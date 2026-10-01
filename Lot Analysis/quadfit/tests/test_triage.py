@@ -179,6 +179,21 @@ def test_multnomah_no_main_stays_review_never_red():
     assert (lots["binding_constraint"] == "").all()
 
 
+def test_an_unanswered_district_never_reds_a_tualatin_washington_lot():
+    # s5o answers the district only for a Clackamas County lot (the layer is
+    # Clackamas's); Tualatin's Washington County side reads None, and a lot
+    # with no main in reach there stays review (2026-09-30).
+    rows = [
+        _base_row(jurisdiction="tualatin", sewer_main_dist_ft=float("nan"),
+                  in_sewer_district=None),
+        _base_row(jurisdiction="tualatin", sewer_main_dist_ft=float("nan"),
+                  in_sewer_district=False),
+    ]
+    lots = _run(rows)
+    assert list(lots["triage"]) == ["review", "red"]
+    assert list(lots["binding_constraint"]) == ["", "no_public_sewer"]
+
+
 def test_sewer_district_column_absent_is_backward_compatible():
     # Pre-district parquet has no in_sewer_district column: a far-sewer Clackamas
     # lot must stay review (never red), and the function must not raise.

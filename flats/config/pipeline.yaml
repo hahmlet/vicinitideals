@@ -54,6 +54,17 @@ jurisdictions:
   or/clackamas/johnson-city: false      # manufactured-home park, no fourplex land
   or/clackamas/rivergrove: false        # ~500 people, no multi-dwelling zones
   or/clackamas/_unincorporated: true
+  # Washington County, first mapped 2026-09-30 (FOLLOWUPS 17(d)). The six
+  # layers the corpus holds. Tigard, Forest Grove and Cornelius are not
+  # encoded yet and stay off (an unknown jurisdiction is off); Tualatin,
+  # Portland, Wilsonville and Lake Oswego lots in the county reach the layers
+  # those cities already have by their JURIS_CITY.
+  or/washington/_unincorporated: true
+  or/washington/hillsboro: true
+  or/washington/beaverton: true
+  or/washington/sherwood: true
+  or/washington/king-city: true
+  or/washington/durham: true
 
 datasets:
 
@@ -65,15 +76,15 @@ datasets:
     provides: lots
     url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
     member: TAXLOTS/taxlots_public.shp
-    serves: [or/multnomah, or/clackamas]
-    filter: COUNTY in (M, C)
+    serves: [or/multnomah, or/clackamas, or/washington]
+    filter: COUNTY in (M, C, W)
     fields:
       [TLID, SITEADDR, SITECITY, SITEZIP, JURIS_CITY, COUNTY, PROP_CODE,
        STATECLASS, LANDUSE, YEARBUILT, BLDGSQFT, LANDVAL, BLDGVAL, TOTALVAL,
        ASSESSVAL, SALEDATE, SALEPRICE]
     notes: >-
-      The regional shapefile carries Washington County too; the filter keeps the
-      two counties FLATS covers. Holes must be read through pyshp's
+      The regional shapefile carries the three Metro counties; the filter keeps
+      the ones FLATS covers (Washington from 2026-09-30). Holes must be read through pyshp's
       __geo_interface__ — the delta helper's own converter splits interior rings
       into separate polygons, which inflates lot areas.
 
@@ -84,7 +95,7 @@ datasets:
     url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
     member: TAXLOTS/taxlot_change.dbf
     geometry: table
-    serves: [or/multnomah, or/clackamas]
+    serves: [or/multnomah, or/clackamas, or/washington]
     fields: [TLID, ORTAXLOT, ADDCHANGE]
     notes: >-
       Metro's own list of lots ADDED, DELETED or CHANGED in the quarter (the
@@ -92,7 +103,7 @@ datasets:
       our July-vs-now diff against the county's account; never used to build
       the lot table. ORTAXLOT's first two digits name the county (03
       Clackamas, 26 Multnomah, 34 Washington) -- there is no COUNTY field to
-      filter on, so Washington's rows come along and the delta drops them.
+      filter on; the delta keeps the counties it was asked for.
 
   rlis_streets:
     kind: rlis_zip
@@ -101,7 +112,7 @@ datasets:
     url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
     member: STREETS/streets.shp
     geometry: polyline
-    serves: [or/multnomah, or/clackamas]
+    serves: [or/multnomah, or/clackamas, or/washington]
     fields: [LOCALID, STREETNAME, PREFIX, FTYPE, TYPE, F_ZLEV, T_ZLEV]
     notes: Frontage is inferred from distance to these lines. Without them every lot reads landlocked.
 
@@ -112,11 +123,12 @@ datasets:
     url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
     member: LAND/zoning.shp
     zone_field: ZONE
-    serves: [or/multnomah/_unincorporated, or/clackamas/_unincorporated, or/multnomah/fairview]
+    serves: [or/multnomah/_unincorporated, or/clackamas/_unincorporated, or/multnomah/fairview, or/washington/durham]
     notes: >-
       Covers the jurisdictions that publish no zoning service of their own —
-      Fairview's code is PDF-only, and neither county publishes unincorporated
-      zoning through ArcGIS.
+      Fairview's code is PDF-only, neither Multnomah nor Clackamas publishes
+      unincorporated zoning through ArcGIS, and Durham publishes none (its
+      21 polygons here are CITY 'Durham': SDR, MDR, OP, IP, NR).
 
   rlis_orca:
     kind: rlis_zip
@@ -124,14 +136,14 @@ datasets:
     provides: overlay
     url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
     member: LAND/orca.shp
-    serves: [or/multnomah, or/clackamas]
-    filter: COUNTY in (Multnomah, Clackamas)
+    serves: [or/multnomah, or/clackamas, or/washington]
+    filter: COUNTY in (Multnomah, Clackamas, Washington)
     fields: [SITENAME, UNITTYPE, OWNER, OWNLEV1, OWNLEV2, MANAGER, CITYMUNI, COUNTY, STATUS, RECREATION]
     notes: >-
       Metro's regional inventory of parks, natural areas, golf courses,
       cemeteries, HOA tracts, school land and trail parcels, registered to the
       taxlots (the 2026_08 release: 15,932 units, Multnomah 6,327, Clackamas
-      4,129, Washington 5,476 -- the filter drops the last; COUNTY is spelled
+      4,129, Washington 5,476; COUNTY is spelled
       out here, not M/C as on the taxlots). UNITTYPE is the reading: Park,
       Natural Area, Home Owners Association, Other, School Land, Cemetery,
       Golf Course, defined in the member's own metadata (LAND/orca.shp.xml).
@@ -149,7 +161,7 @@ datasets:
     url: https://gis.oregonmetro.gov/arcgis/rest/services/OpenData/BoundaryDataWebMerc/MapServer/6
     fields: [UGB]
     native_srid: 3857
-    serves: [or/multnomah, or/clackamas]
+    serves: [or/multnomah, or/clackamas, or/washington]
     notes: >-
       HB 2001's fourplex mandate follows the UGB, not city population. Was the
       RLIS ZIP member BOUNDARY/ugb.shp until the first acquire snapshot
@@ -280,6 +292,72 @@ datasets:
     zone_field: ZONE_CODE
     fields: [ZONE_CODE]
     serves: [or/clackamas/wilsonville]
+
+  # Washington County, 2026-09-30. Every distinct code on each layer was read
+  # against the corpus that day and resolves to a zone, an alias, a pocket or
+  # a ruling -- none unruled.
+
+  zoning_washington_county:
+    kind: arcgis
+    label: Washington County land use districts
+    provides: zoning
+    url: https://gispub.co.washington.or.us/server/rest/services/Open_Data/Open_Data_AGOL/MapServer/2
+    zone_field: LUD
+    fields: [LUD, Urban]
+    serves: [or/washington/_unincorporated]
+    notes: >-
+      The county's own Land Use Districts layer, the whole county, city land
+      included. Unincorporated lots are routed to it by JURIS_CITY, so the
+      city polygons are never read for them. LUD carries the CDC's own
+      spellings (R-5, R-6 NB, TO:R9-12, FD-20, EFU).
+
+  zoning_hillsboro:
+    kind: arcgis
+    label: Hillsboro zoning
+    provides: zoning
+    url: https://services1.arcgis.com/eQ2vvbCvmxlIgo3a/arcgis/rest/services/Community_Development/FeatureServer/2
+    zone_field: DESCRIPTIO
+    fields: [DESCRIPTIO]
+    serves: [or/washington/hillsboro]
+    notes: The field name is truncated in the service (DESCRIPTIO); it holds the zone code, not a description.
+
+  zoning_beaverton:
+    kind: arcgis
+    label: Beaverton zoning
+    provides: zoning
+    url: https://gisweb.beavertonoregon.gov/server/rest/services/Public_SharedServices/pubZoning/MapServer/0
+    zone_field: ZONE_NAME
+    fields: [ZONE_NAME]
+    serves: [or/washington/beaverton]
+    notes: WAcnty is county zoning kept after annexation -- a pocket the corpus rules, not a Beaverton zone.
+
+  zoning_sherwood:
+    kind: arcgis
+    label: Sherwood zoning
+    provides: zoning
+    url: https://services5.arcgis.com/ikEzR7lqVIlrcVFn/arcgis/rest/services/Planning/FeatureServer/2
+    zone_field: CODE
+    fields: [CODE]
+    serves: [or/washington/sherwood]
+
+  zoning_king_city:
+    kind: arcgis
+    label: King City zoning (current districts and Kingston Terrace)
+    provides: zoning
+    url: https://services8.arcgis.com/NsUn9YuPFCjrkDe3/arcgis/rest/services/King_City_Current_and_Future_Zoning_Map_WFL1/FeatureServer/1
+    zone_field: ZONECLASS
+    fields: [ZONECLASS]
+    parts:
+      - url: https://services8.arcgis.com/NsUn9YuPFCjrkDe3/arcgis/rest/services/King_City_Current_and_Future_Zoning_Map_WFL1/FeatureServer/4
+        fields: [Zoning_Designations]
+        zone_field: Zoning_Designations
+    serves: [or/washington/king-city]
+    notes: >-
+      Two layers of one service, disjoint: layer 1 the older districts (and
+      five county "(WC)" pockets), layer 4 the Kingston Terrace
+      neighbourhoods under their names ("Town Center" for KTTC). Written into
+      one file with layer 4's name copied into ZONECLASS, so every reader
+      sees one zone field.
 
   # --- environmental overlays ----------------------------------------------
 
@@ -444,7 +522,7 @@ datasets:
     provides: overlay
     url: https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Title_3_Land/FeatureServer/0
     fields: [FLOOD96, FEMA, WETBUF, RIPARIAN, TITLE3]
-    serves: [or/multnomah, or/clackamas]
+    serves: [or/multnomah, or/clackamas, or/washington]
     notes: Regional fallback for jurisdictions with no local corridor layer.
 
   overlay_metro_title13:
@@ -453,7 +531,7 @@ datasets:
     provides: overlay
     url: https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Title_13_Habitat_Conservation_Areas/FeatureServer/0
     fields: [HCA_VALUE]
-    serves: [or/multnomah, or/clackamas]
+    serves: [or/multnomah, or/clackamas, or/washington]
 
   overlay_metro_wetlands:
     kind: arcgis
@@ -461,7 +539,7 @@ datasets:
     provides: overlay
     url: https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Wetlands/FeatureServer/0
     fields: [SOURCE]
-    serves: [or/multnomah, or/clackamas]
+    serves: [or/multnomah, or/clackamas, or/washington]
 
   overlay_fema_flood:
     kind: arcgis
@@ -469,12 +547,12 @@ datasets:
     provides: overlay
     url: https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28
     fields: [FLD_ZONE, ZONE_SUBTY, SFHA_TF, STATIC_BFE]
-    where: '"DFIRM_ID" IN (''41051C'', ''41005C'')'
-    serves: [or/multnomah, or/clackamas]
+    where: '"DFIRM_ID" IN (''41051C'', ''41005C'', ''41067C'')'
+    serves: [or/multnomah, or/clackamas, or/washington]
     notes: >-
       NFHL rejects the unquoted form of the where clause intermittently — keep
       the quoting exactly as written. DFIRM_ID is the county FIPS: 41051C
-      Multnomah, 41005C Clackamas. The clause named Multnomah alone until the
+      Multnomah, 41005C Clackamas, 41067C Washington (added 2026-09-30). The clause named Multnomah alone until the
       first acquire snapshot (2026-09-18) showed 3,476 features for a dataset
       serving both counties; a third county needs its ID added here in the
       same breath as its jurisdictions.
@@ -776,10 +854,11 @@ datasets:
     provides: terrain
     url: https://tnmaccess.nationalmap.gov/api/v1/products
     native_srid: 4326
-    bbox_4326: [-122.90, 45.26, -122.24, 45.65]
-    serves: [or/multnomah, or/clackamas]
+    bbox_4326: [-123.20, 45.26, -122.24, 45.65]
+    serves: [or/multnomah, or/clackamas, or/washington]
     notes: >-
       Per-lot slope. The bbox covers urban Multnomah plus the eight Clackamas
-      urban cities down to Wilsonville and Tualatin at about 45.27 N. Two lidar
+      urban cities down to Wilsonville and Tualatin at about 45.27 N, and
+      from 2026-09-30 urban Washington County west to Forest Grove (-123.15). Two lidar
       projects overlap the area (OR_OLCMetro_2019, OR_PortlandMetro); newest
       tile wins per cell.

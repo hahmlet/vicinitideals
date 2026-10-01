@@ -697,13 +697,27 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    a Cloudflare Turnstile on every chapter (not to be bypassed); the
    scrapling MCP's proxy is down. Asked Steph to save the six articles as
    PDFs (HUMAN_TODO 28); store them from the files, then rulebook 1-14.
-   (d) COUNTY MAP on 137: COUNTY W into s0 KEEP_COUNTIES; zoning from the
+   (d) STARTED 2026-09-30 (Steph: "start it"), worktree
+   ../vicinitideals-worktrees/washington-map, branch flats/washington-map.
+   COUNTY MAP on 137: COUNTY W into s0 KEEP_COUNTIES; zoning from the
    county's LUD layer + city layers (King City layer 4 = Kingston Terrace);
    overlays incl. Clean Water Services; send Tualatin/Portland/Wilsonville/
    Lake Oswego/Rivergrove's Washington lots to their existing layers (by
    JURIS_CITY, never SITECITY); regenerate the coverage ledger and empty
    OWED_A_COUNTY; bridge, drift, promote.
-   (e) AFTER THE FIRST SCREEN, count what these cost: Beaverton/King City
+   MERGED ef08aebc + deployed; snapshot 4 (2026-10-01) loaded as CANDIDATE
+   RUN 51 (590,282 lots; Washington 190,250: best-pod if-signed green
+   18,891 / yellow 100,888 / red 8,644 / unknown 61,827). Drift vs run 49:
+   2 moved (sewer district), 0 unexplained. Gate WARNED (count_drift,
+   lots_drift = the new county) -> ASKED Steph to promote. Unruled codes
+   (warn only): Tualatin's Washington side BCE CC CN CR IN MBP MP MUC RH
+   RH/HR (~420 lots) and Wilsonville PDI-RSIA/PFC (17) -- rule within the
+   week. 08 splices LR10/FU10/sewer + fire reach on
+   /root/bridge_2026-10-01_wash AFTER promotion (message it then).
+   (e) AFTER THE FIRST SCREEN, count what these cost. FIRST COUNTS (run 51):
+   Beaverton has 0 green -- `utility_easement` unmeasured holds ~32,100
+   answers; Hillsboro 25 green -- `flag_lot` assumed on 48,650 answers (the
+   same assumption holds 12,668 in Clackamas). Also: Beaverton/King City
    minimum density on big lots (fail vs closer look: bring Steph the
    number); the bigger next-to-a-named-zone setback (Hillsboro SCR-DNC,
    Beaverton downtown); Hillsboro's corner coverage bonus + two corner
@@ -713,6 +727,42 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    layers here with the same blind re-read; read the county's 11 community
    plans (Aloha, Bethany, Cedar Mill, ...) into the county layer as
    neighbourhood variants. Worktree per city, confirm with Steph first.
+   STARTED 2026-10-01 (Steph: "both, in parallel"): worktrees
+   ../vicinitideals-worktrees/flats-tigard (flats/tigard-draft) and
+   flats-cornelius (flats/cornelius-draft), rules + documents + blind
+   re-read only; map wiring after flats/washington-map merges. eCode360
+   serves the real page to a browser User-Agent (no challenge solved).
+   Both drafts DONE 2026-10-01 (Cornelius 1681a829: 12 zones, 4 admit;
+   Tigard d5f53149: 13 zones, 9 admit; both full suites green, blind
+   re-read 0 wrong). Steph 2026-10-01: Cornelius R-7 one-home line is
+   superseded (keep); charge parking out of side/rear yards + Tigard's
+   5 ft screen (being built on flats/cornelius-draft); Tigard's per-home
+   lot cap follows Tigard's townhome definition (if unit lots, no parent
+   cap); TRACE the Tigard sub-area image maps (18.650.A/18.660.A/18.670.A,
+   ~590 acres MUR/MUC/MU-CBD) LATER -- until then those lots stay review.
+   Remaining questions: handoff §6 Tigard + Cornelius. Merge both after
+   flats/washington-map lands, then wire Tigard/Cornelius into the map
+   (JURIS_CITY -> layer, Metro ZONE; Cornelius R-10 parcel by hand).
+   Rulings round 2 (all Steph 2026-10-01, applied on the two branches):
+   Tigard Triangle ground floor >= 12 ft (pod fact), MUR stricter column,
+   MUC blank cells = no limit, Triangle 10 ft one-lane drive OK; Cornelius
+   fourplex NOT multi-family, 9 ft stall, CR standalone only near
+   Adair/Baseline, sun shading = flag every R-7/R-10 lot, GMU townhome
+   path REVIEW (subdistrict figure traced later), corner front = narrower
+   side, pod has NO covered parking. Both drafts finished the round
+   (Cornelius 5bf6e848, Tigard 266053fa, suites green, not pushed). The
+   Adair/Baseline standalone-fourplex rule is CC, not CR as asked (the
+   substance ruled stands). OPEN: sun shading as built makes every R-7/R-10
+   lot (about half of Cornelius) never-GREEN "needs a closer look", not the
+   note-only flag Steph was told. Steph 2026-10-01: GREEN WITH A WARNING
+   (lot-page shading flag, verdict not held); being reworked on the branch. Merge Cornelius first (it adds
+   parking_required_yard_prohibited / behind_wall_ft), then Tigard
+   reuses it for its 5 ft planted parking strip (RES-A/B/C).
+   The split-path double count the Tigard draft found in Hillsboro
+   (R-8.5 asked 24,000 sq ft, should be 6,000) was every `per_dwelling`
+   variant on `unit_lots` (24 in the corpus, Gladstone/Happy Valley/West
+   Linn too): FIXED in the reader (Effective/Resolved.whole_project), not
+   the files; nothing screens the split path yet, so no verdict moved.
    (g) JAN 1 2027 (HB 2138 sec. 4): every Metro city must re-conform its
    middle-housing code (cottage clusters by 2028); a city that misses it
    gets the state model code directly. Run the drift check on every layer
@@ -899,3 +949,79 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    and submitted once at the end of the document; a per-document "read by a
    human" record so the corpus gets covered over time. Until it exists, keep
    "Flag something missing" on the card.
+27. **Steph's Oregon City page check (2026-10-01): what is left.** All of
+   her answers triaged; card and reader fixes shipped (set-aside tint,
+   other numbers held, yes/no cards say where they were read, smaller-face
+   columns no longer read as footnotes, centred headings claim their column
+   -- 129 boxes narrowed to one column across OC/Gresham/Portland --, notes
+   on a group heading reach its rows). Left: (a) MUC-1/MUC-2/MUD/WFDD/C
+   "front parking banned: yes" answered "differs" with no comment --
+   17.16.060.E has a three-condition escape (local street + not corner +
+   topography) held as binding; ask Steph whether the "differs" was the
+   escape. (b) Other cities' prose refusals still need locating into
+   `set_aside:` so their pages tint grey.
+27. **Parking layout generator (Steph 2026-10-01: "more parking flexibility
+   opens up more lots"; don't invent shapes).** SCOPING, nothing built.
+   Steph's frame: NOT a menu of shapes -- feed the city's parameters (stall
+   sizes per angle, aisle widths, number of drives -- Oregon City wants one
+   approach per two townhouses = 2 for the pod -- backing rules, setbacks)
+   and let it find ANY valid layout, odd angles and leftover shapes
+   included ("yes, SOME solution works"; TestFit does this commercially).
+   Cheap pre-defined shapes may run first as a lite screen, the generator
+   only where they fail. Pool (run 49): ~108k lots fail ONLY on the court
+   behind (Portland 78k) + ~32k ambiguous. Corpus: no field holds parallel/
+   angled stalls or backing-into-street limits yet (Happy Valley 16.43.030.I
+   exemption and Sherwood 9x20 unencoded). Steph sent 8 references (MDPI
+   2075-5309/13/11/2898, arXiv 2407.01333, Grasshopper parking solvers,
+   IAAC, nvdomidi/ProceduralGenerator) -- digested: none solves it, none
+   checks a turning path; lessons: access first, lot-edge angles first, an
+   independent validator, score against real approved site plans.
+   PROPOSED time box: simple shapes (1-2 sessions) + generator prototype on
+   137 (<= 2 sessions, 5,000 failing lots); continue only if it adds lots
+   beyond the shapes, zero false fits in hand review, <= ~3 s a lot.
+   HUMAN VERIFICATION (Steph): an annotated image per layout -- every
+   distance dimensioned and tagged, a table of required vs measured with the
+   citation behind each number; physical numbers no code states (design
+   car, turning radii, inside-corner offset, end-stall width, dead-end
+   extension, driveway spacing) from official/industry standards in a cited
+   registry (research running); a review queue like the page check; zero
+   false fits before any promotion. RESTRICTIONS ARE HARD LIMITS (Steph):
+   moving the building never licenses a drive or court the code forbids
+   (side-street-only entrance, front/side parking bans, frontage caps). GAP
+   that matters now: `lowest_class` corner lots (Clackamas, Milwaukie,
+   Oregon City, West Linn, Wilsonville, Fairview) -- no street's functional
+   class is measured (6(c)), so today's lane may sit on the busier street;
+   measure it per edge from RLIS street TYPE in s4 and re-check today's
+   greens there. Awaiting Steph's go.
+28. **Fire apparatus access is not screened (found 2026-10-01 by the parking
+   standards research).** Oregon Fire Code 2022 503.1.1: a fire apparatus
+   road must reach within 150 ft of every part of the first-storey exterior
+   walls, measured along an approved route around the building. Exception
+   1.3 covers "not more than two" one-/two-family dwellings -- a 4-unit pod
+   does not qualify. If the street does not reach, an on-site fire road is
+   20 ft wide (D103.1; Clackamas allows 12 ft only up to 3 units, Portland
+   up to 2), turning radii 28/48 (Clackamas) or 25/45 (Portland), turnaround
+   past 150 ft (Portland 300). Sprinklers let the fire official modify it
+   (1.1; Portland Fire allows 250 ft). `flats/rules/conditions.py` names fire
+   access as an `unavailable` tier but no check measures it. Risk: deep,
+   flag and rear-placed lots read green today. Next: measure the route
+   distance from the street to the farthest wall corner in the fit drawing,
+   count today's greens over 150 ft, then decide (red, or a "needs
+   sprinklers" relief). Becomes binding for item 27's long drives.
+   SIZED 2026-10-01 (read-only, 137 /root/fire.py on run 49's base
+   /root/bridge_spliced_mhq0930 + s4 street edges; output
+   /root/fire_sizing.parquet): of 52,219 green-if-signed lots, 175 are
+   CERTAINLY past 150 ft (straight line from the street lot line to the
+   farthest wall of the drawn pod -- no route is shorter) and up to 304
+   possibly (nearest gap + half the pod's perimeter); 13 / 34 past 250 ft.
+   None is signed green yet, so no live false GREEN -- but each becomes one
+   on signing. Portland 92, Clackamas uninc 67, Mult uninc 6, small others;
+   109 of the 175 have under 30 ft of frontage (flag lots, median depth
+   305 ft). Median upper estimate on all greens 107 ft, so the rule only
+   bites deep lots. Steph 2026-10-01: **RED**, no sprinkler relief.
+   BUILT a0522c1d (flats/fit/fire.py route_ft, check `fire_access_ft`, state
+   default `fire_access_max_ft: 150` preempts always, NO_ZONING_RELIEF; lot
+   page row "Fire truck reach"). Bridge runs now need s1_streets.parquet
+   beside --s4. NOT LIVE until the re-screen: batch it into the partial
+   after CHAIN_WASH (scope: non-red lots whose route could pass ~100 ft, plus
+   the LR10/FU10/Mult-uninc scope), read the moves, promote, E2E the row.

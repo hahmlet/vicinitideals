@@ -75,6 +75,12 @@ NOTE_ANSWERS = {
 #: hold. Not an answer to the card's question, so it never moves the queue.
 FLAG = "unmarked"
 
+#: Not a reviewer's answer: the question was put back after a fix that the
+#: fingerprint cannot see -- a box moved, a footnote read, a card reworded --
+#: so the fix is checked rather than assumed. ``note`` keeps what was said
+#: before, ``says`` the comment, so the card can show both.
+REOPENED = "reopened"
+
 #: Answers that mean something needs fixing. They make the problems list.
 PROBLEMS = frozenset({"differs", "wrong_box", "missing", FLAG})
 
@@ -234,7 +240,7 @@ def _standing(answer: FlatsPageCheck | None, row: dict[str, Any]) -> FlatsPageCh
     so the answer stops standing and the question comes back -- which is how a
     fix gets checked rather than assumed.
     """
-    if answer is None or answer.fingerprint != row["mark"]:
+    if answer is None or answer.fingerprint != row["mark"] or answer.answer == REOPENED:
         return None
     return answer
 
@@ -388,15 +394,71 @@ def _own_boxes(placed: sheet.Placed) -> list[tuple[int, list[tuple[sheet.Box, st
     return [(page, shown.get(page, [])) for page in pages[:2]]
 
 
+def _exempt(layer: Layer, row: dict[str, Any]) -> bool:
+    number = _number(layer, row["zone"], row["field"], row["when"])
+    return bool(getattr(number, "exempt", False))
+
+
 @lru_cache(maxsize=1)
 def _by_document() -> dict[str, list[dict[str, Any]]]:
-    """Every encoded number in every layer, grouped by the document it cites."""
+    """Every encoded number in every layer, grouped by the document it cites.
+
+    An exempt standard is not here: "this does not reach our building" is a
+    decision to leave the passage out, and it is drawn with the other ones
+    (:func:`_set_aside_by_document`).
+    """
     out: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for layer_id, layer in _layers().items():
         for row in _value_rows(layer):
             document = (row["quote"] or "").partition("#L")[0]
-            if document:
+            if document and not _exempt(layer, row):
                 out[document].append({**row, "layer_id": layer_id})
+    return out
+
+
+@lru_cache(maxsize=1)
+def _set_aside_by_document() -> dict[str, list[dict[str, str]]]:
+    """Every passage read and left out on purpose, grouped by document.
+
+    Four kinds of decision, one tint: a located refusal (``set_aside:``), a
+    footnote ruled dismissed, a section the reading queues closed as not
+    reaching us, and a standard held as exempt. A reviewer does not need the
+    reason to tell "weighed and refused" from "never read", and the second is
+    the one the page check is for.
+    """
+    from flats.encode import dispositions, worklist
+
+    out: dict[str, list[dict[str, str]]] = defaultdict(list)
+
+    def add(quote: str, why: str) -> None:
+        document = quote.partition("#L")[0]
+        if document and _ranges(quote):
+            out[document].append({"quote": quote, "why": why})
+
+    for layer_id, layer in _layers().items():
+        for item in layer.set_aside:
+            add(item.quote, item.why)
+        for row in _value_rows(layer):
+            if row["quote"] and _exempt(layer, row):
+                add(row["quote"], f"{_label(row['field'])} -- does not reach this building")
+        try:
+            for card in worklist.cards(layer, _store()):
+                if card.ruling is not None and card.ruling.closed and card.lines:
+                    lines = ",".join(f"L{line.line}" for line in card.lines)
+                    add(f"{card.path}#{lines}", f"{card.section} -- read, does not reach us")
+        except Exception:  # noqa: BLE001 — a layer the reading queue cannot survey draws none
+            pass
+    # The rulings as written carry their own line; joining them to the
+    # footnote census to re-find it costs half a minute a process.
+    for rulings in dispositions.rulings().values():
+        for ruling in rulings:
+            if ruling.state == "dismissed" and ruling.quote:
+                add(ruling.quote, "footnote read and dismissed")
+    for document, items in out.items():
+        seen: set[tuple[str, str]] = set()
+        out[document] = [
+            i for i in items if (i["quote"], i["why"]) not in seen and not seen.add((i["quote"], i["why"]))
+        ]
     return out
 
 
@@ -447,6 +509,31 @@ def _encoded_on(document: str, page: int) -> tuple[tuple[sheet.Box, str, frozens
     return tuple(out)
 
 
+@lru_cache(maxsize=256)
+def _set_aside_on(document: str, page: int) -> tuple[tuple[sheet.Box, str], ...]:
+    """The lines on this page that were read and left out on purpose."""
+    index = _page_index(document)
+    if index is None:
+        return ()
+    spots: dict[tuple, dict[str, Any]] = {}
+    for item in _set_aside_by_document().get(document, []):
+        if not _on_page(index, item["quote"], page):
+            continue
+        try:
+            placed = _placed_cached(document, tuple(_ranges(item["quote"])), "null", "")
+        except Exception:  # noqa: BLE001 — a passage that cannot be placed is not drawn
+            continue
+        for box, _kind in placed.boxes.get(page, []):
+            key = tuple(round(v, 3) for v in (box.x0, box.y0, box.x1, box.y1))
+            spot = spots.setdefault(key, {"box": box, "why": []})
+            if item["why"] not in spot["why"]:
+                spot["why"].append(item["why"])
+    return tuple(
+        (spot["box"], "set aside on purpose: " + "; ".join(spot["why"][:4]))
+        for spot in spots.values()
+    )
+
+
 # --- the card ---------------------------------------------------------------
 
 
@@ -466,6 +553,10 @@ def _sheet_view(
         "cite": printed.cite if printed else f"PDF page {page}",
         "boxes": [{"css": box.css(), "kind": kind} for box, kind in boxes],
         "encoded": encoded,
+        "set_aside": [
+            {"css": box.pad(0.002).css(), "title": title}
+            for box, title in _set_aside_on(document, page)
+        ],
     }
 
 
@@ -489,9 +580,13 @@ def _variants(layer: Layer, zone: str, field: str) -> list[dict[str, str]]:
     value = values.get(field)
     if value is None:
         return []
-    out = [{"when": "normally", "value": _said(value.value, field)}]
+    out = [{"when": "normally", "value": _said(value.value, field), "key": ""}]
     out += [
-        {"when": ", ".join(v.key).replace("_", " "), "value": _said(v.value, field)}
+        {
+            "when": "in the case where " + ", and ".join(_condition_words("+".join(v.key))),
+            "value": _said(v.value, field),
+            "key": "+".join(v.key),
+        }
         for v in value.variants
     ]
     return out
@@ -527,6 +622,20 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         "answers": list(VALUE_ANSWERS.items()),
     }
     if ask.question == "value":
+        # The other numbers held for the same standard. Without them a
+        # reviewer reading "except townhouses: 20 ft" answers "No" to the
+        # 25 ft card, not knowing the 20 is held too (Oregon City R-3.5).
+        card["others"] = [
+            v for v in _variants(layer, row["zone"], row["field"]) if v["key"] != row["when"]
+        ]
+        card["no_rule"] = row["value"] is None
+        # A yes/no is a reading, not a number on the page: Steph answered
+        # "differs" to "fourplex allowed: no" in I and MUE, where the page
+        # shown was the general rule that an unlisted use is forbidden. The
+        # card says what was read and where, not only the section.
+        card["yes_no"] = isinstance(row["value"], bool)
+        card["because"] = row["cite"] if card["yes_no"] else ""
+        card["exempt"] = _exempt(layer, row)
         for page, boxes in _own_boxes(placed):
             card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))
         return card
@@ -605,6 +714,14 @@ async def _card_ctx(
                 (layer.layer, ask.row["zone"], ask.row["field"], ask.row["when"], ask.question)
             ),
             ask.row,
+        )
+        latest = answers.get(
+            (layer.layer, ask.row["zone"], ask.row["field"], ask.row["when"], ask.question)
+        )
+        card["asked_again"] = (
+            {"answer": _WORDS.get(latest.note, latest.note), "says": latest.says}
+            if latest is not None and latest.answer == REOPENED
+            else None
         )
         card["before"] = _WORDS.get(before.answer, before.answer) if before else ""
         card["before_answer"] = before.answer if before else ""
@@ -856,15 +973,19 @@ async def flats_check_answer(
         )
     if layer is None or number is None:
         return HTMLResponse("not a number we hold", status_code=400)
+    said = (await _answers(session, layer.layer)).get((layer.layer, zone, field, when, question))
+    answered = (
+        said is not None
+        and said.answer != REOPENED
+        and said.fingerprint == _mark(layer.layer, zone, field, when, number)
+    )
     if action == "forward" or (action == "skip" and forward):
         # Back over a card, then forward again. Passing a card that still
         # has no answer skips it, as the Skip button would have.
         if not forward:
             return await card(skipped=skipped, focus=tuple(here))
         *rest, target = forward
-        answers = await _answers(session, layer.layer)
-        said = answers.get((layer.layer, zone, field, when, question))
-        if said is None or said.fingerprint != _mark(layer.layer, zone, field, when, number):
+        if not answered:
             skipped, here = skipped + 1, [zone, field, when, f"skip:{question}"]
         return await card(
             skipped=skipped,
@@ -872,6 +993,11 @@ async def flats_check_answer(
             trail=[*passed, here][-_TRAIL:],
             ahead=rest,
         )
+    if action == "skip" and answered:
+        # Leaving a card already answered (reached by Back) is not a skip:
+        # the queue never held it, and counting it would pass over the next
+        # unanswered card instead.
+        return await card(skipped=skipped, trail=[*passed, here][-_TRAIL:])
     if action == "skip":
         return await card(skipped=skipped + 1, trail=[*passed, [zone, field, when, f"skip:{question}"]][-_TRAIL:])
     # The card has one comment box. Under "No" it is what the page says;

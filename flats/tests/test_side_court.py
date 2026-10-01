@@ -352,6 +352,10 @@ def test_a_court_beside_the_building_has_to_reach_the_street(corpus, monkeypatch
     assert s.fit.beside is False
     assert s.signed.triage.value != "green"
     # Without the reach test the same lot came back green on the court beside.
+    # The fire check is held off for that counterfactual: with the pod at the
+    # back of the L the hose walks 240 ft, and since FOLLOWUPS 28 that alone
+    # is RED -- a second, independent reason this lot is not green.
     monkeypatch.setattr(quadfit, "beside_reaches_street", lambda *a, **k: True)
+    monkeypatch.setattr(quadfit, "fire_checked", lambda s, *a, **k: s)
     (loose,) = screen_lot(lot(), [pod()], **kw)
     assert loose.fit.beside is True and loose.signed.triage.value == "green"

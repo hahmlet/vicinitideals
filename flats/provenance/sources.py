@@ -91,6 +91,11 @@ OFFICIAL: frozenset[str] = frozenset(
         # indistinguishable, from every other module, from a city that
         # publishes nothing.
         "cityofrivergrove.org",
+        # Clackamas Fire District #1, a special district and the fire code
+        # official across most of Clackamas County. Its Applications Guide is
+        # the issuing fire marshal's own statement of what OFC 2022 requires
+        # of a site plan (FOLLOWUPS 28).
+        "clackamasfire.com",
         # State
         "oregonlegislature.gov",
         "sos.state.or.us",

@@ -33,7 +33,7 @@ from flats.ingest.acquire import (
     read_manifest,
     snapshot_dir,
 )
-from flats.ingest.sources import load_pipeline
+from flats.ingest.sources import PipelineError, load_pipeline
 
 pytestmark = pytest.mark.unit
 
@@ -654,3 +654,66 @@ def test_the_shipped_registry_is_wholly_dispatchable() -> None:
     for ds in pipeline.datasets.values():
         if ds.filter:
             parse_filter(ds.filter)
+
+
+# --- parts (one file from two layers) ----------------------------------------
+
+PART = "https://example.gov/arcgis/rest/services/Zoning/MapServer/4"
+
+
+class TwoLayers:
+    """King City's shape: the main layer, and a second whose zone field is named otherwise."""
+
+    def __init__(self) -> None:
+        self.main = ArcGIS(n=2)
+
+    def __call__(self, request: httpx.Request) -> httpx.Response:
+        url = str(request.url).split("?", 1)[0]
+        if not url.startswith(PART):
+            return self.main(request)
+        if url == PART:
+            return httpx.Response(200, json={"fields": [{"name": "OBJECTID"}, {"name": "Zoning_Designations"}],
+                                             "maxRecordCount": 1000})
+        params = dict(request.url.params) if request.method == "GET" else _form(request)
+        if params.get("returnIdsOnly") == "true":
+            return httpx.Response(200, json={"objectIdFieldName": "OBJECTID", "objectIds": [7, 8, 9]})
+        feats = [
+            {"attributes": {"OBJECTID": i, "Zoning_Designations": "Town Center"},
+             "geometry": {"rings": [[[c + 500 + i for c in pt] for pt in SQUARE_CW]]}}
+            for i in (int(x) for x in params["objectIds"].split(","))
+        ]
+        return httpx.Response(200, json={"features": feats})
+
+
+def test_a_second_layer_is_written_into_the_same_file_under_the_zone_field(tmp_path: Path) -> None:
+    body = ARCGIS_ONLY.replace(
+        "    serves: [or/multnomah/portland]\n",
+        "    serves: [or/multnomah/portland]\n"
+        "    parts:\n"
+        f"      - url: {PART}\n"
+        "        fields: [Zoning_Designations]\n"
+        "        zone_field: Zoning_Designations\n",
+    )
+    out = tmp_path / "2026-09-30"
+
+    doc = acquire(load_pipeline(registry(tmp_path, body)), out, client=client(TwoLayers()), log=quiet)
+
+    entry = doc["datasets"]["zoning_portland"]
+    assert entry["status"] == "acquired" and entry["features"] == 5
+    assert [p["features"] for p in entry["parts"]] == [3] and entry["parts"][0]["url"] == PART
+    zones = [f["properties"]["ZONE"] for f in features_of(out / "zoning_portland.geojson")]
+    # The part's name is copied into the dataset's zone field, so every reader
+    # downstream sees one field; the part's own attribute stays as it came.
+    assert zones == ["R1", "R2", "Town Center", "Town Center", "Town Center"]
+
+
+def test_a_part_on_a_zoning_layer_must_name_its_zone_field(tmp_path: Path) -> None:
+    body = ARCGIS_ONLY.replace(
+        "    serves: [or/multnomah/portland]\n",
+        "    serves: [or/multnomah/portland]\n"
+        "    parts:\n"
+        f"      - url: {PART}\n"
+        "        fields: [Zoning_Designations]\n",
+    )
+    with pytest.raises(PipelineError, match="zone codes live in"):
+        load_pipeline(registry(tmp_path, body))

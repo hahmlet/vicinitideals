@@ -45,6 +45,7 @@ from flats.score.screen import (  # noqa: E402
     FACT_UNOBSERVED,
     GEOMETRY_UNREADABLE,
     NO_FRONTAGE,
+    SOLAR_SHADE,
     STANDARD_NOT_ENCODED,
     STREET_UNCONFIRMED,
     USE_NOT_ENCODED,
@@ -488,6 +489,24 @@ def test_tolerance_on_any_other_check_never_manufactures_a_green() -> None:
 def test_a_policy_with_no_fit_tolerance_flags_nothing_tight() -> None:
     result = screen(rules(), LOT, DESIGN, fit(over_ft=0.0), policy=SlackPolicy(), relief=None)
     assert result.triage is Triage.green and result.tight_fit is False
+
+
+def test_a_warning_rides_beside_the_colour_and_never_moves_it() -> None:
+    # Steph 2026-10-01 (Cornelius's sun-shading rule): "Green with a
+    # warning". A rule nothing checks, held as ``solar_shade_limit``, names
+    # itself in ``warnings`` and leaves the colour, reasons and binding as
+    # the rest of the screen made them -- green, yellow or red alike.
+    plain = run()
+    warned = run(rules(solar_shade_limit=True))
+    assert warned.triage is Triage.green and warned.reasons == ()
+    assert warned.warnings == (SOLAR_SHADE,)
+    assert plain.warnings == ()
+    assert (warned.binding, warned.ask) == (plain.binding, plain.ask)
+    assert run(rules(solar_shade_limit=False)).warnings == ()
+    failing = run(rules(min_lot_sqft=8000, solar_shade_limit=True), relief=READ)
+    assert failing.triage is Triage.yellow and failing.warnings == (SOLAR_SHADE,)
+    dead = run(rules(min_lot_sqft=8000, solar_shade_limit=True), relief=NO_RELIEF)
+    assert dead.triage is Triage.red and dead.warnings == (SOLAR_SHADE,)
 
 
 def test_a_definite_miss_outranks_a_fuzzy_one() -> None:
@@ -1594,6 +1613,36 @@ def test_a_per_lot_standard_is_asked_of_the_parcel_four_times_over() -> None:
     area = next(c for c in result.checks if c.check == "min_lot_area_sqft")
     assert area.threshold == 6_000
     assert area.verdict is Verdict.fails
+
+
+@pytest.mark.parametrize(
+    ("layer", "zone"),
+    [
+        # Stated per dwelling on the variant, multiplied out by the loader.
+        ("or/washington/hillsboro", "R-8.5"),
+        ("or/clackamas/gladstone", "R5"),
+        # Stated per child lot on the variant, multiplied out here.
+        ("or/washington/durham", "SDR"),
+    ],
+)
+def test_a_townhouse_lot_floor_is_four_lots_once_however_it_is_written(
+    layer: str, zone: str
+) -> None:
+    """1,500 sq ft a townhouse lot is 6,000 for the four, whichever way the
+    file states it. A ``per_dwelling`` variant is already the building's total
+    when it leaves the loader, and multiplying it by the lot count a second
+    time asked 24,000 of a Hillsboro R-8.5 parent (found drafting Tigard,
+    2026-10-01). Nothing in the catalog takes the split path yet, so this
+    moved no verdict."""
+    from flats.rules.loader import load_rules
+    from flats.rules.resolver import RuleSet
+    from flats.score.paper import lot_standard
+
+    got = RuleSet(load_rules()).resolve(
+        layer, zone, conditions=["unit_lots"], lot={"lot_sqft": 8_000}
+    )
+
+    assert lot_standard(got, "min_lot_sqft", per_unit=True, lots=4) == (6_000.0, True)
 
 
 def test_the_same_lot_on_one_lot_is_measured_against_the_number_as_written() -> None:

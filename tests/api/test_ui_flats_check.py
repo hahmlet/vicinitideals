@@ -414,6 +414,19 @@ async def test_forward_returns_to_the_card_back_was_pressed_on(client, session):
     assert _hidden(forward.text, "skipped") == "0"
 
 
+async def test_skip_on_a_card_already_answered_does_not_pass_over_the_next(client, session):
+    # Back to an answered card, then Skip instead of Forward: the reviewer is
+    # leaving a card the queue no longer holds, so nothing is skipped.
+    await _login(client, session)
+    row = _first_row()
+    await client.post("/ui/flats/check", data=_form(row, answer="matches"))
+
+    left = await client.post("/ui/flats/check", data=_form(row, action="skip", skipped="0"))
+
+    assert _hidden(left.text, "skipped") == "0"
+    assert "skip:" not in _hidden(left.text, "trail")
+
+
 async def test_passing_an_unanswered_card_on_the_way_forward_skips_it(client, session):
     await _login(client, session)
     row = _first_row()
@@ -456,3 +469,101 @@ async def test_a_new_answer_after_back_ends_the_walk_forward(client, session):
 
     assert "data-forward" not in changed.text
     assert "data-back" in changed.text
+
+
+async def test_a_passage_set_aside_on_purpose_has_its_own_tint(client, session, monkeypatch):
+    """Steph 2026-10-01: an untinted clause must mean nobody weighed it. One
+    read and declined is tinted grey, so a blind miss stands out from a
+    conscious refusal without the reviewer needing the reason."""
+    await _login(client, session)
+    declined = sheet.Box(0.1, 0.7, 0.5, 0.72)
+    monkeypatch.setattr(
+        check, "_set_aside_on", lambda document, page: ((declined, "set aside on purpose: garages"),)
+    )
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert 'class="check-box check-box-set-aside"' in response.text
+    assert 'title="set aside on purpose: garages"' in response.text
+    assert "read and set aside on purpose" in response.text
+
+
+def test_what_was_set_aside_includes_the_located_refusals():
+    oregon_city = check._layers()["or/clackamas/oregon-city"]
+    by_document = check._set_aside_by_document()
+
+    for item in oregon_city.set_aside:
+        held = by_document[item.quote.partition("#L")[0]]
+        assert {"quote": item.quote, "why": item.why} in held
+
+
+async def test_an_exempt_standard_is_asked_as_not_applying(client, session, monkeypatch):
+    await _login(client, session)
+    monkeypatch.setattr(check, "_exempt", lambda layer, row: True)
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert "does <strong>not apply to our building</strong>" in response.text
+
+
+def test_the_card_names_the_other_numbers_held_for_the_same_standard():
+    layer = check._layers()["or/clackamas/oregon-city"]
+    zone, field = next(
+        (z, f)
+        for z, block in layer.zones.items()
+        for f, v in block.values.items()
+        if v.variants
+    )
+
+    held = check._variants(layer, zone, field)
+
+    assert held[0]["when"] == "normally"
+    assert all(v["when"].startswith("in the case where ") for v in held[1:])
+    assert "_" not in " ".join(v["when"] for v in held), "conditions in words, not keys"
+
+
+async def test_a_yes_or_no_is_asked_as_a_reading_with_where_it_was_read(client, session, monkeypatch):
+    """Steph answered "differs" to "fourplex allowed: no" in Oregon City's I
+    and MUE, shown only the general rule that an unlisted use is forbidden."""
+    await _login(client, session)
+    row = {**_first_row(), "value": False, "cite": "OCMC 17.39.020 (permitted uses), with 17.06.010.A"}
+    monkeypatch.setattr(check, "_rows", lambda layer, answered: [row])
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert "Is that what the page says?" in response.text
+    assert "Read from: OCMC 17.39.020 (permitted uses), with 17.06.010.A" in response.text
+
+
+async def test_a_reopened_no_is_asked_again_with_what_was_said_before(client, session):
+    """Steph 2026-10-01: a "No" whose fix moved a box or reworded the card
+    changes no fingerprint, so it would stand forever. Reopening puts it back
+    in the queue; a "Yes" stays done."""
+    import importlib.util
+    from pathlib import Path
+
+    spec = importlib.util.spec_from_file_location(
+        "reopen", Path(__file__).resolve().parents[2] / "scripts" / "flats_page_check_reopen.py"
+    )
+    reopen = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(reopen)
+
+    await _login(client, session)
+    rows = check._rows(check._layers()[LAYER], set())
+    no, yes = rows[0], rows[1]
+    await client.post("/ui/flats/check", data=_form(no, answer="differs", says="the page says 7,500"))
+    await client.post("/ui/flats/check", data=_form(yes, answer="matches"))
+
+    added = await reopen.reopen(session, LAYER)
+    assert [(r.zone, r.field, r.note) for r in added] == [(no["zone"], no["field"], "differs")]
+    session.add_all(added)
+    await session.commit()
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert "data-asked-again" in response.text
+    assert "the page says 7,500" in response.text
+    assert "No, the page says something else" in response.text
+    # Off the problems list until answered again; the history keeps the "No".
+    assert f"{LAYER} | {no['zone']} | {no['field']}" not in (await client.get("/flats/check/problems.txt")).text
+    assert await reopen.reopen(session, LAYER) == [], "a reopened question is not reopened twice"

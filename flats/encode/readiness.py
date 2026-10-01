@@ -274,6 +274,17 @@ def _printed(value: object) -> object:
         # "2 1/2 stories" and 10 feet and prints the 25 nowhere.
         else value.stories
         if getattr(value, "stories", None) is not None
+        # A rate printed per the city's own acre is checked against the rate
+        # the table prints; the acre's size is checked on the denominator's
+        # row below. Cornelius prints four and 32,670 and prints 5.333
+        # nowhere.
+        else value.before_acre
+        if getattr(value, "before_acre", None) is not None
+        # A yard grown per story is checked against the single-story figure;
+        # the growth is printed in the same sentence. Cornelius prints 10
+        # and five and prints 15 nowhere.
+        else value.before_story
+        if getattr(value, "before_story", None) is not None
         else getattr(value, "value", None)
     )
 
@@ -330,7 +341,15 @@ def _rows(
         # nothing checks is the provenance hole this field was added to close.
         # No number to corroborate -- what is being verified is that the
         # sentence is still where the file says it is.
-        yield where, f"{name} <{value.measured_on}>", value.measured_on_quote, None, False
+        # Where the city sizes its own acre, that figure is on this sentence
+        # and is checked like any other.
+        yield (
+            where,
+            f"{name} <{value.measured_on}>",
+            value.measured_on_quote,
+            getattr(value, "acre_sqft", None),
+            False,
+        )
     if getattr(value, "story_ft_quote", None):
         # The other operand of a height in stories, printed in its own
         # chapter, so checked against its own sentence like a step-back.
@@ -611,6 +630,13 @@ _NO_STANDARD = tuple(
         # requiring something, not to "does not have", which a code says of
         # far more than floors.
         r"\bdoes\s+not\s+have\s+standards\s+which\s+require\b",
+        # "single-family attached dwellings shall not be required to have a
+        # side yard on side(s) where structures are attached" -- Cornelius
+        # CMC 18.70.050 (D)(3)(a), the Core Residential common-wall side. The
+        # passive "not be required to have" puts two words between "not" and
+        # "required" that the pattern above does not allow; scoped to that
+        # exact phrase rather than to any gap between the two words.
+        r"\bnot\s+be\s+required\s+to\s+have\b",
         # "may be reduced to zero" -- Happy Valley's townhouse footnote, and
         # the one spelled number `_says` cannot see, because it is not
         # followed by a unit the way "five feet" is.

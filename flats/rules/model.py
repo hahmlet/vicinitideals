@@ -377,6 +377,25 @@ class ZoneRuling(BaseModel):
         return self.zone or code
 
 
+class SetAside(BaseModel):
+    """A passage of our own documents read and deliberately left out.
+
+    The prose refusals ("NOT ENCODED: ...") live in notes and comments with no
+    line reference, so nothing could show a reviewer which untinted text on a
+    printed page was weighed and refused and which nobody has read. This is
+    the located form: the lines, and a few words of why. The page check tints
+    these apart from the encoded numbers, so an untinted line is a blind miss.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    #: ``<document>#L<a>-L<b>[,L<c>...]``, the same shape a value's quote takes.
+    quote: str
+    why: str = ""
+    #: The zones it was weighed for; empty for the whole layer.
+    zones: tuple[str, ...] = ()
+
+
 class PrivateDriveRuling(BaseModel):
     """Whether a private road or drive the lot abuts is a street here, for
     the lot lines, the corner and the yards, in this code's own words.
@@ -562,6 +581,9 @@ LAYER_META = frozenset(
         # Whether a private drive the lot abuts is a street here, for the
         # lot lines, the corner and the yards (`PrivateDriveRuling`).
         "private_drives",
+        # Passages of our documents read and left out on purpose, with the
+        # lines, so a printed page can show them apart from a blind miss.
+        "set_aside",
         "kind",
         "label",
         "eligible",
@@ -1200,6 +1222,12 @@ class Effective:
     #: lot's 78 ft, under 4.113(.02)A.2" rather than presenting 15.6 as a
     #: figure somebody read.
     lot_width_share: LotWidthShare | None = None
+    #: True where the number was stated per dwelling and multiplied out to
+    #: the building (`per_dwelling`, `acres_per_dwelling`): it is already the
+    #: whole project's figure, so a reader that multiplies a `unit_lots`
+    #: number by the lot count must not do it a second time. Hillsboro R-8.5's
+    #: 1,500 sq ft townhouse average came to 24,000 that way, not 6,000.
+    whole_project: bool = False
 
     @property
     def trusted(self) -> bool:
@@ -1446,6 +1474,26 @@ class Value(BaseModel):
     #: on different acres and each cites its own sentence.
     measured_on_cite: str | None = None
     measured_on_quote: str | None = None
+    #: The size of the acre the rate is printed per, where the code defines
+    #: one that is not 43,560 square feet. Cornelius 18.20.050 (A): "A net
+    #: acre is equal to 32,670 square feet". The screen measures density per
+    #: 43,560 sq ft of lot, so `value` carries the rate restated per that acre
+    #: and `before_acre` the rate the code prints; read unconverted, a floor
+    #: of four per net acre would pass a lot a third again as large as the
+    #: code allows. Carried with `measured_on` because the sentence that sizes
+    #: the acre is the sentence that defines it, and cited by its quote.
+    acre_sqft: float | None = None
+    before_acre: float | None = None
+    #: A yard the code prints for a single-story building and grows per story
+    #: above it. Cornelius 18.35.050 (D)(2): "No rear yard shall be less than
+    #: 10 feet in depth for a single-story structure, plus five feet per
+    #: additional story". `before_story` keeps the printed 10, this the
+    #: printed five, and `value` the yard owed by a building of
+    #: :data:`~flats.rules.fields.DESIGN_STORIES` stories -- 15, which no
+    #: sentence prints. Same bargain as `per_height_ft`, counted in stories
+    #: rather than feet because that is what the code counts.
+    plus_per_story_ft: float | None = None
+    before_story: float | None = None
     #: A height stated in STORIES, where the code elsewhere fixes how tall a
     #: story may be. Hillsboro's residential tables print "2 1/2 stories or 35
     #: feet, whichever is less", and 12.50.140 B.6 says "a residential 'story'
@@ -1872,6 +1920,46 @@ class Value(BaseModel):
         return self
 
     @model_validator(mode="after")
+    def _a_yard_per_story_is_a_yard(self) -> Value:
+        if self.plus_per_story_ft is None and self.before_story is None:
+            return self
+        if self.plus_per_story_ft is None or self.before_story is None:
+            raise ValueError(
+                f"{self.name}: a yard grown per story needs both the "
+                f"single-story figure and the growth per story"
+            )
+        if self.name not in HEIGHT_RATIO_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'plus_per_story_ft' grows a yard with the "
+                f"building, and applies to "
+                f"{', '.join(sorted(HEIGHT_RATIO_FIELDS))}"
+            )
+        if self.plus_per_story_ft <= 0:
+            raise ValueError(
+                f"{self.name}: plus_per_story_ft {self.plus_per_story_ft} is "
+                f"not a distance"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _an_acre_of_its_own_is_a_denominator(self) -> Value:
+        if self.acre_sqft is None and self.before_acre is None:
+            return self
+        if self.measured_on is None:
+            raise ValueError(
+                f"{self.name}: 'acre_sqft' sizes the acre a rate is measured "
+                f"on, and there is no 'measured_on' naming that acre"
+            )
+        if self.acre_sqft is None or self.before_acre is None:
+            raise ValueError(
+                f"{self.name}: a rate per a city's own acre needs both the "
+                f"printed rate and the size of the acre"
+            )
+        if self.acre_sqft <= 0:
+            raise ValueError(f"{self.name}: acre_sqft {self.acre_sqft} is not an area")
+        return self
+
+    @model_validator(mode="after")
     def _denominator_citation_needs_a_denominator(self) -> Value:
         if (self.measured_on_cite or self.measured_on_quote) and self.measured_on is None:
             raise ValueError(
@@ -2083,6 +2171,10 @@ class Value(BaseModel):
             winner.status,
             winner.reviewer,
             winner.reviewed,
+            whole_project=(
+                winner.per_dwelling is not None
+                or winner.acres_per_dwelling is not None
+            ),
             when=winner.key,
             exempt=winner.exempt,
             reduce_pct=winner.reduce_pct,
@@ -2485,6 +2577,8 @@ class Layer(BaseModel):
     #: Whether a private drive the lot abuts is a street here (see
     #: :class:`PrivateDriveRuling`); None where the code is silent.
     private_drives: PrivateDriveRuling | None = None
+    #: Passages read and refused on purpose -- see :class:`SetAside`.
+    set_aside: tuple[SetAside, ...] = ()
 
     @property
     def depth(self) -> int:

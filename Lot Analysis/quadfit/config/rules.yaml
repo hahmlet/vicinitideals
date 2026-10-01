@@ -3071,3 +3071,1471 @@ jurisdictions:
         source_url: "https://www.clackamas.us/planning"
         confidence: needs_verification
         notes: "NOT subject to HB 2001 — pop <=1,000 exempt. City limits = the Johnson Mobile Estates manufactured-home park; ~0 splittable lots. No municipal code published. Metro ZONE 'MR1' (ZONE_CLASS MFR1 — multi-family, not SFR)."
+
+  # >>> ported from the FLATS corpus by port_from_flats.py -- edit the corpus, not these rows
+
+  washington_unincorporated:
+    # Community Development Code; county Open_Data_AGOL layer 2, field LUD. Rural districts (EFU, EFC, AF-*, RR-5, R-COM, R-IND, MA-E) are ruled quadplex_allowed false in the corpus, and the UGB gate stands in front of them.
+    eligible: true
+    juris_city_codes: [UNINCORPORATED]
+    county_codes: [W]
+    zoning_layer: zoning_washington_county
+    zone_field: LUD
+    require_inside_ugb: true
+    orientation_constraint: entrance_only
+    zones:
+      - zone: "R-5"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 8
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        source: "Washington County CDC 302-2 and 302-3 (Middle Housing through Type I and Type II) + 106-124, 106-173"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-5) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-6"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 8
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        source: "Washington County CDC 303-2 and 303-3 (Middle Housing through Type I and Type II) + 106-124, 106-173"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-6) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-9"
+        quadplex_allowed: true
+        setback_front_ft: 12
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 8
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        source: "Washington County CDC 304-2 and 304-3 (Middle Housing through Type I and Type II) + 106-124, 106-173"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-9) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-15"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 12
+        setback_street_side_ft: 8
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        source: "Washington County CDC 305-2 and 305-3 (Middle Housing through Type I and Type II) + 106-124, 106-173"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-15) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-24"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 12
+        setback_street_side_ft: 8
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        source: "Washington County CDC 306-2 and 306-3 (Middle Housing through Type I and Type II) + 106-124, 106-173"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-24) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-25+"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 12
+        setback_street_side_ft: 8
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        source: "Washington County CDC 307-2 and 307-3 (Middle Housing through Type I and Type II) + 106-124, 106-173"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-25+) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-6 NB"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 8
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        source: "Washington County CDC 390-8.2 E and 390-8.3 B (Middle Housing, Type I and Type II) + 106-124"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-6 NB) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-9 NB"
+        quadplex_allowed: true
+        setback_front_ft: 12
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_density_du_per_acre: 7
+        source: "Washington County CDC 390-9.3 A (Attached Dwelling Units, Type II) + 390-16.2 A-B + 106-70.1 B"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-9 NB) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-15 NB"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 12
+        setback_street_side_ft: 8
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        source: "Washington County CDC 390-10.2 K and 390-10.3 B (Middle Housing, Type I and Type II) + 106-124"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-15 NB) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-24 NB"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        min_density_du_per_acre: 19
+        source: "Washington County CDC 390-11.3 A (Attached Dwelling Units, Type II) + 390-16.2 + 106-70.1 B"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-24 NB) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-25+ NB"
+        quadplex_allowed: false
+        source: "Washington County CDC 390-12.2 and 390-12.3 A (multi-dwelling only) + 106-143"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-25+ NB) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "NCC NB"
+        quadplex_allowed: false
+        source: "Washington County CDC 390-6.2 C + 390-13.3 H (upper-floor dwellings over non-residential ground floor)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated NCC NB) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "NCMU NB"
+        quadplex_allowed: false
+        source: "Washington County CDC 390-6.2 C + 390-14.3 G and K + 390-16.7"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated NCMU NB) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "INST NB"
+        quadplex_allowed: false
+        source: "Washington County CDC 390-6.2 C, new residential uses prohibited in nonresidential NB districts"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated INST NB) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "TO:R9-12"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        source: "Washington County CDC 375 Table A, Middle Housing row (I/II), and 375-7 30.c. + 106-124"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:R9-12) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "TO:R12-18"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        source: "Washington County CDC 375 Table A, Middle Housing row (I/II), and 375-7 30.c. + 106-124"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:R12-18) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "TO:R18-24"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 15
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        source: "Washington County CDC 375 Table A, Middle Housing row (I/II), and 375-7 30.c. + 106-124"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:R18-24) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "TO:R24-40"
+        quadplex_allowed: true
+        min_density_du_per_acre: 24
+        setback_front_ft: 15
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        source: "Washington County CDC 375 Table A (Middle Housing N; no four-unit row) + 375-5.2 + 106-143"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:R24-40) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_front_ft, setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
+      - zone: "TO:R40-80"
+        quadplex_allowed: true
+        min_density_du_per_acre: 40
+        setback_front_ft: 15
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        source: "Washington County CDC 375 Table A (Middle Housing N; no four-unit row) + 375-5.2 + 106-143"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:R40-80) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_front_ft, setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
+      - zone: "TO:BUS"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        source: "Washington County CDC 375 Table A (Middle Housing N; no four-unit row) + 375-5.2 + 106-143"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:BUS) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_front_ft, setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
+      - zone: "TO:RC"
+        quadplex_allowed: false
+        source: "Washington County CDC 375 Table A (Middle Housing N, Townhouses N) + 375-7 (14)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:RC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "TO:EMP"
+        quadplex_allowed: false
+        source: "Washington County CDC 375 Table A, every dwelling row N in TO:EMP"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated TO:EMP) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "NMU"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 6000
+        min_frontage_ft: 40
+        min_lot_depth_ft: 50
+        min_density_du_per_acre: 20
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        source: "Washington County CDC 392-4, Attached Dwelling Unit (Type II in NMU) + 106-70.1 B"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated NMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
+      - zone: "CCMU"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 6000
+        min_frontage_ft: 40
+        min_lot_depth_ft: 50
+        min_density_du_per_acre: 20
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        source: "Washington County CDC 392-4, Attached Dwelling Unit (Type II in CCMU) + 106-70.1 B"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated CCMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
+      - zone: "CBD"
+        quadplex_allowed: true
+        min_density_du_per_acre: 20
+        setback_front_ft: 15
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        source: "Washington County CDC 313-5.3, new dwelling units except pursuant to 313-3.40"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated CBD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_front_ft, setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
+      - zone: "NC"
+        quadplex_allowed: false
+        source: "Washington County CDC 311-3.6 A + 311-5.4"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated NC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "OC"
+        quadplex_allowed: false
+        source: "Washington County CDC 312-4.4 B + 312-5.3"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated OC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "GC"
+        quadplex_allowed: false
+        source: "Washington County CDC 314-5.3, New dwelling units prohibited"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated GC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "IND"
+        quadplex_allowed: false
+        source: "Washington County CDC 320-5.3, New dwellings except as provided in this District"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated IND) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "INST"
+        quadplex_allowed: false
+        source: "Washington County CDC 330-6.2, New dwelling units prohibited"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated INST) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SID"
+        quadplex_allowed: false
+        source: "Washington County CDC 377-1.3, development limited to industrial, office and industrial-park uses"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated SID) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "FD-20"
+        quadplex_allowed: false
+        source: "Washington County CDC 308-2.4 (one detached dwelling) + 308-5.1"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated FD-20) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "FD-10"
+        quadplex_allowed: false
+        source: "Washington County CDC 309-2.4 (one detached dwelling) + 309-5.1"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated FD-10) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "EFU"
+        quadplex_allowed: false
+        source: "Washington County CDC 340-4.1 G (one nonfarm detached dwelling) + 340-7.1"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated EFU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "EFC"
+        quadplex_allowed: false
+        source: "Washington County CDC 342-2.8 (detached dwelling unit, one) + 342-6.1"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated EFC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "AF-20"
+        quadplex_allowed: false
+        source: "Washington County CDC 344-4.1 G (one nonfarm detached dwelling) + 344-7.1"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated AF-20) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "AF-10"
+        quadplex_allowed: false
+        source: "Washington County CDC 346-2.3 (Detached Dwelling Unit, one) + 346-5.1"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated AF-10) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "AF-5"
+        quadplex_allowed: false
+        source: "Washington County CDC 348-2.3 (Detached Dwelling Unit, one) + 348-5.1"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated AF-5) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RR-5"
+        quadplex_allowed: false
+        source: "Washington County CDC 350-2.2 (Detached Dwelling Unit, one) + 350-5.1"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated RR-5) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-COM"
+        quadplex_allowed: false
+        source: "Washington County CDC 352-2.3 (residence with a commercial use, one dwelling structure) + 352-5.1"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-COM) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-IND"
+        quadplex_allowed: false
+        source: "Washington County CDC 354-2.1 B (caretaker residence) + 354-5.2"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated R-IND) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MA-E"
+        quadplex_allowed: false
+        source: "Washington County CDC 356-2.1 A and 356-2.2 (caretaker or one detached dwelling with a permitted use) + 356-5.1"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3090"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/_unincorporated MA-E) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+
+  hillsboro:
+    eligible: true
+    juris_city_codes: [HILLSBORO]
+    zoning_layer: zoning_hillsboro
+    zone_field: DESCRIPTIO
+    orientation_constraint: entrance_only
+    zone_aliases:
+      "SC-BP": "SCBP"
+      "SID I-P": "I-P"
+    zones:
+      - zone: "R-10"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        min_lot_sqft: 10000
+        max_coverage_pct: 40
+        min_frontage_ft: 25
+        min_lot_width_ft: 70
+        min_lot_depth_ft: 90
+        min_density_du_per_acre: 3.5
+        source: "Hillsboro CDC Table 12.21.120-1, Housing Types in the R-10 Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro R-10) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-8.5"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 8
+        setback_rear_ft: 20
+        min_lot_sqft: 8500
+        max_coverage_pct: 45
+        min_frontage_ft: 25
+        min_lot_width_ft: 65
+        min_lot_depth_ft: 90
+        min_density_du_per_acre: 4
+        source: "Hillsboro CDC Table 12.21.220-1, Housing Types in the R-8.5 Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro R-8.5) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-7"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        min_lot_sqft: 7000
+        max_coverage_pct: 45
+        min_frontage_ft: 25
+        min_lot_width_ft: 60
+        min_lot_depth_ft: 90
+        min_density_du_per_acre: 5
+        source: "Hillsboro CDC Table 12.21.320-1, Housing Types in the R-7 Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro R-7) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-6"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        min_lot_sqft: 7000
+        max_coverage_pct: 55
+        min_frontage_ft: 25
+        min_lot_width_ft: 55
+        min_lot_depth_ft: 85
+        min_density_du_per_acre: 6
+        source: "Hillsboro CDC Table 12.21.420-1, Housing Types in the R-6 Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro R-6) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-4.5"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        min_lot_sqft: 7000
+        max_coverage_pct: 55
+        min_frontage_ft: 25
+        min_lot_width_ft: 50
+        min_lot_depth_ft: 80
+        min_density_du_per_acre: 8
+        source: "Hillsboro CDC Table 12.21.520-1, Housing Types Permitted in the R-4.5 Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro R-4.5) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCR-LD"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 30
+        min_lot_width_ft: 30
+        min_density_du_per_acre: 9
+        source: "Hillsboro CDC Table 12.21.620-1, Housing Types Permitted in the SCR-LD Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCR-LD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCR-OTC"
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 5
+        setback_rear_ft: 16
+        min_lot_sqft: 7500
+        min_frontage_ft: 50
+        min_lot_width_ft: 50
+        min_lot_depth_ft: 150
+        min_density_du_per_acre: 6
+        source: "Hillsboro CDC Table 12.21.720-1, Housing Types Permitted in the SCR-OTC Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCR-OTC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCR-DNC"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 22
+        min_lot_depth_ft: 85
+        min_density_du_per_acre: 15
+        source: "Hillsboro CDC Table 12.21.820-1, Housing Types Permitted in the SCR-DNC Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCR-DNC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MR-1"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        min_lot_sqft: 7000
+        max_coverage_pct: 65
+        min_frontage_ft: 25
+        min_lot_width_ft: 50
+        min_lot_depth_ft: 85
+        min_density_du_per_acre: 11
+        source: "Hillsboro CDC Table 12.22.120-1, Housing Types Permitted in the MR-1 Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro MR-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MR-2"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        min_lot_sqft: 8000
+        max_coverage_pct: 50
+        min_frontage_ft: 25
+        min_lot_width_ft: 55
+        min_lot_depth_ft: 85
+        min_density_du_per_acre: 17
+        source: "Hillsboro CDC Table 12.22.220-1, Housing Types Permitted in the MR-2 Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro MR-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MR-3"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        min_lot_sqft: 6000
+        max_coverage_pct: 60
+        min_frontage_ft: 25
+        min_lot_width_ft: 55
+        min_lot_depth_ft: 85
+        min_density_du_per_acre: 23
+        source: "Hillsboro CDC Table 12.22.320-1, Housing Types Permitted in the MR-3 Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro MR-3) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCR-MD"
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 22
+        min_density_du_per_acre: 18
+        source: "Hillsboro CDC Table 12.22.420-1, Housing Types Permitted in the SCR-MD Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCR-MD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCR-HD"
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        min_lot_sqft: 6000
+        min_frontage_ft: 25
+        min_lot_width_ft: 22
+        min_density_du_per_acre: 24
+        source: "Hillsboro CDC Table 12.22.520-1, Housing Types Permitted in the SCR-HD Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCR-HD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCC-DT"
+        quadplex_allowed: false
+        source: "Hillsboro CDC 12.50.350 D.1, parking for free-standing residential structures in SCC-DT incorporated within the structure"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCC-DT) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCC-SC"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_lot_width_ft: 25
+        min_lot_depth_ft: 25
+        min_density_du_per_acre: 30
+        source: "Hillsboro CDC Table 12.23.420-1, Housing Types Permitted in the SCC-SC Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCC-SC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCC-MM"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_frontage_ft: 25
+        min_density_du_per_acre: 15
+        source: "Hillsboro CDC Table 12.23.520-1, Housing Types Permitted in the SCC-MM Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCC-MM) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MU-N"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 18
+        min_density_du_per_acre: 12
+        source: "Hillsboro CDC Table 12.24.120-1, Housing Types Permitted in the MU-N Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro MU-N) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MU-C"
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        min_frontage_ft: 25
+        min_lot_width_ft: 18
+        min_density_du_per_acre: 23
+        source: "Hillsboro CDC 12.24.250 G, Vertical Mixed-Use Required on Arterial and Collector Streets"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro MU-C) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MU-VTC"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 10
+        min_lot_sqft: 7000
+        min_lot_width_ft: 22
+        source: "Hillsboro CDC Table 12.24.320-1, Housing Types Permitted in the MU-VTC Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro MU-VTC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCR-V"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        min_lot_width_ft: 20
+        min_density_du_per_acre: 24
+        source: "Hillsboro CDC Table 12.24.420-1, Housing Types Permitted in the SCR-V Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCR-V) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "UC-RM"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        min_frontage_ft: 25
+        min_lot_width_ft: 18
+        min_lot_depth_ft: 50
+        min_density_du_per_acre: 24
+        source: "Hillsboro CDC Table 12.24.520-1, Housing Types Permitted in the UC-RM Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-RM) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "UC-MU"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        min_frontage_ft: 25
+        min_lot_depth_ft: 50
+        min_density_du_per_acre: 43
+        source: "Hillsboro CDC Table 12.24.620-1, Housing Types Permitted in the UC-MU Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-MU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "UC-AC"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_frontage_ft: 25
+        min_density_du_per_acre: 43
+        source: "Hillsboro CDC Table 12.24.720-1, Quadplex P/L, no ground-floor dwellings on a Retail Focus Frontage"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-AC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "UC-NC"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 15
+        setback_rear_ft: 15
+        min_density_du_per_acre: 30
+        source: "Hillsboro CDC Table 12.24.820-1, Quadplex P/L, not on a Retail Focus Frontage"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-NC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "UC-OR"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_density_du_per_acre: 30
+        source: "Hillsboro CDC Table 12.24.920-1, Quadplex P/L, no ground-floor dwellings on a Retail Focus Frontage"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-OR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "UC-RP"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_lot_width_ft: 30
+        min_density_du_per_acre: 18
+        source: "Hillsboro CDC Table 12.24.1020-1, Housing Types Permitted in the UC-RP Zone (Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-RP) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-N"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.23.120-1, Housing Types Permitted in the C-N Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro C-N) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-G"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.23.220-1, Housing Types Permitted in the C-G Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro C-G) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "I-G"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.25.120-1, Housing Types Permitted in the I-G Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro I-G) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "I-P"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.25.220-1, Housing Types Permitted in the I-P Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro I-P) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "I-S"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.25.320-1, Housing Types Permitted in the I-S Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro I-S) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCBP"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.25.420-1, Housing Types Permitted in the SCBP Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCBP) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCI"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.25.520-1, Housing Types Permitted in the SCI Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCI) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SSID"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.25.620-1, Housing Types Permitted in the SSID Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SSID) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "ESID"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.25.720-1, Housing Types Permitted in the ESID Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro ESID) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "HSID"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.25.820-1, Housing Types Permitted in the HSID Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro HSID) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SCFI"
+        quadplex_allowed: false
+        source: "Hillsboro CDC Table 12.26.120-1, Housing Types Permitted in the SCFI Zone (Quadplex N)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/4450"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/hillsboro SCFI) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+
+  beaverton:
+    eligible: true
+    juris_city_codes: [BEAVERTON]
+    zoning_layer: zoning_beaverton
+    zone_field: ZONE_NAME
+    orientation_constraint: entrance_only
+    zones:
+      - zone: "MR"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        min_lot_width_ft: 14
+        min_density_du_per_acre: 34
+        source: "Beaverton BDC Table 20.05.20.A, 2.D Residential Dwellings - Triplex and Quadplex (MR P8)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton MR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RMA"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        min_lot_sqft: 3000
+        min_lot_width_ft: 14
+        min_density_du_per_acre: 17
+        source: "Beaverton BDC Table 20.05.20.A, 2.D Residential Dwellings - Triplex and Quadplex (RMA P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton RMA) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RMB"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 16
+        min_lot_sqft: 4000
+        min_lot_width_ft: 20
+        min_density_du_per_acre: 10
+        source: "Beaverton BDC Table 20.05.20.A, 2.D Residential Dwellings - Triplex and Quadplex (RMB P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton RMB) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RMC"
+        quadplex_allowed: true
+        setback_front_ft: 11
+        setback_side_ft: 5
+        setback_rear_ft: 16
+        min_lot_sqft: 5000
+        min_lot_width_ft: 20
+        min_density_du_per_acre: 7
+        source: "Beaverton BDC Table 20.05.20.A, 2.D Residential Dwellings - Triplex and Quadplex (RMC P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton RMC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "CM-RM"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        min_lot_sqft: 4000
+        min_lot_width_ft: 20
+        min_density_du_per_acre: 10
+        source: "Beaverton BDC Table 20.22.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CM-RM P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton CM-RM) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "CM-MR"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        min_lot_width_ft: 14
+        min_density_du_per_acre: 34
+        source: "Beaverton BDC Table 20.22.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CM-MR P7)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton CM-MR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "CM-HDR"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        min_density_du_per_acre: 34
+        source: "Beaverton BDC Table 20.22.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CM-HDR P7)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton CM-HDR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "CM-CS"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        min_density_du_per_acre: 34
+        source: "Beaverton BDC Table 20.22.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CM-CS P7)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton CM-CS) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "NS"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 10
+        setback_rear_ft: 15
+        min_lot_width_ft: 70
+        min_lot_depth_ft: 100
+        min_density_du_per_acre: 34
+        source: "Beaverton BDC Table 20.10.20.A, 2.D Residential Dwellings - Triplex and Quadplex (NS P1)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton NS) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "CS"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 15
+        min_density_du_per_acre: 34
+        source: "Beaverton BDC Table 20.10.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CS P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton CS) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "CC"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_density_du_per_acre: 34
+        source: "Beaverton BDC Table 20.10.20.A, 2.D Residential Dwellings - Triplex and Quadplex (CC P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton CC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "GC"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 15
+        min_density_du_per_acre: 34
+        source: "Beaverton BDC Table 20.10.20.A, 2.D Residential Dwellings - Triplex and Quadplex (GC P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton GC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RC-E"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_density_du_per_acre: 12
+        source: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-E P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton RC-E) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "TC-MU"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_density_du_per_acre: 24
+        source: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (TC-MU P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton TC-MU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "TC-HDR"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_density_du_per_acre: 24
+        source: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (TC-HDR P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton TC-HDR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SC-MU"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_density_du_per_acre: 30
+        source: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (SC-MU P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton SC-MU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SC-HDR"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_density_du_per_acre: 30
+        source: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (SC-HDR P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton SC-HDR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SC-S"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_density_du_per_acre: 30
+        source: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (SC-S P66)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton SC-S) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RC-BC"
+        quadplex_allowed: true
+        setback_front_ft: 6
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        setback_street_side_ft: 6
+        min_density_du_per_acre: 60
+        source: "Beaverton BDC Table 70.15.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-BC P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton RC-BC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RC-OT"
+        quadplex_allowed: true
+        setback_front_ft: 6
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        setback_street_side_ft: 6
+        min_density_du_per_acre: 24
+        source: "Beaverton BDC Table 70.15.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-OT P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton RC-OT) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RC-MU"
+        quadplex_allowed: true
+        setback_front_ft: 6
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        setback_street_side_ft: 6
+        min_density_du_per_acre: 43
+        source: "Beaverton BDC Table 70.15.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-MU P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton RC-MU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RC-DT"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 20
+        setback_street_side_ft: 10
+        min_density_du_per_acre: 30
+        source: "Beaverton BDC Table 70.15.20.A, 1.C Residential Dwellings - Triplex and Quadplex (RC-DT P)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton RC-DT) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "OI"
+        quadplex_allowed: false
+        source: "Beaverton BDC Tables 20.15.15 B.1 and 20.15.20.A (no residential dwelling use in OI)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton OI) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "OI-NC"
+        quadplex_allowed: false
+        source: "Beaverton BDC Tables 20.15.15 B.1 and 20.15.20.A (no residential dwelling use in OI-NC)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton OI-NC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "IND"
+        quadplex_allowed: false
+        source: "Beaverton BDC Tables 20.15.15 B.1 and 20.15.20.A (no residential dwelling use in IND)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton IND) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "OI-WS"
+        quadplex_allowed: false
+        source: "Beaverton BDC Table 20.20.20.A, 1.C Triplex and Quadplex (OI-WS N) and 1.F Multi-Dwelling (OI-WS P2), note 2"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton OI-WS) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-WS"
+        quadplex_allowed: false
+        source: "Beaverton BDC Table 20.20.20.A, 1.C Triplex and Quadplex (C-WS N) and 1.F Multi-Dwelling (C-WS P3), note 3"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton C-WS) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SC-E"
+        quadplex_allowed: false
+        source: "Beaverton BDC Table 20.20.20.A, 1.C Residential Dwellings - Triplex and Quadplex (SC-E1 N, SC-E3 N)"
+        source_url: "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/beaverton SC-E) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+
+  sherwood:
+    eligible: true
+    juris_city_codes: [SHERWOOD]
+    zoning_layer: zoning_sherwood
+    zone_field: CODE
+    orientation_constraint: entrance_only
+    zones:
+      - zone: "VLDR"
+        quadplex_allowed: true
+        setback_front_ft: 30
+        setback_side_ft: 6
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 40000
+        min_frontage_ft: 25
+        min_lot_width_ft: 60
+        min_lot_depth_ft: 80
+        source: "Sherwood SZCDC 16.12.020 A, Allowed Residential Land Uses (Triplex and Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood VLDR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "VLDR_PUD"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 6
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 10000
+        min_frontage_ft: 25
+        min_lot_width_ft: 60
+        min_lot_depth_ft: 80
+        source: "Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in VLDR) and 16.40.050 A (Residential PUD uses)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood VLDR_PUD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "LDR"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 6
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 60
+        min_lot_depth_ft: 80
+        source: "Sherwood SZCDC 16.12.020 A, Allowed Residential Land Uses (Triplex and Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood LDR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MDRL"
+        quadplex_allowed: true
+        setback_front_ft: 14
+        setback_side_ft: 6
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 50
+        min_lot_depth_ft: 80
+        source: "Sherwood SZCDC 16.12.020 A, Allowed Residential Land Uses (Triplex and Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood MDRL) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MDRH"
+        quadplex_allowed: true
+        setback_front_ft: 14
+        setback_side_ft: 6
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 50
+        min_lot_depth_ft: 80
+        source: "Sherwood SZCDC 16.12.020 A, Allowed Residential Land Uses (Triplex and Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood MDRH) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "HDR"
+        quadplex_allowed: true
+        setback_front_ft: 14
+        setback_side_ft: 6
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 50
+        min_lot_depth_ft: 80
+        source: "Sherwood SZCDC 16.12.020 A, Allowed Residential Land Uses (Triplex and Quadplex P)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood HDR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "LDR_PUD"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 6
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 60
+        min_lot_depth_ft: 80
+        source: "Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in LDR) and 16.40.050 A (Residential PUD uses)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood LDR_PUD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MDRL_PUD"
+        quadplex_allowed: true
+        setback_front_ft: 14
+        setback_side_ft: 6
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 50
+        min_lot_depth_ft: 80
+        source: "Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in MDRL) and 16.40.050 A (Residential PUD uses)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood MDRL_PUD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MDRH-PUD"
+        quadplex_allowed: true
+        setback_front_ft: 14
+        setback_side_ft: 6
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 50
+        min_lot_depth_ft: 80
+        source: "Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in MDRH) and 16.40.050 A (Residential PUD uses)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood MDRH-PUD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "HDR_PUD"
+        quadplex_allowed: true
+        setback_front_ft: 14
+        setback_side_ft: 6
+        setback_rear_ft: 20
+        setback_street_side_ft: 15
+        min_lot_sqft: 7000
+        min_frontage_ft: 25
+        min_lot_width_ft: 50
+        min_lot_depth_ft: 80
+        source: "Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in HDR) and 16.40.050 A (Residential PUD uses)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood HDR_PUD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "OC"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood OC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "OC_PUD"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (OC, which lists no triplex or quadplex)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood OC_PUD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "NC"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood NC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RC"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood RC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "RC_PUD"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (RC, which lists no triplex or quadplex)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood RC_PUD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "GC"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood GC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "LI"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.31.020 A-B and the industrial use table (one security dwelling only; unlisted uses prohibited)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood LI) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "LI_PUD"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (LI, which lists one security dwelling only)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood LI_PUD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "GI"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.31.020 A-B and the industrial use table (one security dwelling only; unlisted uses prohibited)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood GI) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "EI"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.31.020 A-B and the industrial use table (one security dwelling only; unlisted uses prohibited)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood EI) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "IP"
+        quadplex_allowed: false
+        source: "Sherwood SZCDC 16.36.020 A-B and the IP use table (one security dwelling, conditional; unlisted uses prohibited)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3865"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/sherwood IP) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+
+  king_city:
+    # Two layers of one service merged at acquire: layer 1 (ZONECLASS) and the Kingston Terrace layer 4 (Zoning_Designations, copied into ZONECLASS).
+    eligible: true
+    juris_city_codes: [KING CITY]
+    zoning_layer: zoning_king_city
+    zone_field: ZONECLASS
+    orientation_constraint: entrance_only
+    zone_aliases:
+      "Beef Bend Neighborhood": "KTBB"
+      "Central Neighborhood": "KTC"
+      "R12": "R-12"
+      "R9": "R-9"
+      "Rural Character Neighborhood": "KTRC"
+      "Town Center": "KTTC"
+    zones:
+      - zone: "R-9"
+        quadplex_allowed: false
+        source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling N in R-9) and 16.84.020 permitted uses"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city R-9) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-12"
+        quadplex_allowed: false
+        source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.94.020 permitted uses"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city R-12) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-15"
+        quadplex_allowed: false
+        source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.96.020 permitted uses"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city R-15) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-24"
+        quadplex_allowed: false
+        source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.100.020 permitted uses"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city R-24) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SF"
+        quadplex_allowed: false
+        source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling N in SF) and 16.88.020 permitted uses (residential home only)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city SF) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "AT"
+        quadplex_allowed: false
+        source: "King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.92.020 permitted uses"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city AT) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "NMU"
+        quadplex_allowed: false
+        source: "King City KCMC 16.102.020 permitted uses (single-family attached and detached, multi-family, duplex; no triplex or fourplex)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city NMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "LC"
+        quadplex_allowed: false
+        source: "King City KCMC 16.104.020 permitted uses (multi-family dwelling; no triplex or fourplex)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city LC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "CF"
+        quadplex_allowed: false
+        source: "King City KCMC 16.108.020 permitted uses (community services only)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city CF) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "ROS"
+        quadplex_allowed: false
+        source: "King City KCMC 16.112.020 permitted uses (community services and parks only)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city ROS) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "KTTC"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 3
+        setback_rear_ft: 10
+        setback_street_side_ft: 8
+        min_lot_sqft: 1500
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 45
+        min_density_du_per_acre: 22
+        source: "King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city KTTC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "KTBB"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 3
+        setback_rear_ft: 10
+        setback_street_side_ft: 8
+        min_lot_sqft: 1500
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 45
+        min_density_du_per_acre: 18
+        source: "King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city KTBB) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "KTC"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 3
+        setback_rear_ft: 10
+        setback_street_side_ft: 8
+        min_lot_sqft: 2400
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 60
+        min_density_du_per_acre: 10
+        source: "King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city KTC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "KTRC"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        setback_street_side_ft: 8
+        min_lot_sqft: 2400
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 60
+        min_density_du_per_acre: 8
+        source: "King City KCMC 16.114.040 Table 16.114-2 (Duplex, Triplex, Fourplex Y) and 16.114.150 B.2 (middle housing on an existing lot allowed outright)"
+        source_url: "https://api.municode.com/PublicationPdfDownload/3913"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/king-city KTRC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+
+  durham:
+    # No city zoning service; Metro's regional layer, as Fairview.
+    eligible: true
+    juris_city_codes: [DURHAM]
+    zoning_layer: zoning_metro
+    zone_field: ZONE
+    orientation_constraint: entrance_only
+    zones:
+      - zone: "SDR"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 10
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 10000
+        min_frontage_ft: 20
+        min_density_du_per_acre: 4.356
+        source: "Durham Development Code 2.8.1.6 and Table 2.18 (Middle housing permitted outright in SDR), 2.3 (ministerial review), 12.2.22 and 12.2.29 (a Quadplex is Middle Housing)"
+        source_url: "https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/durham SDR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MDR"
+        quadplex_allowed: false
+        source: "Durham Development Code 2.9.1 and Table 2.18 (no Middle housing or quadplex row; multiple residential units within a commonly-owned structure, read as condominium) and Table 9.10.9 (MDR Development, Type 2 on the 4.3 criteria)"
+        source_url: "https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/durham MDR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MDDO"
+        quadplex_allowed: false
+        source: "Durham Development Code 2.10 and 2.10.2 (MDR's uses, by a discretionary process) and Table 9.10.9 (MDDO Development, Type 3)"
+        source_url: "https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/durham MDDO) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "IP"
+        quadplex_allowed: false
+        source: "Durham Development Code 2.11.1 and 2.11.2 (industrial uses only) and 2.17 (unlisted uses not permitted)"
+        source_url: "https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/durham IP) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "OP"
+        quadplex_allowed: false
+        source: "Durham Development Code 2.12.1 and 2.12.2 (offices and studios only) and 2.17 (unlisted uses not permitted)"
+        source_url: "https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/durham OP) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "BPO"
+        quadplex_allowed: false
+        source: "Durham Development Code 2.13.1 and 2.13.2 (the OP or IP uses, within a building)"
+        source_url: "https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/durham BPO) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "NR"
+        quadplex_allowed: false
+        source: "Durham Development Code 2.14.1 (access ways, gardens, open space and recreation only)"
+        source_url: "https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/durham NR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "NRO"
+        quadplex_allowed: false
+        source: "Durham Development Code 2.15.1 and Table 2.18 (uses only as part of a Planned Residential Development)"
+        source_url: "https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/washington/durham NRO) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+
+  # <<< end of ported blocks

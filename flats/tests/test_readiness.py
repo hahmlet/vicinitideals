@@ -409,6 +409,30 @@ def test_a_city_that_has_no_standards_requiring_parking_states_zero() -> None:
     assert not quotes_the_number("The zone does not have a front setback line.", 0)
 
 
+def test_a_side_yard_a_dwelling_is_not_required_to_have_states_zero() -> None:
+    """Cornelius CMC 18.70.050 (D)(3)(a), the Core Residential side yard:
+    "single-family attached dwellings shall not be required to have a side
+    yard on side(s) where structures are attached". No digit, no dash, no
+    "zero"; the attached-wall zero read as misquoted until the passive was
+    learned. Held to the phrase: "not ... required" with any words between
+    them would reach a sentence that keeps a floor."""
+    from flats.encode.readiness import quotes_the_number
+
+    sentence = (
+        "The minimum width of side yards shall be not less than five feet in "
+        "width as measured from the foundation of the structure, except that "
+        "common wall detached single-family dwellings and single-family "
+        "attached dwellings shall not be required to have a side yard on "
+        "side(s) where structures are attached."
+    )
+    assert quotes_the_number(sentence, 0)
+    assert quotes_the_number(sentence, 5)
+    assert not quotes_the_number(sentence, 3)
+    assert not quotes_the_number(
+        "A landscaped strip is not in all cases required to be planted.", 0
+    )
+
+
 def test_a_borrowing_with_no_floor_is_checked_for_words_and_not_for_a_figure() -> None:
     """`same_as` where the sentence carries no number at all.
 

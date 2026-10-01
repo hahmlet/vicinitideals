@@ -340,6 +340,82 @@ DECLARED_OWING = {
         "list. Capped by the same `protected_water_feature` corridor "
         "footnotes at OCMC 17.zoning L12517 to L12523."
     ),
+    # --- The ledger learns two things, 2026-10-01 -----------------------
+    #
+    # Washington County entered the corpus (FOLLOWUPS 17(d)), and eight of
+    # its drafted zones owe on purpose, each with the deferral written into
+    # the zone block when it was drafted on 2026-09-28. And the ledger began
+    # filing a map label under the zone an alias ruling names, which made
+    # Happy Valley's MURM visible: 486 lots the map prints MURM1/2/3 had been
+    # queued as unwritten zones while the block that owes sat at zero. The
+    # three opened by the state middle housing path (FOLLOWUPS 21(b),
+    # 2026-09-30) owe because the ledger last ran before they opened.
+    "or/clackamas/happy-valley/MURM": (
+        "min_lot_sqft, setback_front_ft, setback_rear_ft and setback_side_ft. "
+        "Table 16.22.060-2 prints 'Variable' for lot size and every building "
+        "setback, and its note 2 sends them to 'the master plan process or "
+        "design review application'. There is no by-right envelope; the "
+        "four-family permission is false except on unit lots, and the unit-lot "
+        "path is the one that cannot be dimensioned."
+    ),
+    "or/washington/_unincorporated/R-9 NB": (
+        "min_lot_sqft. 304-7.2 A (by 390-9.6) states an area for detached units "
+        "and for attached units 'on individual lots' (2,400 square feet a unit) "
+        "and none for attached units sharing one lot, which is the pod; the "
+        "9-per-acre maximum of 390-9.5 B sizes the lot instead."
+    ),
+    "or/washington/_unincorporated/R-24 NB": (
+        "min_lot_sqft. 306-7.2 A (by 390-11.6) states an area for attached "
+        "units 'on individual lots' (1,300 square feet) and none for attached "
+        "units on one lot; the 24-per-acre maximum of 390-11.5 sizes the lot "
+        "instead of the neighbouring noun's number."
+    ),
+    "or/washington/_unincorporated/TO:R24-40": (
+        "setback_front_ft, setback_rear_ft and setback_side_ft. 375 Table B(2) "
+        "prints 'None' and its footnotes (E) and (H) send the frontage minimum "
+        "to Section 418 and the interior minimum to Sections 411 and 431, of "
+        "which only 418 is stored. Four units on one lot is settled false; "
+        "the yards bite only on the unit-lot townhouse variant."
+    ),
+    "or/washington/_unincorporated/TO:R40-80": (
+        "setback_front_ft, setback_rear_ft and setback_side_ft, for the reason "
+        "given under TO:R24-40: 375 Table B(2) footnotes (E) and (H) hand the "
+        "yards to Sections 418, 411 and 431, and 431 is not stored. Settled "
+        "false on one lot; owed only on the unit-lot variant."
+    ),
+    "or/washington/_unincorporated/TO:BUS": (
+        "setback_front_ft, setback_rear_ft and setback_side_ft, as in the two "
+        "residential Transit Oriented districts: 375 Table B(2) footnotes (E) "
+        "and (H) and Sections 411 and 431. 375-7 (15) admits townhouses on "
+        "their own lots; four on one lot is false."
+    ),
+    "or/washington/_unincorporated/NMU": (
+        "setback_rear_ft and setback_side_ft. 392-8 prints 'Zero feet (3)' and "
+        "(3) requires the abutting residential district's yard where the site "
+        "abuts one: zero needs a negation `when:` cannot say, and the other "
+        "figure is a number from another zone. Held owed, not zero."
+    ),
+    "or/washington/_unincorporated/CCMU": (
+        "setback_rear_ft and setback_side_ft. The same 392-8 note (3) as NMU: "
+        "no interior yard except beside a residential district, where the "
+        "abutting district's yard applies. Owed rather than a zero that would "
+        "be a false GREEN beside every R district."
+    ),
+    "or/washington/_unincorporated/CBD": (
+        "max_height_ft, min_lot_sqft, setback_front_ft, setback_rear_ft and "
+        "setback_side_ft. Dwellings come only through a Type II Planned "
+        "Development (313-3.40 A(1)), which applies 'Sections 307-7 through "
+        "307-10', while 313-6 prints the district's own 8,500 sq ft and 100 "
+        "feet. Which governs is not settled from the text, and Section 404 is "
+        "not stored."
+    ),
+    "or/multnomah/_unincorporated/RF": (
+        "min_lot_sqft. Opened 2026-09-30 by the state middle housing path "
+        "(ORS 197A.420(2), FOLLOWUPS 21(b)), never GREEN. Not read yet, not "
+        "absent: R20 beside it holds 12,000 from 33.110.txt L1550 and the RF "
+        "figure sits in the same table. Debt for the session that owns 21(b), "
+        "declared here so the ledger regeneration can land."
+    ),
 }
 
 

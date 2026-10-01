@@ -816,6 +816,41 @@ RULINGS: dict[str, dict[str, str]] = {
             "(ddc.3.site-design L476)."
         ),
     },
+    "or/washington/cornelius": {
+        # 2026-10-01, a worktree draft. Every live district with a use list
+        # is a zone block (R-7, R-10, MHP, A-2, C-2, LI, M-1, CMU, CC, CR,
+        # GMU, NRO). What the harvest still prints is four repealed chapters
+        # eCode360 keeps as titles, the flood overlay, a buffer and a
+        # procedure.
+        "C-1": (
+            "not-a-zone: Chapter 18.40, General Commercial, '(Repealed by Ord. "
+            "841)' (cmc.18.40.c-1 L13-L15). 18.05.030 still lists it "
+            "(cmc.18.05.general L62); neither map carries it."
+        ),
+        "CE": (
+            "not-a-zone: Chapter 18.50, Core Commercial-Employment, '(Repealed "
+            "by Ord. 2019-10)' (cmc.18.50.ce L13-L15)."
+        ),
+        "MSC": (
+            "not-a-zone: Chapter 18.80, Main Street Civic, '(Repealed by Ord. "
+            "2019-10)' (cmc.18.80.msc L13-L15)."
+        ),
+        "FP": (
+            "overlay: Chapter 18.90, the Floodplain District, 'this "
+            "floodplain (FP) overlay zone' (cmc.18.90.fp L130): flood "
+            "construction standards with no use list of its own; on neither "
+            "map."
+        ),
+        "RBZ": (
+            "not-a-zone: the riparian buffer zone, a tree-removal area inside "
+            "the flood chapter (cmc.18.90.fp L778)."
+        ),
+        "TDR": (
+            "not-a-zone: transfer of development rights, a conditional use "
+            "permit procedure of the natural resources overlay "
+            "(cmc.18.95.nro L171)."
+        ),
+    },
     "or/washington/tigard": {
         # All thirteen zones Metro's map prints for Tigard are zone blocks
         # (2026-10-01, draft, a cloud session): nine admit the pod, four are

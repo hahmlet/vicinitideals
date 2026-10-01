@@ -457,6 +457,9 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
             "if_signed": row.get("if_signed"),
             "reasons": _split(row.get("reasons")),
             "if_signed_reasons": _split(row.get("if_signed_reasons")),
+            # Rules nothing checks that must not move the colour: shown
+            # beside it (Cornelius's sun-shading rule, Steph 2026-10-01).
+            "warnings": _split(row.get("warnings")),
             "head": row.get("head") or None,
             "dominant": row.get("dominant") or None,
             "failing": _split(row.get("failing")),
@@ -504,6 +507,12 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
     drawn = _clean(row.get("drawing"))
     if isinstance(drawn, str) and drawn:
         checks["drawing"] = json.loads(drawn)
+    # The fire hose's route from the street to the farthest wall, against
+    # OFC 503.1.1's 150 ft (FOLLOWUPS 28). Absent from a bridge run written
+    # before the bridge measured it, and where the plan was already red.
+    route = _num(row.get("fire_route_ft"))
+    if route is not None:
+        checks["fire_route_ft"] = round(route, 1)
     return checks
 
 

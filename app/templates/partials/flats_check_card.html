@@ -68,6 +68,9 @@
       </div>
       <div class="check-sheet" style="position:relative;line-height:0">
         <img src="{{ s.src }}" alt="{{ s.cite }} of the printed code" style="width:100%;display:block" loading="eager">
+        {% for e in s.set_aside %}
+        <div class="check-box check-box-set-aside" style="position:absolute;{{ e.css }}" title="{{ e.title }}"></div>
+        {% endfor %}
         {% for e in s.encoded %}
         <div class="check-box check-box-encoded" style="position:absolute;{{ e.css }}" title="{{ e.title }}"></div>
         {% endfor %}
@@ -87,11 +90,30 @@
       {% if card.before %}<span class="badge badge-yellow" style="margin-left:4px">your answer: {{ card.before }}</span>{% endif %}
     </div>
     {% if said %}<div style="margin:0 0 10px;font-size:12px;color:#15803d">✓ {{ said }}</div>{% endif %}
+    {% if card.asked_again %}
+    <div style="margin:0 0 10px;padding:6px 10px;border-left:3px solid #f59e0b;font-size:12px" data-asked-again>
+      <strong>Asked again after a fix.</strong> Before, you said: {{ card.asked_again.answer }}{% if card.asked_again.says %} — “{{ card.asked_again.says }}”{% endif %}
+    </div>
+    {% endif %}
     {% if error %}
     <div style="margin:0 0 10px;padding:8px 10px;border-left:3px solid #dc2626;font-size:12px">{{ error }}</div>
     {% endif %}
 
-    {% if card.question == "value" %}
+    {% if card.question == "value" and card.exempt %}
+      <p style="font-size:15px;margin:0 0 4px">
+        We hold that <strong>{{ card.field_label }}</strong> does <strong>not apply to our building</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_words %}, in the case where {{ card.when_words | join(", and ") }}{% endif %}. Is that right?
+      </p>
+    {% elif card.question == "value" and card.no_rule %}
+      <p style="font-size:15px;margin:0 0 4px">
+        We hold that the page sets <strong>no rule</strong> for
+        <strong>{{ card.field_label }}</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_words %}, in the case where {{ card.when_words | join(", and ") }}{% endif %}. Is that right?
+      </p>
+    {% elif card.question == "value" and card.yes_no %}
+      <p style="font-size:15px;margin:0 0 4px">
+        We hold <strong>{{ card.field_label }}: <span style="font-size:17px">{{ card.value }}</span></strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_words %}, in the case where {{ card.when_words | join(", and ") }}{% endif %}. Is that what the page says?
+      </p>
+      <p class="muted" style="font-size:12px;margin:0 0 4px" data-because>Read from: {{ card.because }}</p>
+    {% elif card.question == "value" %}
       <p style="font-size:15px;margin:0 0 4px">
         Does the page say <strong style="font-size:17px">{{ card.value }}</strong>
         for <strong>{{ card.field_label }}</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_words %}, in the case where {{ card.when_words | join(", and ") }}{% endif %}?
@@ -102,6 +124,12 @@
         {% if card.mark_on == "number" %}number{% elif card.mark_on == "row" %}row{% else %}column{% endif %}.
         Does it change <strong>{{ card.field_label }}</strong> ({{ card.value }}){% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}?
       </p>
+    {% endif %}
+    {% if card.others %}
+    <div style="font-size:12px;margin:0 0 6px">
+      <span class="muted">We also hold, for the same standard:</span>
+      {% for v in card.others %}<div><strong>{{ v.value }}</strong> <span class="muted">{{ v.when }}</span></div>{% endfor %}
+    </div>
     {% endif %}
     <div class="muted" style="font-size:12px;margin:0 0 10px">{{ card.layer_label }} · {{ card.section }}</div>
     {% if card.placed == "unfound" %}
@@ -161,7 +189,8 @@
       <div><span class="swatch" style="outline:2px solid #dc2626"></span> the number this card asks about</div>
       <div><span class="swatch" style="background:rgba(250,204,21,0.45)"></span> the line it was read from, where the number is in words</div>
       <div><span class="swatch" style="background:rgba(22,163,74,0.22);border-bottom:2px solid rgba(22,163,74,0.7)"></span> other rules we have from this page — hover to see which</div>
-      <div><span class="swatch" style="border:1px solid #d1d5db"></span> no tint: nothing in the rules comes from it</div>
+      <div><span class="swatch" style="background:rgba(100,116,139,0.20);border-bottom:2px dashed rgba(71,85,105,0.7)"></span> read and set aside on purpose</div>
+      <div><span class="swatch" style="border:1px solid #d1d5db"></span> no tint: nobody has weighed it — flag it if it matters</div>
     </div>
 
     <details style="font-size:12px;margin:12px 0 0">

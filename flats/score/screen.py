@@ -35,6 +35,11 @@ acquisition is surveyed and the county's lot lines are coarser than the
 tolerance (:attr:`Screening.tight_fit`). Every other tolerated check still
 holds the lot out of GREEN.
 
+*A warning rides beside the colour and never moves it.* Where a code states a
+rule nothing here measures and Steph has ruled that it must not hold a lot
+back, the screening names it in :attr:`Screening.warnings` instead of
+``reasons``: Cornelius's sun-shading rule, "Green with a warning" (2026-10-01).
+
 *A standard nobody encoded is not a standard that passes.* Skipping a check the
 code plainly imposes would manufacture GREENs. Any skipped check drops the lot
 out of GREEN and names itself, which is how the coverage ledger gets its work.
@@ -56,7 +61,7 @@ import math
 from dataclasses import dataclass, field as _dc_field
 from typing import Any, Sequence
 
-from flats.designs.model import Design, Orientation, Plat
+from flats.designs.model import Design, Orientation, ParkingConfig, Plat
 from flats.fit.rectangle import Fit, Fitter
 from flats.geom.edges import Tier as GeometryTier
 from flats.rules.conditions import CONDITIONS, Tier
@@ -66,6 +71,7 @@ from flats.score.configure import Configuration
 from flats.score.paper import (
     Alley,
     Beside,
+    behind_wall_ft,
     court_across,
     court_depth,
     drive_at_street,
@@ -133,6 +139,14 @@ COURT_WIDTH_UNMEASURED = "COURT_WIDTH_UNMEASURED"
 #: grants are not there. A person has to look at the lot (FOLLOWUPS 4).
 STREET_UNCONFIRMED = "STREET_UNCONFIRMED"
 
+#: The code caps the building's height by the shade it casts on the lot to
+#: the north, and nothing here knows which line faces north or where the
+#: roof's peak lands (``solar_shade_limit``; Cornelius 18.160). A WARNING,
+#: not a reason: Steph, 2026-10-01, "Green with a warning" -- the lot keeps
+#: whatever colour the rest of the screen gives it, and the lot page asks a
+#: person to check the shadow before an offer.
+SOLAR_SHADE = "solar_shade"
+
 #: Checks computed from a proxy that runs in the lot's favour. Empty since
 #: 2026-09-28 (FOLLOWUPS 7(a)): the two it held, open space and landscaping
 #: as a share of the lot, were read against the lot less the building alone,
@@ -180,12 +194,19 @@ CHECK_FIELD: dict[str, str] = {
     "min_density_du_per_acre": "min_density_du_per_acre",
     "parking_stalls": "parking_min_per_unit",
     "parking_cap": "parking_max_per_unit",
+    "covered_parking": "parking_covered_required",
     "open_space_pct": "open_space_min_pct",
     "open_space_sqft": "open_space_min_sqft",
     "open_space_shape": "open_space_min_dimension_ft",
     "private_open_space_shape": "private_open_space_min_dimension_ft",
     "landscaped_pct": "min_landscaped_pct",
+    "fire_access_ft": "fire_access_max_ft",
 }
+
+#: The route from the street to the farthest wall that a plan was tried for
+#: and not found (:func:`flats.fit.fire.route_ft` returned None). Joins
+#: ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``.
+FIRE_ROUTE = "fire_route"
 
 
 @dataclass(frozen=True, slots=True)
@@ -286,6 +307,15 @@ class LotFacts:
     #: that band on them. Empty where nothing measured the lot, which leaves
     #: every such band unplaceable rather than "far from transit".
     transit_ft: tuple[tuple[str, float], ...] = ()
+    #: How far a fire hose walks from the street to the farthest point of
+    #: this plan's first-storey walls (:func:`flats.fit.fire.route_ft`,
+    #: FOLLOWUPS 28), feet. Measured by the bridge on the plan it draws.
+    #: ``fire_route_tried`` with no number means the plan was there and no
+    #: route reached it -- unobserved, held out of GREEN; neither set means
+    #: nobody measured (every caller but the bridge), and the check goes
+    #: unrun.
+    fire_route_ft: float | None = None
+    fire_route_tried: bool = False
 
     @property
     def landlocked(self) -> bool:
@@ -354,6 +384,11 @@ class Screening:
     #: lot lines are good to about a foot, so the lot's survey decides it,
     #: and a colour that flipped on the next map's redraw would be noise.
     tight_fit: bool = False
+    #: Rules the code states that nothing here checks and that, by Steph's
+    #: ruling, must not hold the lot out of GREEN: named beside the colour
+    #: and never inside it (:func:`warnings_for`). Not ``reasons``, which
+    #: say why a lot is NOT green.
+    warnings: tuple[str, ...] = ()
 
     #: The blocker that most explains the outcome — largest proportional
     #: shortfall, not the tightest. This is what the rule-cost ledger counts;
@@ -392,6 +427,45 @@ def _coverage_allowed_sqft(rules: ZoneResolution, lot_sqft: float) -> tuple[floa
     if pct is not None:
         return lot_sqft * pct / 100.0, "max_coverage_pct"
     return None, ""
+
+
+def warnings_for(rules: ZoneResolution) -> tuple[str, ...]:
+    """What the lot page should ask a person to check, colour aside.
+
+    One today: :data:`SOLAR_SHADE` where the zone's height is capped by the
+    shade the building casts north (``solar_shade_limit``). Read whether or
+    not the rules are signed, so a draft zone's lot shows it too.
+    """
+    return (SOLAR_SHADE,) if rules.get("solar_shade_limit") is True else ()
+
+
+def covered_parking_check(
+    rules: ZoneResolution, design: Design, policy: SlackPolicy, where: str | None = None
+) -> CheckResult | None:
+    """One covered stall a unit, against the cover the design builds.
+
+    Cornelius asks "One covered parking space ... for each dwelling unit" in
+    every residential zone, and the pod parks in an open court with nothing
+    over it (Steph, 2026-10-01), so where a layer says the requirement holds
+    for this building the lot misses it by every unit. Only a design parked
+    under its own floor (``tuck_under``) provides cover. A layer states False
+    where state law forbids the requirement -- OAR 660-046-0220(2)(e)(D), a
+    quadplex in a Large City -- and False or silence runs nothing.
+    """
+    if rules.get("parking_covered_required") is not True:
+        return None
+    covered = (
+        math.ceil(round(design.stalls_required, 6))
+        if design.parking.config is ParkingConfig.tuck_under
+        else 0
+    )
+    return policy.evaluate(
+        "covered_parking",
+        float(covered),
+        float(design.units),
+        is_maximum=False,
+        jurisdiction=where,
+    )
 
 
 def _checks(
@@ -749,6 +823,11 @@ def _checks(
             )
         )
 
+    # Cover over the stalls (`covered_parking_check`).
+    covered = covered_parking_check(rules, design, policy, where)
+    if covered is not None:
+        out.append(covered)
+
     # What the lot has left over for the open space and landscaping a code
     # asks of it: the lot less the building AND less the pavement its parking
     # takes -- the court, the way in to it, the back-out room an alley leaves
@@ -843,6 +922,19 @@ def _checks(
         else:
             out.append(result)
     _outdoor_shape(rules, lot, design, fit, fitted, policy, out, unchecked, unmeasured)
+
+    # The fire truck's reach (OFC 503.1.1, FOLLOWUPS 28): the hose's route
+    # from the street to the far side of the building, against the 150 ft
+    # the state layer states for every zone. A route the bridge looked for
+    # and could not find is a fact nobody observed, never a pass.
+    reach = rules.get("fire_access_max_ft")
+    if reach is not None:
+        if lot.fire_route_ft is not None:
+            check("fire_access_ft", lot.fire_route_ft, float(reach), is_maximum=True)
+        else:
+            unchecked.append("fire_access_ft")
+            if lot.fire_route_tried:
+                unmeasured.add(FIRE_ROUTE)
 
     return out, unchecked, unmeasured
 
@@ -1047,18 +1139,21 @@ def _court_beyond_rear(
     The court sits between the building's rear wall and the rear lot line,
     and the envelope has already had a rear setback taken off it -- so that
     strip is land the court may use, and only the excess is charged. This is
-    the same overlap ``paper_fit`` states as ``max(rear, court)``; where a
-    jurisdiction bars parking from a required rear yard the two would stack
-    instead, which is an unmeasured condition on the human list rather than a
-    thing assumed away here. A zone stating no rear setback charges the whole
-    court, which is both conservative and correct: no yard, no shared ground.
+    the same overlap ``paper_fit`` states (:func:`flats.score.paper.behind_wall_ft`);
+    where the code keeps parking out of required yards
+    (``parking_required_yard_prohibited``, Cornelius 18.145.010 (B), Steph's
+    ruling of 2026-10-01) the two stack instead, and the court is charged in
+    full in front of the yard. A zone stating no rear setback charges the
+    whole court, which is both conservative and correct: no yard, no shared
+    ground.
 
     ``carved_rear_ft`` is the strip the envelope actually lost, when that is
     not the number these rules resolve (:attr:`LotFacts.envelope_rear_ft`).
     The building must stand the RESOLVED rear setback off the line and the
     court needs its own depth behind the wall, so the ground behind the wall
-    is ``max(court, rear)`` either way; what the envelope still owes of it is
-    that less the strip already cut. With the two numbers equal this is the
+    is ``max(court, rear)`` either way (``court + rear`` where the yard is
+    kept clear); what the envelope still owes of it is that less the strip
+    already cut. With the two numbers equal this is the
     old ``max(0, court - rear)``. With the rules relaxing the rear below the
     cut (Portland's 0 ft against a commercial neighbour, envelope cut at 10)
     the strip is wider than the rules ask and the court parks in it; with the
@@ -1086,7 +1181,7 @@ def _court_beyond_rear(
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
-    return max(0.0, max(court, rear_ft) - carved)
+    return max(0.0, behind_wall_ft(court, rear_ft, rules) - carved)
 
 
 def _beside_for(design: Design, rules: ZoneResolution, lot: LotFacts) -> Beside:
@@ -1113,8 +1208,10 @@ def _beside_beyond(
     stand the RESOLVED rear setback off the line, and that part runs past
     the wall into the same yard, so the two share it on the court-behind
     bargain: the ground behind the wall is the deeper of the overhang and
-    the rear setback, less the strip the envelope already lost. ``inf``
-    where the row may not run past the wall and would.
+    the rear setback -- the two stacked where the code keeps parking out of
+    required yards (:func:`flats.score.paper.behind_wall_ft`) -- less the
+    strip the envelope already lost. ``inf`` where the row may not run past
+    the wall and would.
     """
     overhang = beside.overhang_ft(deep_ft)
     if math.isinf(overhang):
@@ -1122,7 +1219,7 @@ def _beside_beyond(
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
-    return max(0.0, max(overhang, rear_ft) - carved)
+    return max(0.0, behind_wall_ft(overhang, rear_ft, rules) - carved)
 
 
 def seats(
@@ -1400,7 +1497,11 @@ def screen(
     paths = relief if relief is not None else ReliefPolicy()
 
     if lot.lot_sqft <= 0:
-        return Screening(triage=Triage.unknown, reasons=(GEOMETRY_UNREADABLE,))
+        return Screening(
+            triage=Triage.unknown,
+            reasons=(GEOMETRY_UNREADABLE,),
+            warnings=warnings_for(rules),
+        )
 
     where = rules.jurisdiction
     across = court_across(design, rules, lot.alley, corner=lot.corner)
@@ -1461,6 +1562,7 @@ def screen(
             c.check == "fit_ft" and c.tolerance > 0 and abs(c.slack) <= c.tolerance
             for c in checks
         ),
+        "warnings": warnings_for(rules),
     }
 
     if use_blocked and use_path is not None and not use_path.available:

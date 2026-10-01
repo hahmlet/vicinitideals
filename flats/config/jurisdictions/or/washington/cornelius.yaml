@@ -1,0 +1,1591 @@
+label: Cornelius
+kind: city
+eligible: true
+notes: >-
+  DRAFT, 2026-09-30. Read from the Cornelius Municipal Code, Title 18
+  (Zoning), Title 16 (Annexation) and Title 17 (Subdivisions), as eCode360
+  publishes it (client CO4396), printed chapter by chapter. Every value is
+  draft. Lots reach this layer by the taxlots' JURIS_CITY CORNELIUS. Their
+  zoning comes from Metro's regional zoning layer (CITY 'Cornelius'), which
+  spells four districts without the hyphen (R7, A2, C2, M1), carries three
+  Washington County codes on four small slivers (FD-20, FD-10, AF-5) and has
+  no R-10; the city's own Zoning Map (April 2025, DocumentCenter View/1542)
+  paints R-10 on one small parcel at the east end and otherwise agrees on
+  the districts. Four districts admit the pod: R-7, R-10, A-2 and CR. Two
+  density rules are printed per a "net acre" of 32,670 square feet (R-7
+  and A-2) and are carried with acre_sqft; A-2's rear yard grows per story
+  and is carried with plus_per_story_ft. Steph, 2026-10-01: the fourplex is
+  not multi-family here, and required parking stays out of every required
+  yard (parking_required_yard_prohibited). Further rulings the same day:
+  the stall stays 9 ft; CC stays refused away from Adair and Baseline; the
+  corner front is the narrower street side; every R-7 and R-10 lot carries
+  a warning for the solar balance point (18.160), "Green with a warning"
+  (solar_shade_limit; it never moves the colour); GMU opens only to
+  townhouses, behind an untraced subdistrict figure; and the pod has no
+  covered parking, which fails the townhouse path wherever the code asks
+  for it (parking_covered_required; the state spares the quadplex).
+ingest:
+  geoid: null
+  juris_city_codes:
+  - CORNELIUS
+crossrefs:
+  "11.20.01":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.20.010, Purpose (cmc.18.20.r-7.txt L19)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.01"), not a pointer.
+  "11.20.04":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.20.040, Prohibited uses (cmc.18.20.r-7.txt L145)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.04"), not a pointer.
+  "11.20.101":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.95.010, Purpose (cmc.18.95.nro.txt L41)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.101"), not a pointer.
+  "11.20.11":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.25.010, Purpose (cmc.18.25.r-10.txt L19)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.11"), not a pointer.
+  "11.20.14":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.25.040, Prohibited uses (cmc.18.25.r-10.txt L137)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.14"), not a pointer.
+  "11.20.15":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.25.050, Area, density and lot requirements (cmc.18.25.r-10.txt L205)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.15"), not a pointer.
+  "11.20.21":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.30.010, Purpose (cmc.18.30.mhp.txt L47)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.21"), not a pointer.
+  "11.20.22":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.30.020, Permitted uses (cmc.18.30.mhp.txt L89)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.22"), not a pointer.
+  "11.20.23":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.30.030, Prohibited uses (cmc.18.30.mhp.txt L107)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.23"), not a pointer.
+  "11.20.31":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.35.010, Purpose (cmc.18.35.a-2.txt L19)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.31"), not a pointer.
+  "11.20.34":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.35.040, Prohibited uses (cmc.18.35.a-2.txt L149)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.34"), not a pointer.
+  "11.20.35":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.35.050, Area, density and lot requirements (cmc.18.35.a-2.txt L242)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.35"), not a pointer.
+  "11.20.51":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.45.010, Purpose (cmc.18.45.c-2.txt L19)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.51"), not a pointer.
+  "11.20.52":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.45.020, Uses permitted outright (cmc.18.45.c-2.txt L73)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.52"), not a pointer.
+  "11.20.73":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.55.030, Conditional uses permitted (cmc.18.55.m-1.txt L123)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.73"), not a pointer.
+  "11.20.74":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.55.040, Prohibited uses (cmc.18.55.m-1.txt L147)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.20.74"), not a pointer.
+  "11.40.14":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.145.040, Off-street loading (cmc.18.145.parking.txt L495)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.40.14"), not a pointer.
+  "11.40.34":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.160.010, Purpose (cmc.18.160.solar-balance-point.txt L19)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.40.34"), not a pointer. Surfaced 2026-10-01, when the solar
+      chapter came to be cited beside R-7's and R-10's heights.
+  "11.60.00":
+    outcome: misread
+    note: >-
+      Not a reference: the history note closing 18.195.005, Applicability (cmc.18.195.definitions.txt L19 and after each letter)
+      names the section's former number in the 2000 code ("Code 2000
+      § 11.60.00"), not a pointer.
+  "18.105":
+    outcome: procedure
+    note: >-
+      Chapter 18.105, Conditional Use Permit. Every zone sends its
+      conditional uses to it ("subject to ... Chapter 18.105 CMC"); the
+      pod is permitted outright where it is admitted, and a conditional
+      path in a refusing zone (C-2's multi-family, CC's and CMU's ground
+      floor) is a hearing, not a figure. Not stored.
+  "18.110":
+    outcome: other_path
+    note: >-
+      Chapter 18.110, Planned Unit Development. A PUD "shall not be subject
+      to the provisions of this section" in the land-division and zone
+      chapters; the pod is screened on one lot, not on a PUD plan. Not
+      stored.
+  "18.135.020":
+    outcome: other_path
+    note: >-
+      Nonconforming structures: "Single-family residences existing at the
+      time of adoption" in CMU, CC and GMU. The pod is new construction.
+      Not stored.
+  "18.177.025":
+    outcome: other_building
+    note: >-
+      Marijuana retail, wholesale and dispensary definitions, in C-2's and
+      M-1's use lists. Not housing.
+  "5.35":
+    outcome: other_building
+    note: >-
+      Chapter 5.35, mobile vendors ('Type "A" mobile vendor'), listed among
+      the uses of most zones. Not housing.
+  "600":
+    outcome: other_building
+    note: >-
+      Half of "OAR Chapter 918, Division 600", the state's manufactured
+      dwelling rules, which MHP's standards supersede
+      (cmc.18.30.mhp.txt L45, L463). MHP refuses the pod.
+  "918":
+    outcome: other_building
+    note: >-
+      Half of "OAR Chapter 918, Division 600"; see 600.
+code:
+# eCode360's print view of one chapter at a time, by guid. Plain HTML text,
+# one paragraph to a line. Read 2026-09-30.
+- id: "cmc.18.05.general"
+  url: https://ecode360.com/print/CO4396?guid=47337177
+  title: "CMC Chapter 18.05 Introduction and General Provisions (zoning districts 18.05.030, similar uses 18.05.040)"
+- id: "cmc.18.10.procedure"
+  url: https://ecode360.com/print/CO4396?guid=47337238
+  title: "CMC Chapter 18.10 Application Procedure"
+- id: "cmc.18.15.review"
+  url: https://ecode360.com/print/CO4396?guid=47337302
+  title: "CMC Chapter 18.15 Review Procedures"
+- id: "cmc.18.20.r-7"
+  url: https://ecode360.com/print/CO4396?guid=47337420
+  title: "CMC Chapter 18.20 Low-Density Residential Zone (R-7)"
+- id: "cmc.18.25.r-10"
+  url: https://ecode360.com/print/CO4396?guid=47337532
+  title: "CMC Chapter 18.25 Very Low-Density Residential Zone (R-10)"
+- id: "cmc.18.30.mhp"
+  url: https://ecode360.com/print/CO4396?guid=47337635
+  title: "CMC Chapter 18.30 Manufactured Home Park Zone (MHP)"
+- id: "cmc.18.35.a-2"
+  url: https://ecode360.com/print/CO4396?guid=47337747
+  title: "CMC Chapter 18.35 Multi-Unit Residential Zone (A-2)"
+- id: "cmc.18.40.c-1"
+  url: https://ecode360.com/print/CO4396?guid=47337880
+  title: "CMC Chapter 18.40 General Commercial Zone (C-1), repealed by Ord. 841"
+  allow_thin: true
+- id: "cmc.18.45.c-2"
+  url: https://ecode360.com/print/CO4396?guid=47337881
+  title: "CMC Chapter 18.45 Highway Commercial Zone (C-2)"
+- id: "cmc.18.50.ce"
+  url: https://ecode360.com/print/CO4396?guid=47337963
+  title: "CMC Chapter 18.50 Core Commercial-Employment District (CE), repealed by Ord. 2019-10"
+  allow_thin: true
+- id: "cmc.18.54.li"
+  url: https://ecode360.com/print/CO4396?guid=47337964
+  title: "CMC Chapter 18.54 Light Industrial Zone (LI)"
+- id: "cmc.18.55.m-1"
+  url: https://ecode360.com/print/CO4396?guid=47338056
+  title: "CMC Chapter 18.55 General Industrial Zone (M-1)"
+- id: "cmc.18.60.cmu"
+  url: https://ecode360.com/print/CO4396?guid=47338143
+  title: "CMC Chapter 18.60 Central Mixed Use Zone (CMU)"
+- id: "cmc.18.65.cc"
+  url: https://ecode360.com/print/CO4396?guid=47338264
+  title: "CMC Chapter 18.65 Corridor Commercial (CC)"
+- id: "cmc.18.70.cr"
+  url: https://ecode360.com/print/CO4396?guid=47338362
+  title: "CMC Chapter 18.70 Core Residential Zone (CR)"
+- id: "cmc.18.75.gmu"
+  url: https://ecode360.com/print/CO4396?guid=47338473
+  title: "CMC Chapter 18.75 Gateway Mixed Use (GMU)"
+- id: "cmc.18.80.msc"
+  url: https://ecode360.com/print/CO4396?guid=47338650
+  title: "CMC Chapter 18.80 Main Street Civic Zone (MSC), repealed by Ord. 2019-10"
+  allow_thin: true
+- id: "cmc.18.85.msdo"
+  url: https://ecode360.com/print/CO4396?guid=47338651
+  title: "CMC Chapter 18.85 Main Street Design Overlay (MSDO), repealed by Ord. 2019-10"
+  allow_thin: true
+- id: "cmc.18.90.fp"
+  url: https://ecode360.com/print/CO4396?guid=47338652
+  title: "CMC Chapter 18.90 Floodplain District (FP)"
+- id: "cmc.18.95.nro"
+  url: https://ecode360.com/print/CO4396?guid=47338971
+  title: "CMC Chapter 18.95 Natural Resources Overlay (NRO)"
+- id: "cmc.18.100.site-design"
+  url: https://ecode360.com/print/CO4396?guid=47339017
+  title: "CMC Chapter 18.100 Site Design Review"
+- id: "cmc.18.143.transportation"
+  url: https://ecode360.com/print/CO4396?guid=47339321
+  title: "CMC Chapter 18.143 Transportation Facilities"
+- id: "cmc.18.145.parking"
+  url: https://ecode360.com/print/CO4396?guid=47339373
+  title: "CMC Chapter 18.145 Off-Street Parking and Loading"
+- id: "cmc.18.150.special-use"
+  url: https://ecode360.com/print/CO4396?guid=47339454
+  title: "CMC Chapter 18.150 Special Use Regulations"
+- id: "cmc.18.155.solar-access"
+  url: https://ecode360.com/print/CO4396?guid=47339521
+  title: "CMC Chapter 18.155 Solar Access for New Development"
+- id: "cmc.18.160.solar-balance-point"
+  url: https://ecode360.com/print/CO4396?guid=47339532
+  title: "CMC Chapter 18.160 Solar Balance Point"
+  # Tables A to C print one figure to a line, which the thin-text check
+  # reads as a landing page. Read whole on 2026-10-01.
+  allow_thin: true
+- id: "cmc.18.165.solar-access-permit"
+  url: https://ecode360.com/print/CO4396?guid=47339577
+  title: "CMC Chapter 18.165 Solar Access Permit"
+  # Lettered and numbered subsections one to a line, with few figures in
+  # them: a permit procedure. Read whole on 2026-10-01.
+  allow_thin: true
+- id: "cmc.18.195.definitions"
+  url: https://ecode360.com/print/CO4396?guid=47339847
+  title: "CMC Chapter 18.195 Definitions"
+  # A glossary: short quoted terms one to a line, which the thin-text check
+  # reads as a landing page. Read whole on 2026-09-30.
+  allow_thin: true
+  # 18.195.010 (A definitions) to 18.195.260 (Z, reserved): one alphabet,
+  # split into a section per letter. Above it is only the print chrome and
+  # 18.195.005's one sentence.
+  definitions_at: L21-L839
+- id: "cmc.16.annexation"
+  url: https://ecode360.com/print/CO4396?guid=47336768
+  title: "CMC Title 16 Annexation (Chapter 16.10 Annexation)"
+- id: "cmc.17.subdivisions"
+  url: https://ecode360.com/print/CO4396?guid=47336829
+  title: "CMC Title 17 Subdivisions (Chapter 17.05 Land Divisions)"
+definitions:
+  # Read 2026-09-30 from CMC 18.195, which is on disk whole
+  # (cmc.18.195.definitions.txt).
+  #
+  # THE NOUN. "Dwelling, quadplex" means "a building containing four
+  # attached or detached dwelling units located on a single parcel or lot"
+  # (L215-L216), and "Dwelling, middle housing" means "a duplex, triplex,
+  # quadplex, townhouse, or cottage cluster" (L191-L192). The pod is a
+  # quadplex and so middle housing. "Dwelling, multi-unit" starts at "five
+  # or more dwelling units on a single lot or parcel" (L209-L210), so a
+  # prohibition of multi-unit dwellings (R-10 18.25.040 (B)) does not reach
+  # the pod. A townhouse is "two or more dwelling units, separated by common
+  # walls on the property lines" (L218-L219): the unit-lot path. "Multi-family"
+  # is not defined; A-2 uses it beside "single-family" for the side yards
+  # and the density floor. The draft read the pod, which is not
+  # single-family, as multi-family there. Steph, 2026-10-01: the fourplex
+  # is NOT multi-family in Cornelius, so A-2 holds the figures that are not
+  # the multi-family ones. CR's density floor does not use the word ("all
+  # other dwelling types", 18.70.050 (B)(1)) and is not moved by the ruling.
+  #
+  # FRONT LOT LINE. Defined only "for purposes of the solar access
+  # regulations": "For corner lots, the front lot line is that with the
+  # narrowest frontage" (L291-L292). The zone chapters speak of "the front"
+  # and of "the side yard facing the street" on a corner lot without naming
+  # either line. Held as front_lot_line_corner: shortest under defaults, the
+  # one rule the code prints. Steph, 2026-10-01: keep it.
+  #
+  # STREET. "every way which provides for public use for the purpose of
+  # vehicular and pedestrian traffic" (L705-L706). "Street side lot line" is
+  # "a lot line which abuts a public street, alley or way" (L708-L709). See
+  # private_drives below.
+  #
+  # SETBACK. Measured from "the lot line following any required dedication"
+  # (L645-L646). Dedication takes ground nothing measures; recorded, not
+  # encoded, as in the other Washington layers.
+  #
+  # HEIGHT. To "the point midway between the ridge and the eaves of a pitch
+  # or hip roof" (L323-L324).
+  #
+  # LOT COVERAGE. Buildings "including covered parking areas" (L139-L140).
+  #
+  # NET ACRE. "Acre, gross" is 43,560 square feet (L35-L36); "Acreage, net"
+  # takes out street dedications, private streets and common driveways,
+  # environmentally constrained lands and land set aside in tracts
+  # (L41-L54). R-10 and CR measure their density floors on this acreage
+  # (CR says so: 18.70.050, "as defined in Chapter 18.195"). R-7 and A-2 do
+  # not: each defines its own net acre in its own section -- "A net acre is
+  # equal to 32,670 square feet, and excludes roads, common open space,
+  # floodplains, riparian setbacks, and slopes over 25 percent" (18.20.050
+  # (A), 18.35.050) -- which is three quarters of a gross acre and a
+  # different subtraction list. Each zone cites its own sentence.
+  #
+  # PARKING SPACE. "a rectangle not less than 20 feet long and eight and
+  # one-half feet wide" (L520-L521). 18.145.050 (A) prints nine by 20
+  # "Except as otherwise defined in this code". See the stall below.
+  corner_lot:
+    # "a lot abutting on two intersecting streets other than an alley;
+    # provided, that the streets do not intersect at an angle greater than
+    # 135 degrees." The alley exception is the default alleys_count: false;
+    # a street is a way for public use, so a private drive does not make a
+    # corner (drives_count stays false).
+    test: intersecting_frontages
+    max_intersection_angle_deg: 135.0
+    quote: "or/washington/cornelius/cmc.18.195.definitions.txt#L417-L418"
+    cite: "Cornelius CMC 18.195.120, Lot, corner"
+
+# Whether a private road or drive the lot abuts is a street here (FOLLOWUPS
+# 17(b); Steph's rule of 2026-09-30: a private road is a way in for the
+# parking everywhere, and governs the yards only where the city's code
+# makes it a street).
+private_drives:
+  street: false
+  quote: "or/washington/cornelius/cmc.18.195.definitions.txt#L705-L706"
+  says: "which provides for public use"
+  cite: "Cornelius CMC 18.195 (Street; Street side lot line; Lot, corner; Access; Road) and 18.150.070 (B)"
+  note: >-
+    "Street" means "the entire width between the boundary lines of every way
+    which provides for public use" (L705-L706), and a street side lot line
+    abuts "a public street, alley or way" (L708-L709). A private access is
+    "an access not in public ownership or control by means of deed,
+    dedication or easement" (L26-L27): not for public use, so not a street.
+    "Road" does reach "a public or private way" (L629-L630), but no yard
+    rule is measured from a road. Where the code wants a private way treated
+    as a street it says so, and only for one section: "A private access
+    shall be treated as a public street for the purpose of this section"
+    (18.150.070 (B), cmc.18.150.special-use.txt L215), the clear vision
+    zone, which is not encoded.
+
+defaults:
+  # PARKING COUNT. 18.145.030 (A), Table: "Middle Housing 1.0/DU none none",
+  # the minimum and the Zone A and Zone B maximums (cmc.18.145.parking.txt
+  # L111-L135). The table applies "regardless of the parking zone in which
+  # the use is located" (L99). One stall per unit; the state layer caps the
+  # total for a quadplex below four on lots under 7,000 square feet, and no
+  # zone here admits the pod below 7,000.
+  parking_min_per_unit:
+    value: 1
+    cite: Cornelius CMC 18.145.030 (A) Table, Middle Housing (1.0/DU minimum)
+    url: https://ecode360.com/print/CO4396?guid=47339373
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/cmc.18.145.parking.txt#L111-L112,L131-L132"
+  parking_max_per_unit:
+    exempt: true
+    cite: Cornelius CMC 18.145.030 (A) Table, Middle Housing (maximum none in Zone A and Zone B)
+    url: https://ecode360.com/print/CO4396?guid=47339373
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/cmc.18.145.parking.txt#L113-L114,L118-L119,L131,L133-L134"
+  # THE STALL. 18.145.050 (A): "Except as otherwise defined in this code,
+  # 'one standard parking space' means a minimum of a parking stall of nine
+  # feet in width and 20 feet in length" (L501). 18.195 defines "Parking
+  # space" as "not less than 20 feet long and eight and one-half feet wide"
+  # (definitions L520-L521). Read literally, the exception hands the width
+  # to the definition and the stall is 8.5; read as the parking chapter's
+  # own standard, it is 9. The code does not say which governs. Held at 9,
+  # the stricter; Steph, 2026-10-01: keep 9. The length is 20 on both
+  # readings.
+  #
+  # NOT ENCODED: the compact stalls of the same sentence, "up to 25 percent
+  # of the available parking spaces may have a minimum dimension of eight
+  # feet in width and 16 feet in length" -- for four stalls, one. An
+  # allowance; the standard stall is held, as in the other layers.
+  #
+  # NOT ENCODED: an aisle. 18.145.050 (E): "Parking space configuration,
+  # stall and access aisles shall be of sufficient width for all vehicles
+  # turning and maneuvering" (L517). No figure anywhere in the chapter; the
+  # site plan draws its assumed aisle and marks the lot geometry_assumed.
+  # 050 (B), (F) and (G) -- service drives, striping and street-standard
+  # paving -- each except "middle housing residences" (L505, L521, L525).
+  parking_stall_width_ft:
+    value: 9
+    cite: Cornelius CMC 18.145.050 (A), one standard parking space (nine feet in width; 18.195 Parking space prints eight and one-half, read the stricter way)
+    url: https://ecode360.com/print/CO4396?guid=47339373
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/cmc.18.145.parking.txt#L501"
+  parking_stall_depth_ft:
+    value: 20
+    cite: Cornelius CMC 18.145.050 (A), one standard parking space (20 feet in length)
+    url: https://ecode360.com/print/CO4396?guid=47339373
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/cmc.18.145.parking.txt#L501"
+  # WHICH STREET IS THE FRONT on a corner lot. The only rule the code prints
+  # is the solar-access definition's, "the front lot line is that with the
+  # narrowest frontage" (see the definitions comment). Held as shortest;
+  # Steph, 2026-10-01: keep it. The yards themselves only name "the front"
+  # and "the side yard facing the street", one of each, so the corner lot
+  # has one front.
+  front_lot_line_corner:
+    value: shortest
+    cite: Cornelius CMC 18.195.060, Front lot line (corner lots, the narrowest frontage; stated for the solar access regulations, read for the yards the stricter way)
+    url: https://ecode360.com/print/CO4396?guid=47339847
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/cmc.18.195.definitions.txt#L291-L292"
+  # NOT ENCODED: front_lot_line_through. A through lot is "a lot other than a
+  # corner lot with frontage on more than one street" (definitions
+  # L757-L758), and nothing says which frontage is the front. Left unread,
+  # and so screened at the worst end.
+  #
+  # WHICH STREET THE DRIVEWAY USES. The same sentence in all four residential
+  # zones: "Access to individual lots shall be primarily from local streets
+  # or alleyways ... Direct lot access to arterials or collector streets
+  # shall not be permitted, unless there is no alternative as determined by
+  # the city engineer" (R-7 18.20.060 (B)(1), L256; R-10 18.25.060 (B)(1)
+  # L231; A-2 18.35.060 (D)(1) L294; CR 18.70.060 (B)(1) L296), and
+  # 18.143.050 (C)(5): "Direct access to a collector street shall only be
+  # considered if there is no alternative way to access the site"
+  # (cmc.18.143.transportation.txt L179). The lowest class first.
+  corner_access_street:
+    value: lowest_class
+    cite: Cornelius CMC 18.20.060 (B)(1) (and 18.25.060 (B)(1), 18.35.060 (D)(1), 18.70.060 (B)(1)), access to individual lots primarily from local streets or alleys
+    url: https://ecode360.com/print/CO4396?guid=47337420
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L256"
+  # NOT ENCODED: parking_side_prohibited and parking_front_prohibited. No
+  # sentence bans parking beside or in front of the building; 18.145.010 (B)
+  # keeps required parking out of the required YARDS, which is a setback
+  # (parking_street_setback_ft in each zone) and, on the side and rear,
+  # parking_required_yard_prohibited (below).
+  #
+  # PARKING OUT OF THE REQUIRED YARDS. 18.145.010 (B): "Unless otherwise
+  # provided, required parking and loading spaces shall not be located in a
+  # required yard" (L23). Nothing in the code provides otherwise for a
+  # dwelling: the only sentences that name parking in a yard are the
+  # commercial zones' front and street-side bans (CMU, CC, GMU) and the
+  # review body's screening of parking lots. A parking space is the stall
+  # "together with maneuvering and access space" (18.195, definitions
+  # L520-L521), so the aisle is kept out with the stalls. The front yard is
+  # parking_street_setback_ft in each zone; this holds the rear and side.
+  # The rear court stands in front of the rear yard instead of in it, and
+  # the side yards are already outside the envelope the court is searched
+  # in. Steph, 2026-10-01: "Yes, charge them."
+  parking_required_yard_prohibited:
+    value: true
+    cite: Cornelius CMC 18.145.010 (B), required parking and loading spaces not located in a required yard
+    url: https://ecode360.com/print/CO4396?guid=47339373
+    retrieved: '2026-09-30'
+    quote: "or/washington/cornelius/cmc.18.145.parking.txt#L23"
+
+# THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-30.
+#
+# FLAGGED, NOT MEASURED, IN R-7 AND R-10: Chapter
+# 18.160, Solar Balance Point. It "applies to an application for a building
+# permit for all structures in all single-family zones"
+# (cmc.18.160.solar-balance-point.txt L23), and R-10 and R-7 are the code's
+# two "Single-Family" districts (cmc.18.05.general.txt L53-L54). The shade
+# point -- the peak of a roof pitched 5 in 12 or steeper, the eave of a
+# flatter one (definitions L652) -- may stand no higher than
+# H = (2 x SRL - N + 150) / 5, SRL being its distance from the northern lot
+# line and N the north-south lot dimension, counted at most 90 (L33-L46).
+# A 26 ft shade point must then be 35 ft from the northern lot line on a lot
+# 90 ft or more north to south, and 20 ft on a lot 60 ft north to south.
+# Where the street is on the lot's north side, R-7's 10 ft front yard does
+# not hold the roof that far back. Exemptions, (C) L286-L332: a lot created
+# under Chapter 18.155 and "not subject to the provisions of CMC
+# 18.155.020(E)" -- a subsection the stored 18.155.020 does not have
+# (cmc.18.155.solar-access.txt L21-L23) -- shade already cast by a building,
+# landform or kept tree, a slope over 20 percent facing away from south,
+# and shade falling only on an unheated wall or under 20 sq ft of south
+# glass. (G), L566-L592, cuts the yards by up to half where that is needed
+# to comply. No field holds a height that grows with the distance from one
+# named lot line, and the screen does not know which line faces north.
+# Steph, 2026-10-01: flag every R-7 and R-10 lot, build no shade check --
+# and, on seeing that a flag held as an unmeasured fact would keep every lot
+# there at UNKNOWN, "Green with a warning". Held as `solar_shade_limit:
+# true` in each of the two zones: the screen names it in the screening's
+# warnings, the lot page asks a person to check the building's shadow on
+# the lot to the north, and the colour is whatever the rest of the screen
+# says. (It was briefly a `qualified_by` on the heights, which held the
+# lots at UNKNOWN; superseded the same day.)
+#
+# Chapter 18.165, the solar access permit, protects a solar feature from
+# vegetation only (cmc.18.165.solar-access-permit.txt L17); 18.155 governs
+# the layout of a development (cmc.18.155.solar-access.txt L29, 65 percent
+# of lots under 10,000 sq ft solar-oriented).
+#
+# NOT ENCODED: 18.145.070 (A) and (B), a five-foot landscaped strip between
+# a parking area and an abutting right-of-way, and between a parking area
+# and an abutting property where no building screens it (L637, L641). The
+# street strip is inside the front yard parking already keeps out of; the
+# strip to a neighbour is a parking setback from an interior lot line, which
+# no field holds. 070 (C) and (D) (L645, L649) reach a nonresidential zone's
+# lot and every tenth stall. 060's landscaping requirements exempt "Parking
+# areas serving single- and two-family uses and multi-family uses with not
+# more than four units in the core residential zone" (L609).
+#
+# COVERED PARKING (parking_covered_required, in each zone). All four
+# residential zones and GMU: "One covered parking space shall be provided
+# for each home [dwelling unit] either on an [the] individual lot or in an
+# off-street parking bay within 100 feet" (R-7 L312; R-10 L283; A-2 L378;
+# CR L380; GMU L671). Steph, 2026-10-01: the pod has no covered parking, so
+# where the requirement holds the lot fails on it. It does not hold for the
+# one-lot quadplex: OAR 660-046-0220(2)(e)(D), "A Large City may allow, but
+# may not require, off-street parking to be provided as a garage or
+# carport" (oar.660-046-0220.txt L96-L97), and Cornelius is inside Metro.
+# The townhouse rules in (3) carry no such sentence, so on the unit-lot
+# path the city's sentence stands. GMU prohibits detached houses, so the
+# state rule does not reach it and it holds on every path. (MHP asks the
+# same of a manufactured home, L425; MHP refuses the pod.) A carport, were
+# one added, is an accessory structure under 18.150.010: not in a required
+# front yard, not within six feet of the main building unless attached to
+# it, three feet from any lot line (cmc.18.150.special-use.txt L39, L43,
+# L47).
+#
+# NOT ENCODED: 18.150.070, clear vision zones: a triangle of 15 feet along
+# each leg from the projected curb lines at street intersections and at a
+# driveway "providing vehicular access to a public street", clear of
+# structures that would impede visibility (cmc.18.150.special-use.txt
+# L207-L211). Measured from curb lines nothing holds; at 15 feet it stays
+# inside the front and street side yards wherever the lot line is at least
+# a few feet behind the curb. Recorded.
+#
+# NOT ENCODED: 18.143.050 (C)(1), driveway spacing "in accordance with
+# adopted public works standards" (cmc.18.143.transportation.txt L163); and
+# in A-2 and CR, "No entrance or exit shall be located closer than 100 feet
+# to any intersection of a public street, unless there is no reasonable
+# alternative" (A-2 L302, CR L304). A curb-return distance nothing measures;
+# on a corner lot short of 100 feet along a street it leaves that street no
+# drive except by the city's finding. A doubt.
+#
+# NOT ENCODED: 18.100.070, the design features a detached house or middle
+# housing must pick from (Type I site design review, 18.100.030 (A)(2),
+# cmc.18.100.site-design.txt L89). Design, not placement.
+#
+# NOT ENCODED: "All setbacks shall be measured from Clean Water Services
+# (CWS) required buffer areas, where applicable" (R-7 18.20.050 (D)(6),
+# L208). Overlay data; the CWS buffers are local work, as in Hillsboro.
+#
+# NOT ENCODED: the open space of 300 square feet a unit "Within residential
+# developments containing 20 or more lots or units" (R-7 L328, A-2 L250).
+# Four units.
+#
+# NOT ENCODED: the perimeter strips a reviewing body "may require" along an
+# arterial or a nonresidential area (R-7 L240-L244, A-2 L258-L262). A
+# discretion on a subdivision, not a standard on a lot.
+#
+# NOT ENCODED: the affordable-housing height and density bonus (R-7 L180,
+# A-2 L188). Relief the pod does not take.
+#
+# NOT ENCODED: Chapter 18.90, Floodplain District. Flood construction and
+# no-net-loss standards over the special flood hazard area, with no use list
+# of its own; the flood layers are local work.
+#
+# NOT ENCODED: 18.05.040, similar uses determined by the community
+# development director (cmc.18.05.general.txt L108). Not a standard on a lot.
+zones:
+  # ------------------------------------------------------------------
+  # R-7, Low-Density Residential, 18.20. 18.20.020: "The following uses and
+  # their accessory uses are permitted outright in an R-7 zone ... (B)
+  # Middle housing" (L23, L31), and a detached dwelling may be "site built,
+  # manufactured off site, or prefabricated" (L27). Middle housing site
+  # plans are a Type I design review (18.100.030 (A)(2),
+  # cmc.18.100.site-design.txt L89).
+  #
+  # RULED 2026-10-01 (Steph: cancelled by state law). 18.20.040 (B)
+  # prohibits "More than one dwelling unit on a single lot, except for an accessory dwelling unit or a
+  # duplex as approved through CMC § 18.20.030" (L123), and 18.05.070 (C)
+  # makes the more restrictive provision govern (cmc.18.05.general.txt
+  # L232). Read alone that bars the pod. It is left over: the duplex path it
+  # points to, 18.20.030 (D), was "Repealed by Ord. 2022-03" (L77), the same
+  # ordinance that made middle housing a permitted use; the zone's own lot
+  # table prints "Quadplex and cottage cluster 7,000 square feet" (L159) and
+  # its middle housing land division rule names the quadplex (L228); and
+  # Cornelius is a Large City under OAR 660-046-0020, which must allow a
+  # quadplex where a detached house is allowed. The specific permission is
+  # read over the stale prohibition. Admitted.
+  #
+  # THE DIMENSIONS, 18.20.050:
+  # - DENSITY. Maximum "five dwellings per net acre for detached single-unit
+  #   dwellings and 20 dwellings per net acre for townhouses. Maximum density
+  #   does not apply to duplexes, triplexes, quadplexes, or cottage
+  #   clusters. A net acre is equal to 32,670 square feet" (L151). Minimum
+  #   "four dwellings per net acre" (L168), on the same net acre: held with
+  #   acre_sqft 32670, which comes to 5.33 per 43,560 square feet, so the
+  #   pod's four units need no more than 32,670 net square feet. The
+  #   townhouse maximum is a variant and variants cannot carry acre_sqft:
+  #   held at 20 as printed, which reads it on the larger acre and is a
+  #   quarter stricter than the code. It reaches only a townhouse plat.
+  # - LOT SIZE. Quadplex 7,000, townhouse 1,500 (L157-L160). The flag
+  #   pole does not count toward area (L164); NOT ENCODED, nothing measures
+  #   a pole.
+  # - HEIGHT 35 (L172).
+  # - FRONT 10 "as measured from the furthest extension of the home,
+  #   including porch or decks"; garages and carports 20 (L188).
+  # - REAR 10 (L192). SIDE 5, street side 10 on a corner lot, zero on a
+  #   townhouse's common wall (L196).
+  # - LOT SHAPE 60 wide and 60 deep, townhouse lots 20 wide (L216). NOT
+  #   ENCODED: the commission's in-fill reduction to 50 (L220) and to 20 or
+  #   30 at the street (L224); discretions, and looser.
+  # - DRIVEWAY. "minimum pavement width of 12 feet and shall not be more
+  #   than 25 feet in width at the curb" (18.20.060 (C)(2), L280).
+  # ------------------------------------------------------------------
+  R-7:
+    cite_default:
+      cite: Cornelius CMC Chapter 18.20 (R-7 Low-Density Residential)
+      url: https://ecode360.com/print/CO4396?guid=47337420
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Cornelius CMC 18.20.020 (B), middle housing permitted outright (18.20.040 (B) read as superseded; see the zone comment)
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L23,L31"
+    min_lot_sqft:
+      value: 7000
+      cite: Cornelius CMC 18.20.050 (A)(1), minimum lot size, quadplex and cottage cluster
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L157,L159"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Cornelius CMC 18.20.050 (A)(1), minimum lot size, townhouse
+          quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L157,L160"
+    min_lot_width_ft:
+      value: 60
+      cite: Cornelius CMC 18.20.050 (E)(1), no lot less than 60 feet in width
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L216"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          cite: Cornelius CMC 18.20.050 (E)(1), no townhouse lot less than 20 feet in width
+          quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L216"
+    min_lot_depth_ft:
+      value: 60
+      cite: Cornelius CMC 18.20.050 (E)(1), no lot less than 60 feet in depth
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L216"
+    min_density_du_per_acre:
+      value: 4
+      cite: Cornelius CMC 18.20.050 (B), minimum density four dwellings per net acre
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L168"
+      measured_on:
+        fact: net_developable_area
+        cite: Cornelius CMC 18.20.050 (A), a net acre is equal to 32,670 square feet and excludes roads, common open space, floodplains, riparian setbacks and slopes over 25 percent
+        quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L151"
+        acre_sqft: 32670
+    max_density_du_per_acre:
+      exempt: true
+      cite: Cornelius CMC 18.20.050 (A), maximum density does not apply to quadplexes
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L151"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          cite: Cornelius CMC 18.20.050 (A), maximum density 20 dwellings per net acre for townhouses (held per 43,560 sq ft, a quarter stricter)
+          quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L151"
+    max_height_ft:
+      value: 35
+      cite: Cornelius CMC 18.20.050 (C), maximum height
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L172"
+    # 18.160, Solar Balance Point, reaches "all structures in all
+    # single-family zones" (L23), and this is one of the two (18.05, L53-L54).
+    # The shade point may stand no higher than (2 x SRL - N + 150) / 5 off
+    # the northern lot line (L33-L46); nothing here knows which line faces
+    # north. Steph, 2026-10-01: "Green with a warning" -- a warning on the
+    # lot page, never the colour.
+    solar_shade_limit:
+      value: true
+      cite: Cornelius CMC 18.160.020, applicability (all structures in all single-family zones) and (B)(1), maximum shade point height
+      url: https://ecode360.com/print/CO4396?guid=47339532
+      retrieved: '2026-09-30'
+      quote: "or/washington/cornelius/cmc.18.160.solar-balance-point.txt#L23,L33-L46"
+    setback_front_ft:
+      value: 10
+      cite: Cornelius CMC 18.20.050 (D)(1), front yard from the furthest extension of the home
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L188"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Cornelius CMC 18.145.010 (B), required parking not located in a required yard (the front yard)
+      url: https://ecode360.com/print/CO4396?guid=47339373
+      quote: "or/washington/cornelius/cmc.18.145.parking.txt#L23"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Cornelius CMC 18.20.050 (D)(1), garages or carports not less than 20 feet
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L188"
+    setback_rear_ft:
+      value: 10
+      cite: Cornelius CMC 18.20.050 (D)(2), rear yard
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L192"
+    setback_side_ft:
+      value: 5
+      cite: Cornelius CMC 18.20.050 (D)(3), side yards
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L196"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Cornelius CMC 18.20.050 (D)(3), townhouses zero on the common-wall side
+          quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L196"
+    setback_street_side_ft:
+      value: 10
+      cite: Cornelius CMC 18.20.050 (D)(3), on corner lots the side yard facing the street
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L196"
+    driveway_min_width_two_way_ft:
+      value: 12
+      cite: Cornelius CMC 18.20.060 (C)(2), all driveways minimum pavement width of 12 feet
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L280"
+    driveway_min_width_one_way_ft:
+      value: 12
+      cite: Cornelius CMC 18.20.060 (C)(2), all driveways minimum pavement width of 12 feet
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L280"
+    driveway_approach_max_width_ft:
+      value: 25
+      cite: Cornelius CMC 18.20.060 (C)(2), not more than 25 feet in width at the curb
+      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L280"
+    # COVERED PARKING. Cornelius CMC 18.20.060 (F)(1)(a):
+    # "One covered parking space shall be provided for each home either on an individual lot or in an off-street
+    # parking bay within 100 feet" (L312).
+    # The pod has no covered parking (Steph, 2026-10-01). For the one-lot
+    # quadplex the state forbids the requirement -- OAR 660-046-0220(2)(e)(D),
+    # "A Large City may allow, but may not require, off-street parking to be
+    # provided as a garage or carport" -- so it is False there. The
+    # townhouse rules in (3) carry no such sentence and (3)(e) prices a
+    # covered requirement in height, so on the unit-lot path the city's
+    # sentence stands and the screen fails the lot on it.
+    parking_covered_required:
+      value: false
+      cite: OAR 660-046-0220(2)(e)(D), a Large City may not require a quadplex's off-street parking as a garage or carport (Cornelius CMC 18.20.060 (F)(1)(a)'s covered space preempted)
+      url: https://oregon.public.law/rules/oar_660-046-0220
+      retrieved: '2026-08-27'
+      quote: "or/oar.660-046-0220.txt#L28,L64,L96-L97"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: Cornelius CMC 18.20.060 (F)(1)(a), one covered parking space for each dwelling (the townhouse path; OAR 660-046-0220(3) leaves it standing)
+          url: https://ecode360.com/print/CO4396?guid=47337420
+          retrieved: '2026-09-30'
+          quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L312"
+    notes: >-
+      DRAFT. Middle housing permitted outright (a leftover one-dwelling-per-
+      lot ban read as superseded; a question for Steph). 7,000 sq ft lot, 60
+      wide, 60 deep; at least four units per 32,670 sq ft net acre; front
+      10, garage 20, side 5, street side 10, rear 10; 35 ft; drive 12 to 25
+      ft. Townhouse lots 1,500, 20 wide, zero common-wall side, 20 units per
+      net acre.
+  # ------------------------------------------------------------------
+  # R-10, Very Low-Density Residential, 18.25. 18.25.020 (B) "Middle
+  # housing" permitted outright (L23, L31). 18.25.040 (B) prohibits
+  # "Multi-unit dwellings on a single lot or parcel" (L115): five or more
+  # units by definition, not the pod. On the city's 2025 map only, one small
+  # parcel at the east end; Metro's layer has no R-10.
+  #
+  # - DENSITY. Minimum "three dwellings per net acre" (L143). R-10 prints no
+  #   net acre of its own, so it is 18.195's net acreage on a 43,560 sq ft
+  #   acre. No maximum is printed.
+  # - LOT SIZE 10,000 for everything through a quadplex; townhouse 1,500
+  #   (L149-L151).
+  # - HEIGHT 35 (L159). FRONT 25, garages 25 (L175). REAR 25 (L179). SIDE
+  #   10, street side 20 on a corner, zero on a townhouse common wall (L183).
+  # - LOT SHAPE 80 by 80, "except as may be approved as part of a planned
+  #   unit development or if the lot has a townhouse. No townhouse lot shall
+  #   be less than 20 feet in width" (L199). A townhouse lot is excused the
+  #   80 feet of depth too; NOT ENCODED (a variant cannot state no
+  #   minimum), so a townhouse plat is held to 80 deep, stricter.
+  # - DRIVEWAY 12 to 25 (18.25.060 (C)(2), L251).
+  # ------------------------------------------------------------------
+  R-10:
+    cite_default:
+      cite: Cornelius CMC Chapter 18.25 (R-10 Very Low-Density Residential)
+      url: https://ecode360.com/print/CO4396?guid=47337532
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Cornelius CMC 18.25.020 (B), middle housing permitted outright
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L23,L31"
+    min_lot_sqft:
+      value: 10000
+      cite: Cornelius CMC 18.25.050 (A)(1), minimum lot size, detached single-unit dwelling through quadplex and cottage cluster
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L149-L150"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Cornelius CMC 18.25.050 (A)(1), minimum lot size, townhouse
+          quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L149,L151"
+    min_lot_width_ft:
+      value: 80
+      cite: Cornelius CMC 18.25.050 (D), no lot less than 80 feet in width
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L199"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          cite: Cornelius CMC 18.25.050 (D), no townhouse lot less than 20 feet in width
+          quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L199"
+    min_lot_depth_ft:
+      value: 80
+      cite: Cornelius CMC 18.25.050 (D), no lot less than 80 feet in depth
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L199"
+    min_density_du_per_acre:
+      value: 3
+      cite: Cornelius CMC 18.25.050 (A), minimum density three dwellings per net acre
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L143"
+      measured_on:
+        fact: net_developable_area
+        cite: Cornelius CMC 18.195.010, Acreage, net
+        quote: "or/washington/cornelius/cmc.18.195.definitions.txt#L41-L54"
+    max_height_ft:
+      value: 35
+      cite: Cornelius CMC 18.25.050 (B), maximum height
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L159"
+    # 18.160, Solar Balance Point, reaches "all structures in all
+    # single-family zones" (L23), and this is one of the two (18.05, L53-L54).
+    # The shade point may stand no higher than (2 x SRL - N + 150) / 5 off
+    # the northern lot line (L33-L46); nothing here knows which line faces
+    # north. Steph, 2026-10-01: "Green with a warning" -- a warning on the
+    # lot page, never the colour.
+    solar_shade_limit:
+      value: true
+      cite: Cornelius CMC 18.160.020, applicability (all structures in all single-family zones) and (B)(1), maximum shade point height
+      url: https://ecode360.com/print/CO4396?guid=47339532
+      retrieved: '2026-09-30'
+      quote: "or/washington/cornelius/cmc.18.160.solar-balance-point.txt#L23,L33-L46"
+    setback_front_ft:
+      value: 25
+      cite: Cornelius CMC 18.25.050 (C)(1), front yard from the furthest extension of the home
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L175"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Cornelius CMC 18.145.010 (B), required parking not located in a required yard (the front yard)
+      url: https://ecode360.com/print/CO4396?guid=47339373
+      quote: "or/washington/cornelius/cmc.18.145.parking.txt#L23"
+    setback_garage_entrance_ft:
+      value: 25
+      cite: Cornelius CMC 18.25.050 (C)(1), garages or carports not less than 25 feet
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L175"
+    setback_rear_ft:
+      value: 25
+      cite: Cornelius CMC 18.25.050 (C)(2), rear yard
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L179"
+    setback_side_ft:
+      value: 10
+      cite: Cornelius CMC 18.25.050 (C)(3), side yards
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L183"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Cornelius CMC 18.25.050 (C)(3), townhouses zero on the common-wall side
+          quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L183"
+    setback_street_side_ft:
+      value: 20
+      cite: Cornelius CMC 18.25.050 (C)(3), on corner lots the side yard facing the street
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L183"
+    driveway_min_width_two_way_ft:
+      value: 12
+      cite: Cornelius CMC 18.25.060 (C)(2), all driveways minimum pavement width of 12 feet
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L251"
+    driveway_min_width_one_way_ft:
+      value: 12
+      cite: Cornelius CMC 18.25.060 (C)(2), all driveways minimum pavement width of 12 feet
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L251"
+    driveway_approach_max_width_ft:
+      value: 25
+      cite: Cornelius CMC 18.25.060 (C)(2), not more than 25 feet in width at the curb
+      quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L251"
+    # COVERED PARKING. Cornelius CMC 18.25.060 (F)(1)(a):
+    # "One covered parking space shall be provided for each home either on an individual lot or in an off-street
+    # parking bay within 100 feet" (L283).
+    # The pod has no covered parking (Steph, 2026-10-01). For the one-lot
+    # quadplex the state forbids the requirement -- OAR 660-046-0220(2)(e)(D),
+    # "A Large City may allow, but may not require, off-street parking to be
+    # provided as a garage or carport" -- so it is False there. The
+    # townhouse rules in (3) carry no such sentence and (3)(e) prices a
+    # covered requirement in height, so on the unit-lot path the city's
+    # sentence stands and the screen fails the lot on it.
+    parking_covered_required:
+      value: false
+      cite: OAR 660-046-0220(2)(e)(D), a Large City may not require a quadplex's off-street parking as a garage or carport (Cornelius CMC 18.25.060 (F)(1)(a)'s covered space preempted)
+      url: https://oregon.public.law/rules/oar_660-046-0220
+      retrieved: '2026-08-27'
+      quote: "or/oar.660-046-0220.txt#L28,L64,L96-L97"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: Cornelius CMC 18.25.060 (F)(1)(a), one covered parking space for each dwelling (the townhouse path; OAR 660-046-0220(3) leaves it standing)
+          url: https://ecode360.com/print/CO4396?guid=47337532
+          retrieved: '2026-09-30'
+          quote: "or/washington/cornelius/cmc.18.25.r-10.txt#L283"
+    notes: >-
+      DRAFT. Middle housing permitted outright. 10,000 sq ft lot, 80 by 80;
+      at least three units per net acre; front 25, garage 25, side 10,
+      street side 20, rear 25; 35 ft; drive 12 to 25 ft.
+  # ------------------------------------------------------------------
+  # A-2, Multi-Unit Residential, 18.35. 18.35.020 (B) "Middle housing
+  # developments" permitted outright (L23, L31). 18.35.040 (H) prohibits
+  # "More than one single-family detached or common-wall single-family
+  # dwelling unit on a single lot or parcel" (L147): not a quadplex. 18.35.060
+  # sends "All multi-family developments" to design review under 18.100
+  # (L246), and 18.100.030 (A)(2) makes a middle housing site plan Type I.
+  #
+  # - NET ACRE. "Lot area and density requirements shall be calculated based
+  #   on net acreage. A net acre is equal to 32,670 square feet" (L153), the
+  #   preamble to the whole section.
+  # - DENSITY. Maximum: "This maximum density does not apply to middle
+  #   housing"; townhouses 25 per net acre (L157). Minimum "eight dwellings
+  #   per net acre for single-family, and 11 for multi-family development"
+  #   (L176). The fourplex is not multi-family (Steph, 2026-10-01), so 8, on
+  #   the 32,670 acre: no more than 16,335 net square feet for four units.
+  #   The draft held 11 (11,880 sq ft). The townhouse maximum is held at 25
+  #   as printed, a quarter strict, for the reason given in R-7.
+  # - LOT SIZE. Quadplex 7,000, townhouse 1,500 (L161-L167).
+  # - HEIGHT 45 (L180).
+  # - FRONT 10, garages and carports 20 (L200).
+  # - REAR "No rear yard shall be less than 10 feet in depth for a
+  #   single-story structure, plus five feet per additional story" (L204):
+  #   every structure, not only multi-family, so plus_per_story_ft, 15 for
+  #   the two-story pod. SIDE: "For single-family residences ... not less
+  #   than five feet", and "For multi-family residences ... five feet in
+  #   depth for a single story structure, plus five feet per additional
+  #   story" (L208). The fourplex is not multi-family (Steph, 2026-10-01),
+  #   so 5; the draft held the multi-family 10. Street side 10 on a corner
+  #   (L208). No zero-side rule is printed for a townhouse here, so a
+  #   townhouse plat keeps the 5.
+  # - LOT DIMENSIONS. "No ... quadplex ... lot shall be less than 30 feet in
+  #   width abutting a public street, nor less than 60 feet in depth" (L232);
+  #   townhouse lots 20 abutting a public street and 60 deep (L240). The
+  #   width is measured where the lot abuts a public street, which is
+  #   frontage: min_frontage_ft.
+  # - DRIVES. 18.35.060 (D)(3): "All internal roadways and drives ... shall
+  #   have the following minimum unobstructed pavement width: (a) Two-way
+  #   traffic: 24 feet; (b) One-way traffic: 15 feet" (L302-L310). The pod's
+  #   drive to its court is an internal drive; held over (E)(2)'s 12 feet
+  #   for every driveway (L330), the stricter. Not more than 25 feet at the
+  #   curb (L330).
+  # - NOT ENCODED: building separation, "within a complex" (L212), one
+  #   building; the five-foot landscaped buffer "at the perimeter of all
+  #   parking lot areas" (L394), a parking setback from every line no field
+  #   holds (see the layer-wide refusals); screening of parking lots abutting
+  #   low density residential development (L362, L414), a fence.
+  # ------------------------------------------------------------------
+  A-2:
+    cite_default:
+      cite: Cornelius CMC Chapter 18.35 (A-2 Multi-Unit Residential)
+      url: https://ecode360.com/print/CO4396?guid=47337747
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Cornelius CMC 18.35.020 (B), middle housing developments permitted outright
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L23,L31"
+    min_lot_sqft:
+      value: 7000
+      cite: Cornelius CMC 18.35.050 (A)(1), minimum lot size, quadplex and cottage cluster
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L163,L166"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Cornelius CMC 18.35.050 (A)(1), minimum lot size, townhouse
+          quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L163,L167"
+    min_frontage_ft:
+      value: 30
+      cite: Cornelius CMC 18.35.050 (G)(1), no quadplex lot less than 30 feet in width abutting a public street
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L232"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          cite: Cornelius CMC 18.35.050 (G)(3), no townhouse lot less than 20 feet in width abutting a public street
+          quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L240"
+    min_lot_depth_ft:
+      value: 60
+      cite: Cornelius CMC 18.35.050 (G)(1), no quadplex lot less than 60 feet in depth
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L232"
+    min_density_du_per_acre:
+      value: 8
+      cite: Cornelius CMC 18.35.050 (B), minimum density eight per net acre, the figure that is not the multi-family one (the fourplex is not multi-family, Steph 2026-10-01)
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L176"
+      measured_on:
+        fact: net_developable_area
+        cite: Cornelius CMC 18.35.050, net acreage; a net acre is equal to 32,670 square feet and excludes roads, common open space, floodplains, riparian setbacks and slopes over 25 percent
+        quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L153"
+        acre_sqft: 32670
+    max_density_du_per_acre:
+      exempt: true
+      cite: Cornelius CMC 18.35.050 (A), this maximum density does not apply to middle housing
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L157"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: Cornelius CMC 18.35.050 (A), maximum 25 units per net acre for townhouses (held per 43,560 sq ft, a quarter stricter)
+          quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L157"
+    max_height_ft:
+      value: 45
+      cite: Cornelius CMC 18.35.050 (C), maximum height
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L180"
+    setback_front_ft:
+      value: 10
+      cite: Cornelius CMC 18.35.050 (D)(1), front yard from the foundation, including porch or deck
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L200"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Cornelius CMC 18.145.010 (B), required parking not located in a required yard (the front yard)
+      url: https://ecode360.com/print/CO4396?guid=47339373
+      quote: "or/washington/cornelius/cmc.18.145.parking.txt#L23"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Cornelius CMC 18.35.050 (D)(1), garages or carports not less than 20 feet
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L200"
+    setback_rear_ft:
+      value: 10
+      plus_per_story_ft: 5
+      cite: Cornelius CMC 18.35.050 (D)(2), rear yard 10 feet for a single-story structure plus five feet per additional story
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L204"
+    setback_side_ft:
+      value: 5
+      cite: Cornelius CMC 18.35.050 (D)(3), side yards not less than five feet, the figure that is not the multi-family one (the fourplex is not multi-family, Steph 2026-10-01)
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L208"
+    setback_street_side_ft:
+      value: 10
+      cite: Cornelius CMC 18.35.050 (D)(3), on corner lots the side yard facing the street
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L208"
+    driveway_min_width_two_way_ft:
+      value: 24
+      cite: Cornelius CMC 18.35.060 (D)(3)(a), internal roadways and drives, two-way traffic
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L302,L306"
+    driveway_min_width_one_way_ft:
+      value: 15
+      cite: Cornelius CMC 18.35.060 (D)(3)(b), internal roadways and drives, one-way traffic
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L302,L310"
+    driveway_approach_max_width_ft:
+      value: 25
+      cite: Cornelius CMC 18.35.060 (E)(2), not more than 25 feet in width at the curb
+      quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L330"
+    # COVERED PARKING. Cornelius CMC 18.35.060 (J)(1)(a):
+    # "One covered parking space shall be provided for each dwelling unit either on the individual lot or in an off-street
+    # parking bay within 100 feet" (L378).
+    # The pod has no covered parking (Steph, 2026-10-01). For the one-lot
+    # quadplex the state forbids the requirement -- OAR 660-046-0220(2)(e)(D),
+    # "A Large City may allow, but may not require, off-street parking to be
+    # provided as a garage or carport" -- so it is False there. The
+    # townhouse rules in (3) carry no such sentence and (3)(e) prices a
+    # covered requirement in height, so on the unit-lot path the city's
+    # sentence stands and the screen fails the lot on it.
+    parking_covered_required:
+      value: false
+      cite: OAR 660-046-0220(2)(e)(D), a Large City may not require a quadplex's off-street parking as a garage or carport (Cornelius CMC 18.35.060 (J)(1)(a)'s covered space preempted)
+      url: https://oregon.public.law/rules/oar_660-046-0220
+      retrieved: '2026-08-27'
+      quote: "or/oar.660-046-0220.txt#L28,L64,L96-L97"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: Cornelius CMC 18.35.060 (J)(1)(a), one covered parking space for each dwelling (the townhouse path; OAR 660-046-0220(3) leaves it standing)
+          url: https://ecode360.com/print/CO4396?guid=47337747
+          retrieved: '2026-09-30'
+          quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L378"
+    notes: >-
+      DRAFT. Middle housing developments permitted outright. 7,000 sq ft
+      lot, 30 ft on a public street, 60 deep; at least 8 units per 32,670 sq
+      ft net acre (the fourplex is not multi-family, Steph 2026-10-01); front
+      10, garage 20, side 5, rear 15 for a two-story building (five per
+      story above the first), street side 10; 45 ft; internal drive 24
+      two-way, 15 one-way; 25 ft at the curb.
+  # ------------------------------------------------------------------
+  # CR, Core Residential, 18.70. 18.70.020 (B) "Middle housing" permitted
+  # outright (L23, L31); 18.70.060: "Detached single-unit dwellings and
+  # middle housing developments are subject to design review requirements
+  # set forth in CMC § 18.100.070 and are subject to a Type I site design
+  # review process" (L264).
+  #
+  # - DENSITY. "Lot area and density requirements shall be calculated based
+  #   on net acreage, as defined in Chapter 18.195 CMC" (L161): the 43,560
+  #   acre. Minimum "11 dwellings per net acre for all other dwelling types"
+  #   than single-family detached (L184); "There is no maximum density
+  #   standard for this zoning district" (L188).
+  # - LOT SIZE. Quadplex 7,000, townhouse 1,500 (L167-L171).
+  # - HEIGHT 35 (L192). FRONT 10, garages and carports 20 (L212). REAR 10
+  #   (L216). SIDE 5, none on an attached side of single-family attached
+  #   dwellings (L224). Street side 10 on a corner (L228).
+  # - COVERAGE. "The area occupied by the home and all accessory buildings
+  #   and structures on the lot shall not exceed 60 percent of the lot area"
+  #   (L240); covered parking counts (18.195, Coverage, lot).
+  # - LOT WIDTH 30 for a quadplex, 20 for a townhouse lot (L248, L252).
+  # - DRIVES. Internal drives 24 two-way and 15 one-way (18.70.060 (B)(3),
+  #   L304-L312), held over the 12 for every driveway; 25 at the curb (L332).
+  # - NOT ENCODED: building separation, six feet between buildings on the
+  #   same lot (L232), one building.
+  # ------------------------------------------------------------------
+  CR:
+    cite_default:
+      cite: Cornelius CMC Chapter 18.70 (CR Core Residential)
+      url: https://ecode360.com/print/CO4396?guid=47338362
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: true
+      cite: Cornelius CMC 18.70.020 (B), middle housing permitted outright; 18.70.060, Type I site design review
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L23,L31,L264"
+    min_lot_sqft:
+      value: 7000
+      cite: Cornelius CMC 18.70.050 (A), minimum lot size, quadplex and cottage cluster
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L167,L170"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: Cornelius CMC 18.70.050 (A), minimum lot size, townhouse
+          quote: "or/washington/cornelius/cmc.18.70.cr.txt#L167,L171"
+    min_lot_width_ft:
+      value: 30
+      cite: Cornelius CMC 18.70.050 (F)(1), minimum lot width for quadplex lots
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L248"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          cite: Cornelius CMC 18.70.050 (F)(2), minimum lot width for townhouse dwelling lots
+          quote: "or/washington/cornelius/cmc.18.70.cr.txt#L252"
+    min_density_du_per_acre:
+      value: 11
+      cite: Cornelius CMC 18.70.050 (B)(1), minimum density 11 dwellings per net acre for all other dwelling types
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L161,L184"
+      measured_on:
+        fact: net_developable_area
+        cite: Cornelius CMC 18.195.010, Acreage, net
+        quote: "or/washington/cornelius/cmc.18.195.definitions.txt#L41-L54"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Cornelius CMC 18.70.050 (B)(2), no maximum density standard for this zoning district
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L188"
+    max_height_ft:
+      value: 35
+      cite: Cornelius CMC 18.70.050 (C), maximum height
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L192"
+    setback_front_ft:
+      value: 10
+      cite: Cornelius CMC 18.70.050 (D)(1), front yard from the foundation, including porch or deck
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L212"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Cornelius CMC 18.145.010 (B), required parking not located in a required yard (the front yard)
+      url: https://ecode360.com/print/CO4396?guid=47339373
+      quote: "or/washington/cornelius/cmc.18.145.parking.txt#L23"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Cornelius CMC 18.70.050 (D)(1), garages or carports not less than 20 feet
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L212"
+    setback_rear_ft:
+      value: 10
+      cite: Cornelius CMC 18.70.050 (D)(2), rear yard
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L216"
+    setback_side_ft:
+      value: 5
+      cite: Cornelius CMC 18.70.050 (D)(3)(a), side yards
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L224"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Cornelius CMC 18.70.050 (D)(3)(a), single-family attached dwellings need no side yard where attached
+          quote: "or/washington/cornelius/cmc.18.70.cr.txt#L224"
+    setback_street_side_ft:
+      value: 10
+      cite: Cornelius CMC 18.70.050 (D)(3)(b), on corner lots the side yard facing the street
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L228"
+    max_coverage_pct:
+      value: 60
+      cite: Cornelius CMC 18.70.050 (E), lot coverage of the home and all accessory buildings and structures
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L240"
+    driveway_min_width_two_way_ft:
+      value: 24
+      cite: Cornelius CMC 18.70.060 (B)(3)(a), internal roadways and drives, two-way traffic
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L304,L308"
+    driveway_min_width_one_way_ft:
+      value: 15
+      cite: Cornelius CMC 18.70.060 (B)(3)(b), internal roadways and drives, one-way traffic
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L304,L312"
+    driveway_approach_max_width_ft:
+      value: 25
+      cite: Cornelius CMC 18.70.060 (C)(2), not more than 25 feet in width at the curb
+      quote: "or/washington/cornelius/cmc.18.70.cr.txt#L332"
+    # COVERED PARKING. Cornelius CMC 18.70.060 (G)(1)(a):
+    # "One covered parking space shall be provided for each dwelling unit either on the individual lot or in an off-street
+    # parking bay within 100 feet" (L380).
+    # The pod has no covered parking (Steph, 2026-10-01). For the one-lot
+    # quadplex the state forbids the requirement -- OAR 660-046-0220(2)(e)(D),
+    # "A Large City may allow, but may not require, off-street parking to be
+    # provided as a garage or carport" -- so it is False there. The
+    # townhouse rules in (3) carry no such sentence and (3)(e) prices a
+    # covered requirement in height, so on the unit-lot path the city's
+    # sentence stands and the screen fails the lot on it.
+    parking_covered_required:
+      value: false
+      cite: OAR 660-046-0220(2)(e)(D), a Large City may not require a quadplex's off-street parking as a garage or carport (Cornelius CMC 18.70.060 (G)(1)(a)'s covered space preempted)
+      url: https://oregon.public.law/rules/oar_660-046-0220
+      retrieved: '2026-08-27'
+      quote: "or/oar.660-046-0220.txt#L28,L64,L96-L97"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: Cornelius CMC 18.70.060 (G)(1)(a), one covered parking space for each dwelling (the townhouse path; OAR 660-046-0220(3) leaves it standing)
+          url: https://ecode360.com/print/CO4396?guid=47338362
+          retrieved: '2026-09-30'
+          quote: "or/washington/cornelius/cmc.18.70.cr.txt#L380"
+    notes: >-
+      DRAFT. Middle housing permitted outright (Type I review). 7,000 sq ft
+      lot, 30 wide; at least 11 units per net acre; front 10, garage 20,
+      side 5, street side 10, rear 10; 35 ft; coverage 60 percent; internal
+      drive 24 two-way, 15 one-way; 25 ft at the curb.
+  # ------------------------------------------------------------------
+  # THE OTHER DISTRICTS. Refused, each on its own use list.
+  # ------------------------------------------------------------------
+  MHP:
+    cite_default:
+      cite: Cornelius CMC Chapter 18.30 (MHP Manufactured Home Park)
+      url: https://ecode360.com/print/CO4396?guid=47337635
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Cornelius CMC 18.30.020 (uses within manufactured home parks on the approved development plan) and 18.30.030 (B) (nonmanufactured dwellings prohibited)
+      quote: "or/washington/cornelius/cmc.18.30.mhp.txt#L51,L55,L83,L93,L101"
+    notes: >-
+      DRAFT. Refuses: manufactured homes, prefabricated dwellings and
+      recreational vehicles within a park on its approved plan; a park is
+      established by a Type III process (L125).
+  C-2:
+    cite_default:
+      cite: Cornelius CMC Chapter 18.45 (C-2 Highway Commercial)
+      url: https://ecode360.com/print/CO4396?guid=47337881
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Cornelius CMC 18.45.020 (H) (single-family dwellings only as secondary to commercial) and 18.45.030 (J) (multi-family conditional)
+      quote: "or/washington/cornelius/cmc.18.45.c-2.txt#L23,L55,L77,L117"
+    notes: >-
+      DRAFT. Refuses: a dwelling only as secondary to commercial use;
+      multi-family dwellings only as a conditional use, to A-2 standards.
+  CC:
+    # A doubt. 18.65.020 (K) permits "Residential dwelling units located
+    # above ground floor or behind nonresidential uses in the interior of the
+    # site such that they are set back a minimum of 50 feet from Adair or
+    # Baseline Street" (L67), and 18.65.030 (D) makes "Ground-floor
+    # residential units set back less than 50 feet from Adair or Baseline
+    # Street" conditional (L125). On a lot off Adair and Baseline the 50 feet
+    # is met by any building; whether a ground-floor dwelling there still
+    # needs a nonresidential use in front of it the sentence does not settle.
+    # Read the stricter way -- the pod stands alone. Steph, 2026-10-01: keep
+    # the draft.
+    cite_default:
+      cite: Cornelius CMC Chapter 18.65 (CC Corridor Commercial)
+      url: https://ecode360.com/print/CO4396?guid=47338264
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Cornelius CMC 18.65.020 (K) (dwellings above the ground floor or behind nonresidential uses) and 18.65.030 (D) (ground-floor units within 50 feet of Adair or Baseline conditional)
+      quote: "or/washington/cornelius/cmc.18.65.cc.txt#L23,L67,L109,L125"
+    notes: >-
+      DRAFT. Refuses: dwellings above the ground floor or behind
+      nonresidential uses (Steph, 2026-10-01: keep the refusal).
+  CMU:
+    cite_default:
+      cite: Cornelius CMC Chapter 18.60 (CMU Central Mixed Use)
+      url: https://ecode360.com/print/CO4396?guid=47338143
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Cornelius CMC 18.60.020 (I) (dwellings above the ground floor) and 18.60.030 (B) (ground-floor dwellings conditional)
+      quote: "or/washington/cornelius/cmc.18.60.cmu.txt#L23,L59,L97,L105"
+    notes: >-
+      DRAFT. Refuses: dwellings above the ground floor; ground-floor
+      dwellings only as a conditional use (regulated affordable units
+      excepted).
+  # ------------------------------------------------------------------
+  # GMU, Gateway Mixed Use, 18.75. Steph, 2026-10-01: four homes on one lot
+  # stays NO -- the fourplex is not multi-family, and 18.75.020 permits
+  # "Multi-family dwelling units" and "Single-family attached dwelling
+  # units" (L55, L59) and no middle housing; 18.75.040 admits "Only uses
+  # specifically listed ... and uses similar to these" (L135). The
+  # TOWNHOUSE path is open: "Single-family attached dwelling units, subject
+  # to CMC § 18.75.065" (L59), on lots of their own (065 (H), L563).
+  #
+  # Held behind a fact nothing measures (`inside_mapped_use_area`), so it is
+  # never GREEN. 065 (B): "Single-family attached residential uses
+  # (townhouses) shall only be permitted within subdistrict A" (L475), and
+  # the subdistricts are drawn on Figure 18.75.065-1 (L471), an image no map
+  # layer carries; subdistrict C has no ground-floor residential at all
+  # (L469). The figure is to be traced later, as Tigard's maps are
+  # (handoff section 8). Detached single-family is prohibited (L163), so
+  # OAR 660-046 does not reach this zone and nothing state-side helps.
+  #
+  # 065 governs "In lieu of compliance with CMC § 18.75.050, § 18.75.060
+  # and § 18.75.070" for ground-floor residential (L453), so the standards
+  # below are 065's, not the commercial ones.
+  #
+  # - LOT. "Single-family attached dwellings on individual lots": 2,000 sq
+  #   ft, 20 wide (L567, L571), per child lot (`unit_lots` variants); four
+  #   of them side by side is 8,000 and 80 ft. The one-lot defaults are the
+  #   zone's general "No minimum lot size" (050 (A), L199) and are moot:
+  #   the one-lot path is refused on the use row.
+  # - DENSITY. "Minimum density for ground-floor residential uses is 18
+  #   units per net acre. There is no maximum density" (L479). GMU prints no
+  #   net acre of its own, so it is 18.195's: net acreage on the 43,560 sq ft
+  #   acre ("Acre, gross", definitions L35-L36, L41-L54), not R-7's and A-2's
+  #   32,670. Four homes at 18 an acre may spread over no more than
+  #   4 / 18 x 43,560 = 9,680 net sq ft.
+  # - HEIGHT 35 (L575). FRONT 5, garages and carports 20 (L579). REAR 10
+  #   (L583). SIDE 5, none where the structures are attached (L587).
+  # - LANDSCAPING. "A minimum of 15 percent of each lot ... landscaped and
+  #   maintained free of buildings, pavement" (065 (E), L487).
+  # - DRIVES. Internal roadways and drives 24 two-way, 15 one-way (065
+  #   (I)(3), L603-L611), as in A-2 and CR; driveways "not more than 25 feet
+  #   in width at the curb" (065 (J)(2), L631).
+  # - COVERED PARKING. "One covered parking space shall be provided for each
+  #   dwelling unit either on the individual lot or in an off-street parking
+  #   bay within 100 feet from the lot being served" (065 (N)(1)(a), L671).
+  #   The pod has none (Steph, 2026-10-01), and nothing state-side cancels
+  #   it here: True on both paths, so the townhouse path fails on it.
+  #
+  # OWED, with the reason:
+  # - THE 50 PERCENT CAP. "In subdistrict A, up to 50 percent of a lot or
+  #   multiple lots if developed concurrently may be developed as
+  #   single-family attached residential uses, including parking,
+  #   infrastructure, and open space to serve those uses" (L475). No field
+  #   holds a share of the lot one use may occupy, and whether the other
+  #   half must be developed at all the sentence does not say. Behind the
+  #   unmeasured subdistrict it moves nothing today; once the figure is
+  #   traced it is the next standard to encode.
+  # - STREET SIDE YARD. (H) states "side yards" and no street side, which
+  #   18.195 defines as a yard of its own (definitions L711-L712). Unread.
+  # - LOT DEPTH and COVERAGE. (H) states neither; not claimed exempt,
+  #   because 065 is "in lieu of" the chapter that would otherwise say.
+  # - THE CORNER FRONT. 050 (B) names the higher-classified street the
+  #   front (L203), but 065 replaces 050; the layer's narrowest-frontage
+  #   reading is held.
+  GMU:
+    cite_default:
+      cite: Cornelius CMC Chapter 18.75 (GMU Gateway Mixed Use)
+      url: https://ecode360.com/print/CO4396?guid=47338473
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Cornelius CMC 18.75.020 (H)-(I) and 18.75.040 (multi-family and single-family attached only; the fourplex is not multi-family, Steph 2026-10-01)
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L23,L55,L59,L135"
+      variants:
+        - value: true
+          when: [unit_lots, inside_mapped_use_area]
+          cite: Cornelius CMC 18.75.020 (I), single-family attached dwelling units, and 18.75.065 (B), townhouses only within subdistrict A of Figure 18.75.065-1 (not traced)
+          quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L23,L59,L453,L457,L469,L471,L475"
+    min_lot_sqft:
+      exempt: true
+      cite: Cornelius CMC 18.75.050 (A), no minimum lot size (moot; the one-lot path is refused)
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L199"
+      variants:
+        - value: 2000
+          when: [unit_lots]
+          cite: Cornelius CMC 18.75.065 (H)(1), single-family attached dwellings on individual lots, minimum lot size
+          quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L567"
+    min_lot_width_ft:
+      exempt: true
+      cite: Cornelius CMC 18.75.050 (A), no minimum lot size, lots need only be functional and meet the setback and parking requirements (moot; the one-lot path is refused)
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L199"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          cite: Cornelius CMC 18.75.065 (H)(2), single-family attached dwellings on individual lots, minimum lot width
+          quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L571"
+    min_density_du_per_acre:
+      value: 18
+      cite: Cornelius CMC 18.75.065 (C), minimum density for ground-floor residential uses 18 units per net acre
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L479"
+      measured_on:
+        fact: net_developable_area
+        cite: Cornelius CMC 18.195.010, Acre, gross and Acreage, net
+        quote: "or/washington/cornelius/cmc.18.195.definitions.txt#L35-L36,L41-L54"
+    max_density_du_per_acre:
+      exempt: true
+      cite: Cornelius CMC 18.75.065 (C), there is no maximum density
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L479"
+    max_height_ft:
+      value: 35
+      cite: Cornelius CMC 18.75.065 (H)(3), single-family attached, maximum height
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L575"
+    setback_front_ft:
+      value: 5
+      cite: Cornelius CMC 18.75.065 (H)(4), front yard
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L579"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Cornelius CMC 18.145.010 (B), required parking not located in a required yard (the front yard)
+      url: https://ecode360.com/print/CO4396?guid=47339373
+      quote: "or/washington/cornelius/cmc.18.145.parking.txt#L23"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Cornelius CMC 18.75.065 (H)(4), garages or carports not less than 20 feet
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L579"
+    setback_rear_ft:
+      value: 10
+      cite: Cornelius CMC 18.75.065 (H)(5), rear yard
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L583"
+    setback_side_ft:
+      value: 5
+      cite: Cornelius CMC 18.75.065 (H)(6), side yards
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L587"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          cite: Cornelius CMC 18.75.065 (H)(6), no side yard where structures are attached
+          quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L587"
+    min_landscaped_pct:
+      value: 15
+      cite: Cornelius CMC 18.75.065 (E), a minimum of 15 percent of each lot landscaped
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L487"
+    driveway_min_width_two_way_ft:
+      value: 24
+      cite: Cornelius CMC 18.75.065 (I)(3)(a), internal roadways and drives, two-way traffic
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L603,L607"
+    driveway_min_width_one_way_ft:
+      value: 15
+      cite: Cornelius CMC 18.75.065 (I)(3)(b), internal roadways and drives, one-way traffic
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L603,L611"
+    driveway_approach_max_width_ft:
+      value: 25
+      cite: Cornelius CMC 18.75.065 (J)(2), not more than 25 feet in width at the curb
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L631"
+    parking_covered_required:
+      value: true
+      cite: Cornelius CMC 18.75.065 (N)(1)(a), one covered parking space for each dwelling unit
+      quote: "or/washington/cornelius/cmc.18.75.gmu.txt#L671"
+    notes: >-
+      DRAFT. Four homes on one lot: no (the fourplex is not multi-family,
+      Steph 2026-10-01). Townhouses on lots of their own: only in
+      subdistrict A of a figure no map carries, so never better than "needs
+      a closer look". 2,000 sq ft and 20 ft a townhouse lot; at least 18
+      units per net acre (9,680 net sq ft for four); front 5, garage 20,
+      side 5 (0 on an attached side), rear 10; 35 ft; 15 percent
+      landscaped; internal drive 24 two-way, 15 one-way; one covered space
+      a unit, which the pod does not provide. Owed: the 50 percent cap on
+      townhouses in subdistrict A, the street side yard.
+  LI:
+    cite_default:
+      cite: Cornelius CMC Chapter 18.54 (LI Light Industrial)
+      url: https://ecode360.com/print/CO4396?guid=47337964
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Cornelius CMC 18.54.020 (L) (housing only by a public body or religious non-profit with a 30-year affordability covenant)
+      quote: "or/washington/cornelius/cmc.18.54.li.txt#L25,L73"
+    notes: >-
+      DRAFT. Refuses: housing only when owned by a public body or a
+      religious non-profit and covenanted affordable for 30 years.
+  M-1:
+    cite_default:
+      cite: Cornelius CMC Chapter 18.55 (M-1 General Industrial)
+      url: https://ecode360.com/print/CO4396?guid=47338056
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Cornelius CMC 18.55.040 (B), no residential use except a nonconforming use or a caretaker's residence
+      quote: "or/washington/cornelius/cmc.18.55.m-1.txt#L133,L137,L141"
+    notes: >-
+      DRAFT. Refuses: no residential use but a caretaker's residence.
+  NRO:
+    # Not on either map on 2026-09-30; held because 18.05.030 names it a
+    # district (cmc.18.05.general.txt L70). An overlay on "the resource sites
+    # and abutting properties identified in the natural resources inventory
+    # and map" (L23). Its permitted uses are resource enhancement and the
+    # like, and "New residential, commercial and industrial development ...
+    # involving deviation of natural resource protection requirements shall
+    # be reviewed through the conditional use permit/planned unit development
+    # process" (L167).
+    cite_default:
+      cite: Cornelius CMC Chapter 18.95 (NRO Natural Resources Overlay)
+      url: https://ecode360.com/print/CO4396?guid=47338971
+      retrieved: '2026-09-30'
+    quadplex_allowed:
+      value: false
+      cite: Cornelius CMC 18.95.020 (resource enhancement and similar uses outright) and 18.95.060 (A) (new residential development by conditional use permit or PUD)
+      quote: "or/washington/cornelius/cmc.18.95.nro.txt#L45,L49,L167"
+    notes: >-
+      DRAFT. Refuses: new residential development only by a conditional use
+      permit or planned unit development.
+  # NOT ENCODED: FP, the Floodplain District (18.90). A district by
+  # 18.05.030 (L69) but a set of flood construction standards with no use
+  # list; on neither map. See the layer-wide refusals.
+  #
+  # NOT ENCODED: C-1, General Commercial, repealed by Ord. 841 (the stored
+  # chapter is the repeal notice) and on neither map, though 18.05.030 still
+  # lists it (L62). CE, MSC and MSDO, repealed by Ord. 2019-10.
+
+# THE MAP'S OTHER CODES. Metro's regional zoning layer (CITY 'Cornelius'),
+# counted 2026-09-30: R7 2,126 polygons, A2 1,259, CR 147, C2 87, CMU 70, M1
+# 62, MHP 45, CC 20, GMU 18, LI 5, FD-20 3, AF-5 1, FD-10 1. The city's
+# Zoning Map (April 2025) labels the same districts with their hyphens and
+# adds R-10 on one parcel Metro's layer does not carry.
+#
+# THE COUNTY CODES. FD-20, FD-10 and AF-5 are Washington County districts on
+# four small polygons (about 1.2, 0.9 and 0.8 acres). A lot reaches this
+# layer only through JURIS_CITY CORNELIUS, so a lot under one of them is in
+# the city on the taxlots while the map still paints a county district.
+# Nothing in the code keeps county zoning after annexation: an annexation
+# petition states "The existing county zoning for the territory, and the
+# proposed city zoning for the territory" (16.10.030, cmc.16.annexation.txt
+# L67), and the city zones it on approval, consistent with its plan
+# (16.10.040 (F), L101). So the county district does not govern and the
+# city district is not printed. Unencodable, as in Sherwood.
+zone_rulings:
+  R7:
+    outcome: alias
+    of: R-7
+    note: >-
+      "R7", 2,126 polygons on Metro's zoning layer (CITY 'Cornelius') on
+      2026-09-30. The map's spelling of R-7, Urban Low Density, in the
+      18.05.030 district list (cmc.18.05.general.txt L54) and on the city's
+      2025 map. One district, two spellings; the block is R-7.
+  A2:
+    outcome: alias
+    of: A-2
+    note: >-
+      "A2", 1,259 polygons on Metro's zoning layer (CITY 'Cornelius') on
+      2026-09-30. The map's spelling of A-2, Urban Medium Density, in the
+      18.05.030 district list (cmc.18.05.general.txt L55) and on the city's
+      2025 map. The block is A-2.
+  C2:
+    outcome: alias
+    of: C-2
+    note: >-
+      "C2", 87 polygons on Metro's zoning layer (CITY 'Cornelius') on
+      2026-09-30. The map's spelling of C-2, Highway Commercial, in the
+      18.05.030 district list (cmc.18.05.general.txt L63). The block is C-2.
+  M1:
+    outcome: alias
+    of: M-1
+    note: >-
+      "M1", 62 polygons on Metro's zoning layer (CITY 'Cornelius') on
+      2026-09-30. The map's spelling of M-1, General Industrial, in the
+      18.05.030 district list (cmc.18.05.general.txt L66). The block is M-1.
+  FD-20:
+    outcome: unencodable
+    note: >-
+      Washington County's Future Development 20-acre district, three
+      polygons of about 1.2 acres on Metro's zoning layer under CITY
+      'Cornelius' on 2026-09-30. Not a Cornelius district (18.05.030,
+      cmc.18.05.general.txt L49-L70). The code keeps no county zoning after
+      annexation (16.10.030 and 16.10.040 (F), cmc.16.annexation.txt L67,
+      L101); the city district the land takes is not printed on Metro's
+      layer. See the comment above zone_rulings.
+  FD-10:
+    outcome: unencodable
+    note: >-
+      Washington County's Future Development 10-acre district, one polygon
+      of about 0.9 acres on Metro's zoning layer under CITY 'Cornelius' on
+      2026-09-30. Not a Cornelius district (cmc.18.05.general.txt L49-L70);
+      unencodable for the reason given for FD-20.
+  AF-5:
+    outcome: unencodable
+    note: >-
+      Washington County's Agriculture and Forest 5-acre district, one polygon
+      of about 0.8 acres on Metro's zoning layer under CITY 'Cornelius' on
+      2026-09-30. Not a Cornelius district (cmc.18.05.general.txt L49-L70);
+      unencodable for the reason given for FD-20.

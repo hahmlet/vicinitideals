@@ -407,11 +407,14 @@ def main() -> None:
     args = ap.parse_args()
 
     import numpy as np
+    import pandas as pd
     import shapely
 
     cfg = load_overlays()
     lots = read_stage("s5_lots")
-    s3 = read_stage("s3_lots")[["TLID", "geom"]].rename(columns={"geom": "lot_geom"})
+    s3 = read_stage("s3_lots")
+    s3 = s3[["TLID", "geom"] + (["COUNTY"] if "COUNTY" in s3.columns else [])]
+    s3 = s3.rename(columns={"geom": "lot_geom", "COUNTY": "_county"})
     lots = lots.merge(s3, on="TLID", how="left")
     print(f"s5o: {len(lots):,} lots, {len(cfg.overlays)} configured overlays")
 
@@ -537,14 +540,24 @@ def main() -> None:
         hit = dtree.query(lot_arr, predicate="intersects")
         in_dist = np.zeros(len(lots), dtype=bool)
         in_dist[np.unique(hit[0])] = True
-        lots["in_sewer_district"] = in_dist
+        # The layer maps Clackamas County's districts and nothing else, so
+        # "outside every district" is an answer only for a Clackamas lot.
+        # Tualatin straddles the line: its Washington County lots are Clean
+        # Water Services land the layer never drew, and reading them False
+        # would send 7,000 of them red for no public sewer. Unanswered
+        # (None) outside the county; s7 and the FLATS bridge both skip it.
+        answered = (lots["_county"].astype(str).str.strip().str.upper() == "C").to_numpy() \
+            if "_county" in lots.columns else np.ones(len(lots), dtype=bool)
+        lots["in_sewer_district"] = pd.Series(
+            [bool(v) if a else None for v, a in zip(in_dist, answered)], index=lots.index, dtype=object)
         print(f"  sewer districts: {len(dist_geoms)} polys; "
-              f"{int(in_dist.sum()):,} lots inside a district")
+              f"{int((in_dist & answered).sum()):,} Clackamas lots inside a district; "
+              f"{int((~answered).sum()):,} lots in other counties left unanswered")
     else:
         print("  sewer districts: layer missing — in_sewer_district all False")
         lots["in_sewer_district"] = False
 
-    lots = lots.drop(columns=["lot_geom"])
+    lots = lots.drop(columns=["lot_geom", "_county"], errors="ignore")
     write_stage(lots, "s5o_lots")
     print("s5o done.")
 

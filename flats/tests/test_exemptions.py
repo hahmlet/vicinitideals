@@ -129,7 +129,20 @@ pytestmark = pytest.mark.unit
 # cuts the building envelope to the alley line under the same sentence and
 # the port asked what the corpus held for it. No county lot carries an alley
 # edge in the street file, so nothing moves on either screen.
-EXPECTED = {"stated": 392, "numeric": 69, "marker": 0, "dash": 2, "silent": 2}
+# 385 -> 388 on 2026-10-01, Cornelius GMU (flats/cornelius-draft). Steph
+# opened the zone's townhouse path, so it now carries standards: "There is
+# no maximum density" (18.75.065 (C)) is one, and the one-lot defaults under
+# the townhouse lot size and width -- 18.75.050 (A), "No minimum lot size is
+# required. All lots must be functional and meet the minimum setback and
+# parking requirements" -- are the other two. Those two are moot: the one-lot
+# path is refused on the use row, and the townhouse figures are variants.
+# 388 -> 399 stated and 63 -> 69 numeric: Tigard (below) merged after Cornelius.
+EXPECTED = {"stated": 399, "numeric": 69, "marker": 0, "dash": 2, "silent": 2}
+# 381 -> 385 stated on 2026-10-01: Cornelius, a Washington County draft. The
+# 18.145.030 table's "none" parking maximum for Middle Housing; R-7's and
+# A-2's "Maximum density does not apply to ... quadplexes" / "This maximum
+# density does not apply to middle housing"; CR's "There is no maximum
+# density standard for this zoning district".
 # 390 -> 392 stated and 64 -> 69 numeric on 2026-10-01, all Tigard MUC, on
 # Steph's ruling that day that MUC's empty rowhouse boxes mean no limit
 # ("Empty means no limit"). The two `stated` are Table 18.805.1's lot size

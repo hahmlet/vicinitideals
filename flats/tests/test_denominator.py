@@ -271,3 +271,107 @@ def test_a_rate_this_screen_can_run_names_no_denominator(
         "max_density_du_per_acre"
         not in RuleSet(layers).resolve(PORTLAND, "RMP").values
     )
+
+
+# --- A city that sizes its own acre ------------------------------------------
+#
+# Cornelius 18.20.050 (A) and 18.35.050 print their densities per "net acre"
+# and then say "A net acre is equal to 32,670 square feet". The screen divides
+# a pod's four units by the lot in 43,560 sq ft acres, so a floor of four per
+# net acre read as four per 43,560 would pass a lot a third again as large as
+# the code allows. 5.333 is printed nowhere, and 8,167.5 sq ft per unit (the
+# `sqft_per_unit` reading) is printed nowhere either -- so the file states the
+# four and the 32,670 the code prints and the loader does the division.
+
+_ACRE = (
+    "    min_density_du_per_acre:\n"
+    "      value: 4\n"
+    '      quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L168"\n'
+    "{extra}"
+    "      measured_on:\n"
+    "        fact: net_developable_area\n"
+    "        cite: CMC 18.20.050\n"
+    '        quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L151"\n'
+    "        acre_sqft: {acre}\n"
+)
+
+
+def test_a_rate_per_the_citys_own_acre_is_restated_per_the_screens_acre(
+    tmp_path: Path,
+) -> None:
+    layers = load_rules(_somewhere(tmp_path, _ACRE.format(extra="", acre=32670)))
+    value = layers["or/multnomah/somewhere"].zones["R-6"].values[
+        "min_density_du_per_acre"
+    ]
+
+    assert value.before_acre == 4
+    assert value.acre_sqft == 32670
+    assert value.value == pytest.approx(4 * 43_560 / 32_670)
+    assert value.value == pytest.approx(5.333333)
+
+
+def test_the_ladder_looks_for_the_four_and_the_32670_not_the_product(
+    tmp_path: Path,
+) -> None:
+    """The bargain every derived form strikes: the citation check compares
+    the figures the page prints, never the arithmetic."""
+    layer = load_rules(_somewhere(tmp_path, _ACRE.format(extra="", acre=32670)))[
+        "or/multnomah/somewhere"
+    ]
+    rows = {name: number for _zone, name, _q, number, _d in _quoted_parts(layer)}
+
+    assert rows["min_density_du_per_acre"] == 4
+    assert rows["min_density_du_per_acre <net_developable_area>"] == 32670
+
+
+def test_an_acre_of_its_own_will_not_convert_a_variant(tmp_path: Path) -> None:
+    """A variant carries a number and a quote and nothing else, so it would be
+    read on the 43,560 acre while its base was read on the city's. Refused
+    rather than half-converted."""
+    extra = (
+        "      variants:\n"
+        "      - when: [unit_lots]\n"
+        "        value: 20\n"
+        '        quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L151"\n'
+    )
+    with pytest.raises(RuleLoadError, match="converts the base rate and no variant"):
+        load_rules(_somewhere(tmp_path, _ACRE.format(extra=extra, acre=32670)))
+
+
+def test_an_acre_of_its_own_converts_only_a_printed_rate(tmp_path: Path) -> None:
+    """Every other derived form already IS a conversion; stacking a second on
+    top would be arithmetic no sentence asked for."""
+    body = _ACRE.format(extra="", acre=32670).replace(
+        "      value: 4\n", "      sqft_per_unit: 8000\n"
+    )
+    with pytest.raises(RuleLoadError, match="state the printed rate as a plain"):
+        load_rules(_somewhere(tmp_path, body))
+
+
+def test_an_acre_must_be_an_area(tmp_path: Path) -> None:
+    with pytest.raises(RuleLoadError, match="positive number of square feet"):
+        load_rules(_somewhere(tmp_path, _ACRE.format(extra="", acre=0)))
+
+
+def test_an_acre_size_without_a_denominator_is_refused() -> None:
+    with pytest.raises(ValidationError, match="no 'measured_on'"):
+        Value(
+            name="min_density_du_per_acre",
+            value=5.333333,
+            prov=PROV,
+            acre_sqft=32670,
+            before_acre=4,
+        )
+
+
+def test_an_acre_size_without_the_printed_rate_is_refused() -> None:
+    with pytest.raises(ValidationError, match="needs both the printed rate"):
+        Value(
+            name="min_density_du_per_acre",
+            value=5.333333,
+            prov=PROV,
+            measured_on="net_developable_area",
+            measured_on_cite="CMC 18.20.050",
+            measured_on_quote="or/washington/cornelius/cmc.18.20.r-7.txt#L151",
+            acre_sqft=32670,
+        )

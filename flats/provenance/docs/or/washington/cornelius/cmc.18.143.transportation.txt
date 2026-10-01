@@ -1,0 +1,229 @@
+Close
+Print
+Resize:
+
+City of Cornelius, OR
+
+[print date]
+
+Title 18. Zoning
+
+Division IV. SPECIAL REGULATIONS
+
+Chapter 18.143. TRANSPORTATION FACILITIES
+
+§ 18.143.010. Purpose and intent.
+
+It is the purpose and intent of this chapter to establish design standards and performance requirements for all streets and other transportation facilities constructed or reconstructed within the city of Cornelius.
+
+(Ord. 857 Exh. 1, 2005; Code 2000 § 11.40.61; Ord. 874 Exh. (1)(B), 2006)
+
+§ 18.143.020. General provisions.
+
+(A)
+
+All transportation facilities shall be designed and improved in accordance with the standards of this code and the adopted Cornelius public works standards. In addition, when development abuts or impacts a transportation facility under the jurisdiction of one or more other governmental agencies, the city shall condition the development to obtain permits required by the other agencies.
+
+(B)
+
+In order to protect the public from potentially adverse impacts of the proposal, to fulfill an identified need for public services related to the development, or both, development shall provide traffic capacity, traffic safety, and transportation improvements in proportion to the identified impacts of the development.
+
+(C)
+
+For applications that meet the threshold criteria of CMC § 18.143.030(B), Analysis Threshold, this analysis or limited elements thereof may be required.
+
+(D)
+
+The decision-making authority may impose development conditions of approval per this title. Conditions of approval may be based on the traffic impact analysis.
+
+(E)
+
+Dedication of rights-of-way shall be determined by the decision-making authority.
+
+(F)
+
+Traffic calming may be approved or required by the decision-making authority in a design of the proposed and/or existing streets within the area of influence or any additional locations identified by the city engineer. Traffic calming measures shall be designed to city standards.
+
+(G)
+
+Intersection performance shall be determined using the Highway Capacity Manual, Sixth Edition, published by the Transportation Research Board. The city engineer may approve a different intersection analysis method prior to use when the different method can be justified. Terms used in this subsection are defined in the Highway Capacity Manual, Sixth Edition.
+
+(H)
+
+City street intersections shall maintain a level of service (LOS) of "D" during the p.m. peak hour of the day. An LOS of "E" may be accepted for local street approaches or driveway access points that intersect with collector or arterial streets, if these intersections are found to operate safely.
+
+(Ord. 857 Exh. 1, 2005; Code 2000 § 11.40.62; Ord. 874 Exh. (1)(B), 2006; Ord. 2018-02 § 1 (Exh. A), 2018; Ord. 2020-05 § 1 (Exh. A), 2020)
+
+§ 18.143.030. Traffic impact analysis.
+
+For each development proposal that exceeds the analysis threshold of subsection (B) of this section, the application for land use or design review approval shall include a traffic impact analysis as required by this code. The traffic impact analysis shall be based on the type and intensity of the proposed land use change or development and its estimated level of impact to the existing and future local and regional transportation systems.
+
+(A)
+
+Engineer Certification. The traffic impact analysis shall be prepared and certified by a traffic engineer or civil engineer licensed in the state of Oregon.
+
+(B)
+
+Analysis Threshold. A traffic impact analysis is required when the proposed land use change or development will generate 200 vehicles or more per day (vpd) in average weekday trips as determined by the city engineer.
+
+(C)
+
+A traffic impact analysis or some elements of a traffic impact analysis may be required when projects that generate less than 200 average daily vehicle trips and the volume threshold under subsection (B) of this section is not met, but the city engineer finds that the traffic impacts attributable to the development have the potential to significantly impact the safe and efficient operation of the existing public transportation system.
+
+(D)
+
+Study Area. The traffic impact analysis shall evaluate the area of influence of the proposed development and all segments of the surrounding transportation system where users are likely to experience a change in the quality of traffic flow. At a minimum, the analysis will consider all road segments, access points, and intersections within the influence area. The city engineer may identify additional locations for study if existing traffic operation, safety, or performance is marginal or substandard. Prior to report preparation, the applicant shall submit the proposed scope and analysis assumptions of the traffic impact analysis. The city engineer shall determine whether the scope and analysis assumptions are adequate.
+
+(E)
+
+Traffic impact analysis shall be based on the type and intensity of proposed land use change or development and its estimated level of impact to the existing and future local and regional transportation systems.
+
+(1)
+
+The traffic impact analysis report shall at a minimum contain the following information:
+
+(a)
+
+A description of the proposal and/or development including the intended use of the site.
+
+(b)
+
+Vicinity map shall identify the influence area map, which includes the existing traffic conditions, the functional classification of the subject roads, existing right-of-way and pavement widths, striping, channelization, and all existing driveways and intersections within the influence area.
+
+(c)
+
+Traffic forecasts of future traffic within the influence area.
+
+(d)
+
+Traffic impact shall be analyzed to evaluate access, safety, feasibility, operation and performance, considering the movement of site-generated traffic relating to existing conditions, traffic flow, access points and intersections within the influence area. Mitigation for identified deficiencies shall be recommended to provide safe and efficient traffic flow.
+
+(e)
+
+Technical appendices and other information that demonstrates the technical adequacy of the analysis.
+
+(2)
+
+Traffic Forecasts. The report shall include complete documentation of trip generation calculations including Institute of Transportation Engineers' (ITE) trip generation use code(s), from the most recent published edition. Traffic flow diagrams displaying distribution, assignment, existing, added and total traffic shall be included. Intersections, access points and turning movements within the area of influence shall be included.
+
+(3)
+
+Trip Generation. Estimates for trip generation shall be made for peak-hour traffic. The peak-hour traffic in the analysis will be justified and will at a minimum include the a.m. and p.m. peak hours. Trip generation estimates shall be based on the most recent issue of the ITE trip generation. The city engineer may approve different trip generation rates when trip generation rates are not available in ITE's trip generation or different rates are justified.
+
+(4)
+
+Trip Distribution and Assignment. Traffic generated by the proposed development shall be logically distributed and assigned to the street system within the influence area and any additional locations identified by the city engineer. The trip distribution information shall be based on Washington County, Metro, or ODOT for local traffic patterns no more than 12 months old, or alternative data approved by the city engineer.
+
+(5)
+
+Performance analysis shall be based on safety considerations that evaluate conflicting turning movements among driveways, intersections and internal traffic. Geometric design concerns shall be addressed and operational improvements shall be considered, evaluated and recommended when determined to be necessary by the standards of Washington County, ODOT or the city engineer. Adequate sight distance shall be addressed at the proposed road access point(s) of the existing and the ultimate road configuration based on the improvements identified in the city transportation system plan. Bicycle, pedestrian and transit issues shall be identified and evaluated. Other operational, circulation, safety, capacity and improvement issues shall be evaluated and addressed as required by the code and the city engineer.
+
+(6)
+
+The traffic impact analysis shall identify traffic impacts attributable to a development and the appropriate mitigation measures where a development causes traffic impacts that bring a road below acceptable levels of service, or impacts a road that is already operating below acceptable levels of service, or impacts a road that has a documented safety problem. Mitigation measures shall be implemented as a condition of approval. Mitigation shall include alternative methods to safely and efficiently improve traffic flow through improvements that address the identified deficiencies. Improvements shall be consistent with those identified in the transportation system plan. If traffic signal warrants are met in conformance with the Highway Capacity Manual and the Manual of Uniform Traffic Control Devices, traffic signals shall be required with development. Before a signal can be installed on a state highway, a traffic signal and location shall have been approved by the State Highway Engineer.
+
+(7)
+
+State and County Facilities. Access to state (ODOT) and/or Washington County facilities or both requires approval from those agencies. Traffic analyses shall meet ODOT and county requirements, in addition to those of the city for a traffic impact analysis.
+
+(Ord. 857 Exh. 1, 2005; Code 2000 § 11.40.63; Ord. 874 Exh. (1)(B), 2006)
+
+§ 18.143.040. Street design cross-sections per transportation system plan.
+
+Street cross-sections include the right-of-way, paved section, sidewalk and planter strip widths. The functional classification of a street as designated in the transportation system plan shall determine its design and width. Identification of functional classifications for streets in the city limits is found in the adopted Cornelius transportation system plan. Street design standards, which are based on functional classification and use, are found in the adopted Cornelius public works standards. Full street connections shall be provided at intervals consistent with the adopted Cornelius public works standards for the identified street classification, except as modified by Chapter 18.115 CMC, or where prevented by topography, barriers such as railroads or freeways, or environmental constraints such as major streams and rivers.
+
+(A)
+
+Deviations to Adopted Street Cross-Sections. A deviation from the adopted street cross-sections and/or widths or both shall require demonstration of a hardship or other exceptional circumstances resulting from conditions of the property. Hardship or exceptional circumstances may include, but are not limited to, unique topographic conditions, environmental protection requirements, and existing development and buildings. A request for a deviation shall comply with this title and, where applicable, the transportation planning rule (TPR).
+
+(Ord. 874 Exh. (1)(B), 2006; Code 2000 § 11.40.64; Ord. 2018-02 § 1 (Exh. A), 2018)
+
+§ 18.143.050. Access standards.
+
+Access standards establish requirements and regulations for safe and efficient vehicle access to and from a site and enhance general circulation within a site.
+
+(A)
+
+Access Spacing. Access spacing shall be designed in conformance with the adopted Cornelius public works standards.
+
+(1)
+
+Access spacing for all state facilities shall be coordinated with the Oregon Department of Transportation (ODOT).
+
+(B)
+
+An access report shall be submitted with all new development and/or redevelopment proposals that demonstrates the street/driveway is safe as designed and meets adequate stacking, site distance, deceleration distance, on-site circulation and deceleration requirements as set by the city, American Association of State Highway and Transportation Officials (AASHTO), and relevant agencies.
+
+(C)
+
+Driveway/Access Points. The location and number of driveways or access points have a direct effect on safe and efficient traffic flow. The following access management standards shall apply toward new driveways:
+
+(1)
+
+Driveway spacing shall be designed in accordance with adopted public works standards. In some cases, driveway setbacks may be greater than the standard depending upon the influence area, as determined by city engineer review of a traffic impact report submitted by the applicant's traffic engineer. If the subject property has less than 150 feet of street frontage, the applicant shall first investigate a shared access as an option. If a shared access is not possible, the driveway shall be placed as far from the intersection as possible.
+
+(2)
+
+Based on the applicants' proposal and its compliance with the comprehensive plan, transportation system plan and the development and zoning code, the city shall require the closing or consolidation of existing driveways or other vehicle access points, the recording of reciprocal access easements (i.e., for shared driveways), and installation of traffic control devices or other measures as a condition of approval to mitigate the impacts of the development.
+
+(3)
+
+New developments shall provide cross-over easements to ensure potential shared driveway access points where existing conditions (i.e., surrounding land uses, lot configurations, physical characteristics, etc.) warrant consideration.
+
+(4)
+
+Access to arterials shall only be from public streets. When a site that has private access onto a principal arterial is redeveloped, the private access shall be eliminated if alternate access exists or can be developed to the site.
+
+(5)
+
+Direct access to a collector street shall only be considered if there is no alternative way to access the site. If direct access is permitted by the city, the applicant shall be required to mitigate for any safety or neighborhood traffic management impacts deemed applicable by the city engineer. In no case shall the design of driveways, drive aisles or service drives require or encourage the backward movement or other maneuvering of a vehicle within a street, except for single-family and duplex residences.
+
+(6)
+
+Proposed shared-use paths shall be located to provide access to existing or planned commercial services and other neighborhood facilities, such as schools, shopping areas and park and transit facilities. To the greatest extent possible, access shall be reasonably direct, providing a route or routes that do not deviate unnecessarily from a straight line or that do not involve a significant amount of out-of-direction travel.
+
+(Ord. 874 Exh. (1)(B), 2006; Code 2000 § 11.40.65; Ord. 2018-02 § 1 (Exh. A), 2018)
+
+§ 18.143.060. Transit supportive amenities.
+
+(A)
+
+New commercial, industrial and institutional buildings developed on sites adjacent to major transit stops shall provide transit-related improvements. Major transit stops are identified as part of the regional transit system or as otherwise defined in Chapter 18.195 CMC. Properties are considered "at" a major transit stop when they are within 200 feet of the stop. A proposed development that is adjacent to or includes an existing or planned major transit stop will be required to plan for access to the transit stop and provide for transit improvements, in consultation with TriMet and consistent with an agency adopted or approved plan at the time of development. Requirements apply where the subject parcel(s) or portions thereof are within 200 feet of a major transit stop. Development requirements and improvements may include the following:
+
+(1)
+
+Intersection or mid-block traffic management improvements to allow for pedestrian crossings at major transit stops.
+
+(2)
+
+Building placement within 20 feet of the transit stop, a transit street or an intersection street, or a pedestrian plaza at the stop or a street intersections.
+
+(3)
+
+Transit passenger landing pads accessible to disabled persons to transit agency standards.
+
+(4)
+
+An easement or dedication for a passenger shelter and an underground utility connection to a major transit stop if requested by TriMet.
+
+(5)
+
+Lighting to TriMet standards.
+
+(6)
+
+Intersection and mid-block traffic management improvements as needed and practicable to enable marked crossings at major transit stops.
+
+(B)
+
+For an existing use or proposed use on a site located within one-quarter mile from a bus stop where at least 10 off-street parking spaces are required, the applicant may apply for a reduction in the number of required spaces by 10 percent through the provision of transit supportive amenities, subject to city approval.
+
+(Ord. 874 Exh. (1)(B), 2006; Code 2000 § 11.40.66; Ord. 2018-02 § 1 (Exh. A), 2018)
+
+§ 18.143.070. Intelligent transportation systems.
+
+Intelligent transportation systems (ITS) manage and enhance operational performance through advanced technologies and management techniques to help relieve congestion, promote safety and provide suitable transportation strategies.
+
+In order to provide for efficient installation of future intelligent transportation systems (ITS), all roadway improvement projects, including private development with frontage improvements, shall install three-inch conduit to support local interconnect infrastructure. The location, design and type of conduit shall be approved by the city engineer.
+
+(Ord. 874 Exh. (1)(B), 2006; Code 2000 § 11.40.67)

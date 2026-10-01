@@ -245,3 +245,29 @@ def test_every_finding_is_plain_data_for_a_database_row(tmp_path: Path) -> None:
     rows = [f.as_dict() for f in found]
     assert json.loads(json.dumps(rows)) == rows
     assert all(set(r) == {"key", "finding", "detail"} for r in rows)
+
+
+def test_a_dataset_written_from_two_layers_is_counted_across_both(tmp_path: Path) -> None:
+    # King City's zoning file holds layer 1 and layer 4 of one service; the
+    # copy counted both, so the probe must too or it reads drift every month.
+    part = "https://example.gov/arcgis/rest/services/Zoning/MapServer/4"
+    where = "    where: \"CITY = 'Portland'\"\n"
+    reg = REGISTRY.replace(
+        where,
+        where + f"    parts:\n      - url: {part}\n        fields: [NAME]\n        zone_field: NAME\n",
+    )
+    (tmp_path / "pipeline.yaml").write_text(reg, encoding="utf-8")
+    pipe = load_pipeline(tmp_path / "pipeline.yaml")
+    county = Services()
+    county.fields[part] = ["OBJECTID", "NAME"]
+    county.counts[ZONING] = 15_000
+    county.counts[part] = 700
+
+    found = probe(pipe, manifest(pipe), client(county))
+    assert by_key(found)["zoning_portland"] == ["ok"], "15,000 + 700 is the 15,700 the copy saw"
+
+    county.counts[part] = 7_000
+    assert by_key(probe(pipe, manifest(pipe), client(county)))["zoning_portland"] == ["count_drift"]
+
+    county.down.add(part)
+    assert by_key(probe(pipe, manifest(pipe), client(county)))["zoning_portland"] == ["unreachable"]

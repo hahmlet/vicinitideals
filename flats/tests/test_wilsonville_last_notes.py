@@ -146,13 +146,17 @@ def test_the_ledger_can_now_see_this_city_and_agrees_with_the_hand_count() -> No
     hand at 2,508 lots and the ledger says 2,370 after condominium and air
     parcels are dropped, and TC was read at 59 and the ledger says 59 exactly.
     A hand count corroborated by a machine count is worth more than either.
+
+    Twenty-two rows since 2026-10-01: Wilsonville reaches into Washington
+    County, and the three-county ledger counts that side too -- TC 60, and
+    two map labels (PDI-RSIA, PFC) the Clackamas side never printed.
     """
     rows = {
         r.zone: r.lots for r in read_coverage() if r.jurisdiction == WILSONVILLE
     }
 
-    assert len(rows) == 20
-    assert rows["TC"] == 59
+    assert len(rows) == 22
+    assert rows["TC"] == 60
     assert 2_300 < rows["V"] < 2_508
 
 
@@ -168,6 +172,11 @@ def test_the_zones_this_city_still_owes_are_now_reported_rather_than_hunted() ->
     Asserted loosely on purpose. The exact list will change as these are
     encoded and that is the point of it; what must not change is that a zone
     with lots and no rules reports itself.
+
+    And it did change. PDI, PDC, PF and the FDAH districts were encoded as
+    use-gate refusals and left the queue; what the three-county ledger
+    (2026-10-01) reports in their place is two labels only the Washington
+    side of the city prints, which is the queue doing its job again.
     """
     missing = {
         r.zone: r.lots
@@ -175,8 +184,10 @@ def test_the_zones_this_city_still_owes_are_now_reported_rather_than_hunted() ->
         if r.jurisdiction == WILSONVILLE and r.status == "zone_missing"
     }
 
-    assert missing["PDI"] == 283
-    assert missing["PDC"] == 184
+    for refused in REFUSED_ZONES:
+        assert refused not in missing, refused
+    assert missing["PDI-RSIA"] == 10
+    assert missing["PFC"] == 7
     assert "V" not in missing
     assert "TC" not in missing
 

@@ -58,7 +58,7 @@ from shapely.strtree import STRtree
 COUNTY_NAMES = {"M": "multnomah", "C": "clackamas", "W": "washington"}
 #: The first two digits of ``ORTAXLOT`` in Metro's change list.
 ORTAXLOT_COUNTIES = {"03": "clackamas", "26": "multnomah", "34": "washington"}
-DEFAULT_COUNTIES = ("multnomah", "clackamas")
+DEFAULT_COUNTIES = ("multnomah", "clackamas", "washington")
 
 #: Coordinates are compared at a hundredth of a foot: the county's exports
 #: wobble in the eighth decimal, which is not a boundary moving.
@@ -628,9 +628,14 @@ def report(
         "",
         "## What happened, by kind",
         "",
-        "| kind | " + " | ".join(sorted(by_county)) + " | total |",
-        "|---|" + "---|" * (len(by_county) + 1),
     ]
+    if not kinds:
+        lines.append("No lot changed.")
+    else:
+        lines += [
+            "| kind | " + " | ".join(sorted(by_county)) + " | total |",
+            "|---|" + "---|" * (len(by_county) + 1),
+        ]
     for kind in KINDS:
         if kind not in kinds:
             continue
@@ -753,6 +758,17 @@ def run(
     new_label = new_label or new_path.parent.name
     prev = load_lots(prev_path, counties=counties, log=log)
     new = load_lots(new_path, counties=counties, log=log)
+    # A county the old copy never held is coverage arriving, not the county
+    # changing: Washington's first snapshot (2026-09-30) would otherwise read
+    # as 200,000 lots "added" against a Metro change log that lists none.
+    # And a county neither copy holds has nothing to grade Metro's list by.
+    held = {c for c, _ in prev}
+    first = sorted({c for c, _ in new} - held)
+    if held:
+        new = {k: v for k, v in new.items() if k[0] in held}
+        counties = tuple(c for c in counties if c in held)
+    if first:
+        log(f"first covered, left out of the delta: {', '.join(first)}")
     delta = classify(prev, new, log=log)
     log(f"classified in {delta.seconds}s: {delta.by_kind()}")
     check = None
@@ -762,6 +778,7 @@ def run(
     out_dir.mkdir(parents=True, exist_ok=True)
     n = write_changes(delta.changes, out_dir / "changes.csv.gz")
     summary = summarize(delta, check, prev_label=prev_label, new_label=new_label)
+    summary["first_covered"] = first
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
     (out_dir / "report.md").write_text(
         report(delta, check, prev_label=prev_label, new_label=new_label, prev=prev, new=new), encoding="utf-8"

@@ -17,6 +17,7 @@ from flats.encode.port_quadfit import (
     BACKPORTED,
     COUNTY,
     FIELD_MAP,
+    FLATS_FIRST,
     HELD_AS_VARIANT,
     ZERO_ALSO_HELD_ON,
     layer_id_for,
@@ -422,8 +423,16 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # of, worth 76,752 lots that were dropped before anything was measured.
     # Lake Oswego's six are NOT among them -- that jurisdiction is `eligible:
     # false` by owner decision, so its rows are reference rather than debt.
+    #
+    # Washington County's six (2026-09-30) are in COUNTY but not ported: their
+    # rows were written FROM the corpus, and porting them back would overwrite
+    # it with its own summary.
     assert dry["stats"]["zones"] == 140
-    assert dry["stats"]["layers"] == len(COUNTY) == 18
+    assert dry["stats"]["layers"] == 18
+    assert len(COUNTY) == 24
+    assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {
+        "washington_unincorporated", "hillsboro", "beaverton", "sherwood", "king_city", "durham",
+    }
 
 
 def test_field_map_targets_are_registered() -> None:
@@ -466,7 +475,7 @@ def test_layer_id_mapping(jurisdiction: str, expected: str) -> None:
 
 def test_unmapped_jurisdiction_fails_loudly() -> None:
     with pytest.raises(KeyError):
-        layer_id_for("beaverton")
+        layer_id_for("tigard")
 
 
 def test_zone_citation_becomes_cite_default() -> None:
@@ -503,6 +512,14 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 26  # 25 jurisdictions + the state layer
+    # 447 as of 2026-10-01: Cornelius (12) and Tigard (13) merged.
+    # 434 as of 2026-10-01: Cornelius, the seventh Washington County layer,
+    # drafted in a worktree. Its 12 zones are the live districts of CMC
+    # 18.05.030 and the use chapters behind them: R-7, R-10, A-2 and CR
+    # admit the pod on one lot; MHP, C-2, CC, CMU, GMU, LI, M-1 and the NRO
+    # overlay refuse. FP has no use list and C-1, CE, MSC and MSDO are
+    # repealed. Metro's hyphenless spellings and three county codes are
+    # zone_rulings, not zones.
     # 435 as of 2026-10-01: Tigard, the seventh Washington County layer, a
     # draft from a cloud session. Its 13 zones are the 13 codes Metro's
     # zoning map prints inside the city, which are the code's own zone
@@ -611,7 +628,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 435
+    assert sum(len(l.zones) for l in rules.layers.values()) == 447
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

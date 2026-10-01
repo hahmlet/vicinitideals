@@ -214,6 +214,39 @@ with the same `screen_version` and a different `code_version` that still
 move a verdict are `unexplained` -- a commit outside the screen moved an
 answer, which is a bug.
 
+### 4e. Adding a county (Washington, 2026-10-01)
+
+A county joins as a full refresh (§4 steps 2-18) on the commit that switches
+it on. What is different:
+
+- **The registry.** Its jurisdictions `true` in `flats/config/pipeline.yaml`,
+  its county path added to the `serves` of every regional dataset (RLIS
+  taxlots, streets and change list, ORCA, UGB, Metro's three resource layers,
+  FEMA with the county's DFIRM id in the where clause, the DEM bbox), and
+  one zoning dataset per city. A city publishing its zoning on two layers is
+  one dataset with `parts:` (King City: layer 1 plus Kingston Terrace on
+  layer 4); acquire writes both into one file with the part's zone name
+  copied into the dataset's `zone_field`, and the probe counts across both.
+- **quadfit's rows come from the corpus.** quadfit drops a lot whose zone
+  rules.yaml does not list, so `python "Lot Analysis/quadfit/port_from_flats.py"
+  --write` writes the county's blocks from the corpus (largest limb of every
+  yard, unread yards a named PLACEHOLDER, every row `needs_verification`).
+  `test_port_from_flats.py` fails when the corpus moves and nobody re-ran it.
+- **The DEM.** The 1 m tiles for the wider bbox go into a hard-linked copy of
+  the July raw (`cp -al data/quadfit/raw data/quadfit_demw/raw`, then
+  `QUADFIT_DATA_DIR=data/quadfit_demw s0_acquire.py --only dem`), and step 5
+  stages with `--dem-from data/quadfit_demw/raw`. The July tree is never
+  written: every older run's slope reads it.
+- **The delta** leaves the new county out (`first_covered` in its summary) --
+  the old copy never held it, so every one of its lots would read "added".
+  When the RLIS release is the one the copy before was taken from (the
+  manifests' `archives.*.release` match; Washington's copy was 2026_08 both
+  times), run it **without** `--change-log`: Metro's list then describes a
+  quarter already applied, nothing in it is new, and grading 0 changes
+  against it reads 0 % recall and trips `rlis_agreement` for nothing.
+- **Transit**: T2 with `--reuse` measures only the new county's lots.
+- **The gate**: as any refresh -- clean, the agent promotes; warned, Steph (§3).
+
 ## 5. What Steph reads
 
 The candidate's card on `/flats/refresh`. Four questions, top to bottom:

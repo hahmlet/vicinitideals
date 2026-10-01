@@ -310,3 +310,96 @@ def test_pages_read_from_many_threads_at_once_all_come_back(book: Path):
         counts = list(pool.map(one, range(200)))
 
     assert len(set(counts)) == 1 and counts[0] > 0
+
+
+def test_a_sentence_printed_twice_is_told_apart_by_the_lines_around_it(tmp_path: Path):
+    """Oregon City page 1039 prints one district's standards after another's,
+    in the same words, and the line either side of each copy is the
+    same "A." and "B.". Only the district heading above tells them apart, so
+    the copy the text cites is found from the wider context, not guessed."""
+    block = ["Dimensional standards apply.", "A.", "The maximum front setback is five feet.", "B."]
+    runs = [(72, 720, 11, "Commercial District")]
+    runs += [(72, 700 - 20 * k, 11, text) for k, text in enumerate(block)]
+    runs += [(72, 560, 11, "Mixed-Use Downtown District")]
+    runs += [(72, 540 - 20 * k, 11, text) for k, text in enumerate(block)]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    lines = list(sheet.lines)
+
+    found = S.find(
+        sheet,
+        "The maximum front setback is five feet.",
+        before="Mixed-Use Downtown District\nDimensional standards apply.\nA.",
+        after="B.",
+    )
+
+    assert found is not None
+    above = " ".join(" ".join(w.text for w in ln.words) for ln in lines[: lines.index(found)])
+    assert above.count("District") == 2, "the second copy, below both headings"
+    # With only the nearest line to go by it is a tie, and a tie is not a guess.
+    assert S.find(sheet, "The maximum front setback is five feet.", before="A.", after="B.") is None
+
+
+#: Oregon City Table 17.08.040 in miniature: headings centred over columns
+#: whose values are set flush left, and two of the three columns printed in a
+#: smaller face on the same baseline.
+CENTRED = [
+    (72, 700, 11, "Standard"),
+    (260, 700, 11, "R-10"),
+    (380, 700, 11, "R-8"),
+    (500, 700, 11, "R-6"),
+    (72, 660, 11, "Maximum building lot coverage"),
+    (220, 660, 8, "40%,"),
+    (340, 660, 11, "40%,"),
+    (460, 660, 8, "40%,"),
+]
+
+
+def test_a_smaller_face_on_the_baseline_is_not_a_footnote_marker(tmp_path: Path):
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(CENTRED))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "Maximum building lot coverage 40%, 40%, 40%,")
+
+    assert not [w.text for w in row.words if w.sup], "a percentage is never a note number"
+    assert len(S.hits(row, 40, sheet.aspect)) == 3
+
+
+def test_a_heading_centred_over_a_flush_left_column_still_claims_it(tmp_path: Path):
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(CENTRED))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "Maximum building lot coverage 40%, 40%, 40%,")
+    spans = S.hits(row, 40, sheet.aspect)
+
+    for zone, n in (("R-10", 0), ("R-8", 1), ("R-6", 2)):
+        assert S.under_heading(sheet, row, spans, zone) == [spans[n]], zone
+
+
+def test_a_note_on_a_group_heading_reaches_the_rows_indented_under_it(tmp_path: Path):
+    """Oregon City Table 17.12.040: "Minimum lot size¹" heads its own row and
+    the sizes sit indented beneath it. A flat table's neighbouring standard,
+    set flush with the row, lends it nothing."""
+    runs = [
+        (72, 700, 11, "Minimum lot size"),
+        (160, 704, 6, "1"),
+        (90, 680, 11, "Duplex"),
+        (300, 680, 11, "4,000 square feet"),
+        (90, 660, 11, "Triplex"),
+        (300, 660, 11, "6,000 square feet"),
+        (72, 620, 11, "Maximum density"),
+        (160, 624, 6, "2"),
+        (300, 620, 11, "N/A"),
+        (72, 600, 11, "Minimum lot width"),
+        (300, 600, 11, "50 feet"),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+
+    triplex = _line(sheet, "Triplex 6,000 square feet")
+    width = _line(sheet, "Minimum lot width 50 feet")
+
+    assert [m.mark for m in S.markers(sheet, triplex, S.hits(triplex, 6000, sheet.aspect))] == ["1"]
+    assert S.markers(sheet, width, S.hits(width, 50, sheet.aspect)) == []

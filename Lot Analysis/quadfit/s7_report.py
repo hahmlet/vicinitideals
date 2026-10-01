@@ -448,8 +448,11 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
     # Computed in s5o; absent on pre-district parquet -> no district reds (a
     # no-main lot just stays review, the old behavior).
     if "in_sewer_district" in lots.columns:
+        # s5o leaves it unanswered (None) outside Clackamas County -- the
+        # Washington County side of Tualatin -- and only an answer can red.
+        answered = lots["in_sewer_district"].notna().to_numpy()
         in_dist = lots["in_sewer_district"].fillna(False).to_numpy().astype(bool)
-        clackamas = np.isin(juris, CLACKAMAS_JURIS)
+        clackamas = np.isin(juris, CLACKAMAS_JURIS) & answered
         no_sewer_red = clackamas & ~near_main & ~in_dist
         newly_red = (binding == "") & no_sewer_red
         if newly_red.any():

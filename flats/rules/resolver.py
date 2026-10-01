@@ -129,6 +129,9 @@ class Resolved:
     #: on a conditional use" was encoded and read by nothing, and every lot
     #: in the zone screened RED as if the sentence did not exist.
     relief: tuple[tuple[tuple[str, ...], Any, str], ...] = ()
+    #: The number was stated per dwelling and is already the building's
+    #: total (:attr:`flats.rules.model.Effective.whole_project`).
+    whole_project: bool = False
 
     @property
     def trusted(self) -> bool:
@@ -459,7 +462,7 @@ class RuleSet:
                             name, eff.value, eff.status, eff.prov, layer, origin,
                             via=via, when=eff.when, levers=val.levers,
                             ambiguous=eff.ambiguous, measured_on=val.measured_on,
-                            relief=_relief_of(val),
+                            relief=_relief_of(val), whole_project=eff.whole_project,
                         )
                         continue
                     # Either the ancestor wins outright, or the local number is
@@ -485,6 +488,7 @@ class RuleSet:
                     ambiguous=eff.ambiguous,
                     measured_on=val.measured_on,
                     relief=_relief_of(val),
+                    whole_project=eff.whole_project,
                 )
                 if val.preempts.binds:
                     locked[name] = (val.preempts, eff.value)

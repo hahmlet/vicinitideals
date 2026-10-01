@@ -1,0 +1,31 @@
+# Cornelius Municipal Code, Title 18 (eCode360 client CO4396). Draft,
+# worktree flats/cornelius-draft, 2026-10-01.
+#
+# eCode360 prints the zone chapters as prose with lettered subsections, and
+# only two tables in the stored chapters carry a numbered note. The census
+# finds one note in CR's lot size table and one in the floodplain chapter's
+# mitigation table. Neither changes a figure the layer holds.
+notes:
+  - quote: "or/washington/cornelius/cmc.18.70.cr.txt#L176"
+    digest: "86ebf8614542"
+    state: dismissed
+    reason: >-
+      "In the case of flag lots, the pole portion of the lot shall not count
+      towards the required lot area." The note on the MINIMUM LOT SIZE
+      column of 18.70.050 (A). It says what area to count on a flag lot, not
+      what is required; the 7,000 sq ft the layer quotes is the row's own
+      figure. Nothing measures a flag pole, and `flag_lot` is registered and
+      assumed false, which is where the gap is carried (as Portland's
+      33.110 flag-lot note). R-7 says the same thing in prose (18.20.050
+      (A)(2), cmc.18.20.r-7.txt L164), recorded in the layer.
+  - quote: "or/washington/cornelius/cmc.18.90.fp.txt#L921"
+    digest: "481a480eba0e"
+    state: dismissed
+    reason: >-
+      The note to the floodplain chapter's mitigation ratios: what a
+      multiplier of 100 or 200 percent means for the pervious surface owed.
+      Chapter 18.90 is a flood overlay with no use list, not encoded (a
+      layer-wide NOT ENCODED comment); the flood layers are local work. The
+      census also counts two markers with no body in the same table: the
+      column heads "Undeveloped Space (ft[3])" and "Impervious Surface
+      (ft[2])", cubic and square feet printed as superscripts (L912).

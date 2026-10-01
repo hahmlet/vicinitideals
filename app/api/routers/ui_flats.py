@@ -2743,6 +2743,20 @@ _LOTS_PAGE = 50
 _OUTLINE_PX = 260
 
 
+#: What each screening warning asks a person to do. A warning never moves
+#: the colour (``flats.score.screen.Screening.warnings``); it is the check a
+#: buyer runs before an offer. Only Cornelius states the sun-shading rule
+#: (``solar_shade_limit``, pinned in flats/tests/test_washington_cornelius.py).
+_WARNING_WORDS = {
+    "solar_shade": (
+        "Cornelius's sun-shading rule (CMC 18.160, solar balance point) is not "
+        "checked here. It caps how high the roof may stand by the shadow it "
+        "casts on the lot to the north. Confirm the building's shadow on the "
+        "lot to the north before an offer."
+    ),
+}
+
+
 def _said_reason(code: str) -> str:
     if code in _REASON_WORDS:
         return _REASON_WORDS[code]
@@ -2890,6 +2904,11 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         # Fits or misses by no more than 6 inches: green, and flagged for the
         # acquisition review -- the survey settles it (Steph 2026-09-25).
         "tight": bool(fit.get("tight")),
+        # Rules the screen does not check and may not hold the colour on
+        # (Cornelius's sun-shading rule, "Green with a warning", 2026-10-01).
+        "warnings": [
+            _WARNING_WORDS.get(w, w.replace("_", " ")) for w in checks.get("warnings") or []
+        ],
         # The stalls stand in a column along a side alley and back out into it.
         "column": bool(fit.get("column")),
         # A corner lot screened with the front its code names, and whether
@@ -2899,6 +2918,10 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         # Where the fit stood the building and its parking (FOLLOWUPS 5);
         # absent from a run screened before the bridge drew it.
         "drawing": (checks.get("drawing") or None) if screened else None,
+        # The fire hose's walk from the street to the farthest wall, against
+        # OFC 503.1.1's 150 ft (FOLLOWUPS 28); absent before it was measured
+        # and on a plan already red.
+        "fire_route_ft": checks.get("fire_route_ft") if screened else None,
         "stalls_charged": stalls.get("charged"),
         "stalls_seated": stalls.get("seated"),
         "band": stalls.get("band"),

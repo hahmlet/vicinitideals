@@ -76,6 +76,15 @@ slope_coverage:
   west_linn: {grade: A, note: "1 m DEM"}
   wilsonville: {grade: A, note: "1 m DEM"}
   tualatin: {grade: A, note: "1 m DEM"}
+  # Washington County, 2026-09-30: the bbox was widened to reach it and the
+  # share each city gets from the 1 m tiles is not measured yet. C until the
+  # first run says otherwise.
+  washington_unincorporated: {grade: C, note: "1 m bbox widened west to -123.20 on 2026-09-30; share not yet measured against the lots"}
+  hillsboro: {grade: C, note: "1 m bbox widened west on 2026-09-30; share not yet measured"}
+  beaverton: {grade: C, note: "1 m bbox widened west on 2026-09-30; share not yet measured"}
+  sherwood: {grade: C, note: "1 m bbox widened west on 2026-09-30; share not yet measured"}
+  king_city: {grade: C, note: "1 m bbox widened west on 2026-09-30; share not yet measured"}
+  durham: {grade: C, note: "1 m bbox widened west on 2026-09-30; share not yet measured"}
 
 sewer_coverage:
   portland: {grade: A, note: "BES mains, ownership+size"}
@@ -96,7 +105,17 @@ sewer_coverage:
   # red (no_public_sewer, genuine septic). Applies only in Clackamas.
   happy_valley: {grade: C, note: "WES-served (CCSD#1) — no main linework; inside WES district => yellow, outside => red"}
   clackamas_unincorporated: {grade: C, note: "WES CCSD#1 / Oak Lodge — no main linework; district polygon is the gate: inside => yellow, outside => red (septic)"}
-  tualatin: {grade: C, note: "Clean Water Services-served — no CWS main linework; inside CWS district => yellow, outside => red"}
+  tualatin: {grade: C, note: "Clean Water Services-served — no CWS main linework; inside CWS district => yellow, outside => red. The district layer is Clackamas County's, so on Tualatin's Washington County side (from 2026-09-30) no lot is answered and a lot with no main in reach stays review, never red"}
+  # Washington County: Clean Water Services collects the whole urban area and
+  # publishes no main linework, and no district polygon is loaded. Every lot
+  # is main-distance only (to the nearest main of another city) -- review
+  # where none is in reach, never red.
+  washington_unincorporated: {grade: X, note: "CWS-served, no public main or district layer loaded; septic parcels indistinguishable"}
+  hillsboro: {grade: X, note: "CWS-served, no main layer loaded"}
+  beaverton: {grade: X, note: "CWS-served, no main layer loaded"}
+  sherwood: {grade: X, note: "CWS-served, no main layer loaded"}
+  king_city: {grade: X, note: "CWS-served, no main layer loaded"}
+  durham: {grade: X, note: "CWS-served, no main layer loaded"}
 
 overlays:
   # ---------------- Portland (all KILL via PCC 33.418 z triggers) ----------
@@ -213,13 +232,63 @@ overlays:
   - key: metro_wetlands
     name: "Metro regional wetland inventory (awareness)"
     action: flag
-    jurisdictions: [troutdale, wood_village, multnomah_unincorporated]
+    jurisdictions: [troutdale, wood_village, multnomah_unincorporated, washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham]
     citation: "no local wetland inventory in these jurisdictions; DSL removal-fill applies to the wetland footprint itself (no universal upland buffer in Oregon)"
     confidence: verified
     coverage:
       troutdale: {grade: B, note: "regional aggregate of LWIs"}
       wood_village: {grade: B, note: ""}
       multnomah_unincorporated: {grade: B, note: ""}
+      washington_unincorporated: {grade: B, note: "regional aggregate; added 2026-09-30 with the county"}
+      hillsboro: {grade: B, note: ""}
+      beaverton: {grade: B, note: ""}
+      sherwood: {grade: B, note: ""}
+      king_city: {grade: B, note: ""}
+      durham: {grade: B, note: ""}
+
+  # ---------------- Washington County (2026-09-30) ---------------------------
+  # One regime covers the whole urban county, cities and county alike: Clean
+  # Water Services' Design and Construction Standards, Chapter 3. A sensitive
+  # area (a stream, a wetland, a spring) carries a vegetated corridor of 15 to
+  # 200 ft, and development inside it needs a Service Provider Letter, with
+  # encroachment allowed only after an alternatives analysis and mitigation.
+  # That is a permit with conditions, not a refusal, so these are FLAGS: the
+  # lot goes to a person rather than green. The cities' and the county's
+  # codes point at CWS and carry their own Goal 5 layers on top; none of
+  # those chapters has been read for the pod, and the sections are not cited
+  # here until they are. Until they are, Metro's Title 3 (water quality
+  # corridors, which are the same widths the CWS table draws around the same
+  # streams) and Title 13 (habitat) stand in, graded C. Touch-only, so a
+  # corridor the regional map drew narrower than CWS will under-flag; that is
+  # the debt this entry carries.
+  - key: washington_cws_corridor
+    source: metro_title3
+    name: "Clean Water Services vegetated corridor (Metro Title 3 as proxy)"
+    action: flag
+    jurisdictions: [washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham]
+    citation: "Clean Water Services Design and Construction Standards, Chapter 3 (vegetated corridors around sensitive areas; development inside one needs a Service Provider Letter). Not yet read against the text; the local code sections that apply it are not yet cited"
+    confidence: needs_verification
+    coverage:
+      washington_unincorporated: {grade: C, note: "Metro Title 3 for the CWS corridor map, which CWS does not publish as the adopted boundary; a flag, so the cost of the proxy is a read"}
+      hillsboro: {grade: C, note: "regional proxy"}
+      beaverton: {grade: C, note: "regional proxy"}
+      sherwood: {grade: C, note: "regional proxy"}
+      king_city: {grade: C, note: "regional proxy"}
+      durham: {grade: C, note: "regional proxy"}
+  - key: washington_habitat
+    source: metro_title13
+    name: "Goal 5 habitat (Metro Title 13 as proxy)"
+    action: flag
+    jurisdictions: [washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham]
+    citation: "Metro Title 13 (Nature in Neighborhoods) as each Washington County jurisdiction implements it through its own Goal 5 overlay; none of those chapters read for the pod yet"
+    confidence: needs_verification
+    coverage:
+      washington_unincorporated: {grade: C, note: "2005-era regional habitat model standing in for the county's Goal 5 maps"}
+      hillsboro: {grade: C, note: "regional proxy"}
+      beaverton: {grade: C, note: "regional proxy"}
+      sherwood: {grade: C, note: "regional proxy"}
+      king_city: {grade: C, note: "regional proxy"}
+      durham: {grade: C, note: "regional proxy"}
 
   # ---------------- Unincorporated Clackamas --------------------------------
   # The county regulates habitat and water quality thoroughly and PROHIBITS

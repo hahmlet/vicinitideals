@@ -656,6 +656,16 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
     ).to_csv(results, index=False)
     out = tmp_path / "bridge"
     log: list[str] = []
+    # The fire route is measured to the street centrelines beside s4, and a
+    # run without them is refused: from the lot line the route comes out
+    # shorter than the hose's (FOLLOWUPS 28).
+    with pytest.raises(FileNotFoundError, match="street centrelines"):
+        run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, log=log.append)
+    street = shapely.LineString([(X0 - 100, Y0 - 20), (X0 + 150, Y0 - 20)])
+    pd.DataFrame(
+        {"name": ["SE TEST ST"], "type": ["1500"], "ftype": ["ST"], "alley": [False],
+         "wkb": [shapely.to_wkb(street)]}
+    ).to_parquet(s4.parent / "s1_streets.parquet")
     written = run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, log=log.append)
     frame = pd.read_parquet(written)
     # Two lots x every catalog design, one row each.
@@ -665,6 +675,8 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
     assert set(frame.loc[frame["zone"] == "NOT-A-ZONE", "if_signed"]) == {"unknown"}
     meta = json.loads((out / "meta.json").read_text(encoding="utf-8"))
     assert meta["lots"] == 2 and meta["rows"] == len(frame) and meta["step_deg"] == 30.0
+    assert meta["roads"] == str(s4.parent / "s1_streets.parquet")
+    assert "fire_route_ft" in frame.columns
     summary = (out / "summary.md").read_text(encoding="utf-8")
     assert "| unknown |" in summary and "RULE_UNVERIFIED" in summary
     assert "against quadfit" in summary
@@ -1349,16 +1361,19 @@ def test_every_private_drive_ruling_quotes_the_line_it_points_at(layers) -> None
         return " ".join(t.replace("–", "-").replace("- ", "-").split())
 
     ruled = {k: v.private_drives for k, v in layers.items() if v.private_drives is not None}
-    # 13 on 2026-09-29; the six Washington layers ruled street: true 2026-09-30;
-    # Tigard (draft, 2026-10-01) street: true on 18.30 "Street" (three or more lots).
-    assert len(ruled) == 20
+    # 13 on 2026-09-29; the six Washington layers ruled street: true 2026-09-30.
+    # 20 on 2026-10-01: Cornelius (draft worktree) rules street: false -- its
+    # "Street" is a way "which provides for public use" (CMC 18.195,
+    # definitions L705-L706), and a private access is not in public control.
+    # 21 the same day: Tigard (draft, 2026-10-01) street: true on 18.30 "Street" (three or more lots).
+    assert len(ruled) == 21
     for layer_id, r in ruled.items():
         doc, _, rng = r.quote.partition("#L")
         a, _, b = rng.partition("-L")
         lines = (store / doc).read_text(encoding="utf-8").split("\n")
         assert norm(r.says) in norm(" ".join(lines[int(a) - 1 : int(b or a)])), layer_id
     assert {k for k, r in ruled.items() if not r.street} == {
-        "or/multnomah/gresham", "or/clackamas/tualatin",
+        "or/multnomah/gresham", "or/clackamas/tualatin", "or/washington/cornelius",
     }
     assert {k for k, r in ruled.items() if r.access_choice} == {"or/clackamas/_unincorporated"}
     assert layers["or/multnomah/fairview"].private_drives is None

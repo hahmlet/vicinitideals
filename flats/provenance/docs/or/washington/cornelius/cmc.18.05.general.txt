@@ -1,0 +1,292 @@
+Close
+Print
+Resize:
+
+City of Cornelius, OR
+
+[print date]
+
+Title 18. Zoning
+
+Division I. INTRODUCTION AND GENERAL PROVISIONS
+
+Chapter 18.05. INTRODUCTION AND GENERAL PROVISIONS
+
+§ 18.05.010. Purpose.
+
+This title has been designed in accordance with the goals, policies and statements of intent of the Cornelius comprehensive plan, the officially enacted comprehensive plan for the city of Cornelius and its environs. It is the general purpose of this title, therefore, to provide one of the principal means for the implementation of the Cornelius comprehensive plan.
+
+(A)
+
+Consistency with Plans and Laws. Actions initiated under this code shall be consistent with the comprehensive plan and with applicable state and federal laws and regulations as these plans, laws, and regulations may now or hereafter provide.
+
+(B)
+
+This title is designed to regulate the division of land and to classify, designate and regulate the location and use of buildings, structures, and land for residential, commercial, industrial, or other uses in appropriate places.
+
+(C)
+
+Short Title. This title shall be known and may be called the development and zoning code.
+
+(Ord. 810, 2000; Code 2000 § 11.10.01)
+
+§ 18.05.020. Compliance.
+
+Except as otherwise specifically provided by this title, no building or other structure shall be constructed, improved, altered, enlarged or moved, nor shall any use or occupancy of premises within the city be commenced or changed, nor shall any condition of or upon real property be caused or maintained after the effective date of the ordinance codified in this title, except in conformity with conditions prescribed for each of the several zones and general regulations established hereunder. It shall be unlawful for any person to erect, construct, establish, move into, alter, enlarge, or use, or cause to be used, any building, structure, improvement or use of premises located in any zone described in this title contrary to the provisions of this title. Where this title imposes greater restrictions than those imposed or required by other rules or regulations or ordinances, the provisions of this title shall control.
+
+(A)
+
+No person shall divide land without first complying with the provision of this title and the laws of the state of Oregon.
+
+(B)
+
+The terms or words used in this title shall be interpreted as follows where the context demands; words in the present tense include the future; the singular number includes the plural and the plural number includes the singular; the word "shall" is mandatory and not discretionary; the word "may" is permissive; the masculine gender includes the feminine and neuter; the term "this title" shall be deemed to include the text of this title, the accompanying zoning map and all amendments made hereafter to either.
+
+(Ord. 810, 2000; Code 2000 § 11.10.02)
+
+§ 18.05.030. Zoning map.
+
+The city is divided into the following zoning districts, each of which shall include a suffix letter designator with its map symbol to indicate its classification:
+
+ZONING DISTRICT           MAP SYMBOL             DENSITY
+Residential Districts     Residential Districts  Residential Districts
+Urban Low Density         R-10                   Single-Family
+Urban Low Density         R-7                    Single-Family
+Urban Medium Density      A-2                    Multi-Family
+Core Residential          CR                     Multi-Family
+Manufactured Home Park    MHP
+Mixed Use Districts       Mixed Use Districts    Mixed Use Districts
+Central Mixed Use         CMU
+Gateway Mixed Use         GMU
+Commercial Districts      Commercial Districts   Commercial Districts
+General Commercial        C-1
+Highway Commercial        C-2
+Corridor Commercial       CC
+Industrial Districts      Industrial Districts   Industrial Districts
+General Industrial        M-1
+Light Industrial          LI
+Natural Resource          Natural Resource       Natural Resource
+Floodplain                FP
+Natural Resource Overlay  NRO
+
+(A)
+
+The boundaries of the zoning districts established in this title are indicated on a map entitled the "Zoning Map of the City of Cornelius" which shall hereinafter be referred to as the "city zoning map." The city zoning map and all amendments and changes thereto, and all legends, symbols, notations, references and other matters shown thereon, are hereby adopted by reference.
+
+(B)
+
+Amendments to the city zoning map may be made in accordance with the provisions of this title. Copies of all map amendments shall be dated with the effective date of the document adopting the map amendment and shall be maintained without change, together with the adopting document, on file in the office of the city recorder.
+
+(C)
+
+The community development director shall maintain an up-to-date copy of the city zoning map to be revised from time to time so that it accurately portrays changes of zone boundaries. A separate map shall also be maintained and show the location of conditional use permits, planned unit developments, variances and the location of historical uses. The community development director shall maintain a log that identifies the following land use actions: zone change, conditional use, planned unit development, variance, or historical use and the number of the resolution, ordinance, order or other document authorizing the same.
+
+(D)
+
+Interpretation of District Boundaries. Where due to the scale, lack of detail or illegibility of the city zoning map or due to any other reason there is uncertainty, contradiction or conflict as to the intended location of any district boundary, the exact location of a district boundary line shall be determined by the community development director in accordance with the following standards:
+
+(1)
+
+Street Lines. Where district boundaries are indicated as approximately following the center line or right-of-way line of streets, such lines shall be construed to be such district boundaries.
+
+(2)
+
+Street Vacations. Whenever any street is lawfully vacated, and when the lands within the boundaries thereof attach to and become a part of lands adjoining such street, such lands formerly within such vacated street shall automatically be subject to the same zoning regulations as are applicable to lands to which same shall attach.
+
+(3)
+
+Lot Lines. Where district boundaries are indicated as approximately following lot lines, such lot lines shall be construed to be said boundaries. If a district boundary divides a lot into two or more districts, the entire lot shall be placed in the district that accounts for the greater area of the lot by the adjustment of the district boundary; provided, that the boundary adjustment is for a distance of less than 20 feet. If an adjustment of more than 20 feet is required, the change in the district boundary shall be treated as a change of zone.
+
+(4)
+
+Watercourses. District boundary lines are intended to follow the center lines of watercourses unless such boundary lines are fixed by dimensions shown on the city zoning map.
+
+(Ord. 810, 2000; Code 2000 § 11.10.03; Ord. 841 Exh. 2, 2003; amended during 2007 recodification; Ord. 2019-10 § 1 (Exh. A), 2019; Ord. 2020-05 § 1 (Exh. A), 2020)
+
+§ 18.05.040. Authorization of similar uses.
+
+When any use is not specifically named in this title, the community development director shall determine whether the use is an outright use, conditional use or prohibited use. A request may be made for a community development director's interpretation for determination of a use. The director may determine that a use, not specifically designated as an outright or conditional use, shall be one of the allowed uses if the use is of the same general type and is similar to the specified allowed uses. Nothing contained in this section is intended to authorize the inclusion of a use in a zone district where it is not specifically listed when such a use is specifically listed in another zoning district.
+
+(Ord. 596 § 1, 1982; Ord. 810, 2000; Code 2000 § 11.10.04; Ord. 841 Exh. 1, 2003)
+
+§ 18.05.050. Development permit required.
+
+(A)
+
+Except as excluded by CMC § 18.05.060, no person shall engage in or cause to occur a development for which the appropriate permit has not been issued. The building official shall not issue a permit for the construction, reconstruction, or alteration of a structure or a part of a structure for which the appropriate permit has not been issued.
+
+(B)
+
+The appropriate permit shall be issued by the community development director in accordance with the provisions set forth in Chapter 18.10 CMC. The community development director shall not issue a development permit for the improvement or use of land that has been previously divided or otherwise developed in violation of this code, regardless of whether the permit applicant or its predecessor created the violation, unless the violation can be rectified as part of the development.
+
+(C)
+
+Unless appealed, a decision on a development permit shall be final upon expiration of the period provided for filing an appeal or, if appealed, upon rendering of the decision by the reviewing body.
+
+(Code 2000 § 11.10.05; amended during 2007 recodification; Ord. 2020-05 § 1 (Exh. A), 2020)
+
+§ 18.05.060. Exclusions from land use approval.
+
+An activity or development listed below is excluded from the requirement for a development permit:
+
+(A)
+
+Landscaping or other treatment or use of the land surface of a single-family residential lot not involving a structure, unless the activity involves moving more than 20 cubic yards of fill.
+
+(B)
+
+A change internal to a building or other structure that does not substantially affect the use of the structure or an alteration that does not substantially affect the use or external appearance of land or a structure.
+
+(C)
+
+Except as otherwise required by Chapters 17.05 and 18.20 CMC, the establishment, construction, or termination of an authorized public facility that directly serves development, including such facilities as a private or public street, sewer, water line, electrical power or gas distribution line, or telephone or television cable system, provided said construction complies with applicable public works standards.
+
+(D)
+
+Installation or construction of a building that does not require a building permit.
+
+(E)
+
+Minor clearing or grading for purposes of site surveying, or exploratory excavations under direction of a soil engineer or engineer geologists, provided said grading or excavation is consistent with building code requirements.
+
+(F)
+
+Exclusion from a permit does not exempt the development or its use from applicable requirements of the comprehensive plan and this code.
+
+(Ord. 810, 2000; Code 2000 § 11.10.06)
+
+§ 18.05.070. Use of a development.
+
+A development may be used only for a lawful use. A lawful use of a development is one that is not prohibited by law and for which the development is designed, arranged, and intended or which is nonconforming pursuant to Chapter 18.135 CMC.
+
+(A)
+
+No structure (except single-family and duplex dwellings) hereinafter erected, moved, enlarged or altered shall be occupied, used or changed in use until after a certificate of occupancy has been issued by the building official. Such certificate shall be applied for coincident with the application for a building permit. A certificate of occupancy shall be issued only after such structure, enlargement, or alteration has been completed in conformity with the provisions of this title and with an approved site plan and required conditions, and when the proposed use conforms to this title and to any and all other required conditions. Any use legally occupying an existing building at the time this title became effective may be continued but shall not be changed unless a certificate of occupancy for the new use has been issued by the city after finding that such use conforms to this title and required conditions.
+
+(B)
+
+Determination of Compliance with Performance Standards. If the building official is unable to determine from information submitted by the applicant that a proposed use in an industrial zone will comply with the performance standards for the zone in which it is to be located, he shall not issue a certificate of occupancy, but shall request the applicant to authorize the city to secure expert professional advice from firms or individuals acceptable to both the city and the applicant. Professional fees shall be paid by the applicant. The building official may require that the applicant agree to pay professional fees for necessary investigations to determine compliance with the required conditions prior to and after issuance of the certificate of occupancy.
+
+(C)
+
+Record. A record of all certificates of occupancy shall be kept on file in the office of the building official and copies shall be furnished on request at a reasonable charge to any person having a proprietary or tenancy interest in the subject structure, use or land.
+
+(D)
+
+Lawfully Existing Development. For the purposes of this code, lawfully existing uses shall include the following:
+
+(1)
+
+All existing lots, properties, buildings, and developments developed in accordance with the comprehensive plan, and as approved by the design review board, planning commission, and/or city manager prior to May 1, 2000.
+
+(2)
+
+All development plans, land partitions, and preliminary and final subdivision plats reviewed and approved in accordance with the applicable zoning and subdivision standards prior to May 1, 2000.
+
+(3)
+
+All conditional use and temporary permits issued prior to May 1, 2000, shall remain valid consistent with the conditions and time periods in effect on the date of adoption.
+
+(4)
+
+Discontinuation of a lawfully established development/use for one year shall require that all future development/uses conform to current development code standards.
+
+(Code 2000 § 11.10.07; Ord. 841 Exh. 2, 2003; Ord. 916 § 1 (Exh. A), 2010)
+
+§ 18.05.080. Fees for land use applications.
+
+A fee shall be charged for all review and approval procedures, land use permits and administrative actions governed by this title. Fees shall be set by resolution adopted by the city council.
+
+(A)
+
+Fee Schedule Update. The city council shall update the fee schedule from time to time.
+
+(B)
+
+Incorporation by Reference. The fee schedule most recently adopted by the city council is incorporated by reference in this title.
+
+(C)
+
+Fees Due and Payable. Fees are due and payable at the time an application is submitted or at such other time as may be specified in this title. The requirement to pay a fee is jurisdictional, and the city will not process an application without payment of the associated fee. If an applicant pays a fee after submitting an application, the date they pay the fee will be considered the date they submitted the application.
+
+(D)
+
+The city may charge double the usual application fee for those who fail to apply for any permit or other approval required by the city. The failure to submit a required fee with an application or a notice of appeal, including return of checks unpaid or other failure of consideration, may preclude the proceeding of that application or appeal.
+
+(Code 2000 § 11.10.08; Ord. 2024-03 § 1 (Exh. A), 2024)
+
+§ 18.05.090. Enforcement.
+
+The city manager, community development director and/or building official shall enforce the provisions of this title. An appeal from a ruling of the city manager, community development director and/or building official shall be made to the commission.
+
+(A)
+
+Appeal to Council. An action or ruling of the commission authorized by this title may be appealed to the council within 10 days after the commission has rendered its decision by filing written notice with the city recorder. If no appeal is taken within the 10-day period, the decision of the commission shall be final. If an appeal is filed, the council shall receive a report and recommendation from the commission and shall hold a public hearing on the appeal. Notice of the time, place and purpose of the public hearing shall be given in accordance with the requirements of CMC § 18.15.090.
+
+(B)
+
+Form of Petitions, Applications, and Appeals. Petitions, applications, and appeals provided for in this title shall be made on forms provided for the purpose or as otherwise prescribed by the commission in order to assure the fullest practical presentation of pertinent facts and to maintain a permanent record. Applications for a building permit shall be accompanied by plans, in duplicate, drawn to scale, showing the actual shape and dimensions of the lot to be built upon; the exact size and locations on the lot of the buildings and other structures, existing and proposed; the existing and intended use of each building, structure or part thereof; the number of families to be accommodated, if any; and such other information as is needed to determine their conformance with the provisions of this title and of the building code.
+
+(C)
+
+Interpretation. The provisions of this title shall be held to be the minimum requirements fulfilling its objectives. Where the conditions imposed by any provisions of this title are less restrictive than comparable conditions imposed by any other provisions of this title or of any other code provisions, ordinance, resolution or regulation, the provisions which are more restrictive shall govern.
+
+(D)
+
+Violations of this title shall be addressed with the following process:
+
+(1)
+
+Education. An explanatory letter and visit (within a week of receiving a written complaint), giving two weeks to demonstrate compliance.
+
+(2)
+
+Warning. A reminder letter (sent two weeks after the first letter/visit) giving the consequences for not complying or instituting a city-approved compliance plan within a second two weeks.
+
+(3)
+
+Citation. Notice to appear in municipal court.
+
+(4)
+
+Initiate revocation under CMC § 18.05.100.
+
+(Ord. 810, 2000; Code 2000 § 11.10.09; Ord. 841 Exhs; 1, 2, 2003; amended during 2007 recodification; Ord. 916 § 1 (Exh. A), 2010)
+
+§ 18.05.100. Misrepresentation and revocation of an approval.
+
+The community development director may upon a reasonable notice to the applicant revoke and/or recommend denial of an active land use application or land use approval previously authorized. The applicant shall have the opportunity to appeal such an action.
+
+(A)
+
+The community development director may revoke or recommend denial of an active land use application or previously authorized action for any of the following reasons:
+
+(1)
+
+Material misrepresentation of fact in the application or in testimony or evidence submitted, whether the misrepresentation is intentional or unintentional.
+
+(2)
+
+Failure to comply with the approval and/or conditions of approval within the time and in the manner that was approved without obtaining an extension of time or modification of plans.
+
+(3)
+
+Failure to maintain and use the property in accordance with the approved plans and conditions.
+
+(B)
+
+Enforcement of Misrepresentation and/or Noncompliance. The community development director's decision to deny a land use application shall follow procedures in CMC § 18.15.010.
+
+(C)
+
+Revocation of a Land Use. The community development director prior to revoking an approved land use application shall follow the steps identified in CMC § 18.05.090(D) for code enforcement.
+
+(1)
+
+In lieu of a citation, the director shall prepare a report with a notice of decision.
+
+(2)
+
+An appeal of the director's decision shall follow the procedures identified in CMC § 18.15.090.
+
+(Ord. 916 § 1 (Exh. A), 2010)

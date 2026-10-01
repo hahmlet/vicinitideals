@@ -1,0 +1,679 @@
+Close
+Print
+Resize:
+
+City of Cornelius, OR
+
+[print date]
+
+Title 18. Zoning
+
+Division IV. SPECIAL REGULATIONS
+
+Chapter 18.145. OFF-STREET PARKING AND LOADING
+
+§ 18.145.010. General provisions.
+
+(A)
+
+The provision and maintenance of off-street parking and loading spaces are continuing obligations of the property owner. No building or other permit shall be issued until plans are presented that show property that is and will remain available for exclusive use as off-street parking and loading space as required by this title. The subsequent use of property for which the building permit is issued shall be conditional upon the unqualified continuance and availability of the amount of parking and loading space required for the specific use. Use of property in violation of the off-street parking and loading requirements located herein shall be a violation of this code. Should the owner or occupant of a lot or building change the use to which the lot or building is put, thereby increasing off-street parking or loading requirements, it shall be a violation of this code to begin or maintain the altered use until the required increase in off-street parking or loading is provided, except as provided in the central mixed use (CMU) and corridor commercial (CC) zoning districts (see CMC § 18.145.020(C)).
+
+(B)
+
+Unless otherwise provided, required parking and loading spaces shall not be located in a required yard.
+
+(C)
+
+Owners of two or more uses, structures, or parcels of land may agree to utilize jointly the same parking and loading spaces when the hours of operation do not overlap; provided, that satisfactory legal evidence is presented to the community development director in the form of deeds, leases, or contracts to establish the joint use.
+
+(D)
+
+A plan drawn to scale, indicating how the off-street parking and loading requirement is to be fulfilled, shall accompany the request for a building permit, site plan review, or certificate of occupancy. The plan shall show all those elements necessary to indicate that these requirements are being fulfilled and shall include but not be limited to:
+
+(1)
+
+Delineation of individual parking and loading spaces and their dimensions;
+
+(2)
+
+Circulation area necessary to serve spaces;
+
+(3)
+
+Access to streets, alleys and properties to be served;
+
+(4)
+
+Curb cuts;
+
+(5)
+
+Location and dimensions of all landscaping, including the type and size of plant material to be used, as well as any other nonliving landscape material incorporated into the overall plan, excluding single- and two-family residences and multi-family uses with not more than four units in the core residential zone; and
+
+(6)
+
+Specifications as to signs and bumper guards, excluding single- and two-family residences and multi-family uses with not more than four units in the core residential zone.
+
+(E)
+
+Requirements for types of buildings and uses not specifically listed herein shall be determined by the community development director, based upon the requirements of comparable uses listed.
+
+(Ord. 810, 2000; Code 2000 § 11.40.11; Ord. 841 Exh. 2, 2003; Ord. 2016-011 § 1 (Exh. A), 2016; Ord. 2018-02 § 1 (Exh. A), 2018; Ord. 2019-10 § 1 (Exh. A), 2019)
+
+§ 18.145.020. Off-street parking.
+
+(A)
+
+At the time of erection of a new structure or at the time of enlargement or change in use of an existing structure within any zone in the city, off-street parking spaces shall be provided in accordance with CMC § 18.145.030. If parking space has been provided in connection with an existing use or is added to an existing use, the parking space shall not be eliminated if elimination would result in less space than is specified in the standards of this section when applied to the entire use. In cases of enlargement of a building or use of land existing on the effective date of the ordinance codified in this title, the number of parking spaces required shall be based only on floor area or capacity of such enlargement.
+
+(B)
+
+Where square feet are specified, the area measured shall be the gross floor area primary to the functioning of the particular use of the property but shall exclude space devoted to off-street parking or loading. Where employees are specified, persons counted shall be those working on the premises during the largest shift at the peak season, including proprietors.
+
+(C)
+
+In the central mixed use and corridor commercial zoning districts, change of use of an existing commercial structure will not require additional parking to be constructed. However, construction of a new building or addition to an existing building will require the provision of off-street parking as required in CMC § 18.145.030.
+
+(D)
+
+If several uses occupy a single structure or parcel of land, the total requirements for off-street parking shall be the sum of the requirements of the several uses computed separately with a reduction of 10 percent to account for cross-patronage and shared parking benefits. Where the peak hours of operation of two or more uses do not substantially overlap, such uses may share off-street parking spaces as required by this title.
+
+(E)
+
+Parking spaces in public streets or alleys shall not be eligible as fulfilling any part of the parking requirements, except as allowed in the central mixed use and core commercial zoning districts.
+
+(F)
+
+Required parking spaces shall be available for the parking of operable motor vehicles for residents, customers, patrons, and employees only, and shall not be used for the storage or sale of vehicles or other materials and shall not be rented, leased or assigned to any other person or organization not using or being directly served by the use.
+
+(G)
+
+Off-street parking spaces for dwellings shall be located on the same lot with the dwelling, unless specified elsewhere in the code.
+
+(Ord. 810, 2000; Code 2000 § 11.40.12; Ord. 2019-10 § 1 (Exh. A), 2019)
+
+§ 18.145.030. Required off-street parking spaces.
+
+(A)
+
+Off-street parking shall be provided based on the primary use of the site according to the following standards and regardless of the parking zone in which the use is located (see Map 1 following this chapter).
+
+Table
+Minimum and Maximum Required Off-Street Vehicle and Bicycle Parking Requirements (unless otherwise noted, standard is per 1,000 sf of gross floor area)
+Table
+Minimum and Maximum Required Off-Street Vehicle and Bicycle Parking Requirements (unless otherwise noted, standard is per 1,000 sf of gross floor area)
+Table
+Minimum and Maximum Required Off-Street Vehicle and Bicycle Parking Requirements (unless otherwise noted, standard is per 1,000 sf of gross floor area)
+Table
+Minimum and Maximum Required Off-Street Vehicle and Bicycle Parking Requirements (unless otherwise noted, standard is per 1,000 sf of gross floor area)
+Table
+Minimum and Maximum Required Off-Street Vehicle and Bicycle Parking Requirements (unless otherwise noted, standard is per 1,000 sf of gross floor area)
+Land Use
+Minimum Parking Standards
+Maximum Parking Standards
+Maximum Parking Standards
+Minimum Bicycle Parking Standards
+Land Use
+Minimum Parking Standards
+Zone A
+Zone B
+Minimum Bicycle Parking Standards
+RESIDENTIAL
+RESIDENTIAL
+RESIDENTIAL
+RESIDENTIAL
+RESIDENTIAL
+Detached Single Dwelling Units
+1.0/DU
+none
+none
+none
+Middle Housing
+1.0/DU
+none
+none
+none
+Multi-Unit Dwellings
+1.0/DU
+none
+none
+1.0/2 DUs except elderly, which is 1.0/20 DUs
+Manufactured Units
+1.0/DU
+none
+none
+none
+Mobile Home Parks
+1.0/DU
+none
+none
+none
+GROUP LIVING
+1.0/room
+1.0/2.5 beds
+non
+2.7/1,000
+non
+2.7/1,000
+1.0/5 beds
+TRANSITIONAL HOUSING
+1.0/2.5 beds
+none
+none
+1.0/5 beds
+HOME OCCUPATION
+none
+none
+none
+none
+CIVIC
+CIVIC
+CIVIC
+CIVIC
+CIVIC
+Basic Utilities
+none
+none
+none
+none
+Colleges
+1.0/5 students/staff
+1.0/3.3 students/staff
+1.0/3.3 students/staff
+1.0/3.0 students/staff
+Community Recreation
+2.0/1,000
+2.5/1,000
+4.0/1,000
+0.3/1,000
+Cultural Institutions
+2.5/1,000
+3.5/1,000
+4.5/1,000
+0.5/1,000
+Medical Centers
+2.0/1,000
+3.7/1,000
+4.2/1,000
+0.2/1,000
+MOTOR VEHICLE RELATED
+MOTOR VEHICLE RELATED
+MOTOR VEHICLE RELATED
+MOTOR VEHICLE RELATED
+MOTOR VEHICLE RELATED
+Motor Vehicle Sales/Rental
+1.0/1,000 but no less than 4
+1.3/1,000 but no less than 4
+2.0/1,000 but no less than 4
+0.2/1,000 sales area
+Motor Vehicle Servicing/Repair
+2.0/1,000 but no less than 4
+2.3/1,000
+2.6/1,000
+0.2/1,000
+Vehicle Fuel Sales
+3.0 + 2.0/service bay
+4.0 + 2.0/service bay
+4.0 + 2.0/service bay
+0.2/1,000
+OFFICE
+2.7/1,000
+3.4/1,000
+4.1/1,000
+0.5/1,000
+COMMERCIAL
+COMMERCIAL
+COMMERCIAL
+COMMERCIAL
+COMMERCIAL
+Commercial Lodging
+1.0/room
+1.2/room
+1.4/room
+1.0/10 rooms
+Eating and Drinking Establishments
+fast food: 9.9/1,000
+other: 15.3/1,000
+12.4/1,000
+19.1/1,000
+14.9/1,000
+23/1,000
+All: 1.0/1,000
+Self-Service Storage
+1/5,000 sf up to 20,000 sf; 1/20,000 sf thereafter
+none
+none
+1/50,000 sf
+ENTERTAINMENT ORIENTED
+ENTERTAINMENT ORIENTED
+ENTERTAINMENT ORIENTED
+ENTERTAINMENT ORIENTED
+ENTERTAINMENT ORIENTED
+Major Event Entertainment
+1.0/3 seats or 1.0/6' bench
+1.0/2.5 seats or 1.0/5' bench
+1.0/2 seats or 1.0/4' bench
+1.0/10 seats or 40' bench
+Outdoor Entertainment
+4.0/1,000
+4.5/1,000
+5.0/1,000
+0.4/1,000
+Indoor Entertainment
+4.3/1,000
+theater: 1.0/3 seats
+5.4/1,000
+theater: 1.0/2.5 seats
+6.5/1,000
+theater: 1.0/2.0 seats
+0.5/1,000
+1.0/10 seats
+Adult Entertainment
+2.5/1,000
+1.0/3 seats
+3.5/1,000
+1.0/1.25 seats
+6.5/1,000
+1.0/2.0 seats
+0.5/1,000
+1.0/10 seats
+GENERAL RETAIL
+GENERAL RETAIL
+GENERAL RETAIL
+GENERAL RETAIL
+GENERAL RETAIL
+Sales-Oriented
+3.7/1,000
+5.1/1,000
+6.2/1,000
+0.3/1,000
+Personal Services
+2.5/1,000
+bank with drive-in: 4.3/1,000
+3.0/1,000
+5.4/1,000
+4.5/1,000
+6.5/1,000
+1.0/1,000
+1.0/1,000
+Repair-Oriented
+3.3/1,000
+4.0/1,000
+4.5/1,000
+0.3/1,000
+Bulk Sales
+1.0/1,000 but no less than 10
+1.3/1,000
+2.0/1,000
+0.3/1,000
+Outdoor Sales
+1.0/1,000 sales area
+1.3/1,000 sales area
+2.0/1,000 sales area
+0.1/1,000 sales area
+Animal-Related
+3.3/1,000
+4.0/1,000
+4.5/1,000
+0.3/1,000
+INDUSTRIAL
+INDUSTRIAL
+INDUSTRIAL
+INDUSTRIAL
+INDUSTRIAL
+Industrial Services
+0.8/1,000
+1.2/1,000
+1.8/1,000
+0.1/1,000
+Manufacturing; Production; Light Industrial; General Industrial; Heavy Industrial
+1.6/1,000
+none
+none
+0.1/1,000
+Research and Development
+2.0/1,000
+3.0/1,000
+3.8/1,000
+0.5/1,000
+Warehouse/Freight Movement
+< 150,000 sq ft: 0.5/1,000
+> 150,000 sq ft: 0.3/1,000
+0.8/1,000
+0.4/1,000
+1.2/1,000
+0.5/1,000
+0.1/1,000
+Waste-Related
+5
+7
+10
+none
+Wholesale Sales
+0.8/1,000
+1.2/100
+1.8/1,000
+0.1/1,000
+OTHER
+OTHER
+OTHER
+OTHER
+OTHER
+Agriculture/Horticulture
+2.5/1,000 sales area but no less than 4
+none
+none
+none
+Cemeteries
+exempt
+exempt
+exempt
+none
+Detention Facilities
+1.0/2.5 beds
+none
+none
+1.0/15 beds
+Wireless Communication Facility
+none
+none
+none
+none
+Postal Services
+2.5/1,000
+3.0/1,000
+4.5/1,000
+0.3/1,000
+Public Support Facilities
+none
+none
+none
+none
+Religious Institutions
+0.25/seat in main assembly area
+0.6/seat in main assembly area
+0.8/seat in main assembly area
+1.0/20 seats in main assembly area
+Schools
+preschool: 5.0 + 1/classroom
+elementary/JR: 2.0/classroom
+SR: 1.0/5 students/staff
+preschool: 7.0 + 1/classroom
+elementary/JR: 2.5/classroom
+SR: 1.0/3.3 students/staff
+preschool: 10.0 + 1/classroom
+elementary/JR: 3.5/classroom
+SR: 1.0/3.3 students/staff
+preschool: 1.0/classroom
+elementary/JR: 6.0/classroom
+SR: 6.0/classroom
+Social/Fraternal Clubs/Lodges
+10.0/1,000 main assembly area
+12.0/1,000 main assembly area
+14.0/1,000 main assembly area
+2.0/1,000 main assembly area
+
+All uses providing drive-in service as defined by this title shall provide on the same site a reservoir for inbound vehicles as follows:
+
+Land Use                              Reservoir Requirement
+Drive-In Banks                        5 spaces/service terminal
+Drive-In Restaurants                  10 spaces/service window
+Drive-In Theaters                     10% of theater capacity
+Gasoline Service Stations             3 spaces/pump
+Mechanical Car Washes                 3 spaces/washing unit
+Parking Facilities – Free Flow Entry  1 space/entry driveway
+Ticket Dispense Entry                 2 spaces/entry driveway
+Manual Ticket Dispensing              8 spaces/entry driveway
+
+(Ord. 810, 2000; Code 2000 § 11.40.13; Ord. 841 Exh. 1, 2003; Ord. 2018-02 § 1 (Exh. A), 2018; Ord. 2022-03 § 1 (Exh. A), 2022)
+
+§ 18.145.040. Off-street loading.
+
+(A)
+
+Buildings and structures to be built or substantially altered which receive and distribute material or merchandise by truck shall provide and maintain off-street loading space as follows:
+
+Table 2 Off-Street Loading Requirements  Table 2 Off-Street Loading Requirements
+Land Use                                 Loading Space Required
+Industrial                               Industrial
+Floor Area:                              Floor Area:
+Under 25,000 sq ft                       1
+25,000 to 50,000 sq ft                   2
+50,000 to 100,000 sq ft                  3
+Commercial                               Commercial
+Floor Area:                              Floor Area:
+Under 5,000 sq ft                        0
+5,000 to 25,000 sq ft                    1
+25,000 to 50,000 sq ft                   2
+50,000 to 100,000 sq ft                  3
+
+Table 3 Minimum Loading Berth Dimensions  Table 3 Minimum Loading Berth Dimensions  Table 3 Minimum Loading Berth Dimensions
+Land Use                                  Length – Linear Feet                      Width – Linear Feet
+All uses except wholesale and industrial  35                                        12
+Wholesale storage and industrial          65                                        12
+
+(B)
+
+Passengers. A driveway designed for continuous forward flow of passenger vehicles for the purpose of loading and unloading children shall be located on the site of any school having a capacity greater than 25 students.
+
+(C)
+
+Merchandise, Materials or Supplies. Buildings or structures to be built or substantially altered which receive and distribute material or merchandise by truck shall provide and maintain off-street loading berths in sufficient numbers and size to adequately handle the needs of the particular use. If loading space has been provided in connection with an existing use or is added to an existing use, the loading space shall not be eliminated if elimination would result in less space than is required to adequately handle the needs of the particular use.
+
+(D)
+
+Any area to be used for the maneuvering of delivery vehicles and the unloading or loading of materials shall be separated from designated off-street parking areas and appropriately designed to prevent the encroachment of delivery vehicles into off-street parking areas or into a public street.
+
+(E)
+
+The facilities review committee may modify the off-street loading requirements as they apply to any individual case only for good cause shown, and it shall set reasonable safeguards and conditions to ensure that any such modification conforms to the intent of this title. Modification may be granted if it is demonstrated to the satisfaction of the committee that loading operations of the use or structure in question will not interfere with pedestrian or vehicular traffic on a public street.
+
+(F)
+
+Exceptions and Adjustments. Loading areas within a street right-of-way within the Cornelius Town Center may be approved when all of the following conditions are met:
+
+(1)
+
+Area is signed for short duration only (i.e., less than one hour);
+
+(2)
+
+Expected visits are infrequent (less than three operations occur daily between 5:00 a.m. and 12:00 a.m. or all operations occur between 12:00 a.m. and 5:00 a.m. at a location that is not adjacent to a residential zone);
+
+(3)
+
+Area does not unreasonably obstruct traffic;
+
+(4)
+
+Area does not obstruct a primary emergency response route; and
+
+(5)
+
+Designation is acceptable to the applicable roadway authority.
+
+(Ord. 810, 2000; Code 2000 § 11.40.14; Ord. 2018-02 § 1 (Exh. A), 2018)
+
+§ 18.145.050. Design and maintenance standards for off-street parking and loading facilities.
+
+(A)
+
+Except as otherwise defined in this code, "one standard parking space" means a minimum of a parking stall of nine feet in width and 20 feet in length. To accommodate compact cars more efficiently, up to 25 percent of the available parking spaces may have a minimum dimension of eight feet in width and 16 feet in length, so long as they are identified as compact car stalls and are not readily accessible to large cars.
+
+(B)
+
+Excluding detached single-unit dwellings and middle housing residences, groups of two or more parking spaces shall be served by a service drive so that no backing movements or other maneuvering within a street or other public right-of-way would be required.
+
+(C)
+
+Service drives shall be designed and constructed to facilitate the flow of traffic, provide maximum safety of traffic access and egress consistent with CMC § 18.150.070, and maximum safety of pedestrians and vehicular traffic on the site.
+
+(D)
+
+Each parking and/or loading space shall be accessible from a street and the access shall be of a width and location as described in this section.
+
+(E)
+
+Parking space configuration, stall and access aisles shall be of sufficient width for all vehicles turning and maneuvering.
+
+(F)
+
+Except for detached, single-unit dwellings and middle housing residences, any area intended to be used to meet the off-street parking requirements as contained in this title shall have all parking spaces clearly marked using a permanent paint. All interior drives and access aisles shall be clearly marked and signed to show direction of flow and maintain vehicular and pedestrian safety.
+
+(G)
+
+Except for detached, single-unit dwellings and middle housing residences, all areas used for the parking and/or storage and/or maneuvering of any vehicle, boat and/or trailer shall be improved with asphalt or concrete surfaces according to the same standards required for the construction and acceptance of city streets. Off-street parking spaces for residential development with not more than four units in the core residential zone shall be improved with an asphalt or concrete surface to specification as approved by the building official.
+
+(H)
+
+Parking spaces along the outer boundaries of a parking lot or adjacent to interior landscaped areas or sidewalks shall be provided with a wheel stop at least four inches high located three feet back from the front of the parking stall. The facilities and design review committee or the planning commission may approve parking spaces without wheel stops, provided the abutting sidewalk is increased by three feet in width and/or the appropriate landscaping is planted where the bumper would overhang.
+
+(I)
+
+Off-street parking and loading areas shall be drained in accordance with specifications approved by the city engineer.
+
+(J)
+
+Artificial lighting on all off-street parking facilities shall be designed to deflect all light away from surrounding residences and so as not to create a hazard to the public use of any road or street.
+
+(K)
+
+Signs which are provided on parking lots for the purpose of meeting this section shall be as prescribed by the building official.
+
+(L)
+
+All parking lots shall be kept clean and in good repair at all times. Breaks in paved surfaces shall be repaired promptly, and broken or splintered wheel stops shall be replaced so that their function will not be impaired.
+
+(M)
+
+Bicycle parking spaces shall be conveniently located with respect to the street, bicycle path/lane and building entrance. Bicycle parking spaces shall not conflict with off-street vehicle parking spaces and drive aisles. There shall be at least 36 inches of clearance between parked bicycles and other obstructions or buildings.
+
+(1)
+
+Short-Term Bicycle Parking. Short-term bicycle parking shall be provided to encourage shoppers, customers, and other visitors to use bicycles by providing a convenient and readily accessible place to park bicycles.
+
+(a)
+
+Short-term bicycle facilities shall be in the form of either a lockable enclosure or a stationary rack, either covered or uncovered, to which the bicycle can be locked.
+
+(b)
+
+Short-term bicycle facilities shall be located within 30 feet of the main entrance to the building, in a location that is easily accessible for bicycles.
+
+(c)
+
+Short-term bicycle facilities may be located within the right-of-way adjacent to the street frontage of a property within the central mixed use and core commercial districts if approved by the city engineer.
+
+(2)
+
+Long-Term Bicycle Parking. Long-term bicycle parking provides employees, students, residents, commuters, and others who generally stay at a site for several hours a weather-protected place to park bicycles.
+
+(a)
+
+A minimum of 50 percent of the bicycle parking spaces shall be provided as long-term bicycle parking in any of the following situations:
+
+(i)
+
+When 10 percent or more of automobile vehicle parking is covered.
+
+(ii)
+
+If more than four bicycle parking spaces are required.
+
+(iii)
+
+Multi-family residential development with nine or more units.
+
+(b)
+
+Secured bicycle parking facilities shall be provided on site; facilities can include a bicycle storage room, bicycle lockers, covered racks, or other secure storage space inside or outside of the building. Long-term bicycle parking facilities shall be located not more than 75 feet from a building entrance.
+
+(Ord. 810, 2000; Code 2000 § 11.40.15; Ord. 841 Exh. 2, 2003; Ord. 874 Exh. (1)(B), 2006; Ord. 916 § 1 (Exh. A), 2010; Ord. 2016-011 § 1 (Exh. A), 2016; Ord. 2018-02 § 1 (Exh. A), 2018; Ord. 2018-05 § 1 (Exh. A), 2018; Ord. 2019-10 § 1 (Exh. A), 2019; Ord. 2022-03 § 1 (Exh. A), 2022)
+
+§ 18.145.060. Landscaping required.
+
+(A)
+
+Purpose. The purpose of this section is to improve the appearance of off-street parking and open lot sales and services areas in Cornelius and to protect and preserve the appearance, character, and value of the surrounding neighborhoods and thereby promote the general welfare by providing for installation and maintenance of landscaping for screening, buffering and aesthetic qualities, finding that the particular characteristics and qualities of Cornelius justify regulations to perpetuate its aesthetic appeal on a city-wide basis. It is also the purpose of this section to allow for increased seepage by providing openings in the impervious surface, increased safety by breaking up large expanses of pavement, and increased shading to reduce overheating of car interiors, and reduce glare and radiation from large numbers of vehicles.
+
+(B)
+
+Minimum Requirements. All areas used for the display and/or parking of any and all types of vehicles, trailers, boats or heavy construction equipment, whether such vehicles traverse the property as a function of the primary use, hereinafter referred to as "other vehicular uses," shall conform to the minimum landscaping requirements provided in this section. Activities that are of a drive-in nature such as, but not limited to, filling stations, grocery and dairy stores, banks, restaurants, and the like shall conform to the minimum landscaping requirements also. The following areas are not required to meet the landscaping standards:
+
+(1)
+
+Where all of the parking or other vehicular uses are located under, on or within buildings; and
+
+(2)
+
+Parking areas serving single- and two-family uses and multi-family uses with not more than four units in the core residential zone as normally such residential areas shall not be required to meet.
+
+(C)
+
+Installation. All landscaping shall be installed in a sound workmanship-like manner and according to accepted good planting procedures with the quality of plant materials as hereinafter described. All elements of landscaping exclusive of plant material except hedges shall be installed so as to meet all other applicable ordinances and code requirements. Landscaped areas shall require protection from vehicular encroachment as herein provided in CMC § 18.145.050(H). The community development director or the building official shall inspect all landscaping and no certificates of occupancy or similar authorization will be issued unless the landscaping meets the requirements herein provided.
+
+(D)
+
+Maintenance. The owner, tenant and their agent, if any, shall be jointly and severally responsible for the maintenance of all landscaping which shall be maintained in good condition so as to present a healthy, neat and orderly appearance and shall be kept free from refuse and debris. All plant growth in interior landscaped areas shall be controlled by pruning, trimming or otherwise so that:
+
+(1)
+
+It will not interfere with the maintenance or repair of any public utility;
+
+(2)
+
+It will not restrict pedestrian or vehicular access; and
+
+(3)
+
+It will not constitute a traffic hazard because of reduced visibility.
+
+(Ord. 810, 2000; Code 2000 § 11.40.16, Ord. 841 Exh. 2, 2003; Ord. 2019-10 § 1 (Exh. A), 2019)
+
+§ 18.145.070. Parking lot design standards.
+
+(A)
+
+Required Landscaping Adjacent to Public Right-of-Way. A strip of land at least five feet in width located between the abutting right-of-way and the off-street parking area or vehicle use area which is exposed to an abutting right-of-way, except in required vision clearance areas as provided in CMC § 18.150.070.
+
+(B)
+
+Perimeter Landscaping Relating to Abutting Properties. On the site of a building or structure or open lot use providing an off-street parking area or other vehicular use area, where such areas will not be entirely screened visually by an intervening building or structure from abutting property, a five-foot landscaped strip shall be between the common lot line and the off-street parking area or other vehicular use area exposed to abutting property.
+
+(C)
+
+Where the boundary of a parking lot in a nonresidential zone adjoins a residential district, a 10-foot landscaped strip shall be provided along the entire length abutting the residential zone, and shall be landscaped with evergreen plant material and maintained at a minimum height of 36 inches.
+
+(D)
+
+Parking Area Interior Landscaping. Landscaped islands shall be provided a minimum of every 10 parking spaces with a depth equivalent to the depth of the adjacent parking spaces and a minimum width of six feet to break up large expanses of pavement, improve the appearance and climate of the site, improve safety, and delineate pedestrian walkways and traffic lanes. Except for industrial development within industrial zones, the following interior landscaping shall be met:
+
+(1)
+
+Sight Distance for Landscaping at Points of Access. When an accessway intersects a public right-of-way or when the subject property abuts the intersection of two or more public rights-of-way, all landscaping within vision clearance areas pursuant to CMC § 18.150.070 shall provide unobstructed cross-visibility at a level between three feet and 10 feet above the curb line; provided however, visibility areas shall be allowed, provided they are so located so as not to create a traffic hazard. Landscaping except required grass or ground cover shall not be located closer than three feet from the edge of any accessway pavement.
+
+(2)
+
+Parking lots that are more than three acres in size shall provide street features along major drive aisles. These features shall include at a minimum curbs, sidewalks and street trees and/or planter strips or both.
+
+(3)
+
+Access to and from parking spaces/areas shall not permit backing onto a public street and/or a public vehicle travel lane or both, except for single-family or duplex dwellings and multi-family uses with not more than four units in the core residential zone.
+
+(Ord. 810, 2000; Code 2000 § 11.40.17; Ord. 874 Exh. (1)(B), 2006; Ord. 2019-10 § 1 (Exh. A), 2019)
+
+§ 18.145.080. Drainage of off-street parking and loading facilities.
+
+Off-street parking and loading facilities shall be drained to avoid flow of water across public sidewalks.
+
+(Ord. 810, 2000; Code 2000 § 11.40.18; Ord. 2018-02 § 1 (Exh. A), 2018)
+
+§ 18.145.090. Security required.
+
+(A)
+
+Completion Time for Parking Lots. Required parking spaces shall be improved and available for use before the final inspection. An extension of time may be granted by the community development director, provided a security equal to 150 percent of the cost of the parking lot is posted with the city of Cornelius and the parking space is not required for immediate use. If the parking improvements are not completed within six months, the city shall have access to the security to complete the installation and/or revoke occupancy. Upon completion of the installation, any portion of the remaining security shall be returned to the owner. Costs in excess of the posted security shall be assessed against the property and the city shall thereupon have a valid lien against the property, which shall become due and payable.
+
+Map 1
+
+(Ord. 810, 2000; Code 2000 § 11.40.19; Ord. 841 Exh. 2, 2003)

@@ -295,6 +295,16 @@ def test_the_checks_record_carries_the_tight_fit_and_side_column_flags() -> None
     assert result_checks(nan)["fit"]["column"] is False
 
 
+def test_the_checks_record_carries_the_screen_warnings() -> None:
+    # Steph 2026-10-01, Cornelius's sun-shading rule: "Green with a warning".
+    # The warning rides beside the colour; a bundle written before the
+    # column carries none.
+    row = {**_bridge_row(LOT_A, DESIGNS[0]), "warnings": "solar_shade"}
+    assert result_checks(row)["warnings"] == ["solar_shade"]
+    old = result_checks(_bridge_row(LOT_A, DESIGNS[0]))
+    assert not old.get("warnings")
+
+
 def test_the_checks_record_carries_the_corner_front_and_the_side_street_driveway() -> None:
     # FOLLOWUPS 4(e), Steph 2026-09-26: the street the code names the front
     # of a corner lot, and a court reached off the other street. A bundle
@@ -320,6 +330,17 @@ def test_the_checks_record_carries_the_drawing_of_the_fit() -> None:
     assert "drawing" not in result_checks(_bridge_row(LOT_A, DESIGNS[0]))
     for empty in (None, float("nan"), ""):
         assert "drawing" not in result_checks({**_bridge_row(LOT_A, DESIGNS[0]), "drawing": empty})
+
+
+def test_the_checks_record_carries_the_fire_hose_route() -> None:
+    # FOLLOWUPS 28: the hose's route from the street to the farthest wall,
+    # to the tenth of a foot. A bundle written before the bridge measured it,
+    # or a plan it skipped (red both ways), carries none.
+    row = {**_bridge_row(LOT_A, DESIGNS[0]), "fire_route_ft": 162.437}
+    assert result_checks(row)["fire_route_ft"] == 162.4
+    assert "fire_route_ft" not in result_checks(_bridge_row(LOT_A, DESIGNS[0]))
+    for empty in (None, float("nan")):
+        assert "fire_route_ft" not in result_checks({**_bridge_row(LOT_A, DESIGNS[0]), "fire_route_ft": empty})
 
 
 def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:

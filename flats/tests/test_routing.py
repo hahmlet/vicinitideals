@@ -280,6 +280,36 @@ OPEN = {
     "or/washington/sherwood 16.40.050 -> 16.40.040",
     "or/washington/king-city 16.114.040 -> 16.84.060",
     "or/washington/king-city 16.114.130 -> 16.132",
+    # 2026-10-01, Cornelius (a worktree draft). Nine rows, all open, none on
+    # a figure the pod needs (a tenth, 18.75.065 -> 18.75.050, closed the
+    # same day; see FOLLOWED):
+    # - 18.145.010 -> 18.145.020: a change of use that adds parking demand is
+    #   excused in CMU and CC "(see CMC 18.145.020(C))". Both zones refuse
+    #   the pod, and it is new construction, not a change of use.
+    # - 18.35.050 and 18.70.050 -> 18.150.010: A-2's and CR's yards apply
+    #   "Except as provided in CMC 18.150.010" (CR adds "for accessory
+    #   structures"). 18.150.010 is stored and read for the layer's
+    #   covered-parking comment; it relaxes accessory structures, and the
+    #   pod is the primary building.
+    # - 18.35.060 and 18.70.060 -> 18.100, 18.100.030 and 18.100.070: design
+    #   review. 18.100.030 (A)(2) makes a middle housing site plan Type I
+    #   (quoted in the layer's comments, not by a value); 18.100.070 is the
+    #   menu of design features, not placement. CR's 18.100.030(C) Type III
+    #   path is for multi-unit dwellings, five or more units.
+    # - 18.75.065 -> 18.75.060, .070: GMU's ground-floor residential
+    #   standards stand "In lieu of" the zone's general ones. GMU refuses
+    #   the one-lot pod; its townhouse path (Steph, 2026-10-01) is held
+    #   behind an unmapped subdistrict figure. The .050 row closed: see
+    #   FOLLOWED.
+    "or/washington/cornelius 18.145.010 -> 18.145.020",
+    "or/washington/cornelius 18.35.050 -> 18.150.010",
+    "or/washington/cornelius 18.35.060 -> 18.100",
+    "or/washington/cornelius 18.70.050 -> 18.150.010",
+    "or/washington/cornelius 18.70.060 -> 18.100",
+    "or/washington/cornelius 18.70.060 -> 18.100.030",
+    "or/washington/cornelius 18.70.060 -> 18.100.070",
+    "or/washington/cornelius 18.75.065 -> 18.75.060",
+    "or/washington/cornelius 18.75.065 -> 18.75.070",
     # Tigard, a draft from a cloud session, 2026-10-01. Each read:
     # 18.140.040 -> .030 lists the PR zone's restricted uses; PR prohibits
     # Residential Use. 18.280.040 -> 18.920.030 is the tandem-driveway path
@@ -391,6 +421,14 @@ FOLLOWED = {
     # minimum density, so the pod's answer does not move; the reader fix is
     # proposed in the Washington handoff rather than made here.
     "or/washington/beaverton 70.15.10 -> 70.15.10.5",
+    # 2026-10-01, Cornelius GMU (a worktree draft). 065 stands "In lieu of"
+    # 050, and 050 was read to know what it replaces: lot size, setbacks,
+    # height, landscaping. The citation that lands there is 050 (A)'s "No
+    # minimum lot size is required", held as the one-lot default under the
+    # townhouse lot size and width -- moot, because the one-lot path is
+    # refused on the use row. Followed in the sense the ledger asks; no
+    # 050 standard is applied to a townhouse.
+    "or/washington/cornelius 18.75.065 -> 18.75.050",
     # Tigard, 2026-10-01 (draft). 18.660.080 -> 18.30 is TMU's height in
     # storeys (L943), whose basements are "as defined in Chapter 18.30"; the
     # layer reads 18.30 whole. 18.660.060 -> .040 is a WIRELESS FACILITY

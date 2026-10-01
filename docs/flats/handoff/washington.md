@@ -143,7 +143,7 @@ cloud session's and are left as written.
 | Tigard | Draft done 2026-10-01 (a later cloud session, branch `flats/tigard-draft`), steps 1-10 and 12. 22 documents (chapters of Title 18, the Community Development Code, eCode360 TI5024, through Ord. 26-13 of July 14, 2026), 13 zones (9 admit the pod as a rowhouse development, 4 refuse), 0 map rulings. eCode360's print view (`https://ecode360.com/print/TI5024?guid=...`) answered a browser User-Agent with no challenge, one chapter every 30 seconds (the scout's 403 was on the reader URL, which this session did not retry). The city site still answers 403 (Akamai) and was not worked around; nothing needed was only there. No city GIS: lots reach the layer by `JURIS_CITY` = `TIGARD`, and Metro's regional zoning layer (`CITY='Tigard'`, field `ZONE`) carried the 13 code names in 189 polygons on 2026-09-30. Blind second reading: 174 cards, 0 disagree |
 | Forest Grove | Not started. **Refused:** the code is only on American Legal (`https://codelibrary.amlegal.com/codes/forestgrove/latest/forestgrovedev_or/0-0-0-4`), which answered 403 to curl and WebFetch; there is no whole-code PDF. City zoning layer reachable (`maps.forestgrove-or.gov/server/rest/services/ForestGrove/Zoning/FeatureServer/16`, field `zoning_code`) |
 | Sherwood | Draft done, steps 1-10 and 12. 18 documents (15 slices of the Zoning and Community Development Code, Municode publication 3865, Supplement 24, through Ord. 2026-001; 3 slices of Ordinance 2022-004, for pages the Municode PDF drops), 21 zones, 14 map codes ruled (Old Town, OS, UGA, Unannex and ten county or neighbouring-city codes on unannexed land). City zoning layer `services5.arcgis.com/ikEzR7lqVIlrcVFn/.../Planning/FeatureServer/2`, field `CODE`. Nothing refused |
-| Cornelius | Not started. **Refused:** Code Publishing now points to eCode360 (`https://ecode360.com/CO4396`), which answered 403 (Cloudflare); `www.ci.cornelius.or.us` failed TLS. No city zoning layer; Metro's is stale (no R-10). The city's Zoning Map 2025 PDF is reachable. The AGOL "Cornelius Zoning Map" is Cornelius, North Carolina |
+| Cornelius | Draft done, steps 1-10 and 12 (worktree `flats/cornelius-draft`, 2026-10-01). 30 documents (chapters of the Cornelius Municipal Code, Titles 16, 17 and 18, from eCode360's print view, client CO4396), 12 zones (4 admit the pod, 8 refuse), 7 map codes ruled (4 aliases, 3 unencodable county codes). No city zoning layer: lots reach the layer by `JURIS_CITY` = `CORNELIUS`, and their zone comes from Metro's regional zoning layer, which has no R-10; the city's Zoning Map (April 2025) was read to compare. eCode360 answered every request with a normal browser User-Agent; no challenge was met and nothing was worked around |
 | King City | Draft done, steps 1-10 and 12. 12 documents (slices of the Community Development and Zoning Code, Municipal Code Title 16, Municode publication 3913, Supplement 16, August 2026, through Ord. O-2025-02), 14 zones (4 admit the pod, 10 refuse), 12 map codes ruled (6 aliases, 5 county pockets, 1 unencodable). City zoning layer on AGOL (`King_City_Current_and_Future_Zoning_Map_WFL1/FeatureServer/1`, field `ZONECLASS`; Kingston Terrace on layer 4, field `Zoning_Designations`). `www.kingcityoregon.gov` refused (CONNECT 502); `www.ci.king-city.or.us` answered, and nothing needed was only on the first |
 | Durham | Draft done, steps 1-10 and 12. 9 documents (chapters 2, 3, 4, 5, 7, 8, 9, 10 and 12 of the Development Code revised 2025-11-13, one 137-page PDF, `https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf`), 8 zones (1 admits the pod, 7 refuse), 0 map rulings. No city GIS: lots reach the layer by `JURIS_CITY` = `DURHAM`, and Metro's regional zoning layer (`CITY='Durham'`, field `ZONE`) carries SDR, MDR, IP, OP and NR in 21 polygons. Nothing refused |
 
@@ -771,6 +771,58 @@ not a notes block, and are about street sections; the file's header says
 so.
 
 Failed fetches for Tigard: none.
+
+### Cornelius
+
+Thirty documents, stored under `flats/provenance/docs/or/washington/cornelius/`,
+retrieved 2026-09-30 (27) and 2026-10-01 (the three solar chapters). Each
+is one chapter of the Cornelius Municipal Code as eCode360's print view
+prints it (`https://ecode360.com/print/CO4396?guid=<guid>`), extracted as
+plain HTML text, one paragraph to a line. The fetches used a normal desktop
+browser User-Agent with a pause of about four seconds between requests;
+every chapter answered 200 and no page returned a challenge.
+
+Held:
+
+- Title 18: 18.05 (the district list, 18.05.030, and similar uses), 18.10
+  and 18.15 (procedures), the zone chapters 18.20 R-7, 18.25 R-10, 18.30
+  MHP, 18.35 A-2, 18.40 C-1 (a repeal notice), 18.45 C-2, 18.50 CE (a
+  repeal notice), 18.54 LI, 18.55 M-1, 18.60 CMU, 18.65 CC, 18.70 CR, 18.75
+  GMU, 18.80 MSC and 18.85 MSDO (repeal notices), 18.90 FP and 18.95 NRO;
+  18.100 (site design review), 18.143 (transportation), 18.145 (parking),
+  18.150 (special uses: accessory structures, clear vision), 18.155,
+  18.160 and 18.165 (solar access, solar balance point, solar access
+  permit) and 18.195 (definitions);
+- Title 16 (annexation) and Title 17 (land divisions).
+
+`allow_thin` is declared, each with a comment saying it was read whole, on
+the four repeal notices, 18.195 (a glossary of short lines), 18.160 and
+18.165. `definitions_at: L21-L839` on 18.195, so the glossary reader takes
+18.195.010 to 18.195.260 and not the print chrome above it.
+
+Fetched to scratch, read for the reference ledger, and not stored: 18.105
+(conditional use), 18.110 (planned unit development), 18.115 (variances),
+18.140 (director's interpretation), 18.141 (administrative relief), 18.168
+(low-impact development), 18.170 (cultural and historic resources) and
+18.190 (general reference). None places the pod on one lot by right. One
+city page answered 404 (`www.corneliusor.gov/DocumentCenter/View/1288`);
+nothing needed was there.
+
+The city's Zoning Map, April 2025
+(`https://www.corneliusor.gov/DocumentCenter/View/1542/Zoning-Map-2025`,
+a PDF), was read in scratch to compare with Metro's layer (Zones). It is
+not stored: a picture, not a standard.
+
+**The footnote census** finds two note blocks, both dismissed in
+`flats/config/footnotes/or/washington/cornelius.yaml`: CR's flag-lot note
+on the lot size column (18.70.050 (A), L176: the pole does not count toward
+area, a reading nothing measures) and the floodplain chapter's note on its
+mitigation multipliers (18.90, L921). The census also counts two markers
+with no note under them in the floodplain table: the column heads print
+cubic and square feet as "ft[3]" and "ft[2]" (L912). `caps.json` is
+unchanged.
+
+Failed fetches: none from eCode360.
 
 ## 3. Zones
 
@@ -1590,6 +1642,218 @@ The zones:
 
 **Ruled, not encoded: none.**
 
+### Cornelius
+
+The zone keys are the district abbreviations of 18.05.030 as the code
+prints them, with the hyphen (`R-7`, `A-2`). The city publishes no zoning
+service. Lots reach the layer by the taxlots' `JURIS_CITY` = `CORNELIUS`
+(about 4,288 lots), and their zoning comes from Metro's regional zoning
+layer (`CITY='Cornelius'`, field `ZONE`). Counted on 2026-09-30:
+
+| Code on Metro's layer | Polygons | Ruling |
+|---|---|---|
+| R7 | 2,126 | alias of R-7 |
+| A2 | 1,259 | alias of A-2 |
+| CR | 147 | zone |
+| C2 | 87 | alias of C-2 |
+| CMU | 70 | zone |
+| M1 | 62 | alias of M-1 |
+| MHP | 45 | zone |
+| CC | 20 | zone |
+| GMU | 18 | zone |
+| LI | 5 | zone |
+| FD-20 | 3 (about 1.2 acres) | unencodable |
+| AF-5 | 1 (about 0.8 acres) | unencodable |
+| FD-10 | 1 (about 0.9 acres) | unencodable |
+
+**Metro's map against the city's.** The city's Zoning Map (April 2025)
+labels the same districts with their hyphens and adds R-10 on one small
+parcel at the east end, which Metro's layer does not carry. Neither map
+shows NRO or FP. FD-20, FD-10 and AF-5 are Washington County districts on
+annexed slivers: the code keeps no county zoning after annexation
+(16.10.030, L67; 16.10.040 (F), L101), and the city district the land takes
+is not printed, so they are unencodable, as in Sherwood.
+
+Held because 18.05.030 names them districts though no map carries them:
+R-10 (the city's map only), NRO (an overlay). Not held: FP (a flood
+construction chapter with no use list, a layer-wide NOT ENCODED comment),
+and C-1, CE, MSC and MSDO, repealed (`test_districts.py` rulings).
+
+What the pod is here. "Dwelling, quadplex" is "a building containing four
+attached or detached dwelling units located on a single parcel or lot"
+(18.195, L215-L216); middle housing is "a duplex, triplex, quadplex,
+townhouse, or cottage cluster" (L191-L192). "Dwelling, multi-unit" starts
+at five units (L209-L210), so R-10's ban on multi-unit dwellings does not
+reach the pod. "Multi-family" is not defined; A-2 uses it beside
+"single-family" for its side yards and density floor. The draft read the
+pod as multi-family there; Steph ruled on 2026-10-01 that it is not (§6),
+so A-2 holds the figures that are not the multi-family ones. CR's floor
+("all other dwelling types") does not use the word.
+
+Layer-wide values (`defaults`):
+
+- one parking space a unit, no maximum: 18.145.030 (A) Table, "Middle
+  Housing 1.0/DU none none", applied "regardless of the parking zone";
+- the stall 9 by 20 (18.145.050 (A), L501), held over the definition's 8.5
+  by 20 (Steph, 2026-10-01: keep 9); no aisle (the code says "of
+  sufficient width");
+- `front_lot_line_corner: shortest` from the solar-access definition of
+  front lot line, the only rule the code prints (Steph, 2026-10-01: keep
+  it);
+- `corner_access_street: lowest_class`: in all four residential zones,
+  access "primarily from local streets or alleyways", and none to an
+  arterial or collector unless there is no alternative;
+- a corner lot is two intersecting streets, alleys excluded, at no more
+  than 135 degrees (18.195.120); a private drive is not a street, since a
+  street is a way "which provides for public use" (`private_drives`).
+
+The four zones that admit the pod, each permitting "Middle housing" (or
+"Middle housing developments") outright:
+
+| | R-7 | R-10 | A-2 | CR |
+|---|---|---|---|---|
+| Lot (unit lots) | 7,000 (1,500) | 10,000 (1,500) | 7,000 (1,500) | 7,000 (1,500) |
+| Width (unit lots) | 60 (20) | 80 (20) | 30 on a public street, as `min_frontage_ft` (20) | 30 (20) |
+| Depth | 60 | 80 | 60 | none held |
+| Minimum density | 4 per 32,670 sq ft net acre = 5.333333 | 3 per net acre (18.195) | 8 per 32,670 sq ft = 10.666667 (not multi-family) | 11 per net acre (18.195) |
+| Maximum density | none for a quadplex (townhouses 20) | none printed | none for middle housing (townhouses 25) | none |
+| Height | 35 | 35 | 45 | 35 |
+| Front / garage | 10 / 20 | 25 / 25 | 10 / 20 | 10 / 20 |
+| Side (common wall) / street side | 5 (0) / 10 | 10 (0) / 20 | 5 (not multi-family) / 10 | 5 (0) / 10 |
+| Rear | 10 | 25 | 15 (10 + 5 a storey) | 10 |
+| Coverage | none | none | none | 60 percent |
+| Drive two-way / one-way / at the curb | 12 / 12 / 25 | 12 / 12 / 25 | 24 / 15 / 25 | 24 / 15 / 25 |
+
+Parking may not sit in any required yard (18.145.010 (B), L23). The front
+is `parking_street_setback_ft`, same as the front setback. The rear and
+side are `parking_required_yard_prohibited: true`, a new optional field
+built on Steph's ruling of 2026-10-01 ("Yes, charge them"): the rear
+court stands in front of the rear yard instead of in it, so the ground
+behind the building is the court plus the yard (49 + 10 in R-7 and CR,
+49 + 25 in R-10, 49 + 15 in A-2) where before it was the deeper of the
+two. The side yards needed nothing new: the court and the lane are
+searched inside the envelope, which the side setbacks already cut. A
+parking space is the stall "together with maneuvering and access space"
+(18.195, L520-L521), so the aisle is kept out of the yard with the
+stalls. Cornelius is the only layer that declares the field
+(`test_only_cornelius_keeps_parking_out_of_its_yards`).
+
+**Covered parking** (`parking_covered_required`, a new optional bool, and a
+new screen check `covered_parking`). Every residential zone and GMU print
+"One covered parking space shall be provided for each home [dwelling
+unit] either on an [the] individual lot or in an off-street parking bay
+within 100 feet" (R-7 18.20.060 (F)(1)(a), L312; R-10 18.25.060 (F)(1)(a),
+L283; A-2 18.35.060 (J)(1)(a), L378; CR 18.70.060 (G)(1)(a), L380; GMU
+18.75.065 (N)(1)(a), L671). Steph, 2026-10-01: the pod has no covered
+parking, so where the requirement holds the lot fails on it. Where it
+holds is narrower than the sentence: OAR 660-046-0220(2)(e)(D), "A Large
+City may allow, but may not require, off-street parking to be provided as
+a garage or carport", for a triplex or quadplex, and Cornelius is inside
+Metro, so a Large City. The townhouse rules in (3) carry no such sentence
+((3)(e) even prices a covered requirement in height), so the city's
+sentence stands on the unit-lot path. Encoded per zone: in R-7, R-10, A-2
+and CR, `false` on the one-lot path (cited to the OAR, quoted from the
+stored rule) with a `true` variant `when: [unit_lots]` cited to the zone's
+own sentence; in GMU, `true` outright (detached houses are prohibited
+there, so the state rule does not reach it). Where it is `true` the screen
+asks one covered stall a unit and finds none (cover counts only for a
+design parked under its own floor, `tuck_under`): a definite miss, which
+the screen reports as YELLOW with an unconfirmed variance path, as for any
+standard whose relief chapter is unread. No shipped pod takes the
+unit-lot path, so no verdict moves today.
+
+**The solar balance point in R-7 and R-10** (18.160): a warning beside
+the colour, never inside it. Steph, 2026-10-01, "Green with a warning",
+superseding the same day's "flag every lot", which the first draft held as
+`qualified_by: solar_shade_point` on each height and so kept every lot in
+the two zones at UNKNOWN ("needs a closer look"), never GREEN. Now each
+zone states `solar_shade_limit: true`, a new optional bool, quoting
+18.160.020's "all structures in all single-family zones" and the formula
+(L23, L33-L46) with 18.160's own url. The height is unchanged and carries
+no qualifier; the `solar_shade_point` site fact is deleted, so no lot
+leans on anything for it, and nothing feeds caps.
+
+What carries the flag: no existing channel fit. `tight_fit` is a bool
+about the fit alone, and "Facts nobody measured" lists facts that hold a
+lot back. So the smallest new one: `Screening.warnings`, a tuple of keys
+that `screen()` fills from the rules on every path (green, yellow, red,
+unknown, unreadable geometry) and that no triage branch reads. One key
+today, `solar_shade` (`flats.score.screen.SOLAR_SHADE`, from
+`warnings_for`). It travels as the bridge's `warnings` column
+(`row_for`, `assign.ROW_COLUMNS`), the loader's `checks.warnings`
+(`scripts/flats_load_bridge.py`), and the lot page's row "Check before an
+offer" (`ui_flats._WARNING_WORDS`, `flats_lot.html`, id
+`warnings-<design>`), which reads: "Cornelius's sun-shading rule (CMC
+18.160, solar balance point) is not checked here. It caps how high the
+roof may stand by the shadow it casts on the lot to the north. Confirm the
+building's shadow on the lot to the north before an offer." Not on the
+Lots list, and no "only warned" filter; a run screened before this carries
+no warnings, so it shows on the lot pages after the next re-screen.
+
+**GMU: the townhouse path only, behind an untraced figure** (Steph,
+2026-10-01). Four homes on one lot stays refused: the fourplex is not
+multi-family, and 18.75.020 lists "Multi-family dwelling units" and
+"Single-family attached dwelling units" (L55, L59) and no middle housing.
+The townhouse row opens as a `quadplex_allowed` variant `when: [unit_lots,
+inside_mapped_use_area]`, because 18.75.065 (B) admits townhouses "only
+... within subdistrict A" (L475) of Figure 18.75.065-1 (L471), an image no
+map layer carries (subdistrict C has no ground-floor residential at all,
+L469). `inside_mapped_use_area` is unmeasured, so a GMU lot is never better
+than UNKNOWN. The standards are 065's, which stand "In lieu of" the zone's
+general ones (L453):
+
+| | GMU townhouses (065 (H) and (C)) |
+|---|---|
+| Lot (each unit lot) | 2,000 (L567); one-lot default `exempt` (050 (A), moot) |
+| Width (each unit lot) | 20 (L571); one-lot default `exempt` (050 (A), moot) |
+| Minimum density | 18 per net acre (L479), on 18.195's 43,560 sq ft acre: 4 homes on at most 9,680 net sq ft |
+| Maximum density | none ("There is no maximum density", L479) |
+| Height | 35 (L575) |
+| Front / garage | 5 / 20 (L579) |
+| Side (attached) | 5 (0) (L587) |
+| Rear | 10 (L583) |
+| Landscaped | 15 percent (065 (E), L487) |
+| Drive two-way / one-way / at the curb | 24 / 15 / 25 (065 (I)(3), (J)(2)) |
+| Covered parking | one a unit, required (L671) |
+
+The density arithmetic, checked against the city's own definition rather
+than estimated: GMU prints no net acre of its own (R-7 and A-2 each print
+32,670), so it is 18.195's "Acreage, net" on the "Acre, gross" of 43,560
+square feet (definitions L35-L36, L41-L54). 4 / 18 x 43,560 = 9,680 net
+square feet. The figure the coordinator gave, about 9,700, is this number
+rounded; on R-7's 32,670 acre it would have been 7,260. No `acre_sqft` is
+needed.
+
+Owed in GMU, each with its reason in the layer: the 50 percent cap ("In
+subdistrict A, up to 50 percent of a lot ... may be developed as
+single-family attached residential uses, including parking,
+infrastructure, and open space", L475), which no field holds; the street
+side yard (065 (H) names "side yards" only, and 18.195 defines a street
+side yard as its own yard, L711-L712); lot depth and coverage (065 states
+neither, and is "in lieu of" the chapter that would). The figure is to be
+traced later (section 8).
+
+**Two new value forms**, each with unit tests, committed separately
+(70990fd5 and 57705275):
+
+- `acre_sqft`, on `measured_on`. R-7 and A-2 each define their own net
+  acre, "equal to 32,670 square feet", and state the density floor per that
+  acre. The screen compares density per 43,560 sq ft. No existing form
+  holds it: a rate of 5.333 per 43,560 is printed nowhere, nor is
+  `sqft_per_unit` 8,167.5; read unconverted, the floor would pass lots up to
+  43,560 net sq ft where the code allows 32,670; and refusing the field
+  would leave the floor unscreened. `acre_sqft` keeps the printed figure
+  and converts it.
+- `plus_per_story_ft`. A-2's rear yard is "No rear yard shall be less than
+  10 feet in depth for a single-story structure, plus five feet per
+  additional story", for every structure. `per_height_ft` and `step_back`
+  grow with feet of height, not storeys, and a `multi_story` variant would
+  have to carry a number the code does not print (15 is not printed). The
+  form holds the printed base and the step, and resolves them for the
+  two-storey design (`DESIGN_STORIES` = 2). The draft also used it for the
+  multi-family side yard; after Steph's ruling of 2026-10-01 the side is
+  the plain 5 and the rear is the form's one user, so it stays.
+
 ## 4. Refusals and absences
 
 Three cities in the county brief's Encode list were not drafted because
@@ -2145,6 +2409,62 @@ not encoded.
 - No aisle width for TMU (18.410's table does not reach it).
 - No driveway width in MU-CBD (18.280 does not apply there, and Table
   18.920.1 sends rowhouses to 18.280).
+
+### Cornelius
+
+Twenty-two NOT ENCODED comments in `cornelius.yaml`, each quoting the
+code, besides the refused zones' own comments (`flats.encode.refusals`:
+22 comments, no notes or tests). There were 25; three became encoding on
+2026-10-01: parking out of the side and rear yards
+(`parking_required_yard_prohibited`), the solar balance point (a
+warning, `solar_shade_limit`, in R-7 and R-10) and covered parking
+(`parking_covered_required`), all in section 3.
+
+- **Compact stalls** (25 percent may be 8 by 16) and **the aisle** ("of
+  sufficient width", L517).
+- **Parking-area landscaping**: 18.145.070 (A)-(D) five-foot strips (L637,
+  L641, L645, L649); 060 exempts small residential parking areas in CR
+  (L609).
+- **Clear vision** (18.150.070, L207-L211): 15 ft triangles from curb
+  lines.
+- **Driveway spacing** (18.143.050 (C)(1), L163) and **100 ft from an
+  intersection** in A-2 and CR (L302, L304).
+- **Design features** (18.100.070; Type I review, 18.100.030 (A)(2), L89).
+- **Clean Water Services buffers** (R-7 L208): overlay data.
+- **Open space at 20 or more units** (R-7 L328, A-2 L250), **perimeter
+  strips** a reviewing body "may require" (R-7 L240-L244, A-2 L258-L262),
+  **the affordable-housing bonus** (R-7 L180, A-2 L188).
+- **FP** (18.90), **similar uses** (18.05.040, L108), **the through-lot
+  front** (definitions L757-L758), **parking beside or in front of the
+  building** (no sentence bans it).
+- In the zones: R-7's flag pole (L164) and in-fill relief (L220, L224);
+  R-10's townhouse depth (a variant cannot state "no minimum"); A-2's
+  building separation (L212), parking perimeter buffer (L394) and screening
+  (L362, L414); CR's six-foot building separation (L232); the repealed C-1
+  (L62).
+
+Seven refused zones carry the use row only, and GMU refuses the one-lot
+pod but opens a townhouse path behind an untraced figure
+(`test_washington_cornelius.py`):
+
+- **MHP** (18.30.020 and 030 (B)): manufactured homes, prefabricated
+  dwellings and RVs within a park on its approved plan.
+- **C-2** (18.45.020 (H), 030 (J)): a dwelling only as secondary to
+  commercial use; multi-family only as a conditional use.
+- **CC** (18.65.020 (K), 030 (D)): dwellings above the ground floor or
+  behind nonresidential uses, 50 ft from Adair or Baseline (Steph,
+  2026-10-01: keep the refusal).
+- **CMU** (18.60.020 (I), 030 (B)): dwellings above the ground floor;
+  ground-floor dwellings conditional, regulated affordable units excepted.
+- **GMU** (18.75.020 (H)-(I), 18.75.040): no middle housing row, and the
+  fourplex is not multi-family (Steph, 2026-10-01). The townhouse path is
+  open only in subdistrict A of Figure 18.75.065-1, held behind
+  `inside_mapped_use_area` (section 3).
+- **LI** (18.54.020 (L)): housing only by a public body or a religious
+  non-profit with a 30-year affordability covenant.
+- **M-1** (18.55.040 (B)): no residential use but a caretaker's residence.
+- **NRO** (18.95.020, 060 (A)): new residential development only by a
+  conditional use permit or a PUD.
 
 ## 5. Doubts
 
@@ -2958,6 +3278,106 @@ Reading the ledgers:
 - **Second reading.** Of 174 cards, none disagree; the 12 unread and 2
   agree-with-alternative are explained under Tests.
 
+### Cornelius
+
+Places where the screen is LOOSER than the code:
+
+- **The solar balance point** (18.160) is warned of, not measured.
+  RULED 2026-10-01 (Steph): "Green with a warning". An R-7 or R-10 lot can
+  come out GREEN with the sun rule unchecked, and the lot page tells the
+  buyer to check the shadow before an offer. This is looser than the code
+  on every lot the rule would stop; which lots those are, nothing here
+  measures. What the warning stands in for: the shade
+  point may be no higher than (2 x SRL - N + 150) / 5, SRL being its
+  distance from the northern lot line and N the north-south lot dimension,
+  counted at most 90 (L33-L46). A 26 ft shade point must sit 35 ft from the
+  northern line on a lot 90 ft or more north to south, 20 ft on a lot 60
+  ft. Exemptions in (C) (L286-L332) include one that points to an
+  "18.155.020(E)" the stored 18.155 does not have (L21-L23), a stale
+  pointer; (G) lets the yards be cut by up to half to comply (L566-L592).
+- **100 ft from an intersection** in A-2 and CR (L302, L304) and GMU
+  (L603), unless there is no reasonable alternative: nothing measures a
+  curb return.
+- **The five-foot parking strips** (Refusals).
+- **GMU's 50 percent cap** on townhouses in subdistrict A (L475), owed.
+  It moves nothing while the subdistrict is unmeasured; it becomes looser
+  than the code the day the figure is traced, unless it is encoded then.
+- `driveway_approach_max_width_ft` (25 in all four zones) is read by no
+  screen (`consumed`): held, not applied, as in the other layers.
+
+Places where it is STRICTER:
+
+- **The stall is 9 ft wide** (18.145.050 (A)), "Except as otherwise defined
+  in this code", where 18.195 defines a parking space as 8.5 by 20
+  (L520-L521). Read literally the exception hands the width to the
+  definition. RULED 2026-10-01 (Steph): keep 9.
+- **Covered parking fails the townhouse path** (Steph, 2026-10-01: the pod
+  has none). Exact to the code where the requirement holds; it is
+  preempted for the one-lot quadplex (OAR 660-046-0220(2)(e)(D)). Stricter
+  only in that a carport could be added and is not modelled.
+- **Internal drives 24 and 15** in A-2 and CR (L302-L312) held over the
+  12 ft every driveway needs (L330, L332): the pod's drive to its court is
+  read as an internal drive.
+- **Townhouse maximum density** held at 20 (R-7) and 25 (A-2) per 43,560
+  sq ft, because a variant cannot carry `acre_sqft`: a quarter stricter, on
+  the unit-lot path only.
+- **R-10 townhouse lots held 80 deep** (the code excuses them).
+- **The parking court and the rear yard stack** (18.145.010 (B),
+  `parking_required_yard_prohibited`, Steph 2026-10-01). Not stricter than
+  the code, but stricter than every other layer: a lot the court binds now
+  needs the whole rear yard behind its court. The whole court (stalls,
+  aisle and the 5 ft standoff off the wall) is kept out, because 18.195
+  counts the "maneuvering and access space" as part of a parking space.
+  An alley is not taken as the aisle under it (the car would back across
+  the yard); no Cornelius zone sends parking to an alley, so that moves
+  nothing here.
+
+Readings that could go either way:
+
+- **R-7's leftover ban.** 18.20.040 (B) prohibits "More than one dwelling
+  unit on a single lot, except for an accessory dwelling unit or a duplex
+  as approved through CMC § 18.20.030" (L123), and 18.05.070 (C) makes the
+  more restrictive provision govern. The duplex path it points to was
+  "Repealed by Ord. 2022-03" (L77), the ordinance that made middle housing
+  permitted; the zone's own lot table prints the quadplex (L159); and OAR
+  660-046 requires a Large City to allow a quadplex where a detached house
+  is allowed. Read as superseded; admitted (RULED 2026-10-01, Steph:
+  cancelled by state law). R-7 is the largest district (2,126 polygons),
+  so this is the reading that moves the most lots.
+- **"Multi-family" undefined. RULED 2026-10-01 (Steph): the fourplex is
+  not multi-family.** A-2's side yard is now 5 (was the multi-family 10)
+  and its density floor 8 per net acre (was 11). A-2's rear yard stays 15:
+  its sentence is every structure's ("No rear yard shall be less than 10
+  feet ... plus five feet per additional story", L204), not a
+  multi-family rule, although the question put to Steph bundled it with
+  the side. CR's floor stays 11: "11 dwellings per net acre for all other
+  dwelling types" than single-family detached (L184) does not turn on the
+  word, and a fourplex is plainly another dwelling type. The blind reader
+  had flagged both A-2 readings (cards 02649, 02656). A-2 040 (H)
+  prohibits "More than one single-family detached or common-wall
+  single-family dwelling unit on a single lot" (L147); held as not
+  reaching a quadplex.
+- **Which street is the front of a corner lot.** The definition is stated
+  "for purposes of the solar access regulations" (L291-L292); held for the
+  yards as the shortest frontage. The blind reader flagged the scope
+  (card 02608). RULED 2026-10-01 (Steph): keep the narrower street side.
+- **CC** refused conservatively away from Adair and Baseline. RULED
+  2026-10-01 (Steph): keep the draft. The ruling as relayed named "CR";
+  the Adair/Baseline question was about CC (Corridor Commercial), and CR
+  admits the pod outright, so it is recorded against CC.
+- **GMU's townhouse path.** Three readings, each the stricter: townhouses
+  are allowed only in subdistrict A (065 (B), L475), which is narrower
+  than "not in subdistrict C" (L469); the 18 units per net acre (L479) is
+  read as reaching townhouses, which are ground-floor residential; and
+  the corner front is the layer's narrowest frontage, not 050 (B)'s
+  higher-classified street (L203), because 065 stands "in lieu of" 050.
+- **Words** (`flats.encode.words`): three of the 24 `defined` cards are
+  containment matches, not the term itself: "building" matched "Building
+  area", "side yard" matched "Street side yard" and "lot line" matched
+  "Front lot line".
+- **R-10 on Metro's layer.** The one R-10 parcel on the city's map takes
+  whatever district Metro paints there; which one was not checked.
+
 ## 6. Questions for Steph
 
 ### Rulings, 2026-09-29 (Steph, encoded the same day)
@@ -3039,6 +3459,56 @@ Left for the city, because only the city holds the answer:
 - **Durham MDR (D1)** -- "multiple residential units within a
   commonly-owned structure" reads both ways, and the zone is 11.5 acres;
   the refusal stands.
+
+### Rulings, 2026-10-01 (Steph)
+
+Three Cornelius answers, encoded the same day on `flats/cornelius-draft`:
+
+- **R-7's old one-home-per-lot line** (18.20.040 (B)) is cancelled by state
+  middle-housing law. The draft's reading stands: R-7 admits the pod.
+- **Parking in the side and back yards: "Yes, charge them."** New optional
+  field `parking_required_yard_prohibited`, declared in Cornelius's
+  defaults on 18.145.010 (B). The rear court and the rear yard now stack
+  instead of sharing; the side yards were already kept clear. Before, the
+  screen let the court sit in the rear yard on every layer; it still does
+  on every layer but Cornelius. Tigard's 5 ft planted strip beside parking
+  is the same shape with its own width and can raise the same keep-off
+  distance (`paper.behind_wall_ft`) on its own branch.
+- **The fourplex is NOT "multi-family" in Cornelius.** A-2 takes the side
+  yard (5) and density floor (8 per net acre) that are not the
+  multi-family ones. Two things the ruling does not move, by the code's
+  own words: A-2's rear yard (10 plus 5 a storey, 15 for the pod) is every
+  structure's rule, so `plus_per_story_ft` keeps one user; and CR's floor
+  of 11 is for "all other dwelling types", not for multi-family. If Steph
+  meant CR's floor to drop to 8 as well, that is a further ruling.
+  (Steph accepted both readings later the same day: A-2's rear yard is
+  every building's, and CR's floor is "all other dwelling types".)
+
+Six more Cornelius answers, the same day, encoded on the same branch:
+
+- **Stall width: keep 9 ft.** No change.
+- **Corridor Commercial (CC) away from Adair and Baseline: keep the
+  draft.** A fourplex on its own, with no business in front, stays
+  refused. (Relayed as "CR"; the question was CC's.)
+- **The sun-shading rule in R-7 and R-10: "Green with a warning".**
+  First ruled as "flag every lot, build no shade check"; the only flag
+  the screen had then held every lot in the two zones at "needs a closer
+  look". Shown that, Steph ruled the same day: green is allowed, and the
+  lot page carries a warning to check the building's shadow on the lot
+  to the north before an offer. Nothing measures the shadow.
+- **Gateway Mixed Use: four homes on one lot stays no; townhouses on their
+  own lots open, but only in the part of the district the code's drawing
+  marks for them.** Nothing can tell which part a lot is in until the
+  drawing is traced, so a GMU lot screened for townhouses is "needs a
+  closer look", never green; the fourplex on one lot (every pod screened
+  today) stays refused there. The code's own definitions put the density floor at 18 homes per
+  43,560 sq ft: four homes on no more than 9,680 sq ft of usable land.
+- **Corner lot front: the narrower street side.** No change.
+- **Covered parking: the pod has none.** State law forbids Cornelius from
+  requiring covered parking for a fourplex on one lot, so on that path
+  nothing changes. For townhouses on their own lots the city may require
+  it, and there the lot now fails on it. (No pod is screened as townhouses
+  today, so no lot moves yet.)
 
 The questions below are kept as the record of what was asked.
 
@@ -3376,6 +3846,73 @@ Five Tigard answers, encoded the same day on `flats/tigard-draft`.
   screen cannot charge that yet, so on tight lots it may call a fit the
   city would not accept. Should that 5 ft be added to the parking
   court's room before we trust a fit in those zones?
+
+### Cornelius
+
+- **The old one-home-per-lot rule in R-7.** (Answered 2026-10-01: cancelled by state law; see Rulings.) R-7 is Cornelius's main
+  neighbourhood zone, about half the map. It lists middle housing,
+  fourplexes included, as allowed outright, and its lot-size table gives a
+  fourplex lot size. But an older line in the same chapter still bans
+  "more than one dwelling unit on a single lot" except a duplex, and the
+  duplex rule it points to was repealed by the same 2022 change that
+  allowed middle housing. State law also requires a city this size to
+  allow a fourplex wherever a house is allowed. The draft treats the ban as
+  a leftover and lets the fourplex through. Following the ban word for word
+  would fail every R-7 lot. Is the draft's reading right?
+- **How wide is a parking space?** (Answered 2026-10-01: keep 9 ft.) The parking chapter says 9 ft by 20 ft
+  "except as otherwise defined in this code", and the definitions chapter
+  defines a parking space as 8.5 ft by 20 ft. The draft uses 9 ft, the
+  safer choice. Using 8.5 ft would let a few more narrow lots fit their
+  four spaces. Which should we use?
+- **Gateway Mixed Use.** (Answered 2026-10-01: one-lot no; townhouses behind the untraced drawing; see Rulings.) This district allows "multi-family" and
+  "single-family attached" homes but never says "middle housing". Homes on
+  the ground floor are allowed only in parts of the district shown on a
+  drawing in the code (not on any map we can load), and there they need at
+  least 18 homes per acre, which four homes cannot reach on the district's
+  smallest allowed lot. The draft says no to the whole district. Is that
+  right, or should a fourplex count as "multi-family" here?
+- **Corridor Commercial, away from the main streets.** (Answered 2026-10-01: keep the refusal.) Homes are allowed
+  above the ground floor or behind businesses, at least 50 ft back from
+  Adair or Baseline Street; ground-floor homes closer than that need a
+  hearing. On a lot nowhere near those two streets it is unclear whether a
+  fourplex on its own, with no business in front, is allowed. The draft
+  says no, the safer choice. Should it be allowed there?
+- **Which street is the front of a corner lot?** (Answered 2026-10-01: the narrower street side.) The code only answers
+  this for its sun-access rules: the front is the narrower street side.
+  The zone rules just say "the front" and "the side facing the street".
+  The draft uses the narrower side as the front for everything. The
+  alternatives are letting the design pick whichever side fits best (more
+  lots pass) or making both street sides meet the front setback (fewer
+  pass). Is the draft's choice right?
+- **Bigger side and back yards in the A-2 zone.** (Answered 2026-10-01: the fourplex is not multi-family; see Rulings.) In A-2, "multi-family"
+  buildings need side yards of 5 ft plus 5 ft for each floor above the
+  first, and back yards of 10 ft plus 5 ft per extra floor: 10 ft and 15 ft
+  for our two-storey building. A single-family home needs only 5 ft on the
+  sides. The code never defines "multi-family". The draft treats a
+  fourplex as multi-family, which also raises the zone's minimum number of
+  homes per acre from 8 to 11. Is that right?
+- **Parking in the side and back yards.** (Answered 2026-10-01: "Yes, charge them"; built, see Rulings.) The code says required parking
+  cannot sit in any required yard. Today the screen keeps parking out of
+  the front yard only, and lets the parking area overlap the back yard (10
+  ft deep in R-7, 25 ft in R-10). Following the rule fully would fail some
+  lots that pass now, and needs a small change to the screen. Should we
+  build it?
+- **Covered parking.** (Answered 2026-10-01: the pod has none; it fails where the code may require it; see Rulings.) Every residential zone requires "one covered
+  parking space for each home". Our design parks in an open court. Will
+  the design add carports (which must stay 6 ft from the building unless
+  attached to it, and 3 ft from the lot lines), or should the screen
+  treat this as something the design handles? Today the screen ignores it.
+- **The sun-shading rule in R-7 and R-10.** (Answered 2026-10-01: (a), flag every lot; then "Green with a warning".) These two zones limit how
+  tall a building can be depending on how far it stands from the
+  neighbour to the north, so it does not shade their roof. For our roof
+  peak of about 26 ft, the tallest part must be about 35 ft from the
+  northern lot line on a typical deep lot (20 ft on a 60 ft deep lot).
+  Where the street is on the north side, this can push the building toward
+  the back. There are exceptions, and the yards may be cut by up to half
+  to comply. The choices: (a) flag every R-7 and R-10 lot as "needs a sun
+  check" (simple and safe, but marks many lots for review), or (b) build
+  the rule into the screen (more accurate, more work: the screen has to
+  work out which side faces north). Which do you prefer?
 
 ## 7. Tests
 
@@ -4101,6 +4638,234 @@ through `sed`, which turned the files to LF; both were put back to CRLF
 before committing. Checked on the final tree: no file in `flats/tests/`
 or `flats/encode/` holds a control character or mixed line endings.
 
+### Cornelius
+
+All on the worktree `flats/cornelius-draft`, 2026-10-01.
+
+Full run before the final commit (`uv run pytest flats/tests -q -n auto`):
+**0 failed, 3990 passed, 5 skipped in 284 s.** The first run on the
+final layer had 2 failed, 3988 passed: `test_quadfit_bridge.py`'s
+private-drive count and `test_unweighed_layers.py`'s `OWED_A_COUNTY`,
+both pins this layer legitimately moves (below). Unlike the earlier
+Washington commits, `test_unweighed_layers` is green here because the set
+now names Cornelius.
+
+quadfit's tests (`uv run pytest "Lot Analysis/quadfit/tests" -q`, step 12):
+348 passed in 351 s. Cornelius is not in quadfit's rules, and nothing there
+was edited. `uv run ruff check flats/ scripts/`: all checks passed.
+`scripts/check_flats_firewall.py`: OK, FLATS-scoped.
+
+**The blind second reading** (`flats.encode.reread`, the whole-corpus
+work list filtered to `or/washington/cornelius`): 72 cards (every quoted
+number in the layer; values with no number, such as exemptions and
+rulings, have no card). Two readers, given only the cards, never
+the layer or the answer key. **No wrong number.** 65 agree, 2 agree with
+an alternative, 1 disagrees, 2 unread, 2 unscored (the corner and access
+rulings, not numbers). Every non-agreement was checked against the layer
+and the stored text:
+
+- 02655, 02656 (`agree_alt`): A-2's per-storey rear and side. The key
+  holds the printed base (10 and 5); the reader gave the two-storey result
+  (15 and 10), which is what the layer resolved to on 2026-09-30. Since
+  Steph's ruling of 2026-10-01 (the fourplex is not multi-family) the side
+  is the plain 5 and only the rear grows.
+- 02616 (`disagree`) and 02650 (`unread`): the `acre_sqft` card, whose
+  figure is the 32,670 sq ft net acre. Both readers answered the density
+  instead and both noted "A net acre is equal to 32,670 square feet" on the
+  cited line (R-7 L151, A-2 L153), which was confirmed by hand.
+- 02651 (`unread`): A-2's townhouse maximum; the reader listed 25 as the
+  alternative and noted that middle housing is exempt (the base is held
+  `exempt`, the 25 is the unit-lot variant).
+- Seven `unclear` flags, all readings already recorded as Doubts (the
+  multi-family reading, the solar-scoped front lot line, the access rule).
+
+Scored cards and answers are not committed.
+
+**Pinned counts and sets moved** (each with a dated paragraph in the
+test):
+
+- `test_port.py`: 26 layers (25 jurisdictions and the state layer), 434
+  zones (422 + Cornelius's 12).
+- `test_refusals.py`: comments 250 -> 275 (Cornelius's 25); notes 134 and
+  tests 18 unchanged.
+- `test_exemptions.py`: stated 385, with `exemptions.csv` regenerated
+  (the parking maximum "none", R-7's and A-2's maximum density "does not
+  apply", CR's "no maximum density standard").
+- `test_routing.py`: ten Cornelius rows in `OPEN` (18.145.010 ->
+  18.145.020; 18.35.050 -> 18.150.010; 18.35.060 -> 18.100; 18.70.050 ->
+  18.150.010; 18.70.060 -> 18.100, 18.100.030 and 18.100.070; 18.75.065 ->
+  18.75.050, 18.75.060 and 18.75.070).
+- `test_districts.py`: Cornelius rulings for C-1, CE and MSC (repealed),
+  FP (overlay), RBZ (not a zone, in the FP chapter, L778) and TDR (not a
+  zone, in NRO, L171).
+- `test_definitions_register.py`: `or/washington/cornelius` added (corner
+  lot at 135 degrees, alley excluded, public use).
+- `test_readiness.py`: one new test for the reader change below.
+- `test_quadfit_bridge.py`: 20 private-drive rulings (19 + Cornelius), and
+  Cornelius joins Gresham and Tualatin as `street: false`.
+- `test_unweighed_layers.py`: `or/washington/cornelius` added to
+  `OWED_A_COUNTY`; no ledger counts its lots until the county map is built.
+- `gaps.json` regenerated over the whole corpus (about 36 minutes, sharing
+  the machine with another branch's run): it gains a Cornelius section with
+  no `misattributed` rows and no gaps; nothing else moved but the digest.
+  The run reports 3 gaps across 26 layers, all `unmapped`, all from before
+  this branch. `caps.json` unchanged.
+- `data/flats/crossrefs.csv` rewritten by a whole-corpus `crossrefs
+  --binding` run: it gains Cornelius's 152 rows. Three other rows changed
+  (Happy Valley 16.71 and Multnomah unincorporated 39.3140 rewritten, one
+  Portland 33.610 row dropped). None of those layers is edited on this
+  branch; the file had not been rewritten since they changed.
+
+**A process slip.** Rulebook section 9 says not to rewrite tests through a
+shell heredoc. Two pinned-count edits were made by small Python scripts
+written through a bash heredoc: one integer in `test_port.py`, and the
+comment count and its paragraph in `test_refusals.py` (275). Every other test edit used the Edit or Write
+tool. Both files pass, and neither holds a control character.
+
+**New test file**: `test_washington_cornelius.py` (11 tests): all twelve
+districts held and the seven map codes ruled (four aliases, three
+unencodable); the four admitting zones quote "Middle housing"; the
+refusals hold the use row only; R-7's and A-2's floors on the 32,670 sq ft
+acre (5.333333, and A-2's 10.666667 since the 2026-10-01 ruling; it was
+14.666667) and CR's printed 11; A-2's per-storey rear (15) and plain side
+(5); maximum density exempt in R-7, A-2 and CR with R-7's townhouse 20;
+CR's zero common-wall side; the R-10 lot; parking 1 a unit, no maximum, 9
+by 20, no aisle; the corner at 135 degrees, alleys not counted, a private
+drive not a street, the front the shortest frontage; nothing `verified`.
+The two new forms have their own unit tests (70990fd5, 57705275).
+
+**Parking out of the yards** (2026-10-01): `test_parking_out_of_yards.py`
+(13 tests). The new field is optional and a bool; unread shares the yard
+and the ban stacks (`behind_wall_ft`); the court charge past the envelope
+and the court beside the building stack only under the ban; an alley is
+not the aisle under it; Cornelius declares it on 18.145.010 (B)'s own
+sentence; the paper lot in R-7, R-10, A-2 and CR is deeper by exactly the
+rear yard; two lots drawn at Cornelius's state-plane coordinates (R-7 70
+by 120: 5 ft to spare and six stalls before, 5 ft short and none after;
+R-10 80 by 140: 10 to spare before, 15 short after); and a guard that
+Cornelius is the only layer declaring it. `test_refusals` comments 275 ->
+274 (the yard comment became the field).
+
+**The remaining rulings** (2026-10-01):
+
+- New `test_covered_parking.py` (11 tests): the field is optional, a bool,
+  and read by the `covered_parking` check; silence and `false` run
+  nothing; an open court misses by every unit (0 of 4); parking under the
+  building is covered; in R-7, R-10, A-2 and CR the one-lot path is `false`
+  on the OAR's own sentence and the unit-lot path `true` on the zone's;
+  GMU is `true` on both; the R-7 townhouse path fails on it and the
+  quadplex path runs nothing; and a guard that Cornelius is the only layer
+  declaring it.
+- `test_washington_cornelius.py`, now 16 tests: GMU opens only the
+  townhouse path, behind `unit_lots` and `inside_mapped_use_area` (the
+  quote holds "shall only be permitted within subdistrict A" and the
+  subdistrict C ban), with its unit-lot lot size and width, height, yards,
+  and the street side and depth owed; GMU's density floor is 18 on the
+  43,560 acre (9,680 net sq ft for four); R-7 and R-10 heights carried
+  `solar_shade_point` (replaced by the warning below); A-2, CR and GMU
+  carry no sun flag. The refusals test now exempts GMU from "use row
+  only".
+- Pins moved: `test_refusals` comments 274 -> 272 (the solar and covered
+  parking comments became encoding); `test_exemptions` stated 385 -> 388
+  (GMU's "no maximum density" and the two moot one-lot defaults under its
+  townhouse lot size and width, `exemptions.csv` regenerated);
+  `test_routing` moves `18.75.065 -> 18.75.050` from `OPEN` to `FOLLOWED`
+  (the 050 (A) citation lands there; nine Cornelius rows stay open).
+- Ledgers: `crossrefs --binding` found one new binding row, 11.40.34, the
+  history note closing 18.160.010, now that the solar chapter is cited
+  beside a height; ruled `misread` in the layer, and `crossrefs.csv`
+  rewritten (that one row changed). `gaps.json` regenerated: only the
+  digest moved; still 3 gaps across 26 layers, all `unmapped`, all from
+  before this branch.
+- The same process slip again: the pin edits in `test_routing.py` and
+  `test_exemptions.py` were made by small Python scripts written through a
+  bash heredoc, not the Edit tool. Every other test edit, and the new test
+  file, used Edit or Write. Both files pass.
+- Full suite after the last edit, once: `pytest flats/tests -n auto`, 4019
+  passed, 5 skipped; `ruff check flats/ scripts/` clean; the firewall
+  check OK.
+
+**"Green with a warning"** (the sun rule, 2026-10-01, the next commit):
+
+- `test_screen.py::test_a_warning_rides_beside_the_colour_and_never_moves_it`:
+  `solar_shade_limit: true` puts `solar_shade` in `warnings` and leaves a
+  green lot green with no reasons, the same binding and ask; a yellow and
+  a red lot keep their colour and carry it too; `false` and silence carry
+  none.
+- `test_washington_cornelius.py`, now 17 tests: R-7 and R-10 state
+  `solar_shade_limit` quoted from 18.160 and their heights carry no
+  qualifier, and `solar_shade_point` is no longer a condition; A-2, CR and
+  GMU state no sun rule; and
+  `test_an_r7_lot_clearing_everything_else_is_green_with_the_sun_warning`:
+  a generous R-7 lot (12,000 sq ft, 100 by 120) under the corpus's own R-7
+  rules, signed as the bridge's "if signed" column signs them, screens
+  GREEN with no reasons and `warnings == ("solar_shade",)`; unsigned it is
+  UNKNOWN on the draft alone with the same warning; in A-2 it carries none.
+- `tests/scripts/test_flats_load_bridge.py`: the checks record carries
+  `warnings`, and a bundle written before the column carries none.
+- `tests/api/test_ui_flats_lots.py`: the seeded green answer carries
+  `solar_shade`; the lot page shows the row for that design only, in
+  words (CMC 18.160, "shadow on the lot to the north"), never the key.
+  The whole file and the loader file pass (51) against the local test
+  database.
+- Owed: a Playwright check of the lot page row. The page change cannot
+  be checked on viciniti.deals until the branch is merged, deployed, and
+  a re-screen has written warnings.
+- The process slip once more: the Cornelius test replacement was written
+  by a Python script through a bash heredoc. The other test edits used
+  Edit.
+- Ledgers: `gaps.json` regenerated (digest only; still 3 gaps across 26
+  layers, all `unmapped`, all from before this branch); `crossrefs.csv`
+  rewritten by a whole-corpus run, one row changed: 11.40.34 now stands
+  beside `solar_shade_limit` rather than the height, and is no longer
+  binding; its `misread` ruling stays. `exemptions.csv` unchanged.
+- Full suite after the last code edit, once: `pytest flats/tests -n auto`,
+  4021 passed, 5 skipped; `ruff check app/ tests/ flats/ scripts/` clean;
+  the firewall check OK.
+- Merge note: `a0522c1d` on main (the fire truck reach) touches the same
+  five files on the bridge-to-page path (`row_for`, `ROW_COLUMNS`, the
+  loader's checks record, `_result_card`, `flats_lot.html`). The lines
+  here sit beside `tight_fit`, apart from its, but the merge should be
+  read there.
+
+**Ledgers** (step 9, on the final layer):
+
+- `crossrefs --binding`: none open. The first run found 26 binding rows,
+  all ruled in the layer's `crossrefs` block: 18 are history notes ("Code
+  2000 § 11.20.01" and so on, the section's number in the 2000 code),
+  closed as `misread`, each naming the section it closes; 18.105
+  (`procedure`), 18.110 and 18.135.020 (`other_path`), 18.177.025, 5.35
+  and OAR 918-600 (`other_building`). Unfiltered, 127 stay open, none
+  beside a number the screen uses.
+- `uncited`: 94 statements of 127 measured lines not quoted by any value.
+- `missed`: 94 statements; 22 state a figure the layer holds nowhere, 19
+  one it already carries, 53 no comparable figure. Of the 22: 1 in a
+  section this standard was taken from (R-7's discretionary in-fill relief
+  to 50 ft, looser), 5 in a section read for something else, 16 in
+  sections nothing quotes (GMU and CMU dimensions, CC's 40 ft height, the
+  solar chapters). A-2's 75 ft average width (L236) is for five or more
+  units, not the pod. 19 figures the corpus has never held.
+- `qualified`: 4 CR values under the flag-lot note, 0 unread. `blocked`
+  0.
+- `applied`: encoded 0. `footnotes`: 2 blocks, both dismissed.
+- `glossary`: 191 entries, 0 out of order, read whole.
+- `attribution`: 0 of 90.
+- `words`: 30 cards, 24 `defined`, 6 `silent` (multifamily, apartment,
+  attached dwelling, frontage, front yard, rear yard). Three containment
+  matches (Doubts).
+- `stale`, `travelled`, `unheld`: no Cornelius rows.
+- `consumed`: Cornelius adds four `driveway_approach_max_width_ft` values
+  no screen reads; garage entrance and one-way drive are declared
+  excluded.
+- `refusals`: 25 comments. `exemptions`: the rows above.
+- Prohibition grep over the admitting zones: R-7 040 (B) is the recorded doubt; R-10 040 (B) is
+  multi-unit (five or more); A-2 040 (H) reaches single-family units, not a
+  quadplex.
+- The resolver, run on every Cornelius zone with and without `unit_lots`
+  and `corner_lot`: nothing owes a required field. Without a lot size every
+  zone resolves `ambiguous` on `parking_min_per_unit` (the state layer
+  bands it by lot size); with `lot_sqft` 10,000 they resolve `unverified`.
+
 ## 8. Owed locally
 
 - quadfit rules for Washington County, the county map, and the overlay data
@@ -4133,15 +4898,11 @@ or `flats/encode/` holds a control character or mixed line endings.
 - HB 2138 (2025) requires middle housing on every residential lot from
   2027-01-01. It may bring North Plains, Banks and Gaston into scope. Not acted
   on here.
-- Tigard, Forest Grove and Cornelius, the three Encode cities whose sites
-  refused the fetch (section 1). Each needs its code fetched from a machine
-  the site answers (eCode360 for Tigard and Cornelius, American Legal for
-  Forest Grove), then rulebook steps 1-14. For the map: Tigard's own GIS
-  was unreachable here, and Metro's layer carries its current codes; Forest
-  Grove's zoning layer answered (`zoning_code`); Cornelius has no zoning
-  layer, Metro's is stale (no R-10), and the city's Zoning Map 2025 PDF is
-  reachable. (Tigard was drafted 2026-10-01; what it owes is under Tigard
-  below.)
+- Forest Grove, the one Encode city whose site refused the fetch (section 1).
+  Its code needs fetching from a machine the site answers (American Legal),
+  then rulebook steps 1-14. For the map: Forest Grove's zoning layer answered
+  (`zoning_code`). Tigard and Cornelius were drafted on 2026-10-01 from
+  eCode360's print view (section 1, and Tigard and Cornelius below).
 
 ### Hillsboro
 
@@ -4448,6 +5209,48 @@ or `flats/encode/` holds a control character or mixed line endings.
   reuse once it merges.
 - **The re-screen and promotion.**
 
+### Cornelius
+
+- **Map ingest from Metro.** Cornelius publishes no zoning service. Its
+  lots (`JURIS_CITY` = `CORNELIUS`) take their zone from Metro's regional
+  zoning layer (`CITY='Cornelius'`, field `ZONE`), with the four aliases
+  and three unencodable county codes ruled in the layer. Metro's layer has
+  no R-10: the one R-10 parcel on the city's Zoning Map (April 2025,
+  `https://www.corneliusor.gov/DocumentCenter/View/1542/Zoning-Map-2025`)
+  has to be painted by hand, or the city asked. NRO and FP are on neither
+  map (the NRO inventory map and the flood maps are overlay data).
+  `port_quadfit`'s county list has no Washington cities, so it needs
+  nothing for Cornelius; `flats/config/pipeline.yaml` and quadfit's
+  `rules.yaml` were not edited.
+- **Trace GMU's subdistricts** (Figure 18.75.065-1, `cmc.18.75.gmu.txt`
+  L471), as Tigard's maps are to be traced. Steph opened GMU's townhouse
+  path on 2026-10-01 behind `inside_mapped_use_area`; until the figure is a
+  layer that answers the fact per lot, every GMU lot is UNKNOWN. When it
+  is traced: townhouses are allowed in subdistrict A only (065 (B), L475),
+  and the 50 percent cap in the same sentence ("up to 50 percent of a lot
+  ... including parking, infrastructure, and open space") has to be
+  encoded at the same time, which needs a field the model lacks.
+- **`DECLARED_OWING`: nothing** (the resolver run in Tests).
+- **The coverage ledger with Cornelius lots**, which
+  `test_unweighed_layers` waits on (Tests).
+- **Fields the code needs and the model lacks** (a `flats/rules/` change,
+  not made). Parking kept out of the rear and side yards (18.145.010 (B))
+  was here; built 2026-10-01 as `parking_required_yard_prohibited`.
+  - the solar balance point (18.160), a height that grows with the
+    distance from the northern lot line, which needs the lot's
+    orientation. A warning rather than a check (Steph, 2026-10-01,
+    "Green with a warning"); a shade check would turn the warning into a
+    colour for the lots the rule actually stops;
+  - a driveway's distance from an intersection (A-2, CR and GMU, 100 ft);
+  - the share of a lot one use may occupy (GMU's 50 percent townhouse
+    cap).
+  Covered parking was here; built 2026-10-01 as `parking_covered_required`.
+- **`acre_sqft` on variants.** The townhouse maximum densities (R-7 20,
+  A-2 25) are held per 43,560 sq ft, a quarter strict, because a variant
+  cannot carry the form.
+- **The blind second reading is done** (Tests). Re-screen and promotion
+  are owed.
+
 ## Reader changes (before and after)
 
 - `flats/encode/glossary.py` learned the CDC's hyphenated section numbers
@@ -4659,3 +5462,12 @@ Durham layer with its `definitions_at` span in place):
   states ceilings and no floor). Before: 13 Tigard values misquoted (the
   parking minimum of 0, and the side and rear variants at 0). After: none
   across the corpus. One test in `test_readiness.py`.
+- `flats/encode/readiness.py` (Cornelius) adds one zero statement to
+  `_NO_STANDARD`: `\bnot\s+be\s+required\s+to\s+have\b`. CR 18.70.050
+  (D)(3)(a): "single-family attached dwellings shall not be required to
+  have a side yard on side(s) where structures are attached". Before: CR's
+  `setback_side_ft [attached_wall]` 0 read as misquoted (one row across
+  the corpus). After: none. New test
+  `test_a_side_yard_a_dwelling_is_not_required_to_have_states_zero` (the
+  zero is quoted, 5 is quoted, 3 is not, and a decoy sentence does not
+  quote zero). `test_readiness.py` 46 passed.

@@ -122,10 +122,14 @@ _LABELS: dict[str, str] = {
     "parking_area_max_frontage_pct": "max. parking share of frontage",
     "parking_area_max_width_ft": "max. parking area width",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
+    "fire_access_max_ft": "max. fire hose route to the farthest wall",
     "parking_front_prohibited": "parking banned in front of building",
     "parking_alley_access_required": "vehicle access must be from the alley",
     "parking_alley_backout_ft": "room to back out into the alley",
     "parking_side_prohibited": "parking banned beside the building",
+    "parking_required_yard_prohibited": "parking banned in required yards",
+    "parking_covered_required": "covered parking required",
+    "solar_shade_limit": "height capped by shade on the lot to the north",
     "front_lot_line_corner": "which street is the front on a corner lot",
     "front_lot_line_through": "which street is the front on a through lot",
     "corner_access_street": "which street a corner lot's driveway uses",
@@ -139,9 +143,9 @@ _LABELS: dict[str, str] = {
     "setback_front_max_ft": "max. front setback",
     "setback_garage_entrance_ft": "garage entrance setback",
     "setback_rear_ft": "rear setback",
-    "setback_side_ft": "side setback",
+    "setback_side_ft": "interior side setback",
     "setback_side_total_ft": "combined side setbacks",
-    "setback_street_side_ft": "street-side setback",
+    "setback_street_side_ft": "corner side yard (street side) setback",
     "setback_alley_side_ft": "alley-side setback",
     "setback_street_off_corridor_ft": "street setback off a mapped corridor",
     "setback_street_across_nonresidential_ft": "street setback facing no residential zone",
@@ -745,6 +749,68 @@ _F: tuple[FieldDef, ...] = (
         None,
     ),
     FieldDef(
+        "parking_required_yard_prohibited",
+        "bool",
+        "True where the code keeps required parking out of every REQUIRED "
+        "yard -- the setback strips, not the ground beside or behind the "
+        "building past them. Cornelius 18.145.010 (B): \"Unless otherwise "
+        "provided, required parking and loading spaces shall not be located "
+        "in a required yard\", where 18.195 defines a parking space as the "
+        "stall \"together with maneuvering and access space\", so the "
+        "aisle is kept out too. What it changes is the REAR court: everywhere "
+        "else the court shares the rear yard (the ground behind the wall is "
+        "the deeper of the court and the yard); here the two stack, the court "
+        "standing in front of the yard (`paper.behind_wall_ft`). The side "
+        "yards need nothing new -- the court and the lane are searched inside "
+        "the envelope, which the side setbacks already cut -- and the front "
+        "is `parking_street_setback_ft`. An alley cannot be the aisle under "
+        "it either: the car would back across the yard strip. Not the "
+        "townhouse model-code ban on parking in the side yard of a townhouse "
+        "(`parking_side_prohibited`), which keeps a court from standing "
+        "beside the building at all. Steph, 2026-10-01: \"Yes, charge "
+        "them.\" Optional: absent means the court shares the yard, as it "
+        "always has.",
+        None,
+    ),
+    FieldDef(
+        "parking_covered_required",
+        "bool",
+        "True where the code requires the required parking to be COVERED -- "
+        "a garage or a carport over the stall. Cornelius prints it in every "
+        "residential zone: \"One covered parking space shall be provided for "
+        "each dwelling unit either on the individual lot or in an off-street "
+        "parking bay within 100 feet\" (R-7, R-10, A-2, CR, GMU). The pod "
+        "parks in an open court and builds no cover, so where this is True "
+        "the screen fails the lot on it (`covered_parking`): one covered "
+        "stall a unit asked, none provided, unless the design parks under "
+        "the building (`tuck_under`). False where state law forbids the "
+        "requirement for this building: OAR 660-046-0220(2)(e)(D), \"A Large "
+        "City may allow, but may not require, off-street parking to be "
+        "provided as a garage or carport\", for a triplex or quadplex. The "
+        "townhouse rules in (3)(e) let a city require covered parking, at "
+        "the price of a three-storey height, so on the unit-lot path the "
+        "city's sentence stands. Steph, 2026-10-01: the pod has no covered "
+        "parking. Optional: absent means no such requirement was read.",
+        None,
+    ),
+    FieldDef(
+        "solar_shade_limit",
+        "bool",
+        "True where the code caps a building's height by the shade it casts "
+        "on the lot to the north. Cornelius 18.160 applies \"to an "
+        "application for a building permit for all structures in all "
+        "single-family zones\" (R-7 and R-10) and caps the shade point -- "
+        "the peak of a roof pitched 5 in 12 or steeper, the eave of a flatter "
+        "one -- at H = (2 x SRL - N + 150) / 5, SRL its distance from the "
+        "northern lot line and N the north-south lot dimension, counted at "
+        "most 90. Nothing here knows which lot line faces north or where the "
+        "peak lands, so nothing checks it. It never moves a verdict: where "
+        "True the screening carries a `solar_shade` warning, which the lot "
+        "page shows beside the colour. Steph, 2026-10-01: \"Green with a "
+        "warning.\" Optional: absent means no such rule was read.",
+        None,
+    ),
+    FieldDef(
         "corner_access_street",
         "enum",
         "Which street a lot with frontage on more than one takes its "
@@ -793,6 +859,21 @@ _F: tuple[FieldDef, ...] = (
         "where the wall is ground-floor living space (19.163.030(E)(3)(b)). "
         "Real ground, subtracted from the court before any stall is seated.",
         False,
+    ),
+    FieldDef(
+        "fire_access_max_ft",
+        "length_ft",
+        "How far a fire apparatus road may stand from the farthest part of "
+        "the building's first-storey walls, measured by an approved route "
+        "around the outside of the building (OFC 2022 503.1.1, 150 ft). A "
+        "fire code number, not a zoning one: no zoning adjustment relieves "
+        "it (:data:`flats.score.relief.NO_ZONING_RELIEF`), and sprinklers "
+        "relax it only at the fire code official's discretion, which the "
+        "screen does not assume (Steph 2026-10-01: red). The exception for "
+        "one or two dwellings does not reach a fourplex. Stated once in the "
+        "state layer for every zone; measured per plan by "
+        ":func:`flats.fit.fire.route_ft` (FOLLOWUPS 28).",
+        True,
     ),
     FieldDef("open_space_min_pct", "percent", "Minimum private open space as a share of lot area.", False),
     FieldDef(
@@ -1041,6 +1122,15 @@ PARKING_TOTAL_FIELDS: frozenset[str] = frozenset(
 #: that silently goes stale.
 DESIGN_HEIGHT_FT = 26
 
+#: The number of stories of the building this screen answers for, read the
+#: same way as :data:`DESIGN_HEIGHT_FT` and for the same reason. Cornelius
+#: 18.35.050 (D) states A-2's rear yard as "10 feet in depth for a
+#: single-story structure, plus five feet per additional story", and a
+#: two-story pod owes 15 -- printed nowhere. The tallest design in the
+#: catalog, because more stories owe more yard; `flats/tests/test_per_story.py`
+#: fails the moment the catalog and this constant part company.
+DESIGN_STORIES = 2
+
 #: Fields a rule file may state as a ratio of building height. Restricted to
 #: the yards and the separation between buildings, because those are the
 #: standards codes actually write this way -- a step-back against a smaller
@@ -1085,6 +1175,10 @@ STEP_BACK_FIELDS: frozenset[str] = frozenset(
 #: recorded as not-applicable via the clause ledger.
 OPTIONAL_FIELDS: frozenset[str] = frozenset(
     {
+        # Stated for every zone at once by the state layer (OFC 503.1.1);
+        # never a city's to state or omit, so never a city's gap. A guard
+        # test holds that every zone resolves it (test_fire.py).
+        "fire_access_max_ft",
         # Answers the height question in the other unit. Required-ness is
         # handled by ALTERNATIVES in the resolver, which reads one as
         # standing in for the other; listed as required here it would be
@@ -1197,6 +1291,9 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_alley_access_required",
         "parking_alley_backout_ft",
         "parking_side_prohibited",
+        "parking_required_yard_prohibited",
+        "parking_covered_required",
+        "solar_shade_limit",
         "corner_access_street",
         "front_lot_line_corner",
         # Same argument as the corner line above it: a definition, not a row
