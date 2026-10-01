@@ -403,6 +403,8 @@ def test_a_backported_band_has_to_already_be_here() -> None:
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:
+    # 140 as of 2026-10-01: Multnomah unincorporated LR10 and Happy Valley FU10,
+    # opened by the same state path, measured once their dimensions were read.
     # 138 as of 2026-09-30: Multnomah unincorporated LR5, opened by the state
     # middle housing law (FOLLOWUPS 21(b)) so quadfit measures its lots.
     #
@@ -420,7 +422,7 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # of, worth 76,752 lots that were dropped before anything was measured.
     # Lake Oswego's six are NOT among them -- that jurisdiction is `eligible:
     # false` by owner decision, so its rows are reference rather than debt.
-    assert dry["stats"]["zones"] == 138
+    assert dry["stats"]["zones"] == 140
     assert dry["stats"]["layers"] == len(COUNTY) == 18
 
 
