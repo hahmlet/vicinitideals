@@ -737,7 +737,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    fourplex NOT multi-family, 9 ft stall, CR standalone only near
    Adair/Baseline, sun shading = flag every R-7/R-10 lot, GMU townhome
    path REVIEW (subdistrict figure traced later), corner front = narrower
-   side, pod has NO covered parking. Merge Cornelius first (it adds
+   side, pod has NO covered parking. Both drafts finished the round
+   (Cornelius 5bf6e848, Tigard 266053fa, suites green, not pushed). The
+   Adair/Baseline standalone-fourplex rule is CC, not CR as asked (the
+   substance ruled stands). OPEN: sun shading as built makes every R-7/R-10
+   lot (about half of Cornelius) never-GREEN "needs a closer look", not the
+   note-only flag Steph was told. Steph 2026-10-01: GREEN WITH A WARNING
+   (lot-page shading flag, verdict not held); being reworked on the branch. Merge Cornelius first (it adds
    parking_required_yard_prohibited / behind_wall_ft), then Tigard
    reuses it for its 5 ft planted parking strip (RES-A/B/C).
    The split-path double count the Tigard draft found in Hillsboro
