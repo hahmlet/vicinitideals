@@ -63,7 +63,10 @@ SWITCHED_OFF = {
 #: home network and the ledger is regenerated over it (FOLLOWUPS 17). This
 #: set is meant to empty the same way the Clackamas ten did -- and it did,
 #: 2026-10-01, when the ledger was regenerated over the three-county corpus.
-OWED_A_COUNTY: set[str] = set()
+#: Cornelius (drafted 2026-10-01) is back in it until the map routes its
+#: lots -- JURIS_CITY CORNELIUS and Metro's zoning layer (FOLLOWUPS 17(f));
+#: until then the ledger counts them as UNMAPPED/cornelius below.
+OWED_A_COUNTY: set[str] = {"or/washington/cornelius"}
 
 
 #: Washington County cities on the county map with no encoded layer: their
