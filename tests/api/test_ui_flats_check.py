@@ -381,3 +381,78 @@ async def test_a_second_flag_adds_to_the_first_and_both_show_on_the_card(client,
 
     assert "Flagged on this page (2)" in response.text
     assert response.text.index("first thing") < response.text.index("second thing")
+
+
+def _hidden(text: str, name: str) -> str:
+    return html.unescape(re.search(rf'name="{name}" value="([^"]*)"', text).group(1))
+
+
+async def test_forward_returns_to_the_card_back_was_pressed_on(client, session):
+    await _login(client, session)
+    row = _first_row()
+    answered = await client.post("/ui/flats/check", data=_form(row, answer="matches"))
+    front = {k: _hidden(answered.text, k) for k in ("zone", "field", "when", "question")}
+
+    back = await client.post(
+        "/ui/flats/check",
+        data={**front, "layer_id": LAYER, "action": "back", "trail": _hidden(answered.text, "trail")},
+    )
+    assert "data-forward" in back.text
+    forward = await client.post(
+        "/ui/flats/check",
+        data={
+            **_form(row),
+            "action": "forward",
+            "trail": _hidden(back.text, "trail"),
+            "ahead": _hidden(back.text, "ahead"),
+        },
+    )
+
+    assert {k: _hidden(forward.text, k) for k in front} == front
+    assert "data-forward" not in forward.text and "data-back" in forward.text
+    # Passing an answered card does not skip it.
+    assert _hidden(forward.text, "skipped") == "0"
+
+
+async def test_passing_an_unanswered_card_on_the_way_forward_skips_it(client, session):
+    await _login(client, session)
+    row = _first_row()
+    skipped = await client.post("/ui/flats/check", data=_form(row, action="skip", skipped="0"))
+    front = {k: _hidden(skipped.text, k) for k in ("zone", "field", "when", "question")}
+    back = await client.post(
+        "/ui/flats/check",
+        data={**front, "layer_id": LAYER, "action": "back", "skipped": "1",
+              "trail": _hidden(skipped.text, "trail")},
+    )
+    assert _hidden(back.text, "skipped") == "0"
+
+    # Skip on a card reached by Back goes forward, the way the reviewer came.
+    again = await client.post(
+        "/ui/flats/check",
+        data={**_form(row), "action": "skip", "skipped": "0",
+              "trail": _hidden(back.text, "trail"), "ahead": _hidden(back.text, "ahead")},
+    )
+
+    assert {k: _hidden(again.text, k) for k in front} == front
+    assert _hidden(again.text, "skipped") == "1"
+
+
+async def test_a_new_answer_after_back_ends_the_walk_forward(client, session):
+    await _login(client, session)
+    row = _first_row()
+    answered = await client.post("/ui/flats/check", data=_form(row, answer="matches"))
+    back = await client.post(
+        "/ui/flats/check",
+        data={"layer_id": LAYER, "action": "back", "trail": _hidden(answered.text, "trail"),
+              "zone": _hidden(answered.text, "zone"), "field": _hidden(answered.text, "field"),
+              "when": _hidden(answered.text, "when"), "question": _hidden(answered.text, "question")},
+    )
+
+    changed = await client.post(
+        "/ui/flats/check",
+        data={**_form(row, answer="differs", comment="7,500"),
+              "trail": _hidden(back.text, "trail"), "ahead": _hidden(back.text, "ahead")},
+    )
+
+    assert "data-forward" not in changed.text
+    assert "data-back" in changed.text

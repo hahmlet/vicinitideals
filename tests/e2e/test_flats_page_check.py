@@ -93,7 +93,7 @@ def test_skip_moves_to_another_question_without_answering(
 
 
 
-def test_back_returns_to_the_skipped_card(logged_in_page: Page, base_url: str) -> None:
+def test_back_returns_to_the_skipped_card_and_forward_returns(logged_in_page: Page, base_url: str) -> None:
     page = logged_in_page
     page.goto(f"{base_url}/flats/check/{LAYER}")
     first = _card_key(page)
@@ -108,6 +108,16 @@ def test_back_returns_to_the_skipped_card(logged_in_page: Page, base_url: str) -
     # The old card has a Back button; the card we came back to has none left.
     expect(page.locator("[data-back]")).to_have_count(0)
     assert _card_key(page) == first
+    second_skipped = page.locator("#check-card input[name='skipped']").first.input_value()
+
+    page.locator("[data-forward]").click()
+    wait_for_htmx(page)
+
+    # Forward lands where Back was pressed, and nothing further is ahead.
+    expect(page.locator("[data-forward]")).to_have_count(0)
+    expect(page.locator("[data-back]")).to_be_visible()
+    assert _card_key(page) != first
+    assert page.locator("#check-card input[name='skipped']").first.input_value() == str(int(second_skipped) + 1)
 
 def test_the_question_sits_beside_the_page_not_above_it(
     logged_in_page: Page, base_url: str

@@ -11,19 +11,36 @@
   from the page is tinted faintly: a clause with no tint is one nobody
   encoded, and the flag box under the answers is where that gets said.
 #}
+{#- Back and Forward: the cards passed this sitting, carried in the form. -#}
+{% macro nav() %}
+{% if trail != "[]" or ahead != "[]" %}
+<form hx-post="/ui/flats/check" hx-target="#check-card" hx-swap="outerHTML" style="display:inline-flex;gap:4px">
+  <input type="hidden" name="layer_id" value="{{ layer.id }}">
+  {% if card %}
+  <input type="hidden" name="zone" value="{{ card.zone }}">
+  <input type="hidden" name="field" value="{{ card.field }}">
+  <input type="hidden" name="when" value="{{ card.when }}">
+  <input type="hidden" name="question" value="{{ card.question }}">
+  {% endif %}
+  <input type="hidden" name="skipped" value="{{ skipped }}">
+  <input type="hidden" name="trail" value="{{ trail }}">
+  <input type="hidden" name="ahead" value="{{ ahead }}">
+  {% if trail != "[]" %}
+  <button type="submit" name="action" value="back" class="btn btn-secondary btn-sm" data-back
+          title="Go back to the card before this one to change your answer">← Back</button>
+  {% endif %}
+  {% if ahead != "[]" %}
+  <button type="submit" name="action" value="forward" class="btn btn-secondary btn-sm" data-forward
+          title="Return toward the card you went back from, leaving this one as it is">Forward →</button>
+  {% endif %}
+</form>
+{% endif %}
+{% endmacro %}
 <div id="check-card">
 {% if not card %}
 <div class="toolbar" style="gap:24px;margin:0 0 12px">
   <div><span class="muted">Numbers checked</span> <strong>{{ counts.checked }}</strong> of {{ counts.numbers }}</div>
-  <div>{% if trail != "[]" %}
-<form hx-post="/ui/flats/check" hx-target="#check-card" hx-swap="outerHTML" style="display:inline">
-  <input type="hidden" name="layer_id" value="{{ layer.id }}">
-  <input type="hidden" name="skipped" value="{{ skipped }}">
-  <input type="hidden" name="trail" value="{{ trail }}">
-  <button type="submit" name="action" value="back" class="btn btn-secondary btn-sm" data-back
-          title="Go back to the card before this one to change your answer">← Back</button>
-</form>
-{% endif %}</div>
+  <div>{{ nav() }}</div>
   {% if said %}<div style="margin-left:auto;font-size:12px;color:#15803d">✓ {{ said }}</div>{% endif %}
 </div>
 <div style="padding:32px 0;text-align:center">
@@ -64,15 +81,7 @@
 
   <aside class="check-panel">
     <div style="font-size:12px;margin:0 0 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-      {% if trail != "[]" %}
-      <form hx-post="/ui/flats/check" hx-target="#check-card" hx-swap="outerHTML" style="display:inline">
-        <input type="hidden" name="layer_id" value="{{ layer.id }}">
-        <input type="hidden" name="skipped" value="{{ skipped }}">
-        <input type="hidden" name="trail" value="{{ trail }}">
-        <button type="submit" name="action" value="back" class="btn btn-secondary btn-sm" data-back
-                title="Go back to the card before this one to change your answer">← Back</button>
-      </form>
-      {% endif %}
+      {{ nav() }}
       <span class="muted">Checked</span> <strong>{{ counts.checked }}</strong> of {{ counts.numbers }}
       {% if card.signed %}<span class="badge badge-green" style="margin-left:8px" title="signed against the text copy">signed</span>{% endif %}
       {% if card.before %}<span class="badge badge-yellow" style="margin-left:4px">your answer: {{ card.before }}</span>{% endif %}
@@ -123,6 +132,7 @@
       <input type="hidden" name="skipped" value="{{ skipped }}">
       <input type="hidden" name="flag_page" value="{{ flag_page }}">
       <input type="hidden" name="trail" value="{{ trail }}">
+      <input type="hidden" name="ahead" value="{{ ahead }}">
       <div style="display:flex;flex-direction:column;gap:6px">
         {% for key, words in card.answers %}
         <button type="submit" name="answer" value="{{ key }}" data-answer="{{ key }}"

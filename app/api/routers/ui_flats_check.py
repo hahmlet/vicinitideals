@@ -314,6 +314,9 @@ def _focus(
 #: How many cards "Back" can walk through.
 _TRAIL = 30
 
+#: On the forward stack: wherever the queue is, not a particular card.
+_QUEUE = ["", "", "", ""]
+
 
 def _trail(raw: str) -> list[list[str]]:
     """The cards already passed this session, oldest first.
@@ -585,6 +588,7 @@ async def _card_ctx(
     skipped: int = 0,
     focus: tuple[str, str, str, str] | None = None,
     trail: list[list[str]] | None = None,
+    ahead: list[list[str]] | None = None,
     said: str = "",
     error: str = "",
 ) -> dict[str, Any]:
@@ -615,6 +619,7 @@ async def _card_ctx(
         "counts": _counts(layer, rows, answers),
         "skipped": skipped,
         "trail": json.dumps(trail or []),
+        "ahead": json.dumps(ahead or []),
         "said": said,
         "error": error,
     }
@@ -809,6 +814,7 @@ async def flats_check_answer(
     action: str = Form("answer"),
     skipped: int = Form(0),
     trail: str = Form("[]"),
+    ahead: str = Form("[]"),
 ) -> HTMLResponse:
     """Record one answer, or skip, and hand back the next card.
 
@@ -821,27 +827,51 @@ async def flats_check_answer(
     layer = _layers().get(layer_id.strip("/"))
     number = _number(layer, zone, field, when) if layer else None
 
-    passed = _trail(trail)
+    passed, forward = _trail(trail), _trail(ahead)
+    # A flag posted on its own names the page, not the card: stay on the value.
+    here = [zone, field, when, "value" if question.startswith("page:") else question]
 
     async def card(**kw: Any) -> HTMLResponse:
         kw.setdefault("trail", passed)
+        kw.setdefault("ahead", forward)
         ctx = await _card_ctx(session, layer, **kw)
         return templates.TemplateResponse(request, "partials/flats_check_card.html", ctx)
 
     if action == "back" and layer is not None:
         # The card before this one, shown again with its standing answer; a
-        # new answer to it is a later answer, and the latest one counts.
+        # new answer to it is a later answer, and the latest one counts. The
+        # card left behind goes on the forward stack.
         if not passed:
             return await card(skipped=skipped)
         *rest, last = passed
-        zone, field, when, question = last
-        if question.startswith("skip:"):
+        b_zone, b_field, b_when, b_question = last
+        if b_question.startswith("skip:"):
             # Un-skipping: the queue's place moves back with the reviewer.
-            question, skipped = question.removeprefix("skip:"), max(skipped - 1, 0)
-        return await card(skipped=skipped, focus=(zone, field, when, question), trail=rest)
+            b_question, skipped = b_question.removeprefix("skip:"), max(skipped - 1, 0)
+        return await card(
+            skipped=skipped,
+            focus=(b_zone, b_field, b_when, b_question),
+            trail=rest,
+            ahead=[*forward, here if number is not None else _QUEUE][-_TRAIL:],
+        )
     if layer is None or number is None:
         return HTMLResponse("not a number we hold", status_code=400)
-    here = [zone, field, when, question]
+    if action == "forward" or (action == "skip" and forward):
+        # Back over a card, then forward again. Passing a card that still
+        # has no answer skips it, as the Skip button would have.
+        if not forward:
+            return await card(skipped=skipped, focus=tuple(here))
+        *rest, target = forward
+        answers = await _answers(session, layer.layer)
+        said = answers.get((layer.layer, zone, field, when, question))
+        if said is None or said.fingerprint != _mark(layer.layer, zone, field, when, number):
+            skipped, here = skipped + 1, [zone, field, when, f"skip:{question}"]
+        return await card(
+            skipped=skipped,
+            focus=None if target == _QUEUE else tuple(target),
+            trail=[*passed, here][-_TRAIL:],
+            ahead=rest,
+        )
     if action == "skip":
         return await card(skipped=skipped + 1, trail=[*passed, [zone, field, when, f"skip:{question}"]][-_TRAIL:])
     # The card has one comment box. Under "No" it is what the page says;
@@ -856,13 +886,13 @@ async def flats_check_answer(
     flag_page = question.partition(":")[2] if question.startswith("page:") else ""
     if flag_page:
         if answer != FLAG or not flag_page.isdigit():
-            return await card(skipped=skipped, error="pick one of the answers")
+            return await card(skipped=skipped, focus=tuple(here), error="pick one of the answers")
         if not says.strip():
-            return await card(skipped=skipped, error="say what on the page is missing from the rules")
+            return await card(skipped=skipped, focus=tuple(here), error="say what on the page is missing from the rules")
     else:
         allowed = VALUE_ANSWERS if question == "value" else NOTE_ANSWERS
         if answer not in allowed or not (question == "value" or question.startswith("note:")):
-            return await card(skipped=skipped, error="pick one of the answers")
+            return await card(skipped=skipped, focus=tuple(here), error="pick one of the answers")
     if user is None:
         return HTMLResponse("sign in first", status_code=401)
 
@@ -902,6 +932,10 @@ async def flats_check_answer(
         )
     )
     await session.commit()
-    if answer != FLAG:
-        passed = [*passed, here][-_TRAIL:]
-    return await card(skipped=skipped, said=_SAID.get(answer, "recorded"))
+    if answer == FLAG:
+        # A flag is not an answer: the same card stays, Back and Forward too.
+        return await card(skipped=skipped, focus=tuple(here), said=_SAID[FLAG])
+    # A new answer ends the walk back: the next card is the queue's next.
+    return await card(
+        skipped=skipped, trail=[*passed, here][-_TRAIL:], ahead=[], said=_SAID.get(answer, "recorded")
+    )
