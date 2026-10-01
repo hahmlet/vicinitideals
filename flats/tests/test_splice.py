@@ -15,7 +15,7 @@ from flats.ingest.splice import MAX_SPLICES, audit, due, report, splice
 LOTS = [("W1", "Wood Village", "TC"), ("W2", "Wood Village", "LR"), ("T1", "Troutdale", "R7"), ("G1", "Gresham", "TC")]
 
 
-def bridge(path: Path, verdicts: dict[str, str], *, s4: str = "s4.parquet", **meta) -> Path:
+def bridge(path: Path, verdicts: dict[str, str], *, s4: str = "s4.parquet", s5o: str = "s5o.parquet", **meta) -> Path:
     """A bridge directory: one row per lot x design, the lots named in ``verdicts``."""
     path.mkdir(parents=True)
     rows = [
@@ -25,7 +25,7 @@ def bridge(path: Path, verdicts: dict[str, str], *, s4: str = "s4.parquet", **me
         for d in ("pod56x36@2", "pod80x25@2")
     ]
     pd.DataFrame(rows).to_parquet(path / "lots.parquet", index=False)
-    base = {"s4": s4, "s5o": "s5o.parquet", "sample": None, "limit": None, "jurisdictions": [], "zones": [], "tlids": []}
+    base = {"s4": s4, "s5o": s5o, "sample": None, "limit": None, "jurisdictions": [], "zones": [], "tlids": []}
     (path / "meta.json").write_text(json.dumps({**base, **meta}), encoding="utf-8")
     return path
 
@@ -82,6 +82,47 @@ def test_splices_chain_on_one_full_run(tmp_path: Path) -> None:
 def test_a_splice_refuses_runs_that_do_not_describe_the_same_county(tmp_path: Path, base_meta, part_meta, why) -> None:
     base = bridge(tmp_path / "full", ALL_RED, **base_meta)
     part = bridge(tmp_path / "p", {"W1": "green"}, **part_meta)
+
+    with pytest.raises(SystemExit, match=why):
+        splice(base, part, tmp_path / "out", change="x")
+
+
+def _measured(path: Path, rows: dict[str, float]) -> str:
+    pd.DataFrame({"TLID": list(rows), "area_sqft": list(rows.values())}).to_parquet(path, index=False)
+    return str(path)
+
+
+def test_a_partial_run_may_measure_from_files_that_only_add_its_own_lots(tmp_path: Path) -> None:
+    """quadfit kept a zone it used to drop (the state middle housing law, 2026-09-30):
+    every old lot measured the same, the new ones are the partial run's scope."""
+    s4a = _measured(tmp_path / "s4a.parquet", {"W1": 1.0, "W2": 2.0})
+    s4b = _measured(tmp_path / "s4b.parquet", {"W1": 1.0, "W2": 2.0, "T1": 3.0})
+    s5a = _measured(tmp_path / "s5a.parquet", {"W1": 1.0, "W2": 2.0})
+    s5b = _measured(tmp_path / "s5b.parquet", {"W1": 1.0, "W2": 2.0, "T1": 3.0})
+    base = bridge(tmp_path / "full", {"W1": "red", "W2": "red"}, s4=s4a, s5o=s5a)
+    part = bridge(tmp_path / "p", {"T1": "yellow"}, s4=s4b, s5o=s5b, tlids=["T1"])
+
+    meta = splice(base, part, tmp_path / "out", change="T1 measured")
+
+    assert meta["s4"] == s4b and meta["s5o"] == s5b
+    assert meta["lineage"]["splices"][-1]["measured"] == {"s4": s4b, "s5o": s5b}
+    got = pd.read_parquet(tmp_path / "out" / "lots.parquet")
+    assert dict(zip(got["TLID"], got["if_signed"])) == {"W1": "red", "W2": "red", "T1": "yellow"}
+
+
+@pytest.mark.parametrize(
+    "grown, why",
+    [
+        ({"W1": 1.5, "W2": 2.0, "T1": 3.0}, "changed 'area_sqft'"),
+        ({"W1": 1.0, "T1": 3.0}, "missing"),
+        ({"W1": 1.0, "W2": 2.0, "T1": 3.0, "G1": 4.0}, "outside the partial run's scope"),
+    ],
+)
+def test_measurement_files_that_change_an_old_lot_are_another_county(tmp_path: Path, grown, why) -> None:
+    s4a = _measured(tmp_path / "s4a.parquet", {"W1": 1.0, "W2": 2.0})
+    s4b = _measured(tmp_path / "s4b.parquet", grown)
+    base = bridge(tmp_path / "full", {"W1": "red", "W2": "red"}, s4=s4a)
+    part = bridge(tmp_path / "p", {"T1": "yellow"}, s4=s4b, tlids=["T1"])
 
     with pytest.raises(SystemExit, match=why):
         splice(base, part, tmp_path / "out", change="x")

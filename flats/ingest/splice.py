@@ -69,10 +69,47 @@ def _full_of(bridge: Path, meta: dict[str, Any]) -> dict[str, Any]:
     return {"bridge": str(bridge.resolve()), "finished_at": meta.get("finished_at")}
 
 
+def _only_added(base_file: Path, partial_file: Path, scope: set[str]) -> str | None:
+    """Why ``partial_file`` is not ``base_file`` plus new lots; None when it is.
+
+    A partial run may measure from a re-run of quadfit that kept lots the old
+    one dropped (a zone it newly screens). That is the same county only when
+    every lot the base measured is still there with every column unchanged,
+    and every added lot is one the partial run screened -- a lot measured and
+    never screened would reach assign with no rows. The spliced run then
+    names the larger files, so the next splice compares against them.
+    """
+    import pandas as pd
+
+    if not base_file.is_file() or not partial_file.is_file():
+        return "the measurement files cannot be compared"
+    a, b = pd.read_parquet(base_file), pd.read_parquet(partial_file)
+    if list(a.columns) != list(b.columns):
+        return "different columns"
+    lost = set(a["TLID"]) - set(b["TLID"])
+    if lost:
+        return f"{len(lost):,} lots the base measured are missing"
+    added = set(b["TLID"]) - set(a["TLID"])
+    if added - scope:
+        return f"{len(added - scope):,} added lots are outside the partial run's scope"
+    a = a.set_index("TLID").sort_index()
+    b = b[~b["TLID"].isin(added)].set_index("TLID").sort_index()
+    for col in a.columns:
+        x, y = a[col], b[col]
+        try:
+            same = ((x == y) | (x.isna() & y.isna())).astype(bool)
+        except (TypeError, ValueError):
+            same = x.astype(str) == y.astype(str)
+        if not same.all():
+            return f"{int((~same).sum()):,} measured lots changed {col!r}"
+    return None
+
+
 def splice(base: Path, partial: Path, out: Path, *, change: str) -> dict[str, Any]:
     """Write ``out`` = ``base`` with every lot ``partial`` screened replaced; returns its meta.
 
-    Refuses to mix runs that measured different lots (other s4/s5o files), a
+    Refuses to mix runs that measured different lots (other s4/s5o files,
+    unless the partial's only ADD lots it screened -- :func:`_only_added`), a
     sampled or truncated run on either side, a base that is itself partial,
     or a partial run with no declared scope -- each would splice rows that do
     not describe the same county.
@@ -87,15 +124,19 @@ def splice(base: Path, partial: Path, out: Path, *, change: str) -> dict[str, An
         raise SystemExit("base run is itself partial; splice onto a full or spliced run")
     if not _is_partial(pm):
         raise SystemExit("partial run declares no scope (--jurisdiction/--zone/--tlid); that is a full run")
-    for key in ("s4", "s5o"):
-        if Path(bm[key]).resolve() != Path(pm[key]).resolve():
-            raise SystemExit(f"{key} differs: base {bm[key]} vs partial {pm[key]}")
-
     old = pd.read_parquet(base / "lots.parquet")
     new = pd.read_parquet(partial / "lots.parquet")
     if set(new["design"]) - set(old["design"]):
         raise SystemExit(f"partial run screened designs the base lacks: {sorted(set(new['design']) - set(old['design']))}")
     touched = set(new["TLID"])
+
+    grown: dict[str, str] = {}
+    for key in ("s4", "s5o"):
+        if Path(bm[key]).resolve() != Path(pm[key]).resolve():
+            why = _only_added(Path(bm[key]), Path(pm[key]), touched)
+            if why:
+                raise SystemExit(f"{key} differs: base {bm[key]} vs partial {pm[key]} ({why})")
+            grown[key] = pm[key]
     kept = old[~old["TLID"].isin(touched)]
     both = pd.concat([kept, new.reindex(columns=old.columns.union(new.columns, sort=False))], ignore_index=True)
     both = both[list(old.columns) + [c for c in new.columns if c not in old.columns]]
@@ -112,9 +153,11 @@ def splice(base: Path, partial: Path, out: Path, *, change: str) -> dict[str, An
         "lots": len(touched),
         "new_lots": len(touched - set(old["TLID"])),
         "finished_at": pm.get("finished_at"),
+        **({"measured": grown} if grown else {}),
     }
     meta = {
         **bm,
+        **grown,
         "lots": int(both["TLID"].nunique()),
         "rows": len(both),
         "seconds": pm.get("seconds"),
