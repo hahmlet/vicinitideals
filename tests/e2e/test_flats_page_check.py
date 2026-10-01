@@ -65,7 +65,9 @@ def test_a_card_draws_the_printed_page_with_a_box_on_it(
     page = logged_in_page
     page.goto(f"{base_url}/flats/check/{LAYER}")
 
-    expect(page.get_by_text("Does the page say", exact=False)).to_be_visible()
+    # The question is worded by what is held (a number, a yes/no, no rule);
+    # every card asks one, with its answers under it.
+    expect(page.locator("[data-answer]").first).to_be_visible()
     image = page.locator(".check-sheet img").first
     expect(image).to_be_visible(timeout=60_000)
     # Rendering a page the server has not drawn before can mean fetching the
