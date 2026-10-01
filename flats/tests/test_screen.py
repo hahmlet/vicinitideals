@@ -1596,6 +1596,36 @@ def test_a_per_lot_standard_is_asked_of_the_parcel_four_times_over() -> None:
     assert area.verdict is Verdict.fails
 
 
+@pytest.mark.parametrize(
+    ("layer", "zone"),
+    [
+        # Stated per dwelling on the variant, multiplied out by the loader.
+        ("or/washington/hillsboro", "R-8.5"),
+        ("or/clackamas/gladstone", "R5"),
+        # Stated per child lot on the variant, multiplied out here.
+        ("or/washington/durham", "SDR"),
+    ],
+)
+def test_a_townhouse_lot_floor_is_four_lots_once_however_it_is_written(
+    layer: str, zone: str
+) -> None:
+    """1,500 sq ft a townhouse lot is 6,000 for the four, whichever way the
+    file states it. A ``per_dwelling`` variant is already the building's total
+    when it leaves the loader, and multiplying it by the lot count a second
+    time asked 24,000 of a Hillsboro R-8.5 parent (found drafting Tigard,
+    2026-10-01). Nothing in the catalog takes the split path yet, so this
+    moved no verdict."""
+    from flats.rules.loader import load_rules
+    from flats.rules.resolver import RuleSet
+    from flats.score.paper import lot_standard
+
+    got = RuleSet(load_rules()).resolve(
+        layer, zone, conditions=["unit_lots"], lot={"lot_sqft": 8_000}
+    )
+
+    assert lot_standard(got, "min_lot_sqft", per_unit=True, lots=4) == (6_000.0, True)
+
+
 def test_the_same_lot_on_one_lot_is_measured_against_the_number_as_written() -> None:
     """The other half of the same rule, and the reason nothing in production
     moves: a design that does not split the plat reads the base standard

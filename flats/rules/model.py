@@ -1222,6 +1222,12 @@ class Effective:
     #: lot's 78 ft, under 4.113(.02)A.2" rather than presenting 15.6 as a
     #: figure somebody read.
     lot_width_share: LotWidthShare | None = None
+    #: True where the number was stated per dwelling and multiplied out to
+    #: the building (`per_dwelling`, `acres_per_dwelling`): it is already the
+    #: whole project's figure, so a reader that multiplies a `unit_lots`
+    #: number by the lot count must not do it a second time. Hillsboro R-8.5's
+    #: 1,500 sq ft townhouse average came to 24,000 that way, not 6,000.
+    whole_project: bool = False
 
     @property
     def trusted(self) -> bool:
@@ -2105,6 +2111,10 @@ class Value(BaseModel):
             winner.status,
             winner.reviewer,
             winner.reviewed,
+            whole_project=(
+                winner.per_dwelling is not None
+                or winner.acres_per_dwelling is not None
+            ),
             when=winner.key,
             exempt=winner.exempt,
             reduce_pct=winner.reduce_pct,

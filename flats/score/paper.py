@@ -214,6 +214,10 @@ def lot_standard(
     if not per_unit:
         return float(value), True
     if "unit_lots" in tuple(getattr(got, "when", ()) or ()):
+        if getattr(got, "whole_project", False):
+            # Stated per dwelling and already multiplied out to the building
+            # by the loader: four child lots' worth is the number itself.
+            return float(value), True
         return float(value) * lots, True
     if rules.get("land_division_parent_standards") is True:
         return float(value), True

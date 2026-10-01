@@ -740,10 +740,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    side, pod has NO covered parking. Merge Cornelius first (it adds
    parking_required_yard_prohibited / behind_wall_ft), then Tigard
    reuses it for its 5 ft planted parking strip (RES-A/B/C).
-   HILLSBORO BUG (found by the Tigard draft): the townhouse min lot sits
-   per home inside a `unit_lots` variant, so the split path counts four
-   homes twice (R-8.5 asks 24,000 sq ft, should be 6,000). Nothing screens
-   the split path today, so no verdict moves; fix on hillsboro.yaml.
+   The split-path double count the Tigard draft found in Hillsboro
+   (R-8.5 asked 24,000 sq ft, should be 6,000) was every `per_dwelling`
+   variant on `unit_lots` (24 in the corpus, Gladstone/Happy Valley/West
+   Linn too): FIXED in the reader (Effective/Resolved.whole_project), not
+   the files; nothing screens the split path yet, so no verdict moved.
    (g) JAN 1 2027 (HB 2138 sec. 4): every Metro city must re-conform its
    middle-housing code (cottage clusters by 2028); a city that misses it
    gets the state model code directly. Run the drift check on every layer
