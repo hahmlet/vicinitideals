@@ -107,4 +107,4 @@ def test_the_question_sits_beside_the_page_not_above_it(
     assert sheet and panel
     assert panel["x"] >= sheet["x"] + sheet["width"] - 1, "the panel is to the right of the page"
     assert panel["y"] < 400, "the answers are on screen without scrolling"
-    expect(page.locator("textarea[name='says']")).to_be_visible()
+    expect(page.locator("textarea[name='comment']")).to_be_visible()

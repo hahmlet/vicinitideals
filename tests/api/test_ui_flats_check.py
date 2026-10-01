@@ -259,3 +259,36 @@ async def test_a_flag_must_say_what_is_missing(client, session):
 
     assert "say what on the page is missing" in response.text
     assert (await session.execute(select(FlatsPageCheck))).first() is None
+
+
+async def test_one_comment_box_serves_every_answer(client, session):
+    """The card has one comment box: under "No" it is what the page says,
+    with "Flag something missing" it is the missing thing, else a note."""
+    await _login(client, session)
+    row = _first_row()
+
+    await client.post(
+        "/ui/flats/check", data=_form(row, answer="differs", comment="7,500 sq ft")
+    )
+    await client.post(
+        "/ui/flats/check",
+        data=_form(row, action="flag", flag_page="12", comment="F. one approach per two units"),
+    )
+
+    saved = (await session.execute(select(FlatsPageCheck).order_by(FlatsPageCheck.id))).scalars().all()
+    assert [(s.question, s.answer, s.says) for s in saved] == [
+        ("value", "differs", "7,500 sq ft"),
+        ("page:12", "unmarked", "F. one approach per two units"),
+    ]
+
+
+async def test_the_card_asks_once_and_names_the_section_not_its_description(client, session):
+    await _login(client, session)
+    row = _first_row()
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert response.text.count("Does the page say") == 1
+    assert "Problems raised" not in response.text
+    assert "Read the row and the column heading" not in response.text
+    assert row["cite"].split(",")[0] in response.text

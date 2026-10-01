@@ -166,7 +166,7 @@ def _said(value: Any, field: str) -> str:
         shown = f"{value:,.0f}" if float(value).is_integer() else f"{value:,}"
         unit = _unit(field)
         return f"{shown}{unit}" if unit == "%" else f"{shown} {unit}".strip()
-    return str(value)
+    return str(value).replace("_", " ")
 
 
 def _label(field: str) -> str:
@@ -417,6 +417,10 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         "value": _said(row["value"], row["field"]),
         "signed": row["signed"],
         "cite": row["cite"],
+        # The section alone: the cite's description restates the question.
+        "section": (row["cite"] or "").split(",")[0].strip(),
+        # A layer-wide rule has no zone worth naming on the card.
+        "zone_label": "" if row["zone"].startswith("(") else row["zone"],
         "quote": row["quote"],
         "url": row["url"],
         "question": ask.question,
@@ -698,6 +702,8 @@ async def flats_check_answer(
     answer: str = Form(""),
     says: str = Form(""),
     note: str = Form(""),
+    comment: str = Form(""),
+    flag_page: int = Form(0),
     action: str = Form("answer"),
     skipped: int = Form(0),
 ) -> HTMLResponse:
@@ -720,6 +726,15 @@ async def flats_check_answer(
         return HTMLResponse("not a number we hold", status_code=400)
     if action == "skip":
         return await card(skipped=skipped + 1)
+    # The card has one comment box. Under "No" it is what the page says;
+    # with "Flag it" it is what the page has that the rules don't; under any
+    # other answer it is a note.
+    if action == "flag":
+        question, answer, says = f"page:{flag_page}", FLAG, comment or says
+    elif comment and answer == "differs":
+        says = says or comment
+    elif comment:
+        note = note or comment
     flag_page = question.partition(":")[2] if question.startswith("page:") else ""
     if flag_page:
         if answer != FLAG or not flag_page.isdigit():
