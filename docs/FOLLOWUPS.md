@@ -705,7 +705,19 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Lake Oswego/Rivergrove's Washington lots to their existing layers (by
    JURIS_CITY, never SITECITY); regenerate the coverage ledger and empty
    OWED_A_COUNTY; bridge, drift, promote.
-   (e) AFTER THE FIRST SCREEN, count what these cost: Beaverton/King City
+   MERGED ef08aebc + deployed; snapshot 4 (2026-10-01) loaded as CANDIDATE
+   RUN 51 (590,282 lots; Washington 190,250: best-pod if-signed green
+   18,891 / yellow 100,888 / red 8,644 / unknown 61,827). Drift vs run 49:
+   2 moved (sewer district), 0 unexplained. Gate WARNED (count_drift,
+   lots_drift = the new county) -> ASKED Steph to promote. Unruled codes
+   (warn only): Tualatin's Washington side BCE CC CN CR IN MBP MP MUC RH
+   RH/HR (~420 lots) and Wilsonville PDI-RSIA/PFC (17) -- rule within the
+   week. 08 splices LR10/FU10/sewer + fire reach on
+   /root/bridge_2026-10-01_wash AFTER promotion (message it then).
+   (e) AFTER THE FIRST SCREEN, count what these cost. FIRST COUNTS (run 51):
+   Beaverton has 0 green -- `utility_easement` unmeasured holds ~32,100
+   answers; Hillsboro 25 green -- `flag_lot` assumed on 48,650 answers (the
+   same assumption holds 12,668 in Clackamas). Also: Beaverton/King City
    minimum density on big lots (fail vs closer look: bring Steph the
    number); the bigger next-to-a-named-zone setback (Hillsboro SCR-DNC,
    Beaverton downtown); Hillsboro's corner coverage bonus + two corner
