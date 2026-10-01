@@ -700,11 +700,19 @@ def permission_splits() -> list[str]:
             v.value is True and "state_middle_housing" in (v.when or ())
             for v in allowed.variants
         )
+        # Any other variant that allows the pod is a condition the corpus
+        # names (a local street, a mapped use area, unit lots) -- the shape
+        # the Washington rows were ported from (port_from_flats.py).
+        other = sorted({
+            w for v in allowed.variants if v.value is True for w in (v.when or ())
+        })
         reads = (
             "conditionally permitted, hearing required"
             if conditional
             else "permitted only by the state middle housing law"
             if state_path
+            else f"permitted only when {', '.join(other)}"
+            if other
             else str(bool(allowed.value))
         )
         capped = str(z.get("confidence", "")) == "needs_verification"

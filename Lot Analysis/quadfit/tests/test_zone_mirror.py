@@ -341,7 +341,8 @@ def test_every_split_but_rn_is_a_path_the_corpus_holds() -> None:
     `state_middle_housing` path for them, and LR7 because it carries a
     conditional use. If one of those paths is ever removed from the corpus,
     the line falls back to a bare "False" and this goes red -- the row is
-    then screening a zone the corpus closes outright.
+    then screening a zone the corpus closes outright. The Washington rows
+    (PORTED_FROM_A_VARIANT) name the corpus's own condition.
     """
     audit = _audit()
     for s in audit.permission_splits():
@@ -350,7 +351,8 @@ def test_every_split_but_rn_is_a_path_the_corpus_holds() -> None:
         if any(s.startswith(f"{k}: ") for k in PORTED_FROM_A_VARIANT):
             continue  # the port's own rule; pinned by the test above
         assert ("conditionally permitted" in s
-                or "permitted only by the state middle housing law" in s), s
+                or "permitted only by the state middle housing law" in s
+                or "permitted only when " in s), s
 
 
 def test_neither_disputed_permission_can_reach_a_green() -> None:
