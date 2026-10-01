@@ -310,3 +310,32 @@ def test_pages_read_from_many_threads_at_once_all_come_back(book: Path):
         counts = list(pool.map(one, range(200)))
 
     assert len(set(counts)) == 1 and counts[0] > 0
+
+
+def test_a_sentence_printed_twice_is_told_apart_by_the_lines_around_it(tmp_path: Path):
+    """Oregon City page 1039 prints one district's standards after another's,
+    in the same words, and the line either side of each copy is the
+    same "A." and "B.". Only the district heading above tells them apart, so
+    the copy the text cites is found from the wider context, not guessed."""
+    block = ["Dimensional standards apply.", "A.", "The maximum front setback is five feet.", "B."]
+    runs = [(72, 720, 11, "Commercial District")]
+    runs += [(72, 700 - 20 * k, 11, text) for k, text in enumerate(block)]
+    runs += [(72, 560, 11, "Mixed-Use Downtown District")]
+    runs += [(72, 540 - 20 * k, 11, text) for k, text in enumerate(block)]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    lines = list(sheet.lines)
+
+    found = S.find(
+        sheet,
+        "The maximum front setback is five feet.",
+        before="Mixed-Use Downtown District\nDimensional standards apply.\nA.",
+        after="B.",
+    )
+
+    assert found is not None
+    above = " ".join(" ".join(w.text for w in ln.words) for ln in lines[: lines.index(found)])
+    assert above.count("District") == 2, "the second copy, below both headings"
+    # With only the nearest line to go by it is a tie, and a tie is not a guess.
+    assert S.find(sheet, "The maximum front setback is five feet.", before="A.", after="B.") is None

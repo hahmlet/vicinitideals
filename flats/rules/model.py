@@ -377,6 +377,25 @@ class ZoneRuling(BaseModel):
         return self.zone or code
 
 
+class SetAside(BaseModel):
+    """A passage of our own documents read and deliberately left out.
+
+    The prose refusals ("NOT ENCODED: ...") live in notes and comments with no
+    line reference, so nothing could show a reviewer which untinted text on a
+    printed page was weighed and refused and which nobody has read. This is
+    the located form: the lines, and a few words of why. The page check tints
+    these apart from the encoded numbers, so an untinted line is a blind miss.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    #: ``<document>#L<a>-L<b>[,L<c>...]``, the same shape a value's quote takes.
+    quote: str
+    why: str = ""
+    #: The zones it was weighed for; empty for the whole layer.
+    zones: tuple[str, ...] = ()
+
+
 class PrivateDriveRuling(BaseModel):
     """Whether a private road or drive the lot abuts is a street here, for
     the lot lines, the corner and the yards, in this code's own words.
@@ -562,6 +581,9 @@ LAYER_META = frozenset(
         # Whether a private drive the lot abuts is a street here, for the
         # lot lines, the corner and the yards (`PrivateDriveRuling`).
         "private_drives",
+        # Passages of our documents read and left out on purpose, with the
+        # lines, so a printed page can show them apart from a blind miss.
+        "set_aside",
         "kind",
         "label",
         "eligible",
@@ -2485,6 +2507,8 @@ class Layer(BaseModel):
     #: Whether a private drive the lot abuts is a street here (see
     #: :class:`PrivateDriveRuling`); None where the code is silent.
     private_drives: PrivateDriveRuling | None = None
+    #: Passages read and refused on purpose -- see :class:`SetAside`.
+    set_aside: tuple[SetAside, ...] = ()
 
     @property
     def depth(self) -> int:

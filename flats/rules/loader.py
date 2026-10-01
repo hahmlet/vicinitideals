@@ -21,6 +21,8 @@ surface every problem in one pass, not one per run.
 from __future__ import annotations
 
 import math
+import re
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -43,6 +45,7 @@ from flats.rules.model import (
     ORCA_UNIT_TYPES,
     ParkRule,
     PrivateDriveRuling,
+    SetAside,
     ZoneRuling,
     READING_OUTCOMES,
     WORD_OUTCOMES,
@@ -1922,6 +1925,37 @@ def _terse(exc: Exception) -> str:
 _LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
 
 
+_SET_ASIDE_QUOTE = re.compile(r"^[^#\s]+#L\d+(?:-L\d+)?(?:,L\d+(?:-L\d+)?)*$")
+
+
+def _parse_set_aside(
+    raw: Any, zones: Mapping[str, Zone], *, where: str, problems: list[str]
+) -> tuple[SetAside, ...]:
+    """The ``set_aside:`` list: located refusals, each a quote and a why."""
+    if raw is None:
+        return ()
+    if not isinstance(raw, list):
+        problems.append(f"{where}.set_aside: expected a list")
+        return ()
+    out = []
+    for n, item in enumerate(raw):
+        here = f"{where}.set_aside[{n}]"
+        if not isinstance(item, dict) or set(item) - {"quote", "why", "zones"}:
+            problems.append(f"{here}: expected quote, why and optional zones")
+            continue
+        quote = str(item.get("quote") or "")
+        if not _SET_ASIDE_QUOTE.match(quote):
+            problems.append(f"{here}: quote {quote!r} is not <document>#L<a>-L<b>")
+            continue
+        named = tuple(str(z) for z in item.get("zones") or ())
+        unknown = [z for z in named if z not in zones]
+        if unknown:
+            problems.append(f"{here}: zones {unknown} are not zone blocks here")
+            continue
+        out.append(SetAside(quote=quote, why=str(item.get("why") or ""), zones=named))
+    return tuple(out)
+
+
 def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
     try:
         raw = yaml.load(path.read_text(encoding="utf-8"), Loader=_LOADER) or {}
@@ -1994,6 +2028,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             private_drives=_parse_private_drives(
                 raw.get("private_drives"), where=where, problems=problems
             ),
+            set_aside=_parse_set_aside(raw.get("set_aside"), zones, where=where, problems=problems),
         )
     except Exception as exc:
         problems.append(f"{where}: {_terse(exc)}")

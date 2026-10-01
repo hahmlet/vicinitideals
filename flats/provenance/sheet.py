@@ -542,15 +542,26 @@ def find(sheet: Sheet, stored: str, before: str = "", after: str = "") -> Line |
     tied = [i for score, i in scored if score > scored[0][0] - 0.03]
     if len(tied) == 1:
         return lines[tied[0]]
-    around = []
-    for i in tied:
-        prev = lines[i - 1].key if i > 0 else ""
-        nxt = lines[i + 1].key if i + 1 < len(lines) else ""
-        around.append((_ratio(squash(before), prev) + _ratio(squash(after), nxt), i))
-    around.sort(reverse=True)
-    if around[0][0] - around[1][0] < 0.2:
-        return None
-    return lines[around[0][1]]
+    # The nearest line either side decides first -- that is what a table row
+    # needs, where the text copy's farther lines come from other columns. The
+    # wider context (newline-separated, nearest last for ``before`` and first
+    # for ``after``) is the second try: Oregon City prints the same sentence in
+    # MUC-1 and MUC-2 on one page, and the one line either side differs by a
+    # letter -- "D." against "F." -- which is not a decision.
+    befores = before.split("\n") if before else []
+    afters = after.split("\n") if after else []
+    for k in sorted({1, max(len(befores), len(afters), 1)}):
+        b, a = "".join(befores[-k:]), "".join(afters[:k])
+        n_before, n_after = min(k, len(befores)), min(k, len(afters))
+        around = []
+        for i in tied:
+            prev = "".join(line.key for line in lines[max(0, i - n_before) : i]) if n_before else ""
+            nxt = "".join(line.key for line in lines[i + 1 : i + 1 + n_after])
+            around.append((_ratio(squash(b), prev) + _ratio(squash(a), nxt), i))
+        around.sort(reverse=True)
+        if around[0][0] - around[1][0] >= 0.2:
+            return lines[around[0][1]]
+    return None
 
 
 @dataclass(frozen=True, slots=True)
@@ -834,6 +845,10 @@ def _is_running(line: Line, running: Sequence[Box]) -> bool:
     )
 
 
+#: Lines either side a repeated line is told apart by.
+_CONTEXT = 3
+
+
 def locate(
     store: ProvenanceStore,
     document: str,
@@ -864,9 +879,11 @@ def locate(
             page = index.at(n)
             if page is None:
                 continue
-            before = next((text[k - 1] for k in range(n - 1, 0, -1) if text[k - 1].strip()), "")
-            after = next(
-                (text[k - 1] for k in range(n + 1, len(text) + 1) if text[k - 1].strip()), ""
+            before = "\n".join(
+                reversed([text[k - 1] for k in range(n - 1, 0, -1) if text[k - 1].strip()][:_CONTEXT])
+            )
+            after = "\n".join(
+                [text[k - 1] for k in range(n + 1, len(text) + 1) if text[k - 1].strip()][:_CONTEXT]
             )
             cited.append((n, page.n, text[n - 1], before, after))
     cited = cited[:_MOST_LINES]

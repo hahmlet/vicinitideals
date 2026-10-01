@@ -2199,3 +2199,42 @@ private_drives:
     "'Private street' means a privately owned and maintained street or
     accessway" (L2727). Front lot line (L1702) and corner lot (L2082) read
     "street".
+
+# Passages read and left out on purpose, located. The refusals above are
+# prose with no line numbers; these are the same decisions with
+# the lines, so the page check can tint them apart from a blind miss. The why
+# is a few words: the full reasoning stays where it was written.
+set_aside:
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L7121-L7125,L7133-L7139"
+    zones: [MUC-1]
+    why: max setbacks and min density -- 17.29.050.I exempts residential under five units
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L7146,L7181-L7185"
+    zones: [MUC-2]
+    why: min floor area ratio -- reaches only nonresidential and mixed-use (17.29.070.A)
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L7162"
+    zones: [MUC-2]
+    why: max corner side setback -- no field for a maximum street-side setback yet
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L7889-L7891,L7930-L7932"
+    zones: [MUD]
+    why: max front setback -- 17.34.060.K / 070.K exempt residential under five units
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L7854,L7899,L7949-L7951"
+    zones: [MUD]
+    why: min floor area ratio -- reaches only nonresidential and mixed-use (17.34.080.A.1)
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L6694-L6696"
+    zones: [NC]
+    why: min building height -- the district already refuses the use
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4609-L4610"
+    zones: [R-2]
+    why: garage setback -- the pod parks in a rear court and has no garage
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4643-L4649"
+    zones: [R-2]
+    why: affordable density bonus -- five or more units only
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L8191-L8192"
+    zones: [WFDD]
+    why: min floor area ratio 1.0 -- no field for it; known gap
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L14895-L14896"
+    why: parking count -- the quadplex row states no unit; the state cap of four in total governs
+  - quote: "or/clackamas/oregon-city/16.12.streets.txt#L984-L1017"
+    why: driveway spacing -- the table excludes quadplexes and townhouses
+  - quote: "or/clackamas/oregon-city/16.12.streets.txt#L1020-L1021"
+    why: driveway five feet off the property line -- known gap, not yet encoded

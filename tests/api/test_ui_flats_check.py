@@ -456,3 +456,54 @@ async def test_a_new_answer_after_back_ends_the_walk_forward(client, session):
 
     assert "data-forward" not in changed.text
     assert "data-back" in changed.text
+
+
+async def test_a_passage_set_aside_on_purpose_has_its_own_tint(client, session, monkeypatch):
+    """Steph 2026-10-01: an untinted clause must mean nobody weighed it. One
+    read and declined is tinted grey, so a blind miss stands out from a
+    conscious refusal without the reviewer needing the reason."""
+    await _login(client, session)
+    declined = sheet.Box(0.1, 0.7, 0.5, 0.72)
+    monkeypatch.setattr(
+        check, "_set_aside_on", lambda document, page: ((declined, "set aside on purpose: garages"),)
+    )
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert 'class="check-box check-box-set-aside"' in response.text
+    assert 'title="set aside on purpose: garages"' in response.text
+    assert "read and set aside on purpose" in response.text
+
+
+def test_what_was_set_aside_includes_the_located_refusals():
+    oregon_city = check._layers()["or/clackamas/oregon-city"]
+    by_document = check._set_aside_by_document()
+
+    for item in oregon_city.set_aside:
+        held = by_document[item.quote.partition("#L")[0]]
+        assert {"quote": item.quote, "why": item.why} in held
+
+
+async def test_an_exempt_standard_is_asked_as_not_applying(client, session, monkeypatch):
+    await _login(client, session)
+    monkeypatch.setattr(check, "_exempt", lambda layer, row: True)
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert "does <strong>not apply to our building</strong>" in response.text
+
+
+def test_the_card_names_the_other_numbers_held_for_the_same_standard():
+    layer = check._layers()["or/clackamas/oregon-city"]
+    zone, field = next(
+        (z, f)
+        for z, block in layer.zones.items()
+        for f, v in block.values.items()
+        if v.variants
+    )
+
+    held = check._variants(layer, zone, field)
+
+    assert held[0]["when"] == "normally"
+    assert all(v["when"].startswith("in the case where ") for v in held[1:])
+    assert "_" not in " ".join(v["when"] for v in held), "conditions in words, not keys"
