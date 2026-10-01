@@ -21,7 +21,9 @@ drafts, with rulebook steps 1-10 and 12 done for each:
 
 That is every jurisdiction in the county brief's Encode list that
 answered. Tigard, Forest Grove and Cornelius refused the fetch and are
-recorded, not drafted; section 1 says what the scout found for each. Every value is `draft`; nothing is `verified`.
+recorded, not drafted; section 1 says what the scout found for each.
+(Tigard was drafted later, 2026-10-01, on its own branch: see the Tigard
+subsections of sections 1 to 8.) Every value is `draft`; nothing is `verified`.
 
 **Read this first about Beaverton.** No Beaverton lot can come back GREEN
 as drafted. The county brief asks for the annexation condition (UPAA §V.D)
@@ -138,7 +140,7 @@ cloud session's and are left as written.
 | Unincorporated (county CDC) | Draft done, steps 1-10 and 12. 34 documents, 42 zones. Step 8 (footnote rulings) could not be run by the tool; the notes were read by hand, see Documents |
 | Hillsboro | Draft done, steps 1-10 and 12. 23 documents, 37 zones, 4 map codes ruled (ANX, CO, SID I-P, SC-BP). Community Development Code, Municode publication 4450 |
 | Beaverton | Draft done, steps 1-10 and 12. 17 documents (16 slices of the Development Code and the county's Urban Planning Area Agreement), 28 zones, 2 map codes ruled (WAcnty, ROW). Development Code as the encodeplus export printed it on 2026-09-28, through Ord. 4879 of April 2026. `apps2.beavertonoregon.gov` refused (CONNECT 502); nothing needed was there |
-| Tigard | Not started. **Refused:** the code is on eCode360 (`https://ecode360.com/43691505`), which answered 403 (Cloudflare) to curl and WebFetch; the city site answered 403 (Akamai). City GIS unreachable: `maps.tigard-or.gov` and `svr.tigardmaps.com` fail TLS (legacy renegotiation, then an untrusted chain), `gis.tigard-or.gov` CONNECT 502. No workaround was tried. Metro's regional zoning layer (`CITY='Tigard'`) carries the current code names |
+| Tigard | Draft done 2026-10-01 (a later cloud session, branch `flats/tigard-draft`), steps 1-10 and 12. 22 documents (chapters of Title 18, the Community Development Code, eCode360 TI5024, through Ord. 26-13 of July 14, 2026), 13 zones (9 admit the pod as a rowhouse development, 4 refuse), 0 map rulings. eCode360's print view (`https://ecode360.com/print/TI5024?guid=...`) answered a browser User-Agent with no challenge, one chapter every 30 seconds (the scout's 403 was on the reader URL, which this session did not retry). The city site still answers 403 (Akamai) and was not worked around; nothing needed was only there. No city GIS: lots reach the layer by `JURIS_CITY` = `TIGARD`, and Metro's regional zoning layer (`CITY='Tigard'`, field `ZONE`) carried the 13 code names in 189 polygons on 2026-09-30. Blind second reading: 174 cards, 0 disagree |
 | Forest Grove | Not started. **Refused:** the code is only on American Legal (`https://codelibrary.amlegal.com/codes/forestgrove/latest/forestgrovedev_or/0-0-0-4`), which answered 403 to curl and WebFetch; there is no whole-code PDF. City zoning layer reachable (`maps.forestgrove-or.gov/server/rest/services/ForestGrove/Zoning/FeatureServer/16`, field `zoning_code`) |
 | Sherwood | Draft done, steps 1-10 and 12. 18 documents (15 slices of the Zoning and Community Development Code, Municode publication 3865, Supplement 24, through Ord. 2026-001; 3 slices of Ordinance 2022-004, for pages the Municode PDF drops), 21 zones, 14 map codes ruled (Old Town, OS, UGA, Unannex and ten county or neighbouring-city codes on unannexed land). City zoning layer `services5.arcgis.com/ikEzR7lqVIlrcVFn/.../Planning/FeatureServer/2`, field `CODE`. Nothing refused |
 | Cornelius | Not started. **Refused:** Code Publishing now points to eCode360 (`https://ecode360.com/CO4396`), which answered 403 (Cloudflare); `www.ci.cornelius.or.us` failed TLS. No city zoning layer; Metro's is stale (no R-10). The city's Zoning Map 2025 PDF is reachable. The AGOL "Cornelius Zoning Map" is Cornelius, North Carolina |
@@ -697,6 +699,78 @@ there is no footnote file for Durham and nothing is added to
 `caps.json`.
 
 Failed fetches for Durham: none. The whole PDF fetched first time.
+
+### Tigard
+
+Twenty-two documents, stored under
+`flats/provenance/docs/or/washington/tigard/`, all retrieved 2026-09-30,
+all chapters of Title 18 of the Tigard Municipal Code (the Community
+Development Code) on General Code's eCode360, publication TI5024, current
+through Ordinance 26-13 of July 14, 2026. Each is the chapter's print view
+(`https://ecode360.com/print/TI5024?guid=<id>`), declared in `tigard.yaml`
+`code:` with its URL.
+
+How they were fetched. The HTML was downloaded to the session's scratch
+with a browser User-Agent, one chapter every 30 seconds, and a check on
+every response for a Cloudflare or Turnstile page; none was met, and no
+chapter was refused. The stored text was then made by the repo's own
+fetcher (`flats.provenance.fetch --layer or/washington/tigard`) from those
+bytes, extractor `flats-html-text/8`. `tigard-or.gov` answered 403
+(Akamai) and was not worked around; nothing the layer needs is only there.
+
+Chapters held:
+
+- 18.30 Definitions (the glossary; `allow_thin`), 18.40 Measurements
+  (18.40.130.B: rowhouse density from the lot table), 18.60 Use Categories
+  (`allow_thin`);
+- the zone chapters: 18.110 Residential, 18.120 Commercial (COM, MUC, MUE,
+  MUR), 18.130 Industrial, 18.140 Parks and Recreation;
+- 18.210 Residential General Provisions (projections, the front setback
+  average), 18.270 Quads (read to rule the pod out of the noun), 18.280
+  Rowhouses (Table 18.280.1, every residential yard and height), 18.320
+  Commercial Zone Development Standards (nonresidential and mixed use
+  only);
+- 18.410 Off-Street Parking (Table 18.410.2 stalls and aisles, Table
+  18.410.3 maximums);
+- the plan districts: 18.620 Bridgeport Village, 18.640 River Terrace,
+  18.650 Downtown (MU-CBD), 18.660 Triangle (TMU), 18.670 Washington
+  Square Regional Center;
+- 18.720 Annexations (the INST ruling), 18.805 Lot Standards (Table
+  18.805.1), 18.840 Sublot Plats, 18.920 Access, 18.930 Vision Clearance
+  (`allow_thin`).
+
+Fetched to scratch and not stored, because no value quotes them: 18.10,
+18.230 (apartments), 18.240, 18.250, 18.290, 18.310, 18.350, 18.420
+(landscaping and screening; Table 18.420.2's S-3 width is quoted in
+Doubts from the scratch copy), 18.510 (sensitive lands), 18.610, 18.630,
+18.710, 18.725, 18.770 and 18.910. If a later reading leans on any of
+them, store it first.
+
+Not held at all: the plan district maps (Map 18.650.A, the Downtown
+subareas; Map 18.660.A, the Triangle's four-storey lots; Map 18.670.A, the
+Washington Square subdistricts). They are images, and they decide three
+refusals and one height (Zones, Owed locally).
+
+**A reader limit, found by hand.** The HTML-to-text extractor drops an
+empty table cell, so a row with a blank cell shifts left in the stored
+text. Table 18.805.1 has one: its MUC column is blank on the Rowhouse
+rows. Read from the raw HTML, the Rowhouse rows are (RES-A, RES-B, RES-C,
+RES-D, RES-E, MU-CBD, MUC, MUR): minimum lot 1,500 / 1,500 / 1,250 / 750 /
+None / None / blank / None; maximum lot 3,000 / 3,000 / 1,750 / 1,250 /
+1,000 / None / blank / 870; width 25 / 25 / 20 / None / 20 / None /
+blank / 16. Every value the layer quotes from that table was checked
+against this. No other table on the branch was checked for blanks.
+
+**The footnote census** found four notes blocks and ten notes: Table
+18.110.3 (two), Table 18.280.1 (two), Table 18.640.1 (one) and Table
+18.650.3 (five). All ten are ruled in
+`flats/config/footnotes/or/washington/tigard.yaml`: five `encoded`, five
+`dismissed`, none `unmeasured`, so nothing goes to `caps.json`. The
+Triangle's street tables (18.660.9, 18.660.10) print a "Notes" column,
+not a notes block, and are about street sections; the file's header says
+so.
+
+Failed fetches for Tigard: none.
 
 ## 3. Zones
 
@@ -1372,6 +1446,136 @@ no dimensions:
 
 **Ruled, not encoded: none.**
 
+### Tigard
+
+The zone keys are the code's own names (`RES-A`, `MU-CBD`). Tigard's GIS
+was unreachable to the scout and was not tried again. Lots reach the layer
+by the taxlots' `JURIS_CITY` = `TIGARD`, and their zoning comes from
+Metro's regional zoning layer
+(`services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services/Zoning/FeatureServer/1`,
+`CITY='Tigard'`, field `ZONE`). On 2026-09-30 it carried 189 polygons
+under 13 codes, every one a zone the code names:
+
+| Code | Polygons | Area (Metro's `AREA`, sq ft) |
+|---|---|---|
+| RES-B | 20 | 122,777,482 (about 2,819 acres) |
+| RES-C | 24 | 58,747,894 (about 1,349 acres) |
+| MUE | 9 | 29,825,083 (about 685 acres) |
+| RES-D | 37 | 28,363,082 (about 651 acres) |
+| PR | 55 | 24,408,671 (about 560 acres) |
+| COM | 9 | 17,420,365 (about 400 acres) |
+| IND | 3 | 15,576,054 (about 358 acres) |
+| RES-E | 14 | 15,509,467 (about 356 acres) |
+| TMU | 1 | 14,076,534 (about 323 acres) |
+| MUC | 9 | 11,687,577 (about 268 acres) |
+| MU-CBD | 2 | 8,278,297 (about 190 acres) |
+| MUR | 3 | 5,788,940 (about 133 acres) |
+| RES-A | 3 | 3,802,500 (about 87 acres) |
+
+So the layer has no `zone_rulings`. The district harvest also finds FAR
+(a floor area ratio, 18.30 and 18.40) and INST (a Washington County
+district named in the annexation table, 18.720); both are ruled
+not-a-zone in `test_districts.py`. Metro draws no plan district, subarea
+or subdistrict.
+
+**What the pod is here.** 18.30: a "Quad" is "two dwelling units on a
+first story ... and two dwelling units on a second story" (L1028-L1029),
+and a "Rowhouse" is "A type of attached housing that shares a common
+sidewall with one or more dwelling units, but excluding apartments,
+courtyard units, and quads" (L1032-L1033), "the same as a townhouse within
+the meaning of state law". Four side-by-side units sharing walls on one
+lot are a rowhouse development (18.280), and 18.280.040.A allows "at least
+two dwelling units", at most five a grouping in RES-A to RES-C.
+
+**Lot size and density, read per rowhouse.** 18.40.130.B sets rowhouse
+density from Table 18.805.1's lot sizes, and 18.280.040.B says rowhouse
+development "is not allowed on lots that do not meet the dimensional lot
+standards for the base zone". The table's minimum lot is held as
+`min_lot_sqft` `per_dwelling` and as the density ceiling
+(`sqft_per_unit`); its MAXIMUM lot is held as the density floor
+(`min_density_du_per_acre` `sqft_per_unit`). A question for Steph.
+
+Layer-wide values (`defaults`):
+
+- parking: zero required, no maximum. 18.410 prints maximums only
+  (18.410.030.A.1), and Table 18.410.3 sends Residential Use to the
+  housing type chapters, which state none. Zero is held so the state
+  layer's banded cap is not read as a requirement (Hillsboro's
+  precedent);
+- `front_lot_line_corner: shortest`: 18.30's Front lot line, "the
+  shortest of the two property lines that abut the street", with the
+  owner's choice where both are 75 ft or more left unread (the stricter
+  reading; Doubts);
+- `corner_access_street: any`: no rule names a street for a rowhouse
+  development's drive;
+- `definitions.corner_lot`: frontages meeting at an interior angle that
+  "does not exceed 135º" (L1236-L1237), private ways counting, alleys
+  not;
+- `private_drives: street: true`: 18.30 defines a Street as "A public or
+  private accessway that is created to provide ingress or egress for
+  vehicles to three or more lots" (L1585).
+
+The zones:
+
+- **RES-A to RES-E** admit the pod (Table 18.110.2 Residential Use A,
+  Table 18.110.3 Rowhouses L[2] in RES-A to RES-C and Y in RES-D and
+  RES-E). Yards, height, coverage and landscape from Table 18.280.1;
+  lot, width and density from Table 18.805.1:
+
+  | Zone | Lot per rowhouse (min / max) | Width | Front / street side / side / rear | Height |
+  |---|---|---|---|---|
+  | RES-A, RES-B | 1,500 / 3,000 | 25 | 20 / 20 / 5 / 25 | 35 |
+  | RES-C | 1,250 / 1,750 | 20 | 15 / 15 / 5 / 15 | 35 |
+  | RES-D | 750 / 1,250 | None | 15 / 15 / 5 / 15 | 35 |
+  | RES-E | None / 1,000 | 20 | 15 / 10 / 5 / 15 | 45 |
+
+  Every one: front setback at most 20, coverage 80 percent (held as
+  impervious: 18.30 counts "structures, buildings and other impervious
+  surfaces"), landscape 20 percent, 15 ft frontage (18.805.030.C.1),
+  side 0 on a common wall and rear 0 on an alley (the two notes of Table
+  18.280.1), parking 20 ft from a street line (18.280.040.D.2), a 20 ft
+  shared access (18.280.040.D.1.b, held for both one- and two-way),
+  entrances facing the street (`axis_required`), and Table 18.410.2's
+  90-degree stall (8.5 by 16) and 20 ft aisle.
+- **MUR** admits it (Table 18.120.1 A, Table 18.120.2 Y): no minimum lot,
+  at most 870 sq ft a rowhouse, 16 ft width, and the stricter of Table
+  18.280.1's MUR-1 and MUR-2 columns (front 10, street side 10, rear 15,
+  height 45). Refused inside Washington Square's Apartment Subdistrict
+  (18.670.060.E.2), as a variant on `inside_mapped_use_area`.
+- **MUC** admits it (A and Y, and 18.280.020.A names MUC), but OWES its
+  lot, width, yards and height: Table 18.280.1 has no MUC column and
+  Table 18.805.1's MUC rowhouse cells are blank. Nothing is borrowed from
+  another column. Parking, drive and orientation are held as in the RES
+  zones. Refused inside Washington Square (four storeys and 20 percent
+  affordable in the Design Review Subdistrict; mixed use only in the
+  Metzger Business Subdistrict), as a variant. Bridgeport Village, zoned
+  MUC, has its own residential figures (18.620.040.B) "Except as
+  determined in the architectural review process"; not encoded (Doubts).
+- **MU-CBD** admits it (Table 18.650.1 A/R, Table 18.650.2 Y, Type II
+  review on the chapter's standards). 18.280 does not apply
+  (18.280.020.C). Every figure is the strictest of Table 18.650.3's four
+  subareas: no minimum lot or width, front 5 (max 10), street side and
+  side 0, rear 5, height 45, at least 20 ft tall, coverage 80, landscape
+  20, density 25 to 50 an acre (25 for "residential-only development",
+  note 4). Parking at the side or rear, at most half the frontage, 10 ft
+  from a street line. Refused where the subarea is Main Street or 99W/Hall
+  (a 15 ft first storey), as a variant.
+- **TMU** admits it (Table 18.660.4 A; 18.660 applies "in lieu of" the
+  rest of the title). No minimum lot or width; 1 ft to the street, 12 ft
+  at most; nothing on interior lines; four storeys (Map 18.660.A is not
+  held); no parking minimum; 7.5 by 17.5 ft spaces; parking behind the
+  building or 35 ft from every street line (the 35 held); rowhouse
+  driveways "10 feet or less in width" (held as
+  `driveway_approach_max_width_ft`); an entrance for each residence
+  (`entrance_only`). Table 18.660.7's 12 ft first storey is not held
+  (Questions).
+- **COM and MUE** refuse: residential only in a mixed-use development
+  (COM) or with employment as a primary use (MUE), and Rowhouses N in
+  Table 18.120.2.
+- **IND and PR** refuse: Residential Use P.
+
+**Ruled, not encoded: none.**
+
 ## 4. Refusals and absences
 
 Three cities in the county brief's Encode list were not drafted because
@@ -1850,6 +2054,73 @@ None prohibits the pod in SDR. None admits it in a zone the layer refuses.
   and exempt on one lot).
 - No definition of corner lot, front lot line, setback, height or lot
   width (12.1 sends them to Webster's).
+
+### Tigard
+
+Twelve NOT ENCODED comments in `tigard.yaml`, each quoting the code: one
+beside `defaults`, ten between `defaults` and `zones`, one in the TMU
+comment; and one in TMU's `notes` (the storey height again, counted as a
+note).
+
+- **The through lot's front** (18.30, Front lot line): "the property line
+  that abuts the street with the lowest classification". No value of
+  `front_lot_line_through` says that, and nothing measures street class.
+  Left unread, the worst reading.
+- **The shared access's 24 ft ceiling** (18.280.040.D.1.b). No field
+  holds a maximum drive width; the pod's drive is narrower.
+- **Tandem driveways** (D.1.a): the other access path; the pod uses the
+  shared rear court.
+- **S-3 screening** of side and rear parking in RES-A to RES-C
+  (18.280.040.D.4). Table 18.420.2 (read in scratch, not stored) makes
+  S-3 5 ft wide with a 6 ft sight-obscuring fence or wall and trees. No
+  field holds a parking buffer from an interior lot line (Doubts).
+- **Detached garages 40 ft from a street** (D.3.a): the pod has none.
+- **The rowhouse design standards** (18.280.040.E to I): paths, service
+  areas, facade articulation, a 48 sq ft porch a unit. Design, not
+  placement.
+- **Vision clearance** (18.930): a 30 ft triangle (35 on arterials). TMU
+  is exempt (18.660.070.B.3).
+- **Driveway spacing** (18.920.030): 150 ft from a collector or arterial
+  intersection. Nothing measures street class.
+- **River Terrace** (18.640): its funding gate reaches land divisions,
+  planned developments, site development reviews and conditional uses,
+  not a rowhouse development on one lot; its Boulevard standards (no
+  parking within 40 ft, no direct access) reach lots along River Terrace
+  Boulevard, whose line is not held (Doubts).
+- **The front setback average** (18.210.030.B.9): a relief the
+  neighbours' houses decide.
+- **Lot shape** (18.805.030.B): "Each lot for quad, rowhouse, or small
+  form residential development must be rectilinear in shape". 18.805
+  applies to "new lots that are created through a partition or
+  subdivision and to existing lots that are reconfigured" (18.805.020),
+  and 18.280.040.B brings in only the dimensional standards. Found by the
+  step-10 prohibition grep and added 2026-10-01.
+- **TMU's first storey** (Table 18.660.7, "First story 12 feet (min.)"):
+  no field holds a storey height (Questions).
+
+The step-10 grep (every stored chapter, for "prohibit", "not allowed",
+"not permitted", "shall not", "may not", "must not", near a housing,
+parking, driveway or building word) found nothing else that reaches the
+pod on an existing lot in an admitting zone. Two finds sit on facts no
+data holds and are recorded here only: TMU's district trees ("Buildings,
+driveways, and off-street vehicle parking and loading areas are not
+allowed within the tree preservation area", 15 ft beyond the drip line,
+18.660, L927) and the Downtown's future street alignments ("New buildings
+may not be located within the area identified as future street or alley
+alignment", 18.650, L949). Bridgeport Village's "Parking and loading
+areas may not be located between the primary structures and the street"
+(18.620, L243) reaches MUC lots there, which owe their dimensions anyway.
+
+"The code states nothing":
+
+- No parking minimum anywhere on the pod's path (held 0) and no maximum
+  for a rowhouse (held `exempt`).
+- No MUC column in Table 18.280.1, and blank MUC rowhouse cells in Table
+  18.805.1 (held as owed, not as "None").
+- No coverage, landscape area or density in TMU.
+- No aisle width for TMU (18.410's table does not reach it).
+- No driveway width in MU-CBD (18.280 does not apply there, and Table
+  18.920.1 sends rowhouses to 18.280).
 
 ## 5. Doubts
 
@@ -2547,6 +2818,108 @@ Ledgers and readers:
 - **The exemption** is `stated` on its own sentence: Table 3.7.5's "No
   maximum" parking.
 
+### Tigard
+
+Reading the code:
+
+- **Table 18.805.1 read per rowhouse.** 18.40.130.B makes rowhouse density
+  "determined by the minimum and maximum lot sizes provided in Chapter
+  18.805", and 18.280.040.B forbids rowhouse development on a lot that
+  misses "the dimensional lot standards for the base zone". The draft
+  reads each row per rowhouse on the pod's one lot: RES-A needs 6,000 sq
+  ft and allows at most 12,000. Two other readings exist: the figures
+  are for each rowhouse's own lot when lots are divided (18.805 applies
+  to "new lots ... and ... existing lots that are reconfigured"), and so
+  do not reach one lot at all; or the maximum lot is a cap on the lot,
+  not a density floor. Under the draft a big lot fails in every RES zone
+  (over 12,000 sq ft in RES-A and RES-B, 7,000 in RES-C, 5,000 in RES-D,
+  4,000 in RES-E, 3,480 in MUR). A question for Steph.
+- **The 15 ft frontage on an existing lot.** 18.805.030.C.1 gives rowhouse
+  lots 15 ft; C.2 and C.3 print 20 ft for lots on a cul-de-sac or eyebrow
+  and at the end of a private street. The draft holds 15 everywhere, so a
+  bulb lot with 15 to 20 ft of frontage passes where the code asks 20. It
+  is also a lot standard (18.805.020), which an existing lot may not owe.
+- **MUR-1 and MUR-2.** Table 18.280.1 prints two MUR columns; 18.120 and
+  18.670 know one MUR zone, and no map held says which lot was which. The
+  stricter is held: front 10 (MUR-1 0), street side 10 (5), height 45
+  (75). A question for Steph.
+- **MUC's blank cells** (Documents). Read as owed, not as "None": a blank
+  cell is silence about a figure the column was set up to state, and
+  Steph's rule that silence means none was not stretched to a table cell
+  the city left empty. If it meant "None", MUC would have no lot minimum
+  and no maximum, and still no yards or height (Table 18.280.1 has no
+  column). A question for Steph.
+- **TMU's first storey.** "First story 12 feet (min.) and 25 feet (max.)"
+  (Table 18.660.7). The pod is 26 ft over two storeys, so a 12 ft ground
+  storey is possible (12 + 14), but the catalog spec does not give its
+  storey heights. If it is under 12, every TMU lot is red. A question for
+  Steph.
+- **TMU's four storeys.** Six storeys, or four on lots Map 18.660.A marks;
+  the map is not held, so four is held. The pod is two. Harmless.
+- **TMU's parking minimum of zero** rests on silence: 18.660.070.D.1 gives
+  maximums only ("The maximum quantity standards for off-street parking
+  areas are provided in Table 18.410.3"). The quote also carries "There
+  is no minimum or maximum quantity standard for off-street loading
+  areas" (L707), which is about loading, not parking; it is not the
+  ground for the zero.
+- **TMU's 10 ft driveway.** "Driveways for rowhouses and small form
+  residential development must be 10 feet or less in width" (18.660.070.G.2),
+  held as `driveway_approach_max_width_ft`. A rear court served by one 10
+  ft drive is one-way at best. A question for Steph.
+- **TMU parking 35 ft from every street line**, or "behind a building".
+  The 35 is held, the stricter. On a corner lot the rear court is behind
+  the building from the front street but not from the side street.
+- **MU-CBD, the strictest of four subareas.** Each figure is the
+  strictest subarea's, and two of those subareas (Main Street and
+  99W/Hall) refuse the pod anyway. The front 5 is 99W/Hall's figure for
+  frontage on 99W only; the maximum front 10 and height 45 are also
+  stricter than most of the zone. The second reading flagged the front 5,
+  the front maximum and the height for this. A lot in Scoffins/Commercial
+  or Fanno/Burnham is held tighter than its own figures.
+- **The sub-area refusals** in MUR, MUC and MU-CBD ride on
+  `inside_mapped_use_area`, which nothing measures; the maps are images
+  (Documents). Until they are digitised, no lot in those three zones can
+  be told apart.
+- **Lot coverage held as impervious.** Table 18.280.1's "lot coverage" is
+  held as `max_impervious_pct` because 18.30 counts "structures, buildings
+  and other impervious surfaces". With the court and drive paved, 80
+  percent can bind.
+- **S-3 screening** in RES-A to RES-C: a 5 ft planted strip and a 6 ft
+  fence between the parking and the neighbours (Refusals). On a tight lot
+  it takes court width the screen does not charge.
+- **The corner owner's choice.** On a corner lot with both street lines
+  75 ft or more the owner picks the front; the draft always takes the
+  shorter line. Stricter, and only a relaxation is lost.
+- **One-way drive at 20.** 18.280.040.D.1.b prints one shared-access
+  width, 20 ft, with no one-way figure; 20 is held for both.
+- **River Terrace Boulevard** lots (no parking within 40 ft, no direct
+  access) are not told apart (Refusals).
+- **Vision clearance** can push a corner building back; nothing draws it.
+- **A stale pointer in Table 18.650.3.** Note 1 says "See 18.650.080.D";
+  the bonuses it means are at 18.650.100.C (L1011-L1045). Dismissed in
+  the footnote file; it changes no figure.
+- **Bridgeport Village** (MUC): 18.620.040.B's figures (no minimum lot
+  or setback, 20 ft maximum front, 20 ft minimum height) are "Except as
+  determined in the architectural review process"; not encoded, and MUC
+  owes its dimensions anyway.
+
+Reading the ledgers:
+
+- **Attribution: 100 Tigard rows, all read.** 82 are a table number read
+  as a section (Table 18.805.1 read as 18.805.1, and the like). 18 name a
+  supporting section the quoted lines do not contain (18.30 definitions,
+  18.40.130, 18.280.020 and 18.280.040, and 18.200 and 18.280 for the
+  parking maximum): sections the value leans on but does not quote. None
+  names a wrong section.
+- **crossrefs: 30 unfetched BINDING references.** Most are table numbers
+  read as sections (18.650.1, 18.650.3, 18.280.1, 18.410.1 to 3, 18.660.1,
+  18.805.1, 18.420.2 and others). The real sections are procedure or
+  another path: 18.450 (wireless), 18.810, 18.820 and 18.830 (land
+  divisions), 18.740 (conditional uses), 18.230.040 (apartments), 18.20
+  (administration) and 18.330 (industrial standards).
+- **Second reading.** Of 174 cards, none disagree; the 12 unread and 2
+  agree-with-alternative are explained under Tests.
+
 ## 6. Questions for Steph
 
 ### Rulings, 2026-09-29 (Steph, encoded the same day)
@@ -2870,6 +3243,53 @@ The questions below are kept as the record of what was asked.
   standards, but a procedures table also lists a "site design" review
   with public notice without saying what it applies to. The draft assumes
   the staff check. Worth confirming with the city?
+
+### Tigard
+
+- **The ground floor height in the Triangle.** In the Tigard Triangle,
+  the ground floor of any building must be at least 12 ft tall. Our
+  building is about 26 ft over two floors, so it could meet
+  that, but the catalog does not say how tall each floor is. Is the
+  ground floor 12 ft or more? If it is less, every lot in the Triangle
+  fails.
+- **Is the "largest lot" a real limit?** Tigard's lot table gives each
+  townhome a smallest and a largest lot (in the two biggest residential
+  zones, 1,500 to 3,000 sq ft a home). The draft treats our four homes on
+  one lot as needing at least 6,000 sq ft and allowing at most 12,000, so
+  every bigger lot fails (smaller caps in the denser zones: 7,000, 5,000,
+  4,000 and 3,480 sq ft). The table may instead only apply when a lot is
+  being divided into one lot per home, in which case big lots would pass.
+  Should a big lot be turned away, or is the cap only about dividing land?
+- **Which of two mixed-use residential columns?** The city's townhome
+  table prints two columns for one zone, "MUR-1" and "MUR-2", though the
+  zone map and the rest of the code know only "MUR". The draft uses the
+  stricter of the two (10 ft from the street instead of 0, 45 ft tall
+  instead of 75). Is that right, or does the city treat the whole zone as
+  one of the two?
+- **The commercial mixed-use zone with blank boxes.** In the mixed-use
+  commercial zone (MUC) townhomes are allowed, but the city's lot table
+  leaves the townhome boxes for that zone empty, and its setback table
+  has no column for it. The draft says townhomes are allowed there but
+  cannot screen them, because there are no yard, height or lot numbers
+  to check. Should we ask the city what applies, or treat empty boxes as
+  "no limit"?
+- **Areas drawn only on separate maps.** In three mixed-use zones the
+  city refuses our building in certain sub-areas (parts of downtown, and
+  parts of the Washington Square area), but those sub-areas are drawn
+  only on picture maps we do not have as data. Until someone traces
+  them, the draft cannot tell which lots are in or out. The three zones
+  are about 590 acres together. Is tracing those maps worth doing now,
+  or should those zones wait?
+- **A narrow driveway in the Triangle.** In the Triangle, a townhome
+  driveway may be at most 10 ft wide. Elsewhere our rear parking court is
+  reached by a 20 ft drive. Can the pod work with a single 10 ft driveway
+  in and out, or should the Triangle count as a no for parking?
+- **A screened parking edge in the three lowest-density zones.** Where
+  parking is beside or behind townhomes in those zones, the city wants a
+  5 ft planted strip with a 6 ft fence along the neighbours' side. The
+  screen cannot charge that yet, so on tight lots it may call a fit the
+  city would not accept. Should that 5 ft be added to the parking
+  court's room before we trust a fit in those zones?
 
 ## 7. Tests
 
@@ -3412,6 +3832,121 @@ Durham (all run on 2026-09-29, on the final layer):
 - `footnotes`: 0 blocks.
 - `exemptions`: 1 row, `stated` (Table 3.7.5's "No maximum").
 
+### Tigard (branch `flats/tigard-draft`, 2026-10-01)
+
+**Full suite** (`uv run pytest flats/tests -q -n auto`), the final tree:
+FULL_SUITE_RESULT. `uv run ruff check flats/ scripts/`: RUFF_RESULT.
+`uv run python scripts/check_flats_firewall.py`: FIREWALL_RESULT.
+
+**quadfit's tests** (`uv run pytest "Lot Analysis/quadfit/tests" -q`),
+the same tree: **348 passed in 353 s.** Tigard holds no `corner_lot`
+variant (its variants are `attached_wall`, `alley_at_rear` and
+`inside_mapped_use_area`), so the corner-variant tests do not move.
+
+**Pinned counts moved**, each with a dated paragraph in the test:
+
+- `test_port.py`: 26 layers, 435 zones (25 and 422 before).
+- `test_refusals.py`: notes 134 to 135 (TMU's storey height in its
+  `notes`), comments 250 to 262 (the twelve in Refusals), tests 18.
+- `test_exemptions.py`: stated 381 to 390, numeric 63 to 64. The nine
+  `stated` are the "None" cells (Table 18.805.1 in RES-D, RES-E and MUR,
+  Table 18.650.3 in MU-CBD, 18.660.040.C.5.a in TMU); the `numeric` one
+  is the layer's parking maximum, whose quote shows Table 18.410.3's
+  figures and no word of exemption.
+- `test_applied.py`: 87 to 92 encoded footnotes; all five Tigard rulings
+  confirm.
+- `test_alley.py`: lines keyed to the rear line's own alley fact, + 6
+  (RES-A to RES-E and MUR, Table 18.280.1 note 2).
+- `test_quadfit_bridge.py`: private drive rulings 19 to 20.
+- `test_clackamas_unincorporated_height.py`: the silent-height list adds
+  Tigard MUC.
+- `test_routing.py`: six Tigard rows in OPEN (18.140.040 to 18.140.030,
+  18.280.040 to 18.920.030, 18.660.040 to 18.660.090, and 18.660.070 to
+  18.930, 18.920 and 18.920.030) and two in FOLLOWED (18.660.080 to 18.30,
+  18.660.060 to 18.660.040), each commented.
+- `test_unweighed_layers.py`: `OWED_A_COUNTY` adds `or/washington/tigard`.
+- `test_districts.py`: two `RULINGS` for Tigard, FAR and INST, both
+  not-a-zone.
+
+**New and extended tests**:
+
+- `test_washington_tigard.py` (18 tests, 22 cases): the 13 zones and no
+  map rulings; the pod a rowhouse, not a quad; nine zones admit it; the
+  grouping note met by four units; the refusals carrying the use row
+  only; the residential rows of Tables 18.805.1 and 18.280.1 (five
+  parametrised zones); the lot table as printed; the common-wall and
+  alley variants; MUR's stricter column; MUC owing its lot, yards and
+  height; the sub-area refusals on `inside_mapped_use_area`; MU-CBD's
+  strictest subarea; TMU's own chapter; the 20 ft shared access; zero
+  parking and no maximum; the corner lot and private road; the footnote
+  states; and nothing `verified`.
+- `test_glossary.py`: two tests, the quoted term closed by a dash, and
+  Tigard's chapter read whole (228 entries; the Rowhouse, Quad, Corner
+  lot and Driveway entries).
+- `test_readiness.py`: one test, Tigard's three ways of stating none.
+
+**Blind second reading** (`flats.encode.reread`), every Tigard card: 174
+cards in 7 batches, read by three subagents that saw the quote and not
+the layer's value. **149 agree, 2 agree with an alternative, 12 unread,
+11 unscored (enums), 0 disagree.** Every non-agreement was checked
+against the layer and the stored text:
+
+- agree-with-alternative: MU-CBD's front 5 (the reader also offered 0;
+  5 is 99W/Hall's figure on 99W frontage, held as the strictest; Doubts),
+  and TMU's 4 storeys (the reader offered 6; four is the figure for lots
+  on Map 18.660.A, which is not held, so the stricter is held).
+- unread: 8 density cards in RES-A to RES-D (square feet a rowhouse read
+  as units an acre; the reader's fragments carry the same figures as the
+  layer), 3 one-way driveway cards (the code prints one shared-access
+  width, 20, and the reader gave 20 as an alternative), and 1 parking
+  minimum (zero by silence).
+- flags: MU-CBD's front maximum 10 and height 45 marked unclear (the
+  strictest of four subareas), and the parking stall and aisle cards
+  marked wrong-zone because they cite the city-wide table, which is what
+  they should cite.
+
+Scored cards and answers are not committed.
+
+**Ledgers (step 9)**, run on the final layer:
+
+- `crossrefs --binding`: 30 unfetched (Doubts; most are table numbers).
+- `uncited`: 80 of 148 measured lines not quoted by any value.
+- `missed`: 80 statements naming a screened field. 42 state a figure the
+  layer holds nowhere, 3 a figure it carries, 35 no comparable figure.
+  30 are figures the corpus has never held (among them the 15 ft
+  detached garage height, the 40 ft flag lot width, River Terrace's 20 ft
+  garage door setback). The one that reaches the pod is 18.805.030.C.2
+  and C.3's 20 ft frontage on a cul-de-sac or private street end, against
+  the held 15 (Doubts).
+- `applied`: 5 Tigard rulings, all confirmed (corpus 92: 91 confirmed, 1
+  elsewhere, Happy Valley's).
+- `qualified --write-caps`: `caps.json` unchanged (no Tigard note is
+  `unmeasured`).
+- `attribution`: 100 Tigard rows, all read (Doubts).
+- `stale`, `travelled`, `unheld`, `consumed`: no Tigard rows. The
+  corpus-wide list of fields nothing reads includes
+  `setback_front_max_ft` and `driveway_approach_max_width_ft`, both of
+  which Tigard holds: they are on the record and screen nothing yet.
+- `words`: 20 Tigard cards; 13 `defined`, 7 `silent` (yard, net acre,
+  attached dwelling, middle housing, townhouse, lot width, grade).
+- `footnotes`: 4 blocks, 10 notes, all ruled (Documents).
+- `exemptions.csv`: 10 Tigard rows (9 `stated`, 1 `numeric`), and 3
+  rows the committed CSV was missing though the pin already counted them
+  (the unincorporated TO:R9-12 side and rear, Hillsboro SCC-SC's minimum
+  height).
+- `gaps.json` regenerated on the final layer (GAPS_RESULT).
+- `data/flats/crossrefs.csv` rewritten by a whole-corpus crossrefs run.
+  Besides Tigard's rows it moves a few Happy Valley, Multnomah and
+  Portland rows that come from store text changed on main; none of those
+  layers is edited here.
+
+**Process.** Most edits to existing test files used the Edit tool or a
+Python script that reads and writes bytes. One pin edit
+(`test_quadfit_bridge.py`) and one layer edit (`tigard.yaml`) went
+through `sed`, which turned the files to LF; both were put back to CRLF
+before committing. Checked on the final tree: no file in `flats/tests/`
+or `flats/encode/` holds a control character or mixed line endings.
+
 ## 8. Owed locally
 
 - quadfit rules for Washington County, the county map, and the overlay data
@@ -3451,7 +3986,8 @@ Durham (all run on 2026-09-29, on the final layer):
   was unreachable here, and Metro's layer carries its current codes; Forest
   Grove's zoning layer answered (`zoning_code`); Cornelius has no zoning
   layer, Metro's is stale (no R-10), and the city's Zoning Map 2025 PDF is
-  reachable.
+  reachable. (Tigard was drafted 2026-10-01; what it owes is under Tigard
+  below.)
 
 ### Hillsboro
 
@@ -3715,6 +4251,45 @@ Durham (all run on 2026-09-29, on the final layer):
   have to be read and encoded. Nothing is drafted for that case.
 - **The blind second reading, re-screen and promotion.**
 
+### Tigard
+
+- **Map ingest from Metro, no pipeline edit made.** Tigard's lots need
+  `JURIS_CITY` = `TIGARD` routed to `or/washington/tigard`, and their
+  zone from Metro's regional zoning layer (`CITY='Tigard'`, field
+  `ZONE`), whose 13 values are the layer's 13 zone keys exactly. No map
+  code needs a ruling. `flats/config/pipeline.yaml` and quadfit's
+  `rules.yaml` are off limits to this session and were not edited; the
+  `port_*` scripts were not run.
+- **Three plan district maps to digitise**, each an image in the code:
+  Map 18.650.A (Downtown subareas: Main Street, 99W/Hall,
+  Scoffins/Commercial, Fanno/Burnham), Map 18.660.A (the Triangle lots
+  held to four storeys) and Map 18.670.A (Washington Square subdistricts,
+  among them Apartment, Design Review and Metzger Business). They decide
+  `inside_mapped_use_area` on MUR, MUC and MU-CBD, and could lift
+  MU-CBD's strictest-subarea figures to each subarea's own. River Terrace
+  Boulevard's alignment (18.640) and Bridgeport Village's boundary
+  (18.620) are the same kind of work.
+- **`DECLARED_OWING`: MUC**, once the ledger sees the county:
+  `max_height_ft`, `min_lot_sqft`, `setback_front_ft`, `setback_rear_ft`,
+  `setback_side_ft`. Drafted reason: Table 18.280.1 prints no MUC column
+  and Table 18.805.1's MUC rowhouse cells are blank.
+  `test_clackamas_unincorporated_height.py` lists MUC as the second zone
+  in the corpus with no height. TMU holds height in storeys only
+  (`max_height_stories` 4).
+- **The coverage ledger with Tigard lots**, which `test_unweighed_layers`
+  waits on (`OWED_A_COUNTY` now names Tigard).
+- **Fields the screen lacks** (a `flats/rules/` change, not made): a
+  parking buffer from an interior lot line (S-3, 5 ft, RES-A to RES-C), a
+  storey height (TMU's 12 ft first storey, MU-CBD's 15 ft), and a
+  maximum drive width (18.280's 24 ft; TMU's 10 ft is held on the
+  approach).
+- **Overlay and site data**: sensitive lands (18.510, fetched to scratch,
+  not stored), TMU's district trees, Downtown's future street
+  alignments, vision clearance triangles.
+- **Steph's answers** to the Tigard questions, then one batch of edits
+  and one ledger regeneration.
+- **The re-screen and promotion.**
+
 ## Reader changes (before and after)
 
 - `flats/encode/glossary.py` learned the CDC's hyphenated section numbers
@@ -3908,3 +4483,21 @@ Durham layer with its `definitions_at` span in place):
 - Not a reader change: Durham's Chapter 12 slice declares
   `definitions_at: L11-L194` (12.2.1 to 12.2.43). Above it are the chapter
   heading and 12.1, whose "(ORS) shall mean" reads as an entry.
+- `flats/encode/glossary.py` (Tigard, 2026-10-01): the stacked-entry rule
+  takes a dash as the separator after a closing quote. Tigard's codifier
+  prints '"Driveway" -' on its own line with the meaning beneath. The end
+  of `STACKED` went from `[\"”]?\s*[.:]?$` to
+  `[\"”]?(?:\s*[.:]|(?<=[\"”])\s*[–—-])?\s*$`. Before: 32 Tigard entries
+  read out of 18.30's 1,812 lines; after: 228. The unquoted shape reads
+  as it did, and no other layer's glossary output changed. Two tests in
+  `test_glossary.py`.
+- `flats/encode/readiness.py` (Tigard): three zero statements in
+  `_NO_STANDARD`, each scoped to its own words and commented: "there is no
+  ... requirement" now takes one or two words before "requirement" (Table
+  18.280.1 note 2, "There is no rear setback requirement when the rear
+  property line abuts an alley"); "this standard does not apply" (note 1,
+  on the common wall); and "the ratios for the maximum number of
+  off-street vehicle parking spaces" (18.410.030.A.1, a chapter that
+  states ceilings and no floor). Before: 13 Tigard values misquoted (the
+  parking minimum of 0, and the side and rear variants at 0). After: none
+  across the corpus. One test in `test_readiness.py`.
