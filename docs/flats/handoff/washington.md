@@ -3934,7 +3934,11 @@ Scored cards and answers are not committed.
   rows the committed CSV was missing though the pin already counted them
   (the unincorporated TO:R9-12 side and rear, Hillsboro SCC-SC's minimum
   height).
-- `gaps.json` regenerated on the final layer (GAPS_RESULT).
+- `gaps.json` regenerated on the final layer (about 35 minutes): a Tigard section with 0 gaps and the 100
+  `misattributed` rows read above; the corpus still reports 3 gaps across
+  26 layers, all `unmapped`, all from before this branch, and 396
+  citations naming a section their quote is not in. Nothing else in the
+  file moved but the digest.
 - `data/flats/crossrefs.csv` rewritten by a whole-corpus crossrefs run.
   Besides Tigard's rows it moves a few Happy Valley, Multnomah and
   Portland rows that come from store text changed on main; none of those

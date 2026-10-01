@@ -1,5 +1,5 @@
 {
-  "digest": "8d29423f7349c545c3b8c29571f87819568f34f3b350f9f6e8b066be00f82798",
+  "digest": "c0cb1718b3da2db3a9c556f0f9e36869ec86b3f4c7f9e010d5a8387f95343767",
   "layers": {
     "or": {
       "misattributed": [],
@@ -2262,6 +2262,713 @@
         }
       ],
       "label": "Sherwood",
+      "counts": {},
+      "gaps": []
+    },
+    "or/washington/tigard": {
+      "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "parking_min_per_unit",
+          "claimed": "18.410.030 18.410.3",
+          "found": "18.410.030 18.410.060",
+          "quote": "or/washington/tigard/tdc.18.410.parking.txt#L77-L81,L397-L401"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "parking_max_per_unit",
+          "claimed": "18.410.3 18.200 18.280",
+          "found": "18.410.060",
+          "quote": "or/washington/tigard/tdc.18.410.parking.txt#L385-L401"
+        },
+        {
+          "zone": "COM",
+          "field": "quadplex_allowed",
+          "claimed": "18.120.020 18.120.1 18.120.2",
+          "found": "18.120.020 18.120.030 18.120.040",
+          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L37,L92-L94,L136,L489-L496"
+        },
+        {
+          "zone": "IND",
+          "field": "quadplex_allowed",
+          "claimed": "18.130.1",
+          "found": "18.130.030",
+          "quote": "or/washington/tigard/tdc.18.130.industrial-zones.txt#L59,L66-L68"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "max_density_du_per_acre",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L475,L477,L479,L484"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "max_height_ft",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L468,L470,L479,L481"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "max_impervious_pct",
+          "claimed": "18.650.3 18.30",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L472"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "min_building_height_ft",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L468-L469"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "min_density_du_per_acre",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L475-L476,L479,L483"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "min_landscaped_pct",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L473"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "min_lot_sqft",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L458"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "min_lot_width_ft",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L459"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "quadplex_allowed",
+          "claimed": "18.650.1 18.650.2 18.650.030 18.650.040",
+          "found": "18.650.030 18.650.040 18.650.050 18.650.060",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L211,L259,L305-L308,L345,L431-L432,L439"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "setback_front_ft",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460-L461"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "setback_front_max_ft",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L465-L466"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "setback_rear_ft",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L464"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "setback_side_ft",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L463"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "setback_street_side_ft",
+          "claimed": "18.650.3",
+          "found": "18.650.070",
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L462"
+        },
+        {
+          "zone": "MUC",
+          "field": "quadplex_allowed",
+          "claimed": "18.120.1 18.120.2 18.280.020",
+          "found": "18.120.020 18.120.030 18.120.040",
+          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L49,L92-L94,L489,L496"
+        },
+        {
+          "zone": "MUE",
+          "field": "quadplex_allowed",
+          "claimed": "18.120.020 18.120.1 18.120.030 18.120.2",
+          "found": "18.120.020 18.120.030 18.120.040",
+          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L45,L92-L94,L284-L296,L489-L496"
+        },
+        {
+          "zone": "MUR",
+          "field": "max_height_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+        },
+        {
+          "zone": "MUR",
+          "field": "max_impervious_pct",
+          "claimed": "18.280.1 18.30",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+        },
+        {
+          "zone": "MUR",
+          "field": "min_landscaped_pct",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+        },
+        {
+          "zone": "MUR",
+          "field": "min_lot_sqft",
+          "claimed": "18.805.1",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L100"
+        },
+        {
+          "zone": "MUR",
+          "field": "min_lot_width_ft",
+          "claimed": "18.805.1",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L192"
+        },
+        {
+          "zone": "MUR",
+          "field": "quadplex_allowed",
+          "claimed": "18.120.1 18.120.2",
+          "found": "18.120.020 18.120.030 18.120.040",
+          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L53,L92-L94,L489,L496"
+        },
+        {
+          "zone": "MUR",
+          "field": "setback_front_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+        },
+        {
+          "zone": "MUR",
+          "field": "setback_front_max_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+        },
+        {
+          "zone": "MUR",
+          "field": "setback_rear_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+        },
+        {
+          "zone": "MUR",
+          "field": "setback_rear_ft [alley_at_rear]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+        },
+        {
+          "zone": "MUR",
+          "field": "setback_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+        },
+        {
+          "zone": "MUR",
+          "field": "setback_side_ft [attached_wall]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+        },
+        {
+          "zone": "MUR",
+          "field": "setback_street_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+        },
+        {
+          "zone": "PR",
+          "field": "quadplex_allowed",
+          "claimed": "18.140.1",
+          "found": "18.140.040",
+          "quote": "or/washington/tigard/tdc.18.140.parks.txt#L81,L84-L86"
+        },
+        {
+          "zone": "RES-A",
+          "field": "max_height_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+        },
+        {
+          "zone": "RES-A",
+          "field": "max_impervious_pct",
+          "claimed": "18.280.1 18.30",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+        },
+        {
+          "zone": "RES-A",
+          "field": "min_landscaped_pct",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+        },
+        {
+          "zone": "RES-A",
+          "field": "min_lot_sqft",
+          "claimed": "18.805.1 18.40.130 18.280.040",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94"
+        },
+        {
+          "zone": "RES-A",
+          "field": "min_lot_width_ft",
+          "claimed": "18.805.1",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L186"
+        },
+        {
+          "zone": "RES-A",
+          "field": "quadplex_allowed",
+          "claimed": "18.110.2 18.110.3 18.30",
+          "found": "18.110.030 18.110.040",
+          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
+        },
+        {
+          "zone": "RES-A",
+          "field": "setback_front_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+        },
+        {
+          "zone": "RES-A",
+          "field": "setback_front_max_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+        },
+        {
+          "zone": "RES-A",
+          "field": "setback_rear_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+        },
+        {
+          "zone": "RES-A",
+          "field": "setback_rear_ft [alley_at_rear]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+        },
+        {
+          "zone": "RES-A",
+          "field": "setback_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+        },
+        {
+          "zone": "RES-A",
+          "field": "setback_side_ft [attached_wall]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+        },
+        {
+          "zone": "RES-A",
+          "field": "setback_street_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+        },
+        {
+          "zone": "RES-B",
+          "field": "max_height_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+        },
+        {
+          "zone": "RES-B",
+          "field": "max_impervious_pct",
+          "claimed": "18.280.1 18.30",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+        },
+        {
+          "zone": "RES-B",
+          "field": "min_landscaped_pct",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+        },
+        {
+          "zone": "RES-B",
+          "field": "min_lot_sqft",
+          "claimed": "18.805.1 18.40.130 18.280.040",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95"
+        },
+        {
+          "zone": "RES-B",
+          "field": "min_lot_width_ft",
+          "claimed": "18.805.1",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L187"
+        },
+        {
+          "zone": "RES-B",
+          "field": "quadplex_allowed",
+          "claimed": "18.110.2 18.110.3 18.30",
+          "found": "18.110.030 18.110.040",
+          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
+        },
+        {
+          "zone": "RES-B",
+          "field": "setback_front_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+        },
+        {
+          "zone": "RES-B",
+          "field": "setback_front_max_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+        },
+        {
+          "zone": "RES-B",
+          "field": "setback_rear_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+        },
+        {
+          "zone": "RES-B",
+          "field": "setback_rear_ft [alley_at_rear]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+        },
+        {
+          "zone": "RES-B",
+          "field": "setback_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+        },
+        {
+          "zone": "RES-B",
+          "field": "setback_side_ft [attached_wall]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+        },
+        {
+          "zone": "RES-B",
+          "field": "setback_street_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+        },
+        {
+          "zone": "RES-C",
+          "field": "max_height_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+        },
+        {
+          "zone": "RES-C",
+          "field": "max_impervious_pct",
+          "claimed": "18.280.1 18.30",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+        },
+        {
+          "zone": "RES-C",
+          "field": "min_landscaped_pct",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+        },
+        {
+          "zone": "RES-C",
+          "field": "min_lot_sqft",
+          "claimed": "18.805.1 18.40.130 18.280.040",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96"
+        },
+        {
+          "zone": "RES-C",
+          "field": "min_lot_width_ft",
+          "claimed": "18.805.1",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L188"
+        },
+        {
+          "zone": "RES-C",
+          "field": "quadplex_allowed",
+          "claimed": "18.110.2 18.110.3 18.30",
+          "found": "18.110.030 18.110.040",
+          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
+        },
+        {
+          "zone": "RES-C",
+          "field": "setback_front_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+        },
+        {
+          "zone": "RES-C",
+          "field": "setback_front_max_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+        },
+        {
+          "zone": "RES-C",
+          "field": "setback_rear_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+        },
+        {
+          "zone": "RES-C",
+          "field": "setback_rear_ft [alley_at_rear]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+        },
+        {
+          "zone": "RES-C",
+          "field": "setback_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+        },
+        {
+          "zone": "RES-C",
+          "field": "setback_side_ft [attached_wall]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+        },
+        {
+          "zone": "RES-C",
+          "field": "setback_street_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+        },
+        {
+          "zone": "RES-D",
+          "field": "max_height_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+        },
+        {
+          "zone": "RES-D",
+          "field": "max_impervious_pct",
+          "claimed": "18.280.1 18.30",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+        },
+        {
+          "zone": "RES-D",
+          "field": "min_landscaped_pct",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+        },
+        {
+          "zone": "RES-D",
+          "field": "min_lot_sqft",
+          "claimed": "18.805.1 18.40.130 18.280.040",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97"
+        },
+        {
+          "zone": "RES-D",
+          "field": "min_lot_width_ft",
+          "claimed": "18.805.1",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L189"
+        },
+        {
+          "zone": "RES-D",
+          "field": "quadplex_allowed",
+          "claimed": "18.110.2 18.110.3 18.30",
+          "found": "18.110.030 18.110.040",
+          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208"
+        },
+        {
+          "zone": "RES-D",
+          "field": "setback_front_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+        },
+        {
+          "zone": "RES-D",
+          "field": "setback_front_max_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+        },
+        {
+          "zone": "RES-D",
+          "field": "setback_rear_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+        },
+        {
+          "zone": "RES-D",
+          "field": "setback_rear_ft [alley_at_rear]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+        },
+        {
+          "zone": "RES-D",
+          "field": "setback_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+        },
+        {
+          "zone": "RES-D",
+          "field": "setback_side_ft [attached_wall]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+        },
+        {
+          "zone": "RES-D",
+          "field": "setback_street_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+        },
+        {
+          "zone": "RES-E",
+          "field": "max_height_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+        },
+        {
+          "zone": "RES-E",
+          "field": "max_impervious_pct",
+          "claimed": "18.280.1 18.30",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+        },
+        {
+          "zone": "RES-E",
+          "field": "min_landscaped_pct",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+        },
+        {
+          "zone": "RES-E",
+          "field": "min_lot_sqft",
+          "claimed": "18.805.1",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L98"
+        },
+        {
+          "zone": "RES-E",
+          "field": "min_lot_width_ft",
+          "claimed": "18.805.1",
+          "found": "18.805.030",
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L190"
+        },
+        {
+          "zone": "RES-E",
+          "field": "quadplex_allowed",
+          "claimed": "18.110.2 18.110.3 18.30",
+          "found": "18.110.030 18.110.040",
+          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208"
+        },
+        {
+          "zone": "RES-E",
+          "field": "setback_front_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+        },
+        {
+          "zone": "RES-E",
+          "field": "setback_front_max_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+        },
+        {
+          "zone": "RES-E",
+          "field": "setback_rear_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+        },
+        {
+          "zone": "RES-E",
+          "field": "setback_rear_ft [alley_at_rear]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+        },
+        {
+          "zone": "RES-E",
+          "field": "setback_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+        },
+        {
+          "zone": "RES-E",
+          "field": "setback_side_ft [attached_wall]",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+        },
+        {
+          "zone": "RES-E",
+          "field": "setback_street_side_ft",
+          "claimed": "18.280.1",
+          "found": "18.280.040",
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+        },
+        {
+          "zone": "TMU",
+          "field": "quadplex_allowed",
+          "claimed": "18.660.4 18.660.030",
+          "found": "18.660.030 18.660.060",
+          "quote": "or/washington/tigard/tdc.18.660.triangle.txt#L132,L536-L539"
+        }
+      ],
+      "label": "Tigard",
       "counts": {},
       "gaps": []
     }
