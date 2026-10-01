@@ -737,7 +737,17 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    "just the side on a street") -> green; fits at 5 ft but not 10 ->
    yellow; not even at 5 -> red. What-if on 137 (/root/pue_driver.py,
    PUE_FT floors the street yards; /root/pue_chain.sh, E10 then E5 on
-   what E10 lost): COUNTS PENDING; nothing built yet.
+   what E10 lost). RESULT 2026-10-01 (what-if only, nothing built): the
+   6,481 were NOT otherwise green -- the cap masked a second hold, net
+   area (`measured_on: net_developable_area`, nothing surveys it). At 10
+   ft: 6,305 fit (one design lost on ~2,800, the other fits), 176 red on
+   fire reach (still red at 5 ft; route median 216 ft), 0 needed 5 ft.
+   Net-area holds on the 6,305: max FAR (RMA 1.6 / RMB 1.2 / RMC 0.9) is
+   passed even after losing 30% of the lot on ALL 6,305 (50% on 4,918);
+   min density (17/10/7 per net acre) settled on 5,395, unsettled on 910
+   big lots (RMA 299, RMB 321, RMC 290). ASKED Steph: (1) treat FAR as
+   passed when it survives a 1/3 deduction? (2) the 910: red or closer
+   look? If both yes: ~5,395 green / 910 per (2) / 176 red.
    Hillsboro 25 green -- `flag_lot` assumed on 48,650 answers (the
    same assumption holds 12,668 in Clackamas). Also: Beaverton/King City
    minimum density on big lots (fail vs closer look: bring Steph the
