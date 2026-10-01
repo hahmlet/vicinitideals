@@ -787,9 +787,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    opened zones' own lots moved red-if-signed -> "not measured": quadfit's
    s3 filter drops a zone it thinks refuses the pod, so Portland RF (634),
    Multnomah RF (225), LR10 (15) and Happy Valley FU10 (12) have no
-   measurement to screen. NEXT: have quadfit keep those zones (s3 rules
-   mirror) and measure them -- a quadfit s3->s5o re-run for those lots --
-   then a partial re-screen; only then can they turn yellow. From 2027-01-01 the
+   measurement to screen. MEASURED 2026-10-01, RUN 49 PROMOTED (d5e42388
+   rules.yaml opens Portland RF + county RF + LR5 at needs_verification;
+   cd746111 lets a splice take measurement files that only ADD its own
+   lots): quadfit tree 137 data/quadfit_2026-09-30mh, bound 0 lost / 0
+   changed / 851 gained (Portland RF 626, county RF 224, LR5 1); splice
+   base now 137 /root/bridge_spliced_mhq0930; drift 48->49 0 moved. Portland
+   RF: 1,252 answers yellow-if-signed (use by the state path; under 52,000
+   sq ft the lot size miss rides the ASSUMED variance, RELIEF_UNCONFIRMED,
+   as every unread adjustment chapter does), 16 too narrow. County RF/LR5
+   stay unknown until `in_sewer_district` is measured in Multnomah. LR10 +
+   Happy Valley FU10 still unmeasured (no dimensions encoded). A FULL
+   re-screen is now due (5 splices since full0930). From 2027-01-01 the
    Div 46 model code applies directly (0040(4), "completely replaces"): audit
    the corpus, switch them to allowed under the city's middle-housing
    standards or the model code (2020 Exhibit B: front/rear setbacks > 10 ft
