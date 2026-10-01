@@ -292,3 +292,24 @@ async def test_the_card_asks_once_and_names_the_section_not_its_description(clie
     assert "Problems raised" not in response.text
     assert "Read the row and the column heading" not in response.text
     assert row["cite"].split(",")[0] in response.text
+
+
+async def test_a_boxed_number_does_not_also_tint_its_citations_context_lines(client, session, monkeypatch):
+    """Oregon City Table 16.12.035.D: the citation quotes the table title and
+    heading rows. With 36 boxed, they were drawn yellow too -- "the line it
+    was read from" -- and the page before, holding only the run-in line, was
+    shown as well."""
+    await _login(client, session)
+    line = sheet.Box(0.1, 0.5, 0.9, 0.52)
+    placed = sheet.Placed(
+        status="boxed",
+        pages=[1, 2],
+        boxes={1: [(line, "line")], 2: [(line, "line"), (_BOX, "value")]},
+    )
+    monkeypatch.setattr(check, "_placed", lambda row: placed)
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert "check-box-value" in response.text
+    assert "check-box check-box-line" not in response.text
+    assert "?page=2" in response.text and "?page=1" not in response.text

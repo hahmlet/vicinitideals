@@ -292,6 +292,34 @@ def _focus(rows: list[dict[str, Any]], zone: str, field: str, when: str) -> _Ask
 # --- everything else we hold from a page ------------------------------------
 
 
+def _numbers_only(placed: sheet.Placed) -> dict[int, list[tuple[sheet.Box, str]]]:
+    """A placement's boxes, minus the context lines once the number is boxed.
+
+    A citation quotes the table title and heading rows as well as the cell.
+    Where the number itself was found, those lines are context, and drawing
+    them made a page of tints in which the cell that matters did not stand
+    out. Only a number never found as a numeral is shown by its lines.
+    """
+    if not any(kind == "value" for boxes in placed.boxes.values() for _b, kind in boxes):
+        return placed.boxes
+    return {
+        page: [(b, kind) for b, kind in boxes if kind == "value"]
+        for page, boxes in placed.boxes.items()
+        if any(kind == "value" for _b, kind in boxes)
+    }
+
+
+def _own_boxes(placed: sheet.Placed) -> list[tuple[int, list[tuple[sheet.Box, str]]]]:
+    """The pages a value card shows, and what is drawn on each.
+
+    Only the pages the number is boxed on, when it is boxed: a page that holds
+    nothing but the citation's run-in context is a page to scroll past.
+    """
+    shown = _numbers_only(placed)
+    pages = [p for p in placed.pages if p in shown] or placed.pages
+    return [(page, shown.get(page, [])) for page in pages[:2]]
+
+
 @lru_cache(maxsize=1)
 def _by_document() -> dict[str, list[dict[str, Any]]]:
     """Every encoded number in every layer, grouped by the document it cites."""
@@ -337,7 +365,7 @@ def _encoded_on(document: str, page: int) -> tuple[tuple[sheet.Box, str, frozens
         label = f"{row['zone']} · {_label(row['field'])} = {_said(row['value'], row['field'])}"
         if row["when"]:
             label += f" (when {row['when_label'].replace('_', ' ')})"
-        for box, _kind in placed.boxes.get(page, []):
+        for box, _kind in _numbers_only(placed).get(page, []):
             key = tuple(round(v, 3) for v in (box.x0, box.y0, box.x1, box.y1))
             spot = spots.setdefault(key, {"box": box, "labels": [], "marks": set()})
             if label not in spot["labels"]:
@@ -430,10 +458,8 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         "answers": list(VALUE_ANSWERS.items()),
     }
     if ask.question == "value":
-        for page in placed.pages[:2]:
-            card["sheets"].append(
-                _sheet_view(document, page, placed.boxes.get(page, []), row["mark"])
-            )
+        for page, boxes in _own_boxes(placed):
+            card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))
         return card
 
     mark = ask.question.partition(":")[2]
