@@ -1132,4 +1132,15 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    gross minus what we measure per the city's own list (floodplain,
    overlays, slopes) -- settles nearly all, big lots under a floor go red;
    (B) margin rule (settle when the lot could lose 1/3) -- ceilings settle,
-   near-cap and floor lots stay held; (C) leave held. PENDING.
+   near-cap and floor lots stay held; (C) leave held. Steph 2026-10-02:
+   **A**, and "lots that fail for the only reason of min density need to
+   go not red. Some sort of yellow or 'closer look'" (interim, until 31).
+   BUILDING on branch flats/net-area (worktree flats-tigard).
+31. **Split a big lot to meet a minimum density (Steph 2026-10-02: "create
+   a task for later ... immensely complicated ... large guesstimates on
+   roads, utilities, etc. maybe never done").** A lot too big for 4 homes
+   under a city's minimum density could still work as a land division
+   (several pods, or pod + other lots). Needs guessed streets, utilities,
+   tracts and each city's land-division rules. Until then, a lot whose
+   ONLY failure is minimum density is yellow "closer look" (item 30), not
+   red. Not started; may never be.
