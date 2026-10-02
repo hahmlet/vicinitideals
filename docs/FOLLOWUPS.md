@@ -1142,9 +1142,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (/root/chain_netarea1002.sh: waits for chain_row1002, 131,039 lots,
    splices onto bridge_spliced_2026-10-02_fits, bundle 2026-10-02_netarea
    to 114) -- then load as candidate, read the drift, promote.
-   STILL OPEN: (a) Beaverton's two rulings (drive aisle = "common
-   driveway"? wetlands only when set aside?) -- both ride `may_less` and
-   hold the lots they decide; (b) Tigard read: MU-CBD's 25/50 per acre is
+   Beaverton rulings ANSWERED (Steph 2026-10-02): the pod's lane + aisle
+   ARE a "common driveway" (neither code defines one; stalls stay in), and
+   constrained land comes off whether or not set aside in a tract ("very
+   few will have done that") -- both now certain deductions in Beaverton
+   and Cornelius 18.195 (Metro wetland/habitat stand-ins stay `may_less`
+   as regional proxies). STILL OPEN: (b) Tigard read: MU-CBD's 25/50 per acre is
    not stated net in 18.650 and the 50 is struck by the state layer, so
    no false GREEN; Tigard FAR is net (18.40.110) but no FAR is encoded;
    (c) King City / Wood Village / Washington Co. floors -- now at worst a

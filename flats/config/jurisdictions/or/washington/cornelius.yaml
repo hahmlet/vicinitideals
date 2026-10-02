@@ -848,11 +848,10 @@ zones:
         fact: net_developable_area
         cite: Cornelius CMC 18.195.010, Acreage, net
         quote: "or/washington/cornelius/cmc.18.195.definitions.txt#L41-L54"
-        less: []
-        may_less: [drive_aisle, floodplain]
+        less: [drive_aisle, floodplain]
         assumed_none:
           - "street dedications and private streets"
-          - "environmentally constrained lands set aside in separate tracts or dedicated to a public entity"
+          - "open water, water quality facilities, wetlands and natural resource areas (no such map is laid over Cornelius)"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
     max_height_ft:
       value: 35
@@ -1174,11 +1173,10 @@ zones:
         fact: net_developable_area
         cite: Cornelius CMC 18.195.010, Acreage, net
         quote: "or/washington/cornelius/cmc.18.195.definitions.txt#L41-L54"
-        less: []
-        may_less: [drive_aisle, floodplain]
+        less: [drive_aisle, floodplain]
         assumed_none:
           - "street dedications and private streets"
-          - "environmentally constrained lands set aside in separate tracts or dedicated to a public entity"
+          - "open water, water quality facilities, wetlands and natural resource areas (no such map is laid over Cornelius)"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
     max_density_du_per_acre:
       exempt: true
@@ -1427,11 +1425,10 @@ zones:
         fact: net_developable_area
         cite: Cornelius CMC 18.195.010, Acre, gross and Acreage, net
         quote: "or/washington/cornelius/cmc.18.195.definitions.txt#L35-L36,L41-L54"
-        less: []
-        may_less: [drive_aisle, floodplain]
+        less: [drive_aisle, floodplain]
         assumed_none:
           - "street dedications and private streets"
-          - "environmentally constrained lands set aside in separate tracts or dedicated to a public entity"
+          - "open water, water quality facilities, wetlands and natural resource areas (no such map is laid over Cornelius)"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
     max_density_du_per_acre:
       exempt: true

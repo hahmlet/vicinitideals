@@ -939,6 +939,7 @@ def paved(
     column: bool = False,
     beside: Beside | None = None,
     deep_ft: float,
+    stalls: bool = True,
 ) -> float | None:
     """Square feet this design's parking paves on the lot, or None if unknown.
 
@@ -988,6 +989,12 @@ def paved(
     measures in thousands of square feet; recorded here rather than assumed
     away.
 
+    ``stalls=False`` leaves the parking spaces out and counts the driveway
+    alone -- the lane in from the street and the aisle the cars drive on --
+    which is what Beaverton's and Cornelius's net acreage take off as a
+    "common driveway" (Steph, 2026-10-02: undefined in either code, so the
+    pod's own drive is one).
+
     None -- unknown, never zero -- for a design parked in a way nothing here
     draws (``side_drive``, ``tuck_under``: a tuck-under's driveway still
     crosses the front yard, and nobody has drawn it), and for a way in whose
@@ -1004,8 +1011,8 @@ def paved(
         front = _yard(rules, "setback_front_ft")
         if front is None:
             return None
-        stalls = beside.stalls * beside.stall_ft * beside.stall_depth_ft
-        return stalls + beside.aisle_ft * beside.length_ft + beside.drive_ft * front
+        cells = beside.stalls * beside.stall_ft * beside.stall_depth_ft if stalls else 0.0
+        return cells + beside.aisle_ft * beside.length_ft + beside.drive_ft * front
     across = court_across(design, rules, alley, corner=corner)
     if not across.stalls:
         # A cap of nothing: no row is drawn and nothing is paved for it. The
@@ -1021,6 +1028,8 @@ def paved(
     if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
         aisle = stated
     row = across.width_ft
+    if not stalls:
+        stall = 0.0
     shortfall = _backout_shortfall(rules, alley)
     if column:
         # The column stands along the side alley: each stall one cell of the

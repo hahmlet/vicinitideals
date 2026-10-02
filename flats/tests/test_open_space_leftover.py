@@ -278,6 +278,15 @@ def test_the_standoff_behind_the_building_is_not_pavement() -> None:
     assert paved(DESIGN, rules(), deep_ft=36.0) == pytest.approx(PAVED_SQFT)
 
 
+def test_the_driveway_alone_is_the_lane_and_the_aisle_not_the_stalls() -> None:
+    # Beaverton and Cornelius take "common driveways" off the net acre (Steph,
+    # 2026-10-02); the stalls are parking, the lane and the aisle are drive.
+    got = paved(DESIGN, rules(), deep_ft=36.0, stalls=False)
+
+    assert got == pytest.approx(DESIGN.parking.aisle_ft * ROW_FT + LANE_SQFT)
+    assert 0 < got < PAVED_SQFT
+
+
 def test_the_court_is_the_charged_row_and_grows_with_the_zones_cell() -> None:
     # Two stalls a home and a 10 ft stall: eight stalls at 10 ft, an 80 ft
     # row. The pavement is the row the lot is charged for, not the design's.

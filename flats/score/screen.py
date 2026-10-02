@@ -569,7 +569,7 @@ def _checks(
         span = (
             None
             if net is None
-            else net_span(net, lot.lot_sqft, lot.net_deductions, pavement)
+            else net_span(net, lot.lot_sqft, lot.net_deductions, driveway)
         )
         if span is not None:
             least, most = (on(area) for area in span)
@@ -729,8 +729,9 @@ def _checks(
         unchecked.append("max_lot_depth_ratio")
 
     # The pavement this plan lays: what the leftover checks below take off
-    # the lot, and -- where a code subtracts "common driveways" -- off its
-    # net area too (:data:`flats.rules.net_area.DRIVE_AISLE`).
+    # the lot. Its driveway alone -- no stalls -- is what a code that
+    # subtracts "common driveways" takes off the net area
+    # (:data:`flats.rules.net_area.DRIVE_AISLE`).
     pavement = paved(
         design,
         rules,
@@ -739,6 +740,16 @@ def _checks(
         column=fit.column,
         beside=beside,
         deep_ft=fit.required_ft,
+    )
+    driveway = paved(
+        design,
+        rules,
+        lot.alley,
+        corner=lot.corner,
+        column=fit.column,
+        beside=beside,
+        deep_ft=fit.required_ft,
+        stalls=False,
     )
 
     allowed_sqft, _source = _coverage_allowed_sqft(rules, lot.lot_sqft)

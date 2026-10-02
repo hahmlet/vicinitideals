@@ -189,6 +189,13 @@ definitions:
   # minimum and maximum density in this layer carries measured_on:
   # net_developable_area. The water quality facilities and wetlands are
   # Clean Water Services' ground; overlay data and local work.
+  # Steph 2026-10-02: the pod's own drive (lane and aisle, not the stalls)
+  # is a "common driveway" -- the code never defines one -- and the
+  # constrained lands come off whether or not anyone set them aside in a
+  # tract ("very few will have done that"). So `less` holds the drive and
+  # FEMA's floodplain; the wetland, corridor and habitat maps stay on
+  # `may_less` only because they are Metro's regional stand-ins, not the
+  # city's or Clean Water Services' own maps.
   corner_lot:
     # "A lot located at the intersection of two or more streets. A lot
     # abutting on a curved street or streets shall be considered a corner lot
@@ -405,8 +412,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -501,8 +508,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -536,8 +543,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
         quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -621,8 +628,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -665,8 +672,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
         quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -750,8 +757,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -799,8 +806,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
         quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -893,8 +900,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -931,8 +938,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
         quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -1015,8 +1022,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -1083,8 +1090,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -1188,8 +1195,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -1303,8 +1310,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -1414,8 +1421,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -1516,8 +1523,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -1609,8 +1616,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -1718,8 +1725,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -1815,8 +1822,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -1912,8 +1919,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -2018,8 +2025,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -2125,8 +2132,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -2233,8 +2240,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -2350,8 +2357,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -2442,8 +2449,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -2525,8 +2532,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -2609,8 +2616,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
@@ -2625,8 +2632,8 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
-        less: []
-        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        less: [drive_aisle, floodplain]
+        may_less: [metro_wetlands, washington_cws_corridor, washington_habitat]
         assumed_none:
           - "street dedications and private streets"
           - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"

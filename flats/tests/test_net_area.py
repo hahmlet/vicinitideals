@@ -160,6 +160,24 @@ def test_a_list_names_only_maps_laid_over_its_own_city(layers: dict[str, Layer])
     assert wrong == []
 
 
+def test_beaverton_and_cornelius_take_the_drive_and_the_floodplain_for_certain(
+    layers: dict[str, Layer],
+) -> None:
+    """Steph, 2026-10-02: the pod's drive is a common driveway (neither code
+    defines one), and constrained land comes off whether or not anyone set it
+    aside in a tract -- "very few will have done that"."""
+    lists = [
+        value.net_area
+        for lid, _zone, _name, value in _rates(layers)
+        if lid in {"or/washington/beaverton", "or/washington/cornelius"}
+        and value.net_area is not None
+        and DRIVE_AISLE in (*value.net_area.less, *value.net_area.may_less)
+    ]
+
+    assert len(lists) >= 30
+    assert all({DRIVE_AISLE, FLOODPLAIN} <= set(net.less) for net in lists)
+
+
 def test_a_deduction_nothing_measures_is_refused_by_name(tmp_path: Path) -> None:
     layer = tmp_path / "or" / "x" / "y.yaml"
     layer.parent.mkdir(parents=True)

@@ -17,10 +17,9 @@ Two lists per value, because a list can be read with certainty or not:
 
 * ``less`` -- the city's sentence subtracts this ground, and the layer that
   measures it is the city's own map (or one the city adopts).
-* ``may_less`` -- subtracted on one reading and not on another: a regional
-  proxy for the map the code names, a deduction that applies only to land
-  "set aside in a separate tract" (Beaverton, pending Steph's ruling), the
-  pod's own drive aisle as a "common driveway".
+* ``may_less`` -- subtracted on one reading and not on another, or measured
+  only by a regional stand-in for the map the code names (Metro's Title 3
+  and Title 13 layers in Washington County).
 
 Nothing says how the measured areas overlap one another, so net area is a
 range, not a number: the most it can be is the lot less the single largest
@@ -37,10 +36,11 @@ from typing import Mapping
 
 from pydantic import BaseModel, ConfigDict
 
-#: The pod's own pavement -- court, aisle and the lane in from the street
-#: (:func:`flats.score.paper.paved`). Beaverton and Cornelius subtract "areas
-#: used for private streets and common driveways"; whether the pod's lane is
-#: one is a ruling owed (FOLLOWUPS 30), so it only ever rides on ``may_less``.
+#: The pod's own driveway -- the lane in from the street and the aisle, not
+#: the stalls (:func:`flats.score.paper.paved` with ``stalls=False``).
+#: Beaverton and Cornelius subtract "areas used for private streets and
+#: common driveways", and neither code defines a common driveway, so the
+#: pod's drive is one (Steph, 2026-10-02).
 DRIVE_AISLE = "drive_aisle"
 
 #: FEMA's 100-year floodplain, floodway and fringe together. quadfit splits

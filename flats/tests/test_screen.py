@@ -30,7 +30,7 @@ from flats.fit.rectangle import Fit, Fitter  # noqa: E402
 from flats.geom.edges import Tier as GeometryTier  # noqa: E402
 from flats.rules.conditions import Tier  # noqa: E402
 from flats.rules.model import Provenance, Status  # noqa: E402
-from flats.rules.net_area import FLOODPLAIN, NetArea  # noqa: E402
+from flats.rules.net_area import DRIVE_AISLE, FLOODPLAIN, NetArea  # noqa: E402
 from flats.rules.resolver import Resolved, Verdict as RuleVerdict, ZoneResolution  # noqa: E402
 from flats.score.relief import (  # noqa: E402
     ANY,
@@ -1658,6 +1658,37 @@ def test_the_range_reports_the_end_with_the_least_room() -> None:
 
     ceiling = next(c for c in result.checks if c.check == "density_du_per_acre")
     assert ceiling.observed == pytest.approx(4 / (6_000 / 43_560))
+
+
+def _drive_held(**overrides) -> ZoneResolution:
+    """Beaverton's ceiling: the lot less floodplain and the common driveway."""
+    held = rules(max_density_du_per_acre=25, **overrides)
+    held.values["max_density_du_per_acre"] = replace(
+        held.values["max_density_du_per_acre"],
+        measured_on="net_developable_area",
+        net_area=NetArea(less=(DRIVE_AISLE, FLOODPLAIN)),
+    )
+    return held
+
+
+def test_the_pods_own_drive_comes_off_the_net_acre() -> None:
+    """Steph, 2026-10-02: neither Beaverton nor Cornelius defines a "common
+    driveway", so the pod's lane and aisle are one, and the acre is divided
+    after they are out. The stalls are parking, not driveway, and stay in."""
+    result = run(_drive_held(setback_front_ft=10), lot=_lot(8_000, floodplain=0.0))
+
+    ceiling = next(c for c in result.checks if c.check == "density_du_per_acre")
+    assert ceiling.observed > 4 / (8_000 / 43_560)
+    assert FACT_UNOBSERVED not in result.reasons
+
+
+def test_a_drive_nobody_could_draw_settles_nothing() -> None:
+    """No front yard encoded, so the lane's length is unknown: the driveway's
+    area is not a zero, and the ceiling is held exactly as before."""
+    result = run(_drive_held(), lot=_lot(8_000, floodplain=0.0))
+
+    assert "density_du_per_acre" in result.unchecked
+    assert FACT_UNOBSERVED in result.reasons
 
 
 # --- a minimum density alone is a closer look --------------------------
