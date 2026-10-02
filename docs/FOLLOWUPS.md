@@ -1135,7 +1135,22 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    near-cap and floor lots stay held; (C) leave held. Steph 2026-10-02:
    **A**, and "lots that fail for the only reason of min density need to
    go not red. Some sort of yellow or 'closer look'" (interim, until 31).
-   BUILDING on branch flats/net-area (worktree flats-tigard).
+   SHIPPED d8d4a439 (deployed 2026-10-02): all 170 net-area values carry
+   `less` / `may_less` / `assumed_none`; net area is a range (overlaps
+   unknown), settled when both ends agree; min density alone = yellow
+   CLOSER_LOOK_MIN_DENSITY. Re-screen queued on 137
+   (/root/chain_netarea1002.sh: waits for chain_row1002, 131,039 lots,
+   splices onto bridge_spliced_2026-10-02_fits, bundle 2026-10-02_netarea
+   to 114) -- then load as candidate, read the drift, promote.
+   STILL OPEN: (a) Beaverton's two rulings (drive aisle = "common
+   driveway"? wetlands only when set aside?) -- both ride `may_less` and
+   hold the lots they decide; (b) Tigard read: MU-CBD's 25/50 per acre is
+   not stated net in 18.650 and the 50 is struck by the state layer, so
+   no false GREEN; Tigard FAR is net (18.40.110) but no FAR is encoded;
+   (c) King City / Wood Village / Washington Co. floors -- now at worst a
+   false closer-look yellow, low priority; (d) the lot page does not yet
+   show what was assumed absent (slopes etc.); (e) slopes over a
+   threshold could be computed from lidar later (quadfit s5o).
 31. **Split a big lot to meet a minimum density (Steph 2026-10-02: "create
    a task for later ... immensely complicated ... large guesstimates on
    roads, utilities, etc. maybe never done").** A lot too big for 4 homes
