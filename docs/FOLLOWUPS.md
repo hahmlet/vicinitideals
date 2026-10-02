@@ -1099,3 +1099,37 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    curb per street line, fall back to the strict 10 ft where nothing is
    held, re-screen the fire scope. Never the lot line without a measure
    (false GREEN).
+30. **Net land area review (Steph 2026-10-01: "not unique to Beaverton ...
+   we need to do a review of net land areas and what to do about it").**
+   129 numeric values in 10 layers carry `measured_on: net_developable_area`
+   (HV, Milwaukie, OC, West Linn, Fairview, Gresham, Troutdale, Beaverton,
+   Cornelius, Hillsboro); nothing measures net area, so the check settles
+   one way from gross and holds the lot otherwise. Run 51 best-pod lots with
+   a net check unsettled: Beaverton 20,341, West Linn 9,511, Hillsboro
+   2,969, Gresham 2,339, Oregon City 1,105, Fairview 174, Happy Valley 97
+   (~36,500; net area is the ONLY hold on just 165 -- other holds mask it).
+   Ceilings (max density/FAR) mostly have wide margins (Beaverton 14,818 of
+   17,589 survive losing 1/3); near-cap lots in OC/Hillsboro/HV do not.
+   Floors (min density, big lots): ~6,600 pass only if >10% is deducted.
+   What each city subtracts (agent read, 2026-10-01): existing ROW is
+   already outside a tax lot; new street dedication/tracts/parks/private
+   streets arise in land divisions (not measurable); floodplain measured
+   (only yes/no reaches FLATS; quadfit has ovl_<key>_sqft areas, not
+   bridged); resource overlays carved in Gresham/OC/WL/Troutdale, area held
+   in quadfit for HV/Milwaukie/Hillsboro/Beaverton (Metro proxy), NOTHING
+   for Cornelius; slopes: lidar held, no "area over 25%" computed; no
+   landslide layer. Gresham 3.0100 has two lists; its max density outside
+   the LDR group is gross by the code's own words (settle now). Fairview
+   subtracts street ROW only (= gross on an existing lot).
+   Possible encoding gaps: Tigard MU-CBD 25/50 du/ac may be net (18.40
+   "net development area") -- false-GREEN risk, read first; King City KT
+   min densities "per net acre" unmarked, Wood Village defines "Land area,
+   net" (720.030 L224-234) though the yaml says undefined, Washington Co.
+   min density may exclude constrained land -- all three false-RED only.
+   Beaverton rulings owed: is the pod's own drive aisle a "common driveway";
+   do wetlands count only when set aside in a tract/easement.
+   OFFERED Steph: (A) ordinary existing lot = no new dedication/tract, net =
+   gross minus what we measure per the city's own list (floodplain,
+   overlays, slopes) -- settles nearly all, big lots under a floor go red;
+   (B) margin rule (settle when the lot could lose 1/3) -- ceilings settle,
+   near-cap and floor lots stay held; (C) leave held. PENDING.
