@@ -382,6 +382,23 @@ def test_a_plan_short_of_green_with_a_route_is_still_measured(corpus, policies) 
     assert got.facts.fire_route_tried and got.facts.fire_route_ft is not None
 
 
+def test_a_fit_that_fell_short_is_not_measured(corpus, policies) -> None:
+    # Run 54 (2026-10-02): 14,419 yellow answers went RED off routes to
+    # buildings drawn where the fit fell short -- 1S1E08DB -05602, short by
+    # 30 ft, walked 344 ft. A drawing that shows the shortfall stands no
+    # building, so it proves no route.
+    import dataclasses
+
+    lot = lot_from_row(bridge_row(), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.drawing["fits"]
+    short = dataclasses.replace(
+        _coloured(s, Triage.yellow), drawing={**s.drawing, "fits": False}
+    )
+    got = fire_checked(short, lot, None, policy=policies[0], relief=policies[1])
+    assert got is short
+
+
 def test_a_plan_red_both_ways_is_not_measured(corpus, policies) -> None:
     lot = lot_from_row(bridge_row(), corpus.layers)
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)

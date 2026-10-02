@@ -1657,9 +1657,9 @@ def fire_checked(
     one the plan was laid out fronting, and a private road the yards do not
     count (:attr:`QuadfitLot.access`): the truck may use any of them. A
     plan already RED both ways cannot be moved by it and is not measured.
-    Where no route is found -- nothing drawn, the drawing standing past
-    the lot line where the fit fell short, no polygon or street line, no
-    truck road near -- a plan that would otherwise be GREEN either way is
+    Where no route is found -- nothing drawn, a fit that fell short (its
+    drawing shows the shortfall, not a building that could stand there),
+    no polygon or street line, no truck road near -- a plan that would otherwise be GREEN either way is
     tried and unobserved, which holds it out of GREEN; any other plan is
     left unchecked, its colour already short of GREEN for another reason.
     Where the drawing stands the building at a front no truck road serves
@@ -1691,8 +1691,12 @@ def fire_checked(
     offset = fire.point_offset(*roads) if roads is not None else None
 
     def measure(drawing: dict[str, Any] | None) -> float | None:
+        # Only a drawing whose room holds the building and its court stands
+        # the building anywhere: where the fit fell short it shows the
+        # shortfall, and a route to that would turn a lot RED off a
+        # building that cannot be built there (run 54: 14,419 answers).
         ring = (drawing or {}).get("building")
-        if not (ring and len(ring) >= 4 and lot.lot_geom is not None and streets):
+        if not ((drawing or {}).get("fits") and ring and len(ring) >= 4 and lot.lot_geom is not None and streets):
             return None
         return fire.route_ft(Polygon(ring), lot.lot_geom, streets, offset)
 
