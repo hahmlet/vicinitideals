@@ -1089,10 +1089,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    SHIPPED d8d4a439 (deployed 2026-10-02): all 170 net-area values carry
    `less` / `may_less` / `assumed_none`; net area is a range (overlaps
    unknown), settled when both ends agree; min density alone = yellow
-   CLOSER_LOOK_MIN_DENSITY. Re-screen queued on 137
-   (/root/chain_netarea1002.sh: waits for chain_row1002, 131,039 lots,
-   splices onto bridge_spliced_2026-10-02_fits, bundle 2026-10-02_netarea
-   to 114) -- then load as candidate, read the drift, promote.
+   CLOSER_LOOK_MIN_DENSITY. RUN 61 PROMOTED 2026-10-02 (131,039 lots
+   at 6d9f7197, spliced on bridge_spliced_2026-10-02_draw; drift 59->61
+   5,765 moved / 0 unexplained: 5,733 unknown->yellow as FAR + min
+   density settle -- Beaverton FAR 32,240 rows, West Linn FAR 11,700 --
+   29,626 rows now carry the closer look; 23 green->unknown + 6 ->red
+   are FIRE, lots no fire partial had re-bridged, reported to the fire
+   session).
    Beaverton rulings ANSWERED (Steph 2026-10-02): the pod's lane + aisle
    ARE a "common driveway" (neither code defines one; stalls stay in), and
    constrained land comes off whether or not set aside in a tract ("very
