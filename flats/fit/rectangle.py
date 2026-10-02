@@ -25,11 +25,21 @@ import math
 from dataclasses import dataclass
 from typing import Callable, Iterable, Sequence
 
+import numpy as np
 from shapely.geometry.base import BaseGeometry
 
 from flats.designs.model import Design, Orientation
 from flats.fit.angles import angles_for, normalize
-from flats.fit.raster import GRID_FT, MAX_CELLS, Grid, cells_for, rasterize
+from flats.fit.raster import (
+    GRID_FT,
+    MAX_CELLS,
+    Grid,
+    Ground,
+    cells_for,
+    court_windows,
+    ground_for,
+    rasterize,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -125,6 +135,14 @@ class Fitter:
     Construction does the work; queries are cheap. A lot with an empty envelope
     still produces a valid Fitter — it simply fits nothing, which is a result,
     not an error.
+
+    ``ground`` is where a parking court may stand (FOLLOWUPS 33): the
+    envelope and the rear yard, which the screen lets the court use
+    (:func:`flats.score.screen._court_beyond_rear`). A query that says how
+    far the court runs past the window it asks for (``over_ft``) is then
+    answered only where that run lands on this ground -- past the window's
+    far end, not off the lot or across a side yard. Without ``ground`` the
+    run is not looked for: the window alone answers, as before 2026-10-02.
     """
 
     def __init__(
@@ -133,10 +151,13 @@ class Fitter:
         angles: Iterable[float] | None = None,
         *,
         res: float = GRID_FT,
+        ground: BaseGeometry | None = None,
     ) -> None:
         self.angles: tuple[float, ...] = tuple(angles) if angles is not None else angles_for()
         self.grids: list[Grid] = []
         self.res = res
+        self.ground = ground
+        self._grounds: dict[int, Ground] = {}
         if envelope is None or envelope.is_empty:
             return
         self.res = res_for(envelope, res)
@@ -162,26 +183,111 @@ class Fitter:
             if any(abs(normalize(g.angle_deg) - a) < 1e-6 for a in wanted)
         ]
 
-    def _best(self, w_ft: float, angles: Iterable[float] | None = None) -> tuple[float, Grid | None]:
+    def _ground(self, grid: Grid) -> Ground:
+        key = id(grid)
+        if key not in self._grounds:
+            self._grounds[key] = ground_for(grid, self.ground)
+        return self._grounds[key]
+
+    def _over_cells(self, over_ft: float) -> int:
+        """The court's run past the window, in whole cells (rounded up: a
+        longer run is harder to hold); 0 where nothing is looked for."""
+        if self.ground is None or over_ft <= 1e-9:
+            return 0
+        return cells_for(over_ft, self.res)
+
+    def court_masks(
+        self, grid: Grid, d_cells: int, w_cells: int, over_ft: float
+    ) -> tuple[np.ndarray, np.ndarray] | None:
+        """:func:`flats.fit.raster.court_windows` on one of this Fitter's
+        grids: the windows whose court runs ``over_ft`` onto the ground past
+        the high-row end, and past the low-row end."""
+        return court_windows(grid, self._ground(grid), d_cells, w_cells, self._over_cells(over_ft))
+
+    def _has(self, grid: Grid, d_cells: int, w_cells: int, over: int) -> bool:
+        # The plain window first: without it there is no court to look for,
+        # and the ground -- the costly raster -- is never built.
+        if over <= 0:
+            return grid.has_window(d_cells, w_cells)
+        if not grid.has_window(d_cells, w_cells):
+            return False
+        got = court_windows(grid, self._ground(grid), d_cells, w_cells, over)
+        return got is not None and bool(got[0].any() or got[1].any())
+
+    def _depth_cells(
+        self, grid: Grid, w_cells: int, over: int, *, top: int | None = None, floor: int = 1
+    ) -> int:
+        """:meth:`Grid.max_depth_cells` with the court's run past the window
+        asked too. Still monotone: a window one row shallower at the street
+        end keeps its run past the far end.
+
+        ``top`` is the plain window's depth where already known -- the run
+        only takes depth away. Below ``floor`` the answer is only "less":
+        ``floor - 1``, the search spared every probe down there.
+        """
+        if top is None:
+            top = grid.max_depth_cells(w_cells)
+        if over <= 0 or top == 0:
+            return top
+        if self._has(grid, top, w_cells, over):
+            return top
+        lo, hi = min(floor, top) - 1, top - 1
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if self._has(grid, mid, w_cells, over):
+                lo = mid
+            else:
+                hi = mid - 1
+        return lo
+
+    def _best(
+        self, w_ft: float, angles: Iterable[float] | None = None, *, over_ft: float = 0.0
+    ) -> tuple[float, Grid | None]:
         """Deepest achievable depth at this width, and the grid that achieved it.
 
         Every angle is scanned even after one clears the requirement: the margin
         is reported, ranked on, and compared across designs, so the best one is
         worth finding rather than the first one. ``angles`` confines the scan
-        to the grids at those angles.
+        to the grids at those angles. ``over_ft`` asks the court's run past
+        the window's far end too (see the class).
         """
         w_cells = cells_for(w_ft, self.res)
+        over = self._over_cells(over_ft)
+        grids = [g for g in self._grids(angles) if g.cols >= w_cells]
         best_cells, best_grid = 0, None
-        for grid in self._grids(angles):
-            if grid.cols < w_cells:
+        if over <= 0:
+            for grid in grids:
+                got = grid.max_depth_cells(w_cells)
+                if got > best_cells:
+                    best_cells, best_grid = got, grid
+            return best_cells * self.res, best_grid
+        # With a run to hold, the plain depth bounds each grid's answer from
+        # above: grids are tried deepest-plain first and the scan stops where
+        # none left can win, so only a few ever build their ground. The
+        # winner is the one the plain scan's rule picks -- the deepest, the
+        # first in angle order among equals.
+        plain = sorted(
+            ((g.max_depth_cells(w_cells), i, g) for i, g in enumerate(grids)),
+            key=lambda t: (-t[0], t[1]),
+        )
+        best_i = len(grids)
+        for top, i, grid in plain:
+            if top < best_cells:
+                break
+            if top == best_cells and i > best_i:
                 continue
-            got = grid.max_depth_cells(w_cells)
-            if got > best_cells:
-                best_cells, best_grid = got, grid
+            got = self._depth_cells(grid, w_cells, over, top=top, floor=max(best_cells, 1))
+            if got > best_cells or (got == best_cells > 0 and i < best_i):
+                best_cells, best_grid, best_i = got, grid, i
         return best_cells * self.res, best_grid
 
     def holds(
-        self, across_ft: float, depth_ft: float, *, angles: Iterable[float] | None = None
+        self,
+        across_ft: float,
+        depth_ft: float,
+        *,
+        angles: Iterable[float] | None = None,
+        over_ft: float = 0.0,
     ) -> bool:
         """Whether a rectangle this wide and this deep fits at any angle.
 
@@ -189,10 +295,12 @@ class Fitter:
         ends it, where :meth:`fit` binary-searches every grid for the deepest
         run. That is what makes it cheap enough to ask several times per lot
         -- the screen asks it once per stall it counts beyond the floor.
-        ``angles`` confines it to the grids at those angles.
+        ``angles`` confines it to the grids at those angles; ``over_ft`` asks
+        the court's run past the far end too.
         """
         w_cells, d_cells = cells_for(across_ft, self.res), cells_for(depth_ft, self.res)
-        return any(grid.has_window(d_cells, w_cells) for grid in self._grids(angles))
+        over = self._over_cells(over_ft)
+        return any(self._has(grid, d_cells, w_cells, over) for grid in self._grids(angles))
 
     def fit(
         self,
@@ -203,6 +311,7 @@ class Fitter:
         placement: bool = True,
         lane_ft: float = 0.0,
         court_width_ft: float = 0.0,
+        over_ft: float = 0.0,
     ) -> Fit:
         """Best fit for one rectangle across every angle and orientation.
 
@@ -214,6 +323,9 @@ class Fitter:
         found stays the building's own. What the court needs *behind* the
         building is depth, charged by the screen against the rear yard, not
         here. Both default to zero, which is the bare rectangle.
+        ``over_ft`` is how far the court runs past the depth found: where
+        the Fitter holds ``ground``, only a window with that run onto it
+        counts.
         """
         options: list[tuple[Orientation, float, float]] = [
             (Orientation.width_facing, max(width_ft + lane_ft, court_width_ft), depth_ft)
@@ -226,7 +338,7 @@ class Fitter:
         best: Fit | None = None
         best_grid: Grid | None = None
         for orientation, across_ft, d_ft in options:
-            got_ft, grid = self._best(across_ft)
+            got_ft, grid = self._best(across_ft, over_ft=over_ft)
             slack = got_ft - d_ft
             if best is None or slack > best.slack_ft:
                 best = Fit(
@@ -248,10 +360,11 @@ class Fitter:
         assert best.across_ft is not None
         d_ft = depth_ft if best.orientation is Orientation.width_facing else width_ft
         w_cells, d_cells = cells_for(best.across_ft, self.res), cells_for(d_ft, self.res)
-        hit = best_grid.first_window(d_cells, w_cells)
-        if hit is None:
+        masks = self.court_masks(best_grid, d_cells, w_cells, over_ft)
+        hits = None if masks is None else np.argwhere(masks[0] | masks[1])
+        if hits is None or not len(hits):
             return best
-        row, col = hit
+        row, col = int(hits[0][0]), int(hits[0][1])
         return Fit(
             fits=best.fits,
             width_ft=best.width_ft,
@@ -345,6 +458,7 @@ class Fitter:
         placement: bool = True,
         lane_ft: float | None = None,
         court_width_ft: float | None = None,
+        over_ft: float = 0.0,
     ) -> Fit:
         """Fit one catalog design. ``axis_required`` forbids the flipped orientation.
 
@@ -361,6 +475,7 @@ class Fitter:
             placement=placement,
             lane_ft=design.parking.lane_width_ft if lane_ft is None else lane_ft,
             court_width_ft=design.court_width_ft if court_width_ft is None else court_width_ft,
+            over_ft=over_ft,
         )
 
     def frontier(self, widths_ft: Sequence[float]) -> tuple[float, ...]:

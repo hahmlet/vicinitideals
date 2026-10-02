@@ -166,6 +166,8 @@ def _place(
     across_b: float,
     deep_b: float,
     street: np.ndarray,
+    fitter: Fitter | None = None,
+    over_ft: float = 0.0,
 ) -> _Placed | None:
     """The window of this size, and the way round, that puts the building
     nearest the street.
@@ -175,17 +177,29 @@ def _place(
     lines wins, the court's distance from them breaking a tie the other way
     -- the parking stands behind, not in front. Without front lines, the
     first window, street at its low end.
+
+    ``over_ft`` is how far the court runs past the window's far end; with
+    the ``fitter`` that holds the court's ground, a window and a way round
+    count only where that run lands on it (FOLLOWUPS 33) -- the court the
+    fit passed, not one drawn off the lot.
     """
     best: tuple[float, float, _Placed] | None = None
     for grid in grids:
-        w = grid._windows(d_cells, w_cells)
-        if w is None:
+        if fitter is not None:
+            masks = fitter.court_masks(grid, d_cells, w_cells, over_ft)
+        else:
+            w = grid._windows(d_cells, w_cells)
+            masks = None if w is None else (w == d_cells * w_cells,) * 2
+        if masks is None:
             continue
-        hits = np.argwhere(w == d_cells * w_cells)
+        # Street at the low end, the court past the high end; and the other way.
+        ways = {True: masks[0], False: masks[1]}
+        hits = np.argwhere(masks[0] | masks[1])
         if not len(hits):
             continue
         if not len(street):
-            return _Placed(grid, int(hits[0][0]), int(hits[0][1]), d_cells, True, True)
+            low = bool(masks[0][hits[0][0], hits[0][1]])
+            return _Placed(grid, int(hits[0][0]), int(hits[0][1]), d_cells, low, True)
         if len(hits) > MAX_CANDIDATES:
             hits = hits[np.linspace(0, len(hits) - 1, MAX_CANDIDATES).astype(int)]
         pts = _local(street, grid)
@@ -195,12 +209,15 @@ def _place(
         wx1 = wx0 + w_cells * res
         wy1 = wy0 + d_cells * res
         for low in (True, False):
+            way = ways[low][hits[:, 0], hits[:, 1]]
+            if not way.any():
+                continue
             by0, by1 = (wy0, wy0 + deep_b) if low else (wy1 - deep_b, wy1)
             cy0, cy1 = (by1, wy1) if low else (wy0, by0)
             court = _box_distance(wx0, cy0, wx1, cy1, pts)
             for left in (True, False):
                 bx0, bx1 = (wx0, wx0 + across_b) if left else (wx1 - across_b, wx1)
-                building = _box_distance(bx0, by0, bx1, by1, pts)
+                building = np.where(way, _box_distance(bx0, by0, bx1, by1, pts), np.inf)
                 i = int(np.lexsort((-court, building))[0])
                 key = (float(building[i]), -float(court[i]))
                 if best is None or key < best[:2]:
@@ -260,7 +277,17 @@ def draw(
 
     # The room: the window the fit needs where one exists; otherwise the
     # deepest the lot holds at that width.
-    placed = _place(grids, need, w_cells, across_b=across_b, deep_b=deep_b, street=pts)
+    over = 0.0 if beside_band_ft > 0 else max(0.0, court_depth_ft - max(court_beyond_ft, 0.0))
+    placed = _place(
+        grids,
+        need,
+        w_cells,
+        across_b=across_b,
+        deep_b=deep_b,
+        street=pts,
+        fitter=fitter,
+        over_ft=over,
+    )
     fits = placed is not None
     if placed is None:
         d_cells = max(g.max_depth_cells(w_cells) for g in grids)

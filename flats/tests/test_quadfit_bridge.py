@@ -1524,3 +1524,22 @@ def test_a_front_chosen_by_the_car_needs_the_drive_to_be_a_street() -> None:
         problems = []
         assert _parse_private_drives({**base, **bad}, where="t", problems=problems) is None
         assert problems and "access_choice" in problems[0]
+
+
+def test_the_court_s_ground_is_the_lot_less_every_yard_but_the_rear() -> None:
+    # FOLLOWUPS 33. The screen lets the court stand in the rear yard; the
+    # ground it may run onto is the envelope plus that yard -- never a side
+    # yard, a front yard or past the lot line.
+    got = Rules(setback_front_ft=10, setback_side_ft=5, setback_rear_ft=15)
+    env = envelope_for(lot_from_row(cut_row()), got)  # type: ignore[arg-type]
+    assert env.sqft == pytest.approx(40 * 75)
+    assert env.ground.area == pytest.approx(40 * 90)
+    assert env.ground.buffer(1e-6).contains(env.geom)
+    # No line is known as the rear on an irregular lot: inset by the largest
+    # of the other yards.
+    irregular = envelope_for(lot_from_row(cut_row(tier="C")), got)  # type: ignore[arg-type]
+    assert irregular.ground.area == pytest.approx(30 * 80)
+    # s5o's envelope knows no yard: the court at least stays on the lot.
+    unread = envelope_for(lot_from_row(cut_row()), Rules(setback_front_ft=10, setback_rear_ft=10))  # type: ignore[arg-type]
+    assert unread.source == "quadfit"
+    assert unread.ground.area == pytest.approx(LOT.area)

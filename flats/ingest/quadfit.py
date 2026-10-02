@@ -814,6 +814,13 @@ class Envelope:
     #: ``quadfit`` -- s5o's, where FLATS could not cut its own.
     source: str
     setbacks: Setbacks | None = None
+    #: Where the parking court may stand (FOLLOWUPS 33): the lot cut by
+    #: every yard but the rear, the carve taken off too -- the envelope plus
+    #: the rear strip the screen credits the court with
+    #: (:func:`flats.score.screen._court_beyond_rear`). Where the envelope
+    #: is s5o's, no yard is known and the lot less the carve stands in: the
+    #: court at least stays on the lot. None without a lot polygon.
+    ground: Any = None
 
     @property
     def sqft(self) -> float:
@@ -897,7 +904,8 @@ def envelope_for(
     all the envelope lost -- charging the ordinary rear there would credit
     the court with ground the envelope still holds.
     """
-    quadfit = Envelope(lot.envelope, lot.facts.envelope_rear_ft, "quadfit")
+    on_lot = None if lot.lot_geom is None else _less_carve(lot.lot_geom, lot.carve)
+    quadfit = Envelope(lot.envelope, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot)
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
     split = rear_off_alley(lot.edges)
@@ -915,7 +923,20 @@ def envelope_for(
     cut = None if strips else setbacks.largest_ft
     if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
         cut = setbacks.alley_rear_ft
-    return Envelope(geom, cut, "flats", setbacks)
+    open_rear = dataclasses.replace(
+        setbacks,
+        rear_ft=0.0,
+        alley_rear_ft=None if setbacks.alley_rear_ft is None else 0.0,
+    )
+    ground = buildable(lot.lot_geom, lot.edges, open_rear, less=lot.carve)
+    return Envelope(geom, cut, "flats", setbacks, ground)
+
+
+def _less_carve(geom: Any, carve: Any) -> Any:
+    """The lot less the carve: the ground nothing is built or parked on."""
+    if carve is None or carve.is_empty:
+        return geom
+    return geom.difference(carve)
 
 
 def _cover(row: Mapping[str, Any], edges: Sequence[Any]) -> list[str | None] | None:
@@ -1375,7 +1396,7 @@ def _screen_on(
     the search apart where a through lot's ends are named (FOLLOWUPS 6(i))."""
     key = (env.source, env.setbacks, front, plan)
     if key not in fitters:
-        fitters[key] = Fitter(env.geom, angles)
+        fitters[key] = Fitter(env.geom, angles, ground=env.ground)
     if here.facts.alley_at_rear and not here.facts.alley_rear_whole:
         # A rear alley along PART of the rear line is the court's
         # aisle only where the stretch it runs, with this envelope

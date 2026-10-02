@@ -121,3 +121,22 @@ def test_the_street_along_the_long_side_puts_the_building_against_it() -> None:
     north = shapely.LineString([(0, 60), (120, 60)])
     assert got.building.distance(north) < 0.6
     assert got.building.distance(north) <= got.court.distance(north)
+
+
+def test_the_court_is_drawn_on_the_ground_the_fit_passed_it_on() -> None:
+    # FOLLOWUPS 33. The room is 50 ft deep (40 of building, 10 the court
+    # charges the envelope); the court's other 20 ft stand in the rear yard.
+    # Where that yard lies behind the room the plan fits and draws there;
+    # where the only strips beyond the envelope are side yards, the court
+    # has nowhere to run and the plan does not fit -- however deep a room
+    # the envelope alone holds.
+    envelope = shapely.box(0, 0, 60, 50)
+    for ground, fits in ((shapely.box(0, 0, 60, 70), True), (shapely.box(-20, 0, 80, 50), False)):
+        fitter = Fitter(envelope, angles=(0.0,), ground=ground)
+        fit = fitter.fit(36.0, 40.0, allow_flip=False, placement=False, lane_ft=12.0, over_ft=20.0)
+        got = draw(fitter, fit, width_ft=36.0, depth_ft=40.0, lane_ft=12.0,
+                   court_depth_ft=30.0, court_beyond_ft=10.0, street=SOUTH)
+        assert got is not None and got.fits is fits
+        assert (fit.slack_ft - 10.0 >= 0) is fits
+        if fits:
+            assert ground.buffer(1e-6).contains(got.court)

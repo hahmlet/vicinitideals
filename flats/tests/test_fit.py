@@ -422,3 +422,69 @@ def test_a_real_shortfall_stays_red() -> None:
     )
 
     assert result.verdict is Verdict.fails
+
+
+# --- the court's run past the window (FOLLOWUPS 33) -------------------
+
+
+@pytest.mark.parametrize(
+    ("ground", "depth"),
+    [
+        (None, 40),  # nothing asked: the envelope alone answers, as before
+        (shapely.box(0, 0, 60, 60), 40),  # a 20 ft rear yard behind the window
+        (shapely.box(0, -20, 60, 40), 40),  # ... or before it: either end may be the street
+        (shapely.box(0, 0, 60, 45), 25),  # a 5 ft yard: the window gives the run its depth
+        (shapely.box(-20, 0, 80, 40), 20),  # side yards only: nothing behind the window
+    ],
+)
+def test_the_court_s_run_past_the_window_has_to_land_on_its_ground(ground, depth) -> None:
+    # The screen credits the court with the rear yard the envelope lost and
+    # charges the envelope only the rest. That credit is ground: a window
+    # whose far end faces a side yard or the lot line has none behind it.
+    f = Fitter(LOT, (0.0,), res=1.0, ground=ground)
+    got = f.fit(56, 36, allow_flip=False, placement=False, over_ft=20.0)
+    assert got.best_depth_ft == depth
+    assert got.fits is (depth >= 36)
+    assert f.holds(56, 36, over_ft=20.0) is (depth >= 36)
+    # A window that asks no run past it is the envelope's alone.
+    assert f.holds(56, 40)
+
+
+def test_the_ground_sits_on_the_envelope_s_own_cell_lines() -> None:
+    # The run is read on a second raster; one cell out of step would put a
+    # court a cell off the lot. A ground equal to the envelope, or an
+    # envelope off the half-foot lattice, must answer exactly as the
+    # envelope does.
+    for envelope in (LOT, affinity.translate(LOT, 0.3, 0.7), affinity.rotate(LOT, 17, origin=(0, 0))):
+        plain = Fitter(envelope, res=0.5)
+        same = Fitter(envelope, res=0.5, ground=envelope)
+        for w in (20, 40, 56):
+            assert same._best(w, over_ft=0.0)[0] == plain._best(w)[0]
+            # Nothing past the envelope: every window gives up the run.
+            assert same._best(w, over_ft=5.0)[0] == pytest.approx(max(0.0, plain._best(w)[0] - 5.0))
+
+
+@pytest.mark.parametrize("over_ft", [3.0, 11.0, 24.0])
+def test_the_court_search_skips_only_grids_that_cannot_win(over_ft: float) -> None:
+    # _best stops early and spares the ground's raster where the plain depth
+    # already loses. It must still pick what a scan of every grid at every
+    # depth picks: the deepest, the first in angle order among equals.
+    lot = shapely.Polygon([(0, 0), (70, 0), (78, 35), (40, 62), (-6, 44)])
+    envelope = lot.buffer(-6, join_style="mitre")
+    fitter = Fitter(envelope, angles=range(0, 180, 9), res=0.5, ground=lot.buffer(-2, join_style="mitre"))
+    over = fitter._over_cells(over_ft)
+    for w in (12, 24, 36, 48):
+        w_cells = cells_for(w, fitter.res)
+        best_cells, best_grid = 0, None
+        for grid in fitter.grids:
+            if grid.cols < w_cells:
+                continue
+            got = max(
+                (d for d in range(1, grid.rows + 1) if fitter._has(grid, d, w_cells, over)),
+                default=0,
+            )
+            if got > best_cells:
+                best_cells, best_grid = got, grid
+        depth, grid = fitter._best(w, over_ft=over_ft)
+        assert depth == best_cells * fitter.res
+        assert grid is best_grid

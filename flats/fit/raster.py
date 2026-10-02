@@ -121,7 +121,11 @@ def cells_for(length_ft: float, res: float = GRID_FT) -> int:
     return max(1, math.ceil(length_ft / res - 1e-9))
 
 
-def _cell_grid(part: BaseGeometry, res: float) -> np.ndarray | None:
+def _cell_grid(
+    part: BaseGeometry,
+    res: float,
+    lattice: tuple[float, float, int, int] | None = None,
+) -> np.ndarray | None:
     """Boolean buildable-cell array for one polygon, by corner containment.
 
     Corners are tested against the envelope grown by a hair. Containment
@@ -130,10 +134,16 @@ def _cell_grid(part: BaseGeometry, res: float) -> np.ndarray | None:
     a foot in each dimension, invented out of arithmetic. The epsilon is a
     millionth of a cell: enough to settle the boundary, far too small to admit
     a placement that does not exist.
+
+    ``lattice`` is ``(minx, miny, ncols, nrows)`` where the cells must sit on
+    another grid's lines (:func:`ground_for`); the part's own bounds otherwise.
     """
-    minx, miny, maxx, maxy = part.bounds
-    ncols = max(1, math.ceil((maxx - minx) / res))
-    nrows = max(1, math.ceil((maxy - miny) / res))
+    if lattice is None:
+        minx, miny, maxx, maxy = part.bounds
+        ncols = max(1, math.ceil((maxx - minx) / res))
+        nrows = max(1, math.ceil((maxy - miny) / res))
+    else:
+        minx, miny, ncols, nrows = lattice
     if ncols * nrows > MAX_CELLS:
         return None
     xs = minx + np.arange(ncols + 1) * res
@@ -197,3 +207,103 @@ def rasterize(
             )
         )
     return grids
+
+
+@dataclass(frozen=True, slots=True)
+class Ground:
+    """The ground a parking court may stand on (FOLLOWUPS 33), on one
+    :class:`Grid`'s own cell lines: the grid's cell ``(r, c)`` is this
+    one's ``(r + row0, c + col0)``. Holds the grid's envelope and more --
+    the strip the envelope lost at the rear."""
+
+    integral: np.ndarray
+    row0: int
+    col0: int
+
+    @property
+    def rows(self) -> int:
+        return int(self.integral.shape[0] - 1)
+
+    @property
+    def cols(self) -> int:
+        return int(self.integral.shape[1] - 1)
+
+
+def ground_for(grid: Grid, ground: BaseGeometry | None) -> Ground:
+    """``ground`` rasterized on ``grid``'s lattice, at its angle.
+
+    Only the part of ``ground`` the grid's envelope stands in: a court may
+    not leap a gap the envelope's part does not span either. Every way this
+    can fail -- no ground, no part holding the envelope, a part past
+    :data:`MAX_CELLS` -- answers the grid's own envelope, the court then
+    held to the ground the building stands on: smaller, never larger.
+    """
+    own = Ground(grid.integral, 0, 0)
+    if ground is None or ground.is_empty:
+        return own
+    cells = np.argwhere(np.diff(np.diff(grid.integral, axis=0), axis=1) > 0)
+    if not len(cells):
+        return own
+    r, c = cells[len(cells) // 2]
+    probe = shapely.Point(grid.minx + (c + 0.5) * grid.res, grid.miny + (r + 0.5) * grid.res)
+    rotated = affinity.rotate(ground, -grid.angle_deg, origin=grid.origin)
+    part = next((p for p in shapely.get_parts(rotated) if p.geom_type == "Polygon" and p.covers(probe)), None)
+    if part is None:
+        return own
+    res = grid.res
+    minx, miny, maxx, maxy = part.bounds
+    kx0 = math.floor((minx - grid.minx) / res)
+    ky0 = math.floor((miny - grid.miny) / res)
+    ncols = max(1, math.ceil((maxx - grid.minx) / res) - kx0)
+    nrows = max(1, math.ceil((maxy - grid.miny) / res) - ky0)
+    cell_ok = _cell_grid(
+        part, res, (grid.minx + kx0 * res, grid.miny + ky0 * res, ncols, nrows)
+    )
+    if cell_ok is None:
+        return own
+    return Ground(_integral(cell_ok), -ky0, -kx0)
+
+
+def _sums(integral: np.ndarray, d_cells: int, w_cells: int) -> np.ndarray | None:
+    rows, cols = integral.shape[0] - 1, integral.shape[1] - 1
+    if d_cells < 1 or w_cells < 1 or d_cells > rows or w_cells > cols:
+        return None
+    s = integral
+    return (
+        s[d_cells:, w_cells:]
+        - s[:-d_cells, w_cells:]
+        - s[d_cells:, :-w_cells]
+        + s[:-d_cells, :-w_cells]
+    ) == d_cells * w_cells
+
+
+def _shifted(full: np.ndarray | None, shape: tuple[int, int], dr: int, dc: int) -> np.ndarray:
+    """``out[r, c] = full[r + dr, c + dc]``, False where that falls outside."""
+    out = np.zeros(shape, dtype=bool)
+    if full is None:
+        return out
+    r0, r1 = max(0, -dr), min(shape[0], full.shape[0] - dr)
+    c0, c1 = max(0, -dc), min(shape[1], full.shape[1] - dc)
+    if r0 < r1 and c0 < c1:
+        out[r0:r1, c0:c1] = full[r0 + dr : r1 + dr, c0 + dc : c1 + dc]
+    return out
+
+
+def court_windows(
+    grid: Grid, ground: Ground, d_cells: int, w_cells: int, over_cells: int
+) -> tuple[np.ndarray, np.ndarray] | None:
+    """Which ``d_cells`` x ``w_cells`` windows of the envelope also have
+    ``over_cells`` more of ``ground`` past one end, the same width: the
+    court's run past the room (FOLLOWUPS 33). Two masks over the grid's
+    windows: the run past the high-row end (the street at the low end), and
+    past the low-row end. None where no window of that size fits at all."""
+    inside = grid._windows(d_cells, w_cells)
+    if inside is None:
+        return None
+    inside = inside == d_cells * w_cells
+    if over_cells <= 0:
+        return inside, inside
+    run = _sums(ground.integral, d_cells + over_cells, w_cells)
+    high = _shifted(run, inside.shape, ground.row0, ground.col0)
+    low = _shifted(run, inside.shape, ground.row0 - over_cells, ground.col0)
+    return inside & high, inside & low

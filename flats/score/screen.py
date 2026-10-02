@@ -1250,6 +1250,38 @@ def _court_beyond_rear(
     return max(0.0, behind_wall_ft(court, rear_ft, rules) - carved)
 
 
+def _court_over(
+    design: Design,
+    rules: ZoneResolution,
+    carved_rear_ft: float | None = None,
+    alley: Alley | None = None,
+    *,
+    column: bool = False,
+    stalls: int | None = None,
+) -> float:
+    """How far the court runs past the window the fit asks for, in feet
+    (FOLLOWUPS 33): the court's depth less what :func:`_court_beyond_rear`
+    charges the envelope for -- the stretch credited to the rear yard.
+
+    The fit used to take that credit on trust: any window deep enough for
+    the building and the charge passed, wherever it stood, and on about
+    6,000 green answers (run 59) the court the credit stood for ran off the
+    lot through a side line or a street. Handed to the Fitter as
+    ``over_ft``, the stretch has to land on ground a court may use
+    (:attr:`flats.fit.rectangle.Fitter.ground`) past the window's far end.
+    """
+    if column:
+        got = side_column(design, rules, alley, stalls)
+        assert got is not None, "a column court was charged where no side alley offers one"
+        court = got[0]
+    else:
+        court, _court_from_code = court_depth(design, rules, alley, stalls)
+    beyond = _court_beyond_rear(
+        design, rules, carved_rear_ft, alley, column=column, stalls=stalls
+    )
+    return max(0.0, court - beyond)
+
+
 def _beside_for(design: Design, rules: ZoneResolution, lot: LotFacts) -> Beside:
     """The court beside the building that :func:`fit_for` searched for this lot."""
     got = side_court(design, rules, lot.alley, corner=lot.corner, frontage_ft=lot.frontage_ft)
@@ -1348,14 +1380,18 @@ def seats(
         n: _court_beyond_rear(design, rules, carved_rear_ft, alley, stalls=n)
         for n in range(across.stalls, across.most + 1)
     }
+    over = {
+        n: _court_over(design, rules, carved_rear_ft, alley, stalls=n)
+        for n in range(across.stalls, across.most + 1)
+    }
     column = side_column(design, rules, alley) is not None
     best = 0
     for _orientation, side, deep in design.oriented(axis_required=axis_required):
         seated = 0
-        held: tuple[float, float] | None = None
+        held: tuple[float, float, float] | None = None
         for n in range(across.stalls, across.most + 1):
-            ask = (max(side + across.lane_ft, n * across.stall_ft), deep + behind[n])
-            if ask != held and not fitter.holds(*ask):
+            ask = (max(side + across.lane_ft, n * across.stall_ft), deep + behind[n], over[n])
+            if ask != held and not fitter.holds(ask[0], ask[1], over_ft=ask[2]):
                 break
             held = ask
             seated = n
@@ -1364,7 +1400,8 @@ def seats(
                 along = deep + _court_beyond_rear(
                     design, rules, carved_rear_ft, alley, column=True, stalls=n
                 )
-                if not fitter.holds(side + across.lane_ft, along):
+                run = _court_over(design, rules, carved_rear_ft, alley, column=True, stalls=n)
+                if not fitter.holds(side + across.lane_ft, along, over_ft=run):
                     break
                 seated = n
         for n in range(max(seated + 1, across.stalls), across.most + 1):
@@ -1483,6 +1520,7 @@ def fit_for(
         placement=placement,
         lane_ft=across.lane_ft,
         court_width_ft=across.width_ft,
+        over_ft=_court_over(design, rules, carved_rear_ft, alley),
     )
     if side_column(design, rules, alley) is not None:
         beside = fitter.fit_design(
@@ -1491,6 +1529,7 @@ def fit_for(
             placement=placement,
             lane_ft=across.lane_ft,
             court_width_ft=0.0,
+            over_ft=_court_over(design, rules, carved_rear_ft, alley, column=True),
         )
         row_room = fit.slack_ft - _court_beyond_rear(design, rules, carved_rear_ft, alley)
         column_room = beside.slack_ft - _court_beyond_rear(
