@@ -46,6 +46,7 @@ from app.services.flats_refresh import (
     RegisterError,
     attach_report,
     blocks,
+    candidate_run,
     drift,
     drift_markdown,
     facts_moved,
@@ -1002,13 +1003,29 @@ async def test_prune_drops_only_copies_older_than_the_previous_one(session: Asyn
         await rollback(session, by="Steph", reason="try")
 
 
+async def test_a_candidate_a_promotion_passed_over_is_no_re_screen_waiting(session: AsyncSession, tmp_path) -> None:
+    """2026-10-02: runs 54 and 57 were loaded, found wanting and re-screened
+    again as run 59, which was promoted; the refresh page still read run 57
+    as the re-screen waiting, its gate warning for a drift nobody would run."""
+    w = await _world(session, tmp_path)
+    await drift(session, from_run=2, to_run=4)
+    await promote(session, w["sept"].id, by="Steph")
+    session.add(FlatsRun(id=3, status="candidate", snapshot_id=w["sept"].id, design_keys=list(DESIGNS), counties=[]))
+    await session.commit()
+    assert await candidate_run(session, w["sept"].id) is None, "run 4 is in use; run 3 was passed over"
+    session.add(FlatsRun(id=5, status="candidate", snapshot_id=w["sept"].id, design_keys=list(DESIGNS), counties=[]))
+    await session.commit()
+    assert (await candidate_run(session, w["sept"].id)).id == 5
+
+
 async def test_prune_runs_keeps_the_newest_runs_whole_and_retires_the_rest(session: AsyncSession, tmp_path) -> None:
     """Steph, 2026-10-01: superseded re-screens fill the disk -- keep the last 3."""
     w = await _world(session, tmp_path)
     await drift(session, from_run=2, to_run=4)
     await promote(session, w["sept"].id, by="Steph")
     sept_lots = (await session.execute(select(FlatsLot).where(FlatsLot.snapshot_id == w["sept"].id))).scalars().all()
-    for run_id, status in ((6, "complete"), (8, "complete"), (10, "candidate")):
+    # Run 7 was loaded as a candidate and passed over: run 8 was promoted past it.
+    for run_id, status in ((6, "complete"), (7, "candidate"), (8, "complete"), (10, "candidate")):
         session.add(FlatsRun(id=run_id, status=status, snapshot_id=w["sept"].id, design_keys=list(DESIGNS), counties=[]))
         await session.flush()
         session.add_all([_result(lot, FlatsRun(id=run_id), DESIGNS[0], "unknown", "green") for lot in sept_lots])
@@ -1023,13 +1040,18 @@ async def test_prune_runs_keeps_the_newest_runs_whole_and_retires_the_rest(sessi
     await session.commit()
     session.expunge_all()
 
-    assert pruned == [{"run_id": 2, "snapshot_id": w["july"].id, "results": 8}]
-    assert (await session.get(FlatsRun, 2)).status == "retired"
+    assert pruned == [
+        {"run_id": 2, "snapshot_id": w["july"].id, "results": 8},
+        {"run_id": 7, "snapshot_id": w["sept"].id, "results": len(sept_lots)},
+    ]
+    for gone in (2, 7):
+        assert (await session.get(FlatsRun, gone)).status == "retired"
+        assert (await results(gone)).scalar_one() == 0
     assert "pruned" in (await session.get(FlatsRun, 2)).notes
-    assert (await results(2)).scalar_one() == 0
+    assert "superseded by run 8" in (await session.get(FlatsRun, 7)).notes
     for kept in (4, 6, 8, 10):
         assert (await results(kept)).scalar_one() > 0, f"run {kept} keeps its results"
-    assert (await session.get(FlatsRun, 10)).status == "candidate", "a candidate is never pruned"
+    assert (await session.get(FlatsRun, 10)).status == "candidate", "a candidate loaded since the run in use is never pruned"
     assert await run_in_use(session) is not None and (await run_in_use(session)).id == 8
     assert await prune_runs(session, keep=3) == []
 

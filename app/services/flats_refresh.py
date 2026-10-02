@@ -538,14 +538,22 @@ def gate(snapshot: FlatsSnapshot, run: FlatsRun | None = None) -> list[dict[str,
 
 
 async def candidate_run(session: AsyncSession, snapshot_id: int) -> FlatsRun | None:
-    """The newest candidate run loaded from this copy."""
-    return (
-        await session.execute(
-            select(FlatsRun)
-            .where(FlatsRun.snapshot_id == snapshot_id, FlatsRun.status == "candidate")
-            .order_by(FlatsRun.id.desc())
-        )
-    ).scalars().first()
+    """The newest candidate run loaded from this copy since its run in use.
+
+    A candidate older than the run in use was superseded -- a later
+    re-screen of the same copy was promoted past it (2026-10-02: runs 54 and
+    57 were loaded, found wanting and re-screened again as 59) -- and is no
+    re-screen waiting; :func:`prune_runs` retires it.
+    """
+    stmt = (
+        select(FlatsRun)
+        .where(FlatsRun.snapshot_id == snapshot_id, FlatsRun.status == "candidate")
+        .order_by(FlatsRun.id.desc())
+    )
+    in_use = await run_in_use(session, snapshot_id)
+    if in_use is not None:
+        stmt = stmt.where(FlatsRun.id > in_use.id)
+    return (await session.execute(stmt)).scalars().first()
 
 
 async def run_in_use(session: AsyncSession, snapshot_id: int | None = None) -> FlatsRun | None:
@@ -1178,23 +1186,37 @@ async def prune_runs(session: AsyncSession, *, keep: int = 3) -> list[dict[str, 
     results, so superseded runs fill the server's disk (FOLLOWUPS 25).
     Steph, 2026-10-01: "delete older runs ... keep the last 3". The newest
     ``keep`` complete runs -- the run in use and the ones before it, which a
-    re-screen rollback falls back to -- and every candidate or running run
-    are never touched. A pruned run is marked ``retired`` so the Lots pages
-    stop listing it; the run row, its notes and the drift reports stored on
-    its copy stay. A retired copy whose only runs are pruned is pruned
-    whole by :func:`prune`.
+    re-screen rollback falls back to -- and every running run and every
+    candidate loaded since its copy's run in use are never touched. A
+    candidate OLDER than its copy's run in use was superseded (a later
+    re-screen was promoted past it) and is pruned with them. A pruned run is
+    marked ``retired`` so the Lots pages stop listing it; the run row, its
+    notes and the drift reports stored on its copy stay. A retired copy
+    whose only runs are pruned is pruned whole by :func:`prune`.
     """
     if keep < 1:
         raise PromotionError("keep at least the run in use (--keep 1 or more)")
     complete = (
         await session.execute(select(FlatsRun).where(FlatsRun.status == "complete").order_by(FlatsRun.id.desc()))
     ).scalars().all()
+    in_use: dict[int, int] = {}
+    for run in complete:
+        in_use.setdefault(run.snapshot_id, run.id)
+    superseded = [
+        run
+        for run in (
+            await session.execute(select(FlatsRun).where(FlatsRun.status == "candidate").order_by(FlatsRun.id.desc()))
+        ).scalars().all()
+        if run.id < in_use.get(run.snapshot_id, 0)
+    ]
     stamp = dt.datetime.now(dt.UTC).date().isoformat()
     pruned: list[dict[str, Any]] = []
-    for run in complete[keep:]:
+    for run, why in [(r, f"kept the newest {keep} runs") for r in complete[keep:]] + [
+        (r, f"superseded by run {in_use[r.snapshot_id]}") for r in superseded
+    ]:
         gone = await session.execute(text("DELETE FROM flats.lot_results WHERE run_id = :id"), {"id": run.id})
         run.status = "retired"
-        run.notes = _note(run.notes, f"pruned {stamp}: {int(gone.rowcount or 0):,} results dropped (kept the newest {keep} runs)")
+        run.notes = _note(run.notes, f"pruned {stamp}: {int(gone.rowcount or 0):,} results dropped ({why})")
         session.add(run)
         pruned.append({"run_id": run.id, "snapshot_id": run.snapshot_id, "results": int(gone.rowcount or 0)})
     await session.flush()
