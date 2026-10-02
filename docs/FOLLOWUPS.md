@@ -1128,18 +1128,21 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (`-n 4`) so tests never take the whole PC; (C) run tests on 137 (frees
    the PC fully, but uncommitted code must be shipped there first --
    slower, more fragile; not recommended).
-33. **Parking court drawn past the lot line (found 2026-10-02 reading run
-   59's green->red lots).** About 6,250 green-if-signed answers draw their
-   court more than 20 sq ft outside the lot, ~4,400 by more than 200 sq ft:
-   Washington uninc 2,048, Clackamas uninc 1,892, Tualatin 239, Wilsonville
-   85, Sherwood 74, Gladstone 57; Portland 12. Example 22E08BA00314
-   (Clackamas R7, pod56x36@2, slack 1.5 ft): the court runs ~15 ft past the
-   top lot line, no alley there. Pre-existing (not from the fire change).
-   Possible FALSE GREEN: if the fit lets the court sit in a yard by the
-   rear yard's depth but stands it against a 5 ft side line, the lot is
-   green on parking it cannot hold. Next: read 20 of them, decide whether
-   the fit or only the drawing is wrong (flats/fit/draw.py band(deep_b,
-   deep_b + court_depth) vs the room), fix, bound, re-screen.
+33. **Parking court drawn past the lot line -- FIX ca26e048 DEPLOYED
+   2026-10-02, re-screen waiting on the net-area promotion.** It was a false
+   GREEN: the screen credited the court with the rear yard but never checked
+   where the court stood, so it could run through a side line or a street.
+   Now the court's run must land on the lot less every yard but the rear.
+   Bound on 15,940 lots (fitting court past the lot line): green->yellow
+   3,451 answers, unknown->yellow 4,433; every green court is on the lot.
+   Cost +15% a lot. On 137 /root/chain_court1002b.sh splices
+   /root/bridge_2026-10-02_court onto /root/bridge_spliced_2026-10-02_netarea
+   and ships bundle 2026-10-02_court to 114. Next: once vicinitideals-6a
+   promotes netarea, load --snapshot 4, VACUUM, drift vs that run, promote,
+   prune, E2E. Still open: (a) side-column courts are not checked; (b) lots
+   outside the 15,940 whose court stands in a side or front yard INSIDE the
+   lot wait for the weekly full run; (c) s5o-envelope lots use the whole lot
+   (less carve) as the court's ground.
 34. **Washington right-of-way polygons in quadfit s4 (77c99822,
    2026-10-02).** Washington ends its street polygons `ROW`; until
    77c99822 the not-a-taxlot rule missed them, so FLATS screened 2,467 of
