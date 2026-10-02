@@ -1133,7 +1133,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    slower, more fragile; not recommended).
 33. **Parking court leftovers (fix ca26e048 LIVE as run 63, 2026-10-02:
    drift 61->63 green->yellow 3,459, unknown->yellow 4,453, 0 unexplained).**
-   Still open: (a) side-column courts are not checked against the lot;
+   Still open: (a) the court BESIDE the building (side court) is not checked against the lot;
    (b) lots outside the 15,940 scoped whose court stands in a side or front
    yard INSIDE the lot are corrected only by the next full re-screen;
    (c) s5o-envelope lots use the whole lot (less carve) as the court's
@@ -1153,7 +1153,6 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    to fail; the rest kept no fire result. Re-screened, 1,055 of them gave
    1,032 green + 23 unknown (no truck road within reach: Troutdale LDR/MDR,
    Gresham LDR-PV, Hillsboro SCR-V), 0 red -- ~2%, so ~2,000 greens county
-   wide may be unknown. DECISION PENDING (Steph): a 6th partial now (green
-   answers with no fire_route_ft / no fire_access_ft in run 63, ~1.5 h on
-   137) even though splice says FULL RE-SCREEN DUE, or wait for the weekly
-   full run.
+   wide may be unknown. Steph 2026-10-02 chose B: NO partial -- the next
+   weekly FULL re-screen fixes it (with 33's leftovers). After that run,
+   check run-wide: zero green answers lacking a fire result.
