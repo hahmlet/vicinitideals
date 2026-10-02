@@ -85,7 +85,7 @@ Durations are from the first real run (2026-09-18/19, 453,782 taxlots).
 | 5 | Stage quadfit's raw files from the snapshot | 137 | `python scripts/flats_stage_quadfit_raw.py --snapshot <date>` | 1 min | `data/quadfit_<date>/raw/` with `SOURCE.json` |
 | 6 | Measure (quadfit s1–s7) | 137 | `QUADFIT_DATA_DIR=data/quadfit_<date> python "Lot Analysis/quadfit/run_all.py" --force` | ~50 min | `EXIT 0`; `data/quadfit_<date>/summary.md` |
 | 7 | Normalize every lot | 137 | `python -m flats.ingest.normalize --snapshot <date>` | ~5 min | `data/flats/normalized/<date>/` with `new_zones.json` (unruled codes) and `summary.json` (`ruled_zones` by outcome) |
-| 8 | Screen (the bridge) | 137 | `python -m flats.ingest.quadfit --s4 data/quadfit_<date>/s4_lots.parquet --s5o data/quadfit_<date>/s5o_lots.parquet --results data/quadfit_<date>/lots_results.csv --out /root/bridge_<date> --processes 12 --chunk-size 250` | **~7 h** (290k measured lots) | `lots.parquet` + `meta.json` in the run dir |
+| 8 | Screen (the bridge) | 137 | `python -m flats.ingest.quadfit --s4 data/quadfit_<date>/s4_lots.parquet --s5o data/quadfit_<date>/s5o_lots.parquet --results data/quadfit_<date>/lots_results.csv --out /root/bridge_<date> --processes 16 --chunk-size 250` | **~7 h** for 290k lots on 12 cores (2 counties); 16.3 h for 418k (3 counties). 137 has 16 cores / 32 GB since 2026-10-02 | `lots.parquet` + `meta.json` in the run dir |
 | 9 | Assign (measured + unmeasured → one run) | 137 | `python -m flats.ingest.assign --normalized data/flats/normalized/<date> --bridge /root/bridge_<date> --quadfit-dir data/quadfit_<date> --out /root/assign_<date>` | ~5 min | `summary.md` with the funnel; "measured by quadfit but not land" (condominium units quadfit's s1 keeps -- 2,001 in September) is normal, "measured but not in the snapshot's lot table (kept)" should be 0 -- a number there is a lot normalize lost for no named reason |
 | 10 | Export the bundle | 137 | `python scripts/flats_load_bridge.py export --run-dir /root/assign_<date> --out /root/bundle_<date>` | ~5 min | `lots.csv.gz`, `results.csv.gz`, `run.json` (`status: candidate`) |
 | 11 | Copy to 114 | 137 | `scp -r /root/bundle_<date> root@<vm114>:/root/stacks/vicinitideals/data/flats/bridge/<date>`; also `data/flats/sources/<date>/manifest.json` → `/root/stacks/vicinitideals/data/flats/sources/<date>/` and `data/flats/deltas/<date>/` → `…/data/flats/deltas/<date>/` | 2 min | files present under `/app/data/flats/…` in the container |
@@ -153,7 +153,9 @@ itself a partial run, or two runs measured from different quadfit files.
 
 **A scope is a claim, so full re-screens stay.** A full re-screen is due
 after 5 partial runs or 30 days since the last full one, whichever comes
-first, and every batch of merged changes that says "all" (geometry, the fit,
+first -- and never more than ONE A WEEK (Steph 2026-10-02: a
+three-county full run is ~16 h); changes merged in between wait for it or
+go out as a partial, and every batch of merged changes that says "all" (geometry, the fit,
 the engine) goes into one. When it has run, before promoting it:
 
 `python -m flats.ingest.splice audit --spliced <the spliced bridge in use> --full /root/bridge_<full tag> --out /root/audit_<tag>`
