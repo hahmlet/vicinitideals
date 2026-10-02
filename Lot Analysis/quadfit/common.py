@@ -1600,11 +1600,14 @@ def reproject_4326_to_2913(geoms: list[Any]) -> list[Any]:
 #: The taxlot IDs that are not taxlots. Multnomah draws every quarter-
 #: section's streets as one lot `1N2E26AC  -STR` (two spaces, then the
 #: suffix), its rivers `-RIV`, its railways `-RR`; Clackamas ends the same
-#: shapes `ROADS` and `WATER`. No owner, no address, no zone anyone builds
+#: shapes `ROADS` and `WATER`; Washington ends its right-of-way `ROW` (one
+#: per quarter-section, `1N117DB ROW`; 2,467 of them, read 2026-10-02 --
+#: until then screened as lots and seen as private neighbours by s4's
+#: alley ray). No owner, no address, no zone anyone builds
 #: in. s3 drops them from the universe; s4 looks through them when it
 #: measures an alley. Tracts (Multnomah `-TR`) are NOT here: some are
 #: buildable, and one across an alley is private land.
-NOT_A_TAXLOT_RE = r"(?:-STR|-RIV|-RR|ROADS|WATER)$"
+NOT_A_TAXLOT_RE = r"(?:-STR|-RIV|-RR|ROADS|WATER|ROW)$"
 
 
 def stage_path(name: str) -> Path:

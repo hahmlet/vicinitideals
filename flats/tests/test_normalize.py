@@ -13,6 +13,7 @@ from __future__ import annotations
 import csv
 import gzip
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -452,3 +453,18 @@ def test_washington_lots_reach_their_layers_and_the_straddling_cities_theirs(lay
     assert juris.layer_for("PORTLAND", "washington") == "or/multnomah/portland"
     assert juris.layer_for("TIGARD", "washington") == "or/washington/tigard"
     assert juris.layer_for("CORNELIUS", "washington") == "or/washington/cornelius"
+
+
+def test_every_county_s_right_of_way_is_not_a_lot() -> None:
+    """Washington draws its right-of-way one polygon per quarter-section,
+    ending ``ROW``; until 2026-10-02 the rule knew only Multnomah's and
+    Clackamas's endings, and 2,467 street polygons were screened as lots --
+    three of them GREEN. quadfit's copy of the rule must say the same, or
+    the two universes disagree on what a lot is."""
+    quadfit_common = (Path(__file__).resolve().parents[2] / "Lot Analysis" / "quadfit" / "common.py").read_text(encoding="utf-8")
+    (quadfit_rule,) = re.findall(r'^NOT_A_TAXLOT_RE = r"(.+)"$', quadfit_common, flags=re.M)
+    assert quadfit_rule == nz.NOT_A_TAXLOT_RE.pattern
+    for street in ("1N1E29DD  -STR", "1N1E29DD  -RIV", "1N1E29DD  -RR", "21E01AA ROADS", "21E01AA WATER", "1N117DB ROW", "2S236DA ROW"):
+        assert nz.NOT_A_TAXLOT_RE.search(street), street
+    for lot in ("1N1E29DD  -00100", "1N1E29DD  -TR", "21E01AA00100", "1N135AD06300", "2S125BD00100"):
+        assert not nz.NOT_A_TAXLOT_RE.search(lot), lot

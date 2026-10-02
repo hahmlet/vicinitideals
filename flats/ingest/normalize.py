@@ -96,10 +96,12 @@ from flats.rules.loader import load_rules
 from flats.rules.model import POCKET_ZONE_FROM_MAP, Layer, ZoneRuling
 
 #: The right-of-way and the water, which RLIS holds as polygons of their own
-#: (Multnomah ``-STR`` / ``-RIV`` / ``-RR``, Clackamas ``ROADS`` / ``WATER``).
-#: quadfit's ``common.NOT_A_TAXLOT_RE``, verbatim; a divergence here would
-#: make the two lot universes disagree on what a lot is.
-NOT_A_TAXLOT_RE = re.compile(r"(?:-STR|-RIV|-RR|ROADS|WATER)$")
+#: (Multnomah ``-STR`` / ``-RIV`` / ``-RR``, Clackamas ``ROADS`` / ``WATER``,
+#: Washington ``ROW`` -- 2,467 of them were screened as lots until
+#: 2026-10-02, three of them GREEN). quadfit's ``common.NOT_A_TAXLOT_RE``,
+#: verbatim; a divergence here would make the two lot universes disagree on
+#: what a lot is.
+NOT_A_TAXLOT_RE = re.compile(r"(?:-STR|-RIV|-RR|ROADS|WATER|ROW)$")
 
 #: ``excluded.csv.gz``: one row per record the lot table dropped by name.
 EXCLUDED_COLUMNS = ("county", "tlid", "step", "reason", "area_sqft", "prop_code")
