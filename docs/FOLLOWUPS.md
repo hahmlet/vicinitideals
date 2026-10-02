@@ -1131,21 +1131,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (`-n 4`) so tests never take the whole PC; (C) run tests on 137 (frees
    the PC fully, but uncommitted code must be shipped there first --
    slower, more fragile; not recommended).
-33. **Parking court drawn past the lot line -- FIX ca26e048 DEPLOYED
-   2026-10-02, re-screen waiting on the net-area promotion.** It was a false
-   GREEN: the screen credited the court with the rear yard but never checked
-   where the court stood, so it could run through a side line or a street.
-   Now the court's run must land on the lot less every yard but the rear.
-   Bound on 15,940 lots (fitting court past the lot line): green->yellow
-   3,451 answers, unknown->yellow 4,433; every green court is on the lot.
-   Cost +15% a lot. On 137 /root/chain_court1002b.sh splices
-   /root/bridge_2026-10-02_court onto /root/bridge_spliced_2026-10-02_netarea
-   and ships bundle 2026-10-02_court to 114. Next: once vicinitideals-6a
-   promotes netarea, load --snapshot 4, VACUUM, drift vs that run, promote,
-   prune, E2E. Still open: (a) side-column courts are not checked; (b) lots
-   outside the 15,940 whose court stands in a side or front yard INSIDE the
-   lot wait for the weekly full run; (c) s5o-envelope lots use the whole lot
-   (less carve) as the court's ground.
+33. **Parking court leftovers (fix ca26e048 LIVE as run 63, 2026-10-02:
+   drift 61->63 green->yellow 3,459, unknown->yellow 4,453, 0 unexplained).**
+   Still open: (a) side-column courts are not checked against the lot;
+   (b) lots outside the 15,940 scoped whose court stands in a side or front
+   yard INSIDE the lot are corrected only by the next full re-screen;
+   (c) s5o-envelope lots use the whole lot (less carve) as the court's
+   ground; (d) bridge +15% a lot -- a faster rasterizer (contains_xy is 80%
+   of the fit) is the lever if the weekly run gets too long.
 34. **Washington right-of-way polygons in quadfit s4 (77c99822,
    2026-10-02).** Washington ends its street polygons `ROW`; until
    77c99822 the not-a-taxlot rule missed them, so FLATS screened 2,467 of
@@ -1155,3 +1148,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    its zone as the neighbour's. The next full Washington quadfit run picks
    the rule up; diff s4's alley and neighbour-zone fields on Washington
    lots then and read the moves.
+35. **Fire check never ran on ~92,700 green answers (found 2026-10-02 by
+   the net-area session).** The fire partials were scoped to lots likely
+   to fail; the rest kept no fire result. Re-screened, 1,055 of them gave
+   1,032 green + 23 unknown (no truck road within reach: Troutdale LDR/MDR,
+   Gresham LDR-PV, Hillsboro SCR-V), 0 red -- ~2%, so ~2,000 greens county
+   wide may be unknown. DECISION PENDING (Steph): a 6th partial now (green
+   answers with no fire_route_ft / no fire_access_ft in run 63, ~1.5 h on
+   137) even though splice says FULL RE-SCREEN DUE, or wait for the weekly
+   full run.
