@@ -59,4 +59,7 @@ items live in [HUMAN_TODO.md](HUMAN_TODO.md).
    flake when the next commit's CI passes with identical `app/`, and a
    real finance item for a finance agent if it fails twice in a row.
    **Confirmed a flake 2026-09-20:** d5181f1a (identical `app/`) passed the
-   full gate, run 35489425771.
+   full gate, run 35489425771. Third time 2026-10-02, the `ci_12mo` case
+   (P=452728, same ltv_pct=70.0 message) on 77c99822 -- a FLATS normalize
+   rule and quadfit common, no `app/` -- run 36985525615; the next commit
+   with identical `app/` (d8d4a439) passed the full gate.

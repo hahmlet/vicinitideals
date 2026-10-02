@@ -1029,64 +1029,6 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    class is measured (6(c)), so today's lane may sit on the busier street;
    measure it per edge from RLIS street TYPE in s4 and re-check today's
    greens there. Awaiting Steph's go.
-28. **Fire apparatus access is not screened (found 2026-10-01 by the parking
-   standards research).** Oregon Fire Code 2022 503.1.1: a fire apparatus
-   road must reach within 150 ft of every part of the first-storey exterior
-   walls, measured along an approved route around the building. Exception
-   1.3 covers "not more than two" one-/two-family dwellings -- a 4-unit pod
-   does not qualify. If the street does not reach, an on-site fire road is
-   20 ft wide (D103.1; Clackamas allows 12 ft only up to 3 units, Portland
-   up to 2), turning radii 28/48 (Clackamas) or 25/45 (Portland), turnaround
-   past 150 ft (Portland 300). Sprinklers let the fire official modify it
-   (1.1; Portland Fire allows 250 ft). `flats/rules/conditions.py` names fire
-   access as an `unavailable` tier but no check measures it. Risk: deep,
-   flag and rear-placed lots read green today. Next: measure the route
-   distance from the street to the farthest wall corner in the fit drawing,
-   count today's greens over 150 ft, then decide (red, or a "needs
-   sprinklers" relief). Becomes binding for item 27's long drives.
-   SIZED 2026-10-01 (read-only, 137 /root/fire.py on run 49's base
-   /root/bridge_spliced_mhq0930 + s4 street edges; output
-   /root/fire_sizing.parquet): of 52,219 green-if-signed lots, 175 are
-   CERTAINLY past 150 ft (straight line from the street lot line to the
-   farthest wall of the drawn pod -- no route is shorter) and up to 304
-   possibly (nearest gap + half the pod's perimeter); 13 / 34 past 250 ft.
-   None is signed green yet, so no live false GREEN -- but each becomes one
-   on signing. Portland 92, Clackamas uninc 67, Mult uninc 6, small others;
-   109 of the 175 have under 30 ft of frontage (flag lots, median depth
-   305 ft). Median upper estimate on all greens 107 ft, so the rule only
-   bites deep lots. Steph 2026-10-01: **RED**, no sprinkler relief.
-   BUILT a0522c1d (flats/fit/fire.py route_ft, check `fire_access_ft`, state
-   default `fire_access_max_ft: 150` preempts always, NO_ZONING_RELIEF; lot
-   page row "Fire truck reach"). Bridge runs now need s1_streets.parquet
-   beside --s4. NOT LIVE until the re-screen: batch it into the partial
-   after CHAIN_WASH (scope: non-red lots whose route could pass ~100 ft, plus
-   the LR10/FU10/Mult-uninc scope), read the moves, promote, E2E the row.
-   SIZED ON RUN 51 (2026-10-01, 137 /root/fire_wash.parquet,
-   fire_size2.parquet, fire_green_{main,v2000}): three bugs fixed first --
-   09de342d (non-green plans with no route held unmeasured: ~133k rows;
-   private-road access lines ignored; through lots drawn at the end no
-   truck reaches, redrawn now) and 09e113a5 (5xxx = streets with streetcar
-   or MAX, e.g. SW 5th, are truck roads). Real bridge on the 2,817 green
-   lots at risk: 1,216 stay green, 783 red, 454 unknown, 364 drop to a
-   weaker design. Approx. on all 56,785 lots past 130 ft: ~6,000 yellow and
-   ~2,100 unknown lots also go red. The earlier 175/304 sizing measured a
-   straight line from the lot line; the walk round the building and where
-   the truck stands are most of the difference. Two assumptions drive it:
-   (a) unimproved roads (RLIS 2000, ~1,100 segments, Leif Erikson Dr) are
-   not truck roads -> ~630 green lots (mostly Portland) go unknown;
-   counting them keeps 1,845 green; (b) the truck stands 10 ft off the
-   centreline (narrowest 20 ft fire road); at the lot line the green loss
-   falls to ~650 and yellow->red to ~4,300 -- but RLIS has no road width,
-   so that is optimistic. ASKED STEPH 2026-10-01: (1) still RED at the
-   real size? (2) count gravel/unimproved streets? (3) strict truck
-   position now + research measured curb/street widths later, or wait?
-   STEPH ANSWERED 2026-10-01: (1) RED stands ("the logic stands");
-   (2) NO, unimproved streets are not truck roads (those lots go unknown);
-   (3) STRICT standoff now (10 ft off the centreline), measured widths
-   later = item 29. main already encodes all three: NEXT is the batched
-   partial (fire scope + LR10/FU10/Mult-uninc) on /root/bridge_2026-10-01
-   _wash. cc's d88971cb Tigard/Cornelius moves ride along -- tell cc
-   before splice/promote.
 29. **Fire reach: measure where the truck really stands (Steph 2026-10-01,
    "later improvement").** Item 28 assumes the narrowest legal fire road
    (truck 10 ft off the RLIS centreline) because RLIS holds no street
@@ -1098,7 +1040,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    publishes before claiming any), measure the truck's offset to the near
    curb per street line, fall back to the strict 10 ft where nothing is
    held, re-screen the fire scope. Never the lot line without a measure
-   (false GREEN).
+   (false GREEN). Item 28 (the 150 ft hose rule itself) is LIVE: run 59
+   PROMOTED 2026-10-02 (51 -> 59: green->red 2,059 answers / 1,453 lots,
+   routes 152-251 ft; yellow->red 2,038; unknown->red 4,881; green->unknown
+   1,339 / 894 lots -- 582 front only a gravel street, 149 an unnamed
+   drive, 20 an alley, ~25 a freeway; 0 unexplained). Left over: 10 green
+   lots on ordinary streets found no route (look at them one by one), and
+   ~100 green plans are held out of GREEN because the drawing could not
+   re-place the building and court (2dd750c2 measures a route only to a
+   drawing that fits -- run 54 had turned 14,419+ answers RED off a
+   building drawn where it does not fit).
 30. **Net land area review (Steph 2026-10-01: "not unique to Beaverton ...
    we need to do a review of net land areas and what to do about it").**
    129 numeric values in 10 layers carry `measured_on: net_developable_area`
@@ -1177,3 +1128,24 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (`-n 4`) so tests never take the whole PC; (C) run tests on 137 (frees
    the PC fully, but uncommitted code must be shipped there first --
    slower, more fragile; not recommended).
+33. **Parking court drawn past the lot line (found 2026-10-02 reading run
+   59's green->red lots).** About 6,250 green-if-signed answers draw their
+   court more than 20 sq ft outside the lot, ~4,400 by more than 200 sq ft:
+   Washington uninc 2,048, Clackamas uninc 1,892, Tualatin 239, Wilsonville
+   85, Sherwood 74, Gladstone 57; Portland 12. Example 22E08BA00314
+   (Clackamas R7, pod56x36@2, slack 1.5 ft): the court runs ~15 ft past the
+   top lot line, no alley there. Pre-existing (not from the fire change).
+   Possible FALSE GREEN: if the fit lets the court sit in a yard by the
+   rear yard's depth but stands it against a 5 ft side line, the lot is
+   green on parking it cannot hold. Next: read 20 of them, decide whether
+   the fit or only the drawing is wrong (flats/fit/draw.py band(deep_b,
+   deep_b + court_depth) vs the room), fix, bound, re-screen.
+34. **Washington right-of-way polygons in quadfit s4 (77c99822,
+   2026-10-02).** Washington ends its street polygons `ROW`; until
+   77c99822 the not-a-taxlot rule missed them, so FLATS screened 2,467 of
+   them as lots (gone in run 59) and quadfit s4 still treats them as
+   private neighbours: the alley ray stops at them (an alley missed = a
+   false red, never a false green) and a non-street edge facing one reads
+   its zone as the neighbour's. The next full Washington quadfit run picks
+   the rule up; diff s4's alley and neighbour-zone fields on Washington
+   lots then and read the moves.
