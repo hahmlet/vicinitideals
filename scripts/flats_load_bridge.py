@@ -1115,21 +1115,31 @@ async def _snapshot_checks(conn: Any, snapshot: Any, snapshot_id: int, run: dict
 
     The baseline is the copy the newest complete run reads -- the one the
     page shows by default -- when it is a different copy from this one.
+
+    A re-screen of the copy in use (runbook 4b) is weighed against that copy's
+    own last load instead: its ground was weighed against the copy before it
+    when it was promoted, and someone ruled on what that found. Weighing it
+    again would hold every re-screen on differences already accepted (the
+    new county run 51 was promoted over). Same datasets and same lots, so
+    only the measured count can move, against the count the last load left.
     """
     counts = json.loads(snapshot["counts"] or "{}")
     stored_report = json.loads(snapshot["report"] or "{}")
-    baseline = await conn.fetchrow(
-        """
-        SELECT s.id, s.counts::text AS counts
-        FROM flats.runs r JOIN flats.snapshots s ON s.id = r.snapshot_id
-        WHERE r.status = 'complete' AND r.snapshot_id <> $1
-        ORDER BY r.finished_at DESC LIMIT 1
-        """,
-        snapshot_id,
-    )
+    if snapshot["status"] == "current":
+        baseline = {"id": snapshot_id, "counts": snapshot["counts"]}
+    else:
+        baseline = await conn.fetchrow(
+            """
+            SELECT s.id, s.counts::text AS counts
+            FROM flats.runs r JOIN flats.snapshots s ON s.id = r.snapshot_id
+            WHERE r.status = 'complete' AND r.snapshot_id <> $1
+            ORDER BY r.finished_at DESC LIMIT 1
+            """,
+            snapshot_id,
+        )
     baseline_counts = json.loads(baseline["counts"] or "{}") if baseline else {}
     zone_changes: dict[str, tuple[int, int]] = {}
-    if baseline:
+    if baseline and baseline["id"] != snapshot_id:
         rows = await conn.fetch(
             """
             SELECT n.jurisdiction, count(*)::int AS total,

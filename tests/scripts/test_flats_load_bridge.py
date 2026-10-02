@@ -861,6 +861,55 @@ async def test_a_candidate_load_writes_the_promotion_gate_on_its_snapshot(
     assert tuple(canby) == ("juris_city:canby", None, "CANBY", "JURISDICTION_NOT_ENCODED"), "a city no layer holds lands with its name, never a blank"
 
 
+@pytest.mark.asyncio
+async def test_a_re_screen_of_the_copy_in_use_is_weighed_against_that_copy_not_the_one_before(
+    tmp_path: Path, session: AsyncSession, _test_db_url: str
+) -> None:
+    """Runbook 4b: the copy in use was weighed against the copy before it when
+    it was promoted, and someone ruled on what that found. A re-screen of it
+    is held only by what the re-screen itself moved (run 51's new county held
+    the 2026-10-02 re-screen on count_drift + lots_drift it had been promoted over)."""
+    run_dir, s4, s5o, results = _make_run(tmp_path)
+
+    def screened(name: str) -> Path:
+        """The same lots exported from a run dir of their own: a run of its own."""
+        here = tmp_path / name
+        here.mkdir()
+        for f in ("lots.parquet", "meta.json"):
+            (here / f).write_bytes((run_dir / f).read_bytes())
+        export(here, tmp_path / f"{name}_bundle", s4=s4, s5o=s5o, quadfit_results=results)
+        return tmp_path / f"{name}_bundle"
+
+    earlier_bundle, in_use_bundle, bundle = screened("earlier"), screened("in_use"), screened("again")
+    datasets = lambda n: {"rlis_taxlots": {"status": "acquired", "features": n, "unfetched": 0}}  # noqa: E731
+
+    before = await _snapshot(session, taken="2026-09-18", status="candidate")
+    await load(earlier_bundle, _test_db_url, snapshot_id=before)
+    await session.execute(text("UPDATE flats.runs SET status = 'complete' WHERE snapshot_id = :s"), {"s": before})
+    await session.execute(
+        text("UPDATE flats.snapshots SET status = 'retired', counts = CAST(:c AS jsonb) WHERE id = :s"),
+        {"c": json.dumps({"measured": 1, "datasets": datasets(1000)}), "s": before},
+    )
+    in_use = await _snapshot(session, taken="2026-10-01", status="current")
+    await session.execute(
+        text("UPDATE flats.snapshots SET counts = CAST(:c AS jsonb) WHERE id = :s"),
+        {"c": json.dumps({"datasets": datasets(1500)}), "s": in_use},
+    )
+    await session.commit()
+    first = await load(in_use_bundle, _test_db_url, snapshot_id=in_use)
+    measured = first["checks"]["lots_drift"]["detail"].split(" measured")[0]
+
+    report = await load(bundle, _test_db_url, snapshot_id=in_use)
+
+    checks = report["checks"]
+    assert report["blocks"] == [], "the 1,000 -> 1,500 taxlots and 1 -> 2 measured were the earlier copy's, already ruled on"
+    assert checks["count_drift"]["detail"] == "1 datasets within tolerance"
+    assert checks["lots_drift"]["detail"] == f"{measured} -> {measured} measured lots (+0.0%)"
+    assert checks["zone_changes"]["detail"] == "no lots shared with an earlier copy"
+    counts = (await session.execute(text("SELECT counts FROM flats.snapshots WHERE id = :s"), {"s": in_use})).scalar_one()
+    assert counts["baseline_snapshot_id"] == in_use
+
+
 # --- load-changes ---------------------------------------------------------------
 
 
