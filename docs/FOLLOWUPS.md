@@ -1156,3 +1156,21 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    wide may be unknown. Steph 2026-10-02 chose B: NO partial -- the next
    weekly FULL re-screen fixes it (with 33's leftovers). After that run,
    check run-wide: zero green answers lacking a fire result.
+36. **Parking tool queue (Steph 2026-10-02: "do them in the reverse order
+   you listed them").** RULING the same day: on a lot with more than one
+   street the parking entrance is the SIDE street, never the front ("cities
+   typically require the housing to face the busier street") -- so
+   `corner_access_street: lowest_class` reads as side-street access, like
+   `any`/`side`. Through lots keep the 2026-09-30 ruling. Order:
+   (5) city parking rules recorded but not applied -- IN PROGRESS: planted
+   strips between parking and the rear/side lot lines (Tualatin 73C.210(3),
+   Multnomah 39.8045(C)(3)(b), Gladstone 17.48.040(2)(e), Tigard, ...) were
+   called "inert" because yards are >= 5 ft, but the court is credited INTO
+   the rear yard, so they may bind (possible false GREEN); landscape islands
+   / % of the parking area (Tualatin 73C.210(4), Fairview 19.163.030(E));
+   approach widths (unread, look inert with one approach -- item 25 owns
+   spacing/second approach); (4) the court BESIDE the building checked
+   against the lot line (33(a)); (3) the side-street ruling above
+   (paper.SIDE_STREET_ACCESS, test_corner.py, fields.py doc); (2) a car's
+   turning path; (1) the free-form generator (item 27). Each ships as code;
+   the re-screen rides the weekly full run (~10-08).
