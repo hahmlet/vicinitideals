@@ -41,6 +41,7 @@ from pydantic import GetCoreSchemaHandler
 from pydantic_core import core_schema
 
 from flats.rules.conditions import condition
+from flats.rules.net_area import NetArea
 from flats.rules.fields import (
     ACRE_PER_DWELLING_FIELDS,
     ACRE_STATED_FIELDS,
@@ -1474,6 +1475,11 @@ class Value(BaseModel):
     #: on different acres and each cites its own sentence.
     measured_on_cite: str | None = None
     measured_on_quote: str | None = None
+    #: What this city's list takes off the lot, as far as anything here
+    #: measures it (:mod:`flats.rules.net_area`, Steph's option A of
+    #: 2026-10-02). None where the list has not been taught yet: the screen
+    #: then keeps to the gross-area bound described above.
+    net_area: NetArea | None = None
     #: The size of the acre the rate is printed per, where the code defines
     #: one that is not 43,560 square feet. Cornelius 18.20.050 (A): "A net
     #: acre is equal to 32,670 square feet". The screen measures density per
@@ -1916,6 +1922,15 @@ class Value(BaseModel):
                 f"{self.name}: 'measured_on' names a quantity this code defines "
                 f"for itself — cite and quote where {self.measured_on!r} is "
                 f"defined, or the rate has no denominator anyone can read"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _a_subtraction_list_belongs_to_a_net_area(self) -> Value:
+        if self.net_area is not None and self.measured_on != "net_developable_area":
+            raise ValueError(
+                f"{self.name}: 'less' lists what a net area subtracts, and this "
+                f"value is measured on {self.measured_on!r}"
             )
         return self
 

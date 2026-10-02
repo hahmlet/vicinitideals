@@ -995,6 +995,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
       variants:
         - value: 4.4
           when: [unit_lots]
@@ -1211,6 +1216,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
       variants:
         - value: 8.7
           when: [unit_lots]
@@ -1425,6 +1435,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
       variants:
         - value: 11.6
           when: [unit_lots]
@@ -1631,6 +1646,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
       variants:
         - value: 17.4
           when: [unit_lots]
@@ -1836,6 +1856,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
       variants:
         - value: 20.5
           when: [unit_lots]
@@ -2041,6 +2066,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
       variants:
         - value: 24.9
           when: [unit_lots]
@@ -2208,6 +2238,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
     max_height_ft:
       # Table 16.22.040-2: 45 feet in the R-5 column.
       #
@@ -2255,6 +2290,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
       variants:
         - value: 25
           when: [unit_lots]
@@ -2452,6 +2492,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
     max_height_ft:
       # Table 16.22.040-2, MUR-S column: 65 feet, twenty above the R-5 cell
       # beside it. Same marker 6 and the same discrepancy recorded on R-5.
@@ -2482,6 +2527,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
       variants:
         - value: 25
           when: [unit_lots]
@@ -2687,6 +2737,11 @@ zones:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
     min_density_du_per_acre:
       # Exempt by the same sentence, which excuses these buildings from
       # "the density standards" rather than from the maximum alone.
@@ -2699,6 +2754,11 @@ zones:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
     min_landscaped_pct:
       # Citywide by housing type, not a district standard: 16.42.030(B)(1)
       # names "single-family attached dwellings, duplexes, triplexes and
@@ -2837,6 +2897,11 @@ zones:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
     min_density_du_per_acre:
       # Exempt by the same sentence, which excuses these buildings from
       # "the density standards" rather than from the maximum alone.
@@ -2849,6 +2914,11 @@ zones:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
     min_landscaped_pct:
       # Citywide by housing type, not a district standard: 16.42.030(B)(1)
       # names "single-family attached dwellings, duplexes, triplexes and
@@ -2975,6 +3045,11 @@ zones:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
     min_density_du_per_acre:
       # And at least one unit per 3,000 sq ft, so four units need no more
       # than 12,000 sq ft of net developable area. The pair is a band.
@@ -2987,6 +3062,11 @@ zones:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        less: [happy_valley_slope, happy_valley_nroz]
+        assumed_none:
+          - "public facilities in a tract"
+          - "public and private right-of-way"
+          - "lands where an easement prohibits structures"
     min_landscaped_pct:
       # Citywide by housing type, not a district standard: 16.42.030(B)(1)
       # names "single-family attached dwellings, duplexes, triplexes and

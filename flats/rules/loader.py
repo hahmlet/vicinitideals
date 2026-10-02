@@ -43,6 +43,7 @@ from flats.rules.fields import (
     field,
 )
 from flats.rules.definitions import parse as parse_definitions
+from flats.rules.net_area import DEDUCTIONS, NetArea
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
     POCKET_ZONE_FROM_MAP,
@@ -183,11 +184,11 @@ def _parse_values(
             step_back = _parse_step_back(
                 body.pop("step_back", None), f"{where}.{key}", problems
             )
+            raw_measured_on = body.pop("measured_on", None)
             measured_on, measured_on_cite, measured_on_quote, acre_sqft = (
-                _parse_measured_on(
-                    body.pop("measured_on", None), f"{where}.{key}", problems
-                )
+                _parse_measured_on(raw_measured_on, f"{where}.{key}", problems)
             )
+            net_area = _parse_net_area(raw_measured_on, f"{where}.{key}", problems)
             qualified, qualified_cite, qualified_quote = _parse_qualified_by(
                 body.pop("qualified_by", None), f"{where}.{key}", problems
             )
@@ -540,6 +541,7 @@ def _parse_values(
             acres = None
             acres_each = None
             measured_on = measured_on_cite = measured_on_quote = None
+            net_area = None
             acre_sqft = before_acre = None
             plus_per_story = before_story = None
             qualified = qualified_cite = qualified_quote = None
@@ -634,6 +636,7 @@ def _parse_values(
                 measured_on=None if measured_on is None else str(measured_on),
                 measured_on_cite=measured_on_cite,
                 measured_on_quote=measured_on_quote,
+                net_area=net_area,
                 acre_sqft=acre_sqft,
                 before_acre=before_acre,
                 plus_per_story_ft=(
@@ -1216,6 +1219,10 @@ def _parse_measured_on(
     cite = body.pop("cite", None)
     quote = body.pop("quote", None)
     acre = body.pop("acre_sqft", None)
+    # The subtraction list, as far as anything here measures it
+    # (:mod:`flats.rules.net_area`); popped by the caller's second parse.
+    for key in ("less", "may_less", "assumed_none"):
+        body.pop(key, None)
     if body:
         problems.append(f"{where}.measured_on: unknown key(s) {sorted(body)}")
     if not fact:
@@ -1238,6 +1245,41 @@ def _parse_measured_on(
         None if quote is None else str(quote),
         None if acre is None else float(acre),
     )
+
+
+def _parse_net_area(raw: Any, where: str, problems: list[str]) -> NetArea | None:
+    """The deductions a ``measured_on`` block names, where it names any.
+
+    Absent ``less`` means the list has not been taught yet, and the screen
+    keeps to the gross-area bound; ``less: []`` is a city whose list takes
+    nothing off an existing lot that anything here could see (Fairview's
+    street right-of-way, which is already outside the tax lot).
+    """
+    if not isinstance(raw, dict) or "less" not in raw:
+        if isinstance(raw, dict) and ("may_less" in raw or "assumed_none" in raw):
+            problems.append(
+                f"{where}.measured_on: 'may_less' and 'assumed_none' need a "
+                f"'less' list beside them, even an empty one"
+            )
+        return None
+    lists: dict[str, tuple[str, ...]] = {}
+    for key in ("less", "may_less", "assumed_none"):
+        items = raw.get(key) or []
+        if not isinstance(items, list) or not all(
+            isinstance(i, str) and i.strip() for i in items
+        ):
+            problems.append(f"{where}.measured_on.{key}: expected a list of names")
+            return None
+        lists[key] = tuple(items)
+    unknown = sorted((set(lists["less"]) | set(lists["may_less"])) - DEDUCTIONS)
+    if unknown:
+        problems.append(
+            f"{where}.measured_on: {unknown} is not a deduction anything here "
+            f"measures ({', '.join(sorted(DEDUCTIONS))}); name it under "
+            f"'assumed_none' if the code lists it and nothing measures it"
+        )
+        return None
+    return NetArea(**lists)
 
 
 def _parse_story_ft(

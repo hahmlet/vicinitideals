@@ -115,6 +115,7 @@ from flats.geom.park import PARK_FACTS, observed_parks
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
 from flats.rules.model import TRANSIT_MEASURES, Layer
+from flats.rules.net_area import MEASURED as NET_MEASURED, measured_deductions
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
 from flats.score.relief import ReliefPolicy
@@ -217,6 +218,9 @@ S5O_COLUMNS: tuple[str, ...] = (
     "wkb",
     "env_setbacks_json",
     "carve_wkb",
+    # Each deduction a city's net area may take off the lot, in square feet
+    # (:data:`flats.rules.net_area.MEASURED`).
+    *sorted({c for cols in NET_MEASURED.values() for c in cols}),
 )
 
 #: The site facts this bridge can observe, in the order they are reported.
@@ -1120,6 +1124,10 @@ def lot_from_row(
         # without it to screen, or none with a street left (FOLLOWUPS 4).
         street_unconfirmed=unconfirmed,
         transit_ft=transit_from_row(row),
+        # What a city's net area may take off the lot (option A, Steph
+        # 2026-10-02): an existing lot dedicates nothing, so only what s5o
+        # measured comes off it.
+        net_deductions=measured_deductions(row) or None,
     )
     juris = str(row.get("jurisdiction"))
     try:

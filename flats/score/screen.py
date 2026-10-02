@@ -59,13 +59,14 @@ import dataclasses
 import enum
 import math
 from dataclasses import dataclass, field as _dc_field
-from typing import Any, Sequence
+from typing import Any, Mapping, Sequence
 
 from flats.designs.model import Design, Orientation, ParkingConfig, Plat
 from flats.fit.rectangle import Fit, Fitter
 from flats.geom.edges import Tier as GeometryTier
 from flats.rules.conditions import CONDITIONS, Tier
 from flats.rules.fields import REQUIRED_FIELDS
+from flats.rules.net_area import net_span
 from flats.rules.resolver import ALTERNATIVES, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
 from flats.score.paper import (
@@ -125,6 +126,14 @@ FACT_UNOBSERVED = "FACT_UNOBSERVED"
 
 #: The zone forbids the use outright and lists no conditional-use path.
 USE_PROHIBITED = "USE_PROHIBITED"
+#: The lot misses nothing but a minimum density: it is big enough that the
+#: city wants more homes on it than four. Never RED (Steph, 2026-10-02:
+#: "lots that fail for the only reason of min density need to go not red.
+#: Some sort of yellow or 'closer look'") -- a bigger plan, or a split
+#: (FOLLOWUPS 31), may still use it, and nothing here can draw either.
+CLOSER_LOOK_MIN_DENSITY = "CLOSER_LOOK_MIN_DENSITY"
+#: The checks a minimum density is measured by.
+MIN_DENSITY_CHECKS: frozenset[str] = frozenset({"min_density_du_per_acre", "min_units"})
 #: The fit was searched at the building's width alone, and what this zone's
 #: parking asks across the lot -- the lane beside the building, or the row of
 #: stalls behind it -- is wider. Whatever depth that search found is not
@@ -316,6 +325,13 @@ class LotFacts:
     #: unrun.
     fire_route_ft: float | None = None
     fire_route_tried: bool = False
+    #: Square feet of each measured deduction a city's net area may take off
+    #: this lot -- floodplain, the mapped resource overlays -- keyed as
+    #: :data:`flats.rules.net_area.MEASURED` names them, from quadfit's s5o
+    #: (:func:`flats.rules.net_area.measured_deductions`). None where nothing
+    #: measured the lot, and a key missing where that one deduction was not:
+    #: either way a rate on a net acre keeps to the gross-area bound.
+    net_deductions: Mapping[str, float] | None = None
 
     @property
     def landlocked(self) -> bool:
@@ -489,7 +505,9 @@ def _checks(
             return
         out.append(policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where))
 
-    def rate(name: str, observed: float, field: str, *, is_maximum: bool) -> None:
+    def rate(
+        name: str, amount: float, per_sqft: float, field: str, *, is_maximum: bool
+    ) -> None:
         """A rate check, aware of which area the code divides by.
 
         Nearly every Oregon city states density per *net acre* -- the lot less
@@ -521,19 +539,49 @@ def _checks(
         lots and maximum density only on small ones, so the certain half is
         the common case both times: most lots get a real answer here, and only
         the genuinely marginal ones fall through to the fact.
+
+        Where the rule file states the city's subtraction list
+        (:mod:`flats.rules.net_area`, Steph's option A of 2026-10-02) and the
+        lot was measured for every deduction on it, net area is a range
+        rather than a bound: the rate is run at both ends, and a verdict both
+        ends agree on stands -- reported at the end that leaves the least
+        room. Only where the ends disagree does the lot fall through to the
+        fact. ``amount`` is the units or the floor area; ``per_sqft`` the
+        square feet of the code's unit of land (an acre, or one square foot
+        for a ratio).
         """
         held = rules.values.get(field)
         threshold = rules.get(field)
+
+        def on(area_sqft: float) -> CheckResult:
+            return policy.evaluate(
+                name,
+                amount / (area_sqft / per_sqft),
+                threshold,
+                is_maximum=is_maximum,
+                jurisdiction=where,
+            )
+
         if held is None or held.measured_on is None or threshold is None:
-            check(name, observed, threshold, is_maximum=is_maximum)
+            check(name, amount / (lot.lot_sqft / per_sqft), threshold, is_maximum=is_maximum)
             return
-        result = policy.evaluate(
-            name, observed, threshold, is_maximum=is_maximum, jurisdiction=where
+        net = getattr(held, "net_area", None)
+        span = (
+            None
+            if net is None
+            else net_span(net, lot.lot_sqft, lot.net_deductions, pavement)
         )
-        settled = result.verdict is (Verdict.fails if is_maximum else Verdict.passes)
-        if settled:
-            out.append(result)
-            return
+        if span is not None:
+            least, most = (on(area) for area in span)
+            if least.verdict is most.verdict:
+                out.append(min(least, most, key=lambda c: c.slack))
+                return
+        else:
+            result = on(lot.lot_sqft)
+            settled = result.verdict is (Verdict.fails if is_maximum else Verdict.passes)
+            if settled:
+                out.append(result)
+                return
         unchecked.append(name)
         unmeasured.add(held.measured_on)
 
@@ -680,6 +728,19 @@ def _checks(
     else:
         unchecked.append("max_lot_depth_ratio")
 
+    # The pavement this plan lays: what the leftover checks below take off
+    # the lot, and -- where a code subtracts "common driveways" -- off its
+    # net area too (:data:`flats.rules.net_area.DRIVE_AISLE`).
+    pavement = paved(
+        design,
+        rules,
+        lot.alley,
+        corner=lot.corner,
+        column=fit.column,
+        beside=beside,
+        deep_ft=fit.required_ft,
+    )
+
     allowed_sqft, _source = _coverage_allowed_sqft(rules, lot.lot_sqft)
     if allowed_sqft is None:
         unchecked.append("coverage_pct")
@@ -696,7 +757,8 @@ def _checks(
 
     rate(
         "far",
-        design.ground_sqft * design.stories / lot.lot_sqft,
+        design.ground_sqft * design.stories,
+        1.0,
         "max_far",
         is_maximum=True,
     )
@@ -747,7 +809,8 @@ def _checks(
     # holds square feet.
     rate(
         "density_du_per_acre",
-        design.units / (lot.lot_sqft / 43_560.0),
+        float(design.units),
+        43_560.0,
         "max_density_du_per_acre",
         is_maximum=True,
     )
@@ -760,7 +823,8 @@ def _checks(
     # is slack, and slack is what the triage bands already know how to read.
     rate(
         "min_density_du_per_acre",
-        design.units / (lot.lot_sqft / 43_560.0),
+        float(design.units),
+        43_560.0,
         "min_density_du_per_acre",
         is_maximum=False,
     )
@@ -856,15 +920,6 @@ def _checks(
     # The SHAPE -- Portland's 12 by 12 square outside the front setback,
     # Milwaukie's 96 sq ft patio off each ground-floor home -- is a different
     # question from the amount answered here, and `_outdoor_shape` asks it.
-    pavement = paved(
-        design,
-        rules,
-        lot.alley,
-        corner=lot.corner,
-        column=fit.column,
-        beside=beside,
-        deep_ft=fit.required_ft,
-    )
     bound_sqft = lot.lot_sqft - design.ground_sqft
 
     def leftover(name: str, field: str, *, share: bool) -> None:
@@ -1619,7 +1674,14 @@ def screen(
         # not hold.
         reasons.append(FACT_UNOBSERVED)
 
-    if any(not o.available for o in outcomes):
+    # A minimum density missed is never a wall, whatever path the code
+    # offers around it (Steph, 2026-10-02): the lot is big enough that the
+    # city wants more homes on it than four, which is a closer look -- a
+    # bigger plan, or a split (FOLLOWUPS 31) -- and not a lot to throw away.
+    walls = [o for o in outcomes if o.check not in MIN_DENSITY_CHECKS]
+    closer = (CLOSER_LOOK_MIN_DENSITY,) if len(walls) < len(outcomes) else ()
+
+    if any(not o.available for o in walls):
         # A verified standard the code offers no way around. Nothing still
         # unencoded can rescue this — missing rules only ever add constraints.
         return Screening(triage=Triage.red, reasons=tuple(reasons), **common)
@@ -1629,7 +1691,9 @@ def screen(
         # so it outranks whatever else is still missing: the gaps ride along in
         # `reasons` and can only add asks, never remove this one.
         return Screening(
-            triage=Triage.yellow, reasons=(*reasons, *_unconfirmed(outcomes)), **common
+            triage=Triage.yellow,
+            reasons=(*reasons, *_unconfirmed(walls), *closer),
+            **common,
         )
 
     # A fit inside its tolerance is GREEN with the flag (``tight_fit``, Steph
@@ -1683,7 +1747,9 @@ def backlog(results: Sequence[Screening]) -> dict[str, int]:
 
 
 __all__ = [
+    "CLOSER_LOOK_MIN_DENSITY",
     "GEOMETRY_UNREADABLE",
+    "MIN_DENSITY_CHECKS",
     "NO_FRONTAGE",
     "OPTIMISTIC_CHECKS",
     "RELIEF_UNCONFIRMED",

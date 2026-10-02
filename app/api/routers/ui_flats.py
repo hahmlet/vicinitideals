@@ -2696,6 +2696,7 @@ _VERDICT_WORDS = {
 _REASON_WORDS = {
     "RULE_UNVERIFIED": "a rule this rests on has not been signed",
     "RELIEF_UNCONFIRMED": "the exception it would ask for has not been read",
+    "CLOSER_LOOK_MIN_DENSITY": "closer look: the lot is big enough that the city wants more homes on it than four",
     "FACT_UNOBSERVED": "a fact about the site nothing has measured decides which number applies",
     "FACT_ASSUMED": "a fact about the site was assumed rather than measured",
     "GEOMETRY_UNREADABLE": "the lot's outline could not be read",

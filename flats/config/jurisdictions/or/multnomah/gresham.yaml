@@ -2293,6 +2293,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex,
       # Cottage Cluster". The pod on one lot has no ceiling here --
@@ -2317,6 +2325,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     notes: >-
       Low Density Residential 5, and 12,854 lots — the largest zone in Gresham. A quadplex is P outright; minimum lot 5,000 sq ft, FAR 1.0, height 35 ft.
 
@@ -2464,6 +2479,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex,
       # Cottage Cluster". The pod on one lot has no ceiling here --
@@ -2488,6 +2511,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     notes: >-
       Low Density Residential 7. Minimum lot 7,000 sq ft and FAR 0.7, the tightest ratio in the city — still over 1,000 sq ft of building on a minimum lot, so it does not bind this pod.
 
@@ -2621,6 +2651,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex,
       # Cottage Cluster". The pod on one lot has no ceiling here --
@@ -2645,6 +2683,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     notes: >-
       Transit Low Density Residential. No minimum lot size, no FAR and no maximum density — the most permissive zone in the LDR family. Table 4.0130 row G prints a rear yard of 15 ft, or 8 with an alley.
 
@@ -2794,6 +2839,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex,
       # Cottage Cluster". The pod on one lot has no ceiling here --
@@ -2818,6 +2871,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     notes: >-
       Transitional Residential. Minimum lot 4,000 sq ft, FAR 1.0.
 
@@ -2981,6 +3041,14 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row C prints None against "Duplex, Triplex, Quadplex". Exempt, not a
       # large number. Article 3 says the same thing from the other side:
@@ -2998,6 +3066,13 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     notes: >-
       Pleasant Valley low density sub-district. Rear yard 10 ft against 15 in the base LDR districts, which is the plan district's whole point.
 
@@ -3062,6 +3137,11 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for districts outside the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L803"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
     max_density_du_per_acre:
       # Row C prints None against "Duplex, Triplex, Quadplex". Article 3
       # corroborates it in its own words: middle housing counts toward minimum
@@ -3077,6 +3157,9 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for districts outside the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L801,L804"
+        less: []
+        assumed_none:
+          - "square footage dedicated to public streets"
     min_frontage_ft:
       # Row E: 35 feet on an interior lot, 40 on a corner. The corner figure is
       # LARGER, which is the opposite of the corridor's note 11 and worth not
@@ -3182,6 +3265,11 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for districts outside the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L803"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
     max_density_du_per_acre:
       # Row C: 40 against the quadplex line, and unlike MDR-PV this one binds.
       # HDR-PV is NOT in Article 3's list of districts where middle housing is
@@ -3195,6 +3283,9 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for districts outside the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L801,L804"
+        less: []
+        assumed_none:
+          - "square footage dedicated to public streets"
     min_frontage_ft:
       # Row E: None on an interior lot, 20 feet on a corner. A minimum that
       # exists only on corners.
@@ -3376,6 +3467,14 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row C prints None against "Duplex, Triplex, Quadplex". Article 3 says
       # the same from the other side: middle housing counts toward minimum but
@@ -3390,6 +3489,13 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     setback_garage_entrance_ft:
       # The Garage column of the continued table: 20 feet, twice the facade
       # setback, and it was never encoded here.
@@ -3493,6 +3599,14 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row C prints None against "Duplex, Triplex, Quadplex", and Article 3
       # names VLDR-SW first in the list of districts where middle housing does
@@ -3511,6 +3625,13 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     min_lot_width_ft:
       # Row D.1, "All Other Uses": 75 feet at the building line on an interior
       # lot and 100 on a corner. The corner figure is a third larger, and it is
@@ -3758,6 +3879,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex,
       # Cottage Cluster". The pod on one lot has no ceiling here --
@@ -3782,6 +3911,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     notes: 'quadfit confidence: verified | Interior side 10 ft; street-side wall 20 ft (corner lots modeled
       at max(F, street-side)).'
     max_height_ft:
@@ -3933,6 +4069,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row D, "Duplex, Triplex, Quadplex, Cottage Cluster". The one
       # district that prints a figure against the pod's own row.
@@ -3956,6 +4100,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     notes: 'quadfit confidence: verified. Single-family detached is not permitted here and a quadplex
       is permitted natively rather than by state mandate.
 
@@ -4050,6 +4201,11 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for districts outside the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L803"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex, Cottage
       # Cluster", and Article 3 names OFR in the list of districts where
@@ -4064,6 +4220,9 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for districts outside the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L801,L804"
+        less: []
+        assumed_none:
+          - "square footage dedicated to public streets"
     min_lot_width_ft:
       # E.1, the "Duplex, Triplex, Quadplex, and Cottage Cluster" line: 60
       # feet at the building line, the widest of the seven columns, and 70 on
@@ -4299,6 +4458,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # The Maximum Residential Net Density row, and DRL-1 is the only
       # Downtown sub-district that states one for this building: "Townhouse
@@ -4331,6 +4498,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L426"
@@ -4459,6 +4633,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # "No maximum" in this column -- exempt, not a large number, and a
       # different answer from a row nobody read.
@@ -4476,6 +4658,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_height_ft:
       value: 50
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L426"
@@ -4630,6 +4819,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # "No maximum" in this column -- exempt, not a large number.
       exempt: true
@@ -4642,6 +4839,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L495"
@@ -4771,6 +4975,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # "No maximum" in this column -- exempt, not a large number.
       exempt: true
@@ -4783,6 +4995,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L495"
@@ -4917,6 +5136,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # 24 units per acre, which four units clear on anything over about
       # 7,260 sq ft -- so on this district's own 10,000 sq ft floor it
@@ -4934,6 +5161,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     parking_min_per_unit:
       # Row K of Table 4.0430 -- "Minimum Off-Street Parking Required: None"
       # in all seven columns. A zero somebody read, which is a different
@@ -5100,6 +5334,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       value: 60
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L325-L326"
@@ -5111,6 +5353,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     min_lot_sqft:
       # Row A, the residential half of the cell: 10,000 sq ft for
       # residential, none for commercial, institutional and mixed-use.
@@ -5222,6 +5471,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       value: 60
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L325-L326"
@@ -5233,6 +5490,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     min_lot_sqft:
       # Row A, the residential half of the cell: 10,000 sq ft for
       # residential, none for commercial, institutional and mixed-use.
@@ -5334,6 +5598,14 @@ zones:
       # encumbered part of a non-standard lot.
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       value: 24
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L325-L326"
@@ -5345,6 +5617,13 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     min_lot_sqft:
       # Row A, the residential half of the cell: 10,000 sq ft for
       # residential, none for commercial, institutional and mixed-use.
@@ -5477,6 +5756,14 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row F: unlimited inside the Triangle, 40 units per net acre elsewhere.
       # The Triangle is unmapped here, so the figure that can bind is taken.
@@ -5486,6 +5773,13 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     setback_front_ft:
       # Row G, RTC column, the Residential paragraph. The Commercial,
       # Mixed-Use and Institutional paragraph above it reads 0 on every side
@@ -5561,6 +5855,14 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row F, CC column: 40 units per acre.
       value: 40
@@ -5569,6 +5871,13 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     setback_front_ft:
       # Row G, CC column: "0 feet front and street-side, interior side, and
       # rear." One cell for all four, and no residential/commercial split.
@@ -5629,6 +5938,14 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+        less: [gresham_hcra, gresham_hillside]
+        may_less: [gresham_wetlands]
+        assumed_none:
+          - "areas encumbered by Natural Resource or Hillside Easements"
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     max_density_du_per_acre:
       # Row F, MC column: 40 units per acre.
       value: 40
@@ -5637,6 +5954,13 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+        less: []
+        may_less: [gresham_hillside]
+        assumed_none:
+          - "square footage dedicated to public streets"
+          - "private accessways"
+          - "the flag pole portion of a flag lot"
+          - "the portion of non-standard lots encumbered by an access easement"
     setback_front_ft:
       # Row G, MC column: "0 feet front and street-side, interior side, and
       # rear." One cell for all four, and no residential/commercial split.

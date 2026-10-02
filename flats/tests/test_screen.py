@@ -30,6 +30,7 @@ from flats.fit.rectangle import Fit, Fitter  # noqa: E402
 from flats.geom.edges import Tier as GeometryTier  # noqa: E402
 from flats.rules.conditions import Tier  # noqa: E402
 from flats.rules.model import Provenance, Status  # noqa: E402
+from flats.rules.net_area import FLOODPLAIN, NetArea  # noqa: E402
 from flats.rules.resolver import Resolved, Verdict as RuleVerdict, ZoneResolution  # noqa: E402
 from flats.score.relief import (  # noqa: E402
     ANY,
@@ -40,6 +41,7 @@ from flats.score.relief import (  # noqa: E402
 )
 from flats.score.configure import configure  # noqa: E402
 from flats.score.screen import (  # noqa: E402
+    CLOSER_LOOK_MIN_DENSITY,
     COURT_WIDTH_UNMEASURED,
     FACT_ASSUMED,
     FACT_UNOBSERVED,
@@ -1242,8 +1244,10 @@ def test_a_tiered_table_can_still_fail() -> None:
 
 
 def test_minimum_density_only_bites_above_its_trigger() -> None:
-    # A four-unit pod on a lot that requires six is out — but only once the lot
-    # is big enough for the requirement to apply.
+    # A four-unit pod on a lot that requires six misses -- but only once the
+    # lot is big enough for the requirement to apply. And a miss on minimum
+    # density alone is a closer look, never RED (Steph, 2026-10-02), even
+    # where the code offers no way around it.
     small = run(rules(min_density_trigger_lot_sqft=10_000, min_units_at_trigger=6))
     big = run(
         rules(min_density_trigger_lot_sqft=5_000, min_units_at_trigger=6),
@@ -1252,7 +1256,8 @@ def test_minimum_density_only_bites_above_its_trigger() -> None:
     )
 
     assert small.triage is Triage.green
-    assert big.triage is Triage.red
+    assert big.triage is Triage.yellow
+    assert CLOSER_LOOK_MIN_DENSITY in big.reasons
     assert big.head == "min_units"
 
 
@@ -1576,6 +1581,133 @@ def test_portland_states_its_floor_per_lot_and_it_runs() -> None:
 
     floor = next(c for c in result.checks if c.check == "min_density_du_per_acre")
     assert floor.verdict is Verdict.fails
+
+
+# --- net area, Steph's option A (2026-10-02) ---------------------------
+
+
+def _net(field: str, value: float, net: NetArea) -> ZoneResolution:
+    """A rate per net acre whose city's subtraction list is taught."""
+    held = _per_net_acre(field, value)
+    held.values[field] = replace(held.values[field], net_area=net)
+    return held
+
+
+def _lot(sqft: float, **deducted: float) -> LotFacts:
+    return LotFacts(lot_sqft=sqft, frontage_ft=150, lot_width_ft=150, net_deductions=deducted)
+
+
+def test_a_ceiling_per_net_acre_on_a_lot_nothing_is_mapped_over_is_settled() -> None:
+    """The ~36,500 held lots. A 40,000 sq ft lot is under the 25-per-acre
+    ceiling on any area, and once the city's list is measured and finds
+    nothing, net area is the lot: the check runs."""
+    result = run(
+        _net("max_density_du_per_acre", 25, NetArea(less=(FLOODPLAIN,))),
+        lot=_lot(40_000, floodplain=0.0),
+    )
+
+    ceiling = next(c for c in result.checks if c.check == "density_du_per_acre")
+    assert ceiling.verdict is Verdict.passes
+    assert FACT_UNOBSERVED not in result.reasons
+    assert result.triage is Triage.green
+
+
+def test_a_measured_floodplain_can_push_a_ceiling_over() -> None:
+    """Four homes on 8,000 sq ft is 21.8 an acre; on the 6,000 left once the
+    floodplain is out it is 29, over 25."""
+    result = run(
+        _net("max_density_du_per_acre", 25, NetArea(less=(FLOODPLAIN,))),
+        lot=_lot(8_000, floodplain=2_000.0),
+    )
+
+    assert result.head == "density_du_per_acre"
+    assert result.triage is Triage.yellow
+
+
+def test_a_deduction_on_a_reading_not_yet_ruled_holds_only_the_lots_it_decides() -> None:
+    held = _net("max_density_du_per_acre", 25, NetArea(may_less=(FLOODPLAIN,)))
+
+    decides = run(held, lot=_lot(8_000, floodplain=2_000.0))
+    cannot = run(held, lot=_lot(8_000, floodplain=200.0))
+
+    assert "density_du_per_acre" in decides.unchecked
+    assert FACT_UNOBSERVED in decides.reasons
+    assert any(c.check == "density_du_per_acre" for c in cannot.checks)
+    assert FACT_UNOBSERVED not in cannot.reasons
+
+
+def test_a_lot_nobody_measured_keeps_the_gross_bound() -> None:
+    result = run(
+        _net("max_density_du_per_acre", 25, NetArea(less=(FLOODPLAIN,))),
+        lot=LotFacts(lot_sqft=40_000, frontage_ft=150, lot_width_ft=150),
+    )
+
+    assert "density_du_per_acre" in result.unchecked
+    assert FACT_UNOBSERVED in result.reasons
+
+
+def test_the_range_reports_the_end_with_the_least_room() -> None:
+    """Two overlays of 1,000 sq ft on an 8,000 sq ft lot leave 6,000 to 7,000;
+    against 30 an acre both ends pass, and the margin quoted is the one at
+    6,000 -- the honest one if the two do not overlap."""
+    net = NetArea(less=(FLOODPLAIN, "oregon_city_nrod"))
+    result = run(
+        _net("max_density_du_per_acre", 30, net),
+        lot=_lot(8_000, floodplain=1_000.0, oregon_city_nrod=1_000.0),
+    )
+
+    ceiling = next(c for c in result.checks if c.check == "density_du_per_acre")
+    assert ceiling.observed == pytest.approx(4 / (6_000 / 43_560))
+
+
+# --- a minimum density alone is a closer look --------------------------
+
+
+TWO_ACRES = LotFacts(lot_sqft=87_120, frontage_ft=200, lot_width_ft=200)
+
+
+def test_a_lot_short_of_a_minimum_density_alone_is_never_red() -> None:
+    """Steph, 2026-10-02: "lots that fail for the only reason of min density
+    need to go not red. Some sort of yellow or 'closer look'". Even where the
+    city's code offers no way around the floor, the lot is big enough for more
+    than four homes -- a bigger plan or a split (FOLLOWUPS 31) -- not a wall."""
+    result = run(rules(min_density_du_per_acre=17.424), lot=TWO_ACRES, relief=NO_RELIEF)
+
+    assert result.triage is Triage.yellow
+    assert CLOSER_LOOK_MIN_DENSITY in result.reasons
+    assert RELIEF_UNCONFIRMED not in result.reasons, "no exception is being leaned on"
+
+
+def test_a_minimum_density_beside_a_wall_is_still_red() -> None:
+    result = run(
+        rules(min_density_du_per_acre=17.424, max_height_ft=20),
+        lot=TWO_ACRES,
+        relief=NO_RELIEF,
+    )
+
+    assert result.triage is Triage.red
+
+
+def test_a_closer_look_rides_beside_any_other_ask() -> None:
+    result = run(rules(min_density_du_per_acre=17.424, min_lot_sqft=100_000), lot=TWO_ACRES)
+
+    assert result.triage is Triage.yellow
+    assert CLOSER_LOOK_MIN_DENSITY in result.reasons
+    assert RELIEF_UNCONFIRMED in result.reasons
+
+
+def test_a_floor_per_net_acre_missed_for_certain_is_a_closer_look() -> None:
+    """Option A settles the big lots under a floor: nothing is mapped over
+    this one, so net area is the lot and two acres is short of 3.5 an acre."""
+    result = run(
+        _net("min_density_du_per_acre", 3.5, NetArea(less=(FLOODPLAIN,))),
+        lot=_lot(87_120, floodplain=0.0),
+    )
+
+    floor = next(c for c in result.checks if c.check == "min_density_du_per_acre")
+    assert floor.verdict is Verdict.fails
+    assert result.triage is Triage.yellow
+    assert CLOSER_LOOK_MIN_DENSITY in result.reasons
 
 
 # --- the split path ---------------------------------------------------

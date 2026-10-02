@@ -1489,6 +1489,12 @@ zones:
       # transfer right is expressly not deducted.
         cite: MMC 19.200 "Net acre"
         quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
+        less: [floodplain, milwaukie_wqr, milwaukie_hca]
+        may_less: [milwaukie_wetlands]
+        assumed_none:
+          - "rights-of-way"
+          - "slopes in excess of 25%"
+          - "publicly owned land designated for park, open space, and resource protection"
       variants:
         # 25 is the number the note prints, and it governs in three of the
         # four bands: four times 25, 8.7 and 8.7 are all above it. In the
@@ -1624,6 +1630,12 @@ zones:
       # transfer right is expressly not deducted.
         cite: MMC 19.200 "Net acre"
         quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
+        less: [floodplain, milwaukie_wqr, milwaukie_hca]
+        may_less: [milwaukie_wetlands]
+        assumed_none:
+          - "rights-of-way"
+          - "slopes in excess of 25%"
+          - "publicly owned land designated for park, open space, and resource protection"
       variants:
         - value: 25
           when: [unit_lots]

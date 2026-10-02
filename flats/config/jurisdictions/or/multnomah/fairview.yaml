@@ -1364,6 +1364,9 @@ zones:
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
       variants:
         # Row 3.c, Townhouse. The same figure in this zone; carried anyway
         # because the split-plat path reads a different row and a reader
@@ -1391,6 +1394,9 @@ zones:
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
       variants:
         # Row 4.c, Townhouse, which does carry one.
         - value: 25
@@ -1577,6 +1583,9 @@ zones:
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
       variants:
         # Row 3.c, Townhouse. The same figure in this zone; carried anyway
         # because the split-plat path reads a different row and a reader
@@ -1604,6 +1613,9 @@ zones:
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
       variants:
         # Row 4.c, Townhouse, which does carry one.
         - value: 23.2
@@ -1771,6 +1783,9 @@ zones:
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
       variants:
         # Row 3.c, Townhouse. The same figure in this zone; carried anyway
         # because the split-plat path reads a different row and a reader
@@ -1798,6 +1813,9 @@ zones:
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
       variants:
         # Row 4.c, Townhouse, which does carry one.
         - value: 17.6
@@ -1995,6 +2013,9 @@ zones:
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
     max_density_du_per_acre:
       # Row 4.b, and row 4.c prints the same 21.8. Four units at 21.8 per acre
       # need 7,993 sq ft, which the 2,500-per-unit lot size already asks
@@ -2016,6 +2037,9 @@ zones:
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
     min_building_separation_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L422"
@@ -2470,6 +2494,9 @@ zones:
         fact: net_developable_area
         cite: FMC 19.13 "Density(ies)" and "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L205-L206,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
     # The subsection that states this zone's setbacks states exactly one, and
     # it is against the neighbours rather than against the street. Five feet
     # is charged on every side and rear line, not only the ones that abut a
@@ -2538,6 +2565,9 @@ zones:
         fact: net_developable_area
         cite: FMC 19.13 "Density(ies)" and "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L205-L206,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
     # Twenty feet from the NE Halsey Street right-of-way, stated for "all
     # building facades (front, rear, sides of unit)". A VC lot off Halsey has
     # no Halsey right-of-way to stand back from, but which lots those are is
@@ -2615,6 +2645,9 @@ zones:
         fact: net_developable_area
         cite: FMC 19.13 "Density(ies)" and "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L205-L206,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
     max_density_du_per_acre:
       value: 30
       quote: "or/multnomah/fairview/19.125.txt#L73,L75-L77"
@@ -2622,6 +2655,9 @@ zones:
         fact: net_developable_area
         cite: FMC 19.13 "Density(ies)" and "Net site area"
         quote: "or/multnomah/fairview/19.13.definitions.txt#L205-L206,L554-L555"
+        less: []
+        assumed_none:
+          - "street right-of-way"
     # Twenty feet, and the sentence it comes from offers zero as well. "Front
     # facades shall be set back from right-of-way a distance of either zero
     # feet or 10 feet or 15 feet" is a menu the applicant picks from, so off

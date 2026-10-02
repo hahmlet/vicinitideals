@@ -405,6 +405,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     min_lot_width_ft:
       value: 14
       cite: "Beaverton BDC Table 20.05.15, E. Minimum Lot Width"
@@ -495,6 +501,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     min_lot_width_ft:
       value: 14
       cite: "Beaverton BDC Table 20.05.15, E. Minimum Lot Width"
@@ -524,6 +536,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
         quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     parking_max_per_unit:
       # Table 60.30.10.5.A row 2 prints N/A in both parking zones for a
       # triplex or quadplex in RMA, RMB, RMC or CM-RM; the layer default
@@ -603,6 +621,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     min_lot_width_ft:
       value: 20
       cite: "Beaverton BDC Table 20.05.15, E. Minimum Lot Width"
@@ -641,6 +665,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
         quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     parking_max_per_unit:
       # Table 60.30.10.5.A row 2 prints N/A in both parking zones for a
       # triplex or quadplex in RMA, RMB, RMC or CM-RM; the layer default
@@ -720,6 +750,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     min_lot_width_ft:
       value: 20
       cite: "Beaverton BDC Table 20.05.15, E. Minimum Lot Width"
@@ -763,6 +799,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
         quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     parking_max_per_unit:
       # Table 60.30.10.5.A row 2 prints N/A in both parking zones for a
       # triplex or quadplex in RMA, RMB, RMC or CM-RM; the layer default
@@ -851,6 +893,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     min_lot_width_ft:
       # Note 16 (14 feet) is for townhouses only.
       value: 20
@@ -883,6 +931,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC 20.25.10.1.B, maximum FAR in RMA, RMB, RMC and CM-RM is floor area over net square footage on a lot"
         quote: "or/washington/beaverton/bdc.20.25-30.density-height.txt#L67,L72-L75"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     parking_max_per_unit:
       # Table 60.30.10.5.A row 2 prints N/A in both parking zones for a
       # triplex or quadplex in RMA, RMB, RMC or CM-RM; the layer default
@@ -961,6 +1015,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     min_lot_width_ft:
       value: 14
       cite: "Beaverton BDC Table 20.22.15, F. Minimum Lot Width"
@@ -1023,6 +1083,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     setback_front_ft:
       value: 0
       cite: "Beaverton BDC Table 20.22.15, G.1.a Front Minimum"
@@ -1122,6 +1188,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     setback_front_ft:
       value: 0
       cite: "Beaverton BDC Table 20.22.15, G.1.a Front Minimum"
@@ -1231,6 +1303,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_far:
       value: 3.0
       cite: "Beaverton BDC Table 20.10.15, B. Maximum Floor Area Ratio (NS 3.0)"
@@ -1336,6 +1414,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_far:
       # 20.10.16: 4.0 is the figure in every branch that does not turn on
       # Frequent Transit Service or regulated affordable housing; the 6.0
@@ -1432,6 +1516,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_far:
       # 20.10.16: 4.0 is the figure in every branch that does not turn on
       # Frequent Transit Service or regulated affordable housing; the 6.0
@@ -1519,6 +1609,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_far:
       # 20.10.16: 4.0 is the figure in every branch that does not turn on
       # Frequent Transit Service or regulated affordable housing; the 6.0
@@ -1622,6 +1718,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_far:
       # 20.20.16: 6.0 within half a mile of Frequent Transit Service, 4.0
       # beyond it. The 6.0 is NOT ENCODED (no measured transit distance);
@@ -1713,6 +1815,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_far:
       # 20.20.16: 6.0 within half a mile of Frequent Transit Service, 4.0
       # beyond it. The 6.0 is NOT ENCODED (no measured transit distance);
@@ -1804,6 +1912,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_far:
       # 20.20.16: 6.0 within half a mile of Frequent Transit Service, 4.0
       # beyond it. The 6.0 is NOT ENCODED (no measured transit distance);
@@ -1904,6 +2018,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_far:
       # 20.20.16: 6.0 within half a mile of Frequent Transit Service, 4.0
       # beyond it. The 6.0 is NOT ENCODED (no measured transit distance);
@@ -2005,6 +2125,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_far:
       # 20.20.16: 6.0 within half a mile of Frequent Transit Service, 4.0
       # beyond it. The 6.0 is NOT ENCODED (no measured transit distance);
@@ -2107,6 +2233,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_far:
       value: 7.0
       cite: "Beaverton BDC Table 20.20.15, B.3 Floor Area Ratio - Maximum (SC-S 7.0)"
@@ -2218,6 +2350,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_height_ft:
       value: 120
       cite: "Beaverton BDC Table 70.15.10.1.A, Height maximum"
@@ -2304,6 +2442,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_height_ft:
       value: 65
       cite: "Beaverton BDC Table 70.15.10.2.A, Height maximum"
@@ -2381,6 +2525,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_height_ft:
       value: 75
       cite: "Beaverton BDC Table 70.15.10.3.A, Height maximum"
@@ -2459,6 +2609,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_density_du_per_acre:
       # Measured on net acreage like the minimum beside it, which is the
       # stricter reading; 20.25.05 speaks only of the minimum. A doubt.
@@ -2469,6 +2625,12 @@ zones:
         fact: net_developable_area
         cite: "Beaverton BDC Chapter 90, Acreage, Net; 20.25.05.1.A, minimum density is the net acreage times the zone's figure"
         quote: "or/washington/beaverton/bdc.90.definitions.txt#L41-L53"
+        less: []
+        may_less: [drive_aisle, floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "street dedications and private streets"
+          - "land set aside in separate tracts or dedicated to a public entity for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area"
     max_height_ft:
       value: 60
       cite: "Beaverton BDC Table 70.15.10.4.A, Height maximum"

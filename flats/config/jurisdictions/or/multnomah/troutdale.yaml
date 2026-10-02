@@ -984,6 +984,11 @@ zones:
         fact: net_developable_area
         cite: TDC 1.020 "Net Area"
         quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+        less: []
+        may_less: [floodplain, troutdale_veco]
+        assumed_none:
+          - "proposed public streets"
+          - "land dedicated or conveyed to the City"
     section: ["3.210", "3.220", "3.230", "3.235", "3.140"]
     cite_default:
       cite: Troutdale Development Code 3.220, 3.230.B (residential uses) and 3.235 (detailed
@@ -1193,6 +1198,11 @@ zones:
         fact: net_developable_area
         cite: TDC 1.020 "Net Area"
         quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+        less: []
+        may_less: [floodplain, troutdale_veco]
+        assumed_none:
+          - "proposed public streets"
+          - "land dedicated or conveyed to the City"
     section: ["3.210", "3.220", "3.230", "3.235", "3.140"]
     cite_default:
       cite: Troutdale Development Code 3.220, 3.230.A and 3.230.B (residential uses), 3.235
@@ -1384,6 +1394,11 @@ zones:
       # dedicated or conveyed to the City where the Council approved it.
         cite: TDC 1.020 "Net Area"
         quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+        less: []
+        may_less: [floodplain, troutdale_veco]
+        assumed_none:
+          - "proposed public streets"
+          - "land dedicated or conveyed to the City"
     section: ["3.111", "3.120", "3.130", "8.120"]
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
@@ -1525,6 +1540,11 @@ zones:
       # dedicated or conveyed to the City where the Council approved it.
         cite: TDC 1.020 "Net Area"
         quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+        less: []
+        may_less: [floodplain, troutdale_veco]
+        assumed_none:
+          - "proposed public streets"
+          - "land dedicated or conveyed to the City"
     section: ["3.112", "3.120", "3.130", "8.120"]
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
@@ -1666,6 +1686,11 @@ zones:
       # dedicated or conveyed to the City where the Council approved it.
         cite: TDC 1.020 "Net Area"
         quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+        less: []
+        may_less: [floodplain, troutdale_veco]
+        assumed_none:
+          - "proposed public streets"
+          - "land dedicated or conveyed to the City"
     section: ["3.113", "3.120", "3.130", "8.120"]
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
@@ -1807,6 +1832,11 @@ zones:
       # dedicated or conveyed to the City where the Council approved it.
         cite: TDC 1.020 "Net Area"
         quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+        less: []
+        may_less: [floodplain, troutdale_veco]
+        assumed_none:
+          - "proposed public streets"
+          - "land dedicated or conveyed to the City"
       variants:
         # 3.140.B.3.c. LDR-1 and LDR-2 get four times the detached density and
         # MDR three times it (3.140.B.3.a and .b); both are multiples of a

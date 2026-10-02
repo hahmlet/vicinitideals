@@ -121,6 +121,9 @@ class Resolved:
     #: -- because this says the comparison cannot be run at all, and the screen
     #: has to be able to tell those two apart.
     measured_on: str | None = None
+    #: And what that quantity subtracts from the lot, where the rule file
+    #: says (:class:`flats.rules.net_area.NetArea`).
+    net_area: Any = None
     #: What an application would turn this standard into: every exception
     #: whose conditions name a relief, as ``(when, value, cite)``. A relief
     #: is never folded into ``when`` -- it is priced after the standard is
@@ -462,6 +465,7 @@ class RuleSet:
                             name, eff.value, eff.status, eff.prov, layer, origin,
                             via=via, when=eff.when, levers=val.levers,
                             ambiguous=eff.ambiguous, measured_on=val.measured_on,
+                            net_area=val.net_area,
                             relief=_relief_of(val), whole_project=eff.whole_project,
                         )
                         continue
@@ -472,7 +476,8 @@ class RuleSet:
                         prev.name, prev.value, prev.status, prev.prov, prev.layer,
                         prev.origin, preempted=True, shadowed=eff.value, via=prev.via,
                         when=prev.when, levers=prev.levers, ambiguous=prev.ambiguous,
-                        measured_on=prev.measured_on, relief=prev.relief,
+                        measured_on=prev.measured_on, net_area=prev.net_area,
+                        relief=prev.relief,
                     )
                     continue
                 resolved[name] = Resolved(
@@ -487,6 +492,7 @@ class RuleSet:
                     levers=val.levers,
                     ambiguous=eff.ambiguous,
                     measured_on=val.measured_on,
+                    net_area=val.net_area,
                     relief=_relief_of(val),
                     whole_project=eff.whole_project,
                 )
