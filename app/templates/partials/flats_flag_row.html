@@ -1,0 +1,60 @@
+{#
+  One kind of unknown and the numbers it carries. Swapped in place after an
+  approval, so a session is a run of clicks, not page loads.
+#}
+{% set v = row["values"] %}
+<div class="flag-row flag-{{ row.state }}" id="flag-{{ row.code }}" data-flag="{{ row.code }}" data-state="{{ row.state }}">
+  <div class="flag-head">
+    <div>
+      <strong>{{ row.description }}</strong>
+      {% if row.state == "proposed" %}<span class="badge badge-yellow">Waiting for approval</span>
+      {% elif row.state == "waiting" %}<span class="badge badge-blue">Approved · in force at the next write-in</span>
+      {% else %}<span class="badge badge-green">Approved</span>{% endif %}
+    </div>
+    <div class="muted" style="font-size:11px;margin-top:2px">
+      {{ row.code }} · {{ row.scope }} · Answered by: {{ row.path }}
+      {% if row.approved_by %} · approved by {{ row.approved_by }}{% if row.approved_on %}, {{ row.approved_on }}{% endif %}{% endif %}
+    </div>
+  </div>
+  {% if owner %}
+  <form class="flag-form" hx-post="/ui/flats/flags/type" hx-target="#flag-{{ row.code }}" hx-swap="outerHTML">
+    <input type="hidden" name="code" value="{{ row.code }}">
+    <label>How it gets answered
+      <select name="resolution" class="form-select">
+        {% for key, words in resolution_words.items() %}<option value="{{ key }}" {% if v.resolution == key %}selected{% endif %}>{{ words }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Chance the bad answer is true
+      <select name="risk" class="form-select">
+        {% for key, words in risk_words.items() %}<option value="{{ key }}" {% if v.risk == key %}selected{% endif %}>{{ words }}</option>{% endfor %}
+      </select>
+    </label>
+    <label title="If the answer goes against us, how likely the lot turns red: 1 = 10%, 10 = certain">Severity (1-10)
+      <select name="severity" class="form-select">
+        {% for n in range(1, 11) %}<option value="{{ n }}" {% if v.severity == n %}selected{% endif %}>{{ n }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Could a pod change absorb it?
+      <select name="absorbs" class="form-select">
+        {% for key, words in absorb_words.items() %}<option value="{{ key }}" {% if (v.absorbs or "") == key %}selected{% endif %}>{{ words }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>When to work it
+      <select name="priority" class="form-select">
+        {% for key, words in priority_words.items() %}<option value="{{ key }}" {% if v.priority == key %}selected{% endif %}>{{ words }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="flag-note">Note
+      <input type="text" name="note" class="form-input" placeholder="optional">
+    </label>
+    <button type="submit" class="btn btn-primary btn-sm" data-approve>Approve</button>
+  </form>
+  {% else %}
+  <div class="flag-values muted">
+    {{ resolution_words[v.resolution] }} · {{ risk_words[v.risk] }} · severity {{ v.severity }}
+    · pod change absorbs: {{ absorb_words[v.absorbs or ""] }} · work it: {{ priority_words[v.priority] }}
+  </div>
+  {% endif %}
+  {% if error %}<div class="flag-error" data-error>{{ error }}</div>{% endif %}
+  {% if said %}<div class="flag-said" data-said>{{ said }}</div>{% endif %}
+</div>

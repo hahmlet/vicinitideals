@@ -1088,3 +1088,56 @@ class FlatsTaxImpactLot(Base):
     notes: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")
 
     snapshot: Mapped["FlatsTaxSnapshot"] = relationship(back_populates="lots")
+
+
+class FlatsFlagDecision(Base):
+    """A person setting the human-owned numbers on a flag type, or on the
+    rule set that turns flags into a colour -- and approving them.
+
+    Steph's flag plan: risk, severity, resolution, priority and the rule set
+    are a person's to set; an agent only proposes them (``status: pending``
+    in ``flats/config/flags.yaml`` and ``colour.yaml``). The approval page
+    (``/flats/flags``) writes a row here; the screen reads the files, so the
+    decision is not in force until ``scripts/flats_drain_flag_decisions.py``
+    writes it into them for commit and stamps ``exported_at``. The drain is
+    the only writer of ``status: approved``.
+
+    ``subject`` is a flag type's code, or :data:`RULES_SUBJECT` for the rule
+    set. ``values`` holds only the fields decided -- the keys of
+    :data:`flats.score.flags.TYPE_DECIDED` or ``RULES_DECIDED``.
+
+    Append-only, the inbox bargain of the other ruling tables: a person who
+    changes their mind writes a second row and the latest ``decided_at`` per
+    subject counts.
+    """
+
+    __tablename__ = "flag_decisions"
+    __table_args__ = (
+        Index(
+            "ix_flats_flag_decisions_pending",
+            "decided_at",
+            postgresql_where=text("exported_at IS NULL"),
+        ),
+        Index("ix_flats_flag_decisions_subject", "subject", "decided_at"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    subject: Mapped[str] = mapped_column(String(80), nullable=False)
+    values: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+    note: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+    #: The approver's name as it goes into the file (``approved_by``).
+    decided_by: Mapped[str] = mapped_column(String(200), nullable=False)
+    decided_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
+    )
+    decided_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    #: When the drain wrote this into the files. NULL means decided but not
+    #: yet in force, and the page says so.
+    exported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+#: :attr:`FlatsFlagDecision.subject` for the rule set (``colour.yaml``).
+RULES_SUBJECT = "RULES"

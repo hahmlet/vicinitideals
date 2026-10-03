@@ -1,0 +1,50 @@
+{#
+  The colour rule: where a flag's severity turns a lot yellow, the close-call
+  line for the fit, and the number behind each risk word.
+#}
+{% set v = rules["values"] %}
+<div id="flag-rules" class="flag-rules flag-{{ rules.state }}" data-state="{{ rules.state }}">
+  <div class="flag-head">
+    <strong>The colour rule</strong>
+    {% if rules.state == "proposed" %}<span class="badge badge-yellow">Waiting for approval</span>
+    {% elif rules.state == "waiting" %}<span class="badge badge-blue">Approved · in force at the next write-in</span>
+    {% else %}<span class="badge badge-green">Approved</span>{% endif %}
+    {% if rules.approved_by %}<span class="muted" style="font-size:11px"> approved by {{ rules.approved_by }}{% if rules.approved_on %}, {{ rules.approved_on }}{% endif %}</span>{% endif %}
+    <p class="muted" style="font-size:12px;margin:4px 0 0;max-width:90ch">
+      Any confirmed miss makes a lot red (no variances for now). Otherwise a lot is yellow when any open
+      unknown on it has a severity at or above the line below, and green when none does.
+    </p>
+  </div>
+  {% if owner %}
+  <form class="flag-form" hx-post="/ui/flats/flags/rules" hx-target="#flag-rules" hx-swap="outerHTML">
+    <label>Yellow at severity
+      <input type="number" name="yellow_at_severity" min="1" max="10" step="1" class="form-input" value="{{ v.yellow_at_severity }}">
+    </label>
+    <label title="A fit short by less than this many feet is a close call: yellow, not red">Close call: fit short by under (ft)
+      <input type="number" name="near_miss_fit_ft" min="0.5" step="0.5" class="form-input" value="{{ v.near_miss.fit_ft }}">
+    </label>
+    <label>Close call severity
+      <input type="number" name="near_miss_severity" min="1" max="10" step="1" class="form-input" value="{{ v.near_miss_severity }}">
+    </label>
+    <label title="Unused while no variances are accepted">Severity of an accepted variance
+      <input type="number" name="approval_severity" min="1" max="10" step="1" class="form-input" value="{{ v.approval_severity }}">
+    </label>
+    {% for key, words in risk_words.items() %}
+    <label>{{ words }} (%)
+      <input type="number" name="risk_{{ key }}" min="1" max="100" step="1" class="form-input" value="{{ (v.risk_bands[key] * 100) | round | int }}">
+    </label>
+    {% endfor %}
+    <label class="flag-note">Note
+      <input type="text" name="note" class="form-input" placeholder="optional">
+    </label>
+    <button type="submit" class="btn btn-primary btn-sm" data-approve-rules>Approve the rule</button>
+  </form>
+  {% else %}
+  <div class="flag-values muted">
+    Yellow at severity {{ v.yellow_at_severity }} · close call under {{ v.near_miss.fit_ft }} ft ·
+    {% for key, words in risk_words.items() %}{{ words }} {{ (v.risk_bands[key] * 100) | round | int }}%{% if not loop.last %} · {% endif %}{% endfor %}
+  </div>
+  {% endif %}
+  {% if error %}<div class="flag-error" data-error>{{ error }}</div>{% endif %}
+  {% if said %}<div class="flag-said" data-said>{{ said }}</div>{% endif %}
+</div>

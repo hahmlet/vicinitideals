@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Unknowns — Viciniti Deals{% endblock %}
+
+{% block content %}
+<style>
+  .flag-row, .flag-rules { border:1px solid var(--border, #ddd); border-radius:8px; padding:10px 12px; margin:8px 0; }
+  .flag-row.flag-proposed, .flag-rules.flag-proposed { border-left:4px solid #d4a017; }
+  .flag-row.flag-waiting, .flag-rules.flag-waiting { border-left:4px solid #3b82f6; }
+  .flag-row.flag-approved, .flag-rules.flag-approved { border-left:4px solid #16a34a; }
+  .flag-form { display:flex; flex-wrap:wrap; gap:8px 12px; align-items:flex-end; margin-top:8px; }
+  .flag-form label { display:flex; flex-direction:column; font-size:11px; color:var(--muted, #666); gap:2px; }
+  .flag-form select, .flag-form input { font-size:13px; min-width:0; }
+  .flag-form input[type=number] { width:90px; }
+  .flag-note { flex:1 1 180px; }
+  .flag-error { color:#b91c1c; font-size:12px; margin-top:6px; }
+  .flag-said { color:#15803d; font-size:12px; margin-top:6px; }
+  .flag-values { font-size:12px; margin-top:6px; }
+  @media (max-width: 700px) { .flag-form label { flex:1 1 45%; } }
+</style>
+<div class="topbar"></div>
+
+<div class="content">
+<div style="max-width:1400px;margin:0 auto">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Unknowns</h2>
+      <p class="muted" style="margin:4px 0 0;max-width:90ch">
+        Every kind of question the screen can leave open on a lot, and the numbers that decide whether
+        it turns the lot yellow. These are yours to set: the screen proposes them, and a kind nobody has
+        approved counts at what was proposed. An approval goes into effect when it is written into the
+        rule files at the next write-in.
+      </p>
+    </div>
+  </div>
+
+  <div class="toolbar" style="gap:24px;flex-wrap:wrap">
+    <div><span class="muted">Kinds</span> <strong>{{ counts.total }}</strong></div>
+    <div><span class="muted">Waiting for approval</span> <strong data-count-proposed>{{ counts.proposed }}</strong></div>
+    <div><span class="muted">Approved, not yet in force</span> <strong>{{ counts.waiting }}</strong></div>
+    <div><span class="muted">Approved</span> <strong>{{ counts.approved }}</strong></div>
+  </div>
+  <div class="toolbar" style="gap:24px;flex-wrap:wrap;font-size:13px">
+    {% for key, n in by_resolution.items() %}
+    <div><span class="muted">{{ resolution_words[key] }}</span> <strong>{{ n }}</strong></div>
+    {% endfor %}
+  </div>
+  <p class="muted" style="font-size:12px;max-width:90ch;margin:0 0 8px">
+    Measuring from maps and data is the preferred way to close an unknown; the other three are what is left
+    when nothing can be measured.
+    {% if not owner %}Only the owner approves; this page is read-only for you.{% endif %}
+  </p>
+
+  {% with error="", said="" %}{% include "partials/flats_flag_rules.html" %}{% endwith %}
+
+  {% set sections = [("proposed", "Waiting for approval"), ("waiting", "Approved, in force at the next write-in"), ("approved", "Approved")] %}
+  {% for state, title in sections %}
+    {% set group = rows | selectattr("state", "equalto", state) | list %}
+    {% if group %}
+    <h3 style="margin:18px 0 6px;font-size:15px" data-section="{{ state }}">{{ title }} ({{ group | length }})</h3>
+    {% for row in group %}
+      {% with error="", said="" %}{% include "partials/flats_flag_row.html" %}{% endwith %}
+    {% endfor %}
+    {% endif %}
+  {% endfor %}
+</div>
+</div>
+{% endblock %}

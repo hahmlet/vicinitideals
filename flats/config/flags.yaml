@@ -17,8 +17,10 @@
 #               clears even at the flag's worst reading.
 #   absorbs     the pod dimension that could absorb a bad answer, or null
 #   resolution  external_inquiry | document_review | per_lot_review |
-#               measurement (a map layer we acquire or a measure we take --
-#               proposed 2026-10-02 as a fourth type)
+#               measurement (a map layer we acquire or a measure we take).
+#               Steph 2026-10-03: measurement is THE PREFERRED way; the
+#               other three are "the failure mode" -- propose them only
+#               where no layer or measure could answer.
 #   scope       shared (one answer, every lot with the key) | per_lot
 #   key         what the resolution key is made of
 #   priority    now | next | later | parked

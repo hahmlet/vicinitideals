@@ -638,6 +638,11 @@ def create_app() -> FastAPI:
     from app.api.routers.ui_flats_check import router as ui_flats_check_router
     app.include_router(ui_flats_check_router)
 
+    # FLATS unknowns — approve each kind of flag's numbers and the colour rule.
+    # Ahead of ui_flats for the same catch-all reason.
+    from app.api.routers.ui_flats_flags import router as ui_flats_flags_router
+    app.include_router(ui_flats_flags_router)
+
     # FLATS rule review — read-only pages over the encoded zoning standards
     from app.api.routers.ui_flats import router as ui_flats_router
     app.include_router(ui_flats_router)

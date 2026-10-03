@@ -125,6 +125,10 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # The page check (0138): a reviewer's answer about one number, asked
         # of the printed page rather than the text copy.
         "page_checks",
+        # The flag plan's approvals (0139): a person setting a flag type's
+        # risk and severity, or the colour rule set, until the drain writes
+        # it into flags.yaml / colour.yaml.
+        "flag_decisions",
         # A one-off property-tax impact snapshot (0136): what each green lot
         # of one jurisdiction pays today, as one new house, and as the pod.
         "tax_snapshots",

@@ -92,9 +92,10 @@ class Resolution(str, enum.Enum):
     document_review = "document_review"
     #: A person looks at each lot (a deed, a survey, the site).
     per_lot_review = "per_lot_review"
-    #: A map layer we acquire, or a measurement we take ourselves. Proposed
-    #: 2026-10-02 as the plan's fourth type: most of today's unknowns are a
-    #: fact no layer answered yet, not a question for anybody.
+    #: A map layer we acquire, or a measurement we take ourselves. Most of
+    #: today's unknowns are a fact no layer answered yet, not a question for
+    #: anybody. The PREFERRED way to close a flag (Steph 2026-10-03: the
+    #: other three are "the failure mode").
     measurement = "measurement"
 
 
@@ -260,9 +261,13 @@ class Registry:
         return len(self.types)
 
 
-def load_registry(path: Path = REGISTRY_PATH) -> Registry:
-    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+def parse_registry(text: str) -> Registry:
+    data = yaml.safe_load(text)
     return Registry(FlagType(code=code, **body) for code, body in (data.get("types") or {}).items())
+
+
+def load_registry(path: Path = REGISTRY_PATH) -> Registry:
+    return parse_registry(path.read_text(encoding="utf-8"))
 
 
 def load_rules(path: Path = COLOUR_PATH) -> ColourRules:
@@ -277,6 +282,124 @@ def registry() -> Registry:
 @lru_cache(maxsize=1)
 def colour_rules() -> ColourRules:
     return load_rules()
+
+
+# --- a person's decision, written into the files --------------------------
+#
+# Steph sets the human-owned numbers on the approval page (/flats/flags). The
+# page writes a row to ``flats.flag_decisions``; the drain
+# (``scripts/flats_drain_flag_decisions.py``) is the only writer of
+# ``status: approved``, and it writes through these two functions. They edit
+# the files line by line, so the comments a person wrote stay where they are,
+# and they re-read what they wrote: a decision that does not load back to
+# exactly the values decided is refused, not half-applied.
+
+#: What the approval page sets on a flag type. ``scope`` and ``key`` stay
+#: with the file: a change of scope is a change of key, which is a change to
+#: the screen that raises the flag, not a number.
+TYPE_DECIDED = ("risk", "severity", "absorbs", "resolution", "priority")
+
+#: What the approval page sets on the rule set.
+RULES_DECIDED = (
+    "yellow_at_severity",
+    "risk_bands",
+    "approval_severity",
+    "near_miss",
+    "near_miss_severity",
+)
+
+_PLAIN = re.compile(r"^[A-Za-z0-9_.\-]+$")
+
+
+def _scalar(value: Any) -> str:
+    if value is None:
+        return "null"
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, date):
+        return value.isoformat()
+    if isinstance(value, enum.Enum):
+        value = value.value
+    if isinstance(value, (int, float)):
+        return repr(value)
+    text = str(value)
+    if _PLAIN.match(text) and text not in {"null", "true", "false", "yes", "no", "on", "off"}:
+        return text
+    return json.dumps(text)
+
+
+def _set_line(lines: list[str], start: int, end: int, indent: str, name: str, value: Any) -> None:
+    pattern = re.compile(rf"^{indent}{re.escape(name)}:(\s|$)")
+    for i in range(start, end):
+        if pattern.match(lines[i]):
+            lines[i] = f"{indent}{name}: {_scalar(value)}\n"
+            return
+    raise ValueError(f"{name}: no such line to set")
+
+
+def _block(lines: list[str], header: re.Pattern[str], child: str) -> tuple[int, int]:
+    """The lines under ``header``: from it to the first line not indented to ``child``."""
+    for i, line in enumerate(lines):
+        if header.match(line):
+            end = i + 1
+            while end < len(lines) and (
+                lines[end].startswith(child) or not lines[end].strip()
+            ):
+                end += 1
+            return i + 1, end
+    raise ValueError(f"{header.pattern}: not in the file")
+
+
+def decide_type(
+    text: str, code: str, values: Mapping[str, Any], *, by: str, on: date
+) -> str:
+    """``flags.yaml`` with ``code`` set to ``values`` and approved by ``by``."""
+    unknown = set(values) - set(TYPE_DECIDED)
+    if unknown:
+        raise ValueError(f"{code}: not set from the approval page: {sorted(unknown)}")
+    if not by:
+        raise ValueError(f"{code}: an approval names who approved it")
+    lines = text.splitlines(keepends=True)
+    start, end = _block(lines, re.compile(rf"^  {re.escape(code)}:\s*$"), "    ")
+    settled = {**values, "status": TypeStatus.approved, "approved_by": by, "approved_on": on}
+    for name, value in settled.items():
+        _set_line(lines, start, end, "    ", name, value)
+    out = "".join(lines)
+    got = parse_registry(out)[code]
+    want = FlagType(**{**got.model_dump(), **settled})
+    if got != want:
+        raise ValueError(f"{code}: the file did not take the decision as made")
+    return out
+
+
+def decide_rules(text: str, values: Mapping[str, Any], *, by: str, on: date) -> str:
+    """``colour.yaml`` with ``values`` set and the rule set approved by ``by``."""
+    unknown = set(values) - set(RULES_DECIDED)
+    if unknown:
+        raise ValueError(f"rule set: not set from the approval page: {sorted(unknown)}")
+    if not by:
+        raise ValueError("rule set: an approval names who approved it")
+    lines = text.splitlines(keepends=True)
+    whole = (0, len(lines))
+    settled = {**values, "status": TypeStatus.approved, "approved_by": by, "approved_on": on}
+    for name, value in settled.items():
+        if isinstance(value, Mapping):
+            start, end = _block(lines, re.compile(rf"^{re.escape(name)}:\s*$"), "  ")
+            for sub, v in value.items():
+                _set_line(lines, start, end, "  ", str(getattr(sub, "value", sub)), v)
+        else:
+            _set_line(lines, *whole, "", name, value)
+    out = "".join(lines)
+    got = ColourRules(**yaml.safe_load(out))
+    merged = got.model_dump()
+    for name, value in settled.items():
+        if isinstance(value, Mapping):
+            merged[name] = {**merged[name], **value}
+        else:
+            merged[name] = value
+    if got != ColourRules(**merged):
+        raise ValueError("rule set: the file did not take the decision as made")
+    return out
 
 
 def fact_code(fact: str) -> str:
