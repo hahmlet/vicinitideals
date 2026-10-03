@@ -158,15 +158,22 @@ def test_only_fourteen_reachable_corner_rules_can_move_a_building() -> None:
     and R-8.5's side yard, 6 to 8 (Tables 12.22.150-1 and 12.21.250-1). Both
     are drafts, and how many Hillsboro greens they would cost waits on the
     Washington County map -- measure it then, before deferring again.
+
+    One joined 2026-10-02 in another NEW jurisdiction: Tualatin CC's front
+    yard, "None" but 0-20 ft along each frontage of a corner lot (Table 53-2,
+    held at the top of the Architectural Review range). It costs a corner
+    nothing the street-side yard does not already charge -- the same row is
+    CC's 20 ft street side -- and CC admits the pod only on the 91 lots of the
+    Residential Sub-District, none screened yet (the next full re-screen).
     """
     audit = _audit()
     setbacky = [v for v in audit.scan()
                 if v.reachable and v.direction == "tightens"
                 and v.field.startswith("setback_")]
-    assert len(setbacky) == 14, [str(v) for v in setbacky]
+    assert len(setbacky) == 15, [str(v) for v in setbacky]
     assert {v.layer for v in setbacky} == {
         "or/multnomah/wood-village", "or/clackamas/wilsonville",
-        "or/washington/hillsboro",
+        "or/washington/hillsboro", "or/clackamas/tualatin",
     }, sorted({v.layer for v in setbacky})
     shares = [v for v in setbacky if getattr(v.alt, "pct", None) is not None]
     assert len(shares) == 8 and {v.field for v in shares} == {"setback_street_side_ft"}
