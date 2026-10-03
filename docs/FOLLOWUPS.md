@@ -1139,7 +1139,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    slower, more fragile; not recommended).
 33. **Parking court leftovers (fix ca26e048 LIVE as run 63, 2026-10-02:
    drift 61->63 green->yellow 3,459, unknown->yellow 4,453, 0 unexplained).**
-   Still open: (a) the court BESIDE the building (side court) is not checked against the lot;
+   Still open ((a), the court beside the building, fixed f7ba7038):
    (b) lots outside the 15,940 scoped whose court stands in a side or front
    yard INSIDE the lot are corrected only by the next full re-screen;
    (c) s5o-envelope lots use the whole lot (less carve) as the court's
@@ -1163,20 +1163,28 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    weekly FULL re-screen fixes it (with 33's leftovers). After that run,
    check run-wide: zero green answers lacking a fire result.
 36. **Parking tool queue (Steph 2026-10-02: "do them in the reverse order
-   you listed them").** RULING the same day: on a lot with more than one
-   street the parking entrance is the SIDE street, never the front ("cities
-   typically require the housing to face the busier street") -- so
-   `corner_access_street: lowest_class` reads as side-street access, like
-   `any`/`side`. Through lots keep the 2026-09-30 ruling. Order:
-   (5) city parking rules recorded but not applied -- IN PROGRESS: planted
-   strips between parking and the rear/side lot lines (Tualatin 73C.210(3),
-   Multnomah 39.8045(C)(3)(b), Gladstone 17.48.040(2)(e), Tigard, ...) were
-   called "inert" because yards are >= 5 ft, but the court is credited INTO
-   the rear yard, so they may bind (possible false GREEN); landscape islands
-   / % of the parking area (Tualatin 73C.210(4), Fairview 19.163.030(E));
-   approach widths (unread, look inert with one approach -- item 25 owns
-   spacing/second approach); (4) the court BESIDE the building checked
-   against the lot line (33(a)); (3) the side-street ruling above
-   (paper.SIDE_STREET_ACCESS, test_corner.py, fields.py doc); (2) a car's
-   turning path; (1) the free-form generator (item 27). Each ships as code;
-   the re-screen rides the weekly full run (~10-08).
+   you listed them").** (5) partly, (4) and (3) LIVE as code f7ba7038; the
+   re-screen rides the weekly full run (~10-08) -- read the moves on
+   corner lots with `lowest_class` and in Tualatin, Gladstone, Multnomah
+   uninc and Hillsboro. Left of (5): strips not yet encoded -- Wood Village
+   350.065(C) and Oregon City 17.52.060.C (one-lot projects only), Happy
+   Valley 16.43.030.E.3 and Troutdale 9.095(A) (the neighbour district's
+   setback; needs per-line neighbour zoning), Tigard 18.280.040.D.4 (width
+   in unstored 18.420); unread chapters ZDO 1009, West Linn CDC 54,
+   Washington CDC 407-6, Sherwood 16.92, King City 16.124, Tigard 18.420,
+   Troutdale Ch. 11; Fairview 19.163.030(E) 5% of the parking area.
+   QUESTION for Steph: OAR 660-046-0220(2)(e)(E) makes large cities apply
+   single-family parking standards to middle housing -- it may cancel the
+   strips single-family homes are not held to (Multnomah, Gladstone,
+   Hillsboro, Wood Village, Oregon City); encoded strict meanwhile.
+   (2) turning path -- DECISION PENDING (Steph): `flats/fit/turning.py`
+   drives a calibrated car (85th-percentile body; turns so a 9x18 stall
+   on a 24 ft aisle can be backed out of and a 22 ft aisle cannot). On
+   today's court no stall can be left by backing out ONCE (the turn into the
+   12 ft lane and the dead ends); with a three-point turn every stall can,
+   and every stall but the far dead-end one can be entered nose first.
+   Ask: may a resident need a three-point turn? Yes -> wire it as the rule
+   (precompute per court shape, confirm every "no" on a finer lattice);
+   no -> the court needs a flared lane mouth + ~15 ft of turning room at
+   the dead end, and many greens move. (1) the free-form generator (item
+   27) after (2).
