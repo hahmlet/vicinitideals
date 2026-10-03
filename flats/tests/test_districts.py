@@ -495,8 +495,9 @@ RULINGS: dict[str, dict[str, str]] = {
         # of the five and under six more, and the eleven chapters were
         # fetched that day (43, 44, 49, 51, 52, 53, 57, 58, 62, 64, 65). CN
         # and MP are refusal blocks now and left this ledger; RH and MUC
-        # moved from fetch to encode; CC and RH-HR arrived. Only CO/MR is
-        # still the tail of another chapter's slice, with no lot.
+        # moved from fetch to encode; CC and RH-HR arrived, and CC left
+        # again when it was encoded (2026-10-02, Map 10-3 traced). Only
+        # CO/MR is still the tail of another chapter's slice, with no lot.
         "RH": (
             "encode: High Density Residential, TDC Chapter 43 (43.rh.txt, "
             "fetched 2026-10-01; 198 Washington-side lots). Table 43-2 "
@@ -526,15 +527,6 @@ RULINGS: dict[str, dict[str, str]] = {
             "Quadplex row (L155-L162), so the unit_lots path only; the "
             "interior side and rear setback is 0-20 ft, 20 ft against a "
             "residential district (L181). Held as `to_read` in zone_rulings."
-        ),
-        "CC": (
-            "encode: Central Commercial, TDC Chapter 53 (53.cc.txt, fetched "
-            "2026-10-01; 155 lots). Table 53-1 lists no Household Living "
-            "(L21-L26), but Table 58-1 of the Central Tualatin Overlay "
-            "permits Quadplexes by name on the ten blocks of the Residential "
-            "Sub-District (58.central-tualatin-overlay.txt L34, L43-L48), "
-            "drawn on Comprehensive Plan Map 10-3, which FLATS does not "
-            "hold. Held as `to_read` in zone_rulings."
         ),
         "TDC 73C": (
             "not-a-zone: a chapter reference split onto its own line -- "
@@ -1147,6 +1139,9 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
     outright in both forms. Its Multi-Family Structure is five or more units
     (TDC 31.060) and Table 42-2 has no Quadplex row, so the only path is
     townhouses on unit lots.
+
+    Twenty-five on 2026-10-02: Tualatin CC encoded, its mapped blocks traced
+    from Comprehensive Plan Map 10-3 into the layer's `drawn_areas`.
     """
     owed: dict[str, list[str]] = {"encode": [], "fetch": [], "column": []}
     for layer, rulings in list(RULINGS.items()) + list(BY_HAND.items()):
@@ -1156,6 +1151,6 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
             verdict = match.group(1)
             if verdict in owed:
                 owed[verdict].append(f"{layer}/{token}")
-    assert len(owed["encode"]) == 26, sorted(owed["encode"])
+    assert len(owed["encode"]) == 25, sorted(owed["encode"])
     assert len(owed["fetch"]) == 2, sorted(owed["fetch"])
     assert len(owed["column"]) == 10, sorted(owed["column"])

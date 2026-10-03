@@ -103,6 +103,7 @@ from flats.geom.corner import (
     two_streets,
 )
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
+from flats.geom.drawn import load_area, observed_drawn
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
 from flats.geom.neighbour import (
@@ -351,6 +352,11 @@ def observed_facts(
     * a fact the lot's own map code settles -- an alias ruling's
       ``observes`` (Fairview's ``FLX`` is the VC flex area, so
       ``inside_mapped_use_area``). True only, and only with ``layers``.
+    * a fact an area the layer traced settles (``drawn_areas``, Tualatin's
+      Residential Sub-District) -- the lot's share inside the tracing,
+      through :func:`flats.geom.drawn.observed_drawn`. Only with ``layers``,
+      only on lots of the zones the area names, and only from the lot's own
+      shape (``lot_wkb``); a lot the boundary cuts through is unanswered.
     """
     out: dict[str, bool] = {}
     edges = json.loads(row.get("edges_json") or "[]")
@@ -369,6 +375,8 @@ def observed_facts(
         out.update(_park_facts(row, edges, layers))
     if layers is not None:
         out.update(_map_code_facts(row, layers))
+        for name, inside in _drawn_facts(row, layers).items():
+            out[name] = out.get(name) or inside
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
     if _answered(row.get("split_zone")):
         out["split_zone"] = _is_true(row.get("split_zone"))
@@ -439,6 +447,29 @@ def _map_code_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict
     if home is None or row.get("zone") is None:
         return {}
     return {name: True for name in home.observed_by_code(str(row.get("zone")))}
+
+
+def _drawn_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
+    """The site facts an area the lot's layer traced settles (see
+    :class:`~flats.rules.model.DrawnArea`), for a lot of a zone the area
+    names. :func:`observed_facts` keeps a True a map code already holds."""
+    home = _home_layer(row, layers)
+    if home is None or not home.drawn_areas or row.get("zone") is None:
+        return {}
+    zone = screened_zone(row, layers)
+    areas = [a for a in home.drawn_areas.values() if zone in a.zones]
+    lot_wkb = row.get("lot_wkb")
+    if not areas or not lot_wkb:
+        return {}
+    import shapely
+
+    lot_geom = shapely.from_wkb(lot_wkb)
+    out: dict[str, bool] = {}
+    for area in areas:
+        got = observed_drawn(lot_geom, load_area(area.file))
+        if got is not None:
+            out[area.condition] = got
+    return out
 
 
 def screened_zone(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> str:

@@ -512,6 +512,9 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 27  # 26 jurisdictions + the state layer
+    # 456 as of 2026-10-02: Tualatin CC, the zone_ruling that became a block
+    # when Steph supplied Map 10-3 and its Residential Sub-District was traced.
+    #
     # 455 as of 2026-10-01: Washington County's map (run 51) put lots under
     # ten Tualatin codes and two Wilsonville codes nobody had ruled. Eight are
     # refusal blocks -- Tualatin IN, CN, CR, MP, MBP and BCE, Wilsonville
@@ -635,7 +638,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 455
+    assert sum(len(l.zones) for l in rules.layers.values()) == 456
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

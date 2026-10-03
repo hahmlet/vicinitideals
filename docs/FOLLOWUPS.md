@@ -717,12 +717,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    doesn't work for us"); RH/HR townhouse lot = the 10,000 sq ft fallback;
    RH/RH-HR/MUC stay unit-lot townhouses only (Quadplex is its own TDC
    31.060 type, absent from their tables; Comp Plan Policy 3.2.1 is policy,
-   not permission). NEXT (offered): trace Map 10-3's Residential
-   Sub-District blocks 2,3,15-20,22,23 (Comp Plan 2025 p.51; no GIS layer)
-   onto Tualatin taxlots and encode CC with the sub-district as a variant --
-   needs a new per-lot "inside a drawn area" measurement; lands at the next
-   FULL re-screen. Also: Tualatin CO refusal may
-   miss the Ch. 58 townhouse path; RML lots now exist on the Washington side. 08 splices LR10/FU10/sewer + fire reach on
+   not permission). CC ENCODED 2026-10-02: Map 10-3 traced onto TualGIS
+   taxlots (flats/config/areas/.../residential-sub-district.geojson, new
+   `drawn_areas` layer block + flats/geom/drawn.py); 155 CC lots, 91 inside
+   (quadplex permitted, 16-25 du/ac), 64 outside (refused), 0 cut. LANDS AT
+   THE NEXT FULL RE-SCREEN (no partial). Still open: Tualatin CO refusal may
+   miss the Ch. 58 townhouse path (58.400, Table 58-4, Block 1); RML lots now exist on the Washington side. 08 splices LR10/FU10/sewer + fire reach on
    /root/bridge_2026-10-01_wash AFTER promotion (message it then).
    (e) AFTER THE FIRST SCREEN, count what these cost. FIRST COUNTS (run 51):
    Beaverton has 0 green -- `utility_easement` unmeasured holds ~32,100

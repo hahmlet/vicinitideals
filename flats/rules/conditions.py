@@ -459,8 +459,13 @@ _C: tuple[ConditionDef, ...] = (
         "relaxes a dimension along a mapped corridor, and from "
         "`site_specific_limitation`, which attaches to one parcel because of "
         "its own history. Assumed unknown, so a use the area switches ON "
-        "stays off.",
-        evidence="the boundary the citing rule names, cut against the parcel — none held",
+        "stays off. Measured only where a layer draws the area "
+        "(`drawn_areas`, :mod:`flats.geom.drawn`) or its map code is the "
+        "area (an alias ruling's `observes`).",
+        evidence=(
+            "the boundary the citing rule names, cut against the parcel -- held "
+            "only where a layer's drawn_areas traces it"
+        ),
         assume=None,
     ),
     ConditionDef(
@@ -950,6 +955,11 @@ NEIGHBOUR_ZONE_CONDITIONS: tuple[str, ...] = (
 #: the loader refuses any other name in that block.
 PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
 
+#: The site facts a layer may answer from an area it draws itself
+#: (``Layer.drawn_areas``, :mod:`flats.geom.drawn`): a boundary the code puts
+#: inside a zone on a map nobody publishes as data.
+DRAWN_CONDITIONS: tuple[str, ...] = ("inside_mapped_use_area",)
+
 #: The site facts about what zone lies across the STREET from a street lot
 #: line, read per line (``flats.geom.neighbour.street_lines_clear``) against
 #: the same ``Layer.neighbours`` block and never answered for a whole lot:
@@ -1015,6 +1025,7 @@ __all__ = [
     "ASSUMED_TIER",
     "ASSUMED_USE_TIER",
     "CONDITIONS",
+    "DRAWN_CONDITIONS",
     "ENTAILS",
     "NEIGHBOUR_ZONE_CONDITIONS",
     "PARK_CONDITIONS",

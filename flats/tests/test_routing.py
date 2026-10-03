@@ -273,6 +273,12 @@ OPEN = {
     "or/washington/sherwood 16.40.050 -> 16.40.040",
     "or/washington/king-city 16.114.040 -> 16.84.060",
     "or/washington/king-city 16.114.130 -> 16.132",
+    # 2026-10-02, Tualatin CC, encoded when Map 10-3 was traced. 53.300
+    # sends "some uses and situations" to 53.310, which is stored and read:
+    # (1) is a 125 ft height bonus by conditional use permit north of Boones
+    # Ferry, (2) a frontage-occupancy rule for "Commercial buildings". The
+    # pod is neither, no value quotes 53.310, and the layer's CC notes say so.
+    "or/clackamas/tualatin 53.300 -> 53.310",
     # 2026-10-01, Cornelius (a worktree draft). Nine rows, all open, none on
     # a figure the pod needs (a tenth, 18.75.065 -> 18.75.050, closed the
     # same day; see FOLLOWED):

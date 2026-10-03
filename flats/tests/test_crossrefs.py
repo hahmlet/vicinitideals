@@ -110,7 +110,10 @@ def test_the_reference_worth_chasing_was_chased(
     # overlay does not list to Chapter 35 (64.mbp.txt L139-L141). The
     # standing ruling already covers it -- an existing situation, not a new
     # building -- so three is ruled noise, not a reference worth chasing.
-    assert max(d.binding for d in tualatin.values()) <= 3
+    # Four since 2026-10-02: CC's lot width quotes 58.800(1), and (2) beside
+    # it lets "Existing nonconforming situations" develop under Chapter 35
+    # (58.central-tualatin-overlay.txt L286-L287). The same ruling.
+    assert max(d.binding for d in tualatin.values()) <= 4
     assert tualatin["35"].ruling
 
 

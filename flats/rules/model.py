@@ -441,6 +441,37 @@ class PrivateDriveRuling(BaseModel):
     note: str | None = None
 
 
+class DrawnArea(BaseModel):
+    """A boundary the code draws inside a zone, traced here because nobody
+    publishes it as data, and the site fact a lot holds when it lies inside.
+
+    Tualatin's Residential Sub-District is ten blocks of Comprehensive Plan
+    Map 10-3 (TDC 58.110, 58.200(2)(a)): the code switches housing on there
+    and nowhere else in the CC zone, and the city's GIS has no layer for the
+    blocks. ``file`` is a GeoJSON FeatureCollection in EPSG:2913 under
+    ``flats/config/areas`` -- the tracing, with how it was made in ``source``
+    -- and ``zones`` the zone blocks whose lots it answers ``condition`` for.
+    A lot of any other zone is not asked. The answer is the share of the lot
+    inside the area (:func:`flats.geom.drawn.observed_drawn`): nearly all of
+    it is inside, nearly none is outside, and a lot the line cuts through is
+    left unanswered rather than guessed.
+
+    ``quote`` points at the code's own words naming the area; ``note`` is the
+    argument. Declared per layer and never inherited.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    name: str
+    condition: str
+    zones: tuple[str, ...]
+    file: str
+    source: str
+    quote: str
+    cite: str | None = None
+    note: str
+
+
 class NeighbourRule(BaseModel):
     """Which zone codes across a lot line make one neighbour-zoning
     condition true here, and which make it false, in this code's own words.
@@ -582,6 +613,9 @@ LAYER_META = frozenset(
         # Whether a private drive the lot abuts is a street here, for the
         # lot lines, the corner and the yards (`PrivateDriveRuling`).
         "private_drives",
+        # Boundaries the code draws inside a zone that no GIS publishes,
+        # traced here, for `inside_mapped_use_area` (`DrawnArea`).
+        "drawn_areas",
         # Passages of our documents read and left out on purpose, with the
         # lines, so a printed page can show them apart from a blind miss.
         "set_aside",
@@ -2592,6 +2626,9 @@ class Layer(BaseModel):
     #: Whether a private drive the lot abuts is a street here (see
     #: :class:`PrivateDriveRuling`); None where the code is silent.
     private_drives: PrivateDriveRuling | None = None
+    #: Areas the code draws inside a zone, traced here -- see
+    #: :class:`DrawnArea`. Keyed by the area's name.
+    drawn_areas: dict[str, DrawnArea] = Field(default_factory=dict)
     #: Passages read and refused on purpose -- see :class:`SetAside`.
     set_aside: tuple[SetAside, ...] = ()
 

@@ -67,27 +67,35 @@ HELD = {
         "R40": 70, "R20": 50, "R15": 50, "R10": 35, "R8.5": 35, "R7": 35, "R5": 35,
     },
     "or/clackamas/wilsonville": {"PDR3": 24, "PDR4": 24, "RN": 24},
+    # Table 58-7's "Minimum Lot Width at the Street on a Cul-De-Sac Street":
+    # a street line, so a frontage, though the table calls it a width.
+    "or/clackamas/tualatin": {"CC": 35},
 }
 
 #: ... and every zone whose entry states the cul-de-sac WIDTH row: Tualatin's
 #: two, the same sentence in Table 40.220 (RL) and Table 41.220 (RML).
 HELD_WIDTH = {"or/clackamas/tualatin": {"RL": 30, "RML": 30}}
 
-#: The field each layer's relief is written on. A frontage is the street
-#: edge; a width is across the middle of the lot; the fact switches both,
-#: and which line a number is about is the field it is filed under.
-FIELD_OF = {
-    "or/clackamas/happy-valley": "min_frontage_ft",
-    "or/clackamas/wilsonville": "min_frontage_ft",
-    "or/clackamas/tualatin": "min_lot_width_ft",
-}
+#: Every held row as (layer, zone, number, the field it is written on). A
+#: frontage is the street edge; a width is across the middle of the lot; the
+#: fact switches both, and which line a number is about is the field it is
+#: filed under -- Tualatin has one of each.
+ROWS = [(lid, z, n, "min_frontage_ft") for lid, zones in HELD.items() for z, n in zones.items()] + [
+    (lid, z, n, "min_lot_width_ft") for lid, zones in HELD_WIDTH.items() for z, n in zones.items()
+]
+
+
+def field_of(lid: str, zname: str) -> str | None:
+    return next((f for l_, z, _, f in ROWS if (l_, z) == (lid, zname)), None)
 
 #: ... and the one that takes it by reference: Happy Valley R20CC is `like: R20`.
 BY_REFERENCE = {("or/clackamas/happy-valley", "R20CC"): ("R20", 50)}
 
 #: Where the rows are printed: Happy Valley's three tables and Wilsonville's
 #: two notes, Tualatin's two tables, then the townhome rows beside them.
-CUL_DE_SAC_LINES = ("#L285", "#L475", "#L651", "#L4740", "#L7254", "#L192-L193", "#L503-L504")
+CUL_DE_SAC_LINES = (
+    "#L285", "#L475", "#L651", "#L4740", "#L7254", "#L192-L193", "#L503-L504", "#L294,L307-L309",
+)
 TOWNHOME_LINES = ("#L287", "#L477", "#L653", "#L7253", "#L196", "#L497,L500")
 
 
@@ -175,7 +183,7 @@ def test_every_cul_de_sac_row_in_the_corpus_is_looser_than_the_row_it_replaces(l
                 for v in held.variants:
                     if "fronts_cul_de_sac" not in (v.when or ()):
                         continue
-                    assert lid in FIELD_OF and fname == FIELD_OF[lid], (lid, zname, fname)
+                    assert fname == field_of(lid, zname), (lid, zname, fname)
                     assert not v.exempt, (lid, zname)
                     if tuple(v.when) == ("fronts_cul_de_sac",):
                         # the cul-de-sac row's own line, under the interior number
@@ -189,18 +197,18 @@ def test_every_cul_de_sac_row_in_the_corpus_is_looser_than_the_row_it_replaces(l
                         assert set(v.when) == {"fronts_cul_de_sac", "unit_lots"}, (lid, zname)
                         assert float(v.value) <= float(held.value), (lid, zname, v.value, held.value)
                         assert v.prov.quote.endswith(TOWNHOME_LINES), (lid, zname, v.prov.quote)
-    assert found == {
-        lid: {z: float(n) for z, n in zones.items()}
-        for lid, zones in (HELD | HELD_WIDTH).items()
-    }
+    expected: dict[str, dict[str, float]] = {}
+    for lid, z, n, _ in ROWS:
+        expected.setdefault(lid, {})[z] = float(n)
+    assert found == expected
 
 
 def test_the_measured_fact_reaches_the_row_and_nothing_else_does(layers) -> None:
     rules = RuleSet(layers)
-    every = {(lid, z): n for lid, zones in (HELD | HELD_WIDTH).items() for z, n in zones.items()}
+    every = {(lid, z): n for lid, z, n, _ in ROWS}
     every |= {key: n for key, (_, n) in BY_REFERENCE.items()}
     for (lid, zname), number in every.items():
-        field = FIELD_OF[lid]
+        field = field_of(lid, zname) or "min_frontage_ft"
         on_bulb = rules.resolve(lid, zname, conditions=("fronts_cul_de_sac", "multi_story"))
         got = on_bulb.values[field]
         assert float(got.value) == number, (lid, zname, got.value)
@@ -233,19 +241,18 @@ def test_a_townhome_pod_on_a_bulb_does_not_tie(layers) -> None:
     what the townhome row says -- a relief cannot tighten it."""
     rules = RuleSet(layers)
     spelled = 0
-    for lid, zones in (HELD | HELD_WIDTH).items():
-        for zname in zones:
-            held = layers[lid].zones[zname].values[FIELD_OF[lid]]
-            alone = [v for v in held.variants if tuple(v.when) == ("unit_lots",)]
-            if not alone:
-                continue
-            both = held.under({"fronts_cul_de_sac", "unit_lots", "multi_story"})
-            assert not both.ambiguous, (lid, zname, both.ambiguous)
-            assert set(both.when) == {"fronts_cul_de_sac", "unit_lots"}, (lid, zname)
-            assert float(both.value) == float(alone[0].value), (lid, zname)
-            if lid in HELD:
-                assert float(both.value) == 20.0, (lid, zname)      # every frontage townhome row
-            spelled += 1
+    for lid, zname, _, field in ROWS:
+        held = layers[lid].zones[zname].values[field]
+        alone = [v for v in held.variants if tuple(v.when) == ("unit_lots",)]
+        if not alone:
+            continue
+        both = held.under({"fronts_cul_de_sac", "unit_lots", "multi_story"})
+        assert not both.ambiguous, (lid, zname, both.ambiguous)
+        assert set(both.when) == {"fronts_cul_de_sac", "unit_lots"}, (lid, zname)
+        assert float(both.value) == float(alone[0].value), (lid, zname)
+        if field == "min_frontage_ft":
+            assert float(both.value) == 20.0, (lid, zname)      # every frontage townhome row
+        spelled += 1
     # Happy Valley's seven and Wilsonville RN on the frontage; Tualatin's two
     # on the width (RL's townhouse row is "None", RML's is 14).
     assert spelled == 7 + 1 + 2
