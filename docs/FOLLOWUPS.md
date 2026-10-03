@@ -1194,5 +1194,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    route re-measured on the new placement. Picture for Steph:
    https://claude.ai/artifact/ReP4bZrHy7QG9XjePEKQZ5. Options put to
    Steph: A ship now (no false green; the generator wins lots back later),
-   B hold until the generator (1), C allow a fifth move. (1) the free-form generator (item
+   B hold until the generator (1), C allow a fifth move. STEPH 2026-10-03:
+   the 13 ft dead end should be a LAST RESORT -- try a deeper aisle first.
+   Solved (design court 9x18, 12 ft lane): aisle 28 ft (+4) -> dead end 0
+   (+144 sq ft, no extra width); 25/26/27 ft still need 9/6/8; 10 ft stalls
+   -> 1 (row +5 ft); 10 ft stalls + 26 aisle -> 0; 11 ft stalls -> 0 (row
+   +8); 14/16/18 ft lane -> 10/7/4; 26 aisle + 14 lane -> 2. PROPOSED: the
+   ledger holds a menu per shape (deeper aisle, wider stalls, dead end) and
+   the screen takes the least paving that fits the lot; re-bound the 54.
+   (1) the free-form generator (item
    27) after (2).
