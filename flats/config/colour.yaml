@@ -16,10 +16,19 @@
 #   Q2 "items with risk < 3 (or whatever we decide) are still green"
 #      -> yellow_at_severity: 3 (the number itself is still open).
 #
+#   Near misses, 2026-10-02: "everything 1-20' goes to red ... Let's put
+#      them all to red except short by under 1'" -> near_miss fit_ft: 1.0.
+#      (Inside half a foot the fit is already GREEN with FIT-TIGHT.)
+#
 # Still pending Steph: the threshold's exact value, approval_severity, and
 # the number each risk band stands for (proposed below).
 
 yellow_at_severity: 3
+
+# A miss smaller than this, in the check's units, is YELLOW, not RED.
+near_miss:
+  fit_ft: 1.0
+near_miss_severity: 4
 
 # Relief conditions whose path we will take: adjustment, variance,
 # conditional_use, review_use, planned_development, state_middle_housing.

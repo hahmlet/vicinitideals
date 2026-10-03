@@ -198,6 +198,13 @@ class ColourRules(BaseModel):
     accept_approvals: tuple[str, ...]
     #: Severity a bind carries when ``accept_approvals`` opens it.
     approval_severity: int = Field(ge=1, le=10)
+    #: A bind short of its standard by less than this, in the check's own
+    #: units, is a near miss: a question for the survey, not a wall. Steph
+    #: 2026-10-02: "everything 1-20' goes to red ... except short by under
+    #: 1'". Checks not named here have no near miss.
+    near_miss: dict[str, float] = Field(default_factory=dict)
+    #: Severity a near miss counts as.
+    near_miss_severity: int = Field(default=4, ge=1, le=10)
     #: The number each risk band stands for. Pending approval.
     risk_bands: dict[Risk, float]
     status: TypeStatus
@@ -210,6 +217,8 @@ class ColourRules(BaseModel):
         missing = set(Risk) - set(self.risk_bands)
         if missing:
             raise ValueError(f"risk_bands misses {sorted(m.value for m in missing)}")
+        if any(v <= 0 for v in self.near_miss.values()):
+            raise ValueError("a near-miss line is a positive shortfall")
         if any(not 0.0 < p <= 1.0 for p in self.risk_bands.values()):
             raise ValueError("a risk band is a probability above 0 and at most 1")
         for name in self.accept_approvals:
@@ -431,6 +440,12 @@ def accepted(bind: Bind, rules: ColourRules) -> bool:
     return all(part in rules.accept_approvals for part in bind.relief.split("+"))
 
 
+def near_miss(bind: Bind, rules: ColourRules) -> bool:
+    """Whether this bind misses by less than the rule set's near-miss line."""
+    line = rules.near_miss.get(bind.check)
+    return line is not None and bind.shortfall is not None and 0 <= bind.shortfall < line
+
+
 def colour(
     binds: Sequence[Bind],
     flags: Sequence[Flag],
@@ -438,14 +453,18 @@ def colour(
     reg: Registry | None = None,
     rules: ColourRules | None = None,
 ) -> Colour:
-    """RED on any bind the rule set does not waive; YELLOW on any open flag
-    (or waived bind) at ``yellow_at_severity`` or above; else GREEN."""
+    """RED on any bind the rule set neither waives nor counts as a near
+    miss; YELLOW on any open flag, waived bind or near miss at
+    ``yellow_at_severity`` or above; else GREEN."""
     reg = reg or registry()
     rules = rules or colour_rules()
-    waived = [b for b in binds if accepted(b, rules)]
-    if len(waived) < len(binds):
+    near = [b for b in binds if near_miss(b, rules)]
+    waived = [b for b in binds if accepted(b, rules) and not near_miss(b, rules)]
+    if len(waived) + len(near) < len(binds):
         return Colour.red
     if waived and rules.approval_severity >= rules.yellow_at_severity:
+        return Colour.yellow
+    if near and rules.near_miss_severity >= rules.yellow_at_severity:
         return Colour.yellow
     if any(severity_of(f, reg) >= rules.yellow_at_severity for f in flags):
         return Colour.yellow
@@ -502,6 +521,7 @@ __all__ = [
     "load_registry",
     "load_rules",
     "make",
+    "near_miss",
     "registry",
     "severity_of",
     "validate",

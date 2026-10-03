@@ -220,6 +220,40 @@ def test_moving_the_line_recolours_without_a_rescreen() -> None:
     assert fp.colour([], [f], rules=_rules(yellow_at_severity=5)) is Colour.yellow
 
 
+
+def test_a_fit_short_by_under_a_foot_is_yellow_and_a_foot_or_more_is_red() -> None:
+    """Steph 2026-10-02: "everything 1-20' goes to red ... except short by
+    under 1'". The line is a setting, so moving it recolours without a
+    re-screen."""
+    shipped = fp.load_rules()
+    assert shipped.near_miss == {"fit_ft": 1.0}
+    assert shipped.near_miss_severity >= shipped.yellow_at_severity
+
+    def fit_bind(short: float) -> Bind:
+        return Bind("fit_ft", 50.0 - short, 50.0, short, relief="variance", relief_tier="discretionary")
+
+    for short in (0.6, 0.99):
+        assert fp.colour([fit_bind(short)], [], rules=shipped) is Colour.yellow, short
+    for short in (1.0, 5.0, 20.0, 40.0):
+        assert fp.colour([fit_bind(short)], [], rules=shipped) is Colour.red, short
+    # Only the fit has a near miss: a lot 0.5 sq ft short of its minimum area is red.
+    area = Bind("min_lot_area_sqft", 4999.5, 5000.0, 0.5, relief="variance")
+    assert fp.colour([area], [], rules=shipped) is Colour.red
+    # A near miss beside a real miss is still red.
+    assert fp.colour([fit_bind(0.7), area], [], rules=shipped) is Colour.red
+    # Moved, it recolours.
+    assert fp.colour([fit_bind(3.0)], [], rules=_rules(near_miss={"fit_ft": 5.0})) is Colour.yellow
+    assert fp.colour([fit_bind(0.7)], [], rules=_rules(near_miss={})) is Colour.red
+
+
+def test_the_screen_makes_a_near_miss_yellow() -> None:
+    s = run(f=fit(over_ft=-0.8), relief=READ)
+    (b,) = s.binds
+    assert b.check == "fit_ft" and b.shortfall == pytest.approx(0.8)
+    assert s.colour is Colour.yellow
+    assert run(f=fit(over_ft=-1.5), relief=READ).colour is Colour.red
+
+
 # --- the screen writes them -------------------------------------------------
 
 
@@ -331,6 +365,8 @@ def _cases():
     yield run(rules(max_coverage_pct=33.0))
     for over in (-0.6, -0.3, 0.5, 4.0):
         yield run(f=fit(over_ft=over))
+    yield run(f=fit(over_ft=-0.8), relief=NO_RELIEF)
+    yield run(f=fit(over_ft=-3.0), relief=NO_RELIEF)
     yield run(lot=LotFacts(lot_sqft=0, frontage_ft=60, lot_width_ft=60))
     yield screen(levered("corner_lot"), LOT, DESIGN, fit(), policy=POLICY, config=configure(LOT, DESIGN))
     yield screen(levered("public_sewer"), LOT, DESIGN, fit(), policy=POLICY, config=configure(LOT, DESIGN))
@@ -362,11 +398,13 @@ def test_every_old_reason_is_accounted_for(s) -> None:
 
 @pytest.mark.parametrize("s", CASES, ids=[f"case{i}" for i in range(len(CASES))])
 def test_the_new_colour_is_never_kinder_than_the_old_except_where_steph_said(s) -> None:
-    """Old red stays red. Old yellow from a waivable miss goes red (Q1).
-    Only a lot whose every reason is a minimum density (Q3) moves toward
-    green."""
+    """Old red stays red, unless its only miss is a fit short by under a
+    foot (Steph's near-miss line). Old yellow from a waivable miss goes red
+    (Q1). Only a lot whose every reason is a minimum density (Q3) moves
+    toward green."""
     if s.triage is Triage.red:
-        assert s.colour is Colour.red
+        near = s.binds and all(fp.near_miss(b, fp.colour_rules()) for b in s.binds)
+        assert s.colour is (Colour.yellow if near else Colour.red)
     if s.triage is not Triage.green and s.colour is Colour.green:
         assert set(s.reasons) == {CLOSER_LOOK_MIN_DENSITY}
     if s.triage is Triage.green:
