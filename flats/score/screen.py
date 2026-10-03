@@ -898,6 +898,25 @@ def _checks(
             )
         )
 
+    # The car in the court (FOLLOWUPS 36(2), Steph 2026-10-02: "THREE POINT
+    # is acceptable for now"). A lane-fed row is charged the dead end that
+    # lets a car use every stall (`court_across`, `flats.score.turns`);
+    # where no dead end up to the longest asked does, the court parks
+    # nobody it can be held to and the lot fails on it. Courts beside the
+    # building and columns along a side alley are not driven here.
+    if not fit.column and not fit.beside:
+        court = court_across(design, rules, lot.alley, corner=lot.corner)
+        if not court.turns:
+            out.append(
+                policy.evaluate(
+                    "court_turns",
+                    0.0,
+                    float(court.stalls),
+                    is_maximum=False,
+                    jurisdiction=where,
+                )
+            )
+
     # And the other way round: a ceiling below the least this product is
     # built with. Portland's EX permits half a stall per home -- two on a
     # fourplex -- and a court of two is not this design whatever the lot

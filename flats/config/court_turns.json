@@ -1,0 +1,78 @@
+{
+ "rule": "Steph 2026-10-02: THREE POINT is acceptable for now",
+ "turn_ft": 24.0,
+ "fields": [
+  "stalls",
+  "stall_w_ft",
+  "stall_d_ft",
+  "aisle_ft",
+  "lane_ft",
+  "gap_ft"
+ ],
+ "shapes": [
+  {
+   "shape": "2|9|18|20|12|5",
+   "dead_end_ft": 20.0
+  },
+  {
+   "shape": "4|9|18|20|12|5",
+   "dead_end_ft": 16.0
+  },
+  {
+   "shape": "4|9|18|20|20|5",
+   "dead_end_ft": 3.0
+  },
+  {
+   "shape": "4|9|18|23|24|5",
+   "dead_end_ft": 0.0
+  },
+  {
+   "shape": "4|9|18|24|10|5",
+   "dead_end_ft": 11.0
+  },
+  {
+   "shape": "4|9|18|24|12|5",
+   "dead_end_ft": 13.0
+  },
+  {
+   "shape": "4|9|18|24|30|5",
+   "dead_end_ft": 0.0
+  },
+  {
+   "shape": "4|9|18|25|20|5",
+   "dead_end_ft": 0.0
+  },
+  {
+   "shape": "4|9|18.5|22|12|5",
+   "dead_end_ft": 14.0
+  },
+  {
+   "shape": "4|9|18.5|24|12|5",
+   "dead_end_ft": 12.0
+  },
+  {
+   "shape": "4|9|18.5|24|20|5",
+   "dead_end_ft": 1.0
+  },
+  {
+   "shape": "4|9|18.5|24|22|5",
+   "dead_end_ft": 0.0
+  },
+  {
+   "shape": "4|9|19|24|12|5",
+   "dead_end_ft": 12.0
+  },
+  {
+   "shape": "4|9|20|24|12|5",
+   "dead_end_ft": 12.0
+  },
+  {
+   "shape": "4|9|20|24|24|5",
+   "dead_end_ft": 0.0
+  },
+  {
+   "shape": "4|9.5|18|24|12|5",
+   "dead_end_ft": 8.0
+  }
+ ]
+}

@@ -34,6 +34,7 @@ from dataclasses import dataclass, field as _dc_field
 from typing import TYPE_CHECKING
 
 from flats.designs.model import Design, Orientation, ParkingConfig, Plat
+from flats.score.turns import Shape, dead_end_ft
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
     from flats.rules.resolver import ZoneResolution
@@ -633,6 +634,22 @@ class Across:
     #: Standards the zone actually supplied. Empty against non-zero figures
     #: means the numbers are the design's own.
     from_code: tuple[str, ...] = ()
+    #: How far the aisle runs past the row's far end so a car can use every
+    #: stall (:func:`flats.score.turns.dead_end_ft`) -- already inside
+    #: ``width_ft``. Zero where nothing extra is needed or the court is not
+    #: reached by a lane.
+    dead_end_ft: float = 0.0
+    #: The lane-fed court as the car sees it; None where there is no lane.
+    turn_shape: "Shape | None" = None
+    #: False where no dead end up to the longest asked lets a car use every
+    #: stall: the court is drawn but cannot be used.
+    turns: bool = True
+
+
+def court_shape(design: Design, rules: "ZoneResolution") -> "Shape | None":
+    """The lane-fed court this design draws in this zone, as the car sees it
+    (:class:`flats.score.turns.Shape`); None where it draws none."""
+    return court_across(design, rules, turning=False).turn_shape
 
 
 def court_across(
@@ -641,6 +658,7 @@ def court_across(
     alley: Alley | None = None,
     *,
     corner: bool = False,
+    turning: bool = True,
 ) -> Across:
     """How much width this design's own parking needs, and where.
 
@@ -705,6 +723,14 @@ def court_across(
     would have refused Milwaukie's townhouse plat for a plan its code
     describes. Declared in ``excluded``, bound to the catalog by
     ``test_the_townhouse_lane_ceiling_is_a_condition_of_a_branch_the_pod_does_not_take``.
+
+    **The dead end** (FOLLOWUPS 36(2), Steph 2026-10-02). A row reached by a
+    lane ends blind at its far side, and the stalls' table widths were drawn
+    for a long aisle. Where a car cannot use every stall within a
+    three-point turn, the aisle runs on past the far end of the row by the
+    least extension that lets it (:mod:`flats.score.turns`), and the court is
+    that much wider (``dead_end_ft``, inside ``width_ft``). ``turning=False``
+    skips the question -- for the ledger that answers it.
     """
     if not design.parking.court_depth_ft or design.parking.config not in _COURT_CONFIGS:
         return Across()
@@ -746,6 +772,30 @@ def court_across(
         lane = 0.0
     else:
         lane = drive_width(rules, lane, used)
+    shape: Shape | None = None
+    dead_end, turns = 0.0, True
+    if lane and stalls > 0:
+        bare = design.parking.stall_width_ft
+        if (stated := _number(rules, "parking_stall_width_ft")) is not None:
+            bare = max(bare, stated)
+        deep = design.parking.stall_depth_ft
+        if (stated := _number(rules, "parking_stall_depth_ft")) is not None:
+            deep = max(deep, stated)
+        aisle = design.parking.aisle_ft
+        if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
+            aisle = stated
+        gap = design.parking.building_gap_ft
+        if (stated := _number(rules, "parking_building_buffer_ft")) is not None:
+            gap = max(gap, stated)
+        # The car drives the lane less any walkway beside it, and turns only
+        # in the drawn stalls: planted islands are not ground it may use.
+        shape = Shape(stalls, bare, deep, aisle, lane, gap)
+        if turning:
+            needed = dead_end_ft(shape)
+            if needed is None:
+                turns = False
+            else:
+                dead_end = needed
     if lane and (walk := _number(rules, "driveway_walkway_ft")) is not None:
         # Durham 3.7.1.6: the access way carries "a pedestrian access on one
         # side at least an additional 5 feet wide", so the lane down the
@@ -754,11 +804,14 @@ def court_across(
         lane += walk
     return Across(
         stalls=stalls,
-        width_ft=stalls * stall,
+        width_ft=stalls * stall + dead_end,
         lane_ft=lane,
         stall_ft=stall,
         most=most,
         from_code=tuple(used),
+        dead_end_ft=dead_end,
+        turn_shape=shape,
+        turns=turns,
     )
 
 
@@ -1072,7 +1125,8 @@ def paved(
     ):
         # The same choice `court_depth` makes: the alley is the aisle.
         return row * (stall + shortfall)
-    court = row * stall + aisle * max(row, across.lane_ft)
+    # The dead end past the row is aisle, not stalls.
+    court = (row - across.dead_end_ft) * stall + aisle * max(row, across.lane_ft)
     if across.lane_ft:
         front = _yard(rules, "setback_front_ft")
         if front is None:
