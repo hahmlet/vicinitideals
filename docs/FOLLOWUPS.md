@@ -1177,14 +1177,22 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    single-family parking standards to middle housing -- it may cancel the
    strips single-family homes are not held to (Multnomah, Gladstone,
    Hillsboro, Wood Village, Oregon City); encoded strict meanwhile.
-   (2) turning path -- DECISION PENDING (Steph): `flats/fit/turning.py`
-   drives a calibrated car (85th-percentile body; turns so a 9x18 stall
-   on a 24 ft aisle can be backed out of and a 22 ft aisle cannot). On
-   today's court no stall can be left by backing out ONCE (the turn into the
-   12 ft lane and the dead ends); with a three-point turn every stall can,
-   and every stall but the far dead-end one can be entered nose first.
-   Ask: may a resident need a three-point turn? Yes -> wire it as the rule
-   (precompute per court shape, confirm every "no" on a finer lattice);
-   no -> the court needs a flared lane mouth + ~15 ft of turning room at
-   the dead end, and many greens move. (1) the free-form generator (item
+   (2) turning path -- RULED 2026-10-02 (Steph: "THREE POINT is acceptable
+   for now"), BUILT, NOT SHIPPED -- DECISION PENDING (Steph, 2026-10-03):
+   the car is the AASHTO P car (24 ft turn), every "no" asked four ways;
+   a stall counts if a car gets in and out in four moves or fewer. Today's
+   12 ft-lane court: only the stall by the lane works; the remedy is the
+   aisle run past the row's far end (ledger `flats/config/court_turns.json`,
+   16 shapes: 12 ft lanes 8-16 ft, the design's own 13 ft, 2-stall 20,
+   22+ ft lanes 0; none unusable). Code in the working tree (turning.py,
+   turns.py, paper.py, screen.py, relief.py, tests). Shapes the ledger
+   lacks are UNCHECKED, never searched at screen time. Bound on 3,500
+   sampled lots (137 /root/bridge_turns_base vs _probe, chunks 0-6): 54 of
+   572 green lots (9%) go yellow, 49 of them Portland lots ~55-62 ft wide
+   where the building stood end-on (needs +1 ft for pod56, +12 ft for
+   pod80) and the sideways building does not fit; side effects: fire
+   route re-measured on the new placement. Picture for Steph:
+   https://claude.ai/artifact/ReP4bZrHy7QG9XjePEKQZ5. Options put to
+   Steph: A ship now (no false green; the generator wins lots back later),
+   B hold until the generator (1), C allow a fifth move. (1) the free-form generator (item
    27) after (2).
