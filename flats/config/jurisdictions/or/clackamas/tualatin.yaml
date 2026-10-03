@@ -1532,6 +1532,11 @@ zone_rulings:
       units per acre (L116-L117). Inside the Central Tualatin Overlay,
       Blocks 25 and 4, RH may mix with CC's uses under 58.600 and Table
       58-7's own standards (58.central-tualatin-overlay.txt L272-L276).
+      The Comprehensive Plan's Policy 3.2.1 (Tualatin 2040, 2025, p. 16)
+      says the city will "support development of townhomes, duplexes,
+      triplexes, quadplexes ... in all residential zoning districts" -- a
+      policy for future code, not a permission the use table grants, so
+      the missing Quadplex row still governs (told to Steph 2026-10-02).
   RH/HR:
     outcome: to_read
     note: >-
@@ -1546,9 +1551,11 @@ zone_rulings:
       rear ladder runs on structure height to 12 ft at 25 to under 30 and
       to "As determined through Architectural Review" at 30 and over
       (L173-L184), the front setback likewise (L159-L168), and Table 44-3
-      prints no townhouse lot size at all (L128-L145; townhouses would fall
-      to "All Other Permitted Uses 10,000 square feet", a reading to make
-      deliberately, not by default). Plain rows: 14 ft townhouse average
+      prints no townhouse lot size at all (L128-L145). RULED by Steph
+      2026-10-02: townhouses take the table's fallback row, "All Other
+      Permitted Uses 10,000 square feet" ("all other uses would be 10k for
+      townhouse") -- the minimum lot size to encode for the townhouse row
+      when the block is written. Plain rows: 14 ft townhouse average
       width (L147), 20 ft maximum front setback (L204), 64 ft height
       (L211), 45 percent coverage (L213), 26 to 30 units per acre
       (L117-L118). 58.700 leaves its uses unmodified in the overlay
@@ -1593,7 +1600,14 @@ zone_rulings:
       UC's shape), and Table 53-2 (5,000 sq ft, 75 ft average width,
       setbacks "Determined through Architectural Review"; 53.cc.txt
       L145-L175) read against Table 58-7's overlay rows. Then CC is
-      quadplex_allowed false with the sub-district as its variant.
+      quadplex_allowed false with the sub-district as its variant. MAP IN
+      HAND 2026-10-02: Steph supplied the Tualatin 2040 Comprehensive Plan
+      (2025), whose Map 10-3 "Central Tualatin Overlay Zone" (PDF page 51,
+      TualGIS, RF 1:6000) draws all 33 blocks over the taxlots; the city's
+      public GIS publishes no block layer (LandusePlanningExplorer checked
+      2026-10-02), so the ten blocks are to be traced from the map against
+      the taxlots it draws. Not in the provenance store yet -- a map page,
+      and the store holds text.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.

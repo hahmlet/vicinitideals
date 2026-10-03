@@ -712,10 +712,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    lots_drift = the new county) -> ASKED Steph to promote. Unruled codes
    (warn only): Tualatin's Washington side BCE CC CN CR IN MBP MP MUC RH
    RH/HR (~420 lots) and Wilsonville PDI-RSIA/PFC (17) -- RULED 2026-10-01
-   (8 refusal blocks; RH, RH/HR, MUC, CC to_read). Steph to decide: PDI-RSIA
-   10% residential per lot vs per site; CC to_read until Map 10-3 blocks
-   are drawn; RH/RH-HR/MUC unit-lot townhouses only; RH/HR no townhouse lot
-   size (fallback 10,000 sq ft not applied). Also: Tualatin CO refusal may
+   (8 refusal blocks; RH, RH/HR, MUC, CC to_read). STEPH RULED 2026-10-02:
+   PDI-RSIA 10% is per project site but the refusal stands ("this lot
+   doesn't work for us"); RH/HR townhouse lot = the 10,000 sq ft fallback;
+   RH/RH-HR/MUC stay unit-lot townhouses only (Quadplex is its own TDC
+   31.060 type, absent from their tables; Comp Plan Policy 3.2.1 is policy,
+   not permission). NEXT (offered): trace Map 10-3's Residential
+   Sub-District blocks 2,3,15-20,22,23 (Comp Plan 2025 p.51; no GIS layer)
+   onto Tualatin taxlots and encode CC with the sub-district as a variant --
+   needs a new per-lot "inside a drawn area" measurement; lands at the next
+   FULL re-screen. Also: Tualatin CO refusal may
    miss the Ch. 58 townhouse path; RML lots now exist on the Washington side. 08 splices LR10/FU10/sewer + fire reach on
    /root/bridge_2026-10-01_wash AFTER promotion (message it then).
    (e) AFTER THE FIRST SCREEN, count what these cost. FIRST COUNTS (run 51):
