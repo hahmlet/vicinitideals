@@ -24,8 +24,8 @@ from flats.encode.load import load_trusted
 from flats.fit.rectangle import Fitter
 from flats.ingest.quadfit import lot_from_row, screen_lot
 from flats.score import relief, slack
-from flats.score.paper import Alley, court_across, paved, side_court
-from flats.score.screen import _beside_beyond
+from flats.score.paper import Alley, Beside, court_across, paved, side_court
+from flats.score.screen import _beside_beyond, _beside_over
 from flats.tests.test_quadfit_bridge import row
 
 pytestmark = pytest.mark.unit
@@ -359,3 +359,20 @@ def test_a_court_beside_the_building_has_to_reach_the_street(corpus, monkeypatch
     monkeypatch.setattr(quadfit, "fire_checked", lambda s, *a, **k: s)
     (loose,) = screen_lot(lot(), [pod()], **kw)
     assert loose.fit.beside is True and loose.signed.triage.value == "green"
+
+
+def test_the_row_s_run_into_the_rear_yard_is_what_must_land_on_ground() -> None:
+    # FOLLOWUPS 33(a). A 60 ft row beside a 36 ft deep building runs 24 ft
+    # past the rear wall. With a 10 ft rear yard the envelope is charged 14
+    # and the yard is credited 10: those 10 are the run the fit must find
+    # ground for.
+    row = Beside(band_ft=40.0, length_ft=60.0, stalls=6)
+    rules = Rules(setback_rear_ft=10)
+    assert _beside_beyond(row, 36.0, rules) == 14.0
+    assert _beside_over(row, 36.0, rules) == 10.0
+    # No run past the wall, nothing to land.
+    assert _beside_over(row, 60.0, rules) == 0.0
+    # A row that may not run past the wall asks no run either (it is refused
+    # by its infinite charge, not here).
+    banned = Beside(band_ft=40.0, length_ft=60.0, stalls=6, within_building=True)
+    assert _beside_over(banned, 36.0, rules) == 0.0

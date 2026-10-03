@@ -277,7 +277,12 @@ def draw(
 
     # The room: the window the fit needs where one exists; otherwise the
     # deepest the lot holds at that width.
-    over = 0.0 if beside_band_ft > 0 else max(0.0, court_depth_ft - max(court_beyond_ft, 0.0))
+    # How far the court runs past the window: behind, its depth less the
+    # charge; beside, its row past the rear wall less the charge.
+    if beside_band_ft > 0:
+        over = max(0.0, beside_len_ft - deep_b - max(court_beyond_ft, 0.0))
+    else:
+        over = max(0.0, court_depth_ft - max(court_beyond_ft, 0.0))
     placed = _place(
         grids,
         need,

@@ -912,27 +912,36 @@ defaults:
   # (`flats.geom.corner.through_plans`); no zone here states a rear above
   # its front, so today that is the same envelope.
   #
-  # NOT ENCODED: the five-foot perimeter. 73C.210(3) requires landscaping a
-  # "Minimum five feet in width in all off-street parking and vehicular
-  # circulation areas", under a section that opens "All development where new
-  # parking is provided", so it reaches the pod. It is a strip between the
-  # parking and everything around it and no field in this model holds one.
-  # Inert on the numbers this screen already carries: five feet is exactly the
-  # side yard in both RL and RML, and both rear yards and both front yards are
-  # larger, so the envelope the court is drawn in is already cut back at least
-  # this far on every line. Recorded because the day a zone here states a side
-  # yard under five feet it stops being inert.
-  # (or/clackamas/tualatin/73C.parking.txt#L672-L673,L684-L685)
-  #
-  # NOT ENCODED: the landscape islands, and this one is not inert. 73C.210(4)
-  # asks a "Minimum 25 square feet per parking space" of landscape island --
-  # 100 square feet for the pod's four -- and (c) puts them "at aisle ends",
-  # which is inside the court rather than around it, and (e) adds one
-  # deciduous shade tree for every four spaces. A hundred square feet at the
-  # end of a 24-foot aisle is a real claim on the same ground the court needs
-  # and this model has no field for a reserve inside a parking area. The
-  # eight-space separation rule in (d) does not reach a row of four.
-  # (or/clackamas/tualatin/73C.parking.txt#L695-L696,L705-L707,L711-L712)
+  # THE FIVE-FOOT PERIMETER, encoded 2026-10-02. 73C.210(3) requires
+  # landscaping a "Minimum five feet in width in all off-street parking and
+  # vehicular circulation areas", under a section that opens "All development
+  # where new parking is provided", so it reaches the pod. Until this date it
+  # was refused as inert -- five feet is exactly the side yard in RL and RML,
+  # and the rear and front yards are larger -- which held for the yards and
+  # not for the court: the screen lets the court share the rear yard up to
+  # the rear line (`paper.behind_wall_ft`), and the strip takes its last five
+  # feet there. Its one exception, parking areas on separate lots that adjoin
+  # and connect, is a neighbour nothing measures. The street lines are
+  # `parking_street_setback_ft`'s question and the yards there are deeper.
+  parking_lot_line_buffer_ft:
+    value: 5
+    cite: TDC 73C.210(3), perimeter landscaping at least five feet wide around off-street parking and vehicular circulation areas
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/73C.parking.txt#L675-L676,L684-L685"
+  # THE LANDSCAPE ISLANDS, encoded 2026-10-02. 73C.210(4) asks a "Minimum 25
+  # square feet per parking space" of landscape island -- a hundred square
+  # feet for the pod's four -- and (c) puts them "at aisle ends", inside the
+  # court rather than around it, on the ground the court needs. Charged as
+  # width along the row (`paper.court_across`). (e)'s shade tree for every
+  # four spaces stands in the island; the eight-space separation in (d) does
+  # not reach a row of four.
+  parking_island_sqft_per_space:
+    value: 25
+    cite: TDC 73C.210(4), landscape island at least 25 square feet per parking space, at aisle ends
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/73C.parking.txt#L695-L696,L702-L703"
   #
   # NOT ENCODED: 30 percent tree canopy over the parking area, 73C.030(12)(a),
   # for lots whose parking is under half an acre, which is all of them here. A

@@ -385,7 +385,10 @@ def test_the_chapter_refused_nearly_twice_what_it_kept() -> None:
     """
     mine = [r for r in refusals() if r.kind == "comments" and r.where == COUNTY]
     parking = [r for r in mine if "39.6" in r.text or "39.80" in r.text]
-    assert len(parking) == 11
+    # 11 -> 10 on 2026-10-02: 39.8045(C)(3)(b)'s other-lot-line strip
+    # encoded as `parking_lot_line_buffer_ft`.
+    assert len(parking) == 10
     # 6 -> 9 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
     # 9 -> 10 on 2026-09-29: front_lot_line_through (FOLLOWUPS 6(i)).
-    assert len(load_rules()[COUNTY].defaults) == 10
+    # 10 -> 11 on 2026-10-02: parking_lot_line_buffer_ft.
+    assert len(load_rules()[COUNTY].defaults) == 11

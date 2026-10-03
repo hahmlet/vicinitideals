@@ -280,8 +280,11 @@ def test_the_chapter_refused_one_standard_for_every_number_it_gave_up() -> None:
     #: refusal from a new chapter has to be admitted here on purpose.
     elsewhere = ("17.25", "17.10.065", "17.12.065", "R7.2")
     parking = [r for r in mine if not any(x in r.text for x in elsewhere)]
-    assert len(parking) == 7
-    assert len(mine) == 11
+    # 7 -> 6 on 2026-10-02: the side and rear halves of 17.48.040(2)(e)
+    # encoded as `parking_lot_line_buffer_ft`.
+    assert len(parking) == 6
+    assert len(mine) == 10
     # 7 -> 10 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
     # 10 -> 11 on 2026-09-29: front_lot_line_through (FOLLOWUPS 6(i)).
-    assert len(load_rules()[GLADSTONE].defaults) == 11
+    # 11 -> 12 on 2026-10-02: parking_lot_line_buffer_ft.
+    assert len(load_rules()[GLADSTONE].defaults) == 12

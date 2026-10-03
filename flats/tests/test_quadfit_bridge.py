@@ -1543,3 +1543,21 @@ def test_the_court_s_ground_is_the_lot_less_every_yard_but_the_rear() -> None:
     unread = envelope_for(lot_from_row(cut_row()), Rules(setback_front_ft=10, setback_rear_ft=10))  # type: ignore[arg-type]
     assert unread.source == "quadfit"
     assert unread.ground.area == pytest.approx(LOT.area)
+
+
+def test_a_planted_strip_off_the_lot_lines_keeps_the_court_off_the_rear_line() -> None:
+    # `parking_lot_line_buffer_ft`: the court still uses the rear yard, all
+    # but the strip along the line.
+    got = Rules(
+        setback_front_ft=10, setback_side_ft=5, setback_rear_ft=15, parking_lot_line_buffer_ft=5
+    )
+    env = envelope_for(lot_from_row(cut_row()), got)  # type: ignore[arg-type]
+    assert env.sqft == pytest.approx(40 * 75)
+    assert env.ground.area == pytest.approx(40 * 85)
+    # s5o's envelope names no line: the strip comes off every one.
+    unread = envelope_for(  # type: ignore[arg-type]
+        lot_from_row(cut_row()),
+        Rules(setback_front_ft=10, setback_rear_ft=10, parking_lot_line_buffer_ft=5),
+    )
+    assert unread.source == "quadfit"
+    assert unread.ground.area == pytest.approx(40 * 90)

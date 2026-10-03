@@ -125,6 +125,7 @@ from flats.score.paper import (
     court_depth,
     front_lot_line_rule,
     front_lot_line_through_rule,
+    lot_line_buffer_ft,
     side_column,
     side_court,
     side_street_fed,
@@ -904,7 +905,11 @@ def envelope_for(
     all the envelope lost -- charging the ordinary rear there would credit
     the court with ground the envelope still holds.
     """
+    strip = lot_line_buffer_ft(rules)
     on_lot = None if lot.lot_geom is None else _less_carve(lot.lot_geom, lot.carve)
+    if on_lot is not None and strip > 0:
+        # No line named: keep the strip off every line (conservative).
+        on_lot = on_lot.buffer(-strip)
     quadfit = Envelope(lot.envelope, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot)
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
@@ -919,14 +924,28 @@ def envelope_for(
         # is not on it has a setback this resolution does not carry, and the
         # caller did not resolve it (``plain``).
         return quadfit
+    if strip > 0:
+        # A side yard narrower than the planted strip: the court and the
+        # lane are searched inside the envelope, so the envelope's sides
+        # stand the strip off (conservative -- the building alone could go
+        # nearer).
+        setbacks = dataclasses.replace(
+            setbacks,
+            side_ft=max(setbacks.side_ft, strip),
+            alley_side_ft=None
+            if setbacks.alley_side_ft is None
+            else max(setbacks.alley_side_ft, strip),
+        )
     geom = buildable(lot.lot_geom, lot.edges, setbacks, less=lot.carve)
     cut = None if strips else setbacks.largest_ft
     if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
         cut = setbacks.alley_rear_ft
+    # The court may use the rear yard, less any planted strip the code keeps
+    # between parking and the line (``parking_lot_line_buffer_ft``).
     open_rear = dataclasses.replace(
         setbacks,
-        rear_ft=0.0,
-        alley_rear_ft=None if setbacks.alley_rear_ft is None else 0.0,
+        rear_ft=strip,
+        alley_rear_ft=None if setbacks.alley_rear_ft is None else strip,
     )
     ground = buildable(lot.lot_geom, lot.edges, open_rear, less=lot.carve)
     return Envelope(geom, cut, "flats", setbacks, ground)

@@ -1924,14 +1924,23 @@ defaults:
   # an area "with fewer than four required parking spaces" and this building owes
   # at least four however the state cap lands.
   #
-  # NOT ENCODED: 39.8045(C)(3)(b) via the 39.6585(A) redirect, the same shape one
-  # section over: "a parking or loading area shall be separated from any lot line
-  # adjacent to a street by a landscaped strip at least 10 feet in width, and any
-  # other lot line by a landscaped strip at least 5 feet in width". The street
-  # half is the inert floor described above; the other-lot-line half is five feet
-  # of planted ground along a side or rear line and there is no field for it. It
-  # is exactly equal to the smallest side and rear yards in this layer, which is
-  # the narrowest margin any refusal in this corpus rests on.
+  # 39.8045(C)(3)(b) via the 39.6585(A) redirect, the same shape one section
+  # over: "a parking or loading area shall be separated from any lot line
+  # adjacent to a street by a landscaped strip at least 10 feet in width, and
+  # any other lot line by a landscaped strip at least 5 feet in width". The
+  # street half is the inert floor described above. The other-lot-line half
+  # was refused until 2026-10-02 as equal to the smallest side and rear yards;
+  # true of the yards and not of the court, which the screen lets share the
+  # rear yard up to the rear line (`paper.behind_wall_ft`). Encoded as
+  # `parking_lot_line_buffer_ft`; it reaches the pod through 39.6555(A),
+  # which exempts only parking serving one or two dwellings. 39.6570(B)(2)'s
+  # three-foot curb above sits inside it.
+  parking_lot_line_buffer_ft:
+    value: 5
+    cite: MCC 39.8045(C)(3)(b) via 39.6585(A), landscaped strip at least 5 ft between parking and any lot line not on a street
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39.design-review.txt#L288-L293"
   #
   # NOT ENCODED: 39.6555(B), forward access, and it binds on every space rather
   # than on a group of five. "After July 26, 1979 it shall be unlawful to locate
