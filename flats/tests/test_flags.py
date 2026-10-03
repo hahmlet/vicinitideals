@@ -234,6 +234,7 @@ def test_a_fit_short_by_under_a_foot_is_yellow_and_a_foot_or_more_is_red() -> No
 
     for short in (0.6, 0.99):
         assert fp.colour([fit_bind(short)], [], rules=shipped) is Colour.yellow, short
+    # Exactly 1 ft is red (Steph 2026-10-03: "Exactly 1 foot is red").
     for short in (1.0, 5.0, 20.0, 40.0):
         assert fp.colour([fit_bind(short)], [], rules=shipped) is Colour.red, short
     # Only the fit has a near miss: a lot 0.5 sq ft short of its minimum area is red.

@@ -19,6 +19,9 @@
 #   Near misses, 2026-10-02: "everything 1-20' goes to red ... Let's put
 #      them all to red except short by under 1'" -> near_miss fit_ft: 1.0.
 #      (Inside half a foot the fit is already GREEN with FIT-TIGHT.)
+#      2026-10-03, asked whether exactly 1 ft counts (the fit moves in
+#      half-foot steps, so this band holds no real lot today): "Exactly 1
+#      foot is red" -> the comparison stays strict (shortfall < 1.0).
 #
 # Still pending Steph: the threshold's exact value, approval_severity, and
 # the number each risk band stands for (proposed below).
