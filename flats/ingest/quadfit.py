@@ -103,6 +103,7 @@ from flats.geom.corner import (
     two_streets,
 )
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
+from flats.geom.drawn import load_area, observed_drawn
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
 from flats.geom.neighbour import (
@@ -126,6 +127,7 @@ from flats.score.paper import (
     court_depth,
     front_lot_line_rule,
     front_lot_line_through_rule,
+    lot_line_buffer_ft,
     side_column,
     side_court,
     side_street_fed,
@@ -351,6 +353,11 @@ def observed_facts(
     * a fact the lot's own map code settles -- an alias ruling's
       ``observes`` (Fairview's ``FLX`` is the VC flex area, so
       ``inside_mapped_use_area``). True only, and only with ``layers``.
+    * a fact an area the layer traced settles (``drawn_areas``, Tualatin's
+      Residential Sub-District) -- the lot's share inside the tracing,
+      through :func:`flats.geom.drawn.observed_drawn`. Only with ``layers``,
+      only on lots of the zones the area names, and only from the lot's own
+      shape (``lot_wkb``); a lot the boundary cuts through is unanswered.
     """
     out: dict[str, bool] = {}
     edges = json.loads(row.get("edges_json") or "[]")
@@ -369,6 +376,8 @@ def observed_facts(
         out.update(_park_facts(row, edges, layers))
     if layers is not None:
         out.update(_map_code_facts(row, layers))
+        for name, inside in _drawn_facts(row, layers).items():
+            out[name] = out.get(name) or inside
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
     if _answered(row.get("split_zone")):
         out["split_zone"] = _is_true(row.get("split_zone"))
@@ -439,6 +448,29 @@ def _map_code_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict
     if home is None or row.get("zone") is None:
         return {}
     return {name: True for name in home.observed_by_code(str(row.get("zone")))}
+
+
+def _drawn_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
+    """The site facts an area the lot's layer traced settles (see
+    :class:`~flats.rules.model.DrawnArea`), for a lot of a zone the area
+    names. :func:`observed_facts` keeps a True a map code already holds."""
+    home = _home_layer(row, layers)
+    if home is None or not home.drawn_areas or row.get("zone") is None:
+        return {}
+    zone = screened_zone(row, layers)
+    areas = [a for a in home.drawn_areas.values() if zone in a.zones]
+    lot_wkb = row.get("lot_wkb")
+    if not areas or not lot_wkb:
+        return {}
+    import shapely
+
+    lot_geom = shapely.from_wkb(lot_wkb)
+    out: dict[str, bool] = {}
+    for area in areas:
+        got = observed_drawn(lot_geom, load_area(area.file))
+        if got is not None:
+            out[area.condition] = got
+    return out
 
 
 def screened_zone(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> str:
@@ -905,7 +937,11 @@ def envelope_for(
     all the envelope lost -- charging the ordinary rear there would credit
     the court with ground the envelope still holds.
     """
+    strip = lot_line_buffer_ft(rules)
     on_lot = None if lot.lot_geom is None else _less_carve(lot.lot_geom, lot.carve)
+    if on_lot is not None and strip > 0:
+        # No line named: keep the strip off every line (conservative).
+        on_lot = on_lot.buffer(-strip)
     quadfit = Envelope(lot.envelope, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot)
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
@@ -920,14 +956,28 @@ def envelope_for(
         # is not on it has a setback this resolution does not carry, and the
         # caller did not resolve it (``plain``).
         return quadfit
+    if strip > 0:
+        # A side yard narrower than the planted strip: the court and the
+        # lane are searched inside the envelope, so the envelope's sides
+        # stand the strip off (conservative -- the building alone could go
+        # nearer).
+        setbacks = dataclasses.replace(
+            setbacks,
+            side_ft=max(setbacks.side_ft, strip),
+            alley_side_ft=None
+            if setbacks.alley_side_ft is None
+            else max(setbacks.alley_side_ft, strip),
+        )
     geom = buildable(lot.lot_geom, lot.edges, setbacks, less=lot.carve)
     cut = None if strips else setbacks.largest_ft
     if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
         cut = setbacks.alley_rear_ft
+    # The court may use the rear yard, less any planted strip the code keeps
+    # between parking and the line (``parking_lot_line_buffer_ft``).
     open_rear = dataclasses.replace(
         setbacks,
-        rear_ft=0.0,
-        alley_rear_ft=None if setbacks.alley_rear_ft is None else 0.0,
+        rear_ft=strip,
+        alley_rear_ft=None if setbacks.alley_rear_ft is None else strip,
     )
     ground = buildable(lot.lot_geom, lot.edges, open_rear, less=lot.carve)
     return Envelope(geom, cut, "flats", setbacks, ground)

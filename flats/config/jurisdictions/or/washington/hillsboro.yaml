@@ -253,6 +253,22 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/4450
     retrieved: '2026-09-29'
     quote: "or/washington/hillsboro/cdc.12.50.300.parking.txt#L10,L16-L20"
+  # PERIMETER PLANTER STRIP, encoded 2026-10-02. 12.50.360.F.1: "These
+  # standards apply to parking lots serving nonresidential uses and common
+  # parking areas serving 3 or more dwelling units" -- the pod's shared court
+  # serves four. Table 12.50.360-1 asks a planter strip "At any other
+  # perimeter location 4 feet"; the wall-or-fence alternative in 3.a.iii is
+  # stated only along a right-of-way, so off the side and rear lines the
+  # strip is the only way to meet it. The screen lets the court share the
+  # rear yard up to the rear line (`paper.behind_wall_ft`); this keeps it
+  # four feet off. 3.c's exception between parking lots that share a common
+  # line is a neighbour nothing measures.
+  parking_lot_line_buffer_ft:
+    value: 4
+    cite: Hillsboro CDC 12.50.360.F.1 and Table 12.50.360-1, perimeter planter strip 4 ft at any perimeter location not on a street
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/cdc.12.50.300.parking.txt#L586-L588,L617,L621"
   # PARKING MAXIMUM. Table 12.50.320-1 prints "Quadplex 2" in the Zone A
   # column and nothing in the Zone B column, where every neighbouring row
   # prints "None". 12.50.320 D puts a whole site in Zone A if any part of it

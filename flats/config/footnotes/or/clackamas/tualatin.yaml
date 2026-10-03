@@ -1,0 +1,21 @@
+# Tualatin -- Development Code (Municode publication 1818) footnotes.
+#
+# One notes block reaches a value this corpus encodes: Table 58-1's single
+# note, under the Central Tualatin Overlay's use table, which became a
+# governing note on 2026-10-02 when CC was encoded and its quadplex
+# permission was quoted from the Household Living row of that table. The
+# note is marked on the Eating and Drinking and Retail Sales and Service rows
+# only, and is about drive-through facilities. Dismissed.
+notes:
+
+  # --- 58.central-tualatin-overlay.txt (Table 58-1, modifications to use) ---
+  - quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L76"
+    digest: "fff627adf3c3"
+    state: dismissed
+    reason: >-
+      new drive-through restaurant and photo service facilities are
+      prohibited in the overlay, and existing ones lose the right to rebuild
+      after a year's discontinuance. Marked on the Eating and Drinking and
+      Retail Sales and Service rows; the Household Living row the CC
+      quadplex permission is read from carries no marker, and the pod has no
+      drive-through

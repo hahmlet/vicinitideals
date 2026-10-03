@@ -550,7 +550,7 @@ code:
   # Same rule, same reading: each chapter is one slice of the same PDF, its
   # own first section to the next chapter's, plain extraction for the reason
   # 40-41 gives. Chapter 58 is the Central Tualatin Overlay, held because it
-  # rewrites the CC zone's use table on ten named blocks (see CC's ruling).
+  # rewrites the CC zone's use table on ten named blocks (see the CC block).
   # The PDF was re-downloaded the same day and every one of the fourteen
   # documents already stored slices out of it byte for byte, so the new
   # chapters and the old are the same publication.
@@ -912,27 +912,36 @@ defaults:
   # (`flats.geom.corner.through_plans`); no zone here states a rear above
   # its front, so today that is the same envelope.
   #
-  # NOT ENCODED: the five-foot perimeter. 73C.210(3) requires landscaping a
-  # "Minimum five feet in width in all off-street parking and vehicular
-  # circulation areas", under a section that opens "All development where new
-  # parking is provided", so it reaches the pod. It is a strip between the
-  # parking and everything around it and no field in this model holds one.
-  # Inert on the numbers this screen already carries: five feet is exactly the
-  # side yard in both RL and RML, and both rear yards and both front yards are
-  # larger, so the envelope the court is drawn in is already cut back at least
-  # this far on every line. Recorded because the day a zone here states a side
-  # yard under five feet it stops being inert.
-  # (or/clackamas/tualatin/73C.parking.txt#L672-L673,L684-L685)
-  #
-  # NOT ENCODED: the landscape islands, and this one is not inert. 73C.210(4)
-  # asks a "Minimum 25 square feet per parking space" of landscape island --
-  # 100 square feet for the pod's four -- and (c) puts them "at aisle ends",
-  # which is inside the court rather than around it, and (e) adds one
-  # deciduous shade tree for every four spaces. A hundred square feet at the
-  # end of a 24-foot aisle is a real claim on the same ground the court needs
-  # and this model has no field for a reserve inside a parking area. The
-  # eight-space separation rule in (d) does not reach a row of four.
-  # (or/clackamas/tualatin/73C.parking.txt#L695-L696,L705-L707,L711-L712)
+  # THE FIVE-FOOT PERIMETER, encoded 2026-10-02. 73C.210(3) requires
+  # landscaping a "Minimum five feet in width in all off-street parking and
+  # vehicular circulation areas", under a section that opens "All development
+  # where new parking is provided", so it reaches the pod. Until this date it
+  # was refused as inert -- five feet is exactly the side yard in RL and RML,
+  # and the rear and front yards are larger -- which held for the yards and
+  # not for the court: the screen lets the court share the rear yard up to
+  # the rear line (`paper.behind_wall_ft`), and the strip takes its last five
+  # feet there. Its one exception, parking areas on separate lots that adjoin
+  # and connect, is a neighbour nothing measures. The street lines are
+  # `parking_street_setback_ft`'s question and the yards there are deeper.
+  parking_lot_line_buffer_ft:
+    value: 5
+    cite: TDC 73C.210(3), perimeter landscaping at least five feet wide around off-street parking and vehicular circulation areas
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/73C.parking.txt#L675-L676,L684-L685"
+  # THE LANDSCAPE ISLANDS, encoded 2026-10-02. 73C.210(4) asks a "Minimum 25
+  # square feet per parking space" of landscape island -- a hundred square
+  # feet for the pod's four -- and (c) puts them "at aisle ends", inside the
+  # court rather than around it, on the ground the court needs. Charged as
+  # width along the row (`paper.court_across`). (e)'s shade tree for every
+  # four spaces stands in the island; the eight-space separation in (d) does
+  # not reach a row of four.
+  parking_island_sqft_per_space:
+    value: 25
+    cite: TDC 73C.210(4), landscape island at least 25 square feet per parking space, at aisle ends
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/73C.parking.txt#L695-L696,L702-L703"
   #
   # NOT ENCODED: 30 percent tree canopy over the parking area, 73C.030(12)(a),
   # for lots whose parking is under half an acre, which is all of them here. A
@@ -1329,9 +1338,9 @@ zones:
   # it ten codes this layer had never held -- 423 lots. Six refuse the
   # building at their use table and are the blocks below, read the way the
   # 2026-09-20 six were: the "not listed are prohibited" sentence, then the
-  # RESIDENTIAL USE CATEGORIES block. Four permit it in some form and are
-  # `zone_rulings` entries at the foot of the file, to read (RH, RH/HR, MUC,
-  # CC). Every chapter here also says "Additional uses may be allowed in a
+  # RESIDENTIAL USE CATEGORIES block. Four permit it in some form: RH,
+  # RH/HR and MUC are `zone_rulings` entries at the foot of the file, to
+  # read, and CC is the block below the six (encoded 2026-10-02). Every chapter here also says "Additional uses may be allowed in a
   # particular overlay zone"; the overlays were read for each. Chapter 58
   # (Central Tualatin) modifies only CC, CG, CO, ML, MG, RH and RH-HR, and
   # the Tonquin Light Manufacturing Overlay inside MBP adds the ML zone's
@@ -1477,6 +1486,132 @@ zones:
 # Steph's rule: read every code, write the reason down, never show it again;
 # only a code nobody has seen warns). A ruled code gates ZONE_TO_READ in the
 # copy instead of ZONE_NOT_ENCODED and folds away on the County copy page.
+  # === CC, encoded 2026-10-02 ===========================================
+  # Central Commercial refuses the building on its own and permits it on ten
+  # blocks of the Central Tualatin Overlay. 155 lots; 91 lie inside the
+  # Residential Sub-District as traced (`drawn_areas` below), 64 outside.
+  CC:
+    section: ["53.", "58."]
+    cite_default:
+      cite: TDC 53.300 Table 53-2 (Development Standards in the CC Zone) and
+        TDC 58.800 Table 58-7 (Development Standards in the Central Tualatin
+        Overlay District), CC rows
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-10-01'
+    quadplex_allowed:
+      # Table 53-1's residential block is one row, a family child care home
+      # as an accessory use, and "use categories which are not listed are
+      # prohibited" (53.200(1)). Chapter 58 rewrites the table on the
+      # Residential Sub-District -- "Blocks 2, 3, 15, 16, 17, 18, 19, 20, 22
+      # and 23" of Comprehensive Plan Map 10-3 -- where Household Living is
+      # P (L) with Quadplexes listed by name. The blocks are the traced area
+      # `inside_mapped_use_area` reads here.
+      value: false
+      cite: TDC 53.200(1) and Table 53-1, no Household Living row in the CC zone
+      quote: "or/clackamas/tualatin/53.cc.txt#L11-L18,L21-L26"
+      variants:
+        - value: true
+          when: [inside_mapped_use_area]
+          cite: TDC 58.200(2)(a) and Table 58-1, Household Living P (L), Quadplexes, in the Residential Sub-District
+          quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L20-L22,L31-L34,L39-L48"
+    min_lot_sqft:
+      value: 5000
+      cite: TDC Table 53-2, Minimum Lot Size, All Uses (Table 58-7 states none for CC)
+      quote: "or/clackamas/tualatin/53.cc.txt#L139-L146"
+    min_lot_width_ft:
+      # 58.800(1): "Where no standard is listed, the standards of the base
+      # zone apply" -- and Table 58-7 lists one: a 40 ft Minimum Lot Width
+      # in CC, which takes the place of Table 53-2's 75 ft MINIMUM LOT WIDTH
+      # row (stated there as an average). Every lot the building is allowed
+      # on is inside the overlay, so the overlay's number is the one read.
+      value: 40
+      cite: TDC 58.800(1) and Table 58-7, CC, Minimum Lot Width
+      quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L283-L285,L294,L298"
+    min_frontage_ft:
+      value: 40
+      cite: TDC Table 58-7, CC, Minimum Lot Width at the Street
+      quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L294,L304-L306"
+      variants:
+        - value: 35
+          when: [fronts_cul_de_sac]
+          cite: TDC Table 58-7, CC, Minimum Lot Width at the Street on a Cul-De-Sac Street
+          quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L294,L307-L309"
+    setback_front_ft:
+      # "Front None. Determined through Architectural Review Process." The
+      # corner lot row puts "0-20 feet along each frontage" on a corner, for
+      # sight distance, also through Architectural Review: held at the top
+      # of its range, the number no review can exceed.
+      value: 0
+      cite: TDC Table 53-2, Minimum Setbacks, Front None
+      quote: "or/clackamas/tualatin/53.cc.txt#L158-L160"
+      variants:
+        - value: 20
+          when: [corner_lot]
+          cite: TDC Table 53-2, Minimum Setbacks, Corner Lots 0-20 feet along each frontage
+          quote: "or/clackamas/tualatin/53.cc.txt#L175-L180"
+    setback_front_max_ft:
+      value: 20
+      cite: TDC Table 53-2, Maximum Setback, Front
+      quote: "or/clackamas/tualatin/53.cc.txt#L186-L187"
+    setback_side_ft:
+      # "Side and Rear 0-20 feet. Determined through Architectural Review
+      # Process." A range a review settles, held at its top.
+      value: 20
+      cite: TDC Table 53-2, Minimum Setbacks, Side and Rear 0-20 feet (top of the range)
+      quote: "or/clackamas/tualatin/53.cc.txt#L171-L172"
+    setback_rear_ft:
+      # Two rows reach the rear: "Side and Rear 0-20" and "Rear 0-15", both
+      # by Architectural Review. Held at 20, the stricter of the two tops,
+      # because nothing on the page says the second row displaces the first.
+      value: 20
+      cite: TDC Table 53-2, Minimum Setbacks, Side and Rear 0-20 feet and Rear 0-15 feet (the stricter top)
+      quote: "or/clackamas/tualatin/53.cc.txt#L171-L174"
+    setback_street_side_ft:
+      value: 20
+      cite: TDC Table 53-2, Minimum Setbacks, Corner Lots 0-20 feet along each frontage (top of the range)
+      quote: "or/clackamas/tualatin/53.cc.txt#L175-L180"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: TDC Table 53-2, Minimum Setbacks, Front, residential garage doors facing a public street
+      quote: "or/clackamas/tualatin/53.cc.txt#L158,L164-L165"
+    parking_street_setback_ft:
+      value: 5
+      cite: TDC Table 53-2, Minimum Setbacks, Parking and Vehicle Circulation Areas 5 feet
+      quote: "or/clackamas/tualatin/53.cc.txt#L181-L184"
+    max_height_ft:
+      value: 45
+      cite: TDC Table 53-2, Maximum Structure Height, All Uses
+      quote: "or/clackamas/tualatin/53.cc.txt#L188-L189"
+    max_coverage_pct:
+      exempt: true
+      cite: TDC Table 53-2 states no lot coverage, and Table 58-7 none for CC
+      quote: "or/clackamas/tualatin/53.cc.txt#L139-L144"
+    max_density_du_per_acre:
+      value: 25
+      cite: TDC Table 58-7, CC, Density within the Residential Sub-District 16-25 dwelling units per acre
+      quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L294-L297"
+    min_density_du_per_acre:
+      value: 16
+      cite: TDC Table 58-7, CC, Density within the Residential Sub-District 16-25 dwelling units per acre
+      quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L294-L297"
+    notes: >-
+      Encoded 2026-10-02 from Tables 53-1, 53-2, 58-1 and 58-7, after Steph
+      supplied Map 10-3 (Tualatin 2040 Comprehensive Plan, 2025, p. 51) and
+      the ten Residential Sub-District blocks were traced (`drawn_areas`).
+      Outside them the zone refuses the building; inside it is permitted
+      outright with the Table 58-7 density, 16 to 25 units per acre, read on
+      the lot's whole area -- Tualatin defines Net Acres (31.060) but no
+      density row in the code is stated on it. Relief the table states and
+      this file does not encode: every side, rear and corner setback is a
+      range "determined through Architectural Review" (0-20, 0-15) and is
+      held at its top, so a lot that fits only on a smaller yard reads
+      worse than review may allow; parking 5 ft "except as approved through
+      Architectural Review"; the 125 ft height bonus north of Boones Ferry
+      (53.310(1), a conditional use). Not reaching this building: the
+      frontage-occupancy rule of 53.310(2) (commercial buildings), the
+      mixed-use and separate-lot multi-family rows of Table 58-7, and the
+      retirement-housing conditions of 58.210(1).
+
 zone_rulings:
   RMH:
     outcome: to_read
@@ -1502,11 +1637,12 @@ zone_rulings:
       side of the city was mapped -- second only to RH's 198 among
       Tualatin's unit_lots queues. To encode from Table 42-3 with RL's
       shape.
-  # The Washington County side's four that permit the building in some form,
-  # ruled 2026-10-01 with the six refusals above. Each is a `to_read` rather
-  # than a block because a permitted zone becomes a block only when its
-  # dimensions are encoded, and each of the four has a dimension the model
-  # cannot yet hold or a boundary FLATS does not have -- written down below
+  # Three of the Washington County side's four that permit the building in
+  # some form, ruled 2026-10-01 with the six refusals above (the fourth, CC,
+  # is a block since 2026-10-02). Each is a `to_read` rather than a block
+  # because a permitted zone becomes a block only when its dimensions are
+  # encoded, and each of the three has a dimension the model cannot yet hold
+  # -- written down below
   # so the next reading starts there. Until then their lots screen unknown
   # with reason ZONE_TO_READ -- a ruled code, never green and never red.
   RH:
@@ -1532,6 +1668,11 @@ zone_rulings:
       units per acre (L116-L117). Inside the Central Tualatin Overlay,
       Blocks 25 and 4, RH may mix with CC's uses under 58.600 and Table
       58-7's own standards (58.central-tualatin-overlay.txt L272-L276).
+      The Comprehensive Plan's Policy 3.2.1 (Tualatin 2040, 2025, p. 16)
+      says the city will "support development of townhomes, duplexes,
+      triplexes, quadplexes ... in all residential zoning districts" -- a
+      policy for future code, not a permission the use table grants, so
+      the missing Quadplex row still governs (told to Steph 2026-10-02).
   RH/HR:
     outcome: to_read
     note: >-
@@ -1546,9 +1687,11 @@ zone_rulings:
       rear ladder runs on structure height to 12 ft at 25 to under 30 and
       to "As determined through Architectural Review" at 30 and over
       (L173-L184), the front setback likewise (L159-L168), and Table 44-3
-      prints no townhouse lot size at all (L128-L145; townhouses would fall
-      to "All Other Permitted Uses 10,000 square feet", a reading to make
-      deliberately, not by default). Plain rows: 14 ft townhouse average
+      prints no townhouse lot size at all (L128-L145). RULED by Steph
+      2026-10-02: townhouses take the table's fallback row, "All Other
+      Permitted Uses 10,000 square feet" ("all other uses would be 10k for
+      townhouse") -- the minimum lot size to encode for the townhouse row
+      when the block is written. Plain rows: 14 ft townhouse average
       width (L147), 20 ft maximum front setback (L204), 64 ft height
       (L211), 45 percent coverage (L213), 26 to 30 units per acre
       (L117-L118). 58.700 leaves its uses unmodified in the overlay
@@ -1572,28 +1715,39 @@ zone_rulings:
       condition this layer has not declared -- and a 25 du/acre FLOOR on a
       four-unit pod caps the lot at 6,970 sq ft, a ceiling on lot size
       nothing here has encoded for a townhouse row.
-  CC:
-    outcome: to_read
+
+
+# Areas the code draws inside a zone and nobody publishes as data, traced
+# here (2026-10-02). See flats/rules/model.py DrawnArea.
+drawn_areas:
+  residential_sub_district:
+    condition: inside_mapped_use_area
+    zones: [CC]
+    file: or/clackamas/tualatin/residential-sub-district.geojson
+    source: >-
+      Tualatin 2040 Comprehensive Plan (2025), Map 10-3 "Central Tualatin
+      Overlay Zone" (PDF p. 51, TualGIS, RF 1:6000), supplied by Steph
+      2026-10-02. The city's public GIS has no block layer
+      (LandusePlanningExplorer checked 2026-10-02). The map page was
+      registered to the city's own taxlots (TualGIS Taxlots, retrieved
+      2026-10-02) by matching the taxlot lines it draws (3.13 ft a pixel at
+      250 dpi, north up, 57 percent of the lines coincident at the best fit);
+      each block is the region its black outline encloses, and each taxlot
+      went to the block holding most of its interior. The area is the union
+      of the taxlots of blocks 2, 3, 15, 16, 17, 18, 19, 20, 22 and 23
+      (feature properties list them). Six lots the outlines split were left
+      out of every block, none of them a whole Residential Sub-District lot.
+    quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L20-L22,L31-L34"
+    cite: TDC 58.110 and 58.200(2)(a)
     note: >-
-      Central Commercial, TDC Chapter 53, 155 lots. Fetched and read
-      2026-10-01 (53.cc.txt). On its own the zone refuses the building:
-      Table 53-1's residential block is one row, a family child care home
-      as an accessory use, and no Household Living row (L11-L26). But
-      Chapter 58, the Central Tualatin Overlay, rewrites that table on ten
-      named blocks -- the Residential Sub-District, "Blocks 2, 3, 15, 16,
-      17, 18, 19, 20, 22 and 23" -- where Household Living is P with
-      Quadplexes listed by name (58.central-tualatin-overlay.txt L24-L34,
-      L39-L53), at 16 to 25 units per acre and a 40 ft minimum lot width
-      (L294-L299). The blocks are "depicted in Comprehensive Plan Map
-      10-3" (L21-L22), which FLATS does not hold. A refusal block would
-      turn every Residential Sub-District lot red against the code's
-      express permission, and a permitted block would turn the rest of the
-      zone green against Table 53-1. So it waits on two things: Map 10-3's
-      ten blocks as a measured area (`inside_mapped_use_area`, Hillsboro
-      UC's shape), and Table 53-2 (5,000 sq ft, 75 ft average width,
-      setbacks "Determined through Architectural Review"; 53.cc.txt
-      L145-L175) read against Table 58-7's overlay rows. Then CC is
-      quadplex_allowed false with the sub-district as its variant.
+      "The boundaries of the Central Tualatin Overlay Zone and block numbers
+      are depicted in Comprehensive Plan Map 10-3", and the Residential
+      Sub-District is "Blocks 2, 3, 15, 16, 17, 18, 19, 20, 22 and 23". It is
+      where Table 58-1 permits Household Living in CC, so it is the area the
+      CC block's quadplex permission turns on. Against FLATS' own lots: 155
+      CC lots, 91 at least 90 percent inside, 64 at most 10 percent, none
+      between. A lot split or merged since 2020 that the outline now cuts is
+      left unanswered, and screens unknown on the fact.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.

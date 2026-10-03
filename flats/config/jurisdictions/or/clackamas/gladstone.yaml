@@ -689,14 +689,19 @@ defaults:
   # Portland's it is not a street-only rule -- it says property line and means
   # every one of them.
   #
-  # NOT ENCODED: the side and rear halves of that same sentence. This model has
-  # one parking setback field and it is measured from a street lot line; nothing
-  # holds a parking setback from an interior or rear line. Inert here, and
-  # stated so it stays inert on purpose: R-7.2 asks 7.5 feet of side yard and 15
-  # of rear, R-5 asks 5 and 15, and every one of those is already larger than
-  # the five feet the curb owes. If a Gladstone zone ever carries a side setback
-  # under five, this refusal starts costing something.
+  # THE SIDE AND REAR HALVES of that same sentence, encoded 2026-10-02 as
+  # `parking_lot_line_buffer_ft`. Refused until then as inert -- R-7.2 asks
+  # 7.5 feet of side yard and 15 of rear, R-5 asks 5 and 15, each at least
+  # the five feet the curb owes -- which held for the yards and not for the
+  # court: the screen lets the court share the rear yard up to the rear line
+  # (`paper.behind_wall_ft`), and the curb stands five feet off it.
   # (or/clackamas/gladstone/17.48.parking.txt#L456,L466)
+  parking_lot_line_buffer_ft:
+    value: 5
+    cite: GMC 17.48.040(2)(e), parking spaces set back five feet from the property line (side and rear lines)
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L456,L466"
   parking_street_setback_ft:
     value: 5
     cite: GMC 17.48.040(2)(e), parking spaces set back five feet from the property line

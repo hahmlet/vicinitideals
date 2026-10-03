@@ -307,9 +307,12 @@ def alley_fed(rules: "ZoneResolution", alley: Alley | None) -> bool:
 #: ``corner_access_street`` values that let a corner lot's driveway come in
 #: from the side street: ``any`` names no street, ``side`` names that one.
 #: ``lowest_class`` asks for the street of the lowest functional class, which
-#: nothing measures yet, so it keeps the lane beside the building -- the
-#: conservative reading, where quadfit's drawing treats it as ``any``.
-SIDE_STREET_ACCESS = frozenset({"any", "side"})
+#: nothing measures; it is read as the side street. Steph, 2026-10-02: "when
+#: there are multiple street, it's the side line, not the front. Cities
+#: typically require the housing to face the busier street, so they want the
+#: parking entrance on another side." Until then the lane stayed beside the
+#: building, off the front street the code is likeliest to keep it off.
+SIDE_STREET_ACCESS = frozenset({"any", "side", "lowest_class"})
 
 
 def front_lot_line_rule(rules: "ZoneResolution") -> str | None:
@@ -364,6 +367,12 @@ def yards_kept_clear(rules: "ZoneResolution") -> bool:
     return rules.get("parking_required_yard_prohibited") is True
 
 
+def lot_line_buffer_ft(rules: "ZoneResolution") -> float:
+    """The strip the code keeps between parking and the lot lines that are
+    not streets (``parking_lot_line_buffer_ft``); 0 where none is stated."""
+    return _number(rules, "parking_lot_line_buffer_ft") or 0.0
+
+
 def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") -> float:
     """The ground a lot must give behind the building's rear wall.
 
@@ -383,12 +392,14 @@ def behind_wall_ft(parked_ft: float, rear_ft: float, rules: "ZoneResolution") ->
 
     The one place the yard is kept clear of parking. A code that asks a
     planted strip between parking and the lot line (Tigard's 5 ft in its
-    lowest-density zones) is the same shape with its own width, and raises
-    the keep-off distance here; its lateral half -- a strip wider than the
-    side setback -- is not this function's, because the side yards are
-    already outside the envelope the court is searched in.
+    lowest-density zones) is the same shape with its own width
+    (:func:`lot_line_buffer_ft`), and raises the keep-off distance here; its
+    lateral half -- a strip wider than the side setback -- is not this
+    function's, because the side yards are already outside the envelope the
+    court is searched in.
     """
     keep = rear_ft if yards_kept_clear(rules) else 0.0
+    keep = max(keep, lot_line_buffer_ft(rules))
     return max(rear_ft, parked_ft + keep)
 
 
@@ -410,6 +421,10 @@ def _backout_shortfall(rules: "ZoneResolution", alley: Alley | None) -> float | 
         # the yard along it, or backs across that yard to reach it: either
         # way parking in a required yard, which the code bans. The court
         # keeps its own aisle (conservative; no layer states both today).
+        return None
+    if lot_line_buffer_ft(rules) > 0:
+        # Same shape with a planted strip along the alley line: the stall
+        # cannot back across it.
         return None
     assert alley is not None
     return max(0.0, backout - (alley.width_ft or 0.0))
@@ -660,6 +675,10 @@ def court_across(
     same reason its narrower aisle does not deepen it — the design is drawn to
     a 9 ft cell and a smaller one is a different drawing.
 
+    A code that plants islands inside the court
+    (``parking_island_sqft_per_space``) widens each cell by its share of
+    them, spread one stall deep.
+
     **The lane.** The design's 12 ft, raised by the zone's two-way driveway
     minimum where it states one (Happy Valley 20, Tualatin 22, West Linn 24).
     The two-way figure, as with the aisle: the court is entered and left
@@ -705,6 +724,15 @@ def court_across(
     if (stated := _number(rules, "parking_stall_width_ft")) is not None:
         used.append("parking_stall_width_ft")
         stall = max(stall, stated)
+    if (island := _number(rules, "parking_island_sqft_per_space")) is not None and island > 0:
+        # Planted islands inside the court, so much ground per stall
+        # (Tualatin 73C.210(4), 25 sq ft at the aisle ends): charged as width
+        # along the row, each stall's share standing one stall deep.
+        used.append("parking_island_sqft_per_space")
+        deep = design.parking.stall_depth_ft
+        if (stated := _number(rules, "parking_stall_depth_ft")) is not None:
+            deep = max(deep, stated)
+        stall += island / deep
     lane = design.parking.lane_width_ft
     if alley_fed(rules, alley):
         # The court is reached from the alley behind it or beside it, and the
@@ -1149,6 +1177,8 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     used += list(across.from_code)
     if court and yards_kept_clear(rules):
         used.append("parking_required_yard_prohibited")
+    if court and lot_line_buffer_ft(rules) > 0:
+        used.append("parking_lot_line_buffer_ft")
     used += [
         name
         for name, got in (
@@ -1271,6 +1301,17 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # side_drive design would be on the front branch, and the
                 # test named in `court_across` fails the day one lands.
                 "parking_maneuvering_max_width_ft (a condition of the front-parking option; the pod parks behind)",
+                # The approach is the curb cut and apron in the street right
+                # of way, not ground on the lot: its minimum flares there and
+                # takes nothing the fit searches. Its maximum caps the cut,
+                # and every one encoded admits a car (the smallest is 10 ft,
+                # Gresham and Tigard), so a single approach can always serve
+                # the pod's one drive; the drive on the lot is held to its
+                # own widths (`drive_width`). Spacing between approaches and
+                # a second approach are FOLLOWUPS 24/25. Bound by
+                # `test_every_approach_maximum_admits_one_car`.
+                "driveway_approach_min_width_ft (in the right of way, not on the lot)",
+                "driveway_approach_max_width_ft (in the right of way; every maximum admits one car)",
             ),
         )
         if best is None or _worse(best, candidate):
@@ -1318,3 +1359,21 @@ def drive_at_street(
     if alley_fed(rules, alley):
         return 0.0
     return drive_width(rules, parking.lane_ft)
+
+
+def drive_in_front_yard(
+    design: Design,
+    rules: "ZoneResolution",
+    alley: Alley | None = None,
+    *,
+    corner: bool = False,
+    beside: "Beside | None" = None,
+) -> float:
+    """Width of the pod's driveway across the FRONT yard, in feet: what a cap
+    on the front yard's share in vehicle area (``parking_front_yard_max_pct``)
+    is measured against. :func:`drive_at_street`, less the drive a corner
+    lot takes off the side street (:func:`side_street_fed`), which crosses
+    the street-side yard and leaves the front yard unpaved."""
+    if beside is None and side_street_fed(rules, alley, corner):
+        return 0.0
+    return drive_at_street(design, rules, alley, corner=corner, beside=beside) or 0.0

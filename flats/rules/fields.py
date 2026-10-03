@@ -122,6 +122,8 @@ _LABELS: dict[str, str] = {
     "parking_area_max_frontage_pct": "max. parking share of frontage",
     "parking_area_max_width_ft": "max. parking area width",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
+    "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
+    "parking_island_sqft_per_space": "min. landscape island per parking space",
     "fire_access_max_ft": "max. fire hose route to the farthest wall",
     "parking_front_prohibited": "parking banned in front of building",
     "parking_alley_access_required": "vehicle access must be from the alley",
@@ -825,8 +827,10 @@ _F: tuple[FieldDef, ...] = (
         "building. `lowest_class`: access from the street with the lowest "
         "functional classification first (Clackamas ZDO 845.03(A)(3), West "
         "Linn 48.030(B)(5), Fairview 19.162.020(5) for double-frontage lots) "
-        "-- needs the street class per edge, which nothing measures yet, so "
-        "a drawing treats it as `any` and says so. `any`: the code names no "
+        "-- needs the street class per edge, which nothing measures; read as "
+        "the side street on a corner lot (Steph 2026-10-02: the building "
+        "faces the busier street, so the parking entrance goes on another "
+        "side), a through lot keeping its own ruling. `any`: the code names no "
         "street (Portland, which routes to the alley first and is otherwise "
         "silent; Happy Valley; Gladstone; Wood Village; Tualatin, whose "
         "36.400(b) sends only a double-frontage lot -- by 31 not a corner -- "
@@ -858,6 +862,38 @@ _F: tuple[FieldDef, ...] = (
         "it serves. Fairview asks four feet and makes it a landscape buffer "
         "where the wall is ground-floor living space (19.163.030(E)(3)(b)). "
         "Real ground, subtracted from the court before any stall is seated.",
+        False,
+    ),
+    FieldDef(
+        "parking_lot_line_buffer_ft",
+        "length_ft",
+        "Width of the strip -- landscaped, as most codes word it -- a code "
+        "keeps between a parking or maneuvering area and every lot line that "
+        "is NOT a street: the rear line and the interior sides. The street "
+        "lines are `parking_street_setback_ft`. It matters at the REAR: the "
+        "court shares the rear yard everywhere a code lets it "
+        "(`paper.behind_wall_ft`), so without this the court may run to the "
+        "rear line, and a planted strip there takes the court's last feet. "
+        "Charged as ground behind the wall past the court "
+        "(`paper.behind_wall_ft`) and cut off the court's ground "
+        "(`flats.ingest.quadfit.envelope_for`). An alley line is a lot line "
+        "too, so a code stating it sends no stall backing into the alley "
+        "across the strip (`paper._backout_shortfall`, conservative). At the "
+        "sides the court is searched inside the envelope; a side setback "
+        "narrower than the strip is widened to it there (Hillsboro's 0 ft "
+        "SCC and UC sides). Optional: absent means the court may reach the "
+        "rear line, as it always has.",
+        False,
+    ),
+    FieldDef(
+        "parking_island_sqft_per_space",
+        "area_sqft",
+        "Planted island a code asks INSIDE a parking area, in square feet per "
+        "space. Tualatin 73C.210(4): \"Minimum 25 square feet per parking "
+        "space\", placed \"at aisle ends\" -- a hundred square feet for "
+        "the pod's four, on the ground the court needs. Charged as width "
+        "along the row (`paper.court_across`): each stall's share, spread one "
+        "stall deep. Optional: absent means no island is asked.",
         False,
     ),
     FieldDef(
@@ -1302,6 +1338,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "front_lot_line_through",
         "parking_street_setback_ft",
         "parking_building_buffer_ft",
+        "parking_lot_line_buffer_ft",
+        "parking_island_sqft_per_space",
         "open_space_min_pct",
         "open_space_min_sqft",
         # The shape beside the amount. Stated only where the amount is, and

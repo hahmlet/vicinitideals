@@ -269,11 +269,13 @@ def test_the_setback_that_binds_is_rml_and_rml_holds_no_lots(tualatin: Layer) ->
 def test_four_refusals_against_ten_values(tualatin: Layer) -> None:
     """Three landscaping rules and one setback, and only one of them bites.
 
-    The five-foot planted perimeter is exactly the side yard in both zones and
-    smaller than every other yard, so the envelope is already cut back that
-    far. The tree canopy sits above a car rather than in its way. What is left
-    is a hundred square feet of landscape island at the aisle ends, which is
-    inside the court, and RML's unheld side and rear ten feet.
+    The tree canopy sits above a car rather than in its way; what is left is
+    RML's unheld side and rear ten feet. The five-foot planted perimeter and
+    the hundred square feet of landscape island were refusals here until
+    2026-10-02, when both were encoded (`parking_lot_line_buffer_ft`,
+    `parking_island_sqft_per_space`): the perimeter had been called inert
+    because the yards are wider, but the court shares the rear yard up to
+    the rear line.
     """
     # The through-lot front (FOLLOWUPS 6(i), 2026-09-29) is not a parking
     # refusal: the stored code does not say which end is the front.
@@ -281,6 +283,7 @@ def test_four_refusals_against_ten_values(tualatin: Layer) -> None:
         r for r in refusals()
         if r.kind == "comments" and r.where == TUALATIN and "front_lot_line_through" not in r.text
     ]
-    assert len(mine) == 4
+    assert len(mine) == 2
     # 10 -> 13 on 2026-09-19: the three corner-lot placement fields (FOLLOWUPS 5).
-    assert len(tualatin.defaults) == 13
+    # 13 -> 15 on 2026-10-02: the perimeter strip and the islands.
+    assert len(tualatin.defaults) == 15

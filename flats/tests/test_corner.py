@@ -212,7 +212,7 @@ DESIGN = load_catalog().latest("pod56x36")
 
 
 def test_the_side_street_takes_the_driveway_where_the_code_lets_it() -> None:
-    for value in ("any", "side"):
+    for value in ("any", "side", "lowest_class"):
         rules = Rules(corner_access_street=value)
         assert side_street_fed(rules, None, True)  # type: ignore[arg-type]
         across = court_across(DESIGN, rules, corner=True)  # type: ignore[arg-type]
@@ -222,12 +222,16 @@ def test_the_side_street_takes_the_driveway_where_the_code_lets_it() -> None:
     assert court_across(DESIGN, Rules(corner_access_street="any")).lane_ft > 0  # type: ignore[arg-type]
 
 
-def test_a_code_asking_for_the_lowest_class_street_keeps_the_lane() -> None:
-    # Nothing measures a street's functional class yet: the side street may
-    # be the busier one, so the lane stays beside the building.
+def test_a_code_asking_for_the_lowest_class_street_takes_the_side_street() -> None:
+    # Nothing measures a street's functional class. Steph 2026-10-02: the
+    # building faces the busier street, so the lower class one is the side
+    # street -- the court is reached off it, and no lane runs down the flank.
     rules = Rules(corner_access_street="lowest_class")
-    assert not side_street_fed(rules, None, True)  # type: ignore[arg-type]
-    assert court_across(DESIGN, rules, corner=True).lane_ft > 0  # type: ignore[arg-type]
+    assert side_street_fed(rules, None, True)  # type: ignore[arg-type]
+    assert court_across(DESIGN, rules, corner=True).lane_ft == 0.0  # type: ignore[arg-type]
+    # One street only: there is no other street to take.
+    assert court_across(DESIGN, rules).lane_ft > 0  # type: ignore[arg-type]
+    # A code nobody read for it keeps the lane.
     assert court_across(DESIGN, Rules(), corner=True).lane_ft > 0  # type: ignore[arg-type]
 
 

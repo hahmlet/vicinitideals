@@ -20,6 +20,7 @@ surface every problem in one pass, not one per run.
 
 from __future__ import annotations
 
+import json
 import math
 import re
 from collections.abc import Mapping
@@ -32,6 +33,7 @@ import yaml
 from flats.rules.conditions import (
     ACROSS_STREET_CONDITIONS,
     CONDITIONS,
+    DRAWN_CONDITIONS,
     NEIGHBOUR_ZONE_CONDITIONS,
     PARK_CONDITIONS,
 )
@@ -46,6 +48,7 @@ from flats.rules.definitions import parse as parse_definitions
 from flats.rules.net_area import DEDUCTIONS, NetArea
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
+    DrawnArea,
     POCKET_ZONE_FROM_MAP,
     ZONE_RULING_OUTCOMES,
     NeighbourRule,
@@ -75,6 +78,11 @@ from flats.rules.model import (
 )
 
 CONFIG_ROOT = Path(__file__).resolve().parents[1] / "config" / "jurisdictions"
+#: Where a layer's traced areas live (``drawn_areas``, :class:`DrawnArea`).
+AREAS_ROOT = CONFIG_ROOT.parent / "areas"
+#: The one coordinate system a traced area may be drawn in: quadfit's, so a
+#: lot and the area are compared without a projection in between.
+AREA_CRS = "EPSG::2913"
 
 _PROV_KEYS = ("cite", "url", "retrieved", "quote", "clause", "drawn", "read_by", "read_on")
 _REVIEW_KEYS = ("status", "reviewer", "reviewed", "preempts")
@@ -1907,6 +1915,113 @@ def _parse_parks(
     return out
 
 
+def _parse_drawn_areas(
+    raw: object, zones: Mapping[str, Zone], *, where: str, problems: list[str]
+) -> dict[str, DrawnArea]:
+    """The boundaries this code draws inside a zone, traced here::
+
+        drawn_areas:
+          residential_sub_district:
+            condition: inside_mapped_use_area
+            zones: [CC]
+            file: or/clackamas/tualatin/residential-sub-district.geojson
+            source: Comprehensive Plan Map 10-3, blocks 2, 3 ... traced ...
+            quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L20-L22"
+            cite: TDC 58.110, 58.200(2)(a)
+            note: >-
+              Why these blocks, and how the tracing was made ...
+
+    Only a registered drawn condition (``DRAWN_CONDITIONS``); zones that are
+    zone blocks of this layer, none of them answered by two areas for the
+    same condition; a GeoJSON FeatureCollection under ``AREAS_ROOT`` drawn in
+    EPSG:2913; a source, a quote and a note of a ruling's length.
+    """
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.drawn_areas: expected a mapping of area name -> area")
+        return {}
+    out: dict[str, DrawnArea] = {}
+    claimed: dict[tuple[str, str], str] = {}
+    for name, body in raw.items():
+        name = str(name).strip()
+        at = f"{where}.drawn_areas.{name}"
+        if not isinstance(body, dict):
+            problems.append(f"{at}: expected condition, zones, file, source, quote and note")
+            continue
+        extra = set(body) - {"condition", "zones", "file", "source", "quote", "cite", "note"}
+        if extra:
+            problems.append(f"{at}: unexpected {', '.join(sorted(str(e) for e in extra))}")
+            continue
+        cond = str(body.get("condition") or "").strip()
+        if cond not in DRAWN_CONDITIONS:
+            problems.append(f"{at}.condition: one of {', '.join(DRAWN_CONDITIONS)}")
+            continue
+        listed = body.get("zones")
+        if not isinstance(listed, list) or not listed:
+            problems.append(f"{at}.zones: a list of this layer's zone blocks")
+            continue
+        names = tuple(dict.fromkeys(str(z).strip() for z in listed))
+        missing = [z for z in names if z not in zones]
+        if missing:
+            problems.append(f"{at}.zones: not a zone block here: {', '.join(missing)}")
+            continue
+        twice = [z for z in names if (cond, z) in claimed]
+        if twice:
+            problems.append(
+                f"{at}.zones: {', '.join(twice)} already answered for {cond} by "
+                f"{', '.join(sorted({claimed[(cond, z)] for z in twice}))}"
+            )
+            continue
+        file = str(body.get("file") or "").strip()
+        problem = _area_file_problem(file)
+        if problem:
+            problems.append(f"{at}.file: {problem}")
+            continue
+        texts = {k: body.get(k) for k in ("source", "quote")}
+        blank = [k for k, v in texts.items() if not isinstance(v, str) or not v.strip()]
+        if blank:
+            problems.append(f"{at}: {' and '.join(blank)} required")
+            continue
+        note = body.get("note")
+        if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
+            problems.append(f"{at}: a note saying what the area is and why, in at least {MIN_RULING} characters")
+            continue
+        cite = body.get("cite")
+        for z in names:
+            claimed[(cond, z)] = name
+        out[name] = DrawnArea(
+            name=name,
+            condition=cond,
+            zones=names,
+            file=file,
+            source=" ".join(str(texts["source"]).split()),
+            quote=str(texts["quote"]).strip(),
+            cite=None if cite is None else str(cite).strip(),
+            note=" ".join(note.split()),
+        )
+    return out
+
+
+def _area_file_problem(file: str) -> str | None:
+    """Why ``file`` is not a traced area this loader accepts, or None."""
+    if not file:
+        return "a GeoJSON file under flats/config/areas"
+    path = AREAS_ROOT / file
+    if not path.is_file():
+        return f"no such file under flats/config/areas: {file}"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        return f"not JSON: {_terse(exc)}"
+    if data.get("type") != "FeatureCollection" or not data.get("features"):
+        return "a GeoJSON FeatureCollection with at least one feature"
+    crs = str(((data.get("crs") or {}).get("properties") or {}).get("name") or "")
+    if not crs.endswith(AREA_CRS):
+        return f"drawn in {AREA_CRS} (the crs member says {crs or 'nothing'})"
+    return None
+
+
 def _parse_readings(
     raw: object, *, where: str, problems: list[str]
 ) -> dict[str, Reading]:
@@ -2198,6 +2313,9 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             parks=_parse_parks(raw.get("parks"), where=where, problems=problems),
             private_drives=_parse_private_drives(
                 raw.get("private_drives"), where=where, problems=problems
+            ),
+            drawn_areas=_parse_drawn_areas(
+                raw.get("drawn_areas"), zones, where=where, problems=problems
             ),
             set_aside=_parse_set_aside(raw.get("set_aside"), zones, where=where, problems=problems),
         )

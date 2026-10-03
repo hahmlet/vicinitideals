@@ -79,6 +79,7 @@ from flats.score.paper import (
     court_across,
     court_depth,
     drive_at_street,
+    drive_in_front_yard,
     lot_standard,
     paved,
     side_column,
@@ -188,6 +189,7 @@ CHECK_FIELD: dict[str, str] = {
     "min_lot_area_sqft": "min_lot_sqft",
     "min_frontage_ft": "min_frontage_ft",
     "driveway_frontage_share": "driveway_max_frontage_pct",
+    "front_yard_vehicle_share": "parking_front_yard_max_pct",
     "min_lot_width_ft": "min_lot_width_ft",
     "min_average_lot_width_ft": "min_average_lot_width_ft",
     "min_lot_depth_ft": "min_lot_depth_ft",
@@ -693,6 +695,25 @@ def _checks(
                 "driveway_frontage_share",
                 drive,
                 share / 100.0 * lot.frontage_ft,
+                is_maximum=True,
+            )
+    # The front yard's share in vehicle area (Portland 33.266.120.C.1.b, 40
+    # percent; Milwaukie 19.607.1.D, 50). An AREA share of the ground between
+    # the front lot line and the building, which the pod's drive crosses
+    # front to back; its share of that area is its width against the lot's
+    # width at the front. Unmeasured width leaves it unchecked.
+    front_share = rules.get("parking_front_yard_max_pct")
+    if front_share is not None:
+        across_front = drive_in_front_yard(
+            design, rules, lot.alley, corner=lot.corner, beside=beside
+        )
+        if across_front and lot.lot_width_ft is None:
+            unchecked.append("front_yard_vehicle_share")
+        elif across_front:
+            check(
+                "front_yard_vehicle_share",
+                across_front,
+                front_share / 100.0 * lot.lot_width_ft,
                 is_maximum=True,
             )
     min_width, width_answered = lot_standard(
@@ -1340,6 +1361,24 @@ def _beside_beyond(
     return max(0.0, behind_wall_ft(overhang, rear_ft, rules) - carved)
 
 
+def _beside_over(
+    beside: Beside,
+    deep_ft: float,
+    rules: ZoneResolution,
+    carved_rear_ft: float | None = None,
+) -> float:
+    """How far a court BESIDE a building ``deep_ft`` deep runs past the
+    window the fit asks for (FOLLOWUPS 33(a)): what its row runs past the
+    rear wall less what :func:`_beside_beyond` charges the envelope for --
+    the stretch credited to the rear yard, which has to land on the court's
+    ground as the court behind's does (:func:`_court_over`). 0 where the row
+    may not run past the wall at all."""
+    overhang = beside.overhang_ft(deep_ft)
+    if math.isinf(overhang):
+        return 0.0
+    return max(0.0, overhang - _beside_beyond(beside, deep_ft, rules, carved_rear_ft))
+
+
 def seats(
     fitter: Fitter,
     design: Design,
@@ -1432,7 +1471,10 @@ def seats(
                 break
             extra = _beside_beyond(row, deep, rules, carved_rear_ft)
             if math.isinf(extra) or not fitter.holds(
-                side + row.band_ft, deep + extra, angles=street_deg
+                side + row.band_ft,
+                deep + extra,
+                angles=street_deg,
+                over_ft=_beside_over(row, deep, rules, carved_rear_ft),
             ):
                 break
             seated = n
@@ -1574,6 +1616,7 @@ def fit_for(
             angles=street_deg,
             allow_flip=not axis_required,
             placement=placement,
+            over=lambda deep: _beside_over(court, deep, rules, carved_rear_ft),
         )
         # Taken only where it CLEARS: a lot neither arrangement fits keeps
         # the court behind, the one its near-miss and relief were read on.

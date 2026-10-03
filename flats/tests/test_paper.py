@@ -750,3 +750,35 @@ def test_no_catalog_design_has_a_garage() -> None:
             f"{design.key} parks in a garage -- setback_garage_entrance_ft is no "
             "longer excludable, see PaperFit.excluded and HUMAN_TODO item 14"
         )
+
+
+def test_every_approach_maximum_admits_one_car() -> None:
+    """The guard on declaring the approach widths unread (PaperFit.excluded):
+    a maximum curb cut narrower than one car's lane would refuse the pod's
+    one drive, and would have to be screened. Walks every number filed under
+    the field, variants included."""
+    from pathlib import Path
+
+    import yaml as _yaml
+
+    root = Path(__file__).resolve().parents[1] / "config" / "jurisdictions"
+    found: list[tuple[str, float]] = []
+
+    def walk(node, where: str, inside: bool) -> None:
+        if isinstance(node, dict):
+            for key, value in node.items():
+                here = inside or key == "driveway_approach_max_width_ft"
+                if here and key in ("value", "driveway_approach_max_width_ft") and isinstance(
+                    value, (int, float)
+                ) and not isinstance(value, bool):
+                    found.append((where, float(value)))
+                walk(value, where, here)
+        elif isinstance(node, list):
+            for item in node:
+                walk(item, where, inside)
+
+    for path in root.rglob("*.yaml"):
+        walk(_yaml.safe_load(path.read_text(encoding="utf-8")), path.stem, False)
+    assert found, "no approach maximum found -- the walk is reading nothing"
+    narrow = [(where, value) for where, value in found if value < 9.0]
+    assert narrow == []

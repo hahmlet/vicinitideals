@@ -346,7 +346,10 @@ pytestmark = pytest.mark.unit
 #: prohibition is ruled in the footnote ledger; the rest are townhouse access
 #: rules, middle-housing land divisions, and one about outdoor storage.
 # 272 -> 285 comments: Tigard (below) merged after Cornelius.
-EXPECTED = {"notes": 134, "comments": 285, "tests": 18}
+# 285 -> 281 on 2026-10-02: Tualatin's perimeter and islands, Gladstone's and
+# Multnomah's side-and-rear strips encoded (parking_lot_line_buffer_ft,
+# parking_island_sqft_per_space).
+EXPECTED = {"notes": 134, "comments": 281, "tests": 18}
 # 274 -> 272 the same day, two more Cornelius comments turned into encoding
 # by Steph's rulings: the solar balance point (18.160) is now
 # `solar_shade_limit` in R-7 and R-10, a warning beside the colour ("Green

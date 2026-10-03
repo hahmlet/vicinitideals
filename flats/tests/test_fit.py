@@ -488,3 +488,27 @@ def test_the_court_search_skips_only_grids_that_cannot_win(over_ft: float) -> No
         depth, grid = fitter._best(w, over_ft=over_ft)
         assert depth == best_cells * fitter.res
         assert grid is best_grid
+
+
+@pytest.mark.parametrize(
+    ("ground", "fits"),
+    [
+        (None, True),  # nothing asked: the envelope alone answers, as before
+        (shapely.box(0, 0, 80, 60), True),  # a rear yard behind the window
+        (shapely.box(-20, 0, 100, 40), False),  # side yards only: the row runs off the lot
+    ],
+)
+def test_a_court_beside_the_building_runs_onto_ground_too(ground, fits) -> None:
+    # FOLLOWUPS 33(a): a row beside the building that outruns its rear wall
+    # is charged past the envelope only for what the rear yard does not
+    # hold; the rest has to land on ground, as the court behind's does.
+    f = Fitter(shapely.box(0, 0, 80, 40), (0.0,), res=1.0, ground=ground)
+    got = f.fit_beside(
+        56, 36, band_ft=20.0, beyond=lambda deep: 0.0, angles=(0.0,),
+        allow_flip=False, over=lambda deep: 10.0,
+    )
+    assert got is not None and got.beside
+    assert got.fits is fits
+    # Asked no run, the envelope alone answers.
+    plain = f.fit_beside(56, 36, band_ft=20.0, beyond=lambda deep: 0.0, angles=(0.0,), allow_flip=False)
+    assert plain is not None and plain.fits

@@ -387,6 +387,7 @@ class Fitter:
         angles: Iterable[float],
         allow_flip: bool = True,
         placement: bool = True,
+        over: Callable[[float], float] | None = None,
     ) -> Fit | None:
         """Best fit for the building with a court BESIDE it.
 
@@ -404,6 +405,11 @@ class Fitter:
         by side ALONG the street. Turned a quarter, the same rectangle is a
         building with its court behind it and no lane to reach it -- the
         arrangement the row search already refused. No angle, no court.
+
+        ``over(deep)`` is how far that orientation's court runs past the
+        window it asks for (the stretch credited to the rear yard): where
+        the Fitter holds ``ground``, only a window with that run onto it
+        counts, as for the court behind (FOLLOWUPS 33(a)).
         """
         angles = tuple(angles)
         if not angles:
@@ -413,13 +419,14 @@ class Fitter:
         ]
         if allow_flip and width_ft != depth_ft:
             options.append((Orientation.depth_facing, depth_ft, width_ft))
-        best: tuple[float, Fit, Grid | None, float] | None = None
+        best: tuple[float, Fit, Grid | None, float, float, float] | None = None
         for orientation, side, deep in options:
             extra = beyond(deep)
             if math.isinf(extra):
                 continue
+            run = 0.0 if over is None else over(deep)
             across_ft = side + band_ft
-            got_ft, grid = self._best(across_ft, angles)
+            got_ft, grid = self._best(across_ft, angles, over_ft=run)
             room = got_ft - deep - extra
             if best is None or room > best[0]:
                 best = (
@@ -437,15 +444,24 @@ class Fitter:
                     ),
                     grid,
                     deep,
+                    extra,
+                    run,
                 )
         if best is None:
             return None
-        _room, fit, grid, deep = best
+        _room, fit, grid, deep, extra, run = best
         if not (placement and fit.fits and grid is not None):
             return fit
         assert fit.across_ft is not None
         w_cells, d_cells = cells_for(fit.across_ft, self.res), cells_for(deep, self.res)
-        hit = grid.first_window(d_cells, w_cells)
+        if self._over_cells(run) > 0:
+            # The window the court's run was found from, not the building's.
+            need = cells_for(deep + extra, self.res)
+            masks = self.court_masks(grid, need, w_cells, run)
+            hits = None if masks is None else np.argwhere(masks[0] | masks[1])
+            hit = None if hits is None or not len(hits) else (int(hits[0][0]), int(hits[0][1]))
+        else:
+            hit = grid.first_window(d_cells, w_cells)
         if hit is None:
             return fit
         return dataclasses.replace(fit, placement=grid.to_world(hit[0], hit[1], d_cells, w_cells))

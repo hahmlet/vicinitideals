@@ -183,3 +183,48 @@ def test_sherwood_and_durham_hold_them() -> None:
     assert sherwood.value == 50
     durham = layers["or/washington/durham"].defaults["driveway_walkway_ft"]
     assert durham.value == 5
+
+
+# --- the front yard's share in vehicle area ------------------------------------
+#
+# Portland 33.266.120.C.1.b (40 percent) and Milwaukie 19.607.1.D (50): an
+# AREA share of the ground between the front lot line and the building. The
+# drive crosses it front to back, so its share is its width against the
+# lot's width. Encoded since 2026-08-27 and read by nothing until 2026-10-02.
+
+
+def front(width: float | None, *, corner: bool = False, **extra):
+    zone = rules(parking_front_yard_max_pct=40, **extra)
+    lane = court_across(DESIGN, zone, corner=corner).lane_ft
+    result = screen(
+        zone,
+        LotFacts(lot_sqft=12000, frontage_ft=width or 60.0, lot_width_ft=width, corner=corner),
+        DESIGN, fit(lane), policy=POLICY,
+    )
+    return (
+        next((c for c in result.checks if c.check == "front_yard_vehicle_share"), None),
+        result,
+    )
+
+
+def test_the_front_yard_share_is_a_check_that_names_its_field() -> None:
+    assert CHECK_FIELD["front_yard_vehicle_share"] == "parking_front_yard_max_pct"
+
+
+def test_the_drive_across_the_front_yard_is_held_to_the_share() -> None:
+    lane = DESIGN.parking.lane_ft
+    got, _ = front(lane / 0.4 + 1)
+    assert got is not None and got.verdict is Verdict.passes
+    got, _ = front(lane / 0.4 - 3)
+    assert got is not None and got.verdict is Verdict.fails
+
+
+def test_a_drive_off_the_side_street_leaves_the_front_yard_unpaved() -> None:
+    got, _ = front(20.0, corner=True, corner_access_street="side")
+    assert got is None
+
+
+def test_an_unmeasured_width_leaves_the_share_unchecked() -> None:
+    got, result = front(None)
+    assert got is None
+    assert "front_yard_vehicle_share" in result.unchecked

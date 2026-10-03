@@ -137,7 +137,10 @@ pytestmark = pytest.mark.unit
 # parking requirements" -- are the other two. Those two are moot: the one-lot
 # path is refused on the use row, and the townhouse figures are variants.
 # 388 -> 399 stated and 63 -> 69 numeric: Tigard (below) merged after Cornelius.
-EXPECTED = {"stated": 399, "numeric": 69, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 399, "numeric": 70, "marker": 0, "dash": 2, "silent": 2}
+# 69 -> 70 numeric on 2026-10-02: Tualatin CC's lot coverage. Table 53-2
+# prints no coverage row and Table 58-7 none for CC -- silence, which is
+# none (Steph, 2026-09-29) -- quoted from the head of Table 53-2.
 # 381 -> 385 stated on 2026-10-01: Cornelius, a Washington County draft. The
 # 18.145.030 table's "none" parking maximum for Middle Housing; R-7's and
 # A-2's "Maximum density does not apply to ... quadplexes" / "This maximum

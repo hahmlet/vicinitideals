@@ -88,11 +88,12 @@ from flats.score import paper
 SILENTLY_UNREAD = frozenset(
     {
         "setback_front_max_ft",
-        "driveway_approach_max_width_ft",
         "min_building_separation_ft",
-        "driveway_approach_min_width_ft",
         "max_building_width_ft",
-        "parking_front_yard_max_pct",
+        # 2026-10-02: `parking_front_yard_max_pct` is checked
+        # (`front_yard_vehicle_share`), and the approach widths are declared
+        # in PaperFit.excluded (in the right of way; every maximum admits a
+        # car, `test_every_approach_maximum_admits_one_car`).
         # 2026-09-19, FOLLOWUPS 5 slice A: the corner-lot placement fields.
         # `front_lot_line_corner` and `corner_access_street` left this set
         # 2026-09-26 (FOLLOWUPS 4(e)): the screen names a corner lot's front

@@ -712,11 +712,17 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    lots_drift = the new county) -> ASKED Steph to promote. Unruled codes
    (warn only): Tualatin's Washington side BCE CC CN CR IN MBP MP MUC RH
    RH/HR (~420 lots) and Wilsonville PDI-RSIA/PFC (17) -- RULED 2026-10-01
-   (8 refusal blocks; RH, RH/HR, MUC, CC to_read). Steph to decide: PDI-RSIA
-   10% residential per lot vs per site; CC to_read until Map 10-3 blocks
-   are drawn; RH/RH-HR/MUC unit-lot townhouses only; RH/HR no townhouse lot
-   size (fallback 10,000 sq ft not applied). Also: Tualatin CO refusal may
-   miss the Ch. 58 townhouse path; RML lots now exist on the Washington side. 08 splices LR10/FU10/sewer + fire reach on
+   (8 refusal blocks; RH, RH/HR, MUC, CC to_read). STEPH RULED 2026-10-02:
+   PDI-RSIA 10% is per project site but the refusal stands ("this lot
+   doesn't work for us"); RH/HR townhouse lot = the 10,000 sq ft fallback;
+   RH/RH-HR/MUC stay unit-lot townhouses only (Quadplex is its own TDC
+   31.060 type, absent from their tables; Comp Plan Policy 3.2.1 is policy,
+   not permission). CC ENCODED 2026-10-02: Map 10-3 traced onto TualGIS
+   taxlots (flats/config/areas/.../residential-sub-district.geojson, new
+   `drawn_areas` layer block + flats/geom/drawn.py); 155 CC lots, 91 inside
+   (quadplex permitted, 16-25 du/ac), 64 outside (refused), 0 cut. LANDS AT
+   THE NEXT FULL RE-SCREEN (no partial). Still open: Tualatin CO refusal may
+   miss the Ch. 58 townhouse path (58.400, Table 58-4, Block 1); RML lots now exist on the Washington side. 08 splices LR10/FU10/sewer + fire reach on
    /root/bridge_2026-10-01_wash AFTER promotion (message it then).
    (e) AFTER THE FIRST SCREEN, count what these cost. FIRST COUNTS (run 51):
    Beaverton has 0 green -- `utility_easement` unmeasured holds ~32,100
@@ -1133,7 +1139,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    slower, more fragile; not recommended).
 33. **Parking court leftovers (fix ca26e048 LIVE as run 63, 2026-10-02:
    drift 61->63 green->yellow 3,459, unknown->yellow 4,453, 0 unexplained).**
-   Still open: (a) the court BESIDE the building (side court) is not checked against the lot;
+   Still open ((a), the court beside the building, fixed f7ba7038):
    (b) lots outside the 15,940 scoped whose court stands in a side or front
    yard INSIDE the lot are corrected only by the next full re-screen;
    (c) s5o-envelope lots use the whole lot (less carve) as the court's
@@ -1157,20 +1163,44 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    weekly FULL re-screen fixes it (with 33's leftovers). After that run,
    check run-wide: zero green answers lacking a fire result.
 36. **Parking tool queue (Steph 2026-10-02: "do them in the reverse order
-   you listed them").** RULING the same day: on a lot with more than one
-   street the parking entrance is the SIDE street, never the front ("cities
-   typically require the housing to face the busier street") -- so
-   `corner_access_street: lowest_class` reads as side-street access, like
-   `any`/`side`. Through lots keep the 2026-09-30 ruling. Order:
-   (5) city parking rules recorded but not applied -- IN PROGRESS: planted
-   strips between parking and the rear/side lot lines (Tualatin 73C.210(3),
-   Multnomah 39.8045(C)(3)(b), Gladstone 17.48.040(2)(e), Tigard, ...) were
-   called "inert" because yards are >= 5 ft, but the court is credited INTO
-   the rear yard, so they may bind (possible false GREEN); landscape islands
-   / % of the parking area (Tualatin 73C.210(4), Fairview 19.163.030(E));
-   approach widths (unread, look inert with one approach -- item 25 owns
-   spacing/second approach); (4) the court BESIDE the building checked
-   against the lot line (33(a)); (3) the side-street ruling above
-   (paper.SIDE_STREET_ACCESS, test_corner.py, fields.py doc); (2) a car's
-   turning path; (1) the free-form generator (item 27). Each ships as code;
-   the re-screen rides the weekly full run (~10-08).
+   you listed them").** (5) partly, (4) and (3) LIVE as code f7ba7038; the
+   re-screen rides the weekly full run (~10-08) -- read the moves on
+   corner lots with `lowest_class` and in Tualatin, Gladstone, Multnomah
+   uninc and Hillsboro. Left of (5): strips not yet encoded -- Wood Village
+   350.065(C) and Oregon City 17.52.060.C (one-lot projects only), Happy
+   Valley 16.43.030.E.3 and Troutdale 9.095(A) (the neighbour district's
+   setback; needs per-line neighbour zoning), Tigard 18.280.040.D.4 (width
+   in unstored 18.420); unread chapters ZDO 1009, West Linn CDC 54,
+   Washington CDC 407-6, Sherwood 16.92, King City 16.124, Tigard 18.420,
+   Troutdale Ch. 11; Fairview 19.163.030(E) 5% of the parking area.
+   QUESTION for Steph: OAR 660-046-0220(2)(e)(E) makes large cities apply
+   single-family parking standards to middle housing -- it may cancel the
+   strips single-family homes are not held to (Multnomah, Gladstone,
+   Hillsboro, Wood Village, Oregon City); encoded strict meanwhile.
+   (2) turning path -- RULED 2026-10-02 (Steph: "THREE POINT is acceptable
+   for now"), BUILT, NOT SHIPPED -- DECISION PENDING (Steph, 2026-10-03):
+   the car is the AASHTO P car (24 ft turn), every "no" asked four ways;
+   a stall counts if a car gets in and out in four moves or fewer. Today's
+   12 ft-lane court: only the stall by the lane works; the remedy is the
+   aisle run past the row's far end (ledger `flats/config/court_turns.json`,
+   16 shapes: 12 ft lanes 8-16 ft, the design's own 13 ft, 2-stall 20,
+   22+ ft lanes 0; none unusable). Code in the working tree (turning.py,
+   turns.py, paper.py, screen.py, relief.py, tests). Shapes the ledger
+   lacks are UNCHECKED, never searched at screen time. Bound on 3,500
+   sampled lots (137 /root/bridge_turns_base vs _probe, chunks 0-6): 54 of
+   572 green lots (9%) go yellow, 49 of them Portland lots ~55-62 ft wide
+   where the building stood end-on (needs +1 ft for pod56, +12 ft for
+   pod80) and the sideways building does not fit; side effects: fire
+   route re-measured on the new placement. Picture for Steph:
+   https://claude.ai/artifact/ReP4bZrHy7QG9XjePEKQZ5. Options put to
+   Steph: A ship now (no false green; the generator wins lots back later),
+   B hold until the generator (1), C allow a fifth move. STEPH 2026-10-03:
+   the 13 ft dead end should be a LAST RESORT -- try a deeper aisle first.
+   Solved (design court 9x18, 12 ft lane): aisle 28 ft (+4) -> dead end 0
+   (+144 sq ft, no extra width); 25/26/27 ft still need 9/6/8; 10 ft stalls
+   -> 1 (row +5 ft); 10 ft stalls + 26 aisle -> 0; 11 ft stalls -> 0 (row
+   +8); 14/16/18 ft lane -> 10/7/4; 26 aisle + 14 lane -> 2. PROPOSED: the
+   ledger holds a menu per shape (deeper aisle, wider stalls, dead end) and
+   the screen takes the least paving that fits the lot; re-bound the 54.
+   (1) the free-form generator (item
+   27) after (2).
