@@ -58,6 +58,9 @@ def _bridge_row(tlid: str, design: str, **over) -> dict:
         unknown_leaning="",
         angles=180,
         step_deg=1.0,
+        colour="green",
+        flags="",
+        binds="",
     )
     row.update(over)
     return row

@@ -69,6 +69,9 @@ from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.net_area import net_span
 from flats.rules.resolver import ALTERNATIVES, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
+from flats.score.flags import LOT as _THIS_LOT, Bind, Colour, Flag, colour as _colour, fact_code
+from flats.score.flags import make as make_flag
+from flats.score.flags import registry as _registry
 from flats.score.paper import (
     Alley,
     Beside,
@@ -405,6 +408,15 @@ class Screening:
     #: and never inside it (:func:`warnings_for`). Not ``reasons``, which
     #: say why a lot is NOT green.
     warnings: tuple[str, ...] = ()
+    #: Every unknown behind this answer, one per question
+    #: (:mod:`flats.score.flags`): what the flag plan's colour reads. Raised
+    #: on every path, whatever the colour, so a red lot still shows what a
+    #: pod change could bring back into question.
+    flags: tuple[Flag, ...] = ()
+    #: Every confirmed standard this lot misses with this design -- all of
+    #: them, not the first -- each with the path round it the code offers,
+    #: logged and not taken (Steph 2026-10-02: no variances).
+    binds: tuple[Bind, ...] = ()
 
     #: The blocker that most explains the outcome — largest proportional
     #: shortfall, not the tightest. This is what the rule-cost ledger counts;
@@ -427,6 +439,14 @@ class Screening:
     @property
     def needs_ask(self) -> bool:
         return self.ask.needs_ask
+
+    @property
+    def colour(self) -> Colour:
+        """The flag plan's colour: red on a bind, yellow on a flag at the
+        rule set's line, else green (:func:`flats.score.flags.colour`).
+        Derived, never stored as an input; ``triage`` is the colour from
+        before flags, kept for the reconciliation."""
+        return _colour(self.binds, self.flags)
 
 
 def _coverage_allowed_sqft(rules: ZoneResolution, lot_sqft: float) -> tuple[float | None, str]:
@@ -1602,10 +1622,17 @@ def screen(
     paths = relief if relief is not None else ReliefPolicy()
 
     if lot.lot_sqft <= 0:
+        warned = warnings_for(rules)
         return Screening(
             triage=Triage.unknown,
             reasons=(GEOMETRY_UNREADABLE,),
-            warnings=warnings_for(rules),
+            warnings=warned,
+            flags=_flagged(
+                rules,
+                design,
+                [("GEOM-UNREADABLE", GEOMETRY_UNREADABLE, {})]
+                + [("SOLAR-SHADE", w, {}) for w in warned if w == SOLAR_SHADE],
+            ),
         )
 
     where = rules.jurisdiction
@@ -1669,6 +1696,21 @@ def screen(
         ),
         "warnings": warnings_for(rules),
     }
+    common["flags"], common["binds"] = _account(
+        rules,
+        lot,
+        design,
+        config,
+        checks,
+        unchecked,
+        unmeasured,
+        outcomes,
+        use_path if use_blocked else None,
+        tight=common["tight_fit"],
+        fit_slack_ft=common["fit_slack_ft"],
+        optimistic=optimistic,
+        warnings=common["warnings"],
+    )
 
     if use_blocked and use_path is not None and not use_path.available:
         if use_pending:
@@ -1755,6 +1797,174 @@ def screen(
         return Screening(triage=Triage.unknown, reasons=tuple(reasons), **common)
 
     return Screening(triage=Triage.green, reasons=(), **common)
+
+
+#: The flag type for each verdict that leaves a rule set untrusted.
+_VERDICT_FLAG: dict[RuleVerdict, str] = {
+    RuleVerdict.unverified: "RULE-UNSIGNED",
+    RuleVerdict.zone_not_encoded: "ZONE-NOT-ENCODED",
+    RuleVerdict.zone_reference_missing: "ZONE-REFERENCE-MISSING",
+    RuleVerdict.zone_reference_cycle: "ZONE-REFERENCE-CYCLE",
+    RuleVerdict.jurisdiction_not_encoded: "JURISDICTION-NOT-ENCODED",
+}
+
+#: The flag type for each quantity the screen itself left unmeasured. A
+#: name not here is a site fact a rate is stated per, and takes that fact's
+#: own type (:func:`flats.score.flags.fact_code`).
+_MEASURED_FLAG: dict[str, str] = {
+    UNPAVED: "MEASURE-PAVEMENT",
+    UNSHAPED: "MEASURE-OUTDOOR-SHAPE",
+    FIRE_ROUTE: "MEASURE-FIRE-ROUTE",
+}
+
+#: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on
+#: the bind it qualifies, and USE_PROHIBITED is the use gate's bind.
+UNFLAGGED_REASONS: frozenset[str] = frozenset({RELIEF_UNCONFIRMED, USE_PROHIBITED})
+
+
+def _flagged(
+    rules: ZoneResolution,
+    design: Design,
+    raised: Sequence[tuple[str, str, Mapping[str, Any]]],
+) -> tuple[Flag, ...]:
+    """Each ``(type code, screen reason, details)`` as a :class:`Flag`, its
+    key filled in the order the type names its parts, one flag per key."""
+    reg = _registry()
+    out: dict[tuple[str, str], Flag] = {}
+    for code, by, extra in raised:
+        parts = {
+            "jurisdiction": rules.jurisdiction,
+            "zone": rules.zone or "(none)",
+            "lot": _THIS_LOT,
+            "design": design.key,
+            **{k: v for k, v in extra.items() if k not in ("bounds", "source")},
+        }
+        made = make_flag(
+            code, by, parts, bounds=extra.get("bounds"), source=extra.get("source", ""), reg=reg
+        )
+        out.setdefault((made.code, made.key), made)
+    return tuple(out.values())
+
+
+def _cite(rules: ZoneResolution, field: str | None) -> str:
+    r = rules.values.get(field) if field else None
+    return r.prov.cite if r is not None and r.prov is not None else ""
+
+
+def _account(
+    rules: ZoneResolution,
+    lot: LotFacts,
+    design: Design,
+    config: Configuration | None,
+    checks: Sequence[CheckResult],
+    unchecked: Sequence[str],
+    unmeasured: set[str],
+    outcomes: Sequence[ReliefOutcome],
+    use_path: ReliefOutcome | None,
+    *,
+    tight: bool,
+    fit_slack_ft: float | None,
+    optimistic: Sequence[str],
+    warnings: Sequence[str],
+) -> tuple[tuple[Flag, ...], tuple[Bind, ...]]:
+    """The flag plan's record of one screening: every unknown as a flag and
+    every confirmed miss as a bind (Steph's flag plan, 2026-10-02).
+
+    The same facts ``screen`` turns into ``triage`` and ``reasons``, written
+    one question at a time, on every path -- a red lot keeps its flags, an
+    unsigned one keeps its gaps -- so the colour can be recomputed from them
+    under any rule set. A rule set nobody trusts binds nothing: a draft
+    number must never delete a lot, here as in ``triage``.
+    """
+    raised: list[tuple[str, str, Mapping[str, Any]]] = []
+
+    def flag(code: str, by: str, **extra: Any) -> None:
+        raised.append((code, by, extra))
+
+    reason = rules.reason
+    if rules.verdict is RuleVerdict.ambiguous:
+        for name in rules.ambiguous or ("(unnamed)",):
+            flag("RULE-AMBIGUOUS", reason or "RULE_AMBIGUOUS", field=name)
+    elif not rules.trusted and reason:
+        flag(_VERDICT_FLAG[rules.verdict], reason)
+    if rules.values and rules.get("quadplex_allowed") is None:
+        flag("USE-NOT-ENCODED", USE_NOT_ENCODED)
+    if config is not None:
+        for name in config.leans_on(rules.levers):
+            if name in config.unknown:
+                flag(fact_code(name), FACT_UNOBSERVED, fact=name, source="unobserved")
+            elif name in config.assumed:
+                flag(fact_code(name), FACT_ASSUMED, fact=name, source="assumed")
+    for name in sorted(unmeasured):
+        flag(_MEASURED_FLAG.get(name) or fact_code(name), FACT_UNOBSERVED, fact=name, source="unmeasured")
+    if lot.landlocked:
+        flag("ACCESS-NO-FRONTAGE", NO_FRONTAGE)
+    if lot.geometry is GeometryTier.irregular:
+        flag("GEOM-UNREADABLE", GEOMETRY_UNREADABLE)
+    if lot.street_unconfirmed:
+        flag("ACCESS-STREET-UNCONFIRMED", STREET_UNCONFIRMED)
+    if "fit_across_ft" in unchecked:
+        flag("FIT-COURT-WIDTH", COURT_WIDTH_UNMEASURED)
+    if rules.values:
+        for name in unchecked:
+            field = CHECK_FIELD.get(name, name)
+            if _unencoded(field, rules):
+                flag("STD-NOT-ENCODED", STANDARD_NOT_ENCODED, field=field)
+    for c in checks:
+        if c.verdict is Verdict.tolerated and c.check != "fit_ft":
+            span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
+            flag("MEASURE-TOLERANCE", "TOLERATED", check=c.check, bounds=span)
+    if tight:
+        fit_check = next(c for c in checks if c.check == "fit_ft")
+        flag(
+            "FIT-TIGHT",
+            "TIGHT_FIT",
+            bounds=(fit_check.slack - fit_check.tolerance, fit_check.slack + fit_check.tolerance),
+        )
+    for name in optimistic:
+        flag("CHECK-OPTIMISTIC", "OPTIMISTIC", check=name)
+    if SOLAR_SHADE in warnings:
+        flag("SOLAR-SHADE", SOLAR_SHADE)
+    # A minimum density missed is a flag, never a bind (Steph 2026-10-02:
+    # "Make it a flag for sure ... It would just be a low risk flag").
+    for c in checks:
+        if c.check in MIN_DENSITY_CHECKS and c.verdict is Verdict.fails:
+            span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
+            flag("DENSITY-MIN", CLOSER_LOOK_MIN_DENSITY, bounds=span, source=c.check)
+
+    binds: list[Bind] = []
+    if rules.trusted:
+        paths = {o.check: o for o in outcomes}
+        for c in checks:
+            if c.verdict is not Verdict.fails or c.check in MIN_DENSITY_CHECKS:
+                continue
+            o = paths.get(c.check)
+            binds.append(
+                Bind(
+                    c.check,
+                    c.observed,
+                    c.threshold,
+                    c.shortfall,
+                    source=_cite(rules, CHECK_FIELD.get(c.check)),
+                    relief=o.condition if o is not None else None,
+                    relief_tier=o.tier.value if o is not None else None,
+                    relief_confirmed=bool(o is not None and o.confirmed),
+                )
+            )
+        if use_path is not None:
+            binds.append(
+                Bind(
+                    "use",
+                    None,
+                    None,
+                    None,
+                    source=_cite(rules, "quadplex_allowed"),
+                    relief=use_path.condition,
+                    relief_tier=use_path.tier.value,
+                    relief_confirmed=use_path.confirmed,
+                )
+            )
+    return _flagged(rules, design, raised), tuple(binds)
 
 
 @dataclass(frozen=True, slots=True)

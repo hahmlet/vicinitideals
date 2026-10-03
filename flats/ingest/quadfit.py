@@ -118,6 +118,7 @@ from flats.rules.model import TRANSIT_MEASURES, Layer
 from flats.rules.net_area import MEASURED as NET_MEASURED, measured_deductions
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
+from flats.score import flags as flag_plan
 from flats.score.relief import ReliefPolicy
 from flats.score.paper import (
     _yard,
@@ -1473,7 +1474,10 @@ def _street_unconfirmed(s: Screening) -> Screening:
     unless it is already the worse answer."""
     reasons = s.reasons if STREET_UNCONFIRMED in s.reasons else (*s.reasons, STREET_UNCONFIRMED)
     triage = s.triage if _WORSE[s.triage] >= _WORSE[Triage.unknown] else Triage.unknown
-    return dataclasses.replace(s, triage=triage, reasons=reasons)
+    flags = s.flags
+    if not any(f.code == "ACCESS-STREET-UNCONFIRMED" for f in flags):
+        flags = (*flags, flag_plan.Flag("ACCESS-STREET-UNCONFIRMED", flag_plan.LOT, STREET_UNCONFIRMED))
+    return dataclasses.replace(s, triage=triage, reasons=reasons, flags=flags)
 
 
 def _worse(first: Screened, second: Screened) -> Screened:
@@ -2031,6 +2035,9 @@ def row_for(s: Screened) -> dict[str, Any]:
     """One flat record per lot x design, what the batch writes."""
     leaning = s.config.leans_on(s.rules.levers)
     failing = tuple(c.check for c in s.screening.checks if c.verdict is CheckVerdict.fails)
+    # The flag plan's record, on the colour the map shows (as if signed --
+    # Steph 2026-10-02). The write gate: an incomplete flag stops here.
+    flag_plan.validate(s.signed.flags)
     return {
         "TLID": s.lot.tlid,
         "jurisdiction": s.lot.jurisdiction,
@@ -2076,6 +2083,9 @@ def row_for(s: Screened) -> dict[str, Any]:
         "envelope_source": s.envelope.source if s.envelope else None,
         "drawing": json.dumps(s.drawing, separators=(",", ":")) if s.drawing else None,
         "fire_route_ft": s.facts.fire_route_ft if s.facts is not None else None,
+        "colour": s.signed.colour.value,
+        "flags": flag_plan.dumps(s.signed.flags, lot=s.lot.tlid),
+        "binds": flag_plan.dumps(s.signed.binds),
     }
 
 

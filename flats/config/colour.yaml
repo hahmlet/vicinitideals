@@ -1,0 +1,45 @@
+# The rule set that turns a lot's binds and flags into a colour.
+# (flats/score/flags.py :func:`colour`; the flag plan, "Lot status".)
+#
+# HUMAN-OWNED. An agent proposes changes here; it does not make them.
+#
+#   RED     any bind (a confirmed standard the lot misses with this pod)
+#           whose way round is not in `accept_approvals`
+#   YELLOW  any open flag at `yellow_at_severity` or above
+#   GREEN   everything else -- open flags below the line ride along
+#
+# Steph's answers, 2026-10-02:
+#   Q1 "We aren't accepting variances at all at this time. We need to log
+#      these, but for now, items requiring variance go red. Later we can
+#      review variances."  -> accept_approvals is empty; each bind carries
+#      the path the code offers, so the review can come later.
+#   Q2 "items with risk < 3 (or whatever we decide) are still green"
+#      -> yellow_at_severity: 3 (the number itself is still open).
+#
+# Still pending Steph: the threshold's exact value, approval_severity, and
+# the number each risk band stands for (proposed below).
+
+yellow_at_severity: 3
+
+# Relief conditions whose path we will take: adjustment, variance,
+# conditional_use, review_use, planned_development, state_middle_housing.
+accept_approvals: []
+
+# What a bind counts as once its path is accepted. Unused while
+# accept_approvals is empty.
+approval_severity: 5
+
+# How likely the bad answer is the true one. Proposed 2026-10-02.
+risk_bands:
+  remote: 0.05
+  unlikely: 0.15
+  possible: 0.30
+  likely: 0.60
+  near_certain: 0.90
+
+status: pending
+approved_by: null
+approved_on: null
+note: >-
+  Steph ruled the shape 2026-10-02 (no variances; a flag below the line keeps
+  the lot green). The numbers are proposals until approved.

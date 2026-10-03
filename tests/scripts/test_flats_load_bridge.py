@@ -343,6 +343,21 @@ def test_the_checks_record_carries_the_fire_hose_route() -> None:
         assert "fire_route_ft" not in result_checks({**_bridge_row(LOT_A, DESIGNS[0]), "fire_route_ft": empty})
 
 
+def test_the_checks_record_carries_the_flag_plan() -> None:
+    # The flag plan's colour, beside the old verdict, with the flags and
+    # binds it came from. A bundle written before the plan carries none.
+    flags = [{"code": "RULE-UNSIGNED", "key": "or/x|R5", "by": "RULE_UNVERIFIED"}]
+    binds = [{"check": "use", "relief": "conditional_use"}]
+    row = {**_bridge_row(LOT_A, DESIGNS[0]), "colour": "red", "flags": json.dumps(flags), "binds": json.dumps(binds)}
+    checks = result_checks(row)
+    assert (checks["colour"], checks["flags"], checks["binds"]) == ("red", flags, binds)
+    green = result_checks({**_bridge_row(LOT_A, DESIGNS[0]), "colour": "green", "flags": "", "binds": ""})
+    assert (green["colour"], green["flags"], green["binds"]) == ("green", [], [])
+    for empty in (None, float("nan"), ""):
+        old = result_checks({**_bridge_row(LOT_A, DESIGNS[0]), "colour": empty})
+        assert "colour" not in old and "flags" not in old and "binds" not in old
+
+
 def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:
     run_dir, s4, s5o, results = _make_run(tmp_path)
     short = tmp_path / "s4_short.parquet"

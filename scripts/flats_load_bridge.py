@@ -513,6 +513,14 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
     route = _num(row.get("fire_route_ft"))
     if route is not None:
         checks["fire_route_ft"] = round(route, 1)
+    # The flag plan (flats/score/flags.py): the colour its rule set gives,
+    # beside the old verdict, with the flags and binds it was given. Absent
+    # from a bridge run written before the plan.
+    colour = _clean(row.get("colour"))
+    if isinstance(colour, str) and colour:
+        checks["colour"] = colour
+        checks["flags"] = json.loads(_clean(row.get("flags")) or "[]")
+        checks["binds"] = json.loads(_clean(row.get("binds")) or "[]")
     return checks
 
 

@@ -1,0 +1,1068 @@
+# The flag type registry -- every kind of unknown a lot can carry.
+# (flats/score/flags.py; Steph's flag plan, "Flag type (registry)".)
+#
+# A flag is an unknown. It has no colour: the colour comes from the rule set
+# in colour.yaml. Every field below is required and checked on load.
+#
+# HUMAN-OWNED FIELDS: risk, severity, resolution, scope, priority. An agent
+# proposes a type with its estimates filled in and `status: pending`; a
+# pending type counts at its proposed values until Steph approves it, which
+# sets status: approved, approved_by and approved_on.
+#
+#   kind        parametric (the instance carries low/high bounds) | categorical
+#   risk        remote | unlikely | possible | likely | near_certain
+#               (the number for each band is in colour.yaml)
+#   severity    1-10: the chance the lot goes red if the answer goes against
+#               us (10 = 100%). A lot may carry a LOWER one -- 0 where it
+#               clears even at the flag's worst reading.
+#   absorbs     the pod dimension that could absorb a bad answer, or null
+#   resolution  external_inquiry | document_review | per_lot_review |
+#               measurement (a map layer we acquire or a measure we take --
+#               proposed 2026-10-02 as a fourth type)
+#   scope       shared (one answer, every lot with the key) | per_lot
+#   key         what the resolution key is made of
+#   priority    now | next | later | parked
+#   raised_from the screen reason code(s) this type replaced
+#
+# Every value below was PROPOSED by an agent on 2026-10-02 from the screen's
+# existing reason codes; none is approved yet.
+
+types:
+  # --- the rules themselves ----------------------------------------------
+  RULE-UNSIGNED:
+    description: "A standard here is encoded but nobody has signed it against its quote"
+    kind: categorical
+    risk: unlikely
+    severity: 5
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone]
+    path: "Signing on the FLATS review pages"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [RULE_UNVERIFIED]
+  RULE-AMBIGUOUS:
+    description: "Two exceptions apply equally well to one standard and the code does not say which governs"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone, field]
+    path: "A person reads the code; if it stays unclear, the planning counter"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [RULE_AMBIGUOUS]
+  ZONE-NOT-ENCODED:
+    description: "The lot's zone has not been encoded, so none of its standards are known"
+    kind: categorical
+    risk: possible
+    severity: 8
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone]
+    path: "Encode the zone from its code chapter"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ZONE_NOT_ENCODED]
+  ZONE-REFERENCE-MISSING:
+    description: "The lot's zone adopts another zone's standards and that zone is not encoded"
+    kind: categorical
+    risk: possible
+    severity: 8
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone]
+    path: "Encode the referenced zone"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ZONE_REFERENCE_MISSING]
+  ZONE-REFERENCE-CYCLE:
+    description: "Two zones adopt each other's standards, so neither resolves"
+    kind: categorical
+    risk: possible
+    severity: 8
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone]
+    path: "Fix the encoding; read the code for which zone states the numbers"
+    priority: now
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ZONE_REFERENCE_CYCLE]
+  JURISDICTION-NOT-ENCODED:
+    description: "No rule file exists for the lot's jurisdiction"
+    kind: categorical
+    risk: possible
+    severity: 8
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Encode the jurisdiction's development code"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [JURISDICTION_NOT_ENCODED]
+  USE-NOT-ENCODED:
+    description: "Whether the zone permits a four-unit building has not been encoded"
+    kind: categorical
+    risk: possible
+    severity: 10
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone]
+    path: "Read the zone's use table"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [USE_NOT_ENCODED]
+  STD-NOT-ENCODED:
+    description: "The code imposes a required standard here that nothing encoded supplies"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone, field]
+    path: "Encode the standard from the zone chapter"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [STANDARD_NOT_ENCODED]
+
+  # --- the lot's own shape and access ------------------------------------
+  GEOM-UNREADABLE:
+    description: "The lot's outline is too irregular, or too broken, to measure"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "A person reads the lot on the map"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [GEOMETRY_UNREADABLE]
+  ACCESS-NO-FRONTAGE:
+    description: "The lot touches no street; access would rest on an easement nobody has seen"
+    kind: categorical
+    risk: likely
+    severity: 9
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "Title report for the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [NO_FRONTAGE]
+  ACCESS-STREET-UNCONFIRMED:
+    description: "A street line on this lot is only a private drive the lot may not abut"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "A person looks at the lot and the drive (FOLLOWUPS 4)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [STREET_UNCONFIRMED]
+
+  # --- what our own measurement left open --------------------------------
+  FIT-COURT-WIDTH:
+    description: "The fit was searched at the building's width, narrower than the parking this zone asks for"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: parking
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Re-run the fit at the width the zone asks"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [COURT_WIDTH_UNMEASURED]
+  MEASURE-PAVEMENT:
+    description: "The pod's pavement could not be drawn, so a standard stated net of it is unmeasured"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: parking
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Our own drawing of the plan"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  MEASURE-OUTDOOR-SHAPE:
+    description: "Whether the open space takes the shape the code asks for was not measured"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Our own measure of the leftover ground"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  MEASURE-FIRE-ROUTE:
+    description: "No hose route from the street to the farthest wall was found for the drawn plan"
+    kind: categorical
+    risk: likely
+    severity: 8
+    absorbs: footprint_depth
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Our own fire route measure (FOLLOWUPS 29)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  MEASURE-TOLERANCE:
+    description: "A check misses or clears by less than its measurement tolerance"
+    kind: parametric
+    risk: possible
+    severity: 3
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design, check]
+    path: "The lot's survey at acquisition"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [TOLERATED]
+  CHECK-OPTIMISTIC:
+    description: "A check was computed from a proxy that runs in the lot's favour"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design, check]
+    path: "Measure the quantity the code actually names"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [OPTIMISTIC]
+
+  # --- flags Steph ruled stay green (below the yellow line) --------------
+  FIT-TIGHT:
+    description: "The pod fits within half a foot either way; the survey decides it (Steph 2026-09-25)"
+    kind: parametric
+    risk: possible
+    severity: 1
+    absorbs: footprint_width
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "The lot's survey at acquisition"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [TIGHT_FIT]
+  SOLAR-SHADE:
+    description: "The code caps height by the shade cast north, which nothing here measures (Steph 2026-10-01)"
+    kind: categorical
+    risk: unlikely
+    severity: 2
+    absorbs: height
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "A person checks the shadow before an offer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [solar_shade]
+  DENSITY-MIN:
+    description: "The lot is big enough that the city wants more homes on it than four (Steph 2026-10-02: a flag, maybe a 2)"
+    kind: parametric
+    risk: possible
+    severity: 2
+    absorbs: units
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "A bigger plan, or a split (FOLLOWUPS 31)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_MIN_DENSITY]
+
+  # --- a path round a bind, once the rule set accepts it -----------------
+  APPROVAL-NEEDED:
+    description: "The lot clears only with an approval the rule set accepts; whether it is granted is open"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot, design, check]
+    path: "The application to the city"
+    priority: parked
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [RELIEF_UNCONFIRMED]
+
+  # --- site facts: one type per registered fact --------------------------
+  # Raised where a standard on this lot changes with the fact and nobody
+  # observed it (or the screen assumed it). A test fails when a new site
+  # fact lands in flats/rules/conditions.py without a type here.
+  FACT-ABUTS-ACCESSWAY:
+    description: "Whether the lot abuts a public accessway"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the street and path layers"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ABUTS-ALLEY:
+    description: "Whether the lot abuts an alley"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure (quadfit s4 alley edges)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ABUTS-LOWER-DENSITY-ZONE:
+    description: "Whether a lot line abuts a lower-density zone"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the zoning layer per lot line"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ABUTS-NONRESIDENTIAL-ZONE:
+    description: "Whether a lot line abuts a non-residential zone"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the zoning layer per lot line"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ABUTS-PARK:
+    description: "Whether the lot abuts a park"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "A parks layer for the jurisdiction"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ABUTS-RESIDENTIAL-ZONE:
+    description: "Whether a lot line abuts a residential zone"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the zoning layer per lot line"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ABUTS-SIDE-YARD:
+    description: "Whether the lot line abuts a neighbour's side yard"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, fact]
+    path: "A person reads the neighbouring lots"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ACCESS-EASEMENT:
+    description: "Whether the lot's access rests on an easement"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, fact]
+    path: "Title report for the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ADJACENT-SINGLE-STORY-BUILDING:
+    description: "Whether a neighbouring building is single storey"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "A building-footprint layer with storey counts"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ALLEY-AT-REAR:
+    description: "Whether an alley runs along the rear lot line"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure (quadfit s4 alley edges)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ALLEY-AT-SIDE:
+    description: "Whether an alley runs along a side lot line"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure (quadfit s4 alley edges)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-BEYOND-UGB-MILE:
+    description: "Whether the lot lies more than a mile beyond the UGB"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the Metro UGB layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-CIVIC-CORRIDOR:
+    description: "Whether the lot fronts a civic corridor"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Portland's civic corridor map layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-CIVIC-CORRIDOR-SETBACK:
+    description: "Whether a civic corridor setback applies to the lot's street"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Portland's civic corridor map layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-CIVIC-CORRIDOR-SETBACK-ALL-STREETS:
+    description: "Whether the civic corridor setback applies on every street of the lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Portland's civic corridor map layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-CORNER-LOT:
+    description: "Whether the lot is a corner lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from street bearings"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ESTABLISHED-RESIDENTIAL-AREA:
+    description: "Whether the lot lies in an established residential area"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The city's mapped area, where it publishes one"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-FACES-RESIDENTIAL-ZONE-ACROSS-STREET:
+    description: "Whether the lot faces a residential zone across the street"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the zoning layer across the street"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-FLAG-LOT:
+    description: "Whether the lot is a flag lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure of the lot's shape"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-FRONTS-CUL-DE-SAC:
+    description: "Whether the lot fronts a cul-de-sac bulb"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the street layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-HILLSIDE-OR-RESOURCE-OVERLAY:
+    description: "Whether a hillside or resource overlay covers the lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The jurisdiction's overlay layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-HISTORIC-RESOURCE:
+    description: "Whether the lot holds a designated historic resource"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The jurisdiction's historic inventory layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-IN-FLOODPLAIN:
+    description: "Whether the lot lies in the floodplain"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "FEMA flood layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-IN-SEWER-DISTRICT:
+    description: "Whether the lot lies inside a sewer district"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The county's sewer district layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-INSIDE-MAPPED-USE-AREA:
+    description: "Whether the lot lies inside the mapped area the zone's use rule names"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The map the code cites"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-LOCAL-STREET:
+    description: "Whether the lot's street is classed a local street"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The jurisdiction's street classification layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-MIDDLE-HOUSING-CHILD-LOT:
+    description: "Whether the lot is a middle-housing land division child lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, fact]
+    path: "The recorded plat for the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-NARROW-FRONTAGE:
+    description: "Whether the lot's frontage counts as narrow under the code"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure of the frontage"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-NET-DEVELOPABLE-AREA:
+    description: "How much of the lot is net developable area"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure: floodplain, slope and resource layers off the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-NORTH-OF-MARINE-DRIVE:
+    description: "Whether the lot lies north of Marine Drive"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the street layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ON-TRANSIT-STREET:
+    description: "Whether the lot fronts a transit street"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "TriMet stops and the city's transit street map"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PROTECTED-WATER-FEATURE:
+    description: "Whether a protected water feature touches the lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The jurisdiction's water resource layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-PUBLIC-SEWER:
+    description: "Whether public sewer serves the lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The sewer provider's service layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-SIDEWALK-EASEMENT:
+    description: "Whether a sidewalk easement crosses the lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, fact]
+    path: "Title report for the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-SITE-SPECIFIC-LIMITATION:
+    description: "Whether a site-specific land use condition binds the lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, fact]
+    path: "The city's land use decision history for the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-SPLIT-ZONE:
+    description: "Which zone governs a lot the zone map splits"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, fact]
+    path: "A person reads the zone map and the code's split-zone rule"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-STEEP-SLOPE:
+    description: "Whether the lot is steep enough to trigger a slope standard"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the DEM"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-THROUGH-LOT:
+    description: "Whether the lot is a through lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from street lines on both ends"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-UTILITY-EASEMENT:
+    description: "Whether a utility easement crosses the lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, fact]
+    path: "Title report for the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-WILLAMETTE-HISTORIC-DISTRICT:
+    description: "Whether the lot lies in the Willamette historic district"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The city's historic district layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+
+  # --- lots the bridge never measured (flats.ingest.assign) ------------
+  # One per gate the normalize stage closes (flats.ingest.normalize.GATES)
+  # and one for a lot that passed every gate and still has no measurement.
+  JURISDICTION-OFF:
+    description: "The lot's jurisdiction is switched off in the rules (Lake Oswego, HUMAN_TODO 16)"
+    kind: categorical
+    risk: possible
+    severity: 8
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Steph decides whether to switch the jurisdiction back on"
+    priority: parked
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [JURISDICTION_OFF]
+  LOT-OUTSIDE-UGB:
+    description: "The lot lies outside the urban growth boundary, where the screen does not measure"
+    kind: categorical
+    risk: likely
+    severity: 9
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Read the county's rural zoning for a four-unit building"
+    priority: parked
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [OUTSIDE_UGB]
+  ZONE-MISSING:
+    description: "The zoning layer gives this lot no zone at all"
+    kind: categorical
+    risk: possible
+    severity: 8
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "A person reads the city's zoning map for the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [NO_ZONE]
+  ZONE-POCKET:
+    description: "The lot's zone code is a pocket ruled to read another layer's zoning"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone]
+    path: "Encode the pocket under the layer whose zoning it carries"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ZONE_POCKET]
+  ZONE-UNENCODABLE:
+    description: "The lot's zone was ruled unencodable: its standards are set case by case"
+    kind: categorical
+    risk: likely
+    severity: 8
+    absorbs: null
+    resolution: external_inquiry
+    scope: shared
+    key: [jurisdiction, zone]
+    path: "The city's planning counter, for the plan that governs the zone"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ZONE_UNENCODABLE]
+  ZONE-TO-READ:
+    description: "The lot's zone code was ruled worth reading and has not been read yet"
+    kind: categorical
+    risk: possible
+    severity: 8
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, zone]
+    path: "Read and encode the zone"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [ZONE_TO_READ]
+  LOT-NOT-MEASURED:
+    description: "The lot passed every gate but the measuring pipeline dropped it before a fit"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Our own measurement: quadfit's step that dropped the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [NOT_MEASURED]

@@ -604,6 +604,15 @@ def test_the_flat_row_carries_the_verdict_the_signed_colour_and_what_leaned(
     assert r["triage"] == "unknown" and r["reasons"] == "RULE_UNVERIFIED"
     assert r["if_signed"] == s.signed.triage.value
     assert r["if_signed_reasons"] == ",".join(s.signed.reasons)
+    # The flag plan's colour is the signed one (Steph 2026-10-02, Q4): the
+    # unsigned screening's RULE-UNSIGNED flag is not on the row, and every
+    # flag names this lot, not the screen's placeholder.
+    assert r["colour"] == s.signed.colour.value
+    assert "RULE-UNSIGNED" in {f.code for f in s.screening.flags}
+    written = json.loads(r["flags"]) if r["flags"] else []
+    assert "RULE-UNSIGNED" not in {f["code"] for f in written}
+    assert all("@" not in f["key"].split("|") for f in written)
+    assert r["binds"] == (json.dumps([b.as_json() for b in s.signed.binds], separators=(",", ":")) if s.signed.binds else "")
     assert r["fit_across_ft"] == s.fit.across_ft
     # The stall count beside the colour, in the county map's own three
     # columns: what the row was charged at, how many the lot seats, which

@@ -83,6 +83,19 @@ REASONS = (*GATES, NOT_MEASURED, USE_PROHIBITED)
 #: a zone that forbids the building; what :func:`use_gate` answers.
 UseGate = tuple[str, str, str, str]
 
+
+class _Answered(tuple):
+    """A use-gate answer that also carries the relief policy's outcome for
+    the use there, so the row's bind can log the path. Compares as the
+    plain four-tuple."""
+
+    relief: Any = None
+
+    def __new__(cls, answer: UseGate, relief: Any) -> _Answered:
+        made = super().__new__(cls, answer)
+        made.relief = relief
+        return made
+
 #: Columns a bridge row carries (``flats.ingest.quadfit.row_for``); a synthetic
 #: row fills the same ones so the frame stays rectangular.
 ROW_COLUMNS = (
@@ -130,7 +143,45 @@ ROW_COLUMNS = (
     "envelope_source",
     "drawing",
     "fire_route_ft",
+    "colour",
+    "flags",
+    "binds",
 )
+
+#: The flag type each gate raises on a lot the bridge never measured
+#: (``flats/config/flags.yaml``, "lots the bridge never measured").
+GATE_FLAG = {
+    "JURISDICTION_NOT_ENCODED": "JURISDICTION-NOT-ENCODED",
+    "JURISDICTION_OFF": "JURISDICTION-OFF",
+    "OUTSIDE_UGB": "LOT-OUTSIDE-UGB",
+    "NO_ZONE": "ZONE-MISSING",
+    "ZONE_NOT_ENCODED": "ZONE-NOT-ENCODED",
+    "ZONE_POCKET": "ZONE-POCKET",
+    "ZONE_UNENCODABLE": "ZONE-UNENCODABLE",
+    "ZONE_TO_READ": "ZONE-TO-READ",
+    NOT_MEASURED: "LOT-NOT-MEASURED",
+}
+
+
+def _parts(lot: dict[str, Any]) -> dict[str, Any]:
+    """What a synthetic row's flag keys are made of."""
+    return {
+        "jurisdiction": lot.get("rules_layer") or lot.get("jurisdiction") or "(none)",
+        "zone": lot.get("zone") or "(none)",
+        "lot": str(lot["tlid"]).rstrip(),
+    }
+
+
+def _plan(flags: list[Any], binds: list[Any]) -> dict[str, Any]:
+    """The flag plan's three columns for a synthetic row."""
+    from flats.score import flags as flag_plan
+
+    flag_plan.validate(flags)
+    return {
+        "colour": flag_plan.colour(binds, flags).value,
+        "flags": flag_plan.dumps(flags),
+        "binds": flag_plan.dumps(binds),
+    }
 
 
 def synthetic_row(lot: dict[str, Any], design: str, reason: str, step: str | None = None) -> dict[str, Any]:
@@ -156,7 +207,15 @@ def synthetic_row(lot: dict[str, Any], design: str, reason: str, step: str | Non
         "observed": "{}",
         "assumed_leaning": "",
         "unknown_leaning": "",
+        # A use-gate row (:func:`prohibited_row`) writes its own.
+        **(_plan([_gate_flag(lot, reason)], []) if reason in GATE_FLAG else {}),
     }
+
+
+def _gate_flag(lot: dict[str, Any], reason: str) -> Any:
+    from flats.score import flags as flag_plan
+
+    return flag_plan.make(GATE_FLAG[reason], reason, _parts(lot))
 
 
 def use_gate_for(rules: Any, relief: Any) -> Callable[[str, str], UseGate | None]:
@@ -186,11 +245,12 @@ def use_gate_for(rules: Any, relief: Any) -> Callable[[str, str], UseGate | None
         if got is not None:
             use = got.values.get("quadplex_allowed")
             if use is not None and use.value is False and not use.levers:
-                signed = "yellow" if relief.for_use(layer_id).available else "red"
+                path = relief.for_use(layer_id)
+                signed = "yellow" if path.available else "red"
                 if got.verdict is RuleVerdict.trusted:
-                    answer = (signed, USE_PROHIBITED, signed, USE_PROHIBITED)
+                    answer = _Answered((signed, USE_PROHIBITED, signed, USE_PROHIBITED), path)
                 else:
-                    answer = ("unknown", got.reason or "RULE_UNVERIFIED", signed, USE_PROHIBITED)
+                    answer = _Answered(("unknown", got.reason or "RULE_UNVERIFIED", signed, USE_PROHIBITED), path)
         memo[key] = answer
         return answer
 
@@ -207,9 +267,25 @@ def load_use_gate() -> Callable[[str, str], UseGate | None]:
 
 def prohibited_row(lot: dict[str, Any], design: str, answer: UseGate) -> dict[str, Any]:
     """The row for one lot x design in a zone that forbids the building."""
+    from flats.score import flags as flag_plan
+
     triage, reason, signed, signed_reason = answer
     row = synthetic_row(lot, design, reason)
     row.update({"triage": triage, "if_signed": signed, "if_signed_reasons": signed_reason})
+    # The use gate is a bind whatever path the relief policy lists round it:
+    # a conditional use is an approval, and none is accepted (Steph
+    # 2026-10-02). The path is logged on the bind for the later review.
+    path = getattr(answer, "relief", None)
+    bind = flag_plan.Bind(
+        "use",
+        None,
+        None,
+        None,
+        relief=getattr(path, "condition", None),
+        relief_tier=getattr(getattr(path, "tier", None), "value", None),
+        relief_confirmed=bool(getattr(path, "confirmed", False)),
+    )
+    row.update(_plan([], [bind]))
     return row
 
 
