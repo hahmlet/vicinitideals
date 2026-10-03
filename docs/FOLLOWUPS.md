@@ -1199,8 +1199,19 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Solved (design court 9x18, 12 ft lane): aisle 28 ft (+4) -> dead end 0
    (+144 sq ft, no extra width); 25/26/27 ft still need 9/6/8; 10 ft stalls
    -> 1 (row +5 ft); 10 ft stalls + 26 aisle -> 0; 11 ft stalls -> 0 (row
-   +8); 14/16/18 ft lane -> 10/7/4; 26 aisle + 14 lane -> 2. PROPOSED: the
-   ledger holds a menu per shape (deeper aisle, wider stalls, dead end) and
-   the screen takes the least paving that fits the lot; re-bound the 54.
+   +8); 14/16/18 ft lane -> 10/7/4; 26 aisle + 14 lane -> 2. BUILT
+   2026-10-03 (working tree, bound branch bound/court-fixes 77d5751a): the
+   ledger holds a menu per shape -- deeper aisle, wider stalls, dead end,
+   and every smaller deepening + the dead end it then needs ("mixed";
+   Portland 20 ft aisle: +5/9, +6/6, +7/4, +8/0) -- the fit takes the least
+   paving the lot holds, and where that fix fits but fails only a yard
+   rule (screen.COURT_SHAPED) the next fix is tried (quadfit._other_fixes).
+   Re-bound (137 bridge_cf_base vs bridge_cf_final, 3,400 lots): 18 of 561
+   greens go yellow (3%; was 54/9%), all Portland, 0 gained: 11 no fix fits
+   the depth, 7 fit but leave the outdoor square short of 12 ft (one read:
+   10.5 ft). 1 yellow -> red (Oregon City 22E28D-03700, a 640 ft-slack lot:
+   fire route 164 ft on the new placement). Run +17% time. OPTIONS PUT TO
+   STEPH 2026-10-03: A ship (re-screen rides the weekly run), B hold for
+   the generator (1).
    (1) the free-form generator (item
    27) after (2).
