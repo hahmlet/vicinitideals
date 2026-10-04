@@ -1003,7 +1003,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    escape. (b) Other cities' prose refusals still need locating into
    `set_aside:` so their pages tint grey.
 27. **Parking layout generator (Steph 2026-10-01: "more parking flexibility
-   opens up more lots"; don't invent shapes).** SCOPING, nothing built.
+   opens up more lots"; don't invent shapes).** PARKED by Steph 2026-10-04
+   ("leave the free form generator for now"). SCOPING, nothing built.
    Steph's frame: NOT a menu of shapes -- feed the city's parameters (stall
    sizes per angle, aisle widths, number of drives -- Oregon City wants one
    approach per two townhouses = 2 for the pod -- backing rules, setbacks)
@@ -1177,41 +1178,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    single-family parking standards to middle housing -- it may cancel the
    strips single-family homes are not held to (Multnomah, Gladstone,
    Hillsboro, Wood Village, Oregon City); encoded strict meanwhile.
-   (2) turning path -- RULED 2026-10-02 (Steph: "THREE POINT is acceptable
-   for now"), BUILT, NOT SHIPPED -- DECISION PENDING (Steph, 2026-10-03):
-   the car is the AASHTO P car (24 ft turn), every "no" asked four ways;
-   a stall counts if a car gets in and out in four moves or fewer. Today's
-   12 ft-lane court: only the stall by the lane works; the remedy is the
-   aisle run past the row's far end (ledger `flats/config/court_turns.json`,
-   16 shapes: 12 ft lanes 8-16 ft, the design's own 13 ft, 2-stall 20,
-   22+ ft lanes 0; none unusable). Code in the working tree (turning.py,
-   turns.py, paper.py, screen.py, relief.py, tests). Shapes the ledger
-   lacks are UNCHECKED, never searched at screen time. Bound on 3,500
-   sampled lots (137 /root/bridge_turns_base vs _probe, chunks 0-6): 54 of
-   572 green lots (9%) go yellow, 49 of them Portland lots ~55-62 ft wide
-   where the building stood end-on (needs +1 ft for pod56, +12 ft for
-   pod80) and the sideways building does not fit; side effects: fire
-   route re-measured on the new placement. Picture for Steph:
-   https://claude.ai/artifact/ReP4bZrHy7QG9XjePEKQZ5. Options put to
-   Steph: A ship now (no false green; the generator wins lots back later),
-   B hold until the generator (1), C allow a fifth move. STEPH 2026-10-03:
-   the 13 ft dead end should be a LAST RESORT -- try a deeper aisle first.
-   Solved (design court 9x18, 12 ft lane): aisle 28 ft (+4) -> dead end 0
-   (+144 sq ft, no extra width); 25/26/27 ft still need 9/6/8; 10 ft stalls
-   -> 1 (row +5 ft); 10 ft stalls + 26 aisle -> 0; 11 ft stalls -> 0 (row
-   +8); 14/16/18 ft lane -> 10/7/4; 26 aisle + 14 lane -> 2. BUILT
-   2026-10-03 (working tree, bound branch bound/court-fixes 77d5751a): the
-   ledger holds a menu per shape -- deeper aisle, wider stalls, dead end,
-   and every smaller deepening + the dead end it then needs ("mixed";
-   Portland 20 ft aisle: +5/9, +6/6, +7/4, +8/0) -- the fit takes the least
-   paving the lot holds, and where that fix fits but fails only a yard
-   rule (screen.COURT_SHAPED) the next fix is tried (quadfit._other_fixes).
-   Re-bound (137 bridge_cf_base vs bridge_cf_final, 3,400 lots): 18 of 561
-   greens go yellow (3%; was 54/9%), all Portland, 0 gained: 11 no fix fits
-   the depth, 7 fit but leave the outdoor square short of 12 ft (one read:
-   10.5 ft). 1 yellow -> red (Oregon City 22E28D-03700, a 640 ft-slack lot:
-   fire route 164 ft on the new placement). Run +17% time. OPTIONS PUT TO
-   STEPH 2026-10-03: A ship (re-screen rides the weekly run), B hold for
-   the generator (1).
-   (1) the free-form generator (item
-   27) after (2).
+   (2) turning path LIVE as code 1723db45 (2026-10-04, Steph "ship it"):
+   every stall must be usable by the AASHTO P car (three-point turn ok);
+   ledger `flats/config/court_turns.json` holds a menu of fixes per court
+   shape (deeper aisle, wider stalls, mixed, dead end last), least paving
+   first. The re-screen rides the weekly full run (~10-08) -- expect ~3%
+   of Portland greens on narrow end-on lots to go yellow (bound: 18 of
+   561), and read the moves. A new court shape in the corpus needs
+   `python -m flats.score.turns` (test_turns fails until it is solved).
+   (1) the free-form generator (item 27) -- PARKED by Steph 2026-10-04
+   ("leave the free form generator for now").
