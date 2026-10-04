@@ -39,6 +39,7 @@ from flats.score.relief import (  # noqa: E402
     ReliefPath,
     ReliefPolicy,
 )
+from flats.score import flags as fp  # noqa: E402
 from flats.score.configure import configure  # noqa: E402
 from flats.score.screen import (  # noqa: E402
     CLOSER_LOOK_MIN_DENSITY,
@@ -47,6 +48,7 @@ from flats.score.screen import (  # noqa: E402
     FACT_UNOBSERVED,
     GEOMETRY_UNREADABLE,
     NO_FRONTAGE,
+    PARKING_STRIP_UNCONFIRMED,
     SOLAR_SHADE,
     STANDARD_NOT_ENCODED,
     STREET_UNCONFIRMED,
@@ -1212,6 +1214,20 @@ def test_a_street_that_is_only_a_drive_the_lot_does_not_abut_is_never_green() ->
     result = run(lot=LotFacts(**facts, street_unconfirmed=True))
     assert result.triage is Triage.unknown
     assert result.reasons == (STREET_UNCONFIRMED,)
+
+
+def test_a_plan_that_fits_only_without_the_planted_strip_is_a_yellow_question() -> None:
+    """Steph 2026-10-04: "Let's have strips be a flag for yellow at this
+    time". The bridge screens a lot the strip held a second time without
+    it; the screen then names the question and flags it, never passes it."""
+    facts = dict(lot_sqft=6000, frontage_ft=60, lot_width_ft=60)
+    assert run(lot=LotFacts(**facts)).triage is Triage.green
+    result = run(lot=LotFacts(**facts, strip_waived=True))
+    assert result.triage is Triage.unknown
+    assert result.reasons == (PARKING_STRIP_UNCONFIRMED,)
+    (raised,) = [f for f in result.flags if f.code == "PARKING-STRIP-UNCONFIRMED"]
+    assert "parking_lot_line_buffer_ft" in raised.key
+    assert fp.colour(result.binds, result.flags) is fp.Colour.yellow
 
 
 def test_a_lot_with_no_area_cannot_be_screened() -> None:

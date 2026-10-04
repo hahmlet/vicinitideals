@@ -198,6 +198,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [STREET_UNCONFIRMED]
+  PARKING-STRIP-UNCONFIRMED:
+    description: "The plan fits only without the planted strip the city keeps between parking and the lot lines; whether a townhome project owes it is open"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: parking
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, field]
+    path: "Read OAR 660-046-0220(2)(e)(E) against the city's strip; if it stays unclear, the planning counter (FOLLOWUPS 36)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [PARKING_STRIP_UNCONFIRMED]
 
   # --- what our own measurement left open --------------------------------
   FIT-COURT-WIDTH:

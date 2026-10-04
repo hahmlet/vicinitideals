@@ -168,6 +168,17 @@ COURT_WIDTH_UNMEASURED = "COURT_WIDTH_UNMEASURED"
 #: is too big, and the corner, the lane and the side-street driveway it
 #: grants are not there. A person has to look at the lot (FOLLOWUPS 4).
 STREET_UNCONFIRMED = "STREET_UNCONFIRMED"
+#: The plan was screened without the planted strip the code keeps between
+#: parking and the lot lines (``parking_lot_line_buffer_ft``), because with
+#: it the plan misses and without it the plan does not. Whether a townhome
+#: project owes the strip is open -- OAR 660-046-0220(2)(e)(E) may hold
+#: middle housing to the single-family parking standards, which ask none --
+#: so the lot is a question, not a pass and not a miss (Steph 2026-10-04:
+#: "Let's have strips be a flag for yellow at this time"). The bridge sets
+#: :attr:`LotFacts.strip_waived` (:func:`flats.ingest.quadfit.strip_waived`).
+PARKING_STRIP_UNCONFIRMED = "PARKING_STRIP_UNCONFIRMED"
+#: The field :data:`PARKING_STRIP_UNCONFIRMED` waives.
+STRIP_FIELD = "parking_lot_line_buffer_ft"
 
 #: The code caps the building's height by the shade it casts on the lot to
 #: the north, and nothing here knows which line faces north or where the
@@ -333,6 +344,10 @@ class LotFacts:
     #: :func:`flats.ingest.quadfit.street_unconfirmed`). False where nothing
     #: read the road types, which is every caller but the bridge.
     street_unconfirmed: bool = False
+    #: The plan was screened without the code's planted strip between
+    #: parking and the lot lines (:data:`PARKING_STRIP_UNCONFIRMED`). False
+    #: everywhere but the bridge's second reading of a lot the strip held.
+    strip_waived: bool = False
     #: The side of the largest square of open ground this plan leaves on the
     #: real lot -- off the building and its pavement, outside the front
     #: setback, off every overlay carve -- in one contiguous piece holding the
@@ -1963,6 +1978,8 @@ def screen(
         reasons.append(GEOMETRY_UNREADABLE)
     if lot.street_unconfirmed:
         reasons.append(STREET_UNCONFIRMED)
+    if lot.strip_waived:
+        reasons.append(PARKING_STRIP_UNCONFIRMED)
     if "fit_across_ft" in unchecked:
         reasons.append(COURT_WIDTH_UNMEASURED)
     if any(_unencoded(CHECK_FIELD.get(name, name), rules) for name in unchecked):
@@ -2142,6 +2159,8 @@ def _account(
         flag("GEOM-UNREADABLE", GEOMETRY_UNREADABLE)
     if lot.street_unconfirmed:
         flag("ACCESS-STREET-UNCONFIRMED", STREET_UNCONFIRMED)
+    if lot.strip_waived:
+        flag("PARKING-STRIP-UNCONFIRMED", PARKING_STRIP_UNCONFIRMED, field=STRIP_FIELD)
     if "fit_across_ft" in unchecked:
         flag("FIT-COURT-WIDTH", COURT_WIDTH_UNMEASURED)
     if rules.values:
@@ -2261,9 +2280,11 @@ __all__ = [
     "MIN_DENSITY_CHECKS",
     "NO_FRONTAGE",
     "OPTIMISTIC_CHECKS",
+    "PARKING_STRIP_UNCONFIRMED",
     "RELIEF_UNCONFIRMED",
     "STANDARD_NOT_ENCODED",
     "STREET_UNCONFIRMED",
+    "STRIP_FIELD",
     "USE_NOT_ENCODED",
     "USE_PROHIBITED",
     "BindingHistogram",

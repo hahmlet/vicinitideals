@@ -136,7 +136,9 @@ from flats.score.paper import (
 )
 from flats.score.screen import (
     COURT_SHAPED,
+    STEEP_GROUND,
     STREET_UNCONFIRMED,
+    STRIP_FIELD,
     LotFacts,
     Screening,
     Triage,
@@ -1878,6 +1880,7 @@ def _screen_lot_once(
     bound: bool = True,
     pool: dict[Any, dict[Any, Fitter]] | None = None,
     terrain: Any = None,
+    fit_only: bool = False,
 ) -> list[Screened]:
     """Screen one lot against every design, one envelope search for all.
 
@@ -1899,6 +1902,10 @@ def _screen_lot_once(
     (:func:`_bounded`); ``pool`` carries the envelope searches from one of
     those readings to the next, by the angles they were swept at -- the same
     lot, the same ground, only the code's answers differ.
+
+    ``fit_only`` is for a caller that reads nothing but the fit
+    (:func:`slope_checked`): the drawing, the fire route and the strip's
+    second reading, the dearest steps on a big lot, are not run.
     """
     pool = {} if pool is None else pool
     layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
@@ -1996,6 +2003,9 @@ def _screen_lot_once(
             won, fitter = max(tried, key=lambda t: (*_front_rank(t[0]), -_env_sqft(t[0])))
         else:
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
+        if fit_only:
+            out.append(won)
+            continue
         won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
         won = fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter)
         won = slope_checked(
@@ -2007,8 +2017,96 @@ def _screen_lot_once(
                 won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
                 roads=roads, pool=pool, fitter=fitter, terrain=terrain,
             )
+        won = strip_waived(
+            won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+            roads=roads, bound=bound, terrain=terrain,
+        )
         out.append(won)
     return out
+
+
+class _Waived:
+    """``rules`` with the named standards read as unstated, for
+    :func:`strip_waived`'s second reading: every resolution the screen asks
+    for on the way -- the yards, the worst-bound readings, the slope's
+    re-screen -- comes back without them."""
+
+    def __init__(self, rules: RuleSet, fields: Sequence[str]) -> None:
+        self._rules = rules
+        self._fields = frozenset(fields)
+
+    def resolve(self, *args: Any, **kwargs: Any) -> ZoneResolution:
+        got = self._rules.resolve(*args, **kwargs)
+        if not self._fields & set(got.values):
+            return got
+        return dataclasses.replace(
+            got,
+            values={k: v for k, v in got.values.items() if k not in self._fields},
+            untrusted=tuple(n for n in got.untrusted if n not in self._fields),
+        )
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._rules, name)
+
+
+#: The checks a planted strip can move: the ground the building and its court
+#: stand on, and what is measured on the plan drawn there. A bind on any other
+#: check (a height, a lot size, the use) stays whatever the strip does.
+STRIP_MOVES: frozenset[str] = COURT_SHAPED | {"fire_access_ft", STEEP_GROUND}
+
+#: A fit short by more than this many strip widths is not read again: the
+#: strip gives the envelope back at most its own width off each line it
+#: stands on, and a shortfall past a few of those is a miss either way. A
+#: lot cut here stays RED where a reading might have made it a question --
+#: a false red, never a false green.
+STRIP_REACH = 3.0
+
+
+def strip_waived(
+    s: Screened,
+    lot: QuadfitLot,
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float,
+    roads: Any,
+    bound: bool,
+    terrain: Any = None,
+) -> Screened:
+    """``s``, or the same design screened without the planted strip the code
+    keeps between parking and the lot lines where the strip alone is what
+    the plan misses by (Steph 2026-10-04: "Let's have strips be a flag for
+    yellow at this time").
+
+    Whether a townhome project owes the strip is open -- OAR
+    660-046-0220(2)(e)(E) may hold middle housing to the single-family
+    parking standards, which ask none (FOLLOWUPS 36) -- so a plan that
+    misses with it and clears without it is a question: the second reading,
+    screened the whole way (yards, fit, court, fire, slope, worst bound) on
+    rules that state no strip, and carrying
+    :data:`~flats.score.screen.PARKING_STRIP_UNCONFIRMED` and its flag, which
+    hold it out of GREEN. Kept only where that reading binds nothing; a
+    plan that misses either way keeps the strip's answer. Only a plan with a
+    miss the strip could move is read again (:data:`STRIP_MOVES`,
+    :data:`STRIP_REACH`).
+    """
+    strip = lot_line_buffer_ft(s.rules)
+    binds = s.signed.binds
+    if strip <= 0 or not binds or lot.facts.strip_waived:
+        return s
+    for b in binds:
+        if b.check not in STRIP_MOVES:
+            return s
+        if b.check in ("fit_ft", "fit_across_ft", STEEP_GROUND) and (b.shortfall or 0.0) > STRIP_REACH * strip:
+            return s
+    waived = dataclasses.replace(lot, facts=dataclasses.replace(lot.facts, strip_waived=True))
+    (alt,) = _screen_lot_once(
+        waived, [s.design], rules=_Waived(rules, (STRIP_FIELD,)),  # type: ignore[arg-type]
+        policy=policy, relief=relief, step_deg=step_deg, roads=roads, bound=bound,
+        terrain=terrain,
+    )
+    return s if alt.signed.binds else alt
 
 
 def fire_checked(
@@ -2040,8 +2138,11 @@ def fire_checked(
     and the route misses, the plan is drawn once more at the fronts a truck
     can reach (``fitter``), and kept where the building fits there and the
     hose reaches it sooner: the same fit, the end the developer would
-    build at. Any other placement is not searched: where one would reach,
-    the answer is a false red, never a false green. ``green`` says the plan
+    build at. Where the route still misses, the plan is drawn at the fit's
+    other angles (:func:`_turned_for_fire`) and kept at one the hose
+    reaches. Other placements at an angle than the one nearest the street
+    are not searched: where one would reach, the answer is a false red,
+    never a false green. ``green`` says the plan
     is GREEN whatever its triage reads -- its open facts were bounded
     (:func:`_bounded`) -- and holds it to the same rule.
     """
@@ -2077,10 +2178,12 @@ def fire_checked(
 
     route = measure(s.drawing)
     limit = float(s.rules.get("fire_access_max_ft"))
+    at = None
     if (route is None or route > limit) and fitter is not None:
         fronts = _street_lines(s.lot)
         served = fire.reachable(fronts, offset)
         if served and len(served) < len(fronts):
+            at = served
             drawn = drawing_for(s, fitter, street=served)
             again = measure(drawn) if drawn and drawn.get("fits") else None
             if again is not None and (route is None or again < route):
@@ -2088,12 +2191,97 @@ def fire_checked(
     green = green or Triage.green in (s.screening.triage, s.signed.triage)
     if route is None and not green:
         return s
-    facts = dataclasses.replace(s.facts, fire_route_ft=route, fire_route_tried=True)
-    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
-    shadow = _if_signed(
-        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
-    )
-    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+    def screened(s: Screened, route: float | None) -> Screened:
+        facts = dataclasses.replace(s.facts, fire_route_ft=route, fire_route_tried=True)
+        result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+        shadow = _if_signed(
+            s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+        )
+        return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+    out = screened(s, route)
+    # The other angles are drawn only where the hose is all that stands in
+    # the way: a plan missing something else stays short of GREEN whatever
+    # the route, and the search is the dearest step on a big lot.
+    # A route that was never found is not turned for: the fit's own angle
+    # has the most room, and where its drawing holds no building the others
+    # seldom do -- every angle drawn for nothing (run on a 7-acre lot: 13 s
+    # to 233 s). The plan stays out of GREEN, unobserved.
+    binds = out.signed.binds
+    alone = route is not None and bool(binds) and all(b.check == "fire_access_ft" for b in binds)
+    if fitter is not None and alone:
+        turned, again = _turned_for_fire(s, fitter, measure, route, limit, street=at)
+        if turned is not s:
+            out = screened(turned, again)
+    return out
+
+
+#: The angles :func:`_turned_for_fire` draws: every one the fit searched
+#: within this many degrees of square to a street, and one in this many
+#: beyond. Each angle is a window search, dear on a big lot; a reach missed
+#: between them leaves a red standing, never a false green.
+TURN_NEAR_DEG = 15.0
+TURN_STEP_DEG = 5.0
+#: At most this many angles are drawn, nearest square first: on a 7-acre lot
+#: each drawing and its route cost half a second, and every reading of the
+#: lot (the strip's, the slope's) turns again.
+TURN_MAX = 24
+
+def _turned_for_fire(
+    s: Screened,
+    fitter: Fitter,
+    measure: Any,
+    route: float | None,
+    limit: float,
+    *,
+    street: tuple[tuple[float, float, float, float], ...] | None = None,
+) -> tuple[Screened, float | None]:
+    """``s`` drawn at the angle the hose reaches soonest, and that route
+    (FOLLOWUPS 39, Steph 2026-10-04).
+
+    The drawing stands the building at the fit's angle -- the one with the
+    most room -- and the route is measured from there. Where it misses, the
+    same building, orientation and court are drawn at the other angles the
+    fit searched (the fitter's grids: only the angles the code allows), each
+    nearest the street -- nearest square to a street first; every angle
+    within :data:`TURN_NEAR_DEG` of square, one in :data:`TURN_STEP_DEG`
+    beyond, at most :data:`TURN_MAX` of them -- and the first route within ``limit`` is kept, else the
+    shortest that beats ``route``. Only a drawing whose room holds the building and its court on
+    ground counts (``measure``), so the placement kept is one the fit would
+    have passed: a red lifted, never a green invented. ``street`` is the
+    fronts a truck can reach where the caller narrowed them.
+    """
+    if s.fit.angle_deg is None:
+        return s, route
+    square = [normalize(b + turn) for b in s.lot.front_bearings for turn in (0.0, 90.0)]
+
+    def off(angle: float) -> float:
+        d = min((abs(angle - a) % 180.0 for a in square), default=0.0)
+        return min(d, 180.0 - d)
+
+    def tried(angle: float) -> bool:
+        # Every angle near square to a street; every TURN_STEP_DEG beyond.
+        step = angle / TURN_STEP_DEG
+        return off(angle) <= TURN_NEAR_DEG or math.isclose(step, round(step), abs_tol=1e-6)
+
+    angles = sorted(
+        (a for a in {g.angle_deg for g in fitter.grids}
+         if tried(a) and not math.isclose(a, s.fit.angle_deg, abs_tol=1e-6)),
+        key=lambda a: (off(a), a),
+    )[:TURN_MAX]
+    best: tuple[float, dict[str, Any]] | None = None
+    for angle in angles:
+        turned = dataclasses.replace(s, fit=dataclasses.replace(s.fit, angle_deg=angle))
+        drawn = drawing_for(turned, fitter, street=street)
+        got = measure(drawn) if drawn and drawn.get("fits") else None
+        if got is not None and (best is None or got < best[0]):
+            best = (got, drawn)
+            if got <= limit:
+                break
+    if best is None or (route is not None and best[0] >= route):
+        return s, route
+    return dataclasses.replace(s, drawing=best[1]), best[0]
 
 
 def with_steep(lot: QuadfitLot, terrain: Any) -> QuadfitLot:
@@ -2193,7 +2381,7 @@ def slope_checked(
         elif whole >= need:
             (alt,) = _screen_lot_once(
                 bare, [s.design], rules=rules, policy=policy, relief=relief,
-                step_deg=step_deg, roads=roads, bound=False,
+                step_deg=step_deg, roads=roads, bound=False, fit_only=True,
             )
             if not _fit_missed(alt):
                 facts = dataclasses.replace(facts, steep_blocks=True)

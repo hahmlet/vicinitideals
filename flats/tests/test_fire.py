@@ -470,3 +470,78 @@ def test_a_through_lot_is_drawn_at_the_end_the_truck_reaches(corpus, policies, s
     ys = [p[1] for p in s.drawing["building"]]
     middle = Y0 + depth / 2
     assert (max(ys) < middle) if served_end == "low" else (min(ys) > middle)
+
+
+def _deep_lot(width: float, depth: float):
+    edges = [
+        [X0, Y0, X0 + width, Y0, "F"],
+        [X0 + width, Y0, X0 + width, Y0 + depth, "S"],
+        [X0 + width, Y0 + depth, X0, Y0 + depth, "R"],
+        [X0, Y0 + depth, X0, Y0, "S"],
+    ]
+    return bridge_row(
+        edges_json=json.dumps(edges),
+        frontage_ft=width,
+        lot_width_ft=width,
+        lot_depth_ft=depth,
+        area_sqft=width * depth,
+        wkb=shapely.to_wkb(box(X0 + 5, Y0 + 10, X0 + width - 5, Y0 + depth - 10)),
+        lot_wkb=shapely.to_wkb(box(X0, Y0, X0 + width, Y0 + depth)),
+    )
+
+
+def _sunk(s, to_y: float):
+    """``s`` with its building drawn ``to_y`` ft deeper into the lot."""
+    import dataclasses
+
+    ring = [[x, y + to_y] for x, y in s.drawing["building"]]
+    return dataclasses.replace(
+        _coloured(s, Triage.green), drawing={**s.drawing, "building": ring, "fits": True}
+    )
+
+
+@pytest.mark.parametrize("width, lifted", [(200.0, True), (80.0, False)])
+def test_a_building_drawn_out_of_reach_is_turned_where_the_hose_reaches(
+    corpus, policies, width, lifted
+) -> None:
+    """FOLLOWUPS 39 (Steph 2026-10-04): the drawing stands the building at
+    the fit's angle, and on a lot with room the hose may miss it there
+    while the same plan at another angle stands within reach (Hillsboro
+    1N230BA00800: 201 ft at 140 degrees, 107 ft at 1 degree). The other
+    angles are drawn and the reach kept; where no other angle holds the
+    plan, the miss stands."""
+    from flats.fit.angles import angles_for
+    from flats.fit.rectangle import Fitter
+
+    lot = lot_from_row(_deep_lot(width, 240.0), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.drawing and s.drawing["fits"]
+    angles = angles_for(lot.front_bearings, step_deg=30.0)
+    fitter = Fitter(s.envelope.geom, angles, ground=s.envelope.ground)
+    sunk = _sunk(s, 240.0 - 50.0 - max(p[1] - Y0 for p in s.drawing["building"]))
+    got = fire_checked(sunk, lot, None, policy=policies[0], relief=policies[1], fitter=fitter)
+    if lifted:
+        assert got.facts.fire_route_ft <= 150.0
+        assert got.drawing["fits"]
+        assert max(p[1] for p in got.drawing["building"]) < Y0 + 120.0
+        assert check(got.screening, "fire_access_ft").verdict is Verdict.passes
+    else:
+        assert got.facts.fire_route_ft > 150.0
+        assert got.drawing["building"] == sunk.drawing["building"]
+        assert check(got.screening, "fire_access_ft").verdict is Verdict.fails
+
+
+def test_a_probe_that_reads_only_the_fit_draws_nothing_and_walks_no_hose(corpus, policies) -> None:
+    """The slope's probe of the lot with its steep ground left on asks one
+    thing, whether the fit misses: it is not drawn, its fire route is not
+    walked or turned for, and the fit it reads is the full screen's."""
+    from flats.ingest.quadfit import _screen_lot_once
+
+    lot = lot_from_row(_deep_lot(200.0, 240.0), corpus.layers)
+    kw = dict(rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0, bound=False)
+    (full,) = _screen_lot_once(lot, [pod()], **kw)
+    (probe,) = _screen_lot_once(lot, [pod()], fit_only=True, **kw)
+    assert full.drawing and full.facts.fire_route_tried
+    assert probe.drawing is None
+    assert not probe.facts.fire_route_tried
+    assert check(probe.screening, "fit_ft").verdict is check(full.screening, "fit_ft").verdict
