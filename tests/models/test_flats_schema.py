@@ -129,6 +129,9 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # risk and severity, or the colour rule set, until the drain writes
         # it into flags.yaml / colour.yaml.
         "flag_decisions",
+        "flag_instances",
+        "flag_questions",
+        "flag_reports",
         # A one-off property-tax impact snapshot (0136): what each green lot
         # of one jurisdiction pays today, as one new house, and as the pod.
         "tax_snapshots",
