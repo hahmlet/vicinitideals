@@ -195,6 +195,18 @@
         </tbody>
       </table>
       {% if source %}<div class="muted" style="font-size:11px;margin-top:6px">Facts read from {{ source }}{% if quadfit_jurisdiction %} ({{ quadfit_jurisdiction }}){% endif %}.</div>{% endif %}
+      {% for net in net_land %}
+      <div class="net-land" id="net-land-{{ loop.index }}" style="margin-top:12px;font-size:12px">
+        <strong>Net land</strong> <span class="muted">· {{ net.fields|join(", ") }} counted on the lot less what the city's code takes off</span>
+        <table class="data-table" style="font-size:12px;margin-top:4px">
+          <tbody>
+            {% if net.less %}<tr><td class="col-muted">Taken off where mapped</td><td>{{ net.less|join("; ") }}</td></tr>{% endif %}
+            {% if net.may_less %}<tr><td class="col-muted">May come off (not certain)</td><td>{{ net.may_less|join("; ") }}</td></tr>{% endif %}
+            {% if net.assumed_none %}<tr class="net-assumed"><td class="col-muted">Assumed not on this lot</td><td>{{ net.assumed_none|join("; ") }} <span class="muted">— nothing maps these; a survey or site visit confirms</span></td></tr>{% endif %}
+          </tbody>
+        </table>
+      </div>
+      {% endfor %}
     </div>
   </div>
 

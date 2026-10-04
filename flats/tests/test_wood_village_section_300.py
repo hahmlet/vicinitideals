@@ -155,23 +155,30 @@ def test_all_three_residential_tables_print_a_floor(
         assert "Dwellings Per Net Acre" in quoted, zone
 
 
-def test_no_denominator_is_stated_because_the_code_defines_none(
-    wood_village: Layer,
+def test_the_net_acre_is_land_area_net_and_floodplain_is_its_one_certain_cut(
+    wood_village: Layer, store: ProvenanceStore
 ) -> None:
-    """"Net acre" appears once in the whole fetched corpus for this city -- in
-    the row itself -- and the parenthesised (25%), (80%) and (.80) beside the
-    figures are unexplained. Naming a `measured_on` fact here would be claiming
-    a subtraction list nobody has read.
+    """This file once said "net acre" was defined nowhere. WVDC 720.030 defines
+    "Land Area, Net" -- the project area minus the unbuildable areas it lists
+    -- and each floor is now measured on it (FOLLOWUPS 30, 2026-10-04).
 
-    Leaving it off is the stricter direction for a FLOOR, which is the only
-    reason it is safe: a gross acre is never smaller than a net one, so the
-    density computed against the lot's own area is never higher than the real
-    one, and a lot that clears this measured grossly clears it measured net.
+    Floodplains are named outright and FEMA maps them, so that cut is certain
+    (Steph's Beaverton ruling: constrained land comes off whether or not a
+    plan set it aside). The wetland, water-quality and habitat maps are
+    Metro's regional layers, so they only may come off; tree preservation,
+    set-aside tracts and landslide slopes nothing maps, and are assumed absent
+    by name. A subtraction only ever helps a lot clear a floor, which is why
+    nothing less certain than a named, mapped cut is taken for sure.
     """
     for zone, _ in FLOORS:
         held = wood_village.zones[zone].values["min_density_du_per_acre"]
-        assert held.measured_on is None, zone
-    assert '"Net acre" is defined nowhere in the fetched code' in wood_village.notes
+        assert held.measured_on == "net_developable_area", zone
+        assert held.net_area.less == ("floodplain",), zone
+        assert set(held.net_area.may_less) == {"metro_wetlands", "metro_title3", "metro_title13"}
+        assert any("landslide" in item for item in held.net_area.assumed_none), zone
+        quoted = store.quote(held.measured_on_quote)
+        assert "LAND AREA, NET" in quoted and "floodplains" in quoted, zone
+    assert "is defined nowhere" not in wood_village.notes
 
 
 # -- and what the borrow did with it -----------------------------------------

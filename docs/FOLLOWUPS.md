@@ -1108,13 +1108,17 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    constrained land comes off whether or not set aside in a tract ("very
    few will have done that") -- both now certain deductions in Beaverton
    and Cornelius 18.195 (Metro wetland/habitat stand-ins stay `may_less`
-   as regional proxies). STILL OPEN: (b) Tigard read: MU-CBD's 25/50 per acre is
-   not stated net in 18.650 and the 50 is struck by the state layer, so
-   no false GREEN; Tigard FAR is net (18.40.110) but no FAR is encoded;
-   (c) King City / Wood Village / Washington Co. floors -- now at worst a
-   false closer-look yellow, low priority; (d) the lot page does not yet
-   show what was assumed absent (slopes etc.); (e) slopes over a
-   threshold could be computed from lidar later (quadfit s5o).
+   as regional proxies). Tigard read: MU-CBD's 25/50 per acre is not
+   stated net in 18.650 (no false GREEN); Tigard FAR is net but no FAR is
+   encoded. 2026-10-04: King City KT (4), Wood Village LR/MR (4) and
+   Washington Co. TO:R24-40/TO:R40-80/NMU/CCMU/CBD floors now net (183
+   values); Wood Village floodplain certain, the rest `may_less`; NB floors
+   and county maxima stay gross by 300-2.8's words. Run 63: 2,077 lots in
+   those zones, 419 failing the floor on the whole lot -- lands at the next
+   FULL re-screen. Lot page names each net-land list + what was assumed
+   absent (rules read at view time). STILL OPEN: (e) slopes over a
+   threshold could be computed from lidar (quadfit s5o work on 137 + a
+   re-screen); none of the cities' slope items is measured today.
 31. **Split a big lot to meet a minimum density (Steph 2026-10-02: "create
    a task for later ... immensely complicated ... large guesstimates on
    roads, utilities, etc. maybe never done").** A lot too big for 4 homes

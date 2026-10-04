@@ -227,3 +227,24 @@ def test_a_lot_page_says_how_far_a_fire_hose_walks_and_when_that_is_too_far(
     expect(row).to_contain_text("Fire truck reach")
     expect(row).to_contain_text("ft from the street to the farthest wall, walked around the building")
     expect(row.locator(".badge-red")).to_have_text("farther than the fire code allows (150 ft)")
+
+
+#: King City Kingston Terrace, Town Center: a minimum density per net acre
+#: (KCMC 16.114.050 B), so the lot card names its net-land list.
+NET_LAND_LOT = "/flats/lots/washington/2S1170000400"
+
+
+def test_a_lot_page_names_what_net_land_takes_off_and_what_was_assumed_absent(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """FOLLOWUPS 30, Steph's option A: what the code subtracts and nothing
+    maps is assumed absent -- and the page says so, by name, so a site visit
+    knows what to look for."""
+    page = logged_in_page
+    page.goto(f"{base_url}{NET_LAND_LOT}")
+    if page.locator("#lot-verdict").count() == 0:
+        pytest.skip("the net-land lot is not in this run")
+    net = page.locator("#net-land-1")
+    expect(net).to_contain_text("Net land")
+    expect(net).to_contain_text("May come off (not certain)")
+    expect(net.locator("tr.net-assumed")).to_contain_text("storm facilities")

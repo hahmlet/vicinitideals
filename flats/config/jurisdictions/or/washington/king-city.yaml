@@ -647,7 +647,18 @@ zones:
   # relieves maximums only ("Minimum density is untouched", or/_state.yaml).
   # Four homes at 22 an acre cap a Town Center lot near 7,900 square feet
   # (18: 9,680; 10: 17,424; 8: 21,780), before any natural-resource area is
-  # netted out, which would shrink the net acre and loosen the cap. Whether
+  # netted out, which would shrink the net acre and loosen the cap.
+  # Netted out since 2026-10-04 (FOLLOWUPS 30, Steph's option A): each floor
+  # carries measured_on: net_developable_area. "Natural resources" is the
+  # only item on 16.114.050 B a map here measures, and only through Metro's
+  # regional stand-ins and FEMA (the code names no map, and does not say
+  # floodplain is a natural resource), so all four go on `may_less` -- a lot
+  # with any of them on it holds as a question rather than passing on the
+  # smaller net. Streets, parks, storm facilities and non-residential uses
+  # are assumed absent on an existing lot; the pod's own drive is not a
+  # street (the code does not say so, unlike Beaverton's "common
+  # driveways"), so it stays in the denominator -- the stricter reading for
+  # a floor. Whether
   # "each development" reaches a single fourplex on an existing lot, which
   # B.2 sends straight to a building permit, is read the stricter way; a
   # doubt. NOT ENCODED: the second row, the neighbourhood-wide unit
@@ -691,6 +702,17 @@ zones:
       value: 22
       cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215"
+      measured_on:
+        fact: net_developable_area
+        cite: "King City KCMC 16.114.050 B, Net Density is gross area less streets, parks and open space, storm facilities, natural resources and non-residential uses"
+        quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L202-L204"
+        less: []
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "streets (public and private)"
+          - "parks and open space"
+          - "storm facilities"
+          - "uses that are not residential (Clean Water Services pump station, area designated for municipal uses)"
     setback_front_ft:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
@@ -753,6 +775,17 @@ zones:
       value: 18
       cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215"
+      measured_on:
+        fact: net_developable_area
+        cite: "King City KCMC 16.114.050 B, Net Density is gross area less streets, parks and open space, storm facilities, natural resources and non-residential uses"
+        quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L202-L204"
+        less: []
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "streets (public and private)"
+          - "parks and open space"
+          - "storm facilities"
+          - "uses that are not residential (Clean Water Services pump station, area designated for municipal uses)"
     setback_front_ft:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
@@ -815,6 +848,17 @@ zones:
       value: 10
       cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215"
+      measured_on:
+        fact: net_developable_area
+        cite: "King City KCMC 16.114.050 B, Net Density is gross area less streets, parks and open space, storm facilities, natural resources and non-residential uses"
+        quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L202-L204"
+        less: []
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "streets (public and private)"
+          - "parks and open space"
+          - "storm facilities"
+          - "uses that are not residential (Clean Water Services pump station, area designated for municipal uses)"
     setback_front_ft:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum
@@ -877,6 +921,17 @@ zones:
       value: 8
       cite: King City KCMC 16.114.050 A-B and Table 16.114-3, minimum net density (dwelling units per net acre)
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215"
+      measured_on:
+        fact: net_developable_area
+        cite: "King City KCMC 16.114.050 B, Net Density is gross area less streets, parks and open space, storm facilities, natural resources and non-residential uses"
+        quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L202-L204"
+        less: []
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "streets (public and private)"
+          - "parks and open space"
+          - "storm facilities"
+          - "uses that are not residential (Clean Water Services pump station, area designated for municipal uses)"
     setback_front_ft:
       value: 10
       cite: King City KCMC 16.114.050 Table 16.114-4, Front yard setback to residential building, minimum

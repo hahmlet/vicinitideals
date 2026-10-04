@@ -839,6 +839,42 @@ async def test_a_pocket_lot_says_whose_zoning_it_is_under(client: AsyncClient, s
     assert listing.status_code == 200
 
 
+async def test_a_lot_whose_density_counts_on_net_land_names_what_was_assumed_absent(
+    client: AsyncClient, session: AsyncSession
+):
+    """King City's Kingston Terrace floor is per net acre (KCMC 16.114.050 B).
+    The page names what may come off and what the screen assumed is not there
+    (FOLLOWUPS 30, Steph's option A); a Portland R5 lot, whose density is
+    not on net land, shows no such panel."""
+    await _login(client, session)
+    run = await _seed(session)
+    lot = FlatsLot(
+        tlid="2S106BC  00800", county="washington", jurisdiction="or/washington/king-city",
+        zone_raw="KTTC", zone="KTTC", site_address="16000 SW ROY ROGERS RD", area_sqft=12000.0,
+        geom=_box(7_630_000, 640_000, 100, 120), centroid="SRID=4326;POINT(-122.83 45.39)",
+        condo_verdict="land",
+        facts={"source": "snapshot", "observed": {}, "condo": {"verdict": "land", "reason": None}},
+        first_seen_run_id=run.id, updated_run_id=run.id, snapshot_id=run.snapshot_id,
+    )
+    session.add(lot)
+    await session.commit()
+
+    page = await client.get("/flats/lots/washington/2S106BC%20%2000800")
+
+    assert page.status_code == 200
+    net = page.text.split('id="net-land-1"', 1)[1].split("</table>", 1)[0]
+    assert "min. density" in net
+    assert "May come off" in net and "FEMA 100-year floodplain" in net
+    assert "wetlands (Metro&#39;s regional map)" in net
+    assert "Assumed not on this lot" in net and "storm facilities" in net
+    assert "Taken off where mapped" not in net
+    assert 'id="net-land-2"' not in page.text
+
+    portland = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+    assert portland.status_code == 200
+    assert 'id="net-land-' not in portland.text
+
+
 async def test_a_lot_nobody_loaded_says_so(client: AsyncClient, session: AsyncSession):
     await _login(client, session)
     await _seed(session)

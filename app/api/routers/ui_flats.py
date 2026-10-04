@@ -92,6 +92,7 @@ from flats.encode.words import tally as word_tally
 from flats.provenance import books, pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
+from flats.rules.net_area import SHOWN as net_area_shown
 from flats.rules.ledger import CoverageRow, read_coverage
 from flats.rules.loader import MIN_RULING
 from flats.rules.model import (
@@ -2942,6 +2943,39 @@ def _pocket_of(facts: dict[str, Any]) -> str | None:
     return zone.get("of") if isinstance(zone, dict) else None
 
 
+def _net_land(lot: FlatsLot) -> list[dict[str, Any]]:
+    """What the lot's own code takes off it before a density counts, and what
+    the screen assumed is not there (FOLLOWUPS 30, Steph's option A).
+
+    Read from the rules the page serves, under the layer the lot is screened
+    under (a pocket's, where it has one). One entry per distinct list: a zone
+    whose floor and ceiling share a list shows it once, naming both.
+    """
+    if not lot.zone:
+        return []
+    layer_id = _pocket_of(lot.facts or {}) or lot.jurisdiction
+    area = float(lot.area_sqft) if lot.area_sqft is not None else None
+    got = _ruleset().resolve(layer_id, lot.zone, lot={"lot_sqft": area} if area else None)
+    out: dict[tuple[Any, ...], dict[str, Any]] = {}
+    for name, held in sorted(got.values.items()):
+        net = held.net_area
+        if net is None:
+            continue
+        key = (net.less, net.may_less, net.assumed_none)
+        entry = out.setdefault(
+            key,
+            {
+                "fields": [],
+                "less": [net_area_shown.get(k, k.replace("_", " ")) for k in net.less],
+                "may_less": [net_area_shown.get(k, k.replace("_", " ")) for k in net.may_less],
+                "assumed_none": list(net.assumed_none),
+            },
+        )
+        field = FIELDS.get(name)
+        entry["fields"].append(field.shown if field is not None else name.replace("_", " "))
+    return list(out.values())
+
+
 def _lot_row(lot: FlatsLot, verdict: int, colour: int, results: list[dict[str, Any]]) -> dict[str, Any]:
     facts = lot.facts or {}
     best_colour = _COLOURS[colour] if 0 <= colour < len(_COLOURS) else "unknown"
@@ -3653,6 +3687,7 @@ async def flats_lot(
             "lot": card,
             "decisions": await _lot_decisions(session, county, tlid),
             "facts": _fact_rows(facts),
+            "net_land": _net_land(lot),
             "quadfit": facts.get("quadfit") or {},
             "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",
             "outline": _outline(geojson),

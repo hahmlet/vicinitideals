@@ -50,10 +50,12 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   MINIMUM DENSITY, also encoded now. Table 210-3 prints a "Minimum Number of Dwellings Per Net Acre"
   row -- .9 in LR12, 4.6 in LR7.5 -- and Table 220-3 prints 8.7 in its Duplex Triplex Quadplex
   column. A floor is a standard a lot can fail, and all three sat between the lot dimensions and the
-  height unread. "Net acre" is defined nowhere in the fetched code, and the parenthesised (25%),
-  (80%) and (.80) beside the figures are unexplained, so no denominator is stated: a gross acre is
-  never smaller than a net one, so measuring against the lot''s own area computes a lower density,
-  which is the stricter reading for a floor.
+  height unread. The net acre is WVDC 720.030''s "Land Area, Net" -- the project area minus the
+  unbuildable areas it lists -- and since 2026-10-04 (FOLLOWUPS 30) each floor carries
+  measured_on: net_developable_area with that list: FEMA floodplain off for certain, Metro''s
+  regional wetland, water-quality and habitat maps off on one reading, and the rest (tree
+  preservation, set-aside tracts, landslide slopes) assumed absent on an existing lot (Steph''s
+  option A). The parenthesised (25%), (80%) and (.80) beside the figures are still unexplained.
 
 
   The Town Center then had to state its own answer, because `like:` has no field list. Table 235-2
@@ -1250,16 +1252,31 @@ zones:
       # standard a lot can fail: a pod of four units on a large lot in LR 7.5
       # can be under it where the same pod on a small one is not.
       #
-      # "Net acre" is not defined anywhere in the fetched code -- the term is
-      # used once, here, and WVDC 710.100 does not carry it. The parenthesised
-      # (80%) beside the figure is unexplained in the same way. So no
-      # `measured_on` is stated: inventing a subtraction list would be worse
-      # than measuring against the lot's own acre, which for a FLOOR is the
-      # stricter reading anyway -- a gross acre is never smaller than a net
-      # one, so the density it computes is never higher.
+      # Net acre. Read as an acre of "Land Area, Net", which WVDC 720.030
+      # defines as "the proposed development project area minus any
+      # unbuildable area" and then lists, item by item. Steph's option A
+      # (2026-10-02): an existing lot dedicates nothing, so the Town
+      # Center street dedications and the set-aside tracts are none, and the
+      # landslide slopes come off only at the applicant's discretion and
+      # nothing maps them. Environmentally constrained land comes off whether
+      # or not a plan set it aside -- Steph's Beaverton ruling, the same
+      # sentence shape -- so FEMA's floodplain is certain; the wetlands, water
+      # quality and habitat maps are Metro's regional layers (Wood Village
+      # has no environmental GIS of its own), so they go on `may_less`. The
+      # parenthesised (80%) beside the figure is still unexplained.
       value: 4.6
       cite: "WVDC 210.320, Table 210-3 -- Minimum Number of Dwellings Per Net Acre, LR7.5"
       quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L68"
+      measured_on:
+        fact: net_developable_area
+        cite: "WVDC 720.030, Land Area, Net -- the project area minus the unbuildable areas it lists"
+        quote: "or/multnomah/wood-village/720.030.definitions.txt#L224,L228,L230,L232,L234"
+        less: [floodplain]
+        may_less: [metro_wetlands, metro_title3, metro_title13]
+        assumed_none:
+          - "open water areas, water quality facilities, tree preservation areas"
+          - "land set aside for plazas or open space, or in separate tracts, or dedicated for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area (at the applicant's discretion)"
     quadplex_allowed:
       # Table 210-2, "Attached or Detached Tri- or Quadplex": Y in both light
       # residential zones. Permitted outright by the city's own table, not by
@@ -1365,16 +1382,31 @@ zones:
       # standard a lot can fail: a pod of four units on a large lot in LR 12
       # can be under it where the same pod on a small one is not.
       #
-      # "Net acre" is not defined anywhere in the fetched code -- the term is
-      # used once, here, and WVDC 710.100 does not carry it. The parenthesised
-      # (25%) beside the figure is unexplained in the same way. So no
-      # `measured_on` is stated: inventing a subtraction list would be worse
-      # than measuring against the lot's own acre, which for a FLOOR is the
-      # stricter reading anyway -- a gross acre is never smaller than a net
-      # one, so the density it computes is never higher.
+      # Net acre. Read as an acre of "Land Area, Net", which WVDC 720.030
+      # defines as "the proposed development project area minus any
+      # unbuildable area" and then lists, item by item. Steph's option A
+      # (2026-10-02): an existing lot dedicates nothing, so the Town
+      # Center street dedications and the set-aside tracts are none, and the
+      # landslide slopes come off only at the applicant's discretion and
+      # nothing maps them. Environmentally constrained land comes off whether
+      # or not a plan set it aside -- Steph's Beaverton ruling, the same
+      # sentence shape -- so FEMA's floodplain is certain; the wetlands, water
+      # quality and habitat maps are Metro's regional layers (Wood Village
+      # has no environmental GIS of its own), so they go on `may_less`. The
+      # parenthesised (25%) beside the figure is still unexplained.
       value: 0.9
       cite: "WVDC 210.320, Table 210-3 -- Minimum Number of Dwellings Per Net Acre, LR12"
       quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L68"
+      measured_on:
+        fact: net_developable_area
+        cite: "WVDC 720.030, Land Area, Net -- the project area minus the unbuildable areas it lists"
+        quote: "or/multnomah/wood-village/720.030.definitions.txt#L224,L228,L230,L232,L234"
+        less: [floodplain]
+        may_less: [metro_wetlands, metro_title3, metro_title13]
+        assumed_none:
+          - "open water areas, water quality facilities, tree preservation areas"
+          - "land set aside for plazas or open space, or in separate tracts, or dedicated for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area (at the applicant's discretion)"
     quadplex_allowed:
       # Table 210-2, "Attached or Detached Tri- or Quadplex": Y in both light
       # residential zones. Permitted outright by the city's own table, not by
@@ -1480,16 +1512,31 @@ zones:
       # standard a lot can fail: a pod of four units on a large lot in MR 2
       # can be under it where the same pod on a small one is not.
       #
-      # "Net acre" is not defined anywhere in the fetched code -- the term is
-      # used once, here, and WVDC 710.100 does not carry it. The parenthesised
-      # (.80) beside the figure is unexplained in the same way. So no
-      # `measured_on` is stated: inventing a subtraction list would be worse
-      # than measuring against the lot's own acre, which for a FLOOR is the
-      # stricter reading anyway -- a gross acre is never smaller than a net
-      # one, so the density it computes is never higher.
+      # Net acre. Read as an acre of "Land Area, Net", which WVDC 720.030
+      # defines as "the proposed development project area minus any
+      # unbuildable area" and then lists, item by item. Steph's option A
+      # (2026-10-02): an existing lot dedicates nothing, so the Town
+      # Center street dedications and the set-aside tracts are none, and the
+      # landslide slopes come off only at the applicant's discretion and
+      # nothing maps them. Environmentally constrained land comes off whether
+      # or not a plan set it aside -- Steph's Beaverton ruling, the same
+      # sentence shape -- so FEMA's floodplain is certain; the wetlands, water
+      # quality and habitat maps are Metro's regional layers (Wood Village
+      # has no environmental GIS of its own), so they go on `may_less`. The
+      # parenthesised (.80) beside the figure is still unexplained.
       value: 8.7
       cite: "WVDC 220.320, Table 220-3 -- Minimum No. of Dwellings Per Net Acre, Duplex Triplex Quadplex"
       quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L77"
+      measured_on:
+        fact: net_developable_area
+        cite: "WVDC 720.030, Land Area, Net -- the project area minus the unbuildable areas it lists"
+        quote: "or/multnomah/wood-village/720.030.definitions.txt#L224,L228,L230,L232,L234"
+        less: [floodplain]
+        may_less: [metro_wetlands, metro_title3, metro_title13]
+        assumed_none:
+          - "open water areas, water quality facilities, tree preservation areas"
+          - "land set aside for plazas or open space, or in separate tracts, or dedicated for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area (at the applicant's discretion)"
     quadplex_allowed:
       # Table 220-2, "Attached or Detached Tri- or Quadplex": Y in both
       # multi-residential zones.
@@ -1584,16 +1631,31 @@ zones:
       # standard a lot can fail: a pod of four units on a large lot in MR 4
       # can be under it where the same pod on a small one is not.
       #
-      # "Net acre" is not defined anywhere in the fetched code -- the term is
-      # used once, here, and WVDC 710.100 does not carry it. The parenthesised
-      # (.80) beside the figure is unexplained in the same way. So no
-      # `measured_on` is stated: inventing a subtraction list would be worse
-      # than measuring against the lot's own acre, which for a FLOOR is the
-      # stricter reading anyway -- a gross acre is never smaller than a net
-      # one, so the density it computes is never higher.
+      # Net acre. Read as an acre of "Land Area, Net", which WVDC 720.030
+      # defines as "the proposed development project area minus any
+      # unbuildable area" and then lists, item by item. Steph's option A
+      # (2026-10-02): an existing lot dedicates nothing, so the Town
+      # Center street dedications and the set-aside tracts are none, and the
+      # landslide slopes come off only at the applicant's discretion and
+      # nothing maps them. Environmentally constrained land comes off whether
+      # or not a plan set it aside -- Steph's Beaverton ruling, the same
+      # sentence shape -- so FEMA's floodplain is certain; the wetlands, water
+      # quality and habitat maps are Metro's regional layers (Wood Village
+      # has no environmental GIS of its own), so they go on `may_less`. The
+      # parenthesised (.80) beside the figure is still unexplained.
       value: 8.7
       cite: "WVDC 220.320, Table 220-3 -- Minimum No. of Dwellings Per Net Acre, Duplex Triplex Quadplex"
       quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L77"
+      measured_on:
+        fact: net_developable_area
+        cite: "WVDC 720.030, Land Area, Net -- the project area minus the unbuildable areas it lists"
+        quote: "or/multnomah/wood-village/720.030.definitions.txt#L224,L228,L230,L232,L234"
+        less: [floodplain]
+        may_less: [metro_wetlands, metro_title3, metro_title13]
+        assumed_none:
+          - "open water areas, water quality facilities, tree preservation areas"
+          - "land set aside for plazas or open space, or in separate tracts, or dedicated for schools, parks, or open space"
+          - "slopes of 15 percent or more within a landslide hazard area (at the applicant's discretion)"
     quadplex_allowed:
       # Table 220-2, "Attached or Detached Tri- or Quadplex": Y in both
       # multi-residential zones.
