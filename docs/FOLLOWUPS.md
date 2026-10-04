@@ -1259,11 +1259,11 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    nightly check + pod width report /flats/flags/report (0142) -- FIT
    ONLY. NOTHING SHOWS until a run screened under the colour rule is in
    use (the ~10-08 re-screen); after promoting it run `scripts/flats_flags.py
-   sync` then `check` on 114. OPEN: (i) item-3 bound finishing on 137
-   (/root/msr_bound.out, compare /root/msr_cmp.py branch vs bound) -- its
-   chunks ran ~1.6x slower than base but 137 was shared with strip_chain;
-   time 400 lots bound vs not before the re-screen (a full run is ~16 h);
-   (ii) bridge to store each check's margin on passing lots so the pod
+   sync` then `check` on 114. Item-3 bound DONE: 20k rows,
+   74 yellow->green, all severity-0 fact flags, no reds, no fit change;
+   timing 2,000 lots same load: 1,873 s without vs 2,029 s with (+8%);
+   cbc47269 (True-first + seen-standards dedupe) identical output, LIVE.
+   The ~10-08 re-screen must run from main >= cbc47269. OPEN: (ii) bridge to store each check's margin on passing lots so the pod
    report covers coverage/FAR/height, not just the fit; (iii) Gresham
    note 5 "end of a Minor Access Street" held on `local_street` (wrong
    fact) -- re-point + measure dead ends; worth little while
