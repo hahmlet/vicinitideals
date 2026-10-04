@@ -1268,3 +1268,23 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    note 5 "end of a Minor Access Street" held on `local_street` (wrong
    fact) -- re-point + measure dead ends; worth little while
    sidewalk_easement holds the same Gresham lots; (f) Phase 4 pod spec.
+38. **Slope (Steph 2026-10-04: "work on slope ... on most small lots steep
+   slope would be disqualified due to build costs rather than net land").**
+   TODAY: quadfit s5o measures per-lot mean/p85/max slope % (3DEP 1 m lidar,
+   10 m DEM east of ~-122.48: Gresham/Troutdale/Fairview/Wood Village/east
+   Portland) and the bridge loads it onto `facts.slope`; the lot page prints
+   it. FLATS's verdict reads none of it (quadfit's old 10/20% p85 tiers held
+   lots for review; FLATS dropped that). `steep_slope` struck 2026-09-27 (no
+   rule uses it); slack.yaml slope_pct 2.0 tolerance unused. Hillside
+   overlays act only as carves (Gresham HGRO, Troutdale VECO) or a flag (HV
+   steep slopes). Run 63: of ~68,000 best-green lots, ~15,400 have p85 >20%
+   and ~10,800 >25% -- but 1 m pixel slope reads micro-relief (flat SE
+   Portland lots mean ~6% on 1 m vs ~3% on 10 m), so the statistic overstates
+   build grade. PLAN: (a) build-cost grade = fall across where the fit DREW
+   the building + court, from a smoothed lidar surface (plane fit), per
+   design; (b) net-land slope = lot area steeper than each city's threshold
+   (15/20/25%) measured over a code-like run, plus DOGAMI SLIDO landslide
+   areas where a list says "within a landslide hazard area"; (c) coarse-DEM
+   lots over a cutoff go yellow, never red. PENDING STEPH: the build-cost
+   cutoffs (green / closer look / red) -- asked 2026-10-04. Aim to land in
+   the ~10-08 full re-screen (item 37(c)).
