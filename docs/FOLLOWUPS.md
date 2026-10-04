@@ -1141,15 +1141,23 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (A) kill the orphaned memory-plugin copies; (B) cap local test workers
    (`-n 4`) so tests never take the whole PC; (C) run tests on 137 (frees
    the PC fully, but uncommitted code must be shipped there first --
-   slower, more fragile; not recommended).
+   slower, more fragile; not recommended). Steph 2026-10-04 asked again
+   ("why are your test runs on the windows machine at all?"); RE-OFFERED:
+   full-suite runs on 137 from a scratch commit (push to a non-main branch
+   -- CI only runs on main -- fetch into a test worktree, own venv: the
+   county venv lacks pytest-xdist), small targeted tests stay local.
+   Costs: ~30 s to ship each run, and it queues behind county runs.
 33. **Parking court leftovers (fix ca26e048 LIVE as run 63, 2026-10-02:
    drift 61->63 green->yellow 3,459, unknown->yellow 4,453, 0 unexplained).**
    Still open ((a), the court beside the building, fixed f7ba7038):
    (b) lots outside the 15,940 scoped whose court stands in a side or front
    yard INSIDE the lot are corrected only by the next full re-screen;
    (c) s5o-envelope lots use the whole lot (less carve) as the court's
-   ground; (d) bridge +15% a lot -- a faster rasterizer (contains_xy is 80%
-   of the fit) is the lever if the weekly run gets too long.
+   ground; (d) DONE ce65b86b 2026-10-04: scanline raster + longest-run depth
+   (`flats/fit/raster.py`) -- bridge 2.2-2.6x faster, answers identical on
+   every column (bound on 137: 2,000 Multnomah + 2,000 Washington lots +
+   60 mixed; random-shape harness 0 cells gained). Next levers if needed:
+   `has_window` in the court searches, `ground_for`.
 34. **Washington right-of-way polygons in quadfit s4 (77c99822,
    2026-10-02).** Washington ends its street polygons `ROW`; until
    77c99822 the not-a-taxlot rule missed them, so FLATS screened 2,467 of
@@ -1182,6 +1190,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    single-family parking standards to middle housing -- it may cancel the
    strips single-family homes are not held to (Multnomah, Gladstone,
    Hillsboro, Wood Village, Oregon City); encoded strict meanwhile.
+   STRIP IMPACT measured 2026-10-04 (bound on 137, strips on vs off, best
+   pod as if signed): Gladstone 384 -> 445 green of 3,217 (+61), Multnomah
+   uninc 885 -> 898 of 2,213 (+14 gained, 1 lost), Hillsboro 2 -> 5 of a
+   4,000 sample (~+20 of 27,402). Steph: "planter strips aren't parking,
+   they're landscaping" -- the OAR question stands. The few lots that got
+   WORSE with more ground are item 39 (fire route), not strips.
    (2) turning path LIVE as code 1723db45 (2026-10-04, Steph "ship it"):
    every stall must be usable by the AASHTO P car (three-point turn ok);
    ledger `flats/config/court_turns.json` holds a menu of fixes per court
@@ -1288,3 +1302,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    lots over a cutoff go yellow, never red. PENDING STEPH: the build-cost
    cutoffs (green / closer look / red) -- asked 2026-10-04. Aim to land in
    the ~10-08 full re-screen (item 37(c)).
+39. **The building is drawn where the parking wants it, then the fire
+   route is measured from there (found 2026-10-04 in two bounds).** More
+   ground lets the fit seat the building deeper, the 150-ft hose route
+   (item 35, OFC 503.1.1) then fails and the lot goes RED although a
+   placement nearer the street fits. Seen: Oregon City 22E28D-03700 (court
+   bound, 164 ft), Multnomah uninc 1S1E06CD-03300 green -> red (98 -> 151
+   ft) and 1N1W36CC-00200, Hillsboro 1N230BA00800 (113 -> 207 ft) in the
+   strip bound. A false RED, never a false green. Fix: when fire is the
+   only miss, retry placements nearest the truck road (as `_other_fixes`
+   retries court fixes); bound it. Not yet offered to Steph.
