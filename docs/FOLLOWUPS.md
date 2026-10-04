@@ -1329,3 +1329,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    strip bound. A false RED, never a false green. Fix: when fire is the
    only miss, retry placements nearest the truck road (as `_other_fixes`
    retries court fixes); bound it. Not yet offered to Steph.
+40. **Easements from maps (Steph 2026-10-04 asked the odds of reading an
+   assessor/easement map onto the lot).** Holds: utility_easement ~28k and
+   sidewalk_easement ~20k yellow answers (Beaverton 0 green: BDC 20.05/20.22
+   note 7 "no building may encroach into a Public Utility Easement"; OC R
+   zones same). No easement layer in RLIS. Answer given: assessor tax maps
+   rarely draw easements -- the subdivision/partition PLAT (and its notes,
+   e.g. "8 ft PUE along all street frontages") is the right source; placing
+   a drawn strip on a lot line is the drawn_areas trace recipe; modern plats
+   ~85-90% right, old hand-drawn scans ~60-70%. A plat cannot prove ABSENCE
+   (easements granted later by separate deed are not on it). PENDING STEPH:
+   (a) send a pilot of 5-10 maps (modern plat, old plat, tax map; one with a
+   title report to grade against); (b) rule whether "plat read, deed
+   easements unchecked" can be a severity-2 flag (stays green). Before the
+   pilot: check whether Beaverton/Hillsboro/Washington Co. publish an
+   easement GIS layer or bulk plat images (hundreds of plats needed).
