@@ -1139,14 +1139,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    DONE 2026-10-02: 137 raised 12 -> 16 cores, 24 -> 32 GB (Steph); full
    re-screens capped at once a week (runbook §4c). OFFERED, PENDING:
    (A) kill the orphaned memory-plugin copies; (B) cap local test workers
-   (`-n 4`) so tests never take the whole PC; (C) run tests on 137 (frees
-   the PC fully, but uncommitted code must be shipped there first --
-   slower, more fragile; not recommended). Steph 2026-10-04 asked again
-   ("why are your test runs on the windows machine at all?"); RE-OFFERED:
-   full-suite runs on 137 from a scratch commit (push to a non-main branch
-   -- CI only runs on main -- fetch into a test worktree, own venv: the
-   county venv lacks pytest-xdist), small targeted tests stay local.
-   Costs: ~30 s to ship each run, and it queues behind county runs.
+   (`-n 4`) so tests never take the whole PC. Running tests on 137
+   instead was DECLINED by Steph 2026-10-04 -- do not re-offer.
 33. **Parking court leftovers (fix ca26e048 LIVE as run 63, 2026-10-02:
    drift 61->63 green->yellow 3,459, unknown->yellow 4,453, 0 unexplained).**
    Still open ((a), the court beside the building, fixed f7ba7038):
@@ -1190,6 +1184,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    single-family parking standards to middle housing -- it may cancel the
    strips single-family homes are not held to (Multnomah, Gladstone,
    Hillsboro, Wood Village, Oregon City); encoded strict meanwhile.
+   RULED Steph 2026-10-04: "Let's have strips be a flag for yellow at this
+   time" --    DONE 1d3c89cb: a plan that misses only by the strip (court-shaped
+   checks, fire route, steep ground, within 3 strip widths) and clears with
+   it read as unstated is YELLOW with flag PARKING-STRIP-UNCONFIRMED.
+   Bound 2026-10-04 (21,700 lots): Gladstone 32 red->yellow, Tualatin 50,
+   Multnomah uninc 7, Hillsboro 4; 0 lots worse. Rides the weekly full
+   re-screen. The OAR question still decides whether the flag can clear.
    STRIP IMPACT measured 2026-10-04 (bound on 137, strips on vs off, best
    pod as if signed): Gladstone 384 -> 445 green of 3,217 (+61), Multnomah
    uninc 885 -> 898 of 2,213 (+14 gained, 1 lost), Hillsboro 2 -> 5 of a
@@ -1339,9 +1340,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    placement nearer the street fits. Seen: Oregon City 22E28D-03700 (court
    bound, 164 ft), Multnomah uninc 1S1E06CD-03300 green -> red (98 -> 151
    ft) and 1N1W36CC-00200, Hillsboro 1N230BA00800 (113 -> 207 ft) in the
-   strip bound. A false RED, never a false green. Fix: when fire is the
-   only miss, retry placements nearest the truck road (as `_other_fixes`
-   retries court fixes); bound it. Not yet offered to Steph.
+   strip bound. A false RED, never a false green. DONE 1d3c89cb
+   (Steph 2026-10-04): where a measured route is the only miss, the plan is
+   drawn at up to 24 of the fit's other angles, square first, and the
+   first within reach kept. Bound 2026-10-04: 44 answers lifted, 6 lots
+   red->green (Gladstone 3, Multnomah 1, Tualatin 1, Portland 1), 0 worse.
+   Not searched: other placements at one angle (a false red, never a
+   false green). Rides the weekly full re-screen.
 40. **Easements from maps (Steph 2026-10-04 asked the odds of reading an
    assessor/easement map onto the lot).** Holds: utility_easement ~28k and
    sidewalk_easement ~20k yellow answers (Beaverton 0 green: BDC 20.05/20.22
