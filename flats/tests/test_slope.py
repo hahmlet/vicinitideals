@@ -354,3 +354,47 @@ def test_steep_ground_in_the_setbacks_counts_only_when_ruled_so(
     under = envelope_for(dataclasses.replace(lot, steep=inside), s.rules)
     assert under.geom.area < flat.geom.area - 50
     assert under.ground.area < flat.ground.area - 50
+
+
+# --- net-acre slopes (FOLLOWUPS 30(e)/38(b)) -------------------------------------
+
+
+def test_the_ground_over_each_grade_is_counted_whole(tmp_path: Path) -> None:
+    """Flat for the western 15 m, 30% beyond: about half the lot is over 20
+    and 25%, none of it over 35% -- and a 4 ft bank floor does not shrink
+    the count, which is the code's figure, not the pod's."""
+
+    def bank(x, y):
+        return np.where(x > 15.0, (x - 15.0) * 0.30, 0.0)
+
+    t = terrain(tmp_path, bank)
+    got = t.steep(LOT, 15.0, min_bank_ft=4.0, areas_over=(20.0, 25.0, 35.0))
+    assert 0.35 * LOT.area < got.areas[20.0] < 0.65 * LOT.area
+    assert got.areas[25.0] == pytest.approx(got.areas[20.0], rel=0.1)
+    assert got.areas[35.0] == 0.0
+
+
+def _with_net(lot, net):
+    return dataclasses.replace(lot, facts=dataclasses.replace(lot.facts, net_deductions=net))
+
+
+def test_the_bridge_hands_the_slopes_to_the_net_acre_on_lidar_only(
+    tmp_path, corpus, policies
+) -> None:
+    from flats.rules.net_area import SLOPES
+
+    def bank(x, y):
+        return np.where(y > 12.0, (y - 12.0) * 0.35, 0.0)
+
+    row_lot = lot_from_row(bridge_row(), corpus.layers)
+    lot = with_steep(_with_net(row_lot, {"floodplain": 0.0}), bridge_terrain(tmp_path / "a", bank))
+    assert set(SLOPES) <= set(lot.facts.net_deductions)
+    assert lot.facts.net_deductions["slope_25"] > 0.4 * ROW_LOT.area
+    assert lot.facts.net_deductions["floodplain"] == 0.0
+    # Nothing measured beside it: nothing is started.
+    bare = with_steep(_with_net(row_lot, None), bridge_terrain(tmp_path / "b", bank))
+    assert bare.facts.net_deductions is None
+    # The 10 m model's cells are wider than what it would count.
+    where = write_dem(tmp_path / "c" / "dem10" / "t.tif", ROW_LOT.bounds, bank, res_m=10.0)
+    coarse = with_steep(_with_net(row_lot, {}), Terrain(None, where.parent))
+    assert coarse.facts.steep_source == TEN_M and not coarse.facts.net_deductions

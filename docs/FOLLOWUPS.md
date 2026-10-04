@@ -1116,9 +1116,9 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    and county maxima stay gross by 300-2.8's words. Run 63: 2,077 lots in
    those zones, 419 failing the floor on the whole lot -- lands at the next
    FULL re-screen. Lot page names each net-land list + what was assumed
-   absent (rules read at view time). STILL OPEN: (e) slopes over a
-   threshold could be computed from lidar (quadfit s5o work on 137 + a
-   re-screen); none of the cities' slope items is measured today.
+   absent (rules read at view time). (e) slopes: SHIPPED 2026-10-04 with
+   item 38(b) -- lidar measures each city's slope item; only the
+   landslide-area slopes stay assumed absent (see 38).
 31. **Split a big lot to meet a minimum density (Steph 2026-10-02: "create
    a task for later ... immensely complicated ... large guesstimates on
    roads, utilities, etc. maybe never done").** A lot too big for 4 homes
@@ -1317,8 +1317,21 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    brought back 10 flat lots (pad <=5%). Bridge time +48% overall, ~2x on
    lots with steep ground. OPEN: (1) lands in the ~10-08 full re-screen
    (37(c)) -- a WARNED promotion (big green->red move), Steph promotes;
-   the E2E slope test skips until a run carries slope; (2) part (b)
-   net-land slope per city + DOGAMI SLIDO landslide areas still to do.
+   the E2E slope test skips until a run carries slope. (b) SHIPPED
+   2026-10-04 (code only): the bridge counts the lot area at >=20/25/35%
+   on 1 m lidar and hands it to the net-acre list as `slope_20/25/35`
+   (never on 10 m). Read per sentence: Hillsboro 12.01.500(6), Milwaukie
+   19.200, Cornelius R-7/A-2 = `less slope_25`; Oregon City 17.04.810(3)
+   `less slope_35` + `may_less slope_25` (director may lower it); West
+   Linn Type I/II "as shown on the RLIS layer" = `may_less slope_25`
+   (lidar stands in); Washington Co. 300-3.1(D) "may be excluded" =
+   `may_less slope_20`. SAMPLE (3,000 lots, seed 7): zero colour moves,
+   min-density failing rows 100 -> 96, bridge +9.5%. OPEN (offered to
+   Steph 2026-10-04, low payoff): slopes that count only "within a
+   landslide hazard area" -- Beaverton BDC 90 (Comp Plan Fig 8.6.1) and
+   Wood Village 720.030, both the applicant's option -- plus West Linn's
+   landslide areas on NHMP Maps 16/17. Needs DOGAMI SLIDO or the city
+   maps traced; today assumed absent.
 39. **The building is drawn where the parking wants it, then the fire
    route is measured from there (found 2026-10-04 in two bounds).** More
    ground lets the fit seat the building deeper, the 150-ft hose route

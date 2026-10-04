@@ -8,10 +8,11 @@ every other lot as a question nobody could answer -- ~36,500 of them.
 
 Steph's ruling (option A, 2026-10-02): an ordinary existing lot dedicates
 nothing and sets nothing aside, so its net area is the lot less what each
-city's own list subtracts *and something here measures* -- floodplain and the
-mapped resource overlays. What the list names and nothing measures (slopes
-over a threshold, landslide areas, trees, stormwater facilities) is assumed
-absent, and the rule file says so by name.
+city's own list subtracts *and something here measures* -- floodplain, the
+mapped resource overlays and, since 2026-10-04, ground over a slope (FOLLOWUPS
+30(e)/38(b)). What the list names and nothing measures (landslide areas,
+trees, stormwater facilities) is assumed absent, and the rule file says so
+by name.
 
 Two lists per value, because a list can be read with certainty or not:
 
@@ -88,8 +89,21 @@ MEASURED: dict[str, tuple[str, ...]] = {
     },
 }
 
+#: Ground at or steeper than a grade, per cent, read off the 1 m lidar the
+#: slope check reads (:meth:`flats.fit.slope.Terrain.steep`, over the same
+#: 5 m run) and counted whole: every bank and small patch is in, because a
+#: code's "slopes over 25 percent" knows no 4 ft floor. Measured only where
+#: the 1 m model covers the lot -- the 10 m model's cells are wider than the
+#: banks it would be counting -- so elsewhere a list naming one keeps to the
+#: gross-area bound.
+SLOPES: dict[str, float] = {
+    "slope_20": 20.0,
+    "slope_25": 25.0,
+    "slope_35": 35.0,
+}
+
 #: Every name ``less`` and ``may_less`` accept.
-DEDUCTIONS: frozenset[str] = frozenset({*MEASURED, DRIVE_AISLE})
+DEDUCTIONS: frozenset[str] = frozenset({*MEASURED, *SLOPES, DRIVE_AISLE})
 
 #: Each deduction as the lot page names it. A regional map standing in for the
 #: one the code names says so, because that is why it sits on ``may_less``.
@@ -118,6 +132,9 @@ SHOWN: dict[str, str] = {
     "milwaukie_hca": "Milwaukie habitat conservation areas",
     "milwaukie_wqr": "Milwaukie water quality resources",
     "milwaukie_wetlands": "Milwaukie wetlands",
+    "slope_20": "ground steeper than 20% (lidar)",
+    "slope_25": "ground steeper than 25% (lidar)",
+    "slope_35": "ground steeper than 35% (lidar)",
 }
 
 #: Floor below which a net area is treated as no land at all: a rate on it is
@@ -197,6 +214,7 @@ __all__ = [
     "FLOODWAY",
     "MEASURED",
     "NetArea",
+    "SLOPES",
     "measured_deductions",
     "net_span",
 ]

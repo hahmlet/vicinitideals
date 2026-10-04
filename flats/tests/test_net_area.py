@@ -24,6 +24,7 @@ from flats.rules.net_area import (
     FLOODPLAIN,
     MEASURED,
     SHOWN,
+    SLOPES,
     NetArea,
     measured_deductions,
     net_span,
@@ -152,8 +153,8 @@ def test_a_list_names_only_maps_laid_over_its_own_city(layers: dict[str, Layer])
     wrong = []
     for lid, zone, name, value in _rates(layers):
         for key in (*value.net_area.less, *value.net_area.may_less):
-            if key == DRIVE_AISLE:
-                continue
+            if key == DRIVE_AISLE or key in SLOPES:
+                continue  # the plan's own drive; lidar, laid over every lot
             overlay = "fema_sfha" if key == FLOODPLAIN else key
             reach = covers[overlay]
             if reach is not None and lid not in reach:
@@ -243,8 +244,39 @@ zones:
         load_rules(tmp_path)
 
 
-def test_the_vocabulary_is_the_measured_maps_and_the_drive() -> None:
-    assert DEDUCTIONS == {*MEASURED, DRIVE_AISLE}
+def test_the_vocabulary_is_the_measured_maps_the_slopes_and_the_drive() -> None:
+    assert DEDUCTIONS == {*MEASURED, *SLOPES, DRIVE_AISLE}
+
+
+def test_each_citys_slope_takes_the_grade_its_sentence_names(layers: dict[str, Layer]) -> None:
+    """FOLLOWUPS 30(e)/38(b), read 2026-10-04: a certain sentence is
+    ``less``; Oregon City's 25-35% band is the director's call, West Linn
+    names the RLIS layer the lidar stands in for, and Washington County
+    says "may be excluded" -- those are ``may_less``. Beaverton's and Wood
+    Village's slopes count only inside a landslide area nothing maps yet."""
+    want = {
+        "or/washington/hillsboro": ({"slope_25"}, set()),
+        "or/clackamas/milwaukie": ({"slope_25"}, set()),
+        "or/clackamas/oregon-city": ({"slope_35"}, {"slope_25"}),
+        "or/clackamas/west-linn": (set(), {"slope_25"}),
+        "or/washington/cornelius": ({"slope_25"}, set()),
+        "or/washington/_unincorporated": (set(), {"slope_20"}),
+    }
+    seen: dict[str, set[tuple[frozenset[str], frozenset[str]]]] = {}
+    for lid, _zone, _name, value in _rates(layers):
+        net = value.net_area
+        sure = frozenset(k for k in net.less if k in SLOPES)
+        maybe = frozenset(k for k in net.may_less if k in SLOPES)
+        left = [i for i in net.assumed_none if "slope" in i.lower() and "landslide" not in i.lower()]
+        if lid in want:
+            if sure or maybe:
+                seen.setdefault(lid, set()).add((sure, maybe))
+            assert left == [], f"{lid}: a slope still assumed absent"
+        else:
+            assert not (sure or maybe), f"{lid}: a slope no sentence names"
+    assert set(seen) == set(want)
+    for lid, got in seen.items():
+        assert got == {(frozenset(want[lid][0]), frozenset(want[lid][1]))}, lid
 
 
 def test_every_deduction_has_a_name_the_lot_page_can_show() -> None:

@@ -1699,10 +1699,9 @@ zones:
         cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
         quote: "or/washington/_unincorporated/cdc.300.introduction.txt#L93-L98,L103-L123"
         less: []
-        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat, slope_20]
         assumed_none:
           - "drainage hazard"
-          - "slopes over 20%"
           - "power line easement or right-of-way"
           - "future right-of-way for arterials and collectors"
           - "water quality sensitive areas"
@@ -1754,10 +1753,9 @@ zones:
         cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
         quote: "or/washington/_unincorporated/cdc.300.introduction.txt#L93-L98,L103-L123"
         less: []
-        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat, slope_20]
         assumed_none:
           - "drainage hazard"
-          - "slopes over 20%"
           - "power line easement or right-of-way"
           - "future right-of-way for arterials and collectors"
           - "water quality sensitive areas"
@@ -1939,10 +1937,9 @@ zones:
         cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
         quote: "or/washington/_unincorporated/cdc.300.introduction.txt#L93-L98,L103-L123"
         less: []
-        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat, slope_20]
         assumed_none:
           - "drainage hazard"
-          - "slopes over 20%"
           - "power line easement or right-of-way"
           - "future right-of-way for arterials and collectors"
           - "water quality sensitive areas"
@@ -2016,10 +2013,9 @@ zones:
         cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
         quote: "or/washington/_unincorporated/cdc.300.introduction.txt#L93-L98,L103-L123"
         less: []
-        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat, slope_20]
         assumed_none:
           - "drainage hazard"
-          - "slopes over 20%"
           - "power line easement or right-of-way"
           - "future right-of-way for arterials and collectors"
           - "water quality sensitive areas"
@@ -2072,10 +2068,9 @@ zones:
         cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
         quote: "or/washington/_unincorporated/cdc.300.introduction.txt#L93-L98,L103-L123"
         less: []
-        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat, slope_20]
         assumed_none:
           - "drainage hazard"
-          - "slopes over 20%"
           - "power line easement or right-of-way"
           - "future right-of-way for arterials and collectors"
           - "water quality sensitive areas"

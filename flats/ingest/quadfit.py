@@ -74,7 +74,7 @@ from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
-from flats.fit.slope import load_rules as slope_rules
+from flats.fit.slope import ONE_M, load_rules as slope_rules
 from flats.geom.alley import (
     ALLEY_CLASS,
     ALLEY_FACTS,
@@ -118,7 +118,7 @@ from flats.geom.park import PARK_FACTS, observed_parks
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
 from flats.rules.model import TRANSIT_MEASURES, Layer
-from flats.rules.net_area import MEASURED as NET_MEASURED, measured_deductions
+from flats.rules.net_area import MEASURED as NET_MEASURED, SLOPES as NET_SLOPES, measured_deductions
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
 from flats.score import flags as flag_plan
@@ -2109,18 +2109,33 @@ def with_steep(lot: QuadfitLot, terrain: Any) -> QuadfitLot:
     ride in the facts. The second reading of the lot (:func:`drive_reading`)
     is the same ground and takes the same cut. A lot no model covers, or no
     ``terrain``, is returned as it came.
+
+    The same reading counts the ground over each grade a city's net acre
+    deducts (:data:`flats.rules.net_area.SLOPES`) into the lot's measured
+    deductions -- on the 1 m model only, and only beside the overlays s5o
+    measured, so a lot with no measured deductions stays without.
     """
     if terrain is None or lot.lot_geom is None:
         return lot
     ruled = slope_rules()
-    got = terrain.steep(lot.lot_geom, ruled.steep_over_pct, min_bank_ft=ruled.min_bank_ft)
+    got = terrain.steep(
+        lot.lot_geom,
+        ruled.steep_over_pct,
+        min_bank_ft=ruled.min_bank_ft,
+        areas_over=tuple(NET_SLOPES.values()),
+    )
     if got is None:
         return lot
     steep = got.geom if got.sqft > 0 else None
+    over = {key: round(got.areas[at], 1) for key, at in NET_SLOPES.items() if at in got.areas}
 
     def cut(one: QuadfitLot) -> QuadfitLot:
+        net = one.facts.net_deductions
+        if net is not None and got.source == ONE_M and over:
+            net = {**net, **over}
         facts = dataclasses.replace(
-            one.facts, steep_sqft=round(got.sqft, 1), steep_source=got.source
+            one.facts, steep_sqft=round(got.sqft, 1), steep_source=got.source,
+            net_deductions=net,
         )
         return dataclasses.replace(one, steep=steep, facts=facts)
 

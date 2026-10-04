@@ -505,14 +505,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       # 4.35 du/na, but "Maximum density does not apply to duplexes,
       # triplexes, quadplexes, or cottage clusters." Townhouses have their
@@ -603,14 +602,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.21.250-1, maximum density does not apply to quadplexes
@@ -704,14 +702,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.21.350-1, maximum density does not apply to quadplexes
@@ -804,14 +801,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.21.450-1, maximum density does not apply to quadplexes
@@ -908,14 +904,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.21.550-1, maximum density does not apply to quadplexes
@@ -1009,14 +1004,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.21.650-1, maximum density does not apply to quadplexes
@@ -1118,14 +1112,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.21.750-1, maximum density does not apply to quadplexes
@@ -1239,14 +1232,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.21.850-1, maximum density does not apply to quadplexes
@@ -1358,14 +1350,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.22.150-1, maximum density does not apply to quadplexes
@@ -1462,14 +1453,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       # No quadplex exemption in this zone. With the 17 du/na floor, four
       # units want between 8,199 and 10,249 square feet of net area.
@@ -1480,14 +1470,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     min_lot_width_ft:
       value: 55
       cite: Hillsboro CDC Table 12.22.250-1, Minimum Lot Dimensions, width at front building plane
@@ -1562,14 +1551,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       # No quadplex exemption. With the 23 du/na floor, four units want
       # between 6,061 and 7,576 square feet of net area.
@@ -1580,14 +1568,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     min_lot_width_ft:
       value: 55
       cite: Hillsboro CDC Table 12.22.350-1, Minimum Lot Dimensions, width at building frontage
@@ -1665,14 +1652,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.22.460-1, maximum density does not apply to quadplexes
@@ -1763,14 +1749,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       # No quadplex exemption. "Within 100 feet of a developed standard zone
       # single detached and middle housing neighborhood, minimum/maximum
@@ -1789,14 +1774,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
       variants:
         - value: 7.0
           when: [abuts_lower_density_zone]
@@ -1897,14 +1881,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
       variants:
         - value: 18
           when: [inside_mapped_use_area]
@@ -1923,14 +1906,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     min_lot_width_ft:
       exempt: true
       cite: Hillsboro CDC Table 12.23.360-1, Minimum Lot Dimensions, width None
@@ -2018,14 +2000,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       # Free-standing: 36 du/na within 1,300 feet, 30 beyond, banded on the
       # measured distance to a MAX station. The state removes a density
@@ -2043,14 +2024,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     min_lot_width_ft:
       value: 25
       cite: Hillsboro CDC Table 12.23.460-1, Minimum Lot Dimensions, width at front building plane
@@ -2126,14 +2106,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       value: 30
       cite: Hillsboro CDC Table 12.23.560-1, Maximum Density, free-standing and in mixed-use buildings
@@ -2142,14 +2121,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     min_lot_width_ft:
       exempt: true
       cite: Hillsboro CDC Table 12.23.560-1, Minimum Lot Dimensions, width None
@@ -2255,14 +2233,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
       variants:
         - value: 8
           when: [local_street]
@@ -2377,14 +2354,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.24.260-1, Maximum Residential Density None
@@ -2596,14 +2572,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.24.460-1, maximum density does not apply to quadplexes
@@ -2674,14 +2649,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       # No quadplex exemption in this table, and 12.24.030 G.2 applies the
       # densities to all residential use categories "except as specified
@@ -2693,14 +2667,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     min_lot_width_ft:
       value: 18
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Lot Dimensions, width, quadplex
@@ -2779,14 +2752,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.24.660-1, Maximum Residential Density None
@@ -2890,14 +2862,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.24.760-1, Maximum Residential Density None
@@ -2989,14 +2960,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.24.860-1, Maximum Residential Density None
@@ -3082,14 +3052,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       exempt: true
       cite: Hillsboro CDC Table 12.24.960-1, Maximum Residential Density None
@@ -3159,14 +3128,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     max_density_du_per_acre:
       value: 65
       cite: Hillsboro CDC Table 12.24.1060-1, Maximum Residential Density, triplex and quadplex
@@ -3175,14 +3143,13 @@ zones:
         fact: net_developable_area
         cite: Hillsboro CDC 12.01.500, Acreage, Net
         quote: "or/washington/hillsboro/cdc.12.01.general.txt#L440-L452"
-        less: []
+        less: [slope_25]
         may_less: [floodplain, washington_cws_corridor, metro_wetlands]
         assumed_none:
           - "required street dedications, private street tracts, access easements and internal fire access"
           - "hazardous areas where occupancy is not permitted"
           - "required stormwater treatment and detention facilities"
           - "land dedicated to the City for parks or greenways"
-          - "areas with 25% or greater slopes not used for building or parking"
     min_lot_width_ft:
       value: 30
       cite: Hillsboro CDC Table 12.24.1060-1, Minimum Lot Dimensions, width at front building plane

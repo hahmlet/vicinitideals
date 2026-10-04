@@ -35,7 +35,7 @@ from __future__ import annotations
 
 import math
 from collections.abc import Iterable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -117,6 +117,11 @@ class Steep:
     sqft: float
     #: The model that answered.
     source: str
+    #: Square feet of the lot at or steeper than each grade the caller asked
+    #: (``areas_over``), every short bank and small patch included: the
+    #: figure a code's "slopes over 25 percent" deducts, not the ground the
+    #: pod gives up.
+    areas: dict[float, float] = field(default_factory=dict)
 
 
 @dataclass(frozen=True, slots=True)
@@ -265,13 +270,24 @@ class Terrain:
 
     # -- measuring ------------------------------------------------------------
 
-    def steep(self, lot: Any, over_pct: float, *, min_bank_ft: float = 0.0) -> Steep | None:
+    def steep(
+        self,
+        lot: Any,
+        over_pct: float,
+        *,
+        min_bank_ft: float = 0.0,
+        areas_over: tuple[float, ...] = (),
+    ) -> Steep | None:
         """The part of ``lot`` (working CRS) steeper than ``over_pct``.
 
         A patch whose ground, inside the lot, falls less than ``min_bank_ft``
         from its highest cell to its lowest is left out: a raised front yard
         or a terrace wall, which the run reads as a strip of steep ground
         but a builder regrades.
+
+        ``areas_over`` asks, off the same reading, how much of the lot is at
+        or steeper than each of those grades (:attr:`Steep.areas`): the cells
+        whose centres fall inside the lot, counted.
         """
         import numpy as np
         import shapely
@@ -285,9 +301,18 @@ class Terrain:
         if got is None:
             return None
         pct, tf, source, raw = got
-        mask = np.nan_to_num(pct, nan=0.0) > over_pct
+        grades = np.nan_to_num(pct, nan=0.0)
+        areas: dict[float, float] = {}
+        if areas_over:
+            on_lot = geometry_mask(
+                [lot_m.__geo_interface__], out_shape=grades.shape, transform=tf, invert=True
+            )
+            cell_sqft = abs(tf.a * tf.e) * SQFT_PER_SQM
+            for at in areas_over:
+                areas[at] = float(np.count_nonzero(on_lot & (grades >= at))) * cell_sqft
+        mask = grades > over_pct
         if not mask.any():
-            return Steep(shapely.Polygon(), 0.0, source)
+            return Steep(shapely.Polygon(), 0.0, source, areas)
         polys = [
             shape(g) for g, v in shapes(mask.astype(np.uint8), mask=mask, transform=tf) if v == 1
         ]
@@ -311,7 +336,7 @@ class Terrain:
         steep = self._to(steep_m, self._back).buffer(0)
         parts = [p for p in getattr(steep, "geoms", [steep]) if p.area >= MIN_PATCH_SQFT]
         steep = shapely.union_all(parts) if parts else shapely.Polygon()
-        return Steep(steep, float(steep.area), source)
+        return Steep(steep, float(steep.area), source, areas)
 
     def grade(self, ground: Iterable[Any]) -> Grade | None:
         """The fall across ``ground`` (working-CRS polygons: a plan's

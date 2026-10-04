@@ -685,12 +685,11 @@ zones:
         cite: Cornelius CMC 18.20.050 (A), a net acre is equal to 32,670 square feet and excludes roads, common open space, floodplains, riparian setbacks and slopes over 25 percent
         quote: "or/washington/cornelius/cmc.18.20.r-7.txt#L151"
         acre_sqft: 32670
-        less: [floodplain]
+        less: [floodplain, slope_25]
         assumed_none:
           - "roads"
           - "common open space"
           - "riparian setbacks"
-          - "slopes over 25 percent"
     max_density_du_per_acre:
       exempt: true
       cite: Cornelius CMC 18.20.050 (A), maximum density does not apply to quadplexes
@@ -1026,12 +1025,11 @@ zones:
         cite: Cornelius CMC 18.35.050, net acreage; a net acre is equal to 32,670 square feet and excludes roads, common open space, floodplains, riparian setbacks and slopes over 25 percent
         quote: "or/washington/cornelius/cmc.18.35.a-2.txt#L153"
         acre_sqft: 32670
-        less: [floodplain]
+        less: [floodplain, slope_25]
         assumed_none:
           - "roads"
           - "common open space"
           - "riparian setbacks"
-          - "slopes over 25 percent"
     max_density_du_per_acre:
       exempt: true
       cite: Cornelius CMC 18.35.050 (A), this maximum density does not apply to middle housing

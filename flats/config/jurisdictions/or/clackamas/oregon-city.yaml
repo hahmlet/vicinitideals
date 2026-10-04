@@ -811,8 +811,9 @@ zones:
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
       # 17.04.808 divides by NET developable area, which its own worked
       # example takes as eighty percent of the site -- twenty percent
-      # for right-of-way, slopes and the rest. Nothing here surveys
-      # that, so the lot's own area serves as the bound it is.
+      # for right-of-way, slopes and the rest. The list below takes off
+      # what is measured -- floodplain, the NROD and, from the lidar, the
+      # slopes -- and assumes the rest absent (Steph's option A).
       measured_on:
         fact: net_developable_area
         # This city's own subtraction list, OCMC 17.04.810, six items: the
@@ -829,9 +830,9 @@ zones:
         # a lot survives the deduction.
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
-        less: [floodplain, oregon_city_nrod]
+        less: [floodplain, oregon_city_nrod, slope_35]
+        may_less: [slope_25]
         assumed_none:
-          - "steep slopes exceeding thirty-five percent"
           - "open space"
           - "public facilities and rights-of-way"
           - "lands where an easement prohibits structures"
@@ -902,8 +903,9 @@ zones:
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
       # 17.04.808 divides by NET developable area, which its own worked
       # example takes as eighty percent of the site -- twenty percent
-      # for right-of-way, slopes and the rest. Nothing here surveys
-      # that, so the lot's own area serves as the bound it is.
+      # for right-of-way, slopes and the rest. The list below takes off
+      # what is measured -- floodplain, the NROD and, from the lidar, the
+      # slopes -- and assumes the rest absent (Steph's option A).
       measured_on:
         fact: net_developable_area
         # This city's own subtraction list, OCMC 17.04.810, six items: the
@@ -920,9 +922,9 @@ zones:
         # a lot survives the deduction.
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
-        less: [floodplain, oregon_city_nrod]
+        less: [floodplain, oregon_city_nrod, slope_35]
+        may_less: [slope_25]
         assumed_none:
-          - "steep slopes exceeding thirty-five percent"
           - "open space"
           - "public facilities and rights-of-way"
           - "lands where an easement prohibits structures"
@@ -986,8 +988,9 @@ zones:
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
       # 17.04.808 divides by NET developable area, which its own worked
       # example takes as eighty percent of the site -- twenty percent
-      # for right-of-way, slopes and the rest. Nothing here surveys
-      # that, so the lot's own area serves as the bound it is.
+      # for right-of-way, slopes and the rest. The list below takes off
+      # what is measured -- floodplain, the NROD and, from the lidar, the
+      # slopes -- and assumes the rest absent (Steph's option A).
       measured_on:
         fact: net_developable_area
         # This city's own subtraction list, OCMC 17.04.810, six items: the
@@ -1004,9 +1007,9 @@ zones:
         # a lot survives the deduction.
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
-        less: [floodplain, oregon_city_nrod]
+        less: [floodplain, oregon_city_nrod, slope_35]
+        may_less: [slope_25]
         assumed_none:
-          - "steep slopes exceeding thirty-five percent"
           - "open space"
           - "public facilities and rights-of-way"
           - "lands where an easement prohibits structures"
@@ -1076,8 +1079,9 @@ zones:
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378"
       # 17.04.808 divides by NET developable area, which its own worked
       # example takes as eighty percent of the site -- twenty percent
-      # for right-of-way, slopes and the rest. Nothing here surveys
-      # that, so the lot's own area serves as the bound it is.
+      # for right-of-way, slopes and the rest. The list below takes off
+      # what is measured -- floodplain, the NROD and, from the lidar, the
+      # slopes -- and assumes the rest absent (Steph's option A).
       measured_on:
         fact: net_developable_area
         # This city's own subtraction list, OCMC 17.04.810, six items: the
@@ -1094,9 +1098,9 @@ zones:
         # a lot survives the deduction.
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
-        less: [floodplain, oregon_city_nrod]
+        less: [floodplain, oregon_city_nrod, slope_35]
+        may_less: [slope_25]
         assumed_none:
-          - "steep slopes exceeding thirty-five percent"
           - "open space"
           - "public facilities and rights-of-way"
           - "lands where an easement prohibits structures"
@@ -1255,9 +1259,9 @@ zones:
         fact: net_developable_area
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
-        less: [floodplain, oregon_city_nrod]
+        less: [floodplain, oregon_city_nrod, slope_35]
+        may_less: [slope_25]
         assumed_none:
-          - "steep slopes exceeding thirty-five percent"
           - "open space"
           - "public facilities and rights-of-way"
           - "lands where an easement prohibits structures"
@@ -1307,9 +1311,9 @@ zones:
         fact: net_developable_area
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
-        less: [floodplain, oregon_city_nrod]
+        less: [floodplain, oregon_city_nrod, slope_35]
+        may_less: [slope_25]
         assumed_none:
-          - "steep slopes exceeding thirty-five percent"
           - "open space"
           - "public facilities and rights-of-way"
           - "lands where an easement prohibits structures"
@@ -1395,8 +1399,9 @@ zones:
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378"
       # 17.04.808 divides by NET developable area, which its own worked
       # example takes as eighty percent of the site -- twenty percent
-      # for right-of-way, slopes and the rest. Nothing here surveys
-      # that, so the lot's own area serves as the bound it is.
+      # for right-of-way, slopes and the rest. The list below takes off
+      # what is measured -- floodplain, the NROD and, from the lidar, the
+      # slopes -- and assumes the rest absent (Steph's option A).
       measured_on:
         fact: net_developable_area
         # This city's own subtraction list, OCMC 17.04.810, six items: the
@@ -1413,9 +1418,9 @@ zones:
         # a lot survives the deduction.
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
-        less: [floodplain, oregon_city_nrod]
+        less: [floodplain, oregon_city_nrod, slope_35]
+        may_less: [slope_25]
         assumed_none:
-          - "steep slopes exceeding thirty-five percent"
           - "open space"
           - "public facilities and rights-of-way"
           - "lands where an easement prohibits structures"
@@ -1708,9 +1713,9 @@ zones:
         fact: net_developable_area
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
-        less: [floodplain, oregon_city_nrod]
+        less: [floodplain, oregon_city_nrod, slope_35]
+        may_less: [slope_25]
         assumed_none:
-          - "steep slopes exceeding thirty-five percent"
           - "open space"
           - "public facilities and rights-of-way"
           - "lands where an easement prohibits structures"
@@ -1824,9 +1829,9 @@ zones:
         fact: net_developable_area
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
-        less: [floodplain, oregon_city_nrod]
+        less: [floodplain, oregon_city_nrod, slope_35]
+        may_less: [slope_25]
         assumed_none:
-          - "steep slopes exceeding thirty-five percent"
           - "open space"
           - "public facilities and rights-of-way"
           - "lands where an easement prohibits structures"
@@ -1911,9 +1916,9 @@ zones:
         fact: net_developable_area
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
-        less: [floodplain, oregon_city_nrod]
+        less: [floodplain, oregon_city_nrod, slope_35]
+        may_less: [slope_25]
         assumed_none:
-          - "steep slopes exceeding thirty-five percent"
           - "open space"
           - "public facilities and rights-of-way"
           - "lands where an easement prohibits structures"

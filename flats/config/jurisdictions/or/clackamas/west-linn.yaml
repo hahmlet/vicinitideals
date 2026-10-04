@@ -1040,9 +1040,8 @@ zones:
         cite: CDC 02.030 "Developable net area"; CDC 05.025
         quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
           - "land dedicated to the public for park purposes"
@@ -1087,9 +1086,8 @@ zones:
         cite: 'West Linn CDC 08.070, Type I and II lands'
         quote: "or/clackamas/west-linn/08.r-40.txt#L178"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
     max_height_ft:
@@ -1167,9 +1165,8 @@ zones:
         cite: CDC 02.030 "Developable net area"; CDC 05.025
         quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
           - "land dedicated to the public for park purposes"
@@ -1213,9 +1210,8 @@ zones:
         cite: 'West Linn CDC 09.070, Type I and II lands'
         quote: "or/clackamas/west-linn/09.r-20.txt#L180"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
     max_height_ft:
@@ -1293,9 +1289,8 @@ zones:
         cite: CDC 02.030 "Developable net area"; CDC 05.025
         quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
           - "land dedicated to the public for park purposes"
@@ -1394,9 +1389,8 @@ zones:
         cite: CDC 02.030 "Developable net area"; CDC 05.025
         quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
           - "land dedicated to the public for park purposes"
@@ -1445,9 +1439,8 @@ zones:
         cite: 'West Linn CDC 11.070, Type I and II lands'
         quote: "or/clackamas/west-linn/11.r-10.txt#L175"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
     notes: 'quadfit confidence: verified | Width 35 ft at front line / 50 ft avg (frontage=35). Coverage
@@ -1570,9 +1563,8 @@ zones:
         cite: CDC 02.030 "Developable net area"; CDC 05.025
         quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
           - "land dedicated to the public for park purposes"
@@ -1613,9 +1605,8 @@ zones:
         cite: 'West Linn CDC 12.070, Type I and II lands'
         quote: "or/clackamas/west-linn/12.r-7.txt#L177"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 35% applies to quadplex;
@@ -1708,9 +1699,8 @@ zones:
         cite: CDC 02.030 "Developable net area"; CDC 05.025
         quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
           - "land dedicated to the public for park purposes"
@@ -1861,9 +1851,8 @@ zones:
         cite: CDC 02.030 "Developable net area"; CDC 05.025
         quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
           - "land dedicated to the public for park purposes"
@@ -1988,9 +1977,8 @@ zones:
         cite: CDC 02.030 "Developable net area"; CDC 05.025
         quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
           - "land dedicated to the public for park purposes"
@@ -2127,9 +2115,8 @@ zones:
         cite: CDC 02.030 "Developable net area"; CDC 05.025
         quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
         less: [floodplain]
-        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
-          - "slopes over 25 percent (Type II) and 35 percent or more (Type I)"
           - "landslide areas on NHMP Maps 16 and 17"
           - "mineral and aggregate deposits protected under Goal 5"
           - "land dedicated to the public for park purposes"
