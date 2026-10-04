@@ -1071,7 +1071,8 @@ async def test_the_lot_page_lists_the_open_questions_and_which_hold_it_at_yellow
     through = flags.split('data-flag="FACT-THROUGH-LOT"', 1)[1].split("</li>", 1)[0]
     assert "Whether the lot is a corner lot" in corner
     assert "holds it at yellow" in corner
-    assert "too small to change the colour" in through
+    # Severity 0: the screen tried both answers and the lot cleared both.
+    assert "clears whatever the answer" in through
     assert "severity 0" in through
     # Most severe first.
     assert flags.index("FACT-CORNER-LOT") < flags.index("FACT-THROUGH-LOT")

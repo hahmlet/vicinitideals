@@ -59,6 +59,7 @@ the comparison shows them as quadfit RED against whatever FLATS found.
 from __future__ import annotations
 
 import dataclasses
+import itertools
 import json
 import math
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
@@ -1660,6 +1661,131 @@ def _better(first: Screened, second: Screened) -> Screened:
     return first
 
 
+#: More open facts than this on one design and its worst reading is not
+#: searched: every combination of answers is a screen of its own (2**k).
+BOUND_FACTS = 3
+
+#: Where a fact flag came from when the screen could have taken the other
+#: answer: nobody observed it, or the registry assumed it. A fact measured
+#: TRUE on a footnote that states no number (``held``) has no worse answer
+#: to try, and a measurement the screen could not take (``unmeasured``) is
+#: not a yes or a no.
+_BOUNDABLE = frozenset({"unobserved", "assumed"})
+
+
+def _same_numbers(a: ZoneResolution, b: ZoneResolution) -> bool:
+    """Whether two resolutions state the same standards: every number, every
+    exemption and every gap. Where they do, the screen cannot tell them apart."""
+    return (
+        a.verdict == b.verdict
+        and a.exempted == b.exempted
+        and a.ambiguous == b.ambiguous
+        and a.missing_required == b.missing_required
+        and a.untrusted == b.untrusted
+        and {k: v.value for k, v in a.values.items()} == {k: v.value for k, v in b.values.items()}
+    )
+
+
+def _bounded(
+    s: Screened,
+    lot: QuadfitLot,
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float,
+    roads: Any,
+    pool: dict[Any, dict[Any, Fitter]],
+    fitter: Fitter | None = None,
+) -> Screened:
+    """``s`` with the facts it is waiting on set to severity 0 where no
+    answer to them could turn it red (FOLLOWUPS 37 item 3; Steph's flag plan,
+    2026-10-02: a flag the lot clears even at its worst reading stays a flag,
+    at severity 0, and does not hold the lot out of GREEN).
+
+    Only a design the fact flags alone hold at yellow is tried, and only the
+    facts whose flags do it: the lot is screened again under every
+    combination of yes and no for them, the whole way -- the yards, the fit,
+    the court, the fire route -- and the flags drop to 0 only where every
+    combination clears with no miss and no new question big enough to count.
+    A combination whose standards come out the same as the lot's own is the
+    same screen and is not run again. A fact on a footnote that states no
+    number (``ZoneResolution.unencoded``) has no worst reading anybody can
+    compute and keeps its flag; so does every fact on a design with more
+    than :data:`BOUND_FACTS` of them. Only the code's answers change here:
+    what the lot's geometry says (its edges, its alley, its corner) is the
+    lot's own and is not re-guessed.
+
+    A plan held short of GREEN skipped the fire route where no route was
+    found (:func:`fire_checked`); one made GREEN here is held to it now, as
+    every GREEN is, and keeps its lowered flags through that re-screen.
+    """
+    signed = s.signed
+    if signed.binds or s.config is None:
+        return s
+    reg = flag_plan.registry()
+    line = flag_plan.colour_rules().yellow_at_severity
+    facts = {
+        flag_plan.fact_code(n): n
+        for n in s.config.leans_on(s.rules.levers)
+        if n not in s.rules.unencoded
+    }
+    held = [
+        f
+        for f in signed.flags
+        if f.source in _BOUNDABLE and f.code in facts and flag_plan.severity_of(f, reg) >= line
+    ]
+    if not held:
+        return s
+    keys = {(f.code, f.key) for f in held}
+
+    def zeroed(flags: tuple[flag_plan.Flag, ...]) -> tuple[flag_plan.Flag, ...]:
+        return tuple(
+            dataclasses.replace(f, severity=0) if (f.code, f.key) in keys else f for f in flags
+        )
+
+    lowered = zeroed(signed.flags)
+    if flag_plan.colour(signed.binds, lowered, reg=reg) is not flag_plan.Colour.green:
+        return s
+    names = sorted({facts[f.code] for f in held})
+    if len(names) > BOUND_FACTS:
+        return s
+    known = {(f.code, f.key) for f in signed.flags}
+    layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
+    for combo in itertools.product((False, True), repeat=len(names)):
+        observed = {**lot.observed, **dict(zip(names, combo))}
+        try:
+            config = configure(lot.facts, s.design, observed=observed)
+        except ValueError:
+            continue  # a world that cannot be: a child fact beside its parent's denial
+        got = rules.resolve(layer_id, lot.zone, config.conditions, lot=config.measures)
+        if _same_numbers(got, s.rules):
+            continue
+        (alt,) = _screen_lot_once(
+            dataclasses.replace(lot, observed=observed),
+            [s.design],
+            rules=rules,
+            policy=policy,
+            relief=relief,
+            step_deg=step_deg,
+            roads=roads,
+            bound=False,
+            pool=pool,
+        )
+        if alt.signed.binds or any(
+            (f.code, f.key) not in known and flag_plan.severity_of(f, reg) >= line
+            for f in alt.signed.flags
+        ):
+            return s
+    if s.facts is not None and not s.facts.fire_route_tried:
+        s = fire_checked(s, lot, roads, policy=policy, relief=relief, fitter=fitter, green=True)
+    return dataclasses.replace(
+        s,
+        screening=dataclasses.replace(s.screening, flags=zeroed(s.screening.flags)),
+        signed=dataclasses.replace(s.signed, flags=zeroed(s.signed.flags)),
+    )
+
+
 def screen_lot(
     lot: QuadfitLot,
     designs: Sequence[Design],
@@ -1701,6 +1827,8 @@ def _screen_lot_once(
     relief: ReliefPolicy,
     step_deg: float = DEFAULT_STEP_DEG,
     roads: Any = None,
+    bound: bool = True,
+    pool: dict[Any, dict[Any, Fitter]] | None = None,
 ) -> list[Screened]:
     """Screen one lot against every design, one envelope search for all.
 
@@ -1717,7 +1845,13 @@ def _screen_lot_once(
     both streets tried and the better answer kept where the owner chooses.
     ``Screened.front_deg`` records the street taken; ``None`` is the old
     reading, every street a front.
+
+    ``bound`` tries each design's worst reading of the facts it waits on
+    (:func:`_bounded`); ``pool`` carries the envelope searches from one of
+    those readings to the next, by the angles they were swept at -- the same
+    lot, the same ground, only the code's answers differ.
     """
+    pool = {} if pool is None else pool
     layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
     resolved: list[tuple[Design, Configuration, ZoneResolution]] = []
     for design in designs:
@@ -1735,7 +1869,7 @@ def _screen_lot_once(
     )
     # One search per distinct envelope: the designs usually resolve the
     # same yards, and a Fitter is the expensive part.
-    fitters: dict[Any, Fitter] = {}
+    fitters: dict[Any, Fitter] = pool.setdefault(tuple(angles), {})
 
     out: list[Screened] = []
     for design, config, got in resolved:
@@ -1814,7 +1948,13 @@ def _screen_lot_once(
         else:
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
         won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
-        out.append(fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter))
+        won = fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter)
+        if bound:
+            won = _bounded(
+                won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+                roads=roads, pool=pool, fitter=fitter,
+            )
+        out.append(won)
     return out
 
 
@@ -1826,6 +1966,7 @@ def fire_checked(
     policy: SlackPolicy,
     relief: ReliefPolicy,
     fitter: Fitter | None = None,
+    green: bool = False,
 ) -> Screened:
     """``s`` re-screened with the fire hose's route measured on its drawing
     (FOLLOWUPS 28, OFC 503.1.1).
@@ -1847,7 +1988,9 @@ def fire_checked(
     can reach (``fitter``), and kept where the building fits there and the
     hose reaches it sooner: the same fit, the end the developer would
     build at. Any other placement is not searched: where one would reach,
-    the answer is a false red, never a false green.
+    the answer is a false red, never a false green. ``green`` says the plan
+    is GREEN whatever its triage reads -- its open facts were bounded
+    (:func:`_bounded`) -- and holds it to the same rule.
     """
     from shapely.geometry import Polygon
 
@@ -1889,7 +2032,7 @@ def fire_checked(
             again = measure(drawn) if drawn and drawn.get("fits") else None
             if again is not None and (route is None or again < route):
                 s, route = dataclasses.replace(s, drawing=drawn), again
-    green = Triage.green in (s.screening.triage, s.signed.triage)
+    green = green or Triage.green in (s.screening.triage, s.signed.triage)
     if route is None and not green:
         return s
     facts = dataclasses.replace(s.facts, fire_route_ft=route, fire_route_tried=True)

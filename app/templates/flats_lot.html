@@ -121,7 +121,7 @@
               {% for f in r.flags %}
               <li class="rule-flag" data-flag="{{ f.code }}" data-counts="{{ 'yes' if f.counts else 'no' }}">{{ f.what }}
                 <span class="muted">· {{ f.key }}{% if f.severity is not none %} · severity {{ f.severity }}{% endif %}</span>
-                {% if f.counts %}<span class="badge badge-yellow">holds it at yellow</span>{% else %}<span class="muted">· too small to change the colour</span>{% endif %}
+                {% if f.counts %}<span class="badge badge-yellow">holds it at yellow</span>{% elif f.severity == 0 %}<span class="muted">· clears whatever the answer: screened both ways, it never misses</span>{% else %}<span class="muted">· too small to change the colour</span>{% endif %}
               </li>
               {% endfor %}
             </ul>
