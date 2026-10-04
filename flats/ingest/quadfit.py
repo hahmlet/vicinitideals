@@ -1709,7 +1709,8 @@ def _bounded(
     the court, the fire route -- and the flags drop to 0 only where every
     combination clears with no miss and no new question big enough to count.
     A combination whose standards come out the same as the lot's own is the
-    same screen and is not run again. A fact on a footnote that states no
+    same screen and is not run again, nor is one whose standards match a
+    combination already screened. A fact on a footnote that states no
     number (``ZoneResolution.unencoded``) has no worst reading anybody can
     compute and keeps its flag; so does every fact on a design with more
     than :data:`BOUND_FACTS` of them. Only the code's answers change here:
@@ -1752,15 +1753,19 @@ def _bounded(
         return s
     known = {(f.code, f.key) for f in signed.flags}
     layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
-    for combo in itertools.product((False, True), repeat=len(names)):
+    seen = [s.rules]
+    # Every answer True first: the worst reading is the likeliest to bind,
+    # and the first combination that binds ends the search.
+    for combo in itertools.product((True, False), repeat=len(names)):
         observed = {**lot.observed, **dict(zip(names, combo))}
         try:
             config = configure(lot.facts, s.design, observed=observed)
         except ValueError:
             continue  # a world that cannot be: a child fact beside its parent's denial
         got = rules.resolve(layer_id, lot.zone, config.conditions, lot=config.measures)
-        if _same_numbers(got, s.rules):
+        if any(_same_numbers(got, other) for other in seen):
             continue
+        seen.append(got)
         (alt,) = _screen_lot_once(
             dataclasses.replace(lot, observed=observed),
             [s.design],
