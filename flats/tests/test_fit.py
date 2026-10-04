@@ -127,6 +127,49 @@ def test_the_deepest_window_is_found_by_search() -> None:
     assert grid.max_depth_cells(61) == 0
 
 
+#: Shapes the scanline must read as the point queries did: a rotated lot, an
+#: L on the half-foot lattice (every edge on a reading's line), a lot with a
+#: hole carved out, a circle's many short edges.
+SCANNED = [
+    affinity.rotate(shapely.box(0, 0, 57.3, 131.9), 23.0),
+    shapely.Polygon([(0, 0), (60, 0), (60, 50), (30, 50), (30, 120), (0, 120)]),
+    shapely.box(0, 0, 80, 140).difference(shapely.box(20, 40, 50, 70)),
+    shapely.Point(0, 0).buffer(45.0),
+]
+
+
+@pytest.mark.parametrize("shape", SCANNED)
+@pytest.mark.parametrize("angle", [0.0, 1.0, 37.0, 90.0])
+def test_the_scanline_reads_the_lattice_the_point_queries_did(shape, angle: float) -> None:
+    """2026-10-04: the corner test is read row by row instead of one point
+    query a corner (half the county run). Never a corner the old probe
+    left out; a corner it took may be dropped only within a hair of the
+    edge -- and on these shapes, none is."""
+    import math
+
+    import numpy as np
+
+    from flats.fit.raster import _corners_inside
+
+    part = affinity.rotate(shape, -angle, origin=shape.centroid)
+    minx, miny, maxx, maxy = part.bounds
+    xs = minx + np.arange(math.ceil((maxx - minx) / 0.5) + 1) * 0.5
+    ys = miny + np.arange(math.ceil((maxy - miny) / 0.5) + 1) * 0.5
+    x, y = np.meshgrid(xs, ys)
+    probe = shapely.buffer(part, 0.5e-6)
+    old = shapely.contains_xy(probe, x.ravel(), y.ravel()).reshape(x.shape)
+    new = _corners_inside(part, xs, ys, 0.5e-6)
+    assert not (new & ~old).any()
+    assert (new == old).all()
+
+
+def test_the_deepest_window_is_the_longest_run_of_wide_rows() -> None:
+    """The one-pass depth answers what the binary search over windows did."""
+    l_shape = shapely.Polygon([(0, 0), (60, 0), (60, 50), (30, 50), (30, 120), (0, 120)])
+    [grid] = rasterize(l_shape, 0.0, res=1.0)
+    assert [grid.max_depth_cells(w) for w in (1, 30, 31, 60, 61)] == [120, 120, 50, 50, 0]
+
+
 def test_an_empty_envelope_rasterizes_to_nothing() -> None:
     assert rasterize(shapely.Polygon(), 0.0) == []
     assert rasterize(None, 0.0) == []

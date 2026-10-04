@@ -19,7 +19,7 @@ inventing REDs; nothing about it can invent a GREEN.
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import numpy as np
 import shapely
@@ -38,6 +38,15 @@ MAX_CELLS = 4_000_000
 #: through their rasters costs more than the lots are worth.
 MIN_PART_SQFT = 100.0
 
+#: How far outside the envelope's edge a cell corner may stand and still count,
+#: in cells: a millionth, to settle the boundary against floating-point noise
+#: (:func:`_corners_inside`).
+EDGE_EPS = 1e-6
+
+#: Most corner points × crossings :func:`_corners_inside` compares at once: a
+#: farm-sized part is answered a band of rows at a time.
+SCAN_BLOCK = 4_000_000
+
 
 @dataclass(frozen=True, slots=True)
 class Grid:
@@ -49,6 +58,9 @@ class Grid:
     res: float
     angle_deg: float
     origin: tuple[float, float]
+    #: :meth:`max_depth_cells` answers by width: a lot asks the same widths
+    #: again for every design, fix and seat it tries.
+    _depths: dict[int, int] = field(default_factory=dict, compare=False, repr=False)
 
     @property
     def rows(self) -> int:
@@ -91,18 +103,28 @@ class Grid:
     def max_depth_cells(self, w_cells: int) -> int:
         """Deepest window of the given width that fits.
 
-        Binary search is valid because depth is monotone: any sub-window of an
-        all-buildable window is itself all-buildable, so if depth d fits, every
-        depth below it fits too.
+        A window ``d`` deep and ``w_cells`` wide is all buildable exactly where
+        ``d`` rows running down one column each hold ``w_cells`` buildable
+        cells in a row from there: the answer is the longest such run, read
+        in one pass (it was a binary search over :meth:`has_window`, the same
+        answer at a ninth of the work).
         """
-        lo, hi = 0, self.rows
-        while lo < hi:
-            mid = (lo + hi + 1) // 2
-            if self.has_window(mid, w_cells):
-                lo = mid
-            else:
-                hi = mid - 1
-        return lo
+        got = self._depths.get(w_cells)
+        if got is None:
+            got = self._depths[w_cells] = self._longest_run(w_cells)
+        return got
+
+    def _longest_run(self, w_cells: int) -> int:
+        if w_cells < 1 or w_cells > self.cols:
+            return 0
+        s = self.integral
+        ok = (s[1:, w_cells:] - s[:-1, w_cells:] - s[1:, :-w_cells] + s[:-1, :-w_cells]) == w_cells
+        if not ok.any():
+            return 0
+        count = np.cumsum(ok, axis=0, dtype=np.int32)
+        # The count where each run last broke, carried down the column.
+        broke = np.maximum.accumulate(np.where(ok, 0, count), axis=0)
+        return int((count - broke).max())
 
     def to_world(self, row: int, col: int, d_cells: int, w_cells: int):
         """The window as a polygon back in the lot's own coordinates."""
@@ -148,14 +170,66 @@ def _cell_grid(
         return None
     xs = minx + np.arange(ncols + 1) * res
     ys = miny + np.arange(nrows + 1) * res
-    x, y = np.meshgrid(xs, ys)
-    probe = shapely.buffer(part, res * 1e-6)
-    shapely.prepare(probe)
-    inside = shapely.contains_xy(probe, x.ravel(), y.ravel()).reshape(x.shape)
+    inside = _corners_inside(part, xs, ys, res * EDGE_EPS)
     # All four corners, so a cell the boundary crosses is discarded. On a
     # concave envelope four inside corners do not strictly prove the cell is
     # inside; that residual error runs toward REVIEW, never toward a silent RED.
     return inside[:-1, :-1] & inside[1:, :-1] & inside[:-1, 1:] & inside[1:, 1:]
+
+
+def _corners_inside(part: BaseGeometry, xs: np.ndarray, ys: np.ndarray, eps: float) -> np.ndarray:
+    """Which lattice points ``(xs[c], ys[r])`` stand in ``part``, as a
+    ``(len(ys), len(xs))`` array -- by scanline, not a point query each.
+
+    Each row is read twice, ``eps / 2`` above and below its line, and a point
+    counts where either reading puts it inside or within ``eps / 2`` of an
+    edge crossing. So no reading ever falls on a vertex or along an edge
+    (the cases a crossing count gets wrong), a point ON the boundary counts,
+    and every point counted lies within ``eps`` of the polygon: inside the
+    polygon grown by ``eps``, the probe the point queries asked
+    (2026-10-04; they were half the county run). Holes count by the same
+    crossings: a point is in where the crossings to its left are odd.
+    """
+    h = eps / 2
+    edges = []
+    for ring in (part.exterior, *part.interiors):
+        c = np.asarray(ring.coords)[:, :2]
+        edges.append(np.column_stack([c[:-1], c[1:]]))
+    x0, y0, x1, y1 = np.concatenate(edges).T
+    keep = y0 != y1  # a level edge crosses no reading: none sits on a vertex's line
+    x0, y0, x1, y1 = x0[keep], y0[keep], x1[keep], y1[keep]
+    lo, hi = np.minimum(y0, y1), np.maximum(y0, y1)
+    slope = (x1 - x0) / (y1 - y0)
+    nx = len(xs)
+    res = float(xs[1] - xs[0]) if nx > 1 else 1.0
+    out = np.zeros((len(ys), nx), dtype=bool)
+    step = max(1, SCAN_BLOCK // max(1, nx + len(x0)))
+    for r0 in range(0, len(ys), step):
+        band = ys[r0 : r0 + step]
+        marks = np.zeros(len(band) * (nx + 1) + 1, dtype=np.int32)
+        for dy in (-h, h):
+            yy = band[:, None] + dy
+            hit = (lo <= yy) & (yy < hi)
+            if not hit.any():
+                continue
+            # Each row's crossings, sorted along the row; a closed ring
+            # crosses a line it does not touch an even number of times, so
+            # they pair off into the runs the row spends inside.
+            rr, ee = np.nonzero(hit)
+            at = x0[ee] + (yy[rr, 0] - y0[ee]) * slope[ee]
+            order = np.lexsort((at, rr))
+            rr, at = rr[order], at[order]
+            row, a, b = rr[0::2], at[0::2], at[1::2]
+            # The points from a - h to b + h, as column numbers.
+            first = np.clip(np.ceil((a - h - xs[0]) / res), 0, nx).astype(np.int64)
+            last = np.clip(np.floor((b + h - xs[0]) / res) + 1, 0, nx).astype(np.int64)
+            ok = first < last
+            base = row[ok] * (nx + 1)
+            np.add.at(marks, base + first[ok], 1)
+            np.add.at(marks, base + last[ok], -1)
+        runs = np.cumsum(marks[:-1].reshape(len(band), nx + 1), axis=1)[:, :nx]
+        out[r0 : r0 + step] = runs > 0
+    return out
 
 
 def _integral(cell_ok: np.ndarray) -> np.ndarray:
