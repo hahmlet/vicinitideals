@@ -38,6 +38,8 @@
     <div><span class="muted">Waiting for approval</span> <strong data-count-proposed>{{ counts.proposed }}</strong></div>
     <div><span class="muted">Approved, not yet in force</span> <strong>{{ counts.waiting }}</strong></div>
     <div><span class="muted">Approved</span> <strong>{{ counts.approved }}</strong></div>
+    <div><a href="/flats/flags/questions" id="questions-link">Questions waiting for you</a>
+      <strong data-count-questions>{{ waiting_questions }}</strong></div>
   </div>
   <div class="toolbar" style="gap:24px;flex-wrap:wrap;font-size:13px">
     {% for key, n in by_resolution.items() %}

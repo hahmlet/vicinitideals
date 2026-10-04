@@ -27,6 +27,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.flats import (
     FlatsDesign,
+    FlatsFlagInstance,
     FlatsLot,
     FlatsLotResult,
     FlatsProbe,
@@ -1102,3 +1103,36 @@ async def test_the_lot_page_says_when_todays_colour_rule_would_recolour_it(
     note = page.text.split('id="colour-today-pod80x25-2"', 1)[1].split("</div>", 1)[0]
     assert "<strong>green</strong>" in note
     assert 'id="colour-today-pod56x36-2"' not in page.text
+
+
+async def test_the_lot_page_shows_the_questions_it_has_carried_over_time(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    run = await _seed(session)
+    now = datetime.now(timezone.utc)
+    tlid = "1N1E29DD  -05600"
+    session.add_all([
+        FlatsFlagInstance(county="multnomah", tlid=tlid, design_key=DESIGNS[0], code=CORNER_FLAG["code"],
+                          key=CORNER_FLAG["key"], raised_by="FACT_UNOBSERVED", colour="yellow",
+                          opened_run_id=run.id, last_seen_run_id=run.id),
+        FlatsFlagInstance(county="multnomah", tlid=tlid, design_key=DESIGNS[0], code="FACT-ALLEY-AT-REAR",
+                          key="or/multnomah/portland|alley_at_rear", raised_by="FACT_UNOBSERVED", colour="green",
+                          status="cleared", opened_run_id=run.id, last_seen_run_id=run.id,
+                          cleared_run_id=run.id, cleared_at=now,
+                          resolution_note=f"run {run.id} no longer raises it; the lot is green"),
+    ])
+    await session.commit()
+
+    page = await client.get("/flats/lots/multnomah/1N1E29DD%20%20-05600")
+
+    assert page.status_code == 200
+    history = page.text.split('id="flag-history"', 1)[1].split("</table>", 1)[0]
+    corner = history.split('data-flag="FACT-CORNER-LOT"', 1)[1].split("</tr>", 1)[0]
+    assert 'data-status="open"' in history and "Whether the lot is a corner lot" in corner
+    assert f"opened in run {run.id}, still raised in run {run.id}" in corner
+    alley = history.split('data-flag="FACT-ALLEY-AT-REAR"', 1)[1].split("</tr>", 1)[0]
+    assert f"cleared in run {run.id}: run {run.id} no longer raises it; the lot is green" in alley
+    # A lot with no history shows no section.
+    other = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+    assert 'id="flag-history"' not in other.text

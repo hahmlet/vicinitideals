@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Questions — Viciniti Deals{% endblock %}
+
+{% block content %}
+<style>
+  .q-row { border:1px solid var(--border, #ddd); border-radius:8px; padding:10px 12px; margin:8px 0; }
+  .q-row.q-waiting { border-left:4px solid #d4a017; }
+  .q-row.q-answered { border-left:4px solid #16a34a; }
+  .q-form { display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end; margin-top:8px; }
+  .q-form textarea { flex:1 1 320px; min-height:56px; font-size:13px; }
+  .q-error { color:#b91c1c; font-size:12px; margin:6px 0; }
+  .q-meta { font-size:12px; margin-top:4px; }
+</style>
+<div class="topbar"></div>
+
+<div class="content">
+<div style="max-width:1100px;margin:0 auto">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Questions</h2>
+      <p class="muted" style="margin:4px 0 0;max-width:90ch">
+        What the screen could not answer from maps, data or the code, put to you for the next review.
+        Each question covers every lot one unknown touches. An answer is a note for whoever encodes it;
+        the unknown closes on those lots when the next screen reads it.
+        <a href="/flats/flags">Back to unknowns</a>
+      </p>
+    </div>
+  </div>
+  {% if error %}<div class="q-error" id="q-error">{{ error }}</div>{% endif %}
+
+  <h3 style="margin:18px 0 6px;font-size:15px" data-section="waiting">Waiting ({{ waiting | length }})</h3>
+  {% if not waiting %}<p class="muted" id="q-none-waiting">Nothing is waiting.</p>{% endif %}
+  {% for item in waiting %}
+  <div class="q-row q-waiting" id="q-{{ item.q.id }}">
+    <div><strong>{{ item.q.question }}</strong></div>
+    <div class="muted q-meta">
+      {{ item.what }} · {{ item.key }} ·
+      {% if item.total %}open on {{ "{:,}".format(item.total) }} lot{{ "s" if item.total != 1 }}
+        ({% for c in ["green", "yellow", "red", "unknown"] %}{% if item.lots.get(c) %}{{ "{:,}".format(item.lots[c]) }} {{ c }} {% endif %}{% endfor %})
+      {% else %}no lot holds it open now{% endif %}
+      · asked by {{ item.q.asked_by }}, {{ item.q.asked_at.strftime("%Y-%m-%d") }}
+    </div>
+    {% if owner %}
+    <form class="q-form" method="post" action="/ui/flats/flags/questions/{{ item.q.id }}/answer">
+      <textarea name="answer" required minlength="2" placeholder="Your answer"></textarea>
+      <button type="submit" class="btn">Answer</button>
+    </form>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <h3 style="margin:18px 0 6px;font-size:15px" data-section="answered">Answered ({{ answered | length }})</h3>
+  {% for item in answered %}
+  <div class="q-row q-answered" id="q-{{ item.q.id }}">
+    <div><strong>{{ item.q.question }}</strong></div>
+    <div style="margin-top:4px">{{ item.q.answer }}</div>
+    <div class="muted q-meta">
+      {{ item.what }} · {{ item.key }} · answered by {{ item.q.answered_by }}{% if item.q.answered_at %}, {{ item.q.answered_at.strftime("%Y-%m-%d") }}{% endif %}
+      {% if item.total %} · still open on {{ "{:,}".format(item.total) }} lot{{ "s" if item.total != 1 }} until it is encoded{% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
+{% endblock %}

@@ -15,6 +15,12 @@
       {{ row.code }} · {{ row.scope }} · Answered by: {{ row.path }}
       {% if row.approved_by %} · approved by {{ row.approved_by }}{% if row.approved_on %}, {{ row.approved_on }}{% endif %}{% endif %}
     </div>
+    {% if row.open %}
+    <div class="muted flag-open" style="font-size:11px;margin-top:2px" data-open-lots="{{ row.open.values() | sum }}">
+      Open on {{ "{:,}".format(row.open.values() | sum) }} lot{{ "s" if (row.open.values() | sum) != 1 }} now:
+      {% for c in ["green", "yellow", "red", "unknown"] %}{% if row.open.get(c) %}{{ "{:,}".format(row.open[c]) }} {{ c }}{% if not loop.last %} · {% endif %}{% endif %}{% endfor %}
+    </div>
+    {% endif %}
   </div>
   {% if owner %}
   <form class="flag-form" hx-post="/ui/flats/flags/type" hx-target="#flag-{{ row.code }}" hx-swap="outerHTML">

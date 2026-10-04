@@ -45,6 +45,7 @@ from geoalchemy2 import Geometry
 from sqlalchemy import (
     BigInteger,
     Boolean,
+    CheckConstraint,
     Date,
     DateTime,
     ForeignKey,
@@ -1143,3 +1144,146 @@ class FlatsFlagDecision(Base):
 
 #: :attr:`FlatsFlagDecision.subject` for the rule set (``colour.yaml``).
 RULES_SUBJECT = "RULES"
+
+
+class FlatsFlagInstance(Base):
+    """One open question on one lot x design, from the run that raised it to
+    the run that stopped raising it.
+
+    Steph's flag plan: *"Cleared flags are kept, not deleted; their history
+    shows which checks rarely block."* The run's own rows
+    (``lot_results.checks -> 'flags'``) are the screen's answer and are
+    pruned with the run; this is the history that outlives them, keyed on the
+    durable taxlot id like every other human-facing record here.
+
+    Written only by :func:`app.services.flats_flags.sync_instances`, against
+    the run in use: a flag the run raises and no open row holds opens one; an
+    open row the run no longer raises is cleared, naming the run. A flag that
+    comes back after clearing opens a new row, so a row's two dates always
+    bracket one stretch of being open. Nothing here makes a flag -- the
+    screen does -- and nothing here clears one by hand: a flag clears when
+    the screen, on a confirmed value, stops raising it.
+    """
+
+    __tablename__ = "flag_instances"
+    __table_args__ = (
+        CheckConstraint("status IN ('open', 'cleared')", name="ck_flats_flag_instances_status"),
+        CheckConstraint(
+            "(status = 'cleared') = (cleared_run_id IS NOT NULL AND cleared_at IS NOT NULL)",
+            name="ck_flats_flag_instances_cleared",
+        ),
+        CheckConstraint(
+            "(bounds_low IS NULL) = (bounds_high IS NULL) AND (bounds_low IS NULL OR bounds_low <= bounds_high)",
+            name="ck_flats_flag_instances_bounds",
+        ),
+        CheckConstraint("severity IS NULL OR severity BETWEEN 0 AND 10", name="ck_flats_flag_instances_severity"),
+        # One open row per question on a lot and design: the sync's anchor.
+        Index(
+            "uq_flats_flag_instances_open",
+            "county",
+            "tlid",
+            "design_key",
+            "code",
+            "key",
+            unique=True,
+            postgresql_where=text("status = 'open'"),
+        ),
+        # The counts the work queue and the approval page read: open per kind and key.
+        Index(
+            "ix_flats_flag_instances_open_code_key",
+            "code",
+            "key",
+            postgresql_where=text("status = 'open'"),
+        ),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    county: Mapped[str] = mapped_column(String(40), nullable=False)
+    tlid: Mapped[str] = mapped_column(String(40), nullable=False)
+    design_key: Mapped[str] = mapped_column(String(80), nullable=False)
+    #: The flag type's code (``flats/config/flags.yaml``).
+    code: Mapped[str] = mapped_column(String(80), nullable=False)
+    #: The resolution key, its parts joined by ``|``; a per-lot type's key
+    #: carries the taxlot id.
+    key: Mapped[str] = mapped_column(Text, nullable=False)
+    #: The screen reason that raised it.
+    raised_by: Mapped[str] = mapped_column(String(80), nullable=False)
+    #: Low and high, for a parametric type, as last seen.
+    bounds_low: Mapped[float | None] = mapped_column(Numeric(14, 3))
+    bounds_high: Mapped[float | None] = mapped_column(Numeric(14, 3))
+    #: The rule, citation or measurement it came from, as last seen.
+    source: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+    #: This lot's own severity where it differs from the type's (0: cleared
+    #: at every answer), as last seen.
+    severity: Mapped[int | None] = mapped_column(Integer)
+    #: The lot's colour under that run, as last seen.
+    colour: Mapped[str | None] = mapped_column(String(10))
+    status: Mapped[str] = mapped_column(String(10), nullable=False, server_default="open")
+    opened_run_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.runs.id", ondelete="SET NULL")
+    )
+    opened_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    last_seen_run_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.runs.id", ondelete="SET NULL")
+    )
+    cleared_run_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.runs.id", ondelete="SET NULL")
+    )
+    cleared_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    #: Why it cleared: the run that stopped raising it, and what the lot
+    #: became.
+    resolution_note: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+
+
+class FlatsFlagQuestion(Base):
+    """The review queue: a question an agent could not answer alone, put to a
+    person on one flag's resolution key.
+
+    Steph's flag plan: *"When no one is present to answer, the agent writes
+    the flag with needs review and its question attached. The flag counts at
+    its proposed risk and appears in a queue for the next review session."*
+    Keyed on the flag's ``(code, key)`` -- the thing one answer resolves --
+    rather than on an instance, so one answer reaches every lot sharing the
+    key and survives the instance clearing and reopening between runs. A
+    per-lot type's key names the lot, so its question is the lot's.
+
+    Asked through :func:`app.services.flats_flags.ask` only (the one write
+    path: the type must be registered and the key must fill its parts); a
+    person answers on ``/flats/flags/questions``. The answer is a note, not a
+    value in force: the confirmed value goes into the standards data and the
+    next screen closes the flag, as every flag closes.
+    """
+
+    __tablename__ = "flag_questions"
+    __table_args__ = (
+        CheckConstraint(
+            "(answer IS NULL) = (answered_at IS NULL) AND (answer IS NULL) = (answered_by IS NULL)",
+            name="ck_flats_flag_questions_answered",
+        ),
+        Index("ix_flats_flag_questions_code_key", "code", "key"),
+        Index(
+            "ix_flats_flag_questions_waiting",
+            "asked_at",
+            postgresql_where=text("answered_at IS NULL"),
+        ),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    code: Mapped[str] = mapped_column(String(80), nullable=False)
+    key: Mapped[str] = mapped_column(Text, nullable=False)
+    question: Mapped[str] = mapped_column(Text, nullable=False)
+    #: Who asked: an agent session, a script, a person.
+    asked_by: Mapped[str] = mapped_column(String(200), nullable=False)
+    asked_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    answer: Mapped[str | None] = mapped_column(Text)
+    answered_by: Mapped[str | None] = mapped_column(String(200))
+    answered_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
+    )
+    answered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

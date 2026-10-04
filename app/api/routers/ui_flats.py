@@ -65,6 +65,7 @@ from app.models.flats import (
     FlatsSnapshot,
     FlatsWordRuling,
 )
+from app.services import flats_flags as flag_history
 from app.services import flats_refresh as refresh_service
 from app.services.flats_refresh import refresh_notices
 from flats.encode import legible
@@ -2938,6 +2939,35 @@ def _flag_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
     return out
 
 
+async def _flag_history(session: DBSession, county: str, tlid: str) -> list[dict[str, Any]]:
+    """Every flag this lot has carried, newest first: which run opened it,
+    which run cleared it and why (the flag plan keeps cleared flags so their
+    history shows which checks rarely block)."""
+    try:
+        reg = flag_plan.registry()
+    except Exception:  # noqa: BLE001 -- a bad rule file must not take the page down
+        reg = None
+    out = []
+    for row in await flag_history.lot_history(session, county, tlid):
+        kind = reg.types.get(row.code) if reg is not None else None
+        out.append(
+            {
+                "id": row.id,
+                "code": row.code,
+                "what": kind.description if kind is not None else row.code.replace("-", " ").lower(),
+                "key": row.key.replace(flag_plan.SEP, " · "),
+                "design": row.design_key,
+                "open": row.status == "open",
+                "severity": row.severity,
+                "opened_run": row.opened_run_id,
+                "last_seen_run": row.last_seen_run_id,
+                "cleared_run": row.cleared_run_id,
+                "note": row.resolution_note or "",
+            }
+        )
+    return out
+
+
 def _colour_today(checks: dict[str, Any]) -> str | None:
     """The colour this design takes under the colour rule in force now, where
     that differs from the colour the run wrote; None where it does not (or
@@ -3822,6 +3852,7 @@ async def flats_lot(
             "refresh": refresh,
             "lot": card,
             "decisions": await _lot_decisions(session, county, tlid),
+            "flag_history": await _flag_history(session, county, tlid),
             "facts": _fact_rows(facts),
             "quadfit": facts.get("quadfit") or {},
             "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",

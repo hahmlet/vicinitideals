@@ -52,3 +52,17 @@ def test_a_non_owner_cannot_approve(logged_in_page: Page, base_url: str) -> None
     expect(page.get_by_text("read-only for you")).to_be_visible()
     expect(page.locator("[data-approve]")).to_have_count(0)
     expect(page.locator("[data-approve-rules]")).to_have_count(0)
+
+
+def test_the_unknowns_page_reaches_the_question_queue(logged_in_page: Page, base_url: str) -> None:
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/flags")
+
+    page.locator("#questions-link").click()
+
+    expect(page).to_have_url(f"{base_url}/flats/flags/questions")
+    expect(page.get_by_role("heading", name="Questions")).to_be_visible()
+    expect(page.locator('[data-section="waiting"]')).to_be_visible()
+    expect(page.locator('[data-section="answered"]')).to_be_visible()
+    # The E2E user is not the owner: no answer form.
+    expect(page.locator("form[action$='/answer']")).to_have_count(0)

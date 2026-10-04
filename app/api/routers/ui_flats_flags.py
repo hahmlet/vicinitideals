@@ -24,15 +24,17 @@ Registered ahead of ``ui_flats``: that router ends in a catch-all
 from __future__ import annotations
 
 from typing import Any
+from urllib.parse import quote
 
 from fastapi import APIRouter, Form, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import select
 
 from app.api.deps import DBSession
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import RULES_SUBJECT, FlatsFlagDecision
 from app.models.org import User
+from app.services import flats_flags as flag_store
 from flats.score import flags as fp
 
 router = APIRouter(include_in_schema=False)
@@ -164,6 +166,12 @@ async def flats_flags(request: Request, session: DBSession) -> HTMLResponse:
     by_resolution = {r: 0 for r in RESOLUTION_WORDS}
     for r in rows:
         by_resolution[r["values"]["resolution"]] += 1
+    # How many lots each kind holds open now, by colour (the plan's
+    # population, counted live from the flag history).
+    held = await flag_store.open_counts(session)
+    for r in rows:
+        r["open"] = held.get(r["code"], {})
+    waiting_questions = len(await flag_store.questions(session, answered=False))
     ctx = {
         **_base_ctx(user, dedup_count, "flats_flags", conflicts_count=conflicts_count),
         **_ctx_words(),
@@ -177,8 +185,67 @@ async def flats_flags(request: Request, session: DBSession) -> HTMLResponse:
             "approved": sum(r["state"] == "approved" for r in rows),
         },
         "by_resolution": by_resolution,
+        "waiting_questions": waiting_questions,
     }
     return templates.TemplateResponse(request, "flats_flags.html", ctx)
+
+
+@router.get("/flats/flags/questions", response_class=HTMLResponse)
+async def flats_flag_questions(request: Request, session: DBSession) -> HTMLResponse:
+    """The review queue: questions an agent could not answer alone, each on
+    one flag's key, with the lots that key holds open now."""
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    reg = fp.registry()
+
+    def shown(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        out = []
+        for item in items:
+            q = item["row"]
+            kind = reg.types.get(q.code)
+            out.append(
+                {
+                    "q": q,
+                    "what": kind.description if kind is not None else q.code,
+                    "key": q.key.replace(fp.SEP, " · "),
+                    "lots": item["lots"],
+                    "total": sum(item["lots"].values()),
+                }
+            )
+        return out
+
+    ctx = {
+        **_base_ctx(user, dedup_count, "flats_flags", conflicts_count=conflicts_count),
+        "waiting": shown(await flag_store.questions(session, answered=False)),
+        "answered": shown(await flag_store.questions(session, answered=True)),
+        "owner": _owner(user),
+        "error": request.query_params.get("error", ""),
+    }
+    return templates.TemplateResponse(request, "flats_flag_questions.html", ctx)
+
+
+@router.post("/ui/flats/flags/questions/{question_id}/answer", response_class=HTMLResponse)
+async def flats_flag_question_answer(
+    request: Request,
+    session: DBSession,
+    question_id: int,
+    answer: str = Form(""),
+) -> HTMLResponse:
+    """A person's answer to a waiting question. The answer is a note for
+    whoever encodes the confirmed value; the flag closes when the screen,
+    reading it, stops raising it."""
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("sign in first", status_code=401)
+    if not _owner(user):
+        return HTMLResponse("only the owner answers these", status_code=403)
+    try:
+        await flag_store.answer(session, question_id, text_=answer, by=user.name, user_id=user.id)
+    except flag_store.FlagWriteError as exc:
+        await session.rollback()
+        return RedirectResponse(f"/flats/flags/questions?error={quote(str(exc)[:200])}", status_code=303)
+    await session.commit()
+    return RedirectResponse("/flats/flags/questions", status_code=303)
 
 
 @router.post("/ui/flats/flags/type", response_class=HTMLResponse)

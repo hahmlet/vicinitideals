@@ -234,6 +234,28 @@
     </div>
   </div>
 
+  {# Every open question this lot has carried, across runs: the run that
+     opened it, the run that cleared it and why. Synced nightly from the run
+     in use (FOLLOWUPS 37 item 4). #}
+  {% if flag_history %}
+  <div class="card" id="flag-history" style="padding:12px;margin:12px 0">
+    <h3 style="margin:0 0 6px">Open questions over time</h3>
+    <table class="data-table" style="font-size:12px">
+      <tbody>
+        {% for h in flag_history %}
+        <tr class="flag-history-row" data-flag="{{ h.code }}" data-status="{{ 'open' if h.open else 'cleared' }}">
+          <td>{% if h.open %}<span class="badge badge-yellow">open</span>{% else %}<span class="badge badge-green">cleared</span>{% endif %}</td>
+          <td>{{ h.what }} <span class="muted">· {{ h.key }} · {{ h.design }}{% if h.severity is not none %} · severity {{ h.severity }}{% endif %}</span></td>
+          <td class="muted">
+            opened in run {{ h.opened_run }}{% if h.open %}, still raised in run {{ h.last_seen_run }}{% else %}, cleared in run {{ h.cleared_run }}{% if h.note %}: {{ h.note }}{% endif %}{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
   {% if run %}
   <p class="muted" style="font-size:12px;margin:12px 0 0">
     Run {{ run.id }}{% if run.finished %}, finished {{ run.finished }}{% endif %}{% if run.code_version %}, code {{ run.code_version }}{% endif %}.

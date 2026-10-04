@@ -24,6 +24,7 @@ celery_app = Celery(
         "app.tasks.maintenance",
         "app.tasks.document_preview",
         "app.tasks.flats_probe",
+        "app.tasks.flats_flags",
     ],
 )
 
@@ -81,6 +82,14 @@ celery_app.conf.update(
         "flats-source-probe-monthly": {
             "task": "app.tasks.flats_probe.flats_probe_task",
             "schedule": crontab(day_of_month=3, hour=9, minute=0),
+        },
+        # FLATS flag history: nightly 10:30 UTC (03:30 Pacific). Opens and
+        # clears flats.flag_instances against the run the Lots pages show,
+        # so a promotion or rollback is followed by the next morning.
+        # Idempotent; changes no result and no colour (FOLLOWUPS 37).
+        "flats-flags-nightly": {
+            "task": "app.tasks.flats_flags.flats_flags_nightly_task",
+            "schedule": crontab(hour=10, minute=30),
         },
     },
     timezone="UTC",

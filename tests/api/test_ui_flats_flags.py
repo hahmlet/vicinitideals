@@ -13,7 +13,8 @@ from httpx import AsyncClient
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.flats import RULES_SUBJECT, FlatsFlagDecision
+from app.models.flats import RULES_SUBJECT, FlatsFlagDecision, FlatsFlagInstance, FlatsFlagQuestion
+from app.services import flats_flags
 from flats.score import flags as fp
 from tests.conftest import seed_org, set_client_auth
 
@@ -191,3 +192,70 @@ async def test_a_colour_rule_the_file_would_refuse_is_refused_here(client, sessi
     assert response.status_code == 200
     assert "data-error" in response.text
     assert (await session.execute(select(func.count()).select_from(FlatsFlagDecision))).scalar() == 0
+
+
+CORNER = ("FACT-CORNER-LOT", "or/multnomah/portland|corner_lot")
+
+
+async def _open_on(session: AsyncSession, colours: list[str]) -> None:
+    """Corner-lot instances open on one lot per colour (no run behind them:
+    the page counts the history, not a run)."""
+    for i, colour in enumerate(colours):
+        session.add(FlatsFlagInstance(county="multnomah", tlid=f"LOT{i}", design_key="pod56x36@2",
+                                      code=CORNER[0], key=CORNER[1], raised_by="FACT_UNOBSERVED", colour=colour))
+    await session.commit()
+
+
+async def test_each_kind_says_how_many_lots_it_holds_open_now(client, session):
+    await _login(client, session, owner=False)
+    await _open_on(session, ["yellow", "yellow", "red"])
+
+    page = await client.get("/flats/flags")
+
+    row = page.text.split(f'data-flag="{CORNER[0]}"', 1)[1].split('class="flag-row', 1)[0]
+    assert 'data-open-lots="3"' in row
+    assert "Open on 3 lots now" in row and "2 yellow" in row and "1 red" in row
+    assert page.text.count("data-open-lots=") == 1
+    assert 'id="questions-link"' in page.text
+
+
+async def test_a_question_waits_on_the_queue_and_the_owner_answers_it(client, session):
+    await _login(client, session, owner=True)
+    await _open_on(session, ["yellow", "red"])
+    q = await flats_flags.ask(session, code=CORNER[0], key=CORNER[1], by="agent 2026-10-04",
+                              question="Does Portland count a lot on a curve as a corner?")
+    await session.commit()
+
+    page = await client.get("/flats/flags/questions")
+    assert page.status_code == 200
+    waiting = page.text.split('data-section="waiting"', 1)[1].split('data-section="answered"', 1)[0]
+    assert "Does Portland count a lot on a curve as a corner?" in waiting
+    assert "open on 2 lots" in waiting and "1 yellow" in waiting and "1 red" in waiting
+    assert f'action="/ui/flats/flags/questions/{q.id}/answer"' in waiting
+
+    done = await client.post(f"/ui/flats/flags/questions/{q.id}/answer",
+                             data={"answer": "Only where the curve turns 45 degrees or more."})
+    assert done.status_code == 303
+    after = await client.get("/flats/flags/questions")
+    assert 'id="q-none-waiting"' in after.text
+    answered = after.text.split('data-section="answered"', 1)[1]
+    assert "Only where the curve turns 45 degrees or more." in answered
+    assert "still open on 2 lots until it is encoded" in answered
+
+    again = await client.post(f"/ui/flats/flags/questions/{q.id}/answer", data={"answer": "Twice."})
+    assert again.status_code == 303 and "error=" in again.headers["location"]
+
+
+async def test_only_the_owner_answers_a_question(client, session):
+    await _login(client, session, owner=False)
+    q = await flats_flags.ask(session, code=CORNER[0], key=CORNER[1], by="agent",
+                              question="Does Portland count a lot on a curve as a corner?")
+    await session.commit()
+
+    page = await client.get("/flats/flags/questions")
+    assert "Does Portland count" in page.text and "/answer" not in page.text
+    refused = await client.post(f"/ui/flats/flags/questions/{q.id}/answer", data={"answer": "Yes, always."})
+    assert refused.status_code == 403
+    (row,) = (await session.execute(select(FlatsFlagQuestion))).scalars()
+    await session.refresh(row)
+    assert row.answer is None
