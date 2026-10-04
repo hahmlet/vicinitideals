@@ -2330,6 +2330,32 @@ zone_rulings:
       the zone's own rule. To encode from 59.070; the maximum-lot and
       maximum-building-size rows are the two the model has not held before.
 
+# Areas the code draws inside a zone that the zoning layer does not carry
+# (2026-10-04). See flats/rules/model.py DrawnArea.
+drawn_areas:
+  willamette_historic_district:
+    condition: willamette_historic_district
+    zones: [R-40, R-20, R-15, R-10, R-7, R-5, R-4.5, R-3]
+    file: or/clackamas/west-linn/willamette-historic-district.geojson
+    source: >-
+      West Linn's own GIS, layer "Willamette Historic District (Local
+      Designation)" of geo.westlinnoregon.gov Operational/RegulatoryZones
+      MapServer (layer 1, DOCUMENTAT "Community Development Code, Ch 25"),
+      queried in EPSG:2913 on 2026-10-04 and saved unchanged: one polygon,
+      about 20 acres.
+    quote: "or/clackamas/west-linn/25.willamette-historic.txt#L59,L73"
+    cite: CDC 25.020(A) and 25.020(B)(3)(c)
+    note: >-
+      The chapter applies to "properties designated as historic resources as
+      shown on the City's zoning map", and 25.070(C) "applies only to ...
+      new construction ... in the Willamette Historic District" -- the
+      district is a line on the city's map, not a list of base zones, which
+      is why eight residential zones carry it as a qualifier and R-10 and R-5
+      as a 35 ft building-width variant. The zones listed are the ones that
+      name the fact. Against FLATS' own lots: 71 at least 90 percent inside
+      (all R-10 and R-5), 9,427 at most 10 percent, 2 the line cuts (1225
+      13th St, 1649 5th Ave), which stay unanswered.
+
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:

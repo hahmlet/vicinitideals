@@ -190,6 +190,18 @@ CLACKAMAS: frozenset[str] = frozenset(j for j, c in COUNTY.items() if c == "clac
 #: answers ``public_sewer``.
 DISTRICT_ONLY: frozenset[str] = frozenset({"multnomah_unincorporated"})
 
+#: Where the city's own adopted natural-resource map answers
+#: ``protected_water_feature``. Oregon City's NROD is drawn 10 ft beyond the
+#: 17.49.110 vegetated corridor (17.49.030(1) makes the map the regulatory
+#: boundary), so a lot it does not touch holds no corridor the 17.49.110
+#: footnotes could widen, and a lot it touches keeps the question open --
+#: the corridor is measured from a water feature nothing here locates, and
+#: the map may be re-delineated either way. The NROD itself is carved from
+#: the envelope already (quadfit overlays.yaml). Only Oregon City: no other
+#: layer turns on the fact, and another city's water map is not this one.
+NROD_ANSWERS: frozenset[str] = frozenset({"oregon_city"})
+NROD_SQFT = "ovl_oregon_city_nrod_sqft"
+
 #: The s4 columns the bridge reads, and the s5o ones. Columns a stage file
 #: written before they existed lacks are read as absent (see
 #: :func:`iter_rows`); the bridge then answers those facts the way the
@@ -239,10 +251,15 @@ OBSERVABLE: tuple[str, ...] = (
     *PARK_FACTS,
     *CORRIDOR_FACTS,
     "corner_lot",
+    "through_lot",
     "split_zone",
     "in_floodplain",
-    # Only where a map code settles it (an alias ruling's ``observes``).
+    "protected_water_feature",
+    # Only where a map code settles it (an alias ruling's ``observes``) or a
+    # layer's ``drawn_areas`` traces it.
     "inside_mapped_use_area",
+    "north_of_marine_drive",
+    "willamette_historic_district",
     "public_sewer",
     "in_sewer_district",
 )
@@ -313,6 +330,14 @@ def observed_facts(
       :func:`flats.geom.corner.through_lot` -- is True as well: s4 clusters
       the two ends into one direction, and the 45-degree test alone read
       them False. Same caveat as the alley: only with edges.
+    * ``through_lot`` -- street along two opposite lines
+      (:func:`flats.geom.corner.through_lot`, alley edges are not street
+      edges); only with edges. Gresham's Table 4.0131 note 2 is the reader:
+      every street frontage of a double-frontage lot is a front yard. A
+      True keeps that note an open question (``held_open`` in the screen),
+      because no setback value here says what the second front becomes.
+    * ``protected_water_feature`` -- Oregon City only, off the city's NROD
+      map (:data:`NROD_ANSWERS`): False where the lot does not touch it.
     * ``split_zone`` -- s2's majority rule: the winning zone covers under
       90 % of the lot. A sliver under that is read by quadfit as zoning-map
       noise against the taxlot fabric, and the bridge carries that reading
@@ -356,8 +381,9 @@ def observed_facts(
     * a fact the lot's own map code settles -- an alias ruling's
       ``observes`` (Fairview's ``FLX`` is the VC flex area, so
       ``inside_mapped_use_area``). True only, and only with ``layers``.
-    * a fact an area the layer traced settles (``drawn_areas``, Tualatin's
-      Residential Sub-District) -- the lot's share inside the tracing,
+    * a fact an area the layer traced settles (``drawn_areas``: Tualatin's
+      Residential Sub-District, West Linn's Willamette Historic District,
+      Gresham's land north of Marine Drive) -- the lot's share inside it,
       through :func:`flats.geom.drawn.observed_drawn`. Only with ``layers``,
       only on lots of the zones the area names, and only from the lot's own
       shape (``lot_wkb``); a lot the boundary cuts through is unanswered.
@@ -367,7 +393,9 @@ def observed_facts(
     bearings = json.loads(row.get("front_bearings_json") or "[]")
     if edges:
         out.update(registry_alley(edges, bearings, _cover(row, edges)))
-        if _counts_streets(row, layers) and through_lot(edges, bearings):
+        through = through_lot(edges, bearings)
+        out["through_lot"] = through
+        if _counts_streets(row, layers) and through:
             out["corner_lot"] = True
         elif len(bearings) < 2 or two_streets(bearings):
             out["corner_lot"] = len(bearings) >= 2
@@ -399,6 +427,9 @@ def observed_facts(
             out["public_sewer"] = False
     if row.get("jurisdiction") in DISTRICT_ONLY and _answered(row.get("in_sewer_district")):
         out["in_sewer_district"] = _is_true(row.get("in_sewer_district"))
+    nrod = _finite(row.get(NROD_SQFT))
+    if row.get("jurisdiction") in NROD_ANSWERS and nrod is not None:
+        out["protected_water_feature"] = nrod > 0
     return out
 
 

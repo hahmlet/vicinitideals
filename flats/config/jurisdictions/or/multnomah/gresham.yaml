@@ -6066,6 +6066,34 @@ zones:
       value: 65
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L265"
 
+# Areas the code draws inside a zone that the zoning layer does not carry
+# (2026-10-04). See flats/rules/model.py DrawnArea.
+drawn_areas:
+  north_of_marine_drive:
+    condition: north_of_marine_drive
+    zones: [LDR-5, LDR-7, TLDR, TR, MDR-12, MDR-24, OFR, CMF]
+    file: or/multnomah/gresham/north-of-marine-drive.geojson
+    source: >-
+      Metro RLIS streets as quadfit's s1 stage holds them (s1_streets,
+      name MARINE, ftype DR), every segment between x 7,689,000 and
+      7,706,000 merged into one centerline running west of the city limit to
+      east of it, and closed north to y 712,000 -- past the Columbia. Built on
+      LXC 137 on 2026-10-04. The line is the road's centerline, not its
+      right-of-way edge: a lot on either side of the road lies wholly on one
+      side of it.
+    quote: "or/multnomah/gresham/10.1100.shoreline-height.txt#L17-L20"
+    cite: GDC 10.1102
+    note: >-
+      10.1102 caps a new structure "on land lying north of Marine Drive" at
+      three feet above the abutting roadway, and Table 4.0130's height cell
+      sends every residential and the CMF district there through note 12, so
+      the zones listed are the ones the footnote ledger (caps.json) holds the
+      fact against. The answer lifts the hold everywhere south of the road;
+      north of it the lot stays flagged, because the three-feet-above-the-road
+      height is not encoded. Against FLATS' own lots: 13 at least 90 percent
+      north (all LDR-5, all on NE Marine Dr), 26,157 at most 10 percent, none
+      the line cuts.
+
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:

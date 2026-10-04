@@ -135,6 +135,14 @@ class Resolved:
     #: The number was stated per dwelling and is already the building's
     #: total (:attr:`flats.rules.model.Effective.whole_project`).
     whole_project: bool = False
+    #: The levers that say only that the standard MOVES, never what it
+    #: becomes: a value's ``qualified_by`` and the facts its footnotes turn
+    #: on (``flats.rules.caps``). While nothing measures such a fact it is
+    #: unknown and the lot cannot be certified; once something does, False
+    #: lifts it -- and True must not, because the number carried is still
+    #: the unqualified one. The screen reads this to keep a True from
+    #: certifying a lot against a standard the code says no longer applies.
+    unencoded: frozenset[str] = frozenset()
 
     @property
     def trusted(self) -> bool:
@@ -199,12 +207,25 @@ class ZoneResolution:
         return held | self.exempt_levers
 
     @property
+    def unencoded(self) -> frozenset[str]:
+        """Facts that move a standard here in a way no number states
+        (:attr:`Resolved.unencoded`)."""
+        if not self.values:
+            return frozenset()
+        return frozenset().union(*(r.unencoded for r in self.values.values()))
+
+    @property
     def reason(self) -> str | None:
         return REASON_FOR_VERDICT.get(self.verdict)
 
     def get(self, name: str, default: Any = None) -> Any:
         r = self.values.get(name)
         return default if r is None else r.value
+
+
+def _qualified(val: Value) -> frozenset[str]:
+    """The fact ``val`` says moves it without saying to what."""
+    return frozenset({val.qualified_by}) if val.qualified_by else frozenset()
 
 
 def _relief_of(val: Value) -> tuple[tuple[tuple[str, ...], Any, str], ...]:
@@ -467,6 +488,7 @@ class RuleSet:
                             ambiguous=eff.ambiguous, measured_on=val.measured_on,
                             net_area=val.net_area,
                             relief=_relief_of(val), whole_project=eff.whole_project,
+                            unencoded=_qualified(val),
                         )
                         continue
                     # Either the ancestor wins outright, or the local number is
@@ -477,7 +499,7 @@ class RuleSet:
                         prev.origin, preempted=True, shadowed=eff.value, via=prev.via,
                         when=prev.when, levers=prev.levers, ambiguous=prev.ambiguous,
                         measured_on=prev.measured_on, net_area=prev.net_area,
-                        relief=prev.relief,
+                        relief=prev.relief, unencoded=prev.unencoded,
                     )
                     continue
                 resolved[name] = Resolved(
@@ -495,6 +517,7 @@ class RuleSet:
                     net_area=val.net_area,
                     relief=_relief_of(val),
                     whole_project=eff.whole_project,
+                    unencoded=_qualified(val),
                 )
                 if val.preempts.binds:
                     locked[name] = (val.preempts, eff.value)
@@ -514,7 +537,11 @@ class RuleSet:
             where = r.via or (zone if r.origin == "zone" else "(defaults)")
             extra = caps_for(r.layer, where).get(name, ())
             if extra:
-                resolved[name] = replace(r, levers=r.levers | frozenset(extra))
+                resolved[name] = replace(
+                    r,
+                    levers=r.levers | frozenset(extra),
+                    unencoded=r.unencoded | frozenset(extra),
+                )
 
         untrusted = tuple(sorted(n for n, r in resolved.items() if not r.trusted))
         # A zone that forbids the building forbids it by any amount of slack.

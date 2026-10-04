@@ -1889,7 +1889,7 @@ def screen(
         # cost it a GREEN; where the exception exists, the same assumption is
         # load-bearing and the lot cannot be certified on it.
         leaning = config.leans_on(rules.levers)
-        if any(name in config.unknown for name in leaning):
+        if any(name in config.unknown for name in leaning) or held_open(rules, config):
             reasons.append(FACT_UNOBSERVED)
         if any(name in config.assumed for name in leaning):
             reasons.append(FACT_ASSUMED)
@@ -1952,6 +1952,25 @@ _VERDICT_FLAG: dict[RuleVerdict, str] = {
     RuleVerdict.zone_reference_cycle: "ZONE-REFERENCE-CYCLE",
     RuleVerdict.jurisdiction_not_encoded: "JURISDICTION-NOT-ENCODED",
 }
+
+
+def held_open(rules: ZoneResolution, config: Configuration | None) -> tuple[str, ...]:
+    """Facts measured TRUE on this lot that move a standard here in a way
+    no number states (:attr:`flats.rules.resolver.Resolved.unencoded`).
+
+    Measuring such a fact answers the lot only one way. False says the
+    qualifying rule does not reach it, and the stated number is the answer.
+    True says it does -- and the number carried is still the unqualified
+    one, so certifying the lot on it would certify a standard the code says
+    has been replaced. Gresham's double-frontage note is the case: measured
+    from the street lines, a lot with streets on two opposite sides holds
+    ``through_lot`` and every frontage is a front yard, which no setback
+    value here says. Such a lot stays an open question, named.
+    """
+    if config is None:
+        return ()
+    held = set(config.conditions) - set(config.assumed)
+    return tuple(sorted(n for n in rules.unencoded if n in held))
 
 #: The flag type for each quantity the screen itself left unmeasured. A
 #: name not here is a site fact a rate is stated per, and takes that fact's
@@ -2041,6 +2060,8 @@ def _account(
                 flag(fact_code(name), FACT_UNOBSERVED, fact=name, source="unobserved")
             elif name in config.assumed:
                 flag(fact_code(name), FACT_ASSUMED, fact=name, source="assumed")
+        for name in held_open(rules, config):
+            flag(fact_code(name), FACT_UNOBSERVED, fact=name, source="held")
     for name in sorted(unmeasured):
         flag(_MEASURED_FLAG.get(name) or fact_code(name), FACT_UNOBSERVED, fact=name, source="unmeasured")
     if lot.landlocked:

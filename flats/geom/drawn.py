@@ -6,7 +6,10 @@ of Comprehensive Plan Map 10-3 (TDC 58.200(2)(a)), and housing is permitted
 in the CC zone there and nowhere else; the city's GIS has no layer for the
 blocks. The layer traces the area into a GeoJSON file
 (:class:`flats.rules.model.DrawnArea`) and this module answers the fact for
-each lot of the zones the area names.
+each lot of the zones the area names. The same holds for a boundary a city
+publishes apart from its zoning (West Linn's Willamette Historic District)
+and for one the code draws in words along a named street (Gresham's "land
+lying north of Marine Drive").
 
 **The answer is the share of the lot inside.** At least
 :data:`INSIDE_SHARE` of the lot's area inside is True; at most

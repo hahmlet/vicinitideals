@@ -124,6 +124,7 @@ def test_a_plain_interior_lot_on_a_main() -> None:
         "alley_at_side": False,
         "fronts_cul_de_sac": False,
         "corner_lot": False,
+        "through_lot": False,
         "split_zone": False,
         "in_floodplain": False,
         "public_sewer": True,
@@ -221,6 +222,33 @@ def test_a_through_lot_is_a_corner_where_the_code_counts_streets_and_nowhere_els
     # A through lot in the 20-45 degree band is two streets whichever way it bends.
     bent = row(jurisdiction="gresham", zone="LDR-5", edges_json=THROUGH, front_bearings_json="[0.0, 30.0]")
     assert observed_facts(bent, layers)["corner_lot"] is True
+
+
+def test_a_through_lot_is_observed_in_its_own_name() -> None:
+    """Gresham's setback footnotes turn on ``through_lot`` (Table 4.0131 note
+    2): a street along two opposite lines. Answered for every traced lot, so
+    a lot with one street front lifts the hold the footnote put on it."""
+    assert observed_facts(row(edges_json=THROUGH))["through_lot"] is True
+    assert observed_facts(row())["through_lot"] is False
+
+
+@pytest.mark.parametrize(
+    ("over", "expected"),
+    [
+        ({"ovl_oregon_city_nrod_sqft": 0.0}, False),
+        ({"ovl_oregon_city_nrod_sqft": 1_250.0}, True),
+        ({"ovl_oregon_city_nrod_sqft": float("nan")}, None),
+        ({}, None),
+    ],
+)
+def test_oregon_city_answers_the_water_feature_from_its_nrod(over, expected) -> None:
+    """OC 17.49.030(1) maps the NROD ten feet beyond the vegetated corridor,
+    so a lot the overlay misses has no protected water feature to set back
+    from; a lot it touches has one. The column means nothing elsewhere."""
+    got = observed_facts(row(jurisdiction="oregon_city", zone="R-6", **over))
+    assert got.get("protected_water_feature") is expected
+    elsewhere = observed_facts(row(jurisdiction="portland", ovl_oregon_city_nrod_sqft=1_250.0))
+    assert "protected_water_feature" not in elsewhere
 
 
 def test_a_gresham_through_lot_is_measured_against_the_corner_row(corpus, policies) -> None:

@@ -42,7 +42,11 @@ SUB_DISTRICT_BLOCKS = {2, 3, 15, 16, 17, 18, 19, 20, 22, 23}
 
 
 def test_every_drawn_condition_is_a_registered_condition() -> None:
-    assert DRAWN_CONDITIONS == ("inside_mapped_use_area",)
+    assert DRAWN_CONDITIONS == (
+        "inside_mapped_use_area",
+        "north_of_marine_drive",
+        "willamette_historic_district",
+    )
     assert set(DRAWN_CONDITIONS) <= set(CONDITIONS)
 
 
@@ -252,3 +256,56 @@ def test_a_lot_of_another_zone_is_not_asked(layers) -> None:
 
 def test_a_row_without_the_lot_shape_is_not_asked(layers) -> None:
     assert "inside_mapped_use_area" not in observed_facts(row(jurisdiction="tualatin", zone="CC"), layers)
+
+
+# --- areas the zoning layer does not carry (2026-10-04) -----------------------------
+
+WEST_LINN = "or/clackamas/west-linn"
+GRESHAM = "or/multnomah/gresham"
+WHD = "or/clackamas/west-linn/willamette-historic-district.geojson"
+MARINE = "or/multnomah/gresham/north-of-marine-drive.geojson"
+
+
+def test_west_linn_and_gresham_declare_their_areas(corpus: dict) -> None:
+    (whd,) = corpus[WEST_LINN].drawn_areas.values()
+    assert (whd.condition, whd.file) == ("willamette_historic_district", WHD)
+    assert {"R-10", "R-5"} <= set(whd.zones)
+    (marine,) = corpus[GRESHAM].drawn_areas.values()
+    assert (marine.condition, marine.file) == ("north_of_marine_drive", MARINE)
+    assert "LDR-5" in marine.zones
+
+
+def test_the_historic_district_is_the_citys_one_polygon() -> None:
+    area = load_area(WHD)
+    assert area.geom_type == "Polygon"
+    assert 19 < area.area / 43_560 < 21  # about 20 acres
+
+
+def test_a_west_linn_lot_inside_the_district_is_inside_and_one_outside_is_not(layers) -> None:
+    area = load_area(WHD)
+    inside = area.representative_point().buffer(5)
+    minx, miny, _, _ = area.bounds
+    outside = box(minx - 2000, miny - 2000, minx - 1900, miny - 1900)
+
+    def wl(lot) -> dict:
+        return observed_facts(row(jurisdiction="west_linn", zone="R-5", lot_wkb=shapely.to_wkb(lot)), layers)
+
+    assert wl(inside)["willamette_historic_district"] is True
+    assert wl(outside)["willamette_historic_district"] is False
+
+
+def test_north_of_marine_drive_is_the_side_of_the_road_not_the_address(layers) -> None:
+    area = load_area(MARINE)
+    # The north edge of the area is the road: a point a hundred feet off the
+    # road on each side, at the middle of the line.
+    road = min(area.exterior.coords, key=lambda c: abs(c[0] - 7_696_000))
+
+    def gresham(lot) -> dict:
+        return observed_facts(row(jurisdiction="gresham", zone="LDR-5", lot_wkb=shapely.to_wkb(lot)), layers)
+
+    north = Point(road[0], road[1] + 100).buffer(20)
+    south = Point(road[0], road[1] - 100).buffer(20)
+    assert gresham(north)["north_of_marine_drive"] is True
+    assert gresham(south)["north_of_marine_drive"] is False
+    # Downtown Gresham is miles south of the river.
+    assert gresham(box(7_706_000, 670_000, 7_706_100, 670_100))["north_of_marine_drive"] is False

@@ -456,6 +456,12 @@ class DrawnArea(BaseModel):
     it is inside, nearly none is outside, and a lot the line cuts through is
     left unanswered rather than guessed.
 
+    The same block holds a boundary the city does publish, apart from its
+    zoning (West Linn's Willamette Historic District, from its RegulatoryZones
+    layer), and one the code draws in words along a named line (Gresham's
+    "land lying north of Marine Drive", cut at the street centerline). What
+    makes it a drawn area is that the zoning layer does not carry it.
+
     ``quote`` points at the code's own words naming the area; ``note`` is the
     argument. Declared per layer and never inherited.
     """

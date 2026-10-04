@@ -316,3 +316,47 @@ def test_the_bare_string_form_parses_and_is_refused_for_its_citation(
             ),
             strict=True,
         )
+
+
+# -- once something measures the fact ----------------------------------------
+#
+# Measuring a qualifying fact answers the lot one way only. False says the
+# second rule does not reach it and the printed number is the answer; True
+# says it does, and the number carried is still the unqualified one. So a True
+# must keep the lot an open question -- or the first fact anybody measures
+# turns a guard into a false GREEN.
+
+
+def test_the_qualifier_is_named_as_unencoded(rules: RuleSet) -> None:
+    res = rules.resolve(FAIRVIEW, "R-6", POD)
+    assert FACT in res.values["max_height_ft"].unencoded
+    assert FACT in res.unencoded
+
+
+def test_a_footnote_cap_is_named_as_unencoded(rules: RuleSet) -> None:
+    from flats.rules.caps import caps_for
+
+    capped = caps_for("or/multnomah/gresham", "LDR-5")
+    assert capped, "fixture assumption: Gresham LDR-5 carries footnote caps"
+    res = rules.resolve("or/multnomah/gresham", "LDR-5", POD)
+    for facts in capped.values():
+        assert set(facts) <= res.unencoded
+
+
+def test_measured_false_lifts_the_qualifier_and_measured_true_does_not(
+    rules: RuleSet,
+) -> None:
+    from flats.score.screen import held_open
+
+    design = max(load_catalog(), key=lambda d: d.height_ft)
+    res = rules.resolve(FAIRVIEW, "R-6", POD)
+    lot = LotFacts(lot_sqft=9000)
+
+    no = configure(lot, design, observed={FACT: False})
+    assert FACT not in no.unknown
+    assert FACT not in no.leans_on(res.levers)
+    assert held_open(res, no) == ()
+
+    yes = configure(lot, design, observed={FACT: True})
+    assert FACT not in yes.unknown
+    assert held_open(res, yes) == (FACT,)

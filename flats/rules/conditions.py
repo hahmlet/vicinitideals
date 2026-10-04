@@ -321,7 +321,10 @@ _C: tuple[ConditionDef, ...] = (
         "district changes the answer in both directions -- it loosens three "
         "of the four yards and caps building width at 35 feet, which this "
         "pod cannot meet at all -- so neither default is the safe one.",
-        evidence="the city's adopted Willamette Historic District boundary — not held",
+        evidence=(
+            "the city's adopted Willamette Historic District boundary -- held as "
+            "West Linn's drawn_areas, from the city's own RegulatoryZones layer"
+        ),
         assume=None,
     ),
     ConditionDef(
@@ -749,7 +752,10 @@ _C: tuple[ConditionDef, ...] = (
         "an address on a road does not say which side. On the run of "
         "2026-09-02 thirteen are red and one is in review, so nothing "
         "green rides on the answer today.",
-        evidence="the Marine Drive centerline against the parcel -- one line, not held",
+        evidence=(
+            "the Marine Drive centerline against the parcel -- held as Gresham's "
+            "drawn_areas, the land north of the RLIS centerline"
+        ),
         assume=None,
     ),
     # --- design facts: true of the building, not of the parcel ---------
@@ -957,8 +963,13 @@ PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
 
 #: The site facts a layer may answer from an area it draws itself
 #: (``Layer.drawn_areas``, :mod:`flats.geom.drawn`): a boundary the code puts
-#: inside a zone on a map nobody publishes as data.
-DRAWN_CONDITIONS: tuple[str, ...] = ("inside_mapped_use_area",)
+#: inside a zone -- on a map nobody publishes as data, in a layer the city
+#: publishes apart from its zoning, or along a line the code names in words.
+DRAWN_CONDITIONS: tuple[str, ...] = (
+    "inside_mapped_use_area",
+    "north_of_marine_drive",
+    "willamette_historic_district",
+)
 
 #: The site facts about what zone lies across the STREET from a street lot
 #: line, read per line (``flats.geom.neighbour.street_lines_clear``) against
