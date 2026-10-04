@@ -13,7 +13,13 @@ from httpx import AsyncClient
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.flats import RULES_SUBJECT, FlatsFlagDecision, FlatsFlagInstance, FlatsFlagQuestion
+from app.models.flats import (
+    RULES_SUBJECT,
+    FlatsFlagDecision,
+    FlatsFlagInstance,
+    FlatsFlagQuestion,
+    FlatsFlagReport,
+)
 from app.services import flats_flags
 from flats.score import flags as fp
 from tests.conftest import seed_org, set_client_auth
@@ -259,3 +265,57 @@ async def test_only_the_owner_answers_a_question(client, session):
     (row,) = (await session.execute(select(FlatsFlagQuestion))).scalars()
     await session.refresh(row)
     assert row.answer is None
+
+
+async def test_the_work_queue_lists_each_open_question_with_its_lots(client, session):
+    await _login(client, session, owner=False)
+    await _open_on(session, ["yellow", "yellow", "red"])
+
+    page = await client.get("/flats/flags/queue")
+
+    assert page.status_code == 200
+    row = page.text.split(f'data-flag="{CORNER[0]}"', 1)[1].split("</tr>", 1)[0]
+    assert "or/multnomah/portland · corner_lot" in row
+    assert "0 · 2 · 1" in row
+    # Each yellow lot is held by the corner question alone.
+    assert 'data-last="2"' in row
+    assert 'id="queue-empty"' not in page.text
+
+
+async def test_the_work_queue_says_when_nothing_is_open(client, session):
+    await _login(client, session, owner=False)
+
+    page = await client.get("/flats/flags/queue")
+
+    assert page.status_code == 200 and 'id="queue-empty"' in page.text
+
+
+async def test_the_report_page_shows_the_newest_nightly_check(client, session):
+    await _login(client, session, owner=False)
+    page = await client.get("/flats/flags/report")
+    assert page.status_code == 200 and 'id="report-none"' in page.text
+
+    session.add(FlatsFlagReport(ok=False, report={
+        "rows": 1200, "kinds": 68, "pending_kinds": ["FACT-CORNER-LOT"], "steps": [-1, 1],
+        "moved": {"green->yellow": 3},
+        "moved_examples": [{"county": "multnomah", "tlid": "1S2E08BA  -09500", "design": "pod56x36@2"}],
+        "incomplete": {}, "incomplete_examples": [], "unregistered_instances": {},
+        "sensitivity": {"pod56x36@2": {"1": {"moves": {"yellow->red": 40, "green->red": 2},
+                                              "examples": [{"county": "multnomah", "tlid": "1N1E29DD  -05600",
+                                                            "design": "pod56x36@2", "move": "green->red"}],
+                                              "keys": {"FACT-CORNER-LOT|or/multnomah/portland|corner_lot": 12}}}},
+    }))
+    await session.commit()
+
+    page = await client.get("/flats/flags/report")
+
+    check = page.text.split('id="check-result"', 1)[1]
+    assert 'data-ok="no"' in page.text and "needs a look" in check
+    assert "3 green → yellow" in check and "1S2E08BA" in check
+    assert "1 of 68 kinds" in check
+    pod = page.text.split('id="sensitivity-pod56x36-2"', 1)[1]
+    narrower, wider = pod.split('class="sensitivity-step"')[1:3]
+    assert "1 ft narrower" in narrower and 'data-total="0"' in narrower
+    assert "1 ft wider" in wider and 'data-total="42"' in wider
+    assert "40 yellow → red" in wider and "FACT-CORNER-LOT · or/multnomah/portland · corner_lot (12)" in wider
+    assert "1N1E29DD" in wider

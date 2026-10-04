@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Work queue — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar"></div>
+
+<div class="content">
+<div style="max-width:1400px;margin:0 auto">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Work queue</h2>
+      <p class="muted" style="margin:4px 0 0;max-width:95ch">
+        Every open question, one row per answer: a question one answer settles for a whole city or zone is
+        one row; a question each lot answers on its own is one row for all of them. Sorted by the priority
+        you set on the kind, then by how many yellow lots the answer would turn green on its own, then by how
+        many yellow lots it holds. Counted live from the lots' flag history.
+        <a href="/flats/flags">Back to unknowns</a>
+      </p>
+    </div>
+  </div>
+
+  {% if not queue %}
+  <p class="muted" id="queue-empty">Nothing is open. The history fills in after the first run screened under the colour rule is in use.</p>
+  {% else %}
+  <table class="data-table" style="font-size:12px" id="queue-table">
+    <thead>
+      <tr>
+        <th>Priority</th><th>Question</th><th>Which</th><th>How it gets answered</th><th>Covers</th>
+        <th style="text-align:right">Lots</th><th style="text-align:right">Green · yellow · red</th>
+        <th style="text-align:right">Holds yellow</th><th style="text-align:right">Turns green on its own</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for q in queue %}
+      <tr class="queue-row" data-flag="{{ q.code }}" data-key="{{ q.key }}">
+        <td>{{ priority_words.get(q.priority, q.priority) }}</td>
+        <td>{{ q.what }}{% if q.pending %} <span class="badge badge-yellow" title="Nobody has approved this kind's numbers yet">proposed</span>{% endif %}
+          {% if not q.registered %} <span class="badge badge-red">not a registered kind</span>{% endif %}</td>
+        <td class="muted">{{ q.key or "each lot" }}</td>
+        <td>{{ resolution_words.get(q.resolution, q.resolution) }}</td>
+        <td class="muted">{{ scope_words.get(q.scope, q.scope) }}</td>
+        <td style="text-align:right">{{ "{:,}".format(q.lots) }}</td>
+        <td style="text-align:right">{{ "{:,}".format(q.colours.green) }} · {{ "{:,}".format(q.colours.yellow) }} · {{ "{:,}".format(q.colours.red) }}</td>
+        <td style="text-align:right">{{ "{:,}".format(q.held) }}</td>
+        <td style="text-align:right" data-last="{{ q.last }}"><strong>{{ "{:,}".format(q.last) }}</strong></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+</div>
+{% endblock %}

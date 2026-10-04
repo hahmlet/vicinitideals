@@ -66,3 +66,19 @@ def test_the_unknowns_page_reaches_the_question_queue(logged_in_page: Page, base
     expect(page.locator('[data-section="answered"]')).to_be_visible()
     # The E2E user is not the owner: no answer form.
     expect(page.locator("form[action$='/answer']")).to_have_count(0)
+
+
+def test_the_unknowns_page_reaches_the_work_queue_and_the_nightly_check(
+    logged_in_page: Page, base_url: str
+) -> None:
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/flags")
+
+    page.locator("#queue-link").click()
+    expect(page).to_have_url(f"{base_url}/flats/flags/queue")
+    expect(page.get_by_role("heading", name="Work queue")).to_be_visible()
+
+    page.goto(f"{base_url}/flats/flags")
+    page.locator("#report-link").click()
+    expect(page).to_have_url(f"{base_url}/flats/flags/report")
+    expect(page.get_by_role("heading", name="Nightly check")).to_be_visible()

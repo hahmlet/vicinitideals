@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Nightly check — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar"></div>
+
+<div class="content">
+<div style="max-width:1200px;margin:0 auto">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Nightly check</h2>
+      <p class="muted" style="margin:4px 0 0;max-width:95ch">
+        Every night each lot's colour is worked out again from what it misses and what is open, under today's
+        rules, and compared with the colour the run wrote. The same pass tries the pod a few feet wider and
+        narrower and counts the lots whose colour would move.
+        <a href="/flats/flags">Back to unknowns</a>
+      </p>
+    </div>
+  </div>
+
+  {% if not report %}
+  <p class="muted" id="report-none">No nightly check has run yet.</p>
+  {% else %}
+  <div class="card" id="check-result" style="padding:12px;margin:12px 0" data-ok="{{ 'yes' if report.ok else 'no' }}">
+    <div>
+      {% if report.ok %}<span class="badge badge-green">passed</span>{% else %}<span class="badge badge-red">needs a look</span>{% endif %}
+      <span class="muted">{{ report.made_at.strftime("%Y-%m-%d %H:%M") }} UTC{% if report.run_id %} · run {{ report.run_id }}{% endif %} · {{ "{:,}".format(r.rows or 0) }} lot rows</span>
+    </div>
+    {% if r.skipped %}<div style="margin-top:6px" id="check-skipped">Nothing to check: {{ r.skipped }}.</div>{% endif %}
+    <ul style="margin:8px 0 0 18px;font-size:13px">
+      <li id="check-moved">
+        {% if r.moved %}Colours that differ from what the run wrote:
+          {% for k, n in r.moved.items() %}{{ "{:,}".format(n) }} {{ k|replace("->", " → ") }}{% if not loop.last %}; {% endif %}{% endfor %}.
+          A rule changed since the run, or the screen and the rule disagree; the next run writes today's colour.
+          {% if r.moved_examples %}<div class="muted">For example:
+            {% for e in r.moved_examples %}<a href="/flats/lots/{{ e.county }}/{{ e.tlid|urlencode }}">{{ e.tlid }}</a> ({{ e.design }}){% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+        {% else %}Every stored colour is the colour today's rules give.{% endif %}
+      </li>
+      <li id="check-incomplete">
+        {% if r.incomplete %}Open questions the screen wrote incompletely:
+          {% for k, n in r.incomplete.items() %}{{ "{:,}".format(n) }} ({{ k }}){% if not loop.last %}; {% endif %}{% endfor %}.
+          {% if r.incomplete_examples %}<div class="muted">For example:
+            {% for e in r.incomplete_examples %}<a href="/flats/lots/{{ e.county }}/{{ e.tlid|urlencode }}">{{ e.tlid }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+        {% else %}Every open question is complete.{% endif %}
+      </li>
+      {% if r.unregistered_instances %}
+      <li id="check-unregistered">Open questions of a kind nobody registered:
+        {% for k, n in r.unregistered_instances.items() %}{{ k }} ({{ "{:,}".format(n) }}){% if not loop.last %}; {% endif %}{% endfor %}.</li>
+      {% endif %}
+      <li id="check-pending">{{ (r.pending_kinds or [])|length }} of {{ r.kinds }} kinds of question are waiting for your approval (no deadline; they count at their proposed numbers).</li>
+    </ul>
+  </div>
+
+  <h3 style="margin:18px 0 6px;font-size:15px">Pod width</h3>
+  <p class="muted" style="font-size:12px;max-width:95ch;margin:0 0 8px">
+    What happens to the colours if the building is made wider or narrower, counting only whether it still
+    fits on the lot. Coverage, floor area and the other limits also move with the building's size, but the
+    screen does not yet keep how much room a lot had to spare on those, so they are not counted here.
+    A lot short by under a foot stays yellow, as the colour rule says.
+  </p>
+  {% if not sensitivity %}<p class="muted" id="sensitivity-none">Nothing to report yet.</p>{% endif %}
+  {% for d in sensitivity %}
+  <div class="card" style="padding:12px;margin:8px 0" id="sensitivity-{{ d.design|replace('@', '-') }}">
+    <h4 style="margin:0 0 6px">{{ d.design }}</h4>
+    <table class="data-table" style="font-size:12px">
+      <thead><tr><th>Change</th><th style="text-align:right">Lots that move</th><th>How</th><th>Open questions on those lots</th><th>For example</th></tr></thead>
+      <tbody>
+        {% for s in d.steps %}
+        <tr class="sensitivity-step" data-total="{{ s.total }}">
+          <td>{{ s.words }}</td>
+          <td style="text-align:right"><strong>{{ "{:,}".format(s.total) }}</strong></td>
+          <td>{% for k, n in s.moves.items() %}{{ "{:,}".format(n) }} {{ k|replace("->", " → ") }}{% if not loop.last %}<br>{% endif %}{% endfor %}</td>
+          <td class="muted">{% for k, n in s.questions %}{{ k }} ({{ "{:,}".format(n) }}){% if not loop.last %}<br>{% endif %}{% endfor %}</td>
+          <td>{% for e in s.examples[:4] %}<a href="/flats/lots/{{ e.county }}/{{ e.tlid|urlencode }}">{{ e.tlid }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+</div>
+{% endblock %}

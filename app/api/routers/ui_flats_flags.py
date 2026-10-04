@@ -224,6 +224,59 @@ async def flats_flag_questions(request: Request, session: DBSession) -> HTMLResp
     return templates.TemplateResponse(request, "flats_flag_questions.html", ctx)
 
 
+@router.get("/flats/flags/queue", response_class=HTMLResponse)
+async def flats_flag_queue(request: Request, session: DBSession) -> HTMLResponse:
+    """The work queue: open questions by priority, then by how many lots an
+    answer would turn green on its own, then by how many it holds yellow."""
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    ctx = {
+        **_base_ctx(user, dedup_count, "flats_flags", conflicts_count=conflicts_count),
+        **_ctx_words(),
+        "scope_words": SCOPE_WORDS,
+        "queue": await flag_store.work_queue(session),
+    }
+    return templates.TemplateResponse(request, "flats_flag_queue.html", ctx)
+
+
+#: How the report names a width step.
+def _step_words(step: str) -> str:
+    n = float(step)
+    feet = f"{abs(n):g} ft"
+    return f"{feet} wider" if n > 0 else f"{feet} narrower"
+
+
+@router.get("/flats/flags/report", response_class=HTMLResponse)
+async def flats_flag_report(request: Request, session: DBSession) -> HTMLResponse:
+    """The newest nightly check and the design sensitivity report."""
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    row = await flag_store.latest_report(session)
+    sensitivity = []
+    if row is not None:
+        for design, per in sorted((row.report.get("sensitivity") or {}).items()):
+            steps = []
+            for step in row.report.get("steps") or []:
+                s = per.get(str(step)) or {"moves": {}, "examples": [], "keys": {}}
+                steps.append(
+                    {
+                        "words": _step_words(str(step)),
+                        "moves": s["moves"],
+                        "total": sum(s["moves"].values()),
+                        "examples": s["examples"],
+                        "questions": [(k.replace(fp.SEP, " · ").rstrip(" ·"), n) for k, n in s["keys"].items()],
+                    }
+                )
+            sensitivity.append({"design": design, "steps": steps})
+    ctx = {
+        **_base_ctx(user, dedup_count, "flats_flags", conflicts_count=conflicts_count),
+        "report": row,
+        "r": row.report if row is not None else {},
+        "sensitivity": sensitivity,
+    }
+    return templates.TemplateResponse(request, "flats_flag_report.html", ctx)
+
+
 @router.post("/ui/flats/flags/questions/{question_id}/answer", response_class=HTMLResponse)
 async def flats_flag_question_answer(
     request: Request,

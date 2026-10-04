@@ -29,6 +29,7 @@ from app.models.flats import (
 )
 from app.services import flats_flags
 from app.services.flats_flags import FlagWriteError
+from flats.score import flags as fp
 
 pytestmark = pytest.mark.asyncio
 
@@ -201,3 +202,141 @@ async def test_a_waiting_question_is_not_asked_twice_and_is_answered_once(sessio
     # Answered, the key may be asked about again.
     await flats_flags.ask(session, code="FACT-CORNER-LOT", key=CORNER["key"],
                           question="And a lot on a cul-de-sac bulb?", by="agent")
+
+
+# ---------------------------------------------------------------------------
+# Item 5: work queue, nightly check, design sensitivity
+# ---------------------------------------------------------------------------
+
+FIT = {"check": "fit_ft", "observed": 55.5, "threshold": 56.0, "shortfall": 0.5}
+FIT_FAR = {"check": "fit_ft", "observed": 50.0, "threshold": 56.0, "shortfall": 6.0}
+
+
+async def _slack(session: AsyncSession, run_id: int, tlid: str, slack: float) -> None:
+    row = (
+        await session.execute(
+            select(FlatsLotResult).join(FlatsLot, FlatsLot.id == FlatsLotResult.lot_id)
+            .where(FlatsLotResult.run_id == run_id, FlatsLot.tlid == tlid)
+        )
+    ).scalar_one()
+    row.slack_ft = slack
+    await session.flush()
+
+
+async def test_the_work_queue_puts_the_key_that_turns_lots_green_alone_first(session: AsyncSession) -> None:
+    w = await _world(session)
+    # A is held yellow by the corner alone; B by the corner and the through
+    # lot together. Both kinds share a priority, so yield decides: the corner
+    # turns A green on its own, the through lot turns nothing green alone.
+    await _run(session, w, 1, {A: ("yellow", [CORNER]), B: ("yellow", [CORNER, THROUGH | {"severity": 5}])})
+    await flats_flags.sync_instances(session)
+
+    reg = fp.registry()
+    same = fp.Registry(
+        [t.model_copy(update={"priority": fp.Priority.now}) if t.code in (CORNER["code"], THROUGH["code"]) else t
+         for t in reg]
+    )
+    queue = await flats_flags.work_queue(session, reg=same)
+    first, second = [r for r in queue if r["code"] in (CORNER["code"], THROUGH["code"])]
+    assert first["code"] == CORNER["code"] and (first["lots"], first["held"], first["last"]) == (2, 2, 1)
+    assert second["code"] == THROUGH["code"] and (second["held"], second["last"]) == (1, 0)
+    assert first["key"] == "or/multnomah/x · corner_lot"
+
+
+async def test_the_work_queue_keeps_one_row_for_a_per_lot_kind(session: AsyncSession) -> None:
+    w = await _world(session)
+    await _run(session, w, 1, {A: ("yellow", [tight(A)]), B: ("yellow", [tight(B)])})
+    await flats_flags.sync_instances(session)
+
+    (row,) = [r for r in await flats_flags.work_queue(session) if r["code"] == "FIT-TIGHT"]
+    assert row["key"] == "" and row["lots"] == 2
+
+
+async def test_the_untrusted_flags_are_the_ones_the_screen_raises() -> None:
+    from flats.score import screen
+
+    assert set(screen._VERDICT_FLAG.values()) | {"RULE-AMBIGUOUS"} == flats_flags.UNTRUSTED_FLAGS
+
+
+async def test_a_wider_pod_moves_the_fit_and_a_narrower_one_clears_it() -> None:
+    fit = fp.Bind.from_json(FIT)
+    # Short by half a foot: a foot narrower clears it; a foot wider is 1.5.
+    assert flats_flags.widened([fit], [], -0.5, -1) == []
+    (wider,) = flats_flags.widened([fit], [], -0.5, 1)
+    assert (wider.shortfall, wider.threshold) == (1.5, 57.0)
+    # A lot with 1.5 ft to spare gains a bind only past 1.5 ft.
+    assert flats_flags.widened([], [], 1.5, 1) == []
+    (gained,) = flats_flags.widened([], [], 1.5, 2)
+    assert gained.check == "fit_ft" and gained.shortfall == 0.5
+    # Under a rule set the screen does not trust, no bind is invented.
+    untrusted = [fp.Flag("RULE-AMBIGUOUS", "or/multnomah/x|R5|coverage_pct", "RULE_AMBIGUOUS")]
+    assert flats_flags.widened([], untrusted, 1.5, 4) == []
+
+
+async def test_the_nightly_check_passes_when_every_stored_colour_is_todays(session: AsyncSession) -> None:
+    w = await _world(session)
+    await _run(session, w, 1, {A: ("yellow", [CORNER]), B: ("green", [])})
+    await flats_flags.sync_instances(session)
+
+    got = await flats_flags.nightly_check(session)
+
+    assert got.ok and got.run_id == 1
+    r = got.report
+    assert r["rows"] == 2 and r["moved"] == {} and r["incomplete"] == {}
+    assert r["colours"] == {DESIGN: {"yellow": 1, "green": 1}}
+    assert r["kinds"] == len(fp.registry())
+    assert await flats_flags.latest_report(session) is got
+
+
+async def test_the_nightly_check_fails_on_a_stored_colour_that_is_not_todays(session: AsyncSession) -> None:
+    w = await _world(session)
+    # Stored green, but a corner-lot flag holds it yellow under the rule.
+    await _run(session, w, 1, {A: ("green", [CORNER]), B: ("yellow", [{"code": "FACT-NOPE", "key": "x", "by": "?"}])})
+
+    got = await flats_flags.nightly_check(session)
+
+    assert not got.ok
+    assert got.report["moved"] == {"green->yellow": 1}
+    assert got.report["moved_examples"][0]["tlid"] == A
+    assert sum(got.report["incomplete"].values()) == 1
+    assert got.report["incomplete_examples"][0]["tlid"] == B
+
+
+async def test_the_nightly_check_says_why_a_run_before_the_rule_has_nothing(session: AsyncSession) -> None:
+    w = await _world(session)
+    await _run(session, w, 1, {A: ("yellow", [])}, ruled=False)
+
+    got = await flats_flags.nightly_check(session)
+
+    assert not got.ok and got.report["rows"] == 0
+    assert got.report["skipped"].startswith("run 1 was screened before the colour rule")
+
+
+async def test_the_sensitivity_report_counts_what_each_width_moves(session: AsyncSession) -> None:
+    w = await _world(session)
+    # A misses the fit by half a foot (a near miss: yellow); B fits with
+    # 1.5 ft to spare and carries the corner question.
+    await _run(session, w, 1, {A: ("yellow", []), B: ("yellow", [CORNER])})
+    row = (
+        await session.execute(
+            select(FlatsLotResult).join(FlatsLot, FlatsLot.id == FlatsLotResult.lot_id).where(FlatsLot.tlid == A)
+        )
+    ).scalar_one()
+    row.checks = {**row.checks, "binds": [FIT]}
+    await _slack(session, 1, A, -0.5)
+    await _slack(session, 1, B, 1.5)
+
+    got = await flats_flags.nightly_check(session)
+
+    sens = got.report["sensitivity"][DESIGN]
+    # A foot narrower: A fits and, with nothing open, is green.
+    assert sens["-1"]["moves"] == {"yellow->green": 1}
+    # A foot wider: A is short by 1.5 ft and goes red; B still fits.
+    assert sens["1"]["moves"] == {"yellow->red": 1}
+    assert sens["1"]["examples"][0]["tlid"] == A
+    # Two feet wider: B is short by half a foot -- a near miss, still yellow.
+    assert sens["2"]["moves"] == {"yellow->red": 1}
+    # Four feet wider: B misses too, and the question it carries is named.
+    assert sens["4"]["moves"] == {"yellow->red": 2}
+    assert sens["4"]["keys"] == {"FACT-CORNER-LOT|or/multnomah/x|corner_lot": 1}
+    assert got.ok

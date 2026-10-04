@@ -6,11 +6,13 @@ promotion rather than waiting for the night. ``ask`` is the agent's one way
 to put a question to the next review session: it names a registered flag
 type and a key that fills it, and the question appears on
 ``/flats/flags/questions``. ``questions`` lists what is waiting and what was
-answered.
+answered. ``check`` runs the nightly check and the pod width report now
+(item 5) and prints what failed.
 
 Usage::
 
     uv run python scripts/flats_flags.py sync [--run 64]
+    uv run python scripts/flats_flags.py check
     uv run python scripts/flats_flags.py ask --code FACT-CORNER-LOT \\
         --key "or/multnomah/gresham|corner_lot" --by "agent 2026-10-04" \\
         --question "Does Gresham count a lot on a curve as a corner?"
@@ -43,6 +45,15 @@ async def run(session: AsyncSession, args: argparse.Namespace) -> int:
             return 1
         print(f"run {got.run_id}: {got.opened:,} opened, {got.updated:,} updated, {got.cleared:,} cleared")
         return 0
+    if args.command == "check":
+        row = await flats_flags.nightly_check(session)
+        await session.commit()
+        r = row.report
+        print(f"run {row.run_id}: {'passed' if row.ok else 'needs a look'} -- {r.get('rows', 0):,} rows")
+        for name in ("skipped", "moved", "incomplete", "unregistered_instances"):
+            if r.get(name):
+                print(f"  {name}: {r[name]}")
+        return 0 if row.ok else 1
     if args.command == "ask":
         try:
             row = await flats_flags.ask(session, code=args.code, key=args.key, question=args.question, by=args.by)
@@ -70,6 +81,7 @@ async def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     sync = sub.add_parser("sync", help="open and clear flag instances against a run")
     sync.add_argument("--run", type=int, default=None, help="the run (default: the run in use)")
+    sub.add_parser("check", help="run the nightly check and the pod width report now")
     ask = sub.add_parser("ask", help="put a question on a flag's key to the next review session")
     ask.add_argument("--code", required=True)
     ask.add_argument("--key", required=True)

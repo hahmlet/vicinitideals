@@ -1287,3 +1287,30 @@ class FlatsFlagQuestion(Base):
         UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
     )
     answered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class FlatsFlagReport(Base):
+    """One nightly flag check (FOLLOWUPS 37 item 5): the colour every ruled
+    row of the run in use takes under today's rule set against the colour
+    the run wrote, the flags the write gate would refuse, and the design
+    sensitivity report -- what a pod a foot or more wider or narrower does
+    to the colours. Written by :func:`app.services.flats_flags.nightly_check`
+    only; the pages read the newest row."""
+
+    __tablename__ = "flag_reports"
+    __table_args__ = (
+        Index("ix_flats_flag_reports_made_at", "made_at"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    made_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    run_id: Mapped[int | None] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.runs.id", ondelete="SET NULL")
+    )
+    #: False when any lot's stored colour differs from today's, or a flag
+    #: or open instance is incomplete.
+    ok: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    report: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False, server_default="{}")

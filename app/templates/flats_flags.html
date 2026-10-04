@@ -40,6 +40,8 @@
     <div><span class="muted">Approved</span> <strong>{{ counts.approved }}</strong></div>
     <div><a href="/flats/flags/questions" id="questions-link">Questions waiting for you</a>
       <strong data-count-questions>{{ waiting_questions }}</strong></div>
+    <div><a href="/flats/flags/queue" id="queue-link">Work queue</a></div>
+    <div><a href="/flats/flags/report" id="report-link">Nightly check and pod width report</a></div>
   </div>
   <div class="toolbar" style="gap:24px;flex-wrap:wrap;font-size:13px">
     {% for key, n in by_resolution.items() %}

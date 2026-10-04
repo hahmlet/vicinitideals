@@ -20,19 +20,24 @@ The screen raises flags and the run carries them
   a key that fills its parts. An answer is a note for whoever encodes the
   confirmed value; the flag closes when the screen, reading that value, stops
   raising it.
+* :func:`work_queue` -- open resolution keys by priority, then yield (item 5).
+* :func:`nightly_check` -- every ruled row recoloured under today's rule set,
+  incomplete flags, and the design sensitivity report, as one
+  ``flats.flag_reports`` row (item 5).
 """
 
 from __future__ import annotations
 
 import datetime as dt
+import json
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
 
 from sqlalchemy import func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.flats import FlatsFlagInstance, FlatsFlagQuestion, FlatsRun
+from app.models.flats import FlatsFlagInstance, FlatsFlagQuestion, FlatsFlagReport, FlatsRun
 from app.services.flats_refresh import current_snapshot, run_in_use
 from flats.score import flags as fp
 
@@ -313,3 +318,294 @@ async def lot_history(session: AsyncSession, county: str, tlid: str) -> list[Fla
             )
         ).scalars()
     )
+
+
+# ---------------------------------------------------------------------------
+# Item 5: the work queue, the nightly check and the design sensitivity report
+# ---------------------------------------------------------------------------
+
+#: Priority order on the work queue (a person's call, stored on the type).
+PRIORITY_RANK = {p.value: i for i, p in enumerate(fp.Priority)}
+
+_QUEUE = text(
+    """
+    WITH kinds AS (
+        SELECT * FROM unnest(CAST(:codes AS text[]), CAST(:sevs AS int[]), CAST(:per_lot AS bool[]))
+            AS k(code, sev, per_lot)
+    ), o AS (
+        SELECT i.county, i.tlid, i.design_key, i.code,
+               CASE WHEN COALESCE(k.per_lot, false) THEN '' ELSE i.key END AS key,
+               COALESCE(i.colour, 'unknown') AS colour,
+               COALESCE(i.severity, k.sev, 10) >= :line AS holds
+          FROM flats.flag_instances i
+          LEFT JOIN kinds k ON k.code = i.code
+         WHERE i.status = 'open'
+    ), h AS (
+        SELECT county, tlid, design_key, count(*) FILTER (WHERE holds) AS n_hold
+          FROM o WHERE colour = 'yellow' GROUP BY 1, 2, 3
+    )
+    SELECT o.code, o.key,
+           count(DISTINCT (o.county, o.tlid)) AS lots,
+           count(DISTINCT (o.county, o.tlid)) FILTER (WHERE o.colour = 'green') AS green,
+           count(DISTINCT (o.county, o.tlid)) FILTER (WHERE o.colour = 'yellow') AS yellow,
+           count(DISTINCT (o.county, o.tlid)) FILTER (WHERE o.colour = 'red') AS red,
+           count(DISTINCT (o.county, o.tlid)) FILTER (WHERE o.colour = 'yellow' AND o.holds) AS held,
+           count(DISTINCT (o.county, o.tlid)) FILTER (
+               WHERE o.colour = 'yellow' AND o.holds AND h.n_hold = 1) AS last
+      FROM o LEFT JOIN h USING (county, tlid, design_key)
+     GROUP BY o.code, o.key
+    """
+)
+
+
+async def work_queue(
+    session: AsyncSession,
+    *,
+    reg: fp.Registry | None = None,
+    rules: fp.ColourRules | None = None,
+    limit: int = 200,
+) -> list[dict[str, Any]]:
+    """Open resolution keys sorted by priority, then yield (the flag plan's
+    work queue).
+
+    Yield is weighted toward lots where the key is the *last* thing holding
+    the lot yellow: answering it turns those lots green on its own. So the
+    sort is priority, then those lots, then every yellow lot it holds. A
+    per-lot type is one row (each lot is its own key); a shared type is one
+    row per key. Population is counted live from the open instances, as
+    lots split by colour."""
+    reg = reg or fp.registry()
+    rules = rules or fp.colour_rules()
+    types = list(reg)
+    rows = await session.execute(
+        _QUEUE,
+        {
+            "codes": [t.code for t in types],
+            "sevs": [t.severity for t in types],
+            "per_lot": [t.scope is fp.Scope.per_lot for t in types],
+            "line": rules.yellow_at_severity,
+        },
+    )
+    out = []
+    for code, key, lots, green, yellow, red, held, last in rows:
+        t = reg.types.get(code)
+        out.append(
+            {
+                "code": code,
+                "key": key.replace(fp.SEP, " · "),
+                "what": t.description if t is not None else code,
+                "priority": t.priority.value if t is not None else "now",
+                "resolution": t.resolution.value if t is not None else "",
+                "scope": t.scope.value if t is not None else "",
+                "risk": t.risk.value if t is not None else "",
+                "severity": t.severity if t is not None else None,
+                "pending": t is not None and t.status is fp.TypeStatus.pending,
+                "registered": t is not None,
+                "lots": int(lots),
+                "colours": {"green": int(green), "yellow": int(yellow), "red": int(red)},
+                "held": int(held),
+                "last": int(last),
+            }
+        )
+    out.sort(
+        key=lambda r: (
+            PRIORITY_RANK.get(r["priority"], 0), -r["last"], -r["held"], -r["lots"], r["code"], r["key"]
+        )
+    )
+    return out[:limit]
+
+
+#: The flag types an untrusted rule set raises (``screen._VERDICT_FLAG`` and
+#: RULE-AMBIGUOUS): the screen emits no bind under them, so a width the lot
+#: misses is not a bind there either. ``tests/services`` holds this to the
+#: screen.
+UNTRUSTED_FLAGS = frozenset(
+    {
+        "RULE-AMBIGUOUS",
+        "RULE-UNSIGNED",
+        "ZONE-NOT-ENCODED",
+        "ZONE-REFERENCE-MISSING",
+        "ZONE-REFERENCE-CYCLE",
+        "JURISDICTION-NOT-ENCODED",
+    }
+)
+#: Pod width changes the sensitivity report tries, in feet.
+WIDTH_STEPS = (-4, -2, -1, 1, 2, 4)
+#: How many example lots each finding keeps.
+EXAMPLES = 8
+
+_ROWS = text(
+    """
+    SELECT l.county, l.tlid, r.design_key, r.slack_ft,
+           r.checks->>'colour' AS colour, r.checks->'flags' AS flags, r.checks->'binds' AS binds
+      FROM flats.lot_results r
+      JOIN flats.lots l ON l.id = r.lot_id
+     WHERE r.run_id = :run AND r.checks ? 'colour'
+    """
+)
+
+
+def _json(v: Any) -> list[dict[str, Any]]:
+    if v is None or v == "":
+        return []
+    if isinstance(v, str):
+        v = json.loads(v)
+    return list(v or [])
+
+
+def widened(
+    binds: list[fp.Bind], flags: list[fp.Flag], slack: float | None, step: float
+) -> list[fp.Bind]:
+    """The binds this lot would carry with a pod ``step`` feet wider
+    (negative: narrower), read from the fit alone.
+
+    The fit's bind moves by the step and goes when it no longer misses; a
+    lot that fits gains a fit bind when its slack is smaller than the step.
+    Under a rule set the screen does not trust it emits no bind at all, so
+    none is added there. Coverage, floor area and the rest also move with
+    the footprint, but their margins on lots that pass are not stored, so
+    they are not counted (the report page says so)."""
+    out: list[fp.Bind] = []
+    fit_bound = False
+    for b in binds:
+        if b.check == "fit_ft" and b.shortfall is not None:
+            fit_bound = True
+            short = float(b.shortfall) + step
+            if short > 0:
+                threshold = float(b.threshold) + step if b.threshold is not None else None
+                out.append(replace(b, shortfall=short, threshold=threshold))
+            continue
+        out.append(b)
+    if (
+        not fit_bound
+        and slack is not None
+        and slack >= 0
+        and slack - step < 0
+        and not any(f.code in UNTRUSTED_FLAGS for f in flags)
+    ):
+        out.append(fp.Bind("fit_ft", None, None, step - slack, source="the pod width"))
+    return out
+
+
+def _example(county: str, tlid: str, design: str, **more: Any) -> dict[str, Any]:
+    return {"county": county, "tlid": tlid, "design": design, **more}
+
+
+async def nightly_check(
+    session: AsyncSession,
+    *,
+    reg: fp.Registry | None = None,
+    rules: fp.ColourRules | None = None,
+    steps: tuple[float, ...] = WIDTH_STEPS,
+    now: dt.datetime | None = None,
+) -> FlatsFlagReport:
+    """The flag plan's nightly check and design sensitivity report, written
+    as one ``flats.flag_reports`` row; flushed, not committed.
+
+    Every ruled row of the run in use is recoloured from its own binds and
+    flags under today's registry and rule set. A row whose colour differs
+    from the one the run wrote fails the check (a rule changed since the
+    run, or the screen and the rule disagree); so does a flag the write
+    gate refuses, or an open instance of a kind nobody registered. Pending
+    kinds are counted, never failed: there is no deadline on them (Steph
+    2026-10-03). The same pass tries each pod width in ``steps`` and counts
+    the colours that move, per design, with example lots and the open
+    questions the moving lots carry."""
+    reg = reg or fp.registry()
+    rules = rules or fp.colour_rules()
+    now = now or dt.datetime.now(dt.UTC)
+    snapshot = await current_snapshot(session)
+    run = await run_in_use(session, snapshot.id if snapshot is not None else None)
+    report: dict[str, Any] = {
+        "pending_kinds": sorted(t.code for t in reg if t.status is fp.TypeStatus.pending),
+        "kinds": len(reg),
+        "rule_line": rules.yellow_at_severity,
+        "steps": list(steps),
+    }
+    rows = 0
+    moved: dict[str, int] = {}
+    moved_examples: list[dict[str, Any]] = []
+    bad: dict[str, int] = {}
+    bad_examples: list[dict[str, Any]] = []
+    stored: dict[str, dict[str, int]] = {}
+    sens: dict[str, dict[str, dict[str, Any]]] = {}
+    if run is None:
+        report["skipped"] = "no run in use"
+    else:
+        result = await session.stream(_ROWS.execution_options(yield_per=5000), {"run": run.id})
+        async for county, tlid, design, slack, was, flags_raw, binds_raw in result:
+            rows += 1
+            was = was or "unknown"
+            mine = stored.setdefault(design, {})
+            mine[was] = mine.get(was, 0) + 1
+            try:
+                flags = [fp.Flag.from_json(f) for f in _json(flags_raw)]
+                binds = [fp.Bind.from_json(b) for b in _json(binds_raw)]
+                fp.validate(flags, reg)
+            except (KeyError, ValueError, TypeError) as exc:
+                why = str(exc).split(":", 1)[0].strip("'\" ") or type(exc).__name__
+                bad[why] = bad.get(why, 0) + 1
+                if len(bad_examples) < EXAMPLES:
+                    bad_examples.append(_example(county, tlid, design, why=str(exc)[:300]))
+                continue
+            today = fp.colour(binds, flags, reg=reg, rules=rules).value
+            if today != was:
+                k = f"{was}->{today}"
+                moved[k] = moved.get(k, 0) + 1
+                if len(moved_examples) < EXAMPLES:
+                    moved_examples.append(_example(county, tlid, design, stored=was, today=today))
+            slack_ft = float(slack) if slack is not None else None
+            per = sens.setdefault(design, {})
+            for step in steps:
+                after = fp.colour(widened(binds, flags, slack_ft, step), flags, reg=reg, rules=rules).value
+                if after == today:
+                    continue
+                s = per.setdefault(str(step), {"moves": {}, "examples": [], "keys": {}})
+                k = f"{today}->{after}"
+                s["moves"][k] = s["moves"].get(k, 0) + 1
+                if len(s["examples"]) < EXAMPLES:
+                    s["examples"].append(_example(county, tlid, design, move=k))
+                for f in flags:
+                    if f.code in reg and fp.severity_of(f, reg) >= rules.yellow_at_severity:
+                        key = "" if reg[f.code].scope is fp.Scope.per_lot else f.key
+                        name = f"{f.code}{fp.SEP}{key}"
+                        s["keys"][name] = s["keys"].get(name, 0) + 1
+        for per in sens.values():
+            for s in per.values():
+                s["keys"] = dict(sorted(s["keys"].items(), key=lambda kv: -kv[1])[:10])
+        if rows == 0:
+            report["skipped"] = f"run {run.id} was screened before the colour rule and carries no flags"
+    unregistered = (
+        await session.execute(
+            select(FlatsFlagInstance.code, func.count())
+            .where(
+                FlatsFlagInstance.status == "open",
+                FlatsFlagInstance.code.not_in([t.code for t in reg]),
+            )
+            .group_by(FlatsFlagInstance.code)
+        )
+    ).all()
+    report |= {
+        "rows": rows,
+        "colours": stored,
+        "moved": moved,
+        "moved_examples": moved_examples,
+        "incomplete": bad,
+        "incomplete_examples": bad_examples,
+        "unregistered_instances": {code: int(n) for code, n in unregistered},
+        "sensitivity": sens,
+    }
+    ok = rows > 0 and not moved and not bad and not unregistered
+    row = FlatsFlagReport(made_at=now, run_id=run.id if run is not None else None, ok=ok, report=report)
+    session.add(row)
+    await session.flush()
+    return row
+
+
+async def latest_report(session: AsyncSession) -> FlatsFlagReport | None:
+    """The newest nightly check, or None before the first night."""
+    return (
+        await session.execute(
+            select(FlatsFlagReport).order_by(FlatsFlagReport.made_at.desc()).limit(1)
+        )
+    ).scalar()
