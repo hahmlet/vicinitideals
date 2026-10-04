@@ -1192,3 +1192,79 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    `python -m flats.score.turns` (test_turns fails until it is solved).
    (1) the free-form generator (item 27) -- PARKED by Steph 2026-10-04
    ("leave the free form generator for now").
+37. **Flag system plan ("FLATS Flag System Plan.md", Steph 2026-10-02) --
+   slice 1 + approval page DEPLOYED 2026-10-03 (Steph: "Deploy"), merge
+   34963899 on main; no lot colour moves until the next bridge run writes
+   the new columns (planned with the ~10-08 full re-screen, item (c)).** Steph's answers: (1) no variances, a miss with a path
+   is RED, path logged on the bind; (2) a flag below the line (severity < 3)
+   keeps the lot green; (3) min density = low flag (severity 2 -> green);
+   (4) colour stays "as if signed". Slice 1: flats/score/flags.py (Flag,
+   Bind, colour, write gate), flags.yaml (68 types, all pending), colour.yaml
+   (pending); screen/bridge/assign write colour+flags+binds beside the old
+   triage; loader stores them in lot_results.checks; the map still shows
+   if_signed. Expected shift (run 63 base): most of 330k yellow -> red
+   (653k of 675k yellow rows rest on RELIEF_UNCONFIRMED); use gates with a
+   conditional-use path (~1,900 rows) also go red. REMAINING vs Steph's
+   plan checklist (offered 2026-10-02, order recommended): (a) trial count
+   DONE 2026-10-03 on 137 (/root/bridge_flags_trial, 10,000 lots seed 23,
+   branch code in /root/code/flags-trial, compare script
+   /root/flags_trial_compare.py): best pod per lot green 1,594 -> 1,783,
+   yellow 7,952 -> 675, unknown 345 -> 0 (unknowns become yellow), red 109
+   -> 7,542; yellow->red 7,427 (fit short 20+ ft dominates); yellow->green
+   189 (min density only); unknown->red 6 (prohibited use); no green moved;
+   no crash; the run-63 SQL prediction agreed on 99.76% of rows. Steph
+   RULED 2026-10-03 "Exactly 1 foot is red": the fit moves in half-foot
+   steps and 6 in short is already green-with-flag, so the near-miss band
+   holds no lot today; the ~1,900 lots short by exactly 1 ft go red. Also: an
+   ambiguous rule set binds nothing, so ~0.07% of rows stay yellow despite
+   a 50+ ft fit miss (Wilsonville R, Hillsboro SCR-V) -- by design. (b) APPROVAL PAGE BUILT 2026-10-03 9faf1664 on the branch: /flats/flags "Unknowns" (owner-only approve, waiting kinds on top), flats.flag_decisions (0139), scripts/flats_drain_flag_decisions.py (only writer of status: approved); LIVE 2026-10-03, E2E tests/e2e/test_flats_flags.py 3/3 green on prod; drain on 114 needs --registry-out/--colour-out on /app/data. Still open in (b): per-lot flag instances with open/cleared history in the DB + review queue. Was: DB tables (flag type / instance with open-cleared
+   history + review note / bind) + one write path + approval page where
+   Steph sets the 68 types' numbers (agent can only propose) + review
+   queue; (c) map + lot page show the new colour with its reasons; ship on
+   the weekly full re-screen (~10-08) = the plan's snapshot + rerun +
+   reconcile, leftovers = audit list; (d) nightly consistency check, counts
+   per type/key by colour, work queue (priority then yield), design
+   sensitivity report (needs binds to name the pod dimension + the pass
+   threshold + pod version -- not stored yet); (e) severity 0 for flags
+   cleared at the worst bound; (f) Phase 4 pod spec, deferred by the plan.
+   Steph 2026-10-03: "measurement" (the code works it out from maps) is THE
+   PREFERRED resolution type -- the other three (inquiry, document, per-lot
+   review) are "the failure mode"; flag tables live in the app DB from the
+   start ("flags and warnings are equivalent data points just like a min
+   setback is"); NO DEADLINE for a pending flag type (pending types top the
+   approval page + the count is mentioned at session start). Plan gaps: flag history
+   across county refreshes; bulk writes through the loader.
+   Live run 63 breakdown of 329,484 yellow lots (best pod): 318,290 break a
+   rule as read; fit short >20 ft 220,618 / 5-20 66,903 / 1-5 19,925 / <1
+   1,887; fits but misses another rule 8,957; 129,219 also carry unknowns;
+   11,194 yellow with no miss. Steph RULED: short by 1 ft or more -> red
+   (pull back later for targeted variances / no-parking ideas); under 1 ft
+   -> yellow (near_miss in colour.yaml, built on the branch). Unknown facts
+   on yellow lots: mostly mappable (local_street 28k, north_of_marine_drive
+   20k, through_lot 20k, water 10k, historic 8k) vs needs a title report
+   (utility_easement 28k, sidewalk_easement 20k) -- offered as next work.
+   Steph 2026-10-04: "Start number 2 [measure] first, then 1 [map + lot
+   page], then continue". ALL BUILT + DEPLOYED 2026-10-04 (6eb14ffe on
+   main): (2) measured through_lot, OC NROD water, West Linn WHD, Gresham
+   north of Marine Dr + held_open guard -- bound 10k seed 23: 75 rows
+   yellow->green (all West Linn outside WHD), nothing lost, no reds; (1)
+   lot page shows rule colour + misses + open questions (9ed00826, 0140);
+   (e) severity 0 at the worst bound (85712ad6, `_bounded`): partial bound
+   15/4,000 rows yellow->green (local_street, flag_lot, abuts_*_zone); most
+   fact flags sit on footnotes with no stated direction so cannot drop --
+   extending = encode each capped footnote's direction; (b-rest) flag
+   history flats.flag_instances + question queue /flats/flags/questions
+   (0141, nightly sync 10:30 UTC, scripts/flats_flags.py sync|ask|check);
+   (d) /flats/flags/queue (priority, then lots it turns green alone) +
+   nightly check + pod width report /flats/flags/report (0142) -- FIT
+   ONLY. NOTHING SHOWS until a run screened under the colour rule is in
+   use (the ~10-08 re-screen); after promoting it run `scripts/flats_flags.py
+   sync` then `check` on 114. OPEN: (i) item-3 bound finishing on 137
+   (/root/msr_bound.out, compare /root/msr_cmp.py branch vs bound) -- its
+   chunks ran ~1.6x slower than base but 137 was shared with strip_chain;
+   time 400 lots bound vs not before the re-screen (a full run is ~16 h);
+   (ii) bridge to store each check's margin on passing lots so the pod
+   report covers coverage/FAR/height, not just the fit; (iii) Gresham
+   note 5 "end of a Minor Access Street" held on `local_street` (wrong
+   fact) -- re-point + measure dead ends; worth little while
+   sidewalk_easement holds the same Gresham lots; (f) Phase 4 pod spec.
