@@ -23,6 +23,7 @@ from flats.rules.net_area import (
     DRIVE_AISLE,
     FLOODPLAIN,
     MEASURED,
+    SHOWN,
     NetArea,
     measured_deductions,
     net_span,
@@ -178,6 +179,45 @@ def test_beaverton_and_cornelius_take_the_drive_and_the_floodplain_for_certain(
     assert all({DRIVE_AISLE, FLOODPLAIN} <= set(net.less) for net in lists)
 
 
+def test_the_three_floor_only_places_net_their_floors_and_nothing_else(
+    layers: dict[str, Layer],
+) -> None:
+    """King City, Wood Village and Washington County state a minimum on the net
+    acre and no maximum on it (FOLLOWUPS 30, 2026-10-04). Washington County's
+    300-2.8 counts the same land "when calculating maximum allowed densities"
+    and switches itself off in North Bethany, so those stay on the whole lot.
+    King City's and the county's lists say "may" or "natural resources" with
+    no map named, so nothing comes off them for certain; Wood Village names
+    floodplains outright."""
+    netted = {
+        (lid, zone, name): value.net_area
+        for lid, zone, name, value in _rates(layers)
+        if lid
+        in {
+            "or/washington/king-city",
+            "or/multnomah/wood-village",
+            "or/washington/_unincorporated",
+        }
+    }
+
+    assert sorted((lid.rsplit("/", 1)[1], zone) for lid, zone, _ in netted) == sorted(
+        [
+            ("king-city", "KTTC"), ("king-city", "KTBB"), ("king-city", "KTC"), ("king-city", "KTRC"),
+            ("wood-village", "LR 7.5"), ("wood-village", "LR 12"),
+            ("wood-village", "MR 2"), ("wood-village", "MR 4"),
+            ("_unincorporated", "TO:R24-40"), ("_unincorporated", "TO:R40-80"),
+            ("_unincorporated", "NMU"), ("_unincorporated", "CCMU"), ("_unincorporated", "CBD"),
+        ]
+    )
+    assert {name for _, _, name in netted} == {"min_density_du_per_acre"}
+    for (lid, _zone, _name), net in netted.items():
+        if lid == "or/multnomah/wood-village":
+            assert net.less == (FLOODPLAIN,)
+        else:
+            assert net.less == () and FLOODPLAIN in net.may_less
+        assert net.assumed_none
+
+
 def test_a_deduction_nothing_measures_is_refused_by_name(tmp_path: Path) -> None:
     layer = tmp_path / "or" / "x" / "y.yaml"
     layer.parent.mkdir(parents=True)
@@ -205,3 +245,7 @@ zones:
 
 def test_the_vocabulary_is_the_measured_maps_and_the_drive() -> None:
     assert DEDUCTIONS == {*MEASURED, DRIVE_AISLE}
+
+
+def test_every_deduction_has_a_name_the_lot_page_can_show() -> None:
+    assert set(SHOWN) == DEDUCTIONS

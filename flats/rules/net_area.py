@@ -68,6 +68,8 @@ MEASURED: dict[str, tuple[str, ...]] = {
             "gresham_hillside",
             "troutdale_veco",
             "metro_wetlands",
+            "metro_title3",
+            "metro_title13",
             "washington_cws_corridor",
             "washington_habitat",
             "west_linn_wra_stream",
@@ -88,6 +90,35 @@ MEASURED: dict[str, tuple[str, ...]] = {
 
 #: Every name ``less`` and ``may_less`` accept.
 DEDUCTIONS: frozenset[str] = frozenset({*MEASURED, DRIVE_AISLE})
+
+#: Each deduction as the lot page names it. A regional map standing in for the
+#: one the code names says so, because that is why it sits on ``may_less``.
+SHOWN: dict[str, str] = {
+    DRIVE_AISLE: "the project's own driveway and parking aisle",
+    FLOODPLAIN: "FEMA 100-year floodplain",
+    FLOODWAY: "FEMA floodway",
+    "gresham_hcra": "Gresham natural resource areas",
+    "gresham_wetlands": "Gresham wetlands",
+    "gresham_hillside": "Gresham hillside and geologic risk areas",
+    "troutdale_veco": "Troutdale vegetated corridors and steep slopes",
+    "metro_wetlands": "wetlands (Metro's regional map)",
+    "metro_title3": "water quality areas (Metro's regional map)",
+    "metro_title13": "habitat areas (Metro's regional map)",
+    "washington_cws_corridor": "vegetated corridors (Metro's regional map)",
+    "washington_habitat": "natural resource habitat (Metro's regional map)",
+    "west_linn_wra_stream": "West Linn stream water resource areas",
+    "west_linn_wra_ephemeral": "West Linn ephemeral stream water resource areas",
+    "west_linn_wra_piped": "West Linn piped watercourses",
+    "west_linn_rci": "West Linn riparian corridors",
+    "west_linn_wetlands": "West Linn wetlands",
+    "west_linn_flood": "West Linn flood management areas",
+    "happy_valley_nroz": "Happy Valley natural resource areas",
+    "happy_valley_slope": "Happy Valley steep slopes",
+    "oregon_city_nrod": "Oregon City natural resource areas",
+    "milwaukie_hca": "Milwaukie habitat conservation areas",
+    "milwaukie_wqr": "Milwaukie water quality resources",
+    "milwaukie_wetlands": "Milwaukie wetlands",
+}
 
 #: Floor below which a net area is treated as no land at all: a rate on it is
 #: unbounded, so a ceiling fails and a floor clears.

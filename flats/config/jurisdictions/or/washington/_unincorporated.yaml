@@ -306,9 +306,23 @@ definitions:
   # design height is a dial (fields.DESIGN_HEIGHT_FT); nothing here bakes it.
   #
   # NET ACRE. 300-2.1 counts site size net of land "currently dedicated for
-  # public right-of-way" (cdc.300.introduction.txt#L59-L60). Middle Housing
-  # density "is not a consideration" in every district that allows it, so
-  # this denominator decides no number this layer holds for the pod.
+  # public right-of-way" (cdc.300.introduction.txt#L59-L60) -- an existing
+  # lot's own area already is. Middle Housing density "is not a
+  # consideration" in the residential districts, but five floors still bind
+  # the pod (TO:R24-40, TO:R40-80, NMU, CCMU, CBD), and 300-2.8 lets "only
+  # categories of land listed in Section 300-3.1" come out of the acreage a
+  # minimum is figured on (L93-L98). Since 2026-10-04 (FOLLOWUPS 30) those
+  # five carry measured_on: net_developable_area. 300-3.1 speaks of the
+  # "unbuildable portion" within each category and 300-2.8 says "may", so
+  # nothing comes off for certain: the floodplain (A), wetland (C),
+  # resource (E) and vegetated-corridor (I) maps all go on `may_less`, and a
+  # lot with any of them holds as a question rather than passing on the
+  # smaller net. The rest of the list nothing here maps, so it is assumed
+  # absent (Steph's option A). Maxima stay on the whole lot: 300-2.8 lets
+  # the same land be counted "when calculating maximum allowed densities".
+  # North Bethany's two floors (R-9 NB 7, R-24 NB 19) stay on the whole lot
+  # too -- "Section 300-2.8 and Section 300-3 are not applicable in the North
+  # Bethany Subarea" (L96-L98).
 
 # Whether a private road or drive the lot abuts is a street here (FOLLOWUPS
 # 17(b); Steph's rule of 2026-09-30: a private road is a way in for the
@@ -1680,6 +1694,19 @@ zones:
       value: 24
       cite: Washington County CDC 375 Table C(2), minimum density TO:R24-40
       quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1070-L1071,L1087-L1088,L1093,L1106-L1108,L1117"
+      measured_on:
+        fact: net_developable_area
+        cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
+        quote: "or/washington/_unincorporated/cdc.300.introduction.txt#L93-L98,L103-L123"
+        less: []
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "drainage hazard"
+          - "slopes over 20%"
+          - "power line easement or right-of-way"
+          - "future right-of-way for arterials and collectors"
+          - "water quality sensitive areas"
+          - "in Transit Oriented and Pedestrian/Bicycle Districts, land needed for streets, sidewalks, accessways, greenways, parks, plazas and common open space"
     max_density_du_per_acre:
       value: 40
       cite: Washington County CDC 375 Table C(2), maximum density TO:R24-40
@@ -1722,6 +1749,19 @@ zones:
       value: 40
       cite: Washington County CDC 375 Table C(2), minimum density TO:R40-80
       quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L1070-L1071,L1089-L1090,L1093,L1109-L1111,L1117"
+      measured_on:
+        fact: net_developable_area
+        cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
+        quote: "or/washington/_unincorporated/cdc.300.introduction.txt#L93-L98,L103-L123"
+        less: []
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "drainage hazard"
+          - "slopes over 20%"
+          - "power line easement or right-of-way"
+          - "future right-of-way for arterials and collectors"
+          - "water quality sensitive areas"
+          - "in Transit Oriented and Pedestrian/Bicycle Districts, land needed for streets, sidewalks, accessways, greenways, parks, plazas and common open space"
     max_density_du_per_acre:
       value: 80
       cite: Washington County CDC 375 Table C(2), maximum density TO:R40-80
@@ -1894,6 +1934,19 @@ zones:
       value: 20
       cite: Washington County CDC 392-7, not in conjunction with a commercial use, NMU
       quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L207,L212-L220"
+      measured_on:
+        fact: net_developable_area
+        cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
+        quote: "or/washington/_unincorporated/cdc.300.introduction.txt#L93-L98,L103-L123"
+        less: []
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "drainage hazard"
+          - "slopes over 20%"
+          - "power line easement or right-of-way"
+          - "future right-of-way for arterials and collectors"
+          - "water quality sensitive areas"
+          - "in Transit Oriented and Pedestrian/Bicycle Districts, land needed for streets, sidewalks, accessways, greenways, parks, plazas and common open space"
     max_density_du_per_acre:
       value: 25
       cite: Washington County CDC 392-7, not in conjunction with a commercial use, NMU
@@ -1958,6 +2011,19 @@ zones:
       value: 20
       cite: Washington County CDC 392-7, not in conjunction with a commercial use, CCMU
       quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L207,L212-L218,L221-L222"
+      measured_on:
+        fact: net_developable_area
+        cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
+        quote: "or/washington/_unincorporated/cdc.300.introduction.txt#L93-L98,L103-L123"
+        less: []
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "drainage hazard"
+          - "slopes over 20%"
+          - "power line easement or right-of-way"
+          - "future right-of-way for arterials and collectors"
+          - "water quality sensitive areas"
+          - "in Transit Oriented and Pedestrian/Bicycle Districts, land needed for streets, sidewalks, accessways, greenways, parks, plazas and common open space"
     max_density_du_per_acre:
       value: 40
       cite: Washington County CDC 392-7, not in conjunction with a commercial use, CCMU
@@ -2001,6 +2067,19 @@ zones:
       value: 20
       cite: Washington County CDC 313-3.40 A(1), density of 20 to 40 units per acre
       quote: "or/washington/_unincorporated/cdc.313.cbd.txt#L146-L150"
+      measured_on:
+        fact: net_developable_area
+        cite: "Washington County CDC 300-2.8, only the categories of land in 300-3.1 may be excluded from the acreage used for minimum density"
+        quote: "or/washington/_unincorporated/cdc.300.introduction.txt#L93-L98,L103-L123"
+        less: []
+        may_less: [floodplain, metro_wetlands, washington_cws_corridor, washington_habitat]
+        assumed_none:
+          - "drainage hazard"
+          - "slopes over 20%"
+          - "power line easement or right-of-way"
+          - "future right-of-way for arterials and collectors"
+          - "water quality sensitive areas"
+          - "in Transit Oriented and Pedestrian/Bicycle Districts, land needed for streets, sidewalks, accessways, greenways, parks, plazas and common open space"
     max_density_du_per_acre:
       # A(2) allows 40 to 100 with five percent more open space; not held.
       value: 40
