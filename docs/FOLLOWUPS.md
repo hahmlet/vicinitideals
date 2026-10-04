@@ -1185,7 +1185,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    strips single-family homes are not held to (Multnomah, Gladstone,
    Hillsboro, Wood Village, Oregon City); encoded strict meanwhile.
    RULED Steph 2026-10-04: "Let's have strips be a flag for yellow at this
-   time" --    DONE 1d3c89cb: a plan that misses only by the strip (court-shaped
+   time" -- DONE 1d3c89cb: a plan that misses only by the strip (court-shaped
    checks, fire route, steep ground, within 3 strip widths) and clears with
    it read as unstated is YELLOW with flag PARKING-STRIP-UNCONFIRMED.
    Bound 2026-10-04 (21,700 lots): Gladstone 32 red->yellow, Tualatin 50,
