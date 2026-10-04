@@ -182,6 +182,8 @@ def test_the_bundle_carries_the_run_the_lots_and_the_verdicts(tmp_path: Path) ->
         "results": 4,
         "tiers": {"unknown": 4},
         "if_signed": {"green": 1, "red": 1, "unknown": 1, "yellow": 1},
+        # These rows predate the colour rule (FOLLOWUPS 37): none carries one.
+        "colour": {"none": 4},
         "by_county": {"clackamas": 1, "multnomah": 1},
         "by_source": {"quadfit": 2},
         "unmeasured": {},
@@ -999,3 +1001,26 @@ async def test_a_delta_dry_run_leaves_nothing_and_a_bad_pair_is_refused(
         await load_changes(changes, _test_db_url, snapshot_from=july, snapshot_to=999)
     assert await _count(session, "SELECT count(*) FROM flats.lot_changes") == 0
 
+
+
+@pytest.mark.asyncio
+async def test_a_bundle_whose_colour_count_does_not_match_its_files_is_refused(
+    tmp_path: Path, session: AsyncSession, _test_db_url: str
+) -> None:
+    """The colour rule's colour is checked as it lands, like the signed one;
+    a bundle exported before the rule counts none and is not asked."""
+    run_dir, s4, s5o, results = _make_run(tmp_path)
+    bundle = tmp_path / "bundle"
+    export(run_dir, bundle, s4=s4, s5o=s5o, quadfit_results=results)
+    run = json.loads((bundle / RUN_FILE).read_text(encoding="utf-8"))
+    run["counts"]["colour"] = {"green": 4}  # a claim the files do not support
+    (bundle / RUN_FILE).write_text(json.dumps(run), encoding="utf-8")
+    copy = await _snapshot(session)
+
+    with pytest.raises(SystemExit, match="VERIFY FAILED: colour"):
+        await load(bundle, _test_db_url, snapshot_id=copy)
+
+    del run["counts"]["colour"]
+    (bundle / RUN_FILE).write_text(json.dumps(run), encoding="utf-8")
+    report = await load(bundle, _test_db_url, snapshot_id=copy)
+    assert report["colour"] == {"none": 4}

@@ -94,7 +94,43 @@
         <span class="muted">If signed</span>
         <span class="badge {{ r.badge }}">{{ r.colour }}</span>
         <span class="muted" style="font-size:12px">{{ r.colour_words }}</span>
-        {% if r.colour_reasons %}
+        {% if r.colour_today %}
+          <div class="alert alert-warning" style="font-size:12px;margin:4px 0 0" id="colour-today-{{ r.design|replace('@', '-') }}">
+            Under today's colour rule this design is <strong>{{ r.colour_today }}</strong>; the colour above is the one the run wrote, and moves at the next re-screen.
+          </div>
+        {% endif %}
+        {% if r.ruled %}
+          {% if r.binds %}
+          <div class="rule-binds" id="binds-{{ r.design|replace('@', '-') }}" style="font-size:12px;margin-top:6px">
+            <strong>Misses</strong>
+            <ul style="margin:2px 0 0 18px">
+              {% for b in r.binds %}
+              <li class="rule-bind" data-check="{{ b.check }}">{{ b.words }}{% if b.shortfall is not none %}
+                — short by {{ "{:,.1f}".format(b.shortfall) }}{{ b.units }}{% if b.observed is not none and b.threshold is not none %} <span class="muted">({{ "{:,.1f}".format(b.observed) }} where {{ "{:,.1f}".format(b.threshold) }} is the line)</span>{% endif %}{% endif %}
+                {% if b.source %}<span class="muted">· {{ b.source }}</span>{% endif %}
+                {% if b.relief %}<div class="muted">The code offers a way round it ({{ b.relief }}{% if b.relief_tier %}, {{ b.relief_tier }}{% endif %}). Logged, not counted on: no variances for now.</div>{% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          {% if r.flags %}
+          <div class="rule-flags" id="flags-{{ r.design|replace('@', '-') }}" style="font-size:12px;margin-top:6px">
+            <strong>Open questions</strong>
+            <ul style="margin:2px 0 0 18px">
+              {% for f in r.flags %}
+              <li class="rule-flag" data-flag="{{ f.code }}" data-counts="{{ 'yes' if f.counts else 'no' }}">{{ f.what }}
+                <span class="muted">· {{ f.key }}{% if f.severity is not none %} · severity {{ f.severity }}{% endif %}</span>
+                {% if f.counts %}<span class="badge badge-yellow">holds it at yellow</span>{% else %}<span class="muted">· too small to change the colour</span>{% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          {% if not r.binds and not r.flags %}
+          <div class="muted" style="font-size:12px;margin-top:4px">Nothing missed and nothing open.</div>
+          {% endif %}
+        {% elif r.colour_reasons %}
           <ul style="margin:4px 0 0 18px;font-size:12px">{% for why in r.colour_reasons %}<li>{{ why }}</li>{% endfor %}</ul>
         {% endif %}
       </div>

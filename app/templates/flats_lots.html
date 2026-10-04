@@ -19,6 +19,11 @@
         what the screen can stand behind today; the <strong>colour if signed</strong> is what
         it would say once the rules it rests on are confirmed as read. The two are shown
         side by side and the first is never replaced by the second.
+        {% if ruled %}
+        <span id="colour-rule-note">This run is coloured by the colour rule: <strong>red</strong> misses a
+        standard (no variance is counted on), <strong>yellow</strong> has an open question big enough to
+        turn it red, <strong>green</strong> has neither. Open a lot to see what it misses and what is open.</span>
+        {% endif %}
       </p>
     </div>
   </div>

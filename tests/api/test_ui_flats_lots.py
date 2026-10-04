@@ -989,3 +989,115 @@ async def test_the_lot_page_says_how_far_the_fire_hose_walks(
 
     unmeasured = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
     assert 'id="fire-pod80x25-2"' not in unmeasured.text
+
+
+# --- the colour rule (FOLLOWUPS 37) ------------------------------------------
+
+#: Lot A misses the fit by 22.5 ft with a path the code offers; lot B is open
+#: on two questions, one big enough to hold it at yellow and one the lot
+#: clears at its worst reading. Lot C's rows predate the rule.
+FIT_BIND = {"check": "fit_ft", "observed": 33.5, "threshold": 56.0, "shortfall": 22.5,
+            "source": "PCC 33.110.220", "relief": "adjustment", "relief_tier": "administrative"}
+CORNER_FLAG = {"code": "FACT-CORNER-LOT", "key": "or/multnomah/portland|corner_lot", "by": "FACT_UNOBSERVED"}
+THROUGH_FLAG = {"code": "FACT-THROUGH-LOT", "key": "or/multnomah/portland|through_lot", "by": "FACT_UNOBSERVED",
+                "severity": 0}
+
+
+async def _rule(session: AsyncSession, run: FlatsRun) -> None:
+    """Write the colour rule's answer on lots A and B, as the bridge would."""
+    rows = (await session.execute(
+        select(FlatsLotResult, FlatsLot.tlid).join(FlatsLot, FlatsLot.id == FlatsLotResult.lot_id)
+        .where(FlatsLotResult.run_id == run.id)
+    )).all()
+    for row, tlid in rows:
+        if tlid.startswith("1S2E08BA"):
+            row.checks = {**row.checks, "colour": "red", "flags": [], "binds": [FIT_BIND]}
+        elif tlid.startswith("1N1E29DD"):
+            row.checks = {**row.checks, "colour": "yellow", "flags": [CORNER_FLAG, THROUGH_FLAG], "binds": []}
+    await session.commit()
+
+
+async def test_a_ruled_run_is_counted_by_the_colour_rule(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    await _rule(session, await _seed(session))
+
+    page = await client.get("/flats/lots")
+
+    assert page.status_code == 200
+    counts = " ".join(page.text.split('id="lot-counts"', 1)[1].split('id="lot-table"', 1)[0].split())
+    # A was green as signed and is red under the rule (it misses the fit);
+    # B is yellow; C wrote no rule colour and keeps its older one.
+    for words in ("green 0", "yellow 1", "unknown 1", "red 1"):
+        assert words in counts
+    assert 'id="colour-rule-note"' in page.text
+    red = await client.get("/flats/lots", params={"colour": "red"})
+    assert "2833 SE 71ST AVE" in red.text.split('id="lot-table"', 1)[1]
+
+
+async def test_the_lot_page_says_what_a_red_lot_misses_and_the_path_it_does_not_take(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _rule(session, await _seed(session))
+
+    page = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+
+    assert page.status_code == 200
+    head = page.text.split('id="lot-verdict"', 1)[1].split('id="design-', 1)[0]
+    assert "red" in head and "misses a standard" in head
+    binds = page.text.split('id="binds-pod56x36-2"', 1)[1].split("</ul>", 1)[0]
+    assert "the building and its parking do not fit" in binds
+    assert "short by 22.5 ft" in binds
+    assert "33.5 where 56.0 is the line" in binds
+    assert "PCC 33.110.220" in binds
+    assert "adjustment" in binds and "not counted on" in binds
+    # The older colour's reasons are not shown on a ruled row: pod80 was
+    # yellow as signed for want of a confirmed exception, and is red now.
+    pod80 = page.text.split('id="design-pod80x25-2"', 1)[1]
+    assert "the exception it would ask for has not been read" not in pod80
+
+
+async def test_the_lot_page_lists_the_open_questions_and_which_hold_it_at_yellow(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _rule(session, await _seed(session))
+
+    page = await client.get("/flats/lots/multnomah/1N1E29DD%20%20-05600")
+
+    assert page.status_code == 200
+    flags = page.text.split('id="flags-pod56x36-2"', 1)[1].split("</ul>", 1)[0]
+    corner = flags.split('data-flag="FACT-CORNER-LOT"', 1)[1].split("</li>", 1)[0]
+    through = flags.split('data-flag="FACT-THROUGH-LOT"', 1)[1].split("</li>", 1)[0]
+    assert "Whether the lot is a corner lot" in corner
+    assert "holds it at yellow" in corner
+    assert "too small to change the colour" in through
+    assert "severity 0" in through
+    # Most severe first.
+    assert flags.index("FACT-CORNER-LOT") < flags.index("FACT-THROUGH-LOT")
+    assert "or/multnomah/portland · corner_lot" in corner
+    # Yellow and nothing changed in the rule since: no recolour warning.
+    assert 'id="colour-today-' not in page.text
+
+
+async def test_the_lot_page_says_when_todays_colour_rule_would_recolour_it(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    run = await _seed(session)
+    await _rule(session, run)
+    # A row written red with nothing missed and nothing open: under the rule
+    # in force it is green, and the page says so before the next run does.
+    row = (await session.execute(
+        select(FlatsLotResult).join(FlatsLot, FlatsLot.id == FlatsLotResult.lot_id)
+        .where(FlatsLotResult.run_id == run.id, FlatsLot.tlid.startswith("1S2E08BA"),
+               FlatsLotResult.design_key == DESIGNS[1])
+    )).scalar_one()
+    row.checks = {**row.checks, "binds": []}
+    await session.commit()
+
+    page = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+
+    note = page.text.split('id="colour-today-pod80x25-2"', 1)[1].split("</div>", 1)[0]
+    assert "<strong>green</strong>" in note
+    assert 'id="colour-today-pod56x36-2"' not in page.text

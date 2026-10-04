@@ -109,6 +109,7 @@ from flats.rules.model import (
     Value,
 )
 from flats.rules.resolver import RuleSet
+from flats.score import flags as flag_plan
 from flats.score.paper import paper_fit
 
 router = APIRouter(include_in_schema=False)
@@ -2682,6 +2683,51 @@ _COLOUR_WORDS = {
     "red": "misses a standard no exception covers",
 }
 
+#: What each colour means under the colour rule (flats/config/colour.yaml,
+#: FOLLOWUPS 37, Steph 2026-10-02/03): RED is a standard missed -- no
+#: variance is counted on -- YELLOW an open question big enough to turn the
+#: lot red, GREEN neither. A run screened before the rule carries only
+#: ``if_signed`` and keeps the words above; "unknown" survives only on a lot
+#: nothing measured.
+_RULE_COLOUR_WORDS = {
+    "green": "clears every standard we hold, and no open question is big enough to change that",
+    "yellow": "clears what we hold, but an open question could still turn it red",
+    "unknown": "cannot be told yet: nothing measured this lot",
+    "red": "misses a standard -- the building does not fit, or the rules here do not allow it",
+}
+
+#: The checks a lot can miss, said plainly. Anything else reads as its name.
+_CHECK_WORDS = {
+    "fit_ft": "the building and its parking do not fit",
+    "use": "the zone does not allow four attached homes",
+    "min_lot_area_sqft": "lot smaller than the minimum",
+    "min_frontage_ft": "street frontage shorter than the minimum",
+    "min_lot_width_ft": "lot narrower than the minimum",
+    "min_average_lot_width_ft": "lot narrower on average than the minimum",
+    "min_lot_depth_ft": "lot shallower than the minimum",
+    "max_lot_depth_ratio": "lot deeper for its width than allowed",
+    "coverage_pct": "building covers more of the lot than allowed",
+    "impervious_pct": "more paving and roof than allowed",
+    "far": "more floor area than allowed",
+    "height_ft": "building taller than allowed",
+    "stories": "more storeys than allowed",
+    "min_height_ft": "building shorter than the minimum",
+    "max_units": "more homes than the zone allows here",
+    "min_units": "fewer homes than the zone requires here",
+    "density_du_per_acre": "more homes per acre than allowed",
+    "min_density_du_per_acre": "fewer homes per acre than required",
+    "parking_stalls": "fewer parking spaces than required",
+    "parking_cap": "more parking spaces than allowed",
+    "covered_parking": "covered parking required",
+    "open_space_pct": "less open space than required",
+    "open_space_sqft": "less open space than required",
+    "open_space_shape": "open space too narrow",
+    "landscaped_pct": "less landscaping than required",
+    "fire_access_ft": "the fire hose cannot reach the far wall within 150 ft",
+    "driveway_frontage_share": "driveway takes more of the frontage than allowed",
+    "front_yard_vehicle_share": "parking takes more of the front yard than allowed",
+}
+
 #: What the verdict the screen actually gave means. Today it is "unknown" on
 #: every lot because no rule is signed; the colour beside it is the answer
 #: *if* the rules it rests on are confirmed as read.
@@ -2818,16 +2864,128 @@ async def _refresh(session: DBSession) -> dict[str, Any]:
     }
 
 
+def _colour_of(checks: dict[str, Any]) -> str:
+    """The lot's colour: the colour rule's where the run wrote one, else the
+    older signed colour (a run screened before the rule, or a row the screen
+    never wrote)."""
+    return checks.get("colour") or checks.get("if_signed") or "unknown"
+
+
+def _units(check: str) -> str:
+    if check.endswith("_sqft"):
+        return " sq ft"
+    if check.endswith("_ft"):
+        return " ft"
+    if check.endswith("_pct") or check.endswith("_share"):
+        return "%"
+    return ""
+
+
+def _bind_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
+    """The standards this design misses, each with the way round it the code
+    offers -- logged, never counted on (Steph 2026-10-02: no variances)."""
+    out = []
+    for b in checks.get("binds") or []:
+        check = str(b.get("check") or "")
+        relief = b.get("relief")
+        out.append(
+            {
+                "check": check,
+                "words": _CHECK_WORDS.get(check, check.replace("_", " ")),
+                "observed": b.get("observed"),
+                "threshold": b.get("threshold"),
+                "shortfall": b.get("shortfall"),
+                "units": _units(check),
+                "source": b.get("source") or "",
+                "relief": relief.replace("_", " ").replace("+", " and ") if relief else None,
+                "relief_tier": b.get("relief_tier"),
+            }
+        )
+    return out
+
+
+def _flag_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
+    """The open questions on this design, most severe first, each marked
+    with whether it is big enough to hold the colour at yellow under the
+    colour rule in force."""
+    try:
+        reg = flag_plan.registry()
+        line: int | None = flag_plan.colour_rules().yellow_at_severity
+    except Exception:  # noqa: BLE001 -- a bad rule file must not take the page down
+        reg, line = None, None
+    out = []
+    for f in checks.get("flags") or []:
+        code = str(f.get("code") or "")
+        try:
+            kind = reg[code] if reg is not None else None
+        except KeyError:
+            kind = None
+        severity = f.get("severity")
+        if severity is None and kind is not None:
+            severity = kind.severity
+        out.append(
+            {
+                "code": code,
+                "what": kind.description if kind is not None else code.replace("-", " ").lower(),
+                "key": str(f.get("key") or "").replace(flag_plan.SEP, " · "),
+                "severity": severity,
+                "counts": line is not None and severity is not None and severity >= line,
+                "bounds": f.get("bounds"),
+                "source": f.get("source") or "",
+            }
+        )
+    out.sort(key=lambda r: (-(r["severity"] or 0), r["code"]))
+    return out
+
+
+def _colour_today(checks: dict[str, Any]) -> str | None:
+    """The colour this design takes under the colour rule in force now, where
+    that differs from the colour the run wrote; None where it does not (or
+    the row predates the rule). A number changed in colour.yaml recolours a
+    lot without a re-screen, and the page says so before the next run does."""
+    if not checks.get("colour"):
+        return None
+    try:
+        now = flag_plan.colour(
+            [flag_plan.Bind.from_json(b) for b in checks.get("binds") or []],
+            [flag_plan.Flag.from_json(f) for f in checks.get("flags") or []],
+        ).value
+    except Exception:  # noqa: BLE001 -- a kind the registry no longer holds
+        return None
+    return now if now != checks["colour"] else None
+
+
+async def _ruled_run(session: DBSession, run_id: int) -> bool:
+    """Whether the run was screened under the colour rule. Every screened
+    row of such a run carries the colour, so 200 of its rows (off the
+    run_id index) settle it."""
+    sample = (
+        select(FlatsLotResult.checks.has_key("colour").label("ruled"))
+        .where(FlatsLotResult.run_id == run_id)
+        .limit(200)
+        .subquery()
+    )
+    return bool((await session.execute(select(func.bool_or(sample.c.ruled)))).scalar())
+
+
+def _colour_column() -> Any:
+    """The colour as SQL: the rule's, else the older signed one -- the same
+    expression the index carries (migration 0140), so the per-lot best colour
+    stays an index-only read."""
+    checks = FlatsLotResult.checks
+    return func.coalesce(checks["colour"].astext, checks["if_signed"].astext)
+
+
 def _rank(column: Any) -> Any:
     """0..3 for the four colours in ``_COLOURS`` order, 4 for anything else."""
     return case(*[(column == c, i) for i, c in enumerate(_COLOURS)], else_=len(_COLOURS))
 
 
 def _best(run_id: int, design: str | None) -> Any:
-    """One row per lot: the lowest verdict rank and the lowest signed-colour
-    rank across the run's designs (or the one design asked for)."""
+    """One row per lot: the lowest verdict rank and the lowest colour rank
+    across the run's designs (or the one design asked for)."""
     result = FlatsLotResult
-    colour = result.checks["if_signed"].astext
+    colour = _colour_column()
     stmt = select(
         result.lot_id.label("lot_id"),
         func.min(_rank(result.tier)).label("verdict"),
@@ -2879,7 +3037,9 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
     checks = row.checks or {}
     stalls = checks.get("stalls") or {}
     leaning = checks.get("leaning") or {}
-    colour = checks.get("if_signed") or "unknown"
+    colour = _colour_of(checks)
+    ruled = bool(checks.get("colour"))
+    words = _RULE_COLOUR_WORDS if ruled else _COLOUR_WORDS
     # A row the screen never wrote (the assign stage's ``unknown`` for a lot
     # nobody measured) has no checks to call failing and no fit to call
     # missing; the older bridge rows predate the flag and were all screened.
@@ -2891,10 +3051,16 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         "verdict": row.tier,
         "verdict_words": _VERDICT_WORDS.get(row.tier, row.tier),
         "colour": colour,
-        "colour_words": _COLOUR_WORDS.get(colour, colour),
+        "colour_words": words.get(colour, colour),
         "badge": _BADGE.get(colour, "badge-gray"),
         "reasons": [_said_reason(x) for x in checks.get("reasons") or []],
         "colour_reasons": [_said_reason(x) for x in checks.get("if_signed_reasons") or []],
+        # The colour rule's own reasons (FOLLOWUPS 37): what this design
+        # misses and what is still open about the site.
+        "ruled": ruled,
+        "binds": _bind_rows(checks),
+        "flags": _flag_rows(checks),
+        "colour_today": _colour_today(checks),
         "head": checks.get("head"),
         "failing": list(checks.get("failing") or []),
         "unchecked": list(checks.get("unchecked") or []),
@@ -2944,6 +3110,7 @@ def _pocket_of(facts: dict[str, Any]) -> str | None:
 
 def _lot_row(lot: FlatsLot, verdict: int, colour: int, results: list[dict[str, Any]]) -> dict[str, Any]:
     facts = lot.facts or {}
+    words = _RULE_COLOUR_WORDS if any(r.get("ruled") for r in results) else _COLOUR_WORDS
     best_colour = _COLOURS[colour] if 0 <= colour < len(_COLOURS) else "unknown"
     best_verdict = _COLOURS[verdict] if 0 <= verdict < len(_COLOURS) else "unknown"
     return {
@@ -2962,7 +3129,7 @@ def _lot_row(lot: FlatsLot, verdict: int, colour: int, results: list[dict[str, A
         "verdict": best_verdict,
         "verdict_words": _VERDICT_WORDS.get(best_verdict, best_verdict),
         "colour": best_colour,
-        "colour_words": _COLOUR_WORDS.get(best_colour, best_colour),
+        "colour_words": words.get(best_colour, best_colour),
         "badge": _BADGE.get(best_colour, "badge-gray"),
         "results": results,
         "quadfit": facts.get("quadfit") or {},
@@ -3344,6 +3511,9 @@ async def flats_lots(
         if picked:
             flagged = flagged.where(FlatsLotResult.design_key == picked)
         conditions.append(FlatsLot.id.in_(flagged))
+    if await _ruled_run(session, chosen.id):
+        ctx["colour_words"] = _RULE_COLOUR_WORDS
+        ctx["ruled"] = True
     counts = await _lot_counts(session, chosen.id, picked, conditions)
     shown = counts["if_signed"].get(colour, counts["lots"]) if colour in _COLOURS else counts["lots"]
     ctx["counts"] = counts

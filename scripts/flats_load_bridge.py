@@ -730,6 +730,9 @@ def export(
 
     tiers: Counter[str] = Counter()
     signed: Counter[str] = Counter()
+    # The colour rule's colour (FOLLOWUPS 37), counted so the load can check
+    # it landed; "none" for a row written without one.
+    ruled: Counter[str] = Counter()
     n_results = 0
     with gzip.open(out / RESULTS_FILE, "wt", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
@@ -743,6 +746,7 @@ def export(
             slack = _num(row.get("fit_slack_ft"))
             tiers[tier] += 1
             signed[str(row.get("if_signed"))] += 1
+            ruled[str(_clean(row.get("colour")) or "none")] += 1
             n_results += 1
             w.writerow(
                 [
@@ -797,6 +801,7 @@ def export(
             "results": n_results,
             "tiers": dict(sorted(tiers.items())),
             "if_signed": dict(sorted(signed.items())),
+            "colour": dict(sorted(ruled.items())),
             "by_county": dict(sorted(counties.items())),
             "by_source": dict(sorted(sources.items())),
             "unmeasured": (meta.get("assign") or {}).get("by_reason", {}),
@@ -1082,6 +1087,13 @@ async def load(
                         run_id,
                     )
                 )
+                coloured = dict(
+                    await conn.fetch(
+                        "SELECT COALESCE(checks->>'colour', 'none'), count(*)::int FROM flats.lot_results "
+                        "WHERE run_id = $1 GROUP BY 1 ORDER BY 1",
+                        run_id,
+                    )
+                )
                 bad_geom = await conn.fetchval(
                     "SELECT count(*) FROM flats.lots WHERE updated_run_id = $1 AND geom IS NOT NULL "
                     "AND (ST_SRID(geom) <> 2913 OR ST_IsEmpty(geom) OR ST_SRID(centroid) <> 4326)",
@@ -1089,6 +1101,7 @@ async def load(
                 )
                 report["tiers"] = tiers
                 report["if_signed"] = signed
+                report["colour"] = coloured
                 problems = []
                 if after != expected["results"]:
                     problems.append(f"results {after} != {expected['results']}")
@@ -1096,6 +1109,9 @@ async def load(
                     problems.append(f"tiers {tiers} != {expected['tiers']}")
                 if signed != expected["if_signed"]:
                     problems.append(f"if_signed {signed} != {expected['if_signed']}")
+                # A bundle exported before the colour rule counts no colour.
+                if "colour" in expected and coloured != expected["colour"]:
+                    problems.append(f"colour {coloured} != {expected['colour']}")
                 if bad_geom:
                     problems.append(f"{bad_geom} lots with a geometry in the wrong SRID or empty")
                 if problems:
