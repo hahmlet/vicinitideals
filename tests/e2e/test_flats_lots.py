@@ -248,3 +248,26 @@ def test_a_lot_page_names_what_net_land_takes_off_and_what_was_assumed_absent(
     expect(net).to_contain_text("Net land")
     expect(net).to_contain_text("May come off (not certain)")
     expect(net.locator("tr.net-assumed")).to_contain_text("storm facilities")
+
+
+#: SW Portland's West Hills: a lot that ran GREEN before the slope was read,
+#: its whole area steeper than 15% on the 1 m lidar (FOLLOWUPS 38).
+STEEP_LOT = "/flats/lots/multnomah/1S1E09CB%20%20-00600"
+
+
+def test_a_lot_page_says_how_steep_the_ground_is(logged_in_page: Page, base_url: str) -> None:
+    """Steph 2026-10-04: ground over 15% is kept out of where the building
+    and its parking can go, and the page says how much of the lot that is
+    and which elevation map read it. A run screened before the slope was
+    read carries no row (FOLLOWUPS 38: green from the first run after it)."""
+    page = logged_in_page
+    page.goto(f"{base_url}{STEEP_LOT}")
+    if page.locator("#lot-verdict").count() == 0:
+        pytest.skip("the steep lot is not in this run")
+    rows = page.locator("tr.plan-slope")
+    if rows.count() == 0:
+        pytest.skip("this run was screened before the slope was read")
+    first = rows.first
+    expect(first).to_contain_text("Slope")
+    expect(first.locator(".slope-steep")).to_contain_text("steeper than 15%")
+    expect(first.locator(".slope-steep")).to_contain_text("1 m lidar map")

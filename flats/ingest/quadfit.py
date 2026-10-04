@@ -74,6 +74,7 @@ from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
+from flats.fit.slope import load_rules as slope_rules
 from flats.geom.alley import (
     ALLEY_CLASS,
     ALLEY_FACTS,
@@ -641,6 +642,11 @@ class QuadfitLot:
     #: The ground s5o's carve overlays take off the lot (``carve_wkb``);
     #: None where none touches it.
     carve: Any = None
+    #: The ground too steep to build or park on (:func:`with_steep`, Steph
+    #: 2026-10-04): taken off the envelope and the court's ground like the
+    #: carve, but not off the yard an outdoor area may use -- a code's open
+    #: space may slope. None where nothing measured it or none is steep.
+    steep: Any = None
     #: Where a rear alley that runs only PART of the rear line runs, per rear
     #: line (:func:`flats.geom.alley.rear_cover_runs`); empty where the alley
     #: runs the whole line, is not at the rear, or nothing measured it.
@@ -973,11 +979,15 @@ def envelope_for(
     the court with ground the envelope still holds.
     """
     strip = lot_line_buffer_ft(rules)
-    on_lot = None if lot.lot_geom is None else _less_carve(lot.lot_geom, lot.carve)
+    in_yards = slope_rules().steep_in_setbacks
+    steep = lot.steep if in_yards else _within(lot.steep, lot.envelope)
+    taken = _taken(lot, steep)
+    on_lot = None if lot.lot_geom is None else _less_carve(lot.lot_geom, taken)
     if on_lot is not None and strip > 0:
         # No line named: keep the strip off every line (conservative).
         on_lot = on_lot.buffer(-strip)
-    quadfit = Envelope(lot.envelope, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot)
+    fallback = None if lot.envelope is None else _less_carve(lot.envelope, lot.steep)
+    quadfit = Envelope(fallback, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot)
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
     split = rear_off_alley(lot.edges)
@@ -1003,7 +1013,12 @@ def envelope_for(
             if setbacks.alley_side_ft is None
             else max(setbacks.alley_side_ft, strip),
         )
-    geom = buildable(lot.lot_geom, lot.edges, setbacks, less=lot.carve)
+    if not in_yards and lot.steep is not None and not lot.steep.is_empty:
+        # Steep ground in the setbacks is left to the grader (Steph
+        # 2026-10-04): only what lies where the building may stand comes
+        # off, the court's ground included.
+        taken = _taken(lot, _within(lot.steep, buildable(lot.lot_geom, lot.edges, setbacks)))
+    geom = buildable(lot.lot_geom, lot.edges, setbacks, less=taken)
     cut = None if strips else setbacks.largest_ft
     if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
         cut = setbacks.alley_rear_ft
@@ -1014,8 +1029,27 @@ def envelope_for(
         rear_ft=strip,
         alley_rear_ft=None if setbacks.alley_rear_ft is None else strip,
     )
-    ground = buildable(lot.lot_geom, lot.edges, open_rear, less=lot.carve)
+    ground = buildable(lot.lot_geom, lot.edges, open_rear, less=taken)
     return Envelope(geom, cut, "flats", setbacks, ground)
+
+
+def _taken(lot: QuadfitLot, steep: Any = None) -> Any:
+    """What nothing is built or parked on: the carve, and the steep ground
+    (``steep``, or the lot's own where the caller hands none)."""
+    steep = lot.steep if steep is None else steep
+    if steep is None or steep.is_empty:
+        return lot.carve
+    if lot.carve is None or lot.carve.is_empty:
+        return steep
+    return lot.carve.union(steep)
+
+
+def _within(steep: Any, where: Any) -> Any:
+    """The steep ground inside ``where``; all of it where ``where`` is
+    unknown (conservative)."""
+    if steep is None or steep.is_empty or where is None:
+        return steep
+    return steep.intersection(where)
 
 
 def _less_carve(geom: Any, carve: Any) -> Any:
@@ -1697,6 +1731,7 @@ def _bounded(
     roads: Any,
     pool: dict[Any, dict[Any, Fitter]],
     fitter: Fitter | None = None,
+    terrain: Any = None,
 ) -> Screened:
     """``s`` with the facts it is waiting on set to severity 0 where no
     answer to them could turn it red (FOLLOWUPS 37 item 3; Steph's flag plan,
@@ -1776,6 +1811,7 @@ def _bounded(
             roads=roads,
             bound=False,
             pool=pool,
+            terrain=terrain,
         )
         if alt.signed.binds or any(
             (f.code, f.key) not in known and flag_plan.severity_of(f, reg) >= line
@@ -1800,6 +1836,7 @@ def screen_lot(
     relief: ReliefPolicy,
     step_deg: float = DEFAULT_STEP_DEG,
     roads: Any = None,
+    terrain: Any = None,
 ) -> list[Screened]:
     """Screen one lot against every design, and where a street line rests
     only on a private drive whose standing is in doubt, screen the lot
@@ -1808,15 +1845,21 @@ def screen_lot(
     ``roads`` is the street centreline index the fire route is measured to
     (:func:`flats.fit.fire.load_truck_roads`); without it the route starts
     at the street lot line, which only a test may accept.
+
+    ``terrain`` is the elevation models the grade under each plan is read
+    off (:class:`flats.fit.slope.Terrain`, :func:`slope_checked`); without
+    it no grade is measured and the slope ruling goes unchecked. The steep
+    ground comes on the lot itself (:func:`with_steep`).
     """
     got = _screen_lot_once(
-        lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads
+        lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads,
+        terrain=terrain,
     )
     if lot.second is None:
         return got
     alt = _screen_lot_once(
         lot.second, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
-        roads=roads,
+        roads=roads, terrain=terrain,
     )
     if lot.second_better:
         return [_better(a, b) for a, b in zip(got, alt)]
@@ -1834,6 +1877,7 @@ def _screen_lot_once(
     roads: Any = None,
     bound: bool = True,
     pool: dict[Any, dict[Any, Fitter]] | None = None,
+    terrain: Any = None,
 ) -> list[Screened]:
     """Screen one lot against every design, one envelope search for all.
 
@@ -1954,10 +1998,14 @@ def _screen_lot_once(
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
         won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
         won = fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter)
+        won = slope_checked(
+            won, lot, terrain, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+            roads=roads,
+        )
         if bound:
             won = _bounded(
                 won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
-                roads=roads, pool=pool, fitter=fitter,
+                roads=roads, pool=pool, fitter=fitter, terrain=terrain,
             )
         out.append(won)
     return out
@@ -2041,6 +2089,115 @@ def fire_checked(
     if route is None and not green:
         return s
     facts = dataclasses.replace(s.facts, fire_route_ft=route, fire_route_tried=True)
+    result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
+    shadow = _if_signed(
+        s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
+    )
+    return dataclasses.replace(s, screening=result, signed=shadow, facts=facts)
+
+
+def with_steep(lot: QuadfitLot, terrain: Any) -> QuadfitLot:
+    """``lot`` with its ground too steep to build or park on measured and
+    taken off (FOLLOWUPS 38; Steph 2026-10-04: "slope-based lot
+    elimination should happen before pod placement").
+
+    The part of the taxlot steeper than ``steep_over_pct``
+    (``flats/config/slope.yaml``), read by :meth:`flats.fit.slope.Terrain.
+    steep`, rides on the lot as :attr:`QuadfitLot.steep` and comes off the
+    envelope and the court's ground (:func:`envelope_for`), so the fit is
+    searched on the flat ground alone; its area and the model that read it
+    ride in the facts. The second reading of the lot (:func:`drive_reading`)
+    is the same ground and takes the same cut. A lot no model covers, or no
+    ``terrain``, is returned as it came.
+    """
+    if terrain is None or lot.lot_geom is None:
+        return lot
+    ruled = slope_rules()
+    got = terrain.steep(lot.lot_geom, ruled.steep_over_pct, min_bank_ft=ruled.min_bank_ft)
+    if got is None:
+        return lot
+    steep = got.geom if got.sqft > 0 else None
+
+    def cut(one: QuadfitLot) -> QuadfitLot:
+        facts = dataclasses.replace(
+            one.facts, steep_sqft=round(got.sqft, 1), steep_source=got.source
+        )
+        return dataclasses.replace(one, steep=steep, facts=facts)
+
+    second = None if lot.second is None else cut(lot.second)
+    return dataclasses.replace(cut(lot), second=second)
+
+
+def _fit_missed(s: Screened) -> bool:
+    return any(
+        c.check == "fit_ft" and c.verdict is CheckVerdict.fails for c in s.screening.checks
+    )
+
+
+def slope_checked(
+    s: Screened,
+    lot: QuadfitLot,
+    terrain: Any,
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float,
+    roads: Any,
+) -> Screened:
+    """``s`` re-screened with what the slope did to it (FOLLOWUPS 38).
+
+    First, whether the steep ground is what eliminated the lot
+    (:attr:`LotFacts.steep_blocks`): the plan missed its fit on the flat
+    ground (:func:`with_steep` took the rest off), and either that ground
+    cannot hold even the building's footprint where the lot without the
+    cut could -- Steph's test, "see if there's even enough land for the
+    pod. If no, don't check pod placement" -- or the same lot screened with
+    the steep ground left on does not miss. Then the miss is the slope's
+    and is named so (:data:`flats.score.screen.STEEP_GROUND`); otherwise
+    the lot was too tight anyway and the fit keeps the blame.
+
+    Second, the fall across the ground the drawn plan's building and court
+    stand on (:meth:`flats.fit.slope.Terrain.grade`), only where the drawing
+    holds both -- a drawing that fell short shows the shortfall, not a pad.
+    No model under the pad: tried, unobserved. Without ``terrain`` nothing
+    is measured and ``s`` comes back as it came.
+    """
+    from shapely.geometry import Polygon
+
+    if terrain is None or s.facts is None:
+        return s
+    facts = s.facts
+    if lot.steep is not None and not lot.steep.is_empty and _fit_missed(s):
+        flat = s.envelope.sqft if s.envelope is not None else 0.0
+        need = s.design.ground_sqft
+        bare = dataclasses.replace(lot, steep=None, second=None)
+        whole = envelope_for(bare, s.rules).sqft
+        if flat < need <= whole:
+            facts = dataclasses.replace(facts, steep_blocks=True)
+        elif whole >= need:
+            (alt,) = _screen_lot_once(
+                bare, [s.design], rules=rules, policy=policy, relief=relief,
+                step_deg=step_deg, roads=roads, bound=False,
+            )
+            if not _fit_missed(alt):
+                facts = dataclasses.replace(facts, steep_blocks=True)
+    drawing = s.drawing or {}
+    ring = drawing.get("building")
+    if drawing.get("fits") and ring and len(ring) >= 4:
+        pads = [Polygon(ring)]
+        court = drawing.get("court")
+        if court and len(court) >= 4:
+            pads.append(Polygon(court))
+        got = terrain.grade(pads)
+        facts = dataclasses.replace(
+            facts,
+            site_grade_pct=None if got is None else round(got.pct, 2),
+            site_grade_source=None if got is None else got.source,
+            site_grade_tried=True,
+        )
+    if facts is s.facts:
+        return s
     result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
     shadow = _if_signed(
         s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
@@ -2392,6 +2549,11 @@ def row_for(s: Screened) -> dict[str, Any]:
         "envelope_source": s.envelope.source if s.envelope else None,
         "drawing": json.dumps(s.drawing, separators=(",", ":")) if s.drawing else None,
         "fire_route_ft": s.facts.fire_route_ft if s.facts is not None else None,
+        "steep_sqft": s.facts.steep_sqft if s.facts is not None else None,
+        "steep_source": s.facts.steep_source if s.facts is not None else None,
+        "steep_blocks": bool(s.facts.steep_blocks) if s.facts is not None else False,
+        "site_grade_pct": s.facts.site_grade_pct if s.facts is not None else None,
+        "site_grade_source": s.facts.site_grade_source if s.facts is not None else None,
         "colour": s.signed.colour.value,
         "flags": flag_plan.dumps(s.signed.flags, lot=s.lot.tlid),
         "binds": flag_plan.dumps(s.signed.binds),
@@ -2404,10 +2566,14 @@ _WORKER: dict[str, Any] = {}
 
 
 def _init_worker(
-    step_deg: float, sources: Path | None = None, roads: Path | None = None
+    step_deg: float,
+    sources: Path | None = None,
+    roads: Path | None = None,
+    dem: Path | None = None,
 ) -> None:
-    """Load the corpus, catalog, policies, corridor maps and the street
-    centrelines the fire route is measured to, once per process."""
+    """Load the corpus, catalog, policies, corridor maps, the street
+    centrelines the fire route is measured to and the elevation models the
+    slope is read off, once per process."""
     from flats.designs.model import load_catalog
     from flats.encode.load import load_trusted
     from flats.fit.fire import load_truck_roads
@@ -2420,12 +2586,22 @@ def _init_worker(
     _WORKER["step_deg"] = step_deg
     _WORKER["corridors"] = load_corridor_maps(sources) if sources is not None else ()
     _WORKER["roads"] = load_truck_roads(roads) if roads is not None else None
+    _WORKER["terrain"] = terrain_at(dem) if dem is not None else None
+
+
+def terrain_at(raw: Path) -> Any:
+    """The elevation models under quadfit's raw directory: s0's 1 m tiles
+    (``dem``) and the ~10 m model warped beside them (``dem10_utm``)."""
+    from flats.fit.slope import Terrain
+
+    return Terrain(raw / "dem", raw / "dem10_utm")
 
 
 def _work_chunk(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for row in rows:
         lot = lot_from_row(row, _WORKER["rules"].layers, _WORKER["corridors"])
+        lot = with_steep(lot, _WORKER.get("terrain"))
         for s in screen_lot(
             lot,
             _WORKER["designs"],
@@ -2434,6 +2610,7 @@ def _work_chunk(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             relief=_WORKER["relief"],
             step_deg=_WORKER["step_deg"],
             roads=_WORKER.get("roads"),
+            terrain=_WORKER.get("terrain"),
         ):
             out.append(row_for(s))
     return out
@@ -2614,6 +2791,7 @@ def run(
     sources: Path | None = None,
     transit: Path | None = None,
     roads: Path | None = None,
+    dem: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -2629,6 +2807,11 @@ def run(
     which the fire route is measured to; it defaults to the file beside
     ``s4`` and a run without one is refused -- measured from the lot line,
     the route would come out SHORTER than the hose's (FOLLOWUPS 28).
+    ``dem`` is quadfit's raw directory holding the elevation models
+    (:func:`terrain_at`); it defaults to ``quadfit/raw`` beside the stage
+    directory, and a run without 1 m tiles there is refused -- without them
+    no lot is graded and Steph's slope ruling silently goes unchecked
+    (FOLLOWUPS 38).
     """
     import time
     from multiprocessing import Pool
@@ -2638,6 +2821,9 @@ def run(
     roads = roads if roads is not None else s4.parent / "s1_streets.parquet"
     if not roads.exists():
         raise FileNotFoundError(f"no street centrelines for the fire route: {roads}")
+    dem = dem if dem is not None else s4.parents[1] / "quadfit" / "raw"
+    if not any((dem / "dem").glob("*.tif")):
+        raise FileNotFoundError(f"no 1 m elevation tiles for the slope: {dem / 'dem'}")
     out.mkdir(parents=True, exist_ok=True)
     parts_dir = out / "parts"
     parts_dir.mkdir(exist_ok=True)
@@ -2661,13 +2847,13 @@ def run(
         pd.DataFrame.from_records(records).to_parquet(parts_dir / f"{i:05d}.parquet", index=False)
 
     if processes <= 1:
-        _init_worker(step_deg, sources, roads)
+        _init_worker(step_deg, sources, roads, dem)
         for i, chunk in enumerate(chunks):
             _write(i, _work_chunk(chunk))
             done += len(chunk)
             log(f"  {done:,}/{len(rows):,}  {time.time() - t0:,.0f}s")
     else:
-        with Pool(processes, initializer=_init_worker, initargs=(step_deg, sources, roads)) as pool:
+        with Pool(processes, initializer=_init_worker, initargs=(step_deg, sources, roads, dem)) as pool:
             for i, records in enumerate(pool.imap(_work_chunk, chunks)):
                 _write(i, records)
                 done += len(chunks[i])
@@ -2697,6 +2883,7 @@ def run(
         "sources": str(sources) if sources is not None else None,
         "transit": str(transit) if transit is not None else None,
         "roads": str(roads),
+        "dem": str(dem),
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -2735,6 +2922,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         type=Path,
         help="street centrelines for the fire route (default: s1_streets beside --s4)",
     )
+    ap.add_argument(
+        "--dem",
+        type=Path,
+        help="quadfit raw dir holding dem/ and dem10_utm/ (default: ../quadfit/raw from --s4)",
+    )
     args = ap.parse_args(argv)
     run(
         args.out,
@@ -2753,6 +2945,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         sources=args.sources,
         transit=args.transit,
         roads=args.roads,
+        dem=args.dem,
     )
     return 0
 

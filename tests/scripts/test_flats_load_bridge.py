@@ -345,6 +345,30 @@ def test_the_checks_record_carries_the_fire_hose_route() -> None:
         assert "fire_route_ft" not in result_checks({**_bridge_row(LOT_A, DESIGNS[0]), "fire_route_ft": empty})
 
 
+def test_the_checks_record_carries_the_slope() -> None:
+    # FOLLOWUPS 38, Steph 2026-10-04: the steep ground kept out of the plan
+    # and the fall across the ground it stands on. A bundle written before
+    # the bridge read the elevation models carries none.
+    row = {
+        **_bridge_row(LOT_A, DESIGNS[0]),
+        "steep_sqft": 1234.5,
+        "steep_source": "dem_1m",
+        "steep_blocks": True,
+        "site_grade_pct": 8.25,
+        "site_grade_source": "dem_1m",
+    }
+    assert result_checks(row)["slope"] == {
+        "steep_sqft": 1234.5,
+        "steep_source": "dem_1m",
+        "grade_pct": 8.25,
+        "grade_source": "dem_1m",
+        "steep_blocks": True,
+    }
+    assert "slope" not in result_checks(_bridge_row(LOT_A, DESIGNS[0]))
+    nothing = {"steep_sqft": float("nan"), "site_grade_pct": None, "steep_blocks": False}
+    assert "slope" not in result_checks({**_bridge_row(LOT_A, DESIGNS[0]), **nothing})
+
+
 def test_the_checks_record_carries_the_flag_plan() -> None:
     # The flag plan's colour, beside the old verdict, with the flags and
     # binds it came from. A bundle written before the plan carries none.

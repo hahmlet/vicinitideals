@@ -1,0 +1,51 @@
+# Slope: what a hillside does to a lot (FOLLOWUPS 38; flats/fit/slope.py).
+#
+# HUMAN-OWNED. Every number below is Steph's ruling; an agent does not move
+# one without a new ruling quoted here.
+#
+# Steph, 2026-10-04, on the ground the building and its parking stand on:
+#   "5% / 15%" -- up to 5% is GREEN; 5 to 15% is a closer look (a stepped
+#   foundation or retaining walls, a cost to price); over 15% is RED.
+#
+# Steph, 2026-10-04, on the order of things:
+#   "slope-based lot elimination should happen before pod placement. Again,
+#   for any small lot, 16% slope on any part of it likely eliminates it.
+#   The more thorough way would be to measure how much of the lot is sloped
+#   like that and subtract it and see if there's even enough land for the
+#   pod. If no, don't check pod placement."
+#
+# Steph, 2026-10-04, on a short bank (a front yard raised 3 ft, a terrace):
+#   asked "Can we ignore slopes in setbacks? Would that sort it?" -- it did
+#   not (1 of the sample's 101 lost greens came back: the building is kept
+#   out of the setbacks already), and ruled "Ignore banks under 4 ft". A
+#   retaining wall that short needs no building permit in Oregon; the grade
+#   under the building is still read, so a lot stepped in short terraces
+#   down a real hill still goes yellow or red.
+#
+# So ground steeper than `steep_over_pct` is taken off where the building
+# and its court may stand -- the same way a hillside overlay's carve is --
+# and a lot whose remaining ground cannot hold the pod is RED on slope, not
+# on its fit. The plan that does fit is then graded where it stands.
+
+# Ground steeper than this, read over `run_m` metres, is not built or parked on.
+steep_over_pct: 15.0
+# The fall across the building and its court, as a plane fitted to the
+# ground under them: at or under this is GREEN ...
+grade_green_max_pct: 5.0
+# ... over this is RED; between the two is a closer look.
+grade_red_over_pct: 15.0
+# The run a 1 m slope is read over (flats/fit/slope.py RUN_M): wider than a
+# curb, a ditch or the cut round a basement, which pixel-to-pixel slope reads
+# as hillside.
+run_m: 5.0
+# Where only the ~10 m elevation model covers the lot (Gresham, Troutdale,
+# Fairview, Wood Village, east Portland), a grade over the red line is a
+# closer look, never RED: a pad is two or three of its cells across, and the
+# plane is fitted to the hillside round the pad rather than to the pad.
+coarse_red_is_closer_look: true
+# A steep patch whose ground falls less than this, feet, from its top to its
+# bottom inside the lot is a bank to regrade, not land lost.
+min_bank_ft: 4.0
+# Steep ground in the setbacks comes off the court's ground too (Steph kept
+# this: ignoring it brought back 1 lot of 101).
+steep_in_setbacks: true

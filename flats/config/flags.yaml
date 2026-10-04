@@ -260,6 +260,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-SITE-GRADE:
+    description: "No elevation model covers the ground the drawn plan stands on, so its slope is not known"
+    kind: categorical
+    risk: unlikely
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Our own grade measure (FOLLOWUPS 38) on an elevation model that reaches the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-COURT-TURNS:
     description: "The car was not driven through this shape of rear court: whether every stall can be used is not known"
     kind: categorical
@@ -352,6 +367,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_MIN_DENSITY]
+  SLOPE-GRADE:
+    description: "The ground under the building and its parking falls between 5% and 15% (or past 15% on the coarse elevation map only): a stepped foundation or retaining walls to price (Steph 2026-10-04)"
+    kind: parametric
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "A builder prices the foundation and walls for the grade"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_SLOPE]
 
   # --- a path round a bind, once the rule set accepts it -----------------
   APPROVAL-NEEDED:

@@ -162,6 +162,16 @@
           <tr id="fire-{{ r.design|replace('@', '-') }}"><td class="col-muted">Fire truck reach</td>
               <td>{{ "{:,.0f}".format(r.fire_route_ft) }} ft from the street to the farthest wall, walked around the building{% if 'fire_access_ft' in r.binding %} · <span class="badge badge-red">farther than the fire code allows (150 ft)</span>{% endif %}</td></tr>
           {% endif %}
+          {% if r.slope %}
+          <tr id="slope-{{ r.design|replace('@', '-') }}" class="plan-slope"><td class="col-muted">Slope</td>
+              <td>{% if r.slope.grade_pct is not none %}<div class="slope-grade">The ground under the building and its parking falls {{ "{:.1f}".format(r.slope.grade_pct) }}%
+                  {% if r.slope.grade_band == 'green' %}· <span class="badge badge-green">{{ "{:.0f}".format(r.slope.green_max) }}% or less: fine</span>
+                  {% elif r.slope.grade_band == 'red' %}· <span class="badge badge-red">over {{ "{:.0f}".format(r.slope.red_over) }}%: too steep to build</span>
+                  {% else %}· <span class="badge badge-orange">closer look</span> between {{ "{:.0f}".format(r.slope.green_max) }}% and {{ "{:.0f}".format(r.slope.red_over) }}% (or past it on the coarse map) — a stepped foundation or retaining walls to price{% endif %}
+                  <span class="col-muted">({{ r.slope.grade_map }})</span></div>{% endif %}
+                  {% if r.slope.steep_sqft %}<div class="slope-steep">{{ "{:,.0f}".format(r.slope.steep_sqft) }} sq ft of the lot is steeper than {{ "{:.0f}".format(r.slope.steep_over) }}% and was kept out of where the building and parking could go <span class="col-muted">({{ r.slope.steep_map }})</span>{% if r.slope.steep_blocks %} · <span class="badge badge-red">the building and its parking do not fit on the rest</span>{% endif %}</div>
+                  {% elif r.slope.steep_sqft is not none %}<div class="slope-steep">No part of the lot is steeper than {{ "{:.0f}".format(r.slope.steep_over) }}%.</div>{% endif %}</td></tr>
+          {% endif %}
           {% if r.tight %}
           <tr id="tight-{{ r.design|replace('@', '-') }}"><td class="col-muted">Tight fit</td>
               <td><span class="badge badge-orange">tight fit</span> The building fits, or misses, by 6 inches or less. County lot lines are only good to about a foot, so this counts as green; the survey before an offer decides it.</td></tr>

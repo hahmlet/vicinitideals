@@ -1299,9 +1299,26 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    design; (b) net-land slope = lot area steeper than each city's threshold
    (15/20/25%) measured over a code-like run, plus DOGAMI SLIDO landslide
    areas where a list says "within a landslide hazard area"; (c) coarse-DEM
-   lots over a cutoff go yellow, never red. PENDING STEPH: the build-cost
-   cutoffs (green / closer look / red) -- asked 2026-10-04. Aim to land in
-   the ~10-08 full re-screen (item 37(c)).
+   lots over a cutoff go yellow, never red. RULED (Steph 2026-10-04): pad
+   grade <=5% green, 5-15% closer look, >15% red; AND "slope-based lot
+   elimination should happen before pod placement ... measure how much of
+   the lot is sloped like that and subtract it and see if there's even
+   enough land for the pod. If no, don't check pod placement." and "Ignore
+   banks under 4 ft" (a patch falling <4 ft top to bottom is regraded, not
+   lost; ignoring steep ground in setbacks was tried at Steph's question
+   and brought back 1 of 101, so not adopted). SHIPPED (code only; nothing
+   live moves until a re-screen): flats/fit/slope.py + flats/config/
+   slope.yaml; ground >15% over a 5 m run comes off the envelope + court
+   ground before the fit, a fit lost to it is `steep_ground` (RED, no
+   relief), the drawn building + court is graded (SLOPE-GRADE sev 4 =
+   yellow, >15% on 1 m RED); coarse 10 m never RED. SAMPLE (2,000 lots,
+   seed 31, wash data): ~25% of greens go RED on steep ground (mostly real
+   hillsides, median lot grade 12%), ~7% yellow; the 4 ft bank rule
+   brought back 10 flat lots (pad <=5%). Bridge time +48% overall, ~2x on
+   lots with steep ground. OPEN: (1) lands in the ~10-08 full re-screen
+   (37(c)) -- a WARNED promotion (big green->red move), Steph promotes;
+   the E2E slope test skips until a run carries slope; (2) part (b)
+   net-land slope per city + DOGAMI SLIDO landslide areas still to do.
 39. **The building is drawn where the parking wants it, then the fire
    route is measured from there (found 2026-10-04 in two bounds).** More
    ground lets the fit seat the building deeper, the 150-ft hose route

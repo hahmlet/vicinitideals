@@ -513,6 +513,23 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
     route = _num(row.get("fire_route_ft"))
     if route is not None:
         checks["fire_route_ft"] = round(route, 1)
+    # The slope (FOLLOWUPS 38, Steph 2026-10-04): the ground too steep to
+    # build or park on, taken off before the fit, and the fall across the
+    # drawn building and court. Absent from a bridge run written before the
+    # bridge read the elevation models, and on a lot no model covers.
+    slope = {
+        k: v
+        for k, v in (
+            ("steep_sqft", _num(row.get("steep_sqft"))),
+            ("steep_source", _clean(row.get("steep_source"))),
+            ("grade_pct", _num(row.get("site_grade_pct"))),
+            ("grade_source", _clean(row.get("site_grade_source"))),
+        )
+        if v is not None and v != ""
+    }
+    if slope:
+        slope["steep_blocks"] = bool(_clean(row.get("steep_blocks")))
+        checks["slope"] = slope
     # The flag plan (flats/score/flags.py): the colour its rule set gives,
     # beside the old verdict, with the flags and binds it was given. Absent
     # from a bridge run written before the plan.

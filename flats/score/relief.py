@@ -113,7 +113,12 @@ class ReliefOutcome:
 #: not assumed -- Steph 2026-10-01, a lot past it is RED (FOLLOWUPS 28).
 #: Nor does one widen a car's turn: a court the car cannot use
 #: (``court_turns``, FOLLOWUPS 36(2)) is not a standard a variance waives.
-NO_ZONING_RELIEF: frozenset[str] = frozenset({"fire_access_ft", "court_turns"})
+#: Nor flatten a hillside: ground too steep to build on (``steep_ground``)
+#: and a pad that falls too far (``site_grade_pct``) are Steph's build-cost
+#: lines of 2026-10-04, not a code's (``flats/config/slope.yaml``).
+NO_ZONING_RELIEF: frozenset[str] = frozenset(
+    {"fire_access_ft", "court_turns", "steep_ground", "site_grade_pct"}
+)
 
 
 class ReliefPolicy:

@@ -22,6 +22,7 @@ from flats.designs.model import Design, Orientation
 from flats.encode.load import load_trusted
 from flats.fit.angles import sweep
 from flats.ingest.assign import ROW_COLUMNS
+from flats.tests.dem import plane, write_dem
 from flats.geom.edges import EdgeClass, Tier
 from flats.ingest.quadfit import (
     OBSERVABLE,
@@ -703,7 +704,15 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
         {"name": ["SE TEST ST"], "type": ["1500"], "ftype": ["ST"], "alley": [False],
          "wkb": [shapely.to_wkb(street)]}
     ).to_parquet(s4.parent / "s1_streets.parquet")
-    written = run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, log=log.append)
+    # And the slope is read off quadfit's elevation models, and a run
+    # without them is refused: no lot would be graded (FOLLOWUPS 38).
+    raw = tmp_path / "raw"
+    with pytest.raises(FileNotFoundError, match="elevation tiles"):
+        run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, log=log.append)
+    write_dem(raw / "dem" / "flat.tif", (X0 - 50, Y0 - 50, X0 + 200, Y0 + 200), plane(1.0))
+    written = run(
+        out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, log=log.append
+    )
     frame = pd.read_parquet(written)
     # Two lots x every catalog design, one row each.
     designs = frame["design"].nunique()
@@ -714,6 +723,8 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
     assert meta["lots"] == 2 and meta["rows"] == len(frame) and meta["step_deg"] == 30.0
     assert meta["roads"] == str(s4.parent / "s1_streets.parquet")
     assert "fire_route_ft" in frame.columns
+    assert meta["dem"] == str(raw)
+    assert {"steep_sqft", "site_grade_pct"} <= set(frame.columns)
     summary = (out / "summary.md").read_text(encoding="utf-8")
     assert "| unknown |" in summary and "RULE_UNVERIFIED" in summary
     assert "against quadfit" in summary

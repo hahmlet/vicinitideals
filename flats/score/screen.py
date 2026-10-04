@@ -63,6 +63,7 @@ from typing import Any, Mapping, Sequence
 
 from flats.designs.model import Design, Orientation, ParkingConfig, Plat
 from flats.fit.rectangle import Fit, Fitter
+from flats.fit.slope import load_rules as slope_rules
 from flats.geom.edges import Tier as GeometryTier
 from flats.rules.conditions import CONDITIONS, Tier
 from flats.rules.fields import REQUIRED_FIELDS
@@ -139,6 +140,21 @@ USE_PROHIBITED = "USE_PROHIBITED"
 CLOSER_LOOK_MIN_DENSITY = "CLOSER_LOOK_MIN_DENSITY"
 #: The checks a minimum density is measured by.
 MIN_DENSITY_CHECKS: frozenset[str] = frozenset({"min_density_du_per_acre", "min_units"})
+#: The ground the building and its court stand on falls more than GREEN
+#: allows and no more than RED does -- a stepped foundation or retaining
+#: walls, a cost to price (Steph 2026-10-04, ``flats/config/slope.yaml``).
+#: Or it falls more than RED allows on the coarse elevation model alone,
+#: which may not make a lot RED.
+CLOSER_LOOK_SLOPE = "CLOSER_LOOK_SLOPE"
+#: The plan's fit, missed on the ground left once the steep ground is taken
+#: off and met without that (:attr:`LotFacts.steep_blocks`): the slope
+#: eliminates the lot, not the pod's placement (Steph 2026-10-04). The fit
+#: check under this name.
+STEEP_GROUND = "steep_ground"
+#: The fall across the drawn building and court, percent (FOLLOWUPS 38).
+SITE_GRADE_CHECK = "site_grade_pct"
+#: Where Steph's slope ruling is the standard, not a code.
+SLOPE_RULING = "Steph 2026-10-04 slope ruling (flats/config/slope.yaml)"
 #: The fit was searched at the building's width alone, and what this zone's
 #: parking asks across the lot -- the lane beside the building, or the row of
 #: stalls behind it -- is wider. Whatever depth that search found is not
@@ -222,6 +238,11 @@ CHECK_FIELD: dict[str, str] = {
 #: and not found (:func:`flats.fit.fire.route_ft` returned None). Joins
 #: ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``.
 FIRE_ROUTE = "fire_route"
+
+#: The grade under a plan the bridge measured for and could not read --
+#: no elevation model covers the pad. Joins ``_checks``'s ``unmeasured``,
+#: so it reports as ``FACT_UNOBSERVED``.
+SITE_GRADE = "site_grade"
 
 #: A lane-fed court whose shape the turning ledger does not hold
 #: (:data:`flats.score.turns.UNSEARCHED`): nobody drove the car through it.
@@ -336,6 +357,26 @@ class LotFacts:
     #: unrun.
     fire_route_ft: float | None = None
     fire_route_tried: bool = False
+    #: The ground on this lot steeper than Steph's slope ruling allows
+    #: building or parking on (``flats/config/slope.yaml``,
+    #: :meth:`flats.fit.slope.Terrain.steep`), square feet, and the
+    #: elevation model that read it. The bridge takes that ground off the
+    #: envelope and the court's ground before the fit is searched. None
+    #: where nothing measured the lot.
+    steep_sqft: float | None = None
+    steep_source: str | None = None
+    #: The fit missed on the ground left once the steep ground is taken off,
+    #: and the lot without that cut does not miss it: the slope is what
+    #: eliminates the lot (:data:`STEEP_GROUND`). Set by the bridge.
+    steep_blocks: bool = False
+    #: The fall across the plan's drawn building and court, percent: the
+    #: plane fitted to the ground under them (:meth:`flats.fit.slope.
+    #: Terrain.grade`), and the model that read it. ``site_grade_tried``
+    #: with no number: the bridge looked and no model covered the pad --
+    #: unobserved. Neither set: nobody measured, and nothing is checked.
+    site_grade_pct: float | None = None
+    site_grade_source: str | None = None
+    site_grade_tried: bool = False
     #: Square feet of each measured deduction a city's net area may take off
     #: this lot -- floodplain, the mapped resource overlays -- keyed as
     #: :data:`flats.rules.net_area.MEASURED` names them, from quadfit's s5o
@@ -652,7 +693,12 @@ def _checks(
         is_maximum=False,
         jurisdiction=where,
     )
-    out.append(fitted)
+    if lot.steep_blocks and fitted.verdict is Verdict.fails:
+        # The same miss, named for what caused it: the pod fits this lot
+        # only on ground too steep to build or park on.
+        out.append(dataclasses.replace(fitted, check=STEEP_GROUND))
+    else:
+        out.append(fitted)
     # And across. The court's width and the lane beside the building are
     # not a second check: they are what the envelope had to be searched FOR,
     # and `fit_for` asks the search at that width. A fit searched narrower --
@@ -1081,7 +1127,25 @@ def _checks(
             if lot.fire_route_tried:
                 unmeasured.add(FIRE_ROUTE)
 
+    # The fall across the ground the plan stands on (Steph 2026-10-04). Over
+    # the red line on the fine model is a miss; on the coarse model alone it
+    # is a closer look (:func:`_slope_closer`), never a check that can fail.
+    if lot.site_grade_pct is not None:
+        ruling = slope_rules()
+        if ruling.band(lot.site_grade_pct, lot.site_grade_source or "") == "red":
+            check(SITE_GRADE_CHECK, lot.site_grade_pct, ruling.grade_red_over_pct, is_maximum=True)
+    elif lot.site_grade_tried:
+        unmeasured.add(SITE_GRADE)
+
     return out, unchecked, unmeasured
+
+
+def _slope_closer(lot: LotFacts) -> bool:
+    """Whether the plan's ground falls enough to want a closer look and not
+    so much that a check failed on it (Steph 2026-10-04)."""
+    if lot.site_grade_pct is None:
+        return False
+    return slope_rules().band(lot.site_grade_pct, lot.site_grade_source or "") == "closer"
 
 
 def _outdoor_shape(
@@ -1917,6 +1981,9 @@ def screen(
     # bigger plan, or a split (FOLLOWUPS 31) -- and not a lot to throw away.
     walls = [o for o in outcomes if o.check not in MIN_DENSITY_CHECKS]
     closer = (CLOSER_LOOK_MIN_DENSITY,) if len(walls) < len(outcomes) else ()
+    # A pad on a grade between Steph's two lines: buildable, at a price.
+    if _slope_closer(lot):
+        closer = (*closer, CLOSER_LOOK_SLOPE)
 
     if any(not o.available for o in walls):
         # A verified standard the code offers no way around. Nothing still
@@ -1940,6 +2007,10 @@ def screen(
     ):
         # Nothing definitely failed, and nothing can be certified either.
         return Screening(triage=Triage.unknown, reasons=tuple(reasons), **common)
+
+    if closer:
+        # Every standard cleared, on ground that falls enough to price.
+        return Screening(triage=Triage.yellow, reasons=closer, **common)
 
     return Screening(triage=Triage.green, reasons=(), **common)
 
@@ -1979,6 +2050,7 @@ _MEASURED_FLAG: dict[str, str] = {
     UNPAVED: "MEASURE-PAVEMENT",
     UNSHAPED: "MEASURE-OUTDOOR-SHAPE",
     FIRE_ROUTE: "MEASURE-FIRE-ROUTE",
+    SITE_GRADE: "MEASURE-SITE-GRADE",
     COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
 }
 
@@ -2098,6 +2170,14 @@ def _account(
         if c.check in MIN_DENSITY_CHECKS and c.verdict is Verdict.fails:
             span = (min(c.observed, c.threshold), max(c.observed, c.threshold))
             flag("DENSITY-MIN", CLOSER_LOOK_MIN_DENSITY, bounds=span, source=c.check)
+    if _slope_closer(lot):
+        ruling = slope_rules()
+        flag(
+            "SLOPE-GRADE",
+            CLOSER_LOOK_SLOPE,
+            bounds=(ruling.grade_green_max_pct, float(lot.site_grade_pct or 0.0)),
+            source=lot.site_grade_source or "",
+        )
 
     binds: list[Bind] = []
     if rules.trusted:
@@ -2112,7 +2192,9 @@ def _account(
                     c.observed,
                     c.threshold,
                     c.shortfall,
-                    source=_cite(rules, CHECK_FIELD.get(c.check)),
+                    source=SLOPE_RULING
+                    if c.check in (STEEP_GROUND, SITE_GRADE_CHECK)
+                    else _cite(rules, CHECK_FIELD.get(c.check)),
                     relief=o.condition if o is not None else None,
                     relief_tier=o.tier.value if o is not None else None,
                     relief_confirmed=bool(o is not None and o.confirmed),

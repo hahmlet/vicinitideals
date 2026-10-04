@@ -1028,6 +1028,50 @@ async def test_the_lot_page_says_how_far_the_fire_hose_walks(
     assert 'id="fire-pod80x25-2"' not in unmeasured.text
 
 
+async def test_the_lot_page_says_how_steep_the_ground_is(
+    client: AsyncClient, session: AsyncSession
+):
+    # FOLLOWUPS 38, Steph 2026-10-04: up to 5% under the building and its
+    # parking is fine, 5 to 15% a closer look, over 15% too steep; ground
+    # over 15% is kept out of the plan, and a plan that does not fit on the
+    # rest is out on slope. A design the bridge never graded shows no row.
+    await _login(client, session)
+    await _seed(session)
+    rows = (await session.execute(select(FlatsLotResult))).scalars().all()
+    for row in rows:
+        if row.design_key == DESIGNS[0]:
+            row.checks = {**row.checks, "slope": {
+                "grade_pct": 8.24, "grade_source": "dem_1m",
+                "steep_sqft": 1450.0, "steep_source": "dem_1m", "steep_blocks": False,
+            }}
+        elif row.binding and "coverage_pct" in row.binding:
+            row.checks = {**row.checks, "slope": {
+                "steep_sqft": 5200.0, "steep_source": "dem_10m", "steep_blocks": True,
+            }}
+            row.binding = [*row.binding, "steep_ground"]
+    await session.commit()
+
+    page = await client.get("/flats/lots/multnomah/1N1E29DD%20%20-05600")
+    assert page.status_code == 200
+    gentle = page.text.split('id="slope-pod56x36-2"', 1)[1].split("</tr>", 1)[0]
+    assert "falls 8.2%" in gentle and "closer look" in gentle and "1 m lidar map" in gentle
+    assert "1,450 sq ft of the lot is steeper than 15%" in gentle
+    assert "do not fit on the rest" not in gentle
+    steep = page.text.split('id="slope-pod80x25-2"', 1)[1].split("</tr>", 1)[0]
+    assert "5,200 sq ft" in steep and "coarse 10 m elevation map" in steep
+    assert "the building and its parking do not fit on the rest" in steep
+    # And a miss on either slope check reads as the hillside's, in feet for
+    # the fit it cost and in percent for the pad.
+    from app.api.routers.ui_flats import _CHECK_WORDS, _units
+
+    assert _CHECK_WORDS["steep_ground"].startswith("too steep")
+    assert _CHECK_WORDS["site_grade_pct"].startswith("too steep")
+    assert (_units("steep_ground"), _units("site_grade_pct")) == (" ft", "%")
+
+    unmeasured = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+    assert 'id="slope-pod80x25-2"' not in unmeasured.text
+
+
 # --- the colour rule (FOLLOWUPS 37) ------------------------------------------
 
 #: Lot A misses the fit by 22.5 ft with a path the code offers; lot B is open

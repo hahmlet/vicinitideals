@@ -43,7 +43,7 @@ import json
 import re
 from datetime import datetime, timezone
 from functools import lru_cache
-from typing import Any, Sequence
+from typing import Any, Mapping, Sequence
 from urllib.parse import quote
 
 from fastapi import APIRouter, Form, Query, Request
@@ -2726,6 +2726,8 @@ _CHECK_WORDS = {
     "open_space_shape": "open space too narrow",
     "landscaped_pct": "less landscaping than required",
     "fire_access_ft": "the fire hose cannot reach the far wall within 150 ft",
+    "steep_ground": "too steep: the building and its parking do not fit on the ground under 15% slope",
+    "site_grade_pct": "too steep: the ground under the building and its parking falls more than 15%",
     "driveway_frontage_share": "driveway takes more of the frontage than allowed",
     "front_yard_vehicle_share": "parking takes more of the front yard than allowed",
 }
@@ -2745,6 +2747,7 @@ _REASON_WORDS = {
     "RULE_UNVERIFIED": "a rule this rests on has not been signed",
     "RELIEF_UNCONFIRMED": "the exception it would ask for has not been read",
     "CLOSER_LOOK_MIN_DENSITY": "closer look: the lot is big enough that the city wants more homes on it than four",
+    "CLOSER_LOOK_SLOPE": "closer look: the ground under the building and its parking slopes between 5% and 15% — a stepped foundation or retaining walls to price",
     "FACT_UNOBSERVED": "a fact about the site nothing has measured decides which number applies",
     "FACT_ASSUMED": "a fact about the site was assumed rather than measured",
     "GEOMETRY_UNREADABLE": "the lot's outline could not be read",
@@ -2804,6 +2807,36 @@ _WARNING_WORDS = {
         "lot to the north before an offer."
     ),
 }
+
+
+#: The elevation model a slope was read off, said plainly.
+_SLOPE_MAP_WORDS = {
+    "dem_1m": "1 m lidar map",
+    "dem_10m": "coarse 10 m elevation map",
+}
+
+
+def _slope_words(slope: Mapping[str, Any] | None) -> dict[str, Any] | None:
+    """The slope a run measured for one plan, banded by Steph's ruling of
+    2026-10-04 (``flats/config/slope.yaml``) for the lot page."""
+    if not slope:
+        return None
+    from flats.fit.slope import load_rules as slope_rules
+
+    ruling = slope_rules()
+    grade = slope.get("grade_pct")
+    source = slope.get("grade_source") or ""
+    return {
+        "grade_pct": grade,
+        "grade_band": None if grade is None else ruling.band(float(grade), source),
+        "grade_map": _SLOPE_MAP_WORDS.get(source, source),
+        "green_max": ruling.grade_green_max_pct,
+        "red_over": ruling.grade_red_over_pct,
+        "steep_over": ruling.steep_over_pct,
+        "steep_sqft": slope.get("steep_sqft"),
+        "steep_map": _SLOPE_MAP_WORDS.get(slope.get("steep_source") or "", ""),
+        "steep_blocks": bool(slope.get("steep_blocks")),
+    }
 
 
 def _said_reason(code: str) -> str:
@@ -2874,6 +2907,9 @@ def _colour_of(checks: dict[str, Any]) -> str:
 
 
 def _units(check: str) -> str:
+    if check == "steep_ground":
+        # The fit's own numbers: the depth found on the flat ground, and needed.
+        return " ft"
     if check.endswith("_sqft"):
         return " sq ft"
     if check.endswith("_ft"):
@@ -3120,6 +3156,9 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         # OFC 503.1.1's 150 ft (FOLLOWUPS 28); absent before it was measured
         # and on a plan already red.
         "fire_route_ft": checks.get("fire_route_ft") if screened else None,
+        # The slope (FOLLOWUPS 38): steep ground kept out of the plan and
+        # the fall across the ground it stands on; absent before it was read.
+        "slope": _slope_words(checks.get("slope")) if screened else None,
         "stalls_charged": stalls.get("charged"),
         "stalls_seated": stalls.get("seated"),
         "band": stalls.get("band"),
