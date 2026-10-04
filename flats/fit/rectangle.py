@@ -89,6 +89,12 @@ class Fit:
     #: the rear wall is charged as depth by the screen. Set by
     #: :meth:`Fitter.fit_beside`.
     beside: bool = False
+    #: The room to turn the court behind the building was given for this fit
+    #: (:class:`flats.score.turns.Fix`: the aisle deeper, the stalls wider or
+    #: the dead end), set by :func:`flats.score.screen.fit_for` on the fix it
+    #: took. ``None`` on a fit built without it: the screen then charges the
+    #: least paving of the fixes that work.
+    court_fix: tuple[float, float, float] | None = None
 
     @property
     def required_ft(self) -> float:

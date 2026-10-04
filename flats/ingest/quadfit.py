@@ -133,16 +133,19 @@ from flats.score.paper import (
     side_street_fed,
 )
 from flats.score.screen import (
+    COURT_SHAPED,
     STREET_UNCONFIRMED,
     LotFacts,
     Screening,
     Triage,
     _beside_beyond,
     _court_beyond_rear,
+    _fix,
     fit_for,
     screen,
 )
 from flats.score.slack import SlackPolicy, Verdict as CheckVerdict
+from flats.score.turns import Fix
 
 #: quadfit's per-lot stage record after the envelope was cut and carved
 #: (s5o): the same columns as s4 plus the envelope, the strips s5 cut it
@@ -1484,16 +1487,43 @@ def _screen_on(
             frontage_ft=facts.frontage_ft,
             street_deg=(),
         )
-    result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
-    if "open_space_shape" in result.unchecked:
-        # The screen's window could not prove the outdoor square; measure it
-        # on the lot's own ground and screen again on the answer.
-        square = outdoor_square(here, design, got, fit, fitters[key], env)
-        if square is not None:
-            facts = dataclasses.replace(facts, outdoor_square_ft=square)
-            result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
-    shadow = _if_signed(
-        got, facts, design, fit, result, policy=policy, relief=relief, config=config
+    base = facts
+
+    def screened(fit: Fit) -> tuple[LotFacts, Screening, Screening]:
+        facts = base
+        result = screen(got, facts, design, fit, policy=policy, relief=relief, config=config)
+        if "open_space_shape" in result.unchecked:
+            # The screen's window could not prove the outdoor square; measure it
+            # on the lot's own ground and screen again on the answer.
+            square = outdoor_square(here, design, got, fit, fitters[key], env)
+            if square is not None:
+                facts = dataclasses.replace(facts, outdoor_square_ft=square)
+                result = screen(
+                    got, facts, design, fit, policy=policy, relief=relief, config=config
+                )
+        shadow = _if_signed(
+            got, facts, design, fit, result, policy=policy, relief=relief, config=config
+        )
+        return facts, result, shadow
+
+    def refit(menu: Sequence[Fix]) -> Fit:
+        return fit_for(
+            fitters[key],
+            design,
+            got,
+            placement=False,
+            carved_rear_ft=env.rear_cut_ft,
+            alley=base.alley,
+            corner=base.corner,
+            frontage_ft=base.frontage_ft,
+            street_deg=_access_deg(here, front),
+            menu=menu,
+        )
+
+    offered = court_across(design, got, base.alley, corner=base.corner).fixes
+    facts, result, shadow = screened(fit)
+    fit, facts, result, shadow = _other_fixes(
+        fit, facts, result, shadow, screened, refit, offered
     )
     return (
         Screened(
@@ -1512,6 +1542,41 @@ def _screen_on(
         ),
         fitters[key],
     )
+
+
+def _other_fixes(
+    fit: Fit,
+    facts: LotFacts,
+    result: Screening,
+    shadow: Screening,
+    screened: Callable[[Fit], tuple[LotFacts, Screening, Screening]],
+    refit: Callable[[Sequence[Fix]], Fit],
+    offered: Sequence[Fix],
+) -> tuple[Fit, LotFacts, Screening, Screening]:
+    """The court's next fix where the one taken fits but fails a rule its
+    shape moves (:data:`COURT_SHAPED`) -- a dead end that leaves no outdoor
+    square where a deeper aisle would. Each fix the ledger offers after it
+    is tried in turn, least paving first; the first that passes every rule
+    signed is taken, else the one taken first stands. Every fix tried is
+    one the car was seen to use, so a fix taken here is never a court
+    nobody drove (Steph 2026-10-03: the least paving the lot holds)."""
+    if fit.court_fix is None or fit.beside or fit.column or shadow.triage is Triage.green:
+        return fit, facts, result, shadow
+    failing = {c.check for c in shadow.checks if c.verdict is CheckVerdict.fails}
+    # A court that does not fit was the nearest miss of every fix already.
+    if not failing or not failing <= COURT_SHAPED or failing & {"fit_ft", "fit_across_ft"}:
+        return fit, facts, result, shadow
+    taken = Fix(*fit.court_fix)
+    if taken not in offered:
+        return fit, facts, result, shadow
+    for option in offered[offered.index(taken) + 1 :]:
+        other = refit((option,))
+        if other.beside or other.court_fix != tuple(option):
+            continue
+        got = screened(other)
+        if got[2].triage is Triage.green:
+            return (other, *got)
+    return fit, facts, result, shadow
 
 
 #: Which of two answers is the worse, for :func:`screen_lot`'s two
@@ -1910,7 +1975,8 @@ def outdoor_square(
         return None
     facts = here.facts
     alley, corner = facts.alley, facts.corner
-    across = court_across(design, got, alley, corner=corner)
+    fix = _fix(fit)
+    across = court_across(design, got, alley, corner=corner, fix=fix)
     # A court reached across a side yard (a side street or a side alley):
     # the drive's line is not drawn, so the court's whole depth band is
     # paved from lot line to lot line. A column along a side alley is its
@@ -1933,7 +1999,7 @@ def outdoor_square(
         column = side_column(design, got, alley)
         court = column[0] if column is not None else 0.0
     else:
-        court = court_depth(design, got, alley)[0]
+        court = court_depth(design, got, alley, corner=corner, fix=fix)[0]
     gap = design.parking.building_gap_ft
     if (stated := got.get("parking_building_buffer_ft")) is not None:
         gap = max(gap, float(stated))
@@ -1945,7 +2011,13 @@ def outdoor_square(
         lane_ft=across.lane_ft,
         court_depth_ft=court,
         court_beyond_ft=_court_beyond_rear(
-            design, got, env.rear_cut_ft, alley, column=fit.column and court > 0
+            design,
+            got,
+            env.rear_cut_ft,
+            alley,
+            column=fit.column and court > 0,
+            corner=corner,
+            fix=fix,
         ),
         street=street,
         paved_across_ft=None if fit.column else max(across.width_ft, across.lane_ft),
@@ -2037,8 +2109,16 @@ def drawing_for(
         got = side_column(s.design, s.rules, alley)
         court = got[0] if got is not None else 0.0
     else:
-        court = court_depth(s.design, s.rules, alley)[0]
-    beyond = _court_beyond_rear(s.design, s.rules, rear, alley, column=s.fit.column and court > 0)
+        court = court_depth(s.design, s.rules, alley, corner=corner, fix=_fix(s.fit))[0]
+    beyond = _court_beyond_rear(
+        s.design,
+        s.rules,
+        rear,
+        alley,
+        column=s.fit.column and court > 0,
+        corner=corner,
+        fix=_fix(s.fit),
+    )
     got = draw(
         fitter,
         s.fit,

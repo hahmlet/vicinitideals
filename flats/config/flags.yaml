@@ -260,6 +260,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-COURT-TURNS:
+    description: "The car was not driven through this shape of rear court: whether every stall can be used is not known"
+    kind: categorical
+    risk: unlikely
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, zone, design]
+    path: "Add the court's shape to the turning ledger (python -m flats.score.turns --shapes)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-TOLERANCE:
     description: "A check misses or clears by less than its measurement tolerance"
     kind: parametric

@@ -111,7 +111,9 @@ class ReliefOutcome:
 #: adjustment chapter says: the fire truck's reach is the fire code's, and
 #: its only relief (sprinklers, at the fire code official's discretion) is
 #: not assumed -- Steph 2026-10-01, a lot past it is RED (FOLLOWUPS 28).
-NO_ZONING_RELIEF: frozenset[str] = frozenset({"fire_access_ft"})
+#: Nor does one widen a car's turn: a court the car cannot use
+#: (``court_turns``, FOLLOWUPS 36(2)) is not a standard a variance waives.
+NO_ZONING_RELIEF: frozenset[str] = frozenset({"fire_access_ft", "court_turns"})
 
 
 class ReliefPolicy:

@@ -92,6 +92,7 @@ from flats.score.relief import (
     worst as _hardest_ask,
 )
 from flats.score.slack import CheckResult, SlackPolicy, Verdict, binding, dominant
+from flats.score.turns import Fix
 
 
 class Triage(str, enum.Enum):
@@ -221,6 +222,11 @@ CHECK_FIELD: dict[str, str] = {
 #: and not found (:func:`flats.fit.fire.route_ft` returned None). Joins
 #: ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``.
 FIRE_ROUTE = "fire_route"
+
+#: A lane-fed court whose shape the turning ledger does not hold
+#: (:data:`flats.score.turns.UNSEARCHED`): nobody drove the car through it.
+#: Joins ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``.
+COURT_UNDRIVEN = "court_undriven"
 
 
 @dataclass(frozen=True, slots=True)
@@ -634,7 +640,13 @@ def _checks(
             _beside_beyond(beside, fit.required_ft, rules, lot.envelope_rear_ft)
             if beside is not None
             else _court_beyond_rear(
-                design, rules, lot.envelope_rear_ft, lot.alley, column=fit.column
+                design,
+                rules,
+                lot.envelope_rear_ft,
+                lot.alley,
+                column=fit.column,
+                corner=lot.corner,
+                fix=_fix(fit),
             )
         ),
         is_maximum=False,
@@ -781,6 +793,7 @@ def _checks(
         column=fit.column,
         beside=beside,
         deep_ft=fit.required_ft,
+        fix=_fix(fit),
     )
     driveway = paved(
         design,
@@ -791,6 +804,7 @@ def _checks(
         beside=beside,
         deep_ft=fit.required_ft,
         stalls=False,
+        fix=_fix(fit),
     )
 
     allowed_sqft, _source = _coverage_allowed_sqft(rules, lot.lot_sqft)
@@ -917,6 +931,30 @@ def _checks(
                 jurisdiction=where,
             )
         )
+
+    # The car in the court (FOLLOWUPS 36(2), Steph 2026-10-02: "THREE POINT
+    # is acceptable for now"). A lane-fed row is given the room that lets a
+    # car use every stall -- a deeper aisle, wider stalls, the dead end
+    # (`court_across`, `flats.score.turns`, the one taken in `fit_for`);
+    # where none of them does, the court parks nobody it can be held to and
+    # the lot fails on it. A shape the ledger
+    # does not hold was never driven: unchecked, and never a pass. Courts
+    # beside the building and columns along a side alley are not driven here.
+    if not fit.column and not fit.beside:
+        court = court_across(design, rules, lot.alley, corner=lot.corner)
+        if court.turns is None:
+            unchecked.append("court_turns")
+            unmeasured.add(COURT_UNDRIVEN)
+        elif not court.turns:
+            out.append(
+                policy.evaluate(
+                    "court_turns",
+                    0.0,
+                    float(court.stalls),
+                    is_maximum=False,
+                    jurisdiction=where,
+                )
+            )
 
     # And the other way round: a ceiling below the least this product is
     # built with. Portland's EX permits half a stall per home -- two on a
@@ -1090,7 +1128,7 @@ def _outdoor_shape(
     """
     where = rules.jurisdiction
     parks = design.parking.parks
-    across = court_across(design, rules, lot.alley, corner=lot.corner)
+    across = court_across(design, rules, lot.alley, corner=lot.corner, fix=_fix(fit))
     # Ground behind the court the court need not use: the fit's own spare
     # depth, across the whole searched width. Never negative.
     behind = max(0.0, fitted.observed - fitted.threshold)
@@ -1240,6 +1278,8 @@ def _court_beyond_rear(
     *,
     column: bool = False,
     stalls: int | None = None,
+    corner: bool = False,
+    fix: Fix | None = None,
 ) -> float:
     """Depth the parking court needs past the envelope's rear edge, in feet.
 
@@ -1277,14 +1317,18 @@ def _court_beyond_rear(
     where that plan exists. For the row, ``stalls`` is the count a
     part-covered rear alley has to be long enough for before it serves as
     the aisle (:meth:`flats.score.paper.Alley.rear_aisle_for`); the charged
-    floor when omitted.
+    floor when omitted. ``fix`` is the room to turn the fit took for the
+    row (:attr:`flats.fit.rectangle.Fit.court_fix`); a deeper aisle is
+    depth (:func:`flats.score.paper.court_depth`, ``corner`` as there).
     """
     if column:
         got = side_column(design, rules, alley, stalls)
         assert got is not None, "a column court was charged where no side alley offers one"
         court = got[0]
     else:
-        court, _court_from_code = court_depth(design, rules, alley, stalls)
+        court, _court_from_code = court_depth(
+            design, rules, alley, stalls, corner=corner, fix=fix
+        )
     rear_held = rules.get("setback_rear_ft")
     rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     carved = rear_ft if carved_rear_ft is None else float(carved_rear_ft)
@@ -1299,6 +1343,8 @@ def _court_over(
     *,
     column: bool = False,
     stalls: int | None = None,
+    corner: bool = False,
+    fix: Fix | None = None,
 ) -> float:
     """How far the court runs past the window the fit asks for, in feet
     (FOLLOWUPS 33): the court's depth less what :func:`_court_beyond_rear`
@@ -1316,11 +1362,36 @@ def _court_over(
         assert got is not None, "a column court was charged where no side alley offers one"
         court = got[0]
     else:
-        court, _court_from_code = court_depth(design, rules, alley, stalls)
+        court, _court_from_code = court_depth(
+            design, rules, alley, stalls, corner=corner, fix=fix
+        )
     beyond = _court_beyond_rear(
-        design, rules, carved_rear_ft, alley, column=column, stalls=stalls
+        design, rules, carved_rear_ft, alley, column=column, stalls=stalls, corner=corner, fix=fix
     )
     return max(0.0, court - beyond)
+
+
+#: The checks a court's shape moves: how far it reaches, and the ground its
+#: pavement takes from the yard. A fix that fits but fails only these may
+#: pass on another fix (:func:`flats.ingest.quadfit`); any other failure
+#: stands whatever the court.
+COURT_SHAPED = frozenset(
+    {
+        "fit_ft",
+        "fit_across_ft",
+        "open_space_shape",
+        "private_open_space_shape",
+        "landscaped_pct",
+        "open_space_pct",
+        "open_space_sqft",
+        "impervious_pct",
+    }
+)
+
+
+def _fix(fit: Fit) -> Fix | None:
+    """The room to turn ``fit`` was searched with, None where it records none."""
+    return None if fit.court_fix is None else Fix(*fit.court_fix)
 
 
 def _beside_for(design: Design, rules: ZoneResolution, lot: LotFacts) -> Beside:
@@ -1390,6 +1461,7 @@ def seats(
     corner: bool = False,
     frontage_ft: float | None = None,
     street_deg: tuple[float, ...] = (),
+    fix: Fix | None = None,
 ) -> int | None:
     """How many stalls the lot seats -- the number beside the colour.
 
@@ -1427,20 +1499,25 @@ def seats(
     counts more on those lots than this does (FOLLOWUPS 4(a)); the colour
     is charged at the floor and does not move on it.
 
+    The row is counted with the room to turn the fit took (``fix``).
+
     Returns 0 where not even the floor holds at that depth, and ``None``
     for a design with no court to count.
     """
-    across = court_across(design, rules, alley, corner=corner)
+    across = court_across(design, rules, alley, corner=corner, fix=fix)
     if not across.stalls:
         return None
+    fix = across.fix
     # The depth behind the building per count: a row longer than the stretch
     # a part-covered rear alley runs keeps its own aisle (Steph 2026-09-28).
     behind = {
-        n: _court_beyond_rear(design, rules, carved_rear_ft, alley, stalls=n)
+        n: _court_beyond_rear(
+            design, rules, carved_rear_ft, alley, stalls=n, corner=corner, fix=fix
+        )
         for n in range(across.stalls, across.most + 1)
     }
     over = {
-        n: _court_over(design, rules, carved_rear_ft, alley, stalls=n)
+        n: _court_over(design, rules, carved_rear_ft, alley, stalls=n, corner=corner, fix=fix)
         for n in range(across.stalls, across.most + 1)
     }
     column = side_column(design, rules, alley) is not None
@@ -1499,7 +1576,7 @@ def _searched_narrower_than(
     (``across_ft`` is None) was built around the bare footprint, and reads as
     searched at the building's own side.
     """
-    across = court_across(design, rules, alley, corner=corner)
+    across = court_across(design, rules, alley, corner=corner, fix=_fix(fit))
     facing = fit.orientation or Orientation.width_facing
     side = (
         design.footprint.width_ft
@@ -1533,6 +1610,7 @@ def fit_for(
     corner: bool = False,
     frontage_ft: float | None = None,
     street_deg: tuple[float, ...] = (),
+    menu: Sequence[Fix] | None = None,
 ) -> Fit:
     """The fit :func:`screen` expects for this design in this zone.
 
@@ -1573,17 +1651,40 @@ def fit_for(
     keeps the row: the drawing every code here describes, and the one this
     screen has always charged; so does a lot neither arrangement fits, whose
     near miss was always measured on the row.
+
+    ROOM TO TURN (FOLLOWUPS 36(2)). A row a car cannot use as drawn is
+    given room (:mod:`flats.score.turns`) -- a deeper aisle, wider stalls,
+    the dead end -- and each that works is searched, least paving first;
+    the first the lot holds is taken (:attr:`Fit.court_fix`), else the
+    nearest miss. Steph 2026-10-03: the dead end is the last resort.
+    ``menu`` searches only those fixes, in that order: the caller's next
+    try where the one taken fits but fails a rule another may pass
+    (:data:`COURT_SHAPED`).
     """
     across = court_across(design, rules, alley, corner=corner)
     axis_required = rules.get("orientation_constraint") == "axis_required"
-    fit = fitter.fit_design(
-        design,
-        axis_required=axis_required,
-        placement=placement,
-        lane_ft=across.lane_ft,
-        court_width_ft=across.width_ft,
-        over_ft=_court_over(design, rules, carved_rear_ft, alley),
-    )
+    fit: Fit | None = None
+    best_room = -math.inf
+    for option in menu if menu is not None else (across.fixes or (across.fix,)):
+        court = court_across(design, rules, alley, corner=corner, fix=option)
+        got = fitter.fit_design(
+            design,
+            axis_required=axis_required,
+            placement=placement,
+            lane_ft=court.lane_ft,
+            court_width_ft=court.width_ft,
+            over_ft=_court_over(
+                design, rules, carved_rear_ft, alley, corner=corner, fix=court.fix
+            ),
+        )
+        room = got.slack_ft - _court_beyond_rear(
+            design, rules, carved_rear_ft, alley, corner=corner, fix=court.fix
+        )
+        if fit is None or room > best_room:
+            fit, best_room = dataclasses.replace(got, court_fix=court.fix), room
+        if room >= 0:
+            break
+    assert fit is not None
     if side_column(design, rules, alley) is not None:
         beside = fitter.fit_design(
             design,
@@ -1593,14 +1694,14 @@ def fit_for(
             court_width_ft=0.0,
             over_ft=_court_over(design, rules, carved_rear_ft, alley, column=True),
         )
-        row_room = fit.slack_ft - _court_beyond_rear(design, rules, carved_rear_ft, alley)
+        row_room = best_room
         column_room = beside.slack_ft - _court_beyond_rear(
             design, rules, carved_rear_ft, alley, column=True
         )
         if column_room > row_room:
             fit = dataclasses.replace(beside, column=True)
     room = fit.slack_ft - _court_beyond_rear(
-        design, rules, carved_rear_ft, alley, column=fit.column
+        design, rules, carved_rear_ft, alley, column=fit.column, corner=corner, fix=_fix(fit)
     )
     court = (
         side_court(design, rules, alley, corner=corner, frontage_ft=frontage_ft)
@@ -1638,6 +1739,7 @@ def fit_for(
             corner=corner,
             frontage_ft=frontage_ft,
             street_deg=street_deg,
+            fix=_fix(fit),
         ),
     )
 
@@ -1858,6 +1960,7 @@ _MEASURED_FLAG: dict[str, str] = {
     UNPAVED: "MEASURE-PAVEMENT",
     UNSHAPED: "MEASURE-OUTDOOR-SHAPE",
     FIRE_ROUTE: "MEASURE-FIRE-ROUTE",
+    COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on
