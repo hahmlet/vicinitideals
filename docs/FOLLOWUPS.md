@@ -1086,8 +1086,24 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    beats today's 10 ft on 25,168 of 28,490 segments (median +5 ft);
    truck past a parked-car lane is WORSE than today on 14,284 (median
    -1 ft) -- i.e. today's 10 ft is not strict on parked streets.
-   PENDING Steph: where the truck stands; whether to ask Washington
-   County, Clackamas County and West Linn for their widths.
+   NATIONAL PRACTICE checked 2026-10-05 (Steph asked): no standard. IFC
+   503.1.1 and NFPA 1 18.2.2.3.1 are silent; ICC's Appendix D user note
+   says 503 "does not state specific criteria". Of 16 US fire-department
+   guides read, 7 + all 4 Oregon ones are silent; San Bernardino County
+   FPD Std A-1 p2 starts "from the edge of the roadway or curb"; one
+   Southern California template (Colton p16, Roseville p5, Riverside
+   County, Murrieta, Fountain Valley, Redlands, Placentia) says "Hose pull
+   measurements begin at a point in the street located 10 feet from the
+   edge of the curb"; Ontario CA B-004 p5 "edge of the travel way";
+   Montgomery County MD plans operational bays around parked cars. The
+   10-ft-from-curb rule is WORSE than today's 10 ft on ~85% of Portland
+   segments (every street under 40 ft). Portland drawn curbs checked on
+   4 sample areas: curbed streets have both curbs drawn and match
+   PaveWidth within 2 ft 92-93%; uncurbed SW/outer-east streets 57-70%
+   (rough edges -- margin or keep 10 ft). The PBOT layers page at 200
+   rows a request. PENDING Steph: curb / 10 ft past the curb / ask PF&R
+   and TVF&R plan review once; whether to ask Washington County,
+   Clackamas County and West Linn for their widths.
 30. **Net land area review (Steph 2026-10-01: "not unique to Beaverton ...
    we need to do a review of net land areas and what to do about it").**
    129 numeric values in 10 layers carry `measured_on: net_developable_area`
