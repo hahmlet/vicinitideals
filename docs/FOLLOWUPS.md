@@ -1502,5 +1502,5 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    flagged (Tualatin 11, Sherwood 7, Portland 7, WashCo 5, Clackamas 2,
    Troutdale 1; 23 NWI-only; median 1,127 sqft of wetland), 32 of them with
    wetland ground outside every city carve -- so no carve-aware rule needed.
-   None go green. NOT DONE: probable wetlands + hydric soils on the lot page
-   (shown, not screened) -- open if wanted.
+   None go green. Probable wetlands + hydric soils: Steph 2026-10-05
+   DECLINED ("I don't want the maybe list") -- do not re-offer.
