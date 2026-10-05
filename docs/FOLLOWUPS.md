@@ -1467,6 +1467,21 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    PHASE 2 (next): read each overlay's sentences (CWS Ch. 3, each WashCo
    city's Goal 5 chapter, Gladstone 17.27.045) and move any that forbid
    building to `carve` (needs an s5o run under flock); FEMA fringe stays
-   yellow unless Steph rules raised-floor lots green. (d) DSL statewide
-   wetland inventory over Tigard/Cornelius/Johnson City/Rivergrove/Maywood
-   Park still open.
+   yellow unless Steph rules raised-floor lots green. (d) STATE MAPS --
+   Steph 2026-10-05 "plan on looking at state maps". Found: DSL serves
+   every approved local wetland inventory (maps.dsl.state.or.us
+   LWI2024/FeatureServer: 4 wetlands, 3 probable wetlands, 5 study areas;
+   2,164 wetland polygons in the metro box) and NWI everywhere
+   (NWI/FeatureServer/0, 24,547 polygons), plus ESH streams and hydric
+   soils. The "map gap" was wrong: DSL holds LWIs for Tigard, Cornelius,
+   Beaverton, Hillsboro, Gresham, Oregon City, West Linn, Wilsonville,
+   Tualatin, Sherwood, Happy Valley, Clackamas north urban area -- and
+   Tigard/Cornelius/Johnson City/Rivergrove/Maywood Park have no lots in
+   the run anyway. PLAN: one statewide  overlay (LWI where a
+   study area covers the lot, NWI elsewhere) over EVERY jurisdiction, since
+   DSL removal-fill binds regardless of city code; action flag (yellow,
+   like 42(b)); probable wetlands + hydric soils shown on the lot page, not
+   screened. Steps: fetch to gis_cache on 137, add to overlays.yaml, s5o
+   run under flock, measure greens touching a state wetland no city map
+   already flags, add to resource_overlays PERMITS, ship by end of 10-07
+   for the ~10-08 run if the s5o fits, else the week after.
