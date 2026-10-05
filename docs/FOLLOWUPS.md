@@ -1491,11 +1491,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Beaverton, Hillsboro, Gresham, Oregon City, West Linn, Wilsonville,
    Tualatin, Sherwood, Happy Valley, Clackamas north urban area -- and
    Tigard/Cornelius/Johnson City/Rivergrove/Maywood Park have no lots in
-   the run anyway. PLAN: one statewide dsl_wetlands overlay (LWI where a
-   study area covers the lot, NWI elsewhere) over EVERY jurisdiction, since
-   DSL removal-fill binds regardless of city code; action flag (yellow,
-   like 42(b)); probable wetlands + hydric soils shown on the lot page, not
-   screened. Steps: fetch to gis_cache on 137, add to overlays.yaml, s5o
-   run under flock, measure greens touching a state wetland no city map
-   already flags, add to resource_overlays PERMITS, ship by end of 10-07
-   for the ~10-08 run if the s5o fits, else the week after.
+   the run anyway. (d) SHIPPED 2026-10-05 1c6da420, deployed: two quadfit
+   `flag` overlays over EVERY jurisdiction, dsl_lwi_wetlands (LWI2024
+   layer 4) and dsl_nwi_wetlands (NWI emergent/forested-shrub/pond; Riverine
+   and Lake left out), cite ORS 196.810(1)(a) / 196.800(3),(16),(17); both
+   are RESOURCE-PERMIT yellow like (b). Fetched by box (acquire.py
+   `bbox_4326`, s0 `bbox`); pipeline.yaml registers both keys, so the next
+   weekly acquire + s5o picks them up. Measured on 137 (run 63 lots, same
+   0.5 ft touch as s5o): 33 greens -> yellow that no city map already
+   flagged (Tualatin 11, Sherwood 7, Portland 7, WashCo 5, Clackamas 2,
+   Troutdale 1; 23 NWI-only; median 1,127 sqft of wetland), 32 of them with
+   wetland ground outside every city carve -- so no carve-aware rule needed.
+   None go green. NOT DONE: probable wetlands + hydric soils on the lot page
+   (shown, not screened) -- open if wanted.
