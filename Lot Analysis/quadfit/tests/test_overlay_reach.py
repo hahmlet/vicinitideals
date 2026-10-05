@@ -34,7 +34,10 @@ pytestmark = pytest.mark.unit
 #: was looked at. A city whose only overlay is the nationwide flood layer has
 #: not been screened for wetlands, habitat or steep slope, and counting it as
 #: screened is precisely the mistake this file exists to prevent.
-FLOOD_EVERYWHERE = frozenset({"fema_floodway", "fema_sfha"})
+#: The state wetland maps (FOLLOWUPS 42(d)) are the same kind of evidence: laid
+#: over every jurisdiction by statute, they say nothing about whether a city's
+#: own habitat or slope chapter was read.
+FLOOD_EVERYWHERE = frozenset({"fema_floodway", "fema_sfha", "dsl_lwi_wetlands", "dsl_nwi_wetlands"})
 
 
 #: Jurisdictions knowingly running without an environmental overlay, each with

@@ -653,6 +653,34 @@ datasets:
     fields: [SOURCE]
     serves: [or/multnomah, or/clackamas, or/washington]
 
+  overlay_dsl_lwi_wetlands:
+    kind: arcgis
+    label: DSL local wetland inventories
+    provides: overlay
+    url: https://maps.dsl.state.or.us/arcgis/rest/services/LWI2024/FeatureServer/4
+    fields: [SITENAME, COWARDIN, HGM, Acres, GOAL_5_17]
+    bbox_4326: [-123.25, 45.15, -122.20, 45.75]
+    serves: [or/multnomah, or/clackamas, or/washington]
+    notes: >-
+      FOLLOWUPS 42(d). The state's approved local wetland inventories, laid
+      over every jurisdiction as a removal-fill permit flag (ORS 196.810).
+      Statewide, so asked for by box; layer 3 (probable wetlands) and 5 (study
+      areas) are not fetched.
+
+  overlay_dsl_nwi_wetlands:
+    kind: arcgis
+    label: National Wetlands Inventory (DSL)
+    provides: overlay
+    url: https://maps.dsl.state.or.us/arcgis/rest/services/NWI/FeatureServer/0
+    fields: [ATTRIBUTE, WETLAND_TYPE, ACRES]
+    where: "WETLAND_TYPE IN ('Freshwater Emergent Wetland', 'Freshwater Forested/Shrub Wetland', 'Freshwater Pond')"
+    bbox_4326: [-123.25, 45.15, -122.20, 45.75]
+    serves: [or/multnomah, or/clackamas, or/washington]
+    notes: >-
+      FOLLOWUPS 42(d). Everywhere the inventories do not reach. Wetland and
+      pond types only: Riverine is the channel and Lake open water, both read
+      through the stream maps and FEMA already.
+
   overlay_fema_flood:
     kind: arcgis
     label: FEMA National Flood Hazard Layer

@@ -60,6 +60,14 @@ class Permit:
         return f"ovl_{self.key}"
 
 
+#: The state's own permit, which binds whatever a city's wetland map says
+#: (FOLLOWUPS 42(d)): both DSL maps are laid over every jurisdiction.
+_STATE_FILL = (
+    "ORS 196.810(1)(a): removing material from or filling a wetland needs a Department of "
+    "State Lands permit (wetlands are waters of this state, ORS 196.800(16)-(17); fill is "
+    "50 cubic yards or more at one location, ORS 196.800(3))"
+)
+
 #: Every quadfit overlay whose action is ``flag``, and Portland's three
 #: environmental zones. ``flats/tests/test_resource_overlays.py`` holds this
 #: list against overlays.yaml, so an overlay added there cannot go unread here.
@@ -83,6 +91,16 @@ PERMITS: tuple[Permit, ...] = (
         "metro_wetlands",
         "a wetland on Metro's regional inventory",
         "DSL removal-fill applies to the wetland footprint itself (overlays.yaml metro_wetlands)",
+    ),
+    Permit(
+        "dsl_lwi_wetlands",
+        "a wetland on the state's approved local wetland inventory",
+        _STATE_FILL,
+    ),
+    Permit(
+        "dsl_nwi_wetlands",
+        "a wetland or pond on the National Wetlands Inventory",
+        _STATE_FILL,
     ),
     Permit(
         "washington_cws_corridor",

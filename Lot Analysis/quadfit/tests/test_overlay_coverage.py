@@ -103,12 +103,36 @@ def test_an_overlay_declared_for_all_jurisdictions_says_so_explicitly() -> None:
     `jurisdictions: all` is the shape that makes a data gap invisible: a
     city-scoped overlay missing its layer is caught by the coverage grades in
     `overlays.yaml`, but an all-jurisdictions one silently grades every lot
-    outside its data as clear. Today that is the two FEMA layers. If a third
-    appears, it needs the same fetch-coverage argument made about it, and this
-    test is where somebody finds that out.
+    outside its data as clear. Today that is the two FEMA layers and the two
+    state wetland maps (FOLLOWUPS 42(d)), whose fetch-coverage argument is
+    :func:`test_the_state_wetland_maps_are_fetched_for_the_whole_run_area`. If
+    another appears, it needs the same argument made about it, and this test is
+    where somebody finds that out.
     """
     from common import load_overlays
 
     specs = load_overlays()
     everywhere = sorted(s.key for s in specs.overlays if s.applies_to("a_city_that_does_not_exist"))
-    assert everywhere == ["fema_floodway", "fema_sfha"], everywhere
+    assert everywhere == [
+        "dsl_lwi_wetlands", "dsl_nwi_wetlands", "fema_floodway", "fema_sfha",
+    ], everywhere
+
+
+#: Every screened lot's bounding box, measured on the 2026-10-01 run (lon
+#: -123.00 to -122.37, lat 45.28 to 45.63), rounded outward.
+SCREENED_EXTENT_4326 = (-123.05, 45.25, -122.30, 45.70)
+
+
+@pytest.mark.parametrize("slug", ["overlay_dsl_lwi_wetlands", "overlay_dsl_nwi_wetlands"])
+def test_the_state_wetland_maps_are_fetched_for_the_whole_run_area(slug) -> None:
+    """DSL's layers are statewide, so they are asked for by box, not by county.
+
+    A box that stopped short of a city would grade its lots dry the way the
+    Multnomah-only NFHL filter did, so the box has to hold every screened lot,
+    and the filter may name wetland types but never a place.
+    """
+    spec = _s0().PHASE2_LAYERS[slug]
+    west, south, east, north = spec["bbox"]
+    w, s, e, n = SCREENED_EXTENT_4326
+    assert west <= w and south <= s and east >= e and north >= n, spec["bbox"]
+    assert "COUNTY" not in spec.get("where", "1=1").upper()

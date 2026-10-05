@@ -246,6 +246,85 @@ overlays:
       king_city: {grade: B, note: ""}
       durham: {grade: B, note: ""}
 
+  # ---------------- Oregon Department of State Lands (2026-10-05) ------------
+  # FOLLOWUPS 42(d). A city's own wetland map is one layer of law; the state's
+  # is another, and it binds whatever the city adopted: "a person may not
+  # remove any material from the beds or banks of any waters of this state or
+  # fill any waters of this state without a permit issued under authority of
+  # the Director of the Department of State Lands" (ORS 196.810(1)(a)), and
+  # waters of this state include wetlands (ORS 196.800(16), (17)). A permit,
+  # not a refusal, and only past 50 cubic yards at one location (ORS
+  # 196.800(3)) -- so both are FLAGS everywhere: the lot goes to a person who
+  # reads the wetland against the pod, never green on it. Tigard, Cornelius,
+  # Johnson City, Rivergrove and Maywood Park, which have no wetland map of
+  # their own here, get one from these.
+  #
+  # Two maps, because neither covers the area alone. The approved local
+  # wetland inventories (LWI) are field-delineated and DSL-approved, but only
+  # where a city or district commissioned one; the National Wetlands
+  # Inventory (NWI) covers everywhere from aerial photo interpretation and is
+  # coarser and older. NWI is fetched for its wetland and pond types only:
+  # "Riverine" is the stream channel itself and "Lake" open water, neither
+  # ground a building is placed on, and both already reach the screen through
+  # the city stream maps and FEMA. Probable wetlands (LWI2024 layer 3) and
+  # hydric soils (SWISoil2025) are DSL's screening layers, not mapped
+  # wetlands: deferred to the lot page, not screened.
+  - key: dsl_lwi_wetlands
+    name: "DSL-approved local wetland inventory (state removal-fill permit)"
+    action: flag
+    jurisdictions: all
+    citation: "ORS 196.810(1)(a) -- removal or fill in waters of this state needs a DSL permit; ORS 196.800(16),(17) waters of this state include wetlands; ORS 196.800(3) fill = 50 cubic yards or more at one location"
+    confidence: verified
+    coverage:
+      beaverton: {grade: B, note: "Beaverton LWI 2000 + Cooper Mountain / Cooper Mountain South"}
+      hillsboro: {grade: B, note: "Hillsboro LWI 2001 + Jackson East, Witch Hazel Village South, Technology Park"}
+      gresham: {grade: B, note: "Gresham LWI 2004"}
+      oregon_city: {grade: B, note: "Oregon City LWI 1999"}
+      west_linn: {grade: B, note: "West Linn LWI 2005"}
+      wilsonville: {grade: B, note: "Wilsonville LWI 1999"}
+      tualatin: {grade: B, note: "Tualatin LWI 1996"}
+      sherwood: {grade: B, note: "Sherwood LWI 1992"}
+      happy_valley: {grade: C, note: "Happy Valley West 1997 + Expansion 2009 + Damascus 2009; not every part of the city"}
+      clackamas_unincorporated: {grade: C, note: "Clackamas Co North Urban Area 1994 only"}
+      washington_unincorporated: {grade: C, note: "Bethany North, Bonny Slope West, Bull Mountain, Tigard River Terrace only"}
+      king_city: {grade: C, note: "Kingston Terrace East/West (the expansion area) only"}
+      portland: {grade: X, note: "no approved LWI; NWI only"}
+      milwaukie: {grade: X, note: "no approved LWI; NWI only"}
+      gladstone: {grade: X, note: "no approved LWI; NWI only"}
+      troutdale: {grade: X, note: "no approved LWI; NWI only"}
+      fairview: {grade: X, note: "no approved LWI; NWI only"}
+      wood_village: {grade: X, note: "no approved LWI; NWI only"}
+      multnomah_unincorporated: {grade: X, note: "no approved LWI; NWI only"}
+      durham: {grade: X, note: "no approved LWI; NWI only"}
+
+  - key: dsl_nwi_wetlands
+    name: "National Wetlands Inventory wetland or pond (state removal-fill permit)"
+    action: flag
+    jurisdictions: all
+    citation: "ORS 196.810(1)(a) -- removal or fill in waters of this state needs a DSL permit; ORS 196.800(16),(17) waters of this state include wetlands; ORS 196.800(3) fill = 50 cubic yards or more at one location"
+    confidence: verified
+    coverage:
+      portland: {grade: C, note: "NWI as served by DSL: emergent, forested/shrub and pond types; aerial interpretation"}
+      gresham: {grade: C, note: ""}
+      troutdale: {grade: C, note: ""}
+      fairview: {grade: C, note: ""}
+      wood_village: {grade: C, note: ""}
+      multnomah_unincorporated: {grade: C, note: ""}
+      milwaukie: {grade: C, note: ""}
+      gladstone: {grade: C, note: ""}
+      oregon_city: {grade: C, note: ""}
+      west_linn: {grade: C, note: ""}
+      happy_valley: {grade: C, note: ""}
+      wilsonville: {grade: C, note: ""}
+      clackamas_unincorporated: {grade: C, note: ""}
+      washington_unincorporated: {grade: C, note: ""}
+      hillsboro: {grade: C, note: ""}
+      beaverton: {grade: C, note: ""}
+      tualatin: {grade: C, note: ""}
+      sherwood: {grade: C, note: ""}
+      king_city: {grade: C, note: ""}
+      durham: {grade: C, note: ""}
+
   # ---------------- Washington County (2026-09-30) ---------------------------
   # One regime covers the whole urban county, cities and county alike: Clean
   # Water Services' Design and Construction Standards, Chapter 3. A sensitive

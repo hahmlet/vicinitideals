@@ -171,6 +171,9 @@ _FAI = "https://services5.arcgis.com/3DoY8p7EnUTzaIE7/arcgis/rest/services"
 _WV = "https://services7.arcgis.com/5Loh3xXKWLd2M7xA/arcgis/rest/services"
 _METRO = "https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services"
 _HV = "https://services5.arcgis.com/fuVQ9NIPGnPhCBXp/arcgis/rest/services"
+_DSL = "https://maps.dsl.state.or.us/arcgis/rest/services"
+#: The urban three counties, with room: DSL's layers are statewide.
+DSL_BBOX_4326 = (-123.25, 45.15, -122.20, 45.75)
 _MIL = "https://services6.arcgis.com/8e6aYcxt8yhvXvO9/ArcGIS/rest/services/Milwaukie_Zoning/FeatureServer"
 _TUAL = "https://tualgis.ci.tualatin.or.us/server/rest/services/EnvironmentalExplorer/MapServer"
 
@@ -216,6 +219,24 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_metro_wetlands": {
         "url": f"{_METRO}/Wetlands/FeatureServer/0",
         "fields": ["SOURCE"]},
+    # Oregon Department of State Lands, statewide (FOLLOWUPS 42(d)). A permit
+    # to fill a wetland (ORS 196.810(1)(a)) binds whatever the city's own map
+    # says, so these are laid over every jurisdiction. The approved local
+    # wetland inventories first -- DSL holds one for most cities here, Tigard
+    # and Cornelius included -- and the National Wetlands Inventory, which
+    # covers everywhere and is coarser, kept to the wetland and pond types:
+    # NWI's "Riverine" is the stream channel itself and "Lake" open water,
+    # neither ground a building is placed on.
+    "overlay_dsl_lwi_wetlands": {
+        "url": f"{_DSL}/LWI2024/FeatureServer/4",
+        "fields": ["SITENAME", "COWARDIN", "HGM", "Acres", "GOAL_5_17"],
+        "bbox": DSL_BBOX_4326},
+    "overlay_dsl_nwi_wetlands": {
+        "url": f"{_DSL}/NWI/FeatureServer/0",
+        "fields": ["ATTRIBUTE", "WETLAND_TYPE", "ACRES"],
+        "where": "WETLAND_TYPE IN ('Freshwater Emergent Wetland', "
+                 "'Freshwater Forested/Shrub Wetland', 'Freshwater Pond')",
+        "bbox": DSL_BBOX_4326},
     # ---------------- West Linn -------------------------------------------
     # CDC 32.030: "Alteration, development, or use of real property designated
     # as, and within, a WRA is strictly prohibited except as specifically
@@ -719,7 +740,8 @@ def esri_polyline_to_geojson(esri_geom: dict[str, Any] | None) -> dict[str, Any]
 
 
 def fetch_arcgis_layer(slug: str, url: str, out_fields: list[str], force: bool,
-                       where: str = "1=1", gtype: str = "polygon") -> None:
+                       where: str = "1=1", gtype: str = "polygon",
+                       bbox: tuple[float, float, float, float] | None = None) -> None:
     path = raw_path(slug)
     if path.exists() and not force:
         print(f"{slug}: cache present — skipping")
@@ -742,8 +764,12 @@ def fetch_arcgis_layer(slug: str, url: str, out_fields: list[str], force: bool,
         for attempt in range(5):
             if attempt:
                 time.sleep(10 * attempt)
-            r = client.get(f"{url}/query", params={
-                "where": where, "returnIdsOnly": "true", "f": "json"})
+            params = {"where": where, "returnIdsOnly": "true", "f": "json"}
+            if bbox is not None:  # a statewide layer, asked for the run area
+                params |= {"geometry": ",".join(map(str, bbox)),
+                           "geometryType": "esriGeometryEnvelope", "inSR": "4326",
+                           "spatialRel": "esriSpatialRelIntersects"}
+            r = client.get(f"{url}/query", params=params)
             r.raise_for_status()
             ids_doc = r.json()
             if "error" not in ids_doc:
@@ -986,7 +1012,8 @@ def main() -> None:
             try:
                 fetch_arcgis_layer(slug, spec["url"], spec["fields"], args.force,
                                    where=spec.get("where", "1=1"),
-                                   gtype=spec.get("gtype", "polygon"))
+                                   gtype=spec.get("gtype", "polygon"),
+                                   bbox=spec.get("bbox"))
             except Exception as exc:  # one dead host must not sink the rest
                 print(f"  FAILED {slug}: {exc}")
                 failed.append(slug)

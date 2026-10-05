@@ -275,17 +275,21 @@ def _arcgis_fields(client: httpx.Client, ds: Dataset) -> list[str]:
 
 
 def _arcgis_ids(client: httpx.Client, ds: Dataset) -> tuple[str, list[int]]:
-    where = ds.where or "1=1"
+    params = {"where": ds.where or "1=1", "returnIdsOnly": "true", "f": "json"}
+    if ds.bbox_4326 is not None:
+        # A statewide layer (DSL's wetland inventories), asked for the area
+        # the run covers rather than for all of Oregon.
+        params |= {
+            "geometry": ",".join(str(v) for v in ds.bbox_4326),
+            "geometryType": "esriGeometryEnvelope",
+            "inSR": "4326",
+            "spatialRel": "esriSpatialRelIntersects",
+        }
     last: dict[str, Any] = {}
     for attempt in range(3):
         if attempt:
             _sleep(5.0 * attempt)  # FEMA 400s the identical query intermittently
-        last = _json(
-            client.get(
-                f"{ds.url}/query",
-                params={"where": where, "returnIdsOnly": "true", "f": "json"},
-            )
-        )
+        last = _json(client.get(f"{ds.url}/query", params=params))
         if "error" not in last:
             break
     if "error" in last:

@@ -298,6 +298,36 @@ datasets:
 
     ids = [r for r in server.requests if r.url.params.get("returnIdsOnly") == "true"]
     assert ids and ids[0].url.params["where"] == FEMA_WHERE
+    assert "geometry" not in ids[0].url.params
+
+
+def test_a_statewide_layer_is_asked_for_the_run_area_only(tmp_path: Path) -> None:
+    # DSL serves every wetland inventory in Oregon from one layer; the registry's
+    # bbox_4326 is what keeps the fetch to the counties the run screens.
+    server = ArcGIS(n=2, fields=("OBJECTID", "WETLAND_TYPE"))
+    body = f"""
+jurisdictions:
+  or/multnomah/portland: true
+datasets:
+  overlay_dsl_nwi_wetlands:
+    kind: arcgis
+    label: NWI
+    provides: overlay
+    url: {ARCGIS}
+    fields: [WETLAND_TYPE]
+    where: "WETLAND_TYPE = 'Freshwater Pond'"
+    bbox_4326: [-123.25, 45.15, -122.2, 45.75]
+    serves: [or/multnomah]
+"""
+    pipeline = load_pipeline(registry(tmp_path, body))
+
+    acquire(pipeline, tmp_path / "2026-09-18", client=client(server), log=quiet)
+
+    [ids] = [r for r in server.requests if r.url.params.get("returnIdsOnly") == "true"]
+    assert ids.url.params["geometry"] == "-123.25,45.15,-122.2,45.75"
+    assert ids.url.params["inSR"] == "4326"
+    assert ids.url.params["spatialRel"] == "esriSpatialRelIntersects"
+    assert ids.url.params["where"] == "WETLAND_TYPE = 'Freshwater Pond'"
 
 
 def test_a_feature_the_server_cannot_serve_is_named_not_dropped(tmp_path: Path) -> None:
