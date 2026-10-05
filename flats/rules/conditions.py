@@ -734,6 +734,25 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "constrained_sites_overlay",
+        "site_fact",
+        "Some part of the lot carries Portland's Constrained Sites overlay, "
+        "the \"z\" on the zoning map (PCC 33.418). The city lays it over R20 "
+        "through R2.5 lots touching an environmental zone, the flood hazard "
+        "area, the floodway, a mapped landslide hazard, the 1998 wildfire "
+        "map, an industrial sanctuary or the airport's 68 DNL noise contour "
+        "(33.418.030), and 33.418.040 then switches off the triplex and "
+        "fourplex allowance. The state's middle housing law leaves that "
+        "standing: ORS 197A.420(5)(b) lets a city \"regulate middle housing "
+        "to comply with protective measures adopted pursuant to statewide "
+        "land use planning goals\", which is the purpose 33.418.010 states.",
+        evidence=(
+            "Portland zoning map OVRLY letters, any part of the lot inside a "
+            "\"z\" polygon (quadfit s2 has_z_overlay)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "north_of_marine_drive",
         "site_fact",
         "The lot lies north of NE Marine Drive, between the road and the "
@@ -868,6 +887,21 @@ _C: tuple[ConditionDef, ...] = (
         "rural zones is acres. Tiered discretionary because it is a hearing "
         "with findings, not a permit counter.",
         evidence="a Planning Commission decision on a PD development plan and program",
+        tier=Tier.discretionary,
+    ),
+    ConditionDef(
+        "attached_house_division",
+        "relief",
+        "The four units built as four attached houses, each on its own lot, "
+        "after the lot is divided. Portland's Constrained Sites overlay "
+        "(33.418.040) takes away the triplex and fourplex allowance but not "
+        "the attached house, which Table 110-2 allows in R20 through R2.5; "
+        "33.910 defines an attached house as \"a dwelling unit, located on its "
+        "own lot\", so the way round is a land division the city has to "
+        "approve first, on ground the overlay says is hazardous or protected. "
+        "Nothing here checks the four new lots. Logged on the bind, never "
+        "taken (Steph 2026-10-04: red, way in noted).",
+        evidence="a land division approved by the city, then four attached-house lots",
         tier=Tier.discretionary,
     ),
     ConditionDef(

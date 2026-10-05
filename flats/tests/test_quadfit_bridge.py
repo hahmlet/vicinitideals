@@ -100,6 +100,7 @@ def row(**over: object) -> dict[str, object]:
         "front_bearings_json": "[0.0]",
         "fronts_cul_de_sac": False,
         "split_zone": False,
+        "has_z_overlay": False,
         "ovl_fema_sfha": False,
         "ovl_fema_floodway": False,
         "sewer_main_dist_ft": 12.0,
@@ -128,6 +129,7 @@ def test_a_plain_interior_lot_on_a_main() -> None:
         "corner_lot": False,
         "through_lot": False,
         "split_zone": False,
+        "constrained_sites_overlay": False,
         "in_floodplain": False,
         "public_sewer": True,
     }

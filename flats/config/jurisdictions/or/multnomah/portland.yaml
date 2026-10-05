@@ -1667,6 +1667,12 @@ code:
   # lot area, and the state's middle housing law caps a fourplex's minimum lot
   # at the house's (OAR 660-046-0220(2)(a)(B)) -- so RF's figure for the
   # state path lives here (Steph 2026-09-30, FOLLOWUPS 21(b)).
+  # The Constrained Sites overlay (map letter "z"): on a lot any part of
+  # which is mapped, 33.418.040 switches off the triplex/fourplex allowance
+  # in R20 through R2.5. Read for that one sentence (FOLLOWUPS 42(a)).
+  - id: "33.418"
+    url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+    title: Chapter 33.418 Constrained Sites Overlay Zone
   - id: "33.610"
     url: https://www.portland.gov/sites/default/files/code/610-rf-r2.5-lots_0.pdf
     title: Chapter 33.610 Lots in the RF through R2.5 Zones
@@ -2250,6 +2256,28 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
+      variants:
+        # The Constrained Sites overlay (the "z" on the zoning map) takes the
+        # allowance away again on any lot it touches in any portion: 33.418.040.B
+        # switches off 33.110.265.E, "which allows triplexes and fourplexes in
+        # the R20 through R2.5 zones". The state path does not bring it back --
+        # ORS 197A.420(5)(b) as HB 2138 words it (or/hb.2138.2025.txt#L106-L107)
+        # lets a city "regulate middle housing to comply with protective measures
+        # adopted pursuant to statewide land use planning goals", the purpose
+        # 33.418.010 states -- so a mapped lot is RED with no relief (FOLLOWUPS 42(a)).
+        - value: false
+          when: [constrained_sites_overlay]
+          cite: PCC 33.418.030 and 33.418.040.B
+          url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+          retrieved: '2026-10-04'
+          quote: "or/multnomah/portland/33.418.txt#L20-L22,L43-L48"
+        # The way round, logged and not taken (Steph 2026-10-04, "red, way in
+        # noted"): 33.418.040 does not reach the attached house, which Table
+        # 110-2 allows here -- four units on four lots after a land division.
+        - value: true
+          when: [constrained_sites_overlay, attached_house_division]
+          cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
+          quote: "or/multnomah/portland/33.110.txt#L305-L306"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -2336,6 +2364,28 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
+      variants:
+        # The Constrained Sites overlay (the "z" on the zoning map) takes the
+        # allowance away again on any lot it touches in any portion: 33.418.040.B
+        # switches off 33.110.265.E, "which allows triplexes and fourplexes in
+        # the R20 through R2.5 zones". The state path does not bring it back --
+        # ORS 197A.420(5)(b) as HB 2138 words it (or/hb.2138.2025.txt#L106-L107)
+        # lets a city "regulate middle housing to comply with protective measures
+        # adopted pursuant to statewide land use planning goals", the purpose
+        # 33.418.010 states -- so a mapped lot is RED with no relief (FOLLOWUPS 42(a)).
+        - value: false
+          when: [constrained_sites_overlay]
+          cite: PCC 33.418.030 and 33.418.040.B
+          url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+          retrieved: '2026-10-04'
+          quote: "or/multnomah/portland/33.418.txt#L20-L22,L43-L48"
+        # The way round, logged and not taken (Steph 2026-10-04, "red, way in
+        # noted"): 33.418.040 does not reach the attached house, which Table
+        # 110-2 allows here -- four units on four lots after a land division.
+        - value: true
+          when: [constrained_sites_overlay, attached_house_division]
+          cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
+          quote: "or/multnomah/portland/33.110.txt#L305-L306"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -2422,6 +2472,28 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
+      variants:
+        # The Constrained Sites overlay (the "z" on the zoning map) takes the
+        # allowance away again on any lot it touches in any portion: 33.418.040.B
+        # switches off 33.110.265.E, "which allows triplexes and fourplexes in
+        # the R20 through R2.5 zones". The state path does not bring it back --
+        # ORS 197A.420(5)(b) as HB 2138 words it (or/hb.2138.2025.txt#L106-L107)
+        # lets a city "regulate middle housing to comply with protective measures
+        # adopted pursuant to statewide land use planning goals", the purpose
+        # 33.418.010 states -- so a mapped lot is RED with no relief (FOLLOWUPS 42(a)).
+        - value: false
+          when: [constrained_sites_overlay]
+          cite: PCC 33.418.030 and 33.418.040.B
+          url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+          retrieved: '2026-10-04'
+          quote: "or/multnomah/portland/33.418.txt#L20-L22,L43-L48"
+        # The way round, logged and not taken (Steph 2026-10-04, "red, way in
+        # noted"): 33.418.040 does not reach the attached house, which Table
+        # 110-2 allows here -- four units on four lots after a land division.
+        - value: true
+          when: [constrained_sites_overlay, attached_house_division]
+          cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
+          quote: "or/multnomah/portland/33.110.txt#L305-L306"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -2531,6 +2603,28 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
+      variants:
+        # The Constrained Sites overlay (the "z" on the zoning map) takes the
+        # allowance away again on any lot it touches in any portion: 33.418.040.B
+        # switches off 33.110.265.E, "which allows triplexes and fourplexes in
+        # the R20 through R2.5 zones". The state path does not bring it back --
+        # ORS 197A.420(5)(b) as HB 2138 words it (or/hb.2138.2025.txt#L106-L107)
+        # lets a city "regulate middle housing to comply with protective measures
+        # adopted pursuant to statewide land use planning goals", the purpose
+        # 33.418.010 states -- so a mapped lot is RED with no relief (FOLLOWUPS 42(a)).
+        - value: false
+          when: [constrained_sites_overlay]
+          cite: PCC 33.418.030 and 33.418.040.B
+          url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+          retrieved: '2026-10-04'
+          quote: "or/multnomah/portland/33.418.txt#L20-L22,L43-L48"
+        # The way round, logged and not taken (Steph 2026-10-04, "red, way in
+        # noted"): 33.418.040 does not reach the attached house, which Table
+        # 110-2 allows here -- four units on four lots after a land division.
+        - value: true
+          when: [constrained_sites_overlay, attached_house_division]
+          cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
+          quote: "or/multnomah/portland/33.110.txt#L305-L306"
     max_height_ft:
       # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
       # 35 ft. in R2.5. The header row is quoted with the standard's row
@@ -2642,6 +2736,28 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
+      variants:
+        # The Constrained Sites overlay (the "z" on the zoning map) takes the
+        # allowance away again on any lot it touches in any portion: 33.418.040.B
+        # switches off 33.110.265.E, "which allows triplexes and fourplexes in
+        # the R20 through R2.5 zones". The state path does not bring it back --
+        # ORS 197A.420(5)(b) as HB 2138 words it (or/hb.2138.2025.txt#L106-L107)
+        # lets a city "regulate middle housing to comply with protective measures
+        # adopted pursuant to statewide land use planning goals", the purpose
+        # 33.418.010 states -- so a mapped lot is RED with no relief (FOLLOWUPS 42(a)).
+        - value: false
+          when: [constrained_sites_overlay]
+          cite: PCC 33.418.030 and 33.418.040.B
+          url: https://www.portland.gov/sites/default/files/code/418-constrained_1.pdf
+          retrieved: '2026-10-04'
+          quote: "or/multnomah/portland/33.418.txt#L20-L22,L43-L48"
+        # The way round, logged and not taken (Steph 2026-10-04, "red, way in
+        # noted"): 33.418.040 does not reach the attached house, which Table
+        # 110-2 allows here -- four units on four lots after a land division.
+        - value: true
+          when: [constrained_sites_overlay, attached_house_division]
+          cite: PCC 33.110 Table 110-2 (Attached house); 33.418.040 lists no attached house
+          quote: "or/multnomah/portland/33.110.txt#L305-L306"
     min_density_trigger_lot_sqft:
       # 33.110.205.C.3, one sentence: "In the R2.5 zone, a minimum of two
       # dwelling units are required on sites that are 5,000 square feet or

@@ -252,3 +252,22 @@ def test_a_quote_is_attributed_to_every_section_it_reads():
 
     assert both.agrees
     assert not half.agrees
+
+
+def test_a_heading_split_after_its_title_number_still_reads():
+    """Portland's 33.418 prints "33. 418.030 Applying the ...": the PDF reader
+    put a space after the title number. Without this form every value quoted
+    from 33.418.030 read as 33.418.010, the purpose statement above it.
+    """
+    doc = [
+        "33.418.010 Purpose",
+        "Under some circumstances, more than two dwelling units are allowed.",
+        "33. 418.030 Applying the Constrained Sites Overlay Zone",
+        "The Constrained Sites overlay zone is applied to lots in the R20 zone",
+    ]
+    assert section_at(doc, 4) == "33.418.030"
+
+    # Oregon City's split table-of-contents lines carry no title and stay
+    # what they were: not headings.
+    toc = ["Sections:", "17. 32.010", "text"]
+    assert section_at(toc, 3) == ""

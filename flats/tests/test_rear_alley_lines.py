@@ -91,6 +91,7 @@ def row(edges, cover, **over: object) -> dict[str, object]:
         "front_bearings_json": "[88.37]",
         "fronts_cul_de_sac": False,
         "split_zone": False,
+        "has_z_overlay": False,
         "ovl_fema_sfha": False,
         "ovl_fema_floodway": False,
         "sewer_main_dist_ft": 12.0,

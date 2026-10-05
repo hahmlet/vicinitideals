@@ -207,6 +207,12 @@ DISTRICT_ONLY: frozenset[str] = frozenset({"multnomah_unincorporated"})
 NROD_ANSWERS: frozenset[str] = frozenset({"oregon_city"})
 NROD_SQFT = "ovl_oregon_city_nrod_sqft"
 
+#: Where Portland's zoning map answers ``constrained_sites_overlay``: the city
+#: and the unincorporated pockets it administers, which its map covers with the
+#: same letters (quadfit s2 ``has_z_overlay``). Nowhere else does a "z" mean
+#: anything, and s2's False there is only "outside Portland's map".
+Z_ANSWERS: frozenset[str] = frozenset({"portland", "multnomah_unincorporated"})
+
 #: The s4 columns the bridge reads, and the s5o ones. Columns a stage file
 #: written before they existed lacks are read as absent (see
 #: :func:`iter_rows`); the bridge then answers those facts the way the
@@ -224,6 +230,7 @@ S4_COLUMNS: tuple[str, ...] = (
     "front_bearings_json",
     "fronts_cul_de_sac",
     "split_zone",
+    "has_z_overlay",
     "neighbour_zones_json",
     "park_across_json",
     "alley_width_ft",
@@ -260,6 +267,7 @@ OBSERVABLE: tuple[str, ...] = (
     "split_zone",
     "in_floodplain",
     "protected_water_feature",
+    "constrained_sites_overlay",
     # Only where a map code settles it (an alias ruling's ``observes``) or a
     # layer's ``drawn_areas`` traces it.
     "inside_mapped_use_area",
@@ -343,6 +351,9 @@ def observed_facts(
       because no setback value here says what the second front becomes.
     * ``protected_water_feature`` -- Oregon City only, off the city's NROD
       map (:data:`NROD_ANSWERS`): False where the lot does not touch it.
+    * ``constrained_sites_overlay`` -- Portland and its pockets only
+      (:data:`Z_ANSWERS`), off the "z" letters on Portland's zoning map: True
+      where any part of the lot is inside one (PCC 33.418.040 is "any portion").
     * ``split_zone`` -- s2's majority rule: the winning zone covers under
       90 % of the lot. A sliver under that is read by quadfit as zoning-map
       noise against the taxlot fabric, and the bridge carries that reading
@@ -435,6 +446,8 @@ def observed_facts(
     nrod = _finite(row.get(NROD_SQFT))
     if row.get("jurisdiction") in NROD_ANSWERS and nrod is not None:
         out["protected_water_feature"] = nrod > 0
+    if row.get("jurisdiction") in Z_ANSWERS and _answered(row.get("has_z_overlay")):
+        out["constrained_sites_overlay"] = _is_true(row.get("has_z_overlay"))
     return out
 
 

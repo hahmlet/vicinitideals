@@ -73,6 +73,10 @@ def test_relief_is_a_condition_like_any_other() -> None:
         # caught up with it (ORS 197A.420(2); Steph 2026-09-30): an argument
         # with the city, then LUBA -- a path, never a permit.
         "state_middle_housing",
+        # And Portland's z overlay (PCC 33.418): the four units as four
+        # attached houses after a land division. Logged on the bind, never
+        # taken (Steph 2026-10-04).
+        "attached_house_division",
     }
 
 

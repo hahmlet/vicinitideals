@@ -644,6 +644,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-CONSTRAINED-SITES-OVERLAY:
+    description: "Whether any part of the lot carries Portland's Constrained Sites (z) overlay"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Portland zoning map z letters"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-CORNER-LOT:
     description: "Whether the lot is a corner lot"
     kind: categorical

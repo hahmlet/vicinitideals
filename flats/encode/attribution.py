@@ -72,11 +72,18 @@ _SECTION = re.compile(r"(?<![\d.])(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)(?![\d])"
 #: it the marker above those chapters was whichever cross-reference sat
 #: nearest. Measured 2026-09-20 over the whole corpus: 30 more values
 #: resolve to a section, six disagreements gone, none added.
+#: The last form is a heading the PDF reader split after the title number:
+#: Portland's 33.418 prints "33. 418.030 Applying the Constrained Sites
+#: Overlay Zone", and every value quoted from it read as 33.418.010, the
+#: purpose statement two headings up. Only a three-part number followed by
+#: its title counts -- Oregon City's split table-of-contents lines ("17.
+#: 32.010" alone on a line) stay what they were.
 _HEADING = re.compile(
     r"^[ 	]{0,8}(?:"
     r"Section\s+(?P<s>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.\s*(?:[A-Z—-])"
     r"|(?:§|�)\s*(?P<m>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.?\s*(?:[A-Z§—-]|$)"
     r"|(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—-]|$)"
+    r"|(?P<t>\d{1,3})\. (?P<u>\d{2,4}\.\d{1,4})\s+[A-Z]"
     r")"
 )
 
@@ -186,7 +193,11 @@ def section_at(lines: Sequence[str], line: int) -> str:
                 return furniture
             return spelled
         if not furniture:
-            furniture = found.group("m") or found.group("n")
+            furniture = (
+                found.group("m")
+                or found.group("n")
+                or f"{found.group('t')}.{found.group('u')}"
+            )
     return furniture
 
 
