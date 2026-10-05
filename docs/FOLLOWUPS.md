@@ -1316,9 +1316,14 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    lower, and shows "room to spare on green lots" per limit. Bound on 137 (10k
    lots seed 23, old vs new): 0 colours moved, every column identical. The ~10-08
    re-screen carries it only if run from main >= 7dc34722; nothing shows
-   until that run is in use. NOT measured: side-to-side room inside the
-   side setbacks (needs a second fit search per lot) -- offered 2026-10-05,
-   Steph's call. OPEN: (iii) Gresham
+   until that run is in use. IN PROGRESS (Steph 2026-10-05: "If we're getting
+   room left, we need all dimensions. How would this handle oddly shaped
+   lots?"): room WIDER (at the pod's length) and BIGGER BOTH WAYS at once,
+   each searched on the real lot shape for the plan the screen took; on an
+   odd lot "both" < min(longer, wider) is the tight-shape signal; report's
+   width steps then read the real shape. Bound + timing on 137 before ship;
+   come back to Steph if the weekly run slows a lot. Aim: 10-08 re-screen.
+   OPEN: (iii) Gresham
    note 5 "end of a Minor Access Street" held on `local_street` (wrong
    fact) -- re-point + measure dead ends; worth little while
    sidewalk_easement holds the same Gresham lots; (f) Phase 4 pod spec.
