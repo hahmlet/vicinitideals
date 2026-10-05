@@ -260,3 +260,54 @@ notes:
       anti-phasing sentence bites a developer assembling a larger project out
       of small ones, which is a pattern this screen does not model and would
       have to be told about rather than infer from a single lot
+
+  # --- Table 19.402.15, Determination of WQR Location -------------------
+  # Reached only through the region sweep: this is the first notes block in
+  # 19.400, so its region runs back to the top of the chapter and takes in
+  # the Willamette Greenway sentences in 19.401 that FOLLOWUPS 42(b) encodes
+  # (2026-10-05). The six notes measure the width of a vegetated corridor
+  # off a water feature. FLATS takes that ground from quadfit's Milwaukie
+  # WQR map (resource_overlays.milwaukie_wqr), not from this table, and none
+  # of the six says anything about whether a greenway use is conditional.
+  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2155"
+    digest: "fc5dec2357eb"
+    state: dismissed
+    reason: >-
+      a note to Table 19.402.15 (vegetated corridor width off a protected
+      water feature); it governs no value FLATS encodes -- the Willamette
+      Greenway use rule in 19.401 sits in its region only by the sweep
+  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2156"
+    digest: "3043c9e9d2fe"
+    state: dismissed
+    reason: >-
+      a note to Table 19.402.15 (vegetated corridor width off a protected
+      water feature); it governs no value FLATS encodes -- the Willamette
+      Greenway use rule in 19.401 sits in its region only by the sweep
+  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2157"
+    digest: "6087788a6acb"
+    state: dismissed
+    reason: >-
+      a note to Table 19.402.15 (vegetated corridor width off a protected
+      water feature); it governs no value FLATS encodes -- the Willamette
+      Greenway use rule in 19.401 sits in its region only by the sweep
+  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2158"
+    digest: "c6d3c29b3c34"
+    state: dismissed
+    reason: >-
+      a note to Table 19.402.15 (vegetated corridor width off a protected
+      water feature); it governs no value FLATS encodes -- the Willamette
+      Greenway use rule in 19.401 sits in its region only by the sweep
+  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2159"
+    digest: "8685d4898c23"
+    state: dismissed
+    reason: >-
+      a note to Table 19.402.15 (vegetated corridor width off a protected
+      water feature); it governs no value FLATS encodes -- the Willamette
+      Greenway use rule in 19.401 sits in its region only by the sweep
+  - quote: "or/clackamas/milwaukie/19.400.overlays.txt#L2160"
+    digest: "ee5156f1bbe4"
+    state: dismissed
+    reason: >-
+      a note to Table 19.402.15 (vegetated corridor width off a protected
+      water feature); it governs no value FLATS encodes -- the Willamette
+      Greenway use rule in 19.401 sits in its region only by the sweep

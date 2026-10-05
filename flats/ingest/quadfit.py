@@ -260,8 +260,9 @@ S5O_COLUMNS: tuple[str, ...] = (
     "carve_wkb",
     GREENWAY_COLUMN,
     # The mapped areas a house goes up in only with a permit
-    # (:mod:`flats.rules.resource_overlays`).
-    *PERMIT_COLUMNS,
+    # (:mod:`flats.rules.resource_overlays`); the FEMA fringe is already
+    # above, and pandas refuses a column named twice.
+    *(c for c in PERMIT_COLUMNS if c != "ovl_fema_sfha"),
     # Each deduction a city's net area may take off the lot, in square feet
     # (:data:`flats.rules.net_area.MEASURED`).
     *sorted({c for cols in NET_MEASURED.values() for c in cols}),
