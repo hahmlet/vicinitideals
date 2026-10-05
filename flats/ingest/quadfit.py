@@ -2263,8 +2263,11 @@ def fire_checked(
     # stand on (where it is one: the offset keeps only truck roads).
     streets += tuple(a for a in lot.access if a not in streets)
     offset = fire.point_offset(*roads) if roads is not None else None
+    # The hose measured from the curb itself, where a curb or width is held
+    # (FOLLOWUPS 29): only to flag a red the stricter reading alone makes.
+    from_curb = fire.point_offset(*roads, reading="curb") if roads is not None and len(roads) > 2 and roads[2] is not None else None
 
-    def measure(drawing: dict[str, Any] | None) -> float | None:
+    def measure(drawing: dict[str, Any] | None, offset: Any = offset) -> float | None:
         # Only a drawing whose room holds the building and its court stands
         # the building anywhere: where the fit fell short it shows the
         # shortfall, and a route to that would turn a lot RED off a
@@ -2291,7 +2294,8 @@ def fire_checked(
         return s
 
     def screened(s: Screened, route: float | None) -> Screened:
-        facts = dataclasses.replace(s.facts, fire_route_ft=route, fire_route_tried=True)
+        curb = measure(s.drawing, from_curb) if from_curb is not None and route is not None and route > limit else None
+        facts = dataclasses.replace(s.facts, fire_route_ft=route, fire_route_tried=True, fire_route_curb_ft=curb)
         result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
         shadow = _if_signed(
             s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
@@ -2879,13 +2883,16 @@ def _init_worker(
     sources: Path | None = None,
     roads: Path | None = None,
     dem: Path | None = None,
+    curbs: Path | None = None,
 ) -> None:
     """Load the corpus, catalog, policies, corridor maps, the street
-    centrelines the fire route is measured to and the elevation models the
-    slope is read off, once per process."""
+    centrelines the fire route is measured to (with the curbs and widths
+    of ``curbs``, a snapshot directory) and the elevation models the slope
+    is read off, once per process."""
     from flats.designs.model import load_catalog
     from flats.encode.load import load_trusted
     from flats.fit.fire import load_truck_roads
+    from flats.geom.curbs import load as load_street_edges
     from flats.score import relief as relief_mod, slack as slack_mod
 
     _WORKER["rules"] = load_trusted(strict=False).rules
@@ -2894,7 +2901,11 @@ def _init_worker(
     _WORKER["relief"] = relief_mod.load_policy()
     _WORKER["step_deg"] = step_deg
     _WORKER["corridors"] = load_corridor_maps(sources) if sources is not None else ()
-    _WORKER["roads"] = load_truck_roads(roads) if roads is not None else None
+    _WORKER["roads"] = (
+        (*load_truck_roads(roads), load_street_edges(curbs) if curbs is not None else None)
+        if roads is not None
+        else None
+    )
     _WORKER["terrain"] = terrain_at(dem) if dem is not None else None
 
 
@@ -3101,6 +3112,7 @@ def run(
     transit: Path | None = None,
     roads: Path | None = None,
     dem: Path | None = None,
+    curbs: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -3120,7 +3132,10 @@ def run(
     (:func:`terrain_at`); it defaults to ``quadfit/raw`` beside the stage
     directory, and a run without 1 m tiles there is refused -- without them
     no lot is graded and Steph's slope ruling silently goes unchecked
-    (FOLLOWUPS 38).
+    (FOLLOWUPS 38). ``curbs`` is a snapshot directory holding the published
+    curb lines and pavement widths (:mod:`flats.geom.curbs`); it defaults to
+    ``sources``, and where it holds none every street keeps the truck 10 ft
+    off its centreline (FOLLOWUPS 29).
     """
     import time
     from multiprocessing import Pool
@@ -3128,6 +3143,7 @@ def run(
     import pandas as pd
 
     roads = roads if roads is not None else s4.parent / "s1_streets.parquet"
+    curbs = curbs if curbs is not None else sources
     if not roads.exists():
         raise FileNotFoundError(f"no street centrelines for the fire route: {roads}")
     dem = dem if dem is not None else s4.parents[1] / "quadfit" / "raw"
@@ -3159,13 +3175,13 @@ def run(
         pd.DataFrame.from_records(records).to_parquet(parts_dir / f"{i:05d}.parquet", index=False)
 
     if processes <= 1:
-        _init_worker(step_deg, sources, roads, dem)
+        _init_worker(step_deg, sources, roads, dem, curbs)
         for i, chunk in enumerate(chunks):
             _write(i, _work_chunk(chunk))
             done += len(chunk)
             log(f"  {done:,}/{len(rows):,}  {time.time() - t0:,.0f}s")
     else:
-        with Pool(processes, initializer=_init_worker, initargs=(step_deg, sources, roads, dem)) as pool:
+        with Pool(processes, initializer=_init_worker, initargs=(step_deg, sources, roads, dem, curbs)) as pool:
             for i, records in enumerate(pool.imap(_work_chunk, chunks)):
                 _write(i, records)
                 done += len(chunks[i])
@@ -3196,6 +3212,7 @@ def run(
         "transit": str(transit) if transit is not None else None,
         "roads": str(roads),
         "dem": str(dem),
+        "curbs": str(curbs) if curbs is not None else None,
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -3239,6 +3256,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         type=Path,
         help="quadfit raw dir holding dem/ and dem10_utm/ (default: ../quadfit/raw from --s4)",
     )
+    ap.add_argument(
+        "--curbs",
+        type=Path,
+        help="snapshot dir holding the curb lines and pavement widths (default: --sources)",
+    )
     args = ap.parse_args(argv)
     run(
         args.out,
@@ -3258,6 +3280,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         transit=args.transit,
         roads=args.roads,
         dem=args.dem,
+        curbs=args.curbs,
     )
     return 0
 

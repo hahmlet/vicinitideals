@@ -17,11 +17,17 @@ it leaves out can only lengthen it:
 * it goes round the building, never through it, and reaches a wall point by
   way of a corner -- the wall facing the street, reached straight on, is
   never the farthest point, so nothing is lost there;
-* the truck stands on the street's own pavement. The pavement's edge is
-  unrecorded, so the distance to the street's centreline is taken less
-  :data:`HALF_ROAD_FT`: a fire apparatus road is at least 20 ft wide (OFC
-  503.2.1), so the near edge of any street a truck can use is no nearer the
-  centreline than that, and the offset is never shorter than the real one;
+* the truck stands on the street's own pavement, and the hose is measured
+  from :data:`CURB_START_FT` out from the near curb, never past the street's
+  middle (Steph 2026-10-05, "stricter": a lane of parked cars between the
+  truck and the curb; FOLLOWUPS 29). Where a curb line or a pavement width
+  is published (:mod:`flats.geom.curbs`), the curb is where it says. Where
+  none is, the distance to the street's centreline is taken less
+  :data:`HALF_ROAD_FT`, as before any width was read: a fire apparatus road
+  is at least 20 ft wide (OFC 503.2.1), so the truck stands no nearer the
+  lot than that on any street a truck can use -- strict for the truck at
+  the curb, though not, on a street narrower than 40 ft, for the truck
+  10 ft past it (:func:`hose_offsets`);
 * the street lot line is walked at :data:`SOURCE_STEP_FT` points, and from the
   points of it nearest each building corner, not every point of it.
 
@@ -38,14 +44,26 @@ from __future__ import annotations
 import heapq
 import math
 from pathlib import Path
-from typing import Callable, Sequence
+from typing import TYPE_CHECKING, Callable, Sequence
 
 import numpy as np
 import shapely
 from shapely.geometry.base import BaseGeometry
 
+if TYPE_CHECKING:
+    from flats.geom.curbs import StreetEdges
+
 #: Half the narrowest fire apparatus road (OFC 503.2.1, 20 ft unobstructed).
 HALF_ROAD_FT = 10.0
+#: How far out from the near curb the hose is measured from: "Hose pull
+#: measurements begin at a point in the street located 10 feet from the edge
+#: of the curb" (Colton, Roseville, Riverside County and others; Steph
+#: 2026-10-05 chose it over the curb itself, the stricter of the two).
+CURB_START_FT = 10.0
+#: The two readings :func:`hose_offsets` gives: the one the screen holds
+#: (``strict``), and the hose measured from the curb itself (``curb``), which
+#: only says whether a lot the strict reading fails would clear at the curb.
+READINGS = ("strict", "curb")
 #: A street lot line point farther than this from every road a truck can use
 #: is not on one: quadfit s4 calls a lot line a street's only within 50 ft of
 #: its centreline (``street_threshold_ft``), and a line it called a street
@@ -241,12 +259,56 @@ def route_ft(
     return far
 
 
+def hose_offsets(
+    points: np.ndarray,
+    centrelines: shapely.STRtree | None,
+    geoms: Sequence[BaseGeometry],
+    edges: StreetEdges | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    """How far past each street lot line point the hose starts, read two
+    ways: (strict, curb).
+
+    Strict: :data:`CURB_START_FT` out from the near curb, capped at the
+    street's middle (the centreline); curb: at the near curb. Where
+    ``edges`` place no curb, both are :func:`street_offsets` -- the old
+    10 ft off the centreline. A curb placed by a width alone never puts the
+    strict start nearer the lot than that (:mod:`flats.geom.curbs`).
+    Infinite past :data:`MAX_GAP_FT`, zero where no centreline is held, as
+    :func:`street_offsets`.
+    """
+    old = street_offsets(points, centrelines, geoms)
+    if edges is None or centrelines is None or not len(geoms) or not len(points):
+        return old, old.copy()
+    from flats.geom.curbs import Source
+
+    pts = shapely.points(points)
+    lines = np.asarray(geoms, dtype=object)[centrelines.nearest(pts)]
+    feet = shapely.get_coordinates(shapely.shortest_line(pts, lines)).reshape(-1, 2, 2)[:, 1]
+    gap = shapely.distance(pts, lines)
+    near, src = edges.near(np.asarray(points, dtype=float), feet, lines)
+    held = src != Source.none
+    strict = np.minimum(near + CURB_START_FT, gap)
+    strict = np.where(src == Source.width, np.maximum(strict, old), strict)
+    curb = np.minimum(near, gap)
+    far = ~np.isfinite(old)
+    strict = np.where(far, math.inf, np.where(held, strict, old))
+    curb = np.where(far, math.inf, np.where(held, curb, old))
+    return strict, curb
+
+
 def point_offset(
-    centrelines: shapely.STRtree | None, geoms: Sequence[BaseGeometry]
+    centrelines: shapely.STRtree | None,
+    geoms: Sequence[BaseGeometry],
+    edges: StreetEdges | None = None,
+    *,
+    reading: str = "strict",
 ) -> Callable[[np.ndarray], np.ndarray]:
-    """:func:`street_offsets` bound to one street index, as :func:`route_ft`
-    takes it."""
-    return lambda pts: street_offsets(pts, centrelines, geoms)
+    """:func:`hose_offsets` bound to one street index, as :func:`route_ft`
+    takes it: the ``reading`` of :data:`READINGS` asked for."""
+    if reading not in READINGS:
+        raise ValueError(f"reading must be one of {READINGS}, not {reading!r}")
+    pick = READINGS.index(reading)
+    return lambda pts: hose_offsets(pts, centrelines, geoms, edges)[pick]
 
 
 def reachable(
@@ -262,9 +324,12 @@ def reachable(
 
 
 __all__ = [
+    "CURB_START_FT",
     "HALF_ROAD_FT",
     "MAX_GAP_FT",
+    "READINGS",
     "TRUCK_TYPES",
+    "hose_offsets",
     "load_truck_roads",
     "point_offset",
     "reachable",

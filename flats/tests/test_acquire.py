@@ -80,6 +80,9 @@ class ArcGIS:
         self.requests: list[httpx.Request] = []
         self.fail_ids: set[int] = set()
         self.metadata_error: str | None = None
+        #: Rows the layer serves a request, past which it answers the first
+        #: page and says only ``exceededTransferLimit`` (PBOT: 200).
+        self.cap: int | None = None
 
     def __call__(self, request: httpx.Request) -> httpx.Response:
         self.requests.append(request)
@@ -104,6 +107,8 @@ class ArcGIS:
         for i in ids:
             rings = [SQUARE_CW, HOLE_CCW] if i == 1 else [[[c + i for c in pt] for pt in SQUARE_CW]]
             feats.append({"attributes": {"OBJECTID": i, "ZONE": f"R{i}", "OVRLY": None}, "geometry": {"rings": rings}})
+        if self.cap is not None and len(feats) > self.cap:
+            return httpx.Response(200, json={"features": feats[: self.cap], "exceededTransferLimit": True})
         return httpx.Response(200, json={"features": feats})
 
 
@@ -308,6 +313,23 @@ def test_a_feature_the_server_cannot_serve_is_named_not_dropped(tmp_path: Path) 
     assert entry["features"] == 4
     assert entry["unfetched_ids"] == [3]
     assert [f["properties"]["OBJECTID"] for f in features_of(out / "zoning_portland.geojson")] == [1, 2, 4, 5]
+
+
+def test_a_layer_serving_fewer_rows_than_asked_is_taken_whole(tmp_path: Path) -> None:
+    # PBOT's curb layer answers 200 of the 400 ids asked for and says so in
+    # one flag; read as an answer, half of Portland's curbs went missing.
+    server = ArcGIS(n=450)
+    server.cap = 200
+    pipeline = load_pipeline(registry(tmp_path, ARCGIS_ONLY))
+    out = tmp_path / "2026-10-05"
+
+    doc = acquire(pipeline, out, client=client(server), log=quiet)
+
+    entry = doc["datasets"]["zoning_portland"]
+    assert entry["features"] == 450
+    assert entry["unfetched_ids"] == []
+    ids = [f["properties"]["OBJECTID"] for f in features_of(out / "zoning_portland.geojson")]
+    assert sorted(ids) == list(range(1, 451))
 
 
 def test_a_server_error_is_a_failure_with_no_file(tmp_path: Path) -> None:

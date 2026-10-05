@@ -373,6 +373,12 @@ class LotFacts:
     #: unrun.
     fire_route_ft: float | None = None
     fire_route_tried: bool = False
+    #: The same route with the hose measured from the near curb itself
+    #: rather than 10 ft out from it (:data:`flats.fit.fire.READINGS`,
+    #: FOLLOWUPS 29). Measured only where the route misses and a curb or
+    #: width is published for the street; read only to flag a lot red on
+    #: the stricter reading alone (FIRE-HOSE-START), never as a pass.
+    fire_route_curb_ft: float | None = None
     #: The ground on this lot steeper than Steph's slope ruling allows
     #: building or parking on (``flats/config/slope.yaml``,
     #: :meth:`flats.fit.slope.Terrain.steep`), square feet, and the
@@ -2191,6 +2197,17 @@ def _account(
         flag("CHECK-OPTIMISTIC", "OPTIMISTIC", check=name)
     if SOLAR_SHADE in warnings:
         flag("SOLAR-SHADE", SOLAR_SHADE)
+    # Red on the hose alone measured from 10 ft out from the curb, and
+    # clear measured from the curb (Steph 2026-10-05: "stricter", "with a
+    # flag to check later"). The bind stands; the flag says one answer
+    # from the fire marshal would lift it -- so only where the hose is the
+    # one bind (a minimum density missed is a flag, never a bind).
+    curb_route = lot.fire_route_curb_ft
+    walls = [c for c in checks if c.verdict is Verdict.fails and c.check not in MIN_DENSITY_CHECKS]
+    if curb_route is not None and use_path is None and [c.check for c in walls] == ["fire_access_ft"]:
+        (c,) = walls
+        if curb_route <= c.threshold:
+            flag("FIRE-HOSE-START", "FIRE_HOSE_START", bounds=(min(curb_route, c.observed), c.observed))
     # A minimum density missed is a flag, never a bind (Steph 2026-10-02:
     # "Make it a flag for sure ... It would just be a low risk flag").
     for c in checks:

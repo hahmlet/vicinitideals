@@ -331,6 +331,14 @@ def _fetch_arcgis(
             else:
                 unfetched.extend(ids)
             return
+        if doc.get("exceededTransferLimit") and len(ids) > 1:
+            # The layer serves fewer rows a request than were asked for
+            # (PBOT's transportation layers: 200) and says so only here; the
+            # answer is the first page, the rest silently dropped.
+            mid = len(ids) // 2
+            batch(ids[:mid], offset_ft, retried)
+            batch(ids[mid:], offset_ft, retried)
+            return
         for feat in doc.get("features", []):
             sink.add(
                 {

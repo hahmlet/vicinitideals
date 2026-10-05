@@ -275,6 +275,22 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  FIRE-HOSE-START:
+    description: "Red only because the fire hose is measured from 10 ft out from the curb; measured from the curb itself it reaches (Steph 2026-10-05)"
+    kind: parametric
+    risk: possible
+    # Marks a red, never holds a green: below the yellow line.
+    severity: 1
+    absorbs: null
+    resolution: external_inquiry
+    scope: shared
+    key: [jurisdiction]
+    path: "Ask the fire marshal where the 150 ft starts: at the curb, or 10 ft out from it (FOLLOWUPS 29)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FIRE_HOSE_START]
   MEASURE-SITE-GRADE:
     description: "No elevation model covers the ground the drawn plan stands on, so its slope is not known"
     kind: categorical

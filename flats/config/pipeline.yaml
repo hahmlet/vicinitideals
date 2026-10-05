@@ -461,6 +461,74 @@ datasets:
       (Figure 7 Street Plan, 2013), which draws Minor Collectors on streets
       this layer calls Local Street.
 
+  # --- curbs and pavement widths (flats/geom/curbs.py) ----------------------
+  # Where the fire truck stands (FOLLOWUPS 29): the hose's 150 ft
+  # (OFC 503.1.1) is measured from 10 ft out from the near curb (Steph
+  # 2026-10-05, "stricter"). RLIS holds no street width; these are the
+  # published curb lines and pavement widths found 2026-10-04. Washington and
+  # Clackamas counties keep theirs in pavement systems they do not publish.
+  # A street none of these reach keeps the strict 10 ft off the centreline.
+
+  curbs_portland:
+    kind: arcgis
+    label: Portland PBOT curb and shoulder lines
+    provides: streets
+    url: https://www.portlandmaps.com/od/rest/services/COP_OpenData_Transportation/MapServer/74
+    geometry: polyline
+    where: CurbType IN (3110, 3120, 3140)
+    fields: [CurbType, CurbStyle]
+    serves: [or/multnomah/portland]
+    notes: >-
+      115k lines; the layer pages at 200 rows a request. CurbType 3110
+      Blockface, 3120 Corner, 3140 Shoulder (the pavement's edge where no
+      curb is built); 3130 Island and 3150 Parking Block are not a street's
+      edge and are not fetched. CurbStyle INSIDE (a property-side curb) is
+      fetched and skipped by the reader. No id joins a curb to a street:
+      the reader finds the curb a lot line's straight line to the
+      centreline crosses.
+
+  pave_width_portland:
+    kind: arcgis
+    label: Portland PBOT Pavement Management System segments
+    provides: streets
+    url: https://www.portlandmaps.com/od/rest/services/COP_OpenData_Transportation/MapServer/71
+    geometry: polyline
+    where: PaveWidth >= 10
+    fields: [Streetname, PaveWidth, RoadWidth, Curb, LastInspectionDate]
+    serves: [or/multnomah/portland]
+    notes: >-
+      PaveWidth (ft) on 29,523 segments, inspected mostly 2016-2025; the
+      1,027 under 10 ft are not street widths and are not fetched. Drawn
+      down the street's middle; matches the drawn curbs within 2 ft on 92%
+      of curbed streets (checked 2026-10-04).
+
+  road_width_multnomah:
+    kind: arcgis
+    label: Multnomah County Road Width (county roads)
+    provides: streets
+    url: https://www3.multco.us/gisagspublic/rest/services/RoadServices/TransportationLayers/MapServer/17
+    geometry: polyline
+    where: RoadWidth >= 10
+    fields: [RoadName, RoadWidth, ROWwidth, SquareYards, BeginPoint, EndPoint]
+    serves: [or/multnomah]
+    notes: >-
+      486 county roads. RoadWidth is the paved width: SquareYards x 9 over
+      the section's length gives it back within 4% on 80% of sections
+      (median 1.00, checked 2026-10-05). ROWwidth is the right-of-way.
+
+  street_width_wilsonville:
+    kind: arcgis
+    label: Wilsonville Streets pavement width
+    provides: streets
+    url: https://gis.wilsonvillemaps.com/server/rest/services/Map___WilsonvilleMaps_MIL1/MapServer/80
+    geometry: polyline
+    where: Width >= 10 AND Life_Cycle_Status = 'In Service'
+    fields: [STREETNAME, Width, Life_Cycle_Status]
+    serves: [or/clackamas/wilsonville]
+    notes: >-
+      Width (ft) on 1,608 of 1,609 segments, edited 2026; one Proposed and
+      one Out of Service street are not fetched.
+
   # --- transit (flats/geom/transit.py) ---------------------------------------
   # Measured once per transit release into a per-lot distance file
   # (flats/ingest/transit.py), not once per screen. Metro republishes these
