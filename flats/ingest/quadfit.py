@@ -115,7 +115,13 @@ from flats.geom.neighbour import (
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
-from flats.geom.street_class import LOCAL_STREET, load_class_maps, observed_local_street
+from flats.geom.street_class import (
+    LOCAL_STREET,
+    load_class_maps,
+    measured_access,
+    observed_local_street,
+    street_ranks,
+)
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
@@ -770,9 +776,14 @@ def lot_edges(
     cover = _cover(row, raw) or [None] * len(raw)
     off = off_corridor_lines(raw, _layer_id(row), corridors) if corridors else (False,) * len(raw)
     clear = _across_clear(row, len(raw), layers)
+    # Each street line's class rank off the city's TSP map
+    # (:func:`with_local_street`); none where no map serves the lot.
+    ranks = json.loads(row.get("street_ranks_json") or "[]")
+    if len(ranks) != len(raw):
+        ranks = [None] * len(raw)
     edges: list[Edge] = []
-    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line in zip(
-        raw, cover, off, clear, strict=True
+    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line, rank in zip(
+        raw, cover, off, clear, ranks, strict=True
     ):
         x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
         if letter == ALLEY_CLASS:
@@ -792,6 +803,7 @@ def lot_edges(
                 cover=(stretch or "") if letter == ALLEY_CLASS else None,
                 off_corridor=bool(off_line),
                 across_clear=bool(clear_line) and letter == STREET_CLASS,
+                street_rank=int(rank) if rank is not None and letter == STREET_CLASS else None,
             )
         )
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -1213,6 +1225,7 @@ def _sans_row(row: Mapping[str, Any], key: str) -> dict[str, Any] | None:
         "neighbour_zones_json": dumped(alt.get("neighbour_zones")),
         "park_across_json": dumped(alt.get("park_across")),
         "street_kind_json": None,
+        "street_ranks_json": None,
         "sans_drive_json": None,
     }
 
@@ -1446,7 +1459,10 @@ def iter_rows(
 
 def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
     """Answer ``local_street`` on every row a city's TSP map serves, in place
-    (``local_street_obs``: True, False, or absent), and say how many.
+    (``local_street_obs``: True, False, or absent), and say how many. The
+    same rows carry each street line's class rank (``street_ranks_json``,
+    :func:`flats.geom.street_class.street_ranks`) for the lowest-class
+    driveway rule.
 
     Read off the row's own s4 edges, so a lot screened a second way without
     its private drive (:func:`_sans_row`) carries the first reading -- where
@@ -1463,6 +1479,7 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
         if not any(m.covers(layer_id) for m in maps):
             continue
         edges = json.loads(row.get("edges_json") or "[]")
+        row["street_ranks_json"] = json.dumps(street_ranks(edges, layer_id, maps))
         got = observed_local_street(edges, layer_id, maps)
         if LOCAL_STREET in got:
             row["local_street_obs"] = got[LOCAL_STREET]
@@ -2053,6 +2070,9 @@ def _screen_lot_once(
             here = lot
             if plan_edges is not lot.edges:
                 here = dataclasses.replace(lot, edges=plan_edges)
+            # A lowest-class driveway off a corner lot whose named front is
+            # the quieter street comes off the front (Steph 2026-10-05).
+            plan_got = measured_access(got, plan_edges, front)
             if plain is None and lot.observed.get("alley_at_rear") and rear_off_alley(here.edges):
                 # A rear line off the alley owes the ordinary rear setback:
                 # the same lot resolved without the rear alley (FOLLOWUPS 12(b)).
@@ -2082,7 +2102,7 @@ def _screen_lot_once(
             tried.append(min(
                 (
                     _screen_on(
-                        here, design, config, got, env, front, angles, fitters, step_deg,
+                        here, design, config, plan_got, env, front, angles, fitters, step_deg,
                         policy=policy, relief=relief, plan=plan_key,
                     )
                     for env in envs
