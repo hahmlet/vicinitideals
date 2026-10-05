@@ -255,6 +255,23 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "at_street_end",
+        "site_fact",
+        "A public street ends at the lot: its centreline stops short of "
+        "meeting another street, and the lot lies at that end. Gresham's "
+        "Table 4.0131 note 5 gives a townhouse \"the end of a Minor Access "
+        "Street\" a 5 ft minimum and a 25 ft maximum setback, which the "
+        "corpus does not hold; a Minor Access Street end is a street end, so "
+        "a lot no public street ends near is answered False and the note "
+        "does not reach it. Never answered True: a street ending near the "
+        "lot does not say the lot is at that end, nor that the street is a "
+        "Minor Access Street, and the note's own numbers are not encoded, so "
+        "a True would lift the cap and screen the lot against the table row "
+        "the note replaces. Unknown everywhere else, which keeps the cap.",
+        evidence="quadfit s1 public street centrelines (RLIS TYPE not alley, private road, unnamed drive or unimproved): no end point within flats.geom.street_end.REACH_FT of the taxlot",
+        assume=None,
+    ),
+    ConditionDef(
         "beyond_ugb_mile",
         "site_fact",
         "The parcel is more than one mile from the Metro Urban Growth "
