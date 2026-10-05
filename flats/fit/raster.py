@@ -61,6 +61,8 @@ class Grid:
     #: :meth:`max_depth_cells` answers by width: a lot asks the same widths
     #: again for every design, fix and seat it tries.
     _depths: dict[int, int] = field(default_factory=dict, compare=False, repr=False)
+    #: :meth:`max_width_cells` answers by depth, the same way.
+    _widths: dict[int, int] = field(default_factory=dict, compare=False, repr=False)
 
     @property
     def rows(self) -> int:
@@ -124,6 +126,27 @@ class Grid:
         count = np.cumsum(ok, axis=0, dtype=np.int32)
         # The count where each run last broke, carried down the column.
         broke = np.maximum.accumulate(np.where(ok, 0, count), axis=0)
+        return int((count - broke).max())
+
+    def max_width_cells(self, d_cells: int) -> int:
+        """Widest window of the given depth that fits: :meth:`max_depth_cells`
+        turned a quarter -- the longest run, along one row, of columns that
+        each hold ``d_cells`` buildable cells down from there. How much wider
+        a pod could be at the run it needs (FOLLOWUPS 37(ii))."""
+        got = self._widths.get(d_cells)
+        if got is None:
+            got = self._widths[d_cells] = self._widest_run(d_cells)
+        return got
+
+    def _widest_run(self, d_cells: int) -> int:
+        if d_cells < 1 or d_cells > self.rows:
+            return 0
+        s = self.integral
+        ok = (s[d_cells:, 1:] - s[:-d_cells, 1:] - s[d_cells:, :-1] + s[:-d_cells, :-1]) == d_cells
+        if not ok.any():
+            return 0
+        count = np.cumsum(ok, axis=1, dtype=np.int32)
+        broke = np.maximum.accumulate(np.where(ok, 0, count), axis=1)
         return int((count - broke).max())
 
     def to_world(self, row: int, col: int, d_cells: int, w_cells: int):

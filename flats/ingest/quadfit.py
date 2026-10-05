@@ -126,6 +126,7 @@ from flats.score.configure import Configuration, configure
 from flats.score import flags as flag_plan
 from flats.score import margins as margin_record
 from flats.score.relief import ReliefPolicy
+from flats.score.room import Room, room_for
 from flats.score.paper import (
     _yard,
     court_across,
@@ -1521,6 +1522,28 @@ class Screened:
     #: fact measured after the drawing (:func:`fire_checked`) re-screens on
     #: the same ground. None from a caller that built one by hand.
     facts: LotFacts | None = None
+    #: How much bigger the pod could be on this lot, each way
+    #: (:func:`flats.score.room.room_for`, FOLLOWUPS 37(ii)): for the pod
+    #: report, never read by the colour. None where the fit did not pass,
+    #: the lot is red (it stays red whatever the pod's size) or nobody asked.
+    room: Room | None = None
+
+
+def _room(s: Screened, fitter: Fitter) -> Room | None:
+    """:func:`flats.score.room.room_for` for the plan ``s`` took on
+    ``fitter``, with the arguments :func:`_screen_on` gave the fit."""
+    facts = s.facts if s.facts is not None else s.lot.facts
+    return room_for(
+        fitter,
+        s.design,
+        s.rules,
+        s.fit,
+        carved_rear_ft=s.envelope.rear_cut_ft if s.envelope is not None else None,
+        alley=facts.alley,
+        corner=facts.corner,
+        frontage_ft=facts.frontage_ft,
+        street_deg=_access_deg(s.lot, s.front_deg),
+    )
 
 
 def _if_signed(
@@ -1879,6 +1902,7 @@ def _bounded(
             bound=False,
             pool=pool,
             terrain=terrain,
+            room=False,
         )
         if alt.signed.binds or any(
             (f.code, f.key) not in known and flag_plan.severity_of(f, reg) >= line
@@ -1946,6 +1970,7 @@ def _screen_lot_once(
     pool: dict[Any, dict[Any, Fitter]] | None = None,
     terrain: Any = None,
     fit_only: bool = False,
+    room: bool = True,
 ) -> list[Screened]:
     """Screen one lot against every design, one envelope search for all.
 
@@ -1971,6 +1996,10 @@ def _screen_lot_once(
     ``fit_only`` is for a caller that reads nothing but the fit
     (:func:`slope_checked`): the drawing, the fire route and the strip's
     second reading, the dearest steps on a big lot, are not run.
+
+    ``room`` measures how much bigger each pod could be on a lot it is not
+    red on (:attr:`Screened.room`); a caller that discards the answer
+    (:func:`_bounded`) spares the search.
     """
     pool = {} if pool is None else pool
     layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
@@ -2082,6 +2111,10 @@ def _screen_lot_once(
                 won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
                 roads=roads, pool=pool, fitter=fitter, terrain=terrain,
             )
+        if room and won.signed.colour is not flag_plan.Colour.red:
+            # Before the strip's second reading: a plan that reading replaces
+            # was red, and the reading measures its own.
+            won = dataclasses.replace(won, room=_room(won, fitter))
         won = strip_waived(
             won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
             roads=roads, bound=bound, terrain=terrain,
@@ -2828,6 +2861,11 @@ def row_for(s: Screened) -> dict[str, Any]:
         # The room each passing standard had to spare (FOLLOWUPS 37(ii)):
         # for the pod design report, never read by the colour.
         "margins": margin_record.dumps(s.signed.margins),
+        # And how much bigger the pod could be, each way, on the lot's own
+        # shape (FOLLOWUPS 37(ii)); None where it was not measured.
+        "room_width_ft": round(s.room.width_ft, 3) if s.room is not None else None,
+        "room_depth_ft": round(s.room.depth_ft, 3) if s.room is not None else None,
+        "room_both_ft": round(s.room.both_ft, 3) if s.room is not None else None,
     }
 
 

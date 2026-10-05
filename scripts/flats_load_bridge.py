@@ -530,6 +530,13 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
     if slope:
         slope["steep_blocks"] = bool(_clean(row.get("steep_blocks")))
         checks["slope"] = slope
+    # How much bigger the pod could be on the lot's own shape, in feet: its
+    # width, its depth, and both at once (FOLLOWUPS 37(ii)). Absent from a
+    # bridge run written before the bridge measured it, where the fit did
+    # not pass, and where the lot was red.
+    room = {k: _num(row.get(f"room_{k}_ft")) for k in ("width", "depth", "both")}
+    if all(v is not None for v in room.values()):
+        checks["fit"]["room"] = room
     # The flag plan (flats/score/flags.py): the colour its rule set gives,
     # beside the old verdict, with the flags and binds it was given. Absent
     # from a bridge run written before the plan.

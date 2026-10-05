@@ -152,6 +152,9 @@ ROW_COLUMNS = (
     "flags",
     "binds",
     "margins",
+    "room_width_ft",
+    "room_depth_ft",
+    "room_both_ft",
 )
 
 #: The flag type each gate raises on a lot the bridge never measured

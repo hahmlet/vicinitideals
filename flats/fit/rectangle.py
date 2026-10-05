@@ -308,6 +308,51 @@ class Fitter:
         over = self._over_cells(over_ft)
         return any(self._has(grid, d_cells, w_cells, over) for grid in self._grids(angles))
 
+    def widest(
+        self,
+        depth_ft: float,
+        *,
+        angles: Iterable[float] | None = None,
+        over_ft: float = 0.0,
+    ) -> float:
+        """Widest rectangle this deep the envelope holds at any angle, in
+        feet: :meth:`_best` with the two sides swapped. How much wider the
+        building and its parking could be at the run they need (FOLLOWUPS
+        37(ii)). ``angles`` and ``over_ft`` as for :meth:`holds`.
+
+        With a run to hold, a narrower window keeps the run of a wider one
+        (the same ground, less of it across), so each grid's answer is a
+        binary search below its plain widest; grids are tried widest-plain
+        first and the scan stops where none left can win.
+        """
+        d_cells = cells_for(depth_ft, self.res)
+        over = self._over_cells(over_ft)
+        grids = [g for g in self._grids(angles) if g.rows >= d_cells]
+        best = 0
+        if over <= 0:
+            for grid in grids:
+                best = max(best, grid.max_width_cells(d_cells))
+            return best * self.res
+        tops = sorted(
+            ((g.max_width_cells(d_cells), i, g) for i, g in enumerate(grids)),
+            key=lambda t: (-t[0], t[1]),
+        )
+        for top, _i, grid in tops:
+            if top <= best:
+                break
+            if self._has(grid, d_cells, top, over):
+                best = top
+                continue
+            lo, hi = best, top - 1
+            while lo < hi:
+                mid = (lo + hi + 1) // 2
+                if self._has(grid, d_cells, mid, over):
+                    lo = mid
+                else:
+                    hi = mid - 1
+            best = lo
+        return best * self.res
+
     def fit(
         self,
         width_ft: float,

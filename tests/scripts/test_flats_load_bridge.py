@@ -396,6 +396,24 @@ def test_the_checks_record_carries_the_room_each_pass_had_to_spare() -> None:
         assert "margins" not in result_checks({**_bridge_row(LOT_A, DESIGNS[0]), "margins": empty})
 
 
+def test_the_fit_carries_how_much_bigger_the_pod_could_be_each_way() -> None:
+    # FOLLOWUPS 37(ii), Steph 2026-10-05 ("we need all dimensions"): the
+    # pod's width, its depth, and both at once, in feet. A bundle written
+    # before the bridge measured it, a fit that did not pass, a red lot:
+    # none.
+    row = {
+        **_bridge_row(LOT_A, DESIGNS[0]),
+        "room_width_ft": 6.0,
+        "room_depth_ft": 12.5,
+        "room_both_ft": 4.0,
+    }
+    assert result_checks(row)["fit"]["room"] == {"width": 6.0, "depth": 12.5, "both": 4.0}
+    assert "room" not in result_checks(_bridge_row(LOT_A, DESIGNS[0]))["fit"]
+    for empty in (None, float("nan")):
+        unmeasured = {**row, "room_width_ft": empty, "room_depth_ft": empty, "room_both_ft": empty}
+        assert "room" not in result_checks(unmeasured)["fit"]
+
+
 def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:
     run_dir, s4, s5o, results = _make_run(tmp_path)
     short = tmp_path / "s4_short.parquet"
