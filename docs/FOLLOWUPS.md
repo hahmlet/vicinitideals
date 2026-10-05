@@ -1332,13 +1332,18 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    lower, and shows "room to spare on green lots" per limit. Bound on 137 (10k
    lots seed 23, old vs new): 0 colours moved, every column identical. The ~10-08
    re-screen carries it only if run from main >= 7dc34722; nothing shows
-   until that run is in use. IN PROGRESS (Steph 2026-10-05: "If we're getting
-   room left, we need all dimensions. How would this handle oddly shaped
-   lots?"): room WIDER (at the pod's length) and BIGGER BOTH WAYS at once,
-   each searched on the real lot shape for the plan the screen took; on an
-   odd lot "both" < min(longer, wider) is the tight-shape signal; report's
-   width steps then read the real shape. Bound + timing on 137 before ship;
-   come back to Steph if the weekly run slows a lot. Aim: 10-08 re-screen.
+   until that run is in use. ROOM EACH WAY DONE 2026-10-05
+   794b5f3d+f3408efa (Steph: "we need all dimensions ... oddly shaped
+   lots?"): on every green/yellow lot whose fit passes outright the bridge
+   searches the real lot shape, in the plan the screen took, for how much
+   WIDER, DEEPER and BIGGER BOTH WAYS the pod could be (checks.fit.room,
+   capped 40 ft; tight-fit and non-fitting lots carry none, by design). The
+   report tries the pod wider / deeper / both ways each from that room and
+   counts "tight shapes" (both ways a foot+ less than either way alone).
+   Bound on 137 (10k lots seed 23): every old column identical, 0 colours
+   moved; room on 2,828 rows (1,848 of 1,850 greens); 638 a half foot+ tight; 1,218 s ->
+   1,280 s (+5%). The ~10-08 re-screen carries it only from main >=
+   f3408efa (137's weekly checkout was still 0bf7c8e2 at 12:05 UTC 10-05).
    OPEN: (iii) Gresham
    note 5 "end of a Minor Access Street" held on `local_street` (wrong
    fact) -- re-point + measure dead ends; worth little while
