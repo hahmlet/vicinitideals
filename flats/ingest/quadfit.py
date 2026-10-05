@@ -115,6 +115,7 @@ from flats.geom.neighbour import (
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
+from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
 from flats.rules.model import TRANSIT_MEASURES, Layer
@@ -259,6 +260,8 @@ S5O_COLUMNS: tuple[str, ...] = (
 OBSERVABLE: tuple[str, ...] = (
     *ALLEY_FACTS,
     *CUL_DE_SAC_FACTS,
+    # Only ever False, and only where no street ends near the lot.
+    STREET_END_FACT,
     *NEIGHBOUR_FACTS,
     *PARK_FACTS,
     *CORRIDOR_FACTS,
@@ -326,6 +329,10 @@ def observed_facts(
       reads as a measurement.
     * ``fronts_cul_de_sac`` -- s4's bulb test; False is the conservative
       row and so is answered on every lot.
+    * ``at_street_end`` -- False only where no street ends within
+      :data:`~flats.geom.street_end.REACH_FT` of the taxlot (``street_end_ft``,
+      measured by :func:`iter_rows`); never True, so near an end, or where
+      nothing measured, Gresham's Minor Access Street note keeps its cap.
     * ``corner_lot`` -- True where the frontage runs in two directions at
       least :data:`~flats.geom.corner.CORNER_MIN_DEG` apart, the test that
       names a corner lot's front (:func:`flats.geom.corner.two_streets`);
@@ -426,6 +433,7 @@ def observed_facts(
         for name, inside in _drawn_facts(row, layers).items():
             out[name] = out.get(name) or inside
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
+    out.update(observed_street_end(_finite(row.get("street_end_ft"))))
     if _answered(row.get("split_zone")):
         out["split_zone"] = _is_true(row.get("split_zone"))
     if _answered(row.get("ovl_fema_sfha")) or _answered(row.get("ovl_fema_floodway")):
@@ -1377,6 +1385,7 @@ def iter_rows(
     jurisdictions: Iterable[str] = (),
     zones: Iterable[str] = (),
     tlids: Iterable[str] = (),
+    streets: Path | None = None,
 ) -> Iterator[dict[str, Any]]:
     """Every lot's bridge row, s4 facts joined to s5o's envelope on TLID.
 
@@ -1388,6 +1397,11 @@ def iter_rows(
     ``jurisdictions``, ``zones`` (``"<jurisdiction>:<zone>"``) and ``tlids``
     select the lots a partial re-screen covers (:mod:`flats.ingest.splice`);
     a lot matching ANY of them is kept, and none given keeps every lot.
+
+    ``streets`` is quadfit s1's street centrelines; with it each row gains
+    ``street_end_ft``, the taxlot's distance to the nearest place a street
+    ends (:func:`flats.geom.street_end.street_end_column`). Measured after
+    the scope is cut, so a partial measures only its own lots.
     """
     import pandas as pd
     import pyarrow.parquet as pq
@@ -1412,6 +1426,8 @@ def iter_rows(
         frame = frame.sample(n=sample, random_state=seed)
     if limit is not None:
         frame = frame.head(limit)
+    if streets is not None:
+        frame = frame.assign(street_end_ft=street_end_column(frame, streets))
     # Every null -- NaN, NaT, pandas' NA -- leaves as None, so the readers
     # above see one shape of "no answer" whatever dtype the column arrived in.
     frame = frame.astype(object).where(frame.notna(), None)
@@ -3054,7 +3070,7 @@ def run(
     rows = list(
         iter_rows(
             s4, s5o, transit=transit, limit=limit, sample=sample, seed=seed,
-            jurisdictions=jurisdictions, zones=zones, tlids=tlids,
+            jurisdictions=jurisdictions, zones=zones, tlids=tlids, streets=roads,
         )
     )
     chunks = [rows[i : i + chunk_size] for i in range(0, len(rows), chunk_size)]

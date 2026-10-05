@@ -362,11 +362,15 @@ notes:
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L428"
     digest: "f733ca818d64"
     state: unmeasured
-    fact: local_street
+    fact: at_street_end
     reason: >-
       states a 25-foot maximum and a 5-foot minimum setback from the end of a
-      Minor Access Street, which is one of Gresham's street classes; nothing
-      holds the functional classification of the street a parcel fronts
+      Minor Access Street, and neither number is encoded. The note turns on
+      the END of a street, not on the class of the one a lot fronts (it was
+      held against `local_street` until 2026-10-04): a lot no street ends
+      near is not at the end of a Minor Access Street, and the bridge answers
+      `at_street_end` False there (flats.geom.street_end). Never True, so a
+      lot near an end keeps the cap
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L388"
     digest: "705b5032c7a2"

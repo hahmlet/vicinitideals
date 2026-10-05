@@ -50,12 +50,16 @@ from typing import Any, Iterable, Sequence
 
 #: RLIS TYPE codes that do not carry a public street on: alley (1600),
 #: private named road (1700), unnamed private road or driveway (1800),
-#: unimproved and unmaintained local access (2000, Portland only).
-NOT_PUBLIC: frozenset[int] = frozenset({1600, 1700, 1800, 2000})
+#: unimproved and unmaintained local access (2000, Portland only), and
+#: "unknown type" (8224; 4,146 lines in the three counties' file).
+NOT_PUBLIC: frozenset[int] = frozenset({1600, 1700, 1800, 2000, 8224})
 
 #: How far from the taxlot a street end still counts as possibly the lot's
 #: own. Generous on purpose: a lot this far from every end is not at one.
-REACH_FT = 150.0
+#: Of the 17,037 lots s4 found on a cul-de-sac bulb (2026-10-01 three-county
+#: file) the farthest lies 140 ft from the street's end, and a bulb s4 reads
+#: is at most 80 ft in radius, so no lot on one is more than 160 ft away.
+REACH_FT = 200.0
 
 #: The one fact, named the way the registry names it.
 STREET_END_FACT = "at_street_end"

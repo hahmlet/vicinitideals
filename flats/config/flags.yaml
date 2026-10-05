@@ -824,6 +824,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-AT-STREET-END:
+    description: "Whether the lot lies at the end of a street (Gresham: a Minor Access Street's end has its own setbacks)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Street centrelines: answered 'no' where no street ends within 200 ft; near an end, the street's class and the lot's place at its end"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-MIDDLE-HOUSING-CHILD-LOT:
     description: "Whether the lot is a middle-housing land division child lot"
     kind: categorical
