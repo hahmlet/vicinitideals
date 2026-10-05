@@ -1375,7 +1375,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    landslide hazard area" -- Beaverton BDC 90 (Comp Plan Fig 8.6.1) and
    Wood Village 720.030, both the applicant's option -- plus West Linn's
    landslide areas on NHMP Maps 16/17. Needs DOGAMI SLIDO or the city
-   maps traced; today assumed absent.
+   maps traced; today assumed absent. Steph 2026-10-05 DECLINED (agreed
+   to leave it) -- do not re-offer.
 39. **The building is drawn where the parking wants it, then the fire
    route is measured from there (found 2026-10-04 in two bounds).** More
    ground lets the fit seat the building deeper, the 150-ft hose route
@@ -1480,8 +1481,10 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    313); greenway 126 lots -> RED. WARNED promotion at the ~10-08 run.
    PHASE 2 (next): read each overlay's sentences (CWS Ch. 3, each WashCo
    city's Goal 5 chapter, Gladstone 17.27.045) and move any that forbid
-   building to `carve` (needs an s5o run under flock); FEMA fringe stays
-   yellow unless Steph rules raised-floor lots green. (d) STATE MAPS --
+   building to `carve` (needs an s5o run under flock). Steph 2026-10-05:
+   PHASE 2 "I want this" -- IN PROGRESS (water lane), lands in the run
+   AFTER ~10-08. FEMA fringe stays YELLOW, RULED ("we aren't customizing
+   for flood zones") -- do not re-offer. (d) STATE MAPS --
    Steph 2026-10-05 "plan on looking at state maps". Found: DSL serves
    every approved local wetland inventory (maps.dsl.state.or.us
    LWI2024/FeatureServer: 4 wetlands, 3 probable wetlands, 5 study areas;
