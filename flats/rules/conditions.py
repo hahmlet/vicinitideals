@@ -250,8 +250,13 @@ _C: tuple[ConditionDef, ...] = (
         "Oswego R-7.5 asks 20 ft on an arterial and 15 on a local — so a "
         "screen that picks one without knowing which is guessing. Assumed "
         "unknown, which makes the arterial number bind, because that is the "
-        "half that cannot turn a RED lot green by mistake.",
-        evidence="the jurisdiction functional classification layer",
+        "half that cannot turn a RED lot green by mistake. Answered since "
+        "2026-10-04 where a city publishes its TSP map (Milwaukie, "
+        "Wilsonville; `flats.geom.street_class`): True only where every "
+        "street line is local on the city's map and a minor residential "
+        "street in Metro's file, False where every one is a collector or "
+        "an arterial, unknown everywhere else.",
+        evidence="the jurisdiction functional classification layer (street_class_* in flats/config/pipeline.yaml), read per street lot line",
         assume=None,
     ),
     ConditionDef(

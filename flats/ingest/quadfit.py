@@ -115,6 +115,7 @@ from flats.geom.neighbour import (
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
+from flats.geom.street_class import LOCAL_STREET, load_class_maps, observed_local_street
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
@@ -262,6 +263,8 @@ OBSERVABLE: tuple[str, ...] = (
     *CUL_DE_SAC_FACTS,
     # Only ever False, and only where no street ends near the lot.
     STREET_END_FACT,
+    # Only where a city's TSP map serves the lot (flats.geom.street_class).
+    LOCAL_STREET,
     *NEIGHBOUR_FACTS,
     *PARK_FACTS,
     *CORRIDOR_FACTS,
@@ -333,6 +336,10 @@ def observed_facts(
       :data:`~flats.geom.street_end.REACH_FT` of the taxlot (``street_end_ft``,
       measured by :func:`iter_rows`); never True, so near an end, or where
       nothing measured, Gresham's Minor Access Street note keeps its cap.
+    * ``local_street`` -- from ``local_street_obs``, which
+      :func:`with_local_street` reads off a city's TSP map: True only where
+      every street line is local by the map AND by Metro's street type,
+      False where every one is a collector or an arterial, else unasked.
     * ``corner_lot`` -- True where the frontage runs in two directions at
       least :data:`~flats.geom.corner.CORNER_MIN_DEG` apart, the test that
       names a corner lot's front (:func:`flats.geom.corner.two_streets`);
@@ -434,6 +441,8 @@ def observed_facts(
             out[name] = out.get(name) or inside
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
     out.update(observed_street_end(_finite(row.get("street_end_ft"))))
+    if isinstance(row.get("local_street_obs"), bool):
+        out[LOCAL_STREET] = row["local_street_obs"]
     if _answered(row.get("split_zone")):
         out["split_zone"] = _is_true(row.get("split_zone"))
     if _answered(row.get("ovl_fema_sfha")) or _answered(row.get("ovl_fema_floodway")):
@@ -1432,6 +1441,32 @@ def iter_rows(
     # above see one shape of "no answer" whatever dtype the column arrived in.
     frame = frame.astype(object).where(frame.notna(), None)
     yield from frame.to_dict("records")
+
+
+def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
+    """Answer ``local_street`` on every row a city's TSP map serves, in place
+    (``local_street_obs``: True, False, or absent), and say how many.
+
+    Read off the row's own s4 edges, so a lot screened a second way without
+    its private drive (:func:`_sans_row`) carries the first reading -- where
+    the drive was a street line it has no TSP class, and the fact is absent.
+    """
+    if sources is None:
+        return 0
+    maps = load_class_maps(sources)
+    if not maps:
+        return 0
+    answered = 0
+    for row in rows:
+        layer_id = _layer_id(row)
+        if not any(m.covers(layer_id) for m in maps):
+            continue
+        edges = json.loads(row.get("edges_json") or "[]")
+        got = observed_local_street(edges, layer_id, maps)
+        if LOCAL_STREET in got:
+            row["local_street_obs"] = got[LOCAL_STREET]
+            answered += 1
+    return answered
 
 
 def scope_mask(frame: Any, jurisdictions: Iterable[str] = (), zones: Iterable[str] = (), tlids: Iterable[str] = ()) -> Any:
@@ -3073,6 +3108,9 @@ def run(
             jurisdictions=jurisdictions, zones=zones, tlids=tlids, streets=roads,
         )
     )
+    classed = with_local_street(rows, sources)
+    if classed:
+        log(f"bridge: street class read on {classed:,} lots")
     chunks = [rows[i : i + chunk_size] for i in range(0, len(rows), chunk_size)]
     log(f"bridge: {len(rows):,} lots in {len(chunks)} chunks, {processes} processes, "
         f"{step_deg} deg step")

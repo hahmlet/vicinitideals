@@ -417,6 +417,47 @@ datasets:
       read by the street each abuts), which carries the 20 ft maximum front
       setback the same map allows in place of 10 (33.130.215.C.1).
 
+  # --- street functional class (flats/geom/street_class.py) -----------------
+
+  street_class_milwaukie:
+    kind: arcgis
+    label: Milwaukie TSP roadway classification
+    provides: streets
+    url: https://services6.arcgis.com/8e6aYcxt8yhvXvO9/arcgis/rest/services/TS_Roadway_Classification_Service/FeatureServer/0
+    geometry: polyline
+    fields: [PREFIX, STREETNAME, FTYPE, JURISDIC, RoadwayClassification]
+    parts:
+      - url: https://services6.arcgis.com/8e6aYcxt8yhvXvO9/arcgis/rest/services/TS_Roadway_Classification_Service/FeatureServer/1
+        fields: [PREFIX, STREETNAME, FTYPE, JURISDIC, RoadwayClassification]
+    serves: [or/clackamas/milwaukie]
+    notes: >-
+      The city's TSP street map (layer 0 the city's streets, layer 1 the
+      county's, the state's and the joint ones), drawn on Metro's 2026-03-18
+      centrelines. RoadwayClassification: Local Street, Neighborhood Routes,
+      Collector, and four kinds of arterial, plus Proposed Local and
+      Proposed Neighborhood Routes. It reflects the 2023-25 TSP update the
+      planning commission recommended on 2026-01-28. Answers local_street,
+      which carries MMC 12.16.040.E.3's driveway apron (12 ft on local or
+      neighborhood streets, 16 on collector or arterial).
+
+  street_class_wilsonville:
+    kind: arcgis
+    label: Wilsonville TSP functional classification (Streets_OMS)
+    provides: streets
+    url: https://www.wilsonvillemaps.com/server/rest/services/Map___TransportationService_MIL1/MapServer/180
+    geometry: polyline
+    fields: [PREFIX, STREETNAME, FTYPE, Jurisdiction, Functional_Class]
+    serves: [or/clackamas/wilsonville]
+    notes: >-
+      The city's own street layer (last edited 2026-09-23). Functional_Class
+      holds the TSP's four classes -- Major Arterial, Minor Arterial,
+      Collector, Local Street -- of the 2013 TSP as amended through Ord. 877
+      (2023), whose Figure 3-2 is the legal map. Layer 170 on the same server
+      ("Streets_Functional2012", COW_FuncClass) is an older scheme with a
+      catch-all "Road" class: not this one. Answers local_street, which
+      carries the Villebois front and street-side yards (Table V-1 note 6:
+      20 ft and 15 ft on a Collector Avenue, 12 and 5 otherwise).
+
   # --- transit (flats/geom/transit.py) ---------------------------------------
   # Measured once per transit release into a per-lot distance file
   # (flats/ingest/transit.py), not once per screen. Metro republishes these
