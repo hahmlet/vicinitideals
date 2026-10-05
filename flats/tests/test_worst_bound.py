@@ -116,13 +116,13 @@ def test_a_fact_whose_bad_answer_refuses_the_building_keeps_its_severity(
 
 
 def test_a_fact_on_a_footnote_with_no_number_is_never_bounded(corpus, policies) -> None:
-    # Gresham LDR-7: the sidewalk easement and the local street move the
-    # yards by a footnote that states no number, so neither has a worst
-    # reading anybody can compute.
+    # Gresham LDR-7: the sidewalk easement and the end of a Minor Access
+    # Street move the yards by a footnote that states no number, so neither
+    # has a worst reading anybody can compute.
     s = screened(corpus, policies, bound=True, jurisdiction="gresham", zone="LDR-7")
-    assert {"sidewalk_easement", "local_street"} <= s.rules.unencoded
+    assert {"sidewalk_easement", "at_street_end"} <= s.rules.unencoded
     got = severities(s)
-    assert got["FACT-SIDEWALK-EASEMENT"] == 5 and got["FACT-LOCAL-STREET"] == 5
+    assert got["FACT-SIDEWALK-EASEMENT"] == 5 and got["FACT-AT-STREET-END"] == 5
 
 
 def test_a_red_plan_is_left_alone(corpus, policies) -> None:
