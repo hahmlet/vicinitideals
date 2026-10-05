@@ -313,6 +313,10 @@ def alley_fed(rules: "ZoneResolution", alley: Alley | None) -> bool:
 #: typically require the housing to face the busier street, so they want the
 #: parking entrance on another side." Until then the lane stayed beside the
 #: building, off the front street the code is likeliest to keep it off.
+#: Where both streets' classes are measured and the named front is the
+#: quieter one, the lowest-class street IS the front: the screen reads
+#: ``front`` (:func:`flats.geom.street_class.measured_access`, Steph
+#: 2026-10-05), which is not in this set.
 SIDE_STREET_ACCESS = frozenset({"any", "side", "lowest_class"})
 
 

@@ -131,3 +131,108 @@ def test_the_bridge_carries_the_answer_into_the_facts(monkeypatch, tmp_path) -> 
 def test_the_fact_is_observable_and_still_assumes_nothing() -> None:
     assert LOCAL_STREET in OBSERVABLE
     assert CONDITIONS[LOCAL_STREET].assume is None
+
+
+# --- which street a lowest-class corner lot's driveway uses (41(i)) --------
+
+def ranked(main: int | None = 0, oak: int | None = 1):
+    return build(
+        [MILWAUKIE],
+        [MAIN, OAK],
+        ["local", "other"],
+        ["SE MAIN ST", "SE OAK AVE"],
+        [MAIN, OAK],
+        ["SE MAIN ST", "SE OAK AVE"],
+        [1500, 1450],
+        [main, oak],
+    )
+
+
+def corner(main: int | None, oak: int | None):
+    """A corner lot on Main (front) and Oak, its lines ranked."""
+    from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
+
+    def edge(x1, y1, x2, y2, cls, rank=None):
+        return Edge(
+            x1, y1, x2, y2, length_ft=((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5,
+            bearing_deg=bearing_deg(x1, y1, x2, y2), cls=cls, street_rank=rank,
+        )
+
+    lines = (
+        edge(280, 20, 380, 20, EdgeClass.front, main),
+        edge(380, 20, 380, 120, EdgeClass.front, oak),
+        edge(380, 120, 280, 120, EdgeClass.rear),
+        edge(280, 120, 280, 20, EdgeClass.side),
+    )
+    bearings = (lines[0].bearing_deg, lines[1].bearing_deg)
+    return LotEdges(Tier.corner, lines, bearings, 200.0, 1.0), bearings
+
+
+def access(value: str = "lowest_class"):
+    from flats.rules.resolver import Resolved, ZoneResolution
+
+    held = Resolved("corner_access_street", value, None, None, "or/clackamas/milwaukie", "defaults")  # type: ignore[arg-type]
+    return ZoneResolution("milwaukie", "R-5", None, {"corner_access_street": held})  # type: ignore[arg-type]
+
+
+def test_the_map_ranks_each_street_line() -> None:
+    from flats.geom.street_class import edge_rank, street_ranks
+
+    m = ranked()
+    assert edge_rank(ON_MAIN, m) == 0
+    assert edge_rank(ON_OAK, m) == 1
+    assert street_ranks([ON_MAIN, ON_OAK, SIDE], MILWAUKIE, [m]) == [0, 1, None]
+    assert street_ranks([ON_MAIN], "or/clackamas/oregon-city", [m]) == [None]
+    assert street_ranks([ON_MAIN], MILWAUKIE, [ranked(main=None)]) == [None]
+    spec = CLASS_MAPS["street_class_milwaukie"]
+    assert spec.rank["Local Street"] < spec.rank["Collector"] < spec.rank["Arterial"]
+    assert "Neighborhood Routes" not in spec.rank
+
+
+def test_a_quiet_front_sends_the_driveway_to_the_front() -> None:
+    from flats.geom.corner import name_front
+    from flats.geom.street_class import FRONT_ACCESS, measured_access
+    from flats.score.paper import side_street_fed
+
+    edges, (main, oak) = corner(main=0, oak=2)
+    rules = access()
+    got = measured_access(rules, name_front(edges, main), main)
+    assert got.get("corner_access_street") == FRONT_ACCESS
+    assert got.values["corner_access_street"].shadowed == "lowest_class"
+    assert side_street_fed(rules, None, True) and not side_street_fed(got, None, True)
+    # The busy street named the front: the quiet side street serves.
+    assert measured_access(rules, name_front(edges, oak), oak) is rules
+
+
+def test_anything_short_of_a_measured_quieter_front_changes_nothing() -> None:
+    from flats.geom.corner import name_front
+    from flats.geom.street_class import measured_access
+
+    for main, oak in ((1, 1), (2, 0), (None, 2), (0, None)):
+        edges, (front, _) = corner(main, oak)
+        rules = access()
+        assert measured_access(rules, name_front(edges, front), front) is rules
+    edges, (front, _) = corner(0, 2)
+    rules = access()
+    assert measured_access(rules, edges, None) is rules  # no front named
+    assert measured_access(rules, None, front) is rules
+    for value in ("any", "side"):
+        other = access(value)
+        assert measured_access(other, name_front(edges, front), front) is other
+
+
+def test_the_bridge_carries_the_ranks_onto_the_lot_lines(monkeypatch, tmp_path) -> None:
+    import flats.ingest.quadfit as bridge
+
+    monkeypatch.setattr(bridge, "load_class_maps", lambda sources: (ranked(),))
+    row = {
+        "TLID": "corner", "jurisdiction": "milwaukie", "tier": "A",
+        "edges_json": json.dumps([ON_MAIN, ON_OAK, SIDE]), "front_bearings_json": "[90.0, 0.0]",
+    }
+    with_local_street([row], tmp_path)
+    assert json.loads(row["street_ranks_json"]) == [0, 1, None]
+    edges = bridge.lot_edges(row)
+    assert [e.street_rank for e in edges.edges] == [0, 1, None]
+    # A row with no ranks (no map) ranks nothing.
+    del row["street_ranks_json"]
+    assert all(e.street_rank is None for e in bridge.lot_edges(row).edges)

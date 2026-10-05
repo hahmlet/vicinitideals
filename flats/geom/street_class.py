@@ -43,14 +43,29 @@ the fact is left unasked and the stricter number stays with its question.
 Hillsboro uses the fact for two different street lists ("local or
 Collector" for density, "arterial and collector" for use), and no reading
 of one map answers both.
+
+**Which street a corner lot's driveway uses** (``corner_access_street:
+lowest_class``, FOLLOWUPS 41(i)). The same map ranks each street line
+(:func:`edge_rank`, carried as :attr:`flats.geom.edges.Edge.street_rank`).
+Until 2026-10-05 the screen read ``lowest_class`` as the side street for
+want of a measurement (Steph, 2026-10-02). Steph ruled 2026-10-05: where one
+street is quiet and the other busy, the building faces the busy street and
+the driveway comes off the quiet side street. Where the code's own front --
+the shorter line, say -- is the quiet street, the side street is the busy
+one and the code sends the driveway to the front instead
+(:func:`measured_access`). A rank can only take the side-street lane away,
+never give one, so the ranking needs no second source: a TSP map's "Local
+Street" ranks below its "Collector" even where the code reads "local" off
+another plan (Villebois).
 """
 
 from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from dataclasses import field as dataclass_field
 from pathlib import Path
-from typing import Any, Iterable, Sequence
+from typing import TYPE_CHECKING, Any, Iterable, Mapping, Sequence
 
 from flats.geom.corridor import (
     COINCIDE_FT,
@@ -64,7 +79,10 @@ from flats.geom.corridor import (
     _dataset_path,
     _fronted,
 )
-from flats.geom.edges import bearing_deg
+from flats.geom.edges import BEARING_CLUSTER_TOL_DEG, EdgeClass, LotEdges, bearing_deg, bearing_delta
+
+if TYPE_CHECKING:
+    from flats.rules.resolver import ZoneResolution
 
 #: The fact this module answers.
 LOCAL_STREET = "local_street"
@@ -78,14 +96,18 @@ RLIS_LOCAL: frozenset[int] = frozenset({1500, 1550, 1560})
 class ClassSpec:
     """How one city's TSP map spells its classes.
 
-    ``local`` and ``other`` are the field's values verbatim; anything else
-    (a proposed street, a blank, a class the code's wording does not settle)
-    reads as unknown.
+    ``local`` and ``other`` are the field's values verbatim, for the
+    ``local_street`` fact; anything else (a proposed street, a blank, a class
+    the code's wording does not settle) reads as unknown. ``rank`` orders
+    the classes for the lowest-class access rule (0 local, 1 collector, 2
+    arterial, 3 major arterial or highway); a value it leaves out ranks
+    nothing.
     """
 
     field: str
     local: frozenset[str]
     other: frozenset[str]
+    rank: Mapping[str, int] = dataclass_field(default_factory=dict)
 
 
 #: Registry dataset -> how its classes read.
@@ -106,6 +128,16 @@ CLASS_MAPS: dict[str, ClassSpec] = {
                 "Through Movement Priority Arterial",
             }
         ),
+        # Neighborhood Routes sits between a local street and a collector
+        # and ranks nothing: neither side of it is sure.
+        rank={
+            "Local Street": 0,
+            "Collector": 1,
+            "Arterial": 2,
+            "Local Access Arterial": 2,
+            "Multimodal Travel Priority Arterial": 2,
+            "Through Movement Priority Arterial": 2,
+        },
     ),
     # Villebois Table V-1 note 6: "on Collector Avenues" the front yard is
     # 20 and the street side 15. The Collector Avenues are the Villebois
@@ -119,6 +151,9 @@ CLASS_MAPS: dict[str, ClassSpec] = {
         field="Functional_Class",
         local=frozenset(),
         other=frozenset({"Collector", "Minor Arterial", "Major Arterial"}),
+        # PWS 201.2.23(f) "a lower classification street" reads the TSP's
+        # classes, and a rank only ever takes a side-street lane away.
+        rank={"Local Street": 0, "Collector": 1, "Minor Arterial": 2, "Major Arterial": 3},
     ),
 }
 
@@ -134,6 +169,8 @@ class ClassMap:
     kinds: tuple[str, ...]
     streets: Lines
     types: tuple[int | None, ...]
+    #: Each line's class rank (:attr:`ClassSpec.rank`); None where unranked.
+    ranks: tuple[int | None, ...] = ()
 
     def covers(self, layer_id: str | None) -> bool:
         return bool(layer_id) and any(layer_id == s or layer_id.startswith(f"{s}/") for s in self.serves)
@@ -147,6 +184,11 @@ def class_kind(value: object, spec: ClassSpec) -> str:
     if text in spec.other:
         return "other"
     return ""
+
+
+def class_rank(value: object, spec: ClassSpec) -> int | None:
+    """One TSP class value's rank, or None where the spec ranks it not."""
+    return spec.rank.get(str(value or "").strip())
 
 
 def _street_label(props: dict[str, Any]) -> str:
@@ -168,18 +210,21 @@ def build(
     streets: Sequence[Any],
     street_names: Sequence[object],
     types: Sequence[int | None],
+    ranks: Sequence[int | None] = (),
 ) -> ClassMap:
     """A class map from its parts (what :func:`load_class_maps` reads, and
-    what a test draws)."""
+    what a test draws). ``ranks`` defaults to none."""
     keep = [i for i, g in enumerate(lines) if g is not None and not g.is_empty]
     held = Lines.build([lines[i] for i in keep], [names[i] for i in keep])
     road = [i for i, g in enumerate(streets) if g is not None and not g.is_empty]
+    ranked = list(ranks) if ranks else [None] * len(lines)
     return ClassMap(
         serves=tuple(serves),
         lines=held,
         kinds=tuple(kinds[i] for i in keep),
         streets=Lines.build([streets[i] for i in road], [street_names[i] for i in road]),
         types=tuple(types[i] for i in road),
+        ranks=tuple(ranked[i] for i in keep),
     )
 
 
@@ -233,32 +278,131 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
                 roads,
                 labels,
                 types,
+                [class_rank(p.get(spec.field), spec) for p in props],
             )
         )
     return tuple(out)
 
 
-def _kind_at(point: Any, own: float, cmap: ClassMap) -> str:
-    """The class of the street a lot line abuts at ``point``: ``"local"``,
-    ``"other"`` or ``""`` (unread)."""
+def _beside(point: Any, own: float, cmap: ClassMap) -> tuple[int | None, list[int]]:
+    """The RLIS street a lot line abuts at ``point`` (None where none runs
+    beside it) and the TSP lines on that street abreast of the point."""
     s = _fronted(point, own, cmap.streets)
     if s is None:
-        return ""
+        return None, []
     street, name = cmap.streets.lines[s], cmap.streets.names[s]
     foot = street.interpolate(street.project(point))
-    found: set[str] = set()
+    found: list[int] = []
     for i in cmap.lines.near(point, CORRIDOR_REACH_FT):
         line = cmap.lines.lines[i]
         if not _abreast(line, point, own, CORRIDOR_REACH_FT):
             continue
         if (name and name == cmap.lines.names[i]) or line.distance(foot) <= COINCIDE_FT:
-            found.add(cmap.kinds[i])
-    if len(found) != 1:
+            found.append(i)
+    return s, found
+
+
+def _kind_at(point: Any, own: float, cmap: ClassMap) -> str:
+    """The class of the street a lot line abuts at ``point``: ``"local"``,
+    ``"other"`` or ``""`` (unread)."""
+    s, lines = _beside(point, own, cmap)
+    found = {cmap.kinds[i] for i in lines}
+    if s is None or len(found) != 1:
         return ""
     (kind,) = found
     if kind == "local" and cmap.types[s] not in RLIS_LOCAL:
         return ""
     return kind
+
+
+def _rank_at(point: Any, own: float, cmap: ClassMap) -> int | None:
+    """The rank of the street a lot line abuts at ``point``; None where no
+    TSP line on it is abreast, or the lines there disagree."""
+    _, lines = _beside(point, own, cmap)
+    found = {cmap.ranks[i] for i in lines}
+    if len(found) != 1:
+        return None
+    return next(iter(found))
+
+
+def _samples(edge: Sequence[float]) -> tuple[list[Any], float] | None:
+    from shapely.geometry import Point
+
+    x1, y1, x2, y2 = (float(v) for v in edge[:4])
+    if x1 == x2 and y1 == y2:
+        return None
+    k = SAMPLES + 1
+    points = [Point(x1 + (x2 - x1) * i / k, y1 + (y2 - y1) * i / k) for i in range(1, k)]
+    return points, bearing_deg(x1, y1, x2, y2)
+
+
+def edge_rank(edge: Sequence[float], cmap: ClassMap) -> int | None:
+    """One street lot line's class rank, where every sample point reads the
+    same one; None otherwise."""
+    got = _samples(edge)
+    if got is None:
+        return None
+    points, own = got
+    ranks = {_rank_at(p, own, cmap) for p in points}
+    return ranks.pop() if len(ranks) == 1 else None
+
+
+def street_ranks(
+    edges: Iterable[Sequence[object]], layer_id: str | None, maps: Sequence[ClassMap]
+) -> list[int | None]:
+    """:func:`edge_rank` for every s4 edge (``[x1, y1, x2, y2, cls]``), None
+    on a line that is not a street or that no map serving the layer reads.
+    Two maps serving one layer must agree."""
+    serving = [m for m in maps if m.covers(layer_id)]
+    out: list[int | None] = []
+    for e in edges:
+        if not serving or len(e) < 5 or e[4] != STREET_CLASS:
+            out.append(None)
+            continue
+        got = {edge_rank(e, m) for m in serving}  # type: ignore[arg-type]
+        out.append(got.pop() if len(got) == 1 else None)
+    return out
+
+
+#: The value :func:`measured_access` puts in ``corner_access_street`` where
+#: the code's lowest-class rule, measured, sends the driveway to the front:
+#: not one of the field's choices, so nothing reads it as a side street
+#: (:data:`flats.score.paper.SIDE_STREET_ACCESS`).
+FRONT_ACCESS = "front"
+
+
+def measured_access(
+    rules: "ZoneResolution", edges: LotEdges | None, front: float | None
+) -> "ZoneResolution":
+    """``rules`` for one named-front plan of a corner lot, with
+    ``corner_access_street: lowest_class`` read off the street ranks.
+
+    Where every line on the named front ranks below every line on the side
+    street, the lowest-class street is the front and the driveway comes off
+    it: the value becomes :data:`FRONT_ACCESS`, the code's own
+    ``lowest_class`` kept as ``shadowed``. Everywhere else -- no front
+    named, a rank missing on either street, the front the busier or the two
+    the same -- ``rules`` comes back unchanged and the side street serves,
+    as Steph ruled 2026-10-02.
+    """
+    import dataclasses
+
+    held = rules.values.get("corner_access_street")
+    if front is None or edges is None or held is None or held.value != "lowest_class":
+        return rules
+    here = [
+        e.street_rank
+        for e in edges.edges
+        if e.cls is EdgeClass.front and bearing_delta(e.bearing_deg, front) <= BEARING_CLUSTER_TOL_DEG
+    ]
+    side = [e.street_rank for e in edges.edges if e.cls is EdgeClass.street_side]
+    if not here or not side or None in here or None in side:
+        return rules
+    if max(here) >= min(side):  # type: ignore[type-var]
+        return rules
+    values = dict(rules.values)
+    values["corner_access_street"] = dataclasses.replace(held, value=FRONT_ACCESS, shadowed=held.value)
+    return dataclasses.replace(rules, values=values)
 
 
 def edge_class(edge: Sequence[float], cmap: ClassMap) -> str:
@@ -301,13 +445,18 @@ def observed_local_street(
 
 __all__ = [
     "CLASS_MAPS",
+    "FRONT_ACCESS",
     "LOCAL_STREET",
     "RLIS_LOCAL",
     "ClassMap",
     "ClassSpec",
     "build",
     "class_kind",
+    "class_rank",
     "edge_class",
+    "edge_rank",
     "load_class_maps",
+    "measured_access",
     "observed_local_street",
+    "street_ranks",
 ]
