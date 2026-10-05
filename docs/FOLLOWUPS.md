@@ -1363,3 +1363,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Beaverton/Hillsboro/Washington Co. publish an easement GIS layer or bulk
    plat images; severity of "plat read, deed easements unchecked" is ruled
    AFTER the pilot, not before.
+41. **Street class per lot line (OFFERED 2026-10-04 as the top pick of
+   "what next", with 29 and 37(ii)).** Nothing measures whether a street
+   is local or busy. It holds `local_street` (~28k yellow answers), the
+   `lowest_class` corner access (Clackamas ZDO 845, Milwaukie 12.16, Oregon
+   City 16.12.035, West Linn 48.025, Wilsonville, Fairview 19.162 -- read
+   as side street today) and the lowest-class end of a through lot
+   (Tualatin, Fairview -- worst end today). Source to check first: RLIS
+   streets TYPE code (functional class) already in s4; Washington and
+   Clackamas TSP maps where cities classify differently. Measure the class
+   per street edge in s4, pass it to the bridge, answer the facts; bound,
+   read gains and losses. Pending: Steph's pick. Also on the list offered:
+   29 (where the fire truck stands), 37(ii) (margins on passing checks for
+   the pod report), historic-district fact (~8k answers).
