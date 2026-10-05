@@ -22,12 +22,10 @@ it leaves out can only lengthen it:
   middle (Steph 2026-10-05, "stricter": a lane of parked cars between the
   truck and the curb; FOLLOWUPS 29). Where a curb line or a pavement width
   is published (:mod:`flats.geom.curbs`), the curb is where it says. Where
-  none is, the distance to the street's centreline is taken less
-  :data:`HALF_ROAD_FT`, as before any width was read: a fire apparatus road
-  is at least 20 ft wide (OFC 503.2.1), so the truck stands no nearer the
-  lot than that on any street a truck can use -- strict for the truck at
-  the curb, though not, on a street narrower than 40 ft, for the truck
-  10 ft past it (:func:`hose_offsets`);
+  none is, the street is taken as the narrowest a truck may use (OFC
+  503.2.1, 20 ft; Steph 2026-10-05, "assume narrow"): its curb
+  :data:`HALF_ROAD_FT` off the centreline, and the hose measured from the
+  middle (:func:`hose_offsets`);
 * the street lot line is walked at :data:`SOURCE_STEP_FT` points, and from the
   points of it nearest each building corner, not every point of it.
 
@@ -270,14 +268,17 @@ def hose_offsets(
 
     Strict: :data:`CURB_START_FT` out from the near curb, capped at the
     street's middle (the centreline); curb: at the near curb. Where
-    ``edges`` place no curb, both are :func:`street_offsets` -- the old
-    10 ft off the centreline. A curb placed by a width alone never puts the
-    strict start nearer the lot than that (:mod:`flats.geom.curbs`).
-    Infinite past :data:`MAX_GAP_FT`, zero where no centreline is held, as
+    ``edges`` place no curb (or there are no ``edges``), the street is the
+    narrowest a truck may use (Steph 2026-10-05, "assume narrow" until a
+    width is measured): its curb :data:`HALF_ROAD_FT` off the centreline,
+    where :func:`street_offsets` stands the truck, so the strict start is
+    the middle. A curb placed by a width alone never puts the strict start
+    nearer the lot than that curb (:mod:`flats.geom.curbs`). Infinite past
+    :data:`MAX_GAP_FT`, zero where no centreline is held, as
     :func:`street_offsets`.
     """
     old = street_offsets(points, centrelines, geoms)
-    if edges is None or centrelines is None or not len(geoms) or not len(points):
+    if centrelines is None or not len(geoms) or not len(points):
         return old, old.copy()
     from flats.geom.curbs import Source
 
@@ -285,15 +286,17 @@ def hose_offsets(
     lines = np.asarray(geoms, dtype=object)[centrelines.nearest(pts)]
     feet = shapely.get_coordinates(shapely.shortest_line(pts, lines)).reshape(-1, 2, 2)[:, 1]
     gap = shapely.distance(pts, lines)
-    near, src = edges.near(np.asarray(points, dtype=float), feet, lines)
-    held = src != Source.none
+    if edges is None:
+        src = np.full(len(points), Source.none, dtype=np.int8)
+        near = old
+    else:
+        near, src = edges.near(np.asarray(points, dtype=float), feet, lines)
+        near = np.where(src == Source.none, old, near)
     strict = np.minimum(near + CURB_START_FT, gap)
     strict = np.where(src == Source.width, np.maximum(strict, old), strict)
     curb = np.minimum(near, gap)
     far = ~np.isfinite(old)
-    strict = np.where(far, math.inf, np.where(held, strict, old))
-    curb = np.where(far, math.inf, np.where(held, curb, old))
-    return strict, curb
+    return np.where(far, math.inf, strict), np.where(far, math.inf, curb)
 
 
 def point_offset(

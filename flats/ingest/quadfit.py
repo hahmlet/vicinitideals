@@ -2283,9 +2283,9 @@ def fire_checked(
     # stand on (where it is one: the offset keeps only truck roads).
     streets += tuple(a for a in lot.access if a not in streets)
     offset = fire.point_offset(*roads) if roads is not None else None
-    # The hose measured from the curb itself, where a curb or width is held
-    # (FOLLOWUPS 29): only to flag a red the stricter reading alone makes.
-    from_curb = fire.point_offset(*roads, reading="curb") if roads is not None and len(roads) > 2 and roads[2] is not None else None
+    # The hose measured from the curb itself (FOLLOWUPS 29): only to flag a
+    # red the stricter reading alone makes.
+    from_curb = fire.point_offset(*roads, reading="curb") if roads is not None else None
 
     def measure(drawing: dict[str, Any] | None, offset: Any = offset) -> float | None:
         # Only a drawing whose room holds the building and its court stands
@@ -3154,13 +3154,16 @@ def run(
     no lot is graded and Steph's slope ruling silently goes unchecked
     (FOLLOWUPS 38). ``curbs`` is a snapshot directory holding the published
     curb lines and pavement widths (:mod:`flats.geom.curbs`); it defaults to
-    ``sources``, and where it holds none every street keeps the truck 10 ft
-    off its centreline (FOLLOWUPS 29).
+    ``sources``, and a run whose snapshot lacks one of them is refused -- a
+    street none measures is taken as the narrowest, so without them every
+    Portland street would be (FOLLOWUPS 29).
     """
     import time
     from multiprocessing import Pool
 
     import pandas as pd
+
+    from flats.geom.curbs import missing as curbs_missing
 
     roads = roads if roads is not None else s4.parent / "s1_streets.parquet"
     curbs = curbs if curbs is not None else sources
@@ -3169,6 +3172,11 @@ def run(
     dem = dem if dem is not None else s4.parents[1] / "quadfit" / "raw"
     if not any((dem / "dem").glob("*.tif")):
         raise FileNotFoundError(f"no 1 m elevation tiles for the slope: {dem / 'dem'}")
+    if lacking := curbs_missing(curbs):
+        raise FileNotFoundError(
+            f"no {', '.join(lacking)} for where the fire truck stands in {curbs}: "
+            "run acquire, or pass --curbs a snapshot that holds them"
+        )
     out.mkdir(parents=True, exist_ok=True)
     parts_dir = out / "parts"
     parts_dir.mkdir(exist_ok=True)

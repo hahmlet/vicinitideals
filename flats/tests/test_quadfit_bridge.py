@@ -722,8 +722,17 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
     with pytest.raises(FileNotFoundError, match="elevation tiles"):
         run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, log=log.append)
     write_dem(raw / "dem" / "flat.tif", (X0 - 50, Y0 - 50, X0 + 200, Y0 + 200), plane(1.0))
+    # And where the truck stands is read off the published curbs and
+    # widths, and a run without them is refused: every street would be
+    # taken as the narrowest (FOLLOWUPS 29).
+    with pytest.raises(FileNotFoundError, match="where the fire truck stands"):
+        run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, log=log.append)
+    curbs = tmp_path / "curbs"
+    curbs.mkdir()
+    for key in ("curbs_portland", "pave_width_portland", "road_width_multnomah", "street_width_wilsonville"):
+        (curbs / f"{key}.geojson").write_text('{"type": "FeatureCollection", "features": []}', encoding="utf-8")
     written = run(
-        out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, log=log.append
+        out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, curbs=curbs, log=log.append
     )
     frame = pd.read_parquet(written)
     # Two lots x every catalog design, one row each.

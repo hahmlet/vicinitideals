@@ -467,7 +467,9 @@ datasets:
   # 2026-10-05, "stricter"). RLIS holds no street width; these are the
   # published curb lines and pavement widths found 2026-10-04. Washington and
   # Clackamas counties keep theirs in pavement systems they do not publish.
-  # A street none of these reach keeps the strict 10 ft off the centreline.
+  # A street none of these reach is taken as the narrowest a truck may use
+  # (20 ft; Steph 2026-10-05, "assume narrow"), and the bridge refuses a
+  # snapshot missing any of the four.
 
   curbs_portland:
     kind: arcgis

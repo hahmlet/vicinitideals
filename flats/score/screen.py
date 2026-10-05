@@ -186,6 +186,9 @@ STREET_UNCONFIRMED = "STREET_UNCONFIRMED"
 PARKING_STRIP_UNCONFIRMED = "PARKING_STRIP_UNCONFIRMED"
 #: The field :data:`PARKING_STRIP_UNCONFIRMED` waives.
 STRIP_FIELD = "parking_lot_line_buffer_ft"
+#: Red on the fire hose alone measured from 10 ft out from the curb, and
+#: clear measured from the curb itself (FIRE-HOSE-START; FOLLOWUPS 29).
+FIRE_HOSE_START = "FIRE_HOSE_START"
 
 #: The code caps the building's height by the shade it casts on the lot to
 #: the north, and nothing here knows which line faces north or where the
@@ -2220,7 +2223,7 @@ def _account(
     if curb_route is not None and use_path is None and [c.check for c in walls] == ["fire_access_ft"]:
         (c,) = walls
         if curb_route <= c.threshold:
-            flag("FIRE-HOSE-START", "FIRE_HOSE_START", bounds=(min(curb_route, c.observed), c.observed))
+            flag("FIRE-HOSE-START", FIRE_HOSE_START, bounds=(min(curb_route, c.observed), c.observed))
     # A minimum density missed is a flag, never a bind (Steph 2026-10-02:
     # "Make it a flag for sure ... It would just be a low risk flag").
     for c in checks:

@@ -2760,6 +2760,7 @@ _REASON_WORDS = {
     "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
     "STREET_UNCONFIRMED": "one of the lot's streets may only be a private drive, and the lot could not be checked without it",
     "PARKING_STRIP_UNCONFIRMED": "fits only without the planted strip the city keeps between parking and the lot lines; whether a townhome project owes that strip is still open",
+    "FIRE_HOSE_START": "the fire hose reaches if measured from the curb, not from 10 ft out from it; where the street's width is not measured, from the curb of the narrowest street a fire truck may use",
     # The county copy's own reasons (flats.ingest.normalize gates and the
     # assign stage): why a lot on the map was never screened.
     "JURISDICTION_NOT_ENCODED": "the city this lot is in has no encoded rules",

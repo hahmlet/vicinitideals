@@ -9,7 +9,8 @@ County and others), past a lane of parked cars rather than at the curb.
 :mod:`flats.fit.fire` applies the rule; this module says where the curb is.
 
 RLIS holds street centrelines and no widths, so where nothing here reaches,
-the truck still stands 10 ft off the centreline, as before. Three kinds of
+the street is taken as the narrowest a truck may use (20 ft; Steph
+2026-10-05, "assume narrow" until a width is measured). Three kinds of
 source say more, each in the acquire snapshot (``flats/config/pipeline.yaml``,
 ``curbs_*`` and ``*_width_*``):
 
@@ -31,16 +32,16 @@ source say more, each in the acquire snapshot (``flats/config/pipeline.yaml``,
   less at 95 in 100 (checked 2026-10-05).
 * **Nothing**: no curb crossed and no width beside the foot.
 
-**A drawn curb that would put the truck farther out than today must agree
-with the width.** The old 10 ft off the centreline is the answer on a
+**A drawn curb that would put the truck farther out than the old 10 ft
+off the centreline must agree with the width.** That is the answer on a
 street 40 ft wide; a curb more than 20 ft off the centreline moves the
 truck nearer the lot than any answer before it, and a stray line drawn
 where the real curb has a gap would do the same. So such a curb is kept
 only where a width is recorded beside it and twice its distance off the
 centreline is within :data:`AGREE_FT` of that width; otherwise the width
-answers. A width alone never moves the truck nearer the lot than today
-(:func:`flats.fit.fire.hose_offsets`): it is a step stricter where it
-says the street is narrow, and nothing where it says wide.
+answers, and with no width the street is the narrowest. A width alone
+never moves the truck nearer the lot than the old 10 ft
+(:func:`flats.fit.fire.hose_offsets`).
 """
 
 from __future__ import annotations
@@ -219,15 +220,31 @@ def _dataset_path(sources: Path, manifest: dict[str, Any], key: str) -> Path:
     return sources / str(entry.get("file") or f"{key}.geojson")
 
 
+def _manifest(sources: Path) -> dict[str, Any]:
+    path = sources / "manifest.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
+
+
+def missing(sources: Path | None) -> tuple[str, ...]:
+    """The curb and width datasets an acquire snapshot lacks -- every one
+    where there is no snapshot. A street they would have measured is taken
+    as the narrowest instead, so a run missing one is refused
+    (:func:`flats.ingest.quadfit.run`)."""
+    every = (*CURB_KEYS, *WIDTH_KEYS)
+    if sources is None:
+        return every
+    manifest = _manifest(sources)
+    return tuple(k for k in every if not _dataset_path(sources, manifest, k).is_file())
+
+
 def load(sources: Path) -> StreetEdges | None:
     """The curbs and widths an acquire snapshot holds; None where it holds
-    none of them (every street then keeps the old offset)."""
+    none of them (every street is then taken as the narrowest)."""
     from shapely.geometry import shape
 
     from flats.ingest.delta import iter_features
 
-    manifest_path = sources / "manifest.json"
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.is_file() else {}
+    manifest = _manifest(sources)
     keys: list[str] = []
     curbs: list[BaseGeometry] = []
     for key in CURB_KEYS:
@@ -266,4 +283,5 @@ __all__ = [
     "Source",
     "StreetEdges",
     "load",
+    "missing",
 ]

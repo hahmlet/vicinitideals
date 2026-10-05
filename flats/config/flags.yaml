@@ -276,7 +276,7 @@ types:
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
   FIRE-HOSE-START:
-    description: "Red only because the fire hose is measured from 10 ft out from the curb; measured from the curb itself it reaches (Steph 2026-10-05)"
+    description: "Red only because the fire hose is measured from 10 ft out from the curb; measured from the curb itself it reaches -- where no street width is measured, at the curb of the narrowest street a truck may use (Steph 2026-10-05)"
     kind: parametric
     risk: possible
     # Marks a red, never holds a green: below the yellow line.
@@ -285,7 +285,7 @@ types:
     resolution: external_inquiry
     scope: shared
     key: [jurisdiction]
-    path: "Ask the fire marshal where the 150 ft starts: at the curb, or 10 ft out from it (FOLLOWUPS 29)"
+    path: "Ask the fire marshal where the 150 ft starts: at the curb, or 10 ft out from it; where no street width is measured, a measured width may lift it too (FOLLOWUPS 29)"
     priority: later
     status: pending
     approved_by: null
