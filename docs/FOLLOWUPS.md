@@ -1477,7 +1477,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Beaverton, Hillsboro, Gresham, Oregon City, West Linn, Wilsonville,
    Tualatin, Sherwood, Happy Valley, Clackamas north urban area -- and
    Tigard/Cornelius/Johnson City/Rivergrove/Maywood Park have no lots in
-   the run anyway. PLAN: one statewide  overlay (LWI where a
+   the run anyway. PLAN: one statewide dsl_wetlands overlay (LWI where a
    study area covers the lot, NWI elsewhere) over EVERY jurisdiction, since
    DSL removal-fill binds regardless of city code; action flag (yellow,
    like 42(b)); probable wetlands + hydric soils shown on the lot page, not
