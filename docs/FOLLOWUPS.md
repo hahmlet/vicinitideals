@@ -1436,15 +1436,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    yellow flag, carve, or nothing, per city; (d) lay Metro wetlands (or
    DSL's statewide inventory) over the map-gap cities. (a)-(c) need a
    quadfit s5o run for new carves, then a full re-screen.
-   (a) BUILT 2026-10-04 (water lane, not yet pushed): PCC 33.418.040.B
-   switches off the triplex/fourplex allowance on any R20-R2.5 lot the "z"
-   touches; HB 2138 sec 1(5)(b) keeps a city's Goal-protective measures
-   over the state path. New site fact `constrained_sites_overlay` (bridge
-   reads s4 `has_z_overlay`, Portland + Multnomah pockets only), variant
-   quadplex_allowed false on Portland R20/R10/R7/R5/R2.5 and the pockets'
-   R20/R10/R7/R5. Run 63 measure: 17,908 lots carry a z in those zones,
-   best colour today 7,295 green / 9,557 yellow / 1,004 unknown / 452 red
-   -> all RED at the next re-screen (WARNED promotion). ASKED Steph: 33.418
-   does NOT limit attached houses, so the four units could still go up as
-   four townhouses after splitting the lot (a land division); RED with the
-   path logged, or yellow as a closer look?
+   (a) SHIPPED 2026-10-04 e55c22ee, deployed: PCC 33.418.040.B switches
+   off the triplex/fourplex allowance on any R20-R2.5 lot the "z" touches;
+   HB 2138 sec 1(5)(b) keeps it over the state path. Fact
+   `constrained_sites_overlay` off s4 `has_z_overlay` (Portland + Multnomah
+   pockets). Steph RULED "red, way in noted": four attached houses after a
+   land division (relief `attached_house_division`) rides on the bind,
+   never taken. 17,908 lots (7,295 green / 9,557 yellow today) go RED at the
+   next full re-screen -- WARNED promotion, Steph promotes. Not done: the
+   ~114 ezone lots with no z -- belongs to (b).
