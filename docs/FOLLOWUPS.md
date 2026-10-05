@@ -1376,3 +1376,32 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    read gains and losses. Pending: Steph's pick. Also on the list offered:
    29 (where the fire truck stands), 37(ii) (margins on passing checks for
    the pod report), historic-district fact (~8k answers).
+42. **Water, wetland and flood ground at slope's fidelity (Steph asked
+   2026-10-04 "are we treating wetland/flood zones with as much fidelity
+   as we now treat slopes?" -- answer: no).** Net land (FOLLOWUPS 30) is
+   at parity: each city's water items are measured off its map. Before
+   placement it is not: s5o takes ground off the envelope only for quadfit
+   `action: carve` overlays (floodway everywhere; Gresham, Troutdale,
+   Fairview, Wood Village Title 3/13, West Linn stream/wetland, Oregon City
+   NROD, Tualatin). `flag` overlays reach FLATS only as net-acre sqft --
+   nothing comes off, no flag raised -- and `kill` overlays plus s2's
+   `has_z_overlay` (PCC 33.418) are read by nothing in flats/ (the
+   4(c) note). Live run 63 as-if-signed GREEN lots touching one (s5o
+   2026-10-01_wash x bridge_spliced_2026-10-02_court): Portland ezone p/c
+   3,975 (3,861 also carry z; R10/R7/R20/R5; ezone median 48% of the lot)
+   and 7,324 greens carry z at all -- portland.yaml's state-path variant
+   says "overlays still screen as overlays" but none does; Washington
+   habitat 5,482, CWS vegetated corridor 1,756 (1,039 over a quarter of
+   the lot), Clackamas HCA 2,917 / WQRA 742, FEMA 100-yr fringe 1,099
+   (534 over a quarter), Metro wetlands 313, smaller in Gladstone,
+   Wilsonville, Happy Valley, Tualatin. Map gaps: Tigard, Cornelius,
+   Johnson City, Rivergrove, Maywood Park have no wetland/stream map
+   (Metro wetlands is laid only over 9 jurisdictions). OFFERED (pending
+   Steph): (a) Portland z + ezones first -- read 33.418 / OAR
+   660-046-0010(3) for whether the state path survives a z lot, then red
+   or carve; (b) read each `flag` overlay's code like the slope sentences
+   and rule it no-build (carve before placement), build-with-permit
+   (yellow flag) or incentive-only (ignore); (c) the flood fringe:
+   yellow flag, carve, or nothing, per city; (d) lay Metro wetlands (or
+   DSL's statewide inventory) over the map-gap cities. (a)-(c) need a
+   quadfit s5o run for new carves, then a full re-screen.
