@@ -15,6 +15,7 @@ explicit path.
 | street-class | 41 | `street-class` / `flats/street-class` | Street functional class per lot line. It owns the class column(s) in `Lot Analysis/quadfit/s4_edges.py` and their reading in the bridge; the `local_street` fact; `lowest_class` access on corner and through lots (`flats/score/paper.py` `SIDE_STREET_ACCESS`, the access choice in `flats/ingest/quadfit.py`). |
 | check-margins | 37(ii) | `check-margins` / `flats/check-margins` | Storing each check's margin on PASSING lots: the margin fields on screen results, the bridge's output columns, the loader, and the pod report `/flats/flags/report`. Data only: no lot colour may move. |
 | fire-curb | 29 | `fire-curb` / `flats/fire-curb` | Where the fire truck stands: the curb/pavement-width source, its own new stage or file, and the truck offset in `flats/fit/fire.py`. It does NOT own `s4_edges.py`; it adds a separate file. |
+| water | 42 | `flats-tigard` / `flats/net-area` | Water, wetland and flood ground before placement. Now: Portland's Constrained Sites "z" overlay (the `constrained_sites_overlay` fact, its bridge answer, the 33.418 variants in the Portland and Multnomah layers). Next: ruling each quadfit `flag` overlay (no-build carve / permit flag / ignore), the FEMA fringe, and wetland maps for the cities that have none (`Lot Analysis/quadfit/config/overlays.yaml` actions, `flats/rules/net_area.py`). |
 
 ## Rules
 
