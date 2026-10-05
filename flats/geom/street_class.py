@@ -6,7 +6,9 @@ aprons and Villebois's front yard are all written per street class, and the
 corpus took the stricter number everywhere and named the fact as the lot's
 open question. On 2026-10-04 that question sat on 13,748 Milwaukie answers
 and 4,186 in Wilsonville. Both cities publish the map (``street_class_*`` in
-``flats/config/pipeline.yaml``).
+``flats/config/pipeline.yaml``); Wilsonville's answers only False, because
+the Villebois yards follow the master plan's street classes, not the TSP's
+(see :data:`CLASS_MAPS`).
 
 A city's Transportation System Plan classifies its streets, and some cities
 publish that map. This module reads one, per lot, and answers the fact.
@@ -106,10 +108,16 @@ CLASS_MAPS: dict[str, ClassSpec] = {
         ),
     ),
     # Villebois Table V-1 note 6: "on Collector Avenues" the front yard is
-    # 20 and the street side 15. An arterial is not a local street either.
+    # 20 and the street side 15. The Collector Avenues are the Villebois
+    # Village Master Plan's (Figure 7 Street Plan, 2013), not the TSP's, and
+    # the master plan draws a Minor Collector on dozens of streets the TSP
+    # map calls Local Street. So the TSP map answers only False here -- a TSP
+    # collector or arterial is no local street on either map -- and never
+    # True: a TSP local in Villebois may still be a Collector Avenue, and
+    # reading it as local would pass a lot at 12 ft that the plan holds at 20.
     "street_class_wilsonville": ClassSpec(
         field="Functional_Class",
-        local=frozenset({"Local Street"}),
+        local=frozenset(),
         other=frozenset({"Collector", "Minor Arterial", "Major Arterial"}),
     ),
 }

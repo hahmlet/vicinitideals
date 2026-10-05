@@ -255,7 +255,9 @@ _C: tuple[ConditionDef, ...] = (
         "Wilsonville; `flats.geom.street_class`): True only where every "
         "street line is local on the city's map and a minor residential "
         "street in Metro's file, False where every one is a collector or "
-        "an arterial, unknown everywhere else.",
+        "an arterial, unknown everywhere else. Wilsonville answers False "
+        "only: Villebois's Collector Avenues are the master plan's, which "
+        "names more collectors than the TSP map.",
         evidence="the jurisdiction functional classification layer (street_class_* in flats/config/pipeline.yaml), read per street lot line",
         assume=None,
     ),

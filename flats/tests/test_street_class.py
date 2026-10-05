@@ -84,8 +84,17 @@ def test_a_class_the_code_does_not_settle_reads_as_unknown() -> None:
         assert class_kind(value, spec) == ""
     assert observed_local_street([ON_MAIN], MILWAUKIE, [cmap(main_kind="")]) == {}
     wilsonville = CLASS_MAPS["street_class_wilsonville"]
-    assert class_kind("Local Street", wilsonville) == "local"
     assert class_kind("Minor Arterial", wilsonville) == "other"
+
+
+def test_wilsonvilles_tsp_map_never_calls_a_villebois_street_local() -> None:
+    # Villebois's Collector Avenues are the master plan's (Figure 7), which
+    # draws Minor Collectors on streets the TSP map calls Local Street: the
+    # TSP map can say a street is a collector, never that it is not one.
+    wilsonville = CLASS_MAPS["street_class_wilsonville"]
+    assert not wilsonville.local
+    assert class_kind("Local Street", wilsonville) == ""
+    assert class_kind("Collector", wilsonville) == "other"
 
 
 def test_a_line_no_street_runs_beside_is_unread() -> None:

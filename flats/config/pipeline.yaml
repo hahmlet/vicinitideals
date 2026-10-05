@@ -456,7 +456,10 @@ datasets:
       ("Streets_Functional2012", COW_FuncClass) is an older scheme with a
       catch-all "Road" class: not this one. Answers local_street, which
       carries the Villebois front and street-side yards (Table V-1 note 6:
-      20 ft and 15 ft on a Collector Avenue, 12 and 5 otherwise).
+      20 ft and 15 ft on a Collector Avenue, 12 and 5 otherwise) -- False
+      only: the Collector Avenues are the Villebois Village Master Plan's
+      (Figure 7 Street Plan, 2013), which draws Minor Collectors on streets
+      this layer calls Local Street.
 
   # --- transit (flats/geom/transit.py) ---------------------------------------
   # Measured once per transit release into a per-lot distance file
