@@ -1309,8 +1309,16 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    74 yellow->green, all severity-0 fact flags, no reds, no fit change;
    timing 2,000 lots same load: 1,873 s without vs 2,029 s with (+8%);
    cbc47269 (True-first + seen-standards dedupe) identical output, LIVE.
-   The ~10-08 re-screen must run from main >= cbc47269. OPEN: (ii) bridge to store each check's margin on passing lots so the pod
-   report covers coverage/FAR/height, not just the fit; (iii) Gresham
+   The ~10-08 re-screen must run from main >= cbc47269. (ii) DONE 2026-10-05 79dff142+7dc34722 (check-margins
+   lane): the bridge keeps {check: [observed, threshold, room]} for every
+   PASSING check (lot_results.checks->'margins'); /flats/flags/report charges
+   a wider pod on coverage/FAR/paving/open space too, tries the pod taller and
+   lower, and shows "room to spare on green lots" per limit. Bound on 137 (10k
+   lots seed 23, old vs new): 0 colours moved, every column identical. The ~10-08
+   re-screen carries it only if run from main >= 7dc34722; nothing shows
+   until that run is in use. NOT measured: side-to-side room inside the
+   side setbacks (needs a second fit search per lot) -- offered 2026-10-05,
+   Steph's call. OPEN: (iii) Gresham
    note 5 "end of a Minor Access Street" held on `local_street` (wrong
    fact) -- re-point + measure dead ends; worth little while
    sidewalk_easement holds the same Gresham lots; (f) Phase 4 pod spec.
