@@ -1054,13 +1054,27 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (B) Steph 2026-10-05 "Assume narrow": a street with no measured width is
    the narrowest a truck may use (20 ft, OFC 503.2.1) until measured -- the
    hose starts at its middle; FIRE-HOSE-START says a width may lift it.
-   BUILT, BOUNDING (branch flats/fire-curb a7b51185 + 3338b836). The bridge
-   now REFUSES a --curbs/--sources snapshot missing any of curbs_portland,
-   pave_width_portland, road_width_multnomah, width_wilsonville: the weekly
-   run must acquire them (or pass --curbs /root/fire-curb_sources/
-   2026-10-05), and so must any lane's bound. Bound on 137 queued behind
-   the street-class bound: the 4,315 lots whose run-63 route is 125-160 ft
-   + 3,000 random; counts go to Steph before it ships.
+   BUILT, BOUNDED, NOT SHIPPED (branch flats/fire-curb a7b51185 +
+   3338b836). The bridge now REFUSES a --curbs/--sources snapshot missing
+   any of curbs_portland, pave_width_portland, road_width_multnomah,
+   width_wilsonville: the weekly run must acquire them (or pass --curbs
+   /root/fire-curb_sources/2026-10-05), and so must any lane's bound.
+   BOUND 2026-10-05 (before d8880db1 / after a7b51185, same curbs): the
+   4,312 lots whose run-63 route is 125-160 ft: map colour 170 worse
+   (green->red 79, green->yellow 7, yellow->red 84), 2 better; 3,000 random
+   of the other 47,836: 12 worse (2 / 2 / 8), 0 better. County estimate
+   ~360 worse (sample range ~270-500), ~150 of them green today (~100-250);
+   Washington uninc 65, Beaverton 23, Clackamas uninc 16, Oregon City 14,
+   West Linn 14 of the 182 found. Every loss read: 181 routes 140-150 now
+   150-160; 1 Hillsboro lot is the worse of two readings (doubtful private
+   drive). 176 of 182 carry FIRE-HOSE-START; 4 without still reach (moved
+   onto a slope warning), 2 Gladstone redraws report steep ground / fit
+   instead of the hose (red either way). Both gains read: the hose miss
+   moved the building on the same lot onto ground under 5% -- the slope
+   warning was where the default drawing stood, not the lot (slope lane:
+   the placement does not search for flatter ground). Scripts
+   /root/fire-curb_probe/{pick_b,lotview_b,losses_b}.py.
+   PENDING Steph (asked 2026-10-05): ship (B)?
    (C) Ask Washington County, Clackamas County and West Linn for their
    pavement widths -- DEFERRED, Steph: "follow up with them later". Also
    published but unused: Oregon City Edge of Pavement (CAD, undated),
