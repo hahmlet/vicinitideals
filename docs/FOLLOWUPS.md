@@ -1452,3 +1452,21 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    never taken. 17,908 lots (7,295 green / 9,557 yellow today) go RED at the
    next full re-screen -- WARNED promotion, Steph promotes. Not done: the
    ~114 ezone lots with no z -- belongs to (b).
+   (b)/(c) PHASE 1 SHIPPED 2026-10-05 25d26ce6 + 2c5b461b, deployed: every
+   quadfit `flag` overlay plus Portland ezone p/c/v (no z) and the FEMA
+   fringe is now a closer look -- YELLOW, never GREEN, flag
+   RESOURCE-PERMIT naming the area and its cite on the lot page
+   (`flats/rules/resource_overlays.py`; a test holds the list against
+   overlays.yaml both ways). Milwaukie Willamette Greenway (quadfit kill)
+   -> fact `willamette_greenway_zone`, R-MD/R-HD fourplex RED with the
+   greenway conditional use logged (MMC 19.401.3 / 19.401.5.D). Run 63
+   per lot (bridge files hold 2 rows per lot -- count TLIDs): 8,873 of
+   68,044 greens -> yellow net of z (WA habitat 5,465, CWS 1,751, Clackamas
+   HCA 2,911 / WQRA 741, FEMA 1,093 but only 33 FEMA-only, Metro wetlands
+   313); greenway 126 lots -> RED. WARNED promotion at the ~10-08 run.
+   PHASE 2 (next): read each overlay's sentences (CWS Ch. 3, each WashCo
+   city's Goal 5 chapter, Gladstone 17.27.045) and move any that forbid
+   building to `carve` (needs an s5o run under flock); FEMA fringe stays
+   yellow unless Steph rules raised-floor lots green. (d) DSL statewide
+   wetland inventory over Tigard/Cornelius/Johnson City/Rivergrove/Maywood
+   Park still open.
