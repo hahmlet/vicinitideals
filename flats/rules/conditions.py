@@ -777,6 +777,22 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "willamette_greenway_zone",
+        "site_fact",
+        "Some part of the lot is in Milwaukie's Willamette Greenway Zone, the "
+        "WG on the city's Zoning Map (MMC 19.401). There \"all land use "
+        "actions and any change or intensification of use, or development "
+        "permitted in the underlying zone, are conditional uses\" (19.401.3), "
+        "and none of the thirteen exemptions in 19.401.5.B is a new dwelling. "
+        "Statewide Goal 15 is what the zone implements, so the state's middle "
+        "housing law leaves it standing (ORS 197A.420(5)(b)).",
+        evidence=(
+            "Milwaukie Zoning Map WG boundary, any part of the lot inside it "
+            "(quadfit s5o ovl_milwaukie_greenway)"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "north_of_marine_drive",
         "site_fact",
         "The lot lies north of NE Marine Drive, between the road and the "

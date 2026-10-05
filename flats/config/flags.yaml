@@ -413,6 +413,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_SLOPE]
+  RESOURCE-PERMIT:
+    description: "Part of the lot is a mapped stream, wetland, habitat or flood area where the code lets a house go up only with a permit: a report, mitigation planting or a raised floor (FOLLOWUPS 42)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, fact]
+    path: "Read the city's resource or flood chapter against where the area lies on the lot; price the permit and any mitigation"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_RESOURCE]
 
   # --- a path round a bind, once the rule set accepts it -----------------
   APPROVAL-NEEDED:
@@ -1045,6 +1060,21 @@ types:
     scope: per_lot
     key: [lot, fact]
     path: "Title report for the lot"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-WILLAMETTE-GREENWAY-ZONE:
+    description: "Whether any part of the lot is in Milwaukie's Willamette Greenway Zone (MMC 19.401)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Milwaukie Zoning Map WG boundary"
     priority: later
     status: pending
     approved_by: null

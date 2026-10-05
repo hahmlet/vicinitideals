@@ -147,6 +147,12 @@ MIN_DENSITY_CHECKS: frozenset[str] = frozenset({"min_density_du_per_acre", "min_
 #: Or it falls more than RED allows on the coarse elevation model alone,
 #: which may not make a lot RED.
 CLOSER_LOOK_SLOPE = "CLOSER_LOOK_SLOPE"
+#: Part of the lot is a mapped stream, wetland, habitat or flood area where
+#: the code lets a house go up only with a permit -- a report, mitigation
+#: planting, a raised floor (:mod:`flats.rules.resource_overlays`). Nothing is
+#: taken off the lot, and nothing failed: a cost and a wait to price, so a
+#: closer look, never GREEN (FOLLOWUPS 42(b)/(c), 2026-10-05).
+CLOSER_LOOK_RESOURCE = "CLOSER_LOOK_RESOURCE"
 #: The plan's fit, missed on the ground left once the steep ground is taken
 #: off and met without that (:attr:`LotFacts.steep_blocks`): the slope
 #: eliminates the lot, not the pod's placement (Steph 2026-10-04). The fit
@@ -349,6 +355,11 @@ class LotFacts:
     #: parking and the lot lines (:data:`PARKING_STRIP_UNCONFIRMED`). False
     #: everywhere but the bridge's second reading of a lot the strip held.
     strip_waived: bool = False
+    #: The mapped permit areas the lot touches, by quadfit overlay key
+    #: (:data:`CLOSER_LOOK_RESOURCE`, :func:`flats.rules.resource_overlays.permits_on`).
+    #: Empty where nothing read the overlays, which is every caller but the
+    #: bridge.
+    resource_permits: tuple[str, ...] = ()
     #: The side of the largest square of open ground this plan leaves on the
     #: real lot -- off the building and its pavement, outside the front
     #: setback, off every overlay carve -- in one contiguous piece holding the
@@ -2015,6 +2026,8 @@ def screen(
     # A pad on a grade between Steph's two lines: buildable, at a price.
     if _slope_closer(lot):
         closer = (*closer, CLOSER_LOOK_SLOPE)
+    if lot.resource_permits:
+        closer = (*closer, CLOSER_LOOK_RESOURCE)
 
     if any(not o.available for o in walls):
         # A verified standard the code offers no way around. Nothing still
@@ -2222,6 +2235,8 @@ def _account(
             bounds=(ruling.grade_green_max_pct, float(lot.site_grade_pct or 0.0)),
             source=lot.site_grade_source or "",
         )
+    for key in lot.resource_permits:
+        flag("RESOURCE-PERMIT", CLOSER_LOOK_RESOURCE, fact=key, source="mapped")
 
     binds: list[Bind] = []
     if rules.trusted:
@@ -2301,6 +2316,7 @@ def backlog(results: Sequence[Screening]) -> dict[str, int]:
 
 __all__ = [
     "CLOSER_LOOK_MIN_DENSITY",
+    "CLOSER_LOOK_RESOURCE",
     "GEOMETRY_UNREADABLE",
     "MIN_DENSITY_CHECKS",
     "NO_FRONTAGE",

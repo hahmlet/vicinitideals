@@ -111,6 +111,7 @@ from flats.rules.model import (
     Value,
 )
 from flats.rules.resolver import RuleSet
+from flats.rules.resource_overlays import BY_KEY as RESOURCE_PERMITS
 from flats.score import flags as flag_plan
 from flats.score.paper import paper_fit
 
@@ -2748,6 +2749,7 @@ _REASON_WORDS = {
     "RELIEF_UNCONFIRMED": "the exception it would ask for has not been read",
     "CLOSER_LOOK_MIN_DENSITY": "closer look: the lot is big enough that the city wants more homes on it than four",
     "CLOSER_LOOK_SLOPE": "closer look: the ground under the building and its parking slopes between 5% and 15% — a stepped foundation or retaining walls to price",
+    "CLOSER_LOOK_RESOURCE": "closer look: part of the lot is a mapped stream, wetland, habitat or flood area where the city allows building only with a permit — a report, replanting or a raised floor to price",
     "FACT_UNOBSERVED": "a fact about the site nothing has measured decides which number applies",
     "FACT_ASSUMED": "a fact about the site was assumed rather than measured",
     "GEOMETRY_UNREADABLE": "the lot's outline could not be read",
@@ -2962,10 +2964,13 @@ def _flag_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
         severity = f.get("severity")
         if severity is None and kind is not None:
             severity = kind.severity
+        what = kind.description if kind is not None else code.replace("-", " ").lower()
+        if code == "RESOURCE-PERMIT":
+            what = _resource_words(what, str(f.get("key") or ""))
         out.append(
             {
                 "code": code,
-                "what": kind.description if kind is not None else code.replace("-", " ").lower(),
+                "what": what,
                 "key": str(f.get("key") or "").replace(flag_plan.SEP, " · "),
                 "severity": severity,
                 "counts": line is not None and severity is not None and severity >= line,
@@ -2975,6 +2980,15 @@ def _flag_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
         )
     out.sort(key=lambda r: (-(r["severity"] or 0), r["code"]))
     return out
+
+
+def _resource_words(what: str, key: str) -> str:
+    """A permit-area flag names the area it is about (FOLLOWUPS 42): the last
+    part of its key is quadfit's overlay key."""
+    area = RESOURCE_PERMITS.get(key.split(flag_plan.SEP)[-1])
+    if area is None:
+        return what
+    return f"{what}. Here: {area.words} ({area.cite})"
 
 
 async def _flag_history(session: DBSession, county: str, tlid: str) -> list[dict[str, Any]]:

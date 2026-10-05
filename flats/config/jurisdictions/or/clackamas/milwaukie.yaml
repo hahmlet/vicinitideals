@@ -1325,6 +1325,24 @@ zones:
       value: true
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L35"
       variants:
+        # MMC 19.401.3: inside the Willamette Greenway Zone "all land use
+        # actions ... or development permitted in the underlying zone, are
+        # conditional uses", and 19.401.5.D requires a greenway conditional
+        # use for all development. Goal 15 is what the zone implements, so
+        # the state path does not lift it (ORS 197A.420(5)(b)). The hearing
+        # is the way in, logged on the bind and never taken (FOLLOWUPS 42).
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: MMC 19.401.3 and 19.401.5.D
+          url: https://ecode360.com/print/MI4969?guid=43861241
+          retrieved: '2026-09-02'
+          quote: "or/clackamas/milwaukie/19.400.overlays.txt#L27,L180"
+        - value: true
+          when: [willamette_greenway_zone, conditional_use]
+          cite: MMC 19.401.3 and 19.401.5.D
+          url: https://ecode360.com/print/MI4969?guid=43861241
+          retrieved: '2026-09-02'
+          quote: "or/clackamas/milwaukie/19.400.overlays.txt#L27,L180"
         # Note 3: "Townhouses are not permitted on flag lots." The pod on one
         # lot is a quadplex and unaffected; split onto four it is townhouses,
         # and on a flag lot that path closes.
@@ -1532,6 +1550,25 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L404"
+      variants:
+        # MMC 19.401.3: inside the Willamette Greenway Zone "all land use
+        # actions ... or development permitted in the underlying zone, are
+        # conditional uses", and 19.401.5.D requires a greenway conditional
+        # use for all development. Goal 15 is what the zone implements, so
+        # the state path does not lift it (ORS 197A.420(5)(b)). The hearing
+        # is the way in, logged on the bind and never taken (FOLLOWUPS 42).
+        - value: false
+          when: [willamette_greenway_zone]
+          cite: MMC 19.401.3 and 19.401.5.D
+          url: https://ecode360.com/print/MI4969?guid=43861241
+          retrieved: '2026-09-02'
+          quote: "or/clackamas/milwaukie/19.400.overlays.txt#L27,L180"
+        - value: true
+          when: [willamette_greenway_zone, conditional_use]
+          cite: MMC 19.401.3 and 19.401.5.D
+          url: https://ecode360.com/print/MI4969?guid=43861241
+          retrieved: '2026-09-02'
+          quote: "or/clackamas/milwaukie/19.400.overlays.txt#L27,L180"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L495"

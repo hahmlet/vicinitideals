@@ -122,6 +122,7 @@ from flats.rules.conditions import ACROSS_STREET_CONDITIONS
 from flats.rules.model import TRANSIT_MEASURES, Layer
 from flats.rules.net_area import MEASURED as NET_MEASURED, SLOPES as NET_SLOPES, measured_deductions
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
+from flats.rules.resource_overlays import COLUMNS as PERMIT_COLUMNS, permits_on
 from flats.score.configure import Configuration, configure
 from flats.score import flags as flag_plan
 from flats.score import margins as margin_record
@@ -216,6 +217,12 @@ NROD_SQFT = "ovl_oregon_city_nrod_sqft"
 #: anything, and s2's False there is only "outside Portland's map".
 Z_ANSWERS: frozenset[str] = frozenset({"portland", "multnomah_unincorporated"})
 
+#: Where the Willamette Greenway map answers ``willamette_greenway_zone``:
+#: Milwaukie's WG zone off the city's own Zoning Map service (quadfit
+#: ``milwaukie_greenway``, which s5o measures for Milwaukie lots only).
+GREENWAY_ANSWERS: frozenset[str] = frozenset({"milwaukie"})
+GREENWAY_COLUMN = "ovl_milwaukie_greenway"
+
 #: The s4 columns the bridge reads, and the s5o ones. Columns a stage file
 #: written before they existed lacks are read as absent (see
 #: :func:`iter_rows`); the bridge then answers those facts the way the
@@ -251,6 +258,10 @@ S5O_COLUMNS: tuple[str, ...] = (
     "wkb",
     "env_setbacks_json",
     "carve_wkb",
+    GREENWAY_COLUMN,
+    # The mapped areas a house goes up in only with a permit
+    # (:mod:`flats.rules.resource_overlays`).
+    *PERMIT_COLUMNS,
     # Each deduction a city's net area may take off the lot, in square feet
     # (:data:`flats.rules.net_area.MEASURED`).
     *sorted({c for cols in NET_MEASURED.values() for c in cols}),
@@ -275,6 +286,7 @@ OBSERVABLE: tuple[str, ...] = (
     "in_floodplain",
     "protected_water_feature",
     "constrained_sites_overlay",
+    "willamette_greenway_zone",
     # Only where a map code settles it (an alias ruling's ``observes``) or a
     # layer's ``drawn_areas`` traces it.
     "inside_mapped_use_area",
@@ -369,6 +381,8 @@ def observed_facts(
     * ``constrained_sites_overlay`` -- Portland and its pockets only
       (:data:`Z_ANSWERS`), off the "z" letters on Portland's zoning map: True
       where any part of the lot is inside one (PCC 33.418.040 is "any portion").
+    * ``willamette_greenway_zone`` -- Milwaukie only (:data:`GREENWAY_ANSWERS`),
+      off the city's WG zone: True where any part of the lot is inside it.
     * ``split_zone`` -- s2's majority rule: the winning zone covers under
       90 % of the lot. A sliver under that is read by quadfit as zoning-map
       noise against the taxlot fabric, and the bridge carries that reading
@@ -466,6 +480,8 @@ def observed_facts(
         out["protected_water_feature"] = nrod > 0
     if row.get("jurisdiction") in Z_ANSWERS and _answered(row.get("has_z_overlay")):
         out["constrained_sites_overlay"] = _is_true(row.get("has_z_overlay"))
+    if row.get("jurisdiction") in GREENWAY_ANSWERS and _answered(row.get(GREENWAY_COLUMN)):
+        out["willamette_greenway_zone"] = _is_true(row.get(GREENWAY_COLUMN))
     return out
 
 
@@ -1303,6 +1319,9 @@ def lot_from_row(
         # 2026-10-02): an existing lot dedicates nothing, so only what s5o
         # measured comes off it.
         net_deductions=measured_deductions(row) or None,
+        # A permit to build on mapped stream, wetland, habitat or flood
+        # ground: a closer look (FOLLOWUPS 42(b)/(c)).
+        resource_permits=permits_on(row),
     )
     juris = str(row.get("jurisdiction"))
     try:

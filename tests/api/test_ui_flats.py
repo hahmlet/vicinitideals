@@ -3057,3 +3057,17 @@ async def test_every_screen_reason_is_said_in_words() -> None:
     for code in reasons:
         assert code in _REASON_WORDS, code
     assert "private drive" in _said_reason("STREET_UNCONFIRMED")
+
+
+async def test_a_permit_area_flag_names_its_area() -> None:
+    """A RESOURCE-PERMIT flag says which mapped area and which code
+    section, not only that some area is there (FOLLOWUPS 42(b))."""
+    from app.api.routers.ui_flats import _flag_rows
+    from flats.score import flags as flag_plan
+
+    key = flag_plan.SEP.join(["washington_unincorporated", "R5", "", "", "", "T1", "clackamas_hca"])
+    [row] = _flag_rows({"flags": [{"code": "RESOURCE-PERMIT", "key": key}]})
+    assert "Clackamas County habitat conservation area" in row["what"]
+    assert "ZDO 706.05" in row["what"]
+    [other] = _flag_rows({"flags": [{"code": "RESOURCE-PERMIT", "key": "unheard_of"}]})
+    assert "Here:" not in other["what"]
