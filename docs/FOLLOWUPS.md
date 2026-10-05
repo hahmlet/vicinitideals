@@ -1037,73 +1037,46 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    measure it per edge from RLIS street TYPE in s4 and re-check today's
    greens there. Awaiting Steph's go.
 29. **Fire reach: measure where the truck really stands (Steph 2026-10-01,
-   "later improvement").** Item 28 assumes the narrowest legal fire road
-   (truck 10 ft off the RLIS centreline) because RLIS holds no street
-   width. Sizing on run 51: standing at the lot line instead would keep
-   ~460 more green lots and ~1,600 yellow lots off red -- the strict
-   assumption costs real lots, and most ordinary lots measure 120-130 ft,
-   so a few feet move many. Next: find curb lines or pavement widths per
-   city (Portland, Washington County, Clackamas GIS -- check what each
-   publishes before claiming any), measure the truck's offset to the near
-   curb per street line, fall back to the strict 10 ft where nothing is
-   held, re-screen the fire scope. Never the lot line without a measure
-   (false GREEN). Item 28 (the 150 ft hose rule itself) is LIVE: run 59
-   PROMOTED 2026-10-02 (51 -> 59: green->red 2,059 answers / 1,453 lots,
-   routes 152-251 ft; yellow->red 2,038; unknown->red 4,881; green->unknown
-   1,339 / 894 lots -- 582 front only a gravel street, 149 an unnamed
-   drive, 20 an alley, ~25 a freeway; 0 unexplained). Left over: 10 green
-   lots on ordinary streets found no route (look at them one by one), and
-   ~100 green plans are held out of GREEN because the drawing could not
-   re-place the building and court (2dd750c2 measures a route only to a
-   drawing that fits -- run 54 had turned 14,419+ answers RED off a
-   building drawn where it does not fit).
-   RESEARCHED 2026-10-04 (fire-curb lane, step 1; nothing built; every
-   source fetched live). Published: Portland PBOT Pavement Management
-   (portlandmaps.com/od COP_OpenData_Transportation/MapServer/71:
-   PaveWidth/RoadWidth ft on 29,523 segments, 99.9% filled, inspected
-   mostly 2016-2025; 1,027 widths <10 ft look like junk, 2,118 real
-   10-20 ft) and PBOT Curbs (same service /74: 118k curb + shoulder
-   lines, no shared id -- join by distance); Multnomah County Road Width
-   (www3.multco.us gisagspublic RoadServices/TransportationLayers/17: 486
-   county roads, 100%); Wilsonville Streets `Width` (gis.wilsonvillemaps.com
-   MIL1/MapServer/80, 1,608/1,609, edited 2026); Oregon City Edge of
-   Pavement lines (maps.orcity.org Transportation_PUBLIC/13, CAD import,
-   undated); Hillsboro Roadway polygons (Planning_BaseData/80, streets
-   mixed with parking lots); Tualatin StreetSaver (area / length).
-   Nothing published: RLIS, ODOT (state highways only), Washington and
-   Clackamas counties (internal pavement systems, request only), Lake
-   Oswego, Milwaukie, Happy Valley, Gladstone, Johnson City, Rivergrove,
-   Tigard, King City, Cornelius, Durham, Troutdale, Fairview, Wood
-   Village; OSM width on <1% of roads. Not reachable from here:
-   Beaverton, Gresham. Near misses (run 63, fire the only failing check,
-   <=10 ft over): ~1,000 lots -- Portland 343, Washington uninc 201,
-   Clackamas uninc 85, West Linn 65, Beaverton 43, Happy Valley 36;
-   published data reaches ~430. The four fire guides (PF&R, TVF&R,
-   Clackamas Fire, Gresham) never say whether the 150 ft starts at the
-   curb or past parked cars; PF&R: a fire road "shall not be obstructed
-   ... including the parking of vehicles"; TVF&R parking 20-26 ft none /
-   26-32 one side / >32 both. On Portland's widths, truck at the curb
-   beats today's 10 ft on 25,168 of 28,490 segments (median +5 ft);
-   truck past a parked-car lane is WORSE than today on 14,284 (median
-   -1 ft) -- i.e. today's 10 ft is not strict on parked streets.
-   NATIONAL PRACTICE checked 2026-10-05 (Steph asked): no standard. IFC
-   503.1.1 and NFPA 1 18.2.2.3.1 are silent; ICC's Appendix D user note
-   says 503 "does not state specific criteria". Of 16 US fire-department
-   guides read, 7 + all 4 Oregon ones are silent; San Bernardino County
-   FPD Std A-1 p2 starts "from the edge of the roadway or curb"; one
-   Southern California template (Colton p16, Roseville p5, Riverside
-   County, Murrieta, Fountain Valley, Redlands, Placentia) says "Hose pull
-   measurements begin at a point in the street located 10 feet from the
-   edge of the curb"; Ontario CA B-004 p5 "edge of the travel way";
-   Montgomery County MD plans operational bays around parked cars. The
-   10-ft-from-curb rule is WORSE than today's 10 ft on ~85% of Portland
-   segments (every street under 40 ft). Portland drawn curbs checked on
-   4 sample areas: curbed streets have both curbs drawn and match
-   PaveWidth within 2 ft 92-93%; uncurbed SW/outer-east streets 57-70%
-   (rough edges -- margin or keep 10 ft). The PBOT layers page at 200
-   rows a request. PENDING Steph: curb / 10 ft past the curb / ask PF&R
-   and TVF&R plan review once; whether to ask Washington County,
-   Clackamas County and West Linn for their widths.
+   "later improvement"; RULED 2026-10-05).** Item 28 (the 150 ft hose,
+   OFC 503.1.1) is LIVE since run 59 and measures from a truck 10 ft off
+   the RLIS centreline, because RLIS holds no street width.
+   RULING 2026-10-05. No national standard: IFC 503.1.1, NFPA 1 and all
+   four Oregon guides are silent; one Southern California template
+   (Colton, Roseville, Riverside County ...) says "10 feet from the edge
+   of the curb"; San Bernardino = the curb; Ontario CA = the travel way.
+   Steph: "Let's go with stricter" -- the hose starts 10 ft out from the
+   NEAR curb, capped at the street's middle (worse than today on every
+   street under 40 ft); "with a flag to check later" -- FIRE-HOSE-START
+   (severity 1, the plan stays red) where the hose is the one bind and
+   the route would clear measured from the curb itself.
+   BUILT, NOT SHIPPED (branch flats/fire-curb, 5ded6db8; tests
+   flats/tests/test_fire_curb.py). flats/geom/curbs.py reads PBOT Curbs +
+   PaveWidth, Multnomah RoadWidth and Wilsonville Width (pipeline.yaml;
+   acquire.py now pages the PBOT layers, which serve 200 rows a request).
+   A drawn curb loosens only where a recorded width agrees within 4 ft; a
+   width alone never loosens; nothing measured = today's 10 ft. Bridge
+   `--curbs` defaults to `--sources`, so a full acquire picks it up.
+   BOUND on 137 2026-10-05, same code with and without curbs. Bound 1
+   (2,103 lots nearest the limit): map colour 25 worse (green->red 16,
+   green->yellow 4, yellow->red 5; Portland 23, Wilsonville 2), 3 better;
+   if signed 36 worse, 2 better. Bound 2 (all 2,579 other lots the rule
+   could help + 2,000 random): 0 worse, 1 better. Every gain read: wide
+   main roads with a matching drawn curb (NE Lombard 72 ft,
+   Beaverton-Hillsdale Hwy 72, SE Stark 66, SE Gladstone 50; designs only:
+   SE Market 44, NE Prescott 44). Every loss read: a street under 40 ft.
+   23 of the 25 worse lots carry the flag; ~39 red lots carry it in all.
+   Scripts /root/fire-curb_probe/; detail in memory project_flats_fire_curb.
+   PENDING Steph (asked 2026-10-05): (a) ship it; (b) streets with no
+   width (Washington County, Clackamas outside Wilsonville, Multnomah's
+   cities other than Portland) keep today's 10 ft, which is NOT strict
+   under the ruling on streets under 40 ft -- up to 567 green-if-signed lots sit within 10 ft of the
+   limit there (Washington uninc 388, Clackamas uninc 124): leave as is,
+   or assume the narrowest street (truck in the middle) until a width
+   arrives -- needs its own bound; (c) ask Washington County, Clackamas
+   County and West Linn for their pavement widths (request only). Also
+   published but unused: Oregon City Edge of Pavement (CAD, undated),
+   Hillsboro Roadway polygons (mixed with parking lots). Not reachable
+   from here: Beaverton, Gresham. Not tied to the 10-08 re-screen.
 30. **Net land area review (Steph 2026-10-01: "not unique to Beaverton ...
    we need to do a review of net land areas and what to do about it").**
    129 numeric values in 10 layers carry `measured_on: net_developable_area`
