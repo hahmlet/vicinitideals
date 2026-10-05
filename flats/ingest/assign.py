@@ -151,6 +151,7 @@ ROW_COLUMNS = (
     "colour",
     "flags",
     "binds",
+    "margins",
 )
 
 #: The flag type each gate raises on a lot the bridge never measured

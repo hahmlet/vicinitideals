@@ -122,6 +122,7 @@ from flats.rules.net_area import MEASURED as NET_MEASURED, SLOPES as NET_SLOPES,
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration, configure
 from flats.score import flags as flag_plan
+from flats.score import margins as margin_record
 from flats.score.relief import ReliefPolicy
 from flats.score.paper import (
     _yard,
@@ -2760,6 +2761,9 @@ def row_for(s: Screened) -> dict[str, Any]:
         "colour": s.signed.colour.value,
         "flags": flag_plan.dumps(s.signed.flags, lot=s.lot.tlid),
         "binds": flag_plan.dumps(s.signed.binds),
+        # The room each passing standard had to spare (FOLLOWUPS 37(ii)):
+        # for the pod design report, never read by the colour.
+        "margins": margin_record.dumps(s.signed.margins),
     }
 
 

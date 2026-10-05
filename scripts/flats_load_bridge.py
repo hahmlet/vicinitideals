@@ -538,6 +538,13 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
         checks["colour"] = colour
         checks["flags"] = json.loads(_clean(row.get("flags")) or "[]")
         checks["binds"] = json.loads(_clean(row.get("binds")) or "[]")
+    # The room each standard the lot passes had to spare, ``{check:
+    # [observed, threshold, slack]}`` (flats/score/margins.py, FOLLOWUPS
+    # 37(ii)): for the pod design report. Absent from a bridge run written
+    # before the bridge kept it, and where nothing passed.
+    margins = _clean(row.get("margins"))
+    if isinstance(margins, str) and margins:
+        checks["margins"] = json.loads(margins)
     return checks
 
 

@@ -73,6 +73,7 @@ from flats.score.configure import Configuration
 from flats.score.flags import LOT as _THIS_LOT, Bind, Colour, Flag, colour as _colour, fact_code
 from flats.score.flags import make as make_flag
 from flats.score.flags import registry as _registry
+from flats.score.margins import passing as _passing
 from flats.score.paper import (
     Alley,
     Beside,
@@ -511,6 +512,13 @@ class Screening:
         Derived, never stored as an input; ``triage`` is the colour from
         before flags, kept for the reconciliation."""
         return _colour(self.binds, self.flags)
+
+    @property
+    def margins(self) -> tuple[CheckResult, ...]:
+        """Every check this lot passes with this design, each with the room
+        it had to spare (``slack``), for the pod design report (FOLLOWUPS
+        37(ii)). Derived from ``checks``, never an input to the colour."""
+        return _passing(self.checks)
 
 
 def _coverage_allowed_sqft(rules: ZoneResolution, lot_sqft: float) -> tuple[float | None, str]:
