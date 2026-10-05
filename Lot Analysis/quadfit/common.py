@@ -1466,10 +1466,33 @@ class OverlaySpec(BaseModel):
     # doughnut -- a lake with an island, a floodplain around high ground -- gets
     # bigger and wronger. The published geometry has to be checked, not guessed.
     fill_holes: bool = False
+    # The other half of the same doughnut: keep ONLY the interior rings. The
+    # SROZ is the hole in Wilsonville's ring, and 4.139.06 forbids nearly all
+    # building in it while the 25 ft Impact Area around it is a report, so the
+    # carve reads the hole and the flag reads the whole.
+    holes_only: bool = False
+    # Keep a feature only when one of these properties takes one of the listed
+    # values (any field, any value). Metro's Title 3 layer is one polygon set
+    # with four tags -- RIPARIAN, WETBUF, FEMA, FLOOD96 -- and 5,474 of its
+    # 21,184 polygons are flood ground and nothing else; a carve standing in
+    # for a stream corridor must not take them. Title 13 likewise publishes
+    # "NO HCA" polygons beside HIGH, MODERATE and LOW.
+    keep_where: dict[str, list[str | int | float]] = Field(default_factory=dict)
+    # Keep only the part of each feature inside a second raw layer. West Linn
+    # draws its streams and, separately, which of them are riparian corridors;
+    # Table 32-2 gives a corridor stream 100 ft and any other stream 65, so the
+    # 100 ft carve reads the stream lines clipped to the corridor polygons.
+    within: str | None = None
     jurisdictions: list[str] | Literal["all"] = "all"  # where the RULE applies
     citation: str = ""
     confidence: Literal["verified", "needs_verification"] = "needs_verification"
     coverage: dict[str, OverlayCoverage] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def _one_ring_reading(self):
+        if self.fill_holes and self.holes_only:
+            raise ValueError(f"{self.key}: fill_holes and holes_only read opposite halves of one ring")
+        return self
 
     @property
     def layer(self) -> str:

@@ -85,6 +85,68 @@ def test_fill_holes_recovers_the_resource_a_buffer_ring_leaves_out():
     assert _fill_holes(plain).area == pytest.approx(100)
 
 
+def test_holes_only_keeps_the_resource_and_drops_the_ring():
+    """Wilsonville's SROZ is the hole; the carve must take the hole alone."""
+    from shapely.geometry import MultiPolygon, Polygon, box
+
+    from s5o_overlays import _holes
+
+    ring = Polygon(
+        box(0, 0, 100, 100).exterior.coords,
+        [box(25, 25, 75, 75).exterior.coords],
+    )
+    hole = _holes(ring)
+    assert hole.area == pytest.approx(2500)
+    assert hole.contains(box(40, 40, 60, 60))
+    assert not hole.intersects(box(0, 0, 20, 20))
+    multi = MultiPolygon([ring, box(200, 0, 300, 100)])
+    assert _holes(multi).area == pytest.approx(2500)
+    assert _holes(box(0, 0, 10, 10)).is_empty
+
+
+def test_holes_only_and_fill_holes_cannot_both_be_set():
+    with pytest.raises(ValueError):
+        _spec(fill_holes=True, holes_only=True)
+
+
+def _write_layer(path, features):
+    import json
+
+    path.write_text(json.dumps({"type": "FeatureCollection", "features": [
+        {"type": "Feature", "properties": props, "geometry": geom}
+        for props, geom in features
+    ]}), encoding="utf-8")
+
+
+def test_keep_where_and_within_read_only_the_named_part(tmp_path, monkeypatch):
+    """Title 3's flood-only polygons stay out of a corridor carve; West Linn's
+    100 ft reads only the stream inside a corridor polygon."""
+    from shapely.geometry import box, mapping
+
+    import s5o_overlays
+
+    monkeypatch.setattr(s5o_overlays, "RAW_DIR", tmp_path)
+    _write_layer(tmp_path / "overlay_t3.geojson", [
+        ({"RIPARIAN": 1, "WETBUF": 0, "FEMA": 0}, mapping(box(0, 0, 10, 10))),
+        ({"RIPARIAN": 0, "WETBUF": 1, "FEMA": 1}, mapping(box(20, 0, 30, 10))),
+        ({"RIPARIAN": 0, "WETBUF": 0, "FEMA": 1}, mapping(box(40, 0, 50, 10))),
+    ])
+    kept = s5o_overlays._load_layer_geoms(
+        "overlay_t3", keep_where={"RIPARIAN": [1], "WETBUF": [1]})
+    assert sorted(g.bounds[0] for g in kept) == [0, 20]
+    assert len(s5o_overlays._load_layer_geoms("overlay_t3")) == 3
+
+    _write_layer(tmp_path / "overlay_line.geojson", [
+        ({}, {"type": "LineString", "coordinates": [[0, 5], [100, 5]]}),
+    ])
+    _write_layer(tmp_path / "overlay_corr.geojson", [
+        ({}, mapping(box(0, 0, 40, 10))),
+    ])
+    clipped = s5o_overlays._load_layer_geoms("overlay_line", within="overlay_corr")
+    assert sum(g.length for g in clipped) == pytest.approx(40)
+    assert s5o_overlays._load_layer_geoms("overlay_line", within="overlay_absent") is None
+
+
 def test_carve_envelopes_subtracts_buffered_overlay():
     from shapely.geometry import box
 

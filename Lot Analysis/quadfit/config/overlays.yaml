@@ -368,6 +368,36 @@ overlays:
       sherwood: {grade: C, note: "regional proxy"}
       king_city: {grade: C, note: "regional proxy"}
       durham: {grade: C, note: "regional proxy"}
+  # Phase 2 (FOLLOWUPS 42, read 2026-10-05): the corridor is a no-build area,
+  # so the same map is carved as well as flagged. CWS 3.01.5 bars any
+  # structure in a Sensitive Area and Vegetated Corridor except as 3.04/3.05
+  # allow, and a dwelling is not on 3.05's list; 3.05.9 sends every other use
+  # to a 3.07 alternatives analysis, whose Tier 1 and Tier 2 tests both
+  # require that "No practicable alternative to the location of the
+  # development exists" -- discretion, so RED. The one clear-standards path,
+  # 3.07.2's minor encroachment (20% of the corridor's depth and length), is
+  # open only for a marginal or degraded corridor, a class set by a plant
+  # survey with the higher class prevailing on a mixed community (3.03.3(c)),
+  # which no desk map holds. The flag above stays: a lot whose pod clears the
+  # corridor still needs the Service Provider Letter (3.02.1(b)) and the
+  # corridor planting (3.06.2(a)). Only the stream and wetland polygons are
+  # carved; Title 3's flood-only polygons are the FEMA layers' business.
+  - key: washington_cws_corridor_core
+    source: metro_title3
+    keep_where: {RIPARIAN: [1], WETBUF: [1]}
+    name: "Clean Water Services vegetated corridor -- no-build (Metro Title 3 riparian + wetland buffers as proxy)"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham]
+    citation: "Clean Water Services Design and Construction Standards (R&O 19-5 as amended by R&O 19-22) 3.01.5: 'Except as allowed in Sections 3.04 and 3.05, no person shall erect any structure, conduct any development or construction activities ... within a Sensitive Area and Vegetated Corridor'; 3.05.9 admits other uses only 'as approved by the District through an Alternatives Analysis process as described in Section 3.07'; 3.07.3(c)5 and 3.07.4(c)6: 'No practicable alternative to the location of the development exists that will not disturb the Sensitive Area or Vegetated Corridor'; 3.07.2 minor encroachment (20% of depth and length) applies only to 'marginal or degraded Vegetated Corridors'"
+    confidence: verified
+    coverage:
+      washington_unincorporated: {grade: C, note: "Metro Title 3 RIPARIAN and WETBUF polygons for the CWS corridor, which CWS does not publish as an adopted boundary (2.13.5 disclaims its own maps). Title 3's water quality widths are the same table CWS Table 3-1 draws (50 ft on a perennial stream or a wetland under 25% slope). Under-carves: steep banks (3.03.1(d)1, 35 ft past the break in slope) and the Tualatin River (125 ft). Over-carves: a marginal or degraded corridor whose outer 20% 3.07.2 would release"}
+      hillsboro: {grade: C, note: "regional proxy, as washington_unincorporated"}
+      beaverton: {grade: C, note: "regional proxy, as washington_unincorporated"}
+      sherwood: {grade: C, note: "regional proxy, as washington_unincorporated"}
+      king_city: {grade: C, note: "regional proxy, as washington_unincorporated"}
+      durham: {grade: C, note: "regional proxy, as washington_unincorporated"}
 
   # ---------------- Unincorporated Clackamas --------------------------------
   # The county regulates habitat and water quality thoroughly and PROHIBITS
@@ -401,6 +431,30 @@ overlays:
     confidence: verified
     coverage:
       clackamas_unincorporated: {grade: C, note: "Metro's regional Title 13 layer standing in for the county's adopted HCA Map, which is not published as GIS on the county's own service. Same 2002 inventory by 706.09's own account, but the county's adopted boundaries may differ. A flag, so the cost of the proxy is a lot read by a person"}
+  # Phase 2 (FOLLOWUPS 42, read 2026-10-05): 706.05 prohibits nothing a house
+  # is, but the permit's own numbers keep the pod out. 706.10(A)(1)(c): "the
+  # MDA shall be located outside the HCA except: If the MDA exceeds the
+  # non-HCA area, the excess MDA may be located in Low HCA", and Table 706-3
+  # caps the whole disturbance area -- every improvement on the site, which
+  # 706.03(G) requires to be contiguous -- at 5,000 sq ft (High) or 6,000
+  # (Moderate/Low) on Urban Low Density Residential land. A pod with its court
+  # is larger than either, so on that land it either fits outside the HCA or
+  # it does not fit; route (B) is "avoided to the extent practicable", which is
+  # discretion. Table 706-4 (every other plan designation) allows 10/15/50% of
+  # High/Moderate/Low HCA with no limit outside; the screen holds no plan
+  # designation, so on that land the carve can over-reach -- the conservative
+  # side, and counted at the bound.
+  - key: clackamas_hca_core
+    source: metro_title13
+    keep_where: {HCA_VALUE: [HIGH, MODERATE, LOW]}
+    name: "Clackamas County Habitat Conservation Area -- outside the disturbance allowance"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [clackamas_unincorporated]
+    citation: "Clackamas ZDO 706.10(A)(1)(c): 'the MDA shall be located outside the HCA except: If the MDA exceeds the non-HCA area, the excess MDA may be located in Low HCA'; Table 706-3: High HCA '50 percent of the area of the subject property, up to a maximum of 5,000 square feet', Moderate/Low '65 percent ... up to a maximum of 6,000 square feet'; 706.10(A)(1)(d) counts 'both existing and proposed disturbance area'; 706.03(G) the disturbance area 'must be contiguous'; 706.10(B) 'Development in the HCA shall be avoided to the extent practicable' (discretionary)"
+    confidence: verified
+    coverage:
+      clackamas_unincorporated: {grade: C, note: "Metro Title 13 HIGH/MODERATE/LOW polygons ('NO HCA' left out) standing in for the county's HCA Map. Over-carves on land designated other than Urban Low Density Residential, where Table 706-4 lets part of the development into the HCA"}
   - key: clackamas_wqra
     source: metro_title3
     name: "Clackamas County Water Quality Resource Area District (ZDO 709)"
@@ -441,13 +495,13 @@ overlays:
     coverage:
       west_linn: {grade: A, note: "17 segments / 6,539 ft. The only width in Table 32-2 narrower than row A, so it is kept separate rather than swept into the 65 ft buffer"}
   - key: west_linn_wra_piped
-    name: "West Linn mapped piped watercourse - width unstated"
+    name: "West Linn mapped piped watercourse - exempt"
     action: flag
     jurisdictions: [west_linn]
-    citation: "WLCDC 32.120(A) puts these on the adopted WRA Map; Table 32-2 has no row for a channel that is still piped - every row measures from OHW or a delineated wetland edge, and row E covers a formerly closed channel only once it is REOPENED (15 ft)"
+    citation: "WLCDC 32.040(F) Exempt areas: '2. Existing enclosed or piped sections of streams, including any development at right angles to the enclosed or piped sections.' Table 32-2 accordingly has no row for a channel that is still piped; row E covers a formerly closed channel only once it is REOPENED (15 ft)"
     confidence: verified
     coverage:
-      west_linn: {grade: B, note: "190 segments / 43,303 ft. Not carved: a width nobody wrote down is not a width. Flagged so the lot is read by a person, which is what the code's own silence leaves"}
+      west_linn: {grade: B, note: "190 segments / 43,303 ft. Measured for the net-area deduction West Linn's density rules may take, and nothing else: FLATS raises no permit flag on it since 2026-10-05 (FOLLOWUPS 42 phase 2), because 32.040(F)(2) exempts the piped section outright. The touch column is kept so that reading stays one edit away"}
   - key: west_linn_rci
     name: "West Linn Riparian Corridor Inventory (awareness)"
     action: flag
@@ -455,7 +509,36 @@ overlays:
     citation: "WLCDC 32.120(A) - the adopted map identifies riparian corridors among its water features; Table 32-2 row D would put their WRA at 100 feet, a width the published polygon does not itself state"
     confidence: needs_verification
     coverage:
-      west_linn: {grade: B, note: "10 polygons, 636 acres - within 4% of the stream layer buffered 65 ft each side (613 acres), which reads as the same regime drawn twice rather than a second resource. Flagged, not carved again, because carving row D's 100 ft on top of it would claim more than either layer says"}
+      west_linn: {grade: B, note: "10 polygons, 636 acres. Read until 2026-10-05 as the 65 ft stream buffer drawn twice (613 acres, within 4%); measured, 353 of its acres lie more than 65 ft from any stream line, so it is a resource of its own and is carved as west_linn_rci_resource and west_linn_wra_riparian below. The flag stays for the lot whose pod clears it: 32.060 still governs development on a property containing a WRA"}
+  # Phase 2 (FOLLOWUPS 42, read 2026-10-05): a riparian corridor is a water
+  # resource of its own (Table 32-2 row D), and Table 32-1 puts a new house at
+  # "No" in the resource and "No, except by hardship" in its WRA -- hardship
+  # (32.110) is relief. So the corridor polygon is carved, and the streams
+  # inside it get row D's 100 ft from OHW in place of row A's 65. Measured on
+  # the published layers: 60% of the city's 155,552 ft of stream lies inside a
+  # corridor polygon, and 353 of the corridors' 636 acres lie more than 65 ft
+  # from any stream line -- not the stream buffer drawn twice, as read before.
+  - key: west_linn_rci_resource
+    source: west_linn_rci
+    name: "West Linn riparian corridor -- the resource itself"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [west_linn]
+    citation: "WLCDC 32.120(A) adopts the WRA Map as identifying 'WRA water features (wetlands, streams, ephemeral streams and riparian corridors)'; Table 32-1 'New house, principal structure(s)': In Water Resource 'No', Water Resource Area 'No, except by hardship'; 32.060(D) 'all development is prohibited in the WRA as established in Table 32-2'"
+    confidence: verified
+    coverage:
+      west_linn: {grade: B, note: "10 corridor polygons, 636 acres, off the city's RiparianCI service"}
+  - key: west_linn_wra_riparian
+    source: west_linn_wra_stream
+    within: west_linn_rci
+    name: "West Linn Water Resource Area - riparian corridor streams (Table 32-2 row D)"
+    action: carve
+    buffer_ft: 100
+    jurisdictions: [west_linn]
+    citation: "WLCDC Table 32-2 row D: 'Riparian Corridor | Any | OHW | 100 feet'; row G gives fish-bearing streams the same '100 feet when no greater than 25% slope'"
+    confidence: verified
+    coverage:
+      west_linn: {grade: B, note: "stream centrelines clipped to the corridor polygons, buffered 100 ft. Measured from the centreline, not OHW, so it under-carves by half the channel. Row G's fish-bearing streams OUTSIDE a corridor still get row A's 65 ft: no published layer says which streams carry fish (ODFW's distribution map is not held)"}
   - key: west_linn_wetlands
     name: "West Linn wetland inventory + WRA width"
     action: carve
@@ -498,6 +581,26 @@ overlays:
     confidence: verified
     coverage:
       wilsonville: {grade: B, note: "city layer, 22 polygons, published as the 25 ft ring with the SROZ as the hole; fill_holes recovers resource + buffer. Under-flags: 4.139.05(.01)(A) sets the city's own no-review distance at 100 ft and a flag fires on touch, so a lot 40 ft away is missed. The SROZ core is not published anywhere in Wilsonville's GIS — this reconstruction is the only copy of it we have"}
+  # Phase 2 (FOLLOWUPS 42, read 2026-10-05): the SRIR's criteria are numbers,
+  # and inside the zone they shut the pod out. 4.139.06(.03)(B): "no
+  # development is permitted within Metro's ... Title 3 Water Quality Resource
+  # Areas boundary"; (C): "No more than five percent of the Area of Limited
+  # Conflicting Use ... located on a property may be impacted" -- 5% of a lot
+  # never holds a pod and its court. 4.139.04(.17) exempts a "new single family
+  # dwelling or duplex" only. So the hole -- the SROZ itself -- is carved, and
+  # the 25 ft Impact Area around it stays the flag above (4.139.03(.02) lets
+  # the Director clear Impact-Area-only work without an SRIR).
+  - key: wilsonville_sroz_core
+    source: wilsonville_sroz
+    name: "Wilsonville Significant Resource Overlay Zone -- the zone itself"
+    action: carve
+    buffer_ft: 0
+    holes_only: true
+    jurisdictions: [wilsonville]
+    citation: "WDC 4.139.06(.03)(B): 'Except as specifically authorized by this Code, no development is permitted within Metro's Urban Growth Management Functional Plan Title 3 Water Quality Resource Areas boundary'; (C): 'No more than five percent of the Area of Limited Conflicting Use (see definition) located on a property may be impacted by a development proposal'"
+    confidence: verified
+    coverage:
+      wilsonville: {grade: B, note: "the interior rings of SROZ_ImpactArea -- the SROZ is published only as the hole in its 25 ft ring, so this is the reconstruction fill_holes uses, with the ring taken away"}
 
   # ---------------- Happy Valley --------------------------------------------
   # FLAG, not carve, and the difference is the city's own sentence. LDC
@@ -588,6 +691,23 @@ overlays:
     confidence: verified
     coverage:
       milwaukie: {grade: A, note: "adopted NR Map HCA layer, 1 multipart polygon, published with a Link attribute pointing at ecode360 19.402. Under-flags: 19.402.3.A reaches 100 ft beyond the resource and this fires on touch"}
+  # Phase 2 (FOLLOWUPS 42, read 2026-10-05): the Type I path for middle housing
+  # is arithmetic, and the arithmetic keeps a pod out. 19.402.6.C.1: the
+  # disturbance allowed in the HCA is X - Y, X being 50% of the HCA up to
+  # 5,000 sq ft and Y the lot outside all resource area; anything past it is
+  # discretionary review (19.402.8.A.2). The whole development can therefore
+  # never exceed 5,000 sq ft once it reaches into the HCA -- less than a pod
+  # with its court -- so the pod fits outside or not at all.
+  - key: milwaukie_hca_core
+    source: milwaukie_hca
+    name: "Milwaukie Habitat Conservation Area -- outside the disturbance allowance"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [milwaukie]
+    citation: "MMC 19.402.6.C.1 and Table 19.402.6.C.1: 'X = The maximum potential disturbance area within the HCA, which is 50% of the total HCA, up to a maximum of 5,000 sq ft. Y = The area of the lot or parcel outside the total resource area (WQR and HCA). Z = The net amount of disturbance area allowed within the HCA (Z = X-Y)'; 19.402.8.A.2 sends 'Within HCAs, development that is not in compliance with the nondiscretionary standards' to discretionary review"
+    confidence: verified
+    coverage:
+      milwaukie: {grade: A, note: "adopted NR Map HCA layer"}
   - key: milwaukie_wqr
     name: "Milwaukie water quality resource / vegetated corridor (NR Map)"
     action: flag
@@ -596,6 +716,21 @@ overlays:
     confidence: verified
     coverage:
       milwaukie: {grade: A, note: "61 vegetated-corridor polygons off the NR Map. 19.402.3.D.1 calls the map 'a general indicator ... the specific location of vegetated corridors must be determined in the field', which is the flag's justification in the city's own words. Over-flags piped reaches, which 19.402.3.I exempts and this layer does not separate"}
+  # Phase 2 (FOLLOWUPS 42, read 2026-10-05): the only by-right dwelling path in
+  # a WQR is 19.402.6.B, open only where the lot outside the WQR and the
+  # setbacks is 1,500 sq ft or less, capped at 800 sq ft of disturbance and
+  # kept 30 ft from the top of bank. No pod fits that, and every other
+  # activity is discretionary (19.402.8.A.1), so the WQR is carved.
+  - key: milwaukie_wqr_core
+    source: milwaukie_wqr
+    name: "Milwaukie water quality resource -- no-build"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [milwaukie]
+    citation: "MMC 19.402.6.B.1.b: 'The area of the site that is not categorized as WQR and that is outside the minimum required yard setbacks for the underlying zone is 1,500 sq ft or less ... up to a maximum of 800 sq ft'; 19.402.6.B.1.d: 'The disturbance area is at least 30 ft from the top of bank of a stream or drainage or 50 ft from the edge of a wetland'; 19.402.8.A.1 sends 'Any activity allowed in the base zone that is not otherwise exempt or permitted as a Type I or II activity' to discretionary review"
+    confidence: verified
+    coverage:
+      milwaukie: {grade: A, note: "61 vegetated-corridor polygons off the NR Map. Over-carves piped reaches, which 19.402.3.I exempts and this layer does not separate"}
   - key: milwaukie_wetlands
     name: "Milwaukie wetland inventory"
     action: flag
@@ -696,6 +831,23 @@ overlays:
     confidence: needs_verification
     coverage:
       gladstone: {grade: C, note: "Metro's regional Title 13 inventory standing in for the HCA Map adopted in Comprehensive Plan Chapter 6, which the city does not publish as GIS. 421 Gladstone lots touched, 51 of them the 121 held only by signing. A flag, so the cost of the proxy is a lot read by a person rather than a lot thrown away. Under-flags in one direction the code states plainly: 17.25.020(A) reaches 100 ft beyond an HCA boundary and even onto adjacent parcels, and a flag fires on touch"}
+  # Phase 2 (FOLLOWUPS 42, read 2026-10-05): the arithmetic above, taken. On
+  # Urban Low Density Residential land Table 3 caps the whole contiguous
+  # disturbance area at 5,000/6,000 sq ft, under a pod with its court, so the
+  # pod fits outside the HCA or not at all. Table 4 (every other designation)
+  # allows a share of the HCA with no limit outside; the screen holds no plan
+  # designation, so there the carve can over-reach -- the conservative side.
+  - key: gladstone_hca_core
+    source: metro_title13
+    keep_where: {HCA_VALUE: [HIGH, MODERATE, LOW]}
+    name: "Gladstone Habitat Conservation Area -- outside the disturbance allowance"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [gladstone]
+    citation: "GMC 17.25.100(A)(1) Table 3: Maximum Disturbance Area on Urban Low Density Residential property 50 percent of the subject property up to 5,000 sq ft (High HCA) and 65 percent up to 6,000 sq ft (Moderate/Low); 17.25.030(G) defines the disturbance area as all development on the site and requires it to be contiguous; Table 4 governs every other comprehensive plan designation"
+    confidence: needs_verification
+    coverage:
+      gladstone: {grade: C, note: "Metro Title 13 HIGH/MODERATE/LOW polygons ('NO HCA' left out) standing in for the HCA Map adopted in Comprehensive Plan Chapter 6. Over-carves on land designated other than Urban Low Density Residential"}
   - key: gladstone_wq
     source: metro_title3
     name: "Gladstone Water Quality Resource Area District (GMC 17.27)"
@@ -705,6 +857,23 @@ overlays:
     confidence: needs_verification
     coverage:
       gladstone: {grade: C, note: "Metro Title 3 standing in for Map 12 (Water Quality Resource Areas) of the Comprehensive Plan, the map the chapter regulates from and the city does not publish as GIS. The map is disputable in both directions on evidence -- 17.27.020(5) has the city amend it when a listed water feature turns out not to qualify or an unlisted wetland does -- which is a second reason not to carve on it. 105 Gladstone lots touched, 23 of them in the review queue and all 23 inside the 51 the habitat layer already flags. Two known errors, in opposite directions. OVER-flags: the Metro layer carries FEMA and 1996-flood polygons alongside riparian and wetland buffers, and 17.27 governs only the corridors and water features, so a flood-fringe lot with no water feature can fire. UNDER-states: 17.27.020(4) sizes the vegetated corridor by slope measured in the field at 100-ft increments (Table 1), so the true width on a steep bank exceeds anything a regional layer carries. 17.27.045(1)(a)'s practicable-alternatives test is a refusal rather than a review and would justify a carve on a properly separated riparian subset"}
+  # Phase 2 (FOLLOWUPS 42, read 2026-10-05): the refusal the note above names,
+  # taken on the separated riparian subset it asks for -- Title 3's RIPARIAN
+  # and WETBUF polygons, not its flood-only ones. A new dwelling is a use
+  # subject to review (17.27.040(3)(a)) whose first standard is that no
+  # practicable alternative location exists (17.27.045(1)(a)); the 17.27.070
+  # variances are relief.
+  - key: gladstone_wq_core
+    source: metro_title3
+    keep_where: {RIPARIAN: [1], WETBUF: [1]}
+    name: "Gladstone Water Quality Resource Area -- no-build"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [gladstone]
+    citation: "GMC 17.27.040(4)(a) prohibits 'any new development, other than that listed in GMC Subsections 17.27.040 (1), (2) and (3)'; 17.27.040(3)(a) puts 'any use allowed in the underlying zoning district' in the subject-to-review class; 17.27.045(1)(a): 'No practicable alternative locations exist for the requested development that will not disturb the water quality resource area'"
+    confidence: needs_verification
+    coverage:
+      gladstone: {grade: C, note: "Metro Title 3 RIPARIAN and WETBUF polygons standing in for Comprehensive Plan Map 12. Under-carves steep banks, which 17.27.020(4) Table 1 widens in the field"}
 
   # ---------------- Tualatin ------------------------------------------------
   # Wired 2026-09-03, the same day as Gladstone and for the opposite reason.

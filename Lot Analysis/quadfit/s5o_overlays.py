@@ -69,22 +69,64 @@ def _fill_holes(geom):
     return geom
 
 
-def _load_layer_geoms(key: str, fill_holes: bool = False):
-    """Valid shapely geometries for one raw layer, or None if file absent."""
+def _holes(geom):
+    """Only the interior rings, each as a polygon of its own.
+
+    The other half of `_fill_holes`: where a published ring's hole IS the
+    resource (`OverlaySpec.holes_only`), this is the resource alone.
+    """
+    import shapely
+    from shapely.geometry import MultiPolygon, Polygon
+
+    parts = (list(geom.geoms) if isinstance(geom, MultiPolygon)
+             else [geom] if isinstance(geom, Polygon) else [])
+    holes = [Polygon(r) for p in parts for r in p.interiors]
+    if not holes:
+        return Polygon()
+    return shapely.make_valid(shapely.union_all(holes))
+
+
+def _kept(properties, keep_where) -> bool:
+    """True when any listed property takes one of its listed values."""
+    props = properties or {}
+    return any(props.get(field) in values for field, values in keep_where.items())
+
+
+def _load_layer_geoms(key: str, fill_holes: bool = False,
+                      holes_only: bool = False, keep_where=None,
+                      within: str | None = None):
+    """Valid shapely geometries for one raw layer, or None if file absent.
+
+    `within` names a second raw layer and keeps only the part of each feature
+    inside it (`OverlaySpec.within`); a missing second layer is a missing
+    layer, never the whole first one.
+    """
     import shapely
 
     path = RAW_DIR / f"{key}.geojson"
     if not path.exists():
         return None
+    clip = None
+    if within is not None:
+        area = _load_layer_geoms(within)
+        if area is None:
+            return None
+        clip = shapely.union_all(area)
     geoms = []
     for f in load_geojson_features(path):
         g = f.get("geometry")
         if not g:
             continue
+        if keep_where and not _kept(f.get("properties"), keep_where):
+            continue
         try:
             geom = shapely.make_valid(shapely.geometry.shape(g))
             if fill_holes:
                 geom = shapely.make_valid(_fill_holes(geom))
+            if holes_only:
+                geom = _holes(geom)
+            if clip is not None:
+                geom = shapely.intersection(geom, clip)
         except Exception:
             continue
         if not geom.is_empty:
@@ -421,8 +463,18 @@ def main() -> None:
     # Per-overlay any-touch flags + intersection area.
     layer_geoms: dict[str, list] = {}
     missing: list[str] = []
+    # One read per distinct (layer, reading): Metro's habitat layer is 146 MB
+    # and five overlays borrow it.
+    read: dict[tuple, list | None] = {}
     for spec in cfg.overlays:
-        geoms = _load_layer_geoms(f"overlay_{spec.layer}", spec.fill_holes)
+        reading = (spec.layer, spec.fill_holes, spec.holes_only, spec.within,
+                   tuple(sorted((k, tuple(v)) for k, v in spec.keep_where.items())))
+        if reading not in read:
+            read[reading] = _load_layer_geoms(
+                f"overlay_{spec.layer}", spec.fill_holes,
+                holes_only=spec.holes_only, keep_where=spec.keep_where,
+                within=spec.within and f"overlay_{spec.within}")
+        geoms = read[reading]
         if geoms is None:
             missing.append(spec.key)
             continue

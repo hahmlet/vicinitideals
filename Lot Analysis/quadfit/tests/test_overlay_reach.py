@@ -276,6 +276,60 @@ def test_every_borrowed_source_names_a_layer_something_actually_fetches() -> Non
         assert f"overlay_{spec.source}" in s0_acquire.PHASE2_LAYERS, (
             f"{spec.key} borrows {spec.source!r}, which s0 never downloads"
         )
+        if spec.within is not None:
+            assert f"overlay_{spec.within}" in s0_acquire.PHASE2_LAYERS, (
+                f"{spec.key} clips to {spec.within!r}, which s0 never downloads"
+            )
+
+
+def test_a_no_build_area_is_carved_and_its_paperwork_still_flagged() -> None:
+    """FOLLOWUPS 42 phase 2: the sentences read, the same maps carved.
+
+    Each of these was a flag because its chapter routes a house to a permit.
+    Read to the end, the permit's own numbers keep a pod out: CWS 3.05.9 sends
+    it to an alternatives analysis whose test is "no practicable alternative";
+    Milwaukie's WQR path holds 800 sq ft; the Clackamas, Milwaukie and
+    Gladstone habitat caps stop the whole development at 5,000 or 6,000 sq ft
+    once it enters the HCA; Wilsonville's SRIR allows none of the Title 3 area
+    and 5% of the rest. So a twin on the same map carves, and the flag stays
+    for the lot whose pod clears the area and still owes the letter.
+    """
+    specs = {s.key: s for s in _overlays().overlays}
+    twins = {
+        "washington_cws_corridor_core": "washington_cws_corridor",
+        "clackamas_hca_core": "clackamas_hca",
+        "wilsonville_sroz_core": "wilsonville_sroz",
+        "milwaukie_hca_core": "milwaukie_hca",
+        "milwaukie_wqr_core": "milwaukie_wqr",
+        "gladstone_hca_core": "gladstone_hca",
+        "gladstone_wq_core": "gladstone_wq",
+        "west_linn_rci_resource": "west_linn_rci",
+    }
+    for carve_key, flag_key in twins.items():
+        carve, flag = specs[carve_key], specs[flag_key]
+        assert carve.action == "carve" and flag.action == "flag", carve_key
+        assert carve.layer == flag.layer, carve_key
+        assert carve.jurisdictions == flag.jurisdictions, carve_key
+        assert carve.citation, carve_key
+
+    # Metro's Title 3 layer tags flood ground in the same polygon set; a carve
+    # for a stream corridor reads only the stream and wetland polygons.
+    for key in ("washington_cws_corridor_core", "gladstone_wq_core"):
+        assert specs[key].keep_where == {"RIPARIAN": [1], "WETBUF": [1]}, key
+    for key in ("clackamas_hca_core", "gladstone_hca_core"):
+        assert specs[key].keep_where == {"HCA_VALUE": ["HIGH", "MODERATE", "LOW"]}, key
+
+    # Wilsonville: the SROZ is the hole in the published ring. The flag reads
+    # ring + hole; the carve reads the hole alone.
+    assert specs["wilsonville_sroz_core"].holes_only is True
+    assert specs["wilsonville_sroz_core"].fill_holes is False
+    assert "4.139.06" in specs["wilsonville_sroz_core"].citation
+
+    # West Linn: a riparian corridor's streams take row D's 100 ft.
+    riparian = specs["west_linn_wra_riparian"]
+    assert (riparian.action, riparian.buffer_ft) == ("carve", 100)
+    assert riparian.layer == "west_linn_wra_stream" and riparian.within == "west_linn_rci"
+    assert "row D" in riparian.citation
 
 
 def test_one_chapter_can_hold_a_kill_and_a_flag_at_the_same_time() -> None:
@@ -314,8 +368,8 @@ def test_one_chapter_can_hold_a_kill_and_a_flag_at_the_same_time() -> None:
         spec = specs[key]
         assert spec.action == "flag", (
             f"{key} is a flag because Table 19.402.3.K reaches Type I review "
-            f"for new dwellings; carving it would claim the chapter forbids "
-            f"what it actually meters"
+            f"for new dwellings; the ground the meter cannot reach for a pod "
+            f"is carved by its own *_core twin, not by turning the flag"
         )
         assert spec.applies_to("milwaukie")
 

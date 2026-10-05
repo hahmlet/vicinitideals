@@ -29,7 +29,7 @@ from flats.provenance.store import ProvenanceStore
 from flats.rules.conditions import CONDITIONS
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
-from flats.rules.resource_overlays import BY_KEY, COLUMNS, PERMITS, permits_on
+from flats.rules.resource_overlays import BY_KEY, COLUMNS, EXEMPT, PERMITS, permits_on
 from flats.score import flags as flag_plan
 from flats.score.screen import CLOSER_LOOK_RESOURCE, Triage
 from flats.tests.test_quadfit_bridge import row
@@ -68,7 +68,43 @@ def rules(layers):
 
 def test_every_quadfit_flag_overlay_is_a_permit_here(quadfit_overlays) -> None:
     flags = {k for k, action in quadfit_overlays.items() if action == "flag"}
-    assert flags <= set(BY_KEY), sorted(flags - set(BY_KEY))
+    assert flags <= set(BY_KEY) | set(EXEMPT), sorted(flags - set(BY_KEY) - set(EXEMPT))
+
+
+def test_an_exempt_overlay_is_measured_and_never_a_permit(quadfit_overlays) -> None:
+    """West Linn's piped streams: on the map, in the net area, and released.
+
+    WLCDC 32.040(F)(2) exempts "existing enclosed or piped sections of
+    streams" from the chapter, so a lot touching one is not a closer look.
+    quadfit still measures it, for the net-area deduction.
+    """
+    assert set(EXEMPT) <= {k for k, action in quadfit_overlays.items() if action == "flag"}
+    assert not set(EXEMPT) & set(BY_KEY)
+    assert "32.040(F)" in EXEMPT["west_linn_wra_piped"]
+    assert permits_on({"ovl_west_linn_wra_piped": True}) == ()
+
+
+def test_each_no_build_carve_keeps_its_permit_flag(quadfit_overlays) -> None:
+    """Phase 2: the carve takes the ground; the flag keeps the paperwork.
+
+    A lot whose pod clears a Clean Water Services corridor still owes the
+    Service Provider Letter and the corridor planting, so the flag on the same
+    map stays a closer look while the ``*_core`` twin takes the ground off.
+    """
+    twins = {
+        "washington_cws_corridor_core": "washington_cws_corridor",
+        "clackamas_hca_core": "clackamas_hca",
+        "wilsonville_sroz_core": "wilsonville_sroz",
+        "milwaukie_hca_core": "milwaukie_hca",
+        "milwaukie_wqr_core": "milwaukie_wqr",
+        "gladstone_hca_core": "gladstone_hca",
+        "gladstone_wq_core": "gladstone_wq",
+        "west_linn_rci_resource": "west_linn_rci",
+    }
+    for carve, flag in twins.items():
+        assert quadfit_overlays[carve] == "carve", carve
+        assert quadfit_overlays[flag] == "flag", flag
+        assert flag in BY_KEY and carve not in BY_KEY
 
 
 def test_every_quadfit_kill_is_read_here(quadfit_overlays) -> None:

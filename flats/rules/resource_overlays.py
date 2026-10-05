@@ -20,9 +20,15 @@ area may deduct, so a lot touching one passed GREEN with nothing said: 5,482
 Washington County greens on mapped habitat, 1,756 in a Clean Water Services
 corridor, 2,917 on Clackamas habitat, 1,099 in the FEMA flood fringe. Each
 of those is a permit a builder has to get and price, so it is a closer look
-(YELLOW), exactly as the planted strip and the 5-15% slope are. The lot keeps
-its envelope: these never take ground, which is the next reading's job --
-FOLLOWUPS 42(b) reads each one's sentences to say which belong in ``carve``.
+(YELLOW), exactly as the planted strip and the 5-15% slope are. The flag
+itself never takes ground. Phase 2 (2026-10-05) read each one's sentences
+and, where the code forbids the pod inside the area -- a Clean Water Services
+corridor, Milwaukie's and Gladstone's water quality areas, the Clackamas,
+Milwaukie and Gladstone habitat caps, Wilsonville's SROZ, West Linn's
+riparian corridors -- quadfit carves the same map under a ``*_core`` (or
+``west_linn_rci_resource`` / ``west_linn_wra_riparian``) key as well. The
+flag stays on the lot whose pod clears the area: the letter, the planting
+and the plan are still owed.
 
 Portland's three environmental zones sit here too. A lot the z covers is RED
 on the use rule already; the few the city's z map leaves out while its
@@ -126,11 +132,6 @@ PERMITS: tuple[Permit, ...] = (
         "and a WQRA development permit",
     ),
     Permit(
-        "west_linn_wra_piped",
-        "a piped stream on West Linn's water resource map",
-        "WLCDC 32.120(A); Table 32-2 states no width for a channel still piped",
-    ),
-    Permit(
         "west_linn_rci",
         "a riparian corridor on West Linn's water resource map",
         "WLCDC 32.120(A); Table 32-2 row D",
@@ -200,6 +201,16 @@ PERMITS: tuple[Permit, ...] = (
 
 BY_KEY: Mapping[str, Permit] = {p.key: p for p in PERMITS}
 
+#: quadfit flag overlays measured for something else and read as nothing here,
+#: each with the sentence that releases it. West Linn's piped streams stay on
+#: the WRA Map and in its net-area deduction, but the chapter exempts them.
+EXEMPT: Mapping[str, str] = {
+    "west_linn_wra_piped": (
+        "WLCDC 32.040(F) Exempt areas: '2. Existing enclosed or piped sections of streams, "
+        "including any development at right angles to the enclosed or piped sections.'"
+    ),
+}
+
 #: s5o's columns the bridge reads for these.
 COLUMNS: tuple[str, ...] = tuple(p.column for p in PERMITS)
 
@@ -222,4 +233,4 @@ def permits_on(row: Mapping[str, Any]) -> tuple[str, ...]:
     return tuple(out)
 
 
-__all__ = ["BY_KEY", "COLUMNS", "PERMITS", "Permit", "permits_on"]
+__all__ = ["BY_KEY", "COLUMNS", "EXEMPT", "PERMITS", "Permit", "permits_on"]
