@@ -12,6 +12,8 @@ Run:
 
 from __future__ import annotations
 
+import re
+
 import pytest
 from playwright.sync_api import Page, expect
 
@@ -82,3 +84,22 @@ def test_the_unknowns_page_reaches_the_work_queue_and_the_nightly_check(
     page.locator("#report-link").click()
     expect(page).to_have_url(f"{base_url}/flats/flags/report")
     expect(page.get_by_role("heading", name="Nightly check")).to_be_visible()
+
+
+def test_the_nightly_check_shows_the_room_and_the_pod_height(logged_in_page: Page, base_url: str) -> None:
+    """FOLLOWUPS 37(ii): beside the pod width, the report says how close the
+    green lots come to each limit and tries the pod taller and lower. A
+    report written before the room was kept shows each section empty, never
+    an error."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/flags/report")
+
+    expect(page.get_by_role("heading", name="Nightly check")).to_be_visible()
+    if page.locator("#report-none").count():
+        pytest.skip("no nightly check has run on this instance yet")
+    expect(page.get_by_role("heading", name="Room to spare on green lots")).to_be_visible()
+    expect(page.get_by_role("heading", name="Pod width")).to_be_visible()
+    expect(page.get_by_role("heading", name="Pod height")).to_be_visible()
+    rows = page.locator("tr.room-row")
+    if rows.count():
+        expect(rows.first).to_have_attribute("data-within-10", re.compile(r"^\d+$"))

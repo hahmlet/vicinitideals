@@ -1,0 +1,16 @@
+{# One design's pod changes on the nightly check (/flats/flags/report): ``steps`` from the route's _steps, ``kind`` the table's class prefix. #}
+<table class="data-table" style="font-size:12px">
+  <thead><tr><th>Change</th><th style="text-align:right">Lots that move</th><th>How</th><th>Limits that moved them</th><th>Open questions on those lots</th><th>For example</th></tr></thead>
+  <tbody>
+    {% for s in steps %}
+    <tr class="{{ kind }}-step" data-total="{{ s.total }}">
+      <td>{{ s.words }}</td>
+      <td style="text-align:right"><strong>{{ "{:,}".format(s.total) }}</strong></td>
+      <td>{% for k, n in s.moves.items() %}{{ "{:,}".format(n) }} {{ k|replace("->", " → ") }}{% if not loop.last %}<br>{% endif %}{% endfor %}</td>
+      <td>{% for k, n in s.limits %}{{ k }} ({{ "{:,}".format(n) }}){% if not loop.last %}<br>{% endif %}{% endfor %}</td>
+      <td class="muted">{% for k, n in s.questions %}{{ k }} ({{ "{:,}".format(n) }}){% if not loop.last %}<br>{% endif %}{% endfor %}</td>
+      <td>{% for e in s.examples[:4] %}<a href="/flats/lots/{{ e.county }}/{{ e.tlid|urlencode }}">{{ e.tlid }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

@@ -11,8 +11,9 @@
       <h2 style="margin:0">Nightly check</h2>
       <p class="muted" style="margin:4px 0 0;max-width:95ch">
         Every night each lot's colour is worked out again from what it misses and what is open, under today's
-        rules, and compared with the colour the run wrote. The same pass tries the pod a few feet wider and
-        narrower and counts the lots whose colour would move.
+        rules, and compared with the colour the run wrote. The same pass says how close the green lots come to
+        each limit, and tries the pod a few feet wider, narrower, taller and lower to count the lots whose
+        colour would move.
         <a href="/flats/flags">Back to unknowns</a>
       </p>
     </div>
@@ -51,31 +52,67 @@
     </ul>
   </div>
 
+  <h3 style="margin:18px 0 6px;font-size:15px" id="room-heading">Room to spare on green lots</h3>
+  <p class="muted" style="font-size:12px;max-width:95ch;margin:0 0 8px">
+    For each limit a green lot passes, how much room it had left. The limits the most lots come close to are
+    at the top: "within 10%" counts the lots whose room is less than a tenth of the limit itself (under 3 ft
+    of a 30 ft height limit, say). The fit is the room left inside the front and rear setbacks; the room
+    side to side is not measured yet.
+  </p>
+  {% if not room %}<p class="muted" id="room-none">Nothing to report yet.</p>{% endif %}
+  {% for d in room %}
+  <div class="card" style="padding:12px;margin:8px 0" id="room-{{ d.design|replace('@', '-') }}">
+    <h4 style="margin:0 0 6px">{{ d.design }} <span class="muted" style="font-weight:normal">· {{ "{:,}".format(d.green) }} green lots</span></h4>
+    {% if d.green and not d.measured %}
+    <p class="muted" style="font-size:12px;margin:0">This run was screened before the room was kept; the next run fills this in.</p>
+    {% elif not d.rows %}
+    <p class="muted" style="font-size:12px;margin:0">No limits to show.</p>
+    {% else %}
+    <table class="data-table" style="font-size:12px">
+      <thead><tr><th>Limit</th><th style="text-align:right">Green lots it was checked on</th><th style="text-align:right">Typical room</th><th style="text-align:right">Within 10% of the limit</th><th style="text-align:right">Within 5%</th></tr></thead>
+      <tbody>
+        {% for c in d.rows %}
+        <tr class="room-row" data-check="{{ c.check }}" data-within-10="{{ c.within_10 }}">
+          <td>{{ c.words }}</td>
+          <td style="text-align:right">{{ "{:,}".format(c.lots) }}</td>
+          <td style="text-align:right">{{ c.median }}</td>
+          <td style="text-align:right"><strong>{{ "{:,}".format(c.within_10) }}</strong></td>
+          <td style="text-align:right">{{ "{:,}".format(c.within_5) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+  {% endfor %}
+
   <h3 style="margin:18px 0 6px;font-size:15px">Pod width</h3>
   <p class="muted" style="font-size:12px;max-width:95ch;margin:0 0 8px">
-    What happens to the colours if the building is made wider or narrower, counting only whether it still
-    fits on the lot. Coverage, floor area and the other limits also move with the building's size, but the
-    screen does not yet keep how much room a lot had to spare on those, so they are not counted here.
-    A lot short by under a foot stays yellow, as the colour rule says.
+    What happens to the colours if the building is made wider or narrower: whether it still fits on the lot,
+    and, where the run kept how much room each lot had, whether the bigger building still clears the coverage,
+    floor area, paving and open space limits. Other limits (lot size, density, parking) do not change with the
+    building's size. A lot short by under a foot on the fit stays yellow, as the colour rule says.
   </p>
   {% if not sensitivity %}<p class="muted" id="sensitivity-none">Nothing to report yet.</p>{% endif %}
   {% for d in sensitivity %}
   <div class="card" style="padding:12px;margin:8px 0" id="sensitivity-{{ d.design|replace('@', '-') }}">
     <h4 style="margin:0 0 6px">{{ d.design }}</h4>
-    <table class="data-table" style="font-size:12px">
-      <thead><tr><th>Change</th><th style="text-align:right">Lots that move</th><th>How</th><th>Open questions on those lots</th><th>For example</th></tr></thead>
-      <tbody>
-        {% for s in d.steps %}
-        <tr class="sensitivity-step" data-total="{{ s.total }}">
-          <td>{{ s.words }}</td>
-          <td style="text-align:right"><strong>{{ "{:,}".format(s.total) }}</strong></td>
-          <td>{% for k, n in s.moves.items() %}{{ "{:,}".format(n) }} {{ k|replace("->", " → ") }}{% if not loop.last %}<br>{% endif %}{% endfor %}</td>
-          <td class="muted">{% for k, n in s.questions %}{{ k }} ({{ "{:,}".format(n) }}){% if not loop.last %}<br>{% endif %}{% endfor %}</td>
-          <td>{% for e in s.examples[:4] %}<a href="/flats/lots/{{ e.county }}/{{ e.tlid|urlencode }}">{{ e.tlid }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    {% set steps = d.steps %}{% set kind = "sensitivity" %}
+    {% include "partials/flats_flag_report_steps.html" %}
+  </div>
+  {% endfor %}
+
+  <h3 style="margin:18px 0 6px;font-size:15px">Pod height</h3>
+  <p class="muted" style="font-size:12px;max-width:95ch;margin:0 0 8px">
+    The same question for height: what happens to the colours if the building is made taller or lower, against
+    each zone's height limit (and, where a district sets one, its minimum height).
+  </p>
+  {% if not height %}<p class="muted" id="height-none">Nothing to report yet.</p>{% endif %}
+  {% for d in height %}
+  <div class="card" style="padding:12px;margin:8px 0" id="height-{{ d.design|replace('@', '-') }}">
+    <h4 style="margin:0 0 6px">{{ d.design }}</h4>
+    {% set steps = d.steps %}{% set kind = "height" %}
+    {% include "partials/flats_flag_report_steps.html" %}
   </div>
   {% endfor %}
   {% endif %}

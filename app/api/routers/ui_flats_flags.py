@@ -246,6 +246,101 @@ def _step_words(step: str) -> str:
     return f"{feet} wider" if n > 0 else f"{feet} narrower"
 
 
+def _height_words(step: str) -> str:
+    n = float(step)
+    feet = f"{abs(n):g} ft"
+    return f"{feet} taller" if n > 0 else f"{feet} lower"
+
+
+#: Each standard the screen checks, as the report names it, with its unit
+#: (FOLLOWUPS 37(ii)). A check missing here is shown by its own name.
+CHECK_WORDS: dict[str, tuple[str, str]] = {
+    "fit_ft": ("The fit, inside the setbacks (front to back)", "ft"),
+    "steep_ground": ("The fit, on ground flat enough to build", "ft"),
+    "coverage_pct": ("Building coverage", "% of lot"),
+    "far": ("Floor area ratio", ""),
+    "height_ft": ("Height", "ft"),
+    "stories": ("Storeys", "storeys"),
+    "min_height_ft": ("Minimum height", "ft"),
+    "min_stories": ("Minimum storeys", "storeys"),
+    "min_ground_story_ft": ("Ground storey height", "ft"),
+    "max_units": ("Homes allowed", "homes"),
+    "density_du_per_acre": ("Density", "homes / acre"),
+    "min_density_du_per_acre": ("Minimum density", "homes / acre"),
+    "min_units": ("Minimum homes", "homes"),
+    "min_lot_area_sqft": ("Lot area", "sq ft"),
+    "min_frontage_ft": ("Street frontage", "ft"),
+    "min_lot_width_ft": ("Lot width", "ft"),
+    "min_average_lot_width_ft": ("Average lot width", "ft"),
+    "min_lot_depth_ft": ("Lot depth", "ft"),
+    "max_lot_depth_ratio": ("Lot depth to width", ""),
+    "driveway_frontage_share": ("Driveway width at the street", "ft"),
+    "front_yard_vehicle_share": ("Paving across the front yard", "ft"),
+    "parking_stalls": ("Parking stalls", "stalls"),
+    "parking_cap": ("Parking cap", "stalls"),
+    "covered_parking": ("Covered stalls", "stalls"),
+    "court_turns": ("Stalls a car can turn into", "stalls"),
+    "landscaped_pct": ("Landscaping", "% of lot"),
+    "open_space_pct": ("Open space", "% of lot"),
+    "open_space_sqft": ("Open space", "sq ft"),
+    "impervious_pct": ("Buildings and paving", "% of lot"),
+    "open_space_shape": ("Open space, its narrowest side", "ft"),
+    "private_open_space_shape": ("Private patio, its narrowest side", "ft"),
+    "fire_access_ft": ("Fire hose reach", "ft"),
+    "site_grade_pct": ("Slope under the building", "%"),
+}
+
+
+def _check_words(check: str) -> str:
+    return CHECK_WORDS.get(check, (check, ""))[0]
+
+
+def _room(value: float, check: str) -> str:
+    """The room on one standard, in its own unit."""
+    unit = CHECK_WORDS.get(check, (check, ""))[1]
+    digits = 2 if not unit or abs(value) < 1 else 1
+    text = f"{value:,.{digits}f}"
+    return f"{text} {unit}".strip()
+
+
+def _steps(per: dict[str, Any], steps: list[Any], words: Any) -> list[dict[str, Any]]:
+    out = []
+    for step in steps:
+        s = per.get(str(step)) or {"moves": {}, "examples": [], "keys": {}}
+        out.append(
+            {
+                "words": words(str(step)),
+                "moves": s["moves"],
+                "total": sum(s["moves"].values()),
+                "examples": s["examples"],
+                "questions": [(k.replace(fp.SEP, " · ").rstrip(" ·"), n) for k, n in s["keys"].items()],
+                # A report written before the room was kept names no limits.
+                "limits": [(_check_words(k), n) for k, n in (s.get("limits") or {}).items()],
+            }
+        )
+    return out
+
+
+def _room_rows(mine: dict[str, Any]) -> list[dict[str, Any]]:
+    """One design's limits, the ones its green lots came closest to first."""
+    rows = []
+    for check, c in (mine.get("checks") or {}).items():
+        lots = int(c["lots"])
+        rows.append(
+            {
+                "check": check,
+                "words": _check_words(check),
+                "lots": lots,
+                "median": _room(float(c["median"]), check),
+                "within_10": int(c["within_10"]),
+                "within_5": int(c["within_5"]),
+                "share_10": int(c["within_10"]) / lots if lots else 0.0,
+            }
+        )
+    rows.sort(key=lambda r: (-r["share_10"], -r["within_5"], -r["lots"], r["words"]))
+    return rows
+
+
 @router.get("/flats/flags/report", response_class=HTMLResponse)
 async def flats_flag_report(request: Request, session: DBSession) -> HTMLResponse:
     """The newest nightly check and the design sensitivity report."""
@@ -253,26 +348,30 @@ async def flats_flag_report(request: Request, session: DBSession) -> HTMLRespons
     dedup_count, conflicts_count = await _get_counts(session)
     row = await flag_store.latest_report(session)
     sensitivity = []
+    height = []
+    room = []
     if row is not None:
-        for design, per in sorted((row.report.get("sensitivity") or {}).items()):
-            steps = []
-            for step in row.report.get("steps") or []:
-                s = per.get(str(step)) or {"moves": {}, "examples": [], "keys": {}}
-                steps.append(
-                    {
-                        "words": _step_words(str(step)),
-                        "moves": s["moves"],
-                        "total": sum(s["moves"].values()),
-                        "examples": s["examples"],
-                        "questions": [(k.replace(fp.SEP, " · ").rstrip(" ·"), n) for k, n in s["keys"].items()],
-                    }
-                )
-            sensitivity.append({"design": design, "steps": steps})
+        r = row.report
+        for design, per in sorted((r.get("sensitivity") or {}).items()):
+            sensitivity.append({"design": design, "steps": _steps(per, r.get("steps") or [], _step_words)})
+        for design, per in sorted((r.get("height") or {}).items()):
+            height.append({"design": design, "steps": _steps(per, r.get("height_steps") or [], _height_words)})
+        for design, mine in sorted((r.get("room") or {}).items()):
+            room.append(
+                {
+                    "design": design,
+                    "green": int(mine.get("green") or 0),
+                    "measured": int(mine.get("measured") or 0),
+                    "rows": _room_rows(mine),
+                }
+            )
     ctx = {
         **_base_ctx(user, dedup_count, "flats_flags", conflicts_count=conflicts_count),
         "report": row,
         "r": row.report if row is not None else {},
         "sensitivity": sensitivity,
+        "height": height,
+        "room": room,
     }
     return templates.TemplateResponse(request, "flats_flag_report.html", ctx)
 

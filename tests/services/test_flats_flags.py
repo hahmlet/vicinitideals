@@ -30,6 +30,7 @@ from app.models.flats import (
 from app.services import flats_flags
 from app.services.flats_flags import FlagWriteError
 from flats.score import flags as fp
+from flats.score import margins as mg
 
 pytestmark = pytest.mark.asyncio
 
@@ -340,3 +341,94 @@ async def test_the_sensitivity_report_counts_what_each_width_moves(session: Asyn
     assert sens["4"]["moves"] == {"yellow->red": 2}
     assert sens["4"]["keys"] == {"FACT-CORNER-LOT|or/multnomah/x|corner_lot": 1}
     assert got.ok
+
+
+# ---------------------------------------------------------------------------
+# FOLLOWUPS 37(ii): the room each pass had to spare
+# ---------------------------------------------------------------------------
+
+# The test pod is 56 x 36: the fit measured along its 56 ft side, so a foot
+# more run adds 36 sqft to a 2,016 sqft footprint, on a 5,000 sqft lot.
+GROUND = 56 * 36
+
+
+def _room(**checks: tuple[float, float, float]) -> dict:
+    return {k: list(v) for k, v in checks.items()}
+
+
+async def test_a_bigger_pod_is_charged_on_coverage_from_the_room_the_lot_had() -> None:
+    margins = mg.loads(_room(coverage_pct=(30.0, 31.0, 1.0)))
+    one = mg.Change(extra_sqft=36.0, ground_sqft=GROUND, lot_sqft=5000.0)
+    four = mg.Change(extra_sqft=144.0, ground_sqft=GROUND, lot_sqft=5000.0)
+    # A foot more: 30 % grows to 30.5 %, still under the 31 % cap.
+    assert flats_flags.widened([], [], 10.0, 1, margins=margins, change=one) == []
+    # Four feet more: 32.1 %, over the cap -- a coverage bind, not a fit one.
+    (cov,) = flats_flags.widened([], [], 10.0, 4, margins=margins, change=four)
+    assert cov.check == "coverage_pct" and cov.threshold == 31.0
+    assert cov.shortfall == pytest.approx(30.0 * (GROUND + 144) / GROUND - 31.0)
+    # Under a rule set the screen does not trust, no bind is invented.
+    untrusted = [fp.Flag("RULE-AMBIGUOUS", "or/multnomah/x|R5|coverage_pct", "RULE_AMBIGUOUS")]
+    assert flats_flags.widened([], untrusted, 10.0, 4, margins=margins, change=four) == []
+    # Without the room (a run before the bridge kept it) only the fit reads.
+    assert flats_flags.widened([], [], 10.0, 4, margins={}, change=four) == []
+
+
+async def test_a_smaller_pod_clears_a_coverage_miss_and_leaves_the_rest() -> None:
+    cov = fp.Bind("coverage_pct", 41.0, 40.0, 1.0)
+    use = fp.Bind("use", None, None, None)
+    smaller = mg.Change(extra_sqft=-144.0, ground_sqft=GROUND, lot_sqft=5000.0)
+    assert flats_flags.widened([cov, use], [], 10.0, -4, margins={}, change=smaller) == [use]
+
+
+async def test_a_taller_pod_moves_the_height_limit_and_a_lower_one_the_minimum() -> None:
+    room = mg.loads(_room(height_ft=(27.0, 28.0, 1.0), min_height_ft=(26.0, 25.0, 1.0)))
+    assert flats_flags.heightened([], [], room, 1) == []
+    (tall,) = flats_flags.heightened([], [], room, 2)
+    assert (tall.check, tall.observed, tall.shortfall) == ("height_ft", 29.0, 1.0)
+    (low,) = flats_flags.heightened([], [], room, -2)
+    assert (low.check, low.observed, low.shortfall) == ("min_height_ft", 24.0, 1.0)
+    # A lower pod clears a height miss; coverage is not a height.
+    over = fp.Bind("height_ft", 30.0, 28.0, 2.0)
+    cov = fp.Bind("coverage_pct", 41.0, 40.0, 1.0)
+    assert flats_flags.heightened([over, cov], [], {}, -2) == [cov]
+
+
+async def test_the_report_counts_the_limits_a_bigger_or_taller_pod_crosses(session: AsyncSession) -> None:
+    w = await _world(session)
+    # Both lots green with ten feet of fit to spare. A kept the room on
+    # each standard it passed; B was screened before the room was kept.
+    await _run(session, w, 1, {A: ("green", []), B: ("green", [])})
+    row = (
+        await session.execute(
+            select(FlatsLotResult).join(FlatsLot, FlatsLot.id == FlatsLotResult.lot_id).where(FlatsLot.tlid == A)
+        )
+    ).scalar_one()
+    row.checks = {
+        **row.checks,
+        "fit": {"required_ft": 56.0},
+        "margins": _room(coverage_pct=(30.0, 31.0, 1.0), height_ft=(27.0, 28.0, 1.0), far=(0.5, 1.0, 0.5)),
+    }
+    await _slack(session, 1, A, 10.0)
+    await _slack(session, 1, B, 10.0)
+
+    got = await flats_flags.nightly_check(session)
+
+    assert got.ok
+    r = got.report
+    assert r["height_steps"] == list(flats_flags.HEIGHT_STEPS)
+    sens, tall = r["sensitivity"][DESIGN], r["height"][DESIGN]
+    # A foot wider keeps coverage under the cap; two feet wider crosses it.
+    assert "1" not in sens
+    assert sens["2"]["moves"] == {"green->red": 1} and sens["2"]["limits"] == {"coverage_pct": 1}
+    assert sens["2"]["examples"][0]["tlid"] == A
+    # A foot taller lands on the limit (a pass); two feet over it.
+    assert "1" not in tall
+    assert tall["2"]["moves"] == {"green->red": 1} and tall["2"]["limits"] == {"height_ft": 1}
+    # Nothing narrower or lower moves a green lot.
+    assert not any(k.startswith("-") for k in (*sens, *tall))
+    # The room: two green lots, one measured; coverage came within 5 % of
+    # its cap, floor area kept half its limit.
+    room = r["room"][DESIGN]
+    assert (room["green"], room["measured"]) == (2, 1)
+    assert room["checks"]["coverage_pct"] == {"lots": 1, "median": 1.0, "within_10": 1, "within_5": 1}
+    assert room["checks"]["far"] == {"lots": 1, "median": 0.5, "within_10": 0, "within_5": 0}

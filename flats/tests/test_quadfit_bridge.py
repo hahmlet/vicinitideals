@@ -44,6 +44,7 @@ from flats.ingest.quadfit import (
     setbacks_for,
 )
 from flats.rules.conditions import CONDITIONS
+from flats.score import margins as margin_record
 from flats.score import relief, slack
 from flats.score.screen import Triage
 
@@ -642,6 +643,15 @@ def test_the_flat_row_carries_the_verdict_the_signed_colour_and_what_leaned(
     assert "RULE-UNSIGNED" not in {f["code"] for f in written}
     assert all("@" not in f["key"].split("|") for f in written)
     assert r["binds"] == (json.dumps([b.as_json() for b in s.signed.binds], separators=(",", ":")) if s.signed.binds else "")
+    # The room each passing standard had to spare (FOLLOWUPS 37(ii)), from
+    # the signed answer like the binds, and only the passes: a miss is a
+    # bind, never a margin.
+    assert r["margins"] == margin_record.dumps(s.signed.margins)
+    kept = json.loads(r["margins"]) if r["margins"] else {}
+    passed = {c.check for c in s.signed.checks if c.verdict is slack.Verdict.passes}
+    assert kept and set(kept) == passed
+    assert not set(kept) & {b.check for b in s.signed.binds}
+    assert all(room >= 0 for _, _, room in kept.values())
     assert r["fit_across_ft"] == s.fit.across_ft
     # The stall count beside the colour, in the county map's own three
     # columns: what the row was charged at, how many the lot seats, which

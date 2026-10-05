@@ -319,3 +319,45 @@ async def test_the_report_page_shows_the_newest_nightly_check(client, session):
     assert "1 ft wider" in wider and 'data-total="42"' in wider
     assert "40 yellow → red" in wider and "FACT-CORNER-LOT · or/multnomah/portland · corner_lot (12)" in wider
     assert "1N1E29DD" in wider
+
+
+async def test_the_report_page_shows_the_room_and_the_limits_a_bigger_pod_crosses(client, session):
+    # FOLLOWUPS 37(ii): a report written after the bridge kept the room on
+    # each pass names the limits that moved each lot, tries the pod taller
+    # and lower, and says how close the green lots came to each limit.
+    await _login(client, session, owner=False)
+    session.add(FlatsFlagReport(ok=True, report={
+        "rows": 1200, "kinds": 68, "pending_kinds": [], "steps": [1], "height_steps": [-1, 2],
+        "moved": {}, "moved_examples": [], "incomplete": {}, "incomplete_examples": [], "unregistered_instances": {},
+        "sensitivity": {"pod56x36@2": {"1": {"moves": {"green->red": 5}, "examples": [], "keys": {},
+                                              "limits": {"coverage_pct": 4, "fit_ft": 1}}}},
+        "height": {"pod56x36@2": {"2": {"moves": {"green->red": 7}, "examples": [], "keys": {},
+                                         "limits": {"height_ft": 7}}}},
+        "room": {
+            "pod56x36@2": {"green": 300, "measured": 300, "checks": {
+                "far": {"lots": 300, "median": 0.25, "within_10": 3, "within_5": 1},
+                "height_ft": {"lots": 280, "median": 4.0, "within_10": 70, "within_5": 30},
+            }},
+            "pod40x30@1": {"green": 12, "measured": 0, "checks": {}},
+        },
+    }))
+    await session.commit()
+
+    page = await client.get("/flats/flags/report")
+
+    assert page.status_code == 200 and 'id="room-heading"' in page.text
+    room = page.text.split('id="room-pod56x36-2"', 1)[1].split('class="card"', 1)[0]
+    # The limit most lots come close to is first.
+    first, second = room.split('class="room-row"')[1:3]
+    assert 'data-check="height_ft"' in first and 'data-within-10="70"' in first
+    assert "Height" in first and "4.0 ft" in first
+    assert 'data-check="far"' in second and "Floor area ratio" in second and "0.25" in second
+    # A run screened before the room was kept says so, not "nothing close".
+    old = page.text.split('id="room-pod40x30-1"', 1)[1].split('class="card"', 1)[0]
+    assert "screened before the room was kept" in old
+    wider = page.text.split('id="sensitivity-pod56x36-2"', 1)[1].split('class="sensitivity-step"')[1]
+    assert "Building coverage (4)" in wider and "The fit, inside the setbacks" in wider
+    tall = page.text.split('id="height-pod56x36-2"', 1)[1]
+    lower, taller = tall.split('class="height-step"')[1:3]
+    assert "1 ft lower" in lower and 'data-total="0"' in lower
+    assert "2 ft taller" in taller and 'data-total="7"' in taller and "Height (7)" in taller

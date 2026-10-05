@@ -23,7 +23,9 @@ The screen raises flags and the run carries them
 * :func:`work_queue` -- open resolution keys by priority, then yield (item 5).
 * :func:`nightly_check` -- every ruled row recoloured under today's rule set,
   incomplete flags, and the design sensitivity report, as one
-  ``flats.flag_reports`` row (item 5).
+  ``flats.flag_reports`` row (item 5). The sensitivity reads the room each
+  passing standard had to spare (``checks -> 'margins'``, FOLLOWUPS 37(ii)),
+  so a bigger pod is charged on coverage and floor area too, not only the fit.
 """
 
 from __future__ import annotations
@@ -37,9 +39,10 @@ from typing import Any
 from sqlalchemy import func, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.flats import FlatsFlagInstance, FlatsFlagQuestion, FlatsFlagReport, FlatsRun
+from app.models.flats import FlatsDesign, FlatsFlagInstance, FlatsFlagQuestion, FlatsFlagReport, FlatsRun
 from app.services.flats_refresh import current_snapshot, run_in_use
 from flats.score import flags as fp
+from flats.score import margins as mg
 
 
 class FlagWriteError(ValueError):
@@ -431,16 +434,49 @@ UNTRUSTED_FLAGS = frozenset(
 )
 #: Pod width changes the sensitivity report tries, in feet.
 WIDTH_STEPS = (-4, -2, -1, 1, 2, 4)
+#: Pod height changes it tries, in feet: the 26 ft pod across Steph's 25 to
+#: 30 ft band ("height is a dial").
+HEIGHT_STEPS = (-2, -1, 1, 2, 4)
 #: How many example lots each finding keeps.
 EXAMPLES = 8
 
 _ROWS = text(
     """
     SELECT l.county, l.tlid, r.design_key, r.slack_ft,
-           r.checks->>'colour' AS colour, r.checks->'flags' AS flags, r.checks->'binds' AS binds
+           r.checks->>'colour' AS colour, r.checks->'flags' AS flags, r.checks->'binds' AS binds,
+           r.checks->'margins' AS margins, r.checks->'fit'->>'required_ft' AS run_ft, l.area_sqft
       FROM flats.lot_results r
       JOIN flats.lots l ON l.id = r.lot_id
      WHERE r.run_id = :run AND r.checks ? 'colour'
+    """
+)
+
+#: How much room the green lots of each design had on each standard they
+#: pass: how many, the median room in the standard's own units, and how many
+#: came within ten and within five percent of the limit.
+_ROOM = text(
+    """
+    SELECT r.design_key, m.key AS check,
+           count(*) AS lots,
+           percentile_cont(0.5) WITHIN GROUP (ORDER BY (m.value->>2)::float8) AS median,
+           count(*) FILTER (WHERE (m.value->>2)::float8 < 0.10 * abs((m.value->>1)::float8)) AS within_10,
+           count(*) FILTER (WHERE (m.value->>2)::float8 < 0.05 * abs((m.value->>1)::float8)) AS within_5
+      FROM flats.lot_results r
+      CROSS JOIN LATERAL jsonb_each(r.checks->'margins') m
+     WHERE r.run_id = :run AND r.checks->>'colour' = 'green'
+       AND jsonb_typeof(r.checks->'margins') = 'object'
+     GROUP BY 1, 2
+    """
+)
+
+#: Green rows per design, and how many of them carry the room record.
+_GREEN = text(
+    """
+    SELECT r.design_key, count(*) AS green,
+           count(*) FILTER (WHERE r.checks ? 'margins') AS measured
+      FROM flats.lot_results r
+     WHERE r.run_id = :run AND r.checks->>'colour' = 'green'
+     GROUP BY 1
     """
 )
 
@@ -453,18 +489,67 @@ def _json(v: Any) -> list[dict[str, Any]]:
     return list(v or [])
 
 
+def _moved(b: fp.Bind, change: mg.Change) -> fp.Bind | None | bool:
+    """A miss after ``change``: the bind with its new measurement, None
+    when the lot now clears the standard, False when the change does not
+    move this standard."""
+    if b.observed is None or b.threshold is None:
+        return False
+    now = mg.after(b.check, float(b.observed), change)
+    if now is None:
+        return False
+    short = mg.shortfall(b.check, now, float(b.threshold))
+    return replace(b, observed=now, shortfall=short) if short > 0 else None
+
+
+def _resized(
+    binds: list[fp.Bind],
+    flags: list[fp.Flag],
+    margins: dict[str, mg.Margin] | None,
+    change: mg.Change,
+) -> list[fp.Bind]:
+    """``binds`` with every miss ``change`` moves re-measured, and a bind
+    added for every standard the lot passed with less room than the change
+    takes -- never under a rule set the screen does not trust, which binds
+    nothing."""
+    kept: list[fp.Bind] = []
+    for b in binds:
+        got = _moved(b, change)
+        if got is False:
+            kept.append(b)
+        elif got is not None:
+            kept.append(got)
+    if margins and not any(f.code in UNTRUSTED_FLAGS for f in flags):
+        for m in margins.values():
+            now = mg.after(m.check, m.observed, change)
+            if now is None:
+                continue
+            short = mg.shortfall(m.check, now, m.threshold)
+            if short > 0:
+                kept.append(fp.Bind(m.check, now, m.threshold, short, source="the pod size"))
+    return kept
+
+
 def widened(
-    binds: list[fp.Bind], flags: list[fp.Flag], slack: float | None, step: float
+    binds: list[fp.Bind],
+    flags: list[fp.Flag],
+    slack: float | None,
+    step: float,
+    *,
+    margins: dict[str, mg.Margin] | None = None,
+    change: mg.Change | None = None,
 ) -> list[fp.Bind]:
     """The binds this lot would carry with a pod ``step`` feet wider
-    (negative: narrower), read from the fit alone.
+    (negative: narrower).
 
     The fit's bind moves by the step and goes when it no longer misses; a
     lot that fits gains a fit bind when its slack is smaller than the step.
     Under a rule set the screen does not trust it emits no bind at all, so
-    none is added there. Coverage, floor area and the rest also move with
-    the footprint, but their margins on lots that pass are not stored, so
-    they are not counted (the report page says so)."""
+    none is added there. ``change`` is the same step as footprint
+    (:func:`flats.score.margins.grown`): coverage, floor area, paving and
+    open space move with it, from the misses and from the room the lot had
+    on each standard it passed (``margins``). Without them the fit alone is
+    read, as on a run written before the bridge kept that room."""
     out: list[fp.Bind] = []
     fit_bound = False
     for b in binds:
@@ -484,11 +569,74 @@ def widened(
         and not any(f.code in UNTRUSTED_FLAGS for f in flags)
     ):
         out.append(fp.Bind("fit_ft", None, None, step - slack, source="the pod width"))
+    if change is not None:
+        out = _resized(out, flags, margins, change)
     return out
+
+
+def heightened(
+    binds: list[fp.Bind],
+    flags: list[fp.Flag],
+    margins: dict[str, mg.Margin] | None,
+    step: float,
+) -> list[fp.Bind]:
+    """The binds this lot would carry with a pod ``step`` feet taller
+    (negative: lower): the height limit, and a district's minimum height,
+    move foot for foot; nothing else does."""
+    return _resized(list(binds), flags, margins, mg.Change(taller_ft=step))
 
 
 def _example(county: str, tlid: str, design: str, **more: Any) -> dict[str, Any]:
     return {"county": county, "tlid": tlid, "design": design, **more}
+
+
+def _float(v: Any) -> float | None:
+    if v is None or v == "":
+        return None
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def _misses(binds: list[fp.Bind]) -> dict[str, float | None]:
+    return {b.check: None if b.shortfall is None else round(float(b.shortfall), 3) for b in binds}
+
+
+def _tally(
+    per: dict[str, dict[str, Any]],
+    step: float,
+    before: list[fp.Bind],
+    after: list[fp.Bind],
+    flags: list[fp.Flag],
+    *,
+    today: str,
+    where: tuple[str, str, str],
+    reg: fp.Registry,
+    rules: fp.ColourRules,
+) -> None:
+    """Count one lot under one pod change, where its colour moves: the move,
+    an example, the limits whose miss changed (``limits``), and the open
+    questions it carries."""
+    if after == before:
+        return
+    colour = fp.colour(after, flags, reg=reg, rules=rules).value
+    if colour == today:
+        return
+    s = per.setdefault(str(step), {"moves": {}, "examples": [], "keys": {}, "limits": {}})
+    k = f"{today}->{colour}"
+    s["moves"][k] = s["moves"].get(k, 0) + 1
+    if len(s["examples"]) < EXAMPLES:
+        s["examples"].append(_example(*where, move=k))
+    was, now = _misses(before), _misses(after)
+    for check in sorted(set(was) | set(now)):
+        if was.get(check, "none") != now.get(check, "none"):
+            s["limits"][check] = s["limits"].get(check, 0) + 1
+    for f in flags:
+        if f.code in reg and fp.severity_of(f, reg) >= rules.yellow_at_severity:
+            key = "" if reg[f.code].scope is fp.Scope.per_lot else f.key
+            name = f"{f.code}{fp.SEP}{key}"
+            s["keys"][name] = s["keys"].get(name, 0) + 1
 
 
 async def nightly_check(
@@ -497,6 +645,7 @@ async def nightly_check(
     reg: fp.Registry | None = None,
     rules: fp.ColourRules | None = None,
     steps: tuple[float, ...] = WIDTH_STEPS,
+    height_steps: tuple[float, ...] = HEIGHT_STEPS,
     now: dt.datetime | None = None,
 ) -> FlatsFlagReport:
     """The flag plan's nightly check and design sensitivity report, written
@@ -508,9 +657,11 @@ async def nightly_check(
     run, or the screen and the rule disagree); so does a flag the write
     gate refuses, or an open instance of a kind nobody registered. Pending
     kinds are counted, never failed: there is no deadline on them (Steph
-    2026-10-03). The same pass tries each pod width in ``steps`` and counts
-    the colours that move, per design, with example lots and the open
-    questions the moving lots carry."""
+    2026-10-03). The same pass tries each pod width in ``steps`` and each
+    pod height in ``height_steps`` and counts the colours that move, per
+    design, with example lots, the limits that moved them and the open
+    questions the moving lots carry; and ``room`` says how close the green
+    lots came to each limit they pass (FOLLOWUPS 37(ii))."""
     reg = reg or fp.registry()
     rules = rules or fp.colour_rules()
     now = now or dt.datetime.now(dt.UTC)
@@ -521,6 +672,7 @@ async def nightly_check(
         "kinds": len(reg),
         "rule_line": rules.yellow_at_severity,
         "steps": list(steps),
+        "height_steps": list(height_steps),
     }
     rows = 0
     moved: dict[str, int] = {}
@@ -529,11 +681,17 @@ async def nightly_check(
     bad_examples: list[dict[str, Any]] = []
     stored: dict[str, dict[str, int]] = {}
     sens: dict[str, dict[str, dict[str, Any]]] = {}
+    tall: dict[str, dict[str, dict[str, Any]]] = {}
+    room: dict[str, dict[str, Any]] = {}
     if run is None:
         report["skipped"] = "no run in use"
     else:
+        sizes = {
+            d.key: (float(d.width_ft), float(d.depth_ft))
+            for d in (await session.execute(select(FlatsDesign))).scalars()
+        }
         result = await session.stream(_ROWS.execution_options(yield_per=5000), {"run": run.id})
-        async for county, tlid, design, slack, was, flags_raw, binds_raw in result:
+        async for county, tlid, design, slack, was, flags_raw, binds_raw, margins_raw, run_ft, area in result:
             rows += 1
             was = was or "unknown"
             mine = stored.setdefault(design, {})
@@ -541,6 +699,7 @@ async def nightly_check(
             try:
                 flags = [fp.Flag.from_json(f) for f in _json(flags_raw)]
                 binds = [fp.Bind.from_json(b) for b in _json(binds_raw)]
+                margins = mg.loads(margins_raw)
                 fp.validate(flags, reg)
             except (KeyError, ValueError, TypeError) as exc:
                 why = str(exc).split(":", 1)[0].strip("'\" ") or type(exc).__name__
@@ -555,24 +714,40 @@ async def nightly_check(
                 if len(moved_examples) < EXAMPLES:
                     moved_examples.append(_example(county, tlid, design, stored=was, today=today))
             slack_ft = float(slack) if slack is not None else None
+            size = sizes.get(design)
+            run_len, lot_sqft = _float(run_ft), _float(area)
+            where = (county, tlid, design)
             per = sens.setdefault(design, {})
             for step in steps:
-                after = fp.colour(widened(binds, flags, slack_ft, step), flags, reg=reg, rules=rules).value
-                if after == today:
-                    continue
-                s = per.setdefault(str(step), {"moves": {}, "examples": [], "keys": {}})
-                k = f"{today}->{after}"
-                s["moves"][k] = s["moves"].get(k, 0) + 1
-                if len(s["examples"]) < EXAMPLES:
-                    s["examples"].append(_example(county, tlid, design, move=k))
-                for f in flags:
-                    if f.code in reg and fp.severity_of(f, reg) >= rules.yellow_at_severity:
-                        key = "" if reg[f.code].scope is fp.Scope.per_lot else f.key
-                        name = f"{f.code}{fp.SEP}{key}"
-                        s["keys"][name] = s["keys"].get(name, 0) + 1
-        for per in sens.values():
-            for s in per.values():
-                s["keys"] = dict(sorted(s["keys"].items(), key=lambda kv: -kv[1])[:10])
+                extra = mg.grown(step, run_len, *size) if size is not None else None
+                change = (
+                    None
+                    if extra is None or size is None
+                    else mg.Change(extra_sqft=extra, ground_sqft=size[0] * size[1], lot_sqft=lot_sqft)
+                )
+                after = widened(binds, flags, slack_ft, step, margins=margins, change=change)
+                _tally(per, step, binds, after, flags, today=today, where=where, reg=reg, rules=rules)
+            per = tall.setdefault(design, {})
+            for step in height_steps:
+                after = heightened(binds, flags, margins, step)
+                _tally(per, step, binds, after, flags, today=today, where=where, reg=reg, rules=rules)
+        for table in (sens, tall):
+            for per in table.values():
+                for s in per.values():
+                    s["keys"] = dict(sorted(s["keys"].items(), key=lambda kv: -kv[1])[:10])
+                    s["limits"] = dict(sorted(s["limits"].items(), key=lambda kv: -kv[1]))
+        for design, green, measured in (await session.execute(_GREEN, {"run": run.id})).all():
+            room[design] = {"green": int(green), "measured": int(measured), "checks": {}}
+        for design, check, lots, median, within_10, within_5 in (
+            await session.execute(_ROOM, {"run": run.id})
+        ).all():
+            mine = room.setdefault(design, {"green": 0, "measured": 0, "checks": {}})
+            mine["checks"][check] = {
+                "lots": int(lots),
+                "median": round(float(median), 3),
+                "within_10": int(within_10),
+                "within_5": int(within_5),
+            }
         if rows == 0:
             report["skipped"] = f"run {run.id} was screened before the colour rule and carries no flags"
     unregistered = (
@@ -594,6 +769,8 @@ async def nightly_check(
         "incomplete_examples": bad_examples,
         "unregistered_instances": {code: int(n) for code, n in unregistered},
         "sensitivity": sens,
+        "height": tall,
+        "room": room,
     }
     ok = rows > 0 and not moved and not bad and not unregistered
     row = FlatsFlagReport(made_at=now, run_id=run.id if run is not None else None, ok=ok, report=report)

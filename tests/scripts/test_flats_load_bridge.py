@@ -384,6 +384,18 @@ def test_the_checks_record_carries_the_flag_plan() -> None:
         assert "colour" not in old and "flags" not in old and "binds" not in old
 
 
+def test_the_checks_record_carries_the_room_each_pass_had_to_spare() -> None:
+    # FOLLOWUPS 37(ii): {check: [observed, threshold, room]} over the checks
+    # the lot passed, for the pod design report. A bundle written before the
+    # bridge kept it, or a lot that passed nothing, carries none.
+    margins = {"coverage_pct": [30.0, 40.0, 10.0], "height_ft": [33.0, 35.0, 2.0]}
+    row = {**_bridge_row(LOT_A, DESIGNS[0]), "margins": json.dumps(margins)}
+    assert result_checks(row)["margins"] == margins
+    assert "margins" not in result_checks(_bridge_row(LOT_A, DESIGNS[0]))
+    for empty in (None, float("nan"), ""):
+        assert "margins" not in result_checks({**_bridge_row(LOT_A, DESIGNS[0]), "margins": empty})
+
+
 def test_a_lot_the_stage_file_lacks_refuses_the_export(tmp_path: Path) -> None:
     run_dir, s4, s5o, results = _make_run(tmp_path)
     short = tmp_path / "s4_short.parquet"
