@@ -91,6 +91,7 @@ from flats.geom.alley import (
 )
 from flats.geom.corridor import (
     CORRIDOR_FACTS,
+    FRONT_REACH_FT,
     STREET_CLASS,
     CorridorMap,
     observed_corridors,
@@ -116,6 +117,13 @@ from flats.geom.neighbour import (
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
+from flats.geom.sidewalk import (
+    depth_for,
+    easement_depth_ft,
+    easement_shifted,
+    load_streets,
+    observed_sidewalk_easement,
+)
 from flats.geom.street_class import (
     LOCAL_STREET,
     load_class_maps,
@@ -466,6 +474,7 @@ def observed_facts(
     out.update(observed_street_end(_finite(row.get("street_end_ft"))))
     if isinstance(row.get("local_street_obs"), bool):
         out[LOCAL_STREET] = row["local_street_obs"]
+    out.update(observed_sidewalk_easement(_finite(row.get("sidewalk_easement_ft"))))
     if _answered(row.get("split_zone")):
         out["split_zone"] = _is_true(row.get("split_zone"))
     if _answered(row.get("ovl_fema_sfha")) or _answered(row.get("ovl_fema_floodway")):
@@ -725,6 +734,11 @@ class QuadfitLot:
     #: other lot.
     access: tuple[tuple[float, float, float, float], ...] = ()
     access_bearings: tuple[float, ...] = ()
+    #: How far inside the street lot lines a sidewalk easement is taken to
+    #: reach, at its worst (:func:`with_sidewalk_easement`): every street
+    #: setback is measured from there. None where the code asks nothing of
+    #: one, or nothing was read.
+    sidewalk_easement_ft: float | None = None
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -1372,6 +1386,7 @@ def lot_from_row(
         ),
         second=second,
         second_better=how == "better" and second is not None,
+        sidewalk_easement_ft=_finite(row.get("sidewalk_easement_ft")),
     )
 
 
@@ -1509,6 +1524,37 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
             row["local_street_obs"] = got[LOCAL_STREET]
             answered += 1
     return answered
+
+
+def with_sidewalk_easement(rows: list[dict[str, Any]], sources: Path | None) -> int:
+    """Take the worst-case sidewalk easement on every row whose code measures
+    a setback from one (:mod:`flats.geom.sidewalk`), in place
+    (``sidewalk_easement_ft``), and say how many.
+
+    Only with the snapshot's street centrelines in hand: a line is read as on
+    a local street off Metro's TYPE, and without them the run leaves the
+    fact unasked rather than take every line at the deepest.
+    """
+    if sources is None:
+        return 0
+    asked = [(row, depth_for(_layer_id(row))) for row in rows]
+    asked = [(row, d) for row, d in asked if d is not None]
+    edges = {id(row): json.loads(row.get("edges_json") or "[]") for row, _ in asked}
+    xs = [float(v) for e in edges.values() for line in e for v in (line[0], line[2])]
+    ys = [float(v) for e in edges.values() for line in e for v in (line[1], line[3])]
+    if not xs:
+        return 0
+    reach = 2 * FRONT_REACH_FT
+    streets = load_streets(sources, (min(xs) - reach, min(ys) - reach, max(xs) + reach, max(ys) + reach))
+    if streets is None:
+        return 0
+    taken = 0
+    for row, depth in asked:
+        got = easement_depth_ft(edges[id(row)], depth, streets)
+        if got is not None:
+            row["sidewalk_easement_ft"] = got
+            taken += 1
+    return taken
 
 
 def scope_mask(frame: Any, jurisdictions: Iterable[str] = (), zones: Iterable[str] = (), tlids: Iterable[str] = ()) -> Any:
@@ -1983,6 +2029,11 @@ def screen_lot(
     it no grade is measured and the slope ruling goes unchecked. The steep
     ground comes on the lot itself (:func:`with_steep`).
     """
+    if lot.sidewalk_easement_ft:
+        # Every resolution this lot's screen asks for -- the yards, the
+        # worst-bound readings, the strip's and the slope's re-screens --
+        # measures the street setbacks from the easement line.
+        rules = _Eased(rules, lot.sidewalk_easement_ft)  # type: ignore[assignment]
     got = _screen_lot_once(
         lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads,
         terrain=terrain,
@@ -2277,6 +2328,22 @@ def _screen_lot_once(
         )
         out.append(won)
     return out
+
+
+class _Eased:
+    """``rules`` with every street setback measured from a sidewalk
+    easement line ``depth_ft`` inside the lot
+    (:func:`flats.geom.sidewalk.easement_shifted`), for one lot's screen."""
+
+    def __init__(self, rules: RuleSet, depth_ft: float) -> None:
+        self._rules = rules
+        self._depth_ft = depth_ft
+
+    def resolve(self, *args: Any, **kwargs: Any) -> ZoneResolution:
+        return easement_shifted(self._rules.resolve(*args, **kwargs), self._depth_ft)
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._rules, name)
 
 
 class _Waived:
@@ -3332,6 +3399,9 @@ def run(
     classed = with_local_street(rows, sources)
     if classed:
         log(f"bridge: street class read on {classed:,} lots")
+    eased = with_sidewalk_easement(rows, sources)
+    if eased:
+        log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
     chunks = [rows[i : i + chunk_size] for i in range(0, len(rows), chunk_size)]
     log(f"bridge: {len(rows):,} lots in {len(chunks)} chunks, {processes} processes, "
         f"{step_deg} deg step")
