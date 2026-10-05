@@ -56,8 +56,10 @@
   <p class="muted" style="font-size:12px;max-width:95ch;margin:0 0 8px">
     For each limit a green lot passes, how much room it had left. The limits the most lots come close to are
     at the top: "within 10%" counts the lots whose room is less than a tenth of the limit itself (under 3 ft
-    of a 30 ft height limit, say). The fit is the room left inside the front and rear setbacks; the room
-    side to side is not measured yet.
+    of a 30 ft height limit, say). The fit is the room left inside the front and rear setbacks. Below each
+    design's table, how much bigger the building could be on the lot's own shape: wider, deeper, and both at
+    once -- on an oddly shaped lot (a wedge, an L) there can be room to grow each way alone but less to grow
+    both ways together.
   </p>
   {% if not room %}<p class="muted" id="room-none">Nothing to report yet.</p>{% endif %}
   {% for d in room %}
@@ -83,21 +85,69 @@
       </tbody>
     </table>
     {% endif %}
+    {% if d.size %}
+    <table class="data-table" style="font-size:12px;margin-top:8px" id="size-{{ d.design|replace('@', '-') }}">
+      <thead><tr><th>How much bigger the building could be</th><th style="text-align:right">Typical room</th><th style="text-align:right">Green lots with under 2 ft</th></tr></thead>
+      <tbody>
+        {% for side, words in (("width", "Wider"), ("depth", "Deeper"), ("both", "Both ways at once")) %}
+        <tr class="size-row" data-side="{{ side }}" data-under-2="{{ d.size[side].under_2 }}">
+          <td>{{ words }}</td>
+          <td style="text-align:right">{{ "%.1f"|format(d.size[side].median) }} ft</td>
+          <td style="text-align:right">{{ "{:,}".format(d.size[side].under_2) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p class="muted" style="font-size:12px;margin:4px 0 0" id="tight-{{ d.design|replace('@', '-') }}" data-tight="{{ d.size.tight }}">
+      Measured on {{ "{:,}".format(d.size.lots) }} green lots (up to 40 ft each way). On {{ "{:,}".format(d.size.tight) }}
+      of them the shape is tight: each way alone has more room than both ways at once, by a foot or more.
+    </p>
+    {% elif d.green and d.measured %}
+    <p class="muted" style="font-size:12px;margin:4px 0 0">This run was screened before the room each way was kept; the next run fills it in.</p>
+    {% endif %}
   </div>
   {% endfor %}
 
   <h3 style="margin:18px 0 6px;font-size:15px">Pod width</h3>
   <p class="muted" style="font-size:12px;max-width:95ch;margin:0 0 8px">
-    What happens to the colours if the building is made wider or narrower: whether it still fits on the lot,
-    and, where the run kept how much room each lot had, whether the bigger building still clears the coverage,
-    floor area, paving and open space limits. Other limits (lot size, density, parking) do not change with the
-    building's size. A lot short by under a foot on the fit stays yellow, as the colour rule says.
+    What happens to the colours if the building is made wider or narrower (along the street): whether it still
+    fits on the lot, read off the room each lot had that way on its own shape, and, where the run kept how much
+    room each lot had on each limit, whether the bigger building still clears the coverage, floor area, paving
+    and open space limits. Other limits (lot size, density, parking) do not change with the building's size. A
+    lot short by under a foot on the fit stays yellow, as the colour rule says. On a run screened before the room
+    each way was kept, only the front-to-back fit is read.
   </p>
   {% if not sensitivity %}<p class="muted" id="sensitivity-none">Nothing to report yet.</p>{% endif %}
   {% for d in sensitivity %}
   <div class="card" style="padding:12px;margin:8px 0" id="sensitivity-{{ d.design|replace('@', '-') }}">
     <h4 style="margin:0 0 6px">{{ d.design }}</h4>
     {% set steps = d.steps %}{% set kind = "sensitivity" %}
+    {% include "partials/flats_flag_report_steps.html" %}
+  </div>
+  {% endfor %}
+
+  <h3 style="margin:18px 0 6px;font-size:15px">Pod depth</h3>
+  <p class="muted" style="font-size:12px;max-width:95ch;margin:0 0 8px">
+    The same question for the building made deeper or shallower (front to back).
+  </p>
+  {% if not depth %}<p class="muted" id="depth-none">Nothing to report yet.</p>{% endif %}
+  {% for d in depth %}
+  <div class="card" style="padding:12px;margin:8px 0" id="depth-{{ d.design|replace('@', '-') }}">
+    <h4 style="margin:0 0 6px">{{ d.design }}</h4>
+    {% set steps = d.steps %}{% set kind = "depth" %}
+    {% include "partials/flats_flag_report_steps.html" %}
+  </div>
+  {% endfor %}
+
+  <h3 style="margin:18px 0 6px;font-size:15px">Pod bigger both ways</h3>
+  <p class="muted" style="font-size:12px;max-width:95ch;margin:0 0 8px">
+    And both at once, by the same amount: on an oddly shaped lot this can move more lots than either change alone.
+  </p>
+  {% if not both %}<p class="muted" id="both-none">Nothing to report yet.</p>{% endif %}
+  {% for d in both %}
+  <div class="card" style="padding:12px;margin:8px 0" id="both-{{ d.design|replace('@', '-') }}">
+    <h4 style="margin:0 0 6px">{{ d.design }}</h4>
+    {% set steps = d.steps %}{% set kind = "both" %}
     {% include "partials/flats_flag_report_steps.html" %}
   </div>
   {% endfor %}

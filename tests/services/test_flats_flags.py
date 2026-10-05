@@ -313,10 +313,12 @@ async def test_the_nightly_check_says_why_a_run_before_the_rule_has_nothing(sess
     assert got.report["skipped"].startswith("run 1 was screened before the colour rule")
 
 
-async def test_the_sensitivity_report_counts_what_each_width_moves(session: AsyncSession) -> None:
+async def test_the_sensitivity_report_counts_what_each_size_moves(session: AsyncSession) -> None:
     w = await _world(session)
     # A misses the fit by half a foot (a near miss: yellow); B fits with
-    # 1.5 ft to spare and carries the corner question.
+    # 1.5 ft to spare and carries the corner question. Both were screened
+    # before the room each way was kept, broadside: the fit ran along the
+    # pod's depth.
     await _run(session, w, 1, {A: ("yellow", []), B: ("yellow", [CORNER])})
     row = (
         await session.execute(
@@ -329,17 +331,91 @@ async def test_the_sensitivity_report_counts_what_each_width_moves(session: Asyn
 
     got = await flats_flags.nightly_check(session)
 
-    sens = got.report["sensitivity"][DESIGN]
-    # A foot narrower: A fits and, with nothing open, is green.
-    assert sens["-1"]["moves"] == {"yellow->green": 1}
-    # A foot wider: A is short by 1.5 ft and goes red; B still fits.
-    assert sens["1"]["moves"] == {"yellow->red": 1}
-    assert sens["1"]["examples"][0]["tlid"] == A
-    # Two feet wider: B is short by half a foot -- a near miss, still yellow.
-    assert sens["2"]["moves"] == {"yellow->red": 1}
-    # Four feet wider: B misses too, and the question it carries is named.
-    assert sens["4"]["moves"] == {"yellow->red": 2}
-    assert sens["4"]["keys"] == {"FACT-CORNER-LOT|or/multnomah/x|corner_lot": 1}
+    r = got.report
+    for side in ("depth", "both"):
+        sens = r[side][DESIGN]
+        # A foot shallower: A fits and, with nothing open, is green.
+        assert sens["-1"]["moves"] == {"yellow->green": 1}
+        # A foot deeper: A is short by 1.5 ft and goes red; B still fits.
+        assert sens["1"]["moves"] == {"yellow->red": 1}
+        assert sens["1"]["examples"][0]["tlid"] == A
+        # Two feet deeper: B is short by half a foot -- a near miss, still yellow.
+        assert sens["2"]["moves"] == {"yellow->red": 1}
+        # Four feet deeper: B misses too, and the question it carries is named.
+        assert sens["4"]["moves"] == {"yellow->red": 2}
+        assert sens["4"]["keys"] == {"FACT-CORNER-LOT|or/multnomah/x|corner_lot": 1}
+    # The width runs along the street, which such a run never measured: the
+    # fit reads as it was, so nothing moves.
+    assert r["sensitivity"][DESIGN] == {}
+    assert r["sized"] == {}
+    assert got.ok
+
+
+async def test_a_size_reads_the_room_kept_that_way_or_the_fit_where_it_ran() -> None:
+    room = {"width": 1.5, "depth": 6.0, "both": 0.5}
+    # Kept on the lot's own shape: each side its own room.
+    assert flats_flags.size_reading("width", room, "width_facing", 9.0) == (1.5, False)
+    assert flats_flags.size_reading("depth", room, "width_facing", 9.0) == (6.0, True)
+    assert flats_flags.size_reading("both", room, "width_facing", 9.0) == (0.5, True)
+    # Before it was kept: the fit's own room, for the side that ran along
+    # the lot -- the depth broadside, the width end-on -- and both ways.
+    assert flats_flags.size_reading("depth", None, "width_facing", 9.0) == (9.0, True)
+    assert flats_flags.size_reading("width", None, "width_facing", 9.0) == (None, False)
+    assert flats_flags.size_reading("width", None, "depth_facing", 9.0) == (9.0, True)
+    assert flats_flags.size_reading("depth", None, "depth_facing", 9.0) == (None, False)
+    assert flats_flags.size_reading("both", None, None, 9.0) == (9.0, True)
+
+
+async def test_a_fit_miss_moves_only_with_the_side_the_fit_ran_along() -> None:
+    fit = fp.Bind.from_json(FIT)
+    # Grown across the run, the search was never made at the new size: the
+    # miss is left as it was, neither cleared nor deepened.
+    assert flats_flags.widened([fit], [], None, -1, along=False) == [fit]
+    assert flats_flags.widened([fit], [], None, 4, along=False) == [fit]
+    # And a lot with no room that way gains no fit bind.
+    assert flats_flags.widened([], [], None, 4, along=False) == []
+
+
+async def test_the_report_reads_each_side_off_the_room_kept_on_the_lots_shape(session: AsyncSession) -> None:
+    w = await _world(session)
+    # A is green, broadside, with room to grow 1.5 ft wider and 6 ft deeper
+    # but only half a foot both ways at once: a tight shape. B is green from
+    # a run before the room each way was kept, with 10 ft of fit to spare.
+    await _run(session, w, 1, {A: ("green", []), B: ("green", [])})
+    row = (
+        await session.execute(
+            select(FlatsLotResult).join(FlatsLot, FlatsLot.id == FlatsLotResult.lot_id).where(FlatsLot.tlid == A)
+        )
+    ).scalar_one()
+    row.checks = {
+        **row.checks,
+        "fit": {"orientation": "width_facing", "room": {"width": 1.5, "depth": 6.0, "both": 0.5}},
+    }
+    await _slack(session, 1, A, 6.0)
+    await _slack(session, 1, B, 10.0)
+
+    got = await flats_flags.nightly_check(session)
+
+    r = got.report
+    assert r["sized"] == {DESIGN: 1}
+    wide, deep, both = (r[k][DESIGN] for k in ("sensitivity", "depth", "both"))
+    # Two feet wider: short by half a foot, a near miss; four, red.
+    assert "1" not in wide
+    assert wide["2"]["moves"] == {"green->yellow": 1} and wide["2"]["examples"][0]["tlid"] == A
+    assert wide["4"]["moves"] == {"green->red": 1} and wide["4"]["limits"] == {"fit_ft": 1}
+    # Four feet deeper still fits; B's 10 ft covers every step.
+    assert deep == {}
+    # A foot both ways is already half a foot over.
+    assert both["1"]["moves"] == {"green->yellow": 1}
+    assert both["2"]["moves"] == {"green->red": 1}
+    # The summary: one lot measured, and its shape is tight.
+    assert r["room"][DESIGN]["size"] == {
+        "lots": 1,
+        "width": {"median": 1.5, "under_2": 1},
+        "depth": {"median": 6.0, "under_2": 0},
+        "both": {"median": 0.5, "under_2": 1},
+        "tight": 1,
+    }
     assert got.ok
 
 
@@ -347,8 +423,8 @@ async def test_the_sensitivity_report_counts_what_each_width_moves(session: Asyn
 # FOLLOWUPS 37(ii): the room each pass had to spare
 # ---------------------------------------------------------------------------
 
-# The test pod is 56 x 36: the fit measured along its 56 ft side, so a foot
-# more run adds 36 sqft to a 2,016 sqft footprint, on a 5,000 sqft lot.
+# The test pod is 56 x 36: a foot wider adds 36 sqft to a 2,016 sqft
+# footprint, on a 5,000 sqft lot.
 GROUND = 56 * 36
 
 

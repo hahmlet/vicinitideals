@@ -103,3 +103,23 @@ def test_the_nightly_check_shows_the_room_and_the_pod_height(logged_in_page: Pag
     rows = page.locator("tr.room-row")
     if rows.count():
         expect(rows.first).to_have_attribute("data-within-10", re.compile(r"^\d+$"))
+
+
+def test_the_nightly_check_tries_the_pod_deeper_and_bigger_both_ways(logged_in_page: Page, base_url: str) -> None:
+    """FOLLOWUPS 37(ii), every direction: the pod is tried wider, deeper and
+    both ways at once, and a run that kept the room each way says how much
+    bigger the pod could be on the lots' own shapes. A report written before
+    shows the sections empty, never an error."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/flags/report")
+
+    expect(page.get_by_role("heading", name="Nightly check")).to_be_visible()
+    if page.locator("#report-none").count():
+        pytest.skip("no nightly check has run on this instance yet")
+    expect(page.get_by_role("heading", name="Pod depth")).to_be_visible()
+    expect(page.get_by_role("heading", name="Pod bigger both ways")).to_be_visible()
+    sizes = page.locator("tr.size-row")
+    if sizes.count():
+        expect(sizes).to_have_count(3 * page.locator("[id^='tight-']").count())
+        expect(sizes.first).to_have_attribute("data-side", "width")
+        expect(sizes.first).to_have_attribute("data-under-2", re.compile(r"^\d+$"))

@@ -95,13 +95,16 @@ def test_the_screening_hands_over_its_passes_and_its_colour_does_not_read_them()
 # --- what a bigger or taller pod does ---------------------------------------
 
 
-def test_a_longer_run_adds_the_step_times_the_other_side() -> None:
-    # A 24 x 60 pod: the fit measured along the 60 ft side, so a foot more
-    # run adds 24 sqft; measured along the 24 ft side, it adds 60.
-    assert mg.grown(1.0, 60.0, 24.0, 60.0) == 24.0
-    assert mg.grown(2.0, 24.0, 24.0, 60.0) == 120.0
-    assert mg.grown(-1.0, 60.0, 24.0, 60.0) == -24.0
-    assert mg.grown(1.0, None, 24.0, 60.0) is None
+def test_a_side_grown_adds_the_step_times_the_other_side() -> None:
+    # A 56 x 36 pod: a foot wider adds 36 sqft, a foot deeper 56, a foot
+    # both ways 56 + 36 + 1.
+    assert mg.grown(1.0, "width", 56.0, 36.0) == 36.0
+    assert mg.grown(2.0, "depth", 56.0, 36.0) == 112.0
+    assert mg.grown(-1.0, "width", 56.0, 36.0) == -36.0
+    assert mg.grown(1.0, "both", 56.0, 36.0) == 93.0
+    assert mg.grown(-1.0, "both", 56.0, 36.0) == -91.0
+    with pytest.raises(ValueError):
+        mg.grown(1.0, "height", 56.0, 36.0)
 
 
 def test_coverage_and_floor_area_grow_with_the_footprint() -> None:

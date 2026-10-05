@@ -432,8 +432,12 @@ UNTRUSTED_FLAGS = frozenset(
         "JURISDICTION-NOT-ENCODED",
     }
 )
-#: Pod width changes the sensitivity report tries, in feet.
+#: Pod size changes the sensitivity report tries, in feet: each of the
+#: pod's width, its depth, and both at once (:data:`flats.score.margins.SIDES`).
 WIDTH_STEPS = (-4, -2, -1, 1, 2, 4)
+#: The report key each side's table is written under ("sensitivity" is the
+#: width's, its name before the depth and both ways were measured).
+SIZE_KEYS = {"width": "sensitivity", "depth": "depth", "both": "both"}
 #: Pod height changes it tries, in feet: the 26 ft pod across Steph's 25 to
 #: 30 ft band ("height is a dial").
 HEIGHT_STEPS = (-2, -1, 1, 2, 4)
@@ -444,7 +448,8 @@ _ROWS = text(
     """
     SELECT l.county, l.tlid, r.design_key, r.slack_ft,
            r.checks->>'colour' AS colour, r.checks->'flags' AS flags, r.checks->'binds' AS binds,
-           r.checks->'margins' AS margins, r.checks->'fit'->>'required_ft' AS run_ft, l.area_sqft
+           r.checks->'margins' AS margins, r.checks->'fit'->'room' AS room,
+           r.checks->'fit'->>'orientation' AS orientation, l.area_sqft
       FROM flats.lot_results r
       JOIN flats.lots l ON l.id = r.lot_id
      WHERE r.run_id = :run AND r.checks ? 'colour'
@@ -476,6 +481,35 @@ _GREEN = text(
            count(*) FILTER (WHERE r.checks ? 'margins') AS measured
       FROM flats.lot_results r
      WHERE r.run_id = :run AND r.checks->>'colour' = 'green'
+     GROUP BY 1
+    """
+)
+
+#: How much bigger the pod could be on the green lots of each design, on
+#: each lot's own shape (:class:`flats.score.room.Room`): the median room
+#: wider, deeper and both ways at once, how many have under 2 ft each way,
+#: and how many are a tight shape -- room to grow each way alone, at least
+#: a foot less to grow both ways at once.
+_SIZE = text(
+    """
+    WITH g AS (
+      SELECT r.design_key,
+             (r.checks->'fit'->'room'->>'width')::float8 AS w,
+             (r.checks->'fit'->'room'->>'depth')::float8 AS d,
+             (r.checks->'fit'->'room'->>'both')::float8 AS b
+        FROM flats.lot_results r
+       WHERE r.run_id = :run AND r.checks->>'colour' = 'green'
+         AND jsonb_typeof(r.checks->'fit'->'room') = 'object'
+    )
+    SELECT design_key, count(*) AS lots,
+           percentile_cont(0.5) WITHIN GROUP (ORDER BY w) AS width,
+           percentile_cont(0.5) WITHIN GROUP (ORDER BY d) AS depth,
+           percentile_cont(0.5) WITHIN GROUP (ORDER BY b) AS both,
+           count(*) FILTER (WHERE w < 2) AS width_2,
+           count(*) FILTER (WHERE d < 2) AS depth_2,
+           count(*) FILTER (WHERE b < 2) AS both_2,
+           count(*) FILTER (WHERE b <= least(w, d) - 1) AS tight
+      FROM g
      GROUP BY 1
     """
 )
@@ -538,23 +572,31 @@ def widened(
     *,
     margins: dict[str, mg.Margin] | None = None,
     change: mg.Change | None = None,
+    along: bool = True,
 ) -> list[fp.Bind]:
-    """The binds this lot would carry with a pod ``step`` feet wider
-    (negative: narrower).
+    """The binds this lot would carry with a pod ``step`` feet bigger
+    (negative: smaller) on one side.
 
-    The fit's bind moves by the step and goes when it no longer misses; a
-    lot that fits gains a fit bind when its slack is smaller than the step.
-    Under a rule set the screen does not trust it emits no bind at all, so
-    none is added there. ``change`` is the same step as footprint
-    (:func:`flats.score.margins.grown`): coverage, floor area, paving and
-    open space move with it, from the misses and from the room the lot had
-    on each standard it passed (``margins``). Without them the fit alone is
-    read, as on a run written before the bridge kept that room."""
+    ``slack`` is the room the lot had that way (:func:`size_reading`): a
+    lot that fits gains a fit bind when it is smaller than the step. A fit
+    miss moves by the step and goes when it no longer misses -- where the
+    side grown is the one the fit measured along the lot (``along``); the
+    other way the search was never run at the new size and the miss stays
+    as it was. Under a rule set the screen does not trust it emits no bind
+    at all, so none is added there. ``change`` is the same step as
+    footprint (:func:`flats.score.margins.grown`): coverage, floor area,
+    paving and open space move with it, from the misses and from the room
+    the lot had on each standard it passed (``margins``). Without them the
+    fit alone is read, as on a run written before the bridge kept that
+    room."""
     out: list[fp.Bind] = []
     fit_bound = False
     for b in binds:
         if b.check == "fit_ft" and b.shortfall is not None:
             fit_bound = True
+            if not along:
+                out.append(b)
+                continue
             short = float(b.shortfall) + step
             if short > 0:
                 threshold = float(b.threshold) + step if b.threshold is not None else None
@@ -568,10 +610,32 @@ def widened(
         and slack - step < 0
         and not any(f.code in UNTRUSTED_FLAGS for f in flags)
     ):
-        out.append(fp.Bind("fit_ft", None, None, step - slack, source="the pod width"))
+        out.append(fp.Bind("fit_ft", None, None, step - slack, source="the pod size"))
     if change is not None:
         out = _resized(out, flags, margins, change)
     return out
+
+
+def size_reading(
+    side: str,
+    room: dict[str, Any] | None,
+    orientation: str | None,
+    slack: float | None,
+) -> tuple[float | None, bool]:
+    """The room a lot had to grow the pod's ``side`` (one of
+    :data:`flats.score.margins.SIDES`), and whether that side is the one the
+    fit measured along the lot.
+
+    The room the bridge kept on the lot's own shape (``room``, FOLLOWUPS
+    37(ii)) where there is one. Else the fit's own room, front to back, for
+    the side that ran that way (the depth, broadside; the width, end-on;
+    and both ways, which grows it too); the other side was never measured
+    and reads as no change to the fit."""
+    along = side == "both" or (orientation == "depth_facing") == (side == "width")
+    got = _float(room.get(side)) if isinstance(room, dict) else None
+    if got is not None:
+        return got, along
+    return (slack if along else None), along
 
 
 def heightened(
@@ -657,11 +721,14 @@ async def nightly_check(
     run, or the screen and the rule disagree); so does a flag the write
     gate refuses, or an open instance of a kind nobody registered. Pending
     kinds are counted, never failed: there is no deadline on them (Steph
-    2026-10-03). The same pass tries each pod width in ``steps`` and each
-    pod height in ``height_steps`` and counts the colours that move, per
-    design, with example lots, the limits that moved them and the open
-    questions the moving lots carry; and ``room`` says how close the green
-    lots came to each limit they pass (FOLLOWUPS 37(ii))."""
+    2026-10-03). The same pass tries each step in ``steps`` on the pod's
+    width, its depth and both at once (:data:`SIZE_KEYS`), each read off
+    the room the lot had that way on its own shape where the run kept it
+    (:func:`size_reading`), and each pod height in ``height_steps``, and
+    counts the colours that move, per design, with example lots, the limits
+    that moved them and the open questions the moving lots carry; and
+    ``room`` says how close the green lots came to each limit they pass,
+    and how much bigger the pod could be each way (FOLLOWUPS 37(ii))."""
     reg = reg or fp.registry()
     rules = rules or fp.colour_rules()
     now = now or dt.datetime.now(dt.UTC)
@@ -680,7 +747,8 @@ async def nightly_check(
     bad: dict[str, int] = {}
     bad_examples: list[dict[str, Any]] = []
     stored: dict[str, dict[str, int]] = {}
-    sens: dict[str, dict[str, dict[str, Any]]] = {}
+    sens: dict[str, dict[str, dict[str, dict[str, Any]]]] = {side: {} for side in mg.SIDES}
+    sized: dict[str, int] = {}
     tall: dict[str, dict[str, dict[str, Any]]] = {}
     room: dict[str, dict[str, Any]] = {}
     if run is None:
@@ -691,7 +759,7 @@ async def nightly_check(
             for d in (await session.execute(select(FlatsDesign))).scalars()
         }
         result = await session.stream(_ROWS.execution_options(yield_per=5000), {"run": run.id})
-        async for county, tlid, design, slack, was, flags_raw, binds_raw, margins_raw, run_ft, area in result:
+        async for county, tlid, design, slack, was, flags_raw, binds_raw, margins_raw, room_raw, facing, area in result:
             rows += 1
             was = was or "unknown"
             mine = stored.setdefault(design, {})
@@ -715,23 +783,31 @@ async def nightly_check(
                     moved_examples.append(_example(county, tlid, design, stored=was, today=today))
             slack_ft = float(slack) if slack is not None else None
             size = sizes.get(design)
-            run_len, lot_sqft = _float(run_ft), _float(area)
+            lot_sqft = _float(area)
+            room_got = json.loads(room_raw) if isinstance(room_raw, str) else room_raw
+            if isinstance(room_got, dict):
+                sized[design] = sized.get(design, 0) + 1
             where = (county, tlid, design)
-            per = sens.setdefault(design, {})
-            for step in steps:
-                extra = mg.grown(step, run_len, *size) if size is not None else None
-                change = (
-                    None
-                    if extra is None or size is None
-                    else mg.Change(extra_sqft=extra, ground_sqft=size[0] * size[1], lot_sqft=lot_sqft)
-                )
-                after = widened(binds, flags, slack_ft, step, margins=margins, change=change)
-                _tally(per, step, binds, after, flags, today=today, where=where, reg=reg, rules=rules)
+            for side in mg.SIDES:
+                per = sens[side].setdefault(design, {})
+                spare, along = size_reading(side, room_got, facing, slack_ft)
+                for step in steps:
+                    change = (
+                        None
+                        if size is None
+                        else mg.Change(
+                            extra_sqft=mg.grown(step, side, *size),
+                            ground_sqft=size[0] * size[1],
+                            lot_sqft=lot_sqft,
+                        )
+                    )
+                    after = widened(binds, flags, spare, step, margins=margins, change=change, along=along)
+                    _tally(per, step, binds, after, flags, today=today, where=where, reg=reg, rules=rules)
             per = tall.setdefault(design, {})
             for step in height_steps:
                 after = heightened(binds, flags, margins, step)
                 _tally(per, step, binds, after, flags, today=today, where=where, reg=reg, rules=rules)
-        for table in (sens, tall):
+        for table in (*sens.values(), tall):
             for per in table.values():
                 for s in per.values():
                     s["keys"] = dict(sorted(s["keys"].items(), key=lambda kv: -kv[1])[:10])
@@ -747,6 +823,16 @@ async def nightly_check(
                 "median": round(float(median), 3),
                 "within_10": int(within_10),
                 "within_5": int(within_5),
+            }
+        for design, lots, *cols in (await session.execute(_SIZE, {"run": run.id})).all():
+            width, depth, both, width_2, depth_2, both_2, tight = cols
+            mine = room.setdefault(design, {"green": 0, "measured": 0, "checks": {}})
+            mine["size"] = {
+                "lots": int(lots),
+                "width": {"median": round(float(width), 2), "under_2": int(width_2)},
+                "depth": {"median": round(float(depth), 2), "under_2": int(depth_2)},
+                "both": {"median": round(float(both), 2), "under_2": int(both_2)},
+                "tight": int(tight),
             }
         if rows == 0:
             report["skipped"] = f"run {run.id} was screened before the colour rule and carries no flags"
@@ -768,7 +854,10 @@ async def nightly_check(
         "incomplete": bad,
         "incomplete_examples": bad_examples,
         "unregistered_instances": {code: int(n) for code, n in unregistered},
-        "sensitivity": sens,
+        **{SIZE_KEYS[side]: sens[side] for side in mg.SIDES},
+        # Rows whose room each way was measured on the lot's own shape: none
+        # on a run screened before the bridge kept it.
+        "sized": sized,
         "height": tall,
         "room": room,
     }

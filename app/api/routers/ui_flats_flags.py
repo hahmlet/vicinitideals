@@ -246,6 +246,18 @@ def _step_words(step: str) -> str:
     return f"{feet} wider" if n > 0 else f"{feet} narrower"
 
 
+def _depth_words(step: str) -> str:
+    n = float(step)
+    feet = f"{abs(n):g} ft"
+    return f"{feet} deeper" if n > 0 else f"{feet} shallower"
+
+
+def _both_words(step: str) -> str:
+    n = float(step)
+    feet = f"{abs(n):g} ft"
+    return f"{feet} bigger both ways" if n > 0 else f"{feet} smaller both ways"
+
+
 def _height_words(step: str) -> str:
     n = float(step)
     feet = f"{abs(n):g} ft"
@@ -348,12 +360,19 @@ async def flats_flag_report(request: Request, session: DBSession) -> HTMLRespons
     dedup_count, conflicts_count = await _get_counts(session)
     row = await flag_store.latest_report(session)
     sensitivity = []
+    depth = []
+    both = []
     height = []
     room = []
     if row is not None:
         r = row.report
-        for design, per in sorted((r.get("sensitivity") or {}).items()):
-            sensitivity.append({"design": design, "steps": _steps(per, r.get("steps") or [], _step_words)})
+        for table, key, words in (
+            (sensitivity, "sensitivity", _step_words),
+            (depth, "depth", _depth_words),
+            (both, "both", _both_words),
+        ):
+            for design, per in sorted((r.get(key) or {}).items()):
+                table.append({"design": design, "steps": _steps(per, r.get("steps") or [], words)})
         for design, per in sorted((r.get("height") or {}).items()):
             height.append({"design": design, "steps": _steps(per, r.get("height_steps") or [], _height_words)})
         for design, mine in sorted((r.get("room") or {}).items()):
@@ -363,6 +382,9 @@ async def flats_flag_report(request: Request, session: DBSession) -> HTMLRespons
                     "green": int(mine.get("green") or 0),
                     "measured": int(mine.get("measured") or 0),
                     "rows": _room_rows(mine),
+                    # How much bigger the pod could be each way; absent on a
+                    # run screened before the bridge kept it.
+                    "size": mine.get("size"),
                 }
             )
     ctx = {
@@ -370,6 +392,8 @@ async def flats_flag_report(request: Request, session: DBSession) -> HTMLRespons
         "report": row,
         "r": row.report if row is not None else {},
         "sensitivity": sensitivity,
+        "depth": depth,
+        "both": both,
         "height": height,
         "room": room,
     }

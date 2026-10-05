@@ -146,15 +146,23 @@ class Change:
     taller_ft: float = 0.0
 
 
-def grown(step_ft: float, run_ft: float | None, width_ft: float, depth_ft: float) -> float | None:
-    """The footprint a pod gains when the side the fit measured along the
-    lot (``run_ft``, :attr:`flats.fit.rectangle.Fit.required_ft`) grows by
-    ``step_ft``: the step times the other side. None where the fit
-    recorded no run."""
-    if run_ft is None:
-        return None
-    other = width_ft if abs(run_ft - depth_ft) <= abs(run_ft - width_ft) else depth_ft
-    return step_ft * other
+#: The ways the pod report grows a pod: its width (the side along the
+#: front), its depth, or both by the same step -- the three a lot's room is
+#: kept for (:class:`flats.score.room.Room`).
+SIDES = ("width", "depth", "both")
+
+
+def grown(step_ft: float, side: str, width_ft: float, depth_ft: float) -> float:
+    """The footprint a ``width_ft`` x ``depth_ft`` pod gains when ``side``
+    (one of :data:`SIDES`) grows by ``step_ft``: the step times the other
+    side, or the bigger rectangle less the old one."""
+    if side == "width":
+        return step_ft * depth_ft
+    if side == "depth":
+        return step_ft * width_ft
+    if side == "both":
+        return (width_ft + step_ft) * (depth_ft + step_ft) - width_ft * depth_ft
+    raise ValueError(f"no side {side!r}: one of {SIDES}")
 
 
 def after(check: str, observed: float, change: Change) -> float | None:
