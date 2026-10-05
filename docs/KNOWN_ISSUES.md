@@ -47,6 +47,8 @@ items live in [HUMAN_TODO.md](HUMAN_TODO.md).
    2026-09-27 on 442ad207 (a FLATS lot-page fix; no finance code), run
    36334441978 -- passed on a rerun of the failed job. Two flakes in eight
    days: worth the runbook fix next time finance work is in hand.
+   Third occurrence 2026-10-05 on 6b924963 (FLATS street class; no
+   finance code), run 37300130719 -- passed on a rerun of the failed job.
 
 7. **`tests/e2e/test_phase_b_debt.py::test_phase_b_debt[chromium-ir_12mo]`
    failed once in CI on a commit that touched only `Lot Analysis/` and
