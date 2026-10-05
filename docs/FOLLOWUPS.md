@@ -1423,19 +1423,29 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Beaverton/Hillsboro/Washington Co. publish an easement GIS layer or bulk
    plat images; severity of "plat read, deed easements unchecked" is ruled
    AFTER the pilot, not before.
-41. **Street class per lot line (OFFERED 2026-10-04 as the top pick of
-   "what next", with 29 and 37(ii)).** Nothing measures whether a street
-   is local or busy. It holds `local_street` (~28k yellow answers), the
-   `lowest_class` corner access (Clackamas ZDO 845, Milwaukie 12.16, Oregon
-   City 16.12.035, West Linn 48.025, Wilsonville, Fairview 19.162 -- read
-   as side street today) and the lowest-class end of a through lot
-   (Tualatin, Fairview -- worst end today). Source to check first: RLIS
-   streets TYPE code (functional class) already in s4; Washington and
-   Clackamas TSP maps where cities classify differently. Measure the class
-   per street edge in s4, pass it to the bridge, answer the facts; bound,
-   read gains and losses. Pending: Steph's pick. Also on the list offered:
-   29 (where the fire truck stands), 37(ii) (margins on passing checks for
-   the pod report), historic-district fact (~8k answers).
+41. **Street class per lot line -- (a)+(b) SHIPPED 6b924963 2026-10-05,
+   (c) and two levers OFFERED.** Live: Gresham note 5 ("end of a Minor
+   Access Street") caps on a new measured fact `at_street_end` (False-only,
+   200 ft from any dead end); `local_street` answered from Milwaukie's TSP
+   map (True needs Metro's street type to agree) and Wilsonville's (False
+   only: Villebois "Collector Avenues" are the master plan's Figure 7, which
+   names far more collectors than the TSP). Bound on 7,273 answered lots:
+   every number identical, 0 flag-plan colours moved, if-signed 37 Milwaukie
+   lots up (unknown/yellow -> green/yellow), question gone on 8,696 rows.
+   WEEKLY RUN (~10-08): acquire `--keys street_class_milwaukie
+   street_class_wilsonville` into the snapshot or local_street stays
+   unasked (safe, no gain). Offered, pending Steph:
+   (i) Gresham's sidewalk-easement note co-caps every Gresham setback, so
+   (a) moves nothing until it is settled -- measure (RLIS sidewalks vs lot
+   line) or screen against a stated worst easement depth;
+   (ii) `lowest_class` corner access: ~224 Milwaukie lots have a local AND
+   a collector street line (95 more partly unread). Today the drive goes on
+   the side street; measured, the code wants the local one -- decide
+   whether the building may then face the collector (so the local is the
+   side) or the drive comes off the front;
+   (iii) more cities' maps (Oregon City, Fairview, Tualatin, Clackamas,
+   Hillsboro PSU layer) -- each needs its class words checked against the
+   code's, as Villebois showed.
 42. **Water, wetland and flood ground at slope's fidelity (Steph asked
    2026-10-04 "are we treating wetland/flood zones with as much fidelity
    as we now treat slopes?" -- answer: no).** Net land (FOLLOWUPS 30) is
