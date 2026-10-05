@@ -1054,8 +1054,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (B) Steph 2026-10-05 "Assume narrow": a street with no measured width is
    the narrowest a truck may use (20 ft, OFC 503.2.1) until measured -- the
    hose starts at its middle; FIRE-HOSE-START says a width may lift it.
-   BUILT, BOUNDED, NOT SHIPPED (branch flats/fire-curb a7b51185 +
-   3338b836). The bridge now REFUSES a --curbs/--sources snapshot missing
+   SHIPPED 57313463 2026-10-05 (Steph "Yes, ship it now"), deployed; lands
+   with the next re-screen. The bridge now REFUSES a --curbs/--sources snapshot missing
    any of curbs_portland, pave_width_portland, road_width_multnomah,
    width_wilsonville: the weekly run must acquire them (or pass --curbs
    /root/fire-curb_sources/2026-10-05), and so must any lane's bound.
@@ -1074,7 +1074,6 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    warning was where the default drawing stood, not the lot (slope lane:
    the placement does not search for flatter ground). Scripts
    /root/fire-curb_probe/{pick_b,lotview_b,losses_b}.py.
-   PENDING Steph (asked 2026-10-05): ship (B)?
    (C) Ask Washington County, Clackamas County and West Linn for their
    pavement widths -- DEFERRED, Steph: "follow up with them later". Also
    published but unused: Oregon City Edge of Pavement (CAD, undated),
