@@ -1057,6 +1057,37 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    re-place the building and court (2dd750c2 measures a route only to a
    drawing that fits -- run 54 had turned 14,419+ answers RED off a
    building drawn where it does not fit).
+   RESEARCHED 2026-10-04 (fire-curb lane, step 1; nothing built; every
+   source fetched live). Published: Portland PBOT Pavement Management
+   (portlandmaps.com/od COP_OpenData_Transportation/MapServer/71:
+   PaveWidth/RoadWidth ft on 29,523 segments, 99.9% filled, inspected
+   mostly 2016-2025; 1,027 widths <10 ft look like junk, 2,118 real
+   10-20 ft) and PBOT Curbs (same service /74: 118k curb + shoulder
+   lines, no shared id -- join by distance); Multnomah County Road Width
+   (www3.multco.us gisagspublic RoadServices/TransportationLayers/17: 486
+   county roads, 100%); Wilsonville Streets `Width` (gis.wilsonvillemaps.com
+   MIL1/MapServer/80, 1,608/1,609, edited 2026); Oregon City Edge of
+   Pavement lines (maps.orcity.org Transportation_PUBLIC/13, CAD import,
+   undated); Hillsboro Roadway polygons (Planning_BaseData/80, streets
+   mixed with parking lots); Tualatin StreetSaver (area / length).
+   Nothing published: RLIS, ODOT (state highways only), Washington and
+   Clackamas counties (internal pavement systems, request only), Lake
+   Oswego, Milwaukie, Happy Valley, Gladstone, Johnson City, Rivergrove,
+   Tigard, King City, Cornelius, Durham, Troutdale, Fairview, Wood
+   Village; OSM width on <1% of roads. Not reachable from here:
+   Beaverton, Gresham. Near misses (run 63, fire the only failing check,
+   <=10 ft over): ~1,000 lots -- Portland 343, Washington uninc 201,
+   Clackamas uninc 85, West Linn 65, Beaverton 43, Happy Valley 36;
+   published data reaches ~430. The four fire guides (PF&R, TVF&R,
+   Clackamas Fire, Gresham) never say whether the 150 ft starts at the
+   curb or past parked cars; PF&R: a fire road "shall not be obstructed
+   ... including the parking of vehicles"; TVF&R parking 20-26 ft none /
+   26-32 one side / >32 both. On Portland's widths, truck at the curb
+   beats today's 10 ft on 25,168 of 28,490 segments (median +5 ft);
+   truck past a parked-car lane is WORSE than today on 14,284 (median
+   -1 ft) -- i.e. today's 10 ft is not strict on parked streets.
+   PENDING Steph: where the truck stands; whether to ask Washington
+   County, Clackamas County and West Linn for their widths.
 30. **Net land area review (Steph 2026-10-01: "not unique to Beaverton ...
    we need to do a review of net land areas and what to do about it").**
    129 numeric values in 10 layers carry `measured_on: net_developable_area`
