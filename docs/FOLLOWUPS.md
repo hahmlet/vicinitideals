@@ -1038,45 +1038,36 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    greens there. Awaiting Steph's go.
 29. **Fire reach: measure where the truck really stands (Steph 2026-10-01,
    "later improvement"; RULED 2026-10-05).** Item 28 (the 150 ft hose,
-   OFC 503.1.1) is LIVE since run 59 and measures from a truck 10 ft off
-   the RLIS centreline, because RLIS holds no street width.
-   RULING 2026-10-05. No national standard: IFC 503.1.1, NFPA 1 and all
-   four Oregon guides are silent; one Southern California template
-   (Colton, Roseville, Riverside County ...) says "10 feet from the edge
-   of the curb"; San Bernardino = the curb; Ontario CA = the travel way.
-   Steph: "Let's go with stricter" -- the hose starts 10 ft out from the
-   NEAR curb, capped at the street's middle (worse than today on every
-   street under 40 ft); "with a flag to check later" -- FIRE-HOSE-START
-   (severity 1, the plan stays red) where the hose is the one bind and
-   the route would clear measured from the curb itself.
-   BUILT, NOT SHIPPED (branch flats/fire-curb, 5ded6db8; tests
-   flats/tests/test_fire_curb.py). flats/geom/curbs.py reads PBOT Curbs +
-   PaveWidth, Multnomah RoadWidth and Wilsonville Width (pipeline.yaml;
-   acquire.py now pages the PBOT layers, which serve 200 rows a request).
-   A drawn curb loosens only where a recorded width agrees within 4 ft; a
-   width alone never loosens; nothing measured = today's 10 ft. Bridge
-   `--curbs` defaults to `--sources`, so a full acquire picks it up.
-   BOUND on 137 2026-10-05, same code with and without curbs. Bound 1
-   (2,103 lots nearest the limit): map colour 25 worse (green->red 16,
-   green->yellow 4, yellow->red 5; Portland 23, Wilsonville 2), 3 better;
-   if signed 36 worse, 2 better. Bound 2 (all 2,579 other lots the rule
-   could help + 2,000 random): 0 worse, 1 better. Every gain read: wide
-   main roads with a matching drawn curb (NE Lombard 72 ft,
-   Beaverton-Hillsdale Hwy 72, SE Stark 66, SE Gladstone 50; designs only:
-   SE Market 44, NE Prescott 44). Every loss read: a street under 40 ft.
-   23 of the 25 worse lots carry the flag; ~39 red lots carry it in all.
-   Scripts /root/fire-curb_probe/; detail in memory project_flats_fire_curb.
-   PENDING Steph (asked 2026-10-05): (a) ship it; (b) streets with no
-   width (Washington County, Clackamas outside Wilsonville, Multnomah's
-   cities other than Portland) keep today's 10 ft, which is NOT strict
-   under the ruling on streets under 40 ft -- up to 567 green-if-signed lots sit within 10 ft of the
-   limit there (Washington uninc 388, Clackamas uninc 124): leave as is,
-   or assume the narrowest street (truck in the middle) until a width
-   arrives -- needs its own bound; (c) ask Washington County, Clackamas
-   County and West Linn for their pavement widths (request only). Also
+   OFC 503.1.1) is LIVE since run 59. RULING 2026-10-05 (no national
+   standard; one Southern California template says "10 feet from the edge
+   of the curb"): Steph "Let's go with stricter" -- the hose starts 10 ft
+   out from the NEAR curb, capped at the street's middle; "with a flag to
+   check later" -- FIRE-HOSE-START (severity 1, the plan stays red) where
+   the hose is the one bind and the route clears measured from the curb.
+   (A) SHIPPED d8880db1 2026-10-05, deployed (NOT in a promoted run yet --
+   it lands with the next re-screen). flats/geom/curbs.py reads PBOT
+   Curbs + PaveWidth, Multnomah RoadWidth, Wilsonville Width; a drawn curb
+   loosens only where a recorded width agrees within 4 ft. Bound: 25 lots
+   worse on the map (Portland 23, Wilsonville 2; every one a street under
+   40 ft), 3 better (wide main roads with an agreeing drawn curb); 0 worse
+   / 1 better over the other 4,579 lots it could touch.
+   (B) Steph 2026-10-05 "Assume narrow": a street with no measured width is
+   the narrowest a truck may use (20 ft, OFC 503.2.1) until measured -- the
+   hose starts at its middle; FIRE-HOSE-START says a width may lift it.
+   BUILT, BOUNDING (branch flats/fire-curb a7b51185 + 3338b836). The bridge
+   now REFUSES a --curbs/--sources snapshot missing any of curbs_portland,
+   pave_width_portland, road_width_multnomah, width_wilsonville: the weekly
+   run must acquire them (or pass --curbs /root/fire-curb_sources/
+   2026-10-05), and so must any lane's bound. Bound on 137 queued behind
+   the street-class bound: the 4,315 lots whose run-63 route is 125-160 ft
+   + 3,000 random; counts go to Steph before it ships.
+   (C) Ask Washington County, Clackamas County and West Linn for their
+   pavement widths -- DEFERRED, Steph: "follow up with them later". Also
    published but unused: Oregon City Edge of Pavement (CAD, undated),
    Hillsboro Roadway polygons (mixed with parking lots). Not reachable
-   from here: Beaverton, Gresham. Not tied to the 10-08 re-screen.
+   from here: Beaverton, Gresham. Scripts /root/fire-curb_probe/; detail
+   in memory project_flats_fire_curb. Not tied to the 10-08 re-screen.
+
 30. **Net land area review (Steph 2026-10-01: "not unique to Beaverton ...
    we need to do a review of net land areas and what to do about it").**
    129 numeric values in 10 layers carry `measured_on: net_developable_area`
