@@ -459,7 +459,70 @@ datasets:
       20 ft and 15 ft on a Collector Avenue, 12 and 5 otherwise) -- False
       only: the Collector Avenues are the Villebois Village Master Plan's
       (Figure 7 Street Plan, 2013), which draws Minor Collectors on streets
-      this layer calls Local Street.
+      this layer calls Local Street. Also ranks the classes for PWS
+      201.2.23(f)'s "lower classification street" (corner_access_street).
+
+  # The four below only rank street lines for a corner lot's lowest-class
+  # driveway rule (corner_access_street: lowest_class, FOLLOWUPS 41(i)).
+  street_class_oregon_city:
+    kind: arcgis
+    label: Oregon City TSP functional classification
+    provides: streets
+    url: https://maps.orcity.org/arcgis/rest/services/Transportation_PUBLIC/MapServer/4
+    geometry: polyline
+    fields: [PREFIX, STREETNAME, FTYPE, IN_CITY, FunctionalClass]
+    serves: [or/clackamas/oregon-city]
+    notes: >-
+      The city's street lines (8,224, edited 2026-06-03). FunctionalClass is
+      the 2013 TSP as amended: Local, Collector, Minor Arterial, Major
+      Arterial, Expressway, Freeway, and two Unclassified values.
+      FunctionalClass_Old disagrees on 473 in-city segments and is not
+      read: the plan's own fact sheets agree with the current field.
+
+  street_class_west_linn:
+    kind: arcgis
+    label: West Linn TSP functional classification
+    provides: streets
+    url: https://geo.westlinnoregon.gov/server/rest/services/Operational/RoadFCs/MapServer/4
+    geometry: polyline
+    fields: [CITYCLASS]
+    serves: [or/clackamas/west-linn]
+    notes: >-
+      "Functional Classes from TSP adopted 2016" (the service). CITYCLASS is
+      a number code, decoded from the map legend (9 Local, 7 Neighborhood
+      Route, 6 Collector, 5 Minor Arterial, 3 Major Arterial, 1/99 Freeway,
+      11 Alley, 20 Misc, 10 unlabelled). No street names: lines are matched
+      to Metro's by where they run.
+
+  street_class_fairview:
+    kind: arcgis
+    label: Fairview TSP functional classification
+    provides: streets
+    url: https://services5.arcgis.com/3DoY8p7EnUTzaIE7/arcgis/rest/services/Streets_20230124/FeatureServer/1
+    geometry: polyline
+    fields: [PREFIX, STREETNAME, FTYPE, OWNER, FClassification]
+    serves: [or/multnomah/fairview]
+    notes: >-
+      The 2016 TSP's classes (adopted January 2017), about one line per
+      street (311, edited 2023-08): Local, Neighborhood Collector, Major
+      Collector, Minor Arterial, Major Arterial, Interstate. 182 of the
+      Local lines are private roads.
+
+  street_class_beaverton:
+    kind: arcgis
+    label: Beaverton TSP functional classification
+    provides: streets
+    url: https://gisweb.beavertonoregon.gov/server/rest/services/Public_SharedServices/pubStreetsPlan/MapServer/1
+    geometry: polyline
+    fields: [STREETFULL, FUNC_CLASS, IN_OUT, STATUS]
+    where: STATUS = 2
+    serves: [or/washington/beaverton]
+    notes: >-
+      The 2010 TSP's classes as a coded domain (9 Local, 7 Neighborhood
+      Route, 5 Collector, 3 Arterial, 2 Principal Arterial, 1 Freeway; 4, 6,
+      8 Proposed; 10 NA), existing streets only (STATUS 2; updated
+      2026-09-25). A TSP update is under way: re-read the codes when it is
+      adopted.
 
   # --- transit (flats/geom/transit.py) ---------------------------------------
   # Measured once per transit release into a per-lot distance file

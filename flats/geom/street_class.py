@@ -99,9 +99,12 @@ class ClassSpec:
     ``local`` and ``other`` are the field's values verbatim, for the
     ``local_street`` fact; anything else (a proposed street, a blank, a class
     the code's wording does not settle) reads as unknown. ``rank`` orders
-    the classes for the lowest-class access rule (0 local, 1 collector, 2
-    arterial, 3 major arterial or highway); a value it leaves out ranks
-    nothing.
+    the classes for the lowest-class access rule, 0 the lowest: an order
+    within this one map, never compared with another city's. A value it
+    leaves out (a proposed street, an unlabelled code) ranks nothing.
+
+    A map that only ranks leaves ``local`` and ``other`` empty, and answers
+    no ``local_street``.
     """
 
     field: str
@@ -128,15 +131,18 @@ CLASS_MAPS: dict[str, ClassSpec] = {
                 "Through Movement Priority Arterial",
             }
         ),
-        # Neighborhood Routes sits between a local street and a collector
-        # and ranks nothing: neither side of it is sure.
+        # MMC 12.16.040.E.3 "the street with the lowest classification":
+        # Neighborhood Routes is the TSP's class between the two. (Which
+        # side of "local or neighborhood streets" it falls on is another
+        # question, and local_street leaves it unanswered.)
         rank={
             "Local Street": 0,
-            "Collector": 1,
-            "Arterial": 2,
-            "Local Access Arterial": 2,
-            "Multimodal Travel Priority Arterial": 2,
-            "Through Movement Priority Arterial": 2,
+            "Neighborhood Routes": 1,
+            "Collector": 2,
+            "Arterial": 3,
+            "Local Access Arterial": 3,
+            "Multimodal Travel Priority Arterial": 3,
+            "Through Movement Priority Arterial": 3,
         },
     ),
     # Villebois Table V-1 note 6: "on Collector Avenues" the front yard is
@@ -154,6 +160,67 @@ CLASS_MAPS: dict[str, ClassSpec] = {
         # PWS 201.2.23(f) "a lower classification street" reads the TSP's
         # classes, and a rank only ever takes a side-street lane away.
         rank={"Local Street": 0, "Collector": 1, "Minor Arterial": 2, "Major Arterial": 3},
+    ),
+    # The maps below only rank, for ``corner_access_street: lowest_class``
+    # (FOLLOWUPS 41(i)); no code of theirs asks local_street.
+    #
+    # OCMC 16.12.035.H: "access shall be provided from and limited to the
+    # road with the lowest classification in the transportation system
+    # plan". The two "Unclassified" values (out of the city; "In Area, but
+    # not a valid street") rank nothing.
+    "street_class_oregon_city": ClassSpec(
+        field="FunctionalClass",
+        local=frozenset(),
+        other=frozenset(),
+        rank={
+            "Local": 0,
+            "Collector": 1,
+            "Minor Arterial": 2,
+            "Major Arterial": 3,
+            "Expressway": 4,
+            "Freeway": 4,
+        },
+    ),
+    # CDC 48.025(B)(5): "access shall be provided first from the street
+    # with the lowest classification. For example, access shall be provided
+    # from a local street before a collector or arterial street." CITYCLASS
+    # codes, read off the service's legend: 9 Local, 7 Neighborhood Route,
+    # 6 Collector, 5 Minor Arterial, 3 Major Arterial, 1 and 99 Freeway.
+    # 11 Alley (the alley rule answers), 20 Misc and 10 (no legend entry)
+    # rank nothing.
+    "street_class_west_linn": ClassSpec(
+        field="CITYCLASS",
+        local=frozenset(),
+        other=frozenset(),
+        rank={"9": 0, "7": 1, "6": 2, "5": 3, "3": 4, "1": 5, "99": 5},
+    ),
+    # FMC 19.162.020(5): "access shall be provided first from the street
+    # with the lowest classification". Fairview's map calls many private
+    # roads Local, which ranks them lowest -- the street a driveway may
+    # use anyway (the private-drive ruling, 2026-09-30).
+    "street_class_fairview": ClassSpec(
+        field="FClassification",
+        local=frozenset(),
+        other=frozenset(),
+        rank={
+            "Local": 0,
+            "Neighborhood Collector": 1,
+            "Major Collector": 2,
+            "Minor Arterial": 3,
+            "Major Arterial": 4,
+            "Interstate": 5,
+        },
+    ),
+    # BDC 60.05.60.2 S13.b.1: "lots shall access the street with the lowest
+    # functional classification per the city's adopted Transportation
+    # System Plan". FUNC_CLASS codes (the layer's own domain): 9 Local,
+    # 7 Neighborhood Route, 5 Collector, 3 Arterial, 2 Principal Arterial,
+    # 1 Freeway; 4, 6, 8 are Proposed and 10 is NA, and rank nothing.
+    "street_class_beaverton": ClassSpec(
+        field="FUNC_CLASS",
+        local=frozenset(),
+        other=frozenset(),
+        rank={"9": 0, "7": 1, "5": 2, "3": 3, "2": 4, "1": 5},
     ),
 }
 
@@ -192,7 +259,10 @@ def class_rank(value: object, spec: ClassSpec) -> int | None:
 
 
 def _street_label(props: dict[str, Any]) -> str:
-    return " ".join(str(props.get(k) or "") for k in ("PREFIX", "STREETNAME", "FTYPE"))
+    """``PREFIX STREETNAME FTYPE``; "" where a layer names no street (West
+    Linn's), so the line is matched by where it runs, never by an empty
+    name."""
+    return " ".join(str(props[k]).strip() for k in ("PREFIX", "STREETNAME", "FTYPE") if props.get(k))
 
 
 def _type_of(props: dict[str, Any]) -> int | None:

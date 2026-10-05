@@ -138,9 +138,9 @@ class Edge:
     #: False -- the default, and the answer wherever nothing read the line --
     #: keeps the across-the-street number.
     across_clear: bool = False
-    #: The functional class of the street this line abuts, ranked (0 local,
-    #: 1 collector, 2 arterial, 3 major arterial or highway), read off the
-    #: city's TSP map (:func:`flats.geom.street_class.edge_rank`). None --
+    #: The functional class of the street this line abuts, ranked from 0
+    #: (local) up in the city's own order, read off its TSP map
+    #: (:func:`flats.geom.street_class.edge_rank`). None --
     #: the default, and the answer on every line that is not a street, or
     #: that no map reads -- ranks nothing.
     street_rank: int | None = None

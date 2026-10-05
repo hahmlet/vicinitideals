@@ -185,8 +185,25 @@ def test_the_map_ranks_each_street_line() -> None:
     assert street_ranks([ON_MAIN], "or/clackamas/oregon-city", [m]) == [None]
     assert street_ranks([ON_MAIN], MILWAUKIE, [ranked(main=None)]) == [None]
     spec = CLASS_MAPS["street_class_milwaukie"]
-    assert spec.rank["Local Street"] < spec.rank["Collector"] < spec.rank["Arterial"]
-    assert "Neighborhood Routes" not in spec.rank
+    assert spec.rank["Local Street"] < spec.rank["Neighborhood Routes"] < spec.rank["Collector"] < spec.rank["Arterial"]
+    assert "Proposed Local" not in spec.rank
+
+
+def test_every_ranking_map_starts_local_at_zero_and_ranks_no_proposal() -> None:
+    from flats.geom.street_class import class_rank
+    from flats.ingest.sources import load_pipeline
+
+    datasets = load_pipeline().datasets
+    for key, spec in CLASS_MAPS.items():
+        assert key in datasets and datasets[key].serves, key
+        assert min(spec.rank.values()) == 0, key
+        assert not any("Proposed" in v for v in spec.rank), key
+    beaverton = CLASS_MAPS["street_class_beaverton"]
+    # Coded domains arrive as numbers or strings alike.
+    assert class_rank(9, beaverton) == class_rank("9", beaverton) == 0
+    assert class_rank("4", beaverton) is None  # Proposed Arterial
+    west_linn = CLASS_MAPS["street_class_west_linn"]
+    assert class_rank(10, west_linn) is None and class_rank(11, west_linn) is None
 
 
 def test_a_quiet_front_sends_the_driveway_to_the_front() -> None:
