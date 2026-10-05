@@ -413,6 +413,13 @@ class LotFacts:
     site_grade_pct: float | None = None
     site_grade_source: str | None = None
     site_grade_tried: bool = False
+    #: The yard every street line was held to for a utility easement the
+    #: code forbids building on and nobody maps, feet (Steph 2026-10-01,
+    #: ``flats/config/easements.yaml``): the bridge floors the street yards
+    #: of the envelope at it (:func:`flats.fit.easement.floored`). Read here
+    #: only to flag the plan UTILITY-EASEMENT-ASSUMED. None everywhere the
+    #: ruling was not applied.
+    easement_street_ft: float | None = None
     #: Square feet of each measured deduction a city's net area may take off
     #: this lot -- floodplain, the mapped resource overlays -- keyed as
     #: :data:`flats.rules.net_area.MEASURED` names them, from quadfit's s5o
@@ -2240,6 +2247,12 @@ def _account(
         )
     for key in lot.resource_permits:
         flag("RESOURCE-PERMIT", CLOSER_LOOK_RESOURCE, fact=key, source="mapped")
+    # Fitted clear of an easement assumed along every street line (Steph
+    # 2026-10-01): a plat showing a wider one, or one on a side or rear
+    # line, would move the building. A record, below the yellow line.
+    if lot.easement_street_ft is not None:
+        ft = float(lot.easement_street_ft)
+        flag("UTILITY-EASEMENT-ASSUMED", "UTILITY_EASEMENT_ASSUMED", bounds=(ft, ft))
 
     binds: list[Bind] = []
     if rules.trusted:

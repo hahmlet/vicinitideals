@@ -1065,6 +1065,22 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  UTILITY-EASEMENT-ASSUMED:
+    description: "The building was fitted clear of a utility easement assumed along every street line, as wide as the bounds say (Steph 2026-10-01); a wider one, or one along a side or rear line, would move it"
+    kind: parametric
+    risk: unlikely
+    # Records the assumption, never holds a green: below the yellow line.
+    severity: 1
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "The lot's plat or title report: the easements it records, and their widths (FOLLOWUPS 40, 43)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [UTILITY_EASEMENT_ASSUMED]
   FACT-WILLAMETTE-GREENWAY-ZONE:
     description: "Whether any part of the lot is in Milwaukie's Willamette Greenway Zone (MMC 19.401)"
     kind: categorical

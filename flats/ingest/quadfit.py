@@ -70,6 +70,7 @@ from typing import Any
 
 from flats.designs.model import Design
 from flats.encode.port_quadfit import COUNTY, layer_id_for
+from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
 from flats.fit.outdoor import largest_square, open_ground
@@ -1046,6 +1047,9 @@ def envelope_for(
     setbacks = setbacks_for(rules, plain if split else None, alleyed if part else None)
     if setbacks is None:
         return quadfit
+    # A utility easement the code forbids building on, assumed along every
+    # street line where Steph's ruling reaches the lot (FOLLOWUPS 43).
+    setbacks = easement.floored(setbacks, lot.facts.easement_street_ft)
     strips = lot.edges.tier in (Tier.clean, Tier.corner)
     if split and plain is None and strips and "setback_rear_ft" in rules.exempted:
         # The exemption is about the rear line on the alley; a rear line that
@@ -1966,15 +1970,99 @@ def screen_lot(
         lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads,
         terrain=terrain,
     )
+    got = easement_checked(
+        lot, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg, roads=roads,
+        terrain=terrain,
+    )
     if lot.second is None:
         return got
     alt = _screen_lot_once(
         lot.second, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
         roads=roads, terrain=terrain,
     )
+    alt = easement_checked(
+        lot.second, alt, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
     if lot.second_better:
         return [_better(a, b) for a, b in zip(got, alt)]
     return [_worse(a, b) for a, b in zip(got, alt)]
+
+
+def _waits_on_easement(s: Screened) -> bool:
+    """Whether this design's answer waits on the utility easement question."""
+    if s.config is None:
+        return False
+    return easement.FACT in s.config.unknown and easement.FACT in s.config.leans_on(s.rules.levers)
+
+
+def easement_checked(
+    lot: QuadfitLot,
+    got: list[Screened],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """``got`` with the utility easement question answered where Steph's
+    ruling reaches the lot (FOLLOWUPS 43; ``flats/config/easements.yaml``).
+
+    Steph, 2026-10-01: the building fits with a 10 ft yard on every street
+    line -> green; fits at 5 ft but not 10 -> yellow; not even at 5 -> red.
+    So each design that waits on ``utility_easement`` and fits at the code's
+    own yards is screened again, the whole way, with every street yard
+    floored at the city's ``green_ft`` and the question answered no: where
+    that plan fits, it is the answer, and the lot waits on whatever else it
+    waited on. Where it does not, the design is screened at ``yellow_ft``
+    with the question still open -- yellow where that plan fits, red on its
+    fit where it does not (:func:`flats.fit.easement.pick`). Both carry the
+    UTILITY-EASEMENT-ASSUMED flag through :attr:`LotFacts.easement_street_ft`.
+
+    A design whose fit misses at the code's own yards keeps its answer: the
+    easement changes nothing on a lot that fails without it. So does one the
+    floor cannot reach -- a plan fitted on quadfit's envelope, where FLATS
+    cut none of its own.
+    """
+    rule = easement.rule_for(lot.layer_id)
+    if rule is None or easement.FACT in lot.observed:
+        return got
+    todo = [i for i, s in enumerate(got) if _waits_on_easement(s) and not _fit_missed(s)]
+    if not todo:
+        return got
+
+    def floored(ft: float, answered: bool) -> QuadfitLot:
+        observed = {**lot.observed, easement.FACT: False} if answered else lot.observed
+        facts = dataclasses.replace(lot.facts, easement_street_ft=ft)
+        return dataclasses.replace(lot, facts=facts, observed=observed, second=None)
+
+    def screened(here: QuadfitLot, which: Sequence[int]) -> dict[int, Screened]:
+        out = _screen_lot_once(
+            here, [got[i].design for i in which], rules=rules, policy=policy, relief=relief,
+            step_deg=step_deg, roads=roads, terrain=terrain,
+        )
+        return dict(zip(which, out))
+
+    green = screened(floored(rule.green_ft, answered=True), todo)
+    choice = {
+        i: easement.pick(
+            as_is_missed=False,
+            green_missed=_fit_missed(green[i]),
+            green_measured=green[i].envelope is not None and green[i].envelope.source == "flats",
+        )
+        for i in todo
+    }
+    narrow = [i for i in todo if choice[i] == "yellow"]
+    yellow = screened(floored(rule.yellow_ft, answered=False), narrow) if narrow else {}
+    out = list(got)
+    for i in todo:
+        if choice[i] == "green":
+            out[i] = green[i]
+        elif choice[i] == "yellow":
+            out[i] = yellow[i]
+    return out
 
 
 def _screen_lot_once(
