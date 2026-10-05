@@ -3,15 +3,16 @@
 
 Beaverton prints "In no case shall a building encroach into a Public
 Utility Easement (PUE)" under its residential tables (BDC 20.05 and 20.22
-note 7), and no county publishes where the easements run. The footnote is
+note 7), Oregon City "Public utility easements may supersede the minimum
+setback" under its own, and no county publishes where the easements run. The footnote is
 held on the site fact ``utility_easement`` (:mod:`flats.rules.conditions`),
 which nothing observes, so every lot it reaches waits on it and stays out
 of GREEN.
 
 Steph's ruling stands in for the map: the building fits with a 10 ft yard
 on every street line -> the question is answered; it fits only at 5 ft ->
-yellow; not even at 5 ft -> red. ``flats/config/easements.yaml`` holds the
-numbers per city. This module holds the ruling and the two pure steps the
+yellow; not even at 5 ft -> red (Beaverton 2026-10-01, Oregon City
+2026-10-05). ``flats/config/easements.yaml`` holds the numbers per city. This module holds the ruling and the two pure steps the
 bridge takes with it -- the floor on the street yards (:func:`floored`) and
 which of the three screenings answers the lot (:func:`pick`); the
 screenings themselves are :func:`flats.ingest.quadfit.easement_checked`.

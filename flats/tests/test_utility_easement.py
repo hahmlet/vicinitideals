@@ -6,7 +6,8 @@ into a Public Utility Easement (PUE)". No layer says where the easements
 run, so the footnote held every lot it reaches on ``utility_easement`` and
 Beaverton had no green lot. Steph's ruling: the building fits with a 10 ft
 yard on every street line -> the question is answered; fits only at 5 ft ->
-yellow; not even at 5 ft -> red.
+yellow; not even at 5 ft -> red. Oregon City's "public utility easements may
+supersede the minimum setback" takes the same rule (Steph 2026-10-05).
 
 What must hold: the floor touches street lines only; a lot clear of it
 answers the question and says what it assumed; a lot that fits only at the
@@ -43,9 +44,10 @@ OPEN = "FACT-UTILITY-EASEMENT"
 # --- the ruling and the floor -------------------------------------------------
 
 
-def test_beaverton_is_ruled_at_ten_and_five() -> None:
-    got = easement.rules()[BEAVERTON]
-    assert (got.green_ft, got.yellow_ft) == (10.0, 5.0)
+def test_beaverton_and_oregon_city_are_ruled_at_ten_and_five() -> None:
+    for layer in (BEAVERTON, "or/clackamas/oregon-city"):
+        got = easement.rules()[layer]
+        assert (got.green_ft, got.yellow_ft) == (10.0, 5.0), layer
     assert easement.rule_for("or/multnomah/portland") is None
     assert easement.rule_for(None) is None
 

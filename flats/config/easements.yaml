@@ -14,6 +14,10 @@
 # on a street") -> green; fits at 5 ft but not 10 -> yellow; not even at
 # 5 -> red.
 #
+# Steph, 2026-10-05, on Oregon City (its zone table notes, 17.zoning.txt
+# L4161/L4351/L4619, "Public utility easements may supersede the minimum
+# setback"): the same rule.
+#
 # So for a city listed here the bridge fits the building with every street
 # yard floored at `green_ft` and, where it fits, answers the easement
 # question (the lot is then held only by what else it waits on, and carries
@@ -31,3 +35,7 @@ utility_easement:
     green_ft: 10.0
     yellow_ft: 5.0
     ruled: "Steph 2026-10-01 (FOLLOWUPS 17(e))"
+  or/clackamas/oregon-city:
+    green_ft: 10.0
+    yellow_ft: 5.0
+    ruled: "Steph 2026-10-05 (FOLLOWUPS 43)"
