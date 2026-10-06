@@ -3342,6 +3342,7 @@ def run(
     roads: Path | None = None,
     dem: Path | None = None,
     curbs: Path | None = None,
+    institutional: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -3365,7 +3366,11 @@ def run(
     curb lines and pavement widths (:mod:`flats.geom.curbs`); it defaults to
     ``sources``, and a run whose snapshot lacks one of them is refused -- a
     street none measures is taken as the narrowest, so without them every
-    Portland street would be (FOLLOWUPS 29).
+    Portland street would be (FOLLOWUPS 29). ``institutional`` is the
+    reading :mod:`flats.ingest.institutional` wrote for the snapshot: its
+    lots -- schools, parks, hospitals, utilities -- are left out of the scan
+    (Steph 2026-10-06, FOLLOWUPS 47) and assign answers them RED; without it
+    they are scanned, which costs hours and changes no colour.
     """
     import time
     from multiprocessing import Pool
@@ -3399,6 +3404,15 @@ def run(
             jurisdictions=jurisdictions, zones=zones, tlids=tlids, streets=roads,
         )
     )
+    skipped = 0
+    if institutional is not None:
+        from flats.ingest.institutional import skip_tlids
+
+        skip = skip_tlids(institutional)
+        kept = [r for r in rows if str(r["TLID"]).rstrip() not in skip]
+        skipped = len(rows) - len(kept)
+        rows = kept
+        log(f"bridge: {skipped:,} institutional lots left out of the scan")
     classed = with_local_street(rows, sources)
     if classed:
         log(f"bridge: street class read on {classed:,} lots")
@@ -3453,6 +3467,8 @@ def run(
         "roads": str(roads),
         "dem": str(dem),
         "curbs": str(curbs) if curbs is not None else None,
+        "institutional": str(institutional) if institutional is not None else None,
+        "institutional_skipped": skipped,
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -3501,6 +3517,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         type=Path,
         help="snapshot dir holding the curb lines and pavement widths (default: --sources)",
     )
+    ap.add_argument(
+        "--institutional",
+        type=Path,
+        help="institutional.parquet (or its directory) from flats.ingest.institutional: lots left out of the scan",
+    )
     args = ap.parse_args(argv)
     run(
         args.out,
@@ -3521,6 +3542,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         roads=args.roads,
         dem=args.dem,
         curbs=args.curbs,
+        institutional=args.institutional,
     )
     return 0
 

@@ -154,6 +154,45 @@ datasets:
       The sibling LAND/orca_sites.shp is the same land dissolved into named
       sites; the unit layer is the one that carries UNITTYPE per parcel.
 
+  osm_land_use:
+    kind: overpass
+    label: OpenStreetMap -- institutional, utility and transport land
+    provides: land_use
+    url: https://overpass-api.de/api/interpreter
+    geometry: mixed
+    bbox_4326: [-123.49, 44.88, -121.65, 45.86]
+    serves: [or/multnomah, or/clackamas, or/washington]
+    fields: [name, amenity, healthcare, office, leisure, sport, place, aeroway, man_made, landuse, power, public_transport, railway, park_ride, shop, operator, access, service, usage, tunnel, "plant:source", religion, denomination]
+    query: |
+      nwr["amenity"~"^(school|college|university|hospital|townhall|courthouse|police|fire_station|library|prison|bus_station|waste_transfer_station)$"]({bbox});
+      nwr["healthcare"="hospital"]({bbox});
+      nwr["office"="government"]({bbox});
+      nwr["leisure"~"^(park|marina|water_park)$"]({bbox});
+      nwr["leisure"="sports_centre"]["sport"="swimming"]({bbox});
+      nwr["place"="square"]({bbox});
+      nwr["aeroway"="aerodrome"]({bbox});
+      nwr["man_made"~"^(wastewater_plant|water_works|reservoir_covered|water_tower|pumping_station)$"]({bbox});
+      nwr["landuse"~"^(landfill|railway)$"]({bbox});
+      nwr["power"~"^(substation|plant)$"]({bbox});
+      nwr["public_transport"="station"]({bbox});
+      nwr["railway"~"^(station|rail|light_rail)$"]({bbox});
+      nwr["amenity"="parking"]["park_ride"~"^(yes|bus|train|tram)$"]({bbox});
+      nwr["shop"="mall"]({bbox});
+    notes: >-
+      The land Steph ruled RED and out of the scan on 2026-10-06 (FOLLOWUPS
+      47): schools, hospitals, municipal sites, parks, water treatment and
+      heavy infrastructure, airports, marinas, transit hubs, rail, public
+      pools and plazas, waste treatment, malls -- and NOT churches or
+      charities, which sell land and stay screened (no place_of_worship
+      selector, on purpose; `religion` is kept so a church's school can be
+      told apart). No county publishes this: Washington's roll
+      marks public land (LANDUSE PUB), Multnomah's only tax-exempt land
+      (churches included), Clackamas neither. Which tags mean which category
+      is flats/config/institutional.yaml; this is the superset fetched. The
+      box is the three counties. overpass-api.de sheds load at busy hours
+      (a 504 after a long queue); the fetch retries, and a cut-short answer
+      is refused, never written. 2026-10-06: 9,266 elements.
+
   ugb_metro:
     kind: arcgis
     label: Urban growth boundary

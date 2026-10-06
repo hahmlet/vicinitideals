@@ -3059,6 +3059,18 @@ async def test_every_screen_reason_is_said_in_words() -> None:
     assert "private drive" in _said_reason("STREET_UNCONFIRMED")
 
 
+async def test_institutional_land_is_said_in_words() -> None:
+    """A school, park or rail lot answered RED by assign reads as
+    institutional land, and says churches are still screened (FOLLOWUPS 47)."""
+    from app.api.routers.ui_flats import _CHECK_WORDS, _REASON_WORDS, _said_reason
+    from flats.ingest.institutional import INSTITUTIONAL_USE
+
+    assert INSTITUTIONAL_USE in _REASON_WORDS
+    said = _said_reason(INSTITUTIONAL_USE)
+    assert "left out of the scan" in said and "churches" in said
+    assert _CHECK_WORDS["institutional_share"].startswith("institutional land")
+
+
 async def test_a_permit_area_flag_names_its_area() -> None:
     """A RESOURCE-PERMIT flag says which mapped area and which code
     section, not only that some area is there (FOLLOWUPS 42(b))."""

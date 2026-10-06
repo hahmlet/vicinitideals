@@ -1,0 +1,105 @@
+# Institutional land: RED and never scanned.
+#
+# Steph RULED 2026-10-06 (FOLLOWUPS 47): "Lots with institutional uses;
+# hospitals, schools, municipal, parks, water treatment/heavy infrastructure
+# should just be flagged red and flagged out of scans for any reason." Then
+# added airports, marinas, transit hubs, rail (light and heavy), public
+# pools/plazas, waste treatment, malls and shopping centers. And excluded:
+# "Churches and charities should still be checked because churches do divest
+# of land for charitable purposes." -- so no category below reads a place of
+# worship, a nonprofit owner or tax-exempt status on its own.
+#
+# A lot is institutional when the land of ONE category covers at least
+# `min_share` of its area. Read by flats/geom/institutional.py; the map
+# layers are the snapshot's `osm_land_use` (OpenStreetMap, flats/config/
+# pipeline.yaml) and `rlis_orca` (Metro's parks and school land).
+#
+# `osm`: each entry is a set of tags that must ALL match; a list of values
+# matches any of them. A line (a railway track) is widened by
+# `line_half_width_ft` each side before it covers anything. A lone point (a
+# node with no outline) covers nothing: a police desk in a strip mall is not
+# the mall.
+# The value "*" asks only that the tag is there (any value).
+# `unless`: tag sets that take an element back out of the category.
+# `orca`: Metro ORCA unit types, owned by one of `orca_owners`.
+
+version: 1
+min_share: 0.5
+line_half_width_ft: 10
+orca_owners: [Local, Special District, State, Federal]
+
+categories:
+  school:
+    words: a school, college or university campus
+    # A church's school is a school (Steph 2026-10-06, asked: ~215 lots --
+    # Central Catholic, Columbia Christian, University of Portland, the LDS
+    # seminaries): red like any other. The church itself stays screened.
+    osm:
+      - {amenity: [school, college, university]}
+    orca: [School Land]
+  hospital:
+    words: a hospital
+    osm:
+      - {amenity: hospital}
+      - {healthcare: hospital}
+  municipal:
+    words: a city, county, state or federal site (city hall, courthouse, police, fire station, library, prison, government office)
+    osm:
+      - {amenity: [townhall, courthouse, police, fire_station, library, prison]}
+      - {office: government}
+  park:
+    words: a public park or natural area
+    # Measured 2026-10-06 against live run 63, every GREEN read: an
+    # OpenStreetMap nature reserve is often a PROCLAMATION boundary (Mount
+    # Hood National Forest's holds 587 private lots) or a land trust's or an
+    # HOA's, and an unnamed or gated "park" is a retirement home's lawn or a
+    # vacant lot a mapper guessed at. Metro's ORCA holds the public natural
+    # areas by owner; OpenStreetMap adds only named parks open to the public.
+    osm:
+      - {leisure: park, name: "*"}
+    unless:
+      - {access: [private, "no", customers]}
+    orca: [Park, Natural Area]
+  utility:
+    words: water or wastewater treatment, a reservoir, a pump station, a power substation or plant, a landfill or a waste transfer station
+    osm:
+      - {man_made: [wastewater_plant, water_works, reservoir_covered, water_tower, pumping_station]}
+      - {power: [substation, plant]}
+    unless:
+      # A solar array is a lease on private land, not a utility's site.
+      - {"plant:source": solar}
+      - {landuse: landfill}
+      - {amenity: waste_transfer_station}
+  airport:
+    words: an airport
+    osm:
+      - {aeroway: aerodrome}
+  marina:
+    words: a marina
+    osm:
+      - {leisure: marina}
+  transit:
+    words: a transit hub (a station, a bus station or a park and ride)
+    osm:
+      - {public_transport: station}
+      - {railway: station}
+      - {amenity: bus_station}
+      - {amenity: parking, park_ride: ["yes", bus, train, tram]}
+  rail:
+    words: a railway (heavy or light rail)
+    osm:
+      - {railway: [rail, light_rail]}
+      - {landuse: railway}
+    unless:
+      # MAX under the West Hills is not on the lots above it.
+      - {tunnel: "*"}
+  pool_plaza:
+    words: a public pool, water park or plaza
+    osm:
+      - {leisure: sports_centre, sport: swimming}
+      - {leisure: water_park}
+      - {place: square}
+  mall:
+    words: a mall or shopping center
+    osm:
+      - {shop: mall}

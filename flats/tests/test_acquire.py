@@ -702,7 +702,7 @@ def test_the_shipped_registry_is_wholly_dispatchable() -> None:
     # sources.py without one would be silently skipped with no manifest entry.
     pipeline = load_pipeline()
     kinds = {ds.kind for ds in pipeline.datasets.values()}
-    assert kinds == {stage.Kind.arcgis, stage.Kind.rlis_zip, stage.Kind.tnm_dem}
+    assert kinds == {stage.Kind.arcgis, stage.Kind.rlis_zip, stage.Kind.tnm_dem, stage.Kind.overpass}
     for ds in pipeline.datasets.values():
         if ds.filter:
             parse_filter(ds.filter)

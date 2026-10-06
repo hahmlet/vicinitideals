@@ -32,7 +32,9 @@ as one. A dataset the server would not give up (an error on every retry) is
 ``failed``, with the error in the manifest. Terrain (``tnm_dem``) is
 ``deferred`` -- tiles are not a vector layer and the slope stage that needs
 them is not built. A dataset the registry has since dropped is ``retired``:
-its file stays, its entry stops counting.
+its file stays, its entry stops counting. An OpenStreetMap extract
+(``overpass``) is one request to an Overpass interpreter, converted by
+:mod:`flats.ingest.overpass`.
 
 **What it does not do.** Nothing is normalized, joined or assigned; the files
 are the sources as published, with the columns the registry asked for. A
@@ -585,6 +587,47 @@ def _fetch_rlis(
 # --- the stage -------------------------------------------------------------
 
 
+# --- OpenStreetMap ---------------------------------------------------------
+
+
+def _fetch_overpass(
+    client: httpx.Client, ds: Dataset, srid: int, sink: _Sink, log: Callable[[str], None]
+) -> list[str]:
+    """The extract into the sink; returns the kept tag keys some element carried.
+
+    The public interpreters queue and shed load: a 429 or a 504 is retried
+    after a pause, three times, and a cut-short answer (a ``remark``) is
+    never written -- :func:`flats.ingest.overpass.check`.
+    """
+    from flats.ingest import overpass
+
+    query = overpass.compose(str(ds.query), ds.bbox_4326)  # type: ignore[arg-type]
+    doc: dict[str, Any] = {}
+    for attempt in range(4):
+        if attempt:
+            _sleep(60.0 * attempt)
+        resp = client.post(ds.url, data={"data": query})
+        if resp.status_code in (429, 503, 504) and attempt < 3:
+            log(f"  interpreter busy ({resp.status_code}); retrying")
+            continue
+        doc = _json(resp)
+        break
+    try:
+        overpass.check(doc)
+    except overpass.OverpassError as exc:
+        raise AcquireError(str(exc)) from exc
+    elements = doc["elements"]
+    log(f"  {len(elements):,} elements")
+    skipped: dict[str, int] = {}
+    seen: set[str] = set()
+    for feature in overpass.features(elements, ds.fields, overpass.reprojector(srid), skipped):
+        seen.update(k for k in feature["properties"] if k != "osm")
+        sink.add(feature)
+    if skipped:
+        log("  no shape: " + ", ".join(f"{k} {n:,}" for k, n in sorted(skipped.items())))
+    return sorted(seen)
+
+
 def _check_fields(ds: Dataset, present: Iterable[str]) -> None:
     have = {n.lower() for n in present}
     missing = [f for f in ds.fields if f.lower() not in have]
@@ -687,6 +730,13 @@ def acquire(
                         unfetched = unfetched + missed
                         entry["parts"] = parts
                     entry["unfetched_ids"] = unfetched
+                    entry["status"] = "acquired"
+                elif ds.kind is Kind.overpass:
+                    sink = _Sink(path, pipeline.working_srid)
+                    names = _fetch_overpass(client, ds, pipeline.working_srid, sink, log)
+                    # Tags are sparse: a kept key no element carries is not a
+                    # missing column, so the declared list is recorded, not checked.
+                    entry["fields"] = {"declared": list(ds.fields), "present": names, "checked": False}
                     entry["status"] = "acquired"
                 elif ds.kind is Kind.rlis_zip:
                     archive = archives.get(ds.url)

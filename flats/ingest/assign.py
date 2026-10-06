@@ -25,6 +25,12 @@ for each lot it cannot colour, why:
 * a **pocket** lot (normalize's ``rules_layer``: another layer's zoning on
   this layer's map) goes through the same two lines under that layer -- its
   use gate, its layer id on the row -- and keeps its own jurisdiction;
+* a lot on **institutional land** (:mod:`flats.ingest.institutional`: a
+  school, park, hospital, utility, airport, rail line, mall... -- Steph
+  2026-10-06, FOLLOWUPS 47) is RED with ``INSTITUTIONAL_USE`` whatever else
+  it would have read, measured or not, gated or not: its rows are the
+  reading's, not the screen's. Churches and charities are not in the
+  reading and stay screened;
 * a lot with no gate that quadfit still did not measure gets ``NOT_MEASURED``
   plus the step of quadfit's structural filter that dropped it
   (``s3_dropped.csv``: ``sliver_area``, ``too_narrow_20ft``,
@@ -71,13 +77,14 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Callable
 
+from flats.ingest.institutional import INSTITUTIONAL_USE
 from flats.ingest.normalize import GATES, EXCLUDED_COLUMNS
 
 #: The reason on a lot that passed every gate and still has no measurement.
 NOT_MEASURED = "NOT_MEASURED"
 #: The screen's own word for a zone that forbids the building (``flats.score.screen``).
 USE_PROHIBITED = "USE_PROHIBITED"
-REASONS = (*GATES, NOT_MEASURED, USE_PROHIBITED)
+REASONS = (*GATES, NOT_MEASURED, USE_PROHIBITED, INSTITUTIONAL_USE)
 
 #: ``(triage as screened, its reasons, if_signed, its reasons)`` for a lot in
 #: a zone that forbids the building; what :func:`use_gate` answers.
@@ -299,6 +306,39 @@ def prohibited_row(lot: dict[str, Any], design: str, answer: UseGate) -> dict[st
     return row
 
 
+def _said_source(source: str) -> str:
+    if source.startswith("osm:"):
+        return f"OpenStreetMap {source[4:]}"
+    if source.startswith("orca:"):
+        return f"Metro ORCA ({source[5:]})"
+    return source
+
+
+def institutional_row(lot: dict[str, Any], design: str, reading: dict[str, Any], rules: Any) -> dict[str, Any]:
+    """The row for one lot x design on institutional land: RED as screened
+    and as signed -- no signature turns a school into a pod site. The bind
+    says what the land is, how much of the lot it covers and which map
+    says so; share and line are in percent."""
+    from flats.score import flags as flag_plan
+
+    row = synthetic_row(lot, design, INSTITUTIONAL_USE)
+    row.update({"triage": "red", "if_signed": "red"})
+    share = float(reading["share"])
+    name = f" ({reading['name']})" if reading.get("name") else ""
+    bind = flag_plan.Bind(
+        "institutional_share",
+        round(100 * share, 1),
+        round(100 * rules.min_share, 1),
+        None,
+        source=(
+            f"{rules.words(str(reading['category']))}{name}, {100 * share:.0f}% of the lot, "
+            f"per {_said_source(str(reading['source']))}"
+        ),
+    )
+    row.update(_plan([], [bind]))
+    return row
+
+
 def read_dropped(path: Path | None) -> dict[str, str]:
     """quadfit's ``s3_dropped.csv`` as TLID -> step; empty when there is none."""
     if path is None or not path.is_file():
@@ -328,6 +368,7 @@ def assign(
     snapshot_date: str | None = None,
     log: Callable[[str], None] | None = None,
     use_gate: Callable[[str, str], UseGate | None] | None = None,
+    institutional: Path | None = None,
 ) -> dict[str, Any]:
     """Join the bridge run to the normalized lot table; returns ``meta.json``'s content.
 
@@ -335,6 +376,9 @@ def assign(
     zone forbids the building (:func:`use_gate_for`); the command line passes
     :func:`load_use_gate`, the corpus as the bridge reads it. Without one, no
     lot is answered at the use gate -- the stage stays a pure join.
+    ``institutional`` (or ``meta.json``'s, the file the bridge left out of
+    the scan) is :mod:`flats.ingest.institutional`'s reading; every lot it
+    holds under a TLID it holds whole is answered RED.
     """
     import pandas as pd
 
@@ -367,6 +411,20 @@ def assign(
         raise SystemExit(f"a TLID the bridge measured names lots in two counties: {[t for t in collisions if t in measured][:5]}")
     say(f"normalized: {len(lot_rows):,} lots ({len(collisions)} TLIDs shared across counties)")
 
+    from flats.geom.institutional import load_rules as institutional_rules
+    from flats.ingest.institutional import by_lot
+
+    institutional = institutional or (Path(meta["institutional"]) if meta.get("institutional") else None)
+    inst = {k: v for k, v in by_lot(institutional).items() if v.get("whole_tlid")}
+    inst_tlids = {t for _c, t in inst}
+    inst_rules = institutional_rules() if inst else None
+    if inst_tlids & measured:
+        frame = frame[~frame["TLID"].map(lambda t: str(t).rstrip() in inst_tlids)].reset_index(drop=True)
+    inst_measured = len(inst_tlids & measured)
+    measured -= inst_tlids
+    if inst:
+        say(f"institutional: {len(inst):,} lots answered RED ({inst_measured:,} of them had been scanned)")
+
     dropped = read_dropped(quadfit_dir / "s3_dropped.csv" if quadfit_dir else None)
     summary = json.loads((normalized / "summary.json").read_text(encoding="utf-8")) if (normalized / "summary.json").is_file() else {}
 
@@ -374,8 +432,16 @@ def assign(
     by_reason: Counter[str] = Counter()
     by_step: Counter[str] = Counter()
     prohibited_zones: Counter[str] = Counter()
+    by_category: Counter[str] = Counter()
     for row in lot_rows:
         tlid = str(row["tlid"]).rstrip()
+        reading = inst.get((str(row.get("county")), tlid))
+        if reading is not None:
+            by_reason[INSTITUTIONAL_USE] += 1
+            by_category[str(reading["category"])] += 1
+            for design in designs:
+                synthetic.append(institutional_row(row, design, reading, inst_rules))
+            continue
         if tlid in measured:
             continue
         reason = row.get("gate") or NOT_MEASURED
@@ -420,6 +486,7 @@ def assign(
         "snapshot_date": snapshot_date or summary.get("snapshot"),
         "normalized": str(normalized.resolve()),
         "quadfit_dir": str(quadfit_dir.resolve()) if quadfit_dir else None,
+        "institutional": str(institutional) if institutional is not None else None,
         "new_zones": summary.get("new_zones", {}),
         "ruled_zones": summary.get("ruled_zones", {}),
         "funnel": summary.get("funnel", []),
@@ -431,6 +498,8 @@ def assign(
             "by_reason": dict(sorted(by_reason.items())),
             "not_measured_by_step": dict(sorted(by_step.items())),
             "prohibited_by_zone": dict(sorted(prohibited_zones.items())),
+            "institutional_by_category": dict(sorted(by_category.items())),
+            "institutional_were_scanned": inst_measured,
             "measured_not_in_lots": len(measured_not_in_lots),
             "measured_not_in_lots_examples": measured_not_in_lots[:20],
             "measured_but_excluded": dict(sorted(measured_but_excluded.items())),
@@ -458,6 +527,12 @@ def describe(meta: dict[str, Any]) -> list[str]:
         out.append(
             "  - USE_PROHIBITED, by zone (red at the use gate, no measurement needed): "
             + ", ".join(f"{k} {v:,}" for k, v in a["prohibited_by_zone"].items())
+        )
+    if a.get("institutional_by_category"):
+        out.append(
+            "  - INSTITUTIONAL_USE, by category (red, out of the scan): "
+            + ", ".join(f"{k} {v:,}" for k, v in a["institutional_by_category"].items())
+            + (f" -- {a['institutional_were_scanned']:,} of them were scanned anyway" if a.get("institutional_were_scanned") else "")
         )
     if a.get("measured_but_excluded"):
         out.append(
@@ -487,6 +562,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", type=Path, required=True, help="run directory to write for the loader's export")
     ap.add_argument("--quadfit-dir", type=Path, default=None, help="quadfit data tree, for s3_dropped.csv")
     ap.add_argument("--snapshot-date", default=None, help="YYYY-MM-DD (default: the normalized summary's)")
+    ap.add_argument(
+        "--institutional",
+        type=Path,
+        default=None,
+        help="flats.ingest.institutional's reading (default: the one the bridge's meta.json names)",
+    )
     args = ap.parse_args(argv)
     meta = assign(
         args.normalized,
@@ -496,6 +577,7 @@ def main(argv: list[str] | None = None) -> int:
         snapshot_date=args.snapshot_date,
         log=lambda m: print(m, flush=True),
         use_gate=load_use_gate(),
+        institutional=args.institutional,
     )
     print()
     for line in describe(meta):

@@ -46,6 +46,10 @@ class Kind(str, enum.Enum):
     rlis_zip = "rlis_zip"
     #: USGS National Map product API — DEM tiles for slope.
     tnm_dem = "tnm_dem"
+    #: OpenStreetMap through an Overpass API interpreter
+    #: (:mod:`flats.ingest.overpass`): the selectors in ``query``, inside
+    #: ``bbox_4326``, every element with its geometry.
+    overpass = "overpass"
 
 
 class Provides(str, enum.Enum):
@@ -65,6 +69,10 @@ class Provides(str, enum.Enum):
     #: (:mod:`flats.geom.transit`) -- measured once per transit release, not
     #: once per screen.
     transit = "transit"
+    #: What land is used for -- schools, hospitals, parks, utilities -- read
+    #: to take institutional land out of the screen
+    #: (:mod:`flats.geom.institutional`).
+    land_use = "land_use"
 
 
 class Geometry(str, enum.Enum):
@@ -74,6 +82,8 @@ class Geometry(str, enum.Enum):
     point = "point"
     #: Attribute rows with no shape (a ``.dbf`` on its own).
     table = "table"
+    #: Points, lines and polygons in one file. OpenStreetMap only.
+    mixed = "mixed"
 
 
 class Defaults(BaseModel):
@@ -135,6 +145,9 @@ class Dataset(BaseModel):
     bbox_4326: tuple[float, float, float, float] | None = None
     #: More layers fetched into the same file (:class:`Part`). ArcGIS only.
     parts: tuple[Part, ...] = ()
+    #: Overpass QL selector lines, one statement each with ``{bbox}`` where
+    #: the box goes (:func:`flats.ingest.overpass.compose`). Overpass only.
+    query: str | None = None
     notes: str = ""
 
     @model_validator(mode="after")
@@ -151,6 +164,17 @@ class Dataset(BaseModel):
             raise ValueError(f"{self.key}: an RLIS dataset must name the member to extract")
         if self.geometry is Geometry.point and self.kind is not Kind.arcgis:
             raise ValueError(f"{self.key}: points are fetched from an ArcGIS layer only")
+        if self.kind is Kind.overpass:
+            if not self.query or not self.bbox_4326:
+                raise ValueError(f"{self.key}: an Overpass dataset needs its query and its box")
+            if any("{bbox}" not in ln for ln in self.query.strip().splitlines() if ln.strip()):
+                raise ValueError(f"{self.key}: every Overpass selector line must hold {{bbox}}")
+            if self.geometry is not Geometry.mixed:
+                raise ValueError(f"{self.key}: OpenStreetMap elements are points, lines and polygons: geometry: mixed")
+        elif self.query is not None:
+            raise ValueError(f"{self.key}: only an Overpass dataset has a query")
+        if self.geometry is Geometry.mixed and self.kind is not Kind.overpass:
+            raise ValueError(f"{self.key}: only an OpenStreetMap extract mixes shapes")
         if self.geometry is Geometry.table and self.kind is not Kind.rlis_zip:
             raise ValueError(f"{self.key}: only an RLIS member can be a table; a layer has shapes")
         if self.geometry is Geometry.table and not str(self.member).lower().endswith(".dbf"):
