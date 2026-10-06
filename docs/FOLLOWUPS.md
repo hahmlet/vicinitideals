@@ -1592,9 +1592,14 @@ read when the weekly full re-screen lands.
    placement sweep is array-shaped, and porting it means rewriting the fit
    search and proving it exact (tight fits turn on 6 in; GPU arithmetic
    rounds differently). Cloudflare Containers rent no GPUs (CPU-only
-   instance types, checked 2026-10-06). OFFERED, DECISION PENDING: profile
-   where a lot's seconds go (cProfile on a ~500-lot sample, under the lock)
-   before choosing compute or rewriting a step.
+   instance types, checked 2026-10-06). Steph OWNS a GPU and would not
+   rent one; the question is which geospatial steps would run well on it.
+   Array-shaped: the placement sweep (the one that sets scan time), the
+   slope rasters and distance measures (once per data refresh, not per
+   bound). OFFERED, DECISION PENDING: profile where a lot's seconds go
+   (cProfile on a ~500-lot sample, under the lock); port a step to the GPU
+   only if it dominates and its answers prove identical. Ask where the
+   card lives (in the Proxmox host = passthrough to 137).
 47. [scan: YES] **Institutional land is RED and never scanned (Steph RULED
    2026-10-06: "hospitals, schools, municipal, parks, water treatment/heavy
    infrastructure should just be flagged red and flagged out of scans for
