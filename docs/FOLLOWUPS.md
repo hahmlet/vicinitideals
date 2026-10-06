@@ -1552,25 +1552,24 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    wetland ground outside every city carve -- so no carve-aware rule needed.
    None go green. Probable wetlands + hydric soils: Steph 2026-10-05
    DECLINED ("I don't want the maybe list") -- do not re-offer.
-43. **Utility easement: Steph's street-yard rule, built (lane
-   utility-easement, 2026-10-05).** Ruled 2026-10-01 (item 17(e)): the
-   building fits with a 10 ft yard on every STREET line -> the easement
-   question is answered; fits only at 5 ft -> yellow; not even at 5 ft ->
-   red. Live run 63: Beaverton has 0 green and 5,177 Beaverton lots are held
-   by this question ALONE; Oregon City's "public utility easements may
-   supersede the minimum setback" holds 2,820 more beside other questions.
-   Built config-driven per city (flats/config/easements.yaml,
-   flats/fit/easement.py, bridge `easement_checked`, flag
-   UTILITY-EASEMENT-ASSUMED severity 1): Beaverton, and Oregon City (Steph
-   2026-10-05: "same rule"). Branch flats/utility-easement, NOT on main yet.
-   First bound (137, every Beaverton + Oregon City lot + 1,000 elsewhere):
-   ~4,400 lots gain green, control lots identical; 49 steep corner rows
-   red -> better were replayed -- correct, the open question had ranked the
-   front the building misses on (item 44) -- and two fixes followed (a
-   steep-ground miss is a miss; a missed plan re-asked only where the
-   screen chose a front). Re-bound /root/utility-easement_bound_new3
-   queued behind water_bound; then merge + deploy by end of 2026-10-07 to
-   ride the ~10-08 full re-screen.
+43. **Utility easement: Steph's street-yard rule -- SHIPPED a9106379
+   2026-10-06, live from the next full re-screen (~10-08).** Ruled
+   2026-10-01 (item 17(e)), Oregon City 2026-10-05 "same rule": the
+   building fits with a 10 ft yard on every STREET line -> the question is
+   answered; only at 5 ft -> yellow; not even at 5 ft -> red
+   (flats/config/easements.yaml, flats/fit/easement.py, bridge
+   `easement_checked`, flag UTILITY-EASEMENT-ASSUMED severity 1). Bound on
+   137 (every Beaverton + Oregon City lot + 1,000 control; ae219cb4 vs
+   e6275bc5, /root/utility-easement_diff3.out): control identical; lots
+   green Beaverton 34 -> 3,043, Oregon City 0 -> 2,230. 58 rows worse, all
+   read: 47 Oregon City mixed-use rows (MUC-1/MUD build to the sidewalk)
+   that fit only without the 5 ft yard; 7 two-reading lots whose kept-worse
+   reading always missed (the open question hid it -- item 44 (iii)); 4
+   rows on 3 big lots where the 10 ft yard pushes the hose route past
+   150 ft (red; at 5 ft they might reach -- accepted, unruled). Bridge
+   ~1.6x slower on the two cities (~+1.2 h on the weekly run). After the
+   re-screen: check both cities' green counts land near the bound's, then
+   remove this item.
 44. **A lot's readings are ranked with a missed fit above an open question
    (found 2026-10-05 by the utility-easement bound).** `_front_rank`
    (flats/ingest/quadfit.py) ranks the readings `_screen_lot_once` chooses
@@ -1588,3 +1587,19 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    below severity 3. Fix: rank by `signed.colour` first, then triage; its
    own bound over every corner + through lot, every gain and loss read.
    Size (ii) first -- no Steph decision needed unless a ruling is.
+   (iii) `_worse` (a lot's two readings, kept at the worse) has the same
+   order: an open question outranks a miss, so the miss hides -- 7 rows
+   the easement bound exposed (Oregon City 32E06DD00603 pod80x25: shown
+   fitting, the kept reading misses by 22 ft); where the open fact flags
+   below severity 3 that is a false GREEN too.
+45. **A tight-fit green is never graded (found 2026-10-06 by the
+   utility-easement bound).** `slope_checked` (flats/ingest/quadfit.py)
+   measures the pad grade only on a drawing that fits; a building that
+   misses its room by under 1 ft is green with FIT-TIGHT (Steph
+   2026-10-02) but its drawing fell short, so no grade is taken and a
+   5-15% pad goes unflagged -- a possible false GREEN. Every recent bound
+   on 137 has them, about 1 green in 1,000 (fire-curb_before_2: 7 of
+   4,346; utility-easement new3: Beaverton 1S121AB01000). Fix: grade the
+   short drawing's building + court too (or hold a green whose grade was
+   never tried); bound over the negative-slack greens only. No Steph
+   decision needed.
