@@ -2012,24 +2012,26 @@ def easement_checked(
 
     Steph, 2026-10-01: the building fits with a 10 ft yard on every street
     line -> green; fits at 5 ft but not 10 -> yellow; not even at 5 -> red.
-    So each design that waits on ``utility_easement`` and fits at the code's
-    own yards is screened again, the whole way, with every street yard
-    floored at the city's ``green_ft`` and the question answered no: where
-    that plan fits, it is the answer, and the lot waits on whatever else it
-    waited on. Where it does not, the design is screened at ``yellow_ft``
-    with the question still open -- yellow where that plan fits, red on its
-    fit where it does not (:func:`flats.fit.easement.pick`). Both carry the
+    So each design that waits on ``utility_easement`` is screened again, the
+    whole way, with every street yard floored at the city's ``green_ft`` and
+    the question answered no: where that plan fits, it is the answer, and
+    the lot waits on whatever else it waited on. Where it does not, the
+    design is screened at ``yellow_ft`` with the question still open --
+    yellow where that plan fits, red on its fit where it does not
+    (:func:`flats.fit.easement.pick`). Both carry the
     UTILITY-EASEMENT-ASSUMED flag through :attr:`LotFacts.easement_street_ft`.
 
-    A design whose fit misses at the code's own yards keeps its answer: the
-    easement changes nothing on a lot that fails without it. So does one the
-    floor cannot reach -- a plan fitted on quadfit's envelope, where FLATS
-    cut none of its own.
+    A design that fits at neither yard and misses at the code's own yards
+    too keeps its answer: the easement is not why it fails. The green yard
+    is asked of it all the same, since on a corner lot the open question can
+    be what chose the front it missed on (:func:`_front_rank`). A plan the
+    floor cannot reach -- fitted on quadfit's envelope, where FLATS cut none
+    of its own -- keeps its answer too.
     """
     rule = easement.rule_for(lot.layer_id)
     if rule is None or easement.FACT in lot.observed:
         return got
-    todo = [i for i, s in enumerate(got) if _waits_on_easement(s) and not _fit_missed(s)]
+    todo = [i for i, s in enumerate(got) if _waits_on_easement(s)]
     if not todo:
         return got
 
@@ -2046,16 +2048,20 @@ def easement_checked(
         return dict(zip(which, out))
 
     green = screened(floored(rule.green_ft, answered=True), todo)
+    measured = {
+        i: green[i].envelope is not None and green[i].envelope.source == "flats" for i in todo
+    }
+    narrow = [i for i in todo if measured[i] and _fit_missed(green[i])]
+    yellow = screened(floored(rule.yellow_ft, answered=False), narrow) if narrow else {}
     choice = {
         i: easement.pick(
-            as_is_missed=False,
+            as_is_missed=_fit_missed(got[i]),
             green_missed=_fit_missed(green[i]),
-            green_measured=green[i].envelope is not None and green[i].envelope.source == "flats",
+            green_measured=measured[i],
+            yellow_missed=i not in yellow or _fit_missed(yellow[i]),
         )
         for i in todo
     }
-    narrow = [i for i in todo if choice[i] == "yellow"]
-    yellow = screened(floored(rule.yellow_ft, answered=False), narrow) if narrow else {}
     out = list(got)
     for i in todo:
         if choice[i] == "green":
@@ -2542,8 +2548,11 @@ def with_steep(lot: QuadfitLot, terrain: Any) -> QuadfitLot:
 
 
 def _fit_missed(s: Screened) -> bool:
+    """Whether the plan missed its fit -- :data:`STEEP_GROUND` is the same
+    miss, named for the slope that caused it (:func:`slope_checked`)."""
     return any(
-        c.check == "fit_ft" and c.verdict is CheckVerdict.fails for c in s.screening.checks
+        c.check in ("fit_ft", STEEP_GROUND) and c.verdict is CheckVerdict.fails
+        for c in s.screening.checks
     )
 
 

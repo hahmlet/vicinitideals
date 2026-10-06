@@ -30,8 +30,11 @@ from flats.encode.load import load_trusted
 from flats.fit import easement
 from flats.fit.easement import EasementRule, floored, pick
 from flats.geom.envelope import Setbacks
+from flats.ingest import quadfit
 from flats.ingest.quadfit import _fit_missed, _screen_lot_once, easement_checked, lot_from_row, screen_lot
 from flats.score import relief, slack
+from flats.score.screen import STEEP_GROUND
+from flats.score.slack import Verdict
 from flats.tests.test_quadfit_bridge import X0, Y0
 
 pytestmark = pytest.mark.unit
@@ -84,12 +87,19 @@ def test_no_floor_is_no_change() -> None:
 
 
 def test_which_screening_answers() -> None:
-    # Already short at the code's own yards: the easement changes nothing.
-    assert pick(as_is_missed=True, green_missed=False, green_measured=True) == "as_is"
     # quadfit's envelope: no floor reaches it, nothing is answered.
     assert pick(as_is_missed=False, green_missed=False, green_measured=False) == "as_is"
     assert pick(as_is_missed=False, green_missed=False, green_measured=True) == "green"
-    assert pick(as_is_missed=False, green_missed=True, green_measured=True) == "yellow"
+    assert pick(as_is_missed=False, green_missed=True, green_measured=True, yellow_missed=False) == "yellow"
+    # Short at the narrow yard too: held to that miss.
+    assert pick(as_is_missed=False, green_missed=True, green_measured=True, yellow_missed=True) == "yellow"
+    # Short at the code's own yards and at both of the ruling's: the
+    # easement is not why the lot fails.
+    assert pick(as_is_missed=True, green_missed=True, green_measured=True, yellow_missed=True) == "as_is"
+    # But an as-is miss does not stop the ruling's yards being asked: on a
+    # corner lot the open question can choose the front the plan misses on.
+    assert pick(as_is_missed=True, green_missed=False, green_measured=True) == "green"
+    assert pick(as_is_missed=True, green_missed=True, green_measured=True, yellow_missed=False) == "yellow"
 
 
 # --- through the bridge -------------------------------------------------------
@@ -155,6 +165,21 @@ def screened(corpus, policies, lot):
 
 def flags(s) -> dict[str, object]:
     return {f.code: f for f in s.signed.flags}
+
+
+def missed(s, check: str = "fit_ft"):
+    """``s`` with its fit missed, under ``check``'s name."""
+    checks = tuple(
+        dataclasses.replace(c, check=check, verdict=Verdict.fails) if c.check == "fit_ft" else c
+        for c in s.screening.checks
+    )
+    return dataclasses.replace(s, screening=dataclasses.replace(s.screening, checks=checks))
+
+
+def on_steep_ground(s):
+    """``s`` with its fit missed on ground too steep to build on, named as
+    :func:`flats.ingest.quadfit.slope_checked` names it."""
+    return missed(s, STEEP_GROUND)
 
 
 def ruled(monkeypatch, green: float, yellow: float) -> None:
@@ -229,3 +254,51 @@ def test_a_lot_already_answered_is_not_asked_again(corpus, policies) -> None:
         lot, [before], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
     )
     assert got[0] is before
+
+
+def test_a_miss_on_steep_ground_is_a_miss(corpus, policies) -> None:
+    s = as_is(corpus, policies, lot_from_row(lot_row(), corpus.layers))
+    assert not _fit_missed(s)
+    assert _fit_missed(on_steep_ground(s))
+
+
+@pytest.mark.parametrize("check", ["fit_ft", STEEP_GROUND])
+def test_a_lot_missed_at_the_code_own_yards_is_still_asked_at_the_wide_one(
+    corpus, policies, check
+) -> None:
+    # 2026-10-05 bound, 1S123AB02236: a corner lot whose open question ranked
+    # the front the building misses on (on steep ground) above the one it
+    # fits on. Answered, the building fits: the as-is miss was the question's.
+    lot = lot_from_row(lot_row(), corpus.layers)
+    (got,) = easement_checked(
+        lot, [missed(as_is(corpus, policies, lot), check)],
+        rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
+    )
+    assert got.lot.observed.get("utility_easement") is False
+    assert not _fit_missed(got)
+    assert flags(got)[ASSUMED].bounds == (10.0, 10.0)
+
+
+def test_a_wide_yard_missed_on_steep_ground_falls_to_the_narrow_one(
+    corpus, policies, monkeypatch
+) -> None:
+    # The slope names a miss steep_ground, not fit_ft: read as a fit, the
+    # wide yard "answered" a lot that missed there and the narrow yard was
+    # never asked (2026-10-05 bound).
+    real = quadfit._screen_lot_once
+
+    def steep_at_ten(here, *args, **kwargs):
+        got = real(here, *args, **kwargs)
+        if here.facts.easement_street_ft == 10.0:
+            return [on_steep_ground(s) for s in got]
+        return got
+
+    monkeypatch.setattr(quadfit, "_screen_lot_once", steep_at_ten)
+    (got,) = easement_checked(
+        lot_from_row(lot_row(), corpus.layers),
+        [as_is(corpus, policies, lot_from_row(lot_row(), corpus.layers))],
+        rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
+    )
+    assert "utility_easement" not in got.lot.observed
+    assert not _fit_missed(got)
+    assert flags(got)[ASSUMED].bounds == (5.0, 5.0)

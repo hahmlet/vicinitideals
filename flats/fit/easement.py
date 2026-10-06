@@ -90,20 +90,29 @@ def floored(setbacks: Setbacks, street_ft: float | None) -> Setbacks:
 Pick = Literal["as_is", "green", "yellow"]
 
 
-def pick(*, as_is_missed: bool, green_missed: bool, green_measured: bool) -> Pick:
+def pick(
+    *, as_is_missed: bool, green_missed: bool, green_measured: bool, yellow_missed: bool = True
+) -> Pick:
     """Which screening answers one design (Steph 2026-10-01).
 
-    ``as_is`` -- the lot as the code's own yards cut it, the question left
-    open -- where that fit already misses (the easement changes nothing:
-    the lot fails without it) or the green-yard plan could not be cut from
-    the lot's own lines (``green_measured`` False: quadfit's envelope, which
-    no floor reaches). ``green`` where the building fits with the green
-    street yard: the question is answered. ``yellow`` otherwise: the plan
-    fitted at the yellow yard, the question still open -- yellow where that
-    fit passes, its miss the answer (red) where it does not.
+    ``green`` where the building fits with the green street yard: the
+    question is answered. ``yellow`` where it fits only at the yellow yard,
+    the question still open. Where it fits at neither, ``as_is`` -- the lot
+    as the code's own yards cut it, the question left open -- where that fit
+    misses too (the easement is not why the lot fails), and otherwise
+    ``yellow``, its miss the answer (red). ``as_is`` too where the green-yard
+    plan could not be cut from the lot's own lines (``green_measured``
+    False: quadfit's envelope, which no floor reaches).
+
+    The green yard is asked even where the as-is fit missed: on a corner lot
+    the open question ranks the front where the building fits below a front
+    where it misses but a variance might be granted, so the as-is miss can
+    be the front the question chose rather than the lot.
     """
-    if as_is_missed or not green_measured:
+    if not green_measured:
         return "as_is"
     if not green_missed:
         return "green"
-    return "yellow"
+    if not yellow_missed:
+        return "yellow"
+    return "as_is" if as_is_missed else "yellow"
