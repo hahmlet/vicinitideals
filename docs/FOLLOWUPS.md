@@ -1532,3 +1532,39 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    wetland ground outside every city carve -- so no carve-aware rule needed.
    None go green. Probable wetlands + hydric soils: Steph 2026-10-05
    DECLINED ("I don't want the maybe list") -- do not re-offer.
+43. **Utility easement: Steph's street-yard rule, built (lane
+   utility-easement, 2026-10-05).** Ruled 2026-10-01 (item 17(e)): the
+   building fits with a 10 ft yard on every STREET line -> the easement
+   question is answered; fits only at 5 ft -> yellow; not even at 5 ft ->
+   red. Live run 63: Beaverton has 0 green and 5,177 Beaverton lots are held
+   by this question ALONE; Oregon City's "public utility easements may
+   supersede the minimum setback" holds 2,820 more beside other questions.
+   Built config-driven per city (flats/config/easements.yaml,
+   flats/fit/easement.py, bridge `easement_checked`, flag
+   UTILITY-EASEMENT-ASSUMED severity 1): Beaverton, and Oregon City (Steph
+   2026-10-05: "same rule"). Branch flats/utility-easement, NOT on main yet.
+   First bound (137, every Beaverton + Oregon City lot + 1,000 elsewhere):
+   ~4,400 lots gain green, control lots identical; 49 steep corner rows
+   red -> better were replayed -- correct, the open question had ranked the
+   front the building misses on (item 44) -- and two fixes followed (a
+   steep-ground miss is a miss; a missed plan re-asked only where the
+   screen chose a front). Re-bound /root/utility-easement_bound_new3
+   queued behind water_bound; then merge + deploy by end of 2026-10-07 to
+   ride the ~10-08 full re-screen.
+44. **A lot's readings are ranked with a missed fit above an open question
+   (found 2026-10-05 by the utility-easement bound).** `_front_rank`
+   (flats/ingest/quadfit.py) ranks the readings `_screen_lot_once` chooses
+   between -- a corner's fronts, a through lot's ends, a part-alley's two
+   rear cuts -- by `signed.triage`, where a MISSED fit is yellow
+   (RELIEF_UNCONFIRMED, the assumed variance) and a fit that waits on an
+   open fact is unknown. Steph's flag plan makes every fit miss RED
+   (2026-10-02/03), so: (i) an owner-choice corner can be shown on the
+   front the building misses on while the other front fits -- a false red
+   (replayed: Beaverton 1S123AB02236, the slope then named the miss
+   steep_ground; the easement rule fixes the Beaverton/Oregon City cases
+   by answering the question); (ii) a through lot kept at its WORSE reading
+   (`THROUGH_WORST`) takes the max, so the FITTING reading wins over the
+   missing one -- a false GREEN wherever that reading's open fact flags
+   below severity 3. Fix: rank by `signed.colour` first, then triage; its
+   own bound over every corner + through lot, every gain and loss read.
+   Size (ii) first -- no Steph decision needed unless a ruling is.
