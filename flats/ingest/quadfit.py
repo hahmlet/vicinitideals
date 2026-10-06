@@ -1989,6 +1989,20 @@ def screen_lot(
     return [_worse(a, b) for a, b in zip(got, alt)]
 
 
+def _chose(lot: QuadfitLot, s: Screened) -> bool:
+    """Whether :func:`_screen_lot_once` chose between readings of ``lot`` for
+    this design: a corner's fronts, a through lot's ends, a part-alley rear
+    cut two ways."""
+    if lot.edges is None:
+        return False
+    fronts = corner_fronts(lot.edges, front_lot_line_rule(s.rules))
+    if fronts and fronts != (None,):
+        many = len(fronts) > 1
+    else:
+        many = len(through_plans(lot.edges, front_lot_line_through_rule(s.rules))[0]) > 1
+    return many or part_rear_alley(lot)
+
+
 def _waits_on_easement(s: Screened) -> bool:
     """Whether this design's answer waits on the utility easement question."""
     if s.config is None:
@@ -2021,17 +2035,23 @@ def easement_checked(
     (:func:`flats.fit.easement.pick`). Both carry the
     UTILITY-EASEMENT-ASSUMED flag through :attr:`LotFacts.easement_street_ft`.
 
-    A design that fits at neither yard and misses at the code's own yards
-    too keeps its answer: the easement is not why it fails. The green yard
-    is asked of it all the same, since on a corner lot the open question can
-    be what chose the front it missed on (:func:`_front_rank`). A plan the
-    floor cannot reach -- fitted on quadfit's envelope, where FLATS cut none
-    of its own -- keeps its answer too.
+    A design that misses at the code's own yards keeps its answer unless
+    the green yard fits: the easement is not why it fails. The green yard is
+    asked of it only where the screening chose between readings of the lot
+    (:func:`_chose`), since there the open question can be what chose the
+    reading it missed on (:func:`_front_rank`); one reading, and the floor
+    can only shrink what missed. A plan the floor cannot reach -- fitted on
+    quadfit's envelope, where FLATS cut none of its own -- keeps its answer
+    too.
     """
     rule = easement.rule_for(lot.layer_id)
     if rule is None or easement.FACT in lot.observed:
         return got
-    todo = [i for i, s in enumerate(got) if _waits_on_easement(s)]
+    missed = {i: _fit_missed(s) for i, s in enumerate(got)}
+    todo = [
+        i for i, s in enumerate(got)
+        if _waits_on_easement(s) and (not missed[i] or _chose(lot, s))
+    ]
     if not todo:
         return got
 
@@ -2051,11 +2071,13 @@ def easement_checked(
     measured = {
         i: green[i].envelope is not None and green[i].envelope.source == "flats" for i in todo
     }
-    narrow = [i for i in todo if measured[i] and _fit_missed(green[i])]
+    # The narrow yard leaves the question open, and so the same reading
+    # first: it is not asked of a plan that missed as it stands.
+    narrow = [i for i in todo if measured[i] and _fit_missed(green[i]) and not missed[i]]
     yellow = screened(floored(rule.yellow_ft, answered=False), narrow) if narrow else {}
     choice = {
         i: easement.pick(
-            as_is_missed=_fit_missed(got[i]),
+            as_is_missed=missed[i],
             green_missed=_fit_missed(green[i]),
             green_measured=measured[i],
             yellow_missed=i not in yellow or _fit_missed(yellow[i]),

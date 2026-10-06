@@ -31,7 +31,14 @@ from flats.fit import easement
 from flats.fit.easement import EasementRule, floored, pick
 from flats.geom.envelope import Setbacks
 from flats.ingest import quadfit
-from flats.ingest.quadfit import _fit_missed, _screen_lot_once, easement_checked, lot_from_row, screen_lot
+from flats.ingest.quadfit import (
+    _chose,
+    _fit_missed,
+    _screen_lot_once,
+    easement_checked,
+    lot_from_row,
+    screen_lot,
+)
 from flats.score import relief, slack
 from flats.score.screen import STEEP_GROUND
 from flats.score.slack import Verdict
@@ -262,21 +269,45 @@ def test_a_miss_on_steep_ground_is_a_miss(corpus, policies) -> None:
     assert _fit_missed(on_steep_ground(s))
 
 
+def corner_row(w: float = 100.0, d: float = 200.0) -> dict[str, object]:
+    """:func:`lot_row` with a second street along its east edge."""
+    edges = [
+        [X0, Y0, X0 + w, Y0, "F"],
+        [X0 + w, Y0, X0 + w, Y0 + d, "F"],
+        [X0 + w, Y0 + d, X0, Y0 + d, "R"],
+        [X0, Y0 + d, X0, Y0, "S"],
+    ]
+    return lot_row(w, d, tier="B", edges_json=json.dumps(edges), front_bearings_json="[0.0, 90.0]")
+
+
 @pytest.mark.parametrize("check", ["fit_ft", STEEP_GROUND])
-def test_a_lot_missed_at_the_code_own_yards_is_still_asked_at_the_wide_one(
+def test_a_corner_lot_missed_at_the_code_own_yards_is_still_asked_at_the_wide_one(
     corpus, policies, check
 ) -> None:
     # 2026-10-05 bound, 1S123AB02236: a corner lot whose open question ranked
     # the front the building misses on (on steep ground) above the one it
     # fits on. Answered, the building fits: the as-is miss was the question's.
-    lot = lot_from_row(lot_row(), corpus.layers)
+    lot = lot_from_row(corner_row(), corpus.layers)
+    before = as_is(corpus, policies, lot)
+    assert _chose(lot, before)
     (got,) = easement_checked(
-        lot, [missed(as_is(corpus, policies, lot), check)],
+        lot, [missed(before, check)],
         rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
     )
     assert got.lot.observed.get("utility_easement") is False
     assert not _fit_missed(got)
     assert flags(got)[ASSUMED].bounds == (10.0, 10.0)
+
+
+def test_a_lot_with_one_reading_that_missed_keeps_its_answer(corpus, policies) -> None:
+    # One front, one cut: the floor can only shrink the envelope that missed.
+    lot = lot_from_row(lot_row(), corpus.layers)
+    before = missed(as_is(corpus, policies, lot))
+    assert not _chose(lot, before)
+    got = easement_checked(
+        lot, [before], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+    )
+    assert got[0] is before
 
 
 def test_a_wide_yard_missed_on_steep_ground_falls_to_the_narrow_one(
