@@ -1559,13 +1559,23 @@ read when the weekly full re-screen lands.
    while iterating (parallel-agents rule 12). Ships once the proof on 137
    (`/root/scan-throughput/proof.sh`: cold/warm/mixed vs
    `/root/rank-colour_bound_base_A`) reads identical. (d) rented compute
-   -- researched 2026-10-06, DECISION PENDING, Steph's action (account,
-   card, API token in a file outside the repo): Hetzner Cloud dedicated
-   CPU, Hillsboro OR, CCX63 (48 vCPU / 192 GB / 960 GB, ~$1.64/h,
-   billed until DELETED, not stopped; a new account may need a limit
-   raise) -- full re-screen est. 2-3 h ~$5, a lane bound ~$1-3; keep a
-   ready machine image with the ~2 GB inputs for cents a month.
-   Runner-up AWS c7a.16xlarge spot (64 vCPU / 128 GB, ~$1.2/h,
-   interruptible; `--cache` resumes). One machine per lane = no queue.
-   First rented run must reproduce a 137 run exactly. Steph to judge
-   after seeing what (a)-(c) save. (e) fewer lanes: not pursued.
+   -- DECISION PENDING, Steph's action. Steph 2026-10-06 PREFERS
+   CLOUDFLARE (a commercial version would run there): Cloudflare
+   Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
+   12 GiB / 20 GB each, up to 1,500 vCPU per account at once; CPU billed
+   only while busy ($0.072/vCPU-h), memory while running
+   ($0.009/GiB-h), so ~$0.40 per busy 4-vCPU box-hour; inputs via an
+   R2 bucket mounted in the box; $5/month Workers Paid plan. Est. (to
+   prove on a first trial): full re-screen under an hour for ~$10-20, a
+   lane bound ~10-15 min for ~$1-3, a 2,000-lot sample ~$0.30. Build:
+   a chunk mode for the bridge, a dispatcher Worker + Durable Object,
+   answers written as `AnswerCache` files to R2 and merged by the
+   existing cache read; first rented run must reproduce a 137 run
+   exactly. Risk: a lot that needs more than ~11 GB cannot run in a
+   12 GiB box -- those stay on 137; the first full run's
+   `timings.parquet` (peak memory per lot) counts them. Steph's part:
+   Workers Paid plan, an API token (Containers, Workers, R2) in a file
+   outside the repo, a monthly budget alert. Fallback considered:
+   Hetzner CCX63 in Hillsboro OR (48 vCPU / 192 GB, ~$1.64/h, billed
+   until DELETED; one big machine, least build). (e) fewer lanes: not
+   pursued.
