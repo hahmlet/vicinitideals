@@ -1551,20 +1551,21 @@ read when the weekly full re-screen lands.
    decision needed.
 46. [scan: YES (a proof run: every answer must come out identical)] **Scans (bounds) on 137 are the lanes' bottleneck (Steph 2026-10-06:
    ~1 h coding, then 5-6 h waiting for one scan at a time; four lanes
-   queue on `heavy.lock`).** Measured: every bound runs the BEFORE code
-   again on every iteration (street-class re-ran its base 4 times;
-   bound2.sh runs new then base); the tail holds the lock -- rank-colour
-   new_A finished 9,550/9,936 lots in 45 min then one 9 GB lot ran 22 min
-   alone with 15 of 16 threads idle (tail = 33% of the run; fire-curb_b
-   18%, street-class base5 8%); 137 already has 16 of the host's 20
-   threads (i5-14600KF), so the homelab cannot give it more. Options
-   offered, DECISION PENDING: (a) per-lot answer cache for the BEFORE
-   side keyed on code version + data inputs, shared by every lane and
-   iteration; (b) biggest lots first (area as the cost proxy) and let the
-   next job start as workers free up instead of an all-or-nothing lock;
-   (c) iterate on a small sample, full scope once before merge (the
-   one-by-one gain/loss read stays on the final full bound); (d) more
-   compute -- rent a big cloud machine by the hour (needs an account,
-   Steph's action) or buy a second box; (e) fewer lanes / non-scan work
-   while waiting. (a)-(c) are FLATS tooling (quadfit.py is a shared file:
-   narrow edits); none may change an answer -- prove with `--exact`.
+   queue on `heavy.lock`).** Measured: every bound re-ran its BEFORE
+   code each iteration, and one 9 GB lot held the lock 22 min with 15 of
+   16 threads idle (tail = 33% of rank-colour new_A). Steph said yes to
+   (a)-(c): `flats/ingest/batch.py` (lane scan-throughput) -- costliest
+   lots first under a memory budget, `--cache` answer cache, sample
+   while iterating (parallel-agents rule 12). Ships once the proof on 137
+   (`/root/scan-throughput/proof.sh`: cold/warm/mixed vs
+   `/root/rank-colour_bound_base_A`) reads identical. (d) rented compute
+   -- researched 2026-10-06, DECISION PENDING, Steph's action (account,
+   card, API token in a file outside the repo): Hetzner Cloud dedicated
+   CPU, Hillsboro OR, CCX63 (48 vCPU / 192 GB / 960 GB, ~$1.64/h,
+   billed until DELETED, not stopped; a new account may need a limit
+   raise) -- full re-screen est. 2-3 h ~$5, a lane bound ~$1-3; keep a
+   ready machine image with the ~2 GB inputs for cents a month.
+   Runner-up AWS c7a.16xlarge spot (64 vCPU / 128 GB, ~$1.2/h,
+   interruptible; `--cache` resumes). One machine per lane = no queue.
+   First rented run must reproduce a 137 run exactly. Steph to judge
+   after seeing what (a)-(c) save. (e) fewer lanes: not pursued.
