@@ -1407,7 +1407,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    plat images; severity of "plat read, deed easements unchecked" is ruled
    AFTER the pilot, not before.
 41. **Street class per lot line -- (a)+(b) SHIPPED 6b924963 2026-10-05;
-   Steph RULED 2026-10-05, IN PROGRESS (street-class lane).** Live:
+   (i)-(iii) SHIPPED 2026-10-06 b03dcd88/92c5f1d9/972caa17, deployed.** Live:
    Gresham note 5 caps on measured `at_street_end` (False-only);
    `local_street` from Milwaukie's TSP map (True needs Metro to agree) and
    Wilsonville's (False only: Villebois "Collector Avenues" are the master
@@ -1428,7 +1428,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    easement line): MEASURE where the sidewalk runs against the lot line;
    where it cannot be measured, FALL BACK to a stated worst-case easement
    depth (pessimistic), never to "none".
-   BUILT 2026-10-06, branch flats/street-class (3 commits, NOT on main):
+   Built:
    (i) `measured_access`; (ii) rank maps for Oregon City, West Linn,
    Fairview, Beaverton (+ Milwaukie/Wilsonville ranked); (iii) nothing
    measures the walk (RLIS 2851 is presence only, +/-10 ft; Gresham
@@ -1441,8 +1441,8 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    building); Gresham sample -- 247 greens gained, ~262 yellow->red,
    x6.45 county-wide ~1,600 up / ~1,700 down. Every gain read: cap lift,
    item 44's ranking (a fitting front now beats a variance-yellow miss),
-   or flatter ground under the moved building. AWAITING Steph's go to ship.
-   Then: weekly run needs all 6 `street_class_*` keys + rlis_streets.
+   or flatter ground under the moved building. Reaches the map with the
+   ~10-08 full re-screen, which needs all 6 `street_class_*` keys + rlis_streets.
    Not done: WashCo uninc `lowest_class` re-read (CDC 501-8.5 is a gate,
    not a class rule); Wilsonville note P via easement layer 150 (low value
    while access_easement caps RN); lot page should show the assumed walk
