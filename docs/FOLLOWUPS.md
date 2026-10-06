@@ -1459,104 +1459,40 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Beaverton ROW strips: dropped in normalize since 77c99822; only bounds
    on the 10-01 stage files meet them. Still open: Wilsonville note P via
    easement layer 150 (low value while access_easement caps RN).
-42. **Water, wetland and flood ground at slope's fidelity (Steph asked
-   2026-10-04 "are we treating wetland/flood zones with as much fidelity
-   as we now treat slopes?" -- answer: no).** Net land (FOLLOWUPS 30) is
-   at parity: each city's water items are measured off its map. Before
-   placement it is not: s5o takes ground off the envelope only for quadfit
-   `action: carve` overlays (floodway everywhere; Gresham, Troutdale,
-   Fairview, Wood Village Title 3/13, West Linn stream/wetland, Oregon City
-   NROD, Tualatin). `flag` overlays reach FLATS only as net-acre sqft --
-   nothing comes off, no flag raised -- and `kill` overlays plus s2's
-   `has_z_overlay` (PCC 33.418) are read by nothing in flats/ (the
-   4(c) note). Live run 63 as-if-signed GREEN lots touching one (s5o
-   2026-10-01_wash x bridge_spliced_2026-10-02_court): Portland ezone p/c
-   3,975 (3,861 also carry z; R10/R7/R20/R5; ezone median 48% of the lot)
-   and 7,324 greens carry z at all -- portland.yaml's state-path variant
-   says "overlays still screen as overlays" but none does; Washington
-   habitat 5,482, CWS vegetated corridor 1,756 (1,039 over a quarter of
-   the lot), Clackamas HCA 2,917 / WQRA 742, FEMA 100-yr fringe 1,099
-   (534 over a quarter), Metro wetlands 313, smaller in Gladstone,
-   Wilsonville, Happy Valley, Tualatin. Map gaps: Tigard, Cornelius,
-   Johnson City, Rivergrove, Maywood Park have no wetland/stream map
-   (Metro wetlands is laid only over 9 jurisdictions). OFFERED (pending
-   Steph): (a) Portland z + ezones first -- read 33.418 / OAR
-   660-046-0010(3) for whether the state path survives a z lot, then red
-   or carve; (b) read each `flag` overlay's code like the slope sentences
-   and rule it no-build (carve before placement), build-with-permit
-   (yellow flag) or incentive-only (ignore); (c) the flood fringe:
-   yellow flag, carve, or nothing, per city; (d) lay Metro wetlands (or
-   DSL's statewide inventory) over the map-gap cities. (a)-(c) need a
-   quadfit s5o run for new carves, then a full re-screen.
-   (a) SHIPPED 2026-10-04 e55c22ee, deployed: PCC 33.418.040.B switches
-   off the triplex/fourplex allowance on any R20-R2.5 lot the "z" touches;
-   HB 2138 sec 1(5)(b) keeps it over the state path. Fact
-   `constrained_sites_overlay` off s4 `has_z_overlay` (Portland + Multnomah
-   pockets). Steph RULED "red, way in noted": four attached houses after a
-   land division (relief `attached_house_division`) rides on the bind,
-   never taken. 17,908 lots (7,295 green / 9,557 yellow today) go RED at the
-   next full re-screen -- WARNED promotion, Steph promotes. Not done: the
-   ~114 ezone lots with no z -- belongs to (b).
-   (b)/(c) PHASE 1 SHIPPED 2026-10-05 25d26ce6 + 2c5b461b, deployed: every
-   quadfit `flag` overlay plus Portland ezone p/c/v (no z) and the FEMA
-   fringe is now a closer look -- YELLOW, never GREEN, flag
-   RESOURCE-PERMIT naming the area and its cite on the lot page
-   (`flats/rules/resource_overlays.py`; a test holds the list against
-   overlays.yaml both ways). Milwaukie Willamette Greenway (quadfit kill)
-   -> fact `willamette_greenway_zone`, R-MD/R-HD fourplex RED with the
-   greenway conditional use logged (MMC 19.401.3 / 19.401.5.D). Run 63
-   per lot (bridge files hold 2 rows per lot -- count TLIDs): 8,873 of
-   68,044 greens -> yellow net of z (WA habitat 5,465, CWS 1,751, Clackamas
-   HCA 2,911 / WQRA 741, FEMA 1,093 but only 33 FEMA-only, Metro wetlands
-   313); greenway 126 lots -> RED. WARNED promotion at the ~10-08 run.
-   PHASE 2 SHIPPED 2026-10-06 587b02d1, deployed; reaches the map with the
-   run AFTER ~10-08 (that run's s5o must be re-run on this code -- the bound
-   only patched a copy). Each overlay whose code forbids building got a
-   `carve` twin on the same map, permit flag kept: CWS vegetated corridor
-   (riparian + wetland buffer polygons only), Clackamas HCA
-   (HIGH/MODERATE/LOW only), West Linn RCI + 100 ft WRA riparian inside
-   RCI, Wilsonville SROZ (the hole only), Milwaukie HCA + WQR, Gladstone
-   HCA + WQ; West Linn piped streams EXEMPT (32.040(F)(2)), flag dropped.
-   Cites in overlays.yaml. Bound on 137 (all 11,341 carved or piped lots,
-   /root/water_bound_{base,new}, colour per lot): 824 yellow->red (684 no
-   longer fit, 83 fit only on steep ground, 57 building pushed past hose
-   reach; WashCo uninc 411, Clackamas 250, Beaverton 90, West Linn 26,
-   Milwaukie 19), 0 greens lost; 4 yellow->green (West Linn piped, read)
-   and 7 red->yellow, all read (5: the carve moved the building nearer the
-   street inside hose reach -- item 39's one-placement search; 2
-   Wilsonville: the other reading's ambiguous rule -- item 44). WARNED
-   promotion. OFFERED (pending Steph): the HCA disturbance allowance (ZDO
-   706.10 / Tables 706-3,-4; Gladstone Tables 3/4) could lift some of the
-   ~260 HCA reds (Clackamas 250, Gladstone 7, part of Milwaukie) -- not
-   modelled. Residue: West Linn fish-bearing streams outside RCI still at
-   65 ft not 100 (ODFW map not held); Wood Village's Title 3/13 carves
-   include flood-only and "NO HCA" polygons (over-carve); washington_habitat
-   stays a flag (Beaverton/King City/Durham scoping unread, Hillsboro SNRO
-   map not held); Portland p non-z later; Clackamas WQRA, Happy Valley,
-   Tualatin kept as they were. FEMA fringe stays YELLOW, RULED ("we aren't customizing
-   for flood zones") -- do not re-offer. (d) STATE MAPS --
-   Steph 2026-10-05 "plan on looking at state maps". Found: DSL serves
-   every approved local wetland inventory (maps.dsl.state.or.us
-   LWI2024/FeatureServer: 4 wetlands, 3 probable wetlands, 5 study areas;
-   2,164 wetland polygons in the metro box) and NWI everywhere
-   (NWI/FeatureServer/0, 24,547 polygons), plus ESH streams and hydric
-   soils. The "map gap" was wrong: DSL holds LWIs for Tigard, Cornelius,
-   Beaverton, Hillsboro, Gresham, Oregon City, West Linn, Wilsonville,
-   Tualatin, Sherwood, Happy Valley, Clackamas north urban area -- and
-   Tigard/Cornelius/Johnson City/Rivergrove/Maywood Park have no lots in
-   the run anyway. (d) SHIPPED 2026-10-05 1c6da420, deployed: two quadfit
-   `flag` overlays over EVERY jurisdiction, dsl_lwi_wetlands (LWI2024
-   layer 4) and dsl_nwi_wetlands (NWI emergent/forested-shrub/pond; Riverine
-   and Lake left out), cite ORS 196.810(1)(a) / 196.800(3),(16),(17); both
-   are RESOURCE-PERMIT yellow like (b). Fetched by box (acquire.py
-   `bbox_4326`, s0 `bbox`); pipeline.yaml registers both keys, so the next
-   weekly acquire + s5o picks them up. Measured on 137 (run 63 lots, same
-   0.5 ft touch as s5o): 33 greens -> yellow that no city map already
-   flagged (Tualatin 11, Sherwood 7, Portland 7, WashCo 5, Clackamas 2,
-   Troutdale 1; 23 NWI-only; median 1,127 sqft of wetland), 32 of them with
-   wetland ground outside every city carve -- so no carve-aware rule needed.
-   None go green. Probable wetlands + hydric soils: Steph 2026-10-05
-   DECLINED ("I don't want the maybe list") -- do not re-offer.
+42. **Water, wetland and flood ground at slope's fidelity -- DONE; reaches
+   the map with the weekly runs from ~10-08 (all WARNED promotions, Steph
+   promotes).** Steph asked 2026-10-04 "are we treating wetland/flood zones
+   with as much fidelity as we now treat slopes?". Shipped: (a) Portland z
+   RED e55c22ee (PCC 33.418.040.B; Steph RULED "red, way in noted", ~17,900
+   lots); (b)/(c) every quadfit `flag` overlay + FEMA fringe a YELLOW
+   closer look 25d26ce6/2c5b461b (8,873 greens), Milwaukie greenway RED
+   (126); (d) DSL state wetland maps everywhere 1c6da420 (+33 yellow);
+   phase 2 no-build carves 587b02d1 (824 yellow->red, read); residue
+   5b4ba52e + 799ef7a9 2026-10-06, deployed: Portland ezone p/c/v resource
+   areas carved (PCC 33.430; the 25 ft transition area inside p+c stays
+   buildable); Wood Village carves only streams, wetland buffers and real
+   HCAs (WVDC 430.170.A -- its "NO HCA" and flood-only polygons were an
+   over-carve) and flags WQR/HCA; Hillsboro reads its own significant
+   natural resource map (CDC 12.27: site or impact area = flag, the
+   no-build core carved) instead of Metro's habitat map. Bounds on 137,
+   colour per lot: Portland/Wood Village 1,821 lots -- 25 Portland
+   yellow->red, Wood Village 3 red->green + 5 red->yellow (over-carve gone,
+   read) and 1 green->yellow (WQR flag); Hillsboro 5,145 lots -- 28
+   yellow->green, every one read (on Metro's habitat map only, off
+   Hillsboro's map, envelope and every other flag unchanged), 7 yellow->red
+   (4 no fit, 2 steep, 1 hose), 1 red->yellow, 0 greens lost. The weekly
+   run that carries phase 2 and the residue must re-run quadfit s5o on this
+   code (every bound patched a copy) and acquire `overlay_hillsboro_snro`
+   (pipeline.yaml registers it). RULED, never re-offer: FEMA fringe stays
+   YELLOW ("we aren't customizing for flood zones"); landslide slopes, the
+   "maybe list" (probable wetlands, hydric soils), the HCA disturbance
+   allowance (Steph 2026-10-06 "Leave it") and West Linn fish-bearing
+   streams (ODFW 65 vs 100 ft, Steph 2026-10-06 "ignore") all DECLINED.
+   Left as they were, read: Clackamas WQRA, Happy Valley, Tualatin;
+   washington_habitat stays a flag for WashCo uninc, Beaverton, Sherwood,
+   King City, Durham (each needs a map or a determination the city holds).
+   Known under-carve: Portland's city-limit transition-area exception
+   (33.430.050.A) is not drawn.
 43. **Utility easement: Steph's street-yard rule -- SHIPPED a9106379
    2026-10-06, live from the next full re-screen (~10-08).** Ruled
    2026-10-01 (item 17(e)), Oregon City 2026-10-05 "same rule": the
