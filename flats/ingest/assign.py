@@ -155,6 +155,7 @@ ROW_COLUMNS = (
     "room_width_ft",
     "room_depth_ft",
     "room_both_ft",
+    "sidewalk_easement_ft",
 )
 
 #: The flag type each gate raises on a lot the bridge never measured

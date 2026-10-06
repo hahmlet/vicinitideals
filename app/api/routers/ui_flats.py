@@ -3785,6 +3785,10 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
         ("Alley at the side", yes(observed.get("alley_at_side"))),
         ("Alley width", ft(facts.get("alley_width_ft"))),
         ("On a cul-de-sac bulb", yes(facts.get("fronts_cul_de_sac"))),
+        # Gresham measures its street setbacks from a sidewalk easement where
+        # there is one, and nothing maps them: the screen takes the deepest
+        # the city's standards allow (7 ft on a local street, 20 ft else).
+        ("Sidewalk easement assumed (street setbacks start this far in)", ft(facts.get("sidewalk_easement_ft"))),
         ("Split between zones", yes(facts.get("split_zone"))),
         (
             "Share in this zone",

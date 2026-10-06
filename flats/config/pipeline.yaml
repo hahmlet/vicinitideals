@@ -524,6 +524,24 @@ datasets:
       2026-09-25). A TSP update is under way: re-read the codes when it is
       adopted.
 
+  street_class_washington:
+    kind: arcgis
+    label: Washington County TSP functional classification
+    provides: streets
+    url: https://gispub.co.washington.or.us/server/rest/services/LUT_PDS/TSP_Layers/MapServer/4
+    geometry: polyline
+    fields: [UrbRur, F_Label, FClass2]
+    serves: [or/washington/_unincorporated]
+    notes: >-
+      The county TSP's functional classification (3,609 lines, read
+      2026-10-06), its classified roads only: FClass2 1 Freeway, 2
+      Principal Arterial, 3 Arterial, 4 Collector, 5 Neighborhood Route,
+      and 30/40/50 Proposed Arterial / Collector / Neighborhood Route. No
+      local street is drawn and no line is named: a lot line is matched by
+      where the line runs, and a street the map leaves out ranks local only
+      where Metro types it a minor residential street. For CDC 501-8.5 B's
+      access gates (corner_access_street: lowest_class).
+
   # --- curbs and pavement widths (flats/geom/curbs.py) ----------------------
   # Where the fire truck stands (FOLLOWUPS 29): the hose's 150 ft
   # (OFC 503.1.1) is measured from 10 ft out from the near curb (Steph

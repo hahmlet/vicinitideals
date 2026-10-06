@@ -713,6 +713,11 @@ def export(
                 except KeyError:
                     layer = f"quadfit:{juris}"
                 facts = lot_facts(s4r, s5o_rows.get(tlid, {}), observed, q_rows.get(tlid, {}))
+                # The worst-case sidewalk easement the street setbacks were
+                # measured from (Gresham note 1), so the lot page can say so.
+                eased = _num(first_row[tlid].get("sidewalk_easement_ft"))
+                if eased:
+                    facts["sidewalk_easement_ft"] = eased
                 zone_raw = s4r.get("home_zone_raw") or s4r.get("zone_raw")
                 zone, address = s4r.get("zone"), s4r.get("SITEADDR")
                 wkb = s4r.get("wkb")

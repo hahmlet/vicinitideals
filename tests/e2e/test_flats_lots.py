@@ -271,3 +271,25 @@ def test_a_lot_page_says_how_steep_the_ground_is(logged_in_page: Page, base_url:
     expect(first).to_contain_text("Slope")
     expect(first.locator(".slope-steep")).to_contain_text("steeper than 15%")
     expect(first.locator(".slope-steep")).to_contain_text("1 m lidar map")
+
+
+#: A Gresham corner lot: its street setbacks are measured from a sidewalk
+#: easement nothing maps (Table 4.0131 note 1), taken at its worst.
+SIDEWALK_LOT = "/flats/lots/multnomah/1N3E33CC%20%20-00400"
+
+
+def test_a_gresham_lot_page_says_how_deep_a_sidewalk_easement_was_assumed(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """FOLLOWUPS 41(iii), Steph 2026-10-05: "measure exact, fallback to
+    pessimistic". The facts table says how far in the street setbacks were
+    taken to start -- 7 ft on a local street, 20 ft on any other. A run
+    screened before the depth was carried has no row."""
+    page = logged_in_page
+    page.goto(f"{base_url}{SIDEWALK_LOT}")
+    if page.locator("#lot-verdict").count() == 0:
+        pytest.skip("the Gresham lot is not in this run")
+    row = page.locator("#lot-facts tr", has_text="Sidewalk easement assumed")
+    if row.count() == 0:
+        pytest.skip("this run was screened before the sidewalk depth was carried")
+    expect(row).to_contain_text(" ft")

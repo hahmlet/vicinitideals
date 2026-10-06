@@ -57,6 +57,12 @@ one and the code sends the driveway to the front instead
 never give one, so the ranking needs no second source: a TSP map's "Local
 Street" ranks below its "Collector" even where the code reads "local" off
 another plan (Villebois).
+
+**A map that draws only the classified streets** (Washington County's TSP
+layer: neighbourhood routes and up, no local streets) ranks the street it
+does not draw as :attr:`ClassSpec.unlisted` -- but only where Metro types
+that street a minor residential one (:data:`RLIS_LOCAL`). An absence is not
+a reading, so it takes the second source a ``local_street`` True takes.
 """
 
 from __future__ import annotations
@@ -105,12 +111,17 @@ class ClassSpec:
 
     A map that only ranks leaves ``local`` and ``other`` empty, and answers
     no ``local_street``.
+
+    ``unlisted`` is the rank of a street the map does not draw at all, for
+    a map that draws only its classified streets; None (every other map):
+    an undrawn street is unread.
     """
 
     field: str
     local: frozenset[str]
     other: frozenset[str]
     rank: Mapping[str, int] = dataclass_field(default_factory=dict)
+    unlisted: int | None = None
 
 
 #: Registry dataset -> how its classes read.
@@ -222,6 +233,23 @@ CLASS_MAPS: dict[str, ClassSpec] = {
         other=frozenset(),
         rank={"9": 0, "7": 1, "5": 2, "3": 3, "2": 4, "1": 5},
     ),
+    # Washington County CDC 501-8.5 B is a gate per class, not a "lowest
+    # class" sentence, and it comes to the same street: a collector takes
+    # direct access only from "commercial, industrial and institutional
+    # uses with 150 feet or more of frontage" (B(3)), an arterial only from
+    # a collector or another arterial (B(4)), a neighbourhood route only
+    # from a use with 70 ft of frontage (B(2)). The county's map draws its
+    # classified roads only -- FClass2 5 Neighborhood Route, 4 Collector,
+    # 3 Arterial, 2 Principal Arterial, 1 Freeway; 30, 40, 50 Proposed rank
+    # nothing -- so a street it leaves out is a local street, where Metro
+    # agrees (``unlisted``).
+    "street_class_washington": ClassSpec(
+        field="FClass2",
+        local=frozenset(),
+        other=frozenset(),
+        rank={"5": 1, "4": 2, "3": 3, "2": 4, "1": 5},
+        unlisted=0,
+    ),
 }
 
 
@@ -238,6 +266,8 @@ class ClassMap:
     types: tuple[int | None, ...]
     #: Each line's class rank (:attr:`ClassSpec.rank`); None where unranked.
     ranks: tuple[int | None, ...] = ()
+    #: :attr:`ClassSpec.unlisted`.
+    unlisted: int | None = None
 
     def covers(self, layer_id: str | None) -> bool:
         return bool(layer_id) and any(layer_id == s or layer_id.startswith(f"{s}/") for s in self.serves)
@@ -281,6 +311,7 @@ def build(
     street_names: Sequence[object],
     types: Sequence[int | None],
     ranks: Sequence[int | None] = (),
+    unlisted: int | None = None,
 ) -> ClassMap:
     """A class map from its parts (what :func:`load_class_maps` reads, and
     what a test draws). ``ranks`` defaults to none."""
@@ -295,6 +326,7 @@ def build(
         streets=Lines.build([streets[i] for i in road], [street_names[i] for i in road]),
         types=tuple(types[i] for i in road),
         ranks=tuple(ranked[i] for i in keep),
+        unlisted=unlisted,
     )
 
 
@@ -349,6 +381,7 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
                 labels,
                 types,
                 [class_rank(p.get(spec.field), spec) for p in props],
+                spec.unlisted,
             )
         )
     return tuple(out)
@@ -387,8 +420,14 @@ def _kind_at(point: Any, own: float, cmap: ClassMap) -> str:
 
 def _rank_at(point: Any, own: float, cmap: ClassMap) -> int | None:
     """The rank of the street a lot line abuts at ``point``; None where no
-    TSP line on it is abreast, or the lines there disagree."""
-    _, lines = _beside(point, own, cmap)
+    TSP line on it is abreast, or the lines there disagree.
+
+    On a map of the classified streets only (:attr:`ClassMap.unlisted`), a
+    street with no TSP line abreast that Metro types local ranks as the
+    undrawn class; one Metro types otherwise stays unread."""
+    s, lines = _beside(point, own, cmap)
+    if not lines and s is not None and cmap.unlisted is not None:
+        return cmap.unlisted if cmap.types[s] in RLIS_LOCAL else None
     found = {cmap.ranks[i] for i in lines}
     if len(found) != 1:
         return None

@@ -3096,6 +3096,9 @@ def row_for(s: Screened) -> dict[str, Any]:
         "room_width_ft": round(s.room.width_ft, 3) if s.room is not None else None,
         "room_depth_ft": round(s.room.depth_ft, 3) if s.room is not None else None,
         "room_both_ft": round(s.room.both_ft, 3) if s.room is not None else None,
+        # The sidewalk easement the street setbacks were measured from, at
+        # its worst (FOLLOWUPS 41(iii)); None where no code asks.
+        "sidewalk_easement_ft": s.lot.sidewalk_easement_ft,
     }
 
 

@@ -263,6 +263,21 @@ def test_a_lot_the_distance_file_holds_carries_its_distance_to_transit(tmp_path:
     assert "transit" not in lots[LOT_B], "a lot the file does not hold has no distance, not a far one"
 
 
+def test_a_lot_screened_from_a_sidewalk_easement_carries_its_depth(tmp_path: Path) -> None:
+    """The lot page says how far in the street setbacks were taken to start
+    (Gresham note 1, FOLLOWUPS 41): the screen assumed the worst."""
+    run_dir, s4, s5o, results = _make_run(tmp_path)
+    frame = pd.read_parquet(run_dir / "lots.parquet")
+    frame["sidewalk_easement_ft"] = [7.0 if t == LOT_A else None for t in frame["TLID"]]
+    frame.to_parquet(run_dir / "lots.parquet", index=False)
+
+    export(run_dir, tmp_path / "bundle", s4=s4, s5o=s5o, quadfit_results=results, code_version="abc1234")
+
+    lots = {r["tlid"]: json.loads(r["facts"]) for r in _read(tmp_path / "bundle" / LOTS_FILE)}
+    assert lots[LOT_A]["sidewalk_easement_ft"] == 7.0
+    assert "sidewalk_easement_ft" not in lots[LOT_B], "no code asked: nothing assumed, nothing said"
+
+
 def test_the_binding_list_is_the_head_first_and_each_check_once() -> None:
     assert result_binding({"head": "fit_ft", "failing": "lot_width_ft,fit_ft"}) == ["fit_ft", "lot_width_ft"]
     assert result_binding({"head": None, "failing": ""}) == []

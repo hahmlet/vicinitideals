@@ -195,6 +195,7 @@ async def _seed(
             condo_verdict="land",
             facts={"source": "quadfit", "frontage_ft": 50.0, "lot_width_ft": 50.0, "lot_depth_ft": 100.0,
                    "geometry_tier": "A", "observed": {"abuts_alley": True, "alley_at_rear": True}, "alley_width_ft": 20.0,
+                   "sidewalk_easement_ft": 7.0,
                    "transit": {"rail_stop_ft": 1240.0, "lrt_station_ft": 1240.0, "transit_stop_ft": 180.0,
                                "frequent_route_ft": 90.0, "parking_reform": True, "version": "6d3a528e4091692b"},
                    "quadfit": {"triage": "red", "binding_constraint": "siteplan_no_layout", "policy_exclusion": None,
@@ -666,10 +667,14 @@ async def test_the_lot_page_lists_the_facts_the_screen_read(
     assert "Near transit: no parking can be required" in facts and "yes" in facts
     assert "Nearest MAX / streetcar / WES station" in facts and "1,240 ft" in facts
     assert "Nearest frequent bus or rail line" in facts and "90 ft" in facts
+    # The worst-case sidewalk easement the street setbacks were taken from
+    # (Gresham note 1, FOLLOWUPS 41), where one was assumed.
+    assert "Sidewalk easement assumed" in facts and "7 ft" in facts
     # And the fact the seeded lot lacks is left out, not printed as None.
     assert "None" not in facts
     other = await client.get("/flats/lots/clackamas/11E25AB%20%20-00300")
     assert "Near transit" not in other.text.split('id="lot-facts"', 1)[1]
+    assert "Sidewalk easement" not in other.text.split('id="lot-facts"', 1)[1]
 
 
 async def test_a_lot_the_map_holds_but_nobody_measured_says_why_and_shows_the_roll(

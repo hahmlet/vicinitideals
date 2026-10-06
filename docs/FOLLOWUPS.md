@@ -1442,12 +1442,23 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    x6.45 county-wide ~1,600 up / ~1,700 down. Every gain read: cap lift,
    item 44's ranking (a fitting front now beats a variance-yellow miss),
    or flatter ground under the moved building. Reaches the map with the
-   ~10-08 full re-screen, which needs all 6 `street_class_*` keys + rlis_streets.
-   Not done: WashCo uninc `lowest_class` re-read (CDC 501-8.5 is a gate,
-   not a class rule); Wilsonville note P via easement layer 150 (low value
-   while access_easement caps RN); lot page should show the assumed walk
-   depth; Tualatin through-lot lowest class; Beaverton ROW strips take
-   ~2 min each on new code and hang old code (scope them out of bounds).
+   ~10-08 full re-screen, which needs ALL 7 `street_class_*` keys
+   (washington added) + rlis_streets.
+   Leftovers 2026-10-06: WashCo uninc re-read -- 501-8.5 B(2)-(4) bars a
+   4-plex from collector/arterial/neighbourhood-route access, so
+   `lowest_class` KEPT and ranked off the county TSP map (FClass2; local
+   streets undrawn, so an undrawn street ranks 0 only where Metro calls it
+   local). Bound /root/street-class_bound_{base,new}6 (the 1,717 corners
+   whose drive moves to the quieter front): 248 greens lost (237 red: the
+   drive off the front does not fit, or steep ground), 94 yellow->red, 6
+   up (slope/fire route read at the moved building); 410 local fronts
+   checked for a missed parallel TSP line: none. Lot page shows the
+   assumed sidewalk easement (after the next promoted run). Tualatin
+   through lots PARKED: 351 lots, ~30 green if signed; an exact answer
+   needs a court entered off the back street + a Tualatin class map.
+   Beaverton ROW strips: dropped in normalize since 77c99822; only bounds
+   on the 10-01 stage files meet them. Still open: Wilsonville note P via
+   easement layer 150 (low value while access_easement caps RN).
 42. **Water, wetland and flood ground at slope's fidelity (Steph asked
    2026-10-04 "are we treating wetland/flood zones with as much fidelity
    as we now treat slopes?" -- answer: no).** Net land (FOLLOWUPS 30) is

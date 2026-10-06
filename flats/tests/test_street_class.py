@@ -196,7 +196,8 @@ def test_every_ranking_map_starts_local_at_zero_and_ranks_no_proposal() -> None:
     datasets = load_pipeline().datasets
     for key, spec in CLASS_MAPS.items():
         assert key in datasets and datasets[key].serves, key
-        assert min(spec.rank.values()) == 0, key
+        lowest = min([*spec.rank.values(), *([] if spec.unlisted is None else [spec.unlisted])])
+        assert lowest == 0, key
         assert not any("Proposed" in v for v in spec.rank), key
     beaverton = CLASS_MAPS["street_class_beaverton"]
     # Coded domains arrive as numbers or strings alike.
@@ -204,6 +205,42 @@ def test_every_ranking_map_starts_local_at_zero_and_ranks_no_proposal() -> None:
     assert class_rank("4", beaverton) is None  # Proposed Arterial
     west_linn = CLASS_MAPS["street_class_west_linn"]
     assert class_rank(10, west_linn) is None and class_rank(11, west_linn) is None
+    washington = CLASS_MAPS["street_class_washington"]
+    assert washington.unlisted == 0 and class_rank(5, washington) == 1  # Neighborhood Route
+    assert class_rank(40, washington) is None  # Proposed Collector
+
+
+def unlisted_map(oak: int | None = 2, main_type: int = 1500):
+    """Washington County's shape of map: Oak drawn (ranked ``oak``), Main
+    not drawn at all, Metro typing Main ``main_type``."""
+    return build(
+        ["or/washington/_unincorporated"],
+        [OAK],
+        [""],
+        [""],
+        [MAIN, OAK],
+        ["SE MAIN ST", "SE OAK AVE"],
+        [main_type, 1450],
+        [oak],
+        unlisted=0,
+    )
+
+
+def test_a_street_the_map_leaves_out_is_local_only_where_metro_says_so() -> None:
+    from flats.geom.street_class import edge_rank
+
+    m = unlisted_map()
+    assert edge_rank(ON_OAK, m) == 2
+    assert edge_rank(ON_MAIN, m) == 0
+    # Metro calls Main something busier: the absence alone ranks nothing.
+    assert edge_rank(ON_MAIN, unlisted_map(main_type=1450)) is None
+    # A drawn street of no rank (a proposal) is not read as undrawn.
+    assert edge_rank(ON_OAK, unlisted_map(oak=None)) is None
+    # A line no street runs beside stays unread.
+    assert edge_rank([100.0, 900.0, 200.0, 900.0, "F"], m) is None
+    # Every other map: an undrawn street is unread.
+    no_unlisted = build(["x"], [OAK], [""], [""], [MAIN, OAK], ["", ""], [1500, 1450], [2])
+    assert edge_rank(ON_MAIN, no_unlisted) is None
 
 
 def test_a_quiet_front_sends_the_driveway_to_the_front() -> None:

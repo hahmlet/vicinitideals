@@ -433,8 +433,18 @@ defaults:
   # with 150 feet or more of frontage". A lot on one local street and one
   # collector is therefore steered to the local street. `lowest_class` is
   # the reading that holds in every combination; `any` would be right only
-  # where both streets are local, which nothing measures. A doubt in the
-  # handoff.
+  # where both streets are local, which nothing measures.
+  #
+  # RE-READ 2026-10-06 (FOLLOWUPS 41), and kept. 501-8.5's opening says
+  # its "access spacing requirements" reach middle housing only in the
+  # 430-84.3 B(4) cases -- the spacing, not B's opening "No use will be
+  # permitted to have direct access to a street or road except as specified
+  # below", so the use gates stand. B(4) adds the arterial: access to one
+  # "shall be from collector or other arterial streets". B(2) lets a
+  # neighbourhood route serve a use with 70 ft of frontage. Each gate sends
+  # the driveway down a class, so on a lot of two classes the lower one
+  # serves; (c)(iii) leaves the choice open between two locals. Measured
+  # from the county's TSP map (street_class_washington).
   corner_access_street:
     value: lowest_class
     cite: Washington County CDC 430-84.3 B(4)(c) + 501-8.5 B(3), collector access only for non-residential uses with 150 ft of frontage

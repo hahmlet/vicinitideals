@@ -156,3 +156,8 @@ def test_a_screened_gresham_lot_is_cut_from_the_easement_line() -> None:
     codes = lambda s: {f.code for f in s.screening.flags}  # noqa: E731
     assert "FACT-SIDEWALK-EASEMENT" in codes(before)
     assert "FACT-SIDEWALK-EASEMENT" not in codes(after)
+    # The bridge row carries the depth taken, for the lot page.
+    from flats.ingest.quadfit import row_for
+
+    assert row_for(after)["sidewalk_easement_ft"] == 7.0
+    assert row_for(before)["sidewalk_easement_ft"] is None
