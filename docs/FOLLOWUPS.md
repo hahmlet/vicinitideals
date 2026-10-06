@@ -1608,3 +1608,22 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    short drawing's building + court too (or hold a green whose grade was
    never tried); bound over the negative-slack greens only. No Steph
    decision needed.
+46. **Scans (bounds) on 137 are the lanes' bottleneck (Steph 2026-10-06:
+   ~1 h coding, then 5-6 h waiting for one scan at a time; four lanes
+   queue on `heavy.lock`).** Measured: every bound runs the BEFORE code
+   again on every iteration (street-class re-ran its base 4 times;
+   bound2.sh runs new then base); the tail holds the lock -- rank-colour
+   new_A finished 9,550/9,936 lots in 45 min then one 9 GB lot ran 22 min
+   alone with 15 of 16 threads idle (tail = 33% of the run; fire-curb_b
+   18%, street-class base5 8%); 137 already has 16 of the host's 20
+   threads (i5-14600KF), so the homelab cannot give it more. Options
+   offered, DECISION PENDING: (a) per-lot answer cache for the BEFORE
+   side keyed on code version + data inputs, shared by every lane and
+   iteration; (b) biggest lots first (area as the cost proxy) and let the
+   next job start as workers free up instead of an all-or-nothing lock;
+   (c) iterate on a small sample, full scope once before merge (the
+   one-by-one gain/loss read stays on the final full bound); (d) more
+   compute -- rent a big cloud machine by the hour (needs an account,
+   Steph's action) or buy a second box; (e) fewer lanes / non-scan work
+   while waiting. (a)-(c) are FLATS tooling (quadfit.py is a shared file:
+   narrow edits); none may change an answer -- prove with `--exact`.
