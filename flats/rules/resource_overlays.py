@@ -137,6 +137,12 @@ PERMITS: tuple[Permit, ...] = (
         "overlay (Metro's map as proxy)",
     ),
     Permit(
+        "hillsboro_snro",
+        "a Hillsboro significant natural resource site or its impact area",
+        "Hillsboro CDC 12.27.220.A.9.b (a written verification of exemption, boundaries "
+        "verified and fenced) or 12.27.220.B (a Significant Natural Resource Permit)",
+    ),
+    Permit(
         "clackamas_hca",
         "a Clackamas County habitat conservation area",
         "ZDO 706.05 prohibits no dwelling; 706.06/706.10 require an HCA development permit",

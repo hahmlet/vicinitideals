@@ -764,6 +764,17 @@ datasets:
       pond types only: Riverine is the channel and Lake open water, both read
       through the stream maps and FEMA already.
 
+  overlay_hillsboro_snro:
+    kind: arcgis
+    label: Hillsboro Significant Natural Resources Overlay
+    provides: overlay
+    url: https://services1.arcgis.com/eQ2vvbCvmxlIgo3a/arcgis/rest/services/Community_Development/FeatureServer/1
+    fields: [SIG, LEVEL_, TYPE, RES_TYPE, SITE]
+    serves: [or/washington/hillsboro]
+    notes: >-
+      FOLLOWUPS 42. The city's own Goal 5 map (CDC 12.27.205.A): SNR Sites and
+      their Impact Areas. Stands in for Metro's habitat inventory in Hillsboro.
+
   overlay_fema_flood:
     kind: arcgis
     label: FEMA National Flood Hazard Layer

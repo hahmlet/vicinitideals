@@ -433,20 +433,59 @@ overlays:
       sherwood: {grade: C, note: "regional proxy"}
       king_city: {grade: C, note: "regional proxy"}
       durham: {grade: C, note: "regional proxy"}
+  # Read 2026-10-06 (FOLLOWUPS 42): none of these places regulates Metro's map
+  # as such -- the Tualatin Basin Partners made it a voluntary program -- and
+  # each binding rule sits on a local map. It stays a flag, the paperwork
+  # being real in each: Washington County's exemption needs "a determination
+  # of exemption" (CDC 422-4.4); Beaverton's SNRA tree rules (BDC 60.60) and
+  # Cooper Mountain's Resource Overlay (60.37.40, a capped allowance) ride on
+  # maps not held; Sherwood adopts Metro's inventory as Map V-2 and asks for
+  # the resources on the plans (16.142.020.C); King City's Kingston Terrace
+  # caps upland disturbance (Table 16.114-9); Durham's NR and NRO areas (DDC
+  # Table 2.18) are not held. Hillsboro left this entry: its own map is held
+  # below, and in Hillsboro Metro's inventory is only "Habitat Benefit Areas"
+  # carrying recommended practices (CDC 12.01, 12.50).
   - key: washington_habitat
     source: metro_title13
     name: "Goal 5 habitat (Metro Title 13 as proxy)"
     action: flag
-    jurisdictions: [washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham]
-    citation: "Metro Title 13 (Nature in Neighborhoods) as each Washington County jurisdiction implements it through its own Goal 5 overlay; none of those chapters read for the pod yet"
+    jurisdictions: [washington_unincorporated, beaverton, sherwood, king_city, durham]
+    citation: "Metro Title 13 as each Washington County jurisdiction implements it on its own map: Washington County CDC 422-4.4 ('a determination of exemption'), 422-9 tree retention; Beaverton BDC 60.60 (SNRA trees) and 60.37 (Cooper Mountain); Sherwood SZCDC 16.142.010/.020.C; King City KCC 16.114 Table 16.114-9; Durham DDC Table 2.18"
     confidence: needs_verification
     coverage:
       washington_unincorporated: {grade: C, note: "2005-era regional habitat model standing in for the county's Goal 5 maps"}
-      hillsboro: {grade: C, note: "regional proxy"}
       beaverton: {grade: C, note: "regional proxy"}
       sherwood: {grade: C, note: "regional proxy"}
       king_city: {grade: C, note: "regional proxy"}
       durham: {grade: C, note: "regional proxy"}
+  # Hillsboro's own Goal 5 map (CDC 12.27.200-.255, Ord. 6473). Building in an
+  # SNR Site past 12.27.220.A.9.b.iv's 200 sq ft takes an SNRP II, approved
+  # only where adverse impacts are minimised "to the extent practicable"
+  # (12.80.130.G) -- discretion, so RED. In an Impact Area the clear-standards
+  # SNRP I caps development at 6,000 sq ft less all of the lot outside the
+  # Site and Impact Area, no more than 4,000 of it permanent (12.27.235.A.1.b):
+  # nothing on most lots, short of a pod and its court on any. Both carve;
+  # the allowance is not modelled (as the Clackamas HCA's). The flag keeps
+  # the paperwork: even work wholly outside needs "a written verification of
+  # exemption" with the boundaries verified (12.27.220.A.9.b.i, 12.27.230.A).
+  - key: hillsboro_snro
+    name: "Hillsboro Significant Natural Resources Overlay (paperwork)"
+    action: flag
+    jurisdictions: [hillsboro]
+    citation: "Hillsboro CDC 12.27.220.A.9.b.i: development 'not located within the boundary of a verified SNR Site or Impact Area' is exempt 'provided a written verification of exemption is obtained from the City' and 12.27.230.A is met (boundaries verified, staked and fenced); 12.27.220.B: otherwise 'a Significant Natural Resource Permit (SNRP) is required for all development and redevelopment activities within the SNRO'"
+    confidence: verified
+    coverage:
+      hillsboro: {grade: A, note: "city SNRO layer (Community_Development/FeatureServer/1): SNR Sites and Impact Areas"}
+  - key: hillsboro_snro_core
+    source: hillsboro_snro
+    name: "Hillsboro SNR Sites and Impact Areas -- no pod"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [hillsboro]
+    citation: "Hillsboro CDC 12.27.220.A.9.b.iv: exempt only 'up to 200 square feet of development within SNR Sites within a 5-year period'; 12.27.235.A.1.b.i: 'the maximum development area (permanent and temporary) allowed within the Impact Area on a lot is determined by subtracting all portions of the lot outside the Resource Site and Impact Area from 6,000 square feet', of which (iii) 'no more than 4,000 square feet shall be permanent development area'; 12.27.235.A.2: all other development requires an SNRP II under 12.80.130.G ('To the extent practicable, proposed activities are located and designed to minimize ...')"
+    confidence: verified
+    coverage:
+      hillsboro: {grade: A, note: "city SNRO layer. Over-carves the Impact Area allowance on a lot lying mostly inside it, and the 40 ft by 40 ft floor of 12.27.235.A.1.b.ii"}
   # Phase 2 (FOLLOWUPS 42, read 2026-10-05): the corridor is a no-build area,
   # so the same map is carved as well as flagged. CWS 3.01.5 bars any
   # structure in a Sensitive Area and Vegetated Corridor except as 3.04/3.05

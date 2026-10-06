@@ -102,6 +102,7 @@ def test_each_no_build_carve_keeps_its_permit_flag(quadfit_overlays) -> None:
         "west_linn_rci_resource": "west_linn_rci",
         "metro_title3": "wood_village_wqr",
         "metro_title13": "wood_village_hca",
+        "hillsboro_snro_core": "hillsboro_snro",
     }
     for carve, flag in twins.items():
         assert quadfit_overlays[carve] == "carve", carve

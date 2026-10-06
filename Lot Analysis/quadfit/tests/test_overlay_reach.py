@@ -305,6 +305,7 @@ def test_a_no_build_area_is_carved_and_its_paperwork_still_flagged() -> None:
         "gladstone_hca_core": "gladstone_hca",
         "gladstone_wq_core": "gladstone_wq",
         "west_linn_rci_resource": "west_linn_rci",
+        "hillsboro_snro_core": "hillsboro_snro",
     }
     for carve_key, flag_key in twins.items():
         carve, flag = specs[carve_key], specs[flag_key]
@@ -356,6 +357,12 @@ def test_a_no_build_area_is_carved_and_its_paperwork_still_flagged() -> None:
     v = specs["pdx_ezone_v_core"]
     assert (v.action, v.layer, v.within, v.buffer_ft) == ("carve", "pdx_ezone_v", None, 0)
     assert "33.465.050" in v.citation
+
+    # Hillsboro regulates its own Goal 5 map, not Metro's habitat inventory:
+    # the proxy flag leaves the city once the city's map is held.
+    assert not specs["washington_habitat"].applies_to("hillsboro")
+    assert specs["hillsboro_snro"].applies_to("hillsboro")
+    assert "12.27.235.A.1.b" in specs["hillsboro_snro_core"].citation
 
 
 def test_one_chapter_can_hold_a_kill_and_a_flag_at_the_same_time() -> None:

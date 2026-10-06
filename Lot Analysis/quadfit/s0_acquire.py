@@ -237,6 +237,14 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
         "where": "WETLAND_TYPE IN ('Freshwater Emergent Wetland', "
                  "'Freshwater Forested/Shrub Wetland', 'Freshwater Pond')",
         "bbox": DSL_BBOX_4326},
+    # ---------------- Hillsboro -------------------------------------------
+    # The city's own Goal 5 map (CDC 12.27.205.A), not Metro's: SNR Sites
+    # (RES_TYPE Wetland / RipUp / Upland, LEVEL_ 1-4) and their Impact Areas
+    # (RES_TYPE Impact). Hillsboro regulates this map and not Metro's habitat
+    # inventory, which it treats as recommended practice.
+    "overlay_hillsboro_snro": {
+        "url": "https://services1.arcgis.com/eQ2vvbCvmxlIgo3a/arcgis/rest/services/Community_Development/FeatureServer/1",
+        "fields": ["SIG", "LEVEL_", "TYPE", "RES_TYPE", "SITE"]},
     # ---------------- West Linn -------------------------------------------
     # CDC 32.030: "Alteration, development, or use of real property designated
     # as, and within, a WRA is strictly prohibited except as specifically
