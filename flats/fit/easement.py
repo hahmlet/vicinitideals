@@ -97,7 +97,10 @@ def pick(
 
     ``green`` where the building fits with the green street yard: the
     question is answered. ``yellow`` where it fits only at the yellow yard,
-    the question still open. Where it fits at neither, ``as_is`` -- the lot
+    the question still open. A yard "missed" is a fit missed there, or a
+    check the yard turned to a failure that passed at the code's own yards
+    -- the hose route a deeper building puts out of reach
+    (:func:`flats.ingest.quadfit._lost`). Where it fits at neither, ``as_is`` -- the lot
     as the code's own yards cut it, the question left open -- where that fit
     misses too (the easement is not why the lot fails), and otherwise
     ``yellow``, its miss the answer (red). ``as_is`` too where the green-yard

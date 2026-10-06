@@ -1329,8 +1329,10 @@ def test_the_worse_of_the_two_readings_is_kept(corpus, policies) -> None:
     (both,) = screen_lot(lot, [pod()], **kw)
     (first,) = screen_lot(dataclasses.replace(lot, second=None), [pod()], **kw)
     (second,) = screen_lot(lot.second, [pod()], **kw)
-    rank = {Triage.green: 0, Triage.yellow: 1, Triage.unknown: 2, Triage.red: 3}
-    assert rank[both.signed.triage] == max(rank[first.signed.triage], rank[second.signed.triage])
+    from flats.ingest.quadfit import _shown
+
+    # Worse on the colour the map shows, then the triage (FOLLOWUPS 44).
+    assert _shown(both) == max(_shown(first), _shown(second))
     assert both.signed.triage in (first.signed.triage, second.signed.triage)
 
 

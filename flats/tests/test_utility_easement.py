@@ -333,3 +333,76 @@ def test_a_wide_yard_missed_on_steep_ground_falls_to_the_narrow_one(
     assert "utility_easement" not in got.lot.observed
     assert not _fit_missed(got)
     assert flags(got)[ASSUMED].bounds == (5.0, 5.0)
+
+
+def at_ten(monkeypatch, how) -> None:
+    """Every screening at the 10 ft yard passed through ``how``."""
+    real = quadfit._screen_lot_once
+
+    def screen(here, *args, **kwargs):
+        got = real(here, *args, **kwargs)
+        if here.facts.easement_street_ft == 10.0:
+            return [how(s) for s in got]
+        return got
+
+    monkeypatch.setattr(quadfit, "_screen_lot_once", screen)
+
+
+def test_a_wide_yard_that_puts_the_hose_out_of_reach_falls_to_the_narrow_one(
+    corpus, policies, monkeypatch
+) -> None:
+    # 2026-10-06 bound: 3 big Oregon City lots fit at 10 ft, but the deeper
+    # building put the hose route past 150 ft -- red, and the 5 ft yard,
+    # where it may reach, was never asked.
+    at_ten(monkeypatch, lambda s: missed(s, "fire_access_ft"))
+    lot = lot_from_row(lot_row(), corpus.layers)
+    (got,) = easement_checked(
+        lot, [as_is(corpus, policies, lot)],
+        rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
+    )
+    assert "utility_easement" not in got.lot.observed
+    assert not quadfit._lost(got, as_is(corpus, policies, lot))
+    assert flags(got)[ASSUMED].bounds == (5.0, 5.0)
+
+
+def test_a_check_failing_at_the_code_own_yards_is_not_the_yard_s(
+    corpus, policies, monkeypatch
+) -> None:
+    # Failing as it stands and at 10 ft alike: the yard did not cause it,
+    # and the question is answered at the wide yard.
+    at_ten(monkeypatch, lambda s: missed(s, "fire_access_ft"))
+    lot = lot_from_row(lot_row(), corpus.layers)
+    before = missed(as_is(corpus, policies, lot), "fire_access_ft")
+    assert not _fit_missed(before)
+    (got,) = easement_checked(
+        lot, [before], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
+    )
+    assert got.lot.observed.get("utility_easement") is False
+    assert flags(got)[ASSUMED].bounds == (10.0, 10.0)
+
+
+def test_what_the_yard_lost() -> None:
+    from types import SimpleNamespace
+
+    def plan(*failing: str):
+        checks = tuple(
+            SimpleNamespace(check=c, verdict=Verdict.fails if c in failing else Verdict.passes)
+            for c in ("fit_ft", "fire_access_ft", "min_density_du_per_acre")
+        )
+        return SimpleNamespace(screening=SimpleNamespace(checks=checks))
+
+    assert not quadfit._lost(plan(), plan())
+    assert quadfit._lost(plan("fit_ft"), plan())
+    # A fit missed both ways is still a miss at the yard.
+    assert quadfit._lost(plan("fit_ft"), plan("fit_ft"))
+    assert quadfit._lost(plan("fire_access_ft"), plan())
+    assert not quadfit._lost(plan("min_density_du_per_acre"), plan("min_density_du_per_acre"))
+    assert quadfit._lost(on_steep(), plan())
+
+
+def on_steep():
+    from types import SimpleNamespace
+
+    return SimpleNamespace(
+        screening=SimpleNamespace(checks=(SimpleNamespace(check=STEEP_GROUND, verdict=Verdict.fails),))
+    )

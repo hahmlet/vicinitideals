@@ -1826,6 +1826,18 @@ def _other_fixes(
 #: readings: a definite failure over a question over a path over a pass.
 _WORSE: dict[Triage, int] = {Triage.green: 0, Triage.yellow: 1, Triage.unknown: 2, Triage.red: 3}
 
+#: The colour the map shows, worst last (Steph's flag plan, 2026-10-02): a
+#: miss is RED whatever path round it the triage still names (FOLLOWUPS 44).
+_COLOUR: dict[flag_plan.Colour, int] = {
+    flag_plan.Colour.green: 0, flag_plan.Colour.yellow: 1, flag_plan.Colour.red: 2,
+}
+
+
+def _shown(s: Screened) -> tuple[int, int]:
+    """How bad one reading's answer is: the colour the map shows it, then
+    the triage underneath -- a question over a path over a pass."""
+    return _COLOUR[s.signed.colour], _WORSE[s.signed.triage]
+
 
 def _street_unconfirmed(s: Screening) -> Screening:
     """``s`` as a question (:data:`~flats.score.screen.STREET_UNCONFIRMED`),
@@ -1842,11 +1854,14 @@ def _worse(first: Screened, second: Screened) -> Screened:
     """The worse of one design's two readings (:func:`drive_reading`).
 
     Each is sound alone -- the line a street, the line an ordinary lot
-    line -- so the worse cannot be a false GREEN. Compared on the signed
-    colour, the one that differs between them; the verdict's own colour
-    rides with it. A second reading fitted on s5o's envelope was not
-    computed at all -- s5o cut that envelope with the drive as a street --
-    and makes the first a question.
+    line -- so the worse cannot be a false GREEN. Compared on the colour
+    the map shows (:func:`_shown`), where a miss is red: on the triage
+    alone a reading waiting on an open fact outranked one the building
+    misses on, whose variance path read yellow, and the miss was hidden
+    (FOLLOWUPS 44). The verdict's own colour rides with it. A second
+    reading fitted on s5o's envelope was not computed at all -- s5o cut
+    that envelope with the drive as a street -- and makes the first a
+    question.
     """
     if second.envelope is not None and second.envelope.source == "quadfit":
         return dataclasses.replace(
@@ -1854,7 +1869,7 @@ def _worse(first: Screened, second: Screened) -> Screened:
             screening=_street_unconfirmed(first.screening),
             signed=_street_unconfirmed(first.signed),
         )
-    if _WORSE[second.signed.triage] > _WORSE[first.signed.triage]:
+    if _shown(second) > _shown(first):
         return second
     return first
 
@@ -1864,10 +1879,11 @@ def _better(first: Screened, second: Screened) -> Screened:
     between them (``private_drives.access_choice``): each is the lot as the
     code reads it for one way in, so either is a lawful plan. A second
     reading fitted on s5o's envelope was not computed (s5o cut it with the
-    drive as a street) and is not offered."""
+    drive as a street) and is not offered. Compared on the colour the map
+    shows, as :func:`_worse` is."""
     if second.envelope is not None and second.envelope.source == "quadfit":
         return first
-    if _WORSE[second.signed.triage] < _WORSE[first.signed.triage]:
+    if _shown(second) < _shown(first):
         return second
     return first
 
@@ -2071,6 +2087,21 @@ def _chose(lot: QuadfitLot, s: Screened) -> bool:
     return many or part_rear_alley(lot)
 
 
+def _lost(s: Screened, before: Screened) -> bool:
+    """Whether ``s`` -- a design screened with its street yards floored --
+    misses where ``before``, the same design at the code's own yards, did
+    not: its fit (:func:`_fit_missed`), or any check the deeper yard turned
+    to a failure, as the fire hose's route the yard lengthens past its limit
+    (FOLLOWUPS 43, 2026-10-06 bound: 3 big Oregon City lots red on the hose
+    at 10 ft, never asked at 5)."""
+    if _fit_missed(s):
+        return True
+    had = {c.check for c in before.screening.checks if c.verdict is CheckVerdict.fails}
+    return any(
+        c.verdict is CheckVerdict.fails and c.check not in had for c in s.screening.checks
+    )
+
+
 def _waits_on_easement(s: Screened) -> bool:
     """Whether this design's answer waits on the utility easement question."""
     if s.config is None:
@@ -2097,9 +2128,11 @@ def easement_checked(
     So each design that waits on ``utility_easement`` is screened again, the
     whole way, with every street yard floored at the city's ``green_ft`` and
     the question answered no: where that plan fits, it is the answer, and
-    the lot waits on whatever else it waited on. Where it does not, the
-    design is screened at ``yellow_ft`` with the question still open --
-    yellow where that plan fits, red on its fit where it does not
+    the lot waits on whatever else it waited on. Where it does not -- or
+    fails a check it passed at the code's own yards (:func:`_lost`): the
+    yard is still what stands in the way -- the design is screened at
+    ``yellow_ft`` with the question still open: yellow where that plan
+    holds, red on its miss where it does not
     (:func:`flats.fit.easement.pick`). Both carry the
     UTILITY-EASEMENT-ASSUMED flag through :attr:`LotFacts.easement_street_ft`.
 
@@ -2139,16 +2172,17 @@ def easement_checked(
     measured = {
         i: green[i].envelope is not None and green[i].envelope.source == "flats" for i in todo
     }
+    lost = {i: _lost(green[i], got[i]) for i in todo}
     # The narrow yard leaves the question open, and so the same reading
     # first: it is not asked of a plan that missed as it stands.
-    narrow = [i for i in todo if measured[i] and _fit_missed(green[i]) and not missed[i]]
+    narrow = [i for i in todo if measured[i] and lost[i] and not missed[i]]
     yellow = screened(floored(rule.yellow_ft, answered=False), narrow) if narrow else {}
     choice = {
         i: easement.pick(
             as_is_missed=missed[i],
-            green_missed=_fit_missed(green[i]),
+            green_missed=lost[i],
             green_measured=measured[i],
-            yellow_missed=i not in yellow or _fit_missed(yellow[i]),
+            yellow_missed=i not in yellow or _lost(yellow[i], got[i]),
         )
         for i in todo
     }
@@ -3010,17 +3044,21 @@ def _env_sqft(s: Screened) -> float:
     return s.envelope.sqft if s.envelope is not None else 0.0
 
 
-def _front_rank(s: Screened) -> tuple[int, int, int, float]:
+def _front_rank(s: Screened) -> tuple[int, int, int, int, float]:
     """Which of a corner lot's fronts the applicant would choose.
 
     Steph's ruling of 2026-09-19 (HUMAN_TODO 21): the front that turns the
     lot green, then the one reaching the preferred stall band, then -- where
     quadfit compares the court's exposure to the streets, which the screen
     does not draw -- the one with more room to spare. The colour once signed
-    first, as the Lots pages show it; the colour today breaks a tie.
+    first, as the Lots pages show it (the flag plan's, where a miss is red
+    -- FOLLOWUPS 44: on the triage a miss with a variance path read yellow
+    and outranked a front that fits but waits on an open fact), then its
+    triage; the colour today breaks a tie.
     """
     slack = s.screening.fit_slack_ft
     return (
+        _COLOUR[s.signed.colour],
         _RANK[s.signed.triage.value],
         _RANK[s.screening.triage.value],
         _BAND_RANK.get(s.screening.parking_band, 3),
