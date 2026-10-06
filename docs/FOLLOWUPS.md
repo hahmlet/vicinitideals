@@ -1617,7 +1617,10 @@ read when the weekly full re-screen lands.
    asked 2026-10-06). SHIPPED ca06c2ff (deployed, smoke passed): OSM
    extract `osm_land_use` + ORCA public parks/school land, >= 50% of the
    lot; assign answers RED (INSTITUTIONAL_USE / institutional_share),
-   bridge `--institutional` skips. Measured vs run 63: 9,923 of 587,815
+   bridge `--institutional` skips. EVERY bridge scan (agents' test and
+   partial scans too) skips them since c1a96d81: the bridge reads the land
+   from `--sources`, else refuses; agents on 137 pass `--institutional
+   /root/institutional_sources/2026-10-06`. Measured vs run 63: 9,923 of 587,815
    lots -> RED (381 green, 1,906 yellow, 3,926 unmeasured); every green
    read. LEFT: the WEEKLY RUN (~10-08) must `acquire --keys osm_land_use`,
    run runbook step 7b, and pass `--institutional` to the bridge -- then
