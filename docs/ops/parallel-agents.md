@@ -17,6 +17,7 @@ explicit path.
 | fire-curb | 29 | `fire-curb` / `flats/fire-curb` | Where the fire truck stands: the curb/pavement-width source, its own new stage or file, and the truck offset in `flats/fit/fire.py`. It does NOT own `s4_edges.py`; it adds a separate file. |
 | water | 42 | `flats-tigard` / `flats/net-area` | Water, wetland and flood ground before placement. Now: Portland's Constrained Sites "z" overlay (the `constrained_sites_overlay` fact, its bridge answer, the 33.418 variants in the Portland and Multnomah layers). Next: ruling each quadfit `flag` overlay (no-build carve / permit flag / ignore), the FEMA fringe, and wetland maps for the cities that have none (`Lot Analysis/quadfit/config/overlays.yaml` actions, `flats/rules/net_area.py`). |
 | utility-easement | 43 | `.claude/worktrees/bridge-cse_013p9pShugj6MCoHZD7G4bso` / `flats/utility-easement` | Steph's 2026-10-01 utility easement rule (Beaverton BDC 20.05/20.22 note 7; Oregon City if ruled): the street-yard floor the bridge fits a lot at where the code forbids building on a utility easement nobody maps, the `utility_easement` answer that floor gives, `flats/config/easements.yaml`, `flats/fit/easement.py`, and the UTILITY-EASEMENT-ASSUMED flag. In shared files only: one LotFacts field + the flag in `screen.py`, the floor in `envelope_for` and one wrapper around `_screen_lot_once` in `quadfit.py`. |
+| scan-throughput | 46 | `.claude/worktrees/bridge-cse_01Jy7PvJ5jpm4MaSvtZGhgCw` / `worktree-bridge-cse_01Jy7PvJ5jpm4MaSvtZGhgCw` | How the bridge runs, never what it answers: `flats/ingest/batch.py` (costliest lots first, the memory budget on big lots, the answer cache, `timings.parquet`). In `quadfit.py` only the one call in `run()` that hands the lots to it, and the `--cache` flag. Must move no answer. |
 
 ## Rules
 
@@ -56,13 +57,38 @@ explicit path.
    even a one-lot probe (big lots reach 3-7 GB):
 
    ```bash
-   nohup flock /root/heavy.lock <command> > /root/<lane>_<what>.log 2>&1 &
+   nohup flock -o /root/heavy.lock <command> > /root/<lane>_<what>.log 2>&1 &
    ```
 
    `flock` waits its turn. Do not route around it.
+   - Always `flock -o`, launched from a plain shell. Without `-o` the
+     command inherits the lock. A job it then chains (`flock ... &` at the
+     end of a script) waits for a lock its own parent holds, forever. On
+     2026-10-06 that left 137 idle for 70 minutes. Never start a heavy job
+     from inside a lock hold: put every pass in one script instead.
    - Use at most 14 processes per run.
    - Put your checkout at `/root/code/<lane>`, a worktree of
      `/root/code/vicinitideals`. Put outputs in `/root/<lane>_*`.
+   - One fixed worktree per commit you run:
+     `git -C /root/code/vicinitideals worktree add --detach /root/code/<lane>_<sha> <sha>`.
+     Never `git checkout` to switch commits inside a script. `git worktree
+     add` silently prunes the entry of any worktree whose folder was moved
+     or renamed. That folder loses its git link the moment any lane adds a
+     worktree, and a script that switches commits in it keeps running the
+     old files. Before each pass, the script asserts
+     `git -C <tree> rev-parse --short=8 HEAD` is the sha it wants and the
+     tree is clean (or, for a patched tree, that the patched files' md5
+     match).
+   - Pass `--cache /root/bridge_cache` to every bridge run (FOLLOWUPS 46).
+     A lot whose row, code, config and input files are all unchanged is
+     read back instead of screened again. That makes the second "before"
+     run of the same commit nearly free, and a run re-launched after a
+     crash picks up where it stopped. Any change under `flats/` (tests
+     aside) misses for every lot: the cache saves repeats, not first runs.
+     Folders unused for 14 days are deleted by the next run.
+   - Each bridge run writes `timings.parquet` beside `lots.parquet`: one
+     row per lot screened, with seconds and memory. Read it before
+     guessing why a run was slow.
    - Never change `/root/code/vicinitideals`. It is the weekly run's
      checkout.
    - Never change shared `data/` files in place; write new ones beside
@@ -108,3 +134,13 @@ explicit path.
     Before shipping, report how many lots move and in which direction. Any
     change that could turn a lot GREEN needs a bound whose gains are read
     one by one. Never a false GREEN.
+12. **Iterate on a sample; bound the whole scope once.** While the code is
+    still changing, bound a fixed sample of the scope. Pass
+    `--tlid-file <scope> --sample 2000 --seed 1` to both the base and the
+    new tree; the sample is cut after the scope, so the same lots come
+    back every time. Read the moves, fix, and repeat. With `--cache`, the
+    base tree's answers are kept between rounds, so each round costs only
+    the new tree's run. Bound the whole scope once, when the code is
+    final, right before merge, and read that bound's gains one by one
+    (rule 11). The sample is for finding bugs fast. Only the full bound is
+    the proof.

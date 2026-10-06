@@ -3483,6 +3483,7 @@ def run(
     dem: Path | None = None,
     curbs: Path | None = None,
     institutional: Path | None = None,
+    cache: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -3516,13 +3517,18 @@ def run(
     RED (Steph 2026-10-06, FOLLOWUPS 47: "flagged out of scans for any
     reason" -- every scan, a test scan included), and a run with neither is
     refused.
+
+    The lots run costliest first and ``timings.parquet`` says what each
+    cost (:mod:`flats.ingest.batch`). ``cache`` is a directory of answers
+    kept by earlier runs: a lot whose row, code, packages, step and input
+    files are all unchanged is read from it instead of screened, and every
+    lot screened is kept there -- the BEFORE side of a bound is computed
+    once, not on every retry (FOLLOWUPS 46).
     """
     import time
-    from multiprocessing import Pool
-
-    import pandas as pd
 
     from flats.geom.curbs import missing as curbs_missing
+    from flats.ingest import batch
 
     roads = roads if roads is not None else s4.parent / "s1_streets.parquet"
     curbs = curbs if curbs is not None else sources
@@ -3565,35 +3571,32 @@ def run(
     eased = with_sidewalk_easement(rows, sources)
     if eased:
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
-    chunks = [rows[i : i + chunk_size] for i in range(0, len(rows), chunk_size)]
-    log(f"bridge: {len(rows):,} lots in {len(chunks)} chunks, {processes} processes, "
-        f"{step_deg} deg step")
+    # Costliest lots first, a memory budget on the giants, and the answers a
+    # cache already holds not screened again (FOLLOWUPS 46): the same
+    # records in the same order as lot by lot in file order.
+    answers = None
+    if cache is not None:
+        batch.prune(cache)
+        answers = batch.AnswerCache(
+            cache,
+            batch.run_key(
+                step_deg=step_deg,
+                inputs={"sources": sources, "roads": roads, "dem": dem, "curbs": curbs},
+            ),
+        )
     t0 = time.time()
-    done = 0
-
-    def _write(i: int, records: list[dict[str, Any]]) -> None:
-        pd.DataFrame.from_records(records).to_parquet(parts_dir / f"{i:05d}.parquet", index=False)
-
-    if processes <= 1:
-        _init_worker(step_deg, sources, roads, dem, curbs)
-        for i, chunk in enumerate(chunks):
-            _write(i, _work_chunk(chunk))
-            done += len(chunk)
-            log(f"  {done:,}/{len(rows):,}  {time.time() - t0:,.0f}s")
-    else:
-        with Pool(processes, initializer=_init_worker, initargs=(step_deg, sources, roads, dem, curbs)) as pool:
-            for i, records in enumerate(pool.imap(_work_chunk, chunks)):
-                _write(i, records)
-                done += len(chunks[i])
-                if i % 10 == 0 or i == len(chunks) - 1:
-                    log(f"  {done:,}/{len(rows):,}  {time.time() - t0:,.0f}s")
-
-    parts = sorted(parts_dir.glob("*.parquet"))
-    frame = (
-        pd.concat([pd.read_parquet(p) for p in parts], ignore_index=True)
-        if parts
-        else pd.DataFrame()
+    frame, timings, done = batch.screen_rows(
+        rows,
+        parts_dir,
+        processes=processes,
+        chunk_size=chunk_size,
+        init=_init_worker,
+        initargs=(step_deg, sources, roads, dem, curbs),
+        cache=answers,
+        step_deg=step_deg,
+        log=log,
     )
+    timings.to_parquet(out / "timings.parquet", index=False)
     frame.to_parquet(out / "lots.parquet", index=False)
     meta = {
         "lots": len(rows),
@@ -3615,6 +3618,7 @@ def run(
         "curbs": str(curbs) if curbs is not None else None,
         "institutional": str(institutional),
         "institutional_skipped": skipped,
+        "batch": done.meta(),
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -3669,6 +3673,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="institutional.parquet (or its directory) from flats.ingest.institutional, or a snapshot "
         "holding osm_land_use and rlis_orca: lots left out of the scan (default: --sources; refused without)",
     )
+    ap.add_argument(
+        "--cache",
+        type=Path,
+        help="answer cache dir: unchanged lots are read from it, screened lots kept in it",
+    )
     args = ap.parse_args(argv)
     run(
         args.out,
@@ -3690,6 +3699,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         dem=args.dem,
         curbs=args.curbs,
         institutional=args.institutional,
+        cache=args.cache,
     )
     return 0
 
