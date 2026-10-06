@@ -69,6 +69,14 @@ explicit path.
      them.
    - Kill only PIDs you started. Never `pkill -f` a pattern: it matches
      your own ssh command.
+   - Institutional land (schools, parks, hospitals, utilities, rail...) is
+     left out of EVERY bridge run, a test scan included (Steph 2026-10-06,
+     FOLLOWUPS 47), and a run that cannot read it is refused. The bridge
+     reads it from `--sources` when that snapshot holds `osm_land_use` and
+     `rlis_orca`; until the weekly run's snapshot does, pass
+     `--institutional /root/institutional_sources/2026-10-06`. A bound
+     whose base arm predates this sees those lots as missing rows -- assign
+     answers them RED.
    - Washington TLID lists: drop right-of-way polygons first
      (`grep -v ' ROW$'`). They are roads, not lots, and one chunk of them
      ran over an hour at 7 GB.

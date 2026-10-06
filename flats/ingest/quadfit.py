@@ -3322,6 +3322,52 @@ def _counts(series: Any, top: int = 25) -> str:
     return "\n".join(["| value | rows |", "|---|---:|", *rows])
 
 
+def _is_reading(path: Path) -> bool:
+    from flats.ingest.institutional import INSTITUTIONAL
+
+    return path.is_file() or (path / INSTITUTIONAL).is_file()
+
+
+def _institutional_source(institutional: Path | None, sources: Path | None) -> Path:
+    """The institutional reading, or the snapshot to read it from; refused
+    when there is neither -- Steph ruled those lots out of EVERY scan."""
+    from flats.geom.institutional import missing
+
+    path = institutional if institutional is not None else sources
+    if path is not None and (_is_reading(path) or not missing(path)):
+        return path
+    lacking = ", ".join(missing(path))
+    raise FileNotFoundError(
+        f"no institutional land for this scan ({lacking} not in {path}): schools, parks and the "
+        "rest are left out of every scan (FOLLOWUPS 47) -- pass --institutional a reading from "
+        "flats.ingest.institutional or a snapshot holding osm_land_use and rlis_orca "
+        "(acquire --keys osm_land_use rlis_orca)"
+    )
+
+
+def _read_institutional(rows: list[dict[str, Any]], snapshot: Path, out: Path) -> Path:
+    """Read the lots this run screens against ``snapshot`` and write the
+    reading beside the run, where assign finds it through ``meta.json``."""
+    import pandas as pd
+
+    from flats.geom.institutional import load
+    from flats.ingest.institutional import INSTITUTIONAL, measure
+
+    land = load(snapshot)
+    assert land is not None
+    lots = pd.DataFrame(
+        {
+            # "or/washington/hillsboro" -> "washington", as the lot table names it.
+            "county": [(str(r.get("jurisdiction") or "").split("/") + ["", ""])[1] for r in rows],
+            "tlid": [str(r["TLID"]) for r in rows],
+            "wkb": [r.get("lot_wkb") for r in rows],
+        }
+    )
+    path = out / INSTITUTIONAL
+    measure(lots, land).to_parquet(path, index=False)
+    return path
+
+
 def run(
     out: Path,
     *,
@@ -3367,10 +3413,14 @@ def run(
     ``sources``, and a run whose snapshot lacks one of them is refused -- a
     street none measures is taken as the narrowest, so without them every
     Portland street would be (FOLLOWUPS 29). ``institutional`` is the
-    reading :mod:`flats.ingest.institutional` wrote for the snapshot: its
-    lots -- schools, parks, hospitals, utilities -- are left out of the scan
-    (Steph 2026-10-06, FOLLOWUPS 47) and assign answers them RED; without it
-    they are scanned, which costs hours and changes no colour.
+    reading :mod:`flats.ingest.institutional` wrote for the snapshot, or a
+    snapshot directory holding ``osm_land_use`` and ``rlis_orca`` (the run
+    then reads the lots it screens itself and writes the reading beside its
+    output); it defaults to ``sources``. Its lots -- schools, parks,
+    hospitals, utilities -- are left out of the scan and assign answers them
+    RED (Steph 2026-10-06, FOLLOWUPS 47: "flagged out of scans for any
+    reason" -- every scan, a test scan included), and a run with neither is
+    refused.
     """
     import time
     from multiprocessing import Pool
@@ -3391,6 +3441,7 @@ def run(
             f"no {', '.join(lacking)} for where the fire truck stands in {curbs}: "
             "run acquire, or pass --curbs a snapshot that holds them"
         )
+    institutional = _institutional_source(institutional, sources)
     out.mkdir(parents=True, exist_ok=True)
     parts_dir = out / "parts"
     parts_dir.mkdir(exist_ok=True)
@@ -3404,15 +3455,15 @@ def run(
             jurisdictions=jurisdictions, zones=zones, tlids=tlids, streets=roads,
         )
     )
-    skipped = 0
-    if institutional is not None:
-        from flats.ingest.institutional import skip_tlids
+    if not _is_reading(institutional):
+        institutional = _read_institutional(rows, institutional, out)
+    from flats.ingest.institutional import skip_tlids
 
-        skip = skip_tlids(institutional)
-        kept = [r for r in rows if str(r["TLID"]).rstrip() not in skip]
-        skipped = len(rows) - len(kept)
-        rows = kept
-        log(f"bridge: {skipped:,} institutional lots left out of the scan")
+    skip = skip_tlids(institutional)
+    kept = [r for r in rows if str(r["TLID"]).rstrip() not in skip]
+    skipped = len(rows) - len(kept)
+    rows = kept
+    log(f"bridge: {skipped:,} institutional lots left out of the scan ({institutional})")
     classed = with_local_street(rows, sources)
     if classed:
         log(f"bridge: street class read on {classed:,} lots")
@@ -3467,7 +3518,7 @@ def run(
         "roads": str(roads),
         "dem": str(dem),
         "curbs": str(curbs) if curbs is not None else None,
-        "institutional": str(institutional) if institutional is not None else None,
+        "institutional": str(institutional),
         "institutional_skipped": skipped,
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
@@ -3520,7 +3571,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument(
         "--institutional",
         type=Path,
-        help="institutional.parquet (or its directory) from flats.ingest.institutional: lots left out of the scan",
+        help="institutional.parquet (or its directory) from flats.ingest.institutional, or a snapshot "
+        "holding osm_land_use and rlis_orca: lots left out of the scan (default: --sources; refused without)",
     )
     args = ap.parse_args(argv)
     run(

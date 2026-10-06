@@ -731,8 +731,15 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
     curbs.mkdir()
     for key in ("curbs_portland", "pave_width_portland", "road_width_multnomah", "street_width_wilsonville"):
         (curbs / f"{key}.geojson").write_text('{"type": "FeatureCollection", "features": []}', encoding="utf-8")
+    # And the institutional land is left out of every scan, and a run that
+    # cannot read it is refused (Steph 2026-10-06, FOLLOWUPS 47).
+    with pytest.raises(FileNotFoundError, match="no institutional land"):
+        run(out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, curbs=curbs, log=log.append)
+    for key in ("osm_land_use", "rlis_orca"):
+        (curbs / f"{key}.geojson").write_text('{"type": "FeatureCollection", "features": []}', encoding="utf-8")
     written = run(
-        out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, curbs=curbs, log=log.append
+        out, s4=s4, s5o=s5o, results=results, step_deg=30.0, dem=raw, curbs=curbs, institutional=curbs,
+        log=log.append,
     )
     frame = pd.read_parquet(written)
     # Two lots x every catalog design, one row each.
@@ -745,6 +752,7 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
     assert meta["roads"] == str(s4.parent / "s1_streets.parquet")
     assert "fire_route_ft" in frame.columns
     assert meta["dem"] == str(raw)
+    assert meta["institutional"] == str(out / "institutional.parquet") and meta["institutional_skipped"] == 0
     assert {"steep_sqft", "site_grade_pct"} <= set(frame.columns)
     summary = (out / "summary.md").read_text(encoding="utf-8")
     assert "| unknown |" in summary and "RULE_UNVERIFIED" in summary

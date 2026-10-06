@@ -324,3 +324,41 @@ def test_the_bridge_leaves_institutional_lots_out_of_the_scan(tmp_path: Path, mo
     assert seen == ["HOUSE"]
     meta = json.loads((tmp_path / "run" / "meta.json").read_text(encoding="utf-8"))
     assert meta["institutional"] == str(reading) and meta["institutional_skipped"] == 1
+
+
+def test_every_scan_reads_the_land_itself_and_assign_answers_red(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """A test scan on an agent's own scope leaves the campus out too: given
+    a snapshot, the bridge reads the lots it screens, writes the reading
+    beside its output, and assign finds it there (Steph 2026-10-06:
+    "flagged out of scans for any reason")."""
+    from flats.ingest import quadfit as qf
+
+    campus, house = box(0, 0, 100, 100), box(1000, 0, 1100, 100)
+    rows = [
+        {"TLID": "CAMPUS", "jurisdiction": "or/washington/_unincorporated", "lot_wkb": shapely.to_wkb(campus), "edges_json": "[]"},
+        {"TLID": "HOUSE", "jurisdiction": "or/washington/_unincorporated", "lot_wkb": shapely.to_wkb(house), "edges_json": "[]"},
+    ]
+    seen: list[str] = []
+    monkeypatch.setattr(qf, "iter_rows", lambda *a, **k: iter([dict(r) for r in rows]))
+    monkeypatch.setattr(qf, "_init_worker", lambda *a, **k: None)
+    monkeypatch.setattr(qf, "_work_chunk", lambda chunk: [{"TLID": r["TLID"], "design": "d1", "triage": "green", "if_signed": "green"} for r in chunk if not seen.append(r["TLID"])])
+    monkeypatch.setattr("flats.geom.curbs.missing", lambda _c: [])
+    roads = tmp_path / "s1_streets.parquet"
+    roads.write_bytes(b"")
+    dem = tmp_path / "raw"
+    (dem / "dem").mkdir(parents=True)
+    (dem / "dem" / "t.tif").write_bytes(b"")
+    snap = _snapshot(tmp_path, [osm(box(-50, -50, 150, 150), amenity="school", name="Westview")], [])
+    kw = dict(s4=tmp_path / "s4.parquet", s5o=tmp_path / "s5o.parquet", results=None, roads=roads, dem=dem, log=lambda _m: None)
+
+    with pytest.raises(FileNotFoundError, match="no institutional land"):
+        qf.run(tmp_path / "refused", **kw)
+    qf.run(tmp_path / "run", sources=snap, **kw)
+
+    assert seen == ["HOUSE"]
+    meta = json.loads((tmp_path / "run" / "meta.json").read_text(encoding="utf-8"))
+    assert meta["institutional"] == str(tmp_path / "run" / step.INSTITUTIONAL) and meta["institutional_skipped"] == 1
+    normalized = _normalized(tmp_path, [{"county": "washington", "tlid": "CAMPUS"}, {"county": "washington", "tlid": "HOUSE"}])
+    az.assign(normalized, tmp_path / "run", tmp_path / "out")
+    got = pd.read_parquet(tmp_path / "out" / "lots.parquet").set_index("TLID")["if_signed"]
+    assert got["CAMPUS"] == "red" and got["HOUSE"] == "green"
