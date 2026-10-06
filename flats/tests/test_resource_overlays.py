@@ -100,11 +100,19 @@ def test_each_no_build_carve_keeps_its_permit_flag(quadfit_overlays) -> None:
         "gladstone_hca_core": "gladstone_hca",
         "gladstone_wq_core": "gladstone_wq",
         "west_linn_rci_resource": "west_linn_rci",
+        "metro_title3": "wood_village_wqr",
+        "metro_title13": "wood_village_hca",
     }
     for carve, flag in twins.items():
         assert quadfit_overlays[carve] == "carve", carve
         assert quadfit_overlays[flag] == "flag", flag
         assert flag in BY_KEY and carve not in BY_KEY
+    # Portland's zones are quadfit kills read here as permits (a lot the z map
+    # leaves out); the resource areas inside them carve under their own keys.
+    for zone in ("p", "c", "v"):
+        carve, permit = f"pdx_ezone_{zone}_core", f"pdx_ezone_{zone}"
+        assert quadfit_overlays[carve] == "carve" and quadfit_overlays[permit] == "kill"
+        assert permit in BY_KEY and carve not in BY_KEY
 
 
 def test_every_quadfit_kill_is_read_here(quadfit_overlays) -> None:

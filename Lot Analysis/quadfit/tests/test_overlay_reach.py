@@ -276,9 +276,10 @@ def test_every_borrowed_source_names_a_layer_something_actually_fetches() -> Non
         assert f"overlay_{spec.source}" in s0_acquire.PHASE2_LAYERS, (
             f"{spec.key} borrows {spec.source!r}, which s0 never downloads"
         )
-        if spec.within is not None:
-            assert f"overlay_{spec.within}" in s0_acquire.PHASE2_LAYERS, (
-                f"{spec.key} clips to {spec.within!r}, which s0 never downloads"
+    for spec in _overlays().overlays:
+        for within in spec.within_layers:
+            assert f"overlay_{within}" in s0_acquire.PHASE2_LAYERS, (
+                f"{spec.key} clips to {within!r}, which s0 never downloads"
             )
 
 
@@ -330,6 +331,31 @@ def test_a_no_build_area_is_carved_and_its_paperwork_still_flagged() -> None:
     assert (riparian.action, riparian.buffer_ft) == ("carve", 100)
     assert riparian.layer == "west_linn_wra_stream" and riparian.within == "west_linn_rci"
     assert "row D" in riparian.citation
+
+    # Wood Village (WVDC 430.170): the Metro maps carve, but only the stream,
+    # wetland and HCA polygons -- never Title 3's flood-only or Title 13's
+    # "NO HCA" ones -- and a twin flag on the same polygons keeps the plan.
+    for carve_key, flag_key, keep in (
+        ("metro_title3", "wood_village_wqr", {"RIPARIAN": [1], "WETBUF": [1]}),
+        ("metro_title13", "wood_village_hca", {"HCA_VALUE": ["HIGH", "MODERATE", "LOW"]}),
+    ):
+        carve, flag = specs[carve_key], specs[flag_key]
+        assert carve.action == "carve" and flag.action == "flag"
+        assert carve.layer == flag.layer and carve.keep_where == flag.keep_where == keep
+        assert "430.170" in carve.citation
+        assert flag.jurisdictions == ["wood_village"]
+
+    # Portland (33.430.050): the resource area is the p and c zones together,
+    # 25 ft in from their combined edge; p adds 33.430.140.B's 5 ft; v
+    # (33.465.050) is resource area throughout.
+    for zone, buffer in (("p", 5), ("c", 0)):
+        core = specs[f"pdx_ezone_{zone}_core"]
+        assert (core.action, core.layer, core.buffer_ft) == ("carve", f"pdx_ezone_{zone}", buffer)
+        assert core.within_layers == ("pdx_ezone_p", "pdx_ezone_c")
+        assert core.within_inset_ft == 25
+    v = specs["pdx_ezone_v_core"]
+    assert (v.action, v.layer, v.within, v.buffer_ft) == ("carve", "pdx_ezone_v", None, 0)
+    assert "33.465.050" in v.citation
 
 
 def test_one_chapter_can_hold_a_kill_and_a_flag_at_the_same_time() -> None:

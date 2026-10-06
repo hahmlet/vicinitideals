@@ -143,6 +143,54 @@ overlays:
     confidence: verified
     coverage:
       portland: {grade: A, note: ""}
+  # FOLLOWUPS 42 (read 2026-10-06, 33.430 and 33.465 as printed 7/1/26): a lot
+  # the z covers is RED on the use rule whatever this says; these carve the
+  # ground a building can never take on the ~1,370 lots the z map leaves out
+  # (the multi-dwelling, commercial and RF lots 33.418.030.A does not reach),
+  # which stay a closer look for the paperwork. 33.430.050 splits each zone:
+  # "The transition area is measured as the first 25 feet inward from an
+  # environmental zone boundary. The remaining area is the resource area",
+  # measured from "the combined outer-most boundaries" where p and c abut (C).
+  # Under-carve: exception A ("Where part of an environmental zone boundary is
+  # also the City Limits ... there is no transition area") is not drawn, so
+  # 25 ft along the city limit reads as transition. Not modelled: the c zone's
+  # Table 430-1 allowance in the resource area, which is the table figure less
+  # all of the site outside the resource area -- nothing on most lots -- the
+  # same kind of allowance Steph left unmodelled for the Clackamas HCA.
+  - key: pdx_ezone_p_core
+    source: pdx_ezone_p
+    within: [pdx_ezone_p, pdx_ezone_c]
+    within_inset_ft: 25
+    name: "Portland environmental protection zone resource area, plus 5 ft"
+    action: carve
+    buffer_ft: 5
+    jurisdictions: [portland]
+    citation: "PCC 33.430.140.B: 'The disturbance area is set back at least 5 feet from the resource area of any environmental protection zone' (a standard for new development in the resource area, so no clear-and-objective path builds in a p resource area); 33.430.140.E, the same 5 ft for development in a transition area; 33.430.120.B: 'Adjustments to these standards are prohibited'; 33.430.050 resource and transition areas"
+    confidence: verified
+    coverage:
+      portland: {grade: A, note: "BPS p and c zone geometry; the resource area is drawn 25 ft in from the merged outer edge"}
+  - key: pdx_ezone_c_core
+    source: pdx_ezone_c
+    within: [pdx_ezone_p, pdx_ezone_c]
+    within_inset_ft: 25
+    name: "Portland environmental conservation zone resource area"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [portland]
+    citation: "PCC 33.430.140.A and Table 430-1: 'The maximum disturbance area allowed within the resource area on the site is determined by subtracting all portions of the site outside the resource area from the number listed in Table 430-1' (5,000 sq ft in R10/R20/RF, 3,500 R7, 2,500 R5; elsewhere 50% of the base zone building coverage or 1 acre); 33.430.120.B: 'Adjustments to these standards are prohibited'; a proposal that cannot meet them goes to Environmental Review (33.430.230.B), discretionary"
+    confidence: verified
+    coverage:
+      portland: {grade: A, note: "BPS p and c zone geometry; resource area 25 ft in from the merged outer edge. Over-carves the Table 430-1 allowance where the site lies mostly inside the resource area"}
+  - key: pdx_ezone_v_core
+    source: pdx_ezone_v
+    name: "Portland Pleasant Valley natural resource overlay (v), all of it"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [portland]
+    citation: "PCC 33.465.050: 'The entire Pleasant Valley Natural Resources overlay zone is resource area; there is no transition area'; Table 465-1 allows 5,000 sq ft (RF) or 3,500 sq ft (R7), '(1) Subtract the amount of area on the site outside the Pleasant Valley Natural Resources overlay zone'; 33.465.180.A mitigation 'at a 2:1 ratio of mitigation area to proposed disturbance area' on the same site"
+    confidence: verified
+    coverage:
+      portland: {grade: A, note: "BPS v layer (MapServer/116)"}
 
   # ---------------- Gresham (city-mapped carves, buffers pre-baked) --------
   - key: gresham_hcra
@@ -210,25 +258,56 @@ overlays:
       fairview: {grade: A, note: "city layer; widths corroborated against the full chapter text 2026-09-02. Still unverified: whether the published polygons already include the buffer, which is what `buffer_ft: 0` assumes"}
 
   # ---------------- Regional fallbacks --------------------------------------
+  # Wood Village (WVDC 430, read 2026-10-06): 430.170 prohibits "within a WQR
+  # and an HCA ... A. New structures, development or landscaping activity
+  # other than those allowed by Subsection 430.150 and 430.160", and 430.160
+  # allows only 500 sq ft encroachments -- so both carve. The WQR is "the
+  # vegetated corridor and the Protected Water Feature" (430.130.C), which is
+  # Title 3's stream and wetland polygons, not its flood-only ones (FEMA's
+  # layers carry flood); the HCA is Title 13's HIGH/MODERATE/LOW, never its
+  # "NO HCA" polygons. The flags below keep the paperwork: 430.190 wants a
+  # Construction Management Plan "Prior to issuing any permits in a WQRA".
   - key: metro_title3
+    keep_where: {RIPARIAN: [1], WETBUF: [1]}
     name: "Metro Title 3 water quality resource (regional fallback)"
     action: carve
     buffer_ft: 0
     jurisdictions: [wood_village, multnomah_unincorporated]
-    citation: "Metro Code 3.07 Table 3.07-3 via WVDC 430 (Wood Village adopts by reference); MultCo proxy for unmapped SEC-w"
+    citation: "WVDC 430.170.A: prohibited 'within a WQR and an HCA ... New structures, development or landscaping activity other than those allowed by Subsection 430.150 and 430.160' (430.160: encroachments 'not to exceed 500 sq ft'); 430.130.C: 'The WQRA is the vegetated corridor and the Protected Water Feature' (Table 1: 50 ft on a primary feature under 25% slope, 15 ft on a secondary); WVDC 430.140.C adopts the WQ Map by reference. MultCo: proxy for unmapped SEC-w"
     confidence: needs_verification
     coverage:
-      wood_village: {grade: B, note: "no local env GIS at all — regional layer is the operative map"}
+      wood_village: {grade: B, note: "no local env GIS at all; Metro's Title 3 riparian and wetland-buffer polygons stand in for the city's WQ Map, whose corridor widths are the same Title 3 table"}
       multnomah_unincorporated: {grade: C, note: "proxy: county SEC overlay maps not publicly downloadable"}
   - key: metro_title13
+    keep_where: {HCA_VALUE: [HIGH, MODERATE, LOW]}
     name: "Metro Title 13 habitat (HCA)"
     action: carve
     buffer_ft: 0
     jurisdictions: [wood_village]
-    citation: "WVDC 430 WQRA incorporates HCA; Troutdale 4.318 applies HCA only to public parks (no private-lot effect)"
-    confidence: needs_verification
+    citation: "WVDC 430.170.A (as metro_title3: no new structure within an HCA beyond 430.160's 500 sq ft); 430.140.D(2): 'An HCA includes significant Goal 5 wetlands, riparian areas, and fish and wildlife habitat ... HCA locations on the WQ Map are assumed to be correct unless demonstrated otherwise'. Troutdale 4.318 applies HCA only to public parks (no private-lot effect)"
+    confidence: verified
     coverage:
       wood_village: {grade: C, note: "2005-era regional habitat model, coarse"}
+  - key: wood_village_wqr
+    source: metro_title3
+    keep_where: {RIPARIAN: [1], WETBUF: [1]}
+    name: "Wood Village water quality resource area (paperwork)"
+    action: flag
+    jurisdictions: [wood_village]
+    citation: "WVDC 430.190: 'Prior to issuing any permits in a WQRA a Construction Management Plan must be submitted' (Type I); 430.200 a Natural Resource Management Plan; 430.210.A(7) the undisturbed WQR flagged or fenced through construction"
+    confidence: verified
+    coverage:
+      wood_village: {grade: B, note: "as metro_title3. Touch-only: 430.140.A reaches properties 'within 100 ft of a WQR and/or HCA', and 430.140.B wants the plan there too once more than 500 sq ft is disturbed"}
+  - key: wood_village_hca
+    source: metro_title13
+    keep_where: {HCA_VALUE: [HIGH, MODERATE, LOW]}
+    name: "Wood Village habitat conservation area (paperwork)"
+    action: flag
+    jurisdictions: [wood_village]
+    citation: "WVDC 430.140.A: the regulations 'apply to all properties that contain, or are within 100 ft of a WQR and/or HCA'; 430.210.A(7) the HCA to remain undeveloped flagged or fenced before construction"
+    confidence: verified
+    coverage:
+      wood_village: {grade: C, note: "as metro_title13; touch-only, as wood_village_wqr"}
   - key: metro_wetlands
     name: "Metro regional wetland inventory (awareness)"
     action: flag

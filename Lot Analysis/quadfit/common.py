@@ -1482,7 +1482,14 @@ class OverlaySpec(BaseModel):
     # draws its streams and, separately, which of them are riparian corridors;
     # Table 32-2 gives a corridor stream 100 ft and any other stream 65, so the
     # 100 ft carve reads the stream lines clipped to the corridor polygons.
-    within: str | None = None
+    # Several layers are read as one area: their union.
+    within: str | list[str] | None = None
+    # Keep only the part MORE than this far inside the `within` area. Portland
+    # publishes its environmental zones, not their two halves: the first 25 ft
+    # inward from the zones' combined outer edge is the transition area and
+    # the rest is the resource area (PCC 33.430.050), so the resource area is
+    # the p and c zones together, shrunk by 25 ft.
+    within_inset_ft: float = 0.0
     jurisdictions: list[str] | Literal["all"] = "all"  # where the RULE applies
     citation: str = ""
     confidence: Literal["verified", "needs_verification"] = "needs_verification"
@@ -1492,12 +1499,21 @@ class OverlaySpec(BaseModel):
     def _one_ring_reading(self):
         if self.fill_holes and self.holes_only:
             raise ValueError(f"{self.key}: fill_holes and holes_only read opposite halves of one ring")
+        if self.within_inset_ft < 0 or (self.within_inset_ft and self.within is None):
+            raise ValueError(f"{self.key}: within_inset_ft shrinks a `within` area, inward only")
         return self
 
     @property
     def layer(self) -> str:
         """The raw layer this overlay reads — its own key unless it borrows."""
         return self.source or self.key
+
+    @property
+    def within_layers(self) -> tuple[str, ...]:
+        """The layers `within` names, as a tuple (empty when it names none)."""
+        if self.within is None:
+            return ()
+        return (self.within,) if isinstance(self.within, str) else tuple(self.within)
 
     def applies_to(self, jurisdiction: str) -> bool:
         return self.jurisdictions == "all" or jurisdiction in self.jurisdictions

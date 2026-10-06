@@ -33,7 +33,11 @@ and the plan are still owed.
 Portland's three environmental zones sit here too. A lot the z covers is RED
 on the use rule already; the few the city's z map leaves out while its
 environmental-zone map touches them are a map disagreement, and a person
-reads the lot rather than the screen picking a side.
+reads the lot rather than the screen picking a side. Since 2026-10-06 quadfit
+also carves what 33.430 and 33.465 leave no building on (``pdx_ezone_*_core``:
+the p resource area plus 5 ft, the c resource area, all of v), so the pod is
+placed off it first. Wood Village's WQR and HCA (WVDC 430.170) carve under the
+Metro keys and are flagged under ``wood_village_*`` for the plan 430.190 asks.
 
 Touch-only: quadfit's ``ovl_<key>`` is True when any part of the lot is in
 the area. Several codes reach 25 to 100 ft past it (Wilsonville 4.139.05,
@@ -97,6 +101,18 @@ PERMITS: tuple[Permit, ...] = (
         "metro_wetlands",
         "a wetland on Metro's regional inventory",
         "DSL removal-fill applies to the wetland footprint itself (overlays.yaml metro_wetlands)",
+    ),
+    Permit(
+        "wood_village_wqr",
+        "a Wood Village water quality resource area (stream or wetland corridor)",
+        "WVDC 430.190 (a Construction Management Plan before any permit in a WQRA); "
+        "430.170.A forbids new structures inside it",
+    ),
+    Permit(
+        "wood_village_hca",
+        "a Wood Village habitat conservation area",
+        "WVDC 430.140.A and 430.210.A(7) (the HCA marked and kept undisturbed through "
+        "construction); 430.170.A forbids new structures inside it",
     ),
     Permit(
         "dsl_lwi_wetlands",

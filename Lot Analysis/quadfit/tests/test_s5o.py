@@ -147,6 +147,46 @@ def test_keep_where_and_within_read_only_the_named_part(tmp_path, monkeypatch):
     assert s5o_overlays._load_layer_geoms("overlay_line", within="overlay_absent") is None
 
 
+def test_within_several_layers_inset_keeps_only_the_resource_area(tmp_path, monkeypatch):
+    """Portland 33.430.050: the transition area is the first 25 ft in from the
+    combined outer edge of abutting p and c zones; the rest is resource area.
+
+    p is x 0-100, c abuts it at x 100-200, both y 0-100. Inset from the merged
+    outline, p keeps x 25-100 (no band along the shared edge) and y 25-75.
+    """
+    from shapely.geometry import box, mapping
+
+    import s5o_overlays
+
+    monkeypatch.setattr(s5o_overlays, "RAW_DIR", tmp_path)
+    _write_layer(tmp_path / "overlay_p.geojson", [({}, mapping(box(0, 0, 100, 100)))])
+    _write_layer(tmp_path / "overlay_c.geojson", [({}, mapping(box(100, 0, 200, 100)))])
+    _write_layer(tmp_path / "overlay_far.geojson", [({}, mapping(box(500, 0, 510, 10)))])
+
+    (core,) = s5o_overlays._load_layer_geoms(
+        "overlay_p", within=("overlay_p", "overlay_c"), within_inset_ft=25)
+    assert core.bounds == pytest.approx((25, 25, 100, 75))
+    # Inset from p alone would also band the edge p shares with c.
+    (alone,) = s5o_overlays._load_layer_geoms(
+        "overlay_p", within=("overlay_p",), within_inset_ft=25)
+    assert alone.bounds == pytest.approx((25, 25, 75, 75))
+    # A feature the area never reaches is dropped, not kept whole.
+    assert s5o_overlays._load_layer_geoms(
+        "overlay_far", within=("overlay_p", "overlay_c"), within_inset_ft=25) == []
+    assert s5o_overlays._load_layer_geoms(
+        "overlay_p", within=("overlay_p", "overlay_absent"), within_inset_ft=25) is None
+
+
+def test_within_inset_needs_a_within_and_shrinks_inward():
+    with pytest.raises(ValueError):
+        _spec(within_inset_ft=25)
+    with pytest.raises(ValueError):
+        _spec(within="x", within_inset_ft=-5)
+    assert _spec(within=["a", "b"], within_inset_ft=25).within_layers == ("a", "b")
+    assert _spec(within="a").within_layers == ("a",)
+    assert _spec().within_layers == ()
+
+
 def test_carve_envelopes_subtracts_buffered_overlay():
     from shapely.geometry import box
 

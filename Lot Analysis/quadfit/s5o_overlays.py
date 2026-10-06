@@ -92,14 +92,41 @@ def _kept(properties, keep_where) -> bool:
     return any(props.get(field) in values for field, values in keep_where.items())
 
 
+class _Clip:
+    """An area to clip features to, indexed by its parts.
+
+    Portland's p and c zones together are ~8,000 polygons; intersecting each
+    feature with the whole union would walk every vertex of it every time.
+    """
+
+    def __init__(self, area):
+        import numpy as np
+        import shapely
+        from shapely.strtree import STRtree
+
+        self.parts = np.array(shapely.get_parts(area), dtype=object)
+        self.tree = STRtree(self.parts)
+
+    def of(self, geom):
+        import shapely
+        from shapely.geometry import Polygon
+
+        near = self.parts[self.tree.query(geom, predicate="intersects")]
+        if len(near) == 0:
+            return Polygon()
+        return shapely.intersection(geom, shapely.union_all(near))
+
+
 def _load_layer_geoms(key: str, fill_holes: bool = False,
                       holes_only: bool = False, keep_where=None,
-                      within: str | None = None):
+                      within: str | tuple[str, ...] | None = None,
+                      within_inset_ft: float = 0.0):
     """Valid shapely geometries for one raw layer, or None if file absent.
 
-    `within` names a second raw layer and keeps only the part of each feature
-    inside it (`OverlaySpec.within`); a missing second layer is a missing
-    layer, never the whole first one.
+    `within` names one or more further raw layers and keeps only the part of
+    each feature inside their union, shrunk by `within_inset_ft`
+    (`OverlaySpec.within`); a missing further layer is a missing layer, never
+    the whole first one.
     """
     import shapely
 
@@ -107,11 +134,17 @@ def _load_layer_geoms(key: str, fill_holes: bool = False,
     if not path.exists():
         return None
     clip = None
-    if within is not None:
-        area = _load_layer_geoms(within)
-        if area is None:
-            return None
+    if within:
+        area = []
+        for name in (within,) if isinstance(within, str) else within:
+            part = _load_layer_geoms(name)
+            if part is None:
+                return None
+            area.extend(part)
         clip = shapely.union_all(area)
+        if within_inset_ft > 0:
+            clip = shapely.buffer(clip, -within_inset_ft)
+        clip = _Clip(clip)
     geoms = []
     for f in load_geojson_features(path):
         g = f.get("geometry")
@@ -126,7 +159,7 @@ def _load_layer_geoms(key: str, fill_holes: bool = False,
             if holes_only:
                 geom = _holes(geom)
             if clip is not None:
-                geom = shapely.intersection(geom, clip)
+                geom = clip.of(geom)
         except Exception:
             continue
         if not geom.is_empty:
@@ -467,13 +500,15 @@ def main() -> None:
     # and five overlays borrow it.
     read: dict[tuple, list | None] = {}
     for spec in cfg.overlays:
-        reading = (spec.layer, spec.fill_holes, spec.holes_only, spec.within,
+        reading = (spec.layer, spec.fill_holes, spec.holes_only,
+                   spec.within_layers, spec.within_inset_ft,
                    tuple(sorted((k, tuple(v)) for k, v in spec.keep_where.items())))
         if reading not in read:
             read[reading] = _load_layer_geoms(
                 f"overlay_{spec.layer}", spec.fill_holes,
                 holes_only=spec.holes_only, keep_where=spec.keep_where,
-                within=spec.within and f"overlay_{spec.within}")
+                within=tuple(f"overlay_{w}" for w in spec.within_layers),
+                within_inset_ft=spec.within_inset_ft)
         geoms = read[reading]
         if geoms is None:
             missing.append(spec.key)
