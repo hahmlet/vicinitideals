@@ -1600,15 +1600,13 @@ read when the weekly full re-screen lands.
    neither -- needs map layers (ORCA parks held; schools/hospitals/utility
    sites to find). Scope ANSWERED 2026-10-06: churches and charities stay
    CHECKED; ADDED airports, marinas, transit hubs, rail, public pools/
-   plazas, waste treatment, malls. BUILT on branch `flats/institutional`
-   (d4a01671, not merged): OSM extract `osm_land_use` (Overpass) + ORCA
-   public parks/school land, share of lot >= 50%; assign answers RED
-   (reason INSTITUTIONAL_USE, bind institutional_share), bridge
-   `--institutional` skips; runbook step 7b. Washington PUB NOT used (its
-   9xx codes include land no category names). Measured vs run 63: 9,923
-   of 587,815 lots -> RED (381 green, 1,906 yellow, 3,926 unmeasured,
-   3,710 already red); every green read. ASKED Steph: church-run schools
-   (~215 lots, 29 green: Central Catholic, Columbia Christian, U of
-   Portland, LDS seminaries) -- school (red) or church (screened)? Then
-   merge before the weekly run; the weekly run must acquire osm_land_use
-   and run step 7b.
+   plazas, waste treatment, malls; a church's school is a SCHOOL (Steph,
+   asked 2026-10-06). SHIPPED ca06c2ff (deployed, smoke passed): OSM
+   extract `osm_land_use` + ORCA public parks/school land, >= 50% of the
+   lot; assign answers RED (INSTITUTIONAL_USE / institutional_share),
+   bridge `--institutional` skips. Measured vs run 63: 9,923 of 587,815
+   lots -> RED (381 green, 1,906 yellow, 3,926 unmeasured); every green
+   read. LEFT: the WEEKLY RUN (~10-08) must `acquire --keys osm_land_use`,
+   run runbook step 7b, and pass `--institutional` to the bridge -- then
+   check `institutional_were_scanned` is 0 in assign's summary. Remove
+   this item once that run is promoted.
