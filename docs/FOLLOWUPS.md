@@ -1586,7 +1586,15 @@ read when the weekly full re-screen lands.
    or PROP_CODE 9xx: 90; Multnomah ASSESSVAL 0 with TOTALVAL > 0: 109)
    leave ~660, mostly private (vacant, MFR, COM, farm, SFR acreage;
    Clackamas's 181 unsorted). Re-measure with the first full run's
-   `timings.parquet` after 47 lands.
+   `timings.parquet` after 47 lands. (g) GPU -- Steph asked 2026-10-06;
+   answered not now. A lot's screen is branching geometry (GEOS polygon
+   work, per-city rule lookups, path searches); only the footprint
+   placement sweep is array-shaped, and porting it means rewriting the fit
+   search and proving it exact (tight fits turn on 6 in; GPU arithmetic
+   rounds differently). Cloudflare Containers rent no GPUs (CPU-only
+   instance types, checked 2026-10-06). OFFERED, DECISION PENDING: profile
+   where a lot's seconds go (cProfile on a ~500-lot sample, under the lock)
+   before choosing compute or rewriting a step.
 47. [scan: YES] **Institutional land is RED and never scanned (Steph RULED
    2026-10-06: "hospitals, schools, municipal, parks, water treatment/heavy
    infrastructure should just be flagged red and flagged out of scans for
