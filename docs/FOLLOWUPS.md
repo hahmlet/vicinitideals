@@ -1579,3 +1579,18 @@ read when the weekly full re-screen lands.
    Hetzner CCX63 in Hillsboro OR (48 vCPU / 192 GB, ~$1.64/h, billed
    until DELETED; one big machine, least build). (e) fewer lanes: not
    pursued.
+47. [scan: YES] **Institutional land is RED and never scanned (Steph RULED
+   2026-10-06: "hospitals, schools, municipal, parks, water treatment/heavy
+   infrastructure should just be flagged red and flagged out of scans for
+   any reason").** Found when a 44-acre R-5 school campus (1N1190002300,
+   4200 NW 185th Ave, Westview HS) held 137's lock alone for 70+ min. No
+   owner name in the RLIS feed. Signals measured on the 10-01 s1 (656,383
+   records): Washington `LANDUSE = PUB` (4,387; 1,899 in the screened
+   universe; PROP_CODE 9xx); Multnomah has no PUB but `ASSESSVAL = 0` with
+   `TOTALVAL > 0` marks tax-exempt land (10,572: PCC Sylvania, Mt Hood CC,
+   David Douglas HS... -- also churches and nonprofits); Clackamas has
+   neither -- needs map layers (ORCA parks held; schools/hospitals/utility
+   sites to find). Build: an s1/s3 exclusion with a named reason (like the
+   condo rule), FLATS answers RED with a flag, the bridge never sees the
+   lot. ASKED Steph: churches/nonprofit/housing-authority land in or out;
+   worktree go-ahead.
