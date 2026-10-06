@@ -1578,7 +1578,15 @@ read when the weekly full re-screen lands.
    outside the repo, a monthly budget alert. Fallback considered:
    Hetzner CCX63 in Hillsboro OR (48 vCPU / 192 GB, ~$1.64/h, billed
    until DELETED; one big machine, least build). (e) fewer lanes: not
-   pursued.
+   pursued. (f) skip big PRIVATE lots by size -- Steph 2026-10-06
+   DEFERRED: "see what the institutional changes remove" (item 47), then
+   decide. Measured on quadfit_2026-10-01_wash (418,021 lots screened):
+   861 lots >= 10 ac (660 10-20, 167 20-44, 34 >= 44; biggest 194.8 ac
+   1S1080000504) = ~11% of the cost proxy; 47's signals (Washington PUB
+   or PROP_CODE 9xx: 90; Multnomah ASSESSVAL 0 with TOTALVAL > 0: 109)
+   leave ~660, mostly private (vacant, MFR, COM, farm, SFR acreage;
+   Clackamas's 181 unsorted). Re-measure with the first full run's
+   `timings.parquet` after 47 lands.
 47. [scan: YES] **Institutional land is RED and never scanned (Steph RULED
    2026-10-06: "hospitals, schools, municipal, parks, water treatment/heavy
    infrastructure should just be flagged red and flagged out of scans for
