@@ -4,7 +4,12 @@ Agent-maintained queue. Written when options are offered, pruned when they are
 done or declined. Newest at the bottom; "do the next thing" means item 1.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
-1. **The county map copy: loose ends after the first promotion (HUMAN_TODO
+Each item carries `[scan: ...]`: YES = the work changes lot answers, so a
+before/after scan on 137 must be read before it ships; NO = tests are enough;
+"NO new code, check after the weekly run" = already deployed, its moves are
+read when the weekly full re-screen lands.
+
+1. [scan: NO] **The county map copy: loose ends after the first promotion (HUMAN_TODO
    20).** The September copy (snapshot 3, run 10: 400,032 lots = 288,031
    measured + 112,001 unmeasured with a reason) was PROMOTED 2026-09-20
    11:29 UTC by the agent on the standing word -- gate clean on all nine
@@ -26,7 +31,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    `planned_development` lever are a relief-policy question -- HUMAN_TODO 23
    (2026-09-25). No lot decisions exist yet (0 rows 2026-09-25), so the
    "look again" flag has nothing to mark until a review page writes some.
-2. **Neighbour zoning per lot line -- loose ends after the measurement
+2. [scan: YES] **Neighbour zoning per lot line -- loose ends after the measurement
    (4b25df09 + the carve fix cfc8c033; re-screened as run 12 and PROMOTED
    2026-09-22 10:30 UTC on the standing word -- the first §4b run: gate
    clean on eight rows, drift 10 -> 12 = 289 of 576,062 answers moved,
@@ -94,7 +99,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    5), and reading it needs a fourth neighbour fact ("every line
    non-residential OR HDR"); recommend leaving it unless those lots
    come up.
-3. **Alley leftovers (rear alley caad6f3f run 24; side alleys + the
+3. [scan: YES for the court placement; NO for the lot-page note] **Alley leftovers (rear alley caad6f3f run 24; side alleys + the
    6-inch tight-fit rule 82d4c7de, run 26 PROMOTED 2026-09-26 on the
    standing word: 730 answers moved, 0 unexplained -- 669 unknown->green
    and 52 yellow->green if signed, 9 yellow->unknown where the fit was the
@@ -133,7 +138,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    compares length only, it does not place the court against the stretch;
    the lot page could say when an alley stops short. (d) Gresham's 200 alley lots fail lot
    area/frontage regardless.
-4. **Four places the screen and the county map disagree, found by the
+4. [scan: YES] **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
    the comparison stays readable, each its own change: (a) the court's
    shape -- **side court BUILT 3e8e3bab/1b7b5567 (deployed 15ffab9e,
@@ -220,12 +225,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    stall count was decided 2026-09-18 (HUMAN_TODO 18) and is out of this
    item.
    **(b) DONE caad6f3f** (`parking_alley_backout_ft`; leftovers item 3).
-5. **Draw what the screen fitted -- DONE (666c6837, full run 31 PROMOTED
+5. [scan: YES, small sample (drawings move, colours must not)] **Draw what the screen fitted -- DONE (666c6837, full run 31 PROMOTED
    2026-09-27; new splice base 137 /root/bridge_draw_full, 0 splices).**
    Leftovers: the drawing keeps the verdict's angle, so on a wide shallow
    lot the plan can run along the street; a side-alley column is drawn as
    a row behind the building.
-6. **Where parking may SIT, and which street is "the front".** Offered
+6. [scan: YES] **Where parking may SIT, and which street is "the front".** Offered
    2026-09-19 when Steph asked why the court is always behind. **Steph's
    ruling 2026-09-19:** trying each street as the front applies ONLY where
    the lot has more than one street AND the code leaves the choice to us;
@@ -505,7 +510,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Gresham 3.0100: the front is fixed where the minimum lot depth is met
    in one direction only (needs depth both ways = (a)).
 
-7. **Green and outdoor space: charge the SHAPE, not just the amount.** (a)
+7. [scan: YES] **Green and outdoor space: charge the SHAPE, not just the amount.** (a)
    DONE 2026-09-28 (open-space commit): the screen's open space /
    landscaping checks now read lot - building - pavement (`paper.paved`:
    court, alley back-out, lane/side-street drive/alley-side aisle, counted
@@ -536,7 +541,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    25 % (communal), Gladstone / Tualatin / West Linn / Clackamas county
    state none.
 
-8. **Pockets + corridors -- leftovers (PROMOTED run 33 2026-09-27, drift
+8. [scan: NO new code, check after the weekly run; YES if (b) is taken up] **Pockets + corridors -- leftovers (PROMOTED run 33 2026-09-27, drift
    vs 31: 4,140 moved unknown -> green 4,112 / yellow 28 if signed, all
    rules, 0 unexplained; pocket lots 210 -> 25 still ZONE_POCKET, 174 now
    screened under their `of` layer, red at the use gate).** (a) DONE in code
@@ -562,7 +567,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    and the line is off the corridor (`setback_street_across_nonresidential_ft`);
    quadfit CE/CM2/CM3/CX front 0 -> 5. Bound ~60 lots green/unknown ->
    yellow, 0 loosened. NEEDS the next full s4->s7 run (new s4 column).
-10. **Two loose ends from the ruling pass.** (a) DONE 4b725b6a -- alias
+10. [scan: YES for (a), one lot; NO for (b)] **Two loose ends from the ruling pass.** (a) DONE 4b725b6a -- alias
    rulings can `observes:` a site fact; FLX->VC observes
    `inside_mapped_use_area`; the bridge applies aliases. Moves 0: the one
    FLX lot (1N3E33AB-00500) is dropped by quadfit s3 (zone_not_in_rules);
@@ -571,7 +576,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    published document defines -- not Gresham 4.0100, not MCC 39; ruled
    `to_read` and worth one question to Gresham planning if it ever
    matters; nothing else owed.
-12. **FLATS's own envelope -- loose ends (merged b5303d01, PROMOTED run 18
+12. [scan: NO -- nothing open; the weekly run carries f0418b49] **FLATS's own envelope -- loose ends (merged b5303d01, PROMOTED run 18
    2026-09-25).** Run 18 drift 879 moved / 0 unexplained: the old quadfit
    court credit was false on all-front lots and orientation-blind (now
    charged), Wood Village LR rear resolves to 20, Gresham MDR-24 corner
@@ -586,7 +591,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    and 33.130.215.B.2 sets it by the abutted zone; max(side, rear) already
    equals that number. 0 moves; plan districts not searched. (`checks.envelope` was dropped by assign's column list -- fixed
    a883f439, present from the next run.)
-13. **Tax code area in the RLIS ingest.** The Gresham tax-impact snapshot
+13. [scan: NO -- lands with the November county data refresh] **Tax code area in the RLIS ingest.** The Gresham tax-impact snapshot
    (`scripts/flats_tax_snapshot.py`, migration 0136) needs each lot's tax
    code area (RLIS `TAXCODE`), which acquire drops because it is not a
    declared field; the script's `taxcodes` step pulls it separately out of
@@ -597,13 +602,13 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    probe report `registry_changed` and turns the Lots banner red until a
    new copy is taken -- make the edit as the first step of the November
    RLIS refresh, not before.
-14. **Tax impact beyond Gresham.** `flats/config/tax/or/multnomah/2025-26.yaml`
+14. [scan: NO] **Tax impact beyond Gresham.** `flats/config/tax/or/multnomah/2025-26.yaml`
    holds Gresham's eleven code areas only. Another city needs its code
    areas' rates (Multnomah's levy-code-rates PDF, split local option /
    bond / urban renewal as the Gresham file does) and its CPR row; Clackamas
    needs its own rate file and CPR table (a different county publication).
    Pending decision: which city next (the pitch is per-city).
-15. **Edgemont (P7) bond-model update -- waiting on Steph's answers.**
+15. [scan: NO] **Edgemont (P7) bond-model update -- waiting on Steph's answers.**
     `docs/models/Edgemont_Model_Update_Instructions.md` (another agent's plan:
     60% AMI rent plan for the Portland nonprofit tax exemption, P7 property
     tax, RAMP credit, $500 concession policy, OpEx cuts, asset-mgmt fee, and
@@ -618,7 +623,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
     page recomputes OpEx and revenue itself (section K + per-category rows),
     so a change made only to the P7 roll-up leaves the portfolio pages
     stale; keep P7 units split Studio/1BR/2BR. Deliver as rev13 via Excel COM.
-16. **Partial re-screen -- SHIPPED 50a0ecc2 2026-09-25 (runbook §4c).**
+16. [scan: NO] **Partial re-screen -- SHIPPED 50a0ecc2 2026-09-25 (runbook §4c).**
    Bridge `--zone "<city>:<zone>"` / `--tlid`; `python -m flats.ingest.splice
    splice|audit`. First use: the two Oregon City farm lots (f0418b49) in
    2 minutes, run 20, drift 4 moved / 0 unexplained, promoted. The NEXT
@@ -628,12 +633,12 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    before promoting -- out-of-scope moves are accepted known unknowns.
    (Showing the audit on /flats/refresh: Steph 2026-09-25 "an enhancement
    for later" -- not queued.)
-18. **`GET /api/projects` is not scoped to the caller's organisation.** Any
+18. [scan: NO] **`GET /api/projects` is not scoped to the caller's organisation.** Any
    signed-in user sees every org's opportunities, filtered only by their
    own hidden list (found by the /api/ auth fix 2026-09-28, which closed
    anonymous and made-up-user access). Scope it to the user's org and add
    a two-org integration test; check the other list routes for the same.
-19. **Excel export vs the engine -- four disagreements the parity tests
+19. [scan: NO] **Excel export vs the engine -- four disagreements the parity tests
    found (PR #21/#22, 2026-09-29), none fixed; each needs a ruling.** (a)
    LOAN PAYOFF: the export's levered cash flow counts loan proceeds in at
    purchase but never the payoff at sale, while the engine's leaves loan
@@ -652,7 +657,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (d) look like export bugs; (b) and (c) are presentation choices for
    Steph. Exporter = app/exporters/investor_export.py (not the engine).
 
-17. **Washington County: drafts reviewed; publish, then the county map.**
+17. [scan: YES] **Washington County: drafts reviewed; publish, then the county map.**
    Steph 2026-09-29 (evening) answered HUMAN_TODO 25: A NO second cloud
    round -- Tigard, Cornelius and the 11 community plans are done LOCALLY
    (usage reset, 'go hard on data processing'); B design rules are catalogued
@@ -809,7 +814,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    middle-housing code (cottage clusters by 2028); a city that misses it
    gets the state model code directly. Run the drift check on every layer
    in early 2027 -- expect amendments across the board.
-20. **Design-standards catalog (Steph 2026-09-29, HUMAN_TODO 25B).** Record
+20. [scan: NO -- a catalog; nothing screens it yet] **Design-standards catalog (Steph 2026-09-29, HUMAN_TODO 25B).** Record
    and encode every rule about how the building LOOKS -- front windows
    share, entry facing the street, garage placement and width, siding and
    roof materials, articulation/offsets, eaves, porch, height transitions --
@@ -823,7 +828,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Fairview VA menu). HB 2138 asks LCDC to strip design standards that
    'prevent or discourage' housing by 2028 -- the catalog is also the
    baseline to see what that removes. Plan first; ask Steph before a worktree.
-21. **Post-2027 world (Steph 2026-09-29: "design the system for a post-2027
+21. [scan: YES for (a)-(c); NO for (d)-(e)] **Post-2027 world (Steph 2026-09-29: "design the system for a post-2027
    world... retroactively apply that throughout our corpus").** Sources
    STORED 2026-09-30 (declared in `_state.yaml`, cited by nothing yet):
    `or/hb.2138.2025.txt` (enrolled); `or/oar.660-046.adopted-2026-08.txt`
@@ -928,7 +933,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (e) WATCH: Housing Choices rulemaking (HB 2138 §22: siting/design of
    prefabricated middle housing; RAC 1 on 2026-10-07, adoption ~2027-12-02)
    -- item 20's catalog is the baseline; January 2027 drift run (17g).
-22. **Portland aisle 20 ft -- DONE (bacea669 + quadfit mirror 0df02fcc;
+22. [scan: YES if Steph adopts Milwaukie's 22 ft aisle] **Portland aisle 20 ft -- DONE (bacea669 + quadfit mirror 0df02fcc;
    run 44 PROMOTED 2026-09-30, splice base 137 /root/bridge_spliced_aisle0930).**
    Drift 42 -> 44: 7,633 moved, all rules, 0 unexplained -- Portland
    yellow->green 7,358 (7,001 on the fit alone), yellow->unknown 273
@@ -943,7 +948,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    housing, so it is refused today (milwaukie.yaml ~L948) and the court is
    drawn at 24. Asked: adopt 22 as Portland's 20 was adopted? Wilsonville's
    planning email (HUMAN_TODO 3) still open.
-23. **Page check -- SHIPPED 2026-09-30 (a203e9f1).** `/flats/check`: the
+23. [scan: NO] **Page check -- SHIPPED 2026-09-30 (a203e9f1).** `/flats/check`: the
    printed page with a box on the number, signed numbers first, then one card
    per footnote on it; "no" answers form the problems list
    (`/flats/check/problems.txt`, stamps `bundled_at`). Page maps now cover
@@ -955,7 +960,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    the signing disputes so the number reopens there; (c) Gresham
    4.1400.pleasant-valley's page map no longer matches its source -- re-fetch
    then re-map.
-24. **Oregon City 16.12.035.F -- one driveway approach per two townhouses
+24. [scan: YES] **Oregon City 16.12.035.F -- one driveway approach per two townhouses
    (Steph 2026-09-30, from the page check).** "Townhouses shall have one
    driveway approach for every two dwelling units (round up ...)". Not
    encoded and not among the file's NOT ENCODED notes (E.1, the middle
@@ -967,7 +972,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Next: a field for approaches required per N townhouses + the site plan
    drawing (and charging frontage for) a second approach; check which other
    cities state the same rule before building it for one.
-25. **Driveway approach geometry, ahead of a second approach (Steph
+25. [scan: YES, when built (on hold)] **Driveway approach geometry, ahead of a second approach (Steph
    2026-09-30, flag only -- do not build yet).** What is measured today: the
    drive lane's width (`driveway_min_width_one_way_ft` / `_two_way_ft`, read
    by `flats/score/paper.py`) and the driveway's share of frontage
@@ -981,7 +986,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    local frontage, never more than two). Once item 24 makes the pod draw two
    approaches, all of these start to bind together: per-approach width,
    spacing between them, offset from lot lines, count per frontage.
-26. **Page check: whole-document read-through (Steph 2026-10-01).**
+26. [scan: NO] **Page check: whole-document read-through (Steph 2026-10-01).**
    Finding an untinted rule is a different task from checking a tinted
    number; the existing card flow stays as it is for the second (Steph: no
    fly-through changes). Build a read-through: every page of a document in
@@ -991,7 +996,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    and submitted once at the end of the document; a per-document "read by a
    human" record so the corpus gets covered over time. Until it exists, keep
    "Flag something missing" on the card.
-27. **Steph's Oregon City page check (2026-10-01): what is left.** All of
+27. [scan: YES for (a) if the answer changes the rule; NO for (b)] **Steph's Oregon City page check (2026-10-01): what is left.** All of
    her answers triaged; card and reader fixes shipped (set-aside tint,
    other numbers held, yes/no cards say where they were read, smaller-face
    columns no longer read as footnotes, centred headings claim their column
@@ -1002,7 +1007,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    topography) held as binding; ask Steph whether the "differs" was the
    escape. (b) Other cities' prose refusals still need locating into
    `set_aside:` so their pages tint grey.
-27. **Parking layout generator (Steph 2026-10-01: "more parking flexibility
+27. [scan: YES (parked)] **Parking layout generator (Steph 2026-10-01: "more parking flexibility
    opens up more lots"; don't invent shapes).** PARKED by Steph 2026-10-04
    ("leave the free form generator for now"). SCOPING, nothing built.
    Steph's frame: NOT a menu of shapes -- feed the city's parameters (stall
@@ -1036,7 +1041,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    class is measured (6(c)), so today's lane may sit on the busier street;
    measure it per edge from RLIS street TYPE in s4 and re-check today's
    greens there. Awaiting Steph's go.
-29. **Fire reach: measure where the truck really stands (Steph 2026-10-01,
+29. [scan: YES for (C) when widths arrive; (A)/(B) checked after the weekly run] **Fire reach: measure where the truck really stands (Steph 2026-10-01,
    "later improvement"; RULED 2026-10-05).** Item 28 (the 150 ft hose,
    OFC 503.1.1) is LIVE since run 59. RULING 2026-10-05 (no national
    standard; one Southern California template says "10 feet from the edge
@@ -1081,7 +1086,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    from here: Beaverton, Gresham. Scripts /root/fire-curb_probe/; detail
    in memory project_flats_fire_curb. Not tied to the 10-08 re-screen.
 
-30. **Net land area review (Steph 2026-10-01: "not unique to Beaverton ...
+30. [scan: NO new code, check after the weekly run] **Net land area review (Steph 2026-10-01: "not unique to Beaverton ...
    we need to do a review of net land areas and what to do about it").**
    129 numeric values in 10 layers carry `measured_on: net_developable_area`
    (HV, Milwaukie, OC, West Linn, Fairview, Gresham, Troutdale, Beaverton,
@@ -1143,7 +1148,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    absent (rules read at view time). (e) slopes: SHIPPED 2026-10-04 with
    item 38(b) -- lidar measures each city's slope item; only the
    landslide-area slopes stay assumed absent (see 38).
-31. **Split a big lot to meet a minimum density (Steph 2026-10-02: "create
+31. [scan: YES (not started)] **Split a big lot to meet a minimum density (Steph 2026-10-02: "create
    a task for later ... immensely complicated ... large guesstimates on
    roads, utilities, etc. maybe never done").** A lot too big for 4 homes
    under a city's minimum density could still work as a land division
@@ -1152,7 +1157,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ONLY failure is minimum density is yellow "closer look" (item 30), not
    red. Not started; may never be.
 
-32. **Windows CPU spikes (Steph 2026-10-02: "60%+ of my CPU on Python").**
+32. [scan: NO] **Windows CPU spikes (Steph 2026-10-02: "60%+ of my CPU on Python").**
    Measured: at idle Python uses ~2% of the PC. The bursts are (a) test runs
    on Windows -- `pytest flats/tests -n auto` starts 16 workers, one per
    thread; the Stop hook's `pytest tests/` when `app/` changed; (b) the
@@ -1165,7 +1170,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    (A) kill the orphaned memory-plugin copies; (B) cap local test workers
    (`-n 4`) so tests never take the whole PC. Running tests on 137
    instead was DECLINED by Steph 2026-10-04 -- do not re-offer.
-33. **Parking court leftovers (fix ca26e048 LIVE as run 63, 2026-10-02:
+33. [scan: YES for (c) and any speed-up (must prove identical answers)] **Parking court leftovers (fix ca26e048 LIVE as run 63, 2026-10-02:
    drift 61->63 green->yellow 3,459, unknown->yellow 4,453, 0 unexplained).**
    Still open ((a), the court beside the building, fixed f7ba7038):
    (b) lots outside the 15,940 scoped whose court stands in a side or front
@@ -1176,7 +1181,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    every column (bound on 137: 2,000 Multnomah + 2,000 Washington lots +
    60 mixed; random-shape harness 0 cells gained). Next levers if needed:
    `has_window` in the court searches, `ground_for`.
-34. **Washington right-of-way polygons in quadfit s4 (77c99822,
+34. [scan: NO new code, check after the weekly run] **Washington right-of-way polygons in quadfit s4 (77c99822,
    2026-10-02).** Washington ends its street polygons `ROW`; until
    77c99822 the not-a-taxlot rule missed them, so FLATS screened 2,467 of
    them as lots (gone in run 59) and quadfit s4 still treats them as
@@ -1185,7 +1190,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    its zone as the neighbour's. The next full Washington quadfit run picks
    the rule up; diff s4's alley and neighbour-zone fields on Washington
    lots then and read the moves.
-35. **Fire check never ran on ~92,700 green answers (found 2026-10-02 by
+35. [scan: NO new code, check after the weekly run] **Fire check never ran on ~92,700 green answers (found 2026-10-02 by
    the net-area session).** The fire partials were scoped to lots likely
    to fail; the rest kept no fire result. Re-screened, 1,055 of them gave
    1,032 green + 23 unknown (no truck road within reach: Troutdale LDR/MDR,
@@ -1193,7 +1198,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    wide may be unknown. Steph 2026-10-02 chose B: NO partial -- the next
    weekly FULL re-screen fixes it (with 33's leftovers). After that run,
    check run-wide: zero green answers lacking a fire result.
-36. **Parking tool queue (Steph 2026-10-02: "do them in the reverse order
+36. [scan: YES] **Parking tool queue (Steph 2026-10-02: "do them in the reverse order
    you listed them").** (5) partly, (4) and (3) LIVE as code f7ba7038; the
    re-screen rides the weekly full run (~10-08) -- read the moves on
    corner lots with `lowest_class` and in Tualatin, Gladstone, Multnomah
@@ -1231,7 +1236,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    `python -m flats.score.turns` (test_turns fails until it is solved).
    (1) the free-form generator (item 27) -- PARKED by Steph 2026-10-04
    ("leave the free form generator for now").
-37. **Flag system plan ("FLATS Flag System Plan.md", Steph 2026-10-02) --
+37. [scan: YES for (iii); NO for (f)] **Flag system plan ("FLATS Flag System Plan.md", Steph 2026-10-02) --
    slice 1 + approval page DEPLOYED 2026-10-03 (Steph: "Deploy"), merge
    34963899 on main; no lot colour moves until the next bridge run writes
    the new columns (planned with the ~10-08 full re-screen, item (c)).** Steph's answers: (1) no variances, a miss with a path
@@ -1325,7 +1330,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    note 5 "end of a Minor Access Street" held on `local_street` (wrong
    fact) -- re-point + measure dead ends; worth little while
    sidewalk_easement holds the same Gresham lots; (f) Phase 4 pod spec.
-38. **Slope (Steph 2026-10-04: "work on slope ... on most small lots steep
+38. [scan: NO new code, check after the weekly run] **Slope (Steph 2026-10-04: "work on slope ... on most small lots steep
    slope would be disqualified due to build costs rather than net land").**
    TODAY: quadfit s5o measures per-lot mean/p85/max slope % (3DEP 1 m lidar,
    10 m DEM east of ~-122.48: Gresham/Troutdale/Fairview/Wood Village/east
@@ -1376,7 +1381,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    landslide areas on NHMP Maps 16/17. Needs DOGAMI SLIDO or the city
    maps traced; today assumed absent. Steph 2026-10-05 DECLINED (agreed
    to leave it) -- do not re-offer.
-39. **The building is drawn where the parking wants it, then the fire
+39. [scan: NO new code, check after the weekly run] **The building is drawn where the parking wants it, then the fire
    route is measured from there (found 2026-10-04 in two bounds).** More
    ground lets the fit seat the building deeper, the 150-ft hose route
    (item 35, OFC 503.1.1) then fails and the lot goes RED although a
@@ -1390,7 +1395,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    red->green (Gladstone 3, Multnomah 1, Tualatin 1, Portland 1), 0 worse.
    Not searched: other placements at one angle (a false red, never a
    false green). Rides the weekly full re-screen.
-40. **Easements from maps (Steph 2026-10-04 asked the odds of reading an
+40. [scan: YES, if started] **Easements from maps (Steph 2026-10-04 asked the odds of reading an
    assessor/easement map onto the lot).** Holds: utility_easement ~28k and
    sidewalk_easement ~20k yellow answers (Beaverton 0 green: BDC 20.05/20.22
    note 7 "no building may encroach into a Public Utility Easement"; OC R
@@ -1406,7 +1411,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Beaverton/Hillsboro/Washington Co. publish an easement GIS layer or bulk
    plat images; severity of "plat read, deed easements unchecked" is ruled
    AFTER the pilot, not before.
-41. **Street class per lot line -- (a)+(b) SHIPPED 6b924963 2026-10-05;
+41. [scan: YES] **Street class per lot line -- (a)+(b) SHIPPED 6b924963 2026-10-05;
    (i)-(iii) SHIPPED 2026-10-06 b03dcd88/92c5f1d9/972caa17, deployed.** Live:
    Gresham note 5 caps on measured `at_street_end` (False-only);
    `local_street` from Milwaukie's TSP map (True needs Metro to agree) and
@@ -1459,7 +1464,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    Beaverton ROW strips: dropped in normalize since 77c99822; only bounds
    on the 10-01 stage files meet them. Still open: Wilsonville note P via
    easement layer 150 (low value while access_easement caps RN).
-42. **Water, wetland and flood ground at slope's fidelity -- DONE; reaches
+42. [scan: NO new code, check after the weekly run] **Water, wetland and flood ground at slope's fidelity -- DONE; reaches
    the map with the weekly runs from ~10-08 (all WARNED promotions, Steph
    promotes).** Steph asked 2026-10-04 "are we treating wetland/flood zones
    with as much fidelity as we now treat slopes?". Shipped: (a) Portland z
@@ -1493,7 +1498,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    King City, Durham (each needs a map or a determination the city holds).
    Known under-carve: Portland's city-limit transition-area exception
    (33.430.050.A) is not drawn.
-43. **Utility easement: Steph's street-yard rule -- SHIPPED a9106379
+43. [scan: NO new code, check after the weekly run] **Utility easement: Steph's street-yard rule -- SHIPPED a9106379
    2026-10-06, live from the next full re-screen (~10-08).** Ruled
    2026-10-01 (item 17(e)), Oregon City 2026-10-05 "same rule": the
    building fits with a 10 ft yard on every STREET line -> the question is
@@ -1511,7 +1516,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    ~1.6x slower on the two cities (~+1.2 h on the weekly run). After the
    re-screen: check both cities' green counts land near the bound's, then
    remove this item.
-44. **A lot's readings are ranked with a missed fit above an open question
+44. [scan: YES] **A lot's readings are ranked with a missed fit above an open question
    (found 2026-10-05 by the utility-easement bound).** `_front_rank`
    (flats/ingest/quadfit.py) ranks the readings `_screen_lot_once` chooses
    between -- a corner's fronts, a through lot's ends, a part-alley's two
@@ -1533,7 +1538,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    the easement bound exposed (Oregon City 32E06DD00603 pod80x25: shown
    fitting, the kept reading misses by 22 ft); where the open fact flags
    below severity 3 that is a false GREEN too.
-45. **A tight-fit green is never graded (found 2026-10-06 by the
+45. [scan: YES] **A tight-fit green is never graded (found 2026-10-06 by the
    utility-easement bound).** `slope_checked` (flats/ingest/quadfit.py)
    measures the pad grade only on a drawing that fits; a building that
    misses its room by under 1 ft is green with FIT-TIGHT (Steph
@@ -1544,7 +1549,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    short drawing's building + court too (or hold a green whose grade was
    never tried); bound over the negative-slack greens only. No Steph
    decision needed.
-46. **Scans (bounds) on 137 are the lanes' bottleneck (Steph 2026-10-06:
+46. [scan: YES (a proof run: every answer must come out identical)] **Scans (bounds) on 137 are the lanes' bottleneck (Steph 2026-10-06:
    ~1 h coding, then 5-6 h waiting for one scan at a time; four lanes
    queue on `heavy.lock`).** Measured: every bound runs the BEFORE code
    again on every iteration (street-class re-ran its base 4 times;
