@@ -1498,37 +1498,31 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    68,044 greens -> yellow net of z (WA habitat 5,465, CWS 1,751, Clackamas
    HCA 2,911 / WQRA 741, FEMA 1,093 but only 33 FEMA-only, Metro wetlands
    313); greenway 126 lots -> RED. WARNED promotion at the ~10-08 run.
-   PHASE 2 (next): read each overlay's sentences (CWS Ch. 3, each WashCo
-   city's Goal 5 chapter, Gladstone 17.27.045) and move any that forbid
-   building to `carve` (needs an s5o run under flock). Steph 2026-10-05:
-   PHASE 2 "I want this" -- IN PROGRESS (water lane), lands in the run
-   AFTER ~10-08. READ 2026-10-05 (4 readers, verbatim quotes; reports in
-   the session, key cites here): NO-BUILD inside (carve, lot touching it
-   stays yellow for the paperwork): CWS vegetated corridor (D&C Stds
-   3.01.5 + 3.05.9/3.07 alternatives analysis; only marginal/degraded
-   corridors allow a 20% depth/length nibble, condition unknowable from
-   desk), Milwaukie WQR (19.402.6.B caps fit no pod), Gladstone WQ
-   (17.27.045(1)(a) no-practicable-alternative), Wilsonville SROZ core
-   (4.139.06(.03)(B)/(C) 0% / 5%; the 25 ft Impact Area stays a flag --
-   carve the HOLE only), West Linn RCI (Table 32-2 row D 100 ft, Table
-   32-1 house "No, except by hardship"). HABITAT with a numeric
-   allowance only when the non-habitat part of the lot is smaller than a
-   cap: Clackamas HCA (ZDO 706.10(A)(1)(c), Table 706-3 5,000/6,000),
-   Milwaukie HCA (19.402.6.C.1), Gladstone HCA (17.25.100 Tables 3/4),
-   Portland c (33.430.140.A Table 430-1) -> carve + count the lots the
-   allowance could save. LOOSER than today: West Linn piped streams EXEMPT
-   (32.040(F)(2)) -> drop the flag; washington_habitat (Metro Title 13)
-   is NOT the regulated map in most of Washington Co: Beaverton outside
-   Cooper Mountain voluntary (BDC 60.12.05), Hillsboro regulates its OWN
-   SNRO map (12.27, not held -- keep proxy until fetched), King City
-   outside Kingston Terrace nothing, Durham own NR/NRO zones, WashCo
-   uninc exempt <=0.5 ac lots legally created by 2024-11-05 with no
-   riparian (CDC 422-4.4), Sherwood adopts Metro's map (16.142, flag).
-   Loosening adds greens -> bound + read every gained lot. KEEP as is:
-   Clackamas WQRA (709.02 excludes CCSD1/SWMACC = most urban uninc; WES
-   rules unread), Happy Valley NROZ/slope (mixed; our >15% slope cut
-   already stricter), Tualatin WFA/piped. Portland p non-z lots: resource
-   area + 5 ft no-build, 25 ft transition band usable -- few lots, later. FEMA fringe stays YELLOW, RULED ("we aren't customizing
+   PHASE 2 SHIPPED 2026-10-06 587b02d1, deployed; reaches the map with the
+   run AFTER ~10-08 (that run's s5o must be re-run on this code -- the bound
+   only patched a copy). Each overlay whose code forbids building got a
+   `carve` twin on the same map, permit flag kept: CWS vegetated corridor
+   (riparian + wetland buffer polygons only), Clackamas HCA
+   (HIGH/MODERATE/LOW only), West Linn RCI + 100 ft WRA riparian inside
+   RCI, Wilsonville SROZ (the hole only), Milwaukie HCA + WQR, Gladstone
+   HCA + WQ; West Linn piped streams EXEMPT (32.040(F)(2)), flag dropped.
+   Cites in overlays.yaml. Bound on 137 (all 11,341 carved or piped lots,
+   /root/water_bound_{base,new}, colour per lot): 824 yellow->red (684 no
+   longer fit, 83 fit only on steep ground, 57 building pushed past hose
+   reach; WashCo uninc 411, Clackamas 250, Beaverton 90, West Linn 26,
+   Milwaukie 19), 0 greens lost; 4 yellow->green (West Linn piped, read)
+   and 7 red->yellow, all read (5: the carve moved the building nearer the
+   street inside hose reach -- item 39's one-placement search; 2
+   Wilsonville: the other reading's ambiguous rule -- item 44). WARNED
+   promotion. OFFERED (pending Steph): the HCA disturbance allowance (ZDO
+   706.10 / Tables 706-3,-4; Gladstone Tables 3/4) could lift some of the
+   ~260 HCA reds (Clackamas 250, Gladstone 7, part of Milwaukie) -- not
+   modelled. Residue: West Linn fish-bearing streams outside RCI still at
+   65 ft not 100 (ODFW map not held); Wood Village's Title 3/13 carves
+   include flood-only and "NO HCA" polygons (over-carve); washington_habitat
+   stays a flag (Beaverton/King City/Durham scoping unread, Hillsboro SNRO
+   map not held); Portland p non-z later; Clackamas WQRA, Happy Valley,
+   Tualatin kept as they were. FEMA fringe stays YELLOW, RULED ("we aren't customizing
    for flood zones") -- do not re-offer. (d) STATE MAPS --
    Steph 2026-10-05 "plan on looking at state maps". Found: DSL serves
    every approved local wetland inventory (maps.dsl.state.or.us
