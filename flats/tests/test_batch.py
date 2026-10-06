@@ -374,15 +374,15 @@ def test_prune_drops_the_caches_no_run_has_used(tmp_path) -> None:
 # --- a worker killed mid-run --------------------------------------------------------
 
 
-def _dying_init(flag: str, deaths: int) -> None:
+def _dying_init(flag: str, deaths: int, tlid: str) -> None:
     """Worker setup in a real process: the fake screen, except that the
-    12-acre lot's worker dies outright -- as the kernel's OOM killer ends
-    one -- the first ``deaths`` times it is screened (counted in ``flag``)."""
+    worker screening ``tlid`` dies outright -- as the kernel's OOM killer
+    ends one -- the first ``deaths`` times (counted in ``flag``)."""
 
     def work_chunk(rows):
         out = []
         for row in rows:
-            if row["TLID"] == "T02":
+            if row["TLID"] == tlid:
                 path = Path(flag)
                 died = int(path.read_text()) if path.exists() else 0
                 if died < deaths:
@@ -394,12 +394,12 @@ def _dying_init(flag: str, deaths: int) -> None:
     quadfit._work_chunk = work_chunk
 
 
-def _screen_in_processes(rows, tmp_path: Path, deaths: int, cache=None):
+def _screen_in_processes(rows, tmp_path: Path, deaths: int, tlid: str = "T02", cache=None):
     parts = tmp_path / "parts"
     parts.mkdir(parents=True)
     said: list[str] = []
     got = batch.screen_rows(
-        rows, parts, processes=2, chunk_size=2, init=_dying_init, initargs=(str(tmp_path / "died"), deaths),
+        rows, parts, processes=2, chunk_size=2, init=_dying_init, initargs=(str(tmp_path / "died"), deaths, tlid),
         cache=cache, log=said.append,
     )
     return got, said
@@ -418,10 +418,13 @@ def test_a_worker_killed_mid_run_is_noticed_and_its_chunks_run_again(tmp_path) -
 
 @pytest.mark.timeout(180)
 def test_a_worker_that_dies_again_stops_the_run_and_a_relaunch_resumes(tmp_path) -> None:
+    # The smallest lot runs last, and a chunk starts only when another has
+    # come back, so every chunk but the one beside it is kept before the
+    # death: there is always something to resume from.
     rows = _rows()
     cache = _cache(tmp_path)
-    with pytest.raises(RuntimeError, match="died again.*T02 at 12.0 acres.*re-launch"):
-        _screen_in_processes(rows, tmp_path, deaths=2, cache=cache)
+    with pytest.raises(RuntimeError, match="died again.*acres.*re-launch"):
+        _screen_in_processes(rows, tmp_path, deaths=2, tlid="T00", cache=cache)
     (frame, _, done), _ = _screen_in_processes(rows, tmp_path / "again", deaths=0, cache=cache)
     assert done.cached_lots >= 1 and done.computed_lots >= 1
     _same(frame, pd.DataFrame.from_records([r for row in rows for r in _fake_records(row)]))
