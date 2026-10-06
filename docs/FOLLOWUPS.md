@@ -1598,7 +1598,17 @@ read when the weekly full re-screen lands.
    `TOTALVAL > 0` marks tax-exempt land (10,572: PCC Sylvania, Mt Hood CC,
    David Douglas HS... -- also churches and nonprofits); Clackamas has
    neither -- needs map layers (ORCA parks held; schools/hospitals/utility
-   sites to find). Build: an s1/s3 exclusion with a named reason (like the
-   condo rule), FLATS answers RED with a flag, the bridge never sees the
-   lot. ASKED Steph: churches/nonprofit/housing-authority land in or out;
-   worktree go-ahead.
+   sites to find). Scope ANSWERED 2026-10-06: churches and charities stay
+   CHECKED; ADDED airports, marinas, transit hubs, rail, public pools/
+   plazas, waste treatment, malls. BUILT on branch `flats/institutional`
+   (d4a01671, not merged): OSM extract `osm_land_use` (Overpass) + ORCA
+   public parks/school land, share of lot >= 50%; assign answers RED
+   (reason INSTITUTIONAL_USE, bind institutional_share), bridge
+   `--institutional` skips; runbook step 7b. Washington PUB NOT used (its
+   9xx codes include land no category names). Measured vs run 63: 9,923
+   of 587,815 lots -> RED (381 green, 1,906 yellow, 3,926 unmeasured,
+   3,710 already red); every green read. ASKED Steph: church-run schools
+   (~215 lots, 29 green: Central Catholic, Columbia Christian, U of
+   Portland, LDS seminaries) -- school (red) or church (screened)? Then
+   merge before the weekly run; the weekly run must acquire osm_land_use
+   and run step 7b.
