@@ -1428,6 +1428,26 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
    easement line): MEASURE where the sidewalk runs against the lot line;
    where it cannot be measured, FALL BACK to a stated worst-case easement
    depth (pessimistic), never to "none".
+   BUILT 2026-10-06, branch flats/street-class (3 commits, NOT on main):
+   (i) `measured_access`; (ii) rank maps for Oregon City, West Linn,
+   Fairview, Beaverton (+ Milwaukie/Wilsonville ranked); (iii) nothing
+   measures the walk (RLIS 2851 is presence only, +/-10 ft; Gresham
+   publishes no layer) so every street line takes the worst case: 7 ft on
+   a Metro-local street, 20 ft elsewhere (PWS 6.05.01/6.06.02), and the cap
+   lifts. Bound /root/street-class_bound_{base,new}5 (every mixed-rank
+   corner in the 6 cities, 5,228, less 244 Beaverton ROW strips + 4,000
+   random Gresham): corners -- 32 greens lost (West Linn 16, Milwaukie 9,
+   Wilsonville 7), ~120 yellow->red, 2 gains (slope read at the moved
+   building); Gresham sample -- 247 greens gained, ~262 yellow->red,
+   x6.45 county-wide ~1,600 up / ~1,700 down. Every gain read: cap lift,
+   item 44's ranking (a fitting front now beats a variance-yellow miss),
+   or flatter ground under the moved building. AWAITING Steph's go to ship.
+   Then: weekly run needs all 6 `street_class_*` keys + rlis_streets.
+   Not done: WashCo uninc `lowest_class` re-read (CDC 501-8.5 is a gate,
+   not a class rule); Wilsonville note P via easement layer 150 (low value
+   while access_easement caps RN); lot page should show the assumed walk
+   depth; Tualatin through-lot lowest class; Beaverton ROW strips take
+   ~2 min each on new code and hang old code (scope them out of bounds).
 42. **Water, wetland and flood ground at slope's fidelity (Steph asked
    2026-10-04 "are we treating wetland/flood zones with as much fidelity
    as we now treat slopes?" -- answer: no).** Net land (FOLLOWUPS 30) is
