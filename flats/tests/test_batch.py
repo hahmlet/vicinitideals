@@ -20,7 +20,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import pytest
-from multiprocessing.pool import ThreadPool
+from concurrent.futures import ThreadPoolExecutor
 
 from flats.ingest import batch, quadfit
 
@@ -95,7 +95,7 @@ class _Watch:
 
 def _dispatch(needs, *, slots, budget, free_gb=None, watch=None):
     watch = watch or _Watch(needs)
-    with ThreadPool(slots) as pool:
+    with ThreadPoolExecutor(slots) as pool:
         got = dict(
             batch.dispatch(pool, watch, list(range(len(needs))), needs, slots=slots, budget_gb=budget, free_gb=free_gb)
         )
@@ -209,29 +209,35 @@ def test_the_run_key_changes_with_any_file_in_an_input(tmp_path) -> None:
 # --- one run, cached and not --------------------------------------------------------
 
 
+def _fake_records(row) -> list[dict]:
+    """A lot's records from the fake screen: they depend on the row alone,
+    with the shapes the real one writes -- two designs, a number that is
+    sometimes None, an int, a string."""
+    acres = row["area_sqft"] / ACRE
+    return [
+        {
+            "TLID": row["TLID"],
+            "design": design,
+            "fit_slack_ft": None if acres < 0.15 else round(acres * 3.5, 6),
+            "stalls_seated": int(acres * 10) if acres >= 0.2 else None,
+            "colour": "green" if acres > 0.3 else "red",
+            "fits": acres > 0.12,
+        }
+        for design in ("pod56", "pod80")
+    ]
+
+
 @pytest.fixture
 def fake_screen(monkeypatch):
-    """The worker's screen replaced by one whose records depend on the row
-    alone, with the shapes the real one writes: two designs, a number that
-    is sometimes None, an int, a string."""
+    """The worker's screen replaced by :func:`_fake_records`; returns the
+    TLIDs it screened, in order."""
     calls: list[str] = []
 
     def work_chunk(rows):
         out = []
         for row in rows:
             calls.append(row["TLID"])
-            acres = row["area_sqft"] / ACRE
-            for design in ("pod56", "pod80"):
-                out.append(
-                    {
-                        "TLID": row["TLID"],
-                        "design": design,
-                        "fit_slack_ft": None if acres < 0.15 else round(acres * 3.5, 6),
-                        "stalls_seated": int(acres * 10) if acres >= 0.2 else None,
-                        "colour": "green" if acres > 0.3 else "red",
-                        "fits": acres > 0.12,
-                    }
-                )
+            out.extend(_fake_records(row))
         return out
 
     monkeypatch.setattr(quadfit, "_work_chunk", work_chunk)
@@ -363,3 +369,59 @@ def test_prune_drops_the_caches_no_run_has_used(tmp_path) -> None:
     os.utime(old, (stale, stale))
     assert batch.prune(root, keep_days=14) == [old]
     assert new.exists() and not old.exists()
+
+
+# --- a worker killed mid-run --------------------------------------------------------
+
+
+def _dying_init(flag: str, deaths: int) -> None:
+    """Worker setup in a real process: the fake screen, except that the
+    12-acre lot's worker dies outright -- as the kernel's OOM killer ends
+    one -- the first ``deaths`` times it is screened (counted in ``flag``)."""
+
+    def work_chunk(rows):
+        out = []
+        for row in rows:
+            if row["TLID"] == "T02":
+                path = Path(flag)
+                died = int(path.read_text()) if path.exists() else 0
+                if died < deaths:
+                    path.write_text(str(died + 1))
+                    os._exit(9)
+            out.extend(_fake_records(row))
+        return out
+
+    quadfit._work_chunk = work_chunk
+
+
+def _screen_in_processes(rows, tmp_path: Path, deaths: int, cache=None):
+    parts = tmp_path / "parts"
+    parts.mkdir(parents=True)
+    said: list[str] = []
+    got = batch.screen_rows(
+        rows, parts, processes=2, chunk_size=2, init=_dying_init, initargs=(str(tmp_path / "died"), deaths),
+        cache=cache, log=said.append,
+    )
+    return got, said
+
+
+@pytest.mark.timeout(180)
+def test_a_worker_killed_mid_run_is_noticed_and_its_chunks_run_again(tmp_path) -> None:
+    rows = _rows()
+    (frame, timings, done), said = _screen_in_processes(rows, tmp_path, deaths=1)
+    assert (tmp_path / "died").read_text() == "1"
+    assert done.rerun_chunks >= 1
+    assert any("a worker died" in line for line in said)
+    _same(frame, pd.DataFrame.from_records([r for row in rows for r in _fake_records(row)]))
+    assert set(timings["TLID"]) == {r["TLID"] for r in rows}
+
+
+@pytest.mark.timeout(180)
+def test_a_worker_that_dies_again_stops_the_run_and_a_relaunch_resumes(tmp_path) -> None:
+    rows = _rows()
+    cache = _cache(tmp_path)
+    with pytest.raises(RuntimeError, match="died again.*T02 at 12.0 acres.*re-launch"):
+        _screen_in_processes(rows, tmp_path, deaths=2, cache=cache)
+    (frame, _, done), _ = _screen_in_processes(rows, tmp_path / "again", deaths=0, cache=cache)
+    assert done.cached_lots >= 1 and done.computed_lots >= 1
+    _same(frame, pd.DataFrame.from_records([r for row in rows for r in _fake_records(row)]))

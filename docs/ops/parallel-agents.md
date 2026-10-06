@@ -89,6 +89,15 @@ explicit path.
    - Each bridge run writes `timings.parquet` beside `lots.parquet`: one
      row per lot screened, with seconds and memory. Read it before
      guessing why a run was slow.
+   - Since FOLLOWUPS 46, a run whose worker the kernel kills for memory
+     does not hang. Its unfinished chunks run once more with the giants
+     one at a time; a second death ends the run with an error naming the
+     biggest unfinished lot, and the same command with `--cache` resumes.
+     A tree older than that hangs forever and keeps the lock: the parts
+     count stops climbing while the workers sit at 0% CPU (rank-colour
+     bound3, 2026-10-06, 2 h 20 min). When you watch an old tree, compare
+     the parts count against the clock and read `oom_kill` in
+     `/sys/fs/cgroup/memory.events`.
    - Never change `/root/code/vicinitideals`. It is the weekly run's
      checkout.
    - Never change shared `data/` files in place; write new ones beside

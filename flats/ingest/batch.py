@@ -40,6 +40,17 @@ same order -- the order of the lots as read -- whatever order they ran in
 and whichever came from the cache. ``timings.parquet`` beside it says what
 each lot cost (seconds, the worker's memory after it), for tuning
 :data:`GB_PER_ACRE` against what 137 actually spends.
+
+A worker the kernel kills for memory must end the run, not hang it. A
+``multiprocessing.Pool`` quietly starts a replacement and the dead
+worker's chunk never reports back, so the run waits forever while it
+holds the lock (rank-colour bound3, 2026-10-06: hung 2 h 20 min at
+chunk 548 before anyone looked). The batch runs on a
+``ProcessPoolExecutor`` instead, which breaks when a worker dies. The
+unfinished chunks then run once more in a fresh pool with the giants one
+at a time; if a worker dies again, the run stops with an error naming
+the biggest unfinished lot. Finished chunks are kept either way: with
+``--cache`` a re-launch resumes from them.
 """
 
 from __future__ import annotations
@@ -199,9 +210,9 @@ def dispatch(
     machine has free -- covers its need and ``reserve_gb`` (or nothing at
     all is in flight). A heavy one that must wait holds back the heavy ones
     behind it, so the biggest is not starved to the end of the run, while
-    the small ones fill every free slot. ``pool`` is anything with
-    ``apply_async(func, args, callback=, error_callback=)``; a worker's
-    error is raised here.
+    the small ones fill every free slot. ``pool`` is a
+    :class:`concurrent.futures.Executor`; a worker's error -- a broken
+    pool among them -- is raised here.
     """
     done: queue.Queue[tuple[int, Any, BaseException | None]] = queue.Queue()
     waiting = list(range(len(payloads)))
@@ -220,6 +231,12 @@ def dispatch(
             return heavy
         return next((i for i in waiting if needs_gb[i] < SMALL_GB), None)
 
+    def finished(future: Any, i: int) -> None:
+        try:
+            done.put((i, future.result(), None))
+        except BaseException as error:  # re-raised by the loop below
+            done.put((i, None, error))
+
     while waiting or running:
         while waiting and len(running) < max(slots, 1):
             pick = choose()
@@ -227,12 +244,7 @@ def dispatch(
                 break
             waiting.remove(pick)
             running[pick] = needs_gb[pick]
-            pool.apply_async(
-                work,
-                (payloads[pick],),
-                callback=lambda result, i=pick: done.put((i, result, None)),
-                error_callback=lambda error, i=pick: done.put((i, None, error)),
-            )
+            pool.submit(work, payloads[pick]).add_done_callback(lambda f, i=pick: finished(f, i))
         i, result, error = done.get()
         del running[i]
         if error is not None:
@@ -478,6 +490,8 @@ class Batch:
     cached_lots: int = 0
     computed_lots: int = 0
     cache: str | None = None
+    #: Chunks run again after a worker died (0 on a clean run).
+    rerun_chunks: int = 0
 
     def meta(self) -> dict[str, Any]:
         return {
@@ -486,7 +500,21 @@ class Batch:
             "cache": self.cache,
             "cached_lots": self.cached_lots,
             "computed_lots": self.computed_lots,
+            "rerun_chunks": self.rerun_chunks,
         }
+
+
+def _close(pool: Any, clean: bool) -> None:
+    """Shut ``pool`` down. After a failure its workers are stopped rather
+    than waited for: a giant in flight may have twenty minutes to go."""
+    if not clean:
+        stop = getattr(pool, "terminate_workers", None)  # Python 3.14+
+        if stop is not None:
+            try:
+                stop()
+            except Exception:  # a broken pool may have no workers left to stop
+                pass
+    pool.shutdown(wait=True, cancel_futures=True)
 
 
 def screen_rows(
@@ -531,6 +559,7 @@ def screen_rows(
     timings: list[dict[str, Any]] = []
     t0 = time.time()
     done = 0
+    kept: set[int] = set()
 
     def _keep(n: int, result: tuple[list[dict[str, Any]], list[dict[str, Any]]]) -> None:
         nonlocal done
@@ -540,24 +569,49 @@ def screen_rows(
             cache.put([{**r, "_key": keys[r["_row"]]} for r in records])
         timings.extend(times)
         done += len(chunks[n])
+        kept.add(n)
+        if len(kept) % 10 == 1 or len(kept) == len(payloads) or processes <= 1:
+            log(f"  {done:,}/{len(todo):,}  {time.time() - t0:,.0f}s")
 
     if processes <= 1:
         init(*initargs)
         for n, payload in enumerate(payloads):
             _keep(n, work(payload))
-            log(f"  {done:,}/{len(todo):,}  {time.time() - t0:,.0f}s")
     elif payloads:
-        from multiprocessing import Pool
+        from concurrent.futures import ProcessPoolExecutor
+        from concurrent.futures.process import BrokenProcessPool
 
         total = memory_gb()
         budget = BUDGET_SHARE * total if total else float("inf")
-        with Pool(processes, initializer=init, initargs=initargs) as pool:
-            for count, (n, result) in enumerate(
-                dispatch(pool, work, payloads, needs, slots=processes, budget_gb=budget, free_gb=available_gb)
-            ):
-                _keep(n, result)
-                if count % 10 == 0 or count == len(payloads) - 1:
-                    log(f"  {done:,}/{len(todo):,}  {time.time() - t0:,.0f}s")
+        left = list(range(len(payloads)))
+        for retry in (False, True):
+            pool = ProcessPoolExecutor(processes, initializer=init, initargs=initargs)
+            clean = False
+            try:
+                for k, result in dispatch(
+                    pool, work, [payloads[n] for n in left], [needs[n] for n in left],
+                    slots=processes, budget_gb=0.0 if retry else budget, free_gb=available_gb,
+                ):
+                    _keep(left[k], result)
+                clean = True
+                break
+            except BrokenProcessPool:
+                left = [n for n in left if n not in kept]
+                if not left:
+                    break
+                biggest = max((rows[i] for n in left for i in chunks[n]), key=_area)
+                where = f"the biggest {biggest.get('TLID')} at {_area(biggest) / SQFT_PER_ACRE:,.1f} acres"
+                if retry:
+                    raise RuntimeError(
+                        f"bridge: a worker died again (killed for memory?) with {len(left)} chunks unfinished, "
+                        f"{where}. The finished chunks are in {parts_dir}"
+                        + ("; re-launch the same command to resume from them." if cache is not None else ".")
+                    ) from None
+                batch.rerun_chunks = len(left)
+                log(f"bridge: a worker died (killed for memory?) with {len(left)} chunks unfinished, {where}; "
+                    "running them again with the giants one at a time")
+            finally:
+                _close(pool, clean)
 
     frames = [pd.read_parquet(p) for p in sorted(parts_dir.glob("*.parquet"))]
     if hits is not None and len(hits):
