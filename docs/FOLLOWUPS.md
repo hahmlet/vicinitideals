@@ -1604,8 +1604,10 @@ read when the weekly full re-screen lands.
    114 (`/root/weekly137/status.txt`) committed with the chain so any
    session can watch. Ship after 46 lands (it changes the same runner);
    coordinate with that lane rather than fork it.
-49. [scan: YES for (b)-(f); NO for (g)] **The 2026-10-07 weekly (run 65, candidate on snapshot 4, NOT promoted
-   -- Steph promotes, warned by size): what the one-by-one read found.**
+49. [scan: YES for (b)-(f); NO for (g)] **The 2026-10-07 weekly (run 65 on snapshot 4, PROMOTED 2026-10-07
+   ~14:45 UTC by Steph from the County copy page; prune-runs retired run 59,
+   kept 61/63/65; VACUUM FULL of lot_results NOT run -- permission denied,
+   24 GB free, owed at the next load): what the one-by-one read found.**
    Run 65 = bundle `data/flats/bridge/2026-10-07_weekly` on 114, assign
    `/root/assign_2026-10-07_weekly` on 137 (code 62b2259d, bridge 7 h 53 min
    at 12 procs). Gate clean (8 rows ok); drift 63 -> 65: 133,872 of 827,770
