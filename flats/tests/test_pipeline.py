@@ -99,8 +99,19 @@ def test_switching_a_jurisdiction_off_removes_it_from_the_run() -> None:
 def test_a_jurisdiction_nobody_declared_is_off() -> None:
     # Coverage is claimed, never assumed. Defaulting an unknown city to "on"
     # would have it screened against nothing.
-    assert not load_pipeline().enabled("or/washington/tigard")
+    assert not load_pipeline().enabled("or/washington/forest-grove")
     assert load_pipeline().enabled("or/washington/beaverton"), "declared 2026-09-30"
+
+
+def test_tigard_and_cornelius_are_on_and_read_a_zoning_map() -> None:
+    # Both layers were encoded 2026-10-01 but sat off until 2026-10-07, which
+    # gated every lot JURISDICTION_OFF. An enabled layer with no zoning map
+    # would be a worse silence (every lot NO_ZONE), so pin both halves.
+    p = load_pipeline()
+    for layer in ("or/washington/tigard", "or/washington/cornelius"):
+        assert p.enabled(layer), layer
+        assert p.for_layer(layer, Provides.zoning), layer
+    assert not p.unserved()
 
 
 def test_every_source_lands_in_the_working_crs() -> None:
