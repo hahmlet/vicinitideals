@@ -1558,7 +1558,14 @@ read when the weekly full re-screen lands.
    lots first under a memory budget, `--cache` answer cache, sample
    while iterating (parallel-agents rule 12). Ships once the proof on 137
    (`/root/scan-throughput/proof.sh`: cold/warm/mixed vs
-   `/root/rank-colour_bound_base_A`) reads identical. (d) rented compute
+   `/root/rank-colour_bound_base_A`) reads identical. Proof 1
+   (2026-10-07 00:51 UTC) caught a real bug in 68 s: run as `python -m`,
+   the workers were set up by `__main__`'s copy of quadfit, so every
+   chunk died with KeyError 'rules'. Fixed on the lane branch, with a
+   test that runs the command itself; proof re-queued under `flock -o`
+   (log `/root/scan-throughput/proof.log`) BEHIND the early weekly
+   chain, so 46 rides the weekly AFTER 2026-10-07. Rank-colour keeps
+   base_A + scope_A.txt until it ends. (d) rented compute
    -- DECISION PENDING, Steph's action. Steph 2026-10-06 PREFERS
    CLOUDFLARE (a commercial version would run there): Cloudflare
    Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
