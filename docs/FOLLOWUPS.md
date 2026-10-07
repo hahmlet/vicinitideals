@@ -1704,13 +1704,37 @@ read when the weekly full re-screen lands.
    17); bound a sample on 137 old vs new and read gains one by one; report
    the colour counts to Steph before shipping. Lands via 49(i)'s splice if
    ready before it starts, else the next weekly.
-52. [scan: YES (a bound on the dropped lots)] **11,427 lots passed every gate and were dropped
-   before a fit (run 65, best pod yellow on LOT-NOT-MEASURED / NOT_MEASURED)
-   + 2,203 GEOM-UNREADABLE.** Biggest: Washington unincorporated 2,363,
-   Portland 2,207, Beaverton 1,394, Hillsboro 1,370, Gresham 1,000, Happy
-   Valley 710. Work: bucket the drop reasons (which quadfit step, which
-   error), fix the ones that are ours, measure the rest; bound + read the
-   gains; never a guessed GREEN. Pure measurement, no rulings expected.
+52. [scan: lands at 49(i)'s splice or the next weekly; no re-screen, no promotion]
+   **Lots dropped before a fit (run 65): 11,427 yellow NOT_MEASURED +
+   2,203 yellow GEOM-UNREADABLE.** Bucketed 2026-10-07: 6,951 had no 20 ft
+   circle in the outline (quadfit s3 too_narrow_20ft), 2,737 were under 1,000
+   sq ft (sliver_area), 1,598 sit in a zone quadfit's rules lack
+   (zone_not_in_rules), 140 Multnomah uninc RR (its rules say no fourplex),
+   1 no zone (Washington uninc R-24). SHIPPED (2cfd13d6): the first two
+   (9,688) plus any lot under 98% of a pod footprint are now RED by
+   arithmetic (POD_CANNOT_FIT, bind pod_footprint_area / pod_width); a lot
+   arithmetic does not settle stays NOT_MEASURED. BOUND on 137 (old
+   2026-10-07 weekly assign vs new, 1,175,630 rows each): 10,028 lots / 20,052
+   rows moved, ALL yellow -> red, all previously NOT_MEASURED, zero other
+   differences, no green gained or lost (9,688 + 340 small zone_not_in_rules
+   lots; 4 of those sit between the two pod footprints and are red on
+   pod56x36 only). Read: 8,568 area proofs (max outline area 1,974 sq ft,
+   under the 1,976 line), 1,460 width proofs (max inscribed radius 10.0000 ft
+   by independent shapely; the pod needs 12.5), 25 multi-part lots where the
+   stored area and outline differ -- proofs hold either way. GEOM-UNREADABLE is not
+   broken outlines (0 invalid, 0 multi-part, 1,544 with holes): it is the
+   complex-shape cap (convexity < 0.80, > 10 edges, pole-like), measured at
+   a uniform inset; make_valid / buffer-0 do not apply; only 357 yellow lots
+   are held yellow by that flag alone -- left as is. STILL OPEN (item 52b):
+   the 1,738 zone lots. FLATS resolves every one to ambiguous or unverified
+   (never a clean permission), so measuring them needs those zones added to
+   quadfit's rules (port_from_flats TARGETS cover only Washington + 4
+   cities; the others are hand blocks) and a quadfit s3-s5o + bridge re-run
+   on them; they stay yellow unless the fit fails. Zones: Happy Valley MURM
+   479 / MURX 12, Gresham DCC 266 / DTM 203, Tualatin CC 139, Oregon City
+   MUE 125 / GI 53 / HC 37 / CI 28 / I 16 / NC 1, Wood Village NC 58,
+   Fairview VMU 58 / TCC 44 / VA 8 / VC 4, Portland CI1 37, Multnomah uninc
+   RR 140 / OR 17 / EFU 12, Clackamas uninc R15 1, Washington uninc R-24 1.
 53. [scan: YES if any zone admits the pod] **Four Clackamas cities outside Metro are unencoded:
    Canby 6,175, Sandy 4,538, Molalla 3,188, Estacada 2,865 lots (run 65,
    JURISDICTION-NOT-ENCODED, yellow).** First question per city: does any
