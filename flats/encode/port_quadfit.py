@@ -77,6 +77,8 @@ COUNTY: dict[str, str] = {
     "sherwood": "washington",
     "king_city": "washington",
     "durham": "washington",
+    "tigard": "washington",
+    "cornelius": "washington",
 }
 
 #: Counties whose rules.yaml rows are DERIVED from the corpus rather than the
