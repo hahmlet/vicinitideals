@@ -430,14 +430,16 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # Lake Oswego's six are NOT among them -- that jurisdiction is `eligible:
     # false` by owner decision, so its rows are reference rather than debt.
     #
-    # Washington County's six (2026-09-30) are in COUNTY but not ported: their
+    # Washington County's six (2026-09-30), and Tigard and Cornelius (2026-10-07),
+    # are in COUNTY but not ported: their
     # rows were written FROM the corpus, and porting them back would overwrite
     # it with its own summary.
     assert dry["stats"]["zones"] == 175
     assert dry["stats"]["layers"] == 21
-    assert len(COUNTY) == 27
+    assert len(COUNTY) == 29
     assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {
         "washington_unincorporated", "hillsboro", "beaverton", "sherwood", "king_city", "durham",
+        "tigard", "cornelius",
     }
 
 
@@ -481,7 +483,7 @@ def test_layer_id_mapping(jurisdiction: str, expected: str) -> None:
 
 def test_unmapped_jurisdiction_fails_loudly() -> None:
     with pytest.raises(KeyError):
-        layer_id_for("tigard")
+        layer_id_for("banks")
 
 
 def test_zone_citation_becomes_cite_default() -> None:
