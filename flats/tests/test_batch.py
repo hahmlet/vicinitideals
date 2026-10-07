@@ -13,6 +13,8 @@ from __future__ import annotations
 import io
 import math
 import os
+import subprocess
+import sys
 import threading
 import time
 from pathlib import Path
@@ -20,6 +22,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import pytest
+import shapely
 from concurrent.futures import ThreadPoolExecutor
 
 from flats.ingest import batch, quadfit
@@ -428,3 +431,45 @@ def test_a_worker_that_dies_again_stops_the_run_and_a_relaunch_resumes(tmp_path)
     (frame, _, done), _ = _screen_in_processes(rows, tmp_path / "again", deaths=0, cache=cache)
     assert done.cached_lots >= 1 and done.computed_lots >= 1
     _same(frame, pd.DataFrame.from_records([r for row in rows for r in _fake_records(row)]))
+
+
+# --- the command as LXC 137 runs it --------------------------------------------------
+
+
+@pytest.mark.timeout(300)
+def test_the_command_screens_in_workers_set_up_by_the_module_that_screens(tmp_path) -> None:
+    # `python -m flats.ingest.quadfit` runs the file as __main__, a second
+    # copy of the module beside the flats.ingest.quadfit the workers screen
+    # with. A run that set up __main__'s workers answered every lot with
+    # KeyError 'rules' (the 2026-10-07 proof on 137); a test calling run()
+    # in-process imports one copy only and never sees it.
+    from flats.tests.dem import plane, write_dem
+    from flats.tests.test_quadfit_bridge import X0, Y0, _stage_files, row
+
+    s4, s5o = _stage_files(tmp_path, [row(), row(TLID="1S2E20AA  -15200")])
+    pd.DataFrame(
+        {"TLID": ["1S2E20AA  -15100", "1S2E20AA  -15200"], "triage": ["green", "red"],
+         "binding_constraint": ["", "pod_no_fit"], "policy_exclusion": ["", ""]}
+    ).to_csv(tmp_path / "lots_results.csv", index=False)
+    pd.DataFrame(
+        {"name": ["SE TEST ST"], "type": ["1500"], "ftype": ["ST"], "alley": [False],
+         "wkb": [shapely.to_wkb(shapely.LineString([(X0 - 100, Y0 - 20), (X0 + 150, Y0 - 20)]))]}
+    ).to_parquet(tmp_path / "s1_streets.parquet")
+    write_dem(tmp_path / "raw" / "dem" / "flat.tif", (X0 - 50, Y0 - 50, X0 + 200, Y0 + 200), plane(1.0))
+    snapshot = tmp_path / "snapshot"
+    snapshot.mkdir()
+    for key in ("curbs_portland", "pave_width_portland", "road_width_multnomah", "street_width_wilsonville",
+                "osm_land_use", "rlis_orca"):
+        (snapshot / f"{key}.geojson").write_text('{"type": "FeatureCollection", "features": []}', encoding="utf-8")
+    out = tmp_path / "bridge"
+    got = subprocess.run(
+        [sys.executable, "-m", "flats.ingest.quadfit", "--s4", str(s4), "--s5o", str(s5o),
+         "--results", str(tmp_path / "lots_results.csv"), "--out", str(out), "--processes", "2",
+         "--chunk-size", "1", "--step-deg", "30", "--dem", str(tmp_path / "raw"), "--curbs", str(snapshot),
+         "--institutional", str(snapshot), "--cache", str(tmp_path / "cache")],
+        cwd=Path(__file__).resolve().parents[2], capture_output=True, text=True, encoding="utf-8",
+        env={**os.environ, "PYTHONIOENCODING": "utf-8"},
+    )
+    assert got.returncode == 0, got.stderr[-3000:]
+    frame = pd.read_parquet(out / "lots.parquet")
+    assert set(frame["TLID"]) == {"1S2E20AA  -15100", "1S2E20AA  -15200"}

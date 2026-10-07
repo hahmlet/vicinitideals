@@ -3584,13 +3584,18 @@ def run(
                 inputs={"sources": sources, "roads": roads, "dem": dem, "curbs": curbs},
             ),
         )
+    # The workers screen with flats.ingest.quadfit's _work_chunk, so they are
+    # set up by that module's _init_worker -- under `python -m` this file is
+    # __main__, a second copy whose _WORKER the screen never reads.
+    from flats.ingest import quadfit as screened
+
     t0 = time.time()
     frame, timings, done = batch.screen_rows(
         rows,
         parts_dir,
         processes=processes,
         chunk_size=chunk_size,
-        init=_init_worker,
+        init=screened._init_worker,
         initargs=(step_deg, sources, roads, dem, curbs),
         cache=answers,
         step_deg=step_deg,
