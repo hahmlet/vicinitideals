@@ -3735,6 +3735,7 @@ def _plan(geojson: str | None, drawing: dict[str, Any] | None) -> dict[str, Any]
         "lot": [points(r) for r in lot],
         **{name: [points(r) for r in layers[name]] for name in _PLAN_LAYERS},
         "fits": bool(drawing.get("fits")),
+        "tight": bool(drawing.get("tight")),
         "width": round(width_px),
         "height": round(height_px),
     }

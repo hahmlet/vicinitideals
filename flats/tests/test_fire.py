@@ -343,13 +343,43 @@ def test_the_bridge_measures_the_route_on_the_drawn_plan(corpus, policies) -> No
     assert check(s.screening, "fire_access_ft").verdict is Verdict.passes
 
 
-def _coloured(s, triage: Triage):
+def tight_row(**over) -> dict[str, object]:
+    """:func:`bridge_row` 88.5 ft deep: the pod's court misses by half a
+    foot, inside the fit's tolerance -- GREEN with FIT-TIGHT."""
+    d = 88.5
+    edges = [
+        [X0, Y0, X0 + 80, Y0, "F"],
+        [X0 + 80, Y0, X0 + 80, Y0 + d, "S"],
+        [X0 + 80, Y0 + d, X0, Y0 + d, "R"],
+        [X0, Y0 + d, X0, Y0, "S"],
+    ]
+    return bridge_row(
+        edges_json=json.dumps(edges),
+        lot_depth_ft=d,
+        area_sqft=80 * d,
+        wkb=shapely.to_wkb(box(X0 + 5, Y0 + 10, X0 + 75, Y0 + d - 5)),
+        lot_wkb=shapely.to_wkb(box(X0, Y0, X0 + 80, Y0 + d)),
+        **over,
+    )
+
+
+def _coloured(s, triage: Triage, *, map_too: bool = True):
+    """``s`` read ``triage``; with ``map_too``, short of GREEN on the flag
+    plan's map as well (a flag at the line, or a bind for RED) -- else the
+    map keeps the colour its binds and flags give it."""
     import dataclasses
 
+    from flats.score.flags import Bind, Flag
+
+    extra: dict[str, object] = {}
+    if map_too and triage is Triage.red:
+        extra = {"binds": (Bind(check="fit_ft", observed=1.0, threshold=2.0, shortfall=1.0),)}
+    elif map_too and triage is not Triage.green:
+        extra = {"flags": (Flag(code="TEST", key="", by="test", severity=9),)}
     return dataclasses.replace(
         s,
-        screening=dataclasses.replace(s.screening, triage=triage),
-        signed=dataclasses.replace(s.signed, triage=triage),
+        screening=dataclasses.replace(s.screening, triage=triage, **extra),
+        signed=dataclasses.replace(s.signed, triage=triage, **extra),
         facts=dataclasses.replace(s.facts, fire_route_ft=None, fire_route_tried=False),
     )
 
@@ -373,6 +403,46 @@ def test_a_plan_short_of_green_with_no_route_is_left_as_it_was(corpus, policies)
     bare = lot_from_row(bridge_row(lot_wkb=None), corpus.layers)
     yellow = _coloured(s, Triage.yellow)
     assert fire_checked(yellow, bare, None, policy=policies[0], relief=policies[1]) is yellow
+
+
+def test_a_plan_green_on_the_map_with_no_route_is_tried_and_unobserved(corpus, policies) -> None:
+    # FOLLOWUPS 49(a), run 65: 78 lots shown green on the map with no fire
+    # check -- their triage read yellow on a missed minimum density, a flag
+    # below the map's line, so the "short of GREEN" skip let them by.
+    from flats.score.flags import Colour
+
+    lot = lot_from_row(bridge_row(), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    bare = lot_from_row(bridge_row(lot_wkb=None), corpus.layers)
+    yellow = _coloured(s, Triage.yellow, map_too=False)
+    assert yellow.signed.colour is Colour.green
+    got = fire_checked(yellow, bare, None, policy=policies[0], relief=policies[1])
+    assert got.facts.fire_route_tried and got.facts.fire_route_ft is None
+    assert got.signed.colour is not Colour.green
+    assert FACT_UNOBSERVED in got.signed.reasons
+
+
+def test_a_plan_red_on_triage_and_green_on_the_map_is_measured(corpus, policies) -> None:
+    from flats.score.flags import Colour
+
+    lot = lot_from_row(bridge_row(), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    red = _coloured(s, Triage.red, map_too=False)
+    assert red.signed.colour is Colour.green
+    got = fire_checked(red, lot, None, policy=policies[0], relief=policies[1])
+    assert got.facts.fire_route_tried and got.facts.fire_route_ft is not None
+
+
+def test_a_tight_fit_is_drawn_and_its_route_measured(corpus, policies) -> None:
+    # FOLLOWUPS 49(d), run 65: 1,634 tight fits read UNKNOWN for want of a
+    # route -- the fit passed on its tolerance and the drawing, asked for
+    # the whole window, drew the shortfall and stood no building.
+    lot = lot_from_row(tight_row(), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.screening.tight_fit
+    assert s.drawing["fits"] and s.drawing["tight"]
+    assert s.facts.fire_route_tried and s.facts.fire_route_ft is not None
+    assert s.signed.triage is Triage.green
 
 
 def test_a_plan_short_of_green_with_a_route_is_still_measured(corpus, policies) -> None:
@@ -404,12 +474,7 @@ def test_a_plan_red_both_ways_is_not_measured(corpus, policies) -> None:
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     import dataclasses
 
-    red = dataclasses.replace(
-        s,
-        screening=dataclasses.replace(s.screening, triage=Triage.red),
-        signed=dataclasses.replace(s.signed, triage=Triage.red),
-        facts=dataclasses.replace(s.facts, fire_route_ft=None, fire_route_tried=False),
-    )
+    red = _coloured(s, Triage.red)
     got = fire_checked(red, lot, None, policy=policies[0], relief=policies[1])
     assert got is red
 

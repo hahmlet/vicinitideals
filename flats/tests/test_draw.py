@@ -66,6 +66,32 @@ def test_a_lot_too_shallow_shows_the_room_it_has() -> None:
     assert got.court.bounds[3] > room[3]
 
 
+def test_a_tight_fit_is_drawn_where_it_stands() -> None:
+    """FOLLOWUPS 45 / 49(d): a plan the screen passed inside the fit's
+    tolerance (Steph 2026-09-25) is drawn fitting, half a foot short, so a
+    hose route and a pad grade can be measured to its building; a hair
+    further short is still the shortfall."""
+    tight = shapely.box(0, 0, 60, 49.5)
+    _, plain = _drawn(tight)
+    assert plain is not None and not plain.fits and not plain.tight
+    fitter = Fitter(tight, angles=(0.0,))
+    fit = fitter.fit(36.0, 40.0, allow_flip=False, placement=False, lane_ft=12.0)
+    got = draw(fitter, fit, width_ft=36.0, depth_ft=40.0, lane_ft=12.0, court_depth_ft=30.0,
+               court_beyond_ft=10.0, street=SOUTH, short_ft=0.5)
+    assert got is not None and got.fits and got.tight
+    assert got.room.bounds[3] - got.room.bounds[1] == pytest.approx(49.5)
+    b = got.building.bounds
+    assert (b[2] - b[0], b[3] - b[1]) == pytest.approx((36.0, 40.0))
+    assert got.to_json()["tight"] is True
+    short = shapely.box(0, 0, 60, 49.0)
+    fitter = Fitter(short, angles=(0.0,))
+    fit = fitter.fit(36.0, 40.0, allow_flip=False, placement=False, lane_ft=12.0)
+    got = draw(fitter, fit, width_ft=36.0, depth_ft=40.0, lane_ft=12.0, court_depth_ft=30.0,
+               court_beyond_ft=10.0, street=SOUTH, short_ft=0.5)
+    assert got is not None and not got.fits and not got.tight
+    assert "tight" not in got.to_json()
+
+
 def test_no_room_at_the_width_draws_nothing() -> None:
     narrow = shapely.box(0, 0, 20, 120)
     fit, got = _drawn(narrow)

@@ -212,7 +212,7 @@
           · <span style="color:#6b7280">■</span> driveway
           · <span style="color:#b45309">■</span> parking
           · <span style="color:#93c5fd">▭</span> where the rules let it stand.
-          {% if p.fits %}<span class="plan-fits">The dashed green box is room the screen found for all of it.</span>{% else %}<span class="plan-short">The dashed red box is the most room the lot has at this width; the parking runs past it.</span>{% endif %}
+          {% if p.fits %}<span class="plan-fits">The dashed green box is room the screen found for all of it{% if p.tight %}, give or take half a foot -- a tight fit a survey settles{% endif %}.</span>{% else %}<span class="plan-short">The dashed red box is the most room the lot has at this width; the parking runs past it.</span>{% endif %}
           One way it could stand, not a site plan.
         </div>
       </div>

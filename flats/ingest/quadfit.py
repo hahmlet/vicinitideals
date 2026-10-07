@@ -2485,7 +2485,8 @@ def fire_checked(
     plan already RED both ways cannot be moved by it and is not measured.
     Where no route is found -- nothing drawn, a fit that fell short (its
     drawing shows the shortfall, not a building that could stand there),
-    no polygon or street line, no truck road near -- a plan that would otherwise be GREEN either way is
+    no polygon or street line, no truck road near -- a plan that would otherwise be GREEN either way,
+    or green on the map (:func:`_map_green`), is
     tried and unobserved, which holds it out of GREEN; any other plan is
     left unchecked, its colour already short of GREEN for another reason.
     Where the drawing stands the building at a front no truck road serves
@@ -2507,7 +2508,7 @@ def fire_checked(
 
     if s.rules.get("fire_access_max_ft") is None or s.facts is None:
         return s
-    if s.screening.triage is Triage.red and s.signed.triage is Triage.red:
+    if s.screening.triage is Triage.red and s.signed.triage is Triage.red and not _map_green(s):
         return s
     streets: tuple[tuple[float, float, float, float], ...] = ()
     if lot.edges is not None:
@@ -2528,7 +2529,8 @@ def fire_checked(
         # Only a drawing whose room holds the building and its court stands
         # the building anywhere: where the fit fell short it shows the
         # shortfall, and a route to that would turn a lot RED off a
-        # building that cannot be built there (run 54: 14,419 answers).
+        # building that cannot be built there (run 54: 14,419 answers). A
+        # fit passed tight is drawn fitting (``tight``, :func:`_tight_ft`).
         ring = (drawing or {}).get("building")
         if not ((drawing or {}).get("fits") and ring and len(ring) >= 4 and lot.lot_geom is not None and streets):
             return None
@@ -2546,7 +2548,7 @@ def fire_checked(
             again = measure(drawn) if drawn and drawn.get("fits") else None
             if again is not None and (route is None or again < route):
                 s, route = dataclasses.replace(s, drawing=drawn), again
-    green = green or Triage.green in (s.screening.triage, s.signed.triage)
+    green = green or Triage.green in (s.screening.triage, s.signed.triage) or _map_green(s)
     if route is None and not green:
         return s
 
@@ -2724,7 +2726,8 @@ def slope_checked(
 
     Second, the fall across the ground the drawn plan's building and court
     stand on (:meth:`flats.fit.slope.Terrain.grade`), only where the drawing
-    holds both -- a drawing that fell short shows the shortfall, not a pad.
+    holds both -- a drawing that fell short shows the shortfall, not a pad;
+    one the fit passed tight holds both (FOLLOWUPS 45, :func:`_tight_ft`).
     No model under the pad: tried, unobserved. Without ``terrain`` nothing
     is measured and ``s`` comes back as it came.
     """
@@ -2963,6 +2966,26 @@ def _largest_left(
     )
 
 
+def _tight_ft(s: Screened) -> float:
+    """How far short of the plan the drawing's room may be: the fit's
+    tolerance where the screen passed the fit tight (Steph 2026-09-25), else
+    nothing -- a plan that missed by more is drawn short, as it is."""
+    if not (s.screening.tight_fit or s.signed.tight_fit):
+        return 0.0
+    return max(
+        (c.tolerance for r in (s.screening, s.signed) for c in r.checks if c.check == "fit_ft"),
+        default=0.0,
+    )
+
+
+def _map_green(s: Screened) -> bool:
+    """Whether either reading of the plan is GREEN on the flag plan's map
+    (:attr:`flats.score.screen.Screening.colour`) -- a lot the Lots pages
+    show green whatever its triage reads (a minimum density missed is a
+    flag below the line, not a wall: FOLLOWUPS 49(a))."""
+    return flag_plan.Colour.green in (s.screening.colour, s.signed.colour)
+
+
 def drawing_for(
     s: Screened,
     fitter: Fitter,
@@ -2986,6 +3009,7 @@ def drawing_for(
     rear = s.envelope.rear_cut_ft if s.envelope else None
     if street is None:
         street = _street_lines(s.lot)
+    short = _tight_ft(s)
     if s.fit.beside:
         beside = side_court(
             s.design, s.rules, alley, corner=corner, frontage_ft=s.lot.facts.frontage_ft
@@ -3004,6 +3028,7 @@ def drawing_for(
             street=street,
             beside_band_ft=beside.band_ft,
             beside_len_ft=beside.length_ft,
+            short_ft=short,
         )
         return None if got is None else got.to_json(s.envelope.geom if s.envelope else None)
     if s.fit.column:
@@ -3029,6 +3054,7 @@ def drawing_for(
         court_depth_ft=court,
         court_beyond_ft=beyond,
         street=street,
+        short_ft=short,
     )
     if got is None:
         return None
