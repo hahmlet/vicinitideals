@@ -1698,3 +1698,22 @@ read when the weekly full re-screen lands.
    10 m model only (Gresham 1,066, Happy Valley 886, Portland 831) although
    38 said "coarse 10 m never RED" (`coarse_red_is_closer_look` covers pad
    grade, not the steep cut); median slope 17.5%, real hills.
+50. [scan: YES (greens only turn yellow; no gains to bound)] **Older no-build water areas raise no flag on a lot
+   that clears them (found 2026-10-07 reading run 65 for item 42).** 47
+   run-65 map greens touch a quadfit `carve` overlay that predates item 42
+   and has no `flag` twin, so `permits_on` says nothing:
+   west_linn_wra_stream 17, gresham_hcra 15, gresham_hillside 10,
+   tualatin_stream_buffer 6, west_linn_wetlands 2, west_linn_wra_ephemeral
+   2, troutdale_veco 2, gresham_wetlands 1, tualatin_nrpo 1 (lots +
+   flags: `/root/wcheck2.out` on 137). The pod is placed off the carved
+   ground, so nothing stands in the area; what is missing is the paperwork
+   the phase 2 carve twins keep a flag for. West Linn is already on record
+   (overlays.yaml `west_linn_rci` note: 32.060 governs development on a
+   property containing a WRA); Gresham GDC 5.07xx / 5.02xx, Tualatin TDC
+   72 and Troutdale TDC 4.31x must be read for a duty on a lot that clears
+   the area before a twin is added -- no duty found = stays green, written
+   down. Fix: flag twins in overlays.yaml + PERMITS words/cite,
+   test_resource_overlays both ways; lands by splice or the next weekly.
+   Pending: Steph's yes. Same read on 49(f) slivers: recommend leaving them
+   yellow -- several codes reach 25-100 ft past the drawn line
+   (resource_overlays.py docstring), so a sliver touch sits inside the reach.
