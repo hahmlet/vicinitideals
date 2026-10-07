@@ -202,6 +202,15 @@ overlays:
     confidence: verified
     coverage:
       gresham: {grade: A, note: "city NRO Resource Area polygon"}
+  - key: gresham_hcra_site
+    source: gresham_hcra
+    name: "Gresham NRO Resource Area -- the site that holds one"
+    action: flag
+    jurisdictions: [gresham]
+    citation: "GDC 5.0703(A)(1): the NRO applies to 'properties containing mapped Resource Areas or Potential Resources Areas' when development is proposed; 5.0706(A): uses 'within 50 feet of an RA, but are not within an RA, are required to submit a scale map, site plan, and construction management plan' (Type I); 5.0705(A)(3): development 'more than 50 feet from an RA' is exempt only with 'An NRO exemption form'"
+    confidence: verified
+    coverage:
+      gresham: {grade: B, note: "the gresham_hcra carve's own geometry (same layer, buffer and clip), so it touches exactly the lots the carve touches. The carve keeps the pod off the ground; this keeps the lot a closer look for the paperwork the cited sentence owes on the site that holds the area (FOLLOWUPS 50, read 2026-10-07)"}
   - key: gresham_wetlands
     name: "Gresham Title 3 wetlands"
     action: carve
@@ -211,6 +220,16 @@ overlays:
     confidence: verified
     coverage:
       gresham: {grade: A, note: "LWI-grade city inventory"}
+  - key: gresham_wetlands_site
+    source: gresham_wetlands
+    name: "Gresham Title 3 wetland -- the site that holds one"
+    action: flag
+    buffer_ft: 50
+    jurisdictions: [gresham]
+    citation: "GDC 5.0703(A)(1): the NRO applies to 'properties containing mapped Resource Areas or Potential Resources Areas' when development is proposed; 5.0706(A): uses 'within 50 feet of an RA, but are not within an RA, are required to submit a scale map, site plan, and construction management plan' (Type I); 5.0705(A)(3): development 'more than 50 feet from an RA' is exempt only with 'An NRO exemption form'"
+    confidence: verified
+    coverage:
+      gresham: {grade: B, note: "the gresham_wetlands carve's own geometry (same layer, buffer and clip), so it touches exactly the lots the carve touches. The carve keeps the pod off the ground; this keeps the lot a closer look for the paperwork the cited sentence owes on the site that holds the area (FOLLOWUPS 50, read 2026-10-07)"}
   - key: gresham_hillside
     name: "Gresham Hillside/Geologic Risk Overlay (HGRO incl. HSS)"
     action: carve
@@ -231,6 +250,15 @@ overlays:
     confidence: verified
     coverage:
       troutdale: {grade: B, note: "city-hosted RLIS Title 3 derivative — not an independent city inventory"}
+  - key: troutdale_veco_site
+    source: troutdale_veco
+    name: "Troutdale vegetation corridor and slope district -- the site that holds one"
+    action: flag
+    jurisdictions: [troutdale]
+    citation: "TDC 4.311(A): 'Specific determination of the vegetation corridor and slope district shall be made at the time of a development proposal. The final boundary shall be based on a topographical and slope analysis provided by a professional licensed surveyor in the State of Oregon, and a wetland delineation, if applicable'; Metro's Title 3 and Title 13 maps 'are used as reference only'"
+    confidence: verified
+    coverage:
+      troutdale: {grade: B, note: "the troutdale_veco carve's own geometry (same layer, buffer and clip), so it touches exactly the lots the carve touches. The carve keeps the pod off the ground; this keeps the lot a closer look for the paperwork the cited sentence owes on the site that holds the area (FOLLOWUPS 50, read 2026-10-07)"}
 
   # ---------------- Fairview ------------------------------------------------
   - key: fairview_nrl
@@ -256,6 +284,15 @@ overlays:
     confidence: needs_verification
     coverage:
       fairview: {grade: A, note: "city layer; widths corroborated against the full chapter text 2026-09-02. Still unverified: whether the published polygons already include the buffer, which is what `buffer_ft: 0` assumes"}
+  - key: fairview_nrl_site
+    source: fairview_nrl
+    name: "Fairview natural resource corridor -- the site that holds one"
+    action: flag
+    jurisdictions: [fairview]
+    citation: "FMC 19.106.070(A): 'the boundaries of any designated natural resources on or near the site shall be verified'; a Type I boundary verification is not required only 'when the applicant demonstrates that the development will be greater than 40 feet from the estimated outer boundary of the mapped resource protection area' (Table 19.106.070(A))"
+    confidence: verified
+    coverage:
+      fairview: {grade: B, note: "the fairview_nrl carve's own geometry (same layer, buffer and clip), so it touches exactly the lots the carve touches. The carve keeps the pod off the ground; this keeps the lot a closer look for the paperwork the cited sentence owes on the site that holds the area (FOLLOWUPS 50, read 2026-10-07)"}
 
   # ---------------- Regional fallbacks --------------------------------------
   # Wood Village (WVDC 430, read 2026-10-06): 430.170 prohibits "within a WQR
@@ -603,6 +640,16 @@ overlays:
     confidence: verified
     coverage:
       west_linn: {grade: A, note: "city 2014 WRA stream layer, 378 STREAM segments / 155,552 ft. 65 ft is the NARROWEST width Table 32-2 gives a live water resource - rows B (ravine, top of slope + 50), C (long steep face, 200) and D (riparian corridor, 100) all go wider, and the slope test that picks between them needs three field measurements per property. Under-carves on steep ground by construction; never over-carves"}
+  - key: west_linn_wra_stream_site
+    source: west_linn_wra_stream
+    name: "West Linn WRA, streams -- the property that holds one"
+    action: flag
+    buffer_ft: 65
+    jurisdictions: [west_linn]
+    citation: "WLCDC 32.060: 'No application for development on property containing a WRA shall be approved unless the approval authority finds that the proposed development is consistent with the following approval criteria'; 32.020(B): 'The burden is on the property owner to demonstrate that the requirements of this chapter are met, or are not applicable', and the Planning Director 'may require a survey, delineation, or sworn statement prepared by a natural resource professional'"
+    confidence: verified
+    coverage:
+      west_linn: {grade: B, note: "the west_linn_wra_stream carve's own geometry (same layer, buffer and clip), so it touches exactly the lots the carve touches. The carve keeps the pod off the ground; this keeps the lot a closer look for the paperwork the cited sentence owes on the site that holds the area (FOLLOWUPS 50, read 2026-10-07)"}
   - key: west_linn_wra_ephemeral
     name: "West Linn Water Resource Area - ephemeral streams (row F)"
     action: carve
@@ -612,6 +659,16 @@ overlays:
     confidence: verified
     coverage:
       west_linn: {grade: A, note: "17 segments / 6,539 ft. The only width in Table 32-2 narrower than row A, so it is kept separate rather than swept into the 65 ft buffer"}
+  - key: west_linn_wra_ephemeral_site
+    source: west_linn_wra_ephemeral
+    name: "West Linn WRA, ephemeral streams -- the property that holds one"
+    action: flag
+    buffer_ft: 15
+    jurisdictions: [west_linn]
+    citation: "WLCDC 32.060: 'No application for development on property containing a WRA shall be approved unless the approval authority finds that the proposed development is consistent with the following approval criteria'; 32.020(B): 'The burden is on the property owner to demonstrate that the requirements of this chapter are met, or are not applicable', and the Planning Director 'may require a survey, delineation, or sworn statement prepared by a natural resource professional'"
+    confidence: verified
+    coverage:
+      west_linn: {grade: B, note: "the west_linn_wra_ephemeral carve's own geometry (same layer, buffer and clip), so it touches exactly the lots the carve touches. The carve keeps the pod off the ground; this keeps the lot a closer look for the paperwork the cited sentence owes on the site that holds the area (FOLLOWUPS 50, read 2026-10-07)"}
   - key: west_linn_wra_piped
     name: "West Linn mapped piped watercourse - exempt"
     action: flag
@@ -657,6 +714,17 @@ overlays:
     confidence: verified
     coverage:
       west_linn: {grade: B, note: "stream centrelines clipped to the corridor polygons, buffered 100 ft. Measured from the centreline, not OHW, so it under-carves by half the channel. Row G's fish-bearing streams OUTSIDE a corridor still get row A's 65 ft: no published layer says which streams carry fish (ODFW's distribution map is not held)"}
+  - key: west_linn_wra_riparian_site
+    source: west_linn_wra_stream
+    name: "West Linn WRA, riparian corridor streams -- the property that holds one"
+    action: flag
+    buffer_ft: 100
+    within: west_linn_rci
+    jurisdictions: [west_linn]
+    citation: "WLCDC 32.060: 'No application for development on property containing a WRA shall be approved unless the approval authority finds that the proposed development is consistent with the following approval criteria'; 32.020(B): 'The burden is on the property owner to demonstrate that the requirements of this chapter are met, or are not applicable', and the Planning Director 'may require a survey, delineation, or sworn statement prepared by a natural resource professional'"
+    confidence: verified
+    coverage:
+      west_linn: {grade: B, note: "the west_linn_wra_riparian carve's own geometry (same layer, buffer and clip), so it touches exactly the lots the carve touches. The carve keeps the pod off the ground; this keeps the lot a closer look for the paperwork the cited sentence owes on the site that holds the area (FOLLOWUPS 50, read 2026-10-07)"}
   - key: west_linn_wetlands
     name: "West Linn wetland inventory + WRA width"
     action: carve
@@ -666,6 +734,16 @@ overlays:
     confidence: verified
     coverage:
       west_linn: {grade: B, note: "91 polygons, the 2005 Local Wetland Inventory. The adopted WRA Map is dated 2014 and the published data cannot say which of these 2005 polygons carried onto it - a coverage question, not a legal one, and graded as one"}
+  - key: west_linn_wetlands_site
+    source: west_linn_wetlands
+    name: "West Linn wetland WRA -- the property that holds one"
+    action: flag
+    buffer_ft: 65
+    jurisdictions: [west_linn]
+    citation: "WLCDC 32.060: 'No application for development on property containing a WRA shall be approved unless the approval authority finds that the proposed development is consistent with the following approval criteria'; 32.020(B): 'The burden is on the property owner to demonstrate that the requirements of this chapter are met, or are not applicable', and the Planning Director 'may require a survey, delineation, or sworn statement prepared by a natural resource professional'"
+    confidence: verified
+    coverage:
+      west_linn: {grade: B, note: "the west_linn_wetlands carve's own geometry (same layer, buffer and clip), so it touches exactly the lots the carve touches. The carve keeps the pod off the ground; this keeps the lot a closer look for the paperwork the cited sentence owes on the site that holds the area (FOLLOWUPS 50, read 2026-10-07)"}
   - key: west_linn_flood
     name: "West Linn flood management area"
     action: flag
@@ -1050,6 +1128,15 @@ overlays:
     confidence: verified
     coverage:
       tualatin: {grade: B, note: "159 polygons off the city's own adopted overlay, six CLASS values and every one of them named by the prohibition -- NRPO-GR riverbank, NRPO-GC creek, NRPO-OG other greenway, NRPO-WPNA wetland preservation, NRPO-WCNA wetland conservation, NRPO-OSNA open space. B and not A because 72.020(1) calls Map 72-1 'the general location' of the district. Under-carves in one place the code is explicit about: 72.030(2)(a) measures the riverbank greenway from a line 40 ft inland of the top of bank and 72.030(3) gives creek greenways stated widths of 50 and 30 ft, so where the mapped polygon is thinner than the sentence, the sentence wins and this does not know it"}
+  - key: tualatin_nrpo_site
+    source: tualatin_nrpo
+    name: "Tualatin NRPO greenway or natural area -- the site that holds one"
+    action: flag
+    jurisdictions: [tualatin]
+    citation: "TDC 72.020(1): Map 72-1 'shows the general location of the NRPO District'; 72.040(3)(c): 'Land use and permit applications shall show the NRPO-OSNA Boundary and shall include information on wetland delineations, location of streams, top of bank, topography and a vegetation inventory'; 72.060(3): the City may attach to a development permit 'Setback of proposed buildings, parking lots, and loading areas away from the Greenway and Natural Area boundary'; 72.110: pedestrian and bicycle easements 'In any portion of the NRPO District'"
+    confidence: verified
+    coverage:
+      tualatin: {grade: B, note: "the tualatin_nrpo carve's own geometry (same layer, buffer and clip), so it touches exactly the lots the carve touches. The carve keeps the pod off the ground; this keeps the lot a closer look for the paperwork the cited sentence owes on the site that holds the area (FOLLOWUPS 50, read 2026-10-07)"}
   - key: tualatin_wpd_nobuild
     name: "Tualatin Wetlands Protection District — protected area, Sweek Pond and the 40 ft setback (TDC 71)"
     action: carve
@@ -1074,6 +1161,15 @@ overlays:
     confidence: verified
     coverage:
       tualatin: {grade: B, note: "85 of the 93 published segments, the ones the city does not mark piped. Not a second resource stacked on the NRPO layer: 72.040(3)(a) writes this buffer into the DEFINITION of an Open Space Natural Area, so it is the same district drawn at the width the sentence gives rather than at the width the polygon happened to get. Under-carves where a segment is missing from the published set, since the definition reaches every stream and this layer holds 93"}
+  - key: tualatin_stream_buffer_site
+    source: tualatin_stream_buffer
+    name: "Tualatin 50 ft stream buffer -- the site that holds one"
+    action: flag
+    jurisdictions: [tualatin]
+    citation: "TDC 72.040(3)(c): 'Land use and permit applications shall show the NRPO-OSNA Boundary and shall include information on wetland delineations, location of streams, top of bank, topography and a vegetation inventory'"
+    confidence: verified
+    coverage:
+      tualatin: {grade: B, note: "the tualatin_stream_buffer carve's own geometry (same layer, buffer and clip), so it touches exactly the lots the carve touches. The carve keeps the pod off the ground; this keeps the lot a closer look for the paperwork the cited sentence owes on the site that holds the area (FOLLOWUPS 50, read 2026-10-07)"}
   - key: tualatin_stream_piped
     name: "Tualatin piped stream segments (TDC 72)"
     action: flag

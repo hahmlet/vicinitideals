@@ -29,7 +29,7 @@ from flats.provenance.store import ProvenanceStore
 from flats.rules.conditions import CONDITIONS
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
-from flats.rules.resource_overlays import BY_KEY, COLUMNS, EXEMPT, PERMITS, permits_on
+from flats.rules.resource_overlays import BY_KEY, CLEARED, COLUMNS, EXEMPT, PERMITS, permits_on
 from flats.score import flags as flag_plan
 from flats.score.screen import CLOSER_LOOK_RESOURCE, Triage
 from flats.tests.test_quadfit_bridge import row
@@ -48,9 +48,14 @@ GREENWAY = "willamette_greenway_zone"
 
 
 @pytest.fixture(scope="module")
-def quadfit_overlays() -> dict[str, str]:
+def quadfit_specs() -> dict[str, dict]:
     held = yaml.safe_load(OVERLAYS.read_text(encoding="utf-8"))
-    return {o["key"]: o["action"] for o in held["overlays"]}
+    return {o["key"]: o for o in held["overlays"]}
+
+
+@pytest.fixture(scope="module")
+def quadfit_overlays(quadfit_specs) -> dict[str, str]:
+    return {k: o["action"] for k, o in quadfit_specs.items()}
 
 
 @pytest.fixture(scope="module")
@@ -114,6 +119,86 @@ def test_each_no_build_carve_keeps_its_permit_flag(quadfit_overlays) -> None:
         carve, permit = f"pdx_ezone_{zone}_core", f"pdx_ezone_{zone}"
         assert quadfit_overlays[carve] == "carve" and quadfit_overlays[permit] == "kill"
         assert permit in BY_KEY and carve not in BY_KEY
+
+
+#: The carves quadfit held before 2026-10-05, each with the flag on the same
+#: map that keeps the lot a closer look once the pod clears it (FOLLOWUPS 50).
+SITE_TWINS = {
+    "gresham_hcra": "gresham_hcra_site",
+    "gresham_wetlands": "gresham_wetlands_site",
+    "troutdale_veco": "troutdale_veco_site",
+    "fairview_nrl": "fairview_nrl_site",
+    "west_linn_wra_stream": "west_linn_wra_stream_site",
+    "west_linn_wra_ephemeral": "west_linn_wra_ephemeral_site",
+    "west_linn_wra_riparian": "west_linn_wra_riparian_site",
+    "west_linn_wetlands": "west_linn_wetlands_site",
+    "tualatin_nrpo": "tualatin_nrpo_site",
+    "tualatin_stream_buffer": "tualatin_stream_buffer_site",
+}
+
+#: What decides whether two specs touch the same lots, with OverlaySpec's defaults.
+_GEOMETRY = {
+    "buffer_ft": 0,
+    "keep_where": {},
+    "within": None,
+    "within_inset_ft": 0,
+    "fill_holes": False,
+    "holes_only": False,
+    "jurisdictions": "all",
+}
+
+
+def _layer(spec: dict) -> str:
+    return spec.get("source") or spec["key"]
+
+
+def test_a_site_twin_draws_exactly_its_carve(quadfit_specs) -> None:
+    """The flag must touch the lots the carve touches -- no more, no fewer.
+
+    47 greens in the 2026-10-07 weekly sat on one of these carves with no
+    flag, because nothing but the carve read the map. A twin that read a
+    narrower buffer than its carve would let some of them through again.
+    """
+    for carve, twin in SITE_TWINS.items():
+        c, t = quadfit_specs[carve], quadfit_specs[twin]
+        assert c["action"] == "carve" and t["action"] == "flag", carve
+        assert _layer(c) == _layer(t), carve
+        for field, default in _GEOMETRY.items():
+            assert c.get(field, default) == t.get(field, default), (carve, field)
+        assert twin in BY_KEY and carve not in BY_KEY
+
+
+def test_every_carve_is_either_flagged_on_the_site_or_cleared(quadfit_specs) -> None:
+    """Each no-build map is read for what it asks of a site the pod clears.
+
+    Either a flag reads the same layer (the paperwork is still owed: a
+    Service Provider Letter, an NRO exemption form, a surveyed boundary), or
+    CLEARED quotes the sentence confining the chapter to the area itself.
+    """
+    flagged_layers = {_layer(o) for o in quadfit_specs.values() if o["action"] in ("flag", "kill")}
+    unread = [
+        k for k, o in quadfit_specs.items()
+        if o["action"] == "carve"
+        and _layer(o) not in flagged_layers
+        and not {w for w in ([o["within"]] if isinstance(o.get("within"), str) else o.get("within") or [])}
+        & flagged_layers
+        and k not in CLEARED
+    ]
+    assert unread == []
+    assert all(quadfit_specs[k]["action"] == "carve" for k in CLEARED)
+    assert not set(CLEARED) & set(BY_KEY)
+    # a cleared carve with a flag on its own layer would be read twice, two ways
+    assert not {_layer(quadfit_specs[k]) for k in CLEARED} & flagged_layers
+
+
+@pytest.mark.parametrize("carve", sorted(SITE_TWINS))
+def test_a_lot_beside_an_older_carve_is_a_closer_look(carve) -> None:
+    twin = SITE_TWINS[carve]
+    assert permits_on({f"ovl_{twin}": True}) == (twin,)
+    # the carve's own column says nothing: the ground is off, the permit is the twin's
+    assert permits_on({f"ovl_{carve}": True}) == ()
+    got = run(lot=replace(LOT, resource_permits=(twin,)))
+    assert got.triage is Triage.yellow and got.colour is flag_plan.Colour.yellow
 
 
 def test_every_quadfit_kill_is_read_here(quadfit_overlays) -> None:

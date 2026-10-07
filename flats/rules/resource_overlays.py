@@ -39,6 +39,16 @@ the p resource area plus 5 ft, the c resource area, all of v), so the pod is
 placed off it first. Wood Village's WQR and HCA (WVDC 430.170) carve under the
 Metro keys and are flagged under ``wood_village_*`` for the plan 430.190 asks.
 
+The carves quadfit held before 2026-10-05 had no flag of their own, so a lot
+whose pod cleared one passed GREEN with nothing said: 47 lots in the
+2026-10-07 weekly, on Gresham's, Tualatin's and West Linn's no-build maps and
+Troutdale's (FOLLOWUPS 50). Each city's sentence was read for what it asks of
+a site that holds the area while the building stays out of it. Where it asks
+for something -- a construction management plan or an exemption form, a
+surveyed boundary, a delineation, the boundary on the application -- the same
+map is flagged under a ``*_site`` key. Where it asks for nothing, the carve is
+in CLEARED below with the sentence that says so.
+
 Touch-only: quadfit's ``ovl_<key>`` is True when any part of the lot is in
 the area. Several codes reach 25 to 100 ft past it (Wilsonville 4.139.05,
 Milwaukie 19.402.3.A, Happy Valley 16.34.060, Gladstone 17.25.020(A)); a lot
@@ -76,6 +86,17 @@ _STATE_FILL = (
     "ORS 196.810(1)(a): removing material from or filling a wetland needs a Department of "
     "State Lands permit (wetlands are waters of this state, ORS 196.800(16)-(17); fill is "
     "50 cubic yards or more at one location, ORS 196.800(3))"
+)
+
+#: What a site holding the area owes while the building stays out of it
+#: (FOLLOWUPS 50): Gresham asks for a plan within 50 ft and a form beyond it.
+_GRESHAM_NRO = (
+    "GDC 5.0703(A)(1) and 5.0706(A) (a construction management plan within 50 ft of the "
+    "resource area, Type I); 5.0705(A)(3) (an NRO exemption form beyond 50 ft)"
+)
+_WEST_LINN_WRA = (
+    "WLCDC 32.060 (an application for development on property containing a WRA meets the "
+    "approval criteria); 32.020(B) (the owner's burden; a survey or delineation on request)"
 )
 
 #: Every quadfit overlay whose action is ``flag``, and Portland's three
@@ -214,6 +235,60 @@ PERMITS: tuple[Permit, ...] = (
         "TDC 72.040(3)(a)-(b) measure the buffer from a top of bank a pipe does not have",
     ),
     Permit(
+        "gresham_hcra_site",
+        "a Gresham natural resource area on the site (the building is kept out of it)",
+        _GRESHAM_NRO,
+    ),
+    Permit(
+        "gresham_wetlands_site",
+        "a Gresham wetland or its 50 ft buffer on the site (the building is kept out of it)",
+        _GRESHAM_NRO,
+    ),
+    Permit(
+        "troutdale_veco_site",
+        "Troutdale's vegetation corridor or steep slope district on the site (the building is kept out of it)",
+        "TDC 4.311(A) (the boundary set at the development proposal by a licensed surveyor's "
+        "topographic and slope analysis, and a wetland delineation if applicable)",
+    ),
+    Permit(
+        "fairview_nrl_site",
+        "a Fairview creek or wetland protection area on the site (the building is kept out of it)",
+        "FMC 19.106.070(A) (a Type I boundary verification unless the site plan shows the building "
+        "more than 40 ft from the mapped area)",
+    ),
+    Permit(
+        "west_linn_wra_stream_site",
+        "a West Linn stream water resource area on the property (the building is kept out of it)",
+        _WEST_LINN_WRA,
+    ),
+    Permit(
+        "west_linn_wra_ephemeral_site",
+        "a West Linn ephemeral stream water resource area on the property (the building is kept out of it)",
+        _WEST_LINN_WRA,
+    ),
+    Permit(
+        "west_linn_wra_riparian_site",
+        "a West Linn riparian corridor stream area on the property (the building is kept out of it)",
+        _WEST_LINN_WRA,
+    ),
+    Permit(
+        "west_linn_wetlands_site",
+        "a West Linn wetland water resource area on the property (the building is kept out of it)",
+        _WEST_LINN_WRA,
+    ),
+    Permit(
+        "tualatin_nrpo_site",
+        "a Tualatin greenway or natural area on the site (the building is kept out of it)",
+        "TDC 72.040(3)(c) (the boundary, a wetland delineation, top of bank, topography and a "
+        "vegetation inventory on the application); 72.060(3) (building setback as a condition)",
+    ),
+    Permit(
+        "tualatin_stream_buffer_site",
+        "a Tualatin 50 ft stream buffer on the site (the building is kept out of it)",
+        "TDC 72.040(3)(c) (the boundary, a wetland delineation, top of bank, topography and a "
+        "vegetation inventory on the application)",
+    ),
+    Permit(
         "fema_sfha",
         "the FEMA 100-year flood area outside the floodway",
         "fringe building stays by right with elevation and fill standards (Gresham GDC 5.0120, "
@@ -230,6 +305,30 @@ EXEMPT: Mapping[str, str] = {
     "west_linn_wra_piped": (
         "WLCDC 32.040(F) Exempt areas: '2. Existing enclosed or piped sections of streams, "
         "including any development at right angles to the enclosed or piped sections.'"
+    ),
+}
+
+#: quadfit carves whose code asks nothing of a site while the building stays
+#: out of the area, each with the sentence that confines it (FOLLOWUPS 50).
+#: The carve still takes the ground; nothing else is owed, so no flag.
+CLEARED: Mapping[str, str] = {
+    "gresham_hillside": (
+        "GDC 5.0203(A): the regulations apply 'when the following regulated activities are "
+        "proposed within the boundaries of the Hillside and Geologic Risk Overlay (HGRO)'"
+    ),
+    "oregon_city_nrod": (
+        "OCMC 17.49.030(1): 'This chapter applies to all development within the natural "
+        "resources overlay district'; 17.49.060(B)(2): 'The requirements of this chapter apply only "
+        "to areas within the NROD'"
+    ),
+    "tualatin_wpd_nobuild": (
+        "TDC 71.040(1): the engineer's certification is for buildings 'upon lands lying within "
+        "the Wetlands Protection District'; the fringe half is flagged as tualatin_wfa"
+    ),
+    "fema_floodway": (
+        "the floodplain chapters regulate development within the flood area (GDC 5.0110: "
+        "'any proposal for development within the Floodplain Overlay District'); the fringe "
+        "around a floodway is flagged as fema_sfha"
     ),
 }
 
@@ -255,4 +354,4 @@ def permits_on(row: Mapping[str, Any]) -> tuple[str, ...]:
     return tuple(out)
 
 
-__all__ = ["BY_KEY", "COLUMNS", "EXEMPT", "PERMITS", "Permit", "permits_on"]
+__all__ = ["BY_KEY", "CLEARED", "COLUMNS", "EXEMPT", "PERMITS", "Permit", "permits_on"]
