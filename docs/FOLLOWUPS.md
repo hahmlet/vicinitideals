@@ -1674,22 +1674,21 @@ read when the weekly full re-screen lands.
    (i) SPLICE OWED, handed to an agent 2026-10-07: one partial re-screen
    on run 65 carrying 84e702de, 51577bb8 (44), the slope lane's (e)/(f)/(h)
    and (c) if landed; start once (e)/(f)/(h) are on main or by 2026-10-09.
-50. [scan: YES (greens only turn yellow; no gains to bound)] **Older no-build water areas raise no flag on a lot
-   that clears them (found 2026-10-07 reading run 65 for item 42).** 47
-   run-65 map greens touch a quadfit `carve` overlay that predates item 42
-   and has no `flag` twin, so `permits_on` says nothing:
-   west_linn_wra_stream 17, gresham_hcra 15, gresham_hillside 10,
-   tualatin_stream_buffer 6, west_linn_wetlands 2, west_linn_wra_ephemeral
-   2, troutdale_veco 2, gresham_wetlands 1, tualatin_nrpo 1 (lots +
-   flags: `/root/wcheck2.out` on 137). The pod is placed off the carved
-   ground, so nothing stands in the area; what is missing is the paperwork
-   the phase 2 carve twins keep a flag for. West Linn is already on record
-   (overlays.yaml `west_linn_rci` note: 32.060 governs development on a
-   property containing a WRA); Gresham GDC 5.07xx / 5.02xx, Tualatin TDC
-   72 and Troutdale TDC 4.31x must be read for a duty on a lot that clears
-   the area before a twin is added -- no duty found = stays green, written
-   down. Fix: flag twins in overlays.yaml + PERMITS words/cite,
-   test_resource_overlays both ways; lands by splice or the next weekly.
-   Pending: Steph's yes. Same read on 49(f) slivers: recommend leaving them
-   yellow -- several codes reach 25-100 ft past the drawn line
-   (resource_overlays.py docstring), so a sliver touch sits inside the reach.
+50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
+   no-build water area keeps the lot a closer look once the pod clears it.**
+   City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
+   Troutdale TDC 4.311(A), Fairview FMC 19.106.070(A), West Linn WLCDC
+   32.060/32.020(B), Tualatin TDC 72.040(3)(c) all owe paperwork on a site
+   holding the area -> 10 `*_site` flag twins in overlays.yaml (same layer,
+   buffer, clip as the carve) + PERMITS words/cite. Gresham hillside,
+   Oregon City NROD, Tualatin WPD no-build and FEMA floodway reach only
+   inside the area -> `resource_overlays.CLEARED` (stay green, cite kept);
+   test_resource_overlays holds every carve flagged-or-cleared. Bound on
+   137 (`/root/tw/`, 327 run-65 lots not red): 42 green -> yellow (West
+   Linn 19, Gresham 15, Tualatin 6, Troutdale 2), 285 yellow unchanged,
+   nothing else moved; every mover carries RESOURCE-PERMIT on a `*_site`
+   key. Lands at the next weekly (s5o must re-run to write the
+   `ovl_*_site` columns); a splice on run 65's s5o reads them as nothing
+   unless it copies `ovl_<carve>` into `ovl_<carve>_site` first (recipe
+   `/root/tw/prep.py`). 49(f) slivers: left yellow (codes reach 25-100 ft
+   past the drawn line).
