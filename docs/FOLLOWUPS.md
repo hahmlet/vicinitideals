@@ -1491,51 +1491,30 @@ read when the weekly full re-screen lands.
    King City, Durham (each needs a map or a determination the city holds).
    Known under-carve: Portland's city-limit transition-area exception
    (33.430.050.A) is not drawn.
-43. [scan: NO new code, check after the weekly run] **Utility easement: Steph's street-yard rule -- SHIPPED a9106379
-   2026-10-06, in the early 2026-10-07 re-screen (started 00:54 UTC on
-   62b2259d); the hose edge 51577bb8 merged after it started and rides
-   the next weekly run.** Ruled
-   2026-10-01 (item 17(e)), Oregon City 2026-10-05 "same rule": the
-   building fits with a 10 ft yard on every STREET line -> the question is
-   answered; only at 5 ft -> yellow; not even at 5 ft -> red
-   (flats/config/easements.yaml, flats/fit/easement.py, bridge
-   `easement_checked`, flag UTILITY-EASEMENT-ASSUMED severity 1). Bound on
-   137 (every Beaverton + Oregon City lot + 1,000 control; ae219cb4 vs
-   e6275bc5, /root/utility-easement_diff3.out): control identical; lots
-   green Beaverton 34 -> 3,043, Oregon City 0 -> 2,230. 58 rows worse, all
-   read: 47 Oregon City mixed-use rows (MUC-1/MUD build to the sidewalk)
-   that fit only without the 5 ft yard; 7 two-reading lots whose kept-worse
-   reading always missed (item 44); 4 rows on 3 big lots where the 10 ft
-   yard pushed the hose route past 150 ft -- FIXED 51577bb8: a yard that
-   fails a check the code's own yards passed falls to the 5 ft yard,
-   question open (`_lost`); item 44's bound moved exactly those 4 rows on
-   3 Oregon City lots red -> yellow (replayed 32E09BA00900: 10 ft = hose
-   156 ft red, 5 ft = fits by 26 ft, hose 127 ft), and the 593 rows red on
-   the hose at 10 ft stay red (the hose fails at the code's own yards
-   too). Bridge ~1.6x slower on the two cities (~+1.2 h on the weekly
-   run). After the 10-07 run: check both cities' green counts land near
-   the bound's (that bound had neither 44 nor the hose edge, nor does this
-   run), then remove this item.
-44. [scan: NO new code, check after the weekly run] **A lot's readings are ranked on the colour the map shows -- SHIPPED
-   51577bb8 2026-10-07, rides the next weekly run (missed the early
-   10-07 one).** `_front_rank`, `_worse`, `_better` (flats/ingest/quadfit.py)
+44. [scan: NO new code, check after the weekly run] **A lot's readings are ranked on the colour the map shows, and
+   43's hose edge -- SHIPPED 51577bb8 2026-10-07; NOT in run 65 (the early
+   10-07 weekly started first); Steph 2026-10-07: wait for the next weekly
+   run.** `_front_rank`, `_worse`, `_better` (flats/ingest/quadfit.py)
    compare `signed.colour` first, the triage only on a tie; the triage had
    ranked a missed fit (yellow, its variance path) above a fit waiting on
-   an open fact. Bound on 137 over every corner, through, part-alley and
-   two-reading lot + 2,012 control (39,743 lots, 3f514c9e vs 3cbe113c,
-   /root/rank-colour/diff.out, moves_ABR.csv; every move read, 7 replayed
-   with probe2.py): control identical; owner-choice corners 436 lots
-   better (32 red -> green, 404 red -> yellow), none worse; (ii) through
-   lots kept at the worse end 99 lots yellow -> red, NO false GREEN;
-   (iii) two-reading lots kept at the worse: 34 lots (39 rows) were false
-   GREENs (13 rows now red, 26 yellow), 72 lots yellow -> red; every new
-   green graded (pad grade measured, fits, nothing failing). ASKED Steph
-   2026-10-07: slip it into the running 10-07 re-screen (pin the 137
-   checkout to 51577bb8 before its BRIDGE step loads the code; breaks the
-   "merged after it starts rides the next run" rule in
-   docs/ops/parallel-agents.md) or wait a week (recommended) -- moot once
-   BRIDGE starts. After the run that carries it: spot-check a few of
-   those lots on the map, then remove this item.
+   an open fact. Hose edge (item 43's last loose end): a utility-easement
+   yard that fails a check the code's own yards passed falls to the 5 ft
+   yard, question open (`_lost`). Bound on 137 over every corner, through,
+   part-alley and two-reading lot + 2,012 control (39,743 lots, 3f514c9e vs
+   3cbe113c, /root/rank-colour/diff.out, moves_ABR.csv; every move read, 7
+   replayed with probe2.py): control identical; owner-choice corners 436
+   lots better (32 red -> green, 404 red -> yellow), none worse; through
+   lots kept at the worse end 99 lots yellow -> red, no false GREEN;
+   two-reading lots kept at the worse: 34 lots (39 rows) were false GREENs
+   (13 rows now red, 26 yellow), 72 lots yellow -> red; hose edge exactly
+   the 4 known rows on 3 Oregon City lots red -> yellow (593 hose-red rows
+   at 10 ft stay red); every new green graded. Run 65 still shows 30 of
+   those lots / 34 rows green (item 49(b)). Item 43's easement rule itself
+   checked on run 65 2026-10-07 and closed: lots green Beaverton 3,202
+   (2,833 answered at 10 ft + 369 in CS/GC/RC/SC/TC zones the PUE sentence
+   does not reach -- whole-corpus grep: only BDC 20.05 and 20.22 say it),
+   Oregon City 2,166, vs the bound's 3,043 / 2,230. After the next weekly
+   run: spot-check a few of the 34 lots on the map, then remove this item.
 45. [scan: YES] **A tight-fit green is never graded (found 2026-10-06 by the
    utility-easement bound).** `slope_checked` (flats/ingest/quadfit.py)
    measures the pad grade only on a drawing that fits; a building that
