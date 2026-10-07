@@ -81,6 +81,9 @@ class Drawing:
     #: the drive could run, and more. Empty where not asked. Read by the
     #: outdoor-area shape test (FOLLOWUPS 7(b)), never by the page.
     paved: tuple[BaseGeometry, ...] = ()
+    #: The room is short of the plan by no more than the fit's tolerance
+    #: (``short_ft``): a fit the screen passed tight, drawn where it stands.
+    tight: bool = False
 
     def to_json(self, envelope: BaseGeometry | None = None) -> dict:
         """Rings of ``[x, y]`` pairs, rounded, for the lot page.
@@ -89,6 +92,8 @@ class Drawing:
         page draws the yards the lot lost as well as what stands in them.
         """
         out: dict = {"fits": self.fits, "room": _ring(self.room)}
+        if self.tight:
+            out["tight"] = True
         for name in ("building", "lane", "court"):
             geom = getattr(self, name)
             out[name] = None if geom is None else _ring(geom)
@@ -241,6 +246,7 @@ def draw(
     paved_across_ft: float | None = None,
     gap_ft: float = 0.0,
     side_drive: bool = False,
+    short_ft: float = 0.0,
 ) -> Drawing | None:
     """The fit drawn: room, building, lane and court, in world coordinates.
 
@@ -260,6 +266,14 @@ def draw(
     the lane that reaches it) and the unpaved standoff off the rear wall;
     ``side_drive`` says the court is fed across a side yard (a side street
     or a side alley) and paves its depth band across the whole lot.
+
+    ``short_ft`` is how far short of the plan the room may be and still be
+    drawn as fitting: the fit's tolerance, on a plan the screen passed tight
+    (:attr:`flats.score.screen.Screening.tight_fit`, Steph 2026-09-25). Only
+    where no full window stands; the room found is that much shallower, the
+    building and court are drawn whole, and the drawing says ``tight``. A
+    building that stands somewhere is one a hose route and a pad grade can be
+    measured to (FOLLOWUPS 45, 49(d)).
     """
     if fit.across_ft is None or fit.angle_deg is None:
         return None
@@ -293,6 +307,21 @@ def draw(
         fitter=fitter,
         over_ft=over,
     )
+    tight = False
+    if placed is None and short_ft > 0:
+        short = cells_for(max(deep_b + max(court_beyond_ft, 0.0) - short_ft, res), res)
+        if short < need:
+            placed = _place(
+                grids,
+                short,
+                w_cells,
+                across_b=across_b,
+                deep_b=deep_b,
+                street=pts,
+                fitter=fitter,
+                over_ft=over,
+            )
+            tight = placed is not None
     fits = placed is not None
     if placed is None:
         d_cells = max(g.max_depth_cells(w_cells) for g in grids)
@@ -369,4 +398,5 @@ def draw(
         court=world(court),
         fits=fits,
         paved=tuple(paved),
+        tight=tight,
     )

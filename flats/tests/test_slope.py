@@ -48,7 +48,7 @@ from flats.score.screen import (  # noqa: E402
 )
 from flats.score.slack import Verdict  # noqa: E402
 from flats.tests.dem import plane, write_dem  # noqa: E402
-from flats.tests.test_fire import DESIGN, X0, Y0, bridge_row, fit, rules  # noqa: E402
+from flats.tests.test_fire import DESIGN, X0, Y0, bridge_row, fit, rules, tight_row  # noqa: E402
 
 pytestmark = pytest.mark.unit
 
@@ -276,6 +276,22 @@ def test_a_pad_on_an_even_eight_percent_is_a_closer_look(tmp_path, corpus, polic
     assert s.facts.site_grade_pct == pytest.approx(8.0, abs=0.4)
     assert CLOSER_LOOK_SLOPE in s.signed.reasons
     assert any(f.code == "SLOPE-GRADE" for f in s.signed.flags)
+
+
+def test_a_tight_fit_is_graded(tmp_path, corpus, policies) -> None:
+    """FOLLOWUPS 45: a GREEN passed on the fit's tolerance had its pad read
+    by nothing -- the drawing stood no building -- so a tight fit on a
+    hillside stayed GREEN. Drawn where it stands, it is graded."""
+    t = bridge_terrain(tmp_path, plane(8.0))
+    lot = with_steep(lot_from_row(tight_row(), corpus.layers), t)
+    (s,) = screen_lot(
+        lot, [DESIGN], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
+        terrain=t,
+    )
+    assert s.screening.tight_fit and s.drawing["tight"]
+    assert s.facts.site_grade_tried
+    assert s.facts.site_grade_pct == pytest.approx(8.0, abs=0.4)
+    assert CLOSER_LOOK_SLOPE in s.signed.reasons
 
 
 def test_steep_ground_comes_off_before_the_pod_is_placed(tmp_path, corpus, policies) -> None:

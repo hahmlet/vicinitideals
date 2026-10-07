@@ -994,6 +994,7 @@ async def test_the_lot_page_draws_where_the_building_and_parking_stand(
     for layer in ("plan-lot", "plan-envelope", "plan-court", "plan-lane", "plan-room", "plan-building"):
         assert f'class="{layer}"' in card, layer
     assert 'class="plan-short"' in card and 'class="plan-fits"' not in card
+    assert "give or take half a foot" not in card
     # The court runs 3 ft past the lot line and stays inside the drawing.
     svg = card.split('class="fit-plan"', 1)[1].split("</svg>", 1)[0]
     height = int(svg.split('height="', 1)[1].split('"', 1)[0])
@@ -1001,6 +1002,26 @@ async def test_the_lot_page_draws_where_the_building_and_parking_stand(
     assert all(0 <= float(pt.split(",")[1]) <= height for pt in court.split())
     other = page.text.split('id="design-pod80x25-2"', 1)[1]
     assert "fit-plan" not in other
+
+
+async def test_a_tight_fit_is_drawn_fitting_and_says_so(
+    client: AsyncClient, session: AsyncSession
+):
+    # FOLLOWUPS 45 / 49(d): a fit the screen passed on its half-foot
+    # tolerance is drawn fitting, and the page says it is tight.
+    await _login(client, session)
+    await _seed(session)
+    rows = (await session.execute(select(FlatsLotResult))).scalars().all()
+    for row in rows:
+        if (row.checks or {}).get("drawing"):
+            row.checks = {**row.checks, "drawing": {**row.checks["drawing"], "fits": True, "tight": True}}
+    await session.commit()
+
+    page = await client.get("/flats/lots/multnomah/1N1E29DD%20%20-05600")
+    assert page.status_code == 200
+    card = page.text.split('id="design-pod56x36-2"', 1)[1].split('id="design-pod80x25-2"', 1)[0]
+    assert 'class="plan-fits"' in card and 'class="plan-short"' not in card
+    assert "give or take half a foot" in card
 
 
 async def test_the_lot_page_says_how_far_the_fire_hose_walks(
