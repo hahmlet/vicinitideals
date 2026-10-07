@@ -132,7 +132,9 @@ explicit path.
    bound and scan-throughput's proof are done, on origin/main at that
    moment (`/root/weekly_chain.sh`, log `/root/weekly_chain.log`, sources
    `data/flats/sources/2026-10-07`). A change merged after it starts rides
-   the next weekly run.
+   the next weekly run. Weekly runs from then on use the committed
+   `scripts/flats_weekly_chain.py` (FOLLOWUPS 48, runbook §4), not a
+   hand-written script.
 7. **Deploy through the lock.** Run
    `ssh -o BatchMode=yes root@192.168.1.28 "flock /tmp/vicinitideals-deploy.lock bash /root/deploy-vicinitideals.sh"`,
    then read the smoke output. A deploy ships all of merged `main`, other

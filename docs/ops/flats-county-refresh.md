@@ -99,8 +99,42 @@ Durations are from the first real run (2026-09-18/19, 453,782 taxlots).
 | 18 | Promote | 114 or browser | `flats_promote.py promote --snapshot N --by "agent, standing word 2026-09-19"` (clean) / the **Promote** button, or `--by Steph --override "…"` (warned) | 1 s | the Lots pages default to the new run; the previous copy is `retired` and still reachable by `?run=` |
 | 19 | Prune, next quarter | 114 | `flats_promote.py prune --dry-run`, then real, then step 15 again | ~5 min | the database holds the copy in use, the one before it, and any candidates |
 
-Steps 5–10 chain on 137 as one nohup script (`/root/chain_<date>.sh` ending
-in `CHAIN DONE`) so the seven-hour bridge is not babysat.
+Steps 5–10 (with transit, §4d) run on 137 as one supervised chain,
+`scripts/flats_weekly_chain.py` (FOLLOWUPS 48), so the seven-hour bridge is
+not babysat and a crash costs minutes, not the night. Launch it from a plain
+shell, never from a script that already holds the lock:
+
+```
+cd /root/code/vicinitideals && nohup flock -o /root/heavy.lock   .venv/bin/python scripts/flats_weekly_chain.py --snapshot <date> --sha <the commit>     --dem-from data/quadfit_demw/raw --snapshot-date <ground date>     --transit-reuse data/flats/transit/<last>/distances.parquet     --status-to root@<vm114>:/root/weekly137/status.txt --app-host root@<vm114>   > /root/weekly_chain.log 2>&1 < /dev/null &
+```
+
+- **It refuses in seconds** when the checkout is not at `--sha` or has
+  uncommitted changes, a dataset `pipeline.yaml` names is not in the
+  snapshot (it prints the acquire line that fetches them -- the 2026-10-01
+  copy lacked 15), the curb or institutional-land datasets or the elevation
+  tiles are missing, or 137 has under 10 GB free or 114 under 5 GB (a weekly
+  writes ~3.5 GB on 137). `--preflight-only` checks and prints every step's
+  command. A dataset fetched under an older `pipeline.yaml` entry is only a
+  note: a re-screen reads the ground the copy in use was measured from (the
+  10-07 copy, which screened clean, held 71).
+- **Re-launch the same line after anything.** Each finished step leaves
+  `~/weekly_<tag>/<step>.done` and is skipped; the bridge resumes from
+  `/root/bridge_cache`. Steps finished at another commit are refused until
+  `--from STEP` says which step the change touches: that step and every
+  later one run again, and the earlier ones are kept for the new commit.
+- **It restarts what died for a passing reason**, up to 3 tries: a step
+  killed by a signal (the OOM killer), a bridge lot that killed its worker
+  twice (again on half the processes, never under 2), or a step whose
+  processes used no CPU for 20 minutes (a hang; a giant lot burns CPU the
+  whole time it writes nothing). It ends only the step's own process group.
+  Any other failure stops the chain at once: the same code fails the same
+  way.
+- **Watch it** in `~/weekly_<tag>/status.txt`, copied to 114 every 2 min:
+  the step and try, memory, the kernel's OOM-kill count, the bridge's parts
+  and the log's tail. Its last line is `WEEKLY CHAIN DONE` or `GAVE UP at
+  <step>`. Each step's output is in `~/weekly_<tag>/<step>.log`.
+
+Loading, drift and promotion stay by hand (steps 11–18, §4b R3–R7).
 
 ### 4b. A re-screen of the copy in use
 
@@ -109,7 +143,8 @@ a use gate added, a drawing fixed in s6s -- the copy is not refreshed; it is
 screened again, and the result is a **candidate run on the current copy**
 that goes through the same gate and can be undone the same way. The run the
 Lots pages show is never overwritten in place: the loader refuses to load
-onto any run that is not a `candidate`.
+onto any run that is not a `candidate`. The weekly full re-screen runs R1–R2
+as `scripts/flats_weekly_chain.py` (§4, under the step table).
 
 | # | Step | Where | Command | Done when |
 |---|---|---|---|---|
