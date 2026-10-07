@@ -1,7 +1,8 @@
 # Follow-ups offered but not yet done
 
 Agent-maintained queue. Written when options are offered, pruned when they are
-done or declined. Newest at the bottom; "do the next thing" means item 1.
+done or declined. Newest at the bottom; "do the next thing" means item 1 -- EXCEPT item 48 (scan
+resilience), which Steph put AHEAD of the rest on 2026-10-07.
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
 Each item carries `[scan: ...]`: YES = the work changes lot answers, so a
@@ -1638,3 +1639,32 @@ read when the weekly full re-screen lands.
    run runbook step 7b, and pass `--institutional` to the bridge -- then
    check `institutional_were_scanned` is 0 in assign's summary. Remove
    this item once that run is promoted.
+48. [scan: YES (a proof: a run killed mid-way and resumed must come out identical to one that was not)] **PRIORITY -- scans must survive a crash without losing time (Steph
+   2026-10-07: "we're moving quick and stacking a lot of changes between
+   runs. Don't want to lose time to avoidable problems").** Asked during
+   the early weekly (2026-10-07, 12 processes, 225k/414k lots at 4 h).
+   Today on main a bridge re-run with the same `--out` DELETES its
+   `parts/` first (quadfit.py `run()`), a worker OOM-kill hangs the
+   `multiprocessing.Pool` forever while holding heavy.lock (rank-colour
+   2026-10-06, 2 h 20 min unseen), and recovery is by hand: move parts
+   aside, `--tlid-file` the missing lots, stitch. The weekly chain itself
+   (`/root/weekly_chain.sh`, scratch on 137, hand-written each week) has
+   no step markers, so a failure at the bridge re-runs the ~75 min
+   stage + quadfit too. Item 46's `batch.py` (lane scan-throughput, NOT on
+   main yet) already covers: resume via `--cache`, a dead worker ends the
+   run instead of hanging it, unfinished chunks retried once, memory
+   budget. STILL OWED, beyond 46: (a) never delete finished parts --
+   resume is the DEFAULT for the weekly, not an opt-in flag; (b) the
+   weekly chain as a committed script (`scripts/` + runbook §4b) with a
+   done-marker per step, so a re-launch skips finished steps; (c) a
+   supervisor ON 137 (not an agent's session) that relaunches a failed or
+   stalled step with resume, halving processes after an OOM, and gives up
+   after N tries with a status line; (d) a stall watchdog on 137 (no new
+   part in 30 min -> kill ONLY the run's own process group, relaunch);
+   (e) a preflight that refuses in seconds, not hours: code at the
+   intended sha, every pipeline.yaml source key present in the snapshot
+   (the 10-07 copy was missing 15), 1 m DEM tiles, institutional land,
+   curb datasets, free disk on 137 and 114; (f) the status line pushed to
+   114 (`/root/weekly137/status.txt`) committed with the chain so any
+   session can watch. Ship after 46 lands (it changes the same runner);
+   coordinate with that lane rather than fork it.
