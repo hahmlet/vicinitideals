@@ -1191,14 +1191,6 @@ read when the weekly full re-screen lands.
    its zone as the neighbour's. The next full Washington quadfit run picks
    the rule up; diff s4's alley and neighbour-zone fields on Washington
    lots then and read the moves.
-35. [scan: NO new code, check after the weekly run] **Fire check never ran on ~92,700 green answers (found 2026-10-02 by
-   the net-area session).** The fire partials were scoped to lots likely
-   to fail; the rest kept no fire result. Re-screened, 1,055 of them gave
-   1,032 green + 23 unknown (no truck road within reach: Troutdale LDR/MDR,
-   Gresham LDR-PV, Hillsboro SCR-V), 0 red -- ~2%, so ~2,000 greens county
-   wide may be unknown. Steph 2026-10-02 chose B: NO partial -- the next
-   weekly FULL re-screen fixes it (with 33's leftovers). After that run,
-   check run-wide: zero green answers lacking a fire result.
 36. [scan: YES] **Parking tool queue (Steph 2026-10-02: "do them in the reverse order
    you listed them").** (5) partly, (4) and (3) LIVE as code f7ba7038; the
    re-screen rides the weekly full run (~10-08) -- read the moves on
@@ -1668,3 +1660,61 @@ read when the weekly full re-screen lands.
    114 (`/root/weekly137/status.txt`) committed with the chain so any
    session can watch. Ship after 46 lands (it changes the same runner);
    coordinate with that lane rather than fork it.
+49. [scan: YES for (a)-(f); NO for (g)] **The 2026-10-07 weekly (run 65, candidate on snapshot 4, NOT promoted
+   -- Steph promotes, warned by size): what the one-by-one read found.**
+   Run 65 = bundle `data/flats/bridge/2026-10-07_weekly` on 114, assign
+   `/root/assign_2026-10-07_weekly` on 137 (code 62b2259d, bridge 7 h 53 min
+   at 12 procs). Gate clean (8 rows ok); drift 63 -> 65: 133,872 of 827,770
+   answers moved, all `rules`, 0 unexplained (report
+   `data/flats/reports/2026-10-07/drift_run65.md`). Best pod per lot,
+   if_signed: green 68,044 -> 41,361, red 30,061 -> 72,172. Read by three
+   agents (scripts + tables on 137 in `/root/weekly_read/{gains,losses,
+   slope_water}/`, compare `/root/cmp1007/`): slope is behind most losses
+   (fit, fire, Portland density/coverage/landscaped moves are slope under a
+   different `head`); court turning 1723db45 ~2,600 lots; Portland z
+   e55c22ee 16,538 lots (red on `colour`, yellow on if_signed via the
+   attached-house relief); gains = 43 easement (Beaverton 2,542, Oregon City
+   2,012 -- the bound's 3,043/2,230 were colour counts, reconciled), 41
+   Gresham 1,470, West Linn historic district 483, corner side-street fits;
+   35 CLOSED (every green row carries a fire result); 34 Washington ROW
+   verified (7,817 neighbour-zone changes, no new failure); 47 verified
+   (`institutional_were_scanned` 0). OWED, false GREEN first:
+   (a) MAP-GREEN WITHOUT A FIRE CHECK, 78 lots / 106 rows (Portland
+   RM1/RM2/CM2/CM3): headline yellow on min density only, so `fire_checked`
+   skips the plan (not green on triage), but the map colour counts the
+   severity-2 density flag as green. Fix: fire_checked must also run on a
+   plan whose map colour is green (or colour may not be green with fire
+   unmeasured). Lists in `/root/weekly_read/gains/`.
+   (b) 51577bb8 (item 44) not in run 65: 30 lots / 34 rows map-green
+   (`item44_false_greens_in_weekly.csv`).
+   (c) UNCONFIRMED: ~12 corner greens whose court may open onto an arterial
+   where a local street adjoins (Beaverton 1S121BB14600, 1S124AA06000,
+   1S129DB05400, Greenway lots 1S127BC*; WashCo 1N120CD10600, 1S130CA02600,
+   1S201AC14100; OC 31E01AD00800; Wilsonville 31W13AC00800). The drawing
+   carries no driveway line and `lane` is empty on side-street plans, so the
+   access lot line cannot be read -- record it per plan, then re-check.
+   Unranked cities (Clackamas uninc 274, Sherwood 10, Hillsboro 5 gains)
+   assume the side street is lowest class with no flag.
+   (d) Tight fits never get a fire route: `measure()` needs
+   `drawing["fits"]`; 1,634 rows unknown on fire alone (1,015 tight; 54
+   best-pod green -> unknown, e.g. 12E28CD01400). Cautious; fix with 45.
+   (e) Steep ground blamed on the fit (`slope_checked`): `steep_blocks` is
+   set only when the steep-free envelope is too small or the lot fits WITH
+   steep; a lot missing by 2-6 ft without steep and 30-60 ft with it is
+   handed to `fit_ft` + "variance". ~1,500 lots (replayed: 1S1E16DD-02700,
+   1S1E17AC-01300, 1S1E21BD-11900, 1N135DA06700). Headline yellow + wrong
+   fix; colour already red.
+   (f) Flat lots red from a neighbour's bank / raised road: the 5 m window
+   widens a 4-5 ft bank on a lot line into a 400-1,200 sq ft steep strip
+   (1S2E07BB-22400: grade 2.5%, 1,183 sq ft "steep"); 58 steep reds with
+   mean slope < 5% (`slope_water/slope2.py`). `Terrain.steep`. False reds.
+   Water flag on overlay slivers: 48 lots < 10 sq ft, 194 < 100 sq ft
+   (`water_flag.parquet`, `permits_on` fires on any touch).
+   (g) Reading aids: `head` names the first failing check, not the one that
+   made it red (Portland coverage y->r 807 = all slope); headline vs map
+   colour disagree on the planted strip and STREET_UNCONFIRMED (~160 lots,
+   unknown vs yellow); 14 STREET_UNCONFIRMED y->unknown not traced.
+   RULING ASKED 2026-10-07: 3,209 lots are RED on steep ground read from the
+   10 m model only (Gresham 1,066, Happy Valley 886, Portland 831) although
+   38 said "coarse 10 m never RED" (`coarse_red_is_closer_look` covers pad
+   grade, not the steep cut); median slope 17.5%, real hills.
