@@ -15,7 +15,7 @@ from pathlib import Path
 
 import pytest
 
-from flats.ingest.assign import NOT_MEASURED, ROW_COLUMNS, assign, read_dropped, synthetic_row
+from flats.ingest.assign import NOT_MEASURED, POD_CANNOT_FIT, ROW_COLUMNS, assign, read_dropped, synthetic_row
 from flats.ingest.normalize import EXCLUDED_COLUMNS
 
 pd = pytest.importorskip("pandas")
@@ -26,6 +26,8 @@ MEASURED = "1S2E05DA -01900"
 GATED = "1S2E05DA -02000"
 DROPPED = "1S2E05DA -02100"
 UNCLAIMED = "1S2E05DA -02200"
+NARROW = "1S2E05DA -02300"  # 3,000 sqft, but no 20 ft circle fits in its outline
+ZONED_OUT = "1S2E05DA -02400"  # big enough, dropped for a reason arithmetic does not settle
 GHOST = "1N1E29DD -09999"  # measured by the bridge, absent from the lot table
 CONDO = "1N1E29DD -90001"  # measured by the bridge; the lot table dropped it as a condominium unit
 
@@ -91,6 +93,8 @@ def world(tmp_path: Path) -> dict[str, Path]:
         {"county": "multnomah", "tlid": GATED, "jurisdiction": "or/multnomah/portland", "zone": None, "zone_raw": "QQ9", "area_sqft": 4000.0, "gate": "ZONE_NOT_ENCODED"},
         {"county": "multnomah", "tlid": DROPPED, "jurisdiction": "or/multnomah/portland", "zone": "R5", "zone_raw": "R5", "area_sqft": 800.0, "gate": None},
         {"county": "multnomah", "tlid": UNCLAIMED, "jurisdiction": "or/multnomah/portland", "zone": "R5", "zone_raw": "R5", "area_sqft": 6000.0, "gate": None},
+        {"county": "multnomah", "tlid": NARROW, "jurisdiction": "or/multnomah/portland", "zone": "R5", "zone_raw": "R5", "area_sqft": 3000.0, "gate": None},
+        {"county": "multnomah", "tlid": ZONED_OUT, "jurisdiction": "or/multnomah/portland", "zone": "R5", "zone_raw": "R5", "area_sqft": 5000.0, "gate": None},
         # The same TLID in the other county: allowed as long as the bridge did not measure it.
         {"county": "clackamas", "tlid": UNCLAIMED, "jurisdiction": "or/clackamas", "zone": "R-10", "zone_raw": "R-10", "area_sqft": 9000.0, "gate": None},
     ]
@@ -107,7 +111,7 @@ def world(tmp_path: Path) -> dict[str, Path]:
 
     quadfit = tmp_path / "quadfit"
     quadfit.mkdir()
-    (quadfit / "s3_dropped.csv").write_text(f"TLID,step\n{DROPPED},sliver_area\n", encoding="utf-8")
+    (quadfit / "s3_dropped.csv").write_text(f"TLID,step\n{DROPPED},sliver_area\n{NARROW},too_narrow_20ft\n{ZONED_OUT},zone_not_in_rules\n", encoding="utf-8")
     return {"bridge": bridge, "normalized": normalized, "quadfit": quadfit, "out": tmp_path / "assign"}
 
 
@@ -134,7 +138,15 @@ def test_measured_rows_pass_through_and_every_other_lot_gets_a_reason(world: dic
     assert gated[0]["fits"] is False and pd.isna(gated[0]["fit_slack_ft"]) and gated[0]["observed"] == "{}"
 
     dropped = rows_for(DROPPED)
-    assert {r["reasons"] for r in dropped} == {f"{NOT_MEASURED},quadfit:sliver_area"}
+    assert {r["reasons"] for r in dropped} == {f"{POD_CANNOT_FIT},quadfit:sliver_area"}
+    assert {(r["triage"], r["if_signed"], r["colour"]) for r in dropped} == {("red", "red", "red")}
+    assert {b["check"] for r in dropped for b in json.loads(r["binds"])} == {"pod_footprint_area"}
+    narrow = rows_for(NARROW)
+    assert {r["reasons"] for r in narrow} == {f"{POD_CANNOT_FIT},quadfit:too_narrow_20ft"}
+    assert {b["check"] for r in narrow for b in json.loads(r["binds"])} == {"pod_width"}
+    zoned_out = rows_for(ZONED_OUT)
+    assert {r["reasons"] for r in zoned_out} == {f"{NOT_MEASURED},quadfit:zone_not_in_rules"}
+    assert {(r["triage"], r["colour"]) for r in zoned_out} == {("unknown", "yellow")}
     unclaimed = rows_for(UNCLAIMED)
     assert len(unclaimed) == 4, "two counties' lots share the TLID; each gets its rows"
     assert {r["reasons"] for r in unclaimed} == {f"{NOT_MEASURED},quadfit:unknown"}
@@ -145,18 +157,19 @@ def test_measured_rows_pass_through_and_every_other_lot_gets_a_reason(world: dic
     assert meta["quadfit_dir"] == str(world["quadfit"].resolve())
     assert meta["new_zones"] == {"or/multnomah/portland": {"QQ9": 1}}
     assert meta["s4"] == "/x/s4.parquet", "the bridge's meta rides along"
-    assert (meta["lots"], meta["rows"]) == (5, 4 + 2 * 4)
+    assert (meta["lots"], meta["rows"]) == (7, 4 + 2 * 6)
     a = meta["assign"]
-    assert a["measured"] == 2 and a["unmeasured"] == 4
-    assert a["by_reason"] == {NOT_MEASURED: 3, "ZONE_NOT_ENCODED": 1}
-    assert a["not_measured_by_step"] == {"sliver_area": 1, "unknown": 2}
+    assert a["measured"] == 2 and a["unmeasured"] == 6
+    assert a["by_reason"] == {NOT_MEASURED: 3, "ZONE_NOT_ENCODED": 1, POD_CANNOT_FIT: 2}
+    assert a["not_measured_by_step"] == {"zone_not_in_rules": 1, "unknown": 2}
+    assert a["pod_cannot_fit_by_proof"] == {"pod_footprint_area": 1, "pod_width": 1}
     assert a["measured_not_in_lots"] == 1 and a["measured_not_in_lots_examples"] == [GHOST]
     assert a["measured_but_excluded"] == {"CONDO_AIR_PARCEL": 1}
     assert a["tlids_shared_across_counties"] == 1
     written = json.loads((world["out"] / "meta.json").read_text(encoding="utf-8"))
     assert written["assign"]["by_reason"] == a["by_reason"]
     summary = (world["out"] / "summary.md").read_text(encoding="utf-8")
-    assert "ZONE_NOT_ENCODED: 1" in summary and "QQ9 (1)" in summary and "sliver_area 1" in summary
+    assert "ZONE_NOT_ENCODED: 1" in summary and "QQ9 (1)" in summary and "pod_footprint_area 1" in summary
     assert "not land by the snapshot's reading (dropped): 1 -- CONDO_AIR_PARCEL 1" in summary
     assert "kept from quadfit's record): 1" in summary
 
@@ -173,7 +186,9 @@ def test_without_the_ledger_a_measured_lot_the_table_lacks_is_kept(world: dict[s
 def test_without_quadfit_dir_every_unmeasured_lot_is_unclaimed(world: dict[str, Path]) -> None:
     meta = assign(world["normalized"], world["bridge"], world["out"])
     assert meta["quadfit_dir"] is None
-    assert meta["assign"]["not_measured_by_step"] == {"unknown": 3}
+    assert meta["assign"]["not_measured_by_step"] == {"unknown": 4}
+    # The small lot is proven by its area alone; the narrow one needs the ledger's step.
+    assert meta["assign"]["by_reason"][POD_CANNOT_FIT] == 1
 
 
 def test_a_measured_tlid_in_two_counties_refuses(world: dict[str, Path]) -> None:
@@ -192,3 +207,36 @@ def test_synthetic_row_shape_and_dropped_reader(tmp_path: Path) -> None:
     csv = tmp_path / "s3_dropped.csv"
     csv.write_text("TLID,step\n1N1E01AA -00100 ,too_narrow_20ft\n", encoding="utf-8")
     assert read_dropped(csv) == {"1N1E01AA -00100": "too_narrow_20ft"}
+
+
+def test_the_quadfit_narrow_test_is_the_constant_the_proof_uses() -> None:
+    """The width proof is only as good as s3's test: a lot whose outline
+    shrunk by 10 ft all round is empty holds no 20 ft circle."""
+    import importlib.util
+
+    from flats.ingest.assign import QUADFIT_NARROW_TEST_FT
+
+    path = Path(__file__).resolve().parents[2] / "Lot Analysis" / "quadfit" / "s3_filter.py"
+    text = path.read_text(encoding="utf-8")
+    assert "NARROW_TEST_BUFFER_FT = -10.0" in text
+    assert QUADFIT_NARROW_TEST_FT == 2 * 10.0
+    assert importlib.util.find_spec("flats") is not None
+
+
+def test_a_proof_never_overreaches() -> None:
+    from flats.designs.model import load_catalog
+    from flats.ingest.assign import pod_proof
+
+    catalog = load_catalog()
+    small = {"area_sqft": 1900.0}
+    # Under the footprint of every design the catalog holds.
+    for d in catalog:
+        assert pod_proof({"area_sqft": 0.5 * d.footprint.area_sqft}, None, d.key, catalog).check == "pod_footprint_area"
+        # The footprint itself, or a hair under it, is not proven: the outline may differ by rounding.
+        assert pod_proof({"area_sqft": d.footprint.area_sqft}, "zone_not_in_rules", d.key, catalog) is None
+        assert pod_proof({"area_sqft": 0.99 * d.footprint.area_sqft}, None, d.key, catalog) is None
+        # Narrow needs the step; a big lot dropped for another step is unproven.
+        assert pod_proof({"area_sqft": 9000.0}, "too_narrow_20ft", d.key, catalog).check == "pod_width"
+        assert pod_proof({"area_sqft": 9000.0}, "sliver_area", d.key, catalog) is None
+        assert pod_proof({"area_sqft": None}, "unknown", d.key, catalog) is None
+    assert pod_proof(small, None, "no-such-design@1", catalog) is None

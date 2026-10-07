@@ -84,7 +84,18 @@ from flats.ingest.normalize import GATES, EXCLUDED_COLUMNS
 NOT_MEASURED = "NOT_MEASURED"
 #: The screen's own word for a zone that forbids the building (``flats.score.screen``).
 USE_PROHIBITED = "USE_PROHIBITED"
-REASONS = (*GATES, NOT_MEASURED, USE_PROHIBITED, INSTITUTIONAL_USE)
+#: A lot too small or too narrow for the building, by arithmetic alone.
+POD_CANNOT_FIT = "POD_CANNOT_FIT"
+REASONS = (*GATES, NOT_MEASURED, USE_PROHIBITED, INSTITUTIONAL_USE, POD_CANNOT_FIT)
+
+#: quadfit's s3 drops a lot whose outline has no point 10 ft from every edge
+#: (``NARROW_TEST_BUFFER_FT = -10``): no 20 ft circle fits. A rectangle whose
+#: shorter side is at least this wide holds a circle of that diameter, so such
+#: a lot cannot take it. Pinned to s3's own constant by a test.
+QUADFIT_NARROW_TEST_FT = 20.0
+#: The area on record and the outline's own area differ by rounding; a lot is
+#: only called too small when it is under the footprint by more than this.
+AREA_TOLERANCE = 0.98
 
 #: ``(triage as screened, its reasons, if_signed, its reasons)`` for a lot in
 #: a zone that forbids the building; what :func:`use_gate` answers.
@@ -339,6 +350,54 @@ def institutional_row(lot: dict[str, Any], design: str, reading: dict[str, Any],
     return row
 
 
+def pod_proof(lot: dict[str, Any], step: str | None, design_key: str, catalog: Any) -> Any:
+    """The bind that proves a lot cannot hold a design, or ``None``.
+
+    Only arithmetic that holds whatever the zoning says: a lot smaller than
+    the building's footprint cannot hold it, and neither can a lot with no
+    20 ft circle in it when the building's shorter side is 20 ft or more.
+    Anything short of that proof stays unmeasured -- a guess is never red.
+    """
+    from flats.score import flags as flag_plan
+
+    try:
+        design = catalog.get(design_key)
+    except Exception:  # noqa: BLE001 -- a design the catalog cannot name has no proof
+        return None
+    fp = design.footprint
+    area = lot.get("area_sqft")
+    try:
+        area = float(area) if area is not None else None
+    except (TypeError, ValueError):
+        area = None
+    if area is not None and area == area and area < AREA_TOLERANCE * fp.area_sqft:
+        return flag_plan.Bind(
+            "pod_footprint_area",
+            round(area),
+            round(fp.area_sqft),
+            None,
+            source=f"the {design.id} footprint is {fp.width_ft:g} x {fp.depth_ft:g} ft",
+        )
+    short = min(fp.width_ft, fp.depth_ft)
+    if step == "too_narrow_20ft" and short >= QUADFIT_NARROW_TEST_FT:
+        return flag_plan.Bind(
+            "pod_width",
+            None,
+            round(short, 1),
+            None,
+            source=f"no {QUADFIT_NARROW_TEST_FT:g} ft circle fits inside the lot's outline",
+        )
+    return None
+
+
+def proof_row(lot: dict[str, Any], design: str, step: str | None, bind: Any) -> dict[str, Any]:
+    """RED as screened and as signed: no signature widens a lot."""
+    row = synthetic_row(lot, design, POD_CANNOT_FIT, step)
+    row.update({"triage": "red", "if_signed": "red"})
+    row.update(_plan([], [bind]))
+    return row
+
+
 def read_dropped(path: Path | None) -> dict[str, str]:
     """quadfit's ``s3_dropped.csv`` as TLID -> step; empty when there is none."""
     if path is None or not path.is_file():
@@ -433,6 +492,10 @@ def assign(
     by_step: Counter[str] = Counter()
     prohibited_zones: Counter[str] = Counter()
     by_category: Counter[str] = Counter()
+    by_proof: Counter[str] = Counter()
+    from flats.designs.model import load_catalog
+
+    catalog = load_catalog()
     for row in lot_rows:
         tlid = str(row["tlid"]).rstrip()
         reading = inst.get((str(row.get("county")), tlid))
@@ -455,6 +518,19 @@ def assign(
                     synthetic.append(prohibited_row(row, design, answer))
                 continue
         step = dropped.get(tlid, "unknown") if reason == NOT_MEASURED else None
+        if reason == NOT_MEASURED:
+            proofs = {d: pod_proof(row, step, d, catalog) for d in designs}
+            if any(proofs.values()):
+                by_reason[POD_CANNOT_FIT] += 1
+                by_proof[next(b.check for b in proofs.values() if b)] += 1
+                for design in designs:
+                    bind = proofs[design]
+                    synthetic.append(
+                        proof_row(row, design, step, bind)
+                        if bind
+                        else synthetic_row(row, design, reason, step)
+                    )
+                continue
         by_reason[reason] += 1
         if step is not None:
             by_step[step] += 1
@@ -498,6 +574,7 @@ def assign(
             "by_reason": dict(sorted(by_reason.items())),
             "not_measured_by_step": dict(sorted(by_step.items())),
             "prohibited_by_zone": dict(sorted(prohibited_zones.items())),
+            "pod_cannot_fit_by_proof": dict(sorted(by_proof.items())),
             "institutional_by_category": dict(sorted(by_category.items())),
             "institutional_were_scanned": inst_measured,
             "measured_not_in_lots": len(measured_not_in_lots),
@@ -527,6 +604,11 @@ def describe(meta: dict[str, Any]) -> list[str]:
         out.append(
             "  - USE_PROHIBITED, by zone (red at the use gate, no measurement needed): "
             + ", ".join(f"{k} {v:,}" for k, v in a["prohibited_by_zone"].items())
+        )
+    if a.get("pod_cannot_fit_by_proof"):
+        out.append(
+            "  - POD_CANNOT_FIT, by proof (red: under the footprint, or no 20 ft circle fits): "
+            + ", ".join(f"{k} {v:,}" for k, v in a["pod_cannot_fit_by_proof"].items())
         )
     if a.get("institutional_by_category"):
         out.append(
