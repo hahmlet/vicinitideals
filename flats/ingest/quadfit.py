@@ -3571,7 +3571,7 @@ def run(
     eased = with_sidewalk_easement(rows, sources)
     if eased:
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
-    # Costliest lots first, a memory budget on the giants, and the answers a
+    # Costliest lots first, started as free memory allows, and the answers a
     # cache already holds not screened again (FOLLOWUPS 46): the same
     # records in the same order as lot by lot in file order.
     answers = None

@@ -17,7 +17,7 @@ explicit path.
 | fire-curb | 29 | `fire-curb` / `flats/fire-curb` | Where the fire truck stands: the curb/pavement-width source, its own new stage or file, and the truck offset in `flats/fit/fire.py`. It does NOT own `s4_edges.py`; it adds a separate file. |
 | water | 42 | `flats-tigard` / `flats/net-area` | Water, wetland and flood ground before placement. Now: Portland's Constrained Sites "z" overlay (the `constrained_sites_overlay` fact, its bridge answer, the 33.418 variants in the Portland and Multnomah layers). Next: ruling each quadfit `flag` overlay (no-build carve / permit flag / ignore), the FEMA fringe, and wetland maps for the cities that have none (`Lot Analysis/quadfit/config/overlays.yaml` actions, `flats/rules/net_area.py`). |
 | utility-easement | 43 | `.claude/worktrees/bridge-cse_013p9pShugj6MCoHZD7G4bso` / `flats/utility-easement` | Steph's 2026-10-01 utility easement rule (Beaverton BDC 20.05/20.22 note 7; Oregon City if ruled): the street-yard floor the bridge fits a lot at where the code forbids building on a utility easement nobody maps, the `utility_easement` answer that floor gives, `flats/config/easements.yaml`, `flats/fit/easement.py`, and the UTILITY-EASEMENT-ASSUMED flag. In shared files only: one LotFacts field + the flag in `screen.py`, the floor in `envelope_for` and one wrapper around `_screen_lot_once` in `quadfit.py`. |
-| scan-throughput | 46 | `.claude/worktrees/bridge-cse_01Jy7PvJ5jpm4MaSvtZGhgCw` / `worktree-bridge-cse_01Jy7PvJ5jpm4MaSvtZGhgCw` | How the bridge runs, never what it answers: `flats/ingest/batch.py` (costliest lots first, the memory budget on big lots, the answer cache, `timings.parquet`). In `quadfit.py` only the one call in `run()` that hands the lots to it, and the `--cache` flag. Must move no answer. |
+| scan-throughput | 46 | `.claude/worktrees/bridge-cse_01Jy7PvJ5jpm4MaSvtZGhgCw` / `worktree-bridge-cse_01Jy7PvJ5jpm4MaSvtZGhgCw` | How the bridge runs, never what it answers: `flats/ingest/batch.py` (costliest lots first, chunks started as free memory allows, a dead worker costing one lot, the answer cache and the book of lot costs beside it, `timings.parquet`). In `quadfit.py` only the one call in `run()` that hands the lots to it, and the `--cache` flag. Must move no answer. |
 
 ## Rules
 
@@ -89,14 +89,21 @@ explicit path.
    - Each bridge run writes `timings.parquet` beside `lots.parquet`: one
      row per lot screened, with seconds and memory. Read it before
      guessing why a run was slow.
-   - Since FOLLOWUPS 46, a run whose worker the kernel kills for memory
-     does not hang. Its unfinished chunks run once more with the giants
-     one at a time; a second death ends the run with an error naming the
-     biggest unfinished lot, and the same command with `--cache` resumes.
-     A tree older than that hangs forever and keeps the lock: the parts
-     count stops climbing while the workers sit at 0% CPU (rank-colour
-     bound3, 2026-10-06, 2 h 20 min). When you watch an old tree, compare
-     the parts count against the clock and read `oom_kill` in
+   - Since FOLLOWUPS 46, a bridge run starts a chunk only while the
+     machine's free memory covers what it and the chunks already running
+     may still grow into, plus 3 GB. What each lot cost the last time
+     (seconds and peak memory) is kept in `book.parquet` in the cache
+     directory, so a repeat run orders and sizes the lots by what they
+     really took; a lot it has never seen is guessed from its area.
+   - A worker the kernel kills anyway costs one lot, not the run: the
+     lots it finished are kept, the lot it was on runs again with nothing
+     heavy beside it, and the log says `a worker died ... screening <TLID>`.
+     The same lot dying twice ends the run with an error naming it, and
+     the same command with `--cache` resumes. A tree older than that
+     hangs forever and keeps the lock: the parts count stops climbing
+     while the workers sit at 0% CPU (rank-colour bound3, 2026-10-06,
+     2 h 20 min). When you watch an old tree, compare the parts count
+     against the clock and read `oom_kill` in
      `/sys/fs/cgroup/memory.events`.
    - Never change `/root/code/vicinitideals`. It is the weekly run's
      checkout.
