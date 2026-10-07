@@ -1604,7 +1604,7 @@ read when the weekly full re-screen lands.
    114 (`/root/weekly137/status.txt`) committed with the chain so any
    session can watch. Ship after 46 lands (it changes the same runner);
    coordinate with that lane rather than fork it.
-49. [scan: YES for (b)-(f); NO for (g)] **The 2026-10-07 weekly (run 65 on snapshot 4, PROMOTED 2026-10-07
+49. [scan: YES for (b)-(f), (h), (i)] **The 2026-10-07 weekly (run 65 on snapshot 4, PROMOTED 2026-10-07
    ~14:45 UTC by Steph from the County copy page; prune-runs retired run 59,
    kept 61/63/65; VACUUM FULL of lot_results NOT run -- permission denied,
    24 GB free, owed at the next load): what the one-by-one read found.**
@@ -1658,17 +1658,22 @@ read when the weekly full re-screen lands.
    mean slope < 5% (`slope_water/slope2.py`). `Terrain.steep`. False reds.
    Water flag on overlay slivers: 48 lots < 10 sq ft, 194 < 100 sq ft
    (`water_flag.parquet`, `permits_on` fires on any touch).
-   (g) Reading aids: `head` names the first failing check, not the one that
-   made it red (Portland coverage y->r 807 = all slope); headline vs map
-   colour disagree on the planted strip and STREET_UNCONFIRMED (~160 lots,
-   unknown vs yellow); 14 STREET_UNCONFIRMED y->unknown not traced.
+   (g) DONE a7243f4f (live 2026-10-07): the lots list says why a design is
+   red (every standard missed, worst first) or yellow (the open questions
+   at the line), not `head`; the bridge report adds `dominant`. The
+   if_signed-vs-map disagreements are the legacy `if_signed` column only --
+   the app shows the map colour everywhere; the 16 STREET_UNCONFIRMED
+   y->unknown rows traced: their missed standard went away, leaving the
+   unconfirmed street alone (map: yellow, ACCESS-STREET-UNCONFIRMED).
    (h) RULED Steph 2026-10-07: "yellow with flag. 7 severity" -- the 3,209
    lots RED on steep ground read from the 10 m model only (Gresham 1,066,
    Happy Valley 886, Portland 831; `coarse_red_is_closer_look` covered pad
    grade, not the steep cut; median slope 17.5%) go YELLOW with a flag of
    severity 7, resolution measurement (the 1 m lidar where it exists).
    Handed to the slope lane with (e)/(f) (same files). Not built yet.
-   (g) taken by the weekly session 2026-10-07.
+   (i) SPLICE OWED, handed to an agent 2026-10-07: one partial re-screen
+   on run 65 carrying 84e702de, 51577bb8 (44), the slope lane's (e)/(f)/(h)
+   and (c) if landed; start once (e)/(f)/(h) are on main or by 2026-10-09.
 50. [scan: YES (greens only turn yellow; no gains to bound)] **Older no-build water areas raise no flag on a lot
    that clears them (found 2026-10-07 reading run 65 for item 42).** 47
    run-65 map greens touch a quadfit `carve` overlay that predates item 42
