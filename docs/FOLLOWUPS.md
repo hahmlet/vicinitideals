@@ -1539,10 +1539,18 @@ read when the weekly full re-screen lands.
    (2026-10-07 00:51 UTC) caught a real bug in 68 s: run as `python -m`,
    the workers were set up by `__main__`'s copy of quadfit, so every
    chunk died with KeyError 'rules'. Fixed on the lane branch, with a
-   test that runs the command itself; proof re-queued under `flock -o`
-   (log `/root/scan-throughput/proof.log`) BEHIND the early weekly
-   chain, so 46 rides the weekly AFTER 2026-10-07. Rank-colour keeps
-   base_A + scope_A.txt until it ends. (d) rented compute
+   test that runs the command itself. Proof 2 (2026-10-07 10:18-12:17
+   UTC, after the weekly): SAME cold, warm and mixed -- but the cold run
+   took 5,207 s vs the base's 3,640 s: a worker was killed for memory,
+   the 83 unfinished chunks re-ran with the giants one at a time (the
+   recovery worked, answers identical). Warm (all cached) 66 s; mixed
+   (half cached) 1,715 s. NOT MERGED: the memory guard did not stop the
+   kill -- memory does not follow acreage (0.8-acre lots peaked at
+   2.5-3.7 GB) and a worker keeps what a giant took after it finishes,
+   while the plan runs every giant first. And `/root/weekly_chain.sh`
+   switches to 16 processes the day batch.py exists. Next: recycle a
+   worker after a big lot and budget on what the workers actually hold,
+   then re-prove cold at 14 and 16 processes. (d) rented compute
    -- DECISION PENDING, Steph's action. Steph 2026-10-06 PREFERS
    CLOUDFLARE (a commercial version would run there): Cloudflare
    Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
@@ -1570,20 +1578,8 @@ read when the weekly full re-screen lands.
    or PROP_CODE 9xx: 90; Multnomah ASSESSVAL 0 with TOTALVAL > 0: 109)
    leave ~660, mostly private (vacant, MFR, COM, farm, SFR acreage;
    Clackamas's 181 unsorted). Re-measure with the first full run's
-   `timings.parquet` after 47 lands. (g) GPU -- Steph asked 2026-10-06;
-   answered not now. A lot's screen is branching geometry (GEOS polygon
-   work, per-city rule lookups, path searches); only the footprint
-   placement sweep is array-shaped, and porting it means rewriting the fit
-   search and proving it exact (tight fits turn on 6 in; GPU arithmetic
-   rounds differently). Cloudflare Containers rent no GPUs (CPU-only
-   instance types, checked 2026-10-06). Steph OWNS a GPU and would not
-   rent one; the question is which geospatial steps would run well on it.
-   Array-shaped: the placement sweep (the one that sets scan time), the
-   slope rasters and distance measures (once per data refresh, not per
-   bound). OFFERED, DECISION PENDING: profile where a lot's seconds go
-   (cProfile on a ~500-lot sample, under the lock); port a step to the GPU
-   only if it dominates and its answers prove identical. Ask where the
-   card lives (in the Proxmox host = passthrough to 137).
+   `timings.parquet` after 47 lands. (g) GPU: Steph 2026-10-07 dropped
+   it ("forget those two questions").
 47. [scan: YES] **Institutional land is RED and never scanned (Steph RULED
    2026-10-06: "hospitals, schools, municipal, parks, water treatment/heavy
    infrastructure should just be flagged red and flagged out of scans for
