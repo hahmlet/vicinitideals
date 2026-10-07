@@ -1520,17 +1520,6 @@ read when the weekly full re-screen lands.
    `git -C /root/code/vicinitideals worktree remove` /root/rank-colour/new_tree
    and base_tree; keep /root/rank-colour/{diff.out,moves_ABR.csv,probe2.py}
    until the spot-check.
-45. [scan: YES] **A tight-fit green is never graded (found 2026-10-06 by the
-   utility-easement bound).** `slope_checked` (flats/ingest/quadfit.py)
-   measures the pad grade only on a drawing that fits; a building that
-   misses its room by under 1 ft is green with FIT-TIGHT (Steph
-   2026-10-02) but its drawing fell short, so no grade is taken and a
-   5-15% pad goes unflagged -- a possible false GREEN. Every recent bound
-   on 137 has them, about 1 green in 1,000 (fire-curb_before_2: 7 of
-   4,346; utility-easement new3: Beaverton 1S121AB01000). Fix: grade the
-   short drawing's building + court too (or hold a green whose grade was
-   never tried); bound over the negative-slack greens only. No Steph
-   decision needed.
 46. [scan: YES (a proof run: every answer must come out identical)] **Scans (bounds) on 137 are the lanes' bottleneck (Steph 2026-10-06:
    ~1 h coding, then 5-6 h waiting for one scan at a time; four lanes
    queue on `heavy.lock`).** Measured: every bound re-ran its BEFORE
@@ -1640,7 +1629,7 @@ read when the weekly full re-screen lands.
    114 (`/root/weekly137/status.txt`) committed with the chain so any
    session can watch. Ship after 46 lands (it changes the same runner);
    coordinate with that lane rather than fork it.
-49. [scan: YES for (a)-(f); NO for (g)] **The 2026-10-07 weekly (run 65, candidate on snapshot 4, NOT promoted
+49. [scan: YES for (b)-(f); NO for (g)] **The 2026-10-07 weekly (run 65, candidate on snapshot 4, NOT promoted
    -- Steph promotes, warned by size): what the one-by-one read found.**
    Run 65 = bundle `data/flats/bridge/2026-10-07_weekly` on 114, assign
    `/root/assign_2026-10-07_weekly` on 137 (code 62b2259d, bridge 7 h 53 min
@@ -1659,12 +1648,17 @@ read when the weekly full re-screen lands.
    35 CLOSED (every green row carries a fire result); 34 Washington ROW
    verified (7,817 neighbour-zone changes, no new failure); 47 verified
    (`institutional_were_scanned` 0). OWED, false GREEN first:
-   (a) MAP-GREEN WITHOUT A FIRE CHECK, 78 lots / 106 rows (Portland
-   RM1/RM2/CM2/CM3): headline yellow on min density only, so `fire_checked`
-   skips the plan (not green on triage), but the map colour counts the
-   severity-2 density flag as green. Fix: fire_checked must also run on a
-   plan whose map colour is green (or colour may not be green with fire
-   unmeasured). Lists in `/root/weekly_read/gains/`.
+   (a)+(d)+item 45 DONE 81c3b77b + 84e702de (deployed 2026-10-07; land
+   at the next splice or weekly, NOT in run 65): a plan green on the map
+   is fire-checked; a tight fit is drawn fitting (half a foot short,
+   `drawing.tight`, lot page says "give or take half a foot") so its
+   route and pad grade are measured. Bound on 137 over 9,860 tight /
+   map-green lots (`/root/weekly_fixes/`, base f2aa1bf3): lots yellow->
+   green 529 (every one tight, route <= 150 ft, grade < 5%), green->
+   yellow 43 (38 Portland lots fronting an unimproved road, unnamed drive
+   or the Tilikum approach -- no truck road, correct; 5 tight fits on a
+   5-15% pad -- the item-45 false greens), yellow->red 60 (hose > 150 ft),
+   unknown->measured 657 on if_signed. Every gain and loss read.
    (b) 51577bb8 (item 44) not in run 65: 30 lots / 34 rows map-green
    (`item44_false_greens_in_weekly.csv`).
    (c) UNCONFIRMED: ~12 corner greens whose court may open onto an arterial
@@ -1675,9 +1669,6 @@ read when the weekly full re-screen lands.
    access lot line cannot be read -- record it per plan, then re-check.
    Unranked cities (Clackamas uninc 274, Sherwood 10, Hillsboro 5 gains)
    assume the side street is lowest class with no flag.
-   (d) Tight fits never get a fire route: `measure()` needs
-   `drawing["fits"]`; 1,634 rows unknown on fire alone (1,015 tight; 54
-   best-pod green -> unknown, e.g. 12E28CD01400). Cautious; fix with 45.
    (e) Steep ground blamed on the fit (`slope_checked`): `steep_blocks` is
    set only when the steep-free envelope is too small or the lot fits WITH
    steep; a lot missing by 2-6 ft without steep and 30-60 ft with it is
