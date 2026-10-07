@@ -20,6 +20,7 @@ import os
 import subprocess
 import sys
 import time
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -79,7 +80,7 @@ def test_the_book_deals_the_lots_by_what_they_took_last_time(tmp_path) -> None:
     book = _book(tmp_path, ("giant", 30.0, 2.0, 900.0), ("slow", 0.1, 300.0, 4000.0))
     chunks = batch.plan(rows, processes=1, chunk_size=1, book=book)
     assert [rows[c[0]]["TLID"] for c in chunks] == ["slow", "new", "giant"]
-    assert batch.need_gb(rows[1], book) == pytest.approx(batch.BOOK_MARGIN * 4000.0 / 1024)
+    assert batch.need_gb(rows[1], book) == pytest.approx(4000.0 / 1024)
     assert batch.need_gb(rows[2], book) == batch.need_gb(rows[2])
 
 
@@ -185,6 +186,29 @@ def test_a_solo_chunk_runs_with_no_other_heavy_chunk_beside_it() -> None:
     assert started.index(2) > started.index(1) and started.index(3) > started.index(2)
     waiting = [_chunk(3, 2.5), _chunk(4, 0.8)]
     assert batch.choose(waiting, [batch.InFlight(3.0, 3.0, True, True)], free_gb=60.0) == 1
+
+
+def test_a_chunks_hungriest_lot_runs_first_and_equal_needs_keep_their_order(tmp_path) -> None:
+    rows = [_row("a", 0.1), _row("b", 5.0), _row("c", 0.1), _row("d", 1.0)]
+    chunk = batch.make_chunk(7, [0, 1, 2, 3], rows)
+    assert [r["TLID"] for _, r in chunk.items] == ["b", "d", "a", "c"]
+    assert chunk.need == chunk.needs[0] == batch.need_gb(rows[1])
+    assert chunk.needs == sorted(chunk.needs, reverse=True)
+    # a small lot that once reached 3 GB goes before a 5-acre lot the book lacks
+    book = _book(tmp_path, ("a", 0.1, 1.0, 3072.0))
+    assert [r["TLID"] for _, r in batch.make_chunk(0, [0, 1], rows, book).items] == ["a", "b"]
+
+
+def test_a_chunk_in_flight_is_held_only_to_the_lots_it_has_left() -> None:
+    chunk = batch.Chunk(0, [(i, {}) for i in range(3)], 6.0, needs=[6.0, 1.0, 0.9])
+    assert [chunk.left(k).need for k in range(4)] == [6.0, 1.0, 0.9, 0.0]
+    assert chunk.left(0).heavy and not chunk.left(1).heavy
+    waiting = [_chunk(1, 6.0)]
+    # its worker holds 1 GB: while its 6 GB lot runs, 5 GB more of the 9 free is spoken for
+    assert batch.choose(waiting, [replace(chunk.left(0), rss=1.0)], free_gb=9.0, idle_gb=0.5) is None
+    assert batch.choose(waiting, [replace(chunk.left(1), rss=1.0)], free_gb=9.0, idle_gb=0.5) == 0
+    solo = batch.Chunk(0, [(0, {})], 4.0, solo=True, needs=[4.0])
+    assert solo.left(0).solo and solo.left(0).heavy
 
 
 def test_memory_a_chunk_in_flight_has_yet_to_reach_is_held_for_it() -> None:

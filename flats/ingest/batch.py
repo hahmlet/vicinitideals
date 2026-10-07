@@ -29,7 +29,13 @@ OOM-killed 137 on 2026-10-03 -- so a chunk starts only while the memory the
 machine has free, less what the chunks in flight may still grow into,
 covers what it may add and a reserve (:func:`choose`). Both are read live:
 the machine's ``MemAvailable`` and each worker's resident set, every
-second.
+second. A chunk's lots run the hungriest first, and a chunk in flight is
+held only to what its unfinished lots may reach. Proof 3 (2026-10-07)
+measured the price of holding more: every chunk held to its hungriest lot
+until it ended, a booked peak taken a quarter larger and an area estimate
+twice what a lot reached kept 5 or 6 of 16 workers busy through the second
+half of the run (3,220 s at 16 workers, 3,340 s at 14 with the book;
+the old pool took 3,640 s at 14, and the work was ~1,950 s a worker).
 
 A worker the kernel kills anyway costs one lot. Each worker reports the lot
 it starts and every lot it finishes, so when one dies the lots it finished
@@ -78,7 +84,7 @@ import time
 import traceback
 import uuid
 from collections.abc import Callable, Iterable, Mapping, Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -94,14 +100,17 @@ SECONDS_PER_ACRE = 10.0
 
 #: A lot's peak memory when the book does not hold it, as the worker's
 #: resident set in GB: ``NEED_BASE_GB + NEED_LOG_GB * ln(1 + acres)``.
-#: Proof 2: ~0.5 GB under 0.2 acre; 2-20 acres a median 1.7-1.9 GB, the
-#: worst 5.2 GB. A lot the estimate misses badly kills its worker once and
-#: is booked from then on.
-NEED_BASE_GB = 1.2
-NEED_LOG_GB = 0.9
-
-#: A booked peak is taken this much larger: the code may have moved since.
-BOOK_MARGIN = 1.25
+#: Fitted to about the 90th percentile of each band of proof 3's peaks,
+#: each a lot's own (2026-10-07, 9,936 lots): 0.95 GB under 0.25 acre,
+#: 0.9 at 0.25-1, 1.3 at 1-2, 2.4 at 2-5, 2.7 at 5-20, 3.1 above; the
+#: worst 5.1 GB at 3 acres and 8.6 at 37. (Proof 2's peaks were each
+#: worker's highest of the run so far, and twice as high.) A lot the
+#: estimate misses badly kills its worker once and is booked from then on.
+#: A booked peak is taken as it was: the margin for a lot that grew since
+#: is the reserve, shared, where a margin on each lot in flight is paid
+#: sixteen times over.
+NEED_BASE_GB = 0.85
+NEED_LOG_GB = 0.75
 
 #: A booked lot whose area moved by more than this share is a new lot.
 BOOK_AREA_TOLERANCE = 0.02
@@ -218,11 +227,10 @@ def cost(row: Mapping[str, Any], book: LotBook | None = None) -> float:
 
 def need_gb(row: Mapping[str, Any], book: LotBook | None = None) -> float:
     """The resident memory a worker may reach screening a lot, in GB: the
-    peak it reached the last time (with :data:`BOOK_MARGIN`), or an
-    estimate from its area."""
+    peak it reached the last time, or an estimate from its area."""
     booked = book.peak_gb(row) if book is not None else None
     if booked is not None:
-        return BOOK_MARGIN * booked
+        return booked
     return NEED_BASE_GB + NEED_LOG_GB * math.log1p(_acres(row))
 
 
@@ -271,10 +279,37 @@ class Chunk:
     #: One of its lots was on a worker that died: it starts only with no
     #: other heavy chunk in flight, and none starts beside it.
     solo: bool = False
+    #: What each lot may reach, in GB, in the order they run -- the
+    #: hungriest first (:func:`make_chunk`); empty when each is ``need``.
+    needs: list[float] = field(default_factory=list)
 
     @property
     def heavy(self) -> bool:
         return self.solo or self.need >= SMALL_GB
+
+    def left(self, finished: int) -> InFlight:
+        """The chunk on a worker that has finished ``finished`` of its lots:
+        held to what its unfinished lots may reach, as :func:`choose`
+        weighs it (with the worker's resident set still to fill in)."""
+        if finished <= 0 or not self.needs:
+            need = self.need
+        elif finished < len(self.needs):
+            need = self.needs[finished]
+        else:
+            need = 0.0
+        return InFlight(need, 0.0, self.solo or need >= SMALL_GB, self.solo)
+
+
+def make_chunk(
+    n: int, indices: Sequence[int], rows: Sequence[Mapping[str, Any]], book: LotBook | None = None,
+    solo: bool = False,
+) -> Chunk:
+    """A chunk of ``rows[indices]``, its lots set to run the hungriest
+    first (:func:`need_gb`; equal needs keep their order), so that what its
+    worker may still reach falls as the chunk goes on."""
+    needs = [need_gb(rows[i], book) for i in indices]
+    order = sorted(range(len(indices)), key=lambda k: -needs[k])
+    return Chunk(n, [(indices[k], rows[indices[k]]) for k in order], needs[order[0]], solo, [needs[k] for k in order])
 
 
 @dataclass
@@ -301,7 +336,8 @@ def choose(
 
     Chunks are taken in ``waiting`` order. One starts when ``free_gb`` --
     the memory the machine has free now -- less what the chunks in flight
-    may still grow into (each its need less what its worker holds), covers
+    may still grow into (each what its unfinished lots may reach,
+    :meth:`Chunk.left`, less what its worker holds), covers
     what it may add (its need less ``idle_gb``) and ``reserve_gb``; or when
     nothing is in flight, so a chunk bigger than the machine still runs,
     alone. A heavy chunk that cannot start yet holds back the heavy chunks
@@ -707,7 +743,7 @@ def screen_rows(
     batch.booked_lots = sum(book.holds(rows[i]) for i in todo) if book is not None else 0
 
     def chunk_of(n: int, indices: Sequence[int], solo: bool = False) -> Chunk:
-        return Chunk(n, [(i, rows[i]) for i in indices], max(need_gb(rows[i], book) for i in indices), solo)
+        return make_chunk(n, indices, rows, book, solo)
 
     planned = plan([rows[i] for i in todo], processes=processes, chunk_size=chunk_size, book=book)
     chunks = [chunk_of(n, [todo[j] for j in c]) for n, c in enumerate(planned)]
@@ -824,6 +860,7 @@ def _run_workers(
                     )
                 solo = chunk_of(next(numbers), [culprit], solo=True)
                 solo.need = max(solo.need, w.rss)
+                solo.needs = [solo.need]
                 waiting.insert(0, solo)
                 log(f"bridge: a worker died (killed for memory?) screening {lot_name(culprit)}; the {len(ended)} "
                     "lots it had finished are kept and the lot runs again alone")
@@ -867,7 +904,7 @@ def _run_workers(
                 if not idle:
                     break
                 w = min(idle, key=lambda x: x.rss)
-                running = [InFlight(x.chunk.need, x.rss, x.chunk.heavy, x.chunk.solo) for x in workers if x.chunk]
+                running = [replace(x.chunk.left(len(x.done)), rss=x.rss) for x in workers if x.chunk]
                 k = choose(waiting, running, free_gb=available_gb(), idle_gb=w.rss)
                 if k is None:
                     break
