@@ -1182,15 +1182,6 @@ read when the weekly full re-screen lands.
    every column (bound on 137: 2,000 Multnomah + 2,000 Washington lots +
    60 mixed; random-shape harness 0 cells gained). Next levers if needed:
    `has_window` in the court searches, `ground_for`.
-34. [scan: NO new code, check after the weekly run] **Washington right-of-way polygons in quadfit s4 (77c99822,
-   2026-10-02).** Washington ends its street polygons `ROW`; until
-   77c99822 the not-a-taxlot rule missed them, so FLATS screened 2,467 of
-   them as lots (gone in run 59) and quadfit s4 still treats them as
-   private neighbours: the alley ray stops at them (an alley missed = a
-   false red, never a false green) and a non-street edge facing one reads
-   its zone as the neighbour's. The next full Washington quadfit run picks
-   the rule up; diff s4's alley and neighbour-zone fields on Washington
-   lots then and read the moves.
 36. [scan: YES] **Parking tool queue (Steph 2026-10-02: "do them in the reverse order
    you listed them").** (5) partly, (4) and (3) LIVE as code f7ba7038; the
    re-screen rides the weekly full run (~10-08) -- read the moves on
@@ -1374,20 +1365,6 @@ read when the weekly full re-screen lands.
    landslide areas on NHMP Maps 16/17. Needs DOGAMI SLIDO or the city
    maps traced; today assumed absent. Steph 2026-10-05 DECLINED (agreed
    to leave it) -- do not re-offer.
-39. [scan: NO new code, check after the weekly run] **The building is drawn where the parking wants it, then the fire
-   route is measured from there (found 2026-10-04 in two bounds).** More
-   ground lets the fit seat the building deeper, the 150-ft hose route
-   (item 35, OFC 503.1.1) then fails and the lot goes RED although a
-   placement nearer the street fits. Seen: Oregon City 22E28D-03700 (court
-   bound, 164 ft), Multnomah uninc 1S1E06CD-03300 green -> red (98 -> 151
-   ft) and 1N1W36CC-00200, Hillsboro 1N230BA00800 (113 -> 207 ft) in the
-   strip bound. A false RED, never a false green. DONE 1d3c89cb
-   (Steph 2026-10-04): where a measured route is the only miss, the plan is
-   drawn at up to 24 of the fit's other angles, square first, and the
-   first within reach kept. Bound 2026-10-04: 44 answers lifted, 6 lots
-   red->green (Gladstone 3, Multnomah 1, Tualatin 1, Portland 1), 0 worse.
-   Not searched: other placements at one angle (a false red, never a
-   false green). Rides the weekly full re-screen.
 40. [scan: YES, if started] **Easements from maps (Steph 2026-10-04 asked the odds of reading an
    assessor/easement map onto the lot).** Holds: utility_easement ~28k and
    sidewalk_easement ~20k yellow answers (Beaverton 0 green: BDC 20.05/20.22
@@ -1515,11 +1492,9 @@ read when the weekly full re-screen lands.
    does not reach -- whole-corpus grep: only BDC 20.05 and 20.22 say it),
    Oregon City 2,166, vs the bound's 3,043 / 2,230. After the next weekly
    run: spot-check a few of the 34 lots on the map, then remove this item.
-   CLEANUP OWED on 137 (scan-throughput's proof released them 2026-10-07;
-   the Proxmox MCP was down): `rm -rf /root/rank-colour_bound_*`,
-   `git -C /root/code/vicinitideals worktree remove` /root/rank-colour/new_tree
-   and base_tree; keep /root/rank-colour/{diff.out,moves_ABR.csv,probe2.py}
-   until the spot-check.
+   137 cleanup DONE 2026-10-07 (bound dirs gone, both trees removed);
+   /root/rank-colour/{diff.out,moves_ABR.csv,probe2.py} kept until the
+   spot-check.
 46. [scan: YES (a proof run: every answer must come out identical)] **Scans (bounds) on 137 are the lanes' bottleneck (Steph 2026-10-06:
    ~1 h coding, then 5-6 h waiting for one scan at a time; four lanes
    queue on `heavy.lock`).** Measured: every bound re-ran its BEFORE
