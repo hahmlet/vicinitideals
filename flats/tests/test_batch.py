@@ -1,11 +1,15 @@
-"""The bridge's batch: costliest lots first, a memory budget on the giants,
-and an answer cache that never changes an answer (FOLLOWUPS 46).
+"""The bridge's batch: costliest lots first, memory read live, a dead worker
+costing one lot, and an answer cache that never changes an answer
+(FOLLOWUPS 46).
 
 What must hold: ``lots.parquet`` is the same records in the same order
-whatever order the lots ran in and whichever came from the cache; a lot is
-read from the cache only when its row and everything else its answer is
-computed from are unchanged; and the dispatcher never puts more giants in
-flight than the budget holds -- nor starves the biggest to the end.
+whatever order the lots ran in, on whichever worker, and whichever came from
+the cache; a lot is read from the cache only when its row and everything
+else its answer is computed from are unchanged; a chunk starts only while
+the machine's free memory covers what it and the chunks in flight may still
+grow into -- without starving the biggest to the end; and a worker killed
+mid-lot loses that lot alone, which then runs again with nothing heavy
+beside it.
 """
 
 from __future__ import annotations
@@ -15,7 +19,6 @@ import math
 import os
 import subprocess
 import sys
-import threading
 import time
 from pathlib import Path
 
@@ -23,7 +26,6 @@ import numpy as np
 import pandas as pd
 import pytest
 import shapely
-from concurrent.futures import ThreadPoolExecutor
 
 from flats.ingest import batch, quadfit
 
@@ -59,97 +61,148 @@ def test_equal_costs_keep_the_order_they_were_read_in() -> None:
 
 def test_a_lot_without_an_area_still_costs_its_floor() -> None:
     rows = [_row("a", 0.0), {"TLID": "b", "area_sqft": None}, {"TLID": "c", "area_sqft": float("nan")}]
-    assert {batch.cost(r) for r in rows} == {batch.COST_FLOOR_SQFT}
-    assert batch.extra_gb(rows[1]) == 0.0
+    assert {batch.cost(r) for r in rows} == {batch.SECONDS_FLOOR}
+    assert {batch.need_gb(r) for r in rows} == {batch.NEED_BASE_GB}
     assert batch.plan([], processes=4, chunk_size=10) == []
 
 
-# --- dispatch --------------------------------------------------------------------
+def _book(tmp_path: Path, *timings: tuple[str, float, float, float | None]) -> batch.LotBook:
+    book = batch.LotBook.open(tmp_path / "book.parquet")
+    book.record({"TLID": t, "acres": a, "seconds": s, "peak_mb": p} for t, a, s, p in timings)
+    return book
 
 
-class _Watch:
-    """A work function for a thread pool that records what ran beside what."""
-
-    def __init__(self, needs: list[float], seconds: float = 0.02, fail: int | None = None) -> None:
-        self.needs = needs
-        self.seconds = seconds
-        self.fail = fail
-        self.lock = threading.Lock()
-        self.running: set[int] = set()
-        self.started: list[int] = []
-        self.most_heavy = 0.0
-        self.most_running = 0
-
-    def __call__(self, i: int) -> int:
-        with self.lock:
-            self.running.add(i)
-            self.started.append(i)
-            heavy = [self.needs[j] for j in self.running if self.needs[j] >= batch.SMALL_GB]
-            if len(heavy) > 1:
-                self.most_heavy = max(self.most_heavy, sum(heavy))
-            self.most_running = max(self.most_running, len(self.running))
-        time.sleep(self.seconds)
-        with self.lock:
-            self.running.discard(i)
-        if i == self.fail:
-            raise RuntimeError("worker fell over")
-        return i * 10
+def test_the_book_deals_the_lots_by_what_they_took_last_time(tmp_path) -> None:
+    # a small lot that took five minutes goes before a giant that took two
+    # seconds; a lot the book lacks is costed from its area between them
+    rows = [_row("giant", 30.0), _row("slow", 0.1), _row("new", 5.0)]
+    book = _book(tmp_path, ("giant", 30.0, 2.0, 900.0), ("slow", 0.1, 300.0, 4000.0))
+    chunks = batch.plan(rows, processes=1, chunk_size=1, book=book)
+    assert [rows[c[0]]["TLID"] for c in chunks] == ["slow", "new", "giant"]
+    assert batch.need_gb(rows[1], book) == pytest.approx(batch.BOOK_MARGIN * 4000.0 / 1024)
+    assert batch.need_gb(rows[2], book) == batch.need_gb(rows[2])
 
 
-def _dispatch(needs, *, slots, budget, free_gb=None, watch=None):
-    watch = watch or _Watch(needs)
-    with ThreadPoolExecutor(slots) as pool:
-        got = dict(
-            batch.dispatch(pool, watch, list(range(len(needs))), needs, slots=slots, budget_gb=budget, free_gb=free_gb)
-        )
-    return got, watch
+def test_a_lot_whose_area_moved_is_not_read_from_the_book(tmp_path) -> None:
+    book = _book(tmp_path, ("a", 1.0, 50.0, 3000.0))
+    assert book.seconds(_row("a", 1.01)) == 50.0
+    assert book.seconds(_row("a", 1.2)) is None and batch.cost(_row("a", 1.2), book) == batch.cost(_row("a", 1.2))
+    assert book.peak_gb(_row("a", 1.2)) is None
 
 
-def test_every_payload_runs_once_and_no_more_than_the_slots_at_once() -> None:
-    needs = [0.1] * 30
-    got, watch = _dispatch(needs, slots=4, budget=10.0)
-    assert got == {i: i * 10 for i in range(30)}
-    assert watch.most_running <= 4
+def test_the_book_keeps_the_newest_cost_of_each_lot_across_runs(tmp_path) -> None:
+    book = _book(tmp_path, ("a", 1.0, 50.0, 3000.0), ("b", 0.2, 1.0, None))
+    book.save()
+    again = batch.LotBook.open(tmp_path / "book.parquet")
+    assert again.seconds(_row("a", 1.0)) == 50.0 and again.peak_gb(_row("b", 0.2)) is None
+    again.record([{"TLID": "a", "acres": 1.0, "seconds": 20.0, "peak_mb": 1000.0}])
+    again.save()
+    last = batch.LotBook.open(tmp_path / "book.parquet")
+    assert last.seconds(_row("a", 1.0)) == 20.0 and last.seconds(_row("b", 0.2)) == 1.0
+    assert not list(tmp_path.glob(".*.tmp"))
 
 
-def test_giants_in_flight_together_stay_inside_the_budget() -> None:
-    needs = [6.0, 5.0, 4.0, 3.0, 2.0, *[0.1] * 12]
-    _, watch = _dispatch(needs, slots=5, budget=8.0)
-    assert watch.most_heavy <= 8.0
+# --- which chunk starts next -------------------------------------------------------
 
 
-def test_a_giant_above_the_whole_budget_still_runs_alone() -> None:
-    needs = [20.0, 3.0, 0.1, 0.1]
-    got, watch = _dispatch(needs, slots=3, budget=8.0)
-    assert sorted(got) == [0, 1, 2, 3]
-    assert watch.most_heavy <= 8.0
+def _chunk(n: int, need: float, solo: bool = False) -> batch.Chunk:
+    return batch.Chunk(n, [(n, {})], need, solo)
 
 
-def test_a_giant_that_must_wait_holds_back_the_smaller_giants_behind_it() -> None:
-    # 3 starts; 7 does not fit beside it and waits; 2 would fit beside 3
-    # but must not jump the queue, or 7 is starved to the end of the run.
-    needs = [3.0, 7.0, 2.0]
-    _, watch = _dispatch(needs, slots=3, budget=8.0)
-    assert watch.started == [0, 1, 2]
+def _simulate(needs, *, slots, total, solo=(), ticks=None, idle=0.5, grows=1):
+    """Run chunks through :func:`batch.choose` on a machine of ``total`` GB.
+
+    An idle worker holds ``idle`` GB; a busy one holds ``idle`` until
+    ``grows`` ticks after its chunk started, then the chunk's whole need --
+    so a chunk is admitted before it has grown, the case the growth held
+    for chunks in flight is for. A chunk runs ``ticks[i]`` ticks (2).
+    Returns the start order, the most workers busy at once, and the most
+    memory the busy chunks' needs and the idle workers came to while more
+    than one chunk ran.
+    """
+    ticks = ticks or [2] * len(needs)
+    waiting = [_chunk(i, need, i in solo) for i, need in enumerate(needs)]
+    busy: dict[int, tuple[batch.Chunk, int]] = {}
+    started: list[int] = []
+    most_busy, most_memory, t = 0, 0.0, 0
+    while waiting or busy:
+        for slot, (c, start) in list(busy.items()):
+            if t >= start + ticks[c.n]:
+                del busy[slot]
+        held = {slot: (c.need if t >= start + grows else idle) for slot, (c, start) in busy.items()}
+        while waiting and len(busy) < slots:
+            free = total - sum(held.values()) - idle * (slots - len(busy))
+            running = [batch.InFlight(c.need, held[s], c.heavy, c.solo) for s, (c, _) in busy.items()]
+            k = batch.choose(waiting, running, free_gb=free, idle_gb=idle)
+            if k is None:
+                break
+            c = waiting.pop(k)
+            slot = next(s for s in range(slots) if s not in busy)
+            busy[slot] = (c, t)
+            held[slot] = idle
+            started.append(c.n)
+        most_busy = max(most_busy, len(busy))
+        if len(busy) > 1:
+            most_memory = max(most_memory, sum(c.need for c, _ in busy.values()) + idle * (slots - len(busy)))
+        t += 1
+    return started, most_busy, most_memory
 
 
-def test_one_slot_runs_the_giants_first_then_the_small_lots() -> None:
-    needs = [5.0, 0.1, 2.0, 0.2]
-    _, watch = _dispatch(needs, slots=1, budget=100.0)
-    assert watch.started == [0, 2, 1, 3]
+def test_every_chunk_starts_once_and_no_more_than_the_workers_at_once() -> None:
+    started, most_busy, _ = _simulate([0.8] * 30, slots=4, total=64.0)
+    assert sorted(started) == list(range(30)) and most_busy == 4
 
 
-def test_a_giant_waits_while_the_machine_lacks_its_memory_but_small_lots_go_on() -> None:
-    needs = [2.0, 2.0, *[0.1] * 6]
-    _, watch = _dispatch(needs, slots=4, budget=100.0, free_gb=lambda: 4.0)
-    assert watch.most_heavy == 0.0
-    assert watch.started[-1] == 1  # threads may start in any order; the giant goes last
+def test_chunks_in_flight_stay_inside_the_machine_even_before_they_grow() -> None:
+    needs = [6.0, 5.0, 4.0, 3.0, 2.5, *[0.9] * 12]
+    for grows in (0, 1, 3):
+        _, _, most_memory = _simulate(needs, slots=5, total=14.0, grows=grows)
+        assert most_memory <= 14.0 - batch.RESERVE_GB
 
 
-def test_a_worker_error_is_raised() -> None:
-    needs = [0.1] * 5
-    with pytest.raises(RuntimeError, match="fell over"):
-        _dispatch(needs, slots=2, budget=1.0, watch=_Watch(needs, fail=3))
+def test_a_chunk_bigger_than_the_machine_still_runs_alone() -> None:
+    started, _, most_memory = _simulate([20.0, 3.0, 0.8, 0.8], slots=3, total=12.0)
+    assert sorted(started) == [0, 1, 2, 3] and most_memory <= 12.0 - batch.RESERVE_GB
+
+
+def test_a_heavy_chunk_that_must_wait_holds_back_the_heavy_chunks_behind_it() -> None:
+    # 0 starts; 1 does not fit beside it and waits; 2 would fit beside 0 but
+    # must not jump the queue, or 1 is starved to the end of the run
+    started, _, _ = _simulate([3.0, 7.0, 2.5], slots=3, total=12.0)
+    assert started == [0, 1, 2]
+
+
+def test_light_chunks_pass_a_heavy_chunk_that_waits_for_memory() -> None:
+    started, _, _ = _simulate([6.0, 6.0, 0.8, 0.8, 0.8], slots=3, total=12.0, ticks=[4, 4, 1, 1, 1])
+    assert started.index(1) > started.index(2)
+
+
+def test_a_solo_chunk_runs_with_no_other_heavy_chunk_beside_it() -> None:
+    needs = [2.5, 2.5, 3.0, 2.5, 0.8, 0.8, 0.8]
+    ticks = [2, 2, 3, 2, 1, 1, 1]
+    started, _, _ = _simulate(needs, slots=4, total=64.0, solo={2}, ticks=ticks)
+    # 0 and 1 start, 2 waits for them and holds back 3; light ones go on
+    assert started.index(2) > started.index(1) and started.index(3) > started.index(2)
+    waiting = [_chunk(3, 2.5), _chunk(4, 0.8)]
+    assert batch.choose(waiting, [batch.InFlight(3.0, 3.0, True, True)], free_gb=60.0) == 1
+
+
+def test_memory_a_chunk_in_flight_has_yet_to_reach_is_held_for_it() -> None:
+    running = [batch.InFlight(need=10.0, rss=1.0, heavy=True)]
+    # free 20, less the 9 GB the running chunk may still take, less the reserve: 8 GB of room
+    assert batch.choose([_chunk(0, 8.5)], running, free_gb=20.0, idle_gb=0.5) == 0
+    assert batch.choose([_chunk(0, 9.0)], running, free_gb=20.0, idle_gb=0.5) is None
+
+
+def test_one_worker_takes_the_chunks_in_their_order() -> None:
+    started, _, _ = _simulate([5.0, 0.8, 2.5, 0.9], slots=1, total=64.0)
+    assert started == [0, 1, 2, 3]
+
+
+def test_unknown_free_memory_leaves_only_the_workers_as_the_limit() -> None:
+    running = [batch.InFlight(50.0, 1.0, True)]
+    assert batch.choose([_chunk(0, 40.0)], running, free_gb=None) == 0
+    assert batch.choose([], running, free_gb=None) is None
 
 
 # --- the cache keys ---------------------------------------------------------------
@@ -374,19 +427,63 @@ def test_prune_drops_the_caches_no_run_has_used(tmp_path) -> None:
     assert new.exists() and not old.exists()
 
 
+
+
+def test_the_book_beside_the_cache_outlives_a_change_of_code(tmp_path, fake_screen) -> None:
+    rows = _rows()
+    cache = _cache(tmp_path)
+    _, _, first = _screen(rows, tmp_path, "first", cache=cache)
+    assert first.booked_lots == 0
+    book = batch.LotBook.open(tmp_path / "cache" / "book.parquet")
+    assert all(book.holds(r) for r in rows)
+    other = batch.AnswerCache(tmp_path / "cache", {"format": 1, "code": "abd", "step_deg": 1.0})
+    _, _, again = _screen(rows, tmp_path, "again", cache=other)
+    assert again.cached_lots == 0 and again.booked_lots == len(rows)
+    assert again.meta()["booked_lots"] == len(rows) and again.meta()["worker_deaths"] == []
+    stale = time.time() - 30 * 86_400
+    os.utime(cache.where, (stale, stale))
+    batch.prune(tmp_path / "cache", keep_days=14)
+    assert (tmp_path / "cache" / "book.parquet").exists()
+
+
+@pytest.mark.skipif(not sys.platform.startswith("linux"), reason="a process's peak is read from /proc")
+def test_a_lots_peak_is_its_own_not_the_worst_its_worker_saw(tmp_path, monkeypatch) -> None:
+    if not batch._reset_peak():
+        pytest.skip("this kernel will not reset a process's peak")
+
+    def work_chunk(rows):
+        if rows[0]["TLID"] == "big":
+            block = b"\x01" * (300 * 2**20)
+            assert block[-1] == 1
+            del block
+        return _fake_records(rows[0])
+
+    monkeypatch.setattr(quadfit, "_work_chunk", work_chunk)
+    _, timings, _ = _screen([_row("small", 0.1), _row("big", 5.0)], tmp_path, "run", chunk_size=1)
+    peak = dict(zip(timings["TLID"], timings["peak_mb"]))
+    assert list(timings["TLID"]) == ["big", "small"]
+    assert peak["big"] >= peak["small"] + 200
+
+
 # --- a worker killed mid-run --------------------------------------------------------
 
 
-def _dying_init(flag: str, deaths: int, tlid: str) -> None:
-    """Worker setup in a real process: the fake screen, except that the
-    worker screening ``tlid`` dies outright -- as the kernel's OOM killer
-    ends one -- the first ``deaths`` times (counted in ``flag``)."""
+def _dying_init(where: str, deaths: int, tlid: str, error: str = "") -> None:
+    """Worker setup in a real process: the fake screen, noting each lot it
+    starts in ``where/screened``, except that the worker screening ``tlid``
+    dies outright -- as the kernel's OOM killer ends one -- the first
+    ``deaths`` times (counted in ``where/died``), or raises ``error``."""
 
     def work_chunk(rows):
         out = []
         for row in rows:
+            fd = os.open(os.path.join(where, "screened"), os.O_WRONLY | os.O_CREAT | os.O_APPEND)
+            os.write(fd, f"{row['TLID']}\n".encode("ascii"))
+            os.close(fd)
             if row["TLID"] == tlid:
-                path = Path(flag)
+                if error:
+                    raise ValueError(error)
+                path = Path(where) / "died"
                 died = int(path.read_text()) if path.exists() else 0
                 if died < deaths:
                     path.write_text(str(died + 1))
@@ -397,40 +494,77 @@ def _dying_init(flag: str, deaths: int, tlid: str) -> None:
     quadfit._work_chunk = work_chunk
 
 
-def _screen_in_processes(rows, tmp_path: Path, deaths: int, tlid: str = "T02", cache=None):
-    parts = tmp_path / "parts"
+def _screen_in_processes(rows, where: Path, deaths: int, tlid: str = "T05", cache=None, error: str = ""):
+    parts = where / "parts"
     parts.mkdir(parents=True)
     said: list[str] = []
     got = batch.screen_rows(
-        rows, parts, processes=2, chunk_size=2, init=_dying_init, initargs=(str(tmp_path / "died"), deaths, tlid),
+        rows, parts, processes=2, chunk_size=2, init=_dying_init, initargs=(str(where), deaths, tlid, error),
         cache=cache, log=said.append,
     )
     return got, said
 
 
+def _screened(where: Path) -> list[str]:
+    return (where / "screened").read_text(encoding="ascii").split()
+
+
+def _all_records(rows) -> pd.DataFrame:
+    return pd.DataFrame.from_records([r for row in rows for r in _fake_records(row)])
+
+
 @pytest.mark.timeout(180)
-def test_a_worker_killed_mid_run_is_noticed_and_its_chunks_run_again(tmp_path) -> None:
+def test_a_worker_killed_mid_lot_costs_that_lot_alone(tmp_path) -> None:
+    # T05 is the second lot of its chunk, after T01: T01 is kept, not
+    # screened again, and T05 runs again on a fresh worker
     rows = _rows()
     (frame, timings, done), said = _screen_in_processes(rows, tmp_path, deaths=1)
     assert (tmp_path / "died").read_text() == "1"
-    assert done.rerun_chunks >= 1
-    assert any("a worker died" in line for line in said)
-    _same(frame, pd.DataFrame.from_records([r for row in rows for r in _fake_records(row)]))
-    assert set(timings["TLID"]) == {r["TLID"] for r in rows}
+    screened = _screened(tmp_path)
+    assert screened.count("T05") == 2
+    assert all(screened.count(r["TLID"]) == 1 for r in rows if r["TLID"] != "T05")
+    assert done.deaths == ["T05"] and done.meta()["worker_deaths"] == ["T05"]
+    assert any("a worker died" in line and "T05" in line for line in said)
+    _same(frame, _all_records(rows))
+    assert sorted(timings["TLID"]) == sorted(r["TLID"] for r in rows)
 
 
 @pytest.mark.timeout(180)
-def test_a_worker_that_dies_again_stops_the_run_and_a_relaunch_resumes(tmp_path) -> None:
-    # The smallest lot runs last, and a chunk starts only when another has
-    # come back, so every chunk but the one beside it is kept before the
-    # death: there is always something to resume from.
+def test_a_lot_that_kills_its_worker_again_stops_the_run_and_a_relaunch_resumes(tmp_path) -> None:
+    # The smallest lot runs last, so the chunks before it are kept when it
+    # stops the run: there is always something to resume from.
     rows = _rows()
     cache = _cache(tmp_path)
-    with pytest.raises(RuntimeError, match="died again.*acres.*re-launch"):
-        _screen_in_processes(rows, tmp_path, deaths=2, tlid="T00", cache=cache)
-    (frame, _, done), _ = _screen_in_processes(rows, tmp_path / "again", deaths=0, cache=cache)
+    with pytest.raises(RuntimeError, match="T00 at 0.1 acres killed its worker again.*re-launch"):
+        _screen_in_processes(rows, tmp_path / "first", deaths=2, tlid="T00", cache=cache)
+    (frame, _, done), _ = _screen_in_processes(rows, tmp_path / "again", deaths=0, tlid="T00", cache=cache)
     assert done.cached_lots >= 1 and done.computed_lots >= 1
-    _same(frame, pd.DataFrame.from_records([r for row in rows for r in _fake_records(row)]))
+    _same(frame, _all_records(rows))
+
+
+@pytest.mark.timeout(180)
+def test_a_lot_that_fails_stops_the_run_naming_it(tmp_path) -> None:
+    with pytest.raises(RuntimeError, match=r"lot T06 at 3\.0 acres failed in a worker(.|\n)*bad geometry"):
+        _screen_in_processes(_rows(), tmp_path, deaths=0, tlid="T06", error="bad geometry")
+
+
+def _note_oom_score(where: str) -> None:
+    Path(where, f"oom_score_adj.{os.getpid()}").write_text(Path("/proc/self/oom_score_adj").read_text())
+    _dying_init(where, 0, "")
+
+
+@pytest.mark.timeout(180)
+@pytest.mark.skipif(not sys.platform.startswith("linux"), reason="oom_score_adj is Linux's")
+def test_workers_offer_themselves_to_the_oom_killer_before_the_parent(tmp_path) -> None:
+    parts = tmp_path / "parts"
+    parts.mkdir()
+    batch.screen_rows(
+        _rows(), parts, processes=2, chunk_size=2, init=_note_oom_score, initargs=(str(tmp_path),),
+        log=lambda *a: None,
+    )
+    noted = [p.read_text().strip() for p in tmp_path.glob("oom_score_adj.*")]
+    assert noted and set(noted) == {"1000"}
+    assert Path("/proc/self/oom_score_adj").read_text().strip() != "1000"
 
 
 # --- the command as LXC 137 runs it --------------------------------------------------
