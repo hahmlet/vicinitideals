@@ -3322,6 +3322,19 @@ def _counts(series: Any, top: int = 25) -> str:
     return "\n".join(["| value | rows |", "|---|---:|", *rows])
 
 
+def _default_dem(s4: Path) -> Path:
+    """The elevation models for a stage tree: its own ``raw`` when it holds
+    1 m tiles, else the July ``quadfit/raw`` beside it.
+
+    The July tree stops short of Washington County (no 1 m tile, and the
+    10 m model ends at about -122.95), so a Washington lot screened off it
+    is never graded; the stage tree is staged with every county's tiles
+    (``--dem-from``) and is preferred.
+    """
+    own = s4.parent / "raw"
+    return own if any((own / "dem").glob("*.tif")) else s4.parents[1] / "quadfit" / "raw"
+
+
 def _is_reading(path: Path) -> bool:
     from flats.ingest.institutional import INSTITUTIONAL
 
@@ -3405,8 +3418,9 @@ def run(
     ``s4`` and a run without one is refused -- measured from the lot line,
     the route would come out SHORTER than the hose's (FOLLOWUPS 28).
     ``dem`` is quadfit's raw directory holding the elevation models
-    (:func:`terrain_at`); it defaults to ``quadfit/raw`` beside the stage
-    directory, and a run without 1 m tiles there is refused -- without them
+    (:func:`terrain_at`); it defaults to the stage directory's own ``raw``
+    (staged with the county's tiles), else ``quadfit/raw`` beside it, and a
+    run without 1 m tiles there is refused -- without them
     no lot is graded and Steph's slope ruling silently goes unchecked
     (FOLLOWUPS 38). ``curbs`` is a snapshot directory holding the published
     curb lines and pavement widths (:mod:`flats.geom.curbs`); it defaults to
@@ -3433,7 +3447,7 @@ def run(
     curbs = curbs if curbs is not None else sources
     if not roads.exists():
         raise FileNotFoundError(f"no street centrelines for the fire route: {roads}")
-    dem = dem if dem is not None else s4.parents[1] / "quadfit" / "raw"
+    dem = dem if dem is not None else _default_dem(s4)
     if not any((dem / "dem").glob("*.tif")):
         raise FileNotFoundError(f"no 1 m elevation tiles for the slope: {dem / 'dem'}")
     if lacking := curbs_missing(curbs):

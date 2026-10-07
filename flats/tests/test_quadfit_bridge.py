@@ -1638,3 +1638,18 @@ def test_a_planted_strip_off_the_lot_lines_keeps_the_court_off_the_rear_line() -
     )
     assert unread.source == "quadfit"
     assert unread.ground.area == pytest.approx(40 * 90)
+
+
+def test_the_elevation_defaults_to_the_stage_trees_own_tiles(tmp_path):
+    """A stage tree staged with every county's tiles is read before the July
+    raw, which holds no Washington 1 m tile (a Washington lot would go
+    ungraded)."""
+    from flats.ingest.quadfit import _default_dem
+
+    s4 = tmp_path / "quadfit_2026-10-01_wash" / "s4_lots.parquet"
+    july = tmp_path / "quadfit" / "raw"
+    assert _default_dem(s4) == july
+    (s4.parent / "raw" / "dem").mkdir(parents=True)
+    assert _default_dem(s4) == july  # an empty dem/ is not a tile set
+    (s4.parent / "raw" / "dem" / "tile.tif").write_bytes(b"")
+    assert _default_dem(s4) == s4.parent / "raw"
