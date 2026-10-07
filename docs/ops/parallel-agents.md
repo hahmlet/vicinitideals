@@ -85,7 +85,11 @@ explicit path.
      run of the same commit nearly free, and a run re-launched after a
      crash picks up where it stopped. Any change under `flats/` (tests
      aside) misses for every lot: the cache saves repeats, not first runs.
-     Folders unused for 14 days are deleted by the next run.
+     Folders unused for 14 days are deleted by the next run. Since
+     FOLLOWUPS 48 the bridge keeps a cache without being asked, in
+     `bridge_cache` beside `--out` (`/root/bridge_cache` for a run in
+     `/root`); keep passing the flag, because a base tree from before then
+     does not. `--no-cache` turns it off, to time a cold run.
    - Each bridge run writes `timings.parquet` beside `lots.parquet`: one
      row per lot screened, with seconds and memory. Read it before
      guessing why a run was slow.

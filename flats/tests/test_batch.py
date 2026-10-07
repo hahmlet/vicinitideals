@@ -15,6 +15,7 @@ beside it.
 from __future__ import annotations
 
 import io
+import json
 import math
 import os
 import subprocess
@@ -620,14 +621,25 @@ def test_the_command_screens_in_workers_set_up_by_the_module_that_screens(tmp_pa
                 "osm_land_use", "rlis_orca"):
         (snapshot / f"{key}.geojson").write_text('{"type": "FeatureCollection", "features": []}', encoding="utf-8")
     out = tmp_path / "bridge"
-    got = subprocess.run(
-        [sys.executable, "-m", "flats.ingest.quadfit", "--s4", str(s4), "--s5o", str(s5o),
-         "--results", str(tmp_path / "lots_results.csv"), "--out", str(out), "--processes", "2",
-         "--chunk-size", "1", "--step-deg", "30", "--dem", str(tmp_path / "raw"), "--curbs", str(snapshot),
-         "--institutional", str(snapshot), "--cache", str(tmp_path / "cache")],
-        cwd=Path(__file__).resolve().parents[2], capture_output=True, text=True, encoding="utf-8",
-        env={**os.environ, "PYTHONIOENCODING": "utf-8"},
-    )
-    assert got.returncode == 0, got.stderr[-3000:]
-    frame = pd.read_parquet(out / "lots.parquet")
-    assert set(frame["TLID"]) == {"1S2E20AA  -15100", "1S2E20AA  -15200"}
+
+    def bridge(*more: str) -> dict:
+        got = subprocess.run(
+            [sys.executable, "-m", "flats.ingest.quadfit", "--s4", str(s4), "--s5o", str(s5o),
+             "--results", str(tmp_path / "lots_results.csv"), "--out", str(out), "--processes", "2",
+             "--chunk-size", "1", "--step-deg", "30", "--dem", str(tmp_path / "raw"), "--curbs", str(snapshot),
+             "--institutional", str(snapshot), *more],
+            cwd=Path(__file__).resolve().parents[2], capture_output=True, text=True, encoding="utf-8",
+            env={**os.environ, "PYTHONIOENCODING": "utf-8"},
+        )
+        assert got.returncode == 0, got.stderr[-3000:]
+        frame = pd.read_parquet(out / "lots.parquet")
+        assert set(frame["TLID"]) == {"1S2E20AA  -15100", "1S2E20AA  -15200"}
+        return json.loads((out / "meta.json").read_text(encoding="utf-8"))["batch"]
+
+    # The command keeps its answers beside --out unasked, so launching it
+    # again resumes (FOLLOWUPS 48); --no-cache screens afresh and keeps none.
+    first = bridge()
+    assert first["computed_lots"] == 2 and Path(first["cache"]).parent == tmp_path / "bridge_cache"
+    assert bridge()["cached_lots"] == 2
+    afresh = bridge("--no-cache")
+    assert afresh["cache"] is None and afresh["computed_lots"] == 2

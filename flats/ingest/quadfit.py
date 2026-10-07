@@ -3562,7 +3562,9 @@ def run(
 
     Parts are written as they finish (``parts/NNNNN.parquet``) and
     concatenated at the end, so a run that dies at hour three keeps its
-    first three hours. Re-running with the same ``out`` starts over.
+    first three hours. Re-running with the same ``out`` starts over, but
+    for the lots ``cache`` holds -- and the command keeps one by default,
+    so a re-launch resumes (FOLLOWUPS 48).
     ``sources`` is a snapshot directory (``data/flats/sources/<date>``) whose
     corridor maps answer the corridor facts; without it they stay unasked.
     ``transit`` is the distance file :mod:`flats.ingest.transit` wrote for
@@ -3753,9 +3755,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument(
         "--cache",
         type=Path,
-        help="answer cache dir: unchanged lots are read from it, screened lots kept in it",
+        help="answer cache dir: unchanged lots are read from it, screened lots kept in it, so a "
+        "re-launch resumes (default: bridge_cache beside --out)",
     )
+    ap.add_argument("--no-cache", action="store_true", help="screen every lot afresh and keep no answers")
     args = ap.parse_args(argv)
+    # A run that dies resumes when it is launched again, by default: every
+    # chunk it finished is in the cache (FOLLOWUPS 48, Steph 2026-10-07:
+    # "Don't want to lose time to avoidable problems"). Beside --out, runs
+    # in one directory share it -- on 137 that is /root/bridge_cache.
+    cache = None if args.no_cache else args.cache or args.out.resolve().parent / "bridge_cache"
     run(
         args.out,
         s4=args.s4,
@@ -3776,7 +3785,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         dem=args.dem,
         curbs=args.curbs,
         institutional=args.institutional,
-        cache=args.cache,
+        cache=cache,
     )
     return 0
 
