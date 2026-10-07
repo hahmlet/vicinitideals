@@ -1515,6 +1515,11 @@ read when the weekly full re-screen lands.
    does not reach -- whole-corpus grep: only BDC 20.05 and 20.22 say it),
    Oregon City 2,166, vs the bound's 3,043 / 2,230. After the next weekly
    run: spot-check a few of the 34 lots on the map, then remove this item.
+   CLEANUP OWED on 137 (scan-throughput's proof released them 2026-10-07;
+   the Proxmox MCP was down): `rm -rf /root/rank-colour_bound_*`,
+   `git -C /root/code/vicinitideals worktree remove` /root/rank-colour/new_tree
+   and base_tree; keep /root/rank-colour/{diff.out,moves_ABR.csv,probe2.py}
+   until the spot-check.
 45. [scan: YES] **A tight-fit green is never graded (found 2026-10-06 by the
    utility-easement bound).** `slope_checked` (flats/ingest/quadfit.py)
    measures the pad grade only on a drawing that fits; a building that
