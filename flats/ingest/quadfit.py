@@ -1913,6 +1913,14 @@ def _same_numbers(a: ZoneResolution, b: ZoneResolution) -> bool:
     )
 
 
+#: The flag a plan carries where no hose route was found for its drawing.
+#: Not one of the facts :func:`_bounded` answers: a combination that finds no
+#: route asks the question the bounded plan is asked anyway, on its own
+#: drawing, before it may be GREEN (a route found past the limit is a bind,
+#: and still ends the search).
+FIRE_ROUTE_UNFOUND = "MEASURE-FIRE-ROUTE"
+
+
 def _bounded(
     s: Screened,
     lot: QuadfitLot,
@@ -2008,7 +2016,9 @@ def _bounded(
             room=False,
         )
         if alt.signed.binds or any(
-            (f.code, f.key) not in known and flag_plan.severity_of(f, reg) >= line
+            (f.code, f.key) not in known
+            and f.code != FIRE_ROUTE_UNFOUND
+            and flag_plan.severity_of(f, reg) >= line
             for f in alt.signed.flags
         ):
             return s
