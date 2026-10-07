@@ -1692,3 +1692,32 @@ read when the weekly full re-screen lands.
    unless it copies `ovl_<carve>` into `ovl_<carve>_site` first (recipe
    `/root/tw/prep.py`). 49(f) slivers: left yellow (codes reach 25-100 ft
    past the drawn line).
+51. [scan: YES (a bound on Tigard + Cornelius lots; lands at the splice or the next weekly)] **Tigard and
+   Cornelius are encoded but never screened (found 2026-10-07 counting run
+   65's yellows).** Both layers merged 2026-10-01 (eligible: true, item 17),
+   but `flats/config/pipeline.yaml` `jurisdictions:` never lists them, so
+   `pipeline.enabled()` is false and `normalize.gate_for` gates every lot
+   JURISDICTION_OFF: run 65 best pod yellow 18,516 Tigard + 4,182 Cornelius
+   lots, all JURISDICTION-OFF (the comment there still says "not encoded
+   yet"). Work: switch both on; check each lot finds its zone (Metro
+   regional zoning by JURIS_CITY; Cornelius R-10 by hand still owed, item
+   17); bound a sample on 137 old vs new and read gains one by one; report
+   the colour counts to Steph before shipping. Lands via 49(i)'s splice if
+   ready before it starts, else the next weekly.
+52. [scan: YES (a bound on the dropped lots)] **11,427 lots passed every gate and were dropped
+   before a fit (run 65, best pod yellow on LOT-NOT-MEASURED / NOT_MEASURED)
+   + 2,203 GEOM-UNREADABLE.** Biggest: Washington unincorporated 2,363,
+   Portland 2,207, Beaverton 1,394, Hillsboro 1,370, Gresham 1,000, Happy
+   Valley 710. Work: bucket the drop reasons (which quadfit step, which
+   error), fix the ones that are ours, measure the rest; bound + read the
+   gains; never a guessed GREEN. Pure measurement, no rulings expected.
+53. [scan: YES if any zone admits the pod] **Four Clackamas cities outside Metro are unencoded:
+   Canby 6,175, Sandy 4,538, Molalla 3,188, Estacada 2,865 lots (run 65,
+   JURISDICTION-NOT-ENCODED, yellow).** First question per city: does any
+   zone permit 4 attached townhomes (HB 2001 only requires duplexes in
+   10k-25k cities outside Metro -- same test that kept North Plains, Banks,
+   Gaston out, item 17(D))? A city with no such zone: record the refusal
+   and switch it off with the reason. A city with one: store the code,
+   encode the admitting zones (rulebook, provenance, blind re-read), map
+   the zoning layer, bound. Forest Grove (7,547) stays blocked on HUMAN_TODO
+   28 (Steph's PDFs).
