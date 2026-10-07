@@ -80,10 +80,13 @@ explicit path.
    - Washington TLID lists: drop right-of-way polygons first
      (`grep -v ' ROW$'`). They are roads, not lots, and one chunk of them
      ran over an hour at 7 GB.
-6. **The weekly full re-screen (~2026-10-08) belongs to no lane.** No lane
-   starts a full re-screen, a partial re-screen, or a promotion. A lane
-   that wants its change in that run must be merged and deployed by the
-   end of 2026-10-07.
+6. **The weekly full re-screen belongs to no lane.** No lane starts a full
+   re-screen, a partial re-screen, or a promotion. The 2026-10-07 run was
+   moved EARLY (Steph 2026-10-06): it takes heavy.lock once rank-colour's
+   bound and scan-throughput's proof are done, on origin/main at that
+   moment (`/root/weekly_chain.sh`, log `/root/weekly_chain.log`, sources
+   `data/flats/sources/2026-10-07`). A change merged after it starts rides
+   the next weekly run.
 7. **Deploy through the lock.** Run
    `ssh -o BatchMode=yes root@192.168.1.28 "flock /tmp/vicinitideals-deploy.lock bash /root/deploy-vicinitideals.sh"`,
    then read the smoke output. A deploy ships all of merged `main`, other
