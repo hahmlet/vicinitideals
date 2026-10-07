@@ -1660,10 +1660,13 @@ read when the weekly full re-screen lands.
    made it red (Portland coverage y->r 807 = all slope); headline vs map
    colour disagree on the planted strip and STREET_UNCONFIRMED (~160 lots,
    unknown vs yellow); 14 STREET_UNCONFIRMED y->unknown not traced.
-   RULING ASKED 2026-10-07: 3,209 lots are RED on steep ground read from the
-   10 m model only (Gresham 1,066, Happy Valley 886, Portland 831) although
-   38 said "coarse 10 m never RED" (`coarse_red_is_closer_look` covers pad
-   grade, not the steep cut); median slope 17.5%, real hills.
+   (h) RULED Steph 2026-10-07: "yellow with flag. 7 severity" -- the 3,209
+   lots RED on steep ground read from the 10 m model only (Gresham 1,066,
+   Happy Valley 886, Portland 831; `coarse_red_is_closer_look` covered pad
+   grade, not the steep cut; median slope 17.5%) go YELLOW with a flag of
+   severity 7, resolution measurement (the 1 m lidar where it exists).
+   Handed to the slope lane with (e)/(f) (same files). Not built yet.
+   (g) taken by the weekly session 2026-10-07.
 50. [scan: YES (greens only turn yellow; no gains to bound)] **Older no-build water areas raise no flag on a lot
    that clears them (found 2026-10-07 reading run 65 for item 42).** 47
    run-65 map greens touch a quadfit `carve` overlay that predates item 42
