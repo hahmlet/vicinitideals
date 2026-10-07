@@ -133,7 +133,7 @@
                 <span class="badge {{ r.badge }}">{{ r.colour }}</span>
                 {% if r.tight %}<span class="badge badge-orange" title="Fits or misses by 6 inches or less. The survey decides.">tight fit</span>{% endif %}
                 {% if r.stalls_seated is not none %}<span class="muted">{{ r.stalls_seated }} cars</span>{% endif %}
-                {% if r.head %}<span class="muted">· {{ r.head }}</span>{% endif %}
+                {% if r.why %}<span class="muted why">· {{ r.why }}</span>{% endif %}
               </div>
             {% endfor %}
           </td>

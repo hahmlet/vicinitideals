@@ -1141,6 +1141,37 @@ async def test_a_ruled_run_is_counted_by_the_colour_rule(client: AsyncClient, se
     assert "2833 SE 71ST AVE" in red.text.split('id="lot-table"', 1)[1]
 
 
+async def test_the_list_says_why_a_design_is_red_or_yellow_not_its_tightest_check(
+    client: AsyncClient, session: AsyncSession
+):
+    # FOLLOWUPS 49(g), run 65: the list named the tightest failing check
+    # beside the colour, so 807 Portland lots red on slope read "coverage".
+    await _login(client, session)
+    run = await _seed(session)
+    unruled = (await client.get("/flats/lots")).text.split('id="lot-table"', 1)[1]
+    assert "· coverage_pct" in unruled, "before the colour rule the tightest check is all a row has"
+
+    await _rule(session, run)
+    row = (await session.execute(
+        select(FlatsLotResult).join(FlatsLot, FlatsLot.id == FlatsLotResult.lot_id)
+        .where(FlatsLotResult.run_id == run.id, FlatsLot.tlid.startswith("1S2E08BA"),
+               FlatsLotResult.design_key == DESIGNS[0])
+    )).scalar_one()
+    coverage = {"check": "coverage_pct", "observed": 50.4, "threshold": 50.0, "shortfall": 0.4}
+    steep = {"check": "steep_ground", "observed": 30.0, "threshold": 60.0, "shortfall": 30.0}
+    row.checks = {**row.checks, "head": "coverage_pct", "binds": [coverage, steep]}
+    await session.commit()
+
+    table = (await client.get("/flats/lots")).text.split('id="lot-table"', 1)[1]
+    a = table.split("1S2E08BA  -09500", 1)[1].split("</tr>", 1)[0]
+    assert "misses steep ground, coverage pct" in a, "worst miss first, by share of its limit"
+    assert "· coverage_pct" not in a
+    b = table.split("1N1E29DD  -05600", 1)[1].split("</tr>", 1)[0]
+    assert "open: fact corner lot" in b
+    assert "through lot" not in b, "a question the lot clears at its worst reading holds nothing"
+    assert "· fit_ft" not in b and "· coverage_pct" not in b
+
+
 async def test_the_lot_page_says_what_a_red_lot_misses_and_the_path_it_does_not_take(
     client: AsyncClient, session: AsyncSession
 ):

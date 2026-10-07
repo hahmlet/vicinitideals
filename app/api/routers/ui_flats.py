@@ -2925,6 +2925,34 @@ def _units(check: str) -> str:
     return ""
 
 
+def _why(colour: str, ruled: bool, binds: list[dict[str, Any]], flags: list[dict[str, Any]], head: Any) -> str | None:
+    """What holds this design at its colour, short enough for the lots list
+    (FOLLOWUPS 49(g)): on a RED, every standard it misses, worst first (by
+    the share of the limit it misses by); on a YELLOW, the open question
+    that holds it there, most severe first. ``head`` -- the tightest failing
+    check, what is nearly solved -- is not why a lot is red: a lot missing
+    its coverage by a hair and its ground by half the lot read "coverage"
+    (run 65: 807 Portland lots red on slope). Before the colour rule, the
+    head is all a row has."""
+    if not ruled:
+        return str(head) if head else None
+    if colour == "red" and binds:
+        def share(b: dict[str, Any]) -> float:
+            try:
+                return abs(float(b["shortfall"])) / max(abs(float(b["threshold"])), 1e-9)
+            except (KeyError, TypeError, ValueError):
+                return 0.0
+
+        names = list(dict.fromkeys(b["check"].replace("_", " ") for b in sorted(binds, key=share, reverse=True)))
+        return "misses " + ", ".join(names)
+    if colour == "yellow":
+        held = [f for f in flags if f["counts"]]
+        if held:
+            names = list(dict.fromkeys(f["code"].replace("-", " ").lower() for f in held))
+            return "open: " + ", ".join(names[:2]) + (f" (+{len(names) - 2})" if len(names) > 2 else "")
+    return None
+
+
 def _bind_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
     """The standards this design misses, each with the way round it the code
     offers -- logged, never counted on (Steph 2026-10-02: no variances)."""
@@ -3130,6 +3158,7 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
     # missing; the older bridge rows predate the flag and were all screened.
     screened = checks.get("screened", True)
     fit = (checks.get("fit") or {}) if screened else {}
+    binds, flags = _bind_rows(checks), _flag_rows(checks)
     return {
         "design": row.design_key,
         "screened": screened,
@@ -3143,10 +3172,11 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         # The colour rule's own reasons (FOLLOWUPS 37): what this design
         # misses and what is still open about the site.
         "ruled": ruled,
-        "binds": _bind_rows(checks),
-        "flags": _flag_rows(checks),
+        "binds": binds,
+        "flags": flags,
         "colour_today": _colour_today(checks),
         "head": checks.get("head"),
+        "why": _why(colour, ruled, binds, flags, checks.get("head")),
         "failing": list(checks.get("failing") or []),
         "unchecked": list(checks.get("unchecked") or []),
         "binding": list(row.binding or []),

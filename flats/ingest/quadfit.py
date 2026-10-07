@@ -3314,6 +3314,13 @@ def compare(frame: Any, results: Path = LOTS_RESULTS) -> str:
     lines.append(f"### FLATS RED where quadfit is green: {len(red_where_green):,} lots\n")
     lines.append("Tightest failing check (head):\n")
     lines.append(_counts(red_where_green["head"].fillna("(none)")) + "\n")
+    # The head is what is nearly solved, not why the lot is red: a lot a
+    # hair over its coverage and half a lot short on flat ground reads
+    # "coverage" (FOLLOWUPS 49(g), run 65). The check missed by the largest
+    # share of its limit says why.
+    if "dominant" in red_where_green:
+        lines.append("Missed by most (dominant) -- why it is red:\n")
+        lines.append(_counts(red_where_green["dominant"].fillna("(none)")) + "\n")
     green_where_red = m[(m["if_signed"] == "green") & (m["quadfit"] == "red")]
     lines.append(f"### FLATS GREEN where quadfit is red: {len(green_where_red):,} lots\n")
     lines.append("quadfit's binding constraint:\n")

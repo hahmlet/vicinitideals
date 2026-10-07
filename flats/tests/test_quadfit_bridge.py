@@ -762,6 +762,9 @@ def test_the_batch_writes_the_rows_the_meta_and_the_comparison(tmp_path: Path) -
     assert log and log[-1].startswith("bridge: wrote")
     # The comparison can be re-run from the parquet alone.
     assert compare(frame, results).startswith("# FLATS screen from the county map")
+    # Why a lot is red is the check it misses by most, not the tightest one
+    # (FOLLOWUPS 49(g)).
+    assert "Missed by most (dominant) -- why it is red" in summary
     # And against a results file from before quadfit reported its stalls:
     # the colours still compare, the band table just has nothing in it.
     older = tmp_path / "older_results.csv"
