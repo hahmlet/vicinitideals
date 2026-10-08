@@ -1792,20 +1792,66 @@ read when the weekly full re-screen lands.
    Steph), R-3 townhouse-only reading, MMU master-plan refusal, D-zone
    conditions, PUE width, geotechnical analysis at 33% slope, Airport/Historic/
    Wetlands overlays, minimum density on the land-division path.
-54. [scan: NO for (a)-(b) (they only queue text for Steph to sign); (c) is finance work] **Claude API credit ($100/month,
-   Steph 2026-10-07 asked where it helps) -- options offered, none picked.**
-   Budget scale: a few thousand page-sized reads a month on a mid-tier model,
-   a few hundred whole chapters on the top one; anything per lot (~400k lots,
-   ~$4k a pass) is ~40x over, so the screen itself stays on 137. (a) Code-change
-   reader: when a re-fetch makes a signed value `source_changed`
-   (flats/provenance/staleness.py) the zone drops to REVIEW until a person
-   re-reads; Claude compares old vs new text per stale value and queues
-   "unchanged" / "now X ft, sentence here" for Steph to re-sign. (b) Second
-   reader beside the signing queue: independent read of each draft number
-   against its printed page (Canby, Sandy, Estacada are the next unsigned
-   cities, item 53). (c) Finance side, only if Steph names it:
-   app/tasks/email_ingest.py and app/tasks/proforma_parse.py run on local
-   Ollama (qwen2.5:7b, aborts when the model lands on CPU) -- a Claude
-   fallback or swap. Before any of it: confirm the credit covers an API key
-   the app can use, set a hard monthly cap in the Anthropic console, and make
-   the feature switch itself off when the credit or key is gone.
+54. [scan: NO (warn-only: changes no rule and no answer; the fixes it leads to land at the next weekly)] **Code-change
+   reader on the Claude API credit ($100/month). Steph 2026-10-07 picked this one and
+   DECLINED the other two offered (a second reader beside signing; moving the finance-side
+   email/pro forma reading off local Ollama).** Why it matters: nothing re-checks the codes
+   today -- `fetch --all --check` (flats/provenance/fetch.py, the corpus watch) exists but no
+   schedule runs it -- and nothing is signed into the repo yet (no
+   flats/config/verifications.jsonl; the rule_signatures inbox has never been drained), so
+   the map is as-if-signed and an amended number keeps answering from the old words until
+   somebody happens to re-read. Plan, Steph to approve before building:
+   (a) Cadence: WEEKLY celery beat task on 114, built like `flats_probe_task` (warn-only,
+   writes rows, changes no rule): fetch every declared document (~680) into memory, compare
+   with the store in the image, store nothing. Weekly because detection costs no credit;
+   daily only invites the 429s Municode already throws (pace per host; a 429 = "not checked
+   this week"; 3 misses in a row = warn). Early Monday Pacific so findings wait at the start
+   of the week; nothing runs on 137.
+   (b) Proactive poll, reactive AI: the sweep polls on schedule, the model runs only on
+   what it finds. Free deterministic pass first: a value whose every cited line survives
+   byte-for-byte (`repoint.survivors`) or word-for-word (`loose_line_map`, a republish) is
+   "moved, words unchanged" -- no call. Only values whose own lines changed are sent, one
+   request per changed document (old slice + new slice + all its affected values). One city
+   changing >20 documents in a sweep is a reformat, not an amendment: no calls for that city
+   until Steph says. Later, not v1: DLCD's notices of proposed amendments (cities notify
+   DLCD before the first hearing -- confirm the feed is public and readable) as early
+   warning that never changes an answer.
+   (c) Code checks the model before anyone sees it: structured output per value =
+   unchanged / changed (new number) / removed / cannot_tell + the new sentence VERBATIM.
+   The quote must exist in the fetched text and the new number must appear in it, else
+   cannot_tell. Stricter/looser is computed from the field's min/max sense, never asked.
+   The model never signs and never edits YAML.
+   (d) Interim map (Steph's call; recommended): stricter or cannot_tell -> greens whose
+   stored room on that check (check margins 7dc34722) is less than the change -- every
+   green in the zone for cannot_tell -- get a "city changed this rule, being re-read" flag
+   that shows yellow until ruled; looser -> no colour change (a missed lot, not a false
+   promise); unchanged -> nothing. Display-only if the flag tables can carry a colour
+   without a re-screen (check); otherwise it rides the next weekly.
+   (e) Human review: a "Code changes" queue beside the signing pages -- old sentence, new
+   sentence with the change marked, our number, the model's reading, greens at risk;
+   buttons Still right / Changed to X (prefills the note the rejected-verdict bundle hands
+   an agent) / Needs a closer read. Order: stricter with greens at risk, cannot_tell,
+   looser, unchanged (bulk confirm). One Resend email only on weeks with new findings, plus
+   a Lots-page banner like the county probe's. After Steph rules, an agent runs
+   `fetch --refresh --repoint`, edits the encoding, the next weekly moves the answers.
+   Hole to close in the same change: an undrained inbox signature hashes the quote ADDRESS,
+   not the words, so an amendment at the same line numbers leaves it standing -- the watch
+   must mark those rows too.
+   (f) Credit: expected spend a few dollars a month (roughly 10-30 cents per changed
+   document on claude-opus-5 at medium effort through the Batches API -- half price,
+   results within a day). Ledger row per call; soft cap $75/month for this feature, hard cap
+   = the credit, set in the Anthropic console. Cap reached, credit gone or the API refuses:
+   detection keeps running, findings still queue with plain old/new text marked "not
+   pre-read", ordered by greens at risk; pre-reads resume on the 1st, oldest first; one
+   email. NO fallback to local Ollama -- a missing note is safe, a wrong "unchanged" is not.
+   (g) Model by test, not assumption. Steph asked whether comparing against our encoding
+   lets model and effort drop. The comparison is narrower than encoding, but our errors
+   live in READING the text (wrong column, short headers, footnote markers, orphaned
+   numerals), which the structured side does not help, and the costly miss is one-sided
+   (false "unchanged" = possible false GREEN); at this volume the saving is a dollar or two.
+   Answer key: real past refreshes in git (the Gresham 4.1400 renumber etc.) + planted edits
+   on real cited passages (one number changed, a table column swapped, a pure reformat,
+   untouched controls). Run claude-opus-5 and claude-sonnet-5 at low/medium; ship the
+   cheapest with zero missed planted changes and zero unverifiable quotes. Test costs a few
+   dollars. Before any of it: confirm the credit covers an API key the app can use; key in
+   VM 114 .env only.
