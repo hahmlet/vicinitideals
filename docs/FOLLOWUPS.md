@@ -1792,3 +1792,20 @@ read when the weekly full re-screen lands.
    Steph), R-3 townhouse-only reading, MMU master-plan refusal, D-zone
    conditions, PUE width, geotechnical analysis at 33% slope, Airport/Historic/
    Wetlands overlays, minimum density on the land-division path.
+54. [scan: NO for (a)-(b) (they only queue text for Steph to sign); (c) is finance work] **Claude API credit ($100/month,
+   Steph 2026-10-07 asked where it helps) -- options offered, none picked.**
+   Budget scale: a few thousand page-sized reads a month on a mid-tier model,
+   a few hundred whole chapters on the top one; anything per lot (~400k lots,
+   ~$4k a pass) is ~40x over, so the screen itself stays on 137. (a) Code-change
+   reader: when a re-fetch makes a signed value `source_changed`
+   (flats/provenance/staleness.py) the zone drops to REVIEW until a person
+   re-reads; Claude compares old vs new text per stale value and queues
+   "unchanged" / "now X ft, sentence here" for Steph to re-sign. (b) Second
+   reader beside the signing queue: independent read of each draft number
+   against its printed page (Canby, Sandy, Estacada are the next unsigned
+   cities, item 53). (c) Finance side, only if Steph names it:
+   app/tasks/email_ingest.py and app/tasks/proforma_parse.py run on local
+   Ollama (qwen2.5:7b, aborts when the model lands on CPU) -- a Claude
+   fallback or swap. Before any of it: confirm the credit covers an API key
+   the app can use, set a hard monthly cap in the Anthropic console, and make
+   the feature switch itself off when the credit or key is gone.
