@@ -1797,26 +1797,24 @@ read when the weekly full re-screen lands.
    DECLINED the other two offered (a second reader beside signing; moving the finance-side
    email/pro forma reading off local Ollama).** Why it matters: nothing re-checks the codes
    today -- `fetch --all --check` (flats/provenance/fetch.py, the corpus watch) exists but no
-   schedule runs it -- and nothing is signed into the repo yet (no
-   flats/config/verifications.jsonl; the rule_signatures inbox has never been drained), so
-   the map is as-if-signed and an amended number keeps answering from the old words until
-   somebody happens to re-read. Plan, Steph to approve before building:
+   schedule runs it -- and Steph has done NO sign-offs (told 2026-10-07), so the map is
+   as-if-signed and an amended number keeps answering from the old words until somebody
+   happens to re-read. Plan, Steph to approve before building:
    (a) Cadence: WEEKLY celery beat task on 114, built like `flats_probe_task` (warn-only,
    writes rows, changes no rule): fetch every declared document (~680) into memory, compare
    with the store in the image, store nothing. Weekly because detection costs no credit;
    daily only invites the 429s Municode already throws (pace per host; a 429 = "not checked
-   this week"; 3 misses in a row = warn). Early Monday Pacific so findings wait at the start
-   of the week; nothing runs on 137.
-   (b) Proactive poll, reactive AI: the sweep polls on schedule, the model runs only on
-   what it finds. Free deterministic pass first: a value whose every cited line survives
-   byte-for-byte (`repoint.survivors`) or word-for-word (`loose_line_map`, a republish) is
-   "moved, words unchanged" -- no call. Only values whose own lines changed are sent, one
-   request per changed document (old slice + new slice + all its affected values). One city
-   changing >20 documents in a sweep is a reformat, not an amendment: no calls for that city
-   until Steph says. Later, not v1: DLCD's notices of proposed amendments (cities notify
-   DLCD before the first hearing -- confirm the feed is public and readable) as early
-   warning that never changes an answer.
-   (c) Code checks the model before anyone sees it: structured output per value =
+   this week"; 3 misses in a row = warn). Early Monday Pacific; nothing runs on 137.
+   (b) Proactive poll, reactive AI: the model runs only on what the sweep finds. Free
+   deterministic pass first: a value whose every cited line survives byte-for-byte
+   (`repoint.survivors`) or word-for-word (`loose_line_map`, a republish) is "moved, words
+   unchanged" -- no call. Only values whose own lines changed are sent, one request per
+   changed document (old slice + new slice + all its affected values). One city changing
+   >20 documents in a sweep is a reformat, not an amendment: no calls for that city until
+   Steph says. Later, not v1: DLCD's notices of proposed amendments (cities notify DLCD
+   before the first hearing -- confirm the feed is public and readable) as early warning
+   that never changes an answer.
+   (c) Code checks the model before anything is queued: structured output per value =
    unchanged / changed (new number) / removed / cannot_tell + the new sentence VERBATIM.
    The quote must exist in the fetched text and the new number must appear in it, else
    cannot_tell. Stricter/looser is computed from the field's min/max sense, never asked.
@@ -1824,26 +1822,31 @@ read when the weekly full re-screen lands.
    (d) Interim map (Steph's call; recommended): stricter or cannot_tell -> greens whose
    stored room on that check (check margins 7dc34722) is less than the change -- every
    green in the zone for cannot_tell -- get a "city changed this rule, being re-read" flag
-   that shows yellow until ruled; looser -> no colour change (a missed lot, not a false
+   that shows yellow until fixed; looser -> no colour change (a missed lot, not a false
    promise); unchanged -> nothing. Display-only if the flag tables can carry a colour
    without a re-screen (check); otherwise it rides the next weekly.
-   (e) Human review: a "Code changes" queue beside the signing pages -- old sentence, new
-   sentence with the change marked, our number, the model's reading, greens at risk;
-   buttons Still right / Changed to X (prefills the note the rejected-verdict bundle hands
-   an agent) / Needs a closer read. Order: stricter with greens at risk, cannot_tell,
-   looser, unchanged (bulk confirm). One Resend email only on weeks with new findings, plus
-   a Lots-page banner like the county probe's. After Steph rules, an agent runs
-   `fetch --refresh --repoint`, edits the encoding, the next weekly moves the answers.
-   Hole to close in the same change: an undrained inbox signature hashes the quote ADDRESS,
-   not the words, so an amendment at the same line numbers leaves it standing -- the watch
-   must mark those rows too.
-   (f) Credit: expected spend a few dollars a month (roughly 10-30 cents per changed
-   document on claude-opus-5 at medium effort through the Batches API -- half price,
-   results within a day). Ledger row per call; soft cap $75/month for this feature, hard cap
-   = the credit, set in the Anthropic console. Cap reached, credit gone or the API refuses:
-   detection keeps running, findings still queue with plain old/new text marked "not
-   pre-read", ordered by greens at risk; pre-reads resume on the 1st, oldest first; one
-   email. NO fallback to local Ollama -- a missing note is safe, a wrong "unchanged" is not.
+   (e) Who acts: with no sign-offs every number is a draft, so a changed number is
+   ENCODING work, not review: findings land on an agent work list ("do the next thing"
+   picks it up), the agent re-reads, runs `fetch --refresh --repoint`, fixes the encoding,
+   the next weekly moves the answers. Only a change to a number Steph HAS signed goes to a
+   Steph queue (old/new sentence with the change marked, our number, the model's reading,
+   greens at risk; Still right / Changed to X / Needs a closer read; stricter-with-greens
+   first). Resend email only on weeks with findings, plus a Lots-page banner like the
+   county probe's. A backlog is safe by construction: (d) keeps at-risk greens yellow while
+   it waits, so waiting costs missed lots, never a false GREEN. For when signing starts:
+   an inbox signature hashes the quote ADDRESS, not the words, so an amendment at the same
+   line numbers leaves it standing -- the watch must mark those rows too.
+   (f) Credit: the watch has FIRST CLAIM, always. Expected a few dollars a month (~10-15
+   cents per changed document, claude-opus-5 at medium effort through the Batches API, half
+   price, results within 24 h). Even every document we hold changing in one month roughly
+   fits one month's credit, so the watch alone cannot carry a backlog from month to month.
+   Background work (item 55) only spends above a sliding floor: $40 to day 21, $20 until 3
+   days before reset, $5 in the last 3 days (last batch submitted 2 days before reset).
+   Ledger row per call; hard cap = the credit, set in the Anthropic console. If the watch
+   still runs dry (a mass republish): findings queue "not pre-read", count as cannot_tell
+   for (d), and are read first after reset, before any background work. No Ollama
+   fallback -- a missing note is safe, a wrong "unchanged" is not. Assumed: unused credit
+   does not roll over -- confirm, and confirm the reset day (calendar month or billing day).
    (g) Model by test, not assumption. Steph asked whether comparing against our encoding
    lets model and effort drop. The comparison is narrower than encoding, but our errors
    live in READING the text (wrong column, short headers, footnote markers, orphaned
@@ -1855,3 +1858,27 @@ read when the weekly full re-screen lands.
    cheapest with zero missed planted changes and zero unverifiable quotes. Test costs a few
    dollars. Before any of it: confirm the credit covers an API key the app can use; key in
    VM 114 .env only.
+55. [scan: NO (nothing it writes reaches the rules or the map)] **Expansion scouting on the
+   credit item 54 leaves (Steph 2026-10-07: underspend is likelier than overspend -- use the
+   month's remainder on proactive expansion that runs in the background and waits until we
+   choose to encode a place).** All 28 encoded layers are tri-county; the market is all of
+   Oregon (~240 cities, 36 counties). Per place, cheapest step first: (1) find the code --
+   `flats.provenance.discover` (free, codifier URL shapes); only on a miss, the model with
+   web search; (2) the model reads the table of contents and picks the chapters holding
+   the zones, use table, dimensional standards, parking and definitions (the step
+   discover.py says still needs a reader); (3) gate + headline read: which zones allow 4
+   attached townhouses outright / with review / not at all; min lot area, width, depth;
+   setbacks; height; coverage; parking; density; obvious blockers (design review, master
+   plan, overlays) -- every number with a verbatim quote the app checks exists, as in
+   54(c); (4) where the county publishes its lot and zoning maps (outside tri-county there
+   is no RLIS; getting that data is its own task). Output: one "scouted, not encoded" card
+   per place in the app DB (not the repo; nothing loads it as a rule) and a ranked list
+   (zones that admit the pod x residential land x distance -- Steph sets the weights).
+   Order: nearest first (Columbia, Yamhill, Marion, Polk ...), counties' unincorporated
+   codes after the cities. Proposed model claude-sonnet-5 (Steph to approve): a rough cut
+   where a mistake costs a wrong priority, never an answer, because encoding re-reads
+   everything and uses the card's numbers only as a cross-check. Rough cost well under a
+   few dollars a place, so the whole state fits in a few months of leftover. Scouted
+   places join 54's free weekly check; a change since scouting marks the card "re-scout
+   before encoding". Once the state is scouted the leftover goes to re-scouting changed
+   cards, then a reading list + doubts list (the item-53 kind) for the top-ranked places.
