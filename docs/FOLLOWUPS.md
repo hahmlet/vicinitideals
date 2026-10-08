@@ -1718,10 +1718,25 @@ read when the weekly full re-screen lands.
    JURISDICTION_OFF: run 65 best pod yellow 18,516 Tigard + 4,182 Cornelius
    lots, all JURISDICTION-OFF (the comment there still says "not encoded
    yet"). Work: switch both on; check each lot finds its zone (Metro
-   regional zoning by JURIS_CITY; Cornelius R-10 by hand still owed, item
-   17); bound a sample on 137 old vs new and read gains one by one; report
-   the colour counts to Steph before shipping. Lands via 49(i)'s splice if
-   ready before it starts, else the next weekly.
+   regional zoning by JURIS_CITY); bound a sample on 137 old vs new and read
+   gains one by one; report the colour counts to Steph before shipping.
+   STATE 2026-10-07 (branch bound/f51-tigard-cornelius c54f5a7d + R-10 work,
+   NOT on main, NOT deployed): both cities switched on in the code and tested;
+   quadfit rules ported. Zone check done: of 22,996 lots 11 find no usable
+   zone -- 4 NO_ZONE (outside Metro's polygons), 3 map labels that are a
+   hair-width sliver (Tigard R-15 x2, Cornelius GI; the stored codes hold
+   neither, so they stay gated), 4 Washington County codes (3 on the west
+   side stay unencodable, item 17). Cornelius R-10: tax lot 1N335CD01200 is
+   now read R-10 by hand (`lot_zones` in cornelius.yaml, new `LotZone`
+   mechanism in rules model/loader/normalize, tested); that lot is NOT in
+   the queued bridge (it was normalized before the entry), so it is screened
+   at the next re-screen, not in this bound. Bridge /root/f51/bridge.sh is
+   queued on heavy.lock behind the slope bound (starts ~midnight PDT);
+   reading script ready at /root/f51/gains/read.py (per-city colours, every
+   green block, yellow/red samples). TO THE 49(i) SPLICE AGENT: this bound
+   will NOT be ready before your splice starts and nothing of it is on main,
+   so do not wait for it and do not include it. Tigard + Cornelius ride the
+   next weekly (or a later splice once the gains are read and shipped).
 52. [scan: lands at 49(i)'s splice or the next weekly; no re-screen, no promotion]
    **Lots dropped before a fit (run 65): 11,427 yellow NOT_MEASURED +
    2,203 yellow GEOM-UNREADABLE.** Bucketed 2026-10-07: 6,951 had no 20 ft
