@@ -1497,30 +1497,20 @@ read when the weekly full re-screen lands.
    spot-check.
 46. [scan: YES (a proof run: every answer must come out identical)] **Scans (bounds) on 137 are the lanes' bottleneck (Steph 2026-10-06:
    ~1 h coding, then 5-6 h waiting for one scan at a time; four lanes
-   queue on `heavy.lock`).** Measured: every bound re-ran its BEFORE
-   code each iteration, and one 9 GB lot held the lock 22 min with 15 of
-   16 threads idle (tail = 33% of rank-colour new_A). Steph said yes to
-   (a)-(c): `flats/ingest/batch.py` (lane scan-throughput) -- costliest
-   lots first under a memory budget, `--cache` answer cache, sample
-   while iterating (parallel-agents rule 12). Ships once the proof on 137
-   (`/root/scan-throughput/proof.sh`: cold/warm/mixed vs
-   `/root/rank-colour_bound_base_A`) reads identical. Proof 1
-   (2026-10-07 00:51 UTC) caught a real bug in 68 s: run as `python -m`,
-   the workers were set up by `__main__`'s copy of quadfit, so every
-   chunk died with KeyError 'rules'. Fixed on the lane branch, with a
-   test that runs the command itself. Proof 2 (2026-10-07 10:18-12:17
-   UTC, after the weekly): SAME cold, warm and mixed -- but the cold run
-   took 5,207 s vs the base's 3,640 s: a worker was killed for memory,
-   the 83 unfinished chunks re-ran with the giants one at a time (the
-   recovery worked, answers identical). Warm (all cached) 66 s; mixed
-   (half cached) 1,715 s. Fixed since on the lane branch: chunks start
-   on live free memory with a 3 GB reserve, a chunk runs its hungriest
-   lot first and holds memory only for the lots it has left, a dead
-   worker costs one lot. Proof 3 (2026-10-07): SAME at cold 16 procs
-   3,220 s and booked 14 procs 3,340 s vs base 3,640 s. Proof 4 (the
-   last memory fix, every run compared) QUEUED on heavy.lock
-   (`/root/scan-throughput/proof4.sh`); NOT MERGED until it and item 48's
-   proof read SAME -- 46 and 48 ship together. (d) rented compute
+   queue on `heavy.lock`).** (a)-(c) SHIPPED 24a61695 2026-10-08
+   (deployed, smoke passed): `flats/ingest/batch.py` -- costliest lots
+   first; chunks start on live free memory with a 3 GB reserve; each
+   chunk runs its hungriest lot first and, in flight, holds memory only
+   for the lots it has left; a dead worker costs one lot (retried alone)
+   instead of hanging the Pool; `--cache` answer cache; sample while
+   iterating (parallel-agents rule 12). Proof 4 on 137 (2026-10-08,
+   scope_A 9,936 lots vs `/root/rank-colour_bound_base_A`, base 3,640 s):
+   SAME on every run -- cold 16 procs 3,227 s, booked 16 procs 3,057 s,
+   booked 14 procs 3,074 s, warm 66 s; no worker died; least
+   MemAvailable 3.6 GB. 137 is now CPU-bound (lot-seconds 37k -> 43k
+   with 16 busy), so the simulator's ~2,000 s was not reachable and more
+   than 14 processes buys nothing. Proofs 1-3 caught a `python -m`
+   worker-setup bug and an OOM kill, both fixed. LEFT: (d) rented compute
    -- DECISION PENDING, Steph's action. Steph 2026-10-06 PREFERS
    CLOUDFLARE (a commercial version would run there): Cloudflare
    Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
@@ -1580,8 +1570,8 @@ read when the weekly full re-screen lands.
    2026-10-07: "we're moving quick and stacking a lot of changes between
    runs. Don't want to lose time to avoidable problems").** Asked during
    the early weekly (2026-10-07, 12 processes, 225k/414k lots at 4 h).
-   (a)-(f) BUILT 2026-10-07 on the scan-throughput lane branch with item
-   46 (NOT on main; ships with 46 once both proofs on 137 read SAME):
+   (a)-(f) BUILT 2026-10-07 on the scan-throughput lane branch (NOT on
+   main; ships once proof 5 on 137 reads SAME; item 46 shipped 24a61695):
    (a) the bridge command keeps an answer cache by default (`bridge_cache`
    beside `--out`; `--no-cache` opts out). `parts/` is still cleared on a
    re-launch, but each part goes into the cache the moment it is written,
@@ -1603,8 +1593,8 @@ read when the weekly full re-screen lands.
    (10-07 had 71 and screened clean). Tried on 137's real copies: 10-01
    refused for its 15 missing keys + institutional + curbs; 10-07 passes.
    (f) status every 2 min to `--status-to` (`/root/weekly137/status.txt`).
-   Local suite green; 3 Linux-only tests run in CI. PROOF QUEUED behind
-   46's: `/root/scan-throughput/proof5.sh` -- the chain drives a scope_A
+   Local suite green; 3 Linux-only tests run in CI. PROOF QUEUED on
+   heavy.lock: `/root/scan-throughput/proof5.sh` -- the chain drives a scope_A
    bridge, the bridge's parent is SIGKILLed (retry at 8 processes,
    resumes from the cache), then its group SIGSTOPped (stall kill, try 3
    finishes); lots must be SAME as an uninterrupted run. Once merged the
