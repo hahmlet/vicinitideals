@@ -1642,17 +1642,18 @@ read when the weekly full re-screen lands.
    access lot line cannot be read -- record it per plan, then re-check.
    Unranked cities (Clackamas uninc 274, Sherwood 10, Hillsboro 5 gains)
    assume the side street is lowest class with no flag.
-   (e) Steep ground blamed on the fit (`slope_checked`): `steep_blocks` is
-   set only when the steep-free envelope is too small or the lot fits WITH
-   steep; a lot missing by 2-6 ft without steep and 30-60 ft with it is
-   handed to `fit_ft` + "variance". ~1,500 lots (replayed: 1S1E16DD-02700,
-   1S1E17AC-01300, 1S1E21BD-11900, 1N135DA06700). Headline yellow + wrong
-   fix; colour already red.
-   (f) Flat lots red from a neighbour's bank / raised road: the 5 m window
-   widens a 4-5 ft bank on a lot line into a 400-1,200 sq ft steep strip
-   (1S2E07BB-22400: grade 2.5%, 1,183 sq ft "steep"); 58 steep reds with
-   mean slope < 5% (`slope_water/slope2.py`). `Terrain.steep`. False reds.
-   Water flag on overlay slivers: 48 lots < 10 sq ft, 194 < 100 sq ft
+   (e)+(f)+(h) DONE 2dacbe1c (deployed 2026-10-08; lands at the (i) splice,
+   NOT in run 65): steep is read on the lot's own ground (a neighbour's bank
+   or raised road no longer spills in; a bank's height is walked across the
+   lot's own steep cells), coarse-10 m-only steep is YELLOW + SLOPE-STEEP-
+   COARSE sev 7, steep takes the blame when it is most of a fit miss. Bound
+   on 137 (/root/sf, base 1dcd278c vs final, 93,908 lots): 2,525 moves --
+   red->green 537, red->yellow 861 + 838 (h), yellow->green 84; green->red
+   29, green->yellow 122 (pad now on 5-15% ground: SLOPE-GRADE), yellow->red
+   54; control 0. Every class read; no false GREEN. ~40 new reds sit on a
+   4-4.5 ft bank: Steph 2026-10-08 KEPT the 4 ft line. 3 losses are the
+   placer landing elsewhere on a bigger envelope (open_space_shape / fire).
+   OPEN, not the slope lane: water flag on overlay slivers, 48 lots < 10 sq ft, 194 < 100 sq ft
    (`water_flag.parquet`, `permits_on` fires on any touch).
    (g) DONE a7243f4f (live 2026-10-07): the lots list says why a design is
    red (every standard missed, worst first) or yellow (the open questions
@@ -1661,18 +1662,13 @@ read when the weekly full re-screen lands.
    the app shows the map colour everywhere; the 16 STREET_UNCONFIRMED
    y->unknown rows traced: their missed standard went away, leaving the
    unconfirmed street alone (map: yellow, ACCESS-STREET-UNCONFIRMED).
-   (h) RULED Steph 2026-10-07: "yellow with flag. 7 severity" -- the 3,209
-   lots RED on steep ground read from the 10 m model only (Gresham 1,066,
-   Happy Valley 886, Portland 831; `coarse_red_is_closer_look` covered pad
-   grade, not the steep cut; median slope 17.5%) go YELLOW with a flag of
-   severity 7, resolution measurement (the 1 m lidar where it exists).
-   Handed to the slope lane with (e)/(f) (same files). Not built yet.
    (i) SPLICE OWED -- TAKEN by the weekly session (vicinitideals-fa)
    2026-10-08 (the agent handed it on 10-07 could not be found). One partial
    re-screen on run 65 carrying 81c3b77b + 84e702de (scope
    /root/weekly_fixes/scope.txt, 9,860), 51577bb8 (44, /root/rank-colour/
-   scope.txt, 39,743) and the slope lane's (e)/(f)/(h) (its scope2 =
-   /root/sf/tl_new2.txt + tl_reuse.txt, 111,447, or whatever it ships with);
+   scope.txt, 39,743) and the slope lane's (e)/(f)/(h) = 2dacbe1c (scope
+   /root/sf/scope_slope.txt, 127,093: every lot with steep under either code
+   + the coarse group; the bound's own 93,908 = scope_slope_bound.txt);
    2cfd13d6 (52) rides in assign. Prepared on 137: /root/s49i/scope_pre.txt
    (48,948, the first two), chain /root/s49i/chain.sh (preflight, done-marker
    per step: bridge -> splice onto /root/bridge_2026-10-07_weekly -> assign on
@@ -1680,7 +1676,7 @@ read when the weekly full re-screen lands.
    /root/code/s49i_<sha>). NOT in it: 017f63cf (50) -- its *_site columns need
    s5o re-run and the splice refuses a changed s5o ("different columns"), so
    it waits for the weekly; 51/53 need a new normalize -> the weekly unless
-   51's agent is ready first. Starts once the slope work is on main, or
+   51's agent is ready first. Slope work ON MAIN 2dacbe1c 2026-10-08 -- go;
    2026-10-09 without it. Load/drift/gate on 114; a warned gate is Steph's.
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
