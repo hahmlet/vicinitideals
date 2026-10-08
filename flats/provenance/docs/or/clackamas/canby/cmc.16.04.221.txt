@@ -1,0 +1,3 @@
+16.04.221 Floor area ratio.
+
+Floor area ratio means a method of calculating structural massing on a lot. Floor Area Ratio is expressed as a ratio of x divided by y, where x is equal to the sum of the gross floor area of all stories above grade plane, as measured to the outside surface of exterior walls, and y is equal to the lot area net of any publicly dedicated right-of-way or land. Detached accessory structures and detached or attached parking structures above grade plane are not included in the gross floor area calculation. (Ord 1296, 2008)

@@ -1,0 +1,103 @@
+CHAPTER 17.30 - ZONING DISTRICTS[12]
+
+
+Footnotes:
+--- (12) ---
+Editor's note— Pre-republication, this chapter was last revised by Ord. No. 2013-04, effective July 3, 2013. Any amendments occurring post-republication have a history note in parenthesis at the bottom of the amended section.
+
+
+Sec. 17.30.00. - Zoning district designations.
+
+
+For the purposes of this title, the city is divided into districts designated as follows:
+
+District                        Symbol
+Parks and Open Space            POS
+Residential
+Single Family Residential       SFR
+Low Density Residential         R-1
+Medium Density Residential      R-2
+High Density Residential        R-3
+Commercial
+Central Business District       C-1
+General Commercial              C-2
+Village Commercial              C-3
+Industrial
+Industrial Park                 I-1
+Light Industrial                I-2
+General Industrial              I-3
+Overlay Districts
+Cultural and Historic Resource  CHR
+Flood Slope Hazard              FSH
+Specific Area Plan Overlay      SAP
+
+(Ord. No. 2021-16, § 4(Exh. D), 8-16-2021; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.30.10. - Zoning Map.
+
+
+The Zoning Map is incorporated herein and is deemed as much a part of this Code as if fully set forth. If a conflict appears between the Zoning Map and the written portion of this Code, the written portion shall control. The map and each amendment shall remain on file in the City's document archives.
+
+The boundaries of all districts are established as shown on the Zoning Map, which is made a part of this Code. All notations and references and other matters shown shall be and are hereby made part of this Code.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.30.20. - Residential density calculation procedure.
+
+
+The number of dwelling units permitted on a parcel of land is calculated after the determination of the net site area and the acreage of any restricted development areas (as defined by Chapter 17.60). Limited density transfers are permitted from restricted development areas to unrestricted areas in accordance with the provisions of the Flood and Slope Hazard Area Overlay District, Chapter 17.60.
+
+Calculation of Net Site Area (NSA): Net site area shall be calculated in acres based upon a survey of the property boundaries excluding areas dedicated for public use.
+
+A.
+
+Minimum and Maximum Dwelling Units for Sites with No Restricted Areas. The allowable range of housing units on a piece of property is calculated by multiplying the net site area (NSA) in acres by the minimum and maximum number of dwelling units allowed in that zone.
+
+For example: A site (NSA) containing ten acres in the Single Family Residential Zoning District requires a minimum of 30 units and allows a maximum of 58 units. (NSA x three units/acre = 30 units minimum.) (NSA x 5.8 units/acre = 58 units maximum.)
+
+B.
+
+Minimum and Maximum Dwelling Units for Sites with Restricted Areas.
+
+1.
+
+Unrestricted Site Area: To calculate unrestricted site area (USA): subtract all restricted development areas (RDA) as defined by Subsection 17.60.20.A. from the net site area (NSA), if applicable.
+
+NSA - RDA = USA
+2.
+
+Minimum Required Dwelling Units: The minimum number of dwelling units required for the site is calculated using the following formula:
+
+USA (in acres) x Minimum Density (Units per Acre) of Zoning District = Minimum Number of Dwelling Units Required.
+
+3.
+
+Maximum Allowed Dwelling Units: The maximum number of dwelling units allowed on a site is the lesser of the results of these two formulas:
+
+a.
+
+NSA (in acres) x Maximum Density of Zoning District (units/acre)
+
+b.
+
+USA (in acres) x Maximum Density of Zoning District (units/acre) x 1.5 (maximum allowable density transfer based on Chapter 17.60)
+
+For example: suppose a site in a zone with a maximum density of eight units per acre has six acres of unrestricted site area (USA = six) and two acres of restricted development area (RDA = two), for a total net site area of eight acres (NSA = eight). Then NSA (eight) x eight units/acre = 64 and USA (six) x eight units/acre x 1.5 = 72, so the maximum permitted number of dwelling units is 64 (the lesser of the two results).
+
+C.
+
+Lot Sizes: Lot sizes shall comply with any minimum lot size standards of the underlying zoning district.
+
+D.
+
+Rounding: A dwelling unit figure is rounded down to the nearest whole number for all total maximum or minimum figures less than four dwelling units. For dwelling unit figures greater than four dwellings units, a partial figure of one-half or greater is rounded up to the next whole number.
+
+For example: A calculation of 3.7 units is rounded down to three units. A calculation of 4.2 units is rounded down to four units and a calculation of 4.5 units is rounded up to five units.
+
+E.
+
+Duplexes: For the purpose of calculating maximum density, duplexes shall be counted the same as a single-family residence (i.e., duplexes shall count as one dwelling unit). Accessory dwelling units (ADUs) do not count towards maximum density.
+
+(Ord. No. 2021-03, § 2(Exh. B), 5-17-2021; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)

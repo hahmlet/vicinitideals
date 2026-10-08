@@ -404,6 +404,12 @@ def test_a_backported_band_has_to_already_be_here() -> None:
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:
+    # 175 as of 2026-10-07: Estacada's fifteen zones (FOLLOWUPS 53), the three it
+    # admits and the twelve it refuses.
+    # 160 as of 2026-10-07: Sandy's eleven zones (FOLLOWUPS 53), the three it admits and
+    # the eight it refuses.
+    # 149 as of 2026-10-07: Canby's nine zones (FOLLOWUPS 53), the three it
+    # admits and the six it refuses, each one a zone the screen must know.
     # 140 as of 2026-10-01: Multnomah unincorporated LR10 and Happy Valley FU10,
     # opened by the same state path, measured once their dimensions were read.
     # 138 as of 2026-09-30: Multnomah unincorporated LR5, opened by the state
@@ -427,9 +433,9 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # Washington County's six (2026-09-30) are in COUNTY but not ported: their
     # rows were written FROM the corpus, and porting them back would overwrite
     # it with its own summary.
-    assert dry["stats"]["zones"] == 140
-    assert dry["stats"]["layers"] == 18
-    assert len(COUNTY) == 24
+    assert dry["stats"]["zones"] == 175
+    assert dry["stats"]["layers"] == 21
+    assert len(COUNTY) == 27
     assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {
         "washington_unincorporated", "hillsboro", "beaverton", "sherwood", "king_city", "durham",
     }
@@ -511,7 +517,9 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # is valid. Round-tripping is the whole point of doing this as a port.
     rules = RuleSet(load_rules())
 
-    assert len(rules.layers) == 27  # 26 jurisdictions + the state layer
+    assert len(rules.layers) == 30  # 29 jurisdictions + the state layer
+    # 491 as of 2026-10-07: Canby's nine zones, Sandy's eleven and Estacada's fifteen (FOLLOWUPS 53).
+    #
     # 456 as of 2026-10-02: Tualatin CC, the zone_ruling that became a block
     # when Steph supplied Map 10-3 and its Residential Sub-District was traced.
     #
@@ -638,7 +646,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 456
+    assert sum(len(l.zones) for l in rules.layers.values()) == 491
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

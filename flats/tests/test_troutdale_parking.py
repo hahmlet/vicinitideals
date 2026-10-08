@@ -149,7 +149,10 @@ def test_twenty_five_feet_is_the_widest_aisle_in_the_corpus() -> None:
 
     assert widest[TROUTDALE] == 25
     assert max(widest.values()) == 25
+    # Sandy (FOLLOWUPS 53, 2026-10-07) joins at 25: 17.98.60 C prints 25 feet
+    # double sided, held for both directions.
     assert sorted(k for k, v in widest.items() if v == 25) == [
+        "or/clackamas/sandy",
         "or/multnomah/_unincorporated",
         TROUTDALE,
     ]

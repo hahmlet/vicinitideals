@@ -47,6 +47,9 @@ jurisdictions:
   or/clackamas/milwaukie: true
   or/clackamas/oregon-city: true
   or/clackamas/gladstone: true
+  or/clackamas/canby: true
+  or/clackamas/sandy: true
+  or/clackamas/estacada: true
   or/clackamas/west-linn: true
   or/clackamas/tualatin: true
   or/clackamas/wilsonville: true
@@ -302,6 +305,49 @@ datasets:
       Oregon City hosts this on Gladstone's behalf and the service is
       countywide. Gladstone lots pick their own polygons in the majority-area
       join because they sit inside the city.
+
+  zoning_canby:
+    kind: arcgis
+    label: Canby zoning
+    provides: zoning
+    url: https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_LandUseAndPlanning/MapServer/7
+    zone_field: ZONE
+    fields: [ZONE, CITY]
+    where: CITY = 'Canby'
+    serves: [or/clackamas/canby]
+    notes: >-
+      The same regional zoning fabric Gladstone reads (it carries a CITY
+      column); the where clause keeps Canby's 49 polygons. Spellings are the
+      fabric's (R1, R1.5, CR); the layer's zone_rulings alias them.
+
+  zoning_sandy:
+    kind: arcgis
+    label: Sandy zoning
+    provides: zoning
+    url: https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_LandUseAndPlanning/MapServer/7
+    zone_field: ZONE
+    fields: [ZONE, CITY]
+    where: CITY = 'Sandy'
+    serves: [or/clackamas/sandy]
+    notes: >-
+      The same regional zoning fabric Gladstone and Canby read; the where
+      clause keeps Sandy's 128 polygons. Spellings are the fabric's (R1, R2,
+      R3, C1, SFR); the layer's zone_rulings alias them.
+
+  zoning_estacada:
+    kind: arcgis
+    label: Estacada zoning
+    provides: zoning
+    url: https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_LandUseAndPlanning/MapServer/7
+    zone_field: ZONE
+    fields: [ZONE, CITY]
+    where: CITY = 'Estacada'
+    serves: [or/clackamas/estacada]
+    notes: >-
+      The same regional zoning fabric Gladstone, Canby and Sandy read; the
+      where clause keeps Estacada's polygons. Spellings are the fabric's
+      (R1, R2, R3, C1, C2, RC, HC, OC, M1, AP, OS); the layer's zone_rulings
+      alias them.
 
   zoning_west_linn:
     kind: arcgis

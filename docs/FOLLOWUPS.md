@@ -1711,13 +1711,27 @@ read when the weekly full re-screen lands.
    Valley 710. Work: bucket the drop reasons (which quadfit step, which
    error), fix the ones that are ours, measure the rest; bound + read the
    gains; never a guessed GREEN. Pure measurement, no rulings expected.
-53. [scan: YES if any zone admits the pod] **Four Clackamas cities outside Metro are unencoded:
-   Canby 6,175, Sandy 4,538, Molalla 3,188, Estacada 2,865 lots (run 65,
-   JURISDICTION-NOT-ENCODED, yellow).** First question per city: does any
-   zone permit 4 attached townhomes (HB 2001 only requires duplexes in
-   10k-25k cities outside Metro -- same test that kept North Plains, Banks,
-   Gaston out, item 17(D))? A city with no such zone: record the refusal
-   and switch it off with the reason. A city with one: store the code,
-   encode the admitting zones (rulebook, provenance, blind re-read), map
-   the zoning layer, bound. Forest Grove (7,547) stays blocked on HUMAN_TODO
-   28 (Steph's PDFs).
+53. [scan: YES (Canby, Sandy, Estacada layers are drafted and unscreened; they land at the next weekly after the acquire of their three zoning datasets)] **Canby, Sandy and Estacada are encoded
+   (2026-10-07); Molalla is blocked on HUMAN_TODO 29 (Steph's PDFs); Forest
+   Grove stays blocked on HUMAN_TODO 28.** Each admits the pod somewhere:
+   Canby R-1.5, R-2, C-R; Sandy R-1 (row houses on single lots), R-2, R-3;
+   Estacada C-2, CMU, R-3 (townhouse lots only). Everything is `draft`
+   (signing is Steph's). Wiring done: layers, provenance, footnotes,
+   pipeline.yaml (Canby, Sandy, Estacada datasets), quadfit rules.yaml and
+   s0_acquire. NOT yet done: (a) the 137 bound -- quadfit s1->s7 into a copy
+   tree plus a bridge of the gained lots, every gain read (chain
+   `bound_fg53.sh` on branch `bound/fg53-three`, queued behind the heavy
+   lock 2026-10-07); (b) Molalla: 6 of 11 chapters were stored but are parked outside the repo
+   (retry `fetch --layer or/clackamas/molalla` after the 429s clear,
+   needs 17-2.3, 2.4, 3.2, 4.4, 5.1; gate already read: admits R-2, R-3, R-5,
+   refuses R-1, C-1, C-2, M-1, M-2, PSP); (c) doubts to read before signing
+   -- Canby: Type III design review treated as outright, 20 ft street yard on
+   every street side, 13 du/acre cap, parking 2.0, Downtown Overlay
+   Transitional Commercial nodes refused though they allow multi-family,
+   habitat/riparian/floodplain-district overlays unscreened; Sandy: Type II
+   design review treated as outright, 20 ft arterial setback charged on every
+   street (possible false RED), 25 ft aisle, vision clearance not drawn,
+   FSH/BVO/CHR overlays unscreened; Estacada: NCR street-proximity (ask
+   Steph), R-3 townhouse-only reading, MMU master-plan refusal, D-zone
+   conditions, PUE width, geotechnical analysis at 33% slope, Airport/Historic/
+   Wetlands overlays, minimum density on the land-division path.

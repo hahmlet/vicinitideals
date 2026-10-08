@@ -1,0 +1,877 @@
+CHAPTER 17.74 - ACCESSORY DEVELOPMENT—ADDITIONAL PROVISIONS AND PROCEDURES[28]
+
+
+Footnotes:
+--- (28) ---
+Editor's note— Pre-republication, this chapter was last revised by Ord. No. 2014-05, effective June 2, 2014. Any amendments occurring post-republication have a history note in parenthesis at the bottom of the amended section.
+
+
+Sec. 17.74.00. - Intent.
+
+
+These provisions are intended to establish the relationship between primary and accessory development and specify criteria for regulating accessory developments.
+
+In addition to uses expressly included in each zoning district as primary or conditional uses, each district shall provide for accessory developments identified in the underlying zoning district and as specified in this chapter. When a proposed accessory use is not specified, the Director shall determine the appropriateness of the use and whether it is customarily associated with, and subordinate to, the primary development. The Director shall base the decision on the similarity of the proposed accessory development to those developments specifically identified as accessory to the primary developments and the relationship between the proposed accessory development and primary development. The Director's determination shall be made in accordance with procedures set forth in Chapter 17.14—Request for Interpretation.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.74.10. - Residential accessory structures.
+
+
+Accessory structures (e.g., sheds) may be constructed or installed when in conformance with the standards of this section. A detached accessory structure shall be separated from the primary structure by at least six feet. An accessory structure located closer than six feet from the primary structure shall be considered attached and is required to comply with the same setbacks as the primary structure.
+A.
+
+Detached Accessory Structure Setbacks. Table 17.74.10 below and Figures 17.74.10.A. and B. specify setbacks for detached accessory structures. If not specified below, these structures are subject to the standards identified in the respective zoning district where the structure is to be located. For purposes of these regulations, solariums, greenhouses, garages, or other enclosed areas which are attached to the residential structure shall not be considered accessory but shall be considered part of the primary building. Rigid frame fabric structures are considered accessory structures subject to these standards.
+
+Table 17.74.10: Setbacks for Detached Accessory Structures (Sheds)
+
+Accessory Structure Size                                              Interior Side Yard Setback                                        Rear Yard Setback
+Up to 120 sq. ft., Up to 10 ft. tall                                  1 foot                                                            1 foot
+Up to 120 sq. ft., Up to 12 ft. tall                                  3 feet                                                            3 feet
+Larger than 120 sq. ft. up to 200 sq. ft. and up to 12 ft. in height  3 feet                                                            3 feet
+Larger than 200 sq. ft. or taller than 12 ft. in height               5 feet minimum or same as primary structure whichever is greater  15 feet minimum or same as primary structure whichever is greater
+
+B.
+
+General Standards.
+
+1.
+
+No accessory structure shall be located in front of the primary building. If located to the side of the primary building on an interior lot, the structure shall not be placed closer to the front lot line than the farthest back front wall of the primary building.
+
+2.
+
+An accessory structure located on the street side of a corner lot shall follow the same setbacks as the primary building.
+
+3.
+
+The roof of the structure shall be constructed so that water runoff from the structure does not flow onto an abutting parcel.
+
+4.
+
+Accessory structures for private vehicle storage which have an entrance from the street side yard, except alleys, shall have a minimum street side yard setback of 20 feet.
+
+5.
+
+The total accumulative square footage of all accessory structures on an individual lot shall not exceed 1,200 square feet.
+
+6.
+
+An accessory structure shall not exceed a maximum height of 16 feet.
+
+7.
+
+An accessory structure may be located on an adjacent lot that does not contain a primary structure provided:
+
+a.
+
+Both lots are under the exact same ownership; and
+
+b.
+
+A deed restriction is recorded requiring the accessory structure to be removed within 30 days of transfer of ownership of either lot into separate ownership; and
+
+c.
+
+The accessory structure complies with setback requirements as applied to the lots under same ownership.
+
+8.
+
+Exception for Temporary Use of Rigid Frame Fabric Membrane Structures. Exceptions to these standards may be made by the Director for temporary storage of materials for not more than three days within any 30-day period.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.74.20. - Projecting building features.
+
+
+A.
+
+Setback Projections. The following building features may project into a required yard setback by no more than the amount specified below:
+
+Table 17.74.20: Projections into Setbacks for Building Features
+
+Feature                                                                                                   Front Yard  Side Yard  Rear Yard
+Architectural Appendages [1]                                                                              5 ft.       2½ ft.     5 ft.
+Awnings                                                                                                   5 ft.       2½ ft.     5 ft.
+Chimneys                                                                                                  5 ft.       2½ ft.     5 ft.
+Decks (unroofed) - ground level 30 inches in height or less                                               5 ft.       2½ ft.     Footnote [2]
+Decks (unroofed) - ground level more than 30 inches in height or second story (building permit required)  5 ft.       2½ ft.     Footnote [3]
+Eaves                                                                                                     5 ft.       2½ ft.     5 ft.
+Fire Escapes, Landings (unroofed) and Stairs                                                              5 ft.       2½ ft.     5 ft.
+Planters                                                                                                  5 ft.       2½ ft.     5 ft.
+Porches (roofed)                                                                                          5 ft.       2½ ft.     Footnote [3]
+Windows (bow or bay)                                                                                      5 ft.       2½ ft.     5 ft.
+
+Footnotes:
+
+[1] Architectural features shall not include any portion of a structure built for the support, conveyance, occupancy, shelter, or enclosure of persons, chattels, or property of any kind.
+
+[2] Must maintain a minimum rear yard setback from rear property line of five feet.
+
+[3] Must maintain a minimum rear yard setback from rear property line of ten feet.
+
+B.
+
+Vertical Projections. Height limitations shall not apply to the following:
+
+1.
+
+Fire and parapet walls.
+
+2.
+
+Penthouses or roof structures for the housing of elevators, stairways, tanks, ventilating fans or similar equipment required to operate and maintain a structure. No penthouse or roof structure or any space above the height limitation shall be allowed for the purpose of providing additional floor space.
+
+3.
+
+Smokestacks.
+
+4.
+
+Steeples.
+
+5.
+
+Windmills.
+
+6.
+
+Other similar structures.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.74.30. - Vision clearance area.
+
+
+A.
+
+A vision clearance area shall be maintained on each corner of a lot or tract at the intersection of two streets, or the intersection of a street with an alley. No visual obstruction (e.g., sign, structure, solid fence, or vegetation) shall be placed or located in the "vision clearance area" between the height of three feet and eight and one-half feet measured from the street grade or alley grade at the curb line, or where curbs are absent from the edge of asphalt as specified in the table below.
+
+B.
+
+A vision clearance area shall consist of a triangular area formed by the intersection of the curb lines, measured from the street grade or alley grade at the curb line, or where curbs are absent from the edge of asphalt as specified below.
+
+Table 17.74.30. Vision Clearance Distances
+
+Functional Street Classification             Measurement along curb line
+Intersection of a street and an alley        20 feet
+Intersection of a street and another street  30 feet
+
+C.
+
+The foregoing provisions shall not apply to the following:
+
+1.
+
+A public utility pole, signal pole, light pole, or other utility appurtenance.
+
+2.
+
+A tree trimmed (to the trunk) to a line at least eight feet above the level of the intersection.
+
+3.
+
+Vegetation that is not planted in the form of a hedge and which is so planted and trimmed to leave at all seasons a clear and unobstructed cross view.
+
+4.
+
+A supporting member or appurtenance to a permanent building lawfully existing on the date this Code is adopted.
+
+5.
+
+An official warning sign or signal.
+
+6.
+
+A place where the natural contour of the ground is such that there can be no cross-visibility at the intersection.
+
+7.
+
+A sign mounted ten feet or more above the ground with supports that do not encroach into the clear vision area.
+
+8.
+
+A signalized intersection.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.74.40. - Fences and retaining walls.
+
+
+A.
+
+Fences—Residential.
+
+1.
+
+Fences on corner lots. Any fence or retaining wall, constructed upon or adjacent to any property line that abuts two or more intersecting streets, shall not exceed three feet in height within the vision clearance area as specified in Section 17.74.30.
+
+2.
+
+Fences in a front yard. The height of a fence or retaining wall in a front yard shall not exceed four feet.
+
+3.
+
+Fences—Side and rear yards abutting streets. The height of a fence, retaining wall, or a combination of the two in a side or rear yard abutting a public right-of-way shall not exceed six feet above the grade of the right-of-way.
+
+4.
+
+Fences—Side and rear yards abutting other lots. The height of a fence, retaining wall, or a combination of the two in a side or rear yard abutting other lots shall not exceed eight feet above the grade of the right-of-way.
+
+5.
+
+Sight Obscuring Hedges. Trees or shrubs that form a sight-obscuring hedge shall comply with the same height requirement as a fence within the clear vision area. Deciduous trees separated by at least 15 feet may grow to any height.
+
+6.
+
+Front Yard Fences for Existing Dwellings on Major Arterials. The height of a fence in a front yard for an existing dwelling (constructed prior to July 1, 1996) facing a major arterial shall not exceed a height of six feet outside the clear vision area.
+
+7.
+
+Fences on Through Lots. Gates are required in rear-yard fences on through lots since it remains the property owners' responsibility to maintain the area from the curb or edge of pavement to a proposed fence.
+
+B.
+
+Fences—Commercial/Industrial.
+
+1.
+
+Fences on corner lots. Any fence or retaining wall, constructed upon or adjacent to any property line that abuts two or more intersecting streets, shall not exceed three feet in height within the clear vision area.
+
+2.
+
+Fences in a front yard (Commercial). The height of a fence or retaining wall in a front yard shall not exceed four feet.
+
+3.
+
+Fences in a front yard (Industrial). The height of a fence or retaining wall in a front yard shall not exceed six feet.
+
+4.
+
+Fences—Side and Rear Yards. The height of a fence or retaining wall adjacent to a side or rear yard or a side or rear property line shall not exceed eight feet.
+
+5.
+
+Sight Obscuring Hedges. Trees or shrubs that form a sight-obscuring hedge shall comply with the same height requirement as a fence within the clear vision area. Deciduous trees separated by at least 15 feet may grow to any height.
+
+C.
+
+Fence Regulations for Recreation Areas. Any recreational court may be enclosed by a wire fence not exceeding 12 feet in height provided that no part of the court fence is within 20 feet of any street.
+
+D.
+
+Fence Regulations for Swimming Pool/Hot Tub Areas. A swimming pool, hot tub, or other human-made outside body of water, which has a depth greater than 18 inches shall be enclosed with a fence not less than four feet and not more than eight feet in height. If located on or surrounded by a deck, the deck shall be enclosed with a railing with a height of not less than four feet and not more than eight feet. The fence or railing shall not have any openings, holes, or gaps larger than four inches square, except for doors or gates. Any gate shall be equipped with a self-closing, self-latching device. A dwelling unit and/or accessory building may form part of the enclosure.
+
+E.
+
+Fence Regulations for Stormwater Detention Facilities and Human-Made Wetlands. A stormwater detention facility or human-made wetlands, which is designed for a water depth greater than 18 inches, shall be enclosed with a black coated chain link fence not less than six feet and not more than eight feet in height.
+
+F.
+
+Wire Fences.
+
+1.
+
+Barbed wire fencing may be permitted for agricultural, community service, commercial or industrial uses when the wire is employed on the top of any other type of fencing, and when the barbed wire is a minimum of six feet above the finished ground surface and does not extend over a public right-of-way. The maximum height shall not exceed eight feet.
+
+2.
+
+No electrically charged or sharp pointed fencing such as razor wire (other than barbed wire fencing) shall be constructed or maintained within the city limits.
+
+G.
+
+Fences in excess of seven feet in height require a building permit in accordance with Title 15.
+
+(Ord. No. 2021-03, § 6(Exh. F), 5-17-2021; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.74.50. - Decks.
+
+
+A.
+
+Decks may encroach into required yard areas as specified in Section 17.74.20, above.
+
+B.
+
+Decks greater than 30 inches in height require a building permit in accordance with Title 15.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.74.60. - Temporary uses or structures.
+
+
+A.
+
+Temporary Uses. Temporary uses, as defined in Chapter 17.10—Definitions, not located within a structure, may be permitted for a period not to exceed 90 days, provided a temporary permit is first obtained under the Type I procedure. Renewal of a temporary permit shall be processed under the Type II procedure.
+
+B.
+
+Temporary Structures. Temporary structures in connection with the building or sale of dwellings and land, and construction of industrial or commercial facilities may be permitted, for a period not to exceed one (1) year, provided a temporary permit is first obtained under the Type I procedure. Renewal of a temporary permit shall be processed under the Type II procedure.
+
+C.
+
+Portable Outdoor Storage Unit. Portable outdoor storage units may be placed on a lot, including within the setback areas, for not more than 60 days (any portion of a day, between 12:00 a.m. and ending at 11:59 p.m., shall be counted as a day) within any 12 month period. Portable outdoor storage units shall not be located in the public right-of-way and shall not restrict access to any walkway.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.74.70. - Accessory dwelling units.
+
+
+Accessory dwelling unit (ADU) regulations are intended to:
+•
+
+Provide a cost-effective means of serving development through the use of existing infrastructure, rather than requiring new infrastructure to serve development.
+
+•
+
+Increase the supply of affordable housing without government subsidies.
+
+•
+
+Benefit older homeowners, single parents, young homebuyers, and people with disabilities.
+
+•
+
+Integrate affordable housing more uniformly in the community.
+
+•
+
+Provide a means for adult children to give care and support to a parent in a semi-independent living arrangement.
+
+•
+
+Help maintain the Urban Growth Boundary (UGB) by creating more housing opportunities within existing urban areas.
+
+A.
+
+Permitted Zoning Districts. Accessory dwelling units (ADU) are permitted in the following zoning districts: Single-Family Residential (SFR), Low Density Residential (R-1), Medium Density Residential (R-2), High Density Residential (R-3), Central Business District (C-1) and Village Commercial District (C-3). An ADU shall not be permitted on the same lot as a duplex.
+
+B.
+
+Dimensional Standards.
+
+Type                                        Standard
+Minimum Average Lot Width, Frontage, Depth  Same as underlying zoning district
+Maximum square footage                      720 sq. ft.
+Maximum number of occupants                 3
+Setbacks                                    Same as underlying zoning district
+Structure Height                            Same as underlying zoning district
+Building Site Coverage                      No maximum
+Off-Street Parking                          No minimum
+Landscaping                                 Same as underlying zoning district
+
+C.
+
+Design Standards.
+
+1.
+
+The accessory dwelling unit shall be accessory to the primary residence.
+
+2.
+
+The ADU shall have a pedestrian walkway that connects the primary entrance of the ADU to the public sidewalk. The pedestrian walkway shall consist of concrete, asphalt, stone, brick, permeable pavers and shall be permanently affixed to the ground with gravel subsurface. Other materials may be requested as part of a discretionary review and approved by the Director.
+
+3.
+
+An ADU may be stick-built, modular/prefabricated, or a manufactured home in compliance with Section 17.90.140.
+
+4.
+
+Detached ADUs shall provide at least three of the Required Design Elements in Subsection 17.90.150.F on the street-facing façade(s) and shall provide at least ten percent windows on the ground floor elevation of the street facing façade(s). These standards apply even if the ADU is located behind the primary residence; in such cases, the standards apply to the façade that is closest to and within 45 degrees of the street.
+
+5.
+
+Primary entrances shall not be in front of the primary residence.
+
+D.
+
+Permit Issuance.
+
+1.
+
+A permit to construct or alter a dwelling to accommodate an ADU may be issued under a Type I procedure if the application is in compliance with the ADU standards.
+
+2.
+
+Required permit information shall be limited to that for single-family dwellings.
+
+3.
+
+Construction permit fees shall be based on the same fee schedule as a single-family dwelling.
+
+4.
+
+An ADU may be added to an existing residential dwelling or built concurrently with a new residence.
+
+E.
+
+Additional Requirements.
+
+1.
+
+The ADU shall connect to municipal water in accordance with the 2022 Water System Master Plan.
+
+2.
+
+The ADU shall connect to municipal sewer if service is currently within 200 feet of the site, as measured from the nearest property line. Sites more than 200 feet from municipal sewer, shall only be approved to connect to an alternative disposal system provided all of the following are satisfied:
+
+a.
+
+A county septic permit is secured and a copy is provided to the City;
+
+b.
+
+The property owner executes a waiver of remonstrance to a local improvement district and/or signs a deed restriction agreeing to complete improvements, including but not limited, to curbs, sidewalks, sanitary sewer, water, storm sewer or other improvements required under Chapter 17.84;
+
+c.
+
+The minimum size of the property is one acre or is a pre-existing legal lot, as determined by the City;
+
+d.
+
+Site consists of a legal lot(s) created through dividing property in the city, which is less than five acres in size.
+
+3.
+
+The accessory dwelling unit shall meet applicable building code requirements for two-family dwelling units, pursuant to SMC 15.04.120.
+
+4.
+
+Non-permitted ADUs may be permitted if they are brought into conformance with the Sandy Municipal Code and the Building Code, pursuant to SMC 15.04.120, and including approval of a land use application.
+
+(Ord. No. 2021-03, § 6(Exh. F), 5-17-2021; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.74.80. - Home businesses.
+
+
+The provision for a home business is in recognition of the needs of many people who are engaged in small-scale business ventures, which cannot be expanded to a full-scale enterprise. It is the intent of this section that full-scale commercial or professional operations, which would ordinarily be conducted in a commercial or industrial district, continue to be conducted in the appropriate zoning district and not a dwelling. These regulations apply to family day care businesses.
+A.
+
+Home Business Regulations.
+
+1.
+
+No sign is used other than a nameplate indicating the name of the resident (not the business name) not over two sq. ft. in area.
+
+2.
+
+There is no display that will indicate from the exterior that the building is being used in whole or in part for any purpose other than a dwelling.
+
+3.
+
+There is no outside storage of materials other than plant materials.
+
+4.
+
+The home occupation is licensed by the City.
+
+5.
+
+There is no more than one non-resident employee working on the site.
+
+6.
+
+The building retains the characteristics of a residence.
+
+7.
+
+The use does not destroy the residential character of the neighborhood.
+
+B.
+
+Complaint Procedures.
+
+1.
+
+Complaints on Items 1 through 5 will be handled routinely by the Director.
+
+2.
+
+Complaints on Items 6 and 7 will be dealt with as follows:
+
+a.
+
+Upon receipt of three written complaints specifically stating the nature of the objection from three separate households located within 300 feet of the boundary of the affected property, the Director shall:
+
+i.
+
+Investigate the complaints;
+
+ii.
+
+Prepare a report to the Planning Commission; and,
+
+iii.
+
+Schedule a public hearing before the Planning Commission to make a decision on the validity of the complaint.
+
+3.
+
+Standards evaluating complaints shall include:
+
+a.
+
+Generation of excessive traffic;
+
+b.
+
+Monopoly of on-street parking spaces;
+
+c.
+
+Frequent deliveries and pickups by motor freight;
+
+d.
+
+Noise in excess of that created by normal residential use (either in terms of volume or hours of occurrence);
+
+e.
+
+Smoke, fumes, or odors in excess of those created by normal residential use;
+
+f.
+
+Other offensive activities not in harmony with a residential neighborhood.
+
+4.
+
+Planning Commission Action. The Planning Commission, upon hearing the evidence may:
+
+a.
+
+Approve the use as it exists;
+
+b.
+
+Require the use to be terminated;
+
+c.
+
+Impose appropriate restriction, such as limiting hours of operation, establishing a phaseout period or other measures insuring compatibility with the neighborhood.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.74.90. - Food and beverage carts.
+
+
+A.
+
+Intent. The purpose of these regulations is to permit food and beverage carts on a year-round basis where eating and drinking establishments are permitted outright.
+
+B.
+
+Applicability. The provisions of this section apply to food and beverage carts used in the preparation and/or sales of food and beverage items to the general public. Drive-through uses are not permitted as food carts under this section. Carts must be mobile units but are not permitted to operate from a motorized vehicle. An example of a mobile unit that meets this standard includes a trailer modified for the purpose of selling food (but not a food truck or RV). Food and beverage carts used at temporary duration events of three days or less are not subject to the motorized vehicle restrictions but are subject to the requirements of Section 17.74.60 for a temporary use.
+
+C.
+
+Permit Required.
+
+1.
+
+Food and Beverage Carts are required to obtain a land use approval and a City of Sandy Business License prior to operating.
+
+2.
+
+The initial permit review for a Food Cart Location shall follow a Type II review procedure per the requirements of Chapter 17.18.
+
+D.
+
+Submission Requirements for Food Cart Location. An application for a permit to allow operation of one or more food carts on private property shall be on forms provided by the City and include materials listed as follows:
+
+1.
+
+A completed General Land Use Application and application fee.
+
+2.
+
+List and mailing labels for property owners within 300 feet of the subject property.
+
+3.
+
+Site plan drawn to scale including:
+
+a.
+
+Site dimensions.
+
+b.
+
+Relationship of the site to adjoining properties, streets, alleys, structures, public utilities, and drainage ways.
+
+c.
+
+Number and location of food carts on the site.
+
+d.
+
+Individual square footage of all food carts.
+
+e.
+
+Accessible pedestrian route clearances.
+
+f.
+
+Size, location, and clearances of customer seating areas.
+
+g.
+
+Vehicular circulation and access points.
+
+h.
+
+Parking, maneuvering and loading areas.
+
+i.
+
+Location and design elevation of all structures.
+
+j.
+
+Location and specification of landscaped areas.
+
+k.
+
+Location and specifications of food cart pads.
+
+l.
+
+Location and design of fences and walls.
+
+m.
+
+Number and location of trash and recycling areas.
+
+n.
+
+Location and type of auxiliary storage.
+
+4.
+
+Proximity to bathroom and written permission, if applicable.
+
+5.
+
+Disposal plan for wastewater and gray water.
+
+6.
+
+Exterior lighting plan indicating location, size, height, typical design, material, color, and method of illumination.
+
+7.
+
+Any additional information that may be required by the Director to properly evaluate the proposed site plan.
+
+8.
+
+The Director may waive any of the requirements above where determined that the information required is unnecessary to properly evaluate the proposal.
+
+E.
+
+Submission Requirements for Individual Food Cart. An application for a permit to allow operation of a food cart on private property shall be on forms provided by the City and include materials listed as follows:
+
+1.
+
+A completed Food Cart Permit Application and application fee.
+
+2.
+
+City of Sandy Business License and fee.
+
+3.
+
+Pictures or architectural elevations of the proposed food cart.
+
+4.
+
+Written verification that the food cart has been inspected and meets applicable County Health regulations, and OLCC regulations, as necessary.
+
+5.
+
+Written verification that the food cart has been inspected and approved by the Fire Marshal.
+
+F.
+
+Standards for Food and Beverage Carts. An application for a food and beverage cart shall be reviewed for compliance with the following standards:
+
+Location and Design.
+
+1.
+
+Drive-through uses are not permitted in food carts.
+
+2.
+
+Carts shall not exceed 20 feet in length, not including the trailer hitch, or be greater than 200 square feet.
+
+3.
+
+All carts shall be placed on a paved surface such as but not limited to concrete, asphalt or pavers, or other approved material excluding gravel. If new paved surface is added to a site to accommodate a cart, the parking area shall comply with applicable parking design standards contained in Chapter 17.98.
+
+4.
+
+Carts shall be located at least three feet from the public right-of-way or back of sidewalk, whichever provides the greater distance from the public right-of-way.
+
+5.
+
+Carts shall be located at least five feet away from other carts.
+
+6.
+
+Carts shall not be located within 25 feet of an active driveway entrance as measured in all directions from where the driveway enters the site at the edge of the street right-of-way.
+
+7.
+
+Carts shall not occupy fire lanes or drive aisles necessary for vehicular circulation or fire/emergency vehicle access and shall be stabilized as approved by the Fire Marshal.
+
+8.
+
+Customer service windows shall be located at least five feet from an active drive aisle used by cars.
+
+9.
+
+Carts shall not occupy pedestrian walkways or required landscape areas.
+
+10.
+
+Carts shall not occupy parking needed to meet minimum vehicle and bicycle parking requirements per Chapter 17.98. Blocking automobile access to parking spaces shall be considered occupying the spaces.
+
+11.
+
+Each food cart shall provide a minimum of one paved off-street parking space for employee use or provide proof of written permission from an adjacent business or property owner within one-quarter mile of the subject site allowing the food cart operator to share parking facilities, unless exempt in accordance with Section 17.98.20 (A)(1).
+
+12.
+
+The exterior surfaces of all carts shall be clean and free from dents, rust, peeling paint, and deterioration, and windows shall not be cracked or broken. Day-glo and highly reflective colors are prohibited.
+
+13.
+
+Each cart shall provide an awning for shelter to customers with a minimum clearance of seven feet between the ground and the awning.
+
+14.
+
+Awnings shall not have tears, mold, or broken or non-functioning supports and shall be securely anchored.
+
+15.
+
+Carts shall limit the visual effect of accessory items not used by customers, including but not limited to tanks, barrels, etc. by screening with a site-obscuring fence or landscaping, or containing them within a small storage shed.
+
+16.
+
+All seating areas shall be located on the subject property at least ten feet from a food cart and seating areas shall be separated from parking areas by an approved fence or barrier.
+
+17.
+
+Signage shall comply with Chapter 15.32, Sign Code regulations. Each cart is permitted one A-frame sign.
+
+18.
+
+Auxiliary storage shall be provided on site when there are four or more food carts. The structure for auxiliary storage shall meet Chapter 17.90, Design Standards.
+
+Fire Safety.
+
+19.
+
+Carts shall meet Fire Code requirements regarding distances from other structures or combustible materials.
+
+20.
+
+Any cooking equipment producing smoke or grease-laden vapors shall be equipped with an approved fire-extinguishing system and an exhaust system that complies with all equipment and performance standards found in NFPA or as otherwise approved by the Fire Marshal.
+
+21.
+
+Appropriate fire extinguishers are required as approved by the Fire Marshal.
+
+22.
+
+Propane tanks shall be stored and handled properly and be located at least ten feet from combustible vegetation and trash receptacles and 20 feet from a potential ignition source. Propane tanks shall remain outdoors and be secured from falling. LP-Gas systems on carts shall be certified for compliance with NFPA 58 by an approved company with expertise in installation, inspection, and maintenance of LP-Gas systems.
+
+23.
+
+Carts shall not have any internal floor space available to customers.
+
+Health and Sanitation.
+
+24.
+
+Trash and recycle receptacles shall be provided on site, and must be emptied and maintained. Trash and recycle receptacles shall be provided at a rate of one receptacle for every food cart. Where the food cart operator proposes to provide a common seating area a minimum of one trash receptacle and one recycle receptacle shall be provided in the common seating area.
+
+25.
+
+Restrooms with handwashing facilities shall be provided for employees and customers. The restroom can be on-site or within one-quarter mile or a five-minute walk (such as at a neighboring business) and must be available during the cart's hours of operation. If the restroom is not on-site, the food cart operator shall submit written permission from an adjacent business or property owner where the facility is located.
+
+26.
+
+Sites containing more than one food cart shall provide a restroom facility on-site.
+
+27.
+
+Wastewater and gray water shall be disposed of properly without harm to the environment or city infrastructure. An approved disposal plan shall detail storage and removal methods and meet the requirements of Title 13 of the Sandy Municipal Code.
+
+28.
+
+Food carts that are fully contained; i.e., carts that provide their own water, power, and waste disposal, are permitted with no additional utility considerations beyond the permitting process and site plan approval described herein. Food carts that require a water source, power source, or waste disposal location are permitted only where the Director has approved site plans that show safe access and location of the aforementioned provisions. Such provisions may be subject to all applicable building permits and System Development Charge requirements.
+
+G.
+
+Conditions of Land Use Decision. In addition to naming the property owner as permittee and other information deemed appropriate, the land use decision shall contain the following minimum conditions.
+
+1.
+
+Land Use Decision requirements for individual food cart:
+
+a.
+
+An approved City of Sandy Business License.
+
+b.
+
+The permit issued shall be personal to the permittee only and is not transferable in any manner. The permittee will be responsible for compliance with all conditions of approval.
+
+c.
+
+The permit is specifically limited to the area approved or as modified by the Director.
+
+2.
+
+Requirements for properties containing one or more food carts:
+
+a.
+
+The property containing one or more food carts and all things placed thereon shall at all times be maintained in a safe, clean, and orderly condition. Only those things authorized by the land use decision and shown on the site plan may be stored on the subject property.
+
+3.
+
+Additional licensing requirements: All mobile food carts shall be appropriately licensed and approved for operation in Clackamas County as a Class I—IV mobile food cart. Additionally, each food cart may be inspected by the Fire Marshal as warranted by the Fire Marshal. All food carts are subject to all applicable City, county, and state regulations. The property owner shall ensure that each food cart located on the subject site complies with these regulations.
+
+H.
+
+Denial, Revocation or Suspension of Permit.
+
+1.
+
+A food cart permit shall be subject to revocation by the Director if the application is found to include false information or if the conditions of approval have not been complied with or are not being maintained.
+
+2.
+
+Food carts that have not been in use for over 30 days are determined defunct and shall be removed from the private property which they are located.
+
+3.
+
+Food carts that have not been in use for over 60 days are determined abandoned and shall be removed in accordance with nuisance regulations as described in Title 8 of the Sandy Municipal Code.
+
+4.
+
+Reapplication for a food cart, which has been denied or revoked, cannot be made within one year from the date of the Director's action, except that the Director may schedule a hearing before the City Council if there is new evidence or a change in circumstances.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)

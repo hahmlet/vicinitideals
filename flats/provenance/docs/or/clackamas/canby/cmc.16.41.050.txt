@@ -1,0 +1,90 @@
+16.41.050 Development standards.
+
+The following subsections indicate development standards required in the DCO zone. These standards supplement, and in some cases replace, the development standards in the underlying base zones. Where the standards set forth in the following subsections conflict with standards in the underlying base zone, the DCO development standards set forth below supersede the base zone standards.
+
+A. Setbacks, Floor Area Ratio, Building Footprint and Height Requirements.
+
+1. Setbacks. Minimum and maximum setbacks for each DCO subarea are described in Table 1 and must meet the following requirements:
+
+a.. Mechanical units used for the heating/cooling of dwelling units are exempt from interior yard and rear yard setback requirements.
+
+b. At least x% of the length of each lot frontage shall be developed with a building(s) built at the minimum setback from the street lot line (see Table 1 and 2 and Figure 12). The remainder of the building frontage shall be setback no more than the maximum setback listed in Table 1 below,
+
+Buildings located in the OHC and intended for uses that require a “drive through” and are permitted outright in the zone can increase the setback to a 20 foot maximum from the street lot line frontage.
+
+c. Where feasible, buildings should be located at one or both street-facing corners of a lot.
+
+d. At the street intersections identified as gateways in Figure 11 (Downtown Canby Overlay Zone Map), any new building shall be located at the corner of the lot facing the intersection.
+
+Table 1. Setback Requirements
+
+Standards                              CC subarea  TC subarea  OHC subarea
+Minimum setback                        0 feet      0 feet      10 feet
+Maximum setback from street lot lines  10 feet     15 feet     --
+
+Table 2. Street Lot Minimum Setback Requirements
+
+Standards               CC subarea  TC subarea  OHC subarea
+Minimum percentage (x)  60%         60%         40%
+
+Figure 12
+
+Illustration of Building Façade Requirements
+
+2. Floor area ratio, building footprint, and building height. Minimum floor area ratio, maximum building footprint, and maximum building height requirements for each DCO subarea are described in Table 3 and illustrated in Figures 13, 14, and 15. Footprints are exclusive of exterior displays or merchandise (e.g., garden centers).
+
+Table 3. Floor Area Ratio Requirements
+
+Standards                                 CC subarea          TC subarea    OHC subarea
+Minimum floor area ratio                  0.8, C-1 zone only  0.4           0.15
+Maximum building footprint (square feet)  30,000 total        20,000 total  80,000 per use
+Maximum building footprint (square feet)  30,000 total        20,000 total  100,000 all uses within footprint if more than 1 use (see Figure 13)
+Maximum building height (see Figure 14)   60 feet             45 feet       45 feet
+
+Figure 13
+
+Building Footprint for Multi-Use Structure
+
+Figure 14
+
+Building Height Limitations
+
+Figure 15
+
+Building Height Limitations (continued)
+
+3. Screening. All exterior garbage collection areas, recycling collection areas and mechanical equipment shall be screened with a site obscuring fence, landscaping on all sides, wall, other enclosure, or architectural element per the requirements below (see Figure 16 for examples of good screening design). All non-conforming/non-screened exterior garbage collection areas, recycling collection areas and mechanical equipment may be brought into conformance.
+
+a. Location. Wherever possible, locate screened areas away from the street away from public view. Shared garbage/recycling collection areas are encouraged.
+
+b. Materials. Materials used to construct screening structures shall be consistent and compatible with the exterior materials on adjacent buildings located on the same lot as the screened area or located on a contiguously-owned abutting lot, and shall be consistent with the material requirements of Section 16.41.070.E and 16.41.070.F.
+
+c. Buffering. Screening structures shall be buffered from surrounding areas on all sides with landscaping or other buffering elements.
+
+d. Rooftop structures. Rooftop mechanical structures shall be screened and not visible from any visible public right-of-way at the same elevation as, or lower than, the base of the building. Screening structures should be compatible with the overall building design and may include the following elements or approaches:
+
+(1) By providing parapets as tall as the tallest part of the equipment with a minimum height of 3 feet and 6 inches;
+
+(2) By incorporating an architectural screen around all sides of the equipment;
+
+(3) By setting the equipment back from the building edge with a setback of at least 3 feet for every 1 foot of building height.
+
+4. Parking. Parking areas shall meet the following standards in addition to all other applicable requirements.
+
+Figure 16
+
+Screening examples
+
+a. Location. In the CC and TC subareas, parking and vehicle maneuvering areas shall not be located between a building and the street. This standard applies to primary street facing facades and secondary street facing facades, as defined in Sections 16.41.060.C.
+
+b. Side of building parking areas. In the CC, TC, and OHC subareas, parking shall be permitted between a building and an interior lot line that is not a rear lot line, provided the following standards are met:
+
+(1) Parking and maneuvering areas shall be set back a minimum of 15 feet from the front lot line;
+
+(2) A minimum 5 foot wide landscaped strip shall surround and abut the perimeter of the parking and maneuvering area, except where vehicular driveways and pedestrian accessways are permitted to interrupt the landscaped strip, and except where the parking and maneuvering area is part of a larger parking area in which case a perimeter landscaping strip is not required between the side of building parking area and the remainder of the parking area;
+
+(3) Parking and maneuvering areas, including accessways and driveways, must not exceed 40 percent of a lot frontage in the TC and CC subareas, or 60 percent of a lot frontage in the OHC subarea;
+
+(4) On lots greater than 120,000 square feet, side parking areas shall be broken up into multiple smaller parking areas rather than concentrated in one portion of the lot. This may be done through the use of landscaping or the location of multiple buildings on a lot.
+
+c. Off-street vehicle parking space reduction. The minimum number of off-street vehicle parking spaces required for all uses located on a lot, as set forth in Chapter 16.10, may be reduced by the total number of on-street vehicle parking spaces located within the width of the frontage of the lot on which the use or uses are located. Such reduction shall be calculated on a one-for-one basis, and shall include only parking spaces located on the same side of the street as the lot frontage. Where an on-street parking space is located adjacent the frontage of two abutting lots, only the lot adjacent the larger portion of the parking space may count the entirety of the parking space towards its off-street parking requirement. (Ord. 1296, 2008; Ord. 1514, 2019)

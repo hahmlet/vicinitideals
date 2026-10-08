@@ -45,10 +45,20 @@ KNOWN_ORPHAN = "or/clackamas/happy-valley/16.22.residential.txt#L1138"
 #: also clear the next real one.
 KNOWN_MISPLACED = "or/washington/king-city/kcc.16.102.nmu.txt#L330"
 
+#: Sandy 17.90.130 (shared-area lighting): "shall be lighted to the following
+#: minimum levels of foot-candles ..." is a lead-in; the levels are the lettered
+#: lines beneath it (2, 1.5 and 2 foot-candles, L2341-L2349). Nothing was lost.
+KNOWN_LEAD_IN = "or/clackamas/sandy/sdc.17.90.txt#L2337"
+
+#: Estacada 16.116 (park land dedication): "The following table of persons per
+#: unit shall be used ..." is a lead-in to the table beneath it (3.00 persons a
+#: single-family unit, 2.00 a multifamily unit). Nothing was lost.
+KNOWN_TABLE_LEAD_IN = "or/clackamas/estacada/emc.16.116.txt#L206"
+
 
 def test_exactly_one_stored_sentence_lost_its_number() -> None:
     found = [o.cite for o in scan()]
-    assert found == [KNOWN_ORPHAN, KNOWN_MISPLACED], (
+    assert found == [KNOWN_TABLE_LEAD_IN, KNOWN_ORPHAN, KNOWN_LEAD_IN, KNOWN_MISPLACED], (
         "a unit word with no measurement in front of it is a standard that "
         "went missing on the way into the store, and it leaves no hole for any "
         f"other check to find. Orphaned now: {found}"

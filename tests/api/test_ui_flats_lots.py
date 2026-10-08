@@ -751,21 +751,21 @@ async def test_a_lot_the_map_holds_but_nobody_measured_says_why_and_shows_the_ro
 async def test_a_lot_in_a_city_no_layer_holds_names_the_city_and_says_why(
     client: AsyncClient, session: AsyncSession
 ):
-    """Canby is on the Clackamas roll and in no layer the rules hold. The
-    loader keeps the map's city name as ``juris_city:canby`` (the column is
+    """Barlow is on the Clackamas roll and in no layer the rules hold. The
+    loader keeps the map's city name as ``juris_city:barlow`` (the column is
     never blank); the page reads it as the city, marked as unencoded, and
     the reason the lot has no verdict is the county copy's."""
     await _login(client, session)
     run = await _seed(session)
     lot = FlatsLot(
-        tlid="24E01  03900", county="clackamas", jurisdiction="juris_city:canby",
+        tlid="24E01  03900", county="clackamas", jurisdiction="juris_city:barlow",
         zone_raw=None, zone=None, site_address="14450 BAUMBACK RD", area_sqft=138687.7,
         geom=_box(7_660_000, 600_000, 300, 462), centroid="SRID=4326;POINT(-122.6919 45.2705)",
         condo_verdict="land",
         facts={
             "source": "snapshot",
             "unmeasured": {"reason": "JURISDICTION_NOT_ENCODED", "quadfit_step": None},
-            "juris_city": "CANBY", "split_zone": False, "zone_frac": None, "inside_ugb": False,
+            "juris_city": "BARLOW", "split_zone": False, "zone_frac": None, "inside_ugb": False,
             "stack_count": 1, "part_count": 1, "observed": {},
             "condo": {"verdict": "land", "reason": None},
             "snapshot_zone": {"raw": None, "zone": None, "gate": "JURISDICTION_NOT_ENCODED"},
@@ -793,16 +793,16 @@ async def test_a_lot_in_a_city_no_layer_holds_names_the_city_and_says_why(
     page = await client.get("/flats/lots/clackamas/24E01%20%2003900")
 
     assert page.status_code == 200
-    assert "Canby (no rules encoded)" in page.text
-    assert "juris_city:canby" not in page.text.split("<body", 1)[1].replace("/flats/juris_city:canby", ""), "the prefix is the loader's, not the reader's"
+    assert "Barlow (no rules encoded)" in page.text
+    assert "juris_city:barlow" not in page.text.split("<body", 1)[1].replace("/flats/juris_city:barlow", ""), "the prefix is the loader's, not the reader's"
     body = page.text.split('id="lot-verdict"', 1)[1]
     assert "Not screened" in body
     assert "None" not in page.text.split('id="lot-facts"', 1)[1]
     # The city link a lot header always carries reaches a page, not an error.
-    city = await client.get("/flats/juris_city:canby")
+    city = await client.get("/flats/juris_city:barlow")
     assert city.status_code < 500
     listing = await client.get("/flats/lots?q=BAUMBACK")
-    assert "14450 BAUMBACK RD" in listing.text and "Canby (no rules encoded)" in listing.text
+    assert "14450 BAUMBACK RD" in listing.text and "Barlow (no rules encoded)" in listing.text
 
 
 async def test_a_pocket_lot_says_whose_zoning_it_is_under(client: AsyncClient, session: AsyncSession):

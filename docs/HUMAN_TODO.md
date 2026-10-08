@@ -2474,6 +2474,35 @@ before printing so the whole thing has loaded. Nothing changes on the map
 until Washington County's map is built (the agent's item 17(d)), so there is
 no rush.
 
+## 29. A 15-minute favour: save five chapters of Molalla's code as PDFs
+
+**Added 2026-10-07.** Molalla (3,188 lots) is the one of the four Clackamas
+cities in item 53 whose rules the agent could not finish reading. Its code
+lives on the ecode360 website, which stopped answering the agent ("too many
+requests") partway through the download and had not recovered after more than
+two hours of patient retries. The agent will not try to get around that. Six
+of the eleven chapters came down before it stopped; the zone-by-zone rules
+chapter was one of them, but the five below were not, and the agent does not
+read a city's zones from half a code (the special-use standards and the
+definitions are where a townhouse row lives or dies).
+
+**What to do:** open the link below, find each chapter, and use the browser's
+Print -> *Save as PDF*. Put the PDFs in a folder called `Molalla` anywhere on
+this computer and tell the agent where. The agent does the rest.
+
+Link: https://ecode360.com/MO4970
+
+The five chapters:
+- 17-2.3 Special Use Standards
+- 17-2.4 Overlay Zones
+- 17-3.2 Building Orientation And Design
+- 17-4.4 Conditional Use Permits
+- 17-5.1 Definitions
+
+(An agent-side retry in a day or two may also work; if it does, this item
+closes itself.) Until then Molalla stays yellow, "city not encoded", exactly
+as it is today.
+
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
 - **The lot ledger could not see Clackamas County, and it nearly hid item 15's

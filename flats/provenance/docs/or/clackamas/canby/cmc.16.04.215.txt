@@ -1,0 +1,3 @@
+16.04.215 Equipment shelters.
+
+For purposes of siting wireless telecommunications systems facilities, the buildings, structures, cabinets or vaults used to house and protect the equipment necessary to connect/relay radio signals from cell site to cell site and to land line systems. Associated equipment such as air conditioning or emergency generators shall be included in this definition of equipment shelters. (Ord. 981 section 17, 1997)

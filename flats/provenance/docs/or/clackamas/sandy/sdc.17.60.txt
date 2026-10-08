@@ -1,0 +1,929 @@
+CHAPTER 17.60 - FLOOD AND SLOPE HAZARD (FSH) OVERLAY DISTRICT[25]
+
+
+Footnotes:
+--- (25) ---
+Editor's note— Pre-republication, this chapter was last revised by Ord. No. 2019-01, effective January 7, 2019. Any amendments occurring post-republication have a history note in parenthesis at the bottom of the amended section.
+
+
+Sec. 17.60.00. - Intent.
+
+
+This chapter is intended to promote the public health, safety and general welfare by minimizing public and private adverse impacts from flooding, erosion, landslides or degradation of water quality consistent with Statewide Planning Goals 6 (Air, Land and Water Resources Quality) and 7 (Areas Subject to Natural Disasters and Hazards) and the Sandy Comprehensive Plan (SCP). This chapter is also intended to minimize public and private losses due to flooding in flood hazard areas by provisions designed to:
+A.
+
+Protect human life and health;
+
+B.
+
+Minimize expenditure of public money for costly flood control projects;
+
+C.
+
+Minimize the need for rescue and relief efforts associated with flooding and generally undertaken at the expense of the general public;
+
+D.
+
+Minimize prolonged business interruptions;
+
+E.
+
+Minimize damage to public facilities and utilities such as water and gas mains; electric, telephone and sewer lines; and streets and bridges located in flood hazard areas;
+
+F.
+
+Help maintain a stable tax base by providing for the sound use and development of flood hazard areas so as to minimize blight areas caused by flooding;
+
+G.
+
+Notify potential buyers that the property is in a Special Flood Hazard Area;
+
+H.
+
+Verify that development has achieved no net loss of key floodplain functions;
+
+I.
+
+Notify those who occupy flood hazard areas that they assume responsibility for their actions; and
+
+J.
+
+Participate in and maintain eligibility for flood insurance and disaster relief.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.10. - Interpretation and mapping.
+
+
+The Director has the ultimate responsibility for maintaining the FSH Overlay District on the City of Sandy Zoning Map, determining on-site measuring methods, and otherwise interpreting the provisions of this chapter. Technical terms used in this chapter are defined in Chapter 17.10, Definitions. This chapter does not regulate development on lots or parcels entirely outside the FSH Overlay District.
+A.
+
+FSH Overlay District. The only areas subject to the restrictions and prohibitions of the FSH overlay district are those indicated on the City of Sandy Zoning Map on file in the Planning Department and areas of special flood hazard identified by the Federal Insurance Administration in a scientific and engineering report entitled, "Flood Insurance Study (FIS) for Clackamas County, Oregon and Incorporated Areas," dated January 18, 2019, with accompanying Flood Insurance Rate Maps (FIRMs). This chapter does not regulate lots or parcels entirely outside the FSH Overlay District.
+
+1.
+
+The FIS and FIRMs are hereby adopted by reference and declared to be a part of Section 17.60 and are on file at the City of Sandy.
+
+B.
+
+Development Approval Required. No development shall occur within the FSH overlay district without first obtaining City approval under the provisions of this chapter. The Director shall notify the Oregon Division of State Lands whenever any inventoried wetland is proposed for development, in accordance with ORS 227.350. In riverine situations, the Director shall notify adjacent communities and the State Coordinating Office prior to any alteration or relocation of a watercourse, and submit copies of such notification to the administrator.
+
+C.
+
+Interpretation. All provisions of the FSH overlay code shall be:
+
+1.
+
+Considered as minimum requirements;
+
+2.
+
+Liberally construed in favor of the governing body; and
+
+3.
+
+Deemed neither to limit nor repeal any other powers granted under state statutes.
+
+D.
+
+Applicant Responsibilities. The applicant for alteration or development within the FSH overlay district shall be responsible for preparing a survey of the entire site, based on site-specific field surveys or Corps of Engineers data that precisely maps and delineates the following areas:
+
+1.
+
+The name, location and dimensions of affected streams or rivers, and the tops of their respective banks.
+
+2.
+
+Area of Special Flood Hazard boundaries and elevations as determined by the January 18, 2019 FIS for Clackamas County and Incorporated Areas.
+
+3.
+
+The City of Sandy FSH overlay district boundary as depicted on the City of Sandy FSH Map.
+
+4.
+
+The water quality and slope setback area(s) as defined in Section 17.60.30.
+
+5.
+
+The size and location of locally significant wetlands shall be determined based on the City of Sandy Locally Significant Wetland Inventory (2002) unless modified by a wetland delineation approved by the Oregon Division of State Lands and submitted to the City. Wetland delineations that have formal concurrence from the Division of State Lands shall be valid for the period specified in that agency's administrative rules.
+
+6.
+
+Steep slope areas where the slope of the land is 25 percent or greater within the FSH overlay district boundary.
+
+7.
+
+The area enclosed by a continuous line, measured 25 feet horizontally, parallel to and upland from the top of a steep slope area, where the top of the steep slope is within the FSH overlay district boundary.
+
+8.
+
+Existing public rights-of-way, structures, roads and utilities.
+
+9.
+
+Natural vegetation, including trees six inches DBH or greater or tree groves and understory within the FSH Overlay District boundary.
+
+10.
+
+Existing and proposed contours at two-foot intervals.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.20. - Permitted uses and activities.
+
+
+This chapter lists permitted uses, or uses allowed under prescribed conditions, within the FSH overlay district. Where there are conflicts, this chapter supersedes the use provisions of the underlying district.
+A.
+
+Restricted Development Areas. Restricted development areas within the FSH overlay district as shown on the City of Sandy Zoning Map include:
+
+1.
+
+Slopes of 25 percent or greater that:
+
+a.
+
+encompass at least 1,000 square feet; and
+
+b.
+
+have an elevation differential of at least ten feet.
+
+2.
+
+Protected water features, including locally significant wetlands, wetland mitigation areas approved by the Division of State Lands, and perennial streams.
+
+3.
+
+Required setback areas as defined in Section 17.60.30.
+
+B.
+
+Permitted Uses. Permitted uses within restricted development areas are limited to the following:
+
+1.
+
+Open space and trails provided they are constructed consistent with standards in the 2022 Parks and Trails Master Plan.
+
+2.
+
+Removal of refuse and permitted fill.
+
+3.
+
+Planting of native vegetation species included in the City of Portland Plant List.
+
+4.
+
+Removal of non-native/invasive vegetation, dead or dying trees, or vegetation that is hazardous to the public.
+
+5.
+
+Removal of up to two trees of six inches or greater DBH in a calendar year, provided that each tree removed is replaced with two native trees, each of which must meet the standards in Section 17.92.50 and be placed within the restricted development area of the site.
+
+6.
+
+Construction or expansion of public facilities or private roads necessary to support permitted development.
+
+7.
+
+Construction or expansion of a single-family residence or duplex on a legal lot, provided the standards in Subsections a. through d., below, are met. If these standards cannot be met, exceptions may be approved in accordance with Subsection e.
+
+a.
+
+The site review, engineering, erosion control, water quality, and re-vegetation standards of this chapter shall be fully satisfied.
+
+b.
+
+The maximum disturbance area (permanent and temporary) allowed within the restricted development areas on a lot is determined by subtracting the area of the Buildable Portion of the lot from 4,000 square feet.
+
+i.
+
+For purposes of this subsection, the Buildable Portion of the lot is the largest single contiguous area of the lot outside of the restricted development area.
+
+ii.
+
+Except as specified in subsection iii, below, if the Buildable Portion of the lot is less than 4,000 square feet, encroachment into the restricted development area shall be limited to the amount of area needed to make up for the deficit.
+
+iii.
+
+If the dimensions of the Buildable Portion of the lot are such that a 40-foot by 40-foot area cannot be located within the Buildable Portion of the lot, encroachment into the restricted development area shall be limited to the minimum area needed to accommodate a 40-foot by 40-foot area.
+
+c.
+
+In addition to the maximum disturbance area established by Subsection b., a stormwater facility serving only a single residential lot may be located on the site provided there is no disturbance to existing tree canopy, and it is located outside the critical root zone of existing trees over six inches DBH.
+
+d.
+
+Development shall not result in cuts or fills in excess of three feet except for basement construction.
+
+e.
+
+Exceptions to Subsections a. through d. may be approved by the Director through a Type II review provided the applicant demonstrates that:
+
+i.
+
+There is insufficient buildable land on the lot to allow the proposed construction or expansion.
+
+ii.
+
+An adjustment under Section 17.60.110. is not sufficient to avoid impacts on restricted development areas.
+
+iii.
+
+The design and location of the proposed construction or expansion minimizes adverse impacts to restricted development areas to the extent feasible.
+
+iv.
+
+If the additional impervious area is for a driveway, a longer driveway will avoid required setbacks from protected water features, and the driveway will either:
+
+(a)
+
+more closely follow hillside contours and thereby reduce overall cut and fill area by at least 20 percent; or
+
+(b)
+
+avoid tree clusters and thereby reduce the number of six-inch or greater DBH trees that must be removed by at least 20 percent.
+
+v.
+
+In no case shall the total disturbance area within restricted development areas exceed 10,000 square feet.
+
+8.
+
+Replacement of a single-family dwelling constructed over substantially the same footprint as the original single-family dwelling. "Substantially the same footprint" means that the replacement footprint is relocated no more than ten feet from the original footprint in any direction except closer to the stream/wetland/steep slope.
+
+9.
+
+Repair or stabilization of unstable slopes.
+
+10.
+
+Stream bank restoration, subject to a stream bank restoration plan. This plan must:
+
+a.
+
+Be prepared by a team of specialists in the fields of stream morphology, water quality, and riparian vegetation approved by the Director.
+
+b.
+
+Remove invasive vegetation and replace it with multi-layered native vegetation that provides for stream shading within the entire stream bank.
+
+c.
+
+Reduce the steepness of the bank along reaches that have been highly eroded.
+
+d.
+
+Reduce the velocity of water carried by the stream.
+
+e.
+
+Include guarantees and funding to assure at least a 90 percent survival rate of native plants over a three-year period. This guarantee shall be in one of the following forms:
+
+i.
+
+A surety bond executed by a surety company authorized to transact business in the state of Oregon in a form approved by the City Attorney.
+
+ii.
+
+In lieu of the surety bond, the applicant may:
+
+•
+
+Deposit with the City cash money to be released only upon authorization of the Director;
+
+•
+
+Supply certification by a bank or other reputable lending institution that an irrevocable letter of credit in compliance with the International Chamber of Commerce Uniform Customs and Practice for Documentary Credits, UCP 600 or most current revision has been established to cover the cost of required improvements, to be released only upon authorization of the Director; or
+
+iii.
+
+Such assurance of full and faithful performance shall be for a sum determined by the Director as sufficient to cover the cost of required restoration.
+
+iv.
+
+If the applicant fails to construct one or more of the guaranteed restoration improvements and the City has expenses resulting from such failure, the City shall call on the performance guarantee for reimbursement. If the amount of the performance guarantee exceeds the expense incurred, the remainder shall be released. If the amount of the performance guarantee is less than the amounts of expense incurred by the City, the applicant shall be liable to the City for the excess costs. If the applicant fails to reimburse the City for expenses incurred to complete the public improvements, the City shall place a lien on the property in an amount equal to the City's costs.
+
+11.
+
+Maintenance of existing landscaping on existing lots of record is permitted and is exempt from the requirements of the FSH Overlay District.
+
+12.
+
+Appurtenant structures as permitted under Section 17.60.70.L.
+
+C.
+
+Platting of New Lots. No new lot shall be platted or approved for development that is exclusively in restricted development areas as defined in Subsection 17.60.20.A.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.30. - Required setback areas.
+
+
+Setback areas shall be required to protect water quality and maintain slope stability near stream corridors and locally significant wetlands. Setbacks are measured horizontally from, parallel to, and upland from the protected feature.
+A.
+
+Required Setbacks. The required special setback(s), as illustrated in Figure 1, shall be:
+
+1.
+
+Eighty feet from the top of bank of Tickle Creek and other fish-bearing streams (this supersedes the setback in Figure 1).
+
+2.
+
+Fifty feet from the top of bank along other perennial streams, except for "No Name Creek" east of Towle Drive, as provided in Subsection 17.60.30.C.2.
+
+3.
+
+Twenty-five feet around the edge of any mapped locally significant wetland.
+
+4.
+
+Twenty-five feet from the top of any 25 percent slope break where the slope break occurs within the FSH overlay district as mapped by the City.
+
+B.
+
+Minimize Impacts. Natural vegetation shall be preserved and enhanced, and excavation minimized within required water quality setback areas.
+
+C.
+
+Exceptions, Intent. Exception 1 below recognizes that existing hillside, stormwater detention, and erosion control measures are sufficient to maintain water quality and quantity in areas of steep slopes separated from streams and wetlands by improved public streets in existing rights-of-way. Exception 2 recognizes that "No Name Creek" east of Towle Drive has been severely impacted by culverting, erosion, and invasive plants, and has only a few remaining infill sites adjacent to its banks. This exception is intended to encourage appropriate development of these infill sites and the opening and restoration of No Name Creek.
+
+1.
+
+Land lying within the FSH overlay district, but upland from an existing public right-of-way with an improved public street, shall not be subject to the steep slope restrictions of this chapter. Such land shall remain subject to applicable Section 17.56 Hillside Regulations and shall comply with required setbacks set forth in Subsection 17.60.30.A.3.
+
+a.
+
+Applications for development that include only areas that meet this exception and have existing improved public streets and have no locally significant mapped wetlands are not subject to the provisions of this chapter.
+
+2.
+
+The required setback for "No Name Creek" east of the Towle Drive crossing may be reduced to 25 feet, subject to approval of a "stream bank restoration plan" that meets the standards of Subsection 17.60.20.B.10.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.40. - Review procedures.
+
+
+Review of development requests within the FSH Overlay District shall occur subject to the following procedures. Type II and III development applications shall be reviewed by the Director to ensure consistency with Sections 17.60.60-17.60.70. Section 17.60.50. special reports shall also be required, unless specifically exempted by the Director.
+A.
+
+Type I Procedure. The following uses shall be reviewed under a Type I procedure:
+
+1.
+
+Planting of native plant species identified in the City of Portland Plant List.
+
+2.
+
+Removal of permitted fill.
+
+3.
+
+Removal of non-native/invasive vegetation, dead, or dying vegetation that is hazardous to the public.
+
+4.
+
+Removal of up to two trees of six inches or greater DBH in a calendar year.
+
+5.
+
+Appurtenant structures as permitted under Subsection 17.60.70.L.
+
+B.
+
+Type II Procedure. The following uses shall be reviewed under a Type II review procedure:
+
+1.
+
+Construction or expansion of major public facilities identified in sanitary, storm, water, street, or parks master plans or of minor public facilities necessary to support development, where no other practical alternative exists.
+
+2.
+
+Construction or expansion of trails.
+
+3.
+
+Construction, expansion, or replacement of a single-family residence or duplex within a restricted development area or floodway on a legal lot.
+
+4.
+
+Repair and stabilization of unstable slopes. If emergency slope stabilization is required and authorized by the City Engineer, a Type II development application shall be submitted to the City within 60 days of having taken the emergency action.
+
+5.
+
+Stream bank restoration plans, consistent with the requirements of Subsection 17.60.20.B.10.
+
+6.
+
+Exemption of Type II development applications from one or more required reports.
+
+7.
+
+Development that is completely outside restricted development areas, as determined by available mapping based on site-specific information provided by the applicant and reviewed by a third-party professional consistent with Subsection 17.60.10.C. Such site-specific information shall remain valid for five years from the date approved by the Director, provided that topographical or hydrological changes have not occurred on the site that could invalidate such information.
+
+8.
+
+Development requests that are similar in scope and impact, as determined by the Director, except that no other residential uses shall be considered beyond the provisions of Subsection B.3. The Director shall include the justification for the classification decision in the required notice to affected property owners.
+
+C.
+
+Type III Procedure. The Planning Commission shall review all other public and private development requests under a Type III procedure.
+
+D.
+
+Establishment of Development Decision. A development decision shall be obtained before construction or development begins, within any Area of Special Flood Hazard. Application for a development permit may be made on forms provided by the Director and may include, but not be limited to, plans in duplicate drawn to scale showing the nature, location, dimensions, and elevation of the area in question, existing or proposed structures, fill storage of materials, drainage facilities and the location of the aforementioned. Specifically, the following information is required:
+
+1.
+
+Proposed elevation in relation to mean sea level of the lowest floor (including basement of all structures).
+
+2.
+
+Proposed elevation in relation to mean sea level to which any non-residential structure will be floodproofed.
+
+3.
+
+Certification by a registered professional engineer or architect that the floodproofing methods for any non-residential structure meet the floodproofing criteria detailed in Subsection 17.60.70.H. below.
+
+4.
+
+Description of the extent to which any watercourse will be altered or relocated as a result of proposed development.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.50. - Special reports.
+
+
+Where development is proposed on restricted development areas within the FSH overlay district as defined in Subsection 17.60.20.A., the following special reports shall be submitted. These reports shall be in addition to other information required for specific types of development and shall be prepared by professionals in their respective fields.
+
+The Director may require one or more of these reports where necessary to address potential adverse impacts from development on buildable land within the FSH overlay district. Applications for residential construction allowed under Subsection 17.60.40.B.3. that are not requesting any exceptions or adjustments are exempt from requirements to submit these reports. The Director may exempt Type II permit applications from one or more of these reports where impacts are minimal and the exemption is consistent with the purpose of the FSH overlay zone as stated in Section 17.60.00.
+A.
+
+Hydrology and Soils Report. This report shall include information on the hydrological conditions on the site, the effect of hydrologic conditions on the proposed development, the proposed development's impact on surface and groundwater flows to wetlands and streams, and any hydrological or erosion hazards. This report shall also include soils characteristics of the site, their suitability for development, carrying capacity, and erosion or slumping characteristics that might present a hazard to life and property, or adversely affect the use or stability of a public facility or utility. Finally, this report shall include information on the nature, distribution, and strength of existing soils; the adequacy of the site for development purposes; and an assessment of grading procedures required to impose the minimum disturbance to the natural state. A licensed professional engineer registered in Oregon shall prepare the hydrology and soils report.
+
+B.
+
+Grading Plan. The grading plan shall be specific to a proposed physical structure or use and shall include information on terrain (two-foot intervals of property), drainage, direction of drainage flow, location of proposed structures and existing structures which may be affected by the proposed grading operations, water quality facilities, finished contours or elevations, including all cut and fill slopes and proposed drainage channels. Project designs including but not limited to locations of surface and subsurface devices, walls, dams, sediment basins, storage reservoirs, and other protective devices shall form part of the submission. The grading plan shall also include: 1) construction phase erosion control plan consistent with the provisions of Chapter 15.44; and 2) schedule of operations. A licensed professional engineer registered in Oregon shall prepare the grading and erosion control plan.
+
+C.
+
+Native Vegetation Report. This report shall consist of a survey of existing vegetative cover, whether it is native or introduced, and how it will be altered by the proposed development. Measures for revegetation with native plant species will be clearly stated, as well as methods for immediate and long-term stabilization of slopes and control of soil erosion. A landscape architect, landscape designer, botanist, or arborist with specific knowledge of native plant species, planting and maintenance methods, survival rates, and their ability to control erosion and sedimentation shall prepare the vegetation report. The applicant shall be responsible for replacing any native plant species that do not survive the first two years after planting, and for ensuring the survival of any replacement plants for an additional two years after their replacement.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.60. - Approval standards and conditions.
+
+
+The approval authority may approve, approve with conditions, or deny an application based on the provisions of this chapter. The approval authority may require conditions necessary to comply with the intent and provisions of this chapter. Residential construction allowed under Subsection 17.60.40.B.3. is subject to the approval standards in Subsection B. All other uses are subject to the approval standards in Subsection A.
+A.
+
+Approval Standards. The following approval standards apply to development proposed within restricted development areas of the FSH overlay district.
+
+1.
+
+Cumulative Impacts. Limited development within the FSH overlay district, including planned vegetation removal, grading, construction, utilities, roads and the proposed use(s) of the site will not measurably decrease water quantity or quality in affected streams or wetlands below conditions existing at the time the development application was submitted.
+
+2.
+
+Impervious Surface Area. Impervious surface area within restricted development areas shall be the minimum necessary to achieve development objectives consistent with the purposes of this chapter.
+
+3.
+
+Construction Materials and Methods. Construction materials and methods shall be consistent with the recommendations of special reports, or third-party review of special reports.
+
+4.
+
+Cuts and Fills. Cuts and fills shall be the minimum necessary to ensure slope stability, consistent with the recommendations of special reports, or third-party review of special reports.
+
+5.
+
+Minimize Wetland and Stream Impacts. Development on the site shall maintain the quantity and quality of surface and groundwater flows to locally significant wetlands or streams regulated by the FSH Overlay District.
+
+6.
+
+Minimize Loss of Native Vegetation. Development on the site shall minimize the loss of native vegetation. Where such vegetation is lost as a result of development within restricted development areas, it shall be replaced on-site on a two:one basis according to type and area. Two native trees meeting the standards in Section 17.92.50. shall replace each tree removed. Disturbed understory and groundcover shall be replaced by native understory and groundcover species that effectively covers the disturbed area.
+
+B.
+
+Approval Standards for Residential Construction. The following standards apply to residential construction allowed under Subsection 17.60.40.B.3.
+
+1.
+
+Cumulative Impacts. Limited development within the FSH overlay district will not measurably decrease water quantity or quality in affected streams or wetlands below conditions existing at the time the development application was submitted.
+
+2.
+
+Impervious Surface Area. The maximum impervious surface coverage within restricted development areas shall be 2,500 square feet, unless an exception is granted as part of a discretionary review, pursuant to Subsection 17.60.20.B.7.d.
+
+3.
+
+Construction Materials and Methods. Construction materials and methods shall be consistent with the recommendations of special reports, or third-party review of special reports.
+
+4.
+
+Cuts and Fills. Development shall not result in cuts or fills in excess of three feet except for basement construction, unless specifically approved by the Director as part of a discretionary review.
+
+5.
+
+Minimize Wetland and Stream Impacts. Development on the site shall maintain the quantity and quality of surface and groundwater flows to locally significant wetlands or streams regulated by the FSH Overlay District, consistent with the recommendations of special reports, or third-party review of special reports.
+
+6.
+
+Minimize Loss of Native Vegetation. Where native vegetation is lost as a result of development within restricted development areas, it shall be replaced on-site on a two:one basis according to type and area. Two native trees meeting the standards in Section 17.92.50. shall replace each tree removed. Disturbed understory and groundcover shall be replaced by native understory and groundcover species that effectively covers the disturbed area.
+
+C.
+
+All development permits for areas partially or fully within the Area of Special Flood Hazard shall be reviewed by the Director to determine that:
+
+1.
+
+The permit requirements of Chapter 17.60 have been satisfied;
+
+2.
+
+All other required state and federal permits have been obtained; and,
+
+3.
+
+For residential construction allowed under Subsection 17.60.40.B.3., the standards in Section 17.60.70.G. have been met; or
+
+4.
+
+For all other uses, the site is reasonably safe from flooding.
+
+D.
+
+Conditions. The required reports shall include design standards and recommendations necessary for the engineer and landscape expert to certify that the standards of this chapter can be met with appropriate mitigation measures. These measures, along with third party reviewer and staff recommendations, shall be incorporated as conditions into the final decision approving the proposed development.
+
+E.
+
+Assurances and Penalties. Assurances and penalties for failure to comply with mitigation, engineering, erosion, and water quality plans required under this chapter shall be as stated in Chapter 17.06.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.70. - Floodplain regulations.
+
+
+This section regulates development within the Area of Special Flood Hazard. For purposes of this section, "floodplain functions" mean flood storage, water quality, and riparian vegetation conditions. A "floodplain mitigation assessment" is an assessment of the portions of a site that are within the special flood hazard area, performed by a qualified professional, that identifies existing site conditions before development occurs, describes the impact the proposed development would have on existing floodplain functions within the applicable portion of the existing site, and identifies the mitigation needed for the proposed development to result in no net loss of those floodplain functions. The City website includes the guidance prepared by the Federal Emergency Management Agency for preparation of a floodplain mitigation assessment.
+
+"No net loss" means adverse impacts to floodplain functions are avoided or offset so that there is no net change in the applicable floodplain functions from the existing condition when a development application is submitted to the City, as further described in NMFS Consultation No. NWR-2011-3197. A "qualified professional" is a person who has a minimum of a bachelor's degree in wildlife or fisheries habitat biology, or a related degree in a biological field from an accredited college or university with a minimum of four years' experience as a practicing fish or wildlife habitat biologist; or is listed on the Oregon Department of Transportation's official list of consultants qualified to provide Endangered Species Act Documentation.
+A.
+
+An application for a permit to develop in the area of special flood hazard shall include the following: 1. Either:
+
+a.
+
+A statement confirming that the applicant has obtained a floodplain mitigation assessment of the proposed development performed by a qualified professional;
+
+b.
+
+A statement that, in addition to being covered by the consultation and biological opinion issued by the National Oceanic and Atmospheric Administration's National Marine Fisheries Service (NMFS) for the Federal Emergency Management Agency's implementation of the National Flood Insurance Program in Oregon (NMFS Consultation No. NWR-2011-3197), the development proposed by the application is a project or project action that is covered by another formal consultation with NMFS or the United States Fish and Wildlife Service, pursuant to Section 4(d), 7, or 10 of the Endangered Species Act of 1973;
+
+c.
+
+A statement that the development proposed by the application fits within the nature and scope of the project types that are addressed in an existing full programmatic habitat assessment of all current and reasonably foreseeable future conditions; or
+
+d.
+
+A statement that the development proposed by the application is exempt from the requirement for a floodplain mitigation assessment because it is one or more of the following activities:
+
+i.
+
+Normal maintenance, repairs, or remodeling of structures, such as re-roofing and replacing siding, that does not (1) alter the footprint or expand the roof of the structure or (2) constitute a substantial improvement or repair of substantial damage (meaning the work must be less than 50 percent of the market value of the structure(s)).
+
+ii.
+
+Routine maintenance of streets, sidewalks, paths and roads (including but not limited to filling potholes, repaving, and installing signs and traffic signals) that does not alter contours or culverts, that is less than six inches above grade, and that does not expand paved areas;
+
+iii.
+
+Routine maintenance of landscaping that does not include grading, excavation, or filling;
+
+iv.
+
+Routine agricultural practices such as tilling, plowing, harvesting, soil amendments, and ditch cleaning that does not alter the ditch configuration and that removes all spoils from the special flood hazard area or tills spoils into fields as a soil amendment;
+
+v.
+
+Routine silviculture practices (harvesting of trees), including hazardous fuels reduction and hazard tree removal with root balls left in place;
+
+vi.
+
+Removal of noxious weeds and hazard trees or replacement of non-native vegetation with native vegetation;
+
+vii.
+
+Normal maintenance of above and below ground utilities and facilities, such as replacing downed power lines and utility poles that does not result in a net change in footprint;
+
+viii.
+
+Normal maintenance of a levee or other flood control facility prescribed in the operations and maintenance plan for the levee or flood control facility (this does not include repair from flood damage, expansion of the prism, expansion of the face or toe or addition of protection on the face or toe with rock armor);
+
+ix.
+
+Habitat restoration activities;
+
+x.
+
+Activities with the sole purpose of creating, restoring, or enhancing natural functions associated with floodplains, streams, lakes, estuaries, marine areas, habitat, and riparian areas, provided the activities meet federal and state standards and do not include structures, grading, fill, or impervious surfaces;
+
+xi.
+
+Repair to onsite septic systems, provided ground disturbance is the minimal necessary and best management practices are utilized to prevent stormwater runoff and soil erosion; and
+
+xii.
+
+Pre-emptive removal of documented susceptible trees to manage the spread of invasive species.
+
+2.
+
+If the applicant has confirmed that it has obtained a floodplain mitigation assessment under Section 17.60.70.A.1.a. above, a statement confirming that the proposed development activities, as shown on the design plans and drawings submitted with the application, include measures to incorporate all mitigation identified in the floodplain mitigation assessment as needed for no net loss of floodplain functions.
+
+B.
+
+The City will deny a permit to develop in the area of special flood hazard unless the applicant submits a statement meeting the requirements of Section 17.60.70.A.1.
+
+C.
+
+Residential and Non-residential Structures. No new residential structures (including manufactured dwellings) with the exception of Subsection 17.60.40.B.3., non-residential structures or critical facilities shall be permitted in the Area of Special Flood Hazard.
+
+D.
+
+Flood Storage Capacity. On-site flood storage capacity shall not decrease as a result of development. The cumulative effects of any proposed development shall not reduce flood storage capacity or raise base flood elevations on- or off-site.
+
+E.
+
+Public Facilities and Private Roads. Generally, public facilities and private roads shall avoid restricted development areas. However, where avoidance cannot be achieved consistent with City-approved facilities master plans and sound engineering principles, the following standards shall be met.
+
+1.
+
+The facility shall be designed, located and constructed to minimize flood damage, excavation and loss of native vegetation and to avoid raising flood levels. Facilities and roads located within a floodway may be permitted only where a registered professional engineer certifies based on hydrologic and hydraulic analysis performed in accordance with standard engineering practice that encroachments shall not result in any increase in flood levels during the occurrence of the base flood discharge. Utilities necessary to serve permitted development, or a single family home on a legally-approved lot-of-record, may be permitted only where a registered professional engineer or architect certifies based on hydrologic and hydraulic analysis performed in accordance with standard engineering practice that encroachments shall not result in any increase in flood levels during the occurrence of the base flood discharge, and that water quality will not be adversely affected.
+
+2.
+
+Water supply and sanitary sewer facilities shall be designed, located and constructed to avoid infiltration of floodwaters into the system, and to avoid discharges from such facilities to floodwaters, streams and wetlands.
+
+3.
+
+On-site septic systems, waste disposal systems, and private wells shall be prohibited within the FSH overlay district.
+
+F.
+
+Structural Elevation Report. An application for any substantially improved structure, nonresidential structure or manufactured dwelling within the area of special flood hazard shall include the elevation, referenced to mean sea level, of the lowest floor, of the bottom of the lowest horizontal structural member (for manufactured dwellings), or the elevation to which the structure will be flood-proofed. The elevation of the lowest floor, and any basement area and the elevation of the service facilities/mechanical equipment shall also be provided. A professional engineer registered in Oregon shall prepare the structural elevation certificate.
+
+G.
+
+Existing Residential Structures (including new construction allowed per Subsection 17.60.40.B.3.). Improvements and substantial improvements to an existing residential structure (including manufactured dwellings) or replacement of a single family residence per Subsection 17.60.20.B.8. in a flood-prone area shall comply with the following:
+
+1.
+
+Improvements shall be adequately anchored to prevent flotation, collapse, or lateral movement resulting from hydrodynamic and hydrostatic loads, including the effects of buoyancy;
+
+2.
+
+Materials used shall be resistant to flood damage;
+
+3.
+
+Utilities shall be designed and/or located to prevent water from entering or accumulating within the components during flooding;
+
+4.
+
+The lowest floor (including basement) shall be elevated at least one foot above the base flood level;
+
+5.
+
+Fully enclosed areas below the lowest floor used solely for vehicle parking or building access or storage in an area other than a basement shall be designed to automatically equalize hydrostatic flood forces on exterior walls by allowing for the entry and exit of floodwaters and shall either be designed and certified by a registered professional engineer or architect or meet or exceed the following minimum criteria;
+
+a.
+
+A minimum of two openings having a total net area of not less than one square inch for every square foot of enclosed area subject to flooding shall be provided. The bottom of all openings shall be no higher than one foot above grade. Openings may be equipped with screens, louvers, valves, or other coverings or devices provided that they permit the automatic entry and exit of floodwaters.
+
+H.
+
+Existing Non-Residential Structures. Improvements and substantial improvements to existing non- residential structures within the floodplain shall comply with one of the following:
+
+1.
+
+Elevate the lowest floor (including basement) at least one foot above the base flood level and ensure that any area below the elevated lowest floor meets the requirements of paragraph E.5. and E.5.a., above;
+
+2.
+
+Walls and utilities of structures below the base flood level shall be floodproofed so that the structure is watertight with walls substantially impermeable to the passage of water and structural components having the capability of resisting hydrostatic and hydrodynamic loads and effects of buoyancy. A registered professional engineer or architect shall develop and/or review structural design, specifications, and plans for the construction, and shall certify that the design and methods of construction are in accordance with accepted standards of practice for meeting the applicable provisions of NFIP Regulations per Volume 44 of the Code of Federal Regulations.
+
+Upon completion of the structure, certification by a registered professional engineer or surveyor that the elevation requirements of the lowest floor, including basement, of this section have been satisfied shall be provided to the Director for verification; or certification by a registered professional engineer or architect that the floodproofing requirements of this section are satisfied, including the specific elevation in relation to mean sea level to which such structures are floodproofed, shall be provided to the Director for verification.
+
+I.
+
+Recreational Vehicles. Recreational Vehicles within the floodplain shall comply with one of the following:
+
+1.
+
+Be located on the site for fewer than 180 consecutive days; and
+
+2.
+
+Be fully licensed and ready for highway use; or
+
+3.
+
+Meet the elevation and anchoring requirements for manufactured homes dwellings and permit requirements of NFIP Regulations.
+
+J.
+
+Anchoring. All new construction and substantial improvements (including manufactured dwellings) shall be anchored to prevent flotation, collapse or lateral movement of the structure resulting from hydrodynamic and hydrostatic loads, including the effects of buoyancy.
+
+K.
+
+Construction materials and methods.
+
+1.
+
+All new construction and substantial improvements shall be constructed with materials resistant to flood damage;
+
+2.
+
+All new construction and substantial improvements shall be constructed using methods and practices that minimize flood damage; and,
+
+3.
+
+All new construction and substantial improvement shall be constructed with electrical, heating, ventilation, plumbing, and air conditioning equipment and other service facilities that are designed and/or located so as to prevent water from entering or accumulating within the components during conditions of flooding.
+
+L.
+
+Appurtenant Structures (Detached Garages and Storage Structures). Appurtenant structures used solely for parking of vehicles or storage may be constructed such that the floor is below the Base Flood Elevation, provided the structure is designed and constructed in accordance with the following requirements:
+
+1.
+
+Use of the appurtenant structure must be limited to parking of vehicles or storage;
+
+2.
+
+The portions of the appurtenant structure located below the Base Flood Elevation must be built using flood resistant materials;
+
+3.
+
+The appurtenant structure must be adequately anchored to prevent flotation, collapse and lateral movement;
+
+4.
+
+Any machinery or equipment servicing the appurtenant structure must be elevated or floodproofed to or above the Base Flood Elevation;
+
+5.
+
+The appurtenant structure must meet the floodway requirements of Chapter 17.60 and must not result in any increase in base flood elevations and this shall be demonstrated through hydrologic and hydraulic analyses performed in accordance with standard engineering practices;
+
+6.
+
+The appurtenant structure must be designed to allow for the automatic entry and exit of flood waters in accordance with Subsection 17.60.70.G.5.;
+
+7.
+
+The appurtenant structure must not be used to store toxic material, oil or gasoline, or any priority persistent pollutant identified by the Oregon Department of Environmental Quality unless confined in a tank elevated at least one foot above Base Flood Elevation; and
+
+8.
+
+Shall not exceed the size requirements in the State of Oregon Residential and Structural Specialty Codes and shall not exceed one story.
+
+Detached garages, storage structures and other appurtenant structures not meeting the above standards must be constructed in accordance with all applicable standards of Chapter 17.60.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.80. - Notification to other entities and recordkeeping.
+
+
+A.
+
+Whenever a watercourse is to be altered or relocated, notification shall be sent to Clackamas County and DLCD prior to such alteration or relocation of a watercourse, and submit evidence of such notification to the Federal Insurance Administrator through appropriate notification means (i.e. submittal of a Letter of Map Revision (LOMR)), and assure that the flood carrying capacity of the altered or relocated portion of said watercourse is maintained.
+
+B.
+
+Base Flood Elevations may increase or decrease resulting from physical changes affecting flooding conditions. As soon as practicable, but not later than six months after the date such information becomes available, the Director shall notify the Federal Insurance Administrator of the changes by submitting technical or scientific data in accordance with Volume 44 Code of Federal Regulations Section 65.3. Such a submission is necessary so that upon confirmation of those physical changes affecting flooding conditions, risk premium rates and floodplain management requirements will be based upon current data.
+
+C.
+
+Notify the Federal Insurance Administrator in writing of acquisition by means of annexation, incorporation or otherwise, of additional areas of jurisdiction.
+
+D.
+
+Obtain and maintain the following for public inspection and make available as needed:
+
+1.
+
+Obtain and record the actual elevation (in relation to the mean sea level) of the lowest floor (including basements) of all new or substantially improved structures, and whether or not the structure contains a basement.
+
+2.
+
+For all new or substantially improved floodproofed structures:
+
+a.
+
+Verify and record the actual elevation (in relation to mean sea level), and
+
+b.
+
+Maintain the floodproofing certifications required in Subsection 17.60.70.H.
+
+3.
+
+Obtain and maintain certification for flood openings when certification is required under Subsection 17.60.70.G.5.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.90. - Water quality treatment facilities.
+
+
+Tickle Creek, the Sandy River, and associated natural drainage ways are vital to Sandy's recreationally based economy and to the quality of life of Sandy residents. Placement of water quality facilities shall be limited as follows:
+A.
+
+The water quality facility shall not be constructed in restricted development areas, except where necessary to serve approved development within restricted development areas (e.g., a road) and where no reasonable alternative exists in buildable areas of the site.
+
+B.
+
+Where the approval authority determines that a more efficient and effective regional site exists within the sub-basin, the water quality facility may be constructed off-site.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.100. - Density transfer provisions.
+
+
+Residential density transfer may be approved subject to the following:
+A.
+
+Required Setback Areas. Density may be transferred from restricted development areas (i.e., steep slopes, protected water features and required setbacks) to buildable portions of the site.
+
+B.
+
+Density Maximum. The maximum gross density for the buildable area of the site shall not exceed 150 percent of the maximum density allowed by the underlying zoning district for that buildable area.
+
+C.
+
+Housing Types Not Permitted in Underlying Zoning District. Housing types not permitted in the underlying zoning district may only be approved through the SAP (specific area plan) process.
+
+D.
+
+Transfer Area. Transfer of density may only occur within the same property and/or to properties contiguous to the primary property. The term "primary property" identifies the legal lot from which density is to be transferred to "secondary property(s)." Further development or land use action on the primary or secondary properties shall be reviewed together in the same application.
+
+(Ord. No. 2021-16, § 9(Exh. I), 8-16-2021; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.110. - Adjustments.
+
+
+Variances to Chapter 17.60 provisions are not permitted. In contrast, adjustments to dimensional standards of the underlying zoning district may be approved when necessary to further the intent of this overlay district.
+A.
+
+Adjustment Option. One or more adjustments to the setback, height, or lot area standards of the underlying zoning district may be approved to allow development consistent with the intent of the FSH overlay district. The intent of the adjustment process is to reduce adverse impacts on water quantity and quality, locally significant wetlands and perennial streams, and on the potential for slope or flood hazards.
+
+B.
+
+Adjustment Criteria. A special FSH adjustment may be requested when development is proposed within the FSH overlay district. Adjustments are reviewed under the procedure type applicable to the primary application. The applicant shall demonstrate that the following criteria are fully satisfied:
+
+1.
+
+The adjustment is the minimum necessary to allow a permitted use, while at the same time minimizing disturbance to restricted development areas.
+
+2.
+
+Explicit consideration has been given to maximizing vegetative cover, minimizing excavation, and minimizing impervious surface area on restricted development areas.
+
+3.
+
+Design options have been considered to reduce the impacts of development, including but not limited to multi-story construction, siting of residences close to streets to reduce driveway distance, maximizing the use of native landscaping materials, minimizing parking area and garage space.
+
+4.
+
+In no case shall the impervious surface area (including the building footprint, parking areas, accessory structures, swimming pools and patios) exceed 2,500 square feet of restricted development area except for a private drive that reduces the disturbance to restricted development areas.
+
+5.
+
+Assurances are in place to guarantee that future development will not encroach further onto restricted development areas under the same ownership.
+
+6.
+
+The Planning Commission or Director may impose any reasonable condition necessary to mitigate identified impacts resulting from development on otherwise restricted development areas.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)
+
+
+Sec. 17.60.120. - Disclaimer.
+
+
+The degree of hazard protection afforded by adherence to the provisions of this chapter is considered reasonable for regulatory purposes and is based on the best available engineering and scientific information available to the City. Larger floods than those anticipated by the chapter may occur. Landslides may occur in areas outside of the delineated steep slope and constrained slope boundaries. This chapter does not imply that areas outside the FSH overlay district or land use permitted within FSH boundaries will be free from any significant flooding, mass movement, landslide damage, erosion, or water pollution. This chapter shall not create liability on the part of the City of Sandy for any damage that results from reliance on the provisions of this chapter or any administrative decision lawfully made thereunder.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-16, § 1(Exh. A), 7-21-2025)

@@ -1,0 +1,53 @@
+16.46.010 Number of units in residential development.
+
+A major factor in determining the appropriate density of residential development, particularly in higher density areas, is vehicular access. In order to assure that sufficient access is provided for emergency response as well as the convenience of residents, the following special limitations shall be placed on the allowable number of units in a residential development:
+
+A. Single-family residential access, public and private roads:
+
+1. Roads shall be a minimum of 28 feet in width with parking restricted to one side only, or a minimum of 34 feet in width with no parking restriction.
+
+2. The number of units permitted are as follows:
+
+One access: 30 units
+
+Two accesses: 132 units
+
+Three accesses: 207 units
+
+For more than three accesses, use the following formula: # of units permitted = (60x (1 + (.05 x # of access points))) x (# of access points)
+
+B. Single ownership developments (condominiums, townhouses, manufactured homes, multi-family developments, etc.).
+
+1. Two lane access roads/drives shall be a minimum width of 20 feet with no parking permitted, or 28 feet with parking restricted to one side only, or 34 feet with no parking restrictions. Three lane access roads/drives shall be a minimum width of 32 feet with no parking permitted, or 40 feet with parking restricted to one side.
+
+2. The number of units permitted are as follows:
+
+Two lane access road/drive Three lane access road/drive
+
+One access: 30 units One access: 30 units
+
+Two accesses: 165 units Two accesses: 220 units
+
+Three accesses: 258 units Three accesses: 345 units
+
+For more than three accesses on a two lane access road/drive, use the following formula:
+
+# of units permitted = (75 x (1 + (.05 x # of access points))) x (# of access points) (round down to the nearest whole number)
+
+For more than three accesses on a three lane access road/drive, use the following formula:
+
+# of units permitted = (100 x (1 + (.05 x # of access points))) x(# of access points)
+
+C. The Planning Commission may allow increases beyond the maximum number of units listed in subsections A and B. Such increases shall be based upon findings that no unwarranted problems for the public street system or emergency service provision will result.
+
+D. All turnaround systems shall meet or exceed the requirements of the parking provisions of Chapter 16.10.
+
+E. All on-site private roads and drives shall be designed and constructed to provide safe intersections and travel surfaces which will not result in hazards for motorists, bicyclists or pedestrians.
+
+F. N. Maple Street, north of NE 23rd Avenue, and S. Elm Street, south of SW 13th Avenue, shall be exempt from the residential unit restrictions for single access roads, provided that legally binding alternative emergency vehicle access is available. Road width requirements for these roads shall remain in effect.
+
+G. Public roads accessing any development shall be a minimum of two travel lanes (twenty-four (24) feet of paved width) to the nearest improved collector or arterial street, provided that any required improvement to provide additional pavement width to access a development meets both of the following conditions:
+
+1. An essential nexus is proven, whereby the required improvement is directly related to the proposed development; and
+
+2. Rough proportionality is proven, whereby the cost of the required improvement is roughly proportional to the impact that the development will have on the infrastructure. Specific findings are required for each of the conditions listed above. If either of the two conditions are not met, the infrastructure is considered to be inadequate, and conditioning approval of a development on the widening of the access to the development is considered to be inappropriate. (Ord. 955 section 22, 1996; Ord. 1019 section 21, 1999; Ord. 1237, 2007; Ord. 1514, 2019)

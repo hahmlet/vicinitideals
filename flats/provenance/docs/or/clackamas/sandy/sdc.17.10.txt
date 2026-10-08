@@ -1,0 +1,930 @@
+CHAPTER 17.10 - DEFINITIONS[3]
+
+
+Footnotes:
+--- (3) ---
+Editor's note— Pre-republication, this chapter was last revised by Ord. No. 2020-24, effective September 21, 2020. Any amendments occurring post-republication have a history note in parenthesis at the bottom of the amended section.
+
+
+Sec. 17.10.00. - Intent.
+
+
+These definitions are intended to provide specific meanings for words and terms commonly used in zoning and land use regulations.
+
+
+Sec. 17.10.10. - Meaning of words generally.
+
+
+All words and terms used in this Code have their commonly accepted dictionary meaning unless they are specifically defined in this Code or the context in which they are used clearly indicated to the contrary.
+
+
+Sec. 17.10.20. - Meaning of common words.
+
+
+A.
+
+All words used in the present tense include the future tense.
+
+B.
+
+All words used in the plural include the singular, and all words used in the singular include the plural unless the context clearly indicates to the contrary.
+
+C.
+
+The word "shall" is mandatory and the word "may" is permissive.
+
+D.
+
+The word "building" includes the word "structure."
+
+E.
+
+The phrase "used for" includes the phrases "arranged for," "designed for," "intended for," "maintained for," and "occupied for."
+
+F.
+
+The word "land" and "property" are used interchangeably unless the context clearly indicates to the contrary.
+
+G.
+
+The word "person" may be taken for persons, associations, firms, partnerships or corporations.
+
+
+Sec. 17.10.30. - Meaning of specific words and terms.
+
+
+The listed specific words and terms are defined as follows:
+
+Abandonment: To cease or discontinue a use or activity without intent to resume, but excluding temporary or short-term interruptions to a use or activity during periods of remodeling, maintaining or otherwise improving or rearranging a facility, or during normal periods of vacation or seasonal closure. An "intent to resume" can be shown through continuous operation of a portion of the facility, maintenance of sewer, water and other public utilities, or other outside proof of continuance such as bills of lading, delivery records, etc.
+
+Abandonment, discontinued use: Discontinued use shall mean nonuse and shall not require a determination of the voluntary or involuntary use or intent to resume the use.
+
+Abutting lots: Two or more lots joined by a common boundary line or point. For the purposes of this definition, lots that are separated by a road, street, alley, or public way are not considered abutting.
+
+Access: The place, means, or way by which pedestrians or vehicles shall have ingress and egress to a property, use or parking space.
+
+Accessway: A pathway, shared-use path, walkway, or pedestrian way connecting two rights-of-way to one another where no vehicle connection is made.
+
+Accessory dwelling unit: A second dwelling unit either in or added to an existing single-family detached dwelling, or in a separate accessory structure on the same lot as the single-family dwelling, for use as a complete, independent living facility with provisions within the accessory apartment for cooking, eating, sanitation and sleeping. Such a dwelling is an accessory use to the single-family dwelling.
+
+Accessory structure (detached): A structure that is incidental to and subordinate to the main use of property and located on the same lot as the main use; freestanding and structurally separated from the main use.
+
+Accessory structure (attached): A structure that is clearly incidental to and subordinate to the main use of the property; attached to the principal structure by the wall or roof of the latter or by the roof over a breezeway connecting the accessory and principal structures.
+
+Accessory use: A use on the same lot with and of a nature customarily incidental and subordinate to the principal use.
+
+Acre, gross: An acre area of land which includes in its measurement public streets or other areas to be dedicated or reserved for public use.
+
+Acre, Net: An acre area of land which does not include public streets or other areas to be dedicated or reserved for public use.
+
+Activate (as in "activate wall"): To make the exterior of a building inviting to pedestrians through a combination of elements, such as an enhanced customer entrance, weather protecting features (such as canopies or awnings), pedestrian-scale signage, and transparent windows allowing for views into and from interior building spaces. As used in Chapter 17.90, an elevation is "activated" when it meets applicable window transparency requirements, and contains a public entrance with a pedestrian shelter extending at least five feet over an adjacent sidewalk, walkway, or civic space.
+
+Actual Construction: The placing of construction materials in a permanent position and fastened in a permanent manner.
+
+Adjacent lot: Adjacent means the same as abutting lot.
+
+AE zone (floodway): Area of special flood hazard with water surface elevations determined as depicted on the Flood Insurance Rate Map (FIRM).
+
+Affordable housing: Housing for households with incomes at or below the Clackamas County median, as determined by the U.S. Department of Housing and Urban Development (HUD), on the assumption that these households do not spend more than 30 percent of their income for housing costs. Housing costs for renters include rent and heating. Housing cost for homeowners includes principal on the mortgage plus interest, taxes, insurance, and heating. Note: Median income figures depend upon the household size assumed. These numbers are updated annually by HUD. More specific definitions of "affordable housing" are specified for certain circumstances in Chapter 17.88.
+
+A-frame building: A building with steeply angled sides that meet at the top of the building in the shape of an "A"; more than half of the two side elevations comprise the primary roof form.
+
+After school program: A program designed to provide care for and educational enhancement to children immediately following school release.
+
+Agriculture: Nursery activity, horticulture and similar activities for the cultivation of commercial crops in addition to pasturing, breeding, dairying, and similar uses of animals, and poultry for commercial use; does not include processing, slaughtering, large scale poultry raising, commercial forestry and similar uses.
+
+Aisle: The driving portion of the parking area. The aisle provides access to each space.
+
+Alley: A public or private way permanently reserved as a means of access to abutting property, usually with principal access from another street.
+
+Alteration: Any change, addition, or modification in construction or occupancy of an existing building or structure.
+
+Amendment: A change in the wording, context, or substance of the Development Code, or a change in the zone boundaries or area district boundaries upon the zoning map.
+
+Anchor space/store/building: The largest single use, or the largest space designed for a single store or use, on a site.
+
+Ancillary structure/store/building: An accessory structure, store, or building. See also, Accessory Use.
+
+Angled: Any parking space that is not parallel to the curb or driving aisle.
+
+Apartment: A dwelling unit which is located within a multi-family dwelling but excluding condominiums. (Multi-family dwelling is defined under Building Types.)
+
+Appeal, floodplain: A request for a review of the Floodplain Administrator's interpretation of any provision of this chapter or a request for a variance.
+
+Application: Documents and materials submitted or to be submitted to the City by a person which are related to that person's request for a decision under the Development Code.
+
+Area of shallow flooding: A designated Zone AO or AH on a community's Flood Insurance Rate Map (FIRM) with a one percent or greater annual chance of flooding to an average depth of one to three feet where a clearly defined channel does not exist, where the path of flooding is unpredictable, and where velocity flow may be evident. Such flooding is characterized by ponding or sheet flow.
+
+Area of special flood hazard: The land in the floodplain within a community subject to a one percent or greater chance of flooding in any given year. It is shown on the Flood Insurance Rate Map (FIRM) as Zone A, AO, AH, A1-30, AE, A99, AR. "Special flood hazard area" is synonymous in meaning with the phrase "area of special flood hazard."
+
+Assisted living: Assisted living facilities are places that provide housing, personal care, or assistance to residents that need help with activities of daily living, who are usually elderly or disabled persons. At least one person responsible for providing daytime care, protection, supervision, monitoring and/or training or treatment of residents is present on the site at all times. Larger group-living facilities may offer shared facilities for eating, hygiene, and/or recreation. Tenancy is for longer than one month.
+
+Automobile fueling station: Automotive fueling station means any premises used primarily for supplying motor fuel, oil, minor servicing, excluding body and fender repair, and the sale of accessories as a secondary service for automobiles, at retail direct to the customer.
+
+Automobile wrecking yard: The dismantling or wrecking of used motor vehicles or trailers, or the storage, sale or dumping of dismantled, partially dismantled, obsolete or wrecked vehicles or their parts.
+
+Average daily traffic (ADT): Two-direction, 24-hour total count of vehicles crossing a line perpendicular to the road on an average weekday.
+
+Base flood: A flood having a one percent chance of being equaled or exceeded in any given year.
+
+Base flood elevation (BFE): The elevation to which floodwater is anticipated to rise during the base flood.
+
+Basement: Any area of a building having its floor subgrade below ground level on all sides.
+
+Batten seam: Application of a batten where two exterior boards or panels adjoin (e.g., board and batten siding).
+
+Bay (building design): The division of a building (usually repeating) between vertical lines or planes, especially the entire space included between two adjacent supports.
+
+Bed and breakfast inn: A house, or portion thereof, where short-term lodging rooms and meals are provided. The operator of the inn shall live on the premises or in adjacent premises.
+
+Berm: An earthen mound designed to provide a visual interest, screen undesirable views, and/or decrease noise.
+
+Big-box, or large-format commercial/industrial: Any single building containing more than 30,000 square feet of gross floor area in the C-1 zone, or greater than 60,000 square feet of gross floor area in any other commercial or industrial zone.
+
+Block: A tract of land bounded by street or by a combination of streets and public parks, cemeteries, railroad rights-of-way, drainageways, or unsubdivided land.
+
+Block length: The distance along a block face measured from curb to curb between the edges of the two bounding intersections.
+
+Bond: Any form of security (including a cash deposit, surety bond, collateral, property, or instrument of credit) in an amount and form satisfactory to the City.
+
+Breezeway: A structure for the principal purpose of connecting the primary building or buildings on a property with other primary buildings or accessory buildings.
+
+Buffer: A combination of physical space and vertical elements, such as plants, berms, fences or walls, designed to provide space or distance, obstruct undesirable views, serve as an acoustic barrier, generally reduce impacts of adjacent development, or separate and screen incompatible land uses from each other.
+
+Building: Any structure used or intended for support, shelter or enclosure of any persons, animals, goods, equipment or chattels and property of any kind. If within an Area of Special Flood Hazard then the definition of "Structure" provided in Chapter 17.10 shall apply.
+
+Building Types:
+A.
+
+Nonresidential: That group of building types comprising the following:
+
+1.
+
+Detached: A single building, freestanding and structurally separated from other buildings.
+
+2.
+
+Attached: Two or more buildings placed side by side so that some structural parts are touching one another.
+
+B.
+
+Residential: That group of building types comprising the following:
+
+1.
+
+Single detached: One dwelling unit, freestanding and structurally separated from any other dwelling unit or buildings, located on a lot or development site, including manufactured homes as defined in this chapter and modular and prefabricated structures as defined in ORS 197A.015. Also referred to as "single-family dwelling."
+
+2.
+
+Single detached (zero lot line): A single detached structure with no setback from one lot line.
+
+3.
+
+Duplex: Two independent dwelling units located on one lot or development site. The two dwelling units may be attached or detached, as shown in the images below. A duplex could be two units on a single lot, or on separate lots if divided pursuant to a middle housing land division.
+
+4.
+
+Single attached (zero lot line): Two dwelling units located on separate lots but attached side by side sharing some structural parts at a common property line with no setback from one lot line.
+
+5.
+
+Attached (row house): More than two dwelling units, each unit located on its own separate lot, and placed side by side but sharing some structural parts at a common property line.
+
+6.
+
+Multi-family dwelling: At least three dwelling units in any vertical or horizontal arrangement, located on a lot or development site. An existing dwelling may be utilized as part of a multi-family dwelling when redevelopment of the site occurs and does not have to be attached to another structure. Apartment and condominium are synonymous in reference to multi-family dwellings in the development code.
+
+C.
+
+The following commonly used terms are not considered building types for purposes of this Code.
+
+1.
+
+Cluster: An arrangement of building types designed to retain open space areas equal to or greater than the cumulative total open space areas normally required and maintaining the permitted gross density of a site.
+
+2.
+
+Condominium: A form of ownership where the owner has a deed to a volume of space, and is governed by the provisions of ORS Chapter 100.
+
+Building envelope: That portion of a lot or development site exclusive of the areas required for front, side, and rear yards and other required open spaces; and which is available for siting and constructing a building or buildings.
+
+Building height: See Height of Buildings definition.
+
+Building line: A line on a plat indicating the limit beyond which buildings or structures may not be erected, or the minimum or maximum distance as prescribed by this Code between the property line abutting a street and the closest point of the foundation of any building or structure related thereto. Building line means a line established by this title to govern the placement of a building with respect to the front lot line through the setback requirements of a minimum front yard. A building line is ordinarily parallel to the front lot line and at a distance in accordance with the setback requirement.
+
+Bulk plant: An establishment where commodities, including both liquids and solids, are received by pipelines, tank car, tank vehicle, or other container, and are stored or blended in bulk for the purpose of distribution by pipeline, tank car, tank vehicle or container.
+
+Carport: A stationary-roofed structure or a portion of a building open on two or more sides primarily used for the parking of motor vehicles.
+
+Cemetery: Land used or intended to be used for the burial of the dead and related cemetery activities, including: columbarium, crematoriums, mausoleums, and mortuaries, when operated in conjunction with and within the boundary of such cemetery.
+
+Change of zone: The legislative act of rezoning one or more lots or parcels.
+
+Church: An institution that people regularly attend to participate in or hold religious services, meetings and other activities.
+
+City: The City of Sandy, a municipal corporation of the State of Oregon.
+
+Civic space: A public or quasi-public gathering space, such as a plaza, square, outdoor seating area, bus waiting area, garden, fountain, sculpture or public art display, or similar space, oriented to pedestrians and connecting one or more developments to the adjacent streetscape.
+
+Clinic: A building or portion of a building designed and used for the diagnosis and treatment of human patients that does not include overnight care facilities, including medical, dental and psychiatric services.
+
+Commercial day care facility: Any business other than a family day care home providing adult supervision for children or adolescents.
+
+Commission: The Planning Commission.
+
+Common open space: An area within a development designed and intended for the use or enjoyment of all residents of the development or for the use and enjoyment of the public in general.
+
+Comprehensive plan: The comprehensive development plan for the City of Sandy, comprising plans, maps or reports, or any combination thereof relating to the future economic and physical growth and development or redevelopment of the city.
+
+Community service use: A community use, including but not limited to, schools, churches, community centers, fire stations, libraries, parks and playgrounds, cemeteries, or government buildings.
+
+Concrete form: A method of concrete construction where members are cast horizontally near their eventual location and integrate textures or patterns replicating other materials.
+
+Conditional use: A use that would not be generally appropriate within a zoning district but which, if controlled as to number, area, location, or relation to the neighborhood, would not be detrimental to the public health, safety, or general welfare.
+
+Condominium: A form of ownership where the owner has a deed to a volume of space, and is governed by the provisions of ORS Chapter 100.
+
+Congregate living: A structure containing nine or more bedrooms and with paid or volunteer staff providing meal preparation and other supportive services to occupants.
+
+Conservation easement: An easement granting a right or interest in real property that is appropriate to retaining land or water areas predominately in their natural, scenic, open or wooded condition; retaining such areas as suitable habitat for fish, plants, or wildlife; or maintaining existing land uses.
+
+Consolidation: The elimination of a property line or lines of unplatted land to create a single unit of land where more than one unit previously existed.
+
+Contiguous: Having a property line, zoning boundary or wall in common. For the purposes of this definition, no boundary line shall be deemed interrupted by a road, street, alley or public way, it being the intent of this definition to treat property lying on the opposite sides of a road, street, alley or public way as contiguous.
+
+Cooperative: A group or association which has taken a deed or lease to property and which issues stock upon which the tenant's rights to proprietary leases are based. The stock, or other evidence of interest in the cooperative corporation or association, shall be purchased by persons who are tenants in the occupancy of at least 80 percent of the accommodations in the structure and are entitled by reason of such ownership to proprietary leases of such accommodations.
+
+Critical facilities (floodway): Hospitals, fire stations, police stations, storage of critical records, and similar facilities.
+
+Critical root zone: A protection area beneath a tree containing sufficient roots required for future tree health and stability and delineated by a circle with a minimum radius of one foot for each one inch of trunk diameter (see DBH), measured horizontally from the base of the tree.
+
+Cross-gable: Where one gable-ending roof intersects another gable-ending roof. (See graphic below.)
+
+Curtain windows (flush glazing): Preassembled wall units or continuous window glazing providing a flush surface; windows may be separated by metal framing members which may be set entirely behind the glass panes or units. This type of glazing does not allow for the division of windows into small panes with trim.
+
+Day care facility: A child care facility certified to care for 13 or more children, or a facility that is certified to care for 12 or fewer children and located in a building constructed other than a single family dwelling. Also known as a "Certified Child Care Center" as defined in OAR 414, Division 300.
+
+Day care, family: Baby-sitting, care of 12 or fewer children, including resident family members, as accessory to any residential use regardless of full-time or part-time status. Family day care is subject to the definition of home business.
+
+Day(s): Shall mean calendar days unless working days are specified.
+
+DBH: Diameter at Breast Height is the diameter of a tree at four and one-half feet (54 inches) above the highest natural ground level at the base of the trunk.
+
+Density, gross: The number of residential dwelling units per gross acre of land
+
+Density, net: The number of dwelling units per net acre (based on the total area of the parcel) excluding areas dedicated or reserved for public use.
+
+Density transfer receiving areas: Unconstrained buildable land on the same site as land that is partially covered by the FSH overlay zone. Density may be transferred from constrained and unbuildable land to buildable density transfer receiving areas as prescribed in Section 17.60.120.
+
+Detached: A single building, freestanding and structurally separated from other buildings.
+
+Detention, stormwater: The release of surface and stormwater runoff from a site at a slower rate than it is collected by the drainage facility system, the difference being held in temporary storage.
+
+Detention facility, stormwater: A facility that collects water from developed areas and releases it at a slower rate than it enters the collection systems.
+
+Developer: The person, or the person's agents, contractors, successors, or assigns, who have undertaken or are proposing development of a development site.
+
+Development Code: Title 17 of the Sandy Municipal Code.
+
+Development site: One or more adjacent, legally established lots or parcels of land on which a developer proposes or undertakes a development.
+
+Development: Any human-made change to improved or unimproved real estate, including but not limited to, construction of buildings or other structures, mining, dredging, filling, grading, compaction, paving, excavation or drilling operations, storage of equipment or materials, stream alteration or channeling, vegetation removal or other similar activities.
+
+Director: Development Services Director of the City of Sandy, or the Director's official designee, with responsibility for administration of this Code.
+
+Discretionary land use review: A land use review procedure that relies on standards or criteria that require interpretation or the exercise of policy or legal judgment. Discretionary land use reviews are processed under the Type II, III, or IV review procedures, as defined in Chapter 17.12.
+
+Disturbance area. For the purposes of Chapter 17.60, FSH Overlay District, an area identified in an approved development permit that contains, or will contain, all legally allowed temporary and permanent development, exterior improvements, and staging and storage areas on the site. A disturbance area may contain two subareas, the permanent disturbance area and the temporary disturbance area.
+A.
+
+Permanent disturbance area. The permanent disturbance area includes all areas occupied by existing or proposed structures or exterior improvements (including landscaping). The permanent disturbance area also includes areas where vegetation must be managed to accommodate overhead utilities, existing or proposed landscaped areas, and roadside areas subject to regular vegetation management to maintain safe visual or vehicle clearance.
+
+B.
+
+Temporary disturbance area. The temporary disturbance area is the portion of the site that will be disturbed for the proposed development but not permanently occupied by structures or exterior improvements. It includes staging and storage areas used during construction and all areas graded to facilitate proposed development on the site, but will not be covered by permanent development. It also includes areas disturbed during construction to place underground utilities, where the land above the utility will not otherwise be occupied by structures or exterior improvements.
+
+District: A land use area or zone established by this title for the designated intent.
+
+Drainageway: A natural or artificial watercourse, including adjacent riparian vegetation, that has the specific function of transmitting natural stream water or storm runoff water from a point of higher elevation to a point of lower elevation.
+
+Drip line (of a tree): A line projected to the ground delineating the outermost extent of foliage in all directions.
+
+Drive-in facility: Any portion of a building or structure from which business is transacted, or is capable of being transacted, directly with customers located in a motor vehicle.
+
+Dwelling unit: An independent living unit containing eight or fewer bedrooms within a dwelling structure designed and intended for residential occupancy by one or more persons and having independent living facilities including permanent provisions for cooking, eating, sanitation and sleeping.
+
+Easement: A right that a person has to use someone's land for a specific purpose such as for access or for utilities.
+
+Effects of buoyancy: Uplift force of water on a submerged or partially submerged object.
+
+Erosion: Detachment and movement of soil, rock fragments, refuse, or any other material, organic or inorganic.
+
+Established grade: The curb line grade established by the City.
+
+Excavation: The process of altering the natural (grade) elevation by cutting and/or filling the earth or any activity by which soil or rock is cut, dug, quarried, uncovered, removed, displaced or relocated.
+
+Expedited land division: A division of land under ORS Sections 197.360 to 197.380. Middle housing land divisions shall be processed pursuant to the expedited land division procedures set forth in ORS Chapters 197.360 to 197.380.
+
+Exterior Display: Exterior display includes the outdoor display of products, vehicles, equipment, and machinery for sale or lease. Exterior display is an outdoor showroom for customers to examine and compare products. It does not include damaged or inoperable vehicles, vehicles or equipment being serviced, bulk goods and materials, and other similar products. Examples of uses that often have exterior display are car and boat sales and leasing, and plant nurseries.
+
+Facing (building elevation): A building elevation that is parallel to, or at an angle of up to 45 degrees from, a specific reference point such as a public street or civic space, and that is visible from the reference point and not obstructed by another building.
+
+Family: Any number of individuals, related or unrelated, living together in a dwelling unit.
+
+Fast-food restaurant: This type of restaurant is characterized by a large carryout clientele and high turnover rates for eat-in customers. These limited service eating establishments do not provide table service.
+
+Fence: Any artificially constructed barrier of any material or combination of materials erected to enclose or screen areas of land, serve as a boundary, or means of protection or confinement.
+
+Fence, sight-obscuring: A fence or evergreen planting of such density and so arranged as to obstruct vision.
+
+Fill: Placement of any soil, sand, gravel, clay, mud, debris, refuse, or any other material, organic or inorganic.
+
+Finished grade (ground level): The average of finished ground levels at the center of all walls of the building unless otherwise specified. Flag lot: A lot that has access to a public right-of-way by means of a narrow strip of land.
+
+Flood or flooding:
+A.
+
+A general and temporary condition of partial or complete inundation of normally dry land areas from:
+
+1.
+
+The overflow of inland or tidal waters.
+
+2.
+
+The unusual and rapid accumulation of runoff of surface waters from any source.
+
+3.
+
+Mudslides (i.e., mudflows) which are proximately caused by flooding as defined in Subsection A.2. of this definition and are akin to a river of liquid and flowing mud on the surfaces of normally dry land areas, as when earth is carried by a current of water and deposited along the path of the current.
+
+B.
+
+The collapse or subsidence of land along the shore of a lake or other body of water as a result of erosion or undermining caused by waves or currents of water exceeding anticipated cyclical levels or suddenly caused by an unusually high water level in a natural body of water, accompanied by a severe storm, or by an unanticipated force of nature, such as flash flood, or by some similarly unusual and unforeseeable event which results in flooding as defined in paragraph A.1. of this definition.
+
+Flood insurance rate map (FIRM): The official map of a community, on which the Federal Insurance Administrator has delineated both the special flood hazard areas and the risk premium zones applicable to the community. A FIRM that has been made available digitally is called a Digital Flood Insurance Rate Map (DFIRM).
+
+Flood insurance study: An examination, evaluation and determination of flood hazards and, if appropriate, corresponding water surface elevations, or an examination, evaluation and determination of mudslide (i.e., mudflow) and/or flood-related erosion hazards.
+
+Floodplain or flood-prone area: Any land area susceptible to being inundated by water from any source. See "Flood or Flooding." The lowland and relatively flat areas adjoining inland waters including, at a minimum, that area identified as the Area of Special Flood Hazard.
+
+Flood-proofing: Any combination of structural and non-structural additions, changes, or adjustments to structures which reduce or eliminate flood damage to real estate or improved real property, water and sanitary facilities, structures and their contents.
+
+Flood, slope and hazard areas (FSH):
+A.
+
+Buildable areas: Accessible lands of less than 25 percent slope that lie outside steep slope and water quality setback areas as defined in Chapter 17.60, Flood and Slope Hazard (FSH).
+
+B.
+
+Restricted development areas: As shown on the City of Sandy Zoning Map including:
+
+1.
+
+Slopes of 25 percent or greater that (a) encompass at least 1,000 square feet and (b) have an elevation differential of at least ten feet.
+
+2.
+
+Protected water features, including locally significant wetlands, wetland mitigation areas approved by the Division of State Lands, and perennial streams.
+
+3.
+
+Required setback areas as defined in section 17.60.30.
+
+Floodway (regulatory floodway): The channel of a river or other water course and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than a designated height.
+
+Floodway: The channel of a river or stream and those portions of the adjoining floodplains required to carry and discharge the base flood flow.
+
+Floor area: The sum of the area of all floors of a building, except basements, unenclosed porches, or attics not designed for human occupancy, or any floor space in any accessory building or any interior building parking areas, exclusive of vent shafts.
+
+Floor, habitable: A floor usable for living purposes, which includes working, sleeping, eating, cooking or recreation, or a combination of the above. A floor used only for storage or parking is not a "habitable floor."
+
+Foster home, adult: Any family home or facility in which residential care is provided for five or fewer adults who are not related to the provider by blood or marriage.
+
+Frontage: That portion of a development site that abuts a public or private street. For the purposes of determining yard requirements on corner lots, all sides of a lot adjacent to a street shall be considered frontage, and yards shall be provided as indicated under "yards" in the definition section.
+
+Flood and slope hazard (FSH) overlay district: An overlay zoning district defining water quality, flood, and slope hazard areas within the City identified on the City of Sandy Zoning Map.
+
+Gabled roof: The generally triangular portion of a wall between the lines of a sloping roof. The shape of the gable and how it is detailed depends on the structural system being used (which is often related to climate and materials) and aesthetic concerns. The City of Sandy requires minimum roof pitch on some buildings which supports the use of gables.
+
+Garage, private: A portion of a primary building or an accessory building, shelter or carport used for the parking or temporary storage of private automobiles, trailers, mobile homes, boats or other vehicles owned or used by occupants of the main building.
+
+Garage, public: A building designed and used for the storage, care, or repair of motor vehicles, including both minor and major mechanical overhauling, paint, and body work or where such vehicles are parked or stored for compensation, hire or sale.
+
+Grade: Given in reference to the slope of land or in reference to construction: is the lowest point of elevation of the finished surface of the ground, paving or sidewalk within the area between the building and the property line, or, when the property line is more than five feet from the building, between the building and a line five feet from the building.
+
+Gross area: The total usable area including accessory space dedicated to such things as streets, easements and uses out of character with the principal use, but within a unit of area being measured.
+
+Ground floor: The floor of a building that is at or nearest the ground level.
+
+Ground floor elevation: The elevation of a building that is at or nearest the ground level measured from the ground to a point ten-feet above the ground. (This definition is used to measure the ground floor area subject to window requirements in Chapter 17.90).
+
+Group care home: A home or residential institution maintained and operated for the supervision, care or training of physically, mentally, or socially handicapped persons, but not including foster homes or detention facilities.
+
+Grove (tree): A stand of three or more trees at least six inches DBH that form a generally continuous canopy, or are spaced as appropriate for that species or species assemblage.
+
+Guest house: An accessory, detached dwelling without kitchen facilities, designed for and used to house transient visitors or guests of the occupants of the main building without compensation.
+
+Half-story: A space under a sloping roof which has the line of intersection of roof decking and exterior wall face not more than five feet above the top floor level. A half-story containing one or more dwelling units shall be counted as a full story.
+
+Half-street improvement: A one-half-street improvement includes curb and pavement two feet beyond the centerline of the right-of-way. A three-quarter street improvement includes curbs on both sides of the street and full pavement between curb faces.
+
+Health/recreation facility: An indoor facility including uses such as game courts, exercise equipment, locker rooms, Jacuzzi, and/or sauna and pro shop.
+
+Hearing authority: The City Council, Planning Commission, or other agency or officer designated by the Development Code to conduct public hearings prior to acting on an application.
+
+Heavy timber: Exposed timber framing or detailing consisting of larger wooden members, with minimum dimensions of six inches by six inches, as opposed to common wood framing which uses many more timbers with smaller dimensions. The methods of fastening the frame members also differ; in conventional framing the members are joined using nails or other mechanical fasteners while timber framing uses mortice and tenon (wood joint) or metal fasteners.
+
+Height of buildings: The vertical distance above a reference datum measured to the highest point of the coping of a flat roof or to the deck line of a mansard roof or to the midpoint of the highest gable of a pitched or hipped roof. The reference datum shall be selected by either of the following, whichever yields a greater height of building:
+A.
+
+The elevation of the highest adjoining sidewalk or ground surface within a five-foot horizontal distance of the exterior wall of the building when such sidewalk or ground surface is not more than ten feet above lowest grade.
+
+B.
+
+An elevation ten feet higher than the lowest grade when the sidewalk or ground surface described in Item "A" above is more than ten feet above lowest grade.
+
+High-turnover sit down restaurant: This type of restaurant consists of a sit-down, full-service eating establishment with turnover rates of approximately one hour or less. This type of restaurant is usually moderately priced and frequently belongs to a restaurant chain. This restaurant type is different than fast-food and quality restaurants as defined in the Institute of Transportation Engineers, Trip Generation manual.
+
+Highest adjacent grade: The highest natural elevation of the ground surface prior to construction next to the proposed walls of a structure.
+
+Hipped roof: A type of roof where all sides slope downwards to the walls. Thus, it is a roof with no gables or other vertical sides to the roof. Where two hipped ("h") roof forms adjoin, the edge is called a valley ("v"). See graphic.
+
+Historic resource alteration: Historic resource alteration means the change, addition, removal, physical modification or repair, which affects the exterior appearance of a landmark, excluding, however, routine maintenance and painting.
+
+Historic resource alteration, major: Means exterior alteration, which is not a minor alteration.
+
+Historic resource alteration, minor: Means exterior alteration which does not change the appearance or material of the landmark or contributing resource as it exists, or duplicates or restores the affected exterior features and material as determined from historic photos, building plan or other evidence or original features or material.
+
+Historic structure (area of special flood hazard): Any structure that is:
+A.
+
+Listed individually in the National Register of Historic Places (a listing maintained by the Department of Interior) or preliminarily determined by the Secretary of the Interior as meeting the requirements for individual listing on the National Register;
+
+B.
+
+Certified or preliminarily determined by the Secretary of the Interior as contributing to the historical significance of a registered historic district or a district preliminarily determined by the Secretary to qualify as a registered historic district;
+
+C.
+
+Individually listed on a state inventory of historic places in states with historic preservation programs which have been approved by the Secretary of Interior; or
+
+D.
+
+Individually listed on a local inventory of historic places in communities with historic preservation programs that have been certified either:
+
+1.
+
+By an approved state program as determined by the Secretary of the Interior or
+
+2.
+
+Directly by the Secretary of the Interior in states without approved programs.
+
+Home business: A lawful commercial activity commonly carried on within a dwelling or attached or detached accessory structure.
+
+Homeowners association (HOA): Has the meaning set forth in ORS 94.550(15).
+
+Hospital: An establishment, which provides sleeping and eating facilities to persons receiving medical, obstetrical or surgical care and nursing service.
+
+Hotel: A facility offering transient lodging accommodations at a daily rate to the general public. A hotel may provide additional services, such as restaurants, meeting rooms, and recreational facilities.
+
+Household:. See definition for "Family."
+
+Hydrodynamic load: Force of water in motion.
+
+Hydrostatic load: Force of water at rest.
+
+Impervious surface: Surface materials, including concrete, asphalt, pavers, plastics, and gravel, which substantially reduce or prevent the infiltration of stormwater into previously undeveloped land.
+
+Irrigation system: Method of supplying water (which can be manually or mechanically controlled) to a needed area.
+
+Junkyard: An area used for the dismantling, storage or handling in any manner of junked vehicles or other machinery, or for the purpose of storage of dismantled material, junk and scrap, and/or where wastes and used or secondhand materials are bought, sold, exchanged, stored, processed, or handled. Materials include, but are not limited to, scrap iron and other metals, paper, rags, rubber tires, and bottles, if such activity is not incidental to the principal use of the same lot.
+
+Kennel: Any premises or building in which four or more dogs or cats at least four months of age are kept commercially for board, propagation or sale.
+
+Kitchen: Any room used, intended or designed for preparation and storage of food, including any room having a sink and provision for a range or stove.
+
+Land area, net: That land area remaining after all area covered by impervious surfaces has been excluded (subtracted).
+
+Land division: Land divided to create legally separate parcels in one of the following ways:
+A.
+
+Partition: A division of land that creates three or fewer lots within a calendar year when such parcel exists as a unit or contiguous units of land under single ownership at the beginning of the year. See also, "replat, minor."
+
+A partition does not include division of land resulting from any of the following:
+
+1.
+
+Establishment or modifications of a "tax lot" by the County Assessor;
+
+2.
+
+A lien foreclosure, foreclosure of a recorded contract for the sale of real property or creation of cemetery lots;
+
+3.
+
+An adjustment of a property line by relocation of a common boundary where an additional unit of land is not created and where the existing unit of land reduced in size by the adjustment complies with any applicable development district criteria established by this Code;
+
+4.
+
+Sale or grant by a person to a public agency or public body for state highway, county road, city street or other right-of-way purposes provided that such road or right-of-way complies with the applicable Comprehensive Plan policies and ORS 215.213 (2)(q)—(s) and 215.283 (2)(p)—(r). See "property line adjustment."
+
+B.
+
+Subdivision: Division of an area or tract of land into four or more lots within a calendar year when such area or tract of land exists as a unit or contiguous units of land under a single ownership at the beginning of such year. See also, "Replat, Major."
+
+Land, intensity of: Relative measure of development impact as defined by characteristics such as the number of dwelling units per acre, amount of traffic generated, and amount of site coverage.
+
+Land, parcel of: Any quantity of land capable of being described with such definiteness that its location and boundaries may be established. Also, a unit of land created by a partition.
+
+Landscape management corridor: The required yards abutting Highway 26 within the C-2, I-I and I-2 zoning districts where the Development Code requires native conifer and deciduous landscaping, creating the appearance of a forested corridor; openings or breaks in the landscape corridor are minimized, allowing for transportation access and framed views into development sites.
+
+Landscaping: The arrangement of trees, grass, bushes, shrubs, flowers, gardens, fountains, patios, decks, outdoor furniture, and paving materials in a yard space. It does not include the placing or installation of artificial plant materials.
+
+Lien foreclosure: A lien foreclosure, foreclosure of a recorded contract for the sale of real property or creation of cemetery lots.
+
+Limited land use decision: Has the meaning set forth in ORS 197.015.
+
+Loading space: An off-street space within a building or on the same lot with a building for the temporary parking of commercial vehicles or trucks while loading or unloading merchandise or materials and which space has direct access to a street.
+
+Lot area: The total horizontal area within the lot lines of a lot.
+
+Lot, corner: A lot situated at the intersection of two streets, the interior angle of such intersection not exceeding 135 degrees.
+
+Lot coverage/building site coverage: Unless otherwise noted in a zoning district, percent of a development site covered, including all gravel and paved surface areas and areas encompassed by buildings.
+
+Lot depth: The distance from the midpoint of the front lot line to the midpoint of the rear lot line. The term "average lot depth" has the same meaning as "lot depth" as defined here.
+
+Lot, interior: A lot other than a corner lot having frontage on only one street.
+
+Lot line: The property line bounding a lot.
+
+Lot line, front: In the case of an interior lot, a property line that abuts the street. In the case of a corner lot with frontage on one transit street, the lot line abutting the transit street shall be the front lot line, pursuant to Section 17.82.20. For all other corner lots, the applicant or property owner can choose which lot line is to be the front.
+
+Lot line, side: Any lot boundary not a front or rear lot line (see figure under "lot line, rear").
+
+Lot line, rear: The recorded lot line or lines most distant from and opposite the front lot line. In the case of an interior triangular lot or lot with more than four sides, however, the rear lot line shall mean a straight line ten feet in length that: a) is parallel to the front lot line or its chord and, b) intersects the other lot lines at points most distant from the front line (see figure below).
+
+Lot of record: A lot or parcel created through applicable land division regulations before adoption of this Code.
+
+Lot, reversed corner: A corner lot whose rear line borders the side yard of another lot, whether or not separated by an alley.
+
+Lot, tax: One parcel of real property shown on the County Assessor's map, and identified by a tax lot number. A tax lot may not necessarily be a lot of record.
+
+Lot, through: A lot whose front and rear lot lines both abut streets.
+
+Lot width: The horizontal distance between the midpoints of the side lot lines. The term "average lot width" has the same meaning as "lot width" as defined here.
+
+Lowest floor: The lowest floor of the lowest enclosed area (including a "basement"). An unfinished or flood resistant enclosure, usable solely for parking of vehicles, building access or storage in an area other than a basement area is not considered a building's lowest floor if the building falls within the "Area of Special Flood Hazard," provided that such enclosure is not built so as to render the structure in violation of the applicable nonelevation design requirements of this chapter.
+
+Mansard roof: A style of hip roof characterized by two slopes on each of its four sides with the lower slope being much steeper, almost a vertical wall, while the upper slope, usually not visible from the ground, is pitched at the minimum needed to shed water. This form may accommodate an additional building story. Often the decorative potential of the Mansard is expressed through the use of convex or concave curvature and with elaborate dormer window surrounds.
+
+Manufactured dwelling: As defined in ORS 446.003, a residential trailer, mobile home or manufactured home. Within a "Special Flood Hazard Area" a manufactured dwelling shall mean a structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities. The term "manufactured dwelling" does not include a "recreational vehicle."
+
+Manufactured dwelling: A structure constructed for movement on the public highways that has sleeping, cooking, and plumbing facilities; that is intended for human occupancy; that is being used for residential purposes; and that was constructed in accordance with federal manufactured housing construction and safety standards and regulations in effect at the time of construction.
+
+Manufactured dwelling park (also mobile home park or trailer park): As defined in ORS 446.003, any place where four or more manufactured dwellings or prefabricated structures, as defined in ORS 455.010, that are relocatable and more than eight and one-half feet wide, are located within 500 feet of one another on a lot, tract or parcel of land under the same ownership, the primary purpose of which is to rent or lease space or keep space for rent or lease to any person for a charge or fee paid or to be paid for the rental or lease or use of facilities or to offer space free in connection with securing the trade or patronage of such person.
+
+Manufactured dwelling space: Any portion of a manufactured dwelling park (See "Manufactured Dwelling Park") which is designated or used for occupancy of one manufactured home or mobile home, including its accessory structures and its outdoor living areas, but exclusive of space provided for the common use of tenants such as roadways and guest parking.
+
+Manufactured dwelling stand: That portion of the manufactured dwelling space reserved for the location of the manufactured home or mobile home.
+
+Marijuana dispensary: Those facilities registered and/or licensed by the state of Oregon as medical marijuana dispensaries and marijuana retailers.
+
+Mean sea level: For purposes of the National Flood Insurance Program, the National Geodetic Vertical Datum (NGVD) of 1929 or other datum, to which Base Flood Elevations shown on a community's Flood Insurance Rate Map are referenced.
+
+Medical facility: A building or portion of a building designed and used for the diagnosis and treatment of human patients or animals including clinic, hospital, and laboratory, but excluding medical marijuana facility, as authorized by state law.
+
+Medical marijuana grow site: Those facilities defined, registered and/or licensed by Oregon Health Authority to grow medical marijuana for more than one registered medical marijuana cardholder.
+
+Middle housing: Middle housing refers to duplexes, triplexes, quadplexes, cottage clusters, and townhouses as defined in ORS 197A.420. For the purposes of middle housing land division, middle housing only refers to duplexes.
+
+Middle housing land division: A partition or subdivision of a lot or parcel on which the development of middle housing is allowed under ORS 197A.420(2) or (3). Middle housing land division applications shall be processed pursuant to the expedited land division procedures set forth in ORS Sections 197.360 to 197.380 and Section 17.18.120 of this development code.
+
+Mobile home: A residential structure intended for permanent human occupancy and constructed for movement on the public highways, constructed prior to adoption of June 15, 1976 U.S. Housing and Urban Development (HUD) standards, but meeting the requirements of Oregon's mobile home laws in effect between January 1, 1962 and June 15, 1976 which met the construction requirements of Oregon Mobile Home Law in effect at the time of construction and which exhibits an Oregon Department of Commerce Insignia of Compliance that indicates conformance with U.S. Department of Housing and Urban Development, HUD, standards.
+
+Modular structure: A structure not built on-site, but which is placed on a permanent foundation and meets the State Building Code standards. "Modular structure" has the same meaning as "prefabricated structure," as defined in ORS 455.010.
+
+Motel: A building or group of buildings on the same lot designed or used primarily for providing sleeping accommodations for automobile travelers and providing automobile parking conveniently located on the premises.
+
+National geodetic vertical datum: An elevation reference mark used in determining a flood boundary and floodway maps, formerly referred to as Mean Sea Level.
+
+New construction (area of special flood hazard): For the purposes of determining insurance rates, structures for which the "start of construction" commenced on or after the effective date of an initial Flood Insurance Rate Map or after December 31, 1974, whichever is later, and includes any subsequent improvements to such structures. For floodplain management purposes, "new construction" means structures for which the "start of construction" commenced on or after the effective date of a floodplain management regulation adopted by a community and includes any subsequent improvements to such structures.
+
+Nonconforming development: A lawful existing structure or use that does not conform to requirements of the district, but which was already in existence on the effective date of this Code or any amendment to it became effective.
+
+Notice of decision: A written communication that specifies the action of a hearing authority or Director concerning a development proposal.
+
+Nuisance: Activity or use that is annoying, unpleasant or obnoxious.
+
+Nursing home: Any home, place, or institution which operates and maintains facilities providing convalescent or nursing care, or both, for a period exceeding 24 hours for six or more ill or infirm patients not related to the nursing home administrator or owner.
+
+Office: A place where the following civic and commercial uses are conducted: Administrative services; business support services; financial, insurance and real estate services; medical services; professional and research services.
+
+Open space, group: Areas intended for common use either privately owned and maintained or dedicated to the City, designed for outdoor living and recreation or the retention of an area in its natural state. Group open spaces may include swimming pools, recreation courts, patios, open landscaped areas, and greenbelts with pedestrian, equestrian, and bicycle trails but do not include off-street parking, maneuvering or loading areas or driveways.
+
+Open space, private: Areas intended for the private use by residents of an individual dwelling unit, designed for outdoor living and recreation or the retention of an area in its natural state.
+
+Private open spaces may include patios and landscaped areas but does not include off-street parking, maneuvering, loading or delivery areas.
+
+Final Order: A written statement of the decision on an application.
+
+Other marijuana facility: Those facilities defined, registered and/or licensed by the state of Oregon including marijuana processing sites, marijuana producers, marijuana processors, marijuana wholesalers, and marijuana testing laboratories.
+
+Overlay district: A development district created by ordinance in recognition of an area's unique characteristics such as environmental or historic resources, natural hazards, or an identified need for redevelopment.
+
+Overnight lodging: A building or group of buildings designed and used primarily for overnight lodging. This definition includes hotels, motels, hostels, bed breakfast inns and similar uses.
+
+Owner: For the purpose of notice, the record owner of the real property as shown on the latest tax rolls of the county. For all other purposes, any person with a legal or equitable interest in the real property.
+
+Parapet: An extended wall surrounding a roof, typically a decorative wall constructed of the same materials as the supporting wall. The parapet serves as building cap and may be stepped (Stepped Parapet) to provide visual relief (articulation) and a transition between buildings of dissimilar height.
+
+Parking area, private: A privately owned property, other than public streets and alleys, on which parking spaces are defined, designated, or otherwise identified for use by the tenants, employees, or owners of the property for which the parking area is required by this title and not open for use by the general public.
+
+Parking area, public: An area permanently available, other than public streets and alleys, on which parking spaces are defined, designated, or otherwise identified for use by the general public which is open for use by the general public, either free or for remuneration. Public parking areas may include parking lots, which may be required by this title for retail customers, patrons, and clients.
+
+Parking bay: Rows of parking separated by an aisle. A parking bay may be single-loaded (parking on one side only) or double-loaded (on both sides).
+
+Parking space: Parking space means an area permanently available for the parking of an automobile.
+
+Pathway: A paved public or private route separated from the street right-of-way that is intended to provide pedestrian or bicycle access to adjacent streets and properties. Pathways can serve both recreational and commuter needs. Pathways may also be known as shared-use paths, walkways or pedestrian ways, and these terms may be used interchangeably throughout the SMC.
+
+Pedestrian-scale: The placement, proportioning, and detailing of building and site design elements resulting in an environment that is comfortable and inviting to pedestrians. Examples of elements that are regulated with the intent of creating pedestrian scale include, but are not limited to: pedestrian ways, parking facilities, street furnishings, civic spaces, building entrances, building articulation, divisions between first and second building stories, weather protecting canopies or awnings, transparent storefront windows, fences, walls, and landscape screening and buffering.
+
+Pedestrian way: A paved public or private route separated from the street right-of-way that is intended to provide pedestrian or bicycle access to adjacent streets and properties. Pedestrian ways can serve both recreational and commuter needs. Pedestrian ways may also be known as shared-use paths, walkways or pathways, and these terms may be used interchangeably throughout the SMC.
+
+Percent of slope: The ratio of vertical distance to horizontal distance (rise divided by run times 100). For example, a 1:4 slope (one-foot rise over a four foot run times 100) is a 25 percent slope.
+
+Pergola: A structure forming a shaded walk or passageway. Pillars support cross beams and a sturdy open lattice, upon which woody vines are typically trained. It may also be part of a building, as protection for an open terrace or civic space.
+
+Person: An individual or any other legal entity.
+
+Plat: Refers to a final subdivision plat, replat, or partition plat.
+
+Plat, partition: A final map, diagram, drawing, replat, or other writing containing all the descriptions, locations, specifications, provisions, and information concerning a partition.
+
+Plat, subdivision: A final map, diagram, drawing, replat, or other writing containing all the descriptions, locations, specifications, dedications, provisions, and information concerning a subdivision.
+
+Portico: A porch leading to the entrance of a building, or extended as a colonnade, with a roof structure over a walkway, supported by columns or enclosed by walls.
+
+Practicable: Capable of being effected, feasible.
+
+Preschool: A facility providing care for children 36 months of age to school age that is primarily educational for four hours or less per day and where no preschool child is present at the facility for more than four hours per day.
+
+Primary entrance: A building entrance accessible to all building users, including employees, customers, residents, and visitors, as applicable.
+
+Primary structure/store/building: The structure or building housing the largest use on a site, as determined by floor area, occupancy rating, trip generation, or similar criteria.
+
+Private outdoor area: See "Open space, private."
+
+Professional office: An office of a practitioner of an occupation or calling requiring the practice of an art or science through specialized knowledge based on a degree issued by an institution of higher learning.
+
+Property line adjustment: The relocation of a common property boundary where an additional unit of land is not created and where an existing unit of land reduced in size by the adjustment complies with any applicable development district regulation.
+
+Public facility: Public facilities include, but are not limited to, sanitary sewer, water, storm drainage, street, communication, electrical and natural gas facilities necessary to support development. There are two types of public facilities:
+
+Public facility, major: Any public service improvement or structure developed by or for a public agency that is not defined as a minor public facility, including but not limited to electrical substations, sewer and water treatment plants, water reservoirs, trunk lines, regional stormwater detention facilities, new or expanded public buildings designed for human occupancy that increase traffic within a neighborhood, and active park improvements such as ball fields or restroom facilities.
+
+Public facility, minor: Minor utility structures (e.g., poles, lines, pipes); minor sewer, water and storm drainage structures and collection system improvements (e.g., pump stations, lines, maintenance holes, valves, hydrants, drains, on-site detention facilities); new or extended public streets (including lane additions); minor improvements to existing streets (e.g., overlays, catch basins, signs, control devices, widening, curbs, gutter, sidewalks); minor transit improvements (e.g., bus stops or shelters); passive park improvements (e.g., trails, benches, native plantings or picnic areas); and transportation improvements identified in the 2023 City of Sandy Transportation System Plan.
+
+Public transit stop: An existing or planned transit stop as shown in Figure 8 of the 2023 Sandy Transportation System Plan or the 2020 Sandy Transit Master Plan.
+
+Recreational vehicle: A vacation trailer or other vehicle or portable unit built on a single chassis, which is either self-propelled or towed or is carried by a motor vehicle and which is designed primarily not for use as a permanent dwelling but as temporary living quarters for recreational, camping, travel or seasonal use.
+
+Recreational vehicle (area of special flood hazard): A vehicle which is built on a single chassis; four hundred square feet or less when measured at the largest horizontal projection; designed to be self-propelled or permanently towable by a light duty truck; and designed primarily not for use as a permanent dwelling but as temporary living quarters for recreational, camping, travel, or seasonal use.
+
+Recreational vehicle park: Any lot of land upon which two or more recreational vehicle sites are located, established, or maintained for occupancy for recreational vehicles of the general public as temporary living quarters, for recreation or vacation purposes. An RV park is intended for use on a temporary basis by campers, vacationers, or travelers.
+
+Replat, major: The reconfiguring of lots in a recorded subdivision plat that results in either the creation of four or more additional lots, deletion of four or more lots, or reconfiguring of four or more lots.
+
+Replat, minor: The reconfiguring of a portion of the lots in a recorded subdivision or partition plat that results in three or fewer lots being created, deletion of three or fewer lots, or reconfiguring of three or fewer lots.
+
+Reserve strip: A narrow strip of land overlaying a dedicated street reserved to the City for control of access until such time as additional right-of-way is accepted by the City for continuation or widening of the street.
+
+Residential facility: Per ORS 197.660 a residential facility, means a residential care or residential training facility, as those terms are defined in ORS 443.400 (Definitions for ORS 443.400 to 443.455), that provides residential care alone or in conjunction with treatment or training or a combination thereof for six to 15 individuals who need not be related. Staff persons required to meet licensing requirements shall not be counted in the number of facility residents, and need not be related to each other or to any resident of the residential facility.
+
+Residential home: Per ORS 197.660 a residential home means a residential treatment or training home, as defined in ORS 443.400 (Definitions for ORS 443.400 to 443.455), a residential facility registered under ORS 443.480 (Definitions for ORS 443.480 to 443.500) to 443.500 (Investigation of registered facilities) or an adult foster home licensed under ORS 443.705 (Definitions for ORS 443.705 to 443.825) to 443.825 (Disposition of penalties recovered) that provides residential care alone or in conjunction with treatment or training or a combination thereof for five or fewer individuals who need not be related. Staff persons required to meet licensing requirements shall not be counted in the number of facility residents, and need not be related to each other or to any resident of the residential home.
+
+Restaurant, drive-in: A retail outlet where food or beverages are sold to a substantial extent for consumption by customers in parked motor vehicles.
+
+Restaurant, fast food: An establishment that offers quick food service of items already prepared and held for service, or prepared, fried, griddled quickly, or heated in a device such as a microwave oven. Orders are not generally taken at the customer's table and food is generally served in disposable wrapping or containers.
+
+Retention facility: A facility to collect and hold stormwater runoff with no surface outflow.
+
+Right-of-way: A public way dedicated for vehicular, bicycle, or pedestrian use.
+
+Riparian area: The area adjacent to a river, lake, or stream, consisting of the area of transition from an aquatic ecosystem to a terrestrial ecosystem.
+
+Row house: More than two attached units, often with two stories and with ground floor access, on individual lots.
+
+Rusticated: A texture produced in ashlar (i.e., dressed stone work) masonry with deep cut 'V' or square joints to contrast with smooth masonry.
+
+Sandy Style: An architectural style developed in the City of Sandy, Oregon that expresses elements of or reflects Cascadian Architecture by adapting appropriate elements of English Arts and Crafts Style (1900—1920) and Oregon Rustic Style (1915—1940) or similar elements.
+
+School: A facility that provides a curriculum of elementary and secondary academic instruction, including kindergartens, elementary schools, junior high or middle schools, and high schools.
+
+Sediment: Any material that is in suspension, is being transported, or has been moved from its site of origin by water, wind, or gravity as a result of erosion.
+
+Self-service storage facility: Real property that is designed and used for renting or leasing individual storage space to occupants who have exclusive access to the storage space to store or remove personal property. A self-service storage facility does not include a transfer and storage business where there are no individual storage areas or where employees are the primary movers of the goods to be stored or transferred.
+
+Service building: A structure in a manufactured (mobile) home or recreational vehicle park containing laundry, restrooms or showers, intended to serve the needs of the residents of the park.
+
+Setback: The minimum allowable horizontal distance from a given point or line of reference, which for purposes of this chapter shall be the property line, to the nearest vertical wall of a building or structure, fence, or other elements as defined by this Code. For the purposes of Chapter 17.60, the point of reference is the protected feature in the FSH Overlay District; setbacks are measured horizontally from, parallel to, and upland from the protected feature.
+
+Shared outdoor recreation area: Areas planned and improved to provide opportunities for active recreation, passive relaxation, or community interaction, and which are accessible to all residents of a development. Examples include, but are not limited to, playgrounds, exercise trails, swimming pools, play fields, tennis courts, community gardens, plazas, picnic areas, passive seating areas, and natural areas.
+
+Shared-use path: A paved public or private route separated from the street right-of-way that is intended to provide pedestrian or bicycle access to adjacent streets and properties. Shared-use paths can serve both recreational and commuter needs. Shared-use paths may also be known as walkways, pathways, or pedestrian ways, and these terms may be used interchangeably throughout the SMC.
+
+Shed dormer: Often used in gable-roofed structures, a shed dormer has a single-planed roof, pitched (sloping away from the structure) at a shallower angle than the main roof.
+
+Shed roof: A single-planed roof with a continuous slope from one end of the structure to the other.
+
+Shopping center: A grouping of retail business and service uses on a single site with common parking facilities.
+
+Sidewalk: A paved pedestrian way, pathway, or walkway within a public right-of-way that is generally located adjacent to and separated from the roadway by a curb, drainage facility (e.g., ditch or swale), or planter strip.
+
+Sidewalk café: An area adjacent to and directly in front of a street-level eating or drinking establishment located within the sidewalk area or pedestrian plaza area of the public right-of-way and used exclusively for dining, drinking, and pedestrian circulation.
+
+Single room occupancy. A residential development with no fewer than four attached units (referred to as "SRO units") that are independently rented and lockable and provide living and sleeping space for the exclusive use of an occupant, but require that the occupant share sanitary or food preparation facilities with other units in the occupancy.
+
+Site plan: A plan, prepared at an approved engineering scale, showing accurately and with complete dimensioning, the boundaries of a site and the location of all buildings, structures, uses, natural resources such as creeks, wetlands, and topography, and site development features proposed for a specific parcel of land.
+
+Site: See "Development site."
+
+Span (roof): The horizontal distance between the outside faces of bearing wall plates measured at the shortest dimension across the building.
+
+Special flood hazard area (SFHA): See "area of special flood hazard."
+
+Split-face concrete: Concrete masonry units or blocks with a split face, a technique that results in two blocks being manufactured as one unit and later split into two. This gives the blocks a rough face replicating the appearance of natural, quarried stone.
+
+Standing seam: A raised joint or rib on a sheet of metal roofing; provides visual relief and may help manage rainwater and snow.
+
+Start of construction (area of special flood hazard): Includes substantial improvement and means the date the building permit was issued, provided the actual start of construction, repair, reconstruction, rehabilitation, addition, placement, or other improvement was within 180 days from the date of the permit. The actual start means either the first placement of permanent construction of a structure on a site, such as the pouring of slab or footings, the installation of piles, the construction of columns, or any work beyond the stage of excavation; or the placement of a manufactured home on a foundation. Permanent construction does not include land preparation, such as clearing, grading, and filling; nor does it include the installation of streets and/or walkways; nor does it include excavation for a basement, footings, piers, or foundations or the erection of temporary forms; nor does it include the installation on the property of accessory buildings, such as garages or sheds not occupied as dwelling units or not part of the main structure. For a substantial improvement, the actual start of construction means the first alteration of any wall, ceiling, floor, or other structural part of a building, whether or not that alteration affects the external dimensions of the building.
+
+Stepped parapet: A parapet with breaks in elevation, usually in a symmetrical pattern, that provides visual relief along a building elevation and a transition between buildings of dissimilar height. May also screen rooftop equipment such as electrical and mechanical equipment.
+
+Stockpile: On-site storage of any soil, sand, gravel, clay, mud, debris, vegetation, refuse or any other material, organic or inorganic, in a concentrated state.
+
+Story: That portion of a building included between the upper surface of any floor and the upper surface of the floor next above, except that the top story shall be that portion of a building included between the upper surface of the top floor and the ceiling above.
+
+Stream bank, top of: The land area immediately above and regularly confining a water body, including a stream, river or associated wetland. The bank has a notably steeper slope than the surrounding landscape. The "bankfull stage" means the stage or elevation at which water overflows the natural banks or streams or other waters of this state and begins to inundate the upland. In the absence of physical evidence, the two-year recurrence interval flood elevation may be used to approximate the bankfull state. The first major break in the slope between the top of the bank at waterline and the surrounding landscape shall be the "top of bank."
+
+Stream: A channel such as a river or creek that carries flowing surface water, including perennial streams and intermittent streams with defined channels, and excluding human-made irrigation and drainage channels.
+
+Street: Designated in the 2023 City of Sandy Transportation System Plan as follows:
+A.
+
+Arterial, principal: These roadways serve the highest volume of motor vehicle traffic and are primarily used for longer distance regional trips. The only roadway in the city classified as a principal arterial is US 26.
+
+B.
+
+Arterial, minor: These interconnect and support the major arterial system and link major commercial, residential, industrial, and institutional areas. These roads have a typical capacity between 8,000 and 16,000 ADT.
+
+C.
+
+Collector streets: These provide both access and circulation within residential neighborhoods and commercial/industrial areas. These roads have a typical capacity between 2,000 and 6,000 ADT. Right-of-way width shall not be less than 44 feet nor more than 78 feet (or 82 feet if it's a green street with swales on both sides).
+
+D.
+
+Local streets: The primary function is to provide access to immediately adjacent land. Service to through-traffic movement on local streets is discouraged. Right-of-way width shall be 54 feet (or up to 60 feet if it's a green street with swales on both sides). ADT shall not exceed 1,000 vehicles/day. Proposed developments that result in more than 1,000 ADT on an existing or proposed local street shall be modified to not exceed the 1,000 ADT threshold on the local street or the proposal may be processed through the procedures in Chapter 17.66 of the Sandy Development Code. Proposed outright permitted projects in the C-1, Central Business District, are exempt from adherence to the ADT standards on local streets.
+
+E.
+
+Cul-de-sac: A local street with only one outlet and having a bulb at the opposite end.
+
+F.
+
+Green street: A street with a water quality treatment and/or conveyance swale on either one or both sides. Swales shall be a minimum of eight feet wide. ADT standards and dimensional standards shall adhere to the standards of the street classification.
+
+G.
+
+Complete Street: A street with facilities to support multiple modes of transportation, including motor vehicles, bicycles, and pedestrians. Complete streets are designed to accommodate multiple users and abilities.
+
+Structure: A building or other improvement that is built, constructed or installed, not including minor improvements, such as fences, utility poles, flagpoles, or irrigation system components that are not customarily regulated through zoning ordinances.
+
+Structure (area of special flood hazard): For floodplain management purposes, a structure is a walled and roofed building, including a gas or liquid storage tank, that is principally above ground, as well as a manufactured dwelling.
+
+Substantial damage: Damage of any origin sustained by a structure whereby the cost of restoring the structure to its before damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred.
+
+Substantial improvement: Any reconstruction, rehabilitation, addition, repair, or other improvement of a structure the cost of which equals or exceeds 50 percent of the market value of the structure, before the "start of construction" of the improvement. This term includes structures which have incurred "substantial damage," regardless of the actual repair work performed.
+This term does not, however, include either:
+
+A.
+
+Any project for improvement of a structure to correct existing violations of state or local health, sanitary, or safety code specifications which have been identified by the Director or their designee and which are the minimum necessary to assure safe living conditions; or
+
+B.
+
+Any alteration of a "historic structure," provided that the alteration will not preclude the structure's continued designation as a "historic structure."
+
+Surface water management system: All natural and constructed facilities used to regulate the quantity and quality of surface water, including drainage easements, culverts, storm drains, catch basins, drainage ditches, natural drainage ways, stream corridors, rivers, ponds, wetlands and impoundments. A surface or stormwater facility serves one or more of three primary functions:
+
+Detention facility: A facility to temporarily store stormwater runoff and subsequently release it at a slower rate than would otherwise occur.
+
+Retention facility: A facility to collect and hold stormwater runoff with no surface outflow.
+
+Water quality facility: A facility, which physically, chemically or biologically removes pollutants and sediments from stormwater before reaching natural wetlands or streams.
+
+T1-11 siding: A composite panel (plywood) siding material with vertical grooves used extensively in the 1980s; prone to dry rot if not sealed and maintained properly.
+
+Temporary use: A use, intended for limited duration, to be located in a zoning district not permitting such use and not constituting or continuing a nonconforming use or building.
+
+Top of bank: See "Stream bank, top of."
+
+Trailer: A structure constructed for movement on public highways that has sleeping, cooking, and plumbing facilities, that is intended for human occupancy, that is being used for residential purposes and that was constructed before January 1, 1962, and, in the case of a mobile home, met the construction requirements of Oregon Mobile Home Law in effect at the time of construction, but has not been demonstrated to conform to the requirements of the building code for other residences.
+
+Transportation System Plan (TSP): The 2023 City of Sandy Transportation System Plan.
+
+Tree: A woody perennial plant usually having one dominant trunk, the capacity to achieve a mature height greater than 16 feet, and primarily referred to as a tree in scientific literature.
+
+Truck terminal: Land and buildings used as a relay station for the transfer of a load from one vehicle to another or one party to another. The terminal cannot be used for permanent or long-term accessory storage for principal land uses at other locations. The terminal facility may include storage areas for trucks and buildings or areas for the repair of trucks associated with the terminal.
+
+Use: An activity or a purpose, for which land or a structure is designed, arranged or intended, or for which it is occupied or maintained.
+
+Variance, area: A dispensation permitted on individual parcels of property as a method of alleviating unnecessary hardship by allowing a deviation from dimensional (i.e., height, bulk, yard, setbacks) requirements of the Code because of unusual or unique conditions.
+
+Variance (area of special flood hazard): A grant of relief by a community from the terms of a floodplain management regulation.
+
+Variance, special: A dispensation permitted for use of structures or buildings as a method of alleviating unnecessary hardship by allowing a reasonable use of a building or structure, which because of unusual or unique circumstances, is denied by the terms of the Code. This type of variance should not be utilized as a substitute for the rezoning process.
+
+Vegetation, native: Vegetation that appears on a list of native vegetation species on file in the Planning Department. In contrast to native vegetation, invasive, exotic or introduced vegetation was imported to Sandy over the last few centuries, and can crowd out native vegetation species.
+
+Vegetation removal: Removal of vegetation within constrained or unbuildable areas governed by the FSH Overlay District.
+
+Vehicle: A device in, upon, or by which any person or property is or may be transported upon a public highway, except devices moved by human power or used exclusively upon stationary rails or tracks.
+
+Vicinity map: A drawing or diagram, to scale, showing the location of the proposed development in relation to abutting properties, major streets and other known landmarks.
+
+Violation (area of special flood hazard): The failure of a structure or other development to be fully compliant with the community's floodplain management regulations. A structure or other development without the elevation certificate, other certifications, or other evidence of compliance required in this chapter is presumed to be in violation until such time as that documentation is provided.
+
+Visible (building elevation): A building elevation that can be seen from an abutting public street or civic space.
+
+Visible transmittance: A measure of the amount of visible light transmitted through a material (typically glass). Information about visible transmittance typically is, or can be, provided by window manufacturers.
+
+Vision clearance area: A triangular area located at the intersection of two streets or a street and an alley; two sides of which are measured from the curb line, or when curbs are absent from the edge of asphalt. Specific distances and prohibitions on visual obstructions within vision clearance areas are contained in Chapter 17.74. The third side of the triangle is a line across the corner of the lot joining the ends of the other two sides.
+
+Visual obstruction: Any fence, hedge, tree, shrub, device, wall, or structure between the elevations of three feet and eight feet above the adjacent curb height or above the elevation of gutter line of street edge where there is no curb, as determined by the City Engineer, and so located at a street, drive, or alley intersection as to limit the visibility of pedestrians or persons in motor vehicles on said streets, drives, or alleys.
+
+Walkway: A paved public or private route separated from the street right-of-way that is intended to provide pedestrian or bicycle access to adjacent streets and properties. Walkways can serve both recreational and commuter needs. Walkways may also be known as shared-use paths, pedestrian ways, or pathways, and these terms may be used interchangeably throughout the SMC.
+
+Warehousing and distribution: A use engaged in storage, wholesale and distribution of manufactured products, supplies and equipment, but excluding bulk storage or materials that are inflammable or explosive or that create hazardous or commonly recognized offensive conditions.
+
+Water area: The area between the banks of a lake, pond, river, perennial stream, or fish-bearing intermittent stream, excluding human-made farm ponds.
+
+Water quality: Water quality for any stream or wetland is measured in terms of the Oregon Water Quality Index (OWQI). The higher the OWQI score, the higher the quality of the water. The OWQI considers the following parameters:
+A.
+
+Water temperature;
+
+B.
+
+Percentage and concentration of dissolved oxygen;
+
+C.
+
+Biochemical oxygen demand;
+
+D.
+
+pH;
+
+E.
+
+Total suspended solids;
+
+F.
+
+Ammonia and nitrate nitrogen;
+
+G.
+
+Total phosphorous; and
+
+H.
+
+Fecal coliforms.
+
+Water quality is degraded when the mean OWQI score for a stream or wetland decreases (or can be expected to decrease) below existing conditions as a result of development.
+
+Wetland: Wetlands generally include, but are not limited to, swamps, marshes, bogs, and similar wet areas. Wetlands are areas inundated or saturated by surface water or groundwater at a frequency and duration sufficient to support a prevalence of hydrophytic vegetation. Hydrophytic vegetation typically is adapted for life in saturated soils, and under normal circumstances would be found in wetlands.
+
+Wetland, locally significant: A wetland that meets the criteria for a "locally significant wetland" in OAR 14186-340 "Procedures for Identifying Locally Significant Wetlands" and which is identified as such on the City of Sandy Local Wetlands Inventory (2001).
+
+Wheel stop: A physical obstruction used to prevent a car from moving beyond a predetermined point, usually installed on the pavement.
+
+Yard: An open space unobstructed from the ground upward except as otherwise provided in this Code.
+
+X zone (floodway): Area of minimal to moderate flood hazards as depicted on the FIRM.
+
+Yard, exterior side: A yard extending from the front lot line to the rear lot line on the street side of a corner lot.
+
+Yard, front: A yard extending across the full width of the lot, the depth of which is the minimum horizontal distance between the front lot line and a line parallel thereto at the nearest point of the primary building.
+
+Yard, rear: A yard extending across the full width of the lot between the primary building and the nearest point of the rear lot line.
+
+Yard, side: A yard between the primary building and the side lot line extending from the front yard or front lot line where no front yard is required, to the rear lot line. The width of the required side yard shall be measured horizontally from the nearest point of the side lot line to the nearest part of the primary building.
+
+Zoning district: An area of land designated for specific types of permitted developments and subject to specified development requirements as set forth in Chapter 17.30 of this Code.
+
+(Ord. No. 2021-03, § 1(Exh. A), 5-17-2021; Ord. No. 2021-16, § 1(Exh. A), 8-16-2021; Ord. No. 2022-07, § 1(Exh. A), 5-2-2022; Ord. No. 2022-26, § 2(Exh. B), 1-17-2023; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-32, § 1(Exh. A), 11-17-2025; Ord. No. 2026-03, § 1(Exh. A), 5-4-2026)

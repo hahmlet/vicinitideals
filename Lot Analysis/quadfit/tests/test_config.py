@@ -49,7 +49,8 @@ def test_juris_city_routing():
     rules = load_rules()
     assert rules.jurisdiction_for_juris_city("PORTLAND") == "portland"
     assert rules.jurisdiction_for_juris_city("maywood park".upper()) == "maywood_park"
-    assert rules.jurisdiction_for_juris_city("SANDY") is None
+    assert rules.jurisdiction_for_juris_city("SANDY") == "sandy"
+    assert rules.jurisdiction_for_juris_city("MOLALLA") is None
 
 
 def test_portland_coverage_curve():

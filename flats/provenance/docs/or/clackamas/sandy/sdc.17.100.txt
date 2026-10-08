@@ -1,0 +1,1723 @@
+CHAPTER 17.100 - LAND DIVISION[36]
+
+
+Footnotes:
+--- (36) ---
+Editor's note— Pre-republication, this chapter was last revised by Ord. No. 2020-24, effective September 21, 2020. Any amendments occurring post-republication have a history note in parenthesis at the bottom of the amended section.
+
+
+Sec. 17.100.00. - Intent.
+
+
+The intent of this chapter is to provide procedures, regulations, and design standards for subdivisions, partitions, replats, middle housing land divisions, and property line adjustments. The City of Sandy requires orderly and efficient land division patterns supported by a connected system of streets, sidewalks, park facilities, trails, fiber (broadband), water supply, sanitary sewer, and stormwater drainage facilities.
+
+The division of land is the initial step in establishing Sandy's ultimate development pattern. The framework of streets, blocks, and individual lots is implemented through the land division process. Density, dimensional standards of lots, setbacks, and building height are established in applicable zoning district regulations.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.10. - General provisions.
+
+
+A.
+
+No land shall be divided prior to approval of a minor partition, major partition, replat, middle housing land division, or subdivision in accordance with Title 17 of the Sandy Municipal Code.
+
+B.
+
+No sale or conveyance of any portion of a lot, other than for a public purpose, shall leave a structure on the remainder of a lot with less than the minimum lot size, density, or setback requirements of the zoning district, with the exception of lots created through the middle housing land division process.
+
+C.
+
+Land division is processed by approval of a tentative plan prior to approval and recording of the final land division plat. Where a Type II or Type III procedure is required for land division approval, that procedure shall apply to the tentative plan approval. The Director has the authority to review a final plat for a land division through a Type I procedure to determine whether the plat complies with the approved tentative plat and conditions.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.20. - Land division classification—Type I, II or III procedures.
+
+
+A.
+
+Type I Land Division (Property Line Adjustment). Property line adjustments shall be a Type I procedure if the resulting parcels comply with standards of the zoning district and this chapter.
+
+B.
+
+Type I Land Division (Minor Partition). A partition shall be a Type I procedure if the land division does not create a street and the resulting parcels comply with the standards of the zoning district and this chapter.
+
+C.
+
+Type II Land Division (Major Partition or Subdivision). A partition or subdivision shall be a Type II procedure when a street is extended, satisfactory street conditions exist, the resulting parcels/lots comply with the standards of the zoning district, and the criteria for partitions and subdivisions in this chapter. Satisfactory street conditions exist when the Director determines all of the following are met:
+
+1.
+
+Existing streets that are stubbed to the property boundaries are connected and extended through to the property boundaries of the subject property.
+
+2.
+
+The land division does not create traffic volumes that exceed average daily traffic (ADT) standards for local streets as detailed in Chapter 17.10, Definitions.
+
+3.
+
+The proposed street layout provides collector and arterial streets substantially as depicted in the 2023 City of Sandy Transportation System Plan, Figure 11. "Substantially as depicted" means that the streets' proposed location is within 100 feet of the depicted location in any direction.
+
+4.
+
+The proposed partition or subdivision provides, as applicable, a street pattern that meets the dimensional standards for blocks as required in Chapter 17.100 and provides street cross-sections that meet the width requirements as detailed in Chapter 17.10, Definitions.
+
+D.
+
+Type II Land Division (Minor Replat). A minor replat of an existing platted subdivision shall be a Type II procedure when the street(s) are existing and no extension or reconstruction/realignment is necessary, the replat does not increase the allowable density, the resulting parcels comply with the standards of the zoning district and this chapter, and the replat involves no more than six lots. Regardless of the number of lots, any replat involving the creation, extension, or modification of a street shall be processed as a major replat.
+
+E.
+
+Middle Housing Land Division. A middle housing land division is a land division for a duplex built in accordance with ORS 197A.420. A middle housing land division results in the creation of separate units of land for each dwelling unit of the duplex, or to create a separate unit of land for an Accessory Dwelling Unit. Following the land division, the units of land resulting from a Middle Housing Land Division shall collectively be considered a single lot along with the parent lot for all planning and zoning purposes except platting and property transfer.
+
+F.
+
+Type III Land Division (Major Partition or Subdivision). A partition or subdivision shall be a Type III procedure if unsatisfactory street conditions exist, the resulting parcels/lots do not comply with the standards of the zoning district, the partition or subdivision does not meet the criteria in this chapter, or the applicant is requesting one or more variances. The Director shall determine that unsatisfactory street conditions exist if one or more of the following are proposed:
+
+1.
+
+Existing streets that are stubbed to the property boundaries are not connected and extended through to the property boundaries of the subject property.
+
+2.
+
+The land division creates traffic volumes that exceed average daily traffic (ADT) standards for local streets as detailed in Chapter 17.10, Definitions.
+
+3.
+
+The proposed street layout does not provide collector and arterial streets substantially as depicted in the 2023 City of Sandy Transportation System Plan, Figure 11. "Substantially as depicted" means that the streets' proposed location is within 100 feet of the depicted location in any direction.
+
+4.
+
+The proposed partition or subdivision does not provide a street pattern that meets the dimensional standards for blocks as required in Chapter 17.100 and/or does not provide street cross-sections that meet the width requirements as detailed in Chapter 17.10, Definitions.
+
+G.
+
+Type III Land Division (Major Replat). A major replat involves the realignment of property lines involving more than six lots, even if the major replat does not increase the allowable density. All parcels resulting from the replat must comply with the standards of the zoning district and this chapter. Any replat involving the creation, extension, or modification of a street shall be processed as a major replat.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.30. - Property line adjustment.
+
+
+Approval of a property line adjustment is required to move or eliminate a common boundary line between two parcels or lots. A Type I property line adjustment is not considered a development action for purposes of determining whether parkland dedication or right-of-way dedication is required.
+A.
+
+Preapplication Conference. The applicant for a property line adjustment shall participate in a preapplication conference with City staff to discuss procedures for approval, applicable state and local requirements, objectives and policies of the Sandy Comprehensive Plan, and the availability of services. A preapplication conference is required.
+
+B.
+
+Application Requirements. Property line adjustment applications shall be made on forms provided by the City and shall be accompanied by:
+
+1.
+
+Two copies of the property line adjustment map at least 11 inches by 17 inches in size;
+
+2.
+
+The required fees;
+
+3.
+
+Narrative explaining the application; and,
+
+4.
+
+Electronic copy of all materials.
+
+C.
+
+Map Information. The property line adjustment map and narrative shall include the following:
+
+1.
+
+The names, addresses, email addresses, and phone numbers of the owner(s) of the subject parcels and authorized representative;
+
+2.
+
+Scale of drawing, north arrow, and date;
+
+3.
+
+Legal description of the property;
+
+4.
+
+Dimensions and size of the parcels or lots involved in the property line adjustment, existing and proposed;
+
+5.
+
+Approximate locations of structures, utilities, rights-of-way, and easements;
+
+6.
+
+Points of driveway access, existing and proposed;
+
+7.
+
+Natural features, including waterways, drainage areas, significant vegetation, and rock outcroppings, and including features detailed in DSL's Statewide Wetlands Inventory and ODFW's Conservation Opportunity Areas maps; and,
+
+8.
+
+Topography, including identification of land exceeding a 25 percent slope.
+
+D.
+
+Approval Criteria. The Director shall approve a request for a property line adjustment if the following criteria are satisfied:
+
+1.
+
+No additional parcels are created.
+
+2.
+
+All parcels meet the density requirements and dimensional standards of the base zoning district.
+
+3.
+
+Access, utilities, easements, and future collector and arterial streets as identified in the 2023 Transportation System Plan are not adversely affected by the property line adjustment.
+
+4.
+
+Existing streets that are stubbed to the property boundaries can be connected and extended in the future.
+
+E.
+
+Final Approval. Three paper copies of the final map shall be submitted within two years of approval of the property line adjustment. The final map shall include a boundary survey, which complies with ORS Chapters 92 and 209. The approved final map, along with required deeds, must be recorded with Clackamas County.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.40. - Minor and major partitions and replats.
+
+
+Approval of a partition or replat is required for a land division of three or fewer parcels in a calendar year. Partitions or replats that do not require creation or extension of a street for access are classified as a Type I, minor partition or replat. Partitions or replats that require creation or extension of a street for access are classified as Type II, major partitions or replats.
+A.
+
+Preapplication Conference. The applicant for a minor or major partition or replat shall participate in a preapplication conference with City staff to discuss procedures for approval, applicable state and local requirements, objectives and policies of the Sandy Comprehensive Plan, and the availability of services. A preapplication conference is required.
+
+B.
+
+Application Requirements. Partition or replat applications shall be made on forms provided by the City and shall be accompanied by:
+
+1.
+
+Two copies of the tentative plan for the minor or major partition or replat;
+
+2.
+
+The required fees;
+
+3.
+
+Any data or narrative necessary to explain the application;
+
+4.
+
+List of and two sets of mailing labels for affected property owners (if Type II, III, or IV), pursuant to Sections 17.22.10 and 17.22.20; and,
+
+5.
+
+Electronic copy of all materials.
+
+C.
+
+Tentative Partition Plan or Replat. The tentative partition plan or replat shall be a minimum of 11 inches by 17 inches in size and shall include the following information:
+
+1.
+
+Scale of drawing, north arrow, and date;
+
+2.
+
+Name and address of the owner of record and of the person who prepared the partition plan or replat;
+
+3.
+
+Zoning, size, and dimensions of the property to be partitioned or replatted;
+
+4.
+
+Size, dimensions, and identification of proposed parcels (i.e., Parcel 1, Parcel 2, Parcel 3);
+
+5.
+
+Approximate location of any structures on the property to be partitioned or replatted, including setbacks to proposed parcel boundaries;
+
+6.
+
+Location, names, and widths of streets, sidewalks, and bikeways within the property to be partitioned or replatted and extending 1,000 feet beyond the property boundaries;
+
+7.
+
+Location, width, and purpose of existing and proposed easements on the property to be partitioned or replatted;
+
+8.
+
+Location and size of sanitary sewer, water, and stormwater drainage facilities proposed to serve the property to be partitioned or replatted;
+
+9.
+
+Natural features, including waterways, drainage areas, significant vegetation, and rock outcroppings, and including features detailed in DSL's Statewide Wetlands Inventory and ODFW's Conservation Opportunity Areas maps;
+
+10.
+
+Topography, including identification of land exceeding a 25 percent slope;
+
+11.
+
+Tree preservation plan detailing building footprints and critical root zones of trees proposed for retention;
+
+12.
+
+A plan for future parcel redivision, if the proposed parcels are large enough to be redivided under the comprehensive plan or zoning designation.
+
+D.
+
+Approval Criteria. The Director or Planning Commission shall review the tentative plan for a minor partition, major partition, or replat based on the classification procedure (Type I, II or III) and the following approval criteria:
+
+1.
+
+The proposed partition or replat meets the density requirements, setbacks, and dimensional standards for all lots in the base zoning district or zoning districts if multiple zoning districts exist in the proposed partition or replat.
+
+2.
+
+The proposed partition or replat meets the requirements of the Bornstedt Village Overlay (BVO), if the proposed partition or replat is located in the BVO, or other specific area plan, if the proposed partition or replat is located in another specific plan area, as required in Chapter 17.54.
+
+3.
+
+The proposed partition or replat meets the requirements of hillside development as required in Chapter 17.56.
+
+4.
+
+The proposed partition or replat meets the requirements of the flood and slope hazard overlay district as required in Chapter 17.60.
+
+5.
+
+The proposed partition or replat meets the additional setback standards on collector and arterial streets as required in Chapter 17.80.
+
+6.
+
+The proposed partition or replat meets the building orientation standards on transit streets as required in Chapter 17.82.
+
+7.
+
+The proposed partition or replat meets all improvement standards for sidewalks, pedestrian connections including tracts and easements, bicycle facilities, water facilities, sanitary sewer facilities, stormwater facilities, and all other standards as required in Chapter 17.84.
+
+8.
+
+The proposed partition or replat includes the dedication of land, or a fee in-lieu of land as required in Chapter 17.86 and the 2022 Parks and Trails Master Plan.
+
+9.
+
+The proposed partition or replat will meet the requirements of Chapter 17.90 at the time of building construction.
+
+10.
+
+The proposed partition or replat meets the landscaping requirements of Chapter 17.92.
+
+11.
+
+The proposed partition or replat provides on-street parking, off-street parking, driveway spacing, and driveway widths as required in Chapter 17.98.
+
+12.
+
+The proposed partition or replat provides tree retention as required in Chapter 17.102.
+
+13.
+
+The proposed partition or replat provides a street pattern that meets the dimensional standards for blocks as required in Chapter 17.100 and street cross-sections that meet the width requirements as detailed in Chapter 17.10, Definitions.
+
+14.
+
+The proposed street layout includes the siting of all collector and arterial streets substantially as depicted in the 2023 Transportation System Master Plan, Figure 11. "Substantially as depicted" means that the streets' proposed location is within 100 feet of the depicted location in any direction.
+
+15.
+
+The proposed street improvements, including sidewalks, planter strips or swales, street trees, street lighting, curbs, asphalt, and vehicular and bicycle lanes and striping, are consistent with Figures 18 through 24 of the 2023 Transportation System Master Plan. The improvements shall be constructed to the standards described in the Oregon Standard Specifications for Construction (OSSC) 2021 (or most recent revision) and the AASHTO Policy on Geometric Design of Highways and Streets (Green Book)—2018 (or most recent revision).
+
+16.
+
+The proposed partition or replat is consistent with the design standards set forth in this chapter.
+
+17.
+
+The proposed partition or replat creates traffic volumes that do not exceed average daily traffic (ADT) standards for local streets as detailed in Chapter 17.10, Definitions.
+
+18.
+
+The proposed subdivision includes utilities that meet the requirements of the 2022 City of Sandy Water System Master Plan and the City of Sandy Wastewater System Facilities Plan.
+
+19.
+
+The proposed partition or replat includes the installation of all utilities underground, including electric, natural gas, fiber, telecommunication lines, water, and sanitary sewer, and the required easements for such utilities.
+
+E.
+
+Conditions. The Director or Planning Commission may require dedication of land and easements and may specify such conditions or modifications of the tentative partition plan or replat as necessary to ensure compliance with the applicable standards and criteria.
+
+F.
+
+Approval of Tentative Partition Plan or Replat. When a tentative partition plan or replat has been approved, all copies shall be marked with the date and conditions of approval. One copy shall be returned to the applicant, one copy shall be sent to the county, and one copy shall be retained by the City.
+
+G.
+
+Tentative Plat Expiration Date. The final plat shall be delivered to the Director for approval within two years following approval of the tentative plat, and shall incorporate any modification or condition required by approval of the tentative plat. The Director may, upon written request, grant an extension of the tentative plat approval for up to one additional year. The one-year extension by the Director is the maximum extension that may be granted for a partition or replat.
+
+H.
+
+Submission of Final Plat. The applicant shall survey the partition or replat and prepare a final plat in conformance with the tentative plat approval and the requirements of ORS Chapter 92.
+
+I.
+
+Information on Plat. In addition to information required for the tentative plat or otherwise specified by state law, the following information shall be shown on the final plat for the partition or replat:
+
+1.
+
+Tract boundary lines, right-of-way lines of streets, and property lines with dimensions, bearings, or deflection angles and radii, arcs, points of curvature, and tangent bearings. All bearings and angles shall be shown to the nearest one-second and all dimensions to the nearest 0.01 foot. If circular curves are proposed in the plat, the following data must be shown in table form: curve radius, central angles, arc length, and bearing of long chord.
+
+2.
+
+Easements denoted by fine dotted lines, clearly identified and, if already of record, their recorded references. If an easement is not definitely located of record, a statement of the easement shall be given. The width of the easement, its length and bearing, and sufficient ties to locate the easement with respect to the subdivision shall be shown. If the easement is being dedicated by the plat, it shall be properly referenced in the owner's certificates of dedication.
+
+3.
+
+Any building setback lines if more restrictive than the City zoning ordinance.
+
+4.
+
+Location and purpose for which sites, other than residential lots, are dedicated or reserved.
+
+5.
+
+Easements and any other areas for public use dedicated without any reservation or restriction.
+
+6.
+
+A copy of any deed restrictions and restrictive covenants written on the face of the plat or prepared to record with the plat with reference on the face of the plat.
+
+7.
+
+The following certificates that may be combined where appropriate:
+
+a.
+
+A certificate signed and acknowledged by all parties having any recorded title interest in the land, consenting to the preparation and recording of the plat.
+
+b.
+
+A certificate signed and acknowledged as above, dedicating all land intended for public use except land that is intended for the exclusive use of the lot owners in the plat, their licensees, visitors, and tenants.
+
+c.
+
+A certificate with the seal of and signed by the engineer or the surveyor responsible for the survey and final plat.
+
+d.
+
+Other certificates now or hereafter required by law.
+
+8.
+
+Supplemental Information with Plat. The following data shall accompany the final plat:
+
+a.
+
+A preliminary title report issued by a title insurance company in the name of the owner of the land, showing all parties whose consent is necessary and their interest in the land.
+
+b.
+
+Sheets and drawings showing the following:
+
+i.
+
+Traverse data including the coordinates of the boundary of the plat and ties to section corners and donation land claim corners, and showing the error of closure, if any.
+
+ii.
+
+The computation of distances, angles, and courses shown on the plat.
+
+iii.
+
+Ties to existing monuments, proposed monuments, adjacent subdivisions, street corners, and state highway stationing.
+
+c.
+
+A copy of any deed restrictions or recorded covenants applicable to the partition or replat.
+
+d.
+
+A copy of any dedication requiring separate documents.
+
+e.
+
+A list of all taxes and assessments on the land which have become a lien on the land.
+
+f.
+
+A certificate by the applicant's engineer that the applicant has complied with the improvement requirements.
+
+9.
+
+Certification by the Public Works Director or by the owner of a privately owned domestic water supply system that water will be available to the property line of each and every lot depicted in the final plat.
+
+J.
+
+Approval Signatures for Final Partition Plan or Replat. Following review and approval of a final partition plan or replat, the Director shall:
+
+1.
+
+Review Plat for Accuracy. The Director may require field investigations to verify that the plat survey is accurate. The applicant shall be notified and afforded an opportunity to make corrections if needed.
+
+2.
+
+Sign the plat to certify that the map is approved.
+
+3.
+
+Notify the applicant that the partition map or replat and accompanying documents have been approved and are ready for recording with the Clackamas County Recorder.
+
+4.
+
+Deliver the signed original to the applicant who shall deliver the original for recording at the County Recorder's office.
+
+K.
+
+Effective Date for Final Partition Map Approval. The partition or replat shall become final upon recording of the approved partition map or replat together with any required documents from the land use decision with the County Recorder. Work specifically authorized following tentative approval may take place prior to processing of the final partition map or replat. The documents effectuating a partition or replat shall become null and void if not recorded with the County Recorder within one year following approval.
+
+L.
+
+Improvements. The same improvements shall be installed to serve each parcel of a partition or replat as required of a subdivision. Improvement standards are set forth in Chapter 17.84.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.50. - Middle housing land divisions.
+
+
+A.
+
+Applicability. When land which has been, or is proposed to be, developed for middle housing is proposed to be partitioned or subdivided so that each dwelling unit will be located on its own separate lot, the partition or subdivision shall be processed as a middle housing land division pursuant to this section, in-lieu of the standards and procedures otherwise applicable to partitions and subdivisions included under this chapter.
+
+B.
+
+Procedure Type. Unless an applicant requests that the application be reviewed as a Type II administrative review, a middle housing land division shall be processed as an expedited land division as provided under ORS 197.360 through ORS 197.380.
+
+C.
+
+Submittal Requirements. An application for a middle housing land division shall include the following:
+
+1.
+
+The information required under Section 17.18.30;
+
+2.
+
+List and two sets of mailing labels for property owners within 100 feet of the subject property;
+
+3.
+
+Two copies of a site plan for the middle housing development as it relates to the existing lot. The site plan shall be a minimum of 11 inches by 17 inches in size and shall contain the following information:
+
+a.
+
+Scale and north arrow;
+
+b.
+
+The boundaries, dimensions, and area of the parent lot and resulting middle housing lots;
+
+c.
+
+The location, width, and names of all existing streets, flag lot accessways, and public accessways abutting the perimeter of the lot;
+
+d.
+
+The location, width, curve radius, grade, and names of all proposed streets, flag lot accessways, and public accessways;
+
+e.
+
+The location and use of all existing and proposed buildings and accessory structures on the lot, indicating the setbacks to all property lines and adjacent on-site structures and identification of any structures that will be removed;
+
+f.
+
+The location of all existing and proposed off-street parking and vehicle use areas;
+
+g.
+
+Identification of vehicle, pedestrian, and bicycle parking and circulation areas, including handicapped parking spaces, and accessible routes of travel;
+
+h.
+
+Driveway locations, bike paths, transit stops, sidewalks, and other bike and pedestrian pathways, curbs, and easements;
+
+i.
+
+The location, height, and material of fences, berms, walls, and other existing and proposed screening;
+
+j.
+
+The location of all existing trees and vegetation required to be protected under Section 17.60.40, Subsection 17.92.10.C., and Section 17.102.50; and
+
+k.
+
+The location of all existing and proposed street trees required under Section 17.92.30;
+
+4.
+
+Two copies of a tentative plan map for the middle housing development as it relates to the proposed lots. The tentative plan map shall be a minimum of 11 inches by 17 inches in size and shall contain the following information:
+
+a.
+
+A title block on each sheet indicating the names and addresses of the landowner; the names and addresses of the professional engineers or surveyors responsible for preparing the plan; the date; and the township, range, and section of the subject property;
+
+b.
+
+Scale and north arrow;
+
+c.
+
+The location of all property lines within 50 feet of the perimeter of the subject property;
+
+d.
+
+The boundaries, dimensions, and area of each proposed lot;
+
+e.
+
+The location, width, and names of all existing streets, flag lot accessways, and public accessways abutting the perimeter of the subject property;
+
+f.
+
+The location, width, curve radius, grade, and names of all proposed streets, flag lot accessways, and public accessways;
+
+g.
+
+The location and use of all buildings and accessory structures that will be located on each proposed lot, indicating the distance of such buildings and accessory structures to proposed lot lines and to adjacent structures on abutting lots.
+
+h.
+
+The location of all existing and proposed easements necessary to serve the development;
+
+i.
+
+The location, dimensions, and use of all existing and proposed public areas, including, but not limited to, stormwater management facilities and detention facilities;
+
+j.
+
+The location of any ditches, waterways, detention facilities, sewage disposal systems, and wells on the subject property, indicating which facilities will remain and which will be removed or decommissioned; and
+
+k.
+
+The location of any natural topographic features on the subject property, including, but not limited to, creeks, drainage ways as shown on the most recent USGS maps, wetlands as shown on the Local Wetland Inventory, and floodplains.
+
+5.
+
+A current title report for the property;
+
+6.
+
+A completed tree inventory detailing tree location, species, size (DBH), and condition as well as which, if any, trees are proposed for removal;
+
+7.
+
+A tree protection plan for trees required to be retained;
+
+8.
+
+A geological assessment or geo-technical report, if required by Chapter 17.56, or a certification from an engineering geologist or a geotechnical engineer that landslide risk on the site is low, and that there is no need for further landslide risk assessment;
+
+9.
+
+A preliminary grading plan depicting proposed site conditions following completion of the proposed development, when grading of the subject property is necessary to accommodate the proposed development.
+
+10.
+
+A utility plan showing the location of existing and proposed waterlines, sanitary sewer lines, and stormwater lines; and
+
+11.
+
+A description of the proposed stormwater management system, including pre and post construction conditions, prepared in accordance with the 2020 City of Portland Stormwater Management Manual.
+
+D.
+
+Approval Criteria. The Director shall review middle housing land division applications based on the procedure set forth in Chapter 17.18 and the following approval criteria:
+
+1.
+
+A proposal for development of middle housing shall be in compliance with the Oregon Residential Specialty Code and land use regulations applicable to the original lot or parcel allowed under ORS 197A.420(5);
+
+2.
+
+Separate utilities are provided for each dwelling unit;
+
+3.
+
+The following easements are shown for each dwelling unit on the tentative plan:
+
+a.
+
+Easements necessary for locating, accessing, replacing and servicing all utilities;
+
+b.
+
+Easements for pedestrian access from each dwelling unit to a public road;
+
+c.
+
+Easements necessary for any common use areas or shared building elements; and
+
+d.
+
+Easements necessary for any dedicated driveways or parking.
+
+4.
+
+The middle housing land division results in exactly one dwelling unit on each resulting lot or parcel, except for lots, parcels, or tracts used as common areas;
+
+5.
+
+The application demonstrates that buildings or structures on the middle housing lots created by the middle housing land division will comply with applicable building code provisions relating to new property lines, and, notwithstanding the creation of new lots or parcels, that structures or buildings located on the middle housing lots will comply with the Oregon Residential Specialty Code;
+
+6.
+
+The final plat shall include a notation indicating that the land division was approved through a middle housing land division and that the lots shall not be further divided;
+
+7.
+
+The final plat shall include a note indicating that neither a Homeowners Association nor Covenants, Conditions, and Restrictions can prohibit middle housing land division;
+
+8.
+
+The deed shall contain a reference to the final plat, which includes a notation that the land division was approved though a middle housing land division and that the lots shall not be further divided; and
+
+9.
+
+The proposal shall include street frontage improvements where a resulting lot or parcel abuts the street consistent with the 2023 Transportation System Plan.
+
+E.
+
+Conditions of Approval. Conditions may not be placed on the approval of a middle housing land division except to:
+
+1.
+
+Prohibit further division of the resulting lots;
+
+2.
+
+Prohibit the construction of an accessory dwelling unit on any of the resulting lots;
+
+3.
+
+Require dedication of right-of-way when an existing street abutting the property does not conform to the requirements of Section 17.10.30;
+
+4.
+
+Require boundary street improvements when an existing street abutting the property does not conform to the requirements of the adopted street section consistent with the 2023 Transportation System Plan; and
+
+5.
+
+Require a notation on the final plat indicating that the approval of the land division was given under ORS 92.031.
+
+F.
+
+Submission of Final Plat. The applicant shall survey the middle housing land division and prepare a final plat in conformance with the tentative plat approval and the requirements of ORS Chapter 92.
+
+G.
+
+Information on Plat. In addition to information required for the tentative plat or otherwise specified by state law, the following information shall be shown on the final plat for the middle housing land division:
+
+1.
+
+Tract boundary lines, right-of-way lines of streets, and property lines with dimensions, bearings, or deflection angles and radii, arcs, points of curvature, and tangent bearings. All bearings and angles shall be shown to the nearest one-second and all dimensions to the nearest 0.01 foot. If circular curves are proposed in the plat, the following data must be shown in table form: curve radius, central angles, arc length, and bearing of long chord.
+
+2.
+
+Easements denoted by fine dotted lines, clearly identified and, if already of record, their recorded references. If an easement is not definitely located of record, a statement of the easement shall be given. The width of the easement, its length and bearing, and sufficient ties to locate the easement with respect to the subdivision shall be shown. If the easement is being dedicated by the plat, it shall be properly referenced in the owner's certificates of dedication.
+
+3.
+
+Any building setback lines if more restrictive than the City zoning ordinance.
+
+4.
+
+Location and purpose for which sites, other than residential lots, are dedicated or reserved.
+
+5.
+
+Easements and any other areas for public use dedicated without any reservation or restriction.
+
+6.
+
+A copy of any deed restrictions and restrictive covenants written on the face of the plat or prepared to record with the plat with reference on the face of the plat.
+
+7.
+
+The following certificates that may be combined where appropriate:
+
+a.
+
+A certificate signed and acknowledged by all parties having any recorded title interest in the land, consenting to the preparation and recording of the plat.
+
+b.
+
+A certificate signed and acknowledged as above, dedicating all land intended for public use except land that is intended for the exclusive use of the lot owners in the plat, their licensees, visitors, and tenants.
+
+c.
+
+A certificate with the seal of and signed by the engineer or the surveyor responsible for the survey and final plat.
+
+d.
+
+Other certificates now or hereafter required by law.
+
+8.
+
+Supplemental Information with Plat. The following data shall accompany the final plat:
+
+a.
+
+A preliminary title report issued by a title insurance company in the name of the owner of the land, showing all parties whose consent is necessary and their interest in the land.
+
+b.
+
+Sheets and drawings showing the following:
+
+i.
+
+Traverse data including the coordinates of the boundary of the plat and ties to section corners and donation land claim corners, and showing the error of closure, if any.
+
+ii.
+
+The computation of distances, angles, and courses shown on the plat.
+
+iii.
+
+Ties to existing monuments, proposed monuments, adjacent subdivisions, street corners, and state highway stationing.
+
+c.
+
+A copy of any deed restrictions or recorded covenants applicable to the partition or replat.
+
+d.
+
+A copy of any dedication requiring separate documents.
+
+e.
+
+A list of all taxes and assessments on the land which have become a lien on the land.
+
+f.
+
+A certificate by the applicant's engineer that the applicant has complied with the improvement requirements.
+
+9.
+
+Certification by the Public Works Director or by the owner of a privately owned domestic water supply system that water will be available to the property line of each and every lot depicted in the final plat.
+
+H.
+
+Expiration. Tentative plan approval for a middle housing land division shall expire in three years, unless a final plat is approved within that timeframe.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.60. - Subdivisions.
+
+
+Subdivision approval is required for a land division that creates four or more lots or parcels in a calendar year. A two-step procedure is required for subdivision approval: (1) tentative plat review and approval; and (2) final plat review and approval.
+A.
+
+Preapplication Conference. The applicant for a subdivision shall participate in a preapplication conference with City staff to discuss subdivision criteria, applicable state and local requirements, objectives and policies of the Sandy Comprehensive Plan, and the availability of utility services. The preapplication conference provides the opportunity to discuss the conceptual development of the property in advance of a formal submission of the tentative plan. A preapplication conference is required.
+
+B.
+
+Application Requirements for a Subdivision. Subdivision applications shall be made on forms provided by the Planning Division and shall be accompanied by:
+
+1.
+
+Two copies of the tentative plat;
+
+2.
+
+Required fees, including third-party review fees;
+
+3.
+
+Preliminary title search;
+
+4.
+
+Any data or narrative necessary to explain the application;
+
+5.
+
+Existing zoning and proposed land use;
+
+6.
+
+One mailing list and two sets of mailing labels of affected property owners, pursuant to Sections 17.22.10 and 17.22.20;
+
+7.
+
+Electronic copy of all materials;
+
+8.
+
+Two copies of the following supplementary materials, unless waived by the Director:
+
+a.
+
+A vicinity map, showing adjacent property boundaries and how proposed streets may be extended to connect to existing streets;
+
+b.
+
+Plan Set including the following sheets:
+
+i.
+
+Existing conditions plan detailing the following:
+
+1.
+
+Ground elevations shown by contour lines at two-foot vertical intervals for ground slopes of less than ten percent and at ten-foot vertical intervals for ground slopes exceeding ten percent.
+
+2.
+
+Natural features such as marshes, rock outcroppings, watercourses on and abutting the property, and location of wooded areas, and including features detailed in DSL's Statewide Wetlands Inventory and ODFW's Conservation Opportunity Areas maps.
+
+3.
+
+Existing uses of the property, including location and present use of all existing structures to remain on the property after platting.
+
+ii.
+
+Grading plan depicting proposed site conditions following completion of the proposed development and erosion control plan;
+
+iii.
+
+Utility plan detailing location of stormwater drainage, sanitary sewers, and water lines (existing and proposed) on and abutting the property. If utilities are not on or abutting the property, indicate the direction and distance to the nearest locations;
+
+iv.
+
+A description of the proposed stormwater management system, including pre and post construction conditions, prepared in accordance with the 2020 City of Portland Stormwater Management Manual;
+
+v.
+
+Tree preservation plan detailing building footprints and critical root zones of trees proposed for retention;
+
+vi.
+
+Street tree plan;
+
+vii.
+
+Driveway approach plan;
+
+viii.
+
+On-street parking plan;
+
+ix.
+
+Stream, wetlands, and flood and slope hazard (FSH) overlay map detailing the following:
+
+1.
+
+Location, width, and direction of flow of all water courses.
+
+2.
+
+Approximate location of areas subject to periodic inundation or storm sewer overflow, and location of any floodplain or flood hazard district.
+
+3.
+
+Top of bank.
+
+4.
+
+FSH analysis area, FSH restricted development area, and required setbacks.
+
+x.
+
+Slope analysis map identifying land exceeding a 25 percent slope.
+
+xi.
+
+Future street plan in accordance with Subsection 17.100.100.C.
+
+c.
+
+Arborist report and tree inventory detailing tree location, species, size (DBH), and condition as well as which, if any, trees are proposed for removal;
+
+d.
+
+Traffic analysis in accordance with Section 17.84.50;
+
+e.
+
+Wetland delineation, if applicable;
+
+f.
+
+Geological assessment or Geotechnical Report, if required by Chapter 17.56, or a certification from an engineering geologist or a geotechnical engineer that landslide risk on the site is low, and that there is no need for further landslide risk assessment; and,
+
+g.
+
+Proposed development phases, if applicable.
+
+C.
+
+Format. The Tentative Plat and Plan Set shall be drawn on a sheet 24 inches by 36 inches in size and at a scale of one inch equals 50 feet, one inch equals 40 feet, one inch equals 30 feet, or one inch equals 20 feet, unless an alternative format is approved by the Director at the preapplication conference. The application shall include one copy of a scaled drawing of the proposed subdivision, on a sheet eight and one-half inches by 11 inches, suitable for reproduction.
+
+D.
+
+Data Requirements for Tentative Plat.
+
+1.
+
+Scale of drawing, north arrow, and date.
+
+2.
+
+Location of the subdivision by section, township and range, and a legal description sufficient to define the location and boundaries of the proposed tract.
+
+3.
+
+Names, addresses, and telephone numbers of the owner(s) of the property, the engineer or surveyor, and the date of the survey.
+
+4.
+
+Streets: location, names, paved widths, alleys, and right-of-way (existing and proposed) on and within 400 feet of the boundaries of the property.
+
+5.
+
+Easements: location, widths, purpose of all easements (existing and proposed) on or serving the property.
+
+6.
+
+Location of at least one temporary bench mark within the tract boundaries.
+
+7.
+
+Lots and Blocks: approximate dimensions of all lots, minimum lot sizes, block length, and proposed lot numbers, and block numbers if applicable.
+
+8.
+
+Designation of land intended to be dedicated or reserved for public use, with the purpose, conditions, or limitations of such reservations clearly indicated.
+
+E.
+
+Approval Criteria. The Director or Planning Commission shall review the subdivision based on the classification procedure (Type II or III) set forth in Chapter 17.12 and the following approval criteria:
+
+1.
+
+The proposed subdivision meets the density requirements, setbacks, and dimensional standards for all lots in the base zoning district or zoning districts if multiple zoning districts exist in the proposed subdivision.
+
+2.
+
+The proposed subdivision meets the requirements of the Bornstedt Village Overlay (BVO), if the proposed subdivision is located in the BVO, or other specific area plan, if the proposed subdivision is located in another specific plan area, as required in Chapter 17.54.
+
+3.
+
+The proposed subdivision meets the requirements of the hillside development as required in Chapter 17.56.
+
+4.
+
+The proposed subdivision meets the requirements of the flood and slope hazard overlay district as required in Chapter 17.60.
+
+5.
+
+The proposed subdivision meets the additional setback standards on collector and arterial streets as required in Chapter 17.80.
+
+6.
+
+The proposed subdivision meets the building orientation standards on transit streets as required in Chapter 17.82.
+
+7.
+
+The proposed subdivision meets all improvement standards for sidewalks, pedestrian connections including tracts and easements, bicycle facilities, water facilities, sanitary sewer facilities, stormwater facilities, and all other standards as required in Chapter 17.84.
+
+8.
+
+The proposed subdivision includes the dedication of land or a fee in-lieu of land as required in Chapter 17.86 and the 2022 Parks and Trails Master Plan.
+
+9.
+
+The proposed subdivision will meet the requirements of Chapter 17.90 at the time of building construction.
+
+10.
+
+The proposed subdivision meets the landscaping requirements of Chapter 17.92.
+
+11.
+
+The proposed subdivision provides on-street parking, off-street parking, driveway spacing, and driveway widths as required in Chapter 17.98.
+
+12.
+
+The proposed subdivision provides tree retention as required in Chapter 17.102.
+
+13.
+
+The proposed subdivision provides a street pattern that meets the dimensional standards for blocks as required in Chapter 17.100 and street cross-sections that meet the width requirements as detailed in Chapter 17.10, Definitions.
+
+14.
+
+The proposed street layout includes the siting of all collector and arterial streets as depicted in the 2023 Transportation System Master Plan, Figure 11. "Substantially as depicted" means that the streets' proposed location is within 100 feet of the depicted location in any direction.
+
+15.
+
+The proposed street improvements include sidewalks, planter strips or swales, street trees, street lighting, curbs, asphalt, and vehicular and bicycle lanes and striping that meets the construction standards as required in the 2023 Transportation System Master Plan, Figures 18-24.
+
+16.
+
+The proposed subdivision creates traffic volumes that do not exceed average daily traffic (ADT) standards for local streets as detailed in Chapter 17.10, Definitions.
+
+17.
+
+The proposed subdivision includes utilities that meet the requirements of the 2022 City of Sandy Water System Master Plan and the City of Sandy Wastewater System Facilities Plan.
+
+18.
+
+The proposed subdivision includes the installation of all utilities underground, including electric, natural gas, fiber, telecommunication lines, water, and sanitary sewer, and the required easements for such utilities.
+
+19.
+
+The proposed subdivision, if phasing is proposed, meets the following standards:
+
+a.
+
+A proposed phasing plan shall be submitted with the subdivision land use application.
+
+b.
+
+The proposed phasing plan shall include a time schedule for developing a site in phases, with all phases to be recorded by plat within five years from the date of tentative plat approval.
+
+c.
+
+Public facilities shall be deemed substantially complete prior to construction of additional phases or as otherwise determined through a development agreement with a performance guarantee per Section 17.100.340.
+
+d.
+
+The phased development shall not result in requiring the City or other property owners to construct public facilities that are required to accomplish additional phases in the subdivision.
+
+F.
+
+Conditions. A decision to approve a tentative plat may require dedication of land and easements, and may include such other conditions or modifications as necessary to ensure compliance with the applicable standards and criteria.
+
+G.
+
+Improvements. A detailed list of required improvements for the subdivision shall be set forth in the final order for the tentative plat.
+
+H.
+
+Tentative Plat Expiration Date. The final plat shall be delivered to the Director for approval within two years following approval of the tentative plat, and shall incorporate any modification or condition required by approval of the tentative plat. The Director may, upon written request, grant an extension of the tentative plat approval for up to one additional year. The one-year extension by the Director is the maximum extension that may be granted for a subdivision.
+
+I.
+
+Submission of Final Plat. The applicant shall survey the subdivision and prepare a final plat in conformance with the tentative plat approval and the requirements of ORS Chapter 92.
+
+J.
+
+Information on Plat. In addition to information required for the tentative plat or otherwise specified by state law, the following information shall be shown on the final plat for the subdivision:
+
+1.
+
+Tract boundary lines, right-of-way lines of streets, and property lines with dimensions, bearings, or deflection angles and radii, arcs, points of curvature, and tangent bearings. All bearings and angles shall be shown to the nearest one-second and all dimensions to the nearest 0.01 foot. If circular curves are proposed in the plat, the following data must be shown in table form: curve radius, central angles, arc length, and bearing of long chord.
+
+2.
+
+Easements denoted by fine dotted lines, clearly identified and, if already of record, their recorded references. If an easement is not definitely located of record, a statement of the easement shall be given. The width of the easement, its length and bearing, and sufficient ties to locate the easement with respect to the subdivision shall be shown. If the easement is being dedicated by the plat, it shall be properly referenced in the owner's certificates of dedication.
+
+3.
+
+Any building setback lines if more restrictive than the City zoning ordinance.
+
+4.
+
+Location and purpose for which sites, other than residential lots, are dedicated or reserved.
+
+5.
+
+Easements and any other areas for public use dedicated without any reservation or restriction.
+
+6.
+
+A copy of any deed restrictions and restrictive covenants written on the face of the plat or prepared to record with the plat with reference on the face of the plat.
+
+7.
+
+The following certificates that may be combined where appropriate:
+
+a.
+
+A certificate signed and acknowledged by all parties having any recorded title interest in the land, consenting to the preparation and recording of the plat.
+
+b.
+
+A certificate signed and acknowledged as above, dedicating all land intended for public use except land that is intended for the exclusive use of the lot owners in the subdivision, their licensees, visitors, and tenants.
+
+c.
+
+A certificate with the seal of and signed by the engineer or the surveyor responsible for the survey and final plat.
+
+d.
+
+Other certificates now or hereafter required by law.
+
+8.
+
+Supplemental Information with Plat. The following data shall accompany the final plat:
+
+a.
+
+A preliminary title report issued by a title insurance company in the name of the owner of the land, showing all parties whose consent is necessary and their interest in the land.
+
+b.
+
+Sheets and drawings showing the following:
+
+i.
+
+Traverse data including the coordinates of the boundary of the subdivision and ties to section corners and donation land claim corners, and showing the error of closure, if any.
+
+ii.
+
+The computation of distances, angles, and courses shown on the plat.
+
+iii.
+
+Ties to existing monuments, proposed monuments, adjacent subdivisions, street corners, and state highway stationing.
+
+c.
+
+A copy of any deed restrictions or recorded covenants applicable to the subdivision.
+
+d.
+
+A copy of any dedication requiring separate documents.
+
+e.
+
+A list of all taxes and assessments on the land which have become a lien on the land.
+
+f.
+
+A certificate by the applicant's engineer that the applicant has complied with the improvement requirements.
+
+9.
+
+Certification by the Public Works Director or by the owner of a privately owned domestic water supply system that water will be available to the property line of each and every lot depicted in the final plat.
+
+K.
+
+Technical Plat Review. Upon receipt by the City, the plat and supplemental information shall be reviewed by the City Engineer and Director through a Type I procedure. The review shall focus on conformance of the final plat with the approved tentative plat, conditions of approval, and provisions of city, county, or state law applicable to subdivisions.
+
+1.
+
+The City Engineer may make field checks as needed to verify that the final plat is sufficiently correct on the ground, and City representatives may enter the subdivision property for this purpose.
+
+2.
+
+If the City Engineer or Director determines that full conformance has not been made, they shall advise the applicant of the changes or additions that must be made and shall afford the applicant an opportunity to make the changes or additions.
+
+3.
+
+All costs associated with the technical plat review and recording shall be the responsibility of the applicant.
+
+L.
+
+Approval of Final Plat. The signatures of the Director and the City Engineer shall indicate approval of the final plat. After the plat has been approved by all City and Clackamas County officials, a digital copy of the plat and a digital copy of any recorded documents shall be delivered to the Director within 20 working days of recording.
+
+M.
+
+Recording of Final Plat. Approval of the plat by the City shall be conditioned on its prompt recording. The applicant shall, without delay, submit the plat to the county assessor and the county governing body for signatures as required by ORS 92.100. The plat shall be prepared as provided by ORS 92.080. Approval of the final plat shall be null and void if the plat is not submitted for recording within 30 days after the date the last required approving signature has been obtained.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2021-16, § 15(Exh. N), 8-16-2021; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.70. - Land division design standards.
+
+
+All land divisions shall be in conformance with the requirements of the applicable base zoning district, Chapter 17.100, and other applicable provisions of Title 17 of the Sandy Municipal Code. The design standards in this section shall be used in conjunction with street design standards included in the 2023 City of Sandy Transportation System Plan (Figures 18 through 24) and standards and construction specifications for public improvements as set forth in adopted Public Facilities Plans, including the 2022 City of Sandy Water System Master Plan and the City of Sandy Wastewater System Facilities Plan, and the Sandy Municipal Code, including Title 12 and Title 13.
+
+(Ord. No. 2021-16, § 15(Exh. N), 8-16-2021; Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.80. - Reserved.
+
+
+Editor's note— Ord. No. 2022-07, § 9(Exh. I), adopted May 2, 2022 and Ord. No. 2022-08, § 1(Exh. A), adopted May 2, 2022, repealed § 17.100.80, which pertained to character of the land and derived from original Code material.
+
+
+Sec. 17.100.90. - Access control guidelines and coordination.
+
+
+A.
+
+Notice and coordination with ODOT is required. The City will coordinate and notify ODOT regarding all proposals for new or modified public and private accesses to Highway 26. A notice to ODOT is also required if the proposal is within 1,000 feet of Highway 26, Proctor Blvd., or Pioneer Blvd.
+
+B.
+
+It is the city policy to, over time, reduce noncompliance with the Oregon Highway Plan Access Management Policy guidelines. Reduction of noncompliance with the cited State standards means that all reasonable alternatives to reduce the number of accesses and avoid new non-complying accesses will be explored during the development review. The methods to be explored include, but are not limited to: closure, relocation, and consolidation of access; right-in/right-out driveways; crossover easements; and use of local streets, alleys, and frontage roads.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.100. - Streets generally.
+
+
+No subdivision or partition shall be approved unless the subdivision lots or partition lots have frontage or approved access to an existing public street. In addition, all streets shall be graded and improved in conformance with the construction standards and approved construction plans in Title 12 of the Sandy Municipal Code and the Utility Standard Details for Streets & Roads.
+A.
+
+Street Connectivity. The pattern of streets established through a land division must be a grid pattern connected to the existing city or county road system. The streets shall provide for multimodal transportation facilities including vehicles, bicycles, and pedestrians. For Type III Land Division, the traffic impact study required under Subsection 17.100.100.B. shall demonstrate that the proposed roadways create a logical, recognizable circulation pattern, and spread traffic over many streets so that key transportation facilities (particularly Highway 26) are not overburdened.
+
+B.
+
+Transportation Impact Studies. An applicant is required to prepare and submit a transportation impact study in accordance with the standards of Chapter 17.84 unless those standards exempt the application from the requirement.
+
+C.
+
+Future Street Plan. Future street plans are conceptual plans, street extensions, and street connections on land abutting proposed subdivisions and partitions. All applications for subdivision and partition shall provide a future street plan that shows the pattern of proposed streets within the boundaries of the proposed subdivision or partition, proposed connections to abutting land, and extension of streets to abutting land within a 1,000-foot radius of the subdivision, partition, or replat. The future street plan shall demonstrate that maximum block length standards in Section 17.100.120 will not be exceeded when streets are extended onto abutting land in the future.
+
+D.
+
+Connections. Except as permitted under Exemptions, all streets, alleys, and sidewalks shall connect to other streets, alleys, and sidewalks within the subdivision or partition and to existing and planned streets, alleys, and sidewalks outside the subdivision or partition, and to undeveloped properties that have no future street plan. Streets shall terminate at other streets, parks, and schools. Local streets shall align and connect with other streets when crossing collectors and arterials.
+
+Proposed streets or street extensions shall be located to provide direct access to existing or planned transit stops, and existing or planned schools and parks.
+E.
+
+Exemptions.
+
+1.
+
+A future street plan is not required for partitions of residentially zoned land when none of the parcels may be redivided under existing minimum density standards.
+
+2.
+
+When street connection standards are inconsistent with an adopted street spacing standard for arterials or collectors, a right turn-in/right turn-out only design including median control shall be an acceptable alternative to a full intersection. Where compliance with the standards would result in sight distances that fall short of the current AASHTO Policy on Geometric Design of Highways and Streets, an accessway shall be an acceptable alternative to a street connection.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.110. - Street standards and classification.
+
+
+Functional definitions of each street type are described in the 2023 Transportation System Plan as summarized below. The descriptions below are intended to incorporate and implement the functional classifications in the 2023 Transportation System Plan, Chapter 5 and Figures 18-24.
+A.
+
+Principal arterials are designed to carry high volumes of through traffic, mixed with some unavoidable local traffic, through or around the city.
+
+B.
+
+Minor arterials are designed to collect and distribute traffic from major and minor arterials to neighborhood collectors and local streets, or directly to traffic destinations.
+
+C.
+
+Collector streets are designed to collect and distribute traffic from higher type arterial streets to local streets or directly to traffic destinations. Right-of-way width shall not be less than 44 feet nor more than 78 feet (or 82 feet if it's a green street with swales on both sides).
+
+D.
+
+Local streets provide direct access to abutting property and connect to collector streets. Local streets shall be spaced no less than eight and no more than twelve streets per mile (i.e., spaced no less than 520 feet and no more 660 feet apart). Right-of-way width shall be 54 feet (or up to 60 feet if it's a green street with swales on both sides). Local streets shall not exceed the ADT standards set forth in Chapter 17.10, except that the ADT standard for local streets shall not apply to outright permitted development within the C-1 zone.
+
+E.
+
+Development within the Bornstedt Village Overlay is subject to the roadway standards in Section 17.54.120.
+
+F.
+
+The City may approve deviations from the street spacing standards in Section 17.100.110.A. to D. through an adjustment or variance pursuant to Chapter 17.66.
+
+G.
+
+Cul-de-sacs and dead-end streets shall only be used where the Director determines that street continuation is precluded by the following:
+
+1.
+
+Existing development.
+
+2.
+
+Areas in the Flood and Slope Hazard (FSH) Overlay District pursuant to SDC Chapter 17.60.
+
+3.
+
+The street continuation would connect a Local Street with an Arterial Street, as defined in the 2023 City of Sandy Transportation System Plan, Table 4.
+
+H.
+
+Where the Director determines that a cul-de-sac or dead-end street is allowed pursuant to Section 17.100.110.G, all of the following standards shall be met:
+
+1.
+
+The cul-de-sac shall be a minimum length of 200 feet and shall not exceed 400 feet, except where the Director through a Type II procedure determines that factors identified in Section 17.100.110(H) require a longer block length. The length of the block shall be measured along the centerline of the street from the near side of the intersecting street to the farthest point of the cul-de-sac.
+
+2.
+
+The cul-de-sac or dead-end street shall provide pedestrian and bicycle access to adjacent streets with installation of a pathway in accordance with the 2004 Utility Standard Details and SDC Section 17.84.30—Pedestrian and Bicycle Requirements.
+
+3.
+
+The cul-de-sac shall terminate with a circular or hammer-head turnaround meeting the 2022 Oregon Fire Code.
+
+4.
+
+The cul-de-sac shall not provide access to more than 25 dwelling units.
+
+I.
+
+Alleys are designed to provide access to multiple dwellings in areas where lot frontages are narrow, driveway spacing requirements cannot be met, and lots abut transit streets.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.120. - Blocks and accessways.
+
+
+A.
+
+Blocks. Blocks shall provide for two tiers of lots, and shall provide minimum intersection spacing of 150 feet.
+
+B.
+
+Blocks in the Single Family Residential zone, Low Density Residential zone, Medium Density Residential zone, High Density Residential zone, Central Business District zone, General Commercial zone, Village Commercial zone, and Industrial Park zone fronting local streets shall not exceed 400 feet in length. In situations where slopes in excess of 12 percent, perennial streams, or wetlands preclude a block length 400 feet or less, applicants may propose a longer block length as part of a discretionary land use review, provided that the proposed block length is no greater than needed to accommodate the slope or natural resource barrier.
+
+C.
+
+Pedestrian and Bicycle Access Way Requirements. In any block in a residential or commercial district over 600 feet in length, a pedestrian and bicycle accessway with a minimum improved surface of ten feet within a 15-foot right-of-way, tract, or easement shall be provided through the middle of the block.
+
+(Ord. No. 2021-16, § 15(Exh. N), 8-16-2021; Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.130. - Easements.
+
+
+A minimum eight-foot wide public utility easement shall be recorded along property lines abutting a right-of-way for all lots created by partition, replat, or subdivision. Where a partition, replat, or subdivision is traversed by an open channel watercourse, open channel drainage way, or open channel stream, the land division shall provide a stormwater easement or drainage right-of-way in alignment with the topography and channel of the watercourse at a width equivalent to the width of flow for a 25-year return interval rainfall event, plus ten feet on each side.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.140. - Public alleys.
+
+
+A.
+
+Public alleys shall have a minimum width of 20 feet. Structural section and surfacing shall conform to standards adopted by the City Council.
+
+B.
+
+For unimproved alleys, when division of land occurs or the thresholds in Chapter 15.20 are met, the abutting lot owner shall be responsible for completion of improvements to that portion of the alley abutting the property.
+
+C.
+
+Parking within the alley right-of-way is prohibited, except an alley with a minimum width of 28 feet is allowed to have parallel parking on one side of the alley if driveway access is limited to one side of the alley.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.150. - Reserved.
+
+
+Editor's note— Ord. No. 2022-07, § 9(Exh. I), adopted May 2, 2022 and Ord. No. 2022-08, § 1(Exh. A), adopted May 2, 2022, repealed § 17.100.150, which pertained to residential shared private drives and derived from Ord. No. 2021-03, adopted May 17, 2021.
+
+
+Sec. 17.100.160. - Reserved.
+
+
+Editor's note— Ord. No. 2022-07, § 9(Exh. I), adopted May 2, 2022 and Ord. No. 2022-08, § 1(Exh. A), adopted May 2, 2022, repealed § 17.100.160, which pertained to public access lanes and derived from original Code material.
+
+
+Sec. 17.100.170. - Flag lots.
+
+
+Flag lots are permitted only where it can be shown that there is adequate lot area to divide a property into two or more lots but there is not enough street frontage to meet the minimum frontage requirement for standard lots and where creation of a street is not necessary to meet connectivity standards. The flag lot shall have a minimum street frontage of 20 feet for its accessway. The following requirements shall apply to flag lots:
+A.
+
+Setbacks applicable to the underlying zoning district shall apply to the flag lot.
+
+B.
+
+The access strip (pole) shall not be included when calculating the minimum lot size.
+
+C.
+
+The accessway shall have a minimum paved width of ten feet.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.180. - Intersections.
+
+
+A.
+
+Intersections. Streets shall intersect at angles of 75 to 105 degrees. In no circumstances shall a proposed intersection of two new streets be approved at an angle of less than 75 degrees. No more than two streets shall intersect at any one point. Intersections shall be spaced to maintain a minimum of 150 feet between the nearest edges of the two rights-of-way. Driveways located on a collector or arterial street shall maintain a minimum distance of 150 feet between the nearest edges of the driveway and a right-of-way that intersects with the collector or arterial street.
+
+B.
+
+Curve Radius. All streets shall have a minimum curve radius (at intersections of rights-of-way) of 28 feet, per Oregon Fire Code standards for fire apparatus access roads.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.190. - Street and traffic control signs.
+
+
+The type and location of traffic control signs, street signs, and/or traffic safety devices shall follow the Oregon Standard Details and traffic control signage size, materials, and placement shall conform to the requirements of the FHWA Manual on Uniform Traffic Control Devices for Streets and Highways, 2009 Edition with Revision Numbers 1, 2, and 3, dated July 2022.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.200. - Street surfacing.
+
+
+Public streets, including alleys, within a partition, replat, or subdivision shall be improved in accordance with the requirements of the Oregon Standard Specifications AASHTO Green Book or OSSC standards. All streets shall be paved with asphaltic concrete or Portland cement concrete surfacing.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.210. - Street lighting.
+
+
+Installation of a complete lighting system (including conduits, wiring, bases, poles, arms, and fixtures) shall be the financial responsibility of the property owner completing the partition, replat, or subdivision on all cul-de-sacs, local streets, collector streets, and arterial streets. Standards and specifications for street lighting shall conform to IESNA roadway illumination standards and the 2020 City of Sandy Streetlighting Guidelines.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.220. - Lot design.
+
+
+A.
+
+The lot dimensions shall comply with the minimum standards of the Development Code as specified in the underlying zoning district, with the exception of a lot created through the middle housing land division process.
+
+B.
+
+The lot or parcel width shall meet the requirements of the Development Code and shall abut a public street other than an alley for a width of at least 20 feet, with the exception of a lot created through the middle housing land division process.
+
+C.
+
+The creation of a lot with street frontage on two parallel sides of the lot is not allowed.
+
+D.
+
+Lots shall not take access from major arterials, minor arterials, or collector streets if access to a local street exists. When driveway access from major or minor arterials is necessary for several adjoining lots, and individual driveway accesses would not meet the minimum access spacing standards in Section 17.98.80, such lots shall be served by a common access drive in order to limit traffic conflicts on such streets.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.230. - Water facilities.
+
+
+All water facility improvements shall comply with the 2022 City of Sandy Water System Master Plan and the 2016 Water Management and Conservation Plan. Water lines and fire hydrants serving the partition, replat, or subdivision shall connect to City mainlines and be installed to provide adequate water pressure for domestic water, sanitation, and fire safety purposes. The facilities shall be designed by a professional engineer and must be approved by the City Engineer. The materials, sizes, and locations of water mains, valves, service laterals, meter boxes, and other required appurtenances shall be in accordance with American Water Works Association and the Oregon Standard Specifications for Construction and the Oregon Health Authority Drinking Water Services section. Fire flow requirements shall be based on the Clackamas County Interagency Fire Code Application Guide.
+
+If the City requires the applicant to install water lines in excess of eight inches, the City may participate in the oversizing costs. Any oversizing agreements shall be approved by the City Manager based upon City Council policy and dependent on budget constraints. If required water mains will directly serve property outside the subdivision, the City may enter into an agreement with the applicant setting forth methods for reimbursement by nonparticipating landowners for the proportionate share of the cost of construction per Chapter 12.14 of the Sandy Municipal Code.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.240. - Sanitary sewers.
+
+
+Sanitary sewers shall be installed to serve the partition, replat, or subdivision and to connect the partition, replat, or subdivision to existing mains. Design of sanitary sewers shall take into account the capacity and grade to allow for extension beyond the development, in compliance with Title 13 of the Sandy Municipal Code. The facilities shall be designed by a professional engineer and must be approved by the City Engineer.
+
+If required sewer facilities will directly serve property outside the subdivision, the City may enter into an agreement with the subdivider setting forth methods for reimbursement by nonparticipating landowners for the proportionate share of the cost of construction per Chapter 12.14 of the Sandy Municipal Code.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.250. - Surface drainage and storm sewer system.
+
+
+A.
+
+Drainage facilities shall be provided within the partition or subdivision that connect to off-site drainage ways or storm sewers. Design of the facilities shall meet the requirements of Title 13 of the Sandy Municipal Code and the 2020 City of Portland Stormwater Management Manual, as adopted by the City of Sandy, and shall take into account the location, capacity and grade necessary to maintain unrestricted flow from areas draining through the subdivision, and to allow extension of the system to serve such areas. The facilities shall be designed by a professional engineer and must be approved by the City Engineer.
+
+B.
+
+In addition to normal drainage design and construction, provisions shall be taken to handle any drainage from preexisting subsurface drain tile. The applicant's engineer shall investigate the location of drain tile and its relation to public improvements and building construction.
+
+C.
+
+The roof and site drainage from each lot shall be discharged to either curb face outlets (if minor quantity), to a public storm drain, or to a natural drainage way if adjacent to the lot.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.260. - Underground utilities.
+
+
+All subdivisions or major partitions shall include the installation of underground utilities (including electric, gas, fiber, telecommunication cable, water, and sanitary sewer). The utilities shall be installed pursuant to the requirements of the utility company.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.270. - Sidewalks.
+
+
+Sidewalks shall be installed on both sides of a public street. Sidewalks shall be a minimum width of six feet on local streets and a minimum width of six feet on collector and arterial streets. Sidewalks on Pioneer and Proctor Boulevards shall be installed in accordance with the dimensions and design detailed in Appendix F. Sidewalks on Pleasant Street shall be installed in compliance with the Pleasant Street Master Plan.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.280. - Bicycle routes.
+
+
+If necessary for the extension of a system of bicycle routes, existing or planned in the 2023 City of Sandy Transportation System Plan, Figure 13, the installation of bicycle lanes within streets shall be required.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.290. - Street trees.
+
+
+The street tree plan shall provide street trees every 30 feet on center for all lots. In cases where driveways, streetlights, mailboxes, or other obstructions conflict with spacing street trees 30 feet on center, street trees shall be installed at a reduced spacing interval but in no case less than 15 feet on center. The street tree planting area shall meet the minimum standards specified in Section 17.92.10.D.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.300. - Erosion control.
+
+
+Grass seed planting shall be completed prior to September 30 of the calendar year on all lots upon which a dwelling has not been started but the ground cover has been disturbed. The seeds shall be of an annual rye grass variety and shall be sown at not less than four pounds to each 1,000 square feet of land area.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.310. - Required improvements.
+
+
+The following improvements shall be installed at no expense to the City, consistent with the standards of Chapter 17.84, Chapter 17.100, 2023 Transportation System Master Plan, City of Sandy Street Tree Standard Planting Detail, 2020 Sandy Transit Master Plan, 2022 Water System Master Plan, Sanitary Sewer Master Plan, and Oregon Standard Details.
+A.
+
+Lot, street, and perimeter monumentation.
+
+B.
+
+Mailboxes and concrete slabs for mounting the mailboxes.
+
+C.
+
+Sanitary sewer lines, required pump stations, water distribution lines, and fire hydrants.
+
+D.
+
+Stormwater drainage facilities, including required plantings.
+
+E.
+
+Sidewalks, planter strips or swales or tree wells with decorative grates, ADA ramps, and truncated domes.
+
+F.
+
+Streetlight fixtures and electrical lines for the streetlights.
+
+G.
+
+Street name signs, traffic control devices, and traffic control signs.
+
+H.
+
+Street trees, including required stakes, ties, and mulch.
+
+I.
+
+Streets, including curbs and asphalt.
+
+J.
+
+Transit benches and concrete slabs for mounting benches.
+
+K.
+
+Underground communication lines, including broadband (fiber) for SandyNet and telecommunication lines. Franchise agreements will dictate whether telephone and cable lines are required.
+
+L.
+
+Underground electric and natural gas.
+
+M.
+
+Erosion control measures for all areas without improvements or landscaping.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.320. - Improvement procedures.
+
+
+Improvements installed by an applicant dividing land either as a requirement of these regulations or at their own option shall conform to the standards of Chapter 17.84 and improvement standards and specifications adopted by the City. Improvements shall be installed in accordance with the following general procedure:
+A.
+
+Improvement work shall not start until after the City is notified. If work is discontinued for any reason it shall not resume until the City is notified.
+
+B.
+
+Improvements shall be constructed under the inspection and to the satisfaction of the City Engineer.
+
+C.
+
+All improvements installed by the applicant shall be guaranteed for a period of two years following acceptance by the City Engineer. Such guarantee shall be secured by cash deposit in the amount of ten percent of the value of the improvements as approved by the City Engineer.
+
+D.
+
+As-constructed plans in both digital and hard copy formats shall be filed with the City Engineer upon completion of the improvements.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.330. - Options for improvements.
+
+
+Before the signature of the City Engineer is obtained on the final partition or subdivision plat, the applicant shall install the required improvements, agree to install required improvements, or have gained approval to form an improvement district for installation of the improvements required with the tentative plat approval. These procedures are more fully described as follows:
+A.
+
+Install Improvements. The applicant may install the required improvements for the partition or subdivision prior to recording the final partition or subdivision plat. If this procedure is to be used, the partition or subdivision plat shall contain all the required certifications except the County Surveyor. The City shall keep the partition or subdivision plat until the improvements have been completed and approved by the City Engineer. Upon City Engineer's approval, the City shall forward the final partition or subdivision plat for certification by the County Surveyor and then to the County Clerk for recording; or
+
+B.
+
+Agree to Install Improvement. The applicant may execute and file with the City an agreement specifying the period within which required improvements shall be completed. The agreement shall state that if the work is not completed within the period specified, the City may complete the work and recover the full cost and expense from the applicant. A performance bond equal to 130 percent of the value of the guaranteed improvements shall be required, except when an alternative assurance is allowed under Section 17.100.340. Performance bonds shall be issued by a surety registered to do business in Oregon. The value of the guaranteed improvements may include engineering, construction management, legal, and other related expenses necessary to complete the work. The agreement may provide for the construction of the improvements in increments and for an extension of time under specified conditions; or
+
+C.
+
+Form Improvement District. The applicant may have all or part of the public improvements constructed under an improvement district procedure. Under this procedure the applicant shall enter into an agreement with the City proposing establishment of the district for improvements to be constructed, setting forth a schedule for installing improvements, and specifying the extent of the plat to be improved. The City reserves the right under the improvement district procedure to limit the extent of improvements in a partition or subdivision during a construction year and may limit the area of the final partition or subdivision plat to the area to be improved. The performance bond described in Subsection B. above shall be required under the improvement district procedure. The formation of a Local Improvement District (LID) is entirely at the discretion of the City Council.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.100.340. - Performance guarantee.
+
+
+If the applicant chooses to utilize the options for improvements provided under Subsection 17.100.330.B. or C. above, the applicant shall provide a performance guarantee equal to 130 percent of the cost of the improvements to assure full and faithful performance thereof, in one of the following forms:
+A.
+
+A surety bond executed by a surety company authorized to transact business in the state of Oregon in a form approved by the City Attorney.
+
+B.
+
+In lieu of the surety bond, the applicant may:
+
+1.
+
+Deposit with the City cash money to be released only upon authorization of the City Engineer and Director;
+
+2.
+
+Supply certification by a bank or other reputable lending institution that an irrevocable letter of credit in compliance with the International Chamber of Commerce Uniform Customs and Practice for Documentary Credits, UCP 600 or most current revision has been established to cover the cost of required improvements, to be released only upon authorization of the City Engineer and Director. The amount of the letter of credit shall equal 130 percent of the value of the improvements to be guaranteed; or
+
+C.
+
+One or more award letters from public funding sources made to a subdivider who is subdividing the property to develop affordable housing, that is or will be subject to an affordability restriction as defined in ORS 456.250 or an affordable housing covenant as defined in ORS 456.270, if the awards total an amount greater than the project cost.
+
+D.
+
+Such assurance of full and faithful performance shall be for a sum determined by the City Engineer as sufficient to cover the cost of required improvements, including related engineering and incidental expenses.
+
+E.
+
+If the applicant fails to construct one or more of the guaranteed public improvements and the City has expenses resulting from such failure, the City shall call on the performance guarantee for reimbursement. If the amount of the performance guarantee exceeds the expense incurred, the remainder shall be released. If the amount of the performance guarantee is less than the amounts of expense incurred by the City, the applicant shall be liable to the City for the excess costs. If the applicant fails to reimburse the City for expenses incurred to complete the public improvements, the City shall place a lien on the property in an amount equal to the City's costs.
+
+(Ord. No. 2022-07, § 9(Exh. I), 5-2-2022; Ord. No. 2022-08, § 1(Exh. A), 5-2-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)

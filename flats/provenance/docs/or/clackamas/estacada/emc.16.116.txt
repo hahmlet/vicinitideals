@@ -1,0 +1,467 @@
+Chapter 16.116 DESIGN STANDARDS AND IMPROVEMENTS
+
+16.116.010 General Requirements And Minimum Standards Of Design
+
+16.116.020 Minimum Standards For Park And Recreational Land
+
+16.116.025 Minimum Standard For Open Space Dedication
+
+16.116.030 Street Width And Improvement Standards
+
+16.116.040 Dedication Of Public Streets
+
+16.116.050 Procedure For Insuring Completion Of Streets And Utilities; Bonding/Performance Agreements
+
+16.116.010 General Requirements And Minimum Standards Of Design
+
+The following are the minimum requirements and standards to which partitions and subdivisions must conform:
+
+1 Conformity to the Comprehensive Plan. All partitions and subdivisions shall be consistent with the development code and comprehensive plan.
+
+2 Performance Agreement. If all improvements required by the city and this title are not completed according to specifications as required herein prior to the time the plat or map is duly submitted for final approval, the city may accept in lieu of the completion of improvements a performance agreement bond, or other assurance executed by the developer conditioned upon faithful performance and completion of all such improvements within a period of time stated in such performance agreement, pursuant to EMC 16.116.050.
+
+3 Relation to Adjoining Street System. Streets within a proposed partition or subdivision shall provide for the continuation of existing and projected streets. If physical conditions make such continuation impractical, exceptions may be made.
+
+4 Transportation Adequacy and Safety and Access Design Standards.
+
+1 A proposed partition or subdivision shall provide each lot or parcel, by means of a public street or private road, satisfactory vehicular access to an existing street.
+
+2 All land divisions shall comply with EMC 16.74.
+
+3 When a lot or parcel abuts two or more streets of different classifications under EMC 16.116.030, the lot or parcel's access point shall connect with the road of the lesser classification. For example, access points on local streets shall be preferred to access points on collectors. This standard may be modified due to topographical constraints, presence of natural features or other conditions which make it impractical to access the lower classification street.
+
+4 Access to arterial streets shall be minimized. Where such access is necessary, shared driveways may be required.
+
+5 New and modified accesses shall conform to this and other sections of the code.
+
+1 Except as provided under Subsection C below, the distance from a street intersection to a driveway or other street access shall meet the minimum spacing requirements for the street classification specified in EMC 16.116.030.
+
+2 New property access shall not be permitted within fifty (50) feet of an intersection unless no other reasonable access to the property is available. Where no other alternatives exist, an access connection at a point less than fifty (50) feet from an intersection may be allowed, provided the access is as far away from the intersection as possible and sight distance is adequate. In such cases, the city may impose turning restrictions (i.e., right in/out, right in only, or right out only).
+
+3 The separation distance of access points may be modified if impractical due to lot dimensions, existing development, other physical features, or conflicting code requirements.
+
+6 Access to and from off-street parking areas shall not permit backing onto a public street, except for single-family dwellings.
+
+7 The number of driveway and private street intersections with public streets should be minimized by the use of shared driveways for adjoining lots where feasible. When necessary for traffic safety and access management purposes, or to access flag lots, joint access and/or shared driveways may be required in the following situations:
+
+1 For shared parking areas;
+
+2 For adjacent developments, where access onto an arterial is limited;
+
+3 For multi-tenant developments, and developments on multiple lots or parcels. Such joint accesses and shared driveways shall incorporate all of the following:
+
+1 A continuous service drive or cross-access corridor that provides for driveway separation consistent with the applicable transportation authority's access management classification system and standards,
+
+2 A design speed of ten (10) miles per hour and a maximum width of twenty (20) feet, in addition to any parking alongside the driveway; additional driveway width or fire lanes may be approved when necessary to accommodate specific types of service vehicles, loading vehicles, or emergency service provider vehicles,
+
+3 Driveway stubs to property lines (for future extension) and other design features to make it easy to see that the abutting properties may be required with future development to connect to the cross-access driveway.
+
+8 When a shared driveway is provided or required as a condition of approval, the land uses adjacent to the shared driveway may have their minimum parking standards reduced in accordance with the shared parking provisions of EMC 16.76.010 Subsection C.
+
+9 For joining and cross-access easements, the property owners shall:
+
+1 Record an easement with the deed allowing cross-access to and from other properties served by the joint-use driveways and cross-access or service drive;
+
+2 Record an agreement with the deed that remaining access rights along the roadway for the subject property shall be dedicated to the city and pre-existing driveways will be closed and eliminated after construction of the joint-use driveway;
+
+3 Record a joint maintenance agreement with the deed defining maintenance responsibilities of property owners.
+
+10 Access to a state highway shall be reviewed and approved by the Oregon Department of Transportation.
+
+5 Private Roads. Private roads may be approved if a new public road or extension of the public road system is impractical. In determining if the extension of the public road system is impractical, criteria shall be considered including, but not limited to, lot size or shape, topography, the location of existing structures. In no case shall a private street be less than twenty (20) feet in width. Greater width may be required where necessary to provide for public safety, accommodate traffic volume, or provide for underground utilities. A street maintenance agreement approved by the city and duly recorded shall be required for the creation of any private road.
+
+6 Public Street Standards.
+
+1 Street Widths. The right-of-way and surface widths shall conform to the widths as specified in EMC 16.116.030.
+
+2 Street Design and Improvements.
+
+1 The layout of streets shall give suitable recognition to surrounding topographical conditions in accordance with the purpose of this title.
+
+2 Future Extension of Streets. Where a partition or subdivision will adjoin unplatted acreage, streets, which in the opinion of the planning commission should be continued, will be required to be provided through to the boundary line of the tract of the proposed partition or subdivision. Reserve strips and street plugs may be required to preserve the objectives of street extensions. Reserve strips and street plugs shall be deeded to the city prior to final plat approval.
+
+3 Reserve Strips. Reserve strips or street plugs controlling access to streets will not be approved unless such strips are necessary for the protection of the public welfare or of substantial property rights or both, and in no case unless the control and disposal of the land composing such strips is placed within the jurisdiction of the city under conditions approved by the planning commission.
+
+4 Existing Streets. Whenever existing streets adjacent to or within a tract are of inadequate width, additional right-of-way shall be provided at the time of the partition or subdivision.
+
+5 Street improvements, street grades, paving, drainage and centerline radii on curves shall meet the minimum requirements as specified in EMC 16.116.030.
+
+3 Street Intersections.
+
+1 Streets shall intersect one another at an angle as near to a right angle as is practical considering the topography of the area and previous adjacent layout.
+
+2 Intersections shall be designed so that no danger to the traveling public is created as a result of staggered intersections; and in no case shall intersections be offset.
+
+3 Any intersection that accesses an arterial road shall provide an additional turn lane access.
+
+4 Cul-de-Sacs and Turnarounds.
+
+1 Dead end (cul-de-sac) streets in residential partitions or residential subdivisions shall not exceed four hundred (400) feet in length and shall not serve building sites for not more than eighteen (18) dwelling units. The cul-de-sac must terminate in a circular turnaround with a minimum radius of fifty-five (55) feet or other type of turnaround approved by the planning commission.
+
+2 Approved turnarounds shall be provided on all dead end streets.
+
+7 Public Access Ways. When necessary for public convenience and safety, the city may require a subdivider to provide the city with an easement for public access ways ten (10) to twenty (20) feet in width to connect cul-de-sacs, to pass through oddly shaped or unusually long blocks, to provide for networks of public paths according to adopted plans or to provide access to schools, parks, collector or arterial pedestrian facilities, or other public areas, and be of such design and location as reasonably required to facilitate public use. Determinations of necessity regarding need, location, and design of access ways shall take into consideration the requirements in EMC 12.12 Driveways.
+Additional lighting, landscaping, setbacks, specific access way surfacing, or other design elements may be required to ensure the safety, ease of use, and efficiency of the access way.
+
+8 Lots and Parcels.
+
+1 Every lot/parcel shall abut a public street or private road. A flag lot with the staff that does not comply with the required minimum lot widths for the zone it is located in is permitted but shall not be less than twenty-five (25) feet minimum frontage.
+
+2 Lots/parcels with double frontage shall not be permitted unless, in the opinion of the city, it is unavoidable.
+
+3 The staff portion of a flag lot shall not be used in computing lot size for zoning and building purposes.
+
+9 Utility Easements. Where alleys are not provided, easements of not less than ten (10) feet in width may be required on side or rear lines if determined to be necessary for utility lines, wires, conduits, storm and sanitary sewers, gas and water. Easements of the same or greater widths may be required along boundary lines or across lots where necessary for the extension of utility lines, waterways, and walkways, and to provide necessary drainage ways or channels.
+
+10 Water Service. All lots/parcels shall be served by city water service, as evidenced by:
+
+1 Certification that city water service has been provided to the boundary line of each lot/parcel, with utility location maps furnished to the city; or
+
+2 A performance agreement, bond, contract or other assurance that water service will be provided to the boundary line of each lot/parcel.
+
+11 Sewer. All lots/parcels shall be served by city sewer service, as evidenced by:
+
+1 Certification that city sewer service has been provided to the boundary line of each lot/parcel with utility location maps furnished to the city; or
+
+2 A performance agreement, bond, contract or other assurance that sewer service will be provided to the boundary line of each lot/parcel.
+
+12 Drainage. The developer shall provide a storm water plan which shall include the following:
+
+1 Width, depth and direction of flow of all drainage channels on the property;
+
+2 Names and approximate grade of all streets within and abutting the partition or subdivision;
+
+3 Location, size and type of conduit used in drainage channels and driveway accesses;
+
+4 Inspection and approval of dry-wells installed on the property by the public works superintendent;
+
+5 Inspection and approval of drainage disposal plans by the public works superintendent.
+
+13 Parks. The developer of a residential subdivision is required to dedicate park land serving the development and the residents of the city. Only park land, which in the sole discretion of the city meets the standards and requirements of EMC 16.116.020 and as provided in this title or by resolution, will be maintained by the city and be eligible for a credit against park SDCs.
+
+14 Block Length. In order to promote efficient vehicular and pedestrian circulation throughout the city, block lengths between street lines shall comply with the following standards.
+
+1 Residential Districts. Minimum of one hundred (100) foot block length and maximum of six hundred (600) foot length; maximum one thousand four hundred (1,400) foot block perimeter;
+
+2 Commercial Districts. Minimum of one hundred (100) foot length and maximum of six hundred (600) foot length; maximum one thousand four hundred (1,400) foot perimeter;
+
+3 Block length standards do not apply to industrial or open space districts.
+
+15 Partial Development. If a proposed partition or subdivision area includes only part of the tract owned by the partitioner/subdivider, the city may require a sketch of the tentative layout in the remainder of that tract.
+
+16 Subdivision Phase Development. A developer of a subdivision may file a plat on a portion or phase of the approved tentative plan. If the subdivision is submitted for plat approval in phases, each phase must be able to qualify in all respects to the applicable requirements of approval of the tentative plan. If the subdivision is a planned unit subdivision, each phase must be able to qualify for approval independently from the balance of the approved tentative plan.
+
+17 Building Permits In Subdivisions. Per EMC 15.12.080, building permits and sanitary sewer and water connections shall not be issued or allowed for more than fifty (50) percent of the lots in any subdivision approved by the City until all of the public improvements required by the City have been completely constructed to the specifications of the City and have been accepted and approved by the City. For the purpose of this section, "public improvements" shall include, but not be limited to, streets, sanitary sewers, storm drains, curbs, sidewalks, and water systems.
+
+18 Subdivision Names. Subdivision plat names shall be subject to the approval of the county surveyor pursuant to ORS 92.090.
+
+19 Planned Unit Subdivisions. The tentative plan and final approval procedures for planned unit subdivisions are the same as for other subdivisions. A planned unit subdivision is subject to all applicable provisions contained in the planned development (P-D) overlay zone section of this title.
+
+20 Underground Utilities. In any subdivision which includes the construction of new public or private streets, underground utilities shall be provided. Where a subdivision is proposed to front on existing streets which contain existing utility construction, underground utilities shall not be required unless the affected utility companies have adopted a schedule for the construction of underground utilities for the area.
+
+21 Subdivision Time Extensions. If all phases are not completed within the required four-year time period for tentative approval of a subdivision, a time extension must be applied for subject to provisions contained in EMC 16.108.050.
+
+(Ord. 2007-6 §§ 13—16; Ord. 1999-7 § 4; prior code § 10.750; Ord. No. 2018-001, § 1, 6-11-2018)
+
+HISTORY
+Amended by Ord. 2018-007 on 1/28/2019
+Amended by Ord. 2019-005 on 3/9/2020
+Adopted by Ord. 2024-005 on 10/14/2024
+Amended by Ord. 2025-013 on 1/26/2026
+
+16.116.020 Minimum Standards For Park And Recreational Land
+
+1 Purpose. This section implements the policies of Goal 5 and Goal 8 of the city comprehensive plan and the city parks master plan by outlining standards for parks and recreational facilities in the city. It is the policy of the city that the availability of adequate and accessible parks, open spaces, and recreational land is an important component of residential neighborhoods. Parks and recreational lands meet the recreational needs of the citizens of Estacada. The goal of reserving suitable and adequate parks and recreational land is best realized through the creation of parks at the time that new residential neighborhoods, subdivisions and multi-family housing are created.
+
+2 Dedication of Suitable Park Land Will Qualify for Park SDC Credit. All new residential subdivisions shall provide park and recreation land to serve existing and future residents. New multi-family or manufactured dwelling park developments may provide qualified park and recreational land. Dedicated park land shall receive a credit against park SDCs otherwise chargeable to the lots of the development pursuant to EMC 3.16, provided the standards and conditions of this section are met.
+
+3 Criteria for Park Land Dedication in Lieu of Payment of Park SDCs.
+
+1 The following criteria shall be applied by the city to determine whether the city will accept dedication of park land in lieu of payment of park SDCs:
+
+1 The amount of land to be dedicated is at least one-quarter (0.25) acre in size, as calculated in EMC 16.116.020(C)(3);
+
+2 The topography, geology, access to, parcel size and location of land in the development available for dedication;
+
+3 Potential adverse or beneficial effects of dedication upon environmentally sensitive areas;
+
+4 Compatibility with the city parks master plan, city comprehensive plan, city capital improvements program, and maintenance capabilities of the Estacada public works department;
+
+5 Availability of previously dedicated or acquired property;
+
+6 Connections with, and continuity of, open spaces, trails, shared use paths, bike routes, and other major components of the parks and open spaces system;
+
+7 Opportunity for shared use with other community facilities;
+
+8 Opportunity for future expansion of the site; and
+
+9 The feasibility of dedication.
+
+Park land which does not meet these standards, as applied by the city, will not be accepted for dedication.
+
+2 Prior to acceptance of proposed park land, the City may require the developer to submit a Phase I Environmental Site Assessment completed by a qualified professional according to American Society of Testing and Materials (ASTM) standards (ASTM E 1527), the results of which shall indicate a clean environmental record.
+
+3 Calculation of Land Required to be Dedicated. The city parks master plan currently indicates a total required park acreage of twenty-four point four (24.4) acres. This number divided by current population of five thousand seven hundred and fifty (5,750) equates to 4.2 acres per one thousand (1,000) population or 0.0042 acres of parkland per person. This standard represents the citywide land-to-population ratio for city parks and may be adjusted periodically through amendments to the parks master plan.
+
+1 Population Formula. The following table of persons per unit shall be used in calculating the required dedication of acres of land:
+
+Type of Unit                 Total Persons per Unit
+Single-family dwelling       3.00
+Multifamily dwelling         2.00
+Manufactured dwelling park   2.00
+Congregate multifamily unit  1.50
+This formula for dedication of land will be subject to review and amendment based upon persons per unit, age, distribution, local conditions and the specific demand for park land created by the development. The projected resident population of the land to be subdivided or developed is determined by multiplying the maximum number of units allowed by the plat or the site plan by the appropriate number of standard of persons per unit set forth in the chart above. This figure is then to be multiplied by 0.0042 to determine the total amount of qualified acreage which must be dedicated or deeded to the city for park, open space or recreation purposes. This formula is expressed as follows: (Maximum Units) × (Persons/Unit) × (0.0042) = (acreage to be dedicated).
+
+4 Dedication Standards and Procedure. Dedication of land or covenants approved as part of preliminary plat approval may be given or provided when the final plat is presented for approval. The topography, soils, hydrography, and related elements must be of such quality as to create a flat, dry, obstacle-free, contiguous space on at least 50 percent of the total required area, in a configuration which allows for active recreation. The developer must clear or fill and grade all park land to be dedicated to the satisfaction of the city. Dedicated park land acquired by this section shall not include setbacks, buffers, storm water detention facilities, easements or other similar requirements of this title unless specifically approved by the city. The developer shall dedicate the land as previously determined by the city at the time the final plat is approved. Dedication of land in conjunction with multifamily development shall be required prior to issuance of permits and commencement of construction. Park land dedication shall be formally dedicated on the plat to be recorded and, in addition, the developer shall convey the required lands to the city by general warranty deed. No land so dedicated and deeded shall be subject to any reservations of record, encumbrances of any kind, or easements which, in the opinion of the city, will interfere with the use of the land for park, open space or recreational purposes. The city may require developer to provide to the city a title insurance policy on the dedicated property insuring the marketable state of title. Where any reservations, encumbrances or easements exist the city may require payment in lieu of the dedication of lands unless it, in its sole discretion, chooses to accept the land subject to encumbrances. If the developer does not own the property held subject to the land dedication, the planning commission may, in its discretion, approve the grant of a long-term lease of land which will satisfy the intent of the park land dedication provisions set forth within this title.
+
+(Ord. 1999-7 § 5: prior code § 10.755)
+
+HISTORY
+Amended by Ord. 2018-007 on 1/28/2019
+Adopted by Ord. 2024-005 on 10/14/2024
+
+16.116.025 Minimum Standard For Open Space Dedication
+
+The applicant through a subdivision, partition, or design review process may propose the designation and protection of open space areas as part of that process. This open space will not, however, be counted toward park land dedication requirements outlined in EMC 16.116.010 through 16.116.020.
+
+1 The types of open space that may be provided are as follows:
+
+1 Natural Areas: areas of undisturbed vegetation, steep slopes, stream corridors, wetlands, wildlife habitat areas or areas replanted with native vegetation after construction.
+
+2 Greenways: linear green belts linking residential areas with other open space areas. These greenways may contain bicycle paths or footpaths. Connecting greenways between residences and recreational areas are encouraged.
+
+2 A subdivision, partition, or design review application proposing designation of open space shall include the following information as part of this application:
+
+1 Designate the boundaries of all open space areas;
+
+2 Specify the manner in which the open space shall be perpetuated, maintained, and administered; and
+
+3 Provide for public access to trails included in the Park Master Plan, as appropriate.
+
+3 Dedication of open space may occur concurrently with development of a project. At the discretion of the City, for development that will be phased, the open space may be set aside in totality and/or dedicated in conjunction with the first phase of the development, or incrementally set aside and dedicated in proportion to the development occurring in each phase.
+
+4 Open space areas shall be maintained so that the use and enjoyment thereof is not diminished or destroyed. Open space areas may be owned, preserved, and maintained by any of the following mechanisms or combinations thereof:
+
+1 Dedication to the City or an appropriate public agency approved by the City, if there is a public agency willing to accept the dedication. Prior to acceptance of proposed open space, the City may require the developer to submit a Phase I Environmental Site Assessment completed by a qualified professional according to American Society of Testing and Materials (ASTM) standards (ASTM E 1527). The results of this study shall indicate a clean environmental record;
+
+2 Common ownership by a homeowner's association that assumes full responsibility for its maintenance;
+
+3 Dedication of development rights to an appropriate public agency with ownership remaining with the developer or homeowner's association. Maintenance responsibility will remain with the property owner; and/or
+
+4 Deed-restricted private ownership preventing development and/or subsequent subdivision and providing for maintenance responsibilities.
+
+5 In the event that any private owner of open space fails to maintain it according to the standards of this Code, the City, following reasonable notice, may demand that the deficiency of maintenance be corrected, and may enter the open space for maintenance purposes. All costs thereby incurred by the City shall be charged to those persons having the primary responsibility for maintenance of the open space.
+
+HISTORY
+Adopted by Ord. 2024-005 on 10/14/2024
+
+16.116.030 Street Width And Improvement Standards
+
+1 Roadway Classifications and Standards. The Standard design and widths should be provided unless it is impractical due to constrained areas, in which case Alternative Minimum design requirements may be applied with approval of the City Engineer. Roadway classifications must comply with the Typical Street Cross Sections in the 2023 Estacada Transportation System Plan (TSP Figures 13-17) Improvements to any segments of streets shown in the TSP Special Street Sections need to comply with the Special Street Cross Sections in the (TSP Figures 18-44).
+
+ROADWAY CLASSIFICATIONS AND STANDARDS
+
+Functional Classification                 Number of Traffic Lanes  Minimum Distance Between Accesses (Public)  Minimum Distance Between Accesses (Private)  Minimum Right-of-Way  Paved Width                                                            On-street Parking     Sidewalk               Bikeways                               Landscape Strip
+Major collector (standard)                2 (12' each)             600 ft                                      200 ft                                       60 ft                 40 ft                                                                  None                  2 sidewalks (5' each)  2 bike lanes (6' with 2' buffer each)  2 strips (5' each)
+Major collector (alternative)             2 (11' each)             600 ft                                      200 ft                                       50 ft                 32 ft                                                                  None                  2 sidewalks (5' each)  2 bike lanes (5' each)                 2 strips (4' each)
+Minor collector (standard)                2 (11' each)             300 ft                                      100 ft                                       62 ft                 42 ft                                                                  One side (8')         2 sidewalks (5' each)  2 bike lanes (6' each)                 2 strips (5' each)
+Minor collector (alternative)             2 (10' each)             300ft                                       100 ft                                       55 ft                 37 ft                                                                  One side (7')         2 sidewalks (5' each)  2 bike lanes (5' each)                 2 strips (4' each)
+Local streets (standard)                  2 (10' each)             150 ft                                      10 ft                                        56 ft                 36 ft                                                                  Both sides (8' each)  2 sidewalks (5' each)  No (shared street)                     2 strips (5' each)
+Local streets (alternative)               2 (10' each)             150 ft                                      10 ft                                        52 ft                 34 ft                                                                  Both sides (7' each)  2 sidewalks (5' each)  No (shared street)                     2 strips (4' each)
+Neighborhood local streets (standard)     2 (10' each)             150 ft                                      10 ft                                        40 ft                 28 ft                                                                  One side (8')         2 sidewalks (6' each)  No (shared street)                     No
+Neighborhood local streets (alternative)  2 (10' each)             150 ft                                      10 ft                                        37 ft                 27 ft                                                                  One side (7')         2 sidewalks (5' each)  No (shared street)                     No
+Alleys                                    2                                                                                                                 20 ft                 20 ft                                                                                        No                     No                                     No
+Cul-de-sacs                                                                                                                                                 55' Radius            100' Diameter                                                                                Yes                    No                                     Optional
+Hammerheads                                                                                                                                                                       As determined for adequate movement of traffic and emergency vehicles                        No                     No                                     No
+Shared-Use Path                                                                                                                                             14'                   10'
+
+2 Streets/Road Development Standards. The location, width and grade of streets shall be considered in their relationship to existing and planned streets, topographical conditions, public convenience and safety, and the proposed use of the land to be served by the streets. The arrangement of streets shall provide for the continuation or appropriate projection of existing streets in surrounding areas; or conform to a plan for development of the area to meet a particular situation where topographical or other conditions make continuance or conformance to existing streets impractical.
+
+3 Improvements. Improvements shall have the following minimum standards unless increased at the discretion of the city engineer or public works superintendent:
+
+1 All streets shall be rough graded for the full width.
+
+2 All streets shall have a minimum of eight inches well graded crushed base aggregate conforming to Section 2630 of the Oregon State Highway Division Standard Specifications. The aggregate shall be as follows:
+
+Base course      1-½"- 0
+Leveling course  ¾"- 0
+
+3 Base course shall be a minimum of six inches thick under asphalt concrete pavement. Base course shall be compacted to ninety-five (95) percent ASTM D 1557. Leveling course shall be a minimum of two inches thick and be compacted to ninety-five (95) percent ASTM D 1557.
+
+4 All streets shall be paved with four inches of asphaltic concrete to be applied in a two-inch lift.
+
+5 Grades and Curves. Grades shall not exceed six percent on arterials, ten (10) percent on collector streets or twelve (12) percent on other streets. Center line radii of curves shall not be less than three hundred (300) feet on major arterials, two hundred (200) feet collector streets or one hundred (100) feet on other streets, and shall be to an even ten (10) feet. Where existing conditions, particularly the topography, make it otherwise impractical to provide buildable sites, the planning commission may accept steeper grades and sharper curves. In flat areas, allowance shall be made for finished street grades having a minimum slope, preferable, of at least 0.5 percent.
+
+6 All street improvements shall be certified by an engineer licensed in the state of Oregon as meeting the required standards.
+
+(Ord. 2007-6 § 17; Ord. 2003-10 § 1; prior code § 10.775)
+
+HISTORY
+Amended by Ord. 2023-007 on 1/8/2024
+
+16.116.040 Dedication Of Public Streets
+
+1 Any person wishing to create a public street shall make written application to the Estacada city council. The application shall consist of a letter addressed to the council requesting acceptance of the dedication; a deed with exact description of the proposed dedication signed by all owners of the property being dedicated; and a map showing the proposed street and property intended to be served by the street. The Estacada city council shall refer the application to the following:
+
+1 The city engineer and public works superintendent, who shall check the proposal for grade and conformance to acceptable street standards;
+
+2 The county surveyor, who shall check the description for accuracy;
+
+3 The county assessor's office, who shall insure that the taxes are paid on the property being dedicated; and
+
+4 The city planner, who shall ensure that the street is not in conflict with the transportation system plan (TSP) or any adjacent approved tentative plans, plats or maps.
+
+2 These reports shall be forwarded to the Estacada city council. If the city council approves the dedication, it shall accept the dedication by resolution of the council. The deed shall then be recorded.
+
+3 A substandard developed street will not be maintained by the city unless that street is accepted for maintenance by the city council.
+
+(Prior code § 10.780)
+
+HISTORY
+Amended by Ord. 2025-013 on 1/26/2026
+
+16.116.050 Procedure For Insuring Completion Of Streets And Utilities; Bonding/Performance Agreements
+
+1 The developer's engineer will prepare cost estimates on completion of improvements. Street cost estimates shall be based on street standards as designated in EMC 16.116.030. Sewer and water estimates shall be based upon designs approved by the Oregon Health Authority and DEQ. All cost estimates shall be stamped or sealed by the engineer who prepared them.
+
+2 All estimates shall be submitted to the city. Only after a minimum of eighty percent (80%) completion of all required improvements may a developer request to either file a surety bond or pay cash as security for the completion of the remaining improvements to permit recording the plat. To determine whether the eighty percent (80%) threshold is met, the cost estimate of remaining work shall be divided by the total cost estimate of all required work.
+
+3 The city shall notify the developer as to the amount of the surety that shall be required. The surety shall remain in the custody of the city until the obligation is completed or the surety is forfeited.
+
+4 The developer shall file with the city an agreement binding the developer to complete the improvements within six (6) months of execution of the security. In addition to the agreement, the developer shall submit one of the following to assure the full and faithful performance thereof:
+
+1 A surety bond in the amount of 125% of the cost estimate of remaining work, executed by a surety company;
+
+2 Cash amounting to 125% of the cost estimate of remaining work.
+
+5 If the city finds that a permittee has not completed improvements as required, staff shall notify, in writing, the permittee and the surety holder of the specific noncompliance. Within thirty (30) days of receipt of the written notice, the permittee or the surety holder shall proceed diligently to complete the obligation.
+
+6 If the permittee or the surety holder does not commence compliance within thirty (30) days, or has so commenced but fails to proceed diligently to complete the compliance, or the compliance is not completed in accordance with the requirements of the development permit, the city may take any or all of the following actions:
+
+1 Enter upon the site of the development and carry out the improvements necessary to complete the requirements of the development permit;
+
+2 Notify the permittee and the surety holder of the permittee's failure to complete the improvements;
+
+3 Demand payment from the permittee for the costs of completion of the improvements;
+
+4 Notify the surety holder that the reimbursement for the costs of completion is due and payable to the city.
+
+7 Insufficient Surety. If the amount of the surety is not sufficient to compensate the city fully for the cost of improvements, the amount due the city is a lien in favor of the city upon the entire real property of the owner of the development subject to the development permit. The lien attaches upon the filing with the county recorder of notice of the claim for the amount due for the completion of the improvements. The notice shall demand the amount due, allege the insufficiency of the surety to compensate the city fully for the costs of completion of the improvements as required by the development permit and this code.
+
+8 Damage and Maintenance. The developer of any subdivision, partition or development shall construct, maintain, repair, replace and shall be responsible for any damage to curbs, sidewalks, pavement and driveway approaches, shall keep the pavement area free of debris, soil or foreign matter at all times, shall be responsible for the efficient operation of all sumps or catch basins in all streets included in the development, for a period of time not exceeding two years from the date set in the surety for completion of the improvements, or until ninety (90) percent of the units have been constructed, whichever occurs first.
+
+9 Upon completion of improvements, the applicant's engineer shall certify that such improvements are built to the standards approved. This certification of completion shall be submitted to the city engineer for final approval.
+
+(Prior code § 10.785)
+
+based on cost estimates of remaining work and total work,
+
+HISTORY
+Amended by Ord. 2025-013 on 1/26/2026
+
+Chapter 16.118 (RESERVED)
+
+(Ord. No. 2018-003, § 3(Exh. 6), 10-8-2018)
+
+HISTORY
+Repealed by Ord. 2023-007 on 1/8/2024
+
+Chapter 16.120 PARTITIONS
+
+16.120.010 Approval Of Partitions
+
+16.120.020 Procedure For Land Partitioning
+
+16.120.010 Approval Of Partitions
+
+1 No map of a partition of land in Estacada shall be recorded or have any validity unless and until it has the approval of the Estacada planning commission or is appealed and subsequently approved by the Estacada city council or by higher court action.
+
+2 No person shall sell any lot or convey any interest in a parcel in any partition until the plat of the partition has been acknowledged and recorded with the recording officer of the county in which the lot or parcel is situated.
+
+3 No building permits shall be issued for any parcel in a partition until the partition has been granted final approval.
+
+4 If it is apparent that continuous partitioning of a tract of land may occur in subsequent years, City Staff may make a determination as to whether the proposed development should be subject to the subdivision requirements of this title.
+
+5 All partitions shall comply with the Design Standards and Improvements in EMC 16.116.
+
+(Ord. 2007-6 § 18; prior code § 10.730)
+
+HISTORY
+Amended by Ord. 2025-013 on 1/26/2026
+
+16.120.020 Procedure For Land Partitioning
+
+1 Preapplication Process. Prior to preparing a tentative plan of a land partition, the applicant should discuss the proposed division with city staff. The applicant and staff shall discuss the implication of zoning, availability of water, sewage disposal, drainage and street construction requirements, access and easements, topography of the sites, any known natural hazards, and all other factors affecting the division of the property.
+
+2 Tentative Plan Application.
+
+1 When a tract or area of land is to be partitioned, the tentative plan of the proposed partition shall be filed with the city together with an application. Three (3) copies of the tentative plan shall be submitted if they are larger than 8.5 inches x 11 inches.
+
+2 The tentative plan when submitted shall include the following:
+
+1 The name, address and phone number of the land property owner, applicant, engineer or surveyor;
+
+2 Legal description, including tax lot, section, range and township;
+
+3 The date, north point and scale of the drawing;
+
+4 A vicinity sketch showing the location of the partition;
+
+5 The approximate location and dimensions of all proposed boundary lines;
+
+6 Approximate area of the property being partitioned and each proposed parcel including dimensions of each lot or parcel;
+
+7 Name, location and width of all existing and proposed roads, rights-of-way and easements including identification of legal access to the land;
+
+8 Drainage channels, including their width, depth and direction of flow;
+
+9 Existing zoning of the property;
+
+10 Existing and proposed uses of the property;
+
+11 Approximate location and use of all existing structures to remain on the site. Indicate those to be removed;
+
+12 Source and location of domestic water;
+
+13 Source and location of sewage disposal;
+
+14 Contour lines at two-foot interval if ten (10) percent slope or less, five-foot interval if exceeding ten (10) percent slope; source of contour information;
+
+15 Any limitations to development; i.e. topography, areas subject to flooding, geologic hazards, drainage channels on property, significant vegetative areas, etc.
+
+3 Review of Tentative Plan by Other Departments. Within seven days after the partition application is accepted, the city shall distribute copies thereof to appropriate agencies and departments for review, comments and recommendations.
+
+4 Approval of Tentative Plan:
+
+1 When all comments and recommendations from appropriate agencies or departments have been received, or within sixty (60) days after receiving the application as provided for in this title, whichever date shall occur first, the city shall place the tentative plan on the agenda of the next scheduled meeting of the planning commission and notify the applicant of the meeting date and time. Following consideration of the tentative plan, the replies from the agencies and departments, and such other testimony offered, the planning commission shall approve, conditionally approve, disapprove for cause, or, when further information is required, postpone a decision on the tentative plan.
+
+2 The applicant shall be notified of the decision and the basis upon which the decision was made. Unless appealed, the decision shall become effective fifteen (15) days after rendered, in accordance with EMC 16.132.060. The tentative approval is valid for two years from the effective date of approval.
+
+5 Submitting Final Partition Plat Map.
+
+1 Within two years from the effective date of approval of the tentative plan, a plat of the partition conforming to ORS 92.050 shall be submitted for approval.
+
+2 All partitions must take the final form of a partition plat and be prepared by a registered professional land surveyor.
+
+3 In addition to the information as required on the tentative plan the following information shall be provided.
+
+1 Accurate legal descriptions of all parcels and easement roads;
+
+2 The deed dedicating to the public all common improvements, including but not limited to roads, if the donation was made a condition of approval of the tentative plan for the partition;
+
+3 Certification that water and sewer service has been installed to each parcel (except the residual parcel when the potential exists for additional partitioning) or acceptance by the city of a performance agreement ensuring that such services will be provided;
+
+4 A statement of water rights noted on the partition plat, and a copy of the acknowledgment from the Water Resources Department under ORS 92.120, if the person offering the partition plat for filing indicates on the statement of water rights that a water right is appurtenant to the partition;
+
+5 Such information as the city deems necessary for conformance with conditions of the approved tentative plan;
+
+6 Public street dedication (if applicable). The process for dedicating a private road as a public street is set forth in EMC 16.116.040. City acceptance of the road must be complete prior to final approval of the partition;
+
+7 If additional conditions are necessary to meet changed circumstances or the plan is substantially changed, the planning commission must hold new hearings and reconsider the request.
+
+6 Final Approval. When the city manager and planner determine that the final map substantially conforms to the approved tentative plan and that all conditions have been complied with, the planning commission chair shall sign the plat. The plat shall then be delivered to the county surveyor who shall obtain the appropriate official's signatures required for final recording.
+
+(Ord. 2001-5 § 7; prior code § 10.735)
+
+HISTORY
+Amended by Ord. 2019-005 on 3/9/2020

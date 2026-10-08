@@ -137,7 +137,17 @@ pytestmark = pytest.mark.unit
 # parking requirements" -- are the other two. Those two are moot: the one-lot
 # path is refused on the use row, and the townhouse figures are variants.
 # 388 -> 399 stated and 63 -> 69 numeric: Tigard (below) merged after Cornelius.
-EXPECTED = {"stated": 399, "numeric": 70, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 410, "numeric": 80, "marker": 0, "dash": 2, "silent": 2}
+# 72 -> 80 numeric on 2026-10-07: Estacada (FOLLOWUPS 53), whose C-2, CMU and R-3 print
+# no lot width, coverage or impervious limit (eight exempt values, each citing the
+# standards table that is silent).
+# 399 -> 410 stated and 71 -> 72 numeric on 2026-10-07: Sandy (FOLLOWUPS 53). The numeric one is
+# R-3 lot area, whose table prints only a minimum average lot WIDTH; the stated ones
+# are R-1/R-2/R-3 coverage, impervious and row-house lot width (the tables print "No minimum" / "No maximum")
+# and R-1/R-2 lot area ("No minimum").
+# 70 -> 71 numeric on 2026-10-07: Canby (FOLLOWUPS 53). R-2's standards print
+# no minimum lot area (a density, a width, yards, height), so its lot area is
+# exempt, quoted from the head of the standards section.
 # 69 -> 70 numeric on 2026-10-02: Tualatin CC's lot coverage. Table 53-2
 # prints no coverage row and Table 58-7 none for CC -- silence, which is
 # none (Steph, 2026-09-29) -- quoted from the head of Table 53-2.

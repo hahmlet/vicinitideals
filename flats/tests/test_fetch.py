@@ -22,6 +22,7 @@ from flats.provenance.fetch import (
     html_to_text,
     implausible,
     main,
+    municode_json_to_text,
     slice_between,
 )
 from flats.provenance.store import ProvenanceError, ProvenanceStore
@@ -900,3 +901,22 @@ def test_no_stored_document_carries_one(corpus: ProvenanceStore) -> None:
     cited."""
     carrying = [path for path in corpus.documents() if "\x00" in corpus.load(path).text]
     assert carrying == []
+
+
+def test_a_municode_answer_reads_as_heading_then_body() -> None:
+    raw = (
+        '{"Docs":[{"TitleHtml":"<b>17.38.10 Uses</b>","Content":"<p>Front setback: 10 feet.</p>"},'
+        '{"TitleHtml":null,"Title":"17.38.20 Lots","Content":"<p>Minimum 5,000 square feet.</p>"}]}'
+    )
+    text = municode_json_to_text(raw)
+
+    assert text.index("17.38.10 Uses") < text.index("Front setback: 10 feet.")
+    assert text.index("Front setback: 10 feet.") < text.index("17.38.20 Lots")
+    assert "<p>" not in text
+
+
+def test_the_fetcher_routes_a_municode_answer_to_that_reader() -> None:
+    from flats.provenance.fetch import _to_text
+
+    raw = '{"Docs":[{"TitleHtml":"17.38 R-2","Content":"<p>Eight units per acre.</p>"}]}'
+    assert "Eight units per acre." in _to_text(raw)

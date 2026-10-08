@@ -1,0 +1,9 @@
+16.28.020 Conditional uses.
+
+Conditional uses in the C-2 zone shall be as follows:
+
+A. A use permitted outright in an M-1 zone;
+
+B. A use listed as conditional in a C-1 zone and not listed in section 16.28.010.
+
+C. Macro-telecommunications facilities (monopole), equal to or over 100 feet in height pursuant to the standards and requirements of Chapter 16.55. (Ord. 890 section 29, 1993; Ord. 740 section 10.3.28(B), 1984; Ord. 981 section 26, 1997, Ord. 1539, 2020).

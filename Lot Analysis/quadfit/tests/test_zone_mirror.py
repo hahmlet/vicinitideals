@@ -95,6 +95,12 @@ KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
     "multnomah_unincorporated/LR7",
     "multnomah_unincorporated/RF",
     "portland/RF",
+    # 2026-10-07: Sandy R-1 permits row houses on individual lots only (17.36.10
+    # A.4); rules.yaml says yes so the lots are measured at all.
+    "sandy/R-1",
+    # 2026-10-07: Estacada R-3 permits a townhouse row on individual lots only
+    # (the unit_lots variant); rules.yaml says yes so the lots are measured at all.
+    "estacada/R-3",
     "wilsonville/RN",
 })
 
@@ -935,11 +941,18 @@ def test_a_conditioned_port_carries_its_larger_limb() -> None:
 #: those zones, plus seven fields only their codes state -- the parking area's
 #: share of the frontage, the aisle widths, the driveway approach, the corner
 #: access street, impervious cover and average lot width. FLATS reads them all.
+#: Grew 2026-10-07 by Sandy (FOLLOWUPS 53): `min_landscaped_pct` (R-2 and R-3, 25 percent)
+#: and `max_density_du_per_acre` (R-1, R-2, R-3), figures this pipeline has no column for.
+#: Grew 2026-10-07 by Estacada (FOLLOWUPS 53): `min_landscaped_pct` (the commercial zones, 5 percent).
+#: Grew 2026-10-07 by Canby (FOLLOWUPS 53): `max_density_du_per_acre` (R-1.5 and
+#: C-R, 13 an acre) and `max_impervious_pct` (R-1.5, R-2 and C-R, 70 percent)
+#: are the code's figures and FLATS reads them; this pipeline has no column
+#: for either.
 UNEXPRESSIBLE: dict[str, int] = {
     "setback_garage_entrance_ft": 105,
-    "min_landscaped_pct": 39,
+    "min_landscaped_pct": 42,
     "setback_front_max_ft": 75,
-    "max_density_du_per_acre": 38,
+    "max_density_du_per_acre": 43,
     "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,
@@ -954,7 +967,7 @@ UNEXPRESSIBLE: dict[str, int] = {
     "parking_aisle_one_way_ft": 4,
     "driveway_approach_max_width_ft": 4,
     "corner_access_street": 4,
-    "max_impervious_pct": 4,
+    "max_impervious_pct": 7,
     "min_average_lot_width_ft": 2,
     "setback_street_off_corridor_ft": 6,
     "setback_street_across_nonresidential_ft": 4,

@@ -1,5 +1,5 @@
 {
-  "digest": "6734ea772ac425a1a74f584a83f0bd10175e0ff533c4e51903f452bba73cdc64",
+  "digest": "96882aae6c4fb4cd5c8a87aaf2e585e4c20f9209168215d14f74177ecc7c1e1c",
   "layers": {
     "or": {
       "misattributed": [],
@@ -10,6 +10,33 @@
     "or/clackamas/_unincorporated": {
       "misattributed": [],
       "label": "Clackamas Unincorporated",
+      "counts": {},
+      "gaps": []
+    },
+    "or/clackamas/canby": {
+      "misattributed": [],
+      "label": "Canby",
+      "counts": {},
+      "gaps": []
+    },
+    "or/clackamas/estacada": {
+      "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "corner_access_street",
+          "claimed": "16.116.020",
+          "found": "16.116.010",
+          "quote": "or/clackamas/estacada/emc.16.116.txt#L31"
+        },
+        {
+          "zone": "MMU",
+          "field": "quadplex_allowed",
+          "claimed": "16.33.020",
+          "found": "16.33.020 16.33.060",
+          "quote": "or/clackamas/estacada/emc.16.zones.txt#L1736,L1929"
+        }
+      ],
+      "label": "Estacada",
       "counts": {},
       "gaps": []
     },
@@ -107,6 +134,12 @@
     "or/clackamas/rivergrove": {
       "misattributed": [],
       "label": "Rivergrove",
+      "counts": {},
+      "gaps": []
+    },
+    "or/clackamas/sandy": {
+      "misattributed": [],
+      "label": "Sandy",
       "counts": {},
       "gaps": []
     },

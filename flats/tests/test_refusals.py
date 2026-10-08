@@ -349,7 +349,14 @@ pytestmark = pytest.mark.unit
 # 285 -> 281 on 2026-10-02: Tualatin's perimeter and islands, Gladstone's and
 # Multnomah's side-and-rear strips encoded (parking_lot_line_buffer_ft,
 # parking_island_sqft_per_space).
-EXPECTED = {"notes": 134, "comments": 281, "tests": 18}
+# 134 -> 135 notes and 281 -> 282 comments on 2026-10-07: Canby (FOLLOWUPS 53),
+# whose refused zones (R-1, C-1, C-2, C-M, M-1, M-2) and unencoded Downtown
+# Canby Overlay sub-area are each declared in the layer.
+EXPECTED = {"notes": 135, "comments": 284, "tests": 18}
+# 282 -> 283 comments on 2026-10-07: Sandy (FOLLOWUPS 53), whose refused zones are
+# declared in the layer; the rest of its NOT ENCODED decisions repeat reasons.
+# 283 -> 284 comments on 2026-10-07: Estacada (FOLLOWUPS 53), whose NOT ENCODED
+# block sits above its zones.
 # 274 -> 272 the same day, two more Cornelius comments turned into encoding
 # by Steph's rulings: the solar balance point (18.160) is now
 # `solar_shade_limit` in R-7 and R-10, a warning beside the colour ("Green

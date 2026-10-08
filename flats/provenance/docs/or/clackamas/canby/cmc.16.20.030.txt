@@ -1,0 +1,65 @@
+16.20.030 Development standards.
+
+The following subsections indicate the required development standards of the R-2 zone:
+
+A Minimum residential density: New development shall achieve a minimum density of 14 units per acre. Minimum density for a property is calculated by multiplying its area in acres (minus area required for street right-of-way and public park/open space areas) by the density standard. For example, 0.18 acres x 14 units/acre = minimum of 2.52 units. Decimals are rounded to the nearest whole number (e.g., a minimum of 2.52 units becomes a minimum of 3 units). The Planning Commission may modify the density standard if it cannot be met due to existing lot dimensions, road patterns, or other site characteristics.
+
+B. Townhouses with common wall construction must be placed on a maximum 3000 square foot lot in order to meet the density required in this section.
+
+C. Minimum width and frontage: Twenty feet except that the Planning Commission may require additional width to ensure that all applicable access standards are met.
+
+D. Minimum yard requirements:
+
+1. Street yard: twenty feet on side with driveway; fifteen feet for all other street sides; except that street yards may be reduced to ten feet for covered porches only. Street yards for multifamily development (3 or more units located on the same property) located adjacent and on the same side of the street to an R-1 (Low Density Residential) or R-1.5 (Medium Density Residential) zone shall establish a front yard setback that is within 5 feet of the front yard setback of the adjacent home in the R-1 or R-1.5 zone but shall not be less than 10 feet from the property line. This standard does not apply if the closest adjacent home has a front yard setback greater than 30 feet.
+
+2. Rear yard: all corner lots, ten feet single story or fifteen feet two-story; all other lots: fifteen feet single story or twenty feet two-story. One story building components must meet the single story setback requirements; two story building components must meet the two-story setback requirements;
+
+3. Interior yard: seven feet, except as otherwise provided for zero-lot line housing.
+
+4. Interior and rear yards may be reduced to three feet, or the width of any existing utility easement, whichever is greater, for detached accessory structures erected sixty feet or more from any street other than an alley. The height limitations noted in subsection D.2 below apply to such structures. Utility easements may only be reduced with the approval of all utility providers.
+
+5. Multifamily development (3 or more units on the same property) that is adjacent to an R-1 (Low Density Residential) or R-1.5 (Medium Density Residential) zone must provide a minimum 15-foot buffer area between the multifamily development and the R-1 or R-1.5 zoned property. Within this buffer the following applies (see figure 16.20-1):
+
+a. Site obscuring landscaping shall be required. The Planning Commission may require retention of existing vegetation; installation of a 6-foot minimum height site-obscuring fence with shade trees planted a maximum of 30 feet on center; and/or other landscaping to provide visual buffering.
+
+b. No active recreation areas (tot lots, swimming pools, etc.) shall be allowed within the 15-foot buffer (garden spaces shall not be considered active recreation areas);
+
+6. Infill standards may also apply. See CMC 16.20.030(D)(3) and CMC 16.21.050.
+
+E. Maximum building height and length:
+
+1. Principal building: thirty-five feet.
+
+2. Detached accessory structure:
+
+a. If located inside the allowed building footprint for the principal building, a detached accessory structure may be up to twenty-two feet tall, as measured to the highest point of the roof.
+
+b. If located outside the allowed building footprint for the principal building, a detached accessory structure is subject to a step-up height standard, and is allowed outright only if it meets this standard. The structure shall not exceed eight feet tall, as measured to the highest point of the roof, at a distance of three feet from the property line. The structure may increase in height by one foot vertically for every one foot horizontally away from the three foot line, up to the maximum height of twenty-two feet.
+
+c. A conditional use permit is required to locate the structure outside of the allowed building footprint for the principal building in violation of the step-up height standard.
+
+d. Detached accessory structures over twenty-two feet tall are not permitted.
+
+3. Maximum building height for multifamily developments abutting an R-1 (Low Density Residential) or R-1.5 (Medium Density Residential) zone shall not exceed a building height greater than one foot for each foot of distance from the R-1 and/or R-1.5 property line.
+
+4. Maximum building length shall be 120 feet.
+
+F. The maximum amount of impervious surface allowed in the R-2 zone shall be 70 percent of the lot area.
+
+1. Impervious surface includes all surface areas that create a barrier to or hinder the entry of water into the soil in comparison with natural conditions prior to development. Impervious surfaces includes, but are not limited to, buildings, parking areas, driveways, roads, sidewalks, patios, packed earth, and oiled surfaces. Open, uncovered retention/detention facilities, green roofs, and permeable surfacing materials shall not be considered impervious surfaces. Roof surfaces are also considered ‘pervious’ when 100% of the annual average roof runoff is captured and reused on-site for irrigation or approved interior uses.
+
+2. To limit impervious surface, alternative surfacing materials may be used. Alternative surfacing includes, but is not limited to paving blocks, turf block, pervious concrete, and porous asphalt. Other similar approved materials are encouraged. Utilization of alternative surfacing methods shall be subject to review and approval by the City Public Works Department for compliance with other applicable regulations and development standards. Maintenance of alternative surfacing materials located on private property are the responsibility of the property owner.
+
+G. Other regulations:
+
+1. Vision clearance distance shall be ten feet from a street to an alley or a street to a driveway, and thirty feet from a street to any other street.
+
+2. All setbacks to be measured from the foundation line of the building. Overhangs shall not exceed two feet; mechanical units, used for the heating/cooling of residential units are exempt from interior and/or rear yard setback requirements. A chimney for a fireplace or stove shall not exceed a two foot projection.
+
+3. To provide shade, required yards on southern and western exposures may be reduced by not more than five feet for eaves, canopies, and patio covers, if patio posts still comply with required setbacks.
+
+4. Multi-family developments exceeding ten units shall provide 150 square feet of recreation space per dwelling unit. Recreation spaces shall be no less than 1,500 square feet in size.
+
+5. Accessory buildings shall not have a larger footprint than the primary building.
+
+6. Townhouse (common wall) development shall not exceed six dwelling units as defined in Chapter 16.04.195. Where possible, the six unit development should include the placement of an alley or sidewalk along the rear boundary of the properties for fire and emergency access to the rear of the properties. If more than one group of six dwelling units is constructed, then the groups shall be separated by ten feet of open space. (Ord. 890 sect. 23, 1993; Ord. 740 sect. 10.3.21 (C),1984; Ord. 955 sect. 7, 1996; Ord. 981 sect. 47, 1997; Ord. 1080, 2001; Ord. 1107, 2002; Ord. 1237, 2007; Ord. 1338, 2010; Ord. 1514, 2019)

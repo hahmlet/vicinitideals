@@ -467,7 +467,7 @@ def test_a_measured_pocket_lot_stays_in_its_own_jurisdiction(tmp_path: Path) -> 
 
 LOT_C = "1S1E01AA -00100"  # in s4 but never measured by the bridge; the snapshot answers for it
 LOT_D = "1S1E01AA -00200"  # in the snapshot only: dropped by quadfit's filter
-LOT_E = "24E01  03900"  # Canby: on the Clackamas roll, in no layer the rules hold
+LOT_E = "24E01  03900"  # Barlow: on the Clackamas roll, in no layer the rules hold
 
 
 def _make_snapshot_run(tmp_path: Path) -> tuple[Path, Path, Path, Path, Path]:
@@ -491,7 +491,7 @@ def _make_snapshot_run(tmp_path: Path) -> tuple[Path, Path, Path, Path, Path]:
             {"county": "clackamas", "tlid": LOT_C, "juris_city": "MI", "jurisdiction": "or/clackamas/milwaukie", "site_address": "9 SE HARRISON ST", "area_sqft": 7000.0, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": "QQ9", "zone": None, "zone_frac": 1.0, "split_zone": False, "inside_ugb": True, "gate": "ZONE_NOT_ENCODED", **roll, "wkb": shapely.to_wkb(POLY_A)},
             {"county": "multnomah", "tlid": LOT_D, "juris_city": "PO", "jurisdiction": "or/multnomah/portland", "site_address": None, "area_sqft": 800.0, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": "R5", "zone": "R5", "zone_frac": 0.97, "split_zone": False, "inside_ugb": True, "gate": None, **{k: None for k in roll}, "wkb": shapely.to_wkb(shapely.box(7_640_100.0, 680_000.0, 7_640_120.0, 680_040.0))},
             # Outside Metro's boundary, in a city no layer holds: the map still names the city.
-            {"county": "clackamas", "tlid": LOT_E, "juris_city": "CANBY", "jurisdiction": None, "site_address": "14450 BAUMBACK RD", "area_sqft": 138687.7, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": None, "zone": None, "zone_frac": None, "split_zone": False, "inside_ugb": False, "gate": "JURISDICTION_NOT_ENCODED", **{k: None for k in roll}, "wkb": shapely.to_wkb(shapely.box(7_660_000.0, 600_000.0, 7_660_300.0, 600_462.3))},
+            {"county": "clackamas", "tlid": LOT_E, "juris_city": "BARLOW", "jurisdiction": None, "site_address": "14450 BAUMBACK RD", "area_sqft": 138687.7, "part_count": 1, "stack_count": 1, "condo_verdict": "land", "condo_reason": None, "zone_raw": None, "zone": None, "zone_frac": None, "split_zone": False, "inside_ugb": False, "gate": "JURISDICTION_NOT_ENCODED", **{k: None for k in roll}, "wkb": shapely.to_wkb(shapely.box(7_660_000.0, 600_000.0, 7_660_300.0, 600_462.3))},
         ]
     ).to_parquet(normalized / "lots.parquet", index=False)
     meta = json.loads((run_dir / "meta.json").read_text(encoding="utf-8"))
@@ -549,9 +549,9 @@ def test_a_snapshot_fed_run_exports_every_lot_as_a_candidate(tmp_path: Path) -> 
     assert c["snapshot_zone"] == {"raw": "QQ9", "zone": None, "gate": "ZONE_NOT_ENCODED", "of": None}
     # A lot in a city no layer holds is never blank: the map's city name rides the column.
     e = lots[LOT_E]
-    assert (e["county"], e["jurisdiction"], e["zone"], e["site_address"]) == ("clackamas", "juris_city:canby", "", "14450 BAUMBACK RD")
+    assert (e["county"], e["jurisdiction"], e["zone"], e["site_address"]) == ("clackamas", "juris_city:barlow", "", "14450 BAUMBACK RD")
     ef = json.loads(e["facts"])
-    assert ef["unmeasured"] == {"reason": "JURISDICTION_NOT_ENCODED", "quadfit_step": None} and ef["juris_city"] == "CANBY"
+    assert ef["unmeasured"] == {"reason": "JURISDICTION_NOT_ENCODED", "quadfit_step": None} and ef["juris_city"] == "BARLOW"
     assert ef["snapshot_zone"] == {"raw": None, "zone": None, "gate": "JURISDICTION_NOT_ENCODED", "of": None}
 
     rows = _read(out / RESULTS_FILE)
@@ -938,13 +938,13 @@ async def test_a_candidate_load_writes_the_promotion_gate_on_its_snapshot(
         )
     ).all()
     assert unmeasured and all(u[0] == "NOT_MEASURED" and u[1] == "unknown" and u[2] == ["NOT_MEASURED", "quadfit:sliver_area"] for u in unmeasured)
-    canby = (
+    barlow = (
         await session.execute(
             text("SELECT jurisdiction, zone, facts->>'juris_city', facts->'unmeasured'->>'reason' FROM flats.lots WHERE snapshot_id = :s AND tlid = :t"),
             {"s": september, "t": LOT_E},
         )
     ).one()
-    assert tuple(canby) == ("juris_city:canby", None, "CANBY", "JURISDICTION_NOT_ENCODED"), "a city no layer holds lands with its name, never a blank"
+    assert tuple(barlow) == ("juris_city:barlow", None, "BARLOW", "JURISDICTION_NOT_ENCODED"), "a city no layer holds lands with its name, never a blank"
 
 
 @pytest.mark.asyncio

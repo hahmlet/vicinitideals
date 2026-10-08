@@ -82,11 +82,22 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
     )
     assert read == [
         "or/clackamas/_unincorporated",
+        # 2026-10-07: Canby. CMC 16.04.310 "Corner lot": a lot abutting two
+        # intersecting streets other than an alley, the streets not meeting
+        # at more than 135 degrees. Exactly 135 is a corner.
+        "or/clackamas/canby",
+        # 2026-10-07: Estacada. EMC 16.08.010 "Lot, corner": a lot abutting two
+        # or more streets whose lines meet at an interior angle under 135
+        # degrees; "road" includes a private way.
+        "or/clackamas/estacada",
         "or/clackamas/gladstone",
         "or/clackamas/happy-valley",
         "or/clackamas/milwaukie",
         "or/clackamas/oregon-city",
         "or/clackamas/rivergrove",
+        # 2026-10-07: Sandy. SDC 17.10 "Lot, corner": a lot at the intersection
+        # of two streets, the interior angle not exceeding 135 degrees.
+        "or/clackamas/sandy",
         "or/clackamas/tualatin",
         "or/clackamas/west-linn",
         "or/clackamas/wilsonville",

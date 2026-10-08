@@ -161,7 +161,9 @@ def test_the_aisle_ties_troutdale_for_the_widest_in_the_corpus(
         for layer_id, layer in load_rules().items()
         if "parking_aisle_two_way_ft" in layer.defaults
     }
+    # Sandy (FOLLOWUPS 53, 2026-10-07) ties at 25 as well.
     assert sorted(k for k, v in widest.items() if v == max(widest.values())) == [
+        "or/clackamas/sandy",
         COUNTY,
         "or/multnomah/troutdale",
     ]

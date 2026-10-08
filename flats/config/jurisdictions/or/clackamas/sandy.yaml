@@ -1,0 +1,868 @@
+label: Sandy
+kind: city
+eligible: true
+notes: >-
+  DRAFT, 2026-10-07. Read from the Sandy Development Code (Title 17 of the
+  Sandy Municipal Code) as Municode publishes it, one document per chapter,
+  stored whole. Every value is draft. Lots reach this layer by the taxlots'
+  JURIS_CITY SANDY. Their zoning comes from the Oregon City regional zoning
+  layer (CITY 'Sandy'), which spells the districts without the hyphen. Three
+  districts admit the pod: R-1 (row houses, "more than two attached units
+  ... on individual lots", 17.10 and 17.36.10 A.4, so only the
+  townhouse-on-its-own-lot path), R-2 (row houses and multi-family
+  dwellings, 17.38.10) and R-3 (the same, 17.40.10). Each is outright; every
+  new multi-family, row-house or commercial building goes through design
+  review (17.36.50, 17.38.50, 17.40.50 A: "required for all uses"), which
+  the code runs as a Type II Director's review for multi-family development
+  that complies with its standards (17.90.30), and the screen treats as an
+  outright path; a question for Steph. SFR allows a single detached
+  dwelling, a duplex and a small single-room-occupancy building and no row
+  house or multi-family; the commercial districts allow housing only above a
+  commercial business (C-1 also keeps row houses and duplexes that existed
+  before the code); the industrial districts allow no dwelling; Parks and
+  Open Space is parks only. A fourplex is a multi-family dwelling here
+  ("at least three dwelling units in any vertical or horizontal
+  arrangement", 17.10). Conservative readings taken: the 20-foot setback
+  that 17.80.20 puts on every collector and arterial street is the base
+  figure on the front and street-side yards and the 10 feet the zone prints
+  is the relief on a local street, and no Sandy street-class map exists yet,
+  so 20 feet is charged on every street (a lot on a local street can
+  therefore read RED where it is not); the parking aisle is held at 25 feet
+  both ways; the R-2 landscaping figure for multi-family (25 percent) is
+  read as binding the pod. Density rounding (17.30.20 D) and the
+  flood-and-slope density transfer (17.30.20 B) are not applied.
+
+ingest:
+  geoid: null
+  juris_city_codes:
+  - SANDY
+  zoning_layer: zoning_sandy
+  zone_field: ZONE
+  strip_lowercase_suffix: false
+
+code:
+# Sandy Development Code (Title 17 of the Sandy Municipal Code), the
+# city's adopted code as Municode publishes it (Supplement 5, through
+# Ordinance 2026-09). Municode's reader renders in JavaScript, but the
+# call behind it is public JSON; each entry below is one chapter by that
+# call (client 17267, product 15896, job 480528), stored whole. The
+# Zoneomics copy of the code is a mirror and was not used. The zoning,
+# setback, definition, parking, design and landscaping chapters were read
+# whole on 2026-10-07; the procedure chapters are stored so a citation or a
+# cross-reference into them resolves. allow_thin on every entry: several
+# chapters (17.64 Reserved, 17.88) are short by construction.
+- id: "sdc.17.00"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.00IN
+  title: "SDC Chapter 17.00 Introduction"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.02"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.02THCOAGOF
+  title: "SDC Chapter 17.02 The City Council, Its Agencies And Officers"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.04"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.04LEFR
+  title: "SDC Chapter 17.04 Legal Framework"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.06"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.06EN
+  title: "SDC Chapter 17.06 Enforcement"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.08"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.08NODE
+  title: "SDC Chapter 17.08 Nonconforming Development"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.10"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.10DE
+  title: "SDC Chapter 17.10 Definitions"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.12"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.12PRDEMA
+  title: "SDC Chapter 17.12 Procedures For Decision Making"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.14"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.14REIN
+  title: "SDC Chapter 17.14 Request For Interpretation"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.16"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.16AUSIUS
+  title: "SDC Chapter 17.16 Authorization Of Similar Uses"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.18"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.18PRAP
+  title: "SDC Chapter 17.18 Processing Applications"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.20"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.20PUHE
+  title: "SDC Chapter 17.20 Public Hearings"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.22"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.22NO
+  title: "SDC Chapter 17.22 Notices"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.24"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.24COPLAMPR
+  title: "SDC Chapter 17.24 Comprehensive Plan Amendment Procedures"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.26"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.26ZODIAM
+  title: "SDC Chapter 17.26 Zoning District Amendments"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.28"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.28AP
+  title: "SDC Chapter 17.28 Appeals"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.30"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.30ZODI
+  title: "SDC Chapter 17.30 Zoning Districts"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.32"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.32PAOPSPPO
+  title: "SDC Chapter 17.32 Parks And Open Space (Pos)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.34"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.34SIMIRESF
+  title: "SDC Chapter 17.34 Single-Family Residential (Sfr)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.36"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.36LODERER-
+  title: "SDC Chapter 17.36 Low Density Residential (R-1)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.38"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.38MEDERER-
+  title: "SDC Chapter 17.38 Medium Density Residential (R-2)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.40"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.40HIDERER-
+  title: "SDC Chapter 17.40 High Density Residential (R-3)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.42"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.42CEBUDIC-
+  title: "SDC Chapter 17.42 Central Business District (C-1)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.44"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.44GECOC-
+  title: "SDC Chapter 17.44 General Commercial (C-2)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.46"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.46VICOC-
+  title: "SDC Chapter 17.46 Village Commercial (C-3)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.48"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.48INPAI-
+  title: "SDC Chapter 17.48 Industrial Park (I-1)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.50"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.50LIINI-
+  title: "SDC Chapter 17.50 Light Industrial (I-2)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.52"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.52GEINI-
+  title: "SDC Chapter 17.52 General Industrial (I-3)"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.54"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.54SPARPLOV
+  title: "SDC Chapter 17.54 Specific Area Plan Overlay"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.56"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.56HIDE
+  title: "SDC Chapter 17.56 Hillside Development"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.60"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.60FLSLHAFSOVDI
+  title: "SDC Chapter 17.60 Flood And Slope Hazard (Fsh) Overlay District"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.62"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.62CUHIRE
+  title: "SDC Chapter 17.62 Cultural And Historic Resources"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.64"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.64RE
+  title: "SDC Chapter 17.64 Reserved"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.66"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.66ADVA
+  title: "SDC Chapter 17.66 Adjustments And Variances"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.68"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.68COUS
+  title: "SDC Chapter 17.68 Conditional Uses"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.70"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.70HAPEANHOTROCPE
+  title: "SDC Chapter 17.70 Hardship Permit-Manufactured Home And Trailer Occupancy Permits"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.72"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.72COLI
+  title: "SDC Chapter 17.72 Congregate Living"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.74"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.74ACDEDDPRPR
+  title: "SDC Chapter 17.74 Accessory Development-Additional Provisions And Procedures"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.76"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.76MAUTSIST
+  title: "SDC Chapter 17.76 Major Utility Siting Standards"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.78"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.78AN
+  title: "SDC Chapter 17.78 Annexation"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.80"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.80ADSECOARST
+  title: "SDC Chapter 17.80 Additional Setbacks On Collector And Arterial Streets"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.82"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.82SPSETRST
+  title: "SDC Chapter 17.82 Special Setbacks On Transit Streets"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.84"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.84IMREDE
+  title: "SDC Chapter 17.84 Improvements Required With Development"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.86"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.86PAOPSP
+  title: "SDC Chapter 17.86 Parkland And Open Space"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.88"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.88AFHO
+  title: "SDC Chapter 17.88 Affordable Housing"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.90"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.90DEST
+  title: "SDC Chapter 17.90 Design Standards"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.92"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.92LASCGESTLLZO
+  title: "SDC Chapter 17.92 Landscaping And Screening General Standards-All Zones"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.94"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.94DRUS
+  title: "SDC Chapter 17.94 Drive-Up Uses"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.96"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.96MADWPAST
+  title: "SDC Chapter 17.96 Manufactured Dwelling Park Standards"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.98"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+  title: "SDC Chapter 17.98 Parking, Loading, And Access Requirements"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.100"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.100LADI
+  title: "SDC Chapter 17.100 Land Division"
+  extraction: plain
+  allow_thin: true
+- id: "sdc.17.102"
+  url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.102URFO
+  title: "SDC Chapter 17.102 Urban Forestry"
+  extraction: plain
+  allow_thin: true
+
+definitions:
+  # Read 2026-10-07 from SDC 17.10, on disk chapter by chapter.
+  #
+  # THE NOUN. "Multi-family dwelling: At least three dwelling units in any
+  # vertical or horizontal arrangement, located on a lot or development
+  # site" (sdc.17.10.txt L195). The pod, four units in one building, is a
+  # multi-family dwelling. "Row house: More than two attached units, often
+  # with two stories and with ground floor access, on individual lots" (L719)
+  # is the unit-lot path, and the only one R-1 allows.
+  #
+  # CORNER LOT. "A lot situated at the intersection of two streets, the
+  # interior angle of such intersection not exceeding 135 degrees" (L553).
+  #
+  # FRONT LOT LINE ON A CORNER LOT. "In the case of a corner lot with
+  # frontage on one transit street, the lot line abutting the transit street
+  # shall be the front lot line ... For all other corner lots, the applicant
+  # or property owner can choose which lot line is to be the front" (L563).
+  # The zone tables charge the same 10 feet on the front and on the street
+  # side, so the choice moves nothing but the rear and side yards.
+  corner_lot:
+    test: intersecting_frontages
+    max_intersection_angle_deg: 135.0
+    quote: "or/clackamas/sandy/sdc.17.10.txt#L553"
+    cite: "Sandy SDC 17.10, Lot, corner"
+
+private_drives:
+  street: true
+  quote: "or/clackamas/sandy/sdc.17.10.txt#L404"
+  says: "abuts a public or private street"
+  cite: "Sandy SDC 17.10, Frontage (a public or private street)"
+  note: >-
+    "Frontage: That portion of a development site that abuts a public or
+    private street" (L404) and the yards on a corner lot run along "all sides
+    of a lot adjacent to a street". "Street" itself is defined by the 2023
+    Transportation System Plan classes (L775), which print no private class.
+    A private drive the lot abuts is held to be a street for the yards: the
+    reading that does not shrink a yard. A doubt.
+
+defaults:
+  # PARKING COUNT. 17.98.40 table: single family detached/attached 2 per
+  # dwelling unit (L157); multi-family 1.5 per studio or one-bedroom unit and
+  # 2.0 per two-bedroom unit or greater (L160). The catalog holds no bedroom
+  # count, so the largest printed rate is encoded: 2.0 a unit, eight stalls
+  # for the pod.
+  parking_min_per_unit:
+    value: 2
+    cite: Sandy SDC 17.98.40, minimum off-street vehicle parking (2 per dwelling unit for single family attached; multi-family 2.0 per two-bedroom unit or greater)
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.98.txt#L157,L160"
+  # THE STALL. 17.98.60 A: "A standard parking space shall be a minimum of
+  # nine feet wide by 18 feet in length" (L276).
+  parking_stall_width_ft:
+    value: 9
+    cite: Sandy SDC 17.98.60 (A), a standard parking space nine feet wide by 18 feet in length
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.98.txt#L276"
+  parking_stall_depth_ft:
+    value: 18
+    cite: Sandy SDC 17.98.60 (A), a standard parking space nine feet wide by 18 feet in length
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.98.txt#L276"
+  # THE AISLE. 17.98.60 C, the 90 degree row: 20 feet single sided one-way,
+  # 22 single sided two-way, 25 double sided either way (L302-L303). The
+  # court the pod draws may have stalls on both sides, so the double-sided 25
+  # is held for both directions.
+  parking_aisle_two_way_ft:
+    value: 25
+    cite: Sandy SDC 17.98.60 (C), aisle width at 90 degrees (25 ft double sided two-way; 22 single sided)
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.98.txt#L302-L303"
+  parking_aisle_one_way_ft:
+    value: 25
+    cite: Sandy SDC 17.98.60 (C), aisle width at 90 degrees (25 ft double sided one-way; 20 single sided; the larger is held)
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.98.txt#L302-L303"
+  # DRIVEWAY. 17.98.100 A: "a minimum width of 20 feet for a two-way drive or
+  # 12 feet for a one-way drive" (L440).
+  driveway_min_width_two_way_ft:
+    value: 20
+    cite: Sandy SDC 17.98.100 (A), a driveway to an off-street parking area a minimum 20 feet for a two-way drive
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.98.txt#L440"
+  driveway_min_width_one_way_ft:
+    value: 12
+    cite: Sandy SDC 17.98.100 (A), a driveway to an off-street parking area a minimum 12 feet for a one-way drive
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.98.txt#L440"
+  front_lot_line_corner:
+    value: owner
+    cite: Sandy SDC 17.10, Lot line, front, on a corner lot the applicant or property owner can choose which lot line is the front (the transit-street exception is not mapped)
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.10DE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.10.txt#L563"
+  # WHICH STREET THE DRIVEWAY USES. Nothing in the zone chapters says; Steph's
+  # rule of 2026-10-02 (more than one street: the side street) is carried by
+  # the lowest-class rule.
+  corner_access_street:
+    value: lowest_class
+    cite: Sandy SDC 17.98.100, driveway approaches are reviewed against the street they join (no street is required for the drive; the lower-class street is used)
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.98.txt#L440"
+
+# NOT ENCODED, read 2026-10-07:
+# - Design review (17.90, a Type II Director's review for multi-family
+#   development, 17.90.30), and the multi-family design menu of 17.90.160
+#   (roofs, entries, facade offsets, 48 sq ft private outdoor areas,
+#   a landscaped parking lot frontage of no more than 50 percent of a street,
+#   recreation areas above five units): treated as an outright path and put
+#   to Steph.
+# - Garage setbacks in the zone tables (20 or 22 ft to a garage door, 15 ft
+#   perpendicular, 5 ft alley): the pod carries no garage.
+# - R-1, R-2 and R-3 "lots with 40 feet or less of street frontage shall be
+#   accessed by a rear alley or a shared private driveway" (17.36.50 B,
+#   17.38.50 B, 17.40.50 B): the screen draws one drive for the pod.
+# - The 20-foot setback on collector and arterial streets on a REAR or SIDE
+#   yard (17.80.20): only a lot whose rear line runs along such a street (a
+#   through lot) is touched. The front and street-side yards carry it.
+# - Density rounding (17.30.20 D) and the 1.5 times density transfer from
+#   flood and slope restricted areas (17.30.20 B).
+# - Vision clearance (17.74.30, 17.98.110), measured from curb lines.
+# - Overlays: Specific Area Plan (Bornstedt Village), Flood Slope Hazard,
+#   Cultural and Historic Resource: not held by FLATS for Sandy.
+
+zones:
+  R-1:
+    cite_default:
+      cite: Sandy SDC Chapter 17.36 (Low Density Residential, R-1)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.36LODERER-
+      retrieved: '2026-10-07'
+    # Row houses ("more than two attached units ... on individual lots",
+    # 17.10) are permitted outright; a multi-family dwelling is not listed.
+    # So the pod is allowed on the townhouse-on-its-own-lot path only.
+    quadplex_allowed:
+      value: false
+      cite: Sandy SDC 17.36.10 (A), the outright list has single detached, zero lot line, duplex, row houses, manufactured dwelling parks, SRO and residential home; no multi-family dwelling
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L22,L38"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: Sandy SDC 17.36.10 (A)(4), row houses permitted outright
+          quote: "or/clackamas/sandy/sdc.17.36.txt#L38"
+    min_lot_sqft:
+      exempt: true
+      cite: Sandy SDC 17.36.30 (A), minimum lot area for other permitted uses (row houses) is "No minimum"
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L159"
+    min_lot_width_ft:
+      exempt: true
+      cite: Sandy SDC 17.36.30, minimum average lot width for other permitted uses (row houses, multi-family) is "No minimum"
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L163"
+    min_frontage_ft:
+      value: 20
+      cite: Sandy SDC 17.36.30, minimum lot frontage 20 ft
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L164"
+    min_density_du_per_acre:
+      value: 5
+      cite: Sandy SDC 17.36.00, density shall not be less than five units per net acre
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L12"
+      measured_on:
+        fact: net_developable_area
+        cite: Sandy SDC 17.10, Density, net, the units per net acre excluding areas dedicated or reserved for public use
+        quote: "or/clackamas/sandy/sdc.17.10.txt#L275"
+        less: []
+        assumed_none:
+          - "areas dedicated or reserved for public use"
+    max_density_du_per_acre:
+      value: 8
+      cite: Sandy SDC 17.36.00, density shall not be more than eight units per net acre
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L12"
+    max_height_ft:
+      value: 35
+      cite: Sandy SDC 17.36.30, structure height 35 ft maximum
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L173"
+    max_coverage_pct:
+      exempt: true
+      cite: Sandy SDC 17.36.30, building site coverage prints "No minimum" and no maximum
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L174"
+    max_impervious_pct:
+      exempt: true
+      cite: Sandy SDC 17.36.30, the R-1 standards print no impervious surface limit
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L174"
+    # YARDS. The zone prints 10 ft front and 10 ft on a corner lot's street
+    # side; 17.80.20 puts 20 ft on every collector and arterial street. No
+    # Sandy street-class map exists, so the 20 is the base and the 10 the
+    # relief when a street is known to be local.
+    setback_front_ft:
+      value: 20
+      cite: Sandy SDC 17.80.20, a minimum setback of 20 ft from the property line on a collector or arterial street (the zone prints 10 ft front yard)
+      quote: "or/clackamas/sandy/sdc.17.80.txt#L28"
+      variants:
+        - value: 10
+          when: [local_street]
+          cite: Sandy SDC 17.36.30 (E), front yard 10 ft minimum
+          quote: "or/clackamas/sandy/sdc.17.36.txt#L166"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Sandy SDC 17.36.30 (E), front yard (17.80.20 on a collector or arterial)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.36LODERER-
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L166"
+    setback_street_side_ft:
+      value: 20
+      cite: Sandy SDC 17.80.20, a minimum setback of 20 ft on a collector or arterial street (the zone prints 10 ft on the side abutting the street)
+      quote: "or/clackamas/sandy/sdc.17.80.txt#L28"
+      variants:
+        - value: 10
+          when: [local_street]
+          cite: Sandy SDC 17.36.30 (E), corner lot 10 ft minimum on the side abutting the street
+          quote: "or/clackamas/sandy/sdc.17.36.txt#L169"
+    setback_rear_ft:
+      value: 15
+      cite: Sandy SDC 17.36.30 (E), rear yard 15 ft minimum
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L167"
+    setback_side_ft:
+      value: 5
+      cite: Sandy SDC 17.36.30 (E), interior side yard 5 ft minimum
+      quote: "or/clackamas/sandy/sdc.17.36.txt#L168"
+    notes: >-
+      DRAFT. Row houses on individual lots only (no multi-family dwelling
+      in the R-1 list), so a pod is allowed as four townhouse lots. No
+      minimum lot area or width; frontage 20; density 5 to 8 units a net
+      acre; front and street side 20 on a collector or arterial and 10 on a
+      local street (the screen has no Sandy street map yet, so 20 is
+      charged everywhere); rear 15; side 5; 35 ft. Design review treated as
+      outright (a question for Steph).
+  R-2:
+    cite_default:
+      cite: Sandy SDC Chapter 17.38 (Medium Density Residential, R-2)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.38MEDERER-
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: true
+      cite: Sandy SDC 17.38.10 (A), row houses and multi-family dwellings permitted outright
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L34,L42"
+    min_lot_sqft:
+      exempt: true
+      cite: Sandy SDC 17.38.30, minimum lot area "No minimum"
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L165"
+    min_lot_width_ft:
+      exempt: true
+      cite: Sandy SDC 17.38.30, minimum average lot width for other permitted uses (row houses, multi-family) is "No minimum"
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L169"
+    min_frontage_ft:
+      value: 20
+      cite: Sandy SDC 17.38.30, minimum lot frontage 20 ft
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L170"
+    min_density_du_per_acre:
+      value: 8
+      cite: Sandy SDC 17.38.00, density shall not be less than eight units per net acre
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L12"
+      measured_on:
+        fact: net_developable_area
+        cite: Sandy SDC 17.10, Density, net, the units per net acre excluding areas dedicated or reserved for public use
+        quote: "or/clackamas/sandy/sdc.17.10.txt#L275"
+        less: []
+        assumed_none:
+          - "areas dedicated or reserved for public use"
+    max_density_du_per_acre:
+      value: 14
+      cite: Sandy SDC 17.38.00, density shall not be more than 14 units per net acre
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L12"
+    max_height_ft:
+      value: 35
+      cite: Sandy SDC 17.38.30, structure height 35 feet maximum
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L180"
+    max_coverage_pct:
+      exempt: true
+      cite: Sandy SDC 17.38.30, building site coverage prints "No minimum" and no maximum
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L181"
+    max_impervious_pct:
+      exempt: true
+      cite: Sandy SDC 17.38.30, the R-2 standards print no impervious surface limit
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L181"
+    min_landscaped_pct:
+      value: 25
+      cite: Sandy SDC 17.38.30, multi-family landscaping 25% minimum
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L179"
+    setback_front_ft:
+      value: 20
+      cite: Sandy SDC 17.80.20, a minimum setback of 20 ft from the property line on a collector or arterial street (the zone prints 10 ft front yard)
+      quote: "or/clackamas/sandy/sdc.17.80.txt#L28"
+      variants:
+        - value: 10
+          when: [local_street]
+          cite: Sandy SDC 17.38.30, front yard 10 ft minimum
+          quote: "or/clackamas/sandy/sdc.17.38.txt#L172"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Sandy SDC 17.38.30, front yard (17.80.20 on a collector or arterial)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.38MEDERER-
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L172"
+    setback_street_side_ft:
+      value: 20
+      cite: Sandy SDC 17.80.20, a minimum setback of 20 ft on a collector or arterial street (the zone prints 10 ft on the side abutting the street)
+      quote: "or/clackamas/sandy/sdc.17.80.txt#L28"
+      variants:
+        - value: 10
+          when: [local_street]
+          cite: Sandy SDC 17.38.30, corner lot 10 ft minimum on the side abutting the street
+          quote: "or/clackamas/sandy/sdc.17.38.txt#L175"
+    setback_rear_ft:
+      value: 15
+      cite: Sandy SDC 17.38.30, rear yard 15 ft minimum
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L173"
+    setback_side_ft:
+      value: 5
+      cite: Sandy SDC 17.38.30, interior side yard 5 ft minimum
+      quote: "or/clackamas/sandy/sdc.17.38.txt#L174"
+    notes: >-
+      DRAFT. Multi-family dwellings and row houses outright. No minimum
+      lot area or width; frontage 20; density 8 to 14 units a net acre;
+      front and street side 20 on a collector or arterial and 10 on a
+      local street (charged everywhere for now); rear 15; side 5; 35 ft;
+      multi-family landscaping 25 percent. Design review treated as
+      outright (a question for Steph).
+  R-3:
+    cite_default:
+      cite: Sandy SDC Chapter 17.40 (High Density Residential, R-3)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.40HIDERER-
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: true
+      cite: Sandy SDC 17.40.10 (A), row houses and multi-family dwellings permitted outright
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L38,L42"
+    min_lot_sqft:
+      exempt: true
+      cite: Sandy SDC 17.40.30, the R-3 standards print no minimum lot area (average lot width, frontage, depth, yards, height only)
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L165"
+    min_lot_width_ft:
+      exempt: true
+      cite: Sandy SDC 17.40.30, minimum average lot width for other permitted uses (row houses, multi-family) is "No minimum"
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L168"
+    min_frontage_ft:
+      value: 20
+      cite: Sandy SDC 17.40.30, minimum lot frontage 20 ft
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L169"
+    min_density_du_per_acre:
+      value: 10
+      cite: Sandy SDC 17.40.00, density shall not be less than ten units per net acre
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L12"
+      measured_on:
+        fact: net_developable_area
+        cite: Sandy SDC 17.10, Density, net, the units per net acre excluding areas dedicated or reserved for public use
+        quote: "or/clackamas/sandy/sdc.17.10.txt#L275"
+        less: []
+        assumed_none:
+          - "areas dedicated or reserved for public use"
+    max_density_du_per_acre:
+      value: 20
+      cite: Sandy SDC 17.40.00, density shall not be more than 20 units per net acre
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L12"
+    max_height_ft:
+      value: 35
+      cite: Sandy SDC 17.40.30, structure height 35 ft maximum
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L178"
+    max_coverage_pct:
+      exempt: true
+      cite: Sandy SDC 17.40.30, building site coverage "No maximum"
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L179"
+    max_impervious_pct:
+      exempt: true
+      cite: Sandy SDC 17.40.30, the R-3 standards print no impervious surface limit
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L179"
+    min_landscaped_pct:
+      value: 25
+      cite: Sandy SDC 17.40.30, landscaping 25% minimum
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L180"
+    setback_front_ft:
+      value: 20
+      cite: Sandy SDC 17.80.20, a minimum setback of 20 ft from the property line on a collector or arterial street (the zone prints 10 ft front yard)
+      quote: "or/clackamas/sandy/sdc.17.80.txt#L28"
+      variants:
+        - value: 10
+          when: [local_street]
+          cite: Sandy SDC 17.40.30, front yard 10 ft minimum
+          quote: "or/clackamas/sandy/sdc.17.40.txt#L171"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Sandy SDC 17.40.30, front yard (17.80.20 on a collector or arterial)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.40HIDERER-
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L171"
+    setback_street_side_ft:
+      value: 20
+      cite: Sandy SDC 17.80.20, a minimum setback of 20 ft on a collector or arterial street (the zone prints 10 ft on the side abutting the street)
+      quote: "or/clackamas/sandy/sdc.17.80.txt#L28"
+      variants:
+        - value: 10
+          when: [local_street]
+          cite: Sandy SDC 17.40.30, corner lot 10 ft minimum on the side abutting the street
+          quote: "or/clackamas/sandy/sdc.17.40.txt#L174"
+    setback_rear_ft:
+      value: 15
+      cite: Sandy SDC 17.40.30, rear yard 15 ft minimum
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L172"
+    setback_side_ft:
+      value: 5
+      cite: Sandy SDC 17.40.30, interior side yard 5 ft minimum
+      quote: "or/clackamas/sandy/sdc.17.40.txt#L173"
+    notes: >-
+      DRAFT. Multi-family dwellings and row houses outright. No minimum
+      lot area, no maximum coverage; frontage 20; density 10 to 20 units a
+      net acre; front and street side 20 on a collector or arterial and 10
+      on a local street (charged everywhere for now); rear 15; side 5; 35
+      ft; landscaping 25 percent. Design review treated as outright (a
+      question for Steph).
+  SFR:
+    cite_default:
+      cite: Sandy SDC Chapter 17.34 (Single-Family Residential, SFR)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.34SIMIRESF
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Sandy SDC 17.34.10 (A), the outright list is a single detached dwelling, a duplex, a residential home and similar; no row house and no multi-family dwelling
+      quote: "or/clackamas/sandy/sdc.17.34.txt#L12,L22,L26"
+    notes: >-
+      DRAFT. Refuses: "primarily ... single-family dwellings and duplexes"
+      (17.34.00); no row house, no multi-family dwelling.
+  POS:
+    cite_default:
+      cite: Sandy SDC Chapter 17.32 (Parks and Open Space, POS)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.32PAOPSPPO
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Sandy SDC 17.32.20 (A), the permitted uses list parks and open space; no dwelling
+      quote: "or/clackamas/sandy/sdc.17.32.txt#L27,L32"
+    notes: >-
+      DRAFT. Refuses: land designated for parks and open space; no dwelling
+      use is listed.
+  C-1:
+    cite_default:
+      cite: Sandy SDC Chapter 17.42 (Central Business District, C-1)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.42CEBUDIC-
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Sandy SDC 17.42.10 (A), residential uses are row houses and duplexes existing before the Code, a residential care facility and dwellings above a commercial business; no new multi-family or row house
+      quote: "or/clackamas/sandy/sdc.17.42.txt#L24,L28,L40"
+    notes: >-
+      DRAFT. Refuses: "does not permit new low density building types"
+      (17.42.00); housing only above a commercial business, plus row houses
+      and duplexes already standing.
+  C-2:
+    cite_default:
+      cite: Sandy SDC Chapter 17.44 (General Commercial, C-2)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.44GECOC-
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Sandy SDC 17.44.10 (A), multi-family dwellings only above a commercial business
+      quote: "or/clackamas/sandy/sdc.17.44.txt#L22,L26"
+    notes: >-
+      DRAFT. Refuses: multi-family only above a commercial business.
+  C-3:
+    cite_default:
+      cite: Sandy SDC Chapter 17.46 (Village Commercial, C-3)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.46VICOC-
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Sandy SDC 17.46.10 (A), residential dwellings only above a commercial business
+      quote: "or/clackamas/sandy/sdc.17.46.txt#L22,L26"
+    notes: >-
+      DRAFT. Refuses: dwellings only above a commercial business.
+  I-1:
+    cite_default:
+      cite: Sandy SDC Chapter 17.48 (Industrial Park, I-1)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.48INPAI-
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Sandy SDC 17.48.10 (A), the permitted uses are industrial, warehousing and commercial; no dwelling is listed
+      quote: "or/clackamas/sandy/sdc.17.48.txt#L12,L17,L22"
+    notes: >-
+      DRAFT. Refuses: light industrial and warehousing; no dwelling use.
+  I-2:
+    cite_default:
+      cite: Sandy SDC Chapter 17.50 (Light Industrial, I-2)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.50LIINI-
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Sandy SDC 17.50.10 (A), the permitted uses are manufacturing, warehousing and commercial; no dwelling is listed
+      quote: "or/clackamas/sandy/sdc.17.50.txt#L12,L15,L20"
+    notes: >-
+      DRAFT. Refuses: manufacturing and warehousing; no dwelling use.
+  I-3:
+    cite_default:
+      cite: Sandy SDC Chapter 17.52 (General Industrial, I-3)
+      url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.52GEINI-
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Sandy SDC 17.52.10 (A), the permitted uses are industrial; no dwelling is listed
+      quote: "or/clackamas/sandy/sdc.17.52.txt#L12,L15,L20"
+    notes: >-
+      DRAFT. Refuses: general industrial; no dwelling use.
+
+zone_rulings:
+  R1:
+    outcome: alias
+    of: R-1
+    note: >-
+      "R1", the Oregon City regional zoning layer's spelling of Sandy's R-1,
+      Low Density Residential (SDC 17.36), on 2026-10-07. The block is R-1.
+  R2:
+    outcome: alias
+    of: R-2
+    note: >-
+      "R2", the regional zoning layer's spelling of Sandy's R-2, Medium
+      Density Residential (SDC 17.38), on 2026-10-07. The block is R-2.
+  R3:
+    outcome: alias
+    of: R-3
+    note: >-
+      "R3", the regional zoning layer's spelling of Sandy's R-3, High Density
+      Residential (SDC 17.40), on 2026-10-07. The block is R-3.
+  C1:
+    outcome: alias
+    of: C-1
+    note: >-
+      "C1", the regional zoning layer's spelling of Sandy's C-1, Central
+      Business District (SDC 17.42), on 2026-10-07. The block is C-1.
+  C2:
+    outcome: alias
+    of: C-2
+    note: >-
+      "C2", the regional zoning layer's spelling of Sandy's C-2, General
+      Commercial (SDC 17.44), on 2026-10-07. The block is C-2.
+  C3:
+    outcome: alias
+    of: C-3
+    note: >-
+      "C3", the regional zoning layer's spelling of Sandy's C-3, Village
+      Commercial (SDC 17.46), on 2026-10-07. The block is C-3.
+  I1:
+    outcome: alias
+    of: I-1
+    note: >-
+      "I1", the regional zoning layer's spelling of Sandy's I-1, Industrial
+      Park (SDC 17.48), on 2026-10-07. The block is I-1.
+  I2:
+    outcome: alias
+    of: I-2
+    note: >-
+      "I2", the regional zoning layer's spelling of Sandy's I-2, Light
+      Industrial (SDC 17.50), on 2026-10-07. The block is I-2.
+  I3:
+    outcome: alias
+    of: I-3
+    note: >-
+      "I3", the regional zoning layer's spelling of Sandy's I-3, General
+      Industrial (SDC 17.52), on 2026-10-07. The block is I-3.

@@ -78,6 +78,12 @@
    }
   },
   {
+   "shape": "4|9|18|24|20|5",
+   "aisle_ft": 1.0,
+   "stall_ft": 0.5,
+   "dead_end_ft": 2.0
+  },
+  {
    "shape": "4|9|18|24|30|5",
    "aisle_ft": 0.0,
    "stall_ft": 0.0,

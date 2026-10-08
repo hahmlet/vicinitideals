@@ -1,0 +1,587 @@
+CHAPTER 17.56 - HILLSIDE DEVELOPMENT
+
+
+
+
+
+Sec. 17.56.00. - Intent.
+
+
+The intent of this chapter is to comply with Statewide Planning Goal 7 (Natural Hazards) by minimizing seismic and landslide hazards, and soil erosion associated with development on steep or unstable slopes. Development may be permitted on steep slopes, provided that the recommendations of approved studies are implemented as conditions of building permit or land use approval.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.56.10. - Applicability.
+
+
+These regulations shall apply to any parcel with slopes greater than 25 percent as shown on the Hillside Development Overlay District Map or with slope hazards mapped by the Department of Geology and Mineral Industries (DOGAMI). This chapter shall apply only to activities and uses that require a building, grading, tree removal, and/or land use permit.
+A.
+
+General. No person shall develop property in areas designated by SDC 17.56.10, without first demonstrating compliance with this chapter.
+
+1.
+
+As a condition of permit issuance or land use approval, the applicant shall agree to implement the recommendations of approved studies and to allow all inspections to be conducted.
+
+2.
+
+Where a bond, letter of credit, or other guarantee is required, the permit shall not be issued until the bond or guarantee has been obtained and approved.
+
+3.
+
+Applicability for residential development applications is specified in Section 17.56.50.
+
+B.
+
+Exemptions:
+
+1.
+
+An activity or use that avoids slopes of 25 percent or greater, DOGAMI slope hazard areas, natural drainageways, and potentially hazardous analysis areas as defined in Section 17.56.30.A.
+
+2.
+
+The following activities, regardless of location:
+
+a.
+
+An excavation that is less than three feet in depth, or which involves less than 50 cubic yards of volume;
+
+b.
+
+A fill that does not exceed three feet in depth or 50 cubic yards of volume;
+
+c.
+
+New construction or expansion of a structure resulting in a net increase in ground floor area of less than 1,000 square feet that does not involve grading;
+
+d.
+
+Emergency actions required to prevent an imminent threat to public health or safety, or prevent imminent danger to public or private property, as determined by the Director; or
+
+e.
+
+Any land use or activity that does not require a building, grading permit, or land use approval.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.56.20. - Approval procedures.
+
+
+A.
+
+Land Use Reviews. All applications for land use approval under the Sandy Development Code shall be reviewed under the highest numbered procedure required for the development proposal. For example, a Type II design review combined with hillside development review would be considered under the Type II procedure; similarly, a Type III conditional use permit combined with hillside development review would be considered under the Type III procedure.
+
+B.
+
+Building Permits. The Building Official will process requests for building permit or grading permit applications that do not require land use review under the Sandy Development Code.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.56.30. - Required map and studies.
+
+
+A.
+
+Topographic Map Required. To determine the location of potentially hazardous areas, the applicant shall submit a scaled topographic map at two-foot contour intervals for the subject property (site) and for land within 25 feet of the site perimeter. In addition to DOGAMI slide hazard areas and slopes of 25 percent or greater, potentially hazardous "analysis areas" include land within 25 feet of the top or toe of slopes of 25 percent or greater and the area 25 feet on either side of drainageways that drain 20 acres or more. This map shall be prepared by a registered engineer or land surveyor and shall show:
+
+1.
+
+Slopes of 25—34 percent;
+
+2.
+
+Slopes of 35 percent and greater;
+
+3.
+
+The analysis that is within 25 feet of slopes that are 25 percent or greater parallel to and within 25 feet of the top of the 25 percent slope break;
+
+4.
+
+Mapped DOGAMI slide hazard areas;
+
+5.
+
+The analysis area within 25 feet of the centerline of drainageways that drain at least 20 acres; and
+
+6.
+
+The area (in square feet) for each category listed above for the subject property.
+
+B.
+
+Types of Required Studies. There are three types of geological and engineering studies that may be required b this chapter. See Table 1 under Section 17.56.40, below.
+
+1.
+
+Geological Assessments are prepared and stamped by a Certified Engineering Geologist and describe the surface and subsurface conditions of a site, delineate areas of a property that may be subject to specific geologic hazards, and assess the suitability of the site for development. Geotechnical Reports shall be conducted according to the requirements of Appendix A (Geological Assessments), shall make recommendations as to whether further studies are required, and may be incorporated into or included as an appendix to the geotechnical report.
+
+2.
+
+Engineering Geology Reports are prepared and stamped by a Certified Engineering Geologist and provide detailed descriptions of the geology of the site, professional conclusions and recommendations regarding the effect of geological conditions on the proposed development, and opinions and recommendations covering the adequacy of the site to be developed. Engineering Geology Reports shall be prepared in accordance with the requirements of Appendix B (Guidelines for Preparing Engineering Geology Reports in Oregon adopted by the Oregon State Board of Geologist Examiners) and may be incorporated into or included as an appendix to the geotechnical report.
+
+3.
+
+Geotechnical Reports are prepared and stamped by a Geotechnical Engineer, evaluate site conditions, and recommend design measures necessary to reduce the development risks and facilitate safe and stable development. Geotechnical Reports shall be conducted according to the requirements of Appendix C (Geotechnical Reports), and may be incorporated into or included as an appendix to the Engineering Geology Report.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.56.40. - Where studies required.
+
+
+Additional geological or engineering studies shall be required, or not required, under the following circumstances:
+
+Table 1: Where Studies are Required or not Required
+
+Situation                                                                                                                                                Type I Development Applications; Single Family Homes, Duplexes and Accessory Uses                NON-EXEMPT Grading; Type II or III Development Applications
+A. Proposed development avoids slopes of 25 percent or greater, drainageways, DOGAMI slope hazard areas and all analysis areas:                          1. No further requirements                                                                       2. No further requirements
+B. Development proposed on slopes of 25—35 percent or analysis areas, but avoids drainageways, DOGAMI hazard areas and slopes of 35 percent or greater:  1. Geological Assessment required; Engineering Geology or Geotechnical Reports may be required*  2. Engineering Geology Report required; Geotechnical Report may be required*
+C. Development proposed on DOGAMI hazard areas, slopes of 35% or greater, or drainageway areas:                                                          1. Engineering Geology Report required; Geotechnical Report may be required*                     2. Engineering Geology Report and Geotechnical Report required
+
+* Whether additional studies are necessary depends on recommendations of base required study.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.56.50. - Compliance with study conclusions and recommendations required.
+
+
+A.
+
+Professional Standards. The Director shall determine whether Geological Assessments, Engineering Geology Reports, or Geotechnical Reports have been prepared in accordance with Section 17.56.30. The Director may require additional information or analysis necessary to meet study requirements.
+
+B.
+
+Peer Review. The Director may require peer review of any required report, in which case regulated activities and uses shall be reviewed and accepted through the peer review process before any regulated activity will be allowed.
+
+1.
+
+A professional or professional firm of the City's choice that meets the qualifications listed in this chapter shall perform the review.
+
+2.
+
+The review shall be at the applicant's expense.
+
+3.
+
+Review of report submittals shall determine whether required elements are completed, geologic report procedures and assumptions are accepted, and all conclusions and recommendations are supported and reasonable.
+
+C.
+
+Review Criteria.
+
+1.
+
+Residential Development Criteria. Applications subject to Hillside Development review that are proposing new residential dwelling units or the creation of residential lots on properties that include areas designated by SDC 17.56.10 must comply with either the clear and objective criteria in Subsection C.1.a. or the discretionary criteria in Subsection C.1.b, below.
+
+a.
+
+Clear and Objective Criteria. No development, including creation of lots, is permitted within areas with slopes greater than 25 percent, as designated by SDC 17.56.10. An application to develop property that has slopes greater than 25 percent, but where no development is proposed within the areas designated by SDC 17.56.10 the application will be processed as otherwise required in this Code.
+
+b.
+
+Alternative Criteria. Residential development is permitted within areas designated by SDC 17.56.10 subject to the discretionary criterion in Subsection C.2 of this section and the provisions of this chapter.
+
+2.
+
+Non-residential Development / Discretionary Criteria. The approval authority shall rely on the conclusions and recommendations of required reports, as modified by peer review, to determine compliance with this chapter.
+
+D.
+
+Conditions of Approval. Conclusions and recommendations stated in approved reports shall be directly incorporated as permit conditions or provide the basis for conditions of approval for the regulated activity or use.
+
+E.
+
+Expiration. Where an approved assessment or report as defined and required by this chapter has been prepared within five years of submission of the land use application for a specific site, and where the proposed land use activity and surrounding site conditions are unchanged, that report may be utilized and a new report is not required, provided the applicant submits a letter prepared and stamped by a Certified Engineering Geologist or Geotechnical Engineer stating that the report is still valid. If a Certified Engineering Geologist or Geotechnical Engineer cannot provide such a letter due to changes to the environmental conditions associated with the site or surrounding the site change, or due to material changes to the proposed land use activity or development, the applicant shall submit an amendment to the required assessment or report, which may be reviewed and approved through the peer review process. A new assessment or report is required after five years from submission of the land use application.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+APPENDIX A
+GEOLOGICAL ASSESSMENT REQUIREMENTS
+
+The geological assessment is intended as an overview of site conditions. Its purpose is to identify geologic hazards and considerations, and to provide an assessment of the suitability of the site for the proposed project. It is the City's policy to evaluate not only the development site and its effect on adjacent properties, but also adjacent properties that may affect the site. The report should include the items listed below in sufficient detail so that the City may determine whether a more thorough engineering geology report or geotechnical report may be needed to complete the evaluation of the suitability of the site for the proposed use.
+
+The geologic assessment shall include the following:
+
+GENERAL
+
+• Name, address, and phone number.
+
+• Client for whom the report was prepared.
+
+• A description of the proposed project and its location.
+
+• A review of the geologic history and the history of prior excavations and fills.
+
+• A field reconnaissance of the site and vicinity.
+
+• A discussion of geologic hazards, if any.
+
+SITE INVESTIGATION
+
+A site map of the area at a scale of 1":400' or larger. Geologic conditions, topography, and location of proposed structures are to be shown. A geologic profile showing any referenced subsurface conditions. A copy of published geologic maps shall also be provided.
+
+• Suitability of the site for proposed development from a geologic standpoint.
+
+• A description of the magnitude and extent of proposed grading or soil disturbance.
+
+• If deemed necessary, subsurface exploration shall be conducted to assess unclear geologic conditions.
+
+• A description of all field mapping and exploration procedures.
+
+• Additional information or analyses as necessary to evaluate the site.
+
+• A bibliography of all references used.
+
+GEOLOGIC PROCESSES
+
+• A discussion of any unusual or extreme geologic processes at work on the site, for example: rapid erosion, landslide hazard, flood hazard, rockfall, subsidence, or other features.
+
+• A list of any geologic hazards that may affect the proposed land use, including slope stability, debris flow, flooding, topography, erosion hazard, shallow groundwater, expansive soils, subsidence, fault rupture, or any other geologic hazard discovered by the investigation.
+
+• An identification of any areas of the site that you recommend be avoided for human occupied structures.
+
+• The effects of the geologic conditions on the proposed land use.
+
+• The effects of the proposed land use on future geologic processes.
+
+• The effects of the geologic conditions and proposed land use on surrounding properties.
+
+RECOMMENDATIONS
+
+• Discuss mitigation measures to address any anticipated geologic problems.
+
+• Discuss potential future follow-up studies that should be recommended, such as engineering geology reports, geotechnical reports, additional subsurface exploration or more extensive soil reports.
+
+• Geologic feasibility of the site for the proposed development.
+
+CERTIFICATION
+
+A signature, certification number, and stamp of a Registered Geologist who is certified in the specialty of Engineering Geology under the provisions of ORS 672.505 to 672.705.
+
+APPENDIX B
+GUIDELINES FOR PREPARING
+ENGINEERING GEOLOGIC REPORTS IN OREGON
+
+Adopted by The Oregon State Board of Geologist Examiners
+
+This is a suggested guide for the preparation of an engineering geologic report in Oregon. The engineering geologic report should include sufficient facts and interpretation regarding geologic materials, processes, and history to allow evaluation of the suitability of the site for the proposed use. Because of the wide variation in size and complexity of projects and scope of work, the guidelines are intended to be flexible and should be tailored to the specific project. The guidelines are intended to be fairly complete; however, not all items would be applicable to small projects or low-risk sites. In addition, some items may be addressed in separate reports prepared by a geotechnical engineer, geophysicist, structural engineer, or hydrologist.
+
+The guidelines are based on a publication developed by the Guidelines Committee of the Utah Section of the Association of Engineering Geologists, a series of guidelines published by the California Division of Mines and Geology in the CDMG Note series, and the Bulletin of the Association of Engineering Geologists (Slosson, 1984).
+
+GENERAL INFORMATION
+
+The following items should be addressed:
+
+• Client or party that commissioned the report.
+
+• Name(s) of geologist(s) who did the mapping and other investigation on which the report is based, and dates when the work was done.
+
+• Location and size of area, and its general setting with respect to major or regional geographic and geologic features.
+
+• Purpose and scope of the report and geologic investigation, including the proposed use of the site. Also, identify level of the study, i.e., feasibility, preliminary, final, etc.
+
+• Topography and drainage within or affecting the area.
+
+• General nature, distribution, and abundance of exposures of earth materials within the area.
+
+• Nature and source of available subsurface information and geologic reports or maps. Suitable explanations of the available data should provide a technical reviewer with the means of evaluating the reliability. Reference to cited works or field observations should be made, to substantiate opinions and conclusions.
+
+• Disclosure of known or suspected geologic hazards affecting the area, including a statement regarding past performance of existing facilities (such as buildings or utilities) in the immediate vicinity.
+
+• Location of test holes and excavations (drill holes, test pits, and trenches) shown on maps and sections and described in the text of the report. The actual data, or processed data upon which interpretations are based, should be included in the report to permit technical reviewers to make their own assessments regarding reliability and interpretation.
+
+• All field and laboratory testing procedures (by ASTM designation, if appropriate) and test results.
+
+• Disclosure statement of geologist's financial interest, if any, in the project or the client's organization.
+
+• The signature and seal of the certified engineering geologist who prepared the report.
+
+GEOLOGIC MAPPING AND INVESTIGATION
+
+• Geologic mapping of the area should be done at a scale which shows sufficient detail to adequately define the geologic conditions present. For many purposes, available published geologic maps are unsuitable to provide a basis for understanding the site conditions, so independent geologic mapping is needed. If available published geologic maps are used to portray site conditions, they must be updated to reflect geologic or topographic changes which have occurred since map publication. It may be necessary for the geologist to extend mapping into adjacent areas to adequately define significant geologic conditions.
+
+• Mapping should be done on a suitable topographic base or aerial photograph, at an appropriate scale with satisfactory horizontal and vertical control. The date and source of the base should be included on each map or photo.
+
+• The geologist doing the investigation and preparing the map should report the nature of bedrock and surficial materials, the structural features and relationships, and the three-dimensional distribution of earth materials exposed and inferred within the area. A clear distinction should be made between observed and inferred features and relationships.
+
+• The report should include one or more appropriately positioned and scaled cross sections to show subsurface relationships that cannot be adequately described in words alone. Fence or block diagrams may also be appropriate.
+
+GEOLOGIC DESCRIPTIONS
+
+The report should contain brief but complete descriptions of all natural materials and structural features recognized or inferred within the subject area. Where interpretations are added to the recording of direct observations, the basis for such interpretations should be clearly stated. Describe all field mapping and exploration procedures (surface geologic reconnaissance, drilling, trenching, geophysical survey, etc.).
+
+The following checklist may be useful as a general, though not necessarily complete, guide for descriptions:
+
+Bedrock
+
+• Identification of rock types.
+
+• Relative and absolute age and, where possible, correlation with named formations and other stratigraphic units.
+
+• Surface and subsurface expression, areal distribution, and thickness.
+
+• Pertinent physical characteristics (e.g., color, grain size, nature of stratification, strength, variability).
+
+• Distribution and extent of zones of weathering; significant differences between fresh and weathered rock.
+
+• Special engineering geologic characteristics or concerns (e.g., factors affecting proposed grading, construction, and land use).
+
+Structural features - stratification, faults, discontinuities, foliation, schistosity, folds
+
+• Occurrence, distribution, dimensions, orientation and variability; both within and projecting into the area.
+
+• Relative ages, where pertinent.
+
+• Special features of faults (e.g., topographic expression, zones of gouge and breccia, nature of offsets, age of movements, youngest faulted unit and oldest unfaulted unit).
+
+• Other significant structural characteristics or concerns.
+
+Surficial deposits - alluvial, colluvial, eolian, glacial, lacustrine, marine, residual, mass movement, volcanic (such as cinders and ash), and fill.
+
+• Identification of material, grain size, relative age, degree of activity of originating process.
+
+• Distribution, dimensional characteristics, variations in thickness, degree of soil development, surface expression.
+
+• Pertinent physical and engineering characteristics (e.g., color, grain size, lithology, compactness, cementation, strength, thickness, variability).
+
+• Special physical or chemical features (e.g., indications of volume change or instability, such as expansive clays or peat).
+
+• Other significant engineering geologic characteristics or concerns.
+
+Surface and shallow subsurface hydrologic conditions, including groundwater, springs, and streams and their possible effect on the site. Indicate how conditions may be affected by variations in precipitation, temperature, etc.
+
+• Distribution, occurrence, and variations (e.g., drainage courses, ponds, swamps, springs, seeps, aquifers).
+
+• Identification and characterization of aquifers; depth to groundwater and seasonal fluctuations, flow direction, gradient, recharge and discharge areas.
+
+• Relationships to topographic and geologic features.
+
+• Evidence for earlier occurrence of water at localities now dry (e.g., vegetation, mineral deposits, historic records).
+
+• Other significant engineering geologic characteristics or concerns, such as fluctuating water table and the effects of proposed modifications on future hydrologic processes.
+
+Seismic considerations.
+
+• Description of the seismotectonic setting of the area (including size, frequency, and location of historic earthquakes), current seismic zoning, and expected seismic risk.
+
+• Potential for area to be affected by surface rupture (including sense and amount of displacement, and width of surface deformation zone).
+
+• Probable response of site to likely earthquakes (estimated ground motion).
+
+• Potential for area to be affected by earthquake-induced landslides or liquefaction.
+
+• Potential for area to be affected by regional tectonic deformation (subsidence or uplift.
+
+ASSESSMENT OF GEOLOGIC FACTORS
+
+Assessment of existing geologic conditions and processes with respect to intended use of the site constitutes the principal contribution of the report. It involves 1) the effects of the geologic features upon the proposed grading, construction, and land use, and 2) the effects of these proposed modifications upon future geologic conditions and processes in the area.
+
+The following checklist includes topics that ordinarily should be considered in discussions, conclusions, and recommendations in geologic reports:
+
+General suitability of proposed land use to geologic conditions.
+
+• Areas to be avoided, if any, and mitigation alternatives.
+
+• Topography and slope.
+
+• Stability of geologic units.
+
+• Flood and tidal inundation, erosion, and deposition.
+
+• Problems caused by geologic features or conditions in adjacent properties.
+
+• Other general problems.
+
+Identification and extent of known or probable geologic conditions which may result in risk to the proposed land use (such as flood inundation, shallow groundwater, storm surge, surface and groundwater pollution, snow avalanche, landslide, debris flow, rock fall, expansive soil, collapsible soil, subsidence, erosion, deposition, earthquake shaking, fault rupture, tectonic deformation, liquefaction, seiche, tsunami, volcanic eruption).
+
+Recommendations for site grading.
+
+• Protection of what materials and structural features will be encountered in proposed cuts.
+
+• Prediction of stability based on geologic factors; recommended avoidance or mitigation alternatives to cope with existing or potential landslide masses.
+
+• Excavation considerations (hard or massive rock, groundwater flows).
+
+• General considerations of proposed fill masses in canyons or on sidehills.
+
+• Suitability of on-site material for use as compacted fill.
+
+• Recommendations for positioning fill masses, provision for subdrainage, buttressing, and the need for erosion protection on fill slopes.
+
+• Other recommendations required by the proposed land use, such as the angle of cut slopes, position of drainage terraces, need for rock-fall and/or erosion protection on cut slopes.
+
+Drainage considerations.
+
+• Protection from inundation or wave erosion along shorelines.
+
+• Soil permeability, suitability for septic systems.
+
+• Protection from sheet flood or gulley erosion, and debris flows or mud flows.
+
+Limitations of study, and recommendations for additional investigations. Considering the scope of work and intended use of the site, provide a statement of the limitations of the study and the need for additional studies outside the stated scope of work.
+
+• Borings, test pits, and/or trenches needed for additional geologic information.
+
+• Percolation tests needed for design.
+
+• Program of subsurface exploration and testing that is most likely to provide data needed by the soils or civil engineer.
+
+• Program for long-term monitoring of the site to evaluate geologic conditions (survey hubs, inclinometers, extensometers, etc.).
+
+RECOMMENDED TECHNIQUES/SYSTEMS TO CONSIDER
+
+• Engineering geology mapping can be done using the Genesis-Lithology-Qualifier (GLQ) system (Keaton, 1984), rather than the conventional Time-Rock system commonly used in geologic mapping. The GLQ system promotes communication of geology information to non-geologists. The Unified Soil Classification System (U.S. Army Corps of Engineers, 1960 - Tech. Memo 3-357, and American Society for Testing and Materials, 1984) has been used in engineering for many years and has been incorporated into the GLQ system.
+
+• The Unified Rock Classification System (Williamson, 1984) provides a systematic and reproducible method of describing rock weathering, strength, discontinuities, and density in a manner directly usable by engineers.
+
+• Systems for mapping landslide deposits are described by Wieczorek (1984) and by McCalpin (1984).
+
+• Commonly accepted grading requirements are described in Chapter 70 of the Uniform Building Code.
+
+Direct your questions and comments regarding these guidelines to:
+Oregon Board of Geologist Examiners
+707 13th Street SE, Suite 275
+Salem, OR 97301
+(503) 566-2837
+Fax: (503) 362-6393
+
+REFERENCES
+
+American Society for Testing and Materials, 1984, Standard practice for description and identification of soils (visual-manual procedure): ASTM Standard D-2488-84, p. 409-423.
+
+Keaton, J.R., 1984, Genesis-lithology-qualifier (GLQ) system of engineering geology mapping symbols: Bulletin of the Association of Engineering Geologists, Vol. XXI, No. 3, p. 355-365.
+
+McCalpin, James, 1984, Preliminary age classification of landslides for inventory mapping: 21st Annual Symposium on Engineering Geology and Soils Engineering, Proceedings, University of Idaho, Moscow, ID, p. 99-111.
+
+Slosson, J.E., 1984, Genesis and evolution of guidelines for geologic reports: Bulletin of the Association of Engineering Geologists, Vol. XXI, No. 3, p. 295-316.
+
+U.S. Army Corps of Engineers, 1960, The Unified Soil Classification System: U.S. Army Technical Memorandum 3-357.
+
+Utah Section of the Association of Engineering Geologists, 1986, Guidelines for preparing engineering geologic reports in Utah: Utah Geologic and Mineral Survey Miscellaneous Publication M, 2 p.
+
+Wieczorek, G.F., 1984, Preparing a detailed landslide-inventory map for hazard evaluation and reduction: Bulletin of the Association of Engineering Geologists, vol. XXI, No. 3, p. 337-342.
+
+Williamson, D.A., 1984, Unified Rock Classification System: Bulletin of the Association of Engineering Geologists, Vol. XXI, No. 3, p. 345-354.
+
+APPENDIX C
+GEOTECHNICAL REPORT REQUIREMENTS
+
+The geotechnical report is intended to define the subsurface conditions and provide geotechnical conclusions and recommendations for design and construction of the project. A geological assessment or engineering geology report may be incorporated into or included as an appendix to the geotechnical report for the purpose of providing geologic information for the geotechnical engineer, explaining the implications of the subsurface conditions for appropriate project design and construction. The investigation should include the following:
+
+GENERAL
+
+• Name, address, and phone number.
+
+• Client for whom the report was prepared.
+
+• A description of the proposed project and its location.
+
+• A site map of the area at a scale of 1":400' or larger. Geologic conditions, topography, and location of proposed structures are to be shown. A copy of published geologic maps shall also be provided.
+
+• A review of the geologic history and history of prior excavation and fills.
+
+• A field reconnaissance of the site and vicinity.
+
+• Discussion of geologic hazards.
+
+• A discussion of the engineering aspects of the site and proposed project. The discussion should address foundation types for proposed structures, retaining systems, grading considerations, stability of cut-slopes and constructed embankments, settlement of the site and adjacent sites due to existing conditions, proposed construction, and proposed surface and subsurface drainage facilities.
+
+• A bibliography of all references used.
+
+FIELD INVESTIGATIONS
+
+• Planned construction (type of structure and use, type of construction and foundation/ floor system, number of stories, estimated structural loads).
+
+• Scope (date of work done, investigative methods, sampling methods, logs of borings/ test pits, elevations of borings/test pits for reference of materials and samples to finished grade or footing elevations, identify real or assume elevations.
+
+• Location of all samples taken, surface and subsurface.
+
+• Groundwater conditions and potential (future natural and artificial seepage effects).
+
+• Structural cross-sections (one or more appropriately positioned and referenced on map; especially through critical areas, slopes and slides) of suitable size and engineering scale; with labeled units, features and structures; and a legend. These sections should correlate with surface and subsurface data showing representative dip components, projections and stratigraphic/structural relationships.
+
+ENGINEERING/MATERIAL CHARACTERISTICS AND TESTING
+
+• Test methods used, type or condition of samples, applicable engineering graphics and calculations, results of all tests, and sample locations of all test samples.
+
+• Unified Soil Classifications of materials.
+
+• Material competency and strength of existing soils/profile:
+º Pertinent engineering geologic attributes (clayey, weak, loose; alignments, fissility, planar boundaries; pervious or water-bearing parts; susceptibility to mass wasting, erosion, piping, or compressibility).
+
+º Effects and extent of weathering (existing and relationship to project design and future site stability, material strength).
+
+º Field densities of unconsolidated field areas and moisture content.
+
+º Bearing capacity and/or shear strength of areas affected by future foundation placement (drained or undrained conditions, effective stress or total stress analysis, in-situ or remolded samples must be identified).
+
+º Consolidation or settlement potential.
+
+º Expansion potential.
+
+• Maximum density-optimum moisture parameters of proposed fill material.
+
+STABILITY FEATURES AND CONDITIONS
+
+• Adequate mapping, sections and description dimensions and type of existing downslope movement, soil/rock creep, flows, falls, slumps, slides, if any.
+
+• Activity, cause or contributing factors of downslope movement features.
+
+• Recent erosion, deposition, or flooding features.
+
+• Subsidence/settlement, piping, solution or other void features or conditions.
+
+• Groundwater and surface drainage characteristics or features:
+º Surface expression (past and present); permeability/porosity of near surface materials.
+
+º Actual or potential aquifers or conduits, perching situations, barriers or other controls to percolation and groundwater movement and fluctuations of groundwater levels at the site.
+
+FOUNDATION DESIGN CRITERIA
+
+• Footing depth and width.
+
+• Criteria for foundation material preparation.
+
+• Allowable bearing values based on testing.
+
+• Lateral pressures (active, passive, or at-rest conditions) and coefficient of friction.
+
+• Settlement - total, differential, and rate of settlement.
+
+REFERENCE
+
+In supplemental or grading plan review reports referencing earlier reports, supply copies of those referenced reports or applicable portions as required by the Director.
+
+CONCLUSIONS AND RECOMMENDATIONS
+
+• Ground preparation (clearing, unsuitable material removal, scarification and moisturization).
+
+• Fill support:
+º Suitability and precompaction of in-situ materials (describe test results and other pertinent data to be used to determine suitability).
+
+º Densification and moisturization or dewatering measures (equipment, surcharge, settlement monitoring, if applicable).
+
+• Placement of fill:
+º Material approval (on site, imported).
+
+º Methods and standards (ASTM standards or approved equivalent).
+
+º Testing (ASTM standards (D1556, D1557, D2167, D2922, D2937, D3017) or equivalent) and frequency of field density testing by vertical intervals and/or volume of fill.
+
+• Elimination of cut/fill or other different transitions beneath improvements.
+
+• Opinion as to adequacy of site for the proposed development (this opinion should also be summarized in the first part of the report).
+
+• Other pertinent geotechnical information for the safe development of the site.
+
+CERTIFICATION
+
+• A signature, certification number, and stamp of a Professional Engineer, registered in the State of Oregon as provided by ORS 672.002 to 672.325, who by training, education and experience is qualified in the practice of geotechnical or soils engineering practices.
+
+• A signature, certification number, and stamp of a Registered Geologist who is certified in the specialty of Engineering Geology under the provisions of ORS 672.505 to 672.705 if a geological assessment or engineering geology report is incorporated into or included as an appendix to the geotechnical report.

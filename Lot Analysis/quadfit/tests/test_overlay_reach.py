@@ -45,7 +45,30 @@ FLOOD_EVERYWHERE = frozenset({"fema_floodway", "fema_sfha", "dsl_lwi_wetlands", 
 #: every line here is a city whose layers were found and whose chapter has not
 #: been read. Deleting a line without wiring the overlay is how the original
 #: bug comes back.
-UNSCREENED: dict[str, str] = {}
+UNSCREENED: dict[str, str] = {
+    "canby": (
+        "2026-10-07: Canby's housing zones were encoded first; its habitat, "
+        "riparian, floodplain-district and river-corridor chapters "
+        "are not yet read and no city map is wired, so only the statewide "
+        "flood and wetland layers reach it. Greens at stake: not measured "
+        "until the first Canby bound, see FOLLOWUPS 53."
+    ),
+    "sandy": (
+        "2026-10-07: Sandy's housing zones were encoded first; its Flood and "
+        "Slope Hazard (FSH), Bornstedt Village and Cultural/Historic Resource "
+        "overlays (SDC 17.54, 17.60, 17.62) are not yet read and no city map "
+        "is wired, so only the statewide flood and wetland layers reach it. "
+        "Greens at stake: not measured until the first Sandy bound, see "
+        "FOLLOWUPS 53."
+    ),
+    "estacada": (
+        "2026-10-07: Estacada's housing zones were encoded first; its Airport "
+        "(EMC 16.60), Historic (16.75) and Wetlands overlays are not yet read "
+        "and no city map is wired, so only the statewide flood and wetland "
+        "layers reach it. Greens at stake: not measured until the first "
+        "Estacada bound, see FOLLOWUPS 53."
+    ),
+}
 #: Emptied 2026-09-03. Gladstone and Tualatin were the last two names on it and
 #: both were wired the same day. Keep the dict rather than deleting it: it is
 #: the place a NEW jurisdiction lands the moment it is added to rules.yaml, and

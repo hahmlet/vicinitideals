@@ -1,0 +1,3 @@
+16.04.127 Collocation.
+
+Collocation. Defined in 47 C.F.R. § 1.6002(g). Term describes: (1) mounting or installing an antenna facility on a preexisting structure, and/or (2) modifying a structure for the purpose of mounting or installing an antenna facility on that structure. "Collocate" has a corresponding meaning. A collocation includes supporting ancillary equipment that is required to operate the collocated antennas. (Ord. 1539, 2020)
