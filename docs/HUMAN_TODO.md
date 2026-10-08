@@ -2503,6 +2503,43 @@ The five chapters:
 closes itself.) Until then Molalla stays yellow, "city not encoded", exactly
 as it is today.
 
+## 30. Estacada: five short questions the code itself does not answer
+
+**Added 2026-10-08, widened the same day.** The agent read Estacada's code line
+by line against each doubt. Canby and Sandy are red everywhere by your ruling,
+so their doubts no longer matter. R-3 is settled by the text (a fourplex on one
+lot needs a hearing; four townhomes on their own lots do not), and the
+wetland, historic and steep-ground checks are settled too. These five are not:
+
+1. **Airport protection zones.** The code bars housing near the end of the
+   runway and allows only one to four homes an acre a little further out. The
+   city has no map the agent can reach. Can you get the zone map from the city
+   planner or the state aviation office? If not, the few lots near the airport
+   simply go uncaught.
+2. **Utility strip along side boundaries.** The code lets the city require a
+   strip at least 10 feet wide on side and rear boundaries "if necessary", and
+   makes the side setback as wide as it; no map shows where. Shall we leave
+   it as for Beaverton and Oregon City (only street sides count, side
+   boundaries get nothing extra)?
+3. **No parking facing Eagle Creek Rd (North City Residential).** If the
+   building sits between the road and the parking, is that fine? Or should any
+   lot whose frontage is Eagle Creek Rd with its parking on the same side be
+   red?
+4. **Currin Creek 70 ft no-build strip.** The agent has no map that names
+   Currin Creek. OK to leave it as a known gap, or should every North City
+   Residential lot touching any mapped stream show a yellow "look at the creek"
+   flag?
+5. **Which other roads are "major collectors"?** North City Residential's
+   fourplex is allowed within 200 ft of Eagle Creek Rd, Hinman Rd, or any major
+   collector. The agent measures the first two. Currin Rd looks like a
+   collector but the city's street-class map is not in hand. Can you confirm
+   Currin Rd (or point to the map)? Until then lots near it are red.
+
+Also open, no answer needed: the Downtown zone (D) allows a fourplex outright
+only if it does not face Broadway, Main Street or OR 224, sits north of OR 224,
+and has 16 homes an acre; the agent can encode that with the street-distance
+tool if you want it (the area is small).
+
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
 - **The lot ledger could not see Clackamas County, and it nearly hid item 15's

@@ -4557,40 +4557,19 @@ jurisdictions:
       "R2": "R-2"
     zones:
       - zone: "R-1.5"
-        quadplex_allowed: true
-        setback_front_ft: 20
-        setback_side_ft: 7
-        setback_rear_ft: 20
-        setback_street_side_ft: 20
-        min_lot_sqft: 5000
-        min_lot_width_ft: 40
-        min_density_du_per_acre: 6
+        quadplex_allowed: false
         source: "Canby CMC 16.18.010 (D), four-family dwellings, one fourplex on each lot (and (C), townhouses in groups of up to six)"
         source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38514"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/canby R-1.5) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "R-2"
-        quadplex_allowed: true
-        setback_front_ft: 20
-        setback_side_ft: 26
-        setback_rear_ft: 26
-        setback_street_side_ft: 20
-        min_lot_width_ft: 20
-        min_density_du_per_acre: 14
+        quadplex_allowed: false
         source: "Canby CMC 16.20.010 (D), multi-family dwelling (and (A), the R-1.5 uses; (B), townhouses)"
         source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38567"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/canby R-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "C-R"
-        quadplex_allowed: true
-        setback_front_ft: 20
-        setback_side_ft: 7
-        setback_rear_ft: 20
-        setback_street_side_ft: 20
-        min_lot_sqft: 5000
-        max_coverage_pct: 60
-        min_lot_width_ft: 60
-        min_density_du_per_acre: 6
+        quadplex_allowed: false
         source: "Canby CMC 16.24.010 (A), uses permitted outright in the R-1.5 zone, conforming to the development standards of the R-1.5 zone"
         source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38796"
         confidence: "needs_verification"
@@ -4651,37 +4630,19 @@ jurisdictions:
       "R3": "R-3"
     zones:
       - zone: "R-1"
-        quadplex_allowed: true
-        setback_front_ft: 20
-        setback_side_ft: 5
-        setback_rear_ft: 15
-        setback_street_side_ft: 20
-        min_frontage_ft: 20
-        min_density_du_per_acre: 5
+        quadplex_allowed: false
         source: "Sandy SDC 17.36.10 (A), the outright list has single detached, zero lot line, duplex, row houses, manufactured dwelling parks, SRO and residential home; no multi-family dwelling"
         source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.36LODERER-"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/sandy R-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "R-2"
-        quadplex_allowed: true
-        setback_front_ft: 20
-        setback_side_ft: 5
-        setback_rear_ft: 15
-        setback_street_side_ft: 20
-        min_frontage_ft: 20
-        min_density_du_per_acre: 8
+        quadplex_allowed: false
         source: "Sandy SDC 17.38.10 (A), row houses and multi-family dwellings permitted outright"
         source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.38MEDERER-"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/sandy R-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "R-3"
-        quadplex_allowed: true
-        setback_front_ft: 20
-        setback_side_ft: 5
-        setback_rear_ft: 15
-        setback_street_side_ft: 20
-        min_frontage_ft: 20
-        min_density_du_per_acre: 10
+        quadplex_allowed: false
         source: "Sandy SDC 17.40.10 (A), row houses and multi-family dwellings permitted outright"
         source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.40HIDERER-"
         confidence: "needs_verification"
@@ -4773,6 +4734,7 @@ jurisdictions:
         setback_rear_ft: 15
         setback_street_side_ft: 15
         min_lot_sqft: 10000
+        min_density_du_per_acre: 15
         source: "Estacada EMC 16.37.020, fourplex and commonwall dwellings permitted outright"
         source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
         confidence: "needs_verification"
@@ -4802,7 +4764,12 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/estacada R-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "NCR"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 15
+        min_lot_sqft: 10000
         source: "Estacada EMC 16.25.020, a triplex, fourplex or three-plus-unit commonwall row is outright only within 200 feet of Eagle Creek Road, Hinman Road or a major collector or higher street"
         source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
         confidence: "needs_verification"

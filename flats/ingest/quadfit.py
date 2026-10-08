@@ -131,6 +131,7 @@ from flats.geom.street_class import (
     observed_local_street,
     street_ranks,
 )
+from flats.geom.named_street import NAMED_STREET_FACT, named_street_column, observed_named_street
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
@@ -291,6 +292,8 @@ OBSERVABLE: tuple[str, ...] = (
     *CUL_DE_SAC_FACTS,
     # Only ever False, and only where no street ends near the lot.
     STREET_END_FACT,
+    # True within 200 ft of a street the code names, False beyond.
+    NAMED_STREET_FACT,
     # Only where a city's TSP map serves the lot (flats.geom.street_class).
     LOCAL_STREET,
     *NEIGHBOUR_FACTS,
@@ -365,6 +368,11 @@ def observed_facts(
       :data:`~flats.geom.street_end.REACH_FT` of the taxlot (``street_end_ft``,
       measured by :func:`iter_rows`); never True, so near an end, or where
       nothing measured, Gresham's Minor Access Street note keeps its cap.
+    * ``near_named_street_200ft`` -- True where the taxlot lies within 200 ft of
+      Eagle Creek Rd or Hinman Rd (``named_street_ft``, measured by
+      :func:`iter_rows`), False beyond; Estacada's NCR fourplex path. The code's
+      "major collector" half is not held, so a lot near an unlisted collector
+      is False (RED, never a false GREEN).
     * ``local_street`` -- from ``local_street_obs``, which
       :func:`with_local_street` reads off a city's TSP map: True only where
       every street line is local by the map AND by Metro's street type,
@@ -472,6 +480,7 @@ def observed_facts(
             out[name] = out.get(name) or inside
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
     out.update(observed_street_end(_finite(row.get("street_end_ft"))))
+    out.update(observed_named_street(_finite(row.get("named_street_ft"))))
     if isinstance(row.get("local_street_obs"), bool):
         out[LOCAL_STREET] = row["local_street_obs"]
     out.update(observed_sidewalk_easement(_finite(row.get("sidewalk_easement_ft"))))
@@ -1489,7 +1498,10 @@ def iter_rows(
     if limit is not None:
         frame = frame.head(limit)
     if streets is not None:
-        frame = frame.assign(street_end_ft=street_end_column(frame, streets))
+        frame = frame.assign(
+            street_end_ft=street_end_column(frame, streets),
+            named_street_ft=named_street_column(frame, streets),
+        )
     # Every null -- NaN, NaT, pandas' NA -- leaves as None, so the readers
     # above see one shape of "no answer" whatever dtype the column arrived in.
     frame = frame.astype(object).where(frame.notna(), None)

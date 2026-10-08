@@ -242,19 +242,18 @@ OPEN = {
     "or/clackamas/_unincorporated 511.03 -> 511.04",
     "or/clackamas/_unincorporated 602.03 -> 602.04",
     # Estacada (FOLLOWUPS 53, 2026-10-07), each read when it was added. The
-    # fence lines (16.08.010, and 16.60.010 from the C-2, CMU and R-3 fence
-    # clauses) point at the clear vision rule, which the screen does not
-    # draw; the two 16.60.070 rows are the minimum density rule for
-    # subdivisions and five-unit buildings, neither of which is the pod; the
-    # 16.116 rows are the land-division performance agreement and the
-    # street-class driveway spacing table.
+    # fence lines (16.08.010, and 16.60.010 from the C-2, CMU, R-3 and NCR
+    # fence clauses) point at the clear vision rule, which the screen does not
+    # draw; the 16.60.070 minimum density pointers are followed now that CMU
+    # encodes the rule (2026-10-08, see FOLLOWED); the 16.116 rows are the
+    # land-division performance agreement and the street-class driveway
+    # spacing table.
     "or/clackamas/estacada 16.08.010 -> 16.60.010",
     "or/clackamas/estacada 16.116.010 -> 16.116.030",
     "or/clackamas/estacada 16.116.010 -> 16.116.050",
     "or/clackamas/estacada 16.24.040 -> 16.60.010",
-    "or/clackamas/estacada 16.24.040 -> 16.60.070",
     "or/clackamas/estacada 16.32.040 -> 16.60.010",
-    "or/clackamas/estacada 16.32.040 -> 16.60.070",
+    "or/clackamas/estacada 16.25.050 -> 16.60.010",
     "or/clackamas/estacada 16.37.060 -> 16.60.010",
     "or/clackamas/estacada 16.42.040 -> 16.60.010",
     "or/clackamas/milwaukie 19.309.2 -> 19.509",
@@ -363,6 +362,13 @@ OPEN = {
 #: are, and encoding them is what closed it: a redirect closes by a citation
 #: landing inside the target, which is the only answer this ledger takes.
 FOLLOWED = {
+    # 2026-10-08: CMU's unit-lot density floor is read from 16.60.070, so the
+    # three pointers into it count as followed; the same section's floor for
+    # R-3, NCR and C-2 is derived (8.712 du/ac) and not encodable yet --
+    # FOLLOWUPS 53 (e).
+    "or/clackamas/estacada 16.24.040 -> 16.60.070",
+    "or/clackamas/estacada 16.25.050 -> 16.60.070",
+    "or/clackamas/estacada 16.32.040 -> 16.60.070",
     # Open from 2026-09-29 (SCC-DT's refusal quoted from 12.50.350 D.1, whose
     # D.4 points to 12.50.360 for non-residential front parking); followed
     # 2026-10-02, when 12.50.360.F's perimeter planter strip was encoded as

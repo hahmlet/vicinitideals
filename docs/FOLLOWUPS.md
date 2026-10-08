@@ -1735,27 +1735,44 @@ read when the weekly full re-screen lands.
    MUE 125 / GI 53 / HC 37 / CI 28 / I 16 / NC 1, Wood Village NC 58,
    Fairview VMU 58 / TCC 44 / VA 8 / VC 4, Portland CI1 37, Multnomah uninc
    RR 140 / OR 17 / EFU 12, Clackamas uninc R15 1, Washington uninc R-24 1.
-53. [scan: YES (Canby, Sandy, Estacada layers are drafted and unscreened; they land at the next weekly after the acquire of their three zoning datasets)] **Canby, Sandy and Estacada are encoded
-   (2026-10-07); Molalla is blocked on HUMAN_TODO 29 (Steph's PDFs); Forest
-   Grove stays blocked on HUMAN_TODO 28.** Each admits the pod somewhere:
-   Canby R-1.5, R-2, C-R; Sandy R-1 (row houses on single lots), R-2, R-3;
-   Estacada C-2, CMU, R-3 (townhouse lots only). Everything is `draft`
-   (signing is Steph's). Wiring done: layers, provenance, footnotes,
-   pipeline.yaml (Canby, Sandy, Estacada datasets), quadfit rules.yaml and
-   s0_acquire. NOT yet done: (a) the 137 bound -- quadfit s1->s7 into a copy
-   tree plus a bridge of the gained lots, every gain read (chain
-   `bound_fg53.sh` on branch `bound/fg53-three`, queued behind the heavy
-   lock 2026-10-07); (b) Molalla: 6 of 11 chapters were stored but are parked outside the repo
-   (retry `fetch --layer or/clackamas/molalla` after the 429s clear,
-   needs 17-2.3, 2.4, 3.2, 4.4, 5.1; gate already read: admits R-2, R-3, R-5,
-   refuses R-1, C-1, C-2, M-1, M-2, PSP); (c) doubts to read before signing
-   -- Canby: Type III design review treated as outright, 20 ft street yard on
-   every street side, 13 du/acre cap, parking 2.0, Downtown Overlay
-   Transitional Commercial nodes refused though they allow multi-family,
-   habitat/riparian/floodplain-district overlays unscreened; Sandy: Type II
-   design review treated as outright, 20 ft arterial setback charged on every
-   street (possible false RED), 25 ft aisle, vision clearance not drawn,
-   FSH/BVO/CHR overlays unscreened; Estacada: NCR street-proximity (ask
-   Steph), R-3 townhouse-only reading, MMU master-plan refusal, D-zone
-   conditions, PUE width, geotechnical analysis at 33% slope, Airport/Historic/
-   Wetlands overlays, minimum density on the land-division path.
+53. [scan: YES (Estacada layer is drafted and unscreened; it lands at the next weekly after the acquire of its zoning dataset)] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
+   2026-10-08); Estacada is encoded; Molalla is blocked on HUMAN_TODO 29
+   (Steph's PDFs); Forest Grove stays blocked on HUMAN_TODO 28.** Canby's only
+   path to the pod is a Type III site and design review, Sandy's is a Type II
+   design review: neither is by-right, so `quadplex_allowed` is false in
+   Canby R-1.5, R-2, C-R and Sandy R-1, R-2, R-3 (standards kept, each zone
+   note opens "RED BY RULING" so the ruling can be reversed). Estacada admits
+   C-2, CMU, R-3 (townhouse lots only) and NCR (only within 200 ft of Eagle
+   Creek Rd or Hinman Rd, measured by the new `near_named_street_200ft` fact
+   in `flats/geom/named_street.py`); no design review in those zone chapters,
+   only the 16.132.015 planning-staff review, which Steph ruled by-right.
+   Everything is `draft`. Checks Steph asked for (2026-10-08): wetlands
+   overlay = the NWI layer already applied; historic overlay = inventoried
+   buildings only; 33% geotechnical = already stricter in slope.yaml (15%).
+   NOT yet done: (a) the Estacada-only 137 bound -- the new fact needs the
+   city's zoning layer acquired first (the old script copies another city's
+   file as a stand-in, so it cannot count Estacada lots); then quadfit s1->s7
+   into a copy tree plus a bridge of the gained lots, every gain read, and a
+   per-zone lot count with NCR lots near the two streets (the earlier
+   `bound/fg53-three` job on 137 is STALE: old Canby/Sandy admitting rules;
+   rebuild as `bound/fg53-estacada`); (b) Molalla: the 2026-10-08 retry stored
+   7 of 11 chapters (5.1 came down; 2.3, 2.4, 3.2, 4.4 still 429, retried every
+   10 minutes) -- layer files are parked outside the repo again unless all 11
+   land (copy in /tmp/fg53/molalla_parked + the new 5.1); gate already read:
+   admits R-2, R-3, R-5, refuses R-1, C-1, C-2, M-1, M-2, PSP; ALSO check
+   whether those zones need design review -- by-right only); (c) NCR "major
+   collector" half of EMC 16.25.020 is unmeasured (no street-class map for
+   Estacada; Currin Rd looks like one) -- lots near it screen RED; add the
+   name to STREETS in named_street.py once Steph confirms (HUMAN_TODO 30 q5);
+   (d) Airport Safety overlay (16.54) zone map, side-line PUE (the code only
+   says the city MAY require 10 ft), parking facing Eagle Creek Rd and the
+   Currin Creek 70 ft strip: Steph's answers pending in HUMAN_TODO 30 q1-4;
+   (e) minimum density 8.712 du/ac in C-2, R-3, NCR on the unit-lot path
+   (the quote check wants a printed operand; needs a form that holds half of
+   a per-dwelling area); (f) the Canby/Sandy doubts (design review, 20 ft
+   yards, 13 du/ac, overlays) are MOOT while the by-right ruling holds;
+   Estacada's R-3 townhouse-only reading and the MMU Council-master-plan
+   refusal were re-read 2026-10-08 against the text and stand; the Downtown
+   zone (D) could be encoded with the named-street tool (fourplex outright
+   if it does not face Broadway/Main/OR 224, north of OR 224, 16 du/ac) --
+   waiting on Steph's yes/no.

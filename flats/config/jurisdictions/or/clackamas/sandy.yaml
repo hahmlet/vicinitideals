@@ -14,8 +14,9 @@ notes: >-
   new multi-family, row-house or commercial building goes through design
   review (17.36.50, 17.38.50, 17.40.50 A: "required for all uses"), which
   the code runs as a Type II Director's review for multi-family development
-  that complies with its standards (17.90.30), and the screen treats as an
-  outright path; a question for Steph. SFR allows a single detached
+  that complies with its standards (17.90.30). Steph ruled 2026-10-08 that a
+  review is not by-right, so all three zones are refused (RED); their
+  standards stay encoded in case the ruling changes. SFR allows a single detached
   dwelling, a duplex and a small single-room-occupancy building and no row
   house or multi-family; the commercial districts allow housing only above a
   commercial business (C-1 also keeps row houses and duplexes that existed
@@ -422,8 +423,8 @@ defaults:
 #   development, 17.90.30), and the multi-family design menu of 17.90.160
 #   (roofs, entries, facade offsets, 48 sq ft private outdoor areas,
 #   a landscaped parking lot frontage of no more than 50 percent of a street,
-#   recreation areas above five units): treated as an outright path and put
-#   to Steph.
+#   recreation areas above five units): a review is not by-right (Steph's ruling
+#   2026-10-08), so the zones are refused.
 # - Garage setbacks in the zone tables (20 or 22 ft to a garage door, 15 ft
 #   perpendicular, 5 ft alley): the pod carries no garage.
 # - R-1, R-2 and R-3 "lots with 40 feet or less of street frontage shall be
@@ -452,7 +453,7 @@ zones:
       cite: Sandy SDC 17.36.10 (A), the outright list has single detached, zero lot line, duplex, row houses, manufactured dwelling parks, SRO and residential home; no multi-family dwelling
       quote: "or/clackamas/sandy/sdc.17.36.txt#L22,L38"
       variants:
-        - value: true
+        - value: false
           when: [unit_lots]
           cite: Sandy SDC 17.36.10 (A)(4), row houses permitted outright
           quote: "or/clackamas/sandy/sdc.17.36.txt#L38"
@@ -531,20 +532,20 @@ zones:
       cite: Sandy SDC 17.36.30 (E), interior side yard 5 ft minimum
       quote: "or/clackamas/sandy/sdc.17.36.txt#L168"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the use is permitted here but only after a Type II Director's design review (17.90.30; the zone chapter says design review "is required for all uses"); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
       DRAFT. Row houses on individual lots only (no multi-family dwelling
       in the R-1 list), so a pod is allowed as four townhouse lots. No
       minimum lot area or width; frontage 20; density 5 to 8 units a net
       acre; front and street side 20 on a collector or arterial and 10 on a
       local street (the screen has no Sandy street map yet, so 20 is
-      charged everywhere); rear 15; side 5; 35 ft. Design review treated as
-      outright (a question for Steph).
+      charged everywhere); rear 15; side 5; 35 ft. Design review is a Type II review, not by-right (Steph's ruling).
   R-2:
     cite_default:
       cite: Sandy SDC Chapter 17.38 (Medium Density Residential, R-2)
       url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.38MEDERER-
       retrieved: '2026-10-07'
     quadplex_allowed:
-      value: true
+      value: false
       cite: Sandy SDC 17.38.10 (A), row houses and multi-family dwellings permitted outright
       quote: "or/clackamas/sandy/sdc.17.38.txt#L34,L42"
     min_lot_sqft:
@@ -622,19 +623,19 @@ zones:
       cite: Sandy SDC 17.38.30, interior side yard 5 ft minimum
       quote: "or/clackamas/sandy/sdc.17.38.txt#L174"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the use is permitted here but only after a Type II Director's design review (17.90.30; the zone chapter says design review "is required for all uses"); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
       DRAFT. Multi-family dwellings and row houses outright. No minimum
       lot area or width; frontage 20; density 8 to 14 units a net acre;
       front and street side 20 on a collector or arterial and 10 on a
       local street (charged everywhere for now); rear 15; side 5; 35 ft;
-      multi-family landscaping 25 percent. Design review treated as
-      outright (a question for Steph).
+      multi-family landscaping 25 percent. Design review is a Type II review, not by-right (Steph's ruling).
   R-3:
     cite_default:
       cite: Sandy SDC Chapter 17.40 (High Density Residential, R-3)
       url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.40HIDERER-
       retrieved: '2026-10-07'
     quadplex_allowed:
-      value: true
+      value: false
       cite: Sandy SDC 17.40.10 (A), row houses and multi-family dwellings permitted outright
       quote: "or/clackamas/sandy/sdc.17.40.txt#L38,L42"
     min_lot_sqft:
@@ -712,12 +713,12 @@ zones:
       cite: Sandy SDC 17.40.30, interior side yard 5 ft minimum
       quote: "or/clackamas/sandy/sdc.17.40.txt#L173"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the use is permitted here but only after a Type II Director's design review (17.90.30; the zone chapter says design review "is required for all uses"); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
       DRAFT. Multi-family dwellings and row houses outright. No minimum
       lot area, no maximum coverage; frontage 20; density 10 to 20 units a
       net acre; front and street side 20 on a collector or arterial and 10
       on a local street (charged everywhere for now); rear 15; side 5; 35
-      ft; landscaping 25 percent. Design review treated as outright (a
-      question for Steph).
+      ft; landscaping 25 percent. Design review is a Type II review, not by-right (Steph's ruling).
   SFR:
     cite_default:
       cite: Sandy SDC Chapter 17.34 (Single-Family Residential, SFR)

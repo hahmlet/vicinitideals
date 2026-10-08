@@ -62,11 +62,12 @@ UNSCREENED: dict[str, str] = {
         "FOLLOWUPS 53."
     ),
     "estacada": (
-        "2026-10-07: Estacada's housing zones were encoded first; its Airport "
-        "(EMC 16.60), Historic (16.75) and Wetlands overlays are not yet read "
-        "and no city map is wired, so only the statewide flood and wetland "
-        "layers reach it. Greens at stake: not measured until the first "
-        "Estacada bound, see FOLLOWUPS 53."
+        "2026-10-08: Estacada's overlays were read. Wetlands (EMC 16.56) is the "
+        "National Wetlands Inventory the statewide layer already applies; "
+        "Historic (16.48) covers inventoried buildings, not a lot map; the "
+        "Airport Safety overlay (16.54) bars or limits housing near the "
+        "runway and no zone map is stored (HUMAN_TODO 30). Greens at stake: "
+        "not measured until the first Estacada bound, see FOLLOWUPS 53."
     ),
 }
 #: Emptied 2026-09-03. Gladstone and Tualatin were the last two names on it and

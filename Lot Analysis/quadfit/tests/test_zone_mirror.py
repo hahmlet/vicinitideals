@@ -95,12 +95,12 @@ KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
     "multnomah_unincorporated/LR7",
     "multnomah_unincorporated/RF",
     "portland/RF",
-    # 2026-10-07: Sandy R-1 permits row houses on individual lots only (17.36.10
-    # A.4); rules.yaml says yes so the lots are measured at all.
-    "sandy/R-1",
     # 2026-10-07: Estacada R-3 permits a townhouse row on individual lots only
     # (the unit_lots variant); rules.yaml says yes so the lots are measured at all.
     "estacada/R-3",
+    # 2026-10-08: Estacada NCR permits it only within 200 ft of Eagle Creek Rd or
+    # Hinman Rd (the near_named_street_200ft variant).
+    "estacada/NCR",
     "wilsonville/RN",
 })
 

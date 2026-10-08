@@ -279,6 +279,19 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "near_named_street_200ft",
+        "site_fact",
+        "The taxlot lies within 200 feet of a street the code names. "
+        "Estacada's North City Residential zone allows a triplex, fourplex "
+        "or commonwall row outright only \"within 200 feet of Eagle Creek "
+        "Rd, Hinman Rd, or a street with a major collector classification "
+        "or higher\". Measured to the centrelines of the two named streets "
+        "(flats.geom.named_street); the collector half is not held, so a "
+        "lot near an unlisted collector is answered False and screens RED.",
+        evidence="quadfit s1 street centrelines named Eagle Creek Rd or Hinman Rd: the taxlot's distance to the nearest, at most flats.geom.named_street.REACH_FT",
+        assume=None,
+    ),
+    ConditionDef(
         "beyond_ugb_mile",
         "site_fact",
         "The parcel is more than one mile from the Metro Urban Growth "

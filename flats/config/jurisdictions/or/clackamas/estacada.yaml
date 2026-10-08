@@ -3,7 +3,8 @@ kind: city
 eligible: true
 notes: >-
   DRAFT, 2026-10-07. Estacada Municipal Code Title 16 (Development), stored from the city's
-  published code. Admits C-2, CMU and R-3 (R-3 as townhouse lots only); refuses the rest.
+  published code. Admits C-2, CMU, R-3 (R-3 as townhouse lots only) and NCR (only within 200 ft
+  of Eagle Creek Rd or Hinman Rd, measured); refuses the rest.
 
 ingest:
   geoid: null
@@ -154,19 +155,44 @@ defaults:
     retrieved: '2026-10-07'
     quote: "or/clackamas/estacada/emc.16.116.txt#L31"
 
-# NOT ENCODED, read 2026-10-07:
-# - Minimum residential density (16.60.070): it binds residential
-#   subdivisions and new multi-family (five or more units) development. A
-#   one-lot fourplex is neither. The unit-lot path is a land division, where
-#   half the maximum density applies; the screen draws a one-lot plat.
-# - The 20 ft garage-door front setback (C-2, R-3, CMU): the pod carries no
-#   garage.
+# CHECKED 2026-10-08 (Steph: "add those checks"):
+# - Minimum residential density (16.60.070): encoded for CMU only, 15 du per
+#   net acre, on the four-townhouse-lot path, which is a subdivision (four or
+#   more lots, 16.08). In C-2, R-3 and NCR the floor is half of the density
+#   the 2,500 sq ft a dwelling allows, 8.712 du per net acre, a figure the
+#   code prints nowhere and the quote check (which wants the printed
+#   operand) cannot hold; it is left out and queued as FOLLOWUPS 53(e). A
+#   miss is a soft one anyway (16.60.070 (B): show how the site can reach the
+#   minimum later). The one-lot fourplex is neither a subdivision nor multi-family
+#   (five or more units), so no minimum applies there. Net area is the lot's
+#   own area with the code's deductions held as assumed none: a LARGER area
+#   only makes the minimum harder to meet, so that is the safe side.
+# - Geotechnical analysis at 33 percent slope or a mapped hazard (16.68.030,
+#   L286/L536/L708): the slope screen already takes ground over 15 percent
+#   off the building and court (flats/config/slope.yaml), so a lot cannot
+#   reach a green with ground at 33 percent under the pod. The mapped-hazard
+#   half has no map FLATS holds; a landslide carve was declined (FOLLOWUPS 42).
+# - Wetlands Resources overlay (16.56, L3621): the city designates the
+#   National Wetlands Inventory and relies on state and federal permits, so
+#   the statewide wetland layer FLATS already applies is the same map.
+# - Historic Resources overlay (16.48, L3099-L3125): it applies to
+#   structures on the city's inventory of historic structures, which is a
+#   list of buildings, not a map of lots. Not screened.
+# - Airport Safety and Compatibility overlay (16.54): housing is prohibited
+#   in the runway protection zone, limited in approach surfaces (1 to 4 units
+#   an acre, L3534 and note 8 at L3563) and barred in the transitional
+#   surface (note 12, L3577). No map of the zones is stored. HUMAN_TODO 30. Until then a lot
+#   inside them is not detected.
 # - Public-utility-easement width on a side line (greater than 5 ft when an
-#   easement exists on the side line): the screen does not know the width.
-# - Geotechnical analysis at 33 percent slope or a mapped hazard (16.68.030).
-# - The Airport Safety and Compatibility overlay (16.54), Historic
-#   Resources (16.48) and Wetlands Resources (16.56) overlays: not held by
-#   FLATS for Estacada beyond the statewide flood and wetland layers.
+#   easement exists there, L848): the width is on the plat, not on any county
+#   map, and flats/config/easements.yaml takes only street yards on Steph's
+#   rulings. HUMAN_TODO 30 asks for the number.
+#
+# NOT ENCODED, read 2026-10-07:
+# - The 20 ft garage-door front setback (C-2, R-3, CMU, NCR): the pod carries
+#   no garage.
+# - NCR: the Currin Creek 70 ft buffer (L894) and the ban on parking that
+#   fronts Eagle Creek Rd (L872).
 # - Planning-staff and conditional-use procedure (16.88, 16.132): the
 #   outright uses carry no hearing; the pod is treated as outright where the
 #   use table lists it.
@@ -255,6 +281,29 @@ zones:
           when: [unit_lots]
           cite: Estacada EMC 16.37.060 (A), commonwall dwellings 2,500 square feet per lot for the first five dwelling units
           quote: "or/clackamas/estacada/emc.16.zones.txt#L2479"
+    min_density_du_per_acre:
+      # EMC 16.60.070 binds "residential subdivisions" (four or more lots,
+      # 16.08) and new multi-family (five or more units on one lot). The
+      # fourplex on ONE lot is neither, so no minimum applies there; the
+      # four-townhouse-lot path is a subdivision and does.
+      exempt: true
+      cite: Estacada EMC 16.60.070 (A), the minimum density binds residential subdivisions and new multi-family development only; a four-unit building on one lot is neither
+      quote: "or/clackamas/estacada/emc.16.60.txt#L103"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          cite: Estacada EMC 16.60.070 (A) and (C), fifteen dwelling units per net acre in the CMU zone
+          quote: "or/clackamas/estacada/emc.16.60.txt#L103,L109-L115"
+      measured_on:
+        fact: net_developable_area
+        cite: Estacada EMC 16.08 "Acreage, Net", the subtraction list (street dedications and private streets, environmentally constrained land, school/park/open-space tracts, steep slope in a landslide hazard area)
+        quote: "or/clackamas/estacada/emc.16.08.txt#L22-L34"
+        less: []
+        assumed_none:
+          - "street dedications and private streets"
+          - "environmentally constrained lands"
+          - "tracts for schools, parks or open space"
+          - "steep slope within a landslide hazard area"
     min_lot_width_ft:
       exempt: true
       cite: Estacada EMC 16.37.060, the CMU standards print no minimum lot width
@@ -406,14 +455,79 @@ zones:
       cite: Estacada EMC Chapter 16.25 (North City Residential, NCR)
       url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
       retrieved: '2026-10-07'
+    # A triplex, fourplex or three-plus-unit commonwall row is outright only
+    # within 200 feet of Eagle Creek Rd, Hinman Rd or a major collector or
+    # higher street. Steph, 2026-10-08: measure that distance with the named
+    # streets as the origin. `near_named_street_200ft` is that measurement;
+    # the major-collector half has no classification map, so it is not
+    # measured and such a lot screens RED (the safe way to be wrong).
     quadplex_allowed:
       value: false
       cite: Estacada EMC 16.25.020, a triplex, fourplex or three-plus-unit commonwall row is outright only within 200 feet of Eagle Creek Road, Hinman Road or a major collector or higher street
       quote: "or/clackamas/estacada/emc.16.zones.txt#L762"
+      variants:
+        - value: true
+          when: [near_named_street_200ft]
+          cite: Estacada EMC 16.25.020, within 200 feet of Eagle Creek Road or Hinman Road (measured from the street centreline)
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L762"
+    min_lot_sqft:
+      per_dwelling: 2500
+      cite: Estacada EMC 16.25.050 (A), duplex, triplex or fourplex 2,500 square feet per dwelling unit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L827"
+      variants:
+        - value: 2500
+          when: [unit_lots]
+          cite: Estacada EMC 16.25.050 (A), commonwall dwellings 2,500 square feet per lot for the first five dwelling units
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L828"
+    min_lot_width_ft:
+      exempt: true
+      cite: Estacada EMC 16.25.050, the NCR standards print no minimum lot width
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L826,L832"
+    max_height_ft:
+      value: 35
+      cite: Estacada EMC 16.25.050 (8), buildings shall not exceed thirty-five feet (forty-five for multi-family, which the pod is not)
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L876"
+    max_coverage_pct:
+      exempt: true
+      cite: Estacada EMC 16.25.050, the NCR standards print no lot coverage limit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L834,L876"
+    max_impervious_pct:
+      exempt: true
+      cite: Estacada EMC 16.25.050, the NCR standards print no impervious surface limit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L876,L880"
+    min_landscaped_pct:
+      exempt: true
+      cite: Estacada EMC 16.25.050 (1), the five percent landscaping minimum applies to an authorized conditional use only
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L880"
+    setback_front_ft:
+      value: 15
+      cite: Estacada EMC 16.25.050 (4)(1), the front setback shall be a minimum of fifteen feet (twenty to a garage door or carport entry)
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L840"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Estacada EMC 16.25.050 (4)(1), the front setback
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L840"
+    setback_street_side_ft:
+      value: 15
+      cite: Estacada EMC 16.08.010, all sides of a lot adjacent to a street are frontage and the front setback of fifteen feet applies (16.25.050 (4)(1))
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L840"
+    setback_rear_ft:
+      value: 15
+      cite: Estacada EMC 16.25.050 (4)(3), the rear setback shall be a minimum of fifteen feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L852"
+    setback_side_ft:
+      value: 5
+      cite: Estacada EMC 16.25.050 (4)(2), minimum side setbacks shall be five feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L842"
     notes: >-
-      DRAFT. Refuses for now: the four-unit use depends on the lot being
-      within 200 feet of named streets, a distance the screen does not
-      measure. A question for Steph; a street-distance field would admit it.
+      DRAFT. Admitted only within 200 feet of Eagle Creek Rd or Hinman Rd
+      (measured). A lot near some other major collector, which the screen
+      has no map of, comes out RED. 2,500 square feet a dwelling; front,
+      street side and rear 15; side 5; 35 ft; no coverage limit. No setback
+      is required from Eagle Creek Rd; the screen charges the front setback
+      there (conservative). Doubts: Currin Creek 70 ft buffer (L894) not
+      carved; parking may not front Eagle Creek Rd (L872) not drawn.
   D:
     cite_default:
       cite: Estacada EMC Chapter 16.26 (Downtown, D)

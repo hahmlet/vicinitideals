@@ -137,7 +137,13 @@ pytestmark = pytest.mark.unit
 # parking requirements" -- are the other two. Those two are moot: the one-lot
 # path is refused on the use row, and the townhouse figures are variants.
 # 388 -> 399 stated and 63 -> 69 numeric: Tigard (below) merged after Cornelius.
-EXPECTED = {"stated": 410, "numeric": 80, "marker": 0, "dash": 2, "silent": 2}
+# 410 -> 411 stated and 80 -> 84 numeric on 2026-10-08, Estacada NCR (admitted
+# near Eagle Creek Rd and Hinman Rd) and CMU's minimum density: NCR prints no
+# minimum lot width (stated), and no coverage, impervious or landscaped
+# limit for a residential use (numeric); CMU's density floor is the unit-lot
+# variant's 15 with the base exempt (numeric). Each was read against the
+# zone table when it was encoded.
+EXPECTED = {"stated": 411, "numeric": 84, "marker": 0, "dash": 2, "silent": 2}
 # 72 -> 80 numeric on 2026-10-07: Estacada (FOLLOWUPS 53), whose C-2, CMU and R-3 print
 # no lot width, coverage or impervious limit (eight exempt values, each citing the
 # standards table that is silent).

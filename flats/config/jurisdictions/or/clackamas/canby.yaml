@@ -16,8 +16,9 @@ notes: >-
   (C-1) or not at all; the industrial districts allow a caretaker's dwelling.
   A fourplex is a multi-family dwelling here (16.04.180: three or more
   units on a lot). Every new multi-family building also goes through site
-  and design review (16.49.030, a Type III process), which the screen treats
-  as an outright path; a question for Steph. Conservative readings taken:
+  and design review (16.49.030, a Type III process). Steph ruled 2026-10-08
+  that a review is not by-right, so all three zones are refused (RED); their
+  standards stay encoded in case the ruling changes. Conservative readings taken:
   the 20-foot street yard on the side with the driveway is held on every
   street side (the 15-foot relief on other street sides is not encoded); the
   townhouse path carries the 13-units-an-acre cap the multi-family path
@@ -1949,8 +1950,8 @@ defaults:
 
 # NOT ENCODED, read 2026-10-07:
 # - 16.49.030, site and design review (a Type III process) for new
-#   multi-family buildings, and the points menu in 16.21.070: treated as an
-#   outright path and put to Steph.
+#   multi-family buildings, and the points menu in 16.21.070: a Type III review is
+#   not by-right (Steph's ruling 2026-10-08), so the zones are refused.
 # - R-2 16.20.030 (D)(1), a multifamily street yard that must match the
 #   front yards of the R-1 or R-1.5 lots on the same side; (E)(4), a
 #   building length of 120 feet; (G)(4), 150 sq ft of recreation space a
@@ -1985,7 +1986,7 @@ zones:
       url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38514
       retrieved: '2026-10-07'
     quadplex_allowed:
-      value: true
+      value: false
       cite: Canby CMC 16.18.010 (D), four-family dwellings, one fourplex on each lot (and (C), townhouses in groups of up to six)
       quote: "or/clackamas/canby/cmc.16.18.010.txt#L9,L11"
     # No lot area is printed for a four-family dwelling: 16.18.030 (A)(1)
@@ -2070,19 +2071,20 @@ zones:
       cite: Canby CMC 16.18.030 (D)(3), interior yard seven feet
       quote: "or/clackamas/canby/cmc.16.18.030.txt#L43"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the use is permitted here but only after a Type III site and design review (16.49.030: every new building but a single-family or two-family dwelling); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
       DRAFT. Fourplex permitted outright, one to a lot; townhouses up to six
       in a row. 5,000 sq ft lot (3,000 for a townhouse lot), 40 wide (20
       townhouse), 6 to 13 units an acre; front 20, street side 20, side 7,
       rear 20 (15 on a corner); 35 ft; impervious 70 percent; two stalls a
-      unit. The multi-family site and design review is treated as outright
-      (a question for Steph).
+      unit. The multi-family site and design review is a Type III review, which
+      Steph has ruled is not by-right.
   R-2:
     cite_default:
       cite: Canby CMC Chapter 16.20 (R-2 High Density Residential)
       url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38567
       retrieved: '2026-10-07'
     quadplex_allowed:
-      value: true
+      value: false
       cite: Canby CMC 16.20.010 (D), multi-family dwelling (and (A), the R-1.5 uses; (B), townhouses)
       quote: "or/clackamas/canby/cmc.16.20.010.txt#L5,L7,L11"
     # No lot area is printed for R-2 (16.20.030 prints density, width, yards,
@@ -2175,6 +2177,7 @@ zones:
             cite: Canby CMC 16.20.030 (E)(3), building height not greater than one foot for each foot of distance from the R-1 and/or R-1.5 property line (15 ft of height at the 15 ft buffer line)
             quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the use is permitted here but only after a Type III site and design review (16.49.030: every new building but a single-family or two-family dwelling); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
       DRAFT. Multi-family dwelling permitted outright (a fourplex is
       multi-family, 16.04.180). No lot minimum printed; 20 wide; at least 14
       units an acre; front 20, street side 20, side 7, rear 20 (15 on a
@@ -2192,7 +2195,7 @@ zones:
       url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38796
       retrieved: '2026-10-07'
     quadplex_allowed:
-      value: true
+      value: false
       cite: Canby CMC 16.24.010 (A), uses permitted outright in the R-1.5 zone, conforming to the development standards of the R-1.5 zone
       quote: "or/clackamas/canby/cmc.16.24.010.txt#L5"
     min_lot_width_ft:
@@ -2204,6 +2207,7 @@ zones:
       cite: Canby CMC 16.24.030 (E), maximum lot coverage sixty percent
       quote: "or/clackamas/canby/cmc.16.24.030.txt#L23"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the use is permitted here but only after a Type III site and design review (16.49.030: every new building but a single-family or two-family dwelling); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
       DRAFT. The R-1.5 uses are permitted "conforming to the development
       standards of the R-1.5 zone", so R-1.5's figures hold and C-R's own
       stricter ones are laid over them: 60 wide, 60 percent lot coverage.
