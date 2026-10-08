@@ -1513,13 +1513,14 @@ read when the weekly full re-screen lands.
    took 5,207 s vs the base's 3,640 s: a worker was killed for memory,
    the 83 unfinished chunks re-ran with the giants one at a time (the
    recovery worked, answers identical). Warm (all cached) 66 s; mixed
-   (half cached) 1,715 s. NOT MERGED: the memory guard did not stop the
-   kill -- memory does not follow acreage (0.8-acre lots peaked at
-   2.5-3.7 GB) and a worker keeps what a giant took after it finishes,
-   while the plan runs every giant first. And `/root/weekly_chain.sh`
-   switches to 16 processes the day batch.py exists. Next: recycle a
-   worker after a big lot and budget on what the workers actually hold,
-   then re-prove cold at 14 and 16 processes. (d) rented compute
+   (half cached) 1,715 s. Fixed since on the lane branch: chunks start
+   on live free memory with a 3 GB reserve, a chunk runs its hungriest
+   lot first and holds memory only for the lots it has left, a dead
+   worker costs one lot. Proof 3 (2026-10-07): SAME at cold 16 procs
+   3,220 s and booked 14 procs 3,340 s vs base 3,640 s. Proof 4 (the
+   last memory fix, every run compared) QUEUED on heavy.lock
+   (`/root/scan-throughput/proof4.sh`); NOT MERGED until it and item 48's
+   proof read SAME -- 46 and 48 ship together. (d) rented compute
    -- DECISION PENDING, Steph's action. Steph 2026-10-06 PREFERS
    CLOUDFLARE (a commercial version would run there): Cloudflare
    Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
@@ -1579,31 +1580,36 @@ read when the weekly full re-screen lands.
    2026-10-07: "we're moving quick and stacking a lot of changes between
    runs. Don't want to lose time to avoidable problems").** Asked during
    the early weekly (2026-10-07, 12 processes, 225k/414k lots at 4 h).
-   Today on main a bridge re-run with the same `--out` DELETES its
-   `parts/` first (quadfit.py `run()`), a worker OOM-kill hangs the
-   `multiprocessing.Pool` forever while holding heavy.lock (rank-colour
-   2026-10-06, 2 h 20 min unseen), and recovery is by hand: move parts
-   aside, `--tlid-file` the missing lots, stitch. The weekly chain itself
-   (`/root/weekly_chain.sh`, scratch on 137, hand-written each week) has
-   no step markers, so a failure at the bridge re-runs the ~75 min
-   stage + quadfit too. Item 46's `batch.py` (lane scan-throughput, NOT on
-   main yet) already covers: resume via `--cache`, a dead worker ends the
-   run instead of hanging it, unfinished chunks retried once, memory
-   budget. STILL OWED, beyond 46: (a) never delete finished parts --
-   resume is the DEFAULT for the weekly, not an opt-in flag; (b) the
-   weekly chain as a committed script (`scripts/` + runbook §4b) with a
-   done-marker per step, so a re-launch skips finished steps; (c) a
-   supervisor ON 137 (not an agent's session) that relaunches a failed or
-   stalled step with resume, halving processes after an OOM, and gives up
-   after N tries with a status line; (d) a stall watchdog on 137 (no new
-   part in 30 min -> kill ONLY the run's own process group, relaunch);
-   (e) a preflight that refuses in seconds, not hours: code at the
-   intended sha, every pipeline.yaml source key present in the snapshot
-   (the 10-07 copy was missing 15), 1 m DEM tiles, institutional land,
-   curb datasets, free disk on 137 and 114; (f) the status line pushed to
-   114 (`/root/weekly137/status.txt`) committed with the chain so any
-   session can watch. Ship after 46 lands (it changes the same runner);
-   coordinate with that lane rather than fork it.
+   (a)-(f) BUILT 2026-10-07 on the scan-throughput lane branch with item
+   46 (NOT on main; ships with 46 once both proofs on 137 read SAME):
+   (a) the bridge command keeps an answer cache by default (`bridge_cache`
+   beside `--out`; `--no-cache` opts out). `parts/` is still cleared on a
+   re-launch, but each part goes into the cache the moment it is written,
+   so a re-launch screens only the unfinished lots. (b)
+   `scripts/flats_weekly_chain.py` (runbook §4 + §4b): stage, quadfit,
+   normalize, institutional, transit, bridge, assign, export, a
+   done-marker per step holding the commit; a re-launch skips finished
+   steps and refuses markers from other code unless `--from STEP`. (c)
+   it supervises on 137 itself: a failed or stalled step re-runs (3
+   tries), bridge processes halved after a memory kill, then GAVE UP in
+   the status line. (d) stall = the step's own process group used < 60
+   CPU-s in 20 min (`--stall-minutes`) -> TERM then KILL that group only.
+   CPU, not new parts: one big lot can run 30+ min without a part, and
+   the steps before the bridge write none. (e) `--preflight-only`
+   refuses in seconds: code at the sha and clean, every pipeline.yaml key
+   in the manifest, stage's check, osm_land_use + rlis_orca, curb
+   datasets, 1 m tiles + dem10_utm, free disk on 137 (10 GB) and 114 via
+   `--app-host` (5 GB); a stale spec_sha256 is a note, not a refusal
+   (10-07 had 71 and screened clean). Tried on 137's real copies: 10-01
+   refused for its 15 missing keys + institutional + curbs; 10-07 passes.
+   (f) status every 2 min to `--status-to` (`/root/weekly137/status.txt`).
+   Local suite green; 3 Linux-only tests run in CI. PROOF QUEUED behind
+   46's: `/root/scan-throughput/proof5.sh` -- the chain drives a scope_A
+   bridge, the bridge's parent is SIGKILLed (retry at 8 processes,
+   resumes from the cache), then its group SIGSTOPped (stall kill, try 3
+   finishes); lots must be SAME as an uninterrupted run. Once merged the
+   next weekly launches with the chain; remove this item after it runs
+   clean.
 49. [scan: YES for (b)-(f), (h), (i)] **The 2026-10-07 weekly (run 65 on snapshot 4, PROMOTED 2026-10-07
    ~14:45 UTC by Steph from the County copy page; prune-runs retired run 59,
    kept 61/63/65; VACUUM FULL of lot_results NOT run -- permission denied,
