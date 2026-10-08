@@ -1671,9 +1671,21 @@ read when the weekly full re-screen lands.
    grade, not the steep cut; median slope 17.5%) go YELLOW with a flag of
    severity 7, resolution measurement (the 1 m lidar where it exists).
    Handed to the slope lane with (e)/(f) (same files). Not built yet.
-   (i) SPLICE OWED, handed to an agent 2026-10-07: one partial re-screen
-   on run 65 carrying 84e702de, 51577bb8 (44), the slope lane's (e)/(f)/(h)
-   and (c) if landed; start once (e)/(f)/(h) are on main or by 2026-10-09.
+   (i) SPLICE OWED -- TAKEN by the weekly session (vicinitideals-fa)
+   2026-10-08 (the agent handed it on 10-07 could not be found). One partial
+   re-screen on run 65 carrying 81c3b77b + 84e702de (scope
+   /root/weekly_fixes/scope.txt, 9,860), 51577bb8 (44, /root/rank-colour/
+   scope.txt, 39,743) and the slope lane's (e)/(f)/(h) (its scope2 =
+   /root/sf/tl_new2.txt + tl_reuse.txt, 111,447, or whatever it ships with);
+   2cfd13d6 (52) rides in assign. Prepared on 137: /root/s49i/scope_pre.txt
+   (48,948, the first two), chain /root/s49i/chain.sh (preflight, done-marker
+   per step: bridge -> splice onto /root/bridge_2026-10-07_weekly -> assign on
+   run 65's normalized -> export; `SHA=<main sha>`, fixed tree
+   /root/code/s49i_<sha>). NOT in it: 017f63cf (50) -- its *_site columns need
+   s5o re-run and the splice refuses a changed s5o ("different columns"), so
+   it waits for the weekly; 51/53 need a new normalize -> the weekly unless
+   51's agent is ready first. Starts once the slope work is on main, or
+   2026-10-09 without it. Load/drift/gate on 114; a warned gate is Steph's.
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
