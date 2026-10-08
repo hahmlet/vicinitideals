@@ -1788,7 +1788,7 @@ read when the weekly full re-screen lands.
    into a copy tree plus a bridge of the gained lots, every gain read, and a
    per-zone lot count with NCR lots near the two streets (the earlier
    `bound/fg53-three` job on 137 is STALE: old Canby/Sandy admitting rules;
-   rebuild as `bound/fg53-estacada`); (b) Molalla: the 2026-10-08 retry stored
+   rebuild as `bound/fg53-estacada`; it RAN 2026-10-08 13:32 UTC and found 0 lots on the stand-in layer, and its compare stopped on 20 new `ovl_*_site` columns the run-65 base lacks -- the rebuild must splice onto a base that carries them); (b) Molalla: the 2026-10-08 retry stored
    7 of 11 chapters (5.1 came down; 2.3, 2.4, 3.2, 4.4 still 429, retried every
    10 minutes) -- layer files are parked outside the repo again unless all 11
    land (copy in /tmp/fg53/molalla_parked + the new 5.1); gate already read:
