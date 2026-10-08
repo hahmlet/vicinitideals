@@ -75,7 +75,7 @@ from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
-from flats.fit.slope import ONE_M, load_rules as slope_rules
+from flats.fit.slope import ONE_M, TEN_M, load_rules as slope_rules
 from flats.geom.alley import (
     ALLEY_CLASS,
     ALLEY_FACTS,
@@ -2369,6 +2369,16 @@ def _screen_lot_once(
             won, lot, terrain, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
             roads=roads,
         )
+        if _coarse_blocked(won, lot):
+            # Eliminated on the coarse map's steep ground alone: screened
+            # again, the whole way, as though it were not there, and flagged
+            # (FOLLOWUPS 49(h), Steph 2026-10-07).
+            (won,) = _screen_lot_once(
+                unconfirmed_steep(lot), [design], rules=rules, policy=policy, relief=relief,
+                step_deg=step_deg, roads=roads, bound=bound, terrain=terrain, room=room,
+            )
+            out.append(won)
+            continue
         if bound:
             won = _bounded(
                 won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
@@ -2714,6 +2724,49 @@ def with_steep(lot: QuadfitLot, terrain: Any) -> QuadfitLot:
     return dataclasses.replace(cut(lot), second=second)
 
 
+def _coarse_blocked(s: Screened, lot: QuadfitLot) -> bool:
+    """Whether steep ground read on the coarse 10 m model alone is what
+    eliminated this plan (:attr:`LotFacts.steep_blocks`), where the coarse
+    model may not make a lot RED (``coarse_red_is_closer_look``)."""
+    return (
+        slope_rules().coarse_red_is_closer_look
+        and s.facts is not None
+        and s.facts.steep_blocks
+        and lot.steep is not None
+        and lot.facts.steep_source == TEN_M
+    )
+
+
+def unconfirmed_steep(lot: QuadfitLot) -> QuadfitLot:
+    """``lot`` with the steep ground the coarse 10 m model read left on it,
+    and that said in its facts (:attr:`LotFacts.steep_unconfirmed`).
+
+    Steph 2026-10-07: a lot the coarse map's steep ground eliminates is
+    "yellow with flag. 7 severity" -- a 10 m cell is wider than the ground
+    it would take off, and the coarse map never makes a lot RED alone
+    (``coarse_red_is_closer_look``). So the lot is screened without the
+    cut: RED only on what else it misses, and flagged SLOPE-STEEP-COARSE
+    for the 1 m lidar or a survey to settle. Its second reading
+    (:func:`drive_reading`) is screened on its own.
+    """
+    facts = dataclasses.replace(lot.facts, steep_unconfirmed=True)
+    return dataclasses.replace(lot, steep=None, facts=facts, second=None)
+
+
+def _fit_short(s: Screened) -> float | None:
+    """How far the plan's fit fell short, in feet; None where it was met."""
+    for c in s.screening.checks:
+        if c.check in ("fit_ft", STEEP_GROUND) and c.verdict is CheckVerdict.fails:
+            return c.shortfall
+    return None
+
+
+#: The steep ground takes the blame for a fit the lot misses without it too
+#: once it is most of the miss: the shortfall on the flat ground more than
+#: this many times the shortfall on the whole lot (FOLLOWUPS 49(e)).
+STEEP_SHARE = 2.0
+
+
 def _fit_missed(s: Screened) -> bool:
     """Whether the plan missed its fit -- :data:`STEEP_GROUND` is the same
     miss, named for the slope that caused it (:func:`slope_checked`)."""
@@ -2742,9 +2795,12 @@ def slope_checked(
     cannot hold even the building's footprint where the lot without the
     cut could -- Steph's test, "see if there's even enough land for the
     pod. If no, don't check pod placement" -- or the same lot screened with
-    the steep ground left on does not miss. Then the miss is the slope's
-    and is named so (:data:`flats.score.screen.STEEP_GROUND`); otherwise
-    the lot was too tight anyway and the fit keeps the blame.
+    the steep ground left on does not miss, or misses by less than half as
+    much (:data:`STEEP_SHARE`; FOLLOWUPS 49(e): 2.5 ft short on the whole
+    lot and 63 ft on its flat ground is a hillside, not a variance). Then
+    the miss is the slope's and is named so
+    (:data:`flats.score.screen.STEEP_GROUND`); otherwise the lot was too
+    tight anyway and the fit keeps the blame.
 
     Second, the fall across the ground the drawn plan's building and court
     stand on (:meth:`flats.fit.slope.Terrain.grade`), only where the drawing
@@ -2770,7 +2826,10 @@ def slope_checked(
                 bare, [s.design], rules=rules, policy=policy, relief=relief,
                 step_deg=step_deg, roads=roads, bound=False, fit_only=True,
             )
-            if not _fit_missed(alt):
+            whole_short, flat_short = _fit_short(alt), _fit_short(s)
+            if whole_short is None or (
+                flat_short is not None and flat_short > STEEP_SHARE * whole_short
+            ):
                 facts = dataclasses.replace(facts, steep_blocks=True)
     drawing = s.drawing or {}
     ring = drawing.get("building")
@@ -3169,6 +3228,7 @@ def row_for(s: Screened) -> dict[str, Any]:
         "steep_sqft": s.facts.steep_sqft if s.facts is not None else None,
         "steep_source": s.facts.steep_source if s.facts is not None else None,
         "steep_blocks": bool(s.facts.steep_blocks) if s.facts is not None else False,
+        "steep_unconfirmed": bool(s.facts.steep_unconfirmed) if s.facts is not None else False,
         "site_grade_pct": s.facts.site_grade_pct if s.facts is not None else None,
         "site_grade_source": s.facts.site_grade_source if s.facts is not None else None,
         "colour": s.signed.colour.value,
@@ -3495,6 +3555,7 @@ def run(
     dem: Path | None = None,
     curbs: Path | None = None,
     institutional: Path | None = None,
+    cache: Path | None = None,
     log: Any = print,
 ) -> Path:
     """Screen every lot and write ``lots.parquet``, ``meta.json``, ``summary.md``.
@@ -3528,13 +3589,18 @@ def run(
     RED (Steph 2026-10-06, FOLLOWUPS 47: "flagged out of scans for any
     reason" -- every scan, a test scan included), and a run with neither is
     refused.
+
+    The lots run costliest first and ``timings.parquet`` says what each
+    cost (:mod:`flats.ingest.batch`). ``cache`` is a directory of answers
+    kept by earlier runs: a lot whose row, code, packages, step and input
+    files are all unchanged is read from it instead of screened, and every
+    lot screened is kept there -- the BEFORE side of a bound is computed
+    once, not on every retry (FOLLOWUPS 46).
     """
     import time
-    from multiprocessing import Pool
-
-    import pandas as pd
 
     from flats.geom.curbs import missing as curbs_missing
+    from flats.ingest import batch
 
     roads = roads if roads is not None else s4.parent / "s1_streets.parquet"
     curbs = curbs if curbs is not None else sources
@@ -3577,35 +3643,37 @@ def run(
     eased = with_sidewalk_easement(rows, sources)
     if eased:
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
-    chunks = [rows[i : i + chunk_size] for i in range(0, len(rows), chunk_size)]
-    log(f"bridge: {len(rows):,} lots in {len(chunks)} chunks, {processes} processes, "
-        f"{step_deg} deg step")
+    # Costliest lots first, started as free memory allows, and the answers a
+    # cache already holds not screened again (FOLLOWUPS 46): the same
+    # records in the same order as lot by lot in file order.
+    answers = None
+    if cache is not None:
+        batch.prune(cache)
+        answers = batch.AnswerCache(
+            cache,
+            batch.run_key(
+                step_deg=step_deg,
+                inputs={"sources": sources, "roads": roads, "dem": dem, "curbs": curbs},
+            ),
+        )
+    # The workers screen with flats.ingest.quadfit's _work_chunk, so they are
+    # set up by that module's _init_worker -- under `python -m` this file is
+    # __main__, a second copy whose _WORKER the screen never reads.
+    from flats.ingest import quadfit as screened
+
     t0 = time.time()
-    done = 0
-
-    def _write(i: int, records: list[dict[str, Any]]) -> None:
-        pd.DataFrame.from_records(records).to_parquet(parts_dir / f"{i:05d}.parquet", index=False)
-
-    if processes <= 1:
-        _init_worker(step_deg, sources, roads, dem, curbs)
-        for i, chunk in enumerate(chunks):
-            _write(i, _work_chunk(chunk))
-            done += len(chunk)
-            log(f"  {done:,}/{len(rows):,}  {time.time() - t0:,.0f}s")
-    else:
-        with Pool(processes, initializer=_init_worker, initargs=(step_deg, sources, roads, dem, curbs)) as pool:
-            for i, records in enumerate(pool.imap(_work_chunk, chunks)):
-                _write(i, records)
-                done += len(chunks[i])
-                if i % 10 == 0 or i == len(chunks) - 1:
-                    log(f"  {done:,}/{len(rows):,}  {time.time() - t0:,.0f}s")
-
-    parts = sorted(parts_dir.glob("*.parquet"))
-    frame = (
-        pd.concat([pd.read_parquet(p) for p in parts], ignore_index=True)
-        if parts
-        else pd.DataFrame()
+    frame, timings, done = batch.screen_rows(
+        rows,
+        parts_dir,
+        processes=processes,
+        chunk_size=chunk_size,
+        init=screened._init_worker,
+        initargs=(step_deg, sources, roads, dem, curbs),
+        cache=answers,
+        step_deg=step_deg,
+        log=log,
     )
+    timings.to_parquet(out / "timings.parquet", index=False)
     frame.to_parquet(out / "lots.parquet", index=False)
     meta = {
         "lots": len(rows),
@@ -3627,6 +3695,7 @@ def run(
         "curbs": str(curbs) if curbs is not None else None,
         "institutional": str(institutional),
         "institutional_skipped": skipped,
+        "batch": done.meta(),
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     (out / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -3681,6 +3750,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="institutional.parquet (or its directory) from flats.ingest.institutional, or a snapshot "
         "holding osm_land_use and rlis_orca: lots left out of the scan (default: --sources; refused without)",
     )
+    ap.add_argument(
+        "--cache",
+        type=Path,
+        help="answer cache dir: unchanged lots are read from it, screened lots kept in it",
+    )
     args = ap.parse_args(argv)
     run(
         args.out,
@@ -3702,6 +3776,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         dem=args.dem,
         curbs=args.curbs,
         institutional=args.institutional,
+        cache=args.cache,
     )
     return 0
 

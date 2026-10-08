@@ -413,6 +413,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_SLOPE]
+  SLOPE-STEEP-COARSE:
+    description: "Ground steeper than 15% on the coarse 10 m elevation map alone would keep the building and its parking off the lot; the lot was screened as though it were not there (Steph 2026-10-07: \"yellow with flag. 7 severity\")"
+    kind: categorical
+    risk: possible
+    severity: 7
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Read the 1 m lidar where it reaches the lot, or survey it, for the steep ground the coarse map shows"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_STEEP_COARSE]
   RESOURCE-PERMIT:
     description: "Part of the lot is a mapped stream, wetland, habitat or flood area where the code lets a house go up only with a permit: a report, mitigation planting or a raised floor (FOLLOWUPS 42)"
     kind: categorical

@@ -378,7 +378,12 @@ def test_the_checks_record_carries_the_slope() -> None:
         "grade_pct": 8.25,
         "grade_source": "dem_1m",
         "steep_blocks": True,
+        "steep_unconfirmed": False,
     }
+    # FOLLOWUPS 49(h): steep ground on the coarse map alone, screened as
+    # though buildable, says so.
+    coarse = {**row, "steep_source": "dem_10m", "steep_blocks": False, "steep_unconfirmed": True}
+    assert result_checks(coarse)["slope"]["steep_unconfirmed"] is True
     assert "slope" not in result_checks(_bridge_row(LOT_A, DESIGNS[0]))
     nothing = {"steep_sqft": float("nan"), "site_grade_pct": None, "steep_blocks": False}
     assert "slope" not in result_checks({**_bridge_row(LOT_A, DESIGNS[0]), **nothing})

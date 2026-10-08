@@ -153,6 +153,13 @@ CLOSER_LOOK_SLOPE = "CLOSER_LOOK_SLOPE"
 #: taken off the lot, and nothing failed: a cost and a wait to price, so a
 #: closer look, never GREEN (FOLLOWUPS 42(b)/(c), 2026-10-05).
 CLOSER_LOOK_RESOURCE = "CLOSER_LOOK_RESOURCE"
+#: Steep ground on the coarse 10 m elevation map alone kept the pod off this
+#: lot, and the lot was screened as though it were not there
+#: (:attr:`LotFacts.steep_unconfirmed`): a 10 m cell is wider than what it
+#: would take off, and the coarse map never makes a lot RED on its own
+#: (``coarse_red_is_closer_look``). Steph 2026-10-07: "yellow with flag. 7
+#: severity" -- the 1 m lidar, or a survey, settles it.
+CLOSER_LOOK_STEEP_COARSE = "CLOSER_LOOK_STEEP_COARSE"
 #: The plan's fit, missed on the ground left once the steep ground is taken
 #: off and met without that (:attr:`LotFacts.steep_blocks`): the slope
 #: eliminates the lot, not the pod's placement (Steph 2026-10-04). The fit
@@ -405,6 +412,10 @@ class LotFacts:
     #: and the lot without that cut does not miss it: the slope is what
     #: eliminates the lot (:data:`STEEP_GROUND`). Set by the bridge.
     steep_blocks: bool = False
+    #: The steep ground, read on the coarse 10 m model alone, would have
+    #: eliminated the lot, and the bridge screened it with that ground left
+    #: on (:data:`CLOSER_LOOK_STEEP_COARSE`, FOLLOWUPS 49(h)).
+    steep_unconfirmed: bool = False
     #: The fall across the plan's drawn building and court, percent: the
     #: plane fitted to the ground under them (:meth:`flats.fit.slope.
     #: Terrain.grade`), and the model that read it. ``site_grade_tried``
@@ -2038,6 +2049,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_SLOPE)
     if lot.resource_permits:
         closer = (*closer, CLOSER_LOOK_RESOURCE)
+    if lot.steep_unconfirmed:
+        closer = (*closer, CLOSER_LOOK_STEEP_COARSE)
 
     if any(not o.available for o in walls):
         # A verified standard the code offers no way around. Nothing still
@@ -2247,6 +2260,8 @@ def _account(
         )
     for key in lot.resource_permits:
         flag("RESOURCE-PERMIT", CLOSER_LOOK_RESOURCE, fact=key, source="mapped")
+    if lot.steep_unconfirmed:
+        flag("SLOPE-STEEP-COARSE", CLOSER_LOOK_STEEP_COARSE, source=lot.steep_source or "")
     # Fitted clear of an easement assumed along every street line (Steph
     # 2026-10-01): a plat showing a wider one, or one on a side or rear
     # line, would move the building. A record, below the yellow line.
@@ -2333,6 +2348,7 @@ def backlog(results: Sequence[Screening]) -> dict[str, int]:
 __all__ = [
     "CLOSER_LOOK_MIN_DENSITY",
     "CLOSER_LOOK_RESOURCE",
+    "CLOSER_LOOK_STEEP_COARSE",
     "GEOMETRY_UNREADABLE",
     "MIN_DENSITY_CHECKS",
     "NO_FRONTAGE",

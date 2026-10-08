@@ -1497,30 +1497,20 @@ read when the weekly full re-screen lands.
    spot-check.
 46. [scan: YES (a proof run: every answer must come out identical)] **Scans (bounds) on 137 are the lanes' bottleneck (Steph 2026-10-06:
    ~1 h coding, then 5-6 h waiting for one scan at a time; four lanes
-   queue on `heavy.lock`).** Measured: every bound re-ran its BEFORE
-   code each iteration, and one 9 GB lot held the lock 22 min with 15 of
-   16 threads idle (tail = 33% of rank-colour new_A). Steph said yes to
-   (a)-(c): `flats/ingest/batch.py` (lane scan-throughput) -- costliest
-   lots first under a memory budget, `--cache` answer cache, sample
-   while iterating (parallel-agents rule 12). Ships once the proof on 137
-   (`/root/scan-throughput/proof.sh`: cold/warm/mixed vs
-   `/root/rank-colour_bound_base_A`) reads identical. Proof 1
-   (2026-10-07 00:51 UTC) caught a real bug in 68 s: run as `python -m`,
-   the workers were set up by `__main__`'s copy of quadfit, so every
-   chunk died with KeyError 'rules'. Fixed on the lane branch, with a
-   test that runs the command itself. Proof 2 (2026-10-07 10:18-12:17
-   UTC, after the weekly): SAME cold, warm and mixed -- but the cold run
-   took 5,207 s vs the base's 3,640 s: a worker was killed for memory,
-   the 83 unfinished chunks re-ran with the giants one at a time (the
-   recovery worked, answers identical). Warm (all cached) 66 s; mixed
-   (half cached) 1,715 s. Fixed since on the lane branch: chunks start
-   on live free memory with a 3 GB reserve, a chunk runs its hungriest
-   lot first and holds memory only for the lots it has left, a dead
-   worker costs one lot. Proof 3 (2026-10-07): SAME at cold 16 procs
-   3,220 s and booked 14 procs 3,340 s vs base 3,640 s. Proof 4 (the
-   last memory fix, every run compared) QUEUED on heavy.lock
-   (`/root/scan-throughput/proof4.sh`); NOT MERGED until it and item 48's
-   proof read SAME -- 46 and 48 ship together. (d) rented compute
+   queue on `heavy.lock`).** (a)-(c) SHIPPED 24a61695 2026-10-08
+   (deployed, smoke passed): `flats/ingest/batch.py` -- costliest lots
+   first; chunks start on live free memory with a 3 GB reserve; each
+   chunk runs its hungriest lot first and, in flight, holds memory only
+   for the lots it has left; a dead worker costs one lot (retried alone)
+   instead of hanging the Pool; `--cache` answer cache; sample while
+   iterating (parallel-agents rule 12). Proof 4 on 137 (2026-10-08,
+   scope_A 9,936 lots vs `/root/rank-colour_bound_base_A`, base 3,640 s):
+   SAME on every run -- cold 16 procs 3,227 s, booked 16 procs 3,057 s,
+   booked 14 procs 3,074 s, warm 66 s; no worker died; least
+   MemAvailable 3.6 GB. 137 is now CPU-bound (lot-seconds 37k -> 43k
+   with 16 busy), so the simulator's ~2,000 s was not reachable and more
+   than 14 processes buys nothing. Proofs 1-3 caught a `python -m`
+   worker-setup bug and an OOM kill, both fixed. LEFT: (d) rented compute
    -- DECISION PENDING, Steph's action. Steph 2026-10-06 PREFERS
    CLOUDFLARE (a commercial version would run there): Cloudflare
    Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
@@ -1580,8 +1570,8 @@ read when the weekly full re-screen lands.
    2026-10-07: "we're moving quick and stacking a lot of changes between
    runs. Don't want to lose time to avoidable problems").** Asked during
    the early weekly (2026-10-07, 12 processes, 225k/414k lots at 4 h).
-   (a)-(f) BUILT 2026-10-07 on the scan-throughput lane branch with item
-   46 (NOT on main; ships with 46 once both proofs on 137 read SAME):
+   (a)-(f) BUILT 2026-10-07 on the scan-throughput lane branch (NOT on
+   main; ships once proof 5 on 137 reads SAME; item 46 shipped 24a61695):
    (a) the bridge command keeps an answer cache by default (`bridge_cache`
    beside `--out`; `--no-cache` opts out). `parts/` is still cleared on a
    re-launch, but each part goes into the cache the moment it is written,
@@ -1603,8 +1593,8 @@ read when the weekly full re-screen lands.
    (10-07 had 71 and screened clean). Tried on 137's real copies: 10-01
    refused for its 15 missing keys + institutional + curbs; 10-07 passes.
    (f) status every 2 min to `--status-to` (`/root/weekly137/status.txt`).
-   Local suite green; 3 Linux-only tests run in CI. PROOF QUEUED behind
-   46's: `/root/scan-throughput/proof5.sh` -- the chain drives a scope_A
+   Local suite green; 3 Linux-only tests run in CI. PROOF QUEUED on
+   heavy.lock: `/root/scan-throughput/proof5.sh` -- the chain drives a scope_A
    bridge, the bridge's parent is SIGKILLed (retry at 8 processes,
    resumes from the cache), then its group SIGSTOPped (stall kill, try 3
    finishes); lots must be SAME as an uninterrupted run. Once merged the
@@ -1652,17 +1642,18 @@ read when the weekly full re-screen lands.
    access lot line cannot be read -- record it per plan, then re-check.
    Unranked cities (Clackamas uninc 274, Sherwood 10, Hillsboro 5 gains)
    assume the side street is lowest class with no flag.
-   (e) Steep ground blamed on the fit (`slope_checked`): `steep_blocks` is
-   set only when the steep-free envelope is too small or the lot fits WITH
-   steep; a lot missing by 2-6 ft without steep and 30-60 ft with it is
-   handed to `fit_ft` + "variance". ~1,500 lots (replayed: 1S1E16DD-02700,
-   1S1E17AC-01300, 1S1E21BD-11900, 1N135DA06700). Headline yellow + wrong
-   fix; colour already red.
-   (f) Flat lots red from a neighbour's bank / raised road: the 5 m window
-   widens a 4-5 ft bank on a lot line into a 400-1,200 sq ft steep strip
-   (1S2E07BB-22400: grade 2.5%, 1,183 sq ft "steep"); 58 steep reds with
-   mean slope < 5% (`slope_water/slope2.py`). `Terrain.steep`. False reds.
-   Water flag on overlay slivers: 48 lots < 10 sq ft, 194 < 100 sq ft
+   (e)+(f)+(h) DONE 2dacbe1c (deployed 2026-10-08; lands at the (i) splice,
+   NOT in run 65): steep is read on the lot's own ground (a neighbour's bank
+   or raised road no longer spills in; a bank's height is walked across the
+   lot's own steep cells), coarse-10 m-only steep is YELLOW + SLOPE-STEEP-
+   COARSE sev 7, steep takes the blame when it is most of a fit miss. Bound
+   on 137 (/root/sf, base 1dcd278c vs final, 93,908 lots): 2,525 moves --
+   red->green 537, red->yellow 861 + 838 (h), yellow->green 84; green->red
+   29, green->yellow 122 (pad now on 5-15% ground: SLOPE-GRADE), yellow->red
+   54; control 0. Every class read; no false GREEN. ~40 new reds sit on a
+   4-4.5 ft bank: Steph 2026-10-08 KEPT the 4 ft line. 3 losses are the
+   placer landing elsewhere on a bigger envelope (open_space_shape / fire).
+   OPEN, not the slope lane: water flag on overlay slivers, 48 lots < 10 sq ft, 194 < 100 sq ft
    (`water_flag.parquet`, `permits_on` fires on any touch).
    (g) DONE a7243f4f (live 2026-10-07): the lots list says why a design is
    red (every standard missed, worst first) or yellow (the open questions
@@ -1671,18 +1662,13 @@ read when the weekly full re-screen lands.
    the app shows the map colour everywhere; the 16 STREET_UNCONFIRMED
    y->unknown rows traced: their missed standard went away, leaving the
    unconfirmed street alone (map: yellow, ACCESS-STREET-UNCONFIRMED).
-   (h) RULED Steph 2026-10-07: "yellow with flag. 7 severity" -- the 3,209
-   lots RED on steep ground read from the 10 m model only (Gresham 1,066,
-   Happy Valley 886, Portland 831; `coarse_red_is_closer_look` covered pad
-   grade, not the steep cut; median slope 17.5%) go YELLOW with a flag of
-   severity 7, resolution measurement (the 1 m lidar where it exists).
-   Handed to the slope lane with (e)/(f) (same files). Not built yet.
    (i) SPLICE OWED -- TAKEN by the weekly session (vicinitideals-fa)
    2026-10-08 (the agent handed it on 10-07 could not be found). One partial
    re-screen on run 65 carrying 81c3b77b + 84e702de (scope
    /root/weekly_fixes/scope.txt, 9,860), 51577bb8 (44, /root/rank-colour/
-   scope.txt, 39,743) and the slope lane's (e)/(f)/(h) (its scope2 =
-   /root/sf/tl_new2.txt + tl_reuse.txt, 111,447, or whatever it ships with);
+   scope.txt, 39,743) and the slope lane's (e)/(f)/(h) = 2dacbe1c (scope
+   /root/sf/scope_slope.txt, 127,093: every lot with steep under either code
+   + the coarse group; the bound's own 93,908 = scope_slope_bound.txt);
    2cfd13d6 (52) rides in assign. Prepared on 137: /root/s49i/scope_pre.txt
    (48,948, the first two), chain /root/s49i/chain.sh (preflight, done-marker
    per step: bridge -> splice onto /root/bridge_2026-10-07_weekly -> assign on
@@ -1690,8 +1676,13 @@ read when the weekly full re-screen lands.
    /root/code/s49i_<sha>). NOT in it: 017f63cf (50) -- its *_site columns need
    s5o re-run and the splice refuses a changed s5o ("different columns"), so
    it waits for the weekly; 51/53 need a new normalize -> the weekly unless
-   51's agent is ready first. Starts once the slope work is on main, or
-   2026-10-09 without it. Load/drift/gate on 114; a warned gate is Steph's.
+   51's agent is ready first. Slope work ON MAIN 2dacbe1c 2026-10-08 --
+   QUEUED 2026-10-08 ~14:10 UTC on heavy.lock behind proof5 (pid 364130):
+   SHA f16f1fd6, tree /root/code/s49i_f16f1fd6, scope /root/s49i/scope.txt =
+   162,717 lots (87 ROW pseudo-lots dropped), log /root/s49i/chain.log.
+   Expect the slope bound's 2,525 moves + the others'. Load/drift/gate on
+   114; a warned gate is Steph's. Tell vicinitideals-5c when through (it
+   cleans /root/sf after).
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
@@ -1809,3 +1800,93 @@ read when the weekly full re-screen lands.
    zone (D) could be encoded with the named-street tool (fourplex outright
    if it does not face Broadway/Main/OR 224, north of OR 224, 16 du/ac) --
    waiting on Steph's yes/no.
+54. [scan: NO (warn-only: changes no rule and no answer; the fixes it leads to land at the next weekly)] **Code-change
+   reader on the Claude API credit ($100/month). Steph 2026-10-07 picked this one and
+   DECLINED the other two offered (a second reader beside signing; moving the finance-side
+   email/pro forma reading off local Ollama).** Why it matters: nothing re-checks the codes
+   today -- `fetch --all --check` (flats/provenance/fetch.py, the corpus watch) exists but no
+   schedule runs it -- and Steph has done NO sign-offs (told 2026-10-07), so the map is
+   as-if-signed and an amended number keeps answering from the old words until somebody
+   happens to re-read. Plan, Steph to approve before building:
+   (a) Cadence: WEEKLY celery beat task on 114, built like `flats_probe_task` (warn-only,
+   writes rows, changes no rule): fetch every declared document (~680) into memory, compare
+   with the store in the image, store nothing. Weekly because detection costs no credit;
+   daily only invites the 429s Municode already throws (pace per host; a 429 = "not checked
+   this week"; 3 misses in a row = warn). Early Monday Pacific; nothing runs on 137.
+   (b) Proactive poll, reactive AI: the model runs only on what the sweep finds. Free
+   deterministic pass first: a value whose every cited line survives byte-for-byte
+   (`repoint.survivors`) or word-for-word (`loose_line_map`, a republish) is "moved, words
+   unchanged" -- no call. Only values whose own lines changed are sent, one request per
+   changed document (old slice + new slice + all its affected values). One city changing
+   >20 documents in a sweep is a reformat, not an amendment: no calls for that city until
+   Steph says. Later, not v1: DLCD's notices of proposed amendments (cities notify DLCD
+   before the first hearing -- confirm the feed is public and readable) as early warning
+   that never changes an answer.
+   (c) Code checks the model before anything is queued: structured output per value =
+   unchanged / changed (new number) / removed / cannot_tell + the new sentence VERBATIM.
+   The quote must exist in the fetched text and the new number must appear in it, else
+   cannot_tell. Stricter/looser is computed from the field's min/max sense, never asked.
+   The model never signs and never edits YAML.
+   (d) Interim map (Steph's call; recommended): stricter or cannot_tell -> greens whose
+   stored room on that check (check margins 7dc34722) is less than the change -- every
+   green in the zone for cannot_tell -- get a "city changed this rule, being re-read" flag
+   that shows yellow until fixed; looser -> no colour change (a missed lot, not a false
+   promise); unchanged -> nothing. Display-only if the flag tables can carry a colour
+   without a re-screen (check); otherwise it rides the next weekly.
+   (e) Who acts: with no sign-offs every number is a draft, so a changed number is
+   ENCODING work, not review: findings land on an agent work list ("do the next thing"
+   picks it up), the agent re-reads, runs `fetch --refresh --repoint`, fixes the encoding,
+   the next weekly moves the answers. Only a change to a number Steph HAS signed goes to a
+   Steph queue (old/new sentence with the change marked, our number, the model's reading,
+   greens at risk; Still right / Changed to X / Needs a closer read; stricter-with-greens
+   first). Resend email only on weeks with findings, plus a Lots-page banner like the
+   county probe's. A backlog is safe by construction: (d) keeps at-risk greens yellow while
+   it waits, so waiting costs missed lots, never a false GREEN. For when signing starts:
+   an inbox signature hashes the quote ADDRESS, not the words, so an amendment at the same
+   line numbers leaves it standing -- the watch must mark those rows too.
+   (f) Credit: the watch has FIRST CLAIM, always. Expected a few dollars a month (~10-15
+   cents per changed document, claude-opus-5 at medium effort through the Batches API, half
+   price, results within 24 h). Even every document we hold changing in one month roughly
+   fits one month's credit, so the watch alone cannot carry a backlog from month to month.
+   Background work (item 55) only spends above a sliding floor: $40 to day 21, $20 until 3
+   days before reset, $5 in the last 3 days (last batch submitted 2 days before reset).
+   Ledger row per call; hard cap = the credit, set in the Anthropic console. If the watch
+   still runs dry (a mass republish): findings queue "not pre-read", count as cannot_tell
+   for (d), and are read first after reset, before any background work. No Ollama
+   fallback -- a missing note is safe, a wrong "unchanged" is not. Assumed: unused credit
+   does not roll over -- confirm, and confirm the reset day (calendar month or billing day).
+   (g) Model by test, not assumption. Steph asked whether comparing against our encoding
+   lets model and effort drop. The comparison is narrower than encoding, but our errors
+   live in READING the text (wrong column, short headers, footnote markers, orphaned
+   numerals), which the structured side does not help, and the costly miss is one-sided
+   (false "unchanged" = possible false GREEN); at this volume the saving is a dollar or two.
+   Answer key: real past refreshes in git (the Gresham 4.1400 renumber etc.) + planted edits
+   on real cited passages (one number changed, a table column swapped, a pure reformat,
+   untouched controls). Run claude-opus-5 and claude-sonnet-5 at low/medium; ship the
+   cheapest with zero missed planted changes and zero unverifiable quotes. Test costs a few
+   dollars. Before any of it: confirm the credit covers an API key the app can use; key in
+   VM 114 .env only.
+55. [scan: NO (nothing it writes reaches the rules or the map)] **Expansion scouting on the
+   credit item 54 leaves (Steph 2026-10-07: underspend is likelier than overspend -- use the
+   month's remainder on proactive expansion that runs in the background and waits until we
+   choose to encode a place).** All 28 encoded layers are tri-county; the market is all of
+   Oregon (~240 cities, 36 counties). Per place, cheapest step first: (1) find the code --
+   `flats.provenance.discover` (free, codifier URL shapes); only on a miss, the model with
+   web search; (2) the model reads the table of contents and picks the chapters holding
+   the zones, use table, dimensional standards, parking and definitions (the step
+   discover.py says still needs a reader); (3) gate + headline read: which zones allow 4
+   attached townhouses outright / with review / not at all; min lot area, width, depth;
+   setbacks; height; coverage; parking; density; obvious blockers (design review, master
+   plan, overlays) -- every number with a verbatim quote the app checks exists, as in
+   54(c); (4) where the county publishes its lot and zoning maps (outside tri-county there
+   is no RLIS; getting that data is its own task). Output: one "scouted, not encoded" card
+   per place in the app DB (not the repo; nothing loads it as a rule) and a ranked list
+   (zones that admit the pod x residential land x distance -- Steph sets the weights).
+   Order: nearest first (Columbia, Yamhill, Marion, Polk ...), counties' unincorporated
+   codes after the cities. Proposed model claude-sonnet-5 (Steph to approve): a rough cut
+   where a mistake costs a wrong priority, never an answer, because encoding re-reads
+   everything and uses the card's numbers only as a cross-check. Rough cost well under a
+   few dollars a place, so the whole state fits in a few months of leftover. Scouted
+   places join 54's free weekly check; a change since scouting marks the card "re-scout
+   before encoding". Once the state is scouted the leftover goes to re-scouting changed
+   cards, then a reading list + doubts list (the item-53 kind) for the top-ranked places.

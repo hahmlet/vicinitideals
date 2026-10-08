@@ -164,6 +164,7 @@ ROW_COLUMNS = (
     "steep_sqft",
     "steep_source",
     "steep_blocks",
+    "steep_unconfirmed",
     "site_grade_pct",
     "site_grade_source",
     "colour",

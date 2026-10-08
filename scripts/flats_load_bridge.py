@@ -529,6 +529,7 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
     }
     if slope:
         slope["steep_blocks"] = bool(_clean(row.get("steep_blocks")))
+        slope["steep_unconfirmed"] = bool(_clean(row.get("steep_unconfirmed")))
         checks["slope"] = slope
     # How much bigger the pod could be on the lot's own shape, in feet: its
     # width, its depth, and both at once (FOLLOWUPS 37(ii)). Absent from a
