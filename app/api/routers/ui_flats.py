@@ -2732,6 +2732,8 @@ _CHECK_WORDS = {
     "driveway_frontage_share": "driveway takes more of the frontage than allowed",
     "front_yard_vehicle_share": "parking takes more of the front yard than allowed",
     "institutional_share": "institutional land, never a pod site",
+    "pod_footprint_area": "the lot is smaller than the building's footprint",
+    "pod_width": "the lot is too narrow: no 20 ft circle fits inside it, and the building is wider than that",
 }
 
 #: What the verdict the screen actually gave means. Today it is "unknown" on
@@ -2759,6 +2761,7 @@ _REASON_WORDS = {
     "USE_NOT_ENCODED": "whether the zone allows a fourplex is not encoded",
     "USE_PROHIBITED": "the zone forbids the use outright",
     "INSTITUTIONAL_USE": "institutional land — a school, park, hospital, public site, utility, airport, marina, transit hub, railway, public pool or plaza, or mall — red and left out of the scan (churches and charities are still screened)",
+    "POD_CANNOT_FIT": "red by arithmetic: the lot is smaller than the building's footprint, or too narrow for a building 20 ft or wider — no zoning changes that",
     "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
     "STREET_UNCONFIRMED": "one of the lot's streets may only be a private drive, and the lot could not be checked without it",
     "PARKING_STRIP_UNCONFIRMED": "fits only without the planted strip the city keeps between parking and the lot lines; whether a townhome project owes that strip is still open",

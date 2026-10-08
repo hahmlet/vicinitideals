@@ -3071,6 +3071,16 @@ async def test_institutional_land_is_said_in_words() -> None:
     assert _CHECK_WORDS["institutional_share"].startswith("institutional land")
 
 
+async def test_a_lot_too_small_for_the_pod_is_said_in_words() -> None:
+    """FOLLOWUPS 52: red by arithmetic names its proof in plain words."""
+    from app.api.routers.ui_flats import _CHECK_WORDS, _REASON_WORDS
+    from flats.ingest.assign import POD_CANNOT_FIT
+
+    assert POD_CANNOT_FIT in _REASON_WORDS and "arithmetic" in _REASON_WORDS[POD_CANNOT_FIT]
+    assert "footprint" in _CHECK_WORDS["pod_footprint_area"]
+    assert "20 ft" in _CHECK_WORDS["pod_width"]
+
+
 async def test_a_permit_area_flag_names_its_area() -> None:
     """A RESOURCE-PERMIT flag says which mapped area and which code
     section, not only that some area is there (FOLLOWUPS 42(b))."""
