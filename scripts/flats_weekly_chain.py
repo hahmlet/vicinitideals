@@ -275,7 +275,10 @@ def group_cpu(pgid: int, proc: Path = Path("/proc")) -> dict[tuple[int, int], in
         except OSError:
             continue
         rest = text[text.rindex(")") + 2:].split()  # the name may hold spaces; fields from the state on
-        if int(rest[2]) == pgid:
+        # A zombie (Z) has ended but is not yet reaped -- the step itself is
+        # one until attempt() waits on it -- so counting it held end_group a
+        # whole grace period per signal after the step was gone.
+        if int(rest[2]) == pgid and rest[0] not in ("Z", "X"):
             out[(int(d.name), int(rest[19]))] = int(rest[11]) + int(rest[12])
     return out
 

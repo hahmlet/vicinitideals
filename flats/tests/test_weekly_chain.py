@@ -280,9 +280,12 @@ def test_the_groups_cpu_is_read_from_proc(wc) -> None:
         assert got and {pid for pid, _ in got} == {busy.pid} and sum(got.values()) > 0
         assert wc.group_cpu(os.getpgrp()) and busy.pid not in {pid for pid, _ in wc.group_cpu(os.getpgrp())}
     finally:
+        t0 = time.monotonic()
         wc.end_group(busy.pid, grace=5)
+        ended = time.monotonic() - t0
         busy.wait(timeout=10)
-    assert busy.returncode < 0 and not wc.group_cpu(busy.pid)
+    # busy is a zombie until the wait: end_group must not take it for alive
+    assert busy.returncode < 0 and not wc.group_cpu(busy.pid) and ended < 3
 
 
 # --- preflight ------------------------------------------------------------------------------
