@@ -260,6 +260,7 @@ def test_the_layers_that_read_their_lot_lines(corpus: dict) -> None:
         ("or/multnomah/fairview", "abuts_nonresidential_zone"),
         ("or/clackamas/oregon-city", "abuts_residential_zone"),
         ("or/clackamas/_unincorporated", "abuts_lower_density_zone"),
+        ("or/clackamas/canby", "abuts_lower_density_zone"),
         ("or/multnomah/wood-village", "abuts_residential_zone"),
         ("or/multnomah/wood-village", "abuts_lower_density_zone"),
     }

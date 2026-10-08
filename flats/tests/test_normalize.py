@@ -143,8 +143,8 @@ def snapshot(tmp_path: Path, layers) -> Path:
         feature("21E01AA00100", square(1200, 0), COUNTY="C", JURIS_CITY=""),
         # Clackamas, Lake Oswego: switched off by the layer.
         feature("21E01AA00200", square(1400, 0), COUNTY="C", JURIS_CITY="LAKE OSWEGO"),
-        # Clackamas, Canby: no layer at all.
-        feature("21E01AA00300", square(1600, 0), COUNTY="C", JURIS_CITY="CANBY"),
+        # Clackamas, Barlow: no layer at all.
+        feature("21E01AA00300", square(1600, 0), COUNTY="C", JURIS_CITY="BARLOW"),
         # Maywood Park: a layer, switched off in the registry; no regional polygon covers it.
         feature("1N1E03AA  -00100", square(1800, 0), JURIS_CITY="MAYWOOD PARK"),
         # The same TLID twice: the larger polygon stays.
@@ -213,7 +213,7 @@ def test_the_lot_universe_and_the_funnel(result, layers):
     assert funnel["duplicate_tlid"]["dropped"] == 1
     assert funnel["condo_excluded"]["dropped"] == 1 and funnel["condo_excluded"]["reasons"] == {"CONDO_AIR_PARCEL": 1}
     assert funnel["condo_stack"]["dropped"] == 2
-    assert funnel["jurisdiction_unmapped"] == {"step": "jurisdiction_unmapped", "count": 1, "juris_city": {"CANBY": 1}}
+    assert funnel["jurisdiction_unmapped"] == {"step": "jurisdiction_unmapped", "count": 1, "juris_city": {"BARLOW": 1}}
     assert summary["lots"] == 13 and summary["by_county"] == {"clackamas": 3, "multnomah": 10}
     assert json.loads((out / "funnel.json").read_text()) == summary["funnel"]
     # The duplicate kept the larger polygon; the stack kept the first TLID with its count.
@@ -286,7 +286,7 @@ def test_summary_md_reads_in_plain_english(result):
     assert "- 1 out: not a taxlot" in text and "- 2 out: condo stack" in text
     assert "Zone codes on the map nobody has ruled on -- new since the map was last read:" in text
     assert "- or/multnomah/portland: QQ9 (1)" in text
-    assert "Cities with no encoded layer: CANBY 1" in text
+    assert "Cities with no encoded layer: BARLOW 1" in text
     assert json.loads((out / "new_zones.json").read_text()) == summary["new_zones"]
 
 
@@ -400,7 +400,7 @@ def test_jurisdictions_from_the_real_layers(layers):
     assert j.layer_for(None, "clackamas") == "or/clackamas/_unincorporated"
     assert j.layer_for("UNINCORPORATED", "clackamas") == "or/clackamas/_unincorporated"
     assert j.layer_for("", None) is None, "a blank code with no county cannot be placed"
-    assert j.layer_for("CANBY", "clackamas") is None
+    assert j.layer_for("BARLOW", "clackamas") is None
 
 
 def test_zone_normalisation_follows_the_layer(layers):

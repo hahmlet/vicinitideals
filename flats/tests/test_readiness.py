@@ -727,6 +727,19 @@ def test_a_spelled_number_restated_in_brackets_still_finds_its_unit() -> None:
     assert not quotes_the_number("seven and one-half (7 1/2) reasons", 7.5)
 
 
+def test_a_density_band_in_prose_and_a_glued_or_are_both_read() -> None:
+    """Sandy prints "not less than five or more than eight units per net
+    acre" (the unit sits behind the second number); Canby's scan runs "or"
+    into "twenty" ("ortwenty feet")."""
+    from flats.encode.readiness import quotes_the_number
+
+    band = "Density shall not be less than five or more than eight units per net acre."
+    assert quotes_the_number(band, 5)
+    assert quotes_the_number(band, 8)
+    assert not quotes_the_number("five or more than eight reasons", 5)
+    assert quotes_the_number("fifteen feet single story ortwenty feet two-story", 20)
+
+
 def test_a_footnote_marker_stuck_to_a_number_is_only_read_where_declared() -> None:
     """Milwaukie prints "Street side yard 154" for fifteen feet with note 4.
     Read as 154 the encoding looks wrong; read as 15 everywhere, a table that
@@ -967,3 +980,12 @@ def test_the_four_switched_off_jurisdictions_are_named() -> None:
     # a full encoding behind it -- ten zones read against LOC 50.
     assert off["or/clackamas/lake-oswego"].values == 132
     assert sum(r.values - r.verified for r in off.values()) == 138
+
+
+def test_a_spelled_number_glued_to_the_word_before_it_still_counts() -> None:
+    from flats.encode.readiness import _says
+
+    text = "fifteen feet single story ortwenty feet two-story"
+    assert _says(text, 20)
+    assert _says(text, 15)
+    assert not _says("an orchard of twentyfold growth", 20)

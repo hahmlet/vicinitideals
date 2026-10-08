@@ -313,6 +313,83 @@ RULINGS: dict[str, dict[str, str]] = {
             "by GMC 17.29 where it lists Zones A, AE and so on."
         ),
     },
+    "or/clackamas/canby": {
+        # 2026-10-07: R-1, R-1.5, R-2, C-R, C-1, C-2, C-M, M-1 and M-2 are zone
+        # blocks. What the harvest prints besides is two overlays, a plan name,
+        # a sub-area and a definition.
+        "WO": (
+            "overlay: Wetland Overlay Zone, CMC 16.39 (cmc.16.12.010 L35 lists "
+            "it as a designation; cmc.16.76.010 L13 names it)."
+        ),
+        "TC": (
+            "overlay: the Transitional Commercial sub-area of the Downtown "
+            "Canby Overlay, CMC 16.41.020 A.2. Its boundary is a figure in the "
+            "code, not a map layer; the C-1 block's notes carry the doubt "
+            "(multi-family on R-2 standards is outright there)."
+        ),
+        "NRDCP": (
+            "not-a-zone: the North Redwood Development Concept Plan, which "
+            "CMC 16.13.010 (cmc.16.13.010 L5) says the North Redwood Plan "
+            "District implements."
+        ),
+        "CBD": (
+            "not-a-zone: the defined term Central business district "
+            "(cmc.16.04.110 L1), not a district with a use list."
+        ),
+    },
+    "or/clackamas/sandy": {
+        # 2026-10-07: SFR, R-1, R-2, R-3, C-1, C-2, C-3, I-1, I-2, I-3 and POS
+        # are zone blocks. What the harvest prints besides is the overlays and
+        # one defined term.
+        "NSA": (
+            "not-a-zone: net site area, the density denominator SDC 17.30 "
+            "defines ('Calculation of Net Site Area (NSA)') and multiplies by "
+            "each zone's units per acre."
+        ),
+        "FSH": (
+            "overlay: Flood and Slope Hazard, SDC 17.60. Not screened by this "
+            "layer (UNSCREENED in test_overlay_reach, FOLLOWUPS)."
+        ),
+        "FIS": (
+            "not-a-zone: the Flood Insurance Study, the FEMA document SDC "
+            "17.60 names as the source of the FSH flood boundary."
+        ),
+        "BVO": (
+            "overlay: Bornstedt Village Overlay, SDC 17.54.40; applies to a "
+            "mapped village area, not a base zone."
+        ),
+        "CHR": (
+            "overlay: Cultural or Historic Resource designation, SDC 17.62; "
+            "applied site by site."
+        ),
+        "DOGAMI": (
+            "not-a-zone: the state geology agency whose Hillside Development "
+            "slope map SDC 17.56 reads the 25 percent slope test from."
+        ),
+    },
+    "or/clackamas/estacada": {
+        # 2026-10-07: C-2, CMU, R-3, R-1, R-2, NCR, D, C-1, MMU, R-C, H-C, O-C,
+        # M-1, A-P and O-S are zone blocks. What the harvest prints besides is
+        # an overlay, an airport term, a runway-protection term and a heading.
+        "P-D": (
+            "overlay: Planned Development, EMC Chapter 16.52; 'may be "
+            "established in combination with any other zone', at least five "
+            "acres, approved case by case (emc.16.zones.txt L3303-L3309)."
+        ),
+        "ODAV": (
+            "not-a-zone: the Oregon Department of Aviation, the agency EMC "
+            "16.54 notifies of land use applications near the runway."
+        ),
+        "RPZ": (
+            "not-a-zone: the runway protection zone, a defined term "
+            "(emc.16.08.txt L407) the Airport Safety overlay uses; the overlay "
+            "is not screened (FOLLOWUPS)."
+        ),
+        "HISTORY": (
+            "not-a-zone: the 'HISTORY' heading the codifier prints under each "
+            "section (its amending ordinances)."
+        ),
+    },
     "or/clackamas/happy-valley": {
         # 2026-09-20: the September map put 23 Happy Valley codes in front of
         # the screen and five more chapters came into the store to answer

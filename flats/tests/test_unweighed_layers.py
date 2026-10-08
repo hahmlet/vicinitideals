@@ -66,7 +66,17 @@ SWITCHED_OFF = {
 #: Cornelius and Tigard (drafted 2026-10-01) are back in it until the map
 #: routes their lots -- JURIS_CITY CORNELIUS and Metro's zoning layer (FOLLOWUPS 17(f));
 #: until then the ledger counts them as UNMAPPED/<city> below.
-OWED_A_COUNTY: set[str] = {"or/washington/cornelius", "or/washington/tigard"}
+#: Canby, Estacada and Sandy (FOLLOWUPS 53, 2026-10-07) are in it for a different reason: its lots
+#: ARE on the Clackamas map, but the ledger was read from run 65, which holds
+#: them as JURISDICTION-NOT-ENCODED; the next weekly run weighs them and this
+#: entry comes out.
+OWED_A_COUNTY: set[str] = {
+    "or/clackamas/canby",
+    "or/clackamas/estacada",
+    "or/clackamas/sandy",
+    "or/washington/cornelius",
+    "or/washington/tigard",
+}
 
 
 #: Washington County cities on the county map with no encoded layer: their

@@ -1,0 +1,3 @@
+16.36.030 Conditional uses.
+
+Conditional uses in the PUD overlay zone are the uses listed as conditional in the underlying base zone. (Ord. 740 section 10.3.35 (C), 1984)

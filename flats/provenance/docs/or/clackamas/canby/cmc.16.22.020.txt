@@ -1,0 +1,9 @@
+16.22.020 Conditional uses.
+
+Conditional uses in the C-1 zone shall be as follows:
+
+A. A use listed as conditional in the R-1 zone, except as modified in Section 16.22.010, above;
+
+B. Parking lot or parking structures;
+
+C. Certain wireless telecommunications facilities, pursuant to the standards and requirements of Chapter 16.55. (Ord. 890 section 25, 1993; Ord. 740 section 10.3.24(B), 1984; Ord. 981 section 22, 1997; Ord. 1076, 2001; Ord 1237, 2007; Ord. 1514, 2019, Ord. 1539, 2020)

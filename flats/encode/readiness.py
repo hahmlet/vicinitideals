@@ -495,11 +495,15 @@ _NOT_A_UNIT_WORD = (
     r"|all|is|are|be|shall|may|must|that|th[oe]se|this|than|more|less"
 )
 
+#: A density band printed as prose, Sandy's "Density shall not be less than
+#: five or more than eight units per net acre": the unit sits behind the
+#: second number, so the first number's window steps over "or more than <n>".
 _UNIT_WORD = re.compile(
     r"^[\s.,:;)\-]{0,3}"
     r"(?:\(\s*[\d\s.,¼½¾⅓⅔⅛⅜⅝⅞]*\)"
     r"[\s.,:;\-]{0,3})?"
     r"(?:and\s+)?"
+    r"(?:or\s+more\s+than\s+(?:\d[\d,.]*|[A-Za-z]+(?:-[A-Za-z]+)?)\s+)?"
     rf"(?:(?!(?:{_NOT_A_UNIT_WORD})\b)[A-Za-z]+[\s\-]{{1,2}}){{0,2}}"
     r"(?:feet|foot|ft|inch|inches|stor(?:y|ies)|percent"
     r"|unit|units|space|spaces|square|sq|acre|acres|dwelling|dwellings|percent|%)\b",
@@ -558,7 +562,13 @@ def _says(text: str, number: float, *, spaced: bool = False) -> bool:
         parts = [re.escape(part) for part in parts]
     # Components join over a hyphen, a space, an "and", or -- after a
     # hyphenated line break has been closed up -- nothing at all.
-    pattern = re.compile(r"\b" + r"[-\s]*(?:and[-\s]+)?".join(parts) + r"\b", re.I)
+    # A word run into the one before it by the scan -- Canby prints
+    # "fifteen feet single story ortwenty feet two-story" -- still starts at
+    # its own letters when what is glued on front is "or" or "and".
+    pattern = re.compile(
+        r"(?:\b|(?<=\bor)|(?<=\band))" + r"[-\s]*(?:and[-\s]+)?".join(parts) + r"\b",
+        re.I,
+    )
     return any(_UNIT_WORD.match(text[found.end():]) for found in pattern.finditer(text))
 
 

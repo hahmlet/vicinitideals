@@ -1,0 +1,39 @@
+16.12.010 Zones designated.
+
+In order to carry out the purposes and provisions of this title, the city is divided into zones designated as follows:
+
+Base Zones Abbreviation
+
+Low Density Residential R-1
+
+Medium Density Residential R-1.5
+
+High Density Residential R-2
+
+Downtown Commercial C-1
+
+Residential/Commercial C-R
+
+Highway Commercial C-2
+
+Commercial/Manufacturing C-M
+
+Light Industrial M-1
+
+Heavy Industrial M-2
+
+Overlay Zones
+
+Planned Unit Development PUD
+
+Historical Protection A
+
+Hazard H
+
+Canby Industrial Area I-O
+
+Wetland WO
+
+Riparian RO
+
+(Ord .890 section 14, 1003; Ord. 740 section 10.3.15 [part], 1984; Ord. 1008 section 1, 1998; Ord 1237, 2007; Ord. 1514, 2019)

@@ -1,0 +1,2431 @@
+CHAPTER 17.90 - DESIGN STANDARDS[34]
+
+
+Footnotes:
+--- (34) ---
+Editor's note— Pre-republication, this chapter was last revised by Ord. No. 2013-14, effective July 3, 2013. Any amendments occurring post-republication have a history note in parenthesis at the bottom of the amended section.
+
+
+Sec. 17.90.00. - Intent.
+
+
+Chapter 17.90 is intended to implement the following design standards. In addition to these standards, several appendices are included to aid in the implementation of these standards. Applicable appendices are referenced in this chapter and kept on file by the Director. In implementing these standards, the reviewing body shall refer to the following objectives in evaluating Design Review requests:
+A.
+
+Protect and enhance the city's quality of life and community image.
+
+B.
+
+Encourage functional, safe, and aesthetically pleasing development, while maintaining compatibility with the surrounding built and natural environment.
+
+C.
+
+Implement the Sandy Style, as described by this chapter. The Sandy Style is based on the following guiding principles:
+
+1.
+
+Celebrate Sandy as the Gateway to Mount Hood through contextually appropriate landscaping and building designs.
+
+2.
+
+Protect and enhance Sandy's tree canopy, particularly along the Highway 26 Landscape Management Corridor.
+
+3.
+
+Emphasize a "village" scale and character in new development. Village scale means development is compact and walkable, building entrances are oriented to the street sidewalk or a plaza, and large building masses are broken down through a combination of design elements such as articulation, combinations of complementary building materials and detailing.
+
+4.
+
+Express elements of or reflect Cascadian architecture by adapting appropriate elements of English Arts and Crafts Style (1900—1920) and Oregon Rustic Style (1915—1940), and/or similar elements, into new buildings and exterior remodels, except in locations where this Code allows or requires a different architectural style (e.g., C-1 Historic Roadside Commercial District).
+
+5.
+
+Encourage green building practices in new construction, such as the use of renewable energy (e.g., solar and wind), use of recycled materials, integration of water quality facilities in landscapes, capture of rainwater for irrigation, and similar practices.
+
+D.
+
+The City considers the following elements to be incompatible with the Sandy Style. For residential developments that meet all applicable standards in this chapter, these elements shall serve as guiding principles only. For nonresidential developments, or for residential developments that do not meet all the standards of this chapter, the reviewing body may deny, or require modifications to, a project with any of the following:
+
+1.
+
+Excessive tree removal and/or grading that may harm existing vegetation within a designated landscape conservation area.
+
+2.
+
+Commercial development where buildings are setback from the street behind surface parking lots.
+
+3.
+
+Excessive surface parking lot paving and redundant driveways.
+
+4.
+
+Drive-up facilities adjacent to a street that interrupt pedestrian circulation patterns or create potential safety hazards.
+
+5.
+
+Disjointed parking areas, confusing or unsafe circulation patterns.
+
+6.
+
+Box-like structures with large, blank, unarticulated wall surfaces.
+
+7.
+
+Building materials or colors that do not conform to this Code.
+
+8.
+
+Highly reflective surfaces or heavily tinted glass storefronts.
+
+9.
+
+Strongly thematic architectural styles, forms, colors, materials, and/or detailing, that do not conform to the Sandy Style, including some forms of franchise architectural styles associated with some chain commercial establishments.
+
+10.
+
+Inadequate landscape buffers adjacent to parking lots, walkways, and streets.
+
+11.
+
+Visible outdoor storage, loading, and equipment areas.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.10. - Applicability.
+
+
+The provisions of this chapter apply to all zones and uses as follows except as specified in Sections 17.90.10.B., C., D., E., F., and G. below:
+A.
+
+All construction within a Commercial or Industrial Zoning District or a non-residential use in a Residential Zoning District including the following:
+
+1.
+
+New construction;
+
+2.
+
+Replacement of a building that is destroyed as specified in Section 17.08.30;
+
+3.
+
+Addition to an existing building;
+
+4.
+
+Exterior alterations other than general maintenance on an existing building;
+
+5.
+
+Site improvements including changes to landscaping, parking, civic spaces, etc.
+
+B.
+
+Nonresidential development and the nonresidential components of mixed use development shall comply with all applicable standards in this chapter. Residential development and the residential components of a mixed use development are only required to comply with the clear and objective standards of this chapter unless the applicant is requesting a Design Deviation, in which case compliance with all standards is required for residential development.
+
+C.
+
+General Maintenance Exception: General maintenance activities including but not limited to the replacement of awnings, entryway covers, doors, windows, siding and roofing materials with like materials, and repainting with the same colors are exempt from these standards.
+
+D.
+
+Residential Dwelling Exception: Single detached dwellings, duplexes, accessory dwelling units, and manufactured dwellings and prefabricated dwellings within manufactured dwelling parks are exempt from all requirements of this chapter except for Section 17.90.40, Section 17.90.140, and Section 17.90.150.
+
+E.
+
+Specific Building Exception: Certain buildings contain architectural characteristics that contribute to the unique character of Sandy's business community. However, these buildings are not necessarily designed in conformance with the applicable design standards described in this chapter. This section allows these buildings to be maintained, repaired, painted or added on to, in a way that is consistent with the existing architectural design of these buildings. Additionally, in the event a portion or the entire building is damaged by any means, this section allows these buildings to be rebuilt as currently designed. This exemption does not allow the architectural design of these buildings to be changed or altered from the current design without compliance with the provisions of this Code. (as of February 1, 2008, see Appendix A) All other provisions in this chapter related to site design, landscaping, lighting, and external storage and screening are still applicable. This exception is applicable to the following buildings:
+
+•
+
+Tollgate Inn Restaurant and Bakery (38050 and 38100 Highway 26).
+
+•
+
+Joe's Donut Shop (39230 Pioneer Blvd.).
+
+F.
+
+Downtown Area Exceptions: Two areas within downtown Sandy contain several existing buildings or groupings of buildings that contribute to the unique character of Sandy's downtown (Appendix B). As such, new building construction within these areas may either comply with the Sandy Style design standards of this chapter, or with the details specified below. Examples of building elements that meet these standards are illustrated in Figures 17.90.110-A and 17.90.110-B. All other provisions of this chapter related to site design, landscaping, lighting, and external storage and screening still apply.
+
+1.
+
+Area A—South side of Pioneer Boulevard between Bruns Avenue and Meinig Avenue, including the lot at the southeast corner of Pioneer and Meinig (Figure 17.90.110-F):
+
+a.
+
+Use of flat roofs (See Section 17.90.110.C.8.) with detailed stepped parapet and regularly spaced picture windows (divided or undivided) framed by pilasters, transoms, and sills.
+
+b.
+
+Use of masonry block, brick or fluted concrete, consistent with the existing historic roadside commercial structures is allowed.
+
+c.
+
+Buildings may contain symmetrical forms based on a rectangular building plan and simple massing.
+
+d.
+
+Building articulation and detailing should express the physical structure of buildings in this area.
+
+2.
+
+Area B—South side of Pioneer Boulevard between Scales Avenue and Bruns Avenue, and for the Odd Fellows Hall on the north side of Pioneer Boulevard:
+
+a.
+
+The preferred siding material for building remodels is wood lap siding, consistent with the farm-style structures in that area.
+
+b.
+
+Building forms and detailing should express a farmhouse vernacular; buildings should incorporate front-facing gables, covered porches, and divided or double hung sash windows.
+
+c.
+
+Paint color should not contrast with the white-washed buildings on this block.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-32, § 1(Exh. A), 11-17-2025)
+
+
+Sec. 17.90.30. - Powers and duties.
+
+
+Staff shall review plans for compliance with the Development Code and other applicable regulations. The Director may tailor the extent of the review by deleting or combining steps when not warranted by the scale of the development.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.40. - Type of design review.
+
+
+A.
+
+Type I—Administrative. Type I review applies to single family dwellings, duplex dwellings, manufactured dwellings and prefabricated dwellings within manufactured dwelling parks, and permitted residential accessory dwellings and structures.
+
+Type I review also applies to exterior building alterations or additions on existing commercial or industrial buildings, multi-family dwellings, and non-residential uses on residentially zoned lots where the proposed alteration or addition meets the following criteria:
+1.
+
+Exterior alterations other than general maintenance as defined in Section 17.90.10.B.
+
+2.
+
+Modifications to the number of parking spaces by not more than ten percent.
+
+3.
+
+Modifications to the area devoted to landscaping or civic space by not more than ten percent.
+
+4.
+
+Building additions in the C-1 and C-3 zones containing less than 1,000 square feet.
+
+5.
+
+Building additions in the C-2, I-1, and I-2 zones containing less than 3,000 square feet.
+
+B.
+
+Type II—Director's Review. Type II review includes floor area expansions greater than the thresholds for a Type I review and all other multi-family, commercial, industrial development, and non-residential development on residentially zoned land that is in compliance with code standards, except where a Type III procedure is requested or required.
+
+C.
+
+Type III—Quasi-Judicial Public Hearing. Type III review includes development where the applicant has requested one or more Design Deviations from the standards in this chapter or otherwise has requested a Type III Design Review. Design Deviations involve discretion in applying this chapter's standards to the application. For a Design Deviation to be approved, the applicant must demonstrate that the proposal meets or exceeds the intent of the standard(s) for which a deviation is requested. The more a request seeks to deviate from a standard, the greater the burden on the applicant to demonstrate the request complies with the standard's intent.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-32, § 1(Exh. A), 11-17-2025)
+
+
+Sec. 17.90.70. - Expiration of approval.
+
+
+Design Review approval shall be void after two years from the date of the Final Order, unless the applicant has submitted plans for building permit approval or demolition approval, as applicable, within this timeframe. The Director may grant one extension through a Type I procedure, not to exceed one year, upon a written request from the applicant prior to the expiration date of the approval.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.80. - Modifying approvals.
+
+
+A.
+
+Major Modification. A major modification to a Design Review approval shall be processed as a new application. Major Modifications include but are not limited to:
+
+1.
+
+Changes in proposed land use;
+
+2.
+
+Substantial change in building elevation and materials;
+
+3.
+
+Changes in type and location of access ways and parking areas where off-site traffic would be affected;
+
+4.
+
+Increase in the floor area proposed for nonresidential use by more than ten percent from what was previously specified;
+
+5.
+
+Increase in the total ground area proposed to be covered by structures or parking by more than ten percent from what was previously specified;
+
+6.
+
+Reduction of project amenities provided, such as civic space, recreational facilities, screening, and/or landscaping provisions by more than ten percent from what was previously specified, and;
+
+7.
+
+Any other modification to a requirement established at the time of Design Review approval.
+
+B.
+
+Minor Modification. Minor Modifications may include any of the changes listed above provided the change is below the quantifiable thresholds for a Major Modification, per Section 17.90.80.A. Minor modifications shall be processed as a Type I or Type II decision; a Type II procedure shall be used where the modification requires interpretation of a discretionary standard.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.90. - Submission requirements—Type I.
+
+
+In addition to the items listed in Chapter 17.18.
+A.
+
+Site Plan. The site plan shall be drawn at an approved engineering scale (e.g., 1"=100'; 1"=50'; 1"=20'; or 1"=10') and shall include the applicant's entire property including:
+
+1.
+
+Dimensions of the property;
+
+2.
+
+Proposed building location;
+
+3.
+
+Easements of record;
+
+4.
+
+Parcel boundaries;
+
+5.
+
+Driveway location;
+
+6.
+
+Contour lines at the following minimum intervals;
+
+a.
+
+Two foot intervals for slopes zero percent—14.9 percent.
+
+b.
+
+Five foot or ten foot intervals for slopes between 15 percent—25 percent.
+
+c.
+
+Identification of areas exceeding 25 percent.
+
+7.
+
+Flood and Slope Hazard Overlay District boundaries;
+
+8.
+
+Drainage, including adjacent lands;
+
+9.
+
+Natural hazard areas, including potential flood or high ground water, landslides, erosion, drainage ways, and weak foundation soils;
+
+10.
+
+Marsh or wetland areas, underground springs, wildlife habitat areas, wooded areas, and surface features such as earth mounds and large rock outcroppings, and including features detailed in DSL's Statewide Wetlands Inventory and ODFW's Conservation Opportunity Areas maps;
+
+11.
+
+Streams and stream corridors;
+
+12.
+
+Location of trees 11 inches or greater DBH (six inches or greater DBH in FSH Overlay District);
+
+13.
+
+Additional information necessary to properly evaluate the proposal, including soils, geology, hydrologic study, photometric analysis, etc., unless waived by the Director. The requirement for additional information shall be communicated to the applicant at the pre-application conference or prior to the application being deemed complete.
+
+B.
+
+Architectural Drawings. The architectural drawings shall be drawn at an approved architectural scale and shall contain the following:
+
+1.
+
+Building elevations;
+
+2.
+
+Building materials: colors and type;
+
+3.
+
+Retaining walls including type, architectural finish, and height;
+
+4.
+
+Other drawings or studies (e.g., line-of-sight analysis, perspective, model, visual simulation, window glazing diagram etc.) necessary to evaluate the application as determined necessary by the Planning Director, and communicated to the applicant at the pre-application conference or prior to the application being deemed complete.
+
+C.
+
+Landscape Plan. The landscape plan(s) shall be drawn at an approved engineering scale and shall contain the following:
+
+1.
+
+Property and lot boundaries and rights-of-way;
+
+2.
+
+Structures and impervious surfaces including parking lots;
+
+3.
+
+General landscape development plan, including plant specifications keyed to plan map and including botanical names, common names, sizes, numbers, and methods of planting and maintenance, location of existing plants and groups of plants proposed;
+
+4.
+
+Description of soil conditions and plans for soil treatment such as stockpiling of topsoil, addition of soil amendments, and plant selection requirements, relating to soil conditions;
+
+5.
+
+Details of irrigation method;
+
+6.
+
+Landscape-related structures such as fences, decks, terraces, patios, shelters, play areas, etc.;
+
+7.
+
+Boundaries of open space, recreation or reserved areas;
+
+8.
+
+Location of pedestrian or bicycle circulation.
+
+D.
+
+Other Information or studies determined to be necessary by the Director prepared by qualified professionals to address specific site features or project impacts (e.g. arborist report, natural hazards, Geotechnical, etc.), and communicated to the applicant at the pre-application conference or prior to the application being deemed complete.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.100. - Submission requirements—Type II and Type III.
+
+
+In addition to the items listed in Chapter 17.18.
+A.
+
+Project Narrative documenting compliance with applicable code criteria. If the application involves any Design Deviations from the Code standards (i.e., Type III Design Review), the narrative shall describe how the proposal meets or exceeds the intent of the standard(s) for which a deviation is requested.
+
+B.
+
+Site Analysis Map. An analysis of the site showing the relationship between the site and adjacent properties to contain the following:
+
+1.
+
+Property boundaries, dimensions, and gross area;
+
+2.
+
+Topographic contour lines at two-foot intervals for slopes zero—ten percent and five foot intervals for slopes greater than ten percent;
+
+3.
+
+Location of approved Flood and Slope Hazard Overlay District boundaries and restricted development areas per Chapter 17.60;
+
+4.
+
+Site features including existing structures, pavement, large surface features such as earth mounds and large rock outcroppings;
+
+5.
+
+Contour lines at the following intervals:
+
+a.
+
+Two foot intervals for slopes zero—14.9 percent;
+
+b.
+
+Five foot or ten foot intervals for slopes between 15 percent—25 percent;
+
+c.
+
+Identification of areas exceeding 25 percent;
+
+6.
+
+Location and width of public and private streets, drives, sidewalks, rights-of-way, and easements;
+
+7.
+
+Location, size, and species of trees 11-inches and greater DBH (six-inches or greater DBH in FSH Overlay District);
+
+8.
+
+North arrow, scale, names and addresses of all persons listed as owners of the subject property on the most recently recorded deed;
+
+9.
+
+Name and address of project designer, engineer, surveyor, and/or planner, if applicable;
+
+10.
+
+Additional information necessary to properly evaluate the proposal, including soils, geology, hydrologic study, photometric analysis, etc., unless waived by the Director. The requirement for additional information shall be communicated to the applicant at the pre-application conference or prior to the application being deemed complete.
+
+C.
+
+Proposed site plan. The site plan shall contain the following information:
+
+1.
+
+The proposed development site, including boundaries, dimensions, and gross area;
+
+2.
+
+Features identified on the existing site analysis maps that are proposed to remain on the site;
+
+3.
+
+Features identified on the existing site map, if any, which are proposed to be removed or modified by the development;
+
+4.
+
+The location and dimensions of all proposed public and private streets, drives, rights-of-way, and easements;
+
+5.
+
+The location and dimensions of all existing and proposed structures, utilities, pavement and other improvements on the site. Setback dimensions for all existing and proposed buildings shall be provided on the site plan;
+
+6.
+
+The location and dimensions of entrances and exits to the site for vehicular, pedestrian, and bicycle access;
+
+7.
+
+The location and dimensions of all parking and vehicle circulation areas (show striping for parking stalls and wheel stops);
+
+8.
+
+Pedestrian and bicycle circulation areas, including sidewalks, internal pathways, pathway connections to adjacent properties, and any bicycle lanes or trails;
+
+9.
+
+Loading and service areas for waste disposal, loading and delivery;
+
+10.
+
+Outdoor recreation spaces, common areas, plazas, outdoor seating, street furniture, and similar improvements;
+
+11.
+
+Location, type, and height of outdoor lighting;
+
+12.
+
+Location of mail boxes, if known;
+
+13.
+
+Name and address of project designer, if applicable;
+
+14.
+
+Locations of bus stops and other public or private transportation facilities;
+
+15.
+
+Locations, sizes, and types of signs;
+
+16.
+
+Location of retaining walls.
+
+D.
+
+Preliminary Utility Plan. (Including the location of all electrical transformers and utility meters)
+
+E.
+
+Traffic Impact Study or Traffic Letter in compliance with City standards (if required).
+
+F.
+
+Photometric Analysis and cut sheets of proposed lighting demonstrating compliance with Chapter 15.30, Dark Sky Ordinance.
+
+G.
+
+Preliminary Grading Plan. A preliminary grading plan indicating where and to what extent grading will take place, including general contour lines, slope ratios, slope stabilization proposals, and natural resource protection proposals consistent with the provisions of this Code.
+
+H.
+
+Architectural Drawings. The architectural drawings shall be drawn at an approved architectural scale and shall contain the following:
+
+1.
+
+Building elevations;
+
+2.
+
+Building materials: colors and type;
+
+3.
+
+Retaining walls including type, architectural finish, and height;
+
+4.
+
+Other drawings or studies (e.g., line-of-sight analysis, perspective, model, visual simulation, window glazing diagram, etc.) necessary to evaluate the application as determined necessary by the Planning Director, and communicated to the applicant at the pre-application conference or prior to the application being deemed complete.
+
+I.
+
+Landscape Plan. The landscape plan(s) shall be drawn at an approved engineering scale and shall contain the following:
+
+1.
+
+Property and lot boundaries and rights-of-way;
+
+2.
+
+Structures and impervious surfaces including parking lots;
+
+3.
+
+General landscape development plan, including plant specifications keyed to plan map and including botanical names, common names, sizes, numbers, and methods of planting and maintenance, location of existing plants and groups of plants proposed;
+
+4.
+
+Description of soil conditions and plans for soil treatment such as stockpiling of topsoil, addition of soil amendments, and plant selection requirements, relating to soil conditions;
+
+5.
+
+Details of irrigation method;
+
+6.
+
+Landscape-related structures such as fences, decks, terraces, patios, shelters, play areas, etc.;
+
+7.
+
+Boundaries of open space, recreation or reserved areas;
+
+8.
+
+Location of pedestrian or bicycle circulation.
+
+J.
+
+Signs. Proposed sign details and dimensions in conformance with Chapter 15.32.
+
+K.
+
+Other Information or studies determined to be necessary by the Director prepared by qualified professionals to address specific site features or project impacts (e.g. arborist report, natural hazards, Geotechnical, etc.), and communicated to the applicant at the pre-application conference or prior to the application being deemed complete.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.110. - Downtown and Village Commercial (C-1 and C-3) design standards.
+
+
+Development in the C-1 and C-3 zoning districts shall conform to all of the following standards, as applicable. Where a conflict exists between the requirements of this Chapter and any other code provision, this Chapter shall prevail.
+A.
+
+Site Layout and Vehicle Access.
+
+Intent: To provide for compact, walkable development, and to design and manage vehicle access and circulation in a manner that supports pedestrian safety, comfort and convenience. (Examples of site designs that meet these standards are illustrated in Figures 17.90.110-C and 17.90.110-D).
+
+1.
+
+All lots shall abut or have cross access to a dedicated public street.
+
+2.
+
+All lots that have access to a public alley shall provide for an additional vehicle access from that alley.
+
+3.
+
+Off-street parking shall be located to the rear or side of buildings with no portion of the parking lot located within required setbacks or within ten feet of the public right-of-way, as shown in Figure 17.90.11-C. When access must be provided directly from a public right-of-way, driveways for ingress or egress shall be limited to one per 150 feet. For lots with frontage of 150 feet or less, shared access shall be required if an individual access would not meet the 150-foot spacing requirement.
+
+4.
+
+Adjacent parking lots shall be connected to one another unless such connections are impracticable due to physical constraints such as natural resource areas or steep topography.
+
+5.
+
+Raised or painted pedestrian crossings shall be used to calm traffic and protect pedestrians in parking areas. Similar devices for pedestrian safety that incorporate changes in paving materials, textures or color may be approved through Design Deviation.
+
+6.
+
+Where openings occur between buildings facing Proctor Boulevard or Pioneer Boulevard, pedestrian ways shall connect the street sidewalk to any internal parking areas.
+
+7.
+
+Parking lots may include public alley accessed garages at the rear property line, except where a setback is required for vision clearance or to conform to other City standards.
+
+8.
+
+Raised walkways or painted crossings from the public street sidewalk to the building entrance(s) are required. Crosswalks through parking lots and drive aisles shall be constructed of a material contrasting with the road surface or be painted (e.g., colored concrete inlay in asphalt).
+
+9.
+
+Joint use of access points and interconnections and cross-over easements between parcels shall be required, where necessary to comply with access spacing and other applicable code requirements. A development approval may be conditioned to require a joint use access easement and interconnecting driveways or alleys to comply with access spacing and other applicable code requirements.
+
+10.
+
+Connection to Adjacent Properties: The location of any real improvements to the property must provide for a future street if identified in the City of Sandy 2023 Transportation System Plan and pedestrian connections to adjacent properties.
+
+11.
+
+Through lots and corner lots may be permitted with two access points, one onto each abutting street, where necessary to serve a centralized, shared parking facility. Such access points must conform to the above access spacing requirements and parking must be internalized to the property.
+
+12.
+
+Free-standing buildings shall be connected to one another with a pedestrian network that provides access to building entrances and civic spaces.
+
+B.
+
+Building Facades, Materials, and Colors.
+
+Intent: To provide building façades, materials and colors consistent with the Sandy Style. For purposes of interpreting the Sandy Style, example illustrations and photos are provided. (Figures 17.90.110-C, 17.90.110-D, 17.90.110-E, 17.90.110-F, 17.90.110-G, 17.90.110-H, 17.90.110-I, Color Palettes (Appendices C and D), and photos (Appendix E). Compliance with Color Palettes in Appendices C and D is required; the figures in this chapter and photos in Appendix E are for illustrative purposes only.)
+
+1.
+
+Articulation. The Sandy Style includes asymmetrical building forms, which by definition require buildings to be articulated, varied, and provide visual interest. This standard is met by dividing elevations of a structure visible from an abutting public street or pedestrian way into smaller areas or planes to minimize the appearance of bulk as viewed from the street as follows:
+
+a.
+
+All elevations visible from an abutting public street or pedestrian way shall be divided into distinct planes no more than 30 lineal feet long to include the following:
+
+i.
+
+Wall planes meeting this standard shall include a feature or variation in the wall plane that projects or recedes at least six inches from the adjacent plane, for a length of at least four feet. Changes in plane may include but are not limited to recessed entries, bays, secondary roof forms (e.g., gables, lower roof sheds, dormers and towers), canopies, awnings, projections, recesses, alcoves, pergolas, porticos, or roof overhangs. Other features consistent with the Sandy Style may be approved through Design Deviation.
+
+ii.
+
+Wall planes shall incorporate at least one change in materials or changes in texture or patterns, including trim or moldings. Except for residential components of development (other than those requesting a Design Deviation), these changes shall be visually contrasting and complementary.
+
+iii.
+
+The lower and upper floors of multi-story buildings shall be clearly delineated by using pedestrian shelters, change in siding materials, heavy timber or natural wood accents (e.g., brackets, paneling or other detailing).
+
+2.
+
+Pedestrian Shelters. Buildings must incorporate pedestrian shelters, as follows:
+
+a.
+
+Pedestrian shelters shall be provided over the building's primary entrance(s) and pedestrian areas (i.e., sidewalks and civic spaces) abutting the subject building.
+
+b.
+
+Features such as canopies, arcades, awnings, roofs overhangs, covered porches, alcoves, and/or porticoes are required.
+
+c.
+
+Pedestrian shelters must extend at least five feet over the pedestrian area.
+
+d.
+
+Shelters over building entrances shall be designed with gable or shed roofs and must comply with the roof pitch standards in Section 17.90.110.C. Dome or bubble shaped awnings are not permitted.
+
+3.
+
+Building Materials. Exterior building materials shall convey an impression of strength and durability consistent with the Sandy Style, as follows:
+
+a.
+
+The following standard does not apply to residential components of development, except those requesting a Design Deviation. Buildings on the same site shall be architecturally unified. This provision shall apply to new construction, additions, and remodeling such that buildings are related in architectural style and share some common elements, such as color scheme, materials, roof forms, and/or detailing. Unity does not mean repetition or mirroring of building elevations.
+
+b.
+
+Strong base materials such as natural stone (e.g., basalt, granite, river stone), split-faced rusticated concrete block, or brick are required. Cultured stone may be allowed if it has a stone texture and is similar in appearance and durability to natural stone. A building's base must extend at least 36 inches but not more than 60 inches above the adjacent finished grade and be included on those sides of the building visible from the abutting public street. If the site contains a grade differential making construction of a minimum 36-inch base impracticable, the reviewing body may allow portions of the base to be less than 36-inches.
+
+c.
+
+Foundations shall be designed to match the scale of the building being supported. Examples include sheathing the foundation structure with base materials and wall siding.
+
+d.
+
+Siding shall consist of wood, composite-wood, concrete fiberboard, or fiber cement panels or shingles; stone; brick; split-faced or rusticated concrete block; or a combination of these materials. Stucco, synthetic stucco, and metal are permitted only as specified below. Vinyl and plastic is not permitted:
+
+i.
+
+Where wood siding is used, it shall consist of horizontal (e.g., lap, v-groove, or tongue-and-groove) siding, vertical (board and batten) siding, shingles, or combinations thereof. Vertical grooved (i.e., T1-11) sheet siding and plain plywood are prohibited.
+
+ii.
+
+Where board-and-batten siding is used, battens shall be a minimum of two inches wide by one inch deep and spaced 24 inches apart or closer; rough-sawn boards (specialty panel) are required, as opposed to panels having a resin overlay.
+
+iii.
+
+Where masonry siding is used, it shall consist of brick, stone, or rusticated concrete block, and must incorporate decorative patterns over not less than 15 percent of every elevation where it is used. Examples of decorative patterns include multi-toned masonry units, such as brick, stone, or cast stone, in layered or geometric patterns or split-faced concrete block to simulate rusticated stone-type construction. Changes in pattern shall be used to accentuate breaks in building stories, corners, windows, structural bays, and building tops (e.g., parapets where flat roofs are allowed).
+
+iv.
+
+Where metal siding is used, it shall be used as an accent only, comprising not more than 20 percent of the surface area of the building elevation (e.g., wainscoting or other accent paneling). Metal must be architectural grade and have a non-reflective (burnished or painted) finish conforming to the approved Color Palette. Metal may also be used for flashing, gutters, downspouts, brackets, lighting, and signage and similar functional elements.
+
+v.
+
+Where stucco or synthetic stucco is used, it shall be used as an accent only, comprising not more than 20 percent of the surface area of the building elevation.
+
+e.
+
+Building elevations facing a public right-of-way or civic space shall incorporate at least three of the following features: Using these features may also address other code requirements, such as those related to building articulation, change in relief, pedestrian shelters, and storefront elements:
+
+i.
+
+Exposed, heavy timbers;
+
+ii.
+
+Exposed natural wood color beams, posts, brackets and/or trim (e.g., eaves or trim around windows);
+
+iii.
+
+Natural wood color shingles (e.g., used as siding or to accent gable ends);
+
+iv.
+
+Metal canopies;
+
+v.
+
+Heavy metal brackets (e.g., cast iron or similar appearance), which may be structural brackets or applied as cosmetic detailing; and,
+
+vi.
+
+Similar features, consistent with the Sandy Style, if approved through Design Deviation.
+
+f.
+
+Materials required on elevations visible from an abutting public street must turn the building corner and incorporate transitions onto elevations not requiring these materials for a distance of not less than two feet.
+
+4.
+
+Colors. Building exteriors shall comply with the following standards:
+
+a.
+
+Permitted colors include warm earth tones (tans, browns, reds, grays and greens) conforming to the Color Palette provided in Appendix C.
+
+b.
+
+High-intensity primary colors, metallic colors and black, may be utilized in non-residential components of development as trim and detail colors only, not to exceed one percent of the surface area of any elevation. Such color shall not be used as primary wall colors. All residential components of development shall conform to the Color Palette provided in Appendix C.
+
+c.
+
+Other colors not permitted under a. or b. are prohibited.
+
+C.
+
+Roof Pitch, Materials, and Parapets.
+
+Intent: To provide roof forms and detailing consistent with the Sandy Style. For purposes of interpreting the Sandy Style, example illustrations and photos are provided. (See Figures 17.90.110-C, 17.90.110-D, 17.90.110-E, 17.90.110-F, 17.90.110-G, 17.90.110-H, 17.90.110-I and representative photos in Appendix E)
+
+1.
+
+Except as provided in subsections 17.90.110.C.8., below, pitched (gabled or hipped) roofs are required on all new buildings with a span of 50 feet or less. Gable and hipped roof forms must achieve a pitch not less than the following:
+
+Zoning District  Primary Roof Forms (minimum)  Secondary Roof Forms (minimum)
+C-1, C-3         6:12                          4:12
+
+2.
+
+As provided above, "Primary Roof Forms" are those that individually comprise 20 percent or more of the total surface area of a roof elevation. Secondary roof forms (e.g., dormers, towers, cupolas, etc.) are those that comprise less than 20 percent of the roof elevation. See also, Section 17.74.20 Vertical Projections.
+
+3.
+
+Buildings shall be oriented so the gable end of the roof faces the abutting street.
+
+4.
+
+Pitched roof surfaces visible from an abutting public street shall provide a secondary roof form (e.g. dormer) in the quantity specified below. Secondary roof forms may be located anywhere on the roof, although grouping these features is preferred.
+
+Roof Length          Number of Secondary Roof Forms
+30—40 feet           1
+41—80 feet           2
+81 feet and greater  4
+
+5.
+
+Visible roof materials must be architectural grade composition shingle, slate, or concrete tile. Metal with standing or batten seam may also be used conforming to the Color Palette in Appendix D.
+
+6.
+
+All roof and wall-mounted mechanical, electrical, communications, and service equipment, including satellite dishes and vent pipes, shall be screened from view from public rights-of-way and civic spaces by parapets, walls or by other means approved through Design Deviation. Roof plans and elevations must show proposed equipment locations, approximate dimensions, and line of sight from public rights-of-way and civic spaces. The reviewing body may require additional equipment setbacks, screen walls, or other mitigation to ensure compliance.
+
+7.
+
+A-frame buildings and Mansard-style roofs are not permitted.
+
+8.
+
+The following standard does not apply to residential components of development, except those requesting a Design Deviation. Exception to Pitched Roof: When a building requires a roof span greater than 50 feet, or the internal function of the building or a portion of the building makes construction of a pitched roof impractical, the reviewing body may allow an alternative roof form. An alternative roof form includes an "applied pitched roof" or flat roof constructed over the building or portion of the building as specified below. An example when a pitched roof is considered impractical would be the need to have large rooftop stove vents over the kitchen portion of a restaurant. Roof forms constructed under this exception shall comply with the standards below.
+
+a.
+
+Applied Pitched Roof: An "applied pitched roof" is the preferred alternative roof form and shall be considered first. An "applied pitched roof" is a roof form with the general appearance of a pitched roof in terms of materials, pitch, and overhang, but does not extend all the way from the eave of the building to the ridge of the roof as a typical pitched roof. An "applied pitched roof" shall be constructed according to the following:
+
+i.
+
+For buildings with a span of less than 50 feet, the "applied pitched roof" shall extend at least 50 percent of the distance from the eave to the ridge as if had been constructed as a pitched roof;
+
+ii.
+
+For buildings with a span of 50 feet or greater, the applied pitched roof shall extend at least 12 feet from eave.
+
+iii.
+
+The reviewing body may require buildings with a span of 50 feet or greater to include an "applied pitched roof" in lieu of a flat roof along street facing elevations.
+
+b.
+
+Flat Roof: Flat roofs shall comply with the following standards:
+
+i.
+
+Stepped parapets and detailed coursing shall be provided on those elevations visible from an abutting public street. Parapets shall be varied so that the length of a parapet does not exceed 30 feet without a change in the parapet height of at least two feet or as necessary to hide rooftop equipment, pursuant to Subsection 17.90.110.C.6.
+
+ii.
+
+Average parapet height shall not exceed 15 percent of the supporting wall height, and the maximum parapet height shall not at any point exceed ⅓ of the height of the supporting wall;
+
+iii.
+
+A cornice projecting at least six inches from the building face shall be provided at the roofline of all elevations visible from abutting public rights-of-ways and pedestrian ways;
+
+iv.
+
+Parapet corners shall be stepped and the parapet be designed to emphasize the center or primary entrance(s), unless the primary entrance is at the corner of the building.
+
+D.
+
+Building Orientation and Entrances.
+
+Intent: To maintain and enhance downtown and village commercial streetscapes as public spaces, emphasizing a pedestrian-scale and character in new development, consistent with the Sandy Style; and to provide for a continuous pedestrian network that promotes pedestrian safety, comfort and convenience, and provides materials and detailing consistent with the Sandy Style. (Figures 17.90.110-A, 17.90.110-B, 17.90.110-C, 17.90.110-D, 17.90.110-E, 17.90.110-F, 17.90.110-G, 17.90.110-H, 17.90.110-I and representative photos in Appendix E)
+
+1.
+
+Buildings shall be oriented to a public street or civic space. This standard is met when at least 50 percent of the subject site's street frontage is comprised of building(s) placed within ten feet of a sidewalk or an approved civic space and not more than 20 percent of the off-street parking on a parcel as required by SDC 17.98, tract or area of land is located between a building's front façade and the adjacent street(s).
+
+2.
+
+Where parking is placed between a front façade and a street, a landscaped berm and/or architectural features, such as a knee wall, colonnade, arbor, trellis and/or similar device if approved through Design Deviation, shall be placed behind the sidewalk to partially screen the parking area from the sidewalk. The partial screen shall be designed to achieve at least 50 percent opacity at the time of installation, with openings for walkways connecting to the building's primary entrance.
+
+3.
+
+Ground floor spaces shall face a public street and shall be connected to it by a pedestrian route whose length is no more than 120 percent of the straight line distance (i.e., avoid out-of-direction travel). Where the reviewing authority determines as part of a Design Deviation that facing the building to a street is not practical, it may require the building to face a civic space.
+
+4.
+
+The following standard applies to non-residential building entrances. Buildings located at the intersection of two streets shall use a corner building entrance; where a corner entrance is not practical due to the internal functioning of the building space or due to physical constraints of the site (e.g., topography, accessibility, or similar circumstances), a building entrance must be provided within 40 feet of the corner. The building corner must use detailing that emphasizes the corner location and is consistent with the Sandy Style. Examples of acceptable detailing include a rounded or chamfered (beveled) corner, weather protecting canopy, plaza, sculpture, and/or similar pedestrian-oriented features.
+
+5.
+
+Upper story residential units shall have an entrance separate from the ground floor (commercial) space and conform to applicable building codes.
+
+6.
+
+Buildings shall provide at least two elevations where the pedestrian environment is "activated." An elevation is "activated" when it meets the window transparency requirements in subsection 17.90.110.E., below, and contains a customer entrance with a pedestrian shelter extending at least five feet over an adjacent sidewalk, walkway or civic space. Where providing a customer entrance on two elevations is not practical, the reviewing body may allow a single entrance.
+
+7.
+
+Primary entries entrance shall face a public street or a civic space and shall be spaced not more than 30 feet apart on average. Ancillary shops shall provide entries every 30 feet, on average.
+
+8.
+
+Primary non-residential entrances shall be architecturally emphasized and visible from the abutting public right-of-way or civic space and shall be sheltered with a canopy, overhang, or portico with a depth of at least five feet. Architectural emphasis should be provided by a gabled shelter where practical, consistent with the Sandy Style. Detailing around the base of the building, such as stonework, benches or art, should also be used to emphasize an entrance.
+
+E.
+
+Windows.
+
+Intent: To promote business vitality, public safety and aesthetics through effective window placement and design, consistent with the Sandy Style. (See Figures 17.90.110-C, 17.90.110-D, 17.90.110-E, 17.90.110-F, 17.90.110-G, 17.90.110-H, and 17.90.110-I, and representative photos in Appendix E.
+
+1.
+
+Unified Design. The following standard does not apply to residential components of development, except those requesting a Design Deviation. Building plans must provide for unity in window placement and design so that all sides of a building relate to one another and multiple buildings on a development site relate to one another.
+
+2.
+
+Ground Floor Windows. The ground floor elevation of all new buildings shall contain display areas, windows, and doorways along street frontages and where the building abuts a civic space as follows: Lots with multiple street frontages are required to meet this standard on only two frontages.
+
+Building Size                Percentage Windows Required
+0—10,000 sq. ft.             35 percent of ground floor elevation
+Greater than 10,000 sq. ft.  20 percent of ground floor elevation
+
+a.
+
+Windows shall contain clear glass to allow views to interior activity or display areas. The bottom edge of windows shall be no less than three feet above the adjacent finished grade. Where the internal functions of a building preclude windows at this height, the reviewing body may approve locating windows above or below this height. Display boxes affixed to a building's exterior are not counted in meeting the above standard.
+
+b.
+
+Windows shall be square or vertically oriented and may consist of vertically stacked or horizontally banked window units. Windows located over a door or transom windows may be horizontally oriented.
+
+c.
+
+Windows with any dimension exceeding six feet shall be divided into smaller panes (e.g., two foot by two foot grid) with real divided panes, vinyl inserts or applied dividers.
+
+d.
+
+Windows shall have trim or moldings at least three inches in width around them, or have reveals of at least three inches in depth. Casings shall consist of a drip cap, head casing, side casings, and/or sills.
+
+3.
+
+Upper Floor Window Standards.
+
+a.
+
+For non-residential components of development, the reviewing authority may require buildings exceeding 20 feet in height to provide upper-story windows along "activated" frontages. Such windows may be required for attic space, or applied to roof forms where no second story exists, to meet the articulation requirements under Section 17.90.110.B.1.
+
+b.
+
+For residential upper floors, windows shall cover a minimum of 15 percent of the elevation above the ground floor along "activated" frontages.
+
+c.
+
+Windows shall be square or vertically oriented. Individual window units shall not exceed five feet by seven feet. Any portion of a window unit with a dimension exceeding four feet shall be divided into smaller panes.
+
+d.
+
+At least half of all the window area in upper floors shall be made up of glass panes with dimensions no greater than two feet by three feet, unless approved by variance or adjustment. Upper story windows that have one foot by one foot grid inside double pane glass are appropriate and are encouraged.
+
+e.
+
+Window trim and moldings shall be the same as those used on the ground floor.
+
+4.
+
+Prohibited Windows. The following window types are prohibited:
+
+a.
+
+Windows with a visible transmittance (VT) of less than 0.6 are prohibited adjacent to street sidewalks, civic spaces and walkways.
+
+b.
+
+Glass curtain windows are not permitted facing public rights-of-way.
+
+F.
+
+Landscaping and Streetscape Design.
+
+Intent: To promote business vitality, public safety and aesthetics through effective landscaping and streetscape design, consistent with the Sandy Style; and to provide for a pedestrian network that promotes pedestrian safety, comfort and convenience, and provides materials and detailing consistent with the Sandy Style. (Figures 17.90.110-A, 17.90.110-B, 17.90.110-C, 17.90.110-D, 17.90.110-E, 17.90.110-F, 17.90.110-G, 17.90.110-H, 17.90.110-I, and Downtown Sandy Streetscape Design)
+
+1.
+
+The provisions of Chapter 17.92, Landscaping and Screening General Standards shall apply except in the C-1 Zoning District where conformance with the Downtown Sandy Streetscape Design, as illustrated in Appendix F is required.
+
+2.
+
+Where any conflict arises between provisions of the Sandy Streetscape Design and other City standards (e.g., sidewalk width, materials, or similar specifications), the Streetscape Design shall prevail. All applicable provisions of Chapter 17.92 Landscaping and Screening General Standards must be met, except as modified by the Downtown Sandy Streetscape Design.
+
+G.
+
+Civic Space.
+
+Intent: To connect buildings to the public realm and create comfortable and attractive gathering places and outdoor seating areas for the public, consistent with Sandy's Downtown Streetscape Design. (See Figures 17.90.110-H and 17.90.110-I).
+
+1.
+
+Not less than three percent of the ground floor area of every development shall be improved as civic space.
+
+2.
+
+All civic spaces shall have dimensions of not less than eight feet across and have a surface area of not less than 64 square feet. No civic space is required if the size of this space results in an area of less than 64 square feet.
+
+3.
+
+Civic space improvements may include plazas, private extensions of sidewalks and walkways (i.e., to accommodate outdoor seating), public art, pedestrian-scale lighting, bus waiting areas, tourist amenities (e.g., way finding signs as approved by the City) or similar pedestrian amenities as approved through Design Review.
+
+4.
+
+The highest priority locations for civic space are those areas with the highest pedestrian activity (e.g., street corners and mid-block pedestrian access ways) that have a western or southern exposure.
+
+5.
+
+Unless impractical, civic spaces shall abut a public right-of-way or otherwise be connected to and visible from a public right-of-way by a sidewalk or pedestrian access way; access ways shall be identifiable with a change in paving materials (e.g., pavers inlaid in concrete or a change in pavement scoring patterns and/or texture) or painted. Where a right-of-way connection is not possible, the owner must provide a public access way easement to the civic space. Civic spaces shall not be gated or closed to public access, unless otherwise required by the City.
+
+6.
+
+Exceptions: Building additions and remodels subject to Type I Design Review are not required to set aside or improve civic space, though they are encouraged to do so.
+
+H.
+
+Lighting.
+
+Intent: To promote business vitality, public safety and aesthetics through effective outdoor lighting, consistent with the Sandy Style.
+
+1.
+
+Streetscape lighting shall conform to the Downtown Sandy Streetscape Design and the requirements of Chapter 15.30, Dark Sky Ordinance.
+
+2.
+
+The following standard does not apply to residential components of development, except those requesting a Design Deviation. Exterior lighting must be an integral part of the architectural design and must complement any ornamental street lighting and remain in context with the overall architectural character of the district.
+
+3.
+
+Lighting must be adequate for safety purposes. Walkways, parking lots, and building entrances shall be illuminated at a minimum of 1.5 foot candles.
+
+I.
+
+Safety and Security.
+
+Intent: To promote natural surveillance of public spaces for safety and security.
+
+1.
+
+Locate windows so that all pedestrian, parking, and loading areas are visible from at least one window.
+
+2.
+
+In commercial, public and semipublic development, including civic spaces, locate windows in a manner that enables surveillance of interior activity from the public right-of-way.
+
+3.
+
+Provide street address numbers measuring a minimum of six inches high, which clearly locates buildings and their entries for patrons and emergency services.
+
+4.
+
+The following standard does not apply to residential components of development, except those requesting a Design Deviation. Locate, orient and select on-site lighting to facilitate surveillance of on-site activities from the public right-of-way and other public areas. (See also, subsection H Lighting.)
+
+J.
+
+External Storage and Screening.
+
+Intent: To promote land use compatibility and aesthetics, particularly where development abuts public spaces.
+
+1.
+
+Exterior storage of merchandise and/or materials, except as specifically authorized as a permitted accessory use, is prohibited.
+
+2.
+
+Where such storage is allowed, it must be screened from view from public rights-of-way and civic spaces.
+
+3.
+
+Mechanical, electrical, communications equipment including meters and transformers, and service and delivery entrances and garbage storage areas shall be screened from view from public rights-of-way and civic spaces.
+
+4.
+
+Trash collection and recycling storage areas must be located within the structure or otherwise screened from view in an enclosed facility. Such facilities must be screened from view from public rights-of-way and civic spaces behind a screening wall constructed to match the materials used on the primary building(s) on the subject site.
+
+5.
+
+Exceptions to the above provisions may be allowed through Design Review where no other practical alternative exists and such equipment is made to be visually subordinate to the proposed building and landscape, for example, through the use of common materials for screening walls or landscape berms. The reviewing body may require additional setbacks, screening walls or other mitigation, for aesthetic reasons and to minimize odors or noise impacts on adjoining properties, public rights-of-way or civic spaces.
+
+K.
+
+Private Outdoor Areas. This section applies only to residential uses.
+
+Intent: Ensure that residential units have access to adequately-sized spaces for private outdoor recreation and relaxation.
+
+1.
+
+A separate outdoor area of not less than 48 square feet in the form of balconies, terraces or porches shall be provided for each dwelling unit located above the ground level.
+
+L.
+
+Individual Storage Areas. This section applies only to residential uses.
+
+Intent: Ensure that residential units have adequate storage space, especially to store outdoor items.
+
+1.
+
+Enclosed storage areas shall be provided that meet the minimum area and dimensions specified below. Storage areas may be attached to the exterior of each dwelling unit to accommodate garden equipment, patio furniture, barbecues, bicycles, and other items for outdoor use. Storage areas may be provided within garages if the required storage area is in addition to the required parking area for a standard parking space, per subsection 17.98.60.B.1.
+
+Size of Dwelling  Minimum Square Feet  Minimum Height
+Studio            24                   6
+1 Bedroom         24                   6
+2 Bedroom         36                   6
+3+ Bedroom        48                   6
+
+M.
+
+Shared Outdoor Recreation Areas. This section applies only to residential uses with more than five dwelling units.
+
+Intent: Ensure that developments with multi-family units provide shared spaces for outdoor recreation and relaxation that are adequately sized, located, and functional.
+
+1.
+
+Usable recreation areas shall be provided at the rate of 200 square feet per dwelling unit. Such areas shall be counted as part of the required landscaping.
+
+2.
+
+Examples of usable recreation areas include, but are not limited to, playgrounds, exercise trails, swimming pools, play fields, tennis courts, community gardens, plazas, picnic areas, and passive seating areas. Usable recreation area may also include slopes, wetlands, FSH setback areas, and tree groves; however, at least 50 percent of the recreation area must be located outside the boundaries of such areas and slopes may not exceed 15 percent in the 50 percent usable recreation area. Gazebos and other outdoor covered spaces are encouraged and qualify as 1.25 square feet for every one square foot of required shared recreation area.
+
+3.
+
+The shared outdoor recreation area(s) shall be located and designed to meet the following standards:
+
+a.
+
+At least 80 percent of dwelling units shall be located within 200 feet walking distance of a recreation area.
+
+b.
+
+Windows shall be located such that all entry areas, shared recreational areas, laundry areas, walkways and parking areas are visible from windows in at least two adjacent dwelling units. These windows must be located in kitchen, living room, dining room or other rooms besides bedrooms or bathrooms.
+
+c.
+
+Separation from parking and driveway areas shall be provided with a landscaped transition area measuring a minimum of ten feet wide.
+
+d.
+
+Access to shared outdoor areas from off-site as well as from on-site parking and entrance areas shall be controlled with fencing, walls, landscaping, or a building.
+
+e.
+
+All ground surfaces shall be improved with lawn, decks, wood chips, sand, hard surface materials (concrete/asphalt), or other surface appropriate to the use (e.g., rubber surface in playground area).
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.120. - General commercial and industrial (C-2 and I-1) and non-residential uses in residential zones design standards.
+
+
+Development in the C-2 and I-1 zoning districts and non-residential uses in a residential zone shall conform to all of the following standards, as applicable. Where a conflict exists between the requirements of this Chapter and any other code provision, this Chapter shall prevail.
+A.
+
+Site Layout and Access.
+
+Intent: To provide for compact, walkable development, and to design and manage vehicle access and circulation in a manner that supports pedestrian safety, comfort and convenience. (Examples of site designs that meet these standards are illustrated in Figures 17.90.120-A and 17.90.120-B)
+
+1.
+
+All lots shall abut or have cross access to a dedicated public street.
+
+2.
+
+All lots that have access to a public alley shall provide for an additional vehicle access from that alley.
+
+3.
+
+Off-street parking shall be located to the rear or side of buildings with no portion of the parking lot located within required setbacks or within ten feet of the public right-of-way, as shown in Figure 17.90.120-A. When access must be provided directly from a public right-of-way, driveways for ingress or egress shall be limited to one per 150 feet. For lots with frontage of 150 feet or less, shared access shall be required if an individual access would not meet the 150-foot spacing requirement.
+
+4.
+
+Adjacent parking lots shall be connected to one another unless such connections are impracticable due to physical constraints such as natural resource areas or steep topography.
+
+5.
+
+Raised or painted pedestrian crossings shall be used to calm traffic and protect pedestrians in parking areas. Similar devices for pedestrian safety that incorporate changes in paving materials, textures or color may be approved through Design Deviation.
+
+6.
+
+Parking lots may include public alley accessed garages at the rear property line, except where a setback is required for vision clearance or to conform to other City standards.
+
+7.
+
+Walkways from the public street sidewalk to the building entrance(s) are required. Crosswalks through parking lots and drive aisles shall be constructed of a material contrasting with the road surface or painted (e.g., colored concrete inlay in asphalt).
+
+8.
+
+Connection to Adjacent Properties: The location of any real improvements to the property must provide for a future street if identified in the City of Sandy 2023 Transportation System Plan and pedestrian connections to adjacent properties. Where openings occur between buildings adjacent to Highway 26, pedestrian ways shall connect the street sidewalk to any internal parking areas and building entrances.
+
+9.
+
+Joint use of access points and interconnections and cross-over easements between parcels shall be required, where necessary to comply with access spacing and other applicable code requirements. A development approval may be conditioned to require a joint use access easement and interconnecting driveways or alleys to comply with access spacing and other applicable code requirements.
+
+10.
+
+Through lots may be permitted with two access points, one onto each abutting street, where necessary to serve a centralized, shared parking facility. Such access points must conform to the above access spacing requirements and parking must be internalized to the property.
+
+11.
+
+Free-standing buildings shall be connected to one another with a pedestrian network that provides access to building entrances and adjacent civic spaces.
+
+12.
+
+Minimum parking requirements are contained in Chapter 17.98. For developments containing more than 150 parking spaces, at least 20 percent of all parking spaces shall be constructed of permeable materials such as permeable asphalt, permeable concrete, pavers, and/or similar materials as approved by the City.
+
+B.
+
+Building Facades, Materials, and Colors.
+
+Intent: To provide building façades, materials and colors consistent with the Sandy Style. For purposes of interpreting the Sandy Style, representative illustrations and photos are provided. (Figures 17.90.120-C, 17.90.120-D, 17.90.120-E, 17.90.120-F, 17.90.120-G, 17.90.120-H, and 17.90.120-I; and the Color Palettes (Appendices C and D) and representative photos (Appendix E). Compliance with the Color Palettes in Appendices C and D is required; the photos in Appendix E are for illustrative purposes only.)
+
+1.
+
+Articulation. The Sandy Style includes asymmetrical building forms, which by definition require buildings to be articulated, varied, and provide visual interest. This standard is met by dividing elevations visible from an abutting public street or pedestrian way into smaller areas or planes to minimize the appearance of bulk as follows:
+
+a.
+
+All elevations visible from an abutting public street or pedestrian way shall be divided into distinct planes of no more than 40 lineal feet long to include the following:
+
+i.
+
+Wall planes meeting this standard shall include a feature or variation in the wall plane that are those that are entirely separated from other wall planes by a recessed or projecting section of the structure that projects or recedes at least six inches from the adjacent plane, for a length of at least four feet. Changes in plane may include but are not limited to recessed entries, bays, secondary roof forms (e.g., gables, lower roof sheds, dormers and towers), building bases, canopies, awnings, projections, recesses, alcoves, pergolas, porticos, or roof overhangs. Other features consistent with the Sandy Style may be approved through Design Deviation.
+
+ii.
+
+Wall planes shall incorporate at least one change in materials or changes in texture or patterns, including trim or moldings. Except for residential components of development (other than those requesting a Design Deviation), these changes shall be visually contrasting and complementary.
+
+iii.
+
+The lower and upper floors of multi-storied buildings shall be delineated by using pedestrian shelters, changes in siding materials, heavy timbers, or natural wood accents (e.g. brackets, paneling, or other detailing).
+
+2.
+
+Pedestrian Shelters. Buildings must incorporate pedestrian shelters, as follows:
+
+a.
+
+Pedestrian shelters shall be provided over the building's primary entrance(s) and all pedestrian areas (i.e., sidewalks, and civic spaces) abutting the subject building, where pedestrians are likely to use these facilities.
+
+b.
+
+Features such as canopies, arcades, awnings, roofs overhangs, covered porches, alcoves, and/or porticoes are required to protect pedestrians from the rain and sun.
+
+c.
+
+Pedestrian shelters must extend at least five feet over the pedestrian area.
+
+d.
+
+Shelters over building entrances shall be designed with gable or shed roofs over building entrances and must comply with the roof pitch standards in Section 17.90.110.C. Dome or bubble shaped awnings are not permitted.
+
+3.
+
+Building Materials. Exterior building materials shall convey an impression of strength and durability consistent with the Sandy Style, as follows:
+
+a.
+
+The following standard does not apply to residential components of development, except those requesting a Design Deviation. Buildings on the same site shall be architecturally unified. This provision shall apply to new construction, additions, and remodeling such that buildings are related in architectural style and share some common elements, such as color scheme, materials, roof forms, and/or detailing. Unity does not mean repetition or mirroring of building elevations.
+
+b.
+
+Strong base materials such as natural stone (e.g., basalt, granite, river stone), split-faced rusticated concrete block, brick, or concrete form liner replicating these materials are required. Cultured stone may be allowed if it has a stone texture and is similar in appearance and durability to natural stone. A building's base must extend at least 36 inches but not more than 60 inches above the adjacent finished grade and be included on those sides of the building visible from an abutting public street. If the site contains a grade differential making construction of a minimum 36-inch base impracticable, the reviewing body may allow portions of the base to be less than 36 inches.
+
+c.
+
+Foundations shall be designed to match the scale of the building being supported. Sheathing the foundation structure with base materials and wall siding are examples of methods which accomplish this purpose.
+
+d.
+
+Siding shall consist of wood, composite-wood, concrete fiberboard, or fiber cement panels or shingles; stone; brick; split-faced or rusticated concrete block; concrete form liner; or a combination of these materials. Stucco, synthetic stucco, or metal are only permitted as specified below. Vinyl and plastic is not permitted.
+
+i.
+
+Where wood siding is used, it shall consist of horizontal (e.g., lap, v-groove, or tongue-and-groove) siding, vertical (board and batten) siding, shingles, or combinations thereof. Vertical grooved (i.e., T1-11) sheet siding and plain plywood are prohibited.
+
+ii.
+
+Where board-and-batten siding is used, battens shall be a minimum of two inches wide by one inch deep and spaced 24 inches apart or closer; rough-sawn boards (specialty panel) are required, as opposed to panels having a resin overlay.
+
+iii.
+
+Where masonry siding is used, it shall consist of brick, stone, or rusticated concrete block, and must incorporate decorative patterns over not less than 15 percent of every elevation where it is used. Examples of decorative patterns include multi-toned masonry units, such as brick, stone, or cast stone, in layered or geometric patterns or split-faced concrete block to simulate rusticated stone-type construction. Changes in pattern shall be used to accentuate breaks in building stories, corners, windows, structural bays, and building tops (e.g., parapets where flat roofs are allowed).
+
+iv.
+
+Where metal siding is used, it shall be used as an accent only, comprising not more than 30 percent of the surface area of the building elevation (e.g., wainscoting or other accent paneling). Metal must be architectural grade and have a non-reflective (burnished or painted) finish conforming to the Color Palette in Appendix C. Metal may also be used for flashing, gutters, downspouts, brackets, lighting, and signage and similar functional elements.
+
+v.
+
+Where stucco or synthetic stucco is used, it shall only be used as an accent comprising not more than 30 percent of the surface of the building elevation.
+
+vi.
+
+Where concrete form liner is used, it shall be limited to patterns replicating horizontal wood siding, stone, or brick as shown in Appendix H and shall not include ribbed, fluted, or similar patterns.
+
+e.
+
+Building elevations facing a public street shall incorporate at least three of the following features: Using these features may also address other code requirements, such as those related to building articulation, change in relief, pedestrian shelters, storefront elements.
+
+i.
+
+Exposed, heavy timbers;
+
+ii.
+
+Exposed natural wood color beams, posts, brackets and/or trim (e.g., eaves or trim around windows);
+
+iii.
+
+Natural wood color shingles (e.g., used as siding or to accent gable ends);
+
+iv.
+
+Metal canopies;
+
+v.
+
+Heavy metal brackets (e.g., cast iron or similar appearance), which may be structural brackets or applied as cosmetic detailing, and/or;
+
+vi.
+
+Similar features, consistent with the Sandy Style, if approved through Design Deviation.
+
+f.
+
+Materials required on elevations visible from an abutting public street must turn the building corner and incorporate transitions onto elevations not requiring these materials for a distance of not less than four feet.
+
+4.
+
+Colors. Building exteriors shall comply with the following standards:
+
+a.
+
+Permitted colors include warm earth tones (tans, browns, reds, grays and greens) conforming to Color Palette in Appendix C.
+
+b.
+
+High-intensity primary colors, metallic colors and black, may be utilized in non-residential components of development as trim and detail colors only, not to exceed one percent of the surface area of any elevation. Such color shall not be used as primary wall colors. All residential components of development shall conform to the Color Palette provided in Appendix C.
+
+c.
+
+Other colors not permitted under a. or b. are prohibited.
+
+C.
+
+Roof Pitch, Materials, and Parapets.
+
+Intent: To provide roof forms and detailing consistent with the Sandy Style. For purposes of interpreting the Sandy Style, representative illustrations and photos are provided. (Figures 17.90.120-D, 17.90.120-E, 17.90.120-F, 17.90.120-G, 17.90.120-H, and 17.90.120-I and representative photos in Appendix E)
+
+1.
+
+Except as provided in subsections 17.90.120.C.8., below, pitched (gabled or hipped) roofs are required on all new buildings with a span of 50 feet or less. Gable and hipped roof forms must achieve a pitch not less than the following:
+
+Zoning District  Primary Roof Forms (minimum)  Secondary Roof Forms (minimum)
+C-2 and I-1      6:12                          4:12
+
+2.
+
+As provided above, "Primary Roof Forms" are those that individually comprise 20 percent or more of the total surface area of a roof elevation. Secondary roof forms (e.g., dormers, towers, cupolas, etc.) are those that comprise less than 20 percent of the roof elevation. See also, Section 17.74.20 Vertical Projections.
+
+3.
+
+Buildings shall be oriented so the gable end of the roof faces the abutting street.
+
+4.
+
+Pitched roofs visible from an abutting public street shall provide a secondary roof form (e.g. dormer) in the quantity specified below. Secondary roof forms may be located anywhere on the roof, although grouping these features is preferred.
+
+Roof Length          Number of Secondary Roof Forms
+30—40 feet           1
+41—80 feet           2
+81 feet and greater  4
+
+5.
+
+Visible roof materials must be architectural grade composition shingle, slate, or concrete tile. Metal with standing or batten seam may also be used conforming to the Color Palette in Appendix D.
+
+6.
+
+All roof and wall-mounted mechanical, electrical, communications, and service equipment, including satellite dishes and vent pipes, shall be screened from view from all adjacent public rights-of-way and civic spaces by parapets, walls or by other means approved through Design Deviation. Roof plans and elevations must show proposed equipment locations, approximate dimensions, and line of sight from public rights-of-way and civic spaces. The reviewing body may require additional equipment setbacks, screen walls, or other mitigation to ensure compliance.
+
+7.
+
+A-frame buildings and Mansard-style roofs are not permitted.
+
+8.
+
+The following standard does not apply to residential components of development, except those requesting a Design Deviation. Exception to Pitched Roof: When a building requires a roof span greater than 50 feet, or the internal function of the building or a portion of the building make construction of a pitched roof impractical, the reviewing body may allow an alternative roof form. An alternative roof form includes an "applied pitched roof" or flat roof constructed over the building or portion of the building as specified below. An example when a pitched roof is considered impractical would be the need to have large rooftop stove vents over the kitchen portion of a restaurant. Roof forms constructed under this exception shall comply with the standards below.
+
+a.
+
+Applied Pitched Roof: An "applied pitched roof" is the preferred alternative roof form and shall be considered first. An "applied pitched roof" is a roof form with the general appearance of a pitched roof in terms of materials, pitch, and overhang, but does not extend all the way from the eave of the building to the ridge of the roof as a typical pitched roof. An "applied pitched roof" shall be constructed according to the following:
+
+i.
+
+For buildings with a span of less than 50 feet, the "applied pitched roof" shall extend at least 50 percent of the distance from the eave to the ridge as if had been constructed as a pitched roof;
+
+ii.
+
+For buildings with a span of 50 feet or greater, the applied pitched roof shall extend at least 12 feet from eave.
+
+iii.
+
+The reviewing body may require buildings with a span of 50 feet or greater to include an "applied pitched roof" in lieu of a flat roof along street facing elevations.
+
+b.
+
+Flat Roof: Flat roofs shall comply with the following standards:
+
+i.
+
+Stepped parapets and detailed coursing shall be provided on those elevations visible from a public street. Parapets shall be varied so that the length of a parapet does not exceed 40 feet without a change in the parapet height of at least two feet or as necessary to hide rooftop equipment pursuant to Subsection 17.90.120.C.6.
+
+ii.
+
+Supporting wall height, and the maximum parapet height shall not at any point exceed ⅓ of the height of the supporting wall;
+
+iii.
+
+A cornice projecting at least six inches from the building face shall be provided at the roofline of all elevations visible from public rights-of-way;
+
+iv.
+
+Parapet corners shall be stepped and the parapet be designed to emphasize the center or primary entrance(s), unless the primary entrance is at the corner of the building;
+
+D.
+
+Building Orientation and Entrances.
+
+Intent: To maintain and enhance General Commercial and Industrial streetscapes as public spaces, emphasizing pedestrian-scale and character in new development, consistent with the Sandy Style. (Figures 17.90.120-A, 17.90.120-B, 17.90.120-D, 17.90.120-E, 17.90.120-F, 17.90.120-G, and 17.90.120H) and representative photos in Appendix E.
+
+1.
+
+Buildings shall be oriented to a public street or civic space. This standard is met when at least 50 percent of the subject site's street frontage is comprised of building(s) placed within 20 feet of a sidewalk, walkway or civic space and not more than 20 percent of the off-street parking on a parcel as required by SDC 17.98, tract or area of land is located between a building's front façade and the adjacent street(s).
+
+2.
+
+Where parking is placed between a front façade and a street, a landscaped berm and/or architectural features, such as a knee wall, colonnade, arbor, trellis and/or similar device if approved through Design Deviation, shall be placed behind the sidewalk to partially screen the parking area from the sidewalk. The partial screen shall be designed to achieve at least 50 percent opacity at the time of installation, with openings for walkways connecting to the building's primary entrance.
+
+3.
+
+Ground floor spaces shall face a public street or civic space and shall be connected to it by a pedestrian route whose length is no more than 120 percent of the straight line distance (i.e., avoid out-of-direction travel).
+
+4.
+
+The following standard applies to non-residential building entrances. Buildings located at the intersection of two streets shall use a corner building entrance; where a corner entrance is not practical due to the internal functioning of the building space or due to physical constraints of the site (e.g., topography, accessibility, or similar circumstances), a building entrance must be provided within 40 feet of the corner. The building corner must use detailing that emphasizes the corner location and is consistent with the Sandy Style. Examples of acceptable detailing include a rounded or chamfered (beveled) corner, weather protecting canopy, plaza, sculpture, and/or similar pedestrian-oriented features.
+
+5.
+
+For structures greater than 40,000 gross square feet, there shall be at least two clearly articulated non-residential public entrances on the structure; at least one such entrance shall be visible from a public street and connected to that street by a pedestrian sidewalk or walkway.
+
+6.
+
+Retail buildings shall provide at least one customer entrance for every 200 lineal feet of anchor store space along at least one of the building's street-facing elevation(s). Such entrances may be oriented to a public street or designated civic space. Where ancillary stores or offices are provided, entrances to those spaces must be placed not more than 40 feet apart on average. For example, a 300-foot long building with one anchor store and four ancillary stores would provide no fewer than two anchor space entrances spaced not more than 200 feet apart and four ancillary entrances placed not more than 40 feet apart on average.
+
+7.
+
+Buildings shall provide at least one elevation where the pedestrian environment is "activated." An elevation is "activated" when it meets the window transparency requirements in subsection 17.90.120.E., below, and contains a public entrance with a pedestrian shelter extending at least five feet over an adjacent sidewalk, walkway or civic space.
+
+8.
+
+Primary non-residential entrances must be architecturally emphasized and visible from the public right-of-way and shall be sheltered with a canopy, overhang, or portico with a depth of at least five feet. Architectural emphasis should be provided by a gabled shelter where practical, consistent with the Sandy Style. Detailing around the base of the building, such as stonework, benches or art, should also be used to emphasize an entrance.
+
+E.
+
+Windows.
+
+Intent: To promote business vitality, public safety and aesthetics through effective window placement and design, consistent with the Sandy Style. (Figures 17.90.120-A, 17.90.120-B, 17.90.120-D, 17.90.120-E, 17.90.120-F, 17.90.120-G, and 17.90.120-H)
+
+1.
+
+Unified Design. The following standard does not apply to residential components of development, except those requesting a Design Deviation. Building plans must provide for unity in window placement and design so that all sides of a building relate to one another and multiple buildings on a development site relate to one another.
+
+2.
+
+Ground Floor Windows. The ground floor elevation of all new buildings shall contain ground floor display areas, windows, and doorways on the "activated" frontage as follows:
+
+Building Size                  Percentage Windows Required
+0—10,000 sq. ft.               30 percent of elevation
+10,000 sq. ft.—30,000 sq. ft.  25 percent of elevation
+Greater than 30,000 sq. ft.    20 percent of elevation
+
+a.
+
+Windows shall contain clear glass to allow views to interior activity or display areas. The bottom edge of windows shall be no less than three feet above the adjacent finished grade. Where the internal functions of a building preclude windows at this height, the reviewing body may allow windows above or below this height. Display boxes affixed to a building's exterior are not counted in meeting the above standard.
+
+b.
+
+Windows shall be square or vertically oriented and may consist of vertically stacked or horizontally banked window units. Windows located over a door or transom windows may be horizontally oriented.
+
+c.
+
+Windows with any dimension exceeding six feet shall be divided to contain two or more smaller panes with real divided panes, vinyl inserts, or applied dividers.
+
+d.
+
+Windows shall have trim or moldings at least three inches in width around them, or have reveals of at least three inches in depth. Casings shall consist of a drip cap, head casing, side casings, and/or sills.
+
+3.
+
+Upper Floor Window Standards.
+
+a.
+
+For non-residential components of development, the reviewing authority may require buildings exceeding 20 feet in height to provide upper-story windows along "activated" frontages. Such windows may be required for attic space, or applied to roof forms where no second story exists, to meet the articulation requirements under Section 17.90.110.B.1.
+
+b.
+
+For residential upper floors, windows shall cover a minimum of 15 percent of the elevation above the ground floor along "activated" frontages.
+
+c.
+
+Windows shall be square or vertically oriented. Individual window units shall not exceed five feet by seven feet. Any portion of a window unit with a dimension exceeding four feet shall be divided into smaller panes.
+
+d.
+
+At least half of all the window area in upper floors shall be made up of glass panes with dimensions no greater than two feet by three feet, unless approved by variance or adjustment. Upper story windows that have one foot by one foot grid inside double pane glass are appropriate and are encouraged.
+
+e.
+
+Window trim and moldings shall be the same as those used on the ground floor.
+
+4.
+
+Prohibited Windows.
+
+a.
+
+Windows with a visible transmittance (VT) of less than 0.6 are prohibited adjacent to street sidewalks, civic spaces and walkways.
+
+b.
+
+Glass curtain windows are not permitted facing public rights-of-way.
+
+F.
+
+Landscaping and Streetscape Design.
+
+Intent: To promote business vitality, public safety and aesthetics through effective landscaping and streetscape design, consistent with the Sandy Style, and to provide for a continuous pedestrian network that promotes pedestrian safety, comfort and convenience, and provides materials and detailing consistent with the Sandy Style. (See Figures 17.90.120-J and 17.90.120-K and Appendix G)
+
+1.
+
+The provisions of Chapter 17.92 Landscaping and Screening General Standards shall apply.
+
+2.
+
+Parcels abutting Highway 26 shall provide a landscape buffer comprising not less than 30 percent of the highway frontage, to a depth of not less than 20 feet. Within the buffer, existing trees 11 inches DBH or greater shall be preserved. New trees, shrubs, and groundcover shall be planted to create a landscape buffer and partial visual screen along the highway as specified below or as approved by the reviewing authority. If approved in writing by the Oregon Department of Transportation, this buffer may be located within the public right-of-way. Any new or modified access must fall outside the designated buffer. Landscape plans shall indicate proposed landscaping, signage and other proposed development.
+
+3.
+
+Landscape buffer plantings shall contain a mixture of both deciduous and evergreen species selected from the list below and shall be of a sufficient quantity to provide a partial buffer within two years from the date they are planted:
+
+•
+
+Trees—Deciduous (minimum one and one-half-inch caliper)—Trees on the City of Sandy's Street Tree List. Evergreen (minimum eight—ten feet)—Hogan Cedar, Incense Cedar, Western Red Cedar, Douglas fir.
+
+•
+
+Small Trees/Shrubs—Vine Maple, Serviceberry, Chinese Kousa Dogwood, Red flowering Currant, Ceanothus "Blue Blossom," Rhododendron, Pacific Wax Myrtle.
+
+•
+
+Groundcover—Kinnickinick, Salal, Low Oregon Grape, Coastal Strawberry, Rock Rose.
+
+4.
+
+All service and storage areas must be screened from view from all adjacent rights-of-way. (See Figure 17.90.120-K below.)
+
+G.
+
+Civic Space.
+
+Intent: To connect buildings to the public realm and create comfortable and attractive gathering places and outdoor seating areas for customers and the public, consistent with Sandy's Downtown Streetscape Design. (See Figures 17.90.120-L and 17.90.120-M)
+
+1.
+
+Not less than three percent of the building area of every development shall be improved as civic space.
+
+2.
+
+All civic spaces shall have dimensions of not less than eight feet across and have a surface area of not less than 64 square feet. No civic space is required if the size of this space results in an area of less than 64 square feet.
+
+3.
+
+Civic space improvements may include plazas, private extensions of sidewalks and walkways (i.e., to accommodate outdoor seating), public art, pedestrian-scale lighting, bus waiting areas, tourist amenities (e.g., way finding signs as approved by the City) or similar pedestrian amenities as approved through Design Review.
+
+4.
+
+The highest priority locations for civic space are those areas with the highest pedestrian activity (e.g., street corners and mid-block pedestrian access ways) that have a western or southern exposure.
+
+5.
+
+Civic spaces should abut a public right-of-way or otherwise be connected to and visible from a public right-of-way by a sidewalk or approved pedestrian access way; access ways shall be identifiable with a change in paving materials (e.g., pavers inlaid in concrete or a change in pavement scoring patterns and/or texture) or painted. Where a right-of-way connection is not possible, the owner must provide a public access way easement to the civic space. Civic spaces shall not be gated or closed to public access, unless otherwise required by the City.
+
+6.
+
+The reviewing authority may consider the voluntary provision of civic space or pedestrian amenities in quantities exceeding the minimum standards of this Code in approving an adjustment or variance.
+
+7.
+
+Exceptions:
+
+a.
+
+Building additions and remodels subject to Type I Design Review are not required to set aside or improve civic space, though they are encouraged to do so.
+
+H.
+
+Lighting.
+
+Intent: To promote business vitality, public safety and aesthetics through effective outdoor lighting, consistent with the Sandy Style. (Figures 17.90.120-G, 17.90.120-H, and 17.90.120-M)
+
+1.
+
+Streetscape lighting shall conform to Chapter 15.30 Dark Sky Ordinance.
+
+2.
+
+The following standard does not apply to residential components of development, except those requesting a Design Deviation. Exterior lighting must be an integral part of the architectural design and must complement any ornamental street lighting and remain in context with the overall architectural character of the district.
+
+3.
+
+Lighting must be adequate for safety purposes. Walkways and parking lots shall be illuminated at a minimum of 1.5 foot candles.
+
+I.
+
+Safety and Security.
+
+Intent: To promote natural surveillance of public spaces for safety and security.
+
+1.
+
+Locate windows so that all pedestrian, parking and loading areas are visible from at least one window.
+
+2.
+
+In commercial, public and semipublic development, including civic spaces, locate windows in a manner that enables surveillance of interior activity from the public right-of-way.
+
+3.
+
+Provide street address numbers measuring a minimum of six inches high, which clearly locates buildings and their entries for patrons and emergency services.
+
+4.
+
+The following standard does not apply to residential components of development, except those requesting a Design Deviation. Locate, orient and select on-site lighting to facilitate surveillance of on-site activities from the public right-of-way and other public areas.
+
+J.
+
+External Storage.
+
+Intent: To promote land use compatibility and aesthetics, particularly where development abuts public spaces. (Figure 17.90.120-K)
+
+1.
+
+The exterior storage of merchandise and/or materials, except as specifically authorized as a permitted accessory use, is prohibited.
+
+2.
+
+Where such storage is allowed, it must be screened from view from public rights-of-way and civic spaces at least eight feet and not more than ten feet unless the screen is a continuation of the building wall.
+
+3.
+
+Mechanical, electrical, and communications equipment including meters and transformers, service and delivery entrances, and garbage storage areas shall be screened from view from all public rights-of-way and civic spaces.
+
+4.
+
+Trash collection and recycling storage areas must be located within the structure or otherwise screened from view in an enclosed facility. Such facilities must be screened from view from all public rights-of-way and civic spaces behind a screening wall constructed to match the materials used on the primary building(s) on the subject site.
+
+5.
+
+Exceptions to the above provisions may be allowed through Design Review where no other practical alternative exists and such equipment is made to be visually subordinate to the proposed building and landscape, for example, through the use of common materials for screening walls or landscape berms. The reviewing body may require additional setbacks, screening walls or other mitigation, for aesthetic reasons and to minimize odors or noise impacts on adjoining properties, public rights-of-way or civic spaces.
+
+K.
+
+Private Outdoor Areas. This section applies only to residential uses in the C-2 district.
+
+Intent: Ensure that residential units have access to adequately-sized spaces for private outdoor recreation and relaxation.
+
+1.
+
+A separate outdoor area of not less than 48 square feet in the form of balconies, terraces or porches shall be provided for each dwelling unit located above the ground level.
+
+L.
+
+Individual Storage Areas. This section applies only to residential uses in the C-2 district.
+
+Intent: Ensure that residential units have adequate storage space, especially to store outdoor items.
+
+1.
+
+Enclosed storage areas shall be provided that meet the minimum area and dimensions specified below. Storage areas may be attached to the exterior of each dwelling unit to accommodate garden equipment, patio furniture, barbecues, bicycles, and other items for outdoor use. Storage areas may be provided within garages if the required storage area is in addition to the required parking area for a standard parking space, per subsection 17.98.60.B.1.
+
+Size of Dwelling  Minimum Square Feet  Minimum Height
+Studio            24                   6
+1 Bedroom         24                   6
+2 Bedroom         36                   6
+3+ Bedroom        48                   6
+
+M.
+
+Shared Outdoor Recreation Areas. This section applies only to residential uses with more than five dwelling units in the C-2 district.
+
+Intent: Ensure that developments with multi-family units provide shared spaces for outdoor recreation and relaxation that are adequately sized, located, and functional.
+
+1.
+
+Usable recreation areas shall be provided at the rate of 200 square feet per dwelling unit. Such areas shall be counted as part of the required landscaping.
+
+2.
+
+Examples of usable recreation areas include, but are not limited to, playgrounds, exercise trails, swimming pools, play fields, tennis courts, community gardens, plazas, picnic areas, and passive seating areas. Usable recreation area may also include slopes, wetlands, FSH setback areas, and tree groves; however, at least 50 percent of the recreation area must be located outside the boundaries of such areas and slopes may not exceed 15 percent in the 50 percent usable recreation area. Gazebos and other outdoor covered spaces are encouraged and qualify as 1.25 square feet for every one square foot of required shared recreation area.
+
+3.
+
+The shared outdoor recreation area(s) shall be located and designed to meet the following standards:
+
+a.
+
+At least 80 percent of dwelling units shall be located within 200 feet walking distance of a recreation area.
+
+b.
+
+Windows shall be located such that all entry areas, shared recreational areas, laundry areas, walkways and parking areas are visible from windows in at least two adjacent dwelling units. These windows must be located in kitchen, living room, dining room or other rooms besides bedrooms or bathrooms.
+
+c.
+
+Separation from parking and driveway areas shall be provided with a landscaped transition area measuring a minimum of ten feet wide.
+
+d.
+
+Access to shared outdoor areas from off-site as well as from on-site parking and entrance areas shall be controlled with fencing, walls, landscaping, or a building.
+
+e.
+
+All ground surfaces shall be improved with lawn, decks, wood chips, sand, hard surface materials (concrete/asphalt), or other surface appropriate to the use (e.g., rubber surface in playground area).
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.130. - Light Industrial (I-2) and General Industrial (I-3) design standards.
+
+
+A.
+
+Access.
+
+1.
+
+All lots shall abut or have legal access to a dedicated public street.
+
+2.
+
+All lots that have access to a public alley shall provide for all personal and service access for vehicles from that alley.
+
+3.
+
+Joint use of access points and interconnections shall be required, where deemed needed by the Director and Public Works Director.
+
+4.
+
+Each lot shall be permitted one access point, except lots with street frontage of 150 feet or more may be permitted one or more additional access points, if approved by the Public Works Director.
+
+B.
+
+Pedestrian Accessibility.
+
+1.
+
+Special attention shall be given to designing a primary building entrance for each unit within a building that is both attractive and functional (e.g., SandyStyle).
+
+2.
+
+Building entries shall comply with the accessibility requirements of the Oregon State Structural Specialty Code.
+
+C.
+
+Building Materials and Colors for All Structures.
+
+1.
+
+Building Materials. Exterior building materials shall convey an impression of durability. Materials such as masonry, stone, stucco, wood, composite siding, and metal are permitted. Vertical grooved (i.e., T1-11) sheet siding is prohibited.
+
+2.
+
+Masonry Finishes. Where masonry is used for exterior finish, decorative patterns must be incorporated. Examples of these decorative patterns include multicolored masonry units, such as brick, stone, or cast stone, in layered or geometric patterns or split-faced concrete block to simulate a rusticated stone-type construction.
+
+3.
+
+Change in Relief. Buildings must include changes in relief on ten percent of the facades facing public streets or residential development.
+
+4.
+
+Colors. Building exteriors shall comply with the following standards:
+
+a.
+
+Permitted colors include warm earth tones (tans, browns, reds, grays, and greens).
+
+b.
+
+High-intensity primary colors, metallic colors and black, may be utilized as trim and detail colors only, not to exceed one percent of the surface area of any elevation. Such color shall not be used as primary wall colors.
+
+c.
+
+Day-glow colors, highly reflective colors, and similar colors are not permitted.
+
+5.
+
+Ornamental Devices. Ornamental devices, such as molding, entablature and friezes, are encouraged at the roofline. Where such ornamentation is present in the form of a linear molding or board, the band must be at least eight inches wide.
+
+D.
+
+Roof Pitch, Materials, and Parapets.
+
+1.
+
+Zoning District  Minimum Pitch (principal and accessory structures)
+I-2 and I-3      1:12
+
+2.
+
+Flat roofs (with minimum pitch for drainage) are permitted with detailed stepped parapets or detailed brick coursing.
+
+3.
+
+Parapet corners shall be stepped or the parapet shall be designed to emphasize the center or primary entrance(s), unless the primary entrance is at the corner of the building.
+
+4.
+
+Visible roof materials shall be architectural grade composition shingle, slate, concrete tile, or metal. Metal with standing or batten seam shall conform to the Color Palette in Appendix D.
+
+5.
+
+All roof and wall-mounted mechanical, electrical, communications, and service equipment, including satellite dishes and vent pipes, must be screened from public view by parapets, walls or by other approved means.
+
+E.
+
+Building Orientation and Entrance Standards.
+
+1.
+
+Primary entries shall face a public street or designated pedestrian way that connects to a parking lot.
+
+2.
+
+Secondary entries may face parking lots or loading areas.
+
+3.
+
+Pedestrian entries, but not garage door entries, shall be sheltered with an overhang or portico with a depth of at least five feet.
+
+F.
+
+Windows.
+
+1.
+
+Windows shall be located in a manner that enables tenants, employees, and police to watch over pedestrian, parking and loading areas. Windows shall include sills at the bottom and pediments at the top. Glass curtain walls, reflective glass, and painted or darkly tinted glass are prohibited.
+
+G.
+
+Landscaping/Streetscape.
+
+1.
+
+All buildings (regardless of use) that are visible from a local street, collector street, arterial street, or highway shall be screened from view by a vegetative buffer as specified below:
+
+a.
+
+Minimum depth of the buffer shall be 20 feet measured from the property line and run the entire length of the property.
+
+b.
+
+Existing trees shall be preserved to the greatest extent possible.
+
+c.
+
+Evergreen trees at least eight feet in height and capable of growing to at least 30 feet in height shall be planted at a density that will create a visual screen within five years.
+
+d.
+
+If the property does not abut a local street, collector street, arterial street, or highway, the screening requirement can be met by an offsite screen that has the effect of screening the property from view from collector streets, arterial streets and highways.
+
+2.
+
+Benches, outdoor seating, and trash receptacles shall complement the existing ornamental street lighting and be in keeping with the overall architectural character of the area.
+
+Benches and other streetscape items may be placed within the public right-of-way but must not block free movement of pedestrians. A minimum pedestrian walkway width of five feet shall be maintained at all times.
+
+H.
+
+Lighting.
+
+1.
+
+Streetscape lighting shall conform to Chapter 15.30 Dark Sky Ordinance.
+
+2.
+
+Exterior lighting shall be an integral part of the architectural design and shall complement any ornamental street lighting and remain in context with the overall architectural character of the district.
+
+3.
+
+Lighting shall be adequate for safety purposes. Building entrances, walkways, and parking lots shall be illuminated to at least 1.5—2.0 foot candles.
+
+I.
+
+Safety and Security.
+
+1.
+
+Provide an identification system that clearly locates buildings and their entries for patrons and emergency services.
+
+2.
+
+On-site lighting shall be located, oriented, and selected to facilitate surveillance of onsite activities from the public right-of-way or other public areas.
+
+J.
+
+External Storage.
+
+1.
+
+The exterior storage of merchandise and/or materials, except as specifically authorized as a permitted accessory use, is prohibited.
+
+K.
+
+Trash Collection/Recycling Areas.
+
+1.
+
+All trash collection/recycling areas shall be located within the structure or behind the building in an enclosure in accordance with the provisions of the City of Sandy Design Standards, Appendix A.
+
+(Ord. No. 2023-01, § 1(Exh. A), 2-6-2023; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.140. - Manufactured homes not in a manufactured dwelling park requirements.
+
+
+A.
+
+Manufactured homes that are not located in a manufactured dwelling park shall comply with the following requirements:
+
+1.
+
+Comply with the minimum set-up standards of the adopted Manufactured Dwelling Administrative Rules, Chapter 918.
+
+2.
+
+Be certified by the manufacturer to have an exterior thermal envelope meeting performance standards specified by State law for single-family dwelling constructed under the State one- and two-family dwelling code.
+
+3.
+
+In addition to these requirements manufactured homes shall comply with the design standards in Section 17.90.150.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.150. - Residential design standards.
+
+
+A.
+
+Intent: These design standards are intended to:
+
+•
+
+Enhance the appearance of Sandy through the creation of attractively designed houses and streetscapes;
+
+•
+
+Ensure there is a physical and visual connection between the living area and entrance of the dwelling and the street;
+
+•
+
+Improve public safety for residents and visitors and provide opportunities for community interaction; and,
+
+•
+
+Provide guidelines for good design at reasonable costs and with multiple options to achieve the purposes of this chapter.
+
+B.
+
+Applicability: These standards apply to the street facing facades of all new single family dwellings, single room occupancies with up to six units, and each half of duplexes with or without a garage, including additions or alterations.
+
+Exemptions: The following are exempt from the design standards of this section:
+
+1.
+
+Additions and alterations adding less than 50 percent to the existing floor area of the structure.
+
+2.
+
+Additions or alterations not facing a public street.
+
+C.
+
+Garage Width Formula: The width of the garage relative to the total width of the street facing facade is used to determine the required number of design elements from the list specified in Section F. below:
+
+1.
+
+Formula: width of garage divided by width of primary street facing façade multiplied by 100. For example: A 40 foot wide home with a 20 foot width garage would result in 50 percent (20/40 = 0.5 x 100 = 50 percent) garage to home ratio.
+
+2.
+
+The width of the garage is measured from the outside of the garage walls. The width of the primary street facing façade is the entire width of the structure, including the garage, facing the front lot line.
+
+3.
+
+A garage-under home design where the garage is on the lower level and the entrance to the home is above, is permitted in compliance with the design feature requirements as specified below.
+
+D.
+
+General Provisions.
+
+1.
+
+For the purposes of subsections D., E., and F., "primary street facing façade" shall mean the façade facing the front lot line. "Secondary street facing façade" shall mean a façade facing a street lot line other than the front lot line.
+
+2.
+
+In no case shall the width of the garage exceed 70 percent of the primary street facing façade except for a garage-under home design as specified in Subsection C.3. above.
+
+3.
+
+The primary building entrance of each structure shall meet either Subsection a. or b., below, and shall meet both the standards in Subsections c. and d.:
+
+a.
+
+Face the street; or
+
+b.
+
+Be at an angle up to 45 degrees from the street; and
+
+c.
+
+Open onto a covered porch that is at least 30 square feet with a minimum depth of five feet on the front or, in the case of a corner lot, the side of the residence; and
+
+d.
+
+Be a panel door, glass panel door, or French door. Sliding doors, bifold doors, and pocket doors are not permitted for the primary building entrance.
+
+4.
+
+All windows and doors on the primary street facing façade and any secondary street facing facades shall be provided with trim (four-inch minimum nominal width).
+
+5.
+
+All facades facing a street shall provide windows and doors with trim (four-inch minimum nominal width) occupying a minimum of ten percent (excluding trim area).
+
+6.
+
+A detached garage may not be located closer to the front lot line than the dwelling.
+
+E.
+
+Number of Required Design Elements.
+
+1.
+
+Primary Street Facing Façade: Except as provided in subsection E.3., The number of design elements required on the primary street facing façade is specified in Table 17.90.150-A.
+
+Table 17.90.150-A: Number of Required Design Elements
+
+Garage Width Percent (Street Facing Attached Garage)                                                        Number of Required Design Elements
+Up to 50 percent                                                                                            5 elements
+Greater than 50 percent and up to 60 percent                                                                6 elements
+Greater than 60 percent and up to 70 percent or a garage under home design                                  7 elements
+Other Garage Types                                                                                          Number of Required Design Elements
+Garage door 90 degrees to street                                                                            3 elements plus windows occupying 10 percent of garage wall facing the street
+Detached Garage (An independent, self-supporting structure separated from the dwelling by at least 6 feet)  4 elements plus 4 elements on the garage
+Rear-Loaded Garage or no Garage                                                                             4 elements
+
+2.
+
+Secondary Street Facing Façades: All additional street facing facades shall provide a minimum of three design elements.
+
+3.
+
+Manufactured dwellings and prefabricated dwellings shall provide design elements in accordance with Table 17.90.150-A.
+
+F.
+
+Required Design Elements.
+
+1.
+
+Dormer(s) at least three feet wide.
+
+2.
+
+Covered porch entry with a minimum of a 40 square foot covered front porch and a minimum five feet deep.
+
+3.
+
+Porch railing around at least two sides of the porch.
+
+4.
+
+Second story balcony that projects from the wall of the building a minimum of four feet and enclosed by a railing or parapet wall.
+
+5.
+
+Building face containing two or more off-sets of 16 inches or greater from one exterior wall to the other.
+
+6.
+
+Roof overhang of 16 inches or greater.
+
+7.
+
+Columns, pillars, or posts at least four inches wide and containing base materials for a total width of at least eight inches.
+
+8.
+
+Decorative gables with cross or diagonal bracing, shingles, trim, corbels, exposed rafter ends, or brackets (does not include a garage gable if the garage projects beyond the remaining portion of the primary street facing façade).
+
+9.
+
+Decorative "belly-band" between building floors or gables (minimum nominal width of band is six inches) with a paint color or stain that is different from the siding paint color or stain. "Belly-band" means decorative trim or cladding that runs horizontally around a house or building.
+
+10.
+
+Molding above windows and doors that is at least six inches wide.
+
+11.
+
+Pilasters at least eight inches wide or chimneys.
+
+12.
+
+Shakes, shingles, brick, or stone occupying at least 60 square feet of the street façade.
+
+13.
+
+Bay or bow window(s) that extend a minimum of 12 inches outward from the main wall of a building and form a bay or alcove in a room within the building.
+
+14.
+
+Sidelight and/or transom windows associated with the front door or windows in the front door.
+
+15.
+
+Window grids on all façade windows.
+
+16.
+
+Maximum nine-foot-wide garage doors or a garage door designed to resemble two smaller garage doors and/or windows in the garage door (only applicable to street facing garages that are attached to the single family dwelling or duplex).
+
+17.
+
+Base materials (natural stone, cultured stone, or brick) extending at least 36 inches above adjacent finished grade occupying a minimum of ten percent of the street facing façade.
+
+18.
+
+A front facing garage projecting out from the longest street facing facade not more than six feet. A front facing garage that is recessed or flush with the longest street facing façade may count as two of the required design elements.
+
+19.
+
+Other items meeting the intent of this section if approved through a Design Deviation.
+
+G.
+
+Dwellings Adjacent to a Transit Street:
+
+All dwellings adjacent to an arterial, collector, or other transit street shall meet the standards set forth in Chapter 17.82.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024; Ord. No. 2025-32, § 1(Exh. A), 11-17-2025)
+
+
+Sec. 17.90.160. - Additional requirements—Multi-family developments.
+
+
+Multi-family residential developments in residential zones and single room occupancies with more than six units shall comply with the requirements of this chapter as listed above and the following additional requirements:
+A.
+
+Roofs. Roofs shall meet the following additional requirements:
+
+1.
+
+Roofs shall be gabled or hip type roofs (minimum pitch 3:12) with at least a 30 inch overhang and using shingles or tiles, or other overlapping roofing materials. Alternatives may be approved through Design Deviation where the developer can demonstrate that abutting structures or the majority of structures within 300 feet have roofs similar to what is proposed.
+
+2.
+
+Offsets or breaks in roof elevation shall be at least three or more feet in height.
+
+B.
+
+Entries.
+
+1.
+
+Entries shall be sheltered with an overhang, porch, portico or recessed entry that provides a minimum shelter depth of five feet. Porches and porticos shall have gabled shelters.
+
+2.
+
+At least one primary entry for each building shall either face a public street and be visible from the street or face a designated pedestrian way that is connected to a public street. The pedestrian way shall avoid out-of-direction travel by having a length that is no more than 20 feet longer or 120 percent of the straight line distance to the street.
+
+3.
+
+Individual entries: Where ground floor units have individual entries, each primary entry shall meet the standard in subsection B.2.
+
+4.
+
+Secondary entries may face parking lots or loading areas.
+
+C.
+
+Building facades shall be articulated with windows, entries, balconies and/or bays. Towers or other special vertical elements may be used (no more than one per building) to focus views to the area from surrounding streets.
+
+D.
+
+Along the vertical face of a structure, when facing a public street, pedestrian way or an abutting residential use, offsets shall occur at a minimum of every 30 feet by providing any two of the following:
+
+1.
+
+Recesses (decks, patios, entrances, floor area, etc.) of a minimum depth of four feet.
+
+2.
+
+Extensions (decks, patios, entrances, floor area, etc.) at a minimum depth of four feet, with maximum length of an overhang not to exceed 30 feet.
+
+3.
+
+If a covered porch is proposed, this can meet one of the offset requirements provided the porch is four feet deep and at least 125 square feet in area.
+
+E.
+
+Private Outdoor Areas.
+
+1.
+
+A separate outdoor area of not less than 48 square feet shall be attached to each ground level dwelling unit. These areas shall be separated from common outdoor areas in a manner, which enables the resident to control access from separate to common areas with elements such as walls, fences or shrubs.
+
+2.
+
+A separate outdoor area of not less than 48 square feet in the form of balconies, terraces or porches shall be provided for each dwelling unit located above the ground level.
+
+F.
+
+Parking Lots. Parking lots in multi-family developments shall not occupy more than 50 percent of the frontage of any public street abutting the lot or building.
+
+G.
+
+Individual Storage Areas. Enclosed storage areas shall be required and may be attached to the exterior of each dwelling unit to accommodate garden equipment, patio furniture, barbecues, bicycles, and other items for outdoor use. Storage areas may be provided within garages if the required storage area is in addition to the required parking area for a standard parking space, per subsection 17.98.60.B.1.
+
+Size of Dwelling  Minimum Square Feet  Minimum Height
+Studio            24                   6
+1 Bedroom         24                   6
+2 Bedroom         36                   6
+3+ Bedroom        48                   6
+
+H.
+
+Carports and Garages. If carport and garages are provided, the form, materials, color and construction shall be the same as the complex they serve.
+
+I.
+
+Shared Outdoor Recreation Areas. Multi-family residential development shall provide usable recreation areas for developments containing more than five dwelling units at the rate of 200 square feet per dwelling unit. Such areas shall be counted as part of the required landscaping. Examples include, but are not limited to, playgrounds, exercise trails, swimming pools, play fields, tennis courts, community gardens, plazas, picnic areas, and passive seating areas. Usable recreation area may also include slopes, wetlands, FSH setback areas, and tree groves; however, at least 50 percent of the recreation area must be located outside the boundaries of such areas and slopes may not exceed 15 percent in the 50 percent usable recreation area. Gazebos and other outdoor covered spaces are encouraged and qualify as 1.25 square feet for every one square foot of required shared recreation area. The shared outdoor recreation area(s) shall be located and designed to meet the following standards:
+
+1.
+
+At least 80 percent of dwelling units shall be located within 200 feet walking distance of a recreation area.
+
+2.
+
+Windows shall be located such that all entry areas, shared recreational areas, laundry areas, walkways and parking areas are visible from windows in at least two adjacent dwelling units. These windows must be located in kitchen, living room, dining room or other rooms besides bedrooms or bathrooms.
+
+3.
+
+Separation from parking and driveway areas shall be provided with a landscaped transition area measuring a minimum of ten feet wide.
+
+4.
+
+Access to shared outdoor areas from off-site as well as from on-site parking and entrance areas shall be controlled with fencing, walls, landscaping, or a building.
+
+5.
+
+All ground surfaces shall be improved with lawn, decks, wood chips, sand, hard surface materials (concrete/asphalt), or other surface appropriate to the use (e.g., rubber surface in playground area).
+
+J.
+
+Safety and Security.
+
+1.
+
+Shared or common use areas, including building entries, vehicle parking areas, bicycle parking, shared outdoor areas, and pedestrian paths, shall be lighted to the following minimum levels of foot-candles to enhance safety and allow use at night, and shall conform to the requirements of Chapter 15.30, Dark Sky Ordinance:
+
+a.
+
+Building entries: minimum 2 foot-candles.
+
+b.
+
+Pedestrian paths: minimum 1.5 foot-candles.
+
+c.
+
+Required bicycle parking: minimum 2 foot-candles.
+
+d.
+
+Vehicle parking: minimum 1.5 foot-candles.
+
+2.
+
+Establish a directory for apartment complexes of four or more units, which orients visitors and emergency service providers as to the location of residential units. This system shall be evident from the primary vehicle entryway or within 100 feet from the vehicle entryway.
+
+K.
+
+Service, Delivery and Screening.
+
+1.
+
+Locate postal delivery areas in a location that is accessible to all residents and mail delivery personnel and in accordance with U.S. Postal Service requirements.
+
+2.
+
+Provide pedestrian access from unit entries to postal delivery areas, garbage and recycling collection areas, shared activity areas and parking areas. Walkways providing access to these areas shall meet standards for an ADA accessible route. Crosswalks through parking lots and drive aisles shall be painted or constructed of a material contrasting with the road surface (e.g., colored concrete inlay in asphalt).
+
+3.
+
+Provide garbage collection and recycling areas in locations that are accessible by the service provider and residents.
+
+4.
+
+Garbage collection areas shall have a concrete floor surface and shall have a gate on the truck-loading side and a separate pedestrian access.
+
+5.
+
+Outdoor storage areas, garbage containers and recycling bins shall be screened from view in one of the following manners:
+
+a.
+
+A solid sight obscuring wall or fence not less than six feet in height and constructed of durable materials shall surround these areas.
+
+b.
+
+Evergreen plant materials which will retain their screening ability and will reach the height of six feet within three years from time of planting. An overlap of three inches is required of the evergreen plant screening. The material shall completely screen the area from view from the public right-of-way and on-site walkways.
+
+L.
+
+Electrical and Mechanical Equipment. On-grade and above-grade electrical and mechanical equipment such as transformers, heat pumps, and central air conditioner units shall be screened with sight obscuring fences, walls, or landscaping.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.170. - Maintenance.
+
+
+A.
+
+All approved on-site improvements shall be the on-going responsibility of the property owner or occupant. The owner, occupant, or agent shall be jointly and severally responsible for the maintenance of all landscaping which shall be maintained in good condition so as to present a healthy, neat, and orderly appearance and shall be kept free of refuse and debris. All on-site improvements shall be controlled by maintaining, pruning, trimming or otherwise, so that:
+
+1.
+
+It will not interfere with the maintenance or repair of any public facility;
+
+2.
+
+It will not restrict pedestrian or vehicular access; and
+
+3.
+
+It will not constitute a traffic hazard because of reduced visibility.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.90.180. - Compliance.
+
+
+A.
+
+The development site shall be checked by staff to ensure compliance with final approved plans prior to issuance of a Certificate of Occupancy.
+
+B.
+
+The development shall be completed as per the approved final plans including landscaping and recreation areas before the certificate of occupancy is issued.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)

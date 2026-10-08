@@ -1,0 +1,5 @@
+16.18.020 Conditional uses.
+
+Conditional uses in the R-1.5 zone shall be as follows:
+
+A. Uses listed as conditional in the R-1 zone; except as modified by Section 16.18.010, above. (Ord. 740 sect. 10.3.20(B), 1984; Ord. 1080, 2001; Ord. 1514, 2019; Ord 1634, 2024)

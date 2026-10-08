@@ -1,0 +1,3 @@
+16.04.065 Backhaul network.
+
+The land lines that connect a telecommunications provider’s radio signals to one or more cellular telephone switching offices and/or local or long distance providers, or the public switched telephone network. (Ord. 981 section 17, 1997Ord. 1539, 2020)

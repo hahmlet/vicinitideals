@@ -1,0 +1,98 @@
+# Sandy -- Development Code (Title 17) footnotes.
+#
+# Fifteen notes, none of which changes whether or how a row house or a
+# multi-family building sits on a lot in R-1, R-2 or R-3. Three shared
+# reasons carry most of them: zero-lot-line carve-outs (the printed side yard
+# is kept), vision clearance (a corner-lot triangle nothing here draws, queued
+# as a follow-up), and notes on commercial/industrial tables (those zones are
+# refused). Dismissals bind to the words, not the line.
+notes:
+  - quote: "or/clackamas/sandy/sdc.17.34.txt#L163"
+    digest: "210125f94b77"
+    state: dismissed
+    reason: >-
+      the note points to the vision-clearance triangle at street corners (17.74.30): no obstruction between 3 ft and 8.5 ft inside a triangle measured off the curb lines. It is a corner-lot restriction that nothing in this screen draws; it is listed as NOT ENCODED in sandy.yaml and queued in FOLLOWUPS. Dismissed here, not resolved: a building set exactly at the street setback of a small corner lot could in principle clip the triangle
+
+  - quote: "or/clackamas/sandy/sdc.17.34.txt#L165"
+    digest: "783b700f15c2"
+    state: dismissed
+    reason: >-
+      single room occupancies are a use this building is not; the note sends them to the single-detached standards
+
+  - quote: "or/clackamas/sandy/sdc.17.36.txt#L179"
+    digest: "49489447607a"
+    state: dismissed
+    reason: >-
+      the note carves zero-lot-line development OUT of the standard it sits on (the side yard). Reading it would only relax a yard for lots that share a wall; this screen keeps the printed side yard, which can only cost a lot a false RED, never certify one that does not fit
+
+  - quote: "or/clackamas/sandy/sdc.17.36.txt#L181"
+    digest: "210125f94b77"
+    state: dismissed
+    reason: >-
+      the note points to the vision-clearance triangle at street corners (17.74.30): no obstruction between 3 ft and 8.5 ft inside a triangle measured off the curb lines. It is a corner-lot restriction that nothing in this screen draws; it is listed as NOT ENCODED in sandy.yaml and queued in FOLLOWUPS. Dismissed here, not resolved: a building set exactly at the street setback of a small corner lot could in principle clip the triangle
+
+  - quote: "or/clackamas/sandy/sdc.17.36.txt#L183"
+    digest: "783b700f15c2"
+    state: dismissed
+    reason: >-
+      single room occupancies are a use this building is not; the note sends them to the single-detached standards
+
+  - quote: "or/clackamas/sandy/sdc.17.38.txt#L186"
+    digest: "b0fac2afadb8"
+    state: dismissed
+    reason: >-
+      the note carves zero-lot-line development OUT of the standard it sits on (the side yard). Reading it would only relax a yard for lots that share a wall; this screen keeps the printed side yard, which can only cost a lot a false RED, never certify one that does not fit
+
+  - quote: "or/clackamas/sandy/sdc.17.38.txt#L188"
+    digest: "210125f94b77"
+    state: dismissed
+    reason: >-
+      the note points to the vision-clearance triangle at street corners (17.74.30): no obstruction between 3 ft and 8.5 ft inside a triangle measured off the curb lines. It is a corner-lot restriction that nothing in this screen draws; it is listed as NOT ENCODED in sandy.yaml and queued in FOLLOWUPS. Dismissed here, not resolved: a building set exactly at the street setback of a small corner lot could in principle clip the triangle
+
+  - quote: "or/clackamas/sandy/sdc.17.40.txt#L185"
+    digest: "b0fac2afadb8"
+    state: dismissed
+    reason: >-
+      the note carves zero-lot-line development OUT of the standard it sits on (the side yard). Reading it would only relax a yard for lots that share a wall; this screen keeps the printed side yard, which can only cost a lot a false RED, never certify one that does not fit
+
+  - quote: "or/clackamas/sandy/sdc.17.40.txt#L187"
+    digest: "210125f94b77"
+    state: dismissed
+    reason: >-
+      the note points to the vision-clearance triangle at street corners (17.74.30): no obstruction between 3 ft and 8.5 ft inside a triangle measured off the curb lines. It is a corner-lot restriction that nothing in this screen draws; it is listed as NOT ENCODED in sandy.yaml and queued in FOLLOWUPS. Dismissed here, not resolved: a building set exactly at the street setback of a small corner lot could in principle clip the triangle
+
+  - quote: "or/clackamas/sandy/sdc.17.42.txt#L276"
+    digest: "a35625ac817d"
+    state: dismissed
+    reason: >-
+      the note sits on the commercial and industrial tables (C-1, C-3, I-zones). Every commercial and industrial zone is ruled quadplex_allowed false in sandy.yaml, so no value under this note is ever used to place the pod
+
+  - quote: "or/clackamas/sandy/sdc.17.46.txt#L259"
+    digest: "a35625ac817d"
+    state: dismissed
+    reason: >-
+      the note sits on the commercial and industrial tables (C-1, C-3, I-zones). Every commercial and industrial zone is ruled quadplex_allowed false in sandy.yaml, so no value under this note is ever used to place the pod
+
+  - quote: "or/clackamas/sandy/sdc.17.74.txt#L109"
+    digest: "4abc6a2b8747"
+    state: dismissed
+    reason: >-
+      the note defines what an architectural feature is (17.74 accessory-yard table); the pod's own walls are not an accessory projection and the screen does not place decks, eaves or porches
+
+  - quote: "or/clackamas/sandy/sdc.17.74.txt#L111"
+    digest: "4fd4185fe676"
+    state: dismissed
+    reason: >-
+      an accessory-projection rear-yard minimum for porches and decks; the screen places no projections, only the building footprint
+
+  - quote: "or/clackamas/sandy/sdc.17.74.txt#L113"
+    digest: "c9e17ee4674d"
+    state: dismissed
+    reason: >-
+      an accessory-projection rear-yard minimum for porches and decks; the screen places no projections, only the building footprint
+
+  - quote: "or/clackamas/sandy/sdc.17.98.txt#L381"
+    digest: "7b1e1da8d814"
+    state: dismissed
+    reason: >-
+      access spacing for public road approaches (175 ft or mid-block) is a street-network standard applied when a road is approved, not a lot dimension; Sandy's 17.98 driveway and parking numbers are encoded separately and the spacing between approaches is not measured by this screen

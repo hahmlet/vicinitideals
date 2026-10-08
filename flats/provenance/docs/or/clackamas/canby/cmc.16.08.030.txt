@@ -1,0 +1,3 @@
+16.08.030 Zone boundaries.
+
+Unless otherwise specified, zone boundaries are lot lines or the centerline of streets, railroad rights-of-way, or such lines extended. Where a zone boundary divides a lot into two or more zones, the entire lot shall be considered to be in the zone containing the greater lot area, provided the boundary adjustment is a distance of less than twenty feet. (Ord. 740 section 10.3.05(C), (1984)

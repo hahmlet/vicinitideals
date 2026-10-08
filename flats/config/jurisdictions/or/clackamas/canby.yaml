@@ -1,0 +1,2346 @@
+label: Canby
+kind: city
+eligible: true
+notes: >-
+  DRAFT, 2026-10-07. Read from the Canby Municipal Code, Title 16 (Planning
+  and Zoning), as American Legal Publishing serves it: one document per
+  section, stored whole. Every value is draft. Lots reach this layer by the
+  taxlots' JURIS_CITY CANBY. Their zoning comes from the Oregon City
+  regional zoning layer (CITY 'Canby'), which spells the districts without
+  the hyphen and in places by the city's older plan names. Three districts
+  admit the pod: R-1.5 (a four-family dwelling, one per lot, outright,
+  16.18.010 (D)), R-2 (multi-family dwelling outright, 16.20.010 (D)) and
+  C-R (the R-1.5 uses on R-1.5 standards, 16.24.010 (A)). R-1 admits
+  townhouses only inside a planned unit development and no fourplex; the
+  commercial districts allow housing only as part of a mixed-use development
+  (C-1) or not at all; the industrial districts allow a caretaker's dwelling.
+  A fourplex is a multi-family dwelling here (16.04.180: three or more
+  units on a lot). Every new multi-family building also goes through site
+  and design review (16.49.030, a Type III process), which the screen treats
+  as an outright path; a question for Steph. Conservative readings taken:
+  the 20-foot street yard on the side with the driveway is held on every
+  street side (the 15-foot relief on other street sides is not encoded); the
+  townhouse path carries the 13-units-an-acre cap the multi-family path
+  states; C-R takes the stricter of its own and R-1.5's figures; parking is
+  two stalls a dwelling, the largest rate printed for any size of unit.
+ingest:
+  geoid: null
+  juris_city_codes:
+  - CANBY
+  zoning_layer: zoning_canby
+  zone_field: ZONE
+  strip_lowercase_suffix: false
+code:
+# American Legal Publishing, Canby Municipal Code (Title 16, Planning and
+# Zoning), the codifier's live current page, one document per section
+# because that is how the publisher serves it: a chapter's own page holds
+# only its table of contents. Every section page carries about 3,500
+# characters of site chrome ahead of the text, so each entry opens at the
+# section's own heading line (the second printing of it, after the page's
+# breadcrumb) and closes at the publisher's disclaimer. The city's own
+# per-chapter PDFs were read and set aside: they are the October 2019
+# edition and the codifier's page is current through Ordinance 1634 (2024).
+# allow_thin on every entry: each document is ONE section, short by
+# construction, and the thin-text check reads a short section as a landing
+# page. All of them were read whole on 2026-10-07 (the 16.08.xx and 16.10.xx
+# sections are plain prose with few dimensions).
+- id: "cmc.16.04.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37595
+  title: "CMC 16.04.010 Grammatical interpretation."
+  start: "16.04.010 Grammatical interpretation."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37597
+  title: "CMC 16.04.020 Generally."
+  start: "16.04.020 Generally."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37599
+  title: "CMC 16.04.030 Abutting-adjoining-adjacent."
+  start: "16.04.030 Abutting-adjoining-adjacent."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.035"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37601
+  title: "CMC 16.04.035 Acceptable site."
+  start: "16.04.035 Acceptable site."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.036"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37603
+  title: "CMC 16.04.036 Access."
+  start: "16.04.036 Access."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.037"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37605
+  title: "CMC 16.04.037 Access classification."
+  start: "16.04.037 Access classification."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.038"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37607
+  title: "CMC 16.04.038 Access connection."
+  start: "16.04.038 Access connection."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.039"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37609
+  title: "CMC 16.04.039 Access management."
+  start: "16.04.039 Access management."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.040"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37611
+  title: "CMC 16.04.040 Accessory Dwelling."
+  start: "16.04.040 Accessory Dwelling."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.043"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37613
+  title: "CMC 16.04.043 Accessory structure or use."
+  start: "16.04.043 Accessory structure or use."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.045"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37615
+  title: "CMC 16.04.045 Accessway."
+  start: "16.04.045 Accessway."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.050"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37617
+  title: "CMC 16.04.050 Agriculture."
+  start: "16.04.050 Agriculture."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.060"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37619
+  title: "CMC 16.04.060 Alley."
+  start: "16.04.060 Alley."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.061"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37621
+  title: "CMC 16.04.061 Antenna."
+  start: "16.04.061 Antenna."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.063"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37623
+  title: "CMC 16.04.063 Application."
+  start: "16.04.063 Application."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.064"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37629
+  title: "CMC 16.04.064 Attached telecommunications facility."
+  start: "16.04.064 Attached telecommunications facility."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.065"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37631
+  title: "CMC 16.04.065 Backhaul network."
+  start: "16.04.065 Backhaul network."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.066"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37633
+  title: "CMC 16.04.066 Bed and Breakfast."
+  start: "16.04.066 Bed and Breakfast."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.068"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37635
+  title: "CMC 16.04.068 Bicycle facilities."
+  start: "16.04.068 Bicycle facilities."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.070"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37637
+  title: "CMC 16.04.070 Billboard."
+  start: "16.04.070 Billboard."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.080"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37639
+  title: "CMC 16.04.080 Boarding, lodging or rooming house."
+  start: "16.04.080 Boarding, lodging or rooming house."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.090"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37641
+  title: "CMC 16.04.090 Building."
+  start: "16.04.090 Building."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.100"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37643
+  title: "CMC 16.04.100 Building line."
+  start: "16.04.100 Building line."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.105"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37645
+  title: "CMC 16.04.105 Cell Coverage Area."
+  start: "16.04.105 Cell Coverage Area."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.110"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37647
+  title: "CMC 16.04.110 Central business district (CBD)."
+  start: "16.04.110 Central business district (CBD)."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.120"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37649
+  title: "CMC 16.04.120 City."
+  start: "16.04.120 City."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.125"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37651
+  title: "CMC 16.04.125 City Planner."
+  start: "16.04.125 City Planner."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.127"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37653
+  title: "CMC 16.04.127 Collocation."
+  start: "16.04.127 Collocation."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.128"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37655
+  title: "CMC 16.04.128 Commercial Recreation Uses."
+  start: "16.04.128 Commercial Recreation Uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.130"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37657
+  title: "CMC 16.04.130 Commission."
+  start: "16.04.130 Commission."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.135"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37659
+  title: "CMC 16.04.135 Conditionally suitable site."
+  start: "16.04.135 Conditionally suitable site."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.137"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37661
+  title: "CMC 16.04.137 Corner clearance."
+  start: "16.04.137 Corner clearance."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.140"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37663
+  title: "CMC 16.04.140 Council."
+  start: "16.04.140 Council."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.145"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37665
+  title: "CMC 16.04.145 Cross access."
+  start: "16.04.145 Cross access."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.150"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37667
+  title: "CMC 16.04.150 Curb line."
+  start: "16.04.150 Curb line."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.155"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37669
+  title: "CMC 16.04.155 Day care facility."
+  start: "16.04.155 Day care facility."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.158"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37677
+  title: "CMC 16.04.158 Detached telecommunications facility."
+  start: "16.04.158 Detached telecommunications facility."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.160"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37679
+  title: "CMC 16.04.160 Development plan."
+  start: "16.04.160 Development plan."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.170"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37681
+  title: "CMC 16.04.170 Dwelling, duplex-dwelling, two-family."
+  start: "16.04.170 Dwelling, duplex-dwelling, two-family."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.180"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37683
+  title: "CMC 16.04.180 Dwelling, multi-family."
+  start: "16.04.180 Dwelling, multi-family."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.190"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37685
+  title: "CMC 16.04.190 Dwelling, single-family."
+  start: "16.04.190 Dwelling, single-family."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.195"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37687
+  title: "CMC 16.04.195 Dwelling, Townhouse (Common Wall)."
+  start: "16.04.195 Dwelling, Townhouse (Common Wall)."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.200"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37689
+  title: "CMC 16.04.200 Dwelling unit."
+  start: "16.04.200 Dwelling unit."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.210"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37691
+  title: "CMC 16.04.210 Easement."
+  start: "16.04.210 Easement."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.212"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37693
+  title: "CMC 16.04.212 Eco-roof"
+  start: "16.04.212 Eco-roof"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.215"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37695
+  title: "CMC 16.04.215 Equipment shelters."
+  start: "16.04.215 Equipment shelters."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.218"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37697
+  title: "CMC 16.04.218 Façade."
+  start: "16.04.218 Façade."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.220"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37699
+  title: "CMC 16.04.220 Family."
+  start: "16.04.220 Family."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.220.1"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-43337
+  title: "CMC 16.04.220.1 Fence."
+  start: "16.04.220.1 Fence."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.221"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37701
+  title: "CMC 16.04.221 Floor area ratio."
+  start: "16.04.221 Floor area ratio."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.221.1"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-42835
+  title: "CMC 16.04.221.1 Food Cart Pod"
+  start: "16.04.221.1 Food Cart Pod"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.222"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37703
+  title: "CMC 16.04.222 Foster Home,"
+  start: "16.04.222 Foster Home,"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.223"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37705
+  title: "CMC 16.04.223 Frontage road."
+  start: "16.04.223 Frontage road."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.225"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37708
+  title: "CMC 16.04.225 FCC."
+  start: "16.04.225 FCC."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.228"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37710
+  title: "CMC 16.04.228 Grade plane."
+  start: "16.04.228 Grade plane."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.230"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37712
+  title: "CMC 16.04.230 Height of building."
+  start: "16.04.230 Height of building."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.230.1"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-43341
+  title: "CMC 16.04.230.1 Height of fence."
+  start: "16.04.230.1 Height of fence."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.240"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37714
+  title: "CMC 16.04.240 Home occupation."
+  start: "16.04.240 Home occupation."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.250"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37722
+  title: "CMC 16.04.250 Hotel."
+  start: "16.04.250 Hotel."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.253"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37724
+  title: "CMC 16.04.253 Impervious surface"
+  start: "16.04.253 Impervious surface"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.255"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37726
+  title: "CMC 16.04.255 Infill homes."
+  start: "16.04.255 Infill homes."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.260"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37730
+  title: "CMC 16.04.260 Intersection."
+  start: "16.04.260 Intersection."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.265"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37732
+  title: "CMC 16.04.265 Joint access (or shared access)."
+  start: "16.04.265 Joint access (or shared access)."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.270"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37734
+  title: "CMC 16.04.270 Kennel."
+  start: "16.04.270 Kennel."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.275"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37736
+  title: "CMC 16.04.275 Lattice tower."
+  start: "16.04.275 Lattice tower."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.280"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37738
+  title: "CMC 16.04.280 Loading space."
+  start: "16.04.280 Loading space."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.290"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37740
+  title: "CMC 16.04.290 Lot."
+  start: "16.04.290 Lot."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.300"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37742
+  title: "CMC 16.04.300 Lot area."
+  start: "16.04.300 Lot area."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.310"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37744
+  title: "CMC 16.04.310 Lot, corner."
+  start: "16.04.310 Lot, corner."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.315"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37746
+  title: "CMC 16.04.315 Lot depth."
+  start: "16.04.315 Lot depth."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.318"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37748
+  title: "CMC 16.04.318 Lot, flag."
+  start: "16.04.318 Lot, flag."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.320"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37750
+  title: "CMC 16.04.320 Lot front."
+  start: "16.04.320 Lot front."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.321"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37752
+  title: "CMC 16.04.321 Lot frontage."
+  start: "16.04.321 Lot frontage."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.330"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37754
+  title: "CMC 16.04.330 Lot, interior."
+  start: "16.04.330 Lot, interior."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.340"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37756
+  title: "CMC 16.04.340 Lot line."
+  start: "16.04.340 Lot line."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.350"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37758
+  title: "CMC 16.04.350 Lot line, interior."
+  start: "16.04.350 Lot line, interior."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.360"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37760
+  title: "CMC 16.04.360 Lot line, street."
+  start: "16.04.360 Lot line, street."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.370"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37762
+  title: "CMC 16.04.370 Lot, through."
+  start: "16.04.370 Lot, through."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.380"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37764
+  title: "CMC 16.04.380 Lot width."
+  start: "16.04.380 Lot width."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.383"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37766
+  title: "CMC 16.04.383 Low impact development"
+  start: "16.04.383 Low impact development"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.385"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37768
+  title: "CMC 16.04.385 Lowest floor."
+  start: "16.04.385 Lowest floor."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.390"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37770
+  title: "CMC 16.04.390 Manufactured home (Mobile Home)"
+  start: "16.04.390 Manufactured home (Mobile Home)"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.400"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37772
+  title: "CMC 16.04.400 Manufactured (Mobile) home park."
+  start: "16.04.400 Manufactured (Mobile) home park."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.410"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37774
+  title: "CMC 16.04.410 Manufactured (Mobile) home subdivision."
+  start: "16.04.410 Manufactured (Mobile) home subdivision."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.415"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-42837
+  title: "CMC 16.04.415 Mobile Food Vending Unit."
+  start: "16.04.415 Mobile Food Vending Unit."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.420"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37776
+  title: "CMC 16.04.420 Modular home."
+  start: "16.04.420 Modular home."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.425"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37778
+  title: "CMC 16.04.425 Monopole."
+  start: "16.04.425 Monopole."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.430"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37780
+  title: "CMC 16.04.430 Motel."
+  start: "16.04.430 Motel."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.433"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37782
+  title: "CMC 16.04.433 Nail Salons."
+  start: "16.04.433 Nail Salons."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.435"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37784
+  title: "CMC 16.04.435 Neighborhood activity center."
+  start: "16.04.435 Neighborhood activity center."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.438"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37786
+  title: "CMC 16.04.438 Nonconforming access features."
+  start: "16.04.438 Nonconforming access features."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.440"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37788
+  title: "CMC 16.04.440 Nonconforming structure, lot or use."
+  start: "16.04.440 Nonconforming structure, lot or use."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.445"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37790
+  title: "CMC 16.04.445 Nursing home"
+  start: "16.04.445 Nursing home"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.450"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37792
+  title: "CMC 16.04.450 Parent parcel."
+  start: "16.04.450 Parent parcel."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.460"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37794
+  title: "CMC 16.04.460 Parking space."
+  start: "16.04.460 Parking space."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.470"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37796
+  title: "CMC 16.04.470 Partition."
+  start: "16.04.470 Partition."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.480"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37798
+  title: "CMC 16.04.480 Pedestrian way."
+  start: "16.04.480 Pedestrian way."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.490"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37800
+  title: "CMC 16.04.490 Person."
+  start: "16.04.490 Person."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.500"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37802
+  title: "CMC 16.04.500 Planning Commission."
+  start: "16.04.500 Planning Commission."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.510"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37804
+  title: "CMC 16.04.510 Plat."
+  start: "16.04.510 Plat."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.512"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37806
+  title: "CMC 16.04.512 Porches, covered."
+  start: "16.04.512 Porches, covered."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.514"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37808
+  title: "CMC 16.04.514 Preapplication conference."
+  start: "16.04.514 Preapplication conference."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.515"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37810
+  title: "CMC 16.04.515 Preferred site."
+  start: "16.04.515 Preferred site."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.516"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37812
+  title: "CMC 16.04.516 Public facility, major."
+  start: "16.04.516 Public facility, major."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.517"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37814
+  title: "CMC 16.04.517 Public facility, minor."
+  start: "16.04.517 Public facility, minor."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.519"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37822
+  title: "CMC 16.04.519 Reasonably direct."
+  start: "16.04.519 Reasonably direct."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.520"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37824
+  title: "CMC 16.04.520 Recommendation."
+  start: "16.04.520 Recommendation."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.525"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37826
+  title: "CMC 16.04.525 Residential facility"
+  start: "16.04.525 Residential facility"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.527"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37828
+  title: "CMC 16.04.527 Residential home"
+  start: "16.04.527 Residential home"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.530"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37830
+  title: "CMC 16.04.530 Right-of-way."
+  start: "16.04.530 Right-of-way."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.540"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37832
+  title: "CMC 16.04.540 Roadway."
+  start: "16.04.540 Roadway."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.545"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37834
+  title: "CMC 16.04.545 Safe and convenient bicycle and pedestrian routes."
+  start: "16.04.545 Safe and convenient bicycle and pedestrian routes."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.547"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37838
+  title: "CMC 16.04.547 Self Storage Unit/Ministorage Warehouse (NAICS 531130)"
+  start: "16.04.547 Self Storage Unit/Ministorage Warehouse (NAICS 531130)"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.550"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37840
+  title: "CMC 16.04.550 Setback."
+  start: "16.04.550 Setback."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.560"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37842
+  title: "CMC 16.04.560 Sidewalk."
+  start: "16.04.560 Sidewalk."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.565"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37844
+  title: "CMC 16.04.565 Stealth design."
+  start: "16.04.565 Stealth design."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.567"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37846
+  title: "CMC 16.04.567 Story above grade plane."
+  start: "16.04.567 Story above grade plane."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.570"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37848
+  title: "CMC 16.04.570 Street."
+  start: "16.04.570 Street."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.580"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37859
+  title: "CMC 16.04.580 Structural alteration."
+  start: "16.04.580 Structural alteration."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.590"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37861
+  title: "CMC 16.04.590 Structure."
+  start: "16.04.590 Structure."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.595"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37863
+  title: "CMC 16.04.595 Stub-out (or stub street)."
+  start: "16.04.595 Stub-out (or stub street)."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.600"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37865
+  title: "CMC 16.04.600 Subdivide land."
+  start: "16.04.600 Subdivide land."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.610"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37867
+  title: "CMC 16.04.610 Subdivision."
+  start: "16.04.610 Subdivision."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.615"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37869
+  title: "CMC 16.04.615 Traffic Impact Analysis."
+  start: "16.04.615 Traffic Impact Analysis."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.620"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37871
+  title: "CMC 16.04.620 Trailer coach."
+  start: "16.04.620 Trailer coach."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.630"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37873
+  title: "CMC 16.04.630 Trailer park."
+  start: "16.04.630 Trailer park."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.640"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37877
+  title: "CMC 16.04.640 Urban Growth Boundary (UGB)"
+  start: "16.04.640 Urban Growth Boundary (UGB)"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.650"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37879
+  title: "CMC 16.04.650 Urbanizable."
+  start: "16.04.650 Urbanizable."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.660"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37881
+  title: "CMC 16.04.660 Use."
+  start: "16.04.660 Use."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.666"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37883
+  title: "CMC 16.04.666 Vicinity."
+  start: "16.04.666 Vicinity."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.670"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37885
+  title: "CMC 16.04.670 Vision clearance area."
+  start: "16.04.670 Vision clearance area."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.671"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37887
+  title: "CMC 16.04.671 Walkway."
+  start: "16.04.671 Walkway."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.675"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37889
+  title: "CMC 16.04.675 Wireless telecommunications facilities."
+  start: "16.04.675 Wireless telecommunications facilities."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.680"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37893
+  title: "CMC 16.04.680 Yard."
+  start: "16.04.680 Yard."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.690"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37895
+  title: "CMC 16.04.690 Yard, interior."
+  start: "16.04.690 Yard, interior."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.700"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37897
+  title: "CMC 16.04.700 Yard, rear."
+  start: "16.04.700 Yard, rear."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.710"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37899
+  title: "CMC 16.04.710 Yard, street."
+  start: "16.04.710 Yard, street."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.04.715"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-37901
+  title: "CMC 16.04.715 Zero-lot line development."
+  start: "16.04.715 Zero-lot line development."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38004
+  title: "CMC 16.08.010 Compliance with title."
+  start: "16.08.010 Compliance with title."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38006
+  title: "CMC 16.08.020 Zoning map."
+  start: "16.08.020 Zoning map."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38009
+  title: "CMC 16.08.030 Zone boundaries."
+  start: "16.08.030 Zone boundaries."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.040"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38011
+  title: "CMC 16.08.040 Zoning of annexed areas."
+  start: "16.08.040 Zoning of annexed areas."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.050"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38013
+  title: "CMC 16.08.050 Prohibited parking."
+  start: "16.08.050 Prohibited parking."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.070"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38017
+  title: "CMC 16.08.070 Illegally created lots."
+  start: "16.08.070 Illegally created lots."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.080"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38019
+  title: "CMC 16.08.080 Area and yard reductions."
+  start: "16.08.080 Area and yard reductions."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.090"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38024
+  title: "CMC 16.08.090 Sidewalks required."
+  start: "16.08.090 Sidewalks required."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.100"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38027
+  title: "CMC 16.08.100 Height allowances."
+  start: "16.08.100 Height allowances."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.110"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38029
+  title: "CMC 16.08.110 Fences."
+  start: "16.08.110 Fences."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.130"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38116
+  title: "CMC 16.08.130 Standard transportation improvements."
+  start: "16.08.130 Standard transportation improvements."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.08.160"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38210
+  title: "CMC 16.08.160 Safety and Functionality Standards."
+  start: "16.08.160 Safety and Functionality Standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.10.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38233
+  title: "CMC 16.10.010 Off-street parking required – exceptions."
+  start: "16.10.010 Off-street parking required – exceptions."
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.10.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38237
+  title: "CMC 16.10.020 Definitions."
+  start: "16.10.020 Definitions."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.10.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38240
+  title: "CMC 16.10.030 General requirements."
+  start: "16.10.030 General requirements."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.10.040"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38256
+  title: "CMC 16.10.040 Prohibited near intersections."
+  start: "16.10.040 Prohibited near intersections."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.10.050"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38258
+  title: "CMC 16.10.050 Parking standards designated."
+  start: "16.10.050 Parking standards designated."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.10.070"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+  title: "CMC 16.10.070 Parking lots and access."
+  start: "16.10.070 Parking lots and access."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.10.100"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38355
+  title: "CMC 16.10.100 Bicycle Parking."
+  start: "16.10.100 Bicycle Parking."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.12.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38367
+  title: "CMC 16.12.010 Zones designated."
+  start: "16.12.010 Zones designated."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.12.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38387
+  title: "CMC 16.12.020 Uses Permitted"
+  start: "16.12.020 Uses Permitted"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.13.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38394
+  title: "CMC 16.13.010 North Redwood Plan District"
+  start: "16.13.010 North Redwood Plan District"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.16.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38428
+  title: "CMC 16.16.010 Uses permitted outright."
+  start: "16.16.010 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.16.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38455
+  title: "CMC 16.16.020 Conditional uses."
+  start: "16.16.020 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.16.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38475
+  title: "CMC 16.16.030 Development standards."
+  start: "16.16.030 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.18.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38514
+  title: "CMC 16.18.010 Uses permitted outright."
+  start: "16.18.010 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.18.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38519
+  title: "CMC 16.18.020 Conditional uses."
+  start: "16.18.020 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.18.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38523
+  title: "CMC 16.18.030 Development standards."
+  start: "16.18.030 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.20.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38567
+  title: "CMC 16.20.010 Uses permitted outright."
+  start: "16.20.010 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.20.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38577
+  title: "CMC 16.20.020 Conditional uses."
+  start: "16.20.020 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.20.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38582
+  title: "CMC 16.20.030 Development standards."
+  start: "16.20.030 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.21.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38625
+  title: "CMC 16.21.010 Purpose."
+  start: "16.21.010 Purpose."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.21.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38633
+  title: "CMC 16.21.020 Applicability and review procedure for single family and two family dwellings."
+  start: "16.21.020 Applicability and review procedure for single family and two family dwellings."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.21.040"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38670
+  title: "CMC 16.21.040 Main entrances for single family and two family dwellings."
+  start: "16.21.040 Main entrances for single family and two family dwellings."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.21.050"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38676
+  title: "CMC 16.21.050 Infill Homes"
+  start: "16.21.050 Infill Homes"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.21.060"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38685
+  title: "CMC 16.21.060 Applicability and review procedure for multi-family dwellings."
+  start: "16.21.060 Applicability and review procedure for multi-family dwellings."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.21.070"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38687
+  title: "CMC 16.21.070 Multi-family design standards."
+  start: "16.21.070 Multi-family design standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.22.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38712
+  title: "CMC 16.22.010 Uses permitted outright."
+  start: "16.22.010 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.22.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38763
+  title: "CMC 16.22.020 Conditional uses."
+  start: "16.22.020 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.22.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38768
+  title: "CMC 16.22.030 Development standards."
+  start: "16.22.030 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.24.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38796
+  title: "CMC 16.24.010 Uses permitted outright."
+  start: "16.24.010 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.24.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38818
+  title: "CMC 16.24.020 Conditional uses."
+  start: "16.24.020 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.24.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38826
+  title: "CMC 16.24.030 Development standards."
+  start: "16.24.030 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.28.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38847
+  title: "CMC 16.28.010 Uses permitted outright."
+  start: "16.28.010 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.28.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38869
+  title: "CMC 16.28.020 Conditional uses."
+  start: "16.28.020 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.28.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38874
+  title: "CMC 16.28.030 Development standards."
+  start: "16.28.030 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.30.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38897
+  title: "CMC 16.30.010 Uses permitted outright."
+  start: "16.30.010 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.30.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38914
+  title: "CMC 16.30.020 Conditional uses."
+  start: "16.30.020 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.30.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38920
+  title: "CMC 16.30.030 Development standards."
+  start: "16.30.030 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.32.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38944
+  title: "CMC 16.32.010 Uses permitted outright."
+  start: "16.32.010 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.32.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38980
+  title: "CMC 16.32.020 Conditional uses."
+  start: "16.32.020 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.32.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38989
+  title: "CMC 16.32.030 Development standards."
+  start: "16.32.030 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.34.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39011
+  title: "CMC 16.34.010 Uses permitted outright."
+  start: "16.34.010 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.34.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39014
+  title: "CMC 16.34.020 Conditional uses."
+  start: "16.34.020 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.34.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39020
+  title: "CMC 16.34.030 Development standards."
+  start: "16.34.030 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.35.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39068
+  title: "CMC 16.35.030 Uses permitted outright."
+  start: "16.35.030 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.35.040"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39070
+  title: "CMC 16.35.040 Conditional uses."
+  start: "16.35.040 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.35.045"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39085
+  title: "CMC 16.35.045 Prohibited uses."
+  start: "16.35.045 Prohibited uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.35.050"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39107
+  title: "CMC 16.35.050 Development standards."
+  start: "16.35.050 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.36.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39154
+  title: "CMC 16.36.020 Uses permitted outright."
+  start: "16.36.020 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.36.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39156
+  title: "CMC 16.36.030 Conditional uses."
+  start: "16.36.030 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.36.040"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39158
+  title: "CMC 16.36.040 Development standards."
+  start: "16.36.040 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.41.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39298
+  title: "CMC 16.41.020 Applicability."
+  start: "16.41.020 Applicability."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.41.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39314
+  title: "CMC 16.41.030 Uses permitted outright."
+  start: "16.41.030 Uses permitted outright."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.41.040"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39330
+  title: "CMC 16.41.040 Conditional uses."
+  start: "16.41.040 Conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.41.050"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39335
+  title: "CMC 16.41.050 Development standards."
+  start: "16.41.050 Development standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.46.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40043
+  title: "CMC 16.46.010 Number of units in residential development."
+  start: "16.46.010 Number of units in residential development."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.46.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40070
+  title: "CMC 16.46.020 Ingress and egress."
+  start: "16.46.020 Ingress and egress."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.46.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40075
+  title: "CMC 16.46.030 Access connection."
+  start: "16.46.030 Access connection."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.46.060"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40108
+  title: "CMC 16.46.060 Amount of access points."
+  start: "16.46.060 Amount of access points."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.49.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40222
+  title: "CMC 16.49.030 Site and design review plan approval required."
+  start: "16.49.030 Site and design review plan approval required."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.49.40"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40248
+  title: "CMC 16.49.40 Criteria and standards."
+  start: "16.49.40 Criteria and standards."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.49.050"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40269
+  title: "CMC 16.49.050 Conditions placed on site and design review approvals."
+  start: "16.49.050 Conditions placed on site and design review approvals."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.50.060"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40438
+  title: "CMC 16.50.060 Standards governing conditional uses."
+  start: "16.50.060 Standards governing conditional uses."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.64.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40714
+  title: "CMC 16.64.010 Streets."
+  start: "16.64.010 Streets."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.64.015"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40743
+  title: "CMC 16.64.015 Access"
+  start: "16.64.015 Access"
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.64.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40753
+  title: "CMC 16.64.030 Easements."
+  start: "16.64.030 Easements."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.64.040"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40766
+  title: "CMC 16.64.040 Lots."
+  start: "16.64.040 Lots."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.64.060"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-40794
+  title: "CMC 16.64.060 Grading of building sites."
+  start: "16.64.060 Grading of building sites."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.74.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-41000
+  title: "CMC 16.74.010 Generally."
+  start: "16.74.010 Generally."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.74.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-41002
+  title: "CMC 16.74.020 Uses permitted in residential zone."
+  start: "16.74.020 Uses permitted in residential zone."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.74.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-41008
+  title: "CMC 16.74.030 Uses permitted in other than residential zone."
+  start: "16.74.030 Uses permitted in other than residential zone."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.76.010"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-41016
+  title: "CMC 16.76.010 Minimum requirements."
+  start: "16.76.010 Minimum requirements."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.76.020"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-41022
+  title: "CMC 16.76.020 General requirements."
+  start: "16.76.020 General requirements."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.76.030"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-41035
+  title: "CMC 16.76.030 Standards and criteria."
+  start: "16.76.030 Standards and criteria."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+- id: "cmc.16.76.040"
+  url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-41049
+  title: "CMC 16.76.040 Exceptions."
+  start: "16.76.040 Exceptions."
+  nth: 2
+  end: "Disclaimer:"
+  extraction: plain
+  allow_thin: true
+definitions:
+  # Read 2026-10-07 from CMC 16.04, on disk section by section.
+  #
+  # THE NOUN. "Multi-family dwelling means a building containing three or
+  # more dwelling units located on the same lot or parcel" (16.04.180,
+  # cmc.16.04.180.txt L3). The pod, four units in one building, is a
+  # multi-family dwelling, and is also R-1.5's own "four-family dwelling,
+  # one fourplex on each lot" (cmc.16.18.010.txt L11). A townhouse is
+  # "single-family attached common wall dwellings with each dwelling unit
+  # located on a separate lot ... no more than six attached townhouse
+  # dwelling units in a row, and the combined single-family units shall not
+  # exceed 120 feet in length" (16.04.195, cmc.16.04.195.txt L3): the
+  # unit-lot path.
+  #
+  # CORNER LOT. "a lot abutting two intersecting streets other than an
+  # alley, provided that the streets do not intersect at an angle greater
+  # than one hundred thirty-five degrees" (16.04.310, L3).
+  #
+  # FRONT LOT LINE ON A CORNER LOT. The code names none. The yards speak of
+  # "twenty feet on side with driveway; fifteen feet for all other street
+  # sides" (cmc.16.18.030.txt L39), so a corner lot has a driveway street
+  # side and other street sides and no front. Both are held at the larger
+  # figure in every zone.
+  corner_lot:
+    test: intersecting_frontages
+    max_intersection_angle_deg: 135.0
+    quote: "or/clackamas/canby/cmc.16.04.310.txt#L3"
+    cite: "Canby CMC 16.04.310, Lot, corner"
+
+private_drives:
+  street: false
+  quote: "or/clackamas/canby/cmc.16.10.070.txt#L118"
+  says: "All ingress and egress shall connect directly with public streets"
+  cite: "Canby CMC 16.10.070 (B)(3) (access shall connect directly with public streets)"
+  note: >-
+    The stored sections define no "street", and the one access rule that
+    names them says all ingress and egress "shall connect directly with
+    public streets" (16.10.070 (B)(3), L118). A private drive the lot abuts
+    is not held to be a street for the yards. A doubt; the reading that
+    does not shrink a yard.
+
+defaults:
+  # PARKING COUNT. 16.10.050 (A): single-family and two-family dwellings 2.00
+  # spaces per dwelling unit (L14, L17); multi-family dwellings in complexes
+  # with private internal driveways one space per studio or one-bedroom unit
+  # and 2.00 per two-bedroom or larger unit, plus a guest space for every
+  # five units in a development of ten or more (L20). The catalog holds no
+  # bedroom count, so the largest printed rate is encoded (the corpus
+  # convention): 2.0 a unit, eight stalls for the pod.
+  parking_min_per_unit:
+    value: 2
+    cite: Canby CMC 16.10.050 (A), residential parking requirements (2.00 spaces per dwelling unit; multi-family 2.00 per two-bedroom or larger unit)
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38258
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.050.txt#L14,L17,L20"
+  # THE STALL AND AISLE. 16.10.070 (A) table, the 90 degree row: stall width
+  # 8'6", stall depth 18'0", aisle 24'0" (L105-L108).
+  parking_stall_width_ft:
+    value: 8.5
+    cite: Canby CMC 16.10.070 (A), parking space dimensions at 90 degrees (8 ft 6 in)
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.070.txt#L105-L106"
+  parking_stall_depth_ft:
+    value: 18
+    cite: Canby CMC 16.10.070 (A), parking space dimensions at 90 degrees (18 ft)
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.070.txt#L105,L107"
+  parking_aisle_two_way_ft:
+    value: 24
+    cite: Canby CMC 16.10.070 (A), aisle width at 90 degrees (24 ft)
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.070.txt#L105,L108"
+  parking_aisle_one_way_ft:
+    value: 24
+    cite: Canby CMC 16.10.070 (A), aisle width at 90 degrees (24 ft; the table prints one figure for the angle)
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.070.txt#L105,L108"
+  # DRIVEWAY. 16.10.070 (B)(8): minimum access width, one access, 12 feet
+  # for one or two dwelling units and 20 feet for 3 to 19 (L140-L146).
+  driveway_min_width_two_way_ft:
+    value: 20
+    cite: Canby CMC 16.10.070 (B)(8), minimum access width for 3 to 19 dwelling units (20 feet)
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.070.txt#L136-L138,L144-L146"
+  driveway_min_width_one_way_ft:
+    value: 20
+    cite: Canby CMC 16.10.070 (B)(8), minimum access width for 3 to 19 dwelling units (20 feet; the table prints one figure)
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38276
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.10.070.txt#L136-L138,L144-L146"
+  front_lot_line_corner:
+    value: shortest
+    cite: Canby CMC 16.18.030 (D)(1), no front is named on a corner lot; the narrower street side is held as the front (both street sides are charged 20 ft in every zone)
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38523
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.18.030.txt#L39"
+  # WHICH STREET THE DRIVEWAY USES. The street yard is larger "on side with
+  # driveway" (L39) and nothing says which street takes the drive; Steph's
+  # rule of 2026-10-02 (more than one street: the side street) is carried by
+  # the lowest-class rule.
+  corner_access_street:
+    value: lowest_class
+    cite: Canby CMC 16.18.030 (D)(1), the street yard is larger on the side with the driveway (no street is required for the drive; the lower-class street is used)
+    url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38523
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/canby/cmc.16.18.030.txt#L39"
+
+# NOT ENCODED, read 2026-10-07:
+# - 16.49.030, site and design review (a Type III process) for new
+#   multi-family buildings, and the points menu in 16.21.070: treated as an
+#   outright path and put to Steph.
+# - R-2 16.20.030 (D)(1), a multifamily street yard that must match the
+#   front yards of the R-1 or R-1.5 lots on the same side; (E)(4), a
+#   building length of 120 feet; (G)(4), 150 sq ft of recreation space a
+#   dwelling above ten units. None reaches a four-unit pod on an ordinary lot.
+# - Vision clearance (ten feet from a street to an alley or driveway, thirty
+#   from a street to another street), measured from curb lines.
+# - Infill standards (16.21.050): they reach single-family, two-family and
+#   triplex homes only (16.04.255), not a four-unit pod. Compact stalls.
+# - The Planning Commission's discretion to modify density, lot area, width
+#   and frontage: no variances are assumed.
+
+neighbours:
+  abuts_lower_density_zone:
+    true_for: [R-1, R-1.5]
+    false_for: [R-2, C-R, C-1, C-2, C-M, M-1, M-2]
+    quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+    cite: Canby CMC 16.20.030 (D)(5) and (E)(3), multifamily development adjacent to an R-1 or R-1.5 zone
+    note: >-
+      Only R-2 turns on it. 16.20.030 (D)(5) asks multifamily development
+      (three or more units on a property) adjacent to an R-1 or R-1.5 zone
+      for a 15-foot buffer, and (E)(3) holds the building's height to one
+      foot for each foot of distance from the R-1 or R-1.5 property line.
+      The true side is those two districts and the false side is every other
+      district of Chapter 16. A lot with an R-1 or R-1.5 neighbour across
+      any line takes the buffer on its side and rear yards, the tightening
+      answer.
+
+zones:
+  R-1.5:
+    cite_default:
+      cite: Canby CMC Chapter 16.18 (R-1.5 Medium Density Residential)
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38514
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: true
+      cite: Canby CMC 16.18.010 (D), four-family dwellings, one fourplex on each lot (and (C), townhouses in groups of up to six)
+      quote: "or/clackamas/canby/cmc.16.18.010.txt#L9,L11"
+    # No lot area is printed for a four-family dwelling: 16.18.030 (A)(1)
+    # prints 5,000 to 6,500 for single-family dwellings and (A)(2) 3,000 for
+    # townhouse lots. The single-family minimum is held for the fourplex, the
+    # stricter; the density cap below sets the real floor (13 units an acre,
+    # about 13,400 sq ft for four units).
+    min_lot_sqft:
+      value: 5000
+      cite: Canby CMC 16.18.030 (A)(1), five thousand square feet minimum (single family; no figure is printed for a four-family dwelling)
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L7"
+      variants:
+        - value: 3000
+          when: [unit_lots]
+          cite: Canby CMC 16.18.030 (A)(2)(a), townhouse dwelling units, 3,000 square foot minimum lot size
+          quote: "or/clackamas/canby/cmc.16.18.030.txt#L9,L11"
+    min_lot_width_ft:
+      value: 40
+      cite: Canby CMC 16.18.030 (C), minimum width and frontage forty feet
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L35"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          cite: Canby CMC 16.18.030 (C), twenty feet is permitted for single family attached (common wall) housing
+          quote: "or/clackamas/canby/cmc.16.18.030.txt#L35"
+    min_density_du_per_acre:
+      value: 6
+      cite: Canby CMC 16.18.030 (A)(3), minimum density 6 units per acre for two, three and four family dwellings
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L15"
+      measured_on:
+        fact: net_developable_area
+        cite: Canby CMC 16.18.030 (A)(3), the area in acres minus the area required for street right-of-way and public park/open space areas
+        quote: "or/clackamas/canby/cmc.16.18.030.txt#L15"
+        less: []
+        assumed_none:
+          - "street right-of-way"
+          - "public park and open space areas"
+    max_density_du_per_acre:
+      value: 13
+      cite: Canby CMC 16.18.030 (A)(3), maximum of 13 units per acre for two, three and four family dwellings (held on the townhouse path too, the stricter)
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L15"
+    max_height_ft:
+      value: 35
+      cite: Canby CMC 16.18.030 (E)(1), principal building thirty-five feet
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L51"
+    max_impervious_pct:
+      value: 70
+      cite: Canby CMC 16.18.030 (F), impervious surface 70 percent of the lot area
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L65"
+    # YARDS, 16.18.030 (D). Street yard 20 on the side with the driveway, 15
+    # on other street sides, 10 for covered porches only (L39). The pod's
+    # drive may be on either street, so 20 is held for the front and the
+    # street side. Rear 15 single-story, 20 two-story; on a corner lot 10 and
+    # 15 (L41). The pod is two storeys, so the two-story figures are held.
+    # Interior yard 7 ft "except as otherwise provided for zero-lot line
+    # housing" (L43): that pointer names no figure, so a townhouse's common
+    # wall keeps the seven feet (silence; no attached_wall variant).
+    setback_front_ft:
+      value: 20
+      cite: Canby CMC 16.18.030 (D)(1), street yard twenty feet on the side with the driveway
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L39"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Canby CMC 16.18.030 (D)(1), street yard
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38523
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L39"
+    setback_street_side_ft:
+      value: 20
+      cite: Canby CMC 16.18.030 (D)(1), street yard twenty feet on the side with the driveway (fifteen on other street sides; the larger is held)
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L39"
+    setback_rear_ft:
+      value: 20
+      cite: Canby CMC 16.18.030 (D)(2), rear yard twenty feet for two-story building components
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L41"
+      variants:
+        - value: 15
+          when: [corner_lot]
+          cite: Canby CMC 16.18.030 (D)(2), corner lots fifteen feet for two-story building components
+          quote: "or/clackamas/canby/cmc.16.18.030.txt#L41"
+    setback_side_ft:
+      value: 7
+      cite: Canby CMC 16.18.030 (D)(3), interior yard seven feet
+      quote: "or/clackamas/canby/cmc.16.18.030.txt#L43"
+    notes: >-
+      DRAFT. Fourplex permitted outright, one to a lot; townhouses up to six
+      in a row. 5,000 sq ft lot (3,000 for a townhouse lot), 40 wide (20
+      townhouse), 6 to 13 units an acre; front 20, street side 20, side 7,
+      rear 20 (15 on a corner); 35 ft; impervious 70 percent; two stalls a
+      unit. The multi-family site and design review is treated as outright
+      (a question for Steph).
+  R-2:
+    cite_default:
+      cite: Canby CMC Chapter 16.20 (R-2 High Density Residential)
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38567
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: true
+      cite: Canby CMC 16.20.010 (D), multi-family dwelling (and (A), the R-1.5 uses; (B), townhouses)
+      quote: "or/clackamas/canby/cmc.16.20.010.txt#L5,L7,L11"
+    # No lot area is printed for R-2 (16.20.030 prints density, width, yards,
+    # height and impervious surface); (B) puts a townhouse on a maximum
+    # 3,000 sq ft lot to meet the density.
+    min_lot_sqft:
+      exempt: true
+      cite: Canby CMC 16.20.030 (A)-(G), the R-2 development standards, print no minimum lot area (density, width, yards, height only)
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L5,L7,L9"
+    min_lot_width_ft:
+      value: 20
+      cite: Canby CMC 16.20.030 (C), minimum width and frontage twenty feet
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L9"
+    min_density_du_per_acre:
+      value: 14
+      cite: Canby CMC 16.20.030 (A), minimum density 14 units per acre
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L5"
+      measured_on:
+        fact: net_developable_area
+        cite: Canby CMC 16.20.030 (A), the area in acres minus the area required for street right-of-way and public park/open space areas
+        quote: "or/clackamas/canby/cmc.16.20.030.txt#L5"
+        less: []
+        assumed_none:
+          - "street right-of-way"
+          - "public park and open space areas"
+    max_height_ft:
+      value: 35
+      cite: Canby CMC 16.20.030 (E)(1), principal building thirty-five feet
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L31"
+    max_impervious_pct:
+      value: 70
+      cite: Canby CMC 16.20.030 (F), impervious surface 70 percent of the lot area
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L47"
+    setback_front_ft:
+      value: 20
+      cite: Canby CMC 16.20.030 (D)(1), street yard twenty feet on the side with the driveway
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L13"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Canby CMC 16.20.030 (D)(1), street yard
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38582
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L13"
+    setback_street_side_ft:
+      value: 20
+      cite: Canby CMC 16.20.030 (D)(1), street yard twenty feet on the side with the driveway (fifteen on other street sides; the larger is held)
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L13"
+    # Beside an R-1 or R-1.5 lot (D)(5): a 15-foot buffer; (E)(3): the
+    # building's height may not exceed one foot for each foot of distance
+    # from that property line, so the yard is the building's height, never
+    # under 15.
+    setback_rear_ft:
+      value: 20
+      cite: Canby CMC 16.20.030 (D)(2), rear yard twenty feet for two-story building components
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L15"
+      variants:
+        - value: 15
+          when: [corner_lot]
+          cite: Canby CMC 16.20.030 (D)(2), corner lots fifteen feet for two-story building components
+          quote: "or/clackamas/canby/cmc.16.20.030.txt#L15"
+        - value: 15
+          when: [abuts_lower_density_zone]
+          cite: Canby CMC 16.20.030 (D)(5) and (E)(3), a 15-foot buffer beside an R-1 or R-1.5 lot, and the building no taller than one foot for each foot of distance from that lot line (a 26 ft building therefore stands 26 ft off)
+          quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+          step_back:
+            height_ft: 15
+            rise_per_ft: 1
+            cite: Canby CMC 16.20.030 (E)(3), building height not greater than one foot for each foot of distance from the R-1 and/or R-1.5 property line (15 ft of height at the 15 ft buffer line)
+            quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+        - value: 15
+          when: [corner_lot, abuts_lower_density_zone]
+          cite: Canby CMC 16.20.030 (D)(5) and (E)(3), a 15-foot buffer beside an R-1 or R-1.5 lot, and the building no taller than one foot for each foot of distance from that lot line (a 26 ft building therefore stands 26 ft off)
+          quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+          step_back:
+            height_ft: 15
+            rise_per_ft: 1
+            cite: Canby CMC 16.20.030 (E)(3), building height not greater than one foot for each foot of distance from the R-1 and/or R-1.5 property line (15 ft of height at the 15 ft buffer line)
+            quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+    setback_side_ft:
+      value: 7
+      cite: Canby CMC 16.20.030 (D)(3), interior yard seven feet
+      quote: "or/clackamas/canby/cmc.16.20.030.txt#L17"
+      variants:
+        - value: 15
+          when: [abuts_lower_density_zone]
+          cite: Canby CMC 16.20.030 (D)(5) and (E)(3), a 15-foot buffer beside an R-1 or R-1.5 lot, and the building no taller than one foot for each foot of distance from that lot line (a 26 ft building therefore stands 26 ft off)
+          quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+          step_back:
+            height_ft: 15
+            rise_per_ft: 1
+            cite: Canby CMC 16.20.030 (E)(3), building height not greater than one foot for each foot of distance from the R-1 and/or R-1.5 property line (15 ft of height at the 15 ft buffer line)
+            quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
+    notes: >-
+      DRAFT. Multi-family dwelling permitted outright (a fourplex is
+      multi-family, 16.04.180). No lot minimum printed; 20 wide; at least 14
+      units an acre; front 20, street side 20, side 7, rear 20 (15 on a
+      corner); 35 ft; impervious 70 percent. Beside an R-1 or R-1.5 lot the
+      15-foot buffer and the one-foot-of-height-per-foot-of-distance rule
+      (16.20.030 (D)(5), (E)(3)) are carried as variants on the side and rear
+      yards.
+  C-R:
+    like:
+      zone: R-1.5
+      cite: Canby CMC 16.24.010 (A), uses permitted outright in the R-1.5 zone, conforming to the development standards of the R-1.5 zone
+      quote: "or/clackamas/canby/cmc.16.24.010.txt#L5"
+    cite_default:
+      cite: Canby CMC Chapter 16.24 (C-R Residential/Commercial)
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38796
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: true
+      cite: Canby CMC 16.24.010 (A), uses permitted outright in the R-1.5 zone, conforming to the development standards of the R-1.5 zone
+      quote: "or/clackamas/canby/cmc.16.24.010.txt#L5"
+    min_lot_width_ft:
+      value: 60
+      cite: Canby CMC 16.24.030 (B), minimum width and frontage sixty feet (stricter than R-1.5's forty)
+      quote: "or/clackamas/canby/cmc.16.24.030.txt#L7"
+    max_coverage_pct:
+      value: 60
+      cite: Canby CMC 16.24.030 (E), maximum lot coverage sixty percent
+      quote: "or/clackamas/canby/cmc.16.24.030.txt#L23"
+    notes: >-
+      DRAFT. The R-1.5 uses are permitted "conforming to the development
+      standards of the R-1.5 zone", so R-1.5's figures hold and C-R's own
+      stricter ones are laid over them: 60 wide, 60 percent lot coverage.
+      C-R's 45 ft height is looser than R-1.5's 35, which is kept.
+  # ------------------------------------------------------------------
+  # THE OTHER DISTRICTS. Refused, each on its own use list.
+  # ------------------------------------------------------------------
+  R-1:
+    cite_default:
+      cite: Canby CMC Chapter 16.16 (R-1 Low Density Residential)
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38428
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Canby CMC 16.16.010 (A)-(C) (single-family, duplex, cottage cluster) and (N)(1) (townhouses only as part of a planned unit development); no three- or four-family dwelling is listed
+      quote: "or/clackamas/canby/cmc.16.16.010.txt#L3,L5,L7,L57,L59"
+    notes: >-
+      DRAFT. Refuses: a single-family dwelling, a duplex or a cottage cluster
+      outright; townhouses of up to six only inside an approved planned unit
+      development; no fourplex.
+  C-1:
+    cite_default:
+      cite: Canby CMC Chapter 16.22 (C-1 Downtown Commercial)
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38712
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Canby CMC 16.22.010 (A), residential uses permitted only when part of a mixed use development
+      quote: "or/clackamas/canby/cmc.16.22.010.txt#L5"
+    notes: >-
+      DRAFT. Refuses: housing only as part of a mixed-use development
+      (with commercial, office or public use).
+      DOUBT: the Downtown Canby Overlay (16.41.030 A) lets the Transitional
+      Commercial sub-area -- two small nodes between 3rd and 4th, Fir to
+      Douglas and Holly to Knott (16.41.020 A.2) -- build multi-family on R-2
+      standards outright. The sub-area boundary is a figure in the code, not
+      a map layer FLATS holds, so every C-1 lot stays refused (a false RED on
+      those few lots, never a false GREEN). FOLLOWUPS carries the tracing.
+  C-2:
+    cite_default:
+      cite: Canby CMC Chapter 16.28 (C-2 Highway Commercial)
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38847
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Canby CMC 16.28.010 (A), a use permitted outright in a C-1 zone (C-1 allows housing only in a mixed use development, 16.22.010 (A)); no dwelling use of its own is listed
+      quote: "or/clackamas/canby/cmc.16.28.010.txt#L5"
+    notes: >-
+      DRAFT. Refuses: housing only as the C-1 mixed-use development; no
+      dwelling use of C-2's own.
+  C-M:
+    cite_default:
+      cite: Canby CMC Chapter 16.30 (C-M Commercial-Manufacturing)
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38897
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Canby CMC 16.30.010 (A) (a C-2 use other than dwelling units) and (C) (dwelling for a watchman or caretaker)
+      quote: "or/clackamas/canby/cmc.16.30.010.txt#L5,L9"
+    notes: >-
+      DRAFT. Refuses: dwelling units excluded; a caretaker's dwelling only.
+  M-1:
+    cite_default:
+      cite: Canby CMC Chapter 16.32 (M-1 Light Industrial)
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38944
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Canby CMC 16.32.010 (D), dwelling for a watchman or caretaker working on the property (the only dwelling listed)
+      quote: "or/clackamas/canby/cmc.16.32.010.txt#L17"
+    notes: >-
+      DRAFT. Refuses: a caretaker's dwelling only.
+  M-2:
+    cite_default:
+      cite: Canby CMC Chapter 16.34 (M-2 Heavy Industrial)
+      url: https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39011
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Canby CMC 16.34.010, uses permitted outright in the M-2 zone (no dwelling is listed)
+      quote: "or/clackamas/canby/cmc.16.34.010.txt#L1"
+    notes: >-
+      DRAFT. Refuses: no dwelling use is listed.
+
+zone_rulings:
+  R1:
+    outcome: alias
+    of: R-1
+    note: >-
+      "R1", the Oregon City regional zoning layer's spelling of Canby's R-1,
+      Low Density Residential (CMC 16.16), on 2026-10-07. The block is R-1.
+  R1.5:
+    outcome: alias
+    of: R-1.5
+    note: >-
+      "R1.5", the regional zoning layer's spelling of Canby's R-1.5, Medium
+      Density Residential (CMC 16.18), on 2026-10-07. The block is R-1.5.
+  R2:
+    outcome: alias
+    of: R-2
+    note: >-
+      "R2", the regional zoning layer's spelling of Canby's R-2, High Density
+      Residential (CMC 16.20), on 2026-10-07. The block is R-2.
+  CR:
+    outcome: alias
+    of: C-R
+    note: >-
+      "CR", the regional zoning layer's second spelling of Canby's C-R,
+      Residential/Commercial (CMC 16.24), on 2026-10-07 (the layer also
+      carries "C-R"). The block is C-R.
+  C1:
+    outcome: alias
+    of: C-1
+    note: >-
+      "C1", the regional zoning layer's spelling of Canby's C-1, Downtown
+      Commercial (CMC 16.22), on 2026-10-07. The block is C-1.
+  C2:
+    outcome: alias
+    of: C-2
+    note: >-
+      "C2", the regional zoning layer's spelling of Canby's C-2, Highway
+      Commercial (CMC 16.28), on 2026-10-07. The block is C-2.
+  CM:
+    outcome: alias
+    of: C-M
+    note: >-
+      "CM", the regional zoning layer's spelling of Canby's C-M,
+      Commercial-Manufacturing (CMC 16.30), on 2026-10-07. The block is C-M.
+  M1:
+    outcome: alias
+    of: M-1
+    note: >-
+      "M1", the regional zoning layer's spelling of Canby's M-1, Light
+      Industrial (CMC 16.32), on 2026-10-07. The block is M-1.
+  M2:
+    outcome: alias
+    of: M-2
+    note: >-
+      "M2", the regional zoning layer's spelling of Canby's M-2, Heavy
+      Industrial (CMC 16.34), on 2026-10-07. The block is M-2.

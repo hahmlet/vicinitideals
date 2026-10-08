@@ -97,6 +97,24 @@ TARGETS: tuple[Target, ...] = (
         "durham", "or/washington/durham", ("DURHAM",), "zoning_metro", "ZONE",
         comment="No city zoning service; Metro's regional layer, as Fairview.",
     ),
+    Target(
+        "canby", "or/clackamas/canby", ("CANBY",), "zoning_canby", "ZONE",
+        comment="Canby Municipal Code Title 16 (American Legal); the regional zoning "
+        "fabric's CITY = 'Canby' polygons. Outside Metro: JURIS_CITY CANBY is read "
+        "off the Clackamas roll.",
+    ),
+    Target(
+        "sandy", "or/clackamas/sandy", ("SANDY",), "zoning_sandy", "ZONE",
+        comment="Sandy Development Code, Title 17 (Municode); the regional zoning "
+        "fabric's CITY = 'Sandy' polygons. Outside Metro: JURIS_CITY SANDY is read "
+        "off the Clackamas roll.",
+    ),
+    Target(
+        "estacada", "or/clackamas/estacada", ("ESTACADA",), "zoning_estacada", "ZONE",
+        comment="Estacada Municipal Code Title 16 (Municipal Code Online); the regional "
+        "zoning fabric's CITY = 'Estacada' polygons. Outside Metro: JURIS_CITY ESTACADA "
+        "is read off the Clackamas roll.",
+    ),
 )
 
 

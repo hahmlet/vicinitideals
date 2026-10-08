@@ -1,0 +1,3 @@
+16.04.105 Cell Coverage Area.
+
+A geographic area where a single radio transmission sending/receiving station (per provider) and the equipment necessary to connect these radio calls to land lines or other cells are located. (Ord. 981 section 17, 1997, Ord. 1539, 2020)

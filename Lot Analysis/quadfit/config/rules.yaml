@@ -4538,4 +4538,328 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/durham NRO) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
 
+  canby:
+    # Canby Municipal Code Title 16 (American Legal); the regional zoning fabric's CITY = 'Canby' polygons. Outside Metro: JURIS_CITY CANBY is read off the Clackamas roll.
+    eligible: true
+    juris_city_codes: [CANBY]
+    zoning_layer: zoning_canby
+    zone_field: ZONE
+    orientation_constraint: entrance_only
+    zone_aliases:
+      "C1": "C-1"
+      "C2": "C-2"
+      "CM": "C-M"
+      "CR": "C-R"
+      "M1": "M-1"
+      "M2": "M-2"
+      "R1": "R-1"
+      "R1.5": "R-1.5"
+      "R2": "R-2"
+    zones:
+      - zone: "R-1.5"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 7
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 5000
+        min_lot_width_ft: 40
+        min_density_du_per_acre: 6
+        source: "Canby CMC 16.18.010 (D), four-family dwellings, one fourplex on each lot (and (C), townhouses in groups of up to six)"
+        source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38514"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/canby R-1.5) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-2"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 26
+        setback_rear_ft: 26
+        setback_street_side_ft: 20
+        min_lot_width_ft: 20
+        min_density_du_per_acre: 14
+        source: "Canby CMC 16.20.010 (D), multi-family dwelling (and (A), the R-1.5 uses; (B), townhouses)"
+        source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38567"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/canby R-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-R"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 7
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 5000
+        max_coverage_pct: 60
+        min_lot_width_ft: 60
+        min_density_du_per_acre: 6
+        source: "Canby CMC 16.24.010 (A), uses permitted outright in the R-1.5 zone, conforming to the development standards of the R-1.5 zone"
+        source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38796"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/canby C-R) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-1"
+        quadplex_allowed: false
+        source: "Canby CMC 16.16.010 (A)-(C) (single-family, duplex, cottage cluster) and (N)(1) (townhouses only as part of a planned unit development); no three- or four-family dwelling is listed"
+        source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38428"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/canby R-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-1"
+        quadplex_allowed: false
+        source: "Canby CMC 16.22.010 (A), residential uses permitted only when part of a mixed use development"
+        source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38712"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/canby C-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-2"
+        quadplex_allowed: false
+        source: "Canby CMC 16.28.010 (A), a use permitted outright in a C-1 zone (C-1 allows housing only in a mixed use development, 16.22.010 (A)); no dwelling use of its own is listed"
+        source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38847"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/canby C-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-M"
+        quadplex_allowed: false
+        source: "Canby CMC 16.30.010 (A) (a C-2 use other than dwelling units) and (C) (dwelling for a watchman or caretaker)"
+        source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38897"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/canby C-M) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "M-1"
+        quadplex_allowed: false
+        source: "Canby CMC 16.32.010 (D), dwelling for a watchman or caretaker working on the property (the only dwelling listed)"
+        source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38944"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/canby M-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "M-2"
+        quadplex_allowed: false
+        source: "Canby CMC 16.34.010, uses permitted outright in the M-2 zone (no dwelling is listed)"
+        source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-39011"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/canby M-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+
+  sandy:
+    # Sandy Development Code, Title 17 (Municode); the regional zoning fabric's CITY = 'Sandy' polygons. Outside Metro: JURIS_CITY SANDY is read off the Clackamas roll.
+    eligible: true
+    juris_city_codes: [SANDY]
+    zoning_layer: zoning_sandy
+    zone_field: ZONE
+    orientation_constraint: entrance_only
+    zone_aliases:
+      "C1": "C-1"
+      "C2": "C-2"
+      "C3": "C-3"
+      "I1": "I-1"
+      "I2": "I-2"
+      "I3": "I-3"
+      "R1": "R-1"
+      "R2": "R-2"
+      "R3": "R-3"
+    zones:
+      - zone: "R-1"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_frontage_ft: 20
+        min_density_du_per_acre: 5
+        source: "Sandy SDC 17.36.10 (A), the outright list has single detached, zero lot line, duplex, row houses, manufactured dwelling parks, SRO and residential home; no multi-family dwelling"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.36LODERER-"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy R-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-2"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_frontage_ft: 20
+        min_density_du_per_acre: 8
+        source: "Sandy SDC 17.38.10 (A), row houses and multi-family dwellings permitted outright"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.38MEDERER-"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy R-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-3"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_frontage_ft: 20
+        min_density_du_per_acre: 10
+        source: "Sandy SDC 17.40.10 (A), row houses and multi-family dwellings permitted outright"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.40HIDERER-"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy R-3) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SFR"
+        quadplex_allowed: false
+        source: "Sandy SDC 17.34.10 (A), the outright list is a single detached dwelling, a duplex, a residential home and similar; no row house and no multi-family dwelling"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.34SIMIRESF"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy SFR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "POS"
+        quadplex_allowed: false
+        source: "Sandy SDC 17.32.20 (A), the permitted uses list parks and open space; no dwelling"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.32PAOPSPPO"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy POS) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-1"
+        quadplex_allowed: false
+        source: "Sandy SDC 17.42.10 (A), residential uses are row houses and duplexes existing before the Code, a residential care facility and dwellings above a commercial business; no new multi-family or row house"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.42CEBUDIC-"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy C-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-2"
+        quadplex_allowed: false
+        source: "Sandy SDC 17.44.10 (A), multi-family dwellings only above a commercial business"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.44GECOC-"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy C-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-3"
+        quadplex_allowed: false
+        source: "Sandy SDC 17.46.10 (A), residential dwellings only above a commercial business"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.46VICOC-"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy C-3) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "I-1"
+        quadplex_allowed: false
+        source: "Sandy SDC 17.48.10 (A), the permitted uses are industrial, warehousing and commercial; no dwelling is listed"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.48INPAI-"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy I-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "I-2"
+        quadplex_allowed: false
+        source: "Sandy SDC 17.50.10 (A), the permitted uses are manufacturing, warehousing and commercial; no dwelling is listed"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.50LIINI-"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy I-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "I-3"
+        quadplex_allowed: false
+        source: "Sandy SDC 17.52.10 (A), the permitted uses are industrial; no dwelling is listed"
+        source_url: "https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.52GEINI-"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/sandy I-3) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+
+  estacada:
+    # Estacada Municipal Code Title 16 (Municipal Code Online); the regional zoning fabric's CITY = 'Estacada' polygons. Outside Metro: JURIS_CITY ESTACADA is read off the Clackamas roll.
+    eligible: true
+    juris_city_codes: [ESTACADA]
+    zoning_layer: zoning_estacada
+    zone_field: ZONE
+    orientation_constraint: entrance_only
+    zone_aliases:
+      "AP": "A-P"
+      "C1": "C-1"
+      "C2": "C-2"
+      "HC": "H-C"
+      "M1": "M-1"
+      "OC": "O-C"
+      "OS": "O-S"
+      "R1": "R-1"
+      "R2": "R-2"
+      "R3": "R-3"
+      "RC": "R-C"
+    zones:
+      - zone: "C-2"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 15
+        min_lot_sqft: 10000
+        source: "Estacada EMC 16.32.020, fourplex and commonwall dwellings permitted outright"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada C-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "CMU"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 15
+        min_lot_sqft: 10000
+        source: "Estacada EMC 16.37.020, fourplex and commonwall dwellings permitted outright"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada CMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-3"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 10
+        setback_rear_ft: 15
+        setback_street_side_ft: 15
+        min_lot_sqft: 10000
+        max_coverage_pct: 55
+        source: "Estacada EMC 16.24.020 and 16.24.030 (A), a fourplex on one lot is only the R-2 conditional use (16.20.030 (B)); commonwall dwellings and five-unit multi-family are outright"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada R-3) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-1"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.16.020, the outright list stops at a duplex and commonwall dwellings up to two units"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada R-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-2"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.20.020 and 16.20.030 (B), triplex and commonwall up to three units are outright; middle housing with four dwelling units is a conditional use"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada R-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "NCR"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.25.020, a triplex, fourplex or three-plus-unit commonwall row is outright only within 200 feet of Eagle Creek Road, Hinman Road or a major collector or higher street"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada NCR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "D"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.26.020 (D), a fourplex is outright only if no ground floor residential fronts Broadway, Main or OR 224, none sits south of OR 224, and density is at least sixteen units an acre"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada D) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C-1"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.28.030, multi-family dwelling, triplex or fourplex is a conditional use"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada C-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MMU"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.33.020 (A), before development a Facilities Plan and a City Council Master Development Plan must be approved (the CMU uses are then permitted)"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada MMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "R-C"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.34.040 (D), multi-family dwelling only with a commercial ground floor, as a conditional use; no fourplex is listed"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada R-C) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "H-C"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.35.040 (D), dwellings are a prohibited use"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada H-C) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "O-C"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.38.020, the only outright use is a trail, path or boardwalk"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada O-C) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "M-1"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.39.020, the outright uses are light industry, enclosed manufacturing and storage, agriculture and forestry; no dwelling is listed"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada M-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "A-P"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.42.020 and 16.42.040, the outright uses are aviation uses with a caretaker's residence, on lots of at least fifty acres"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada A-P) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "O-S"
+        quadplex_allowed: false
+        source: "Estacada EMC 16.44.015, the outright uses are public trails, public facilities and park uses"
+        source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada O-S) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+
   # <<< end of ported blocks

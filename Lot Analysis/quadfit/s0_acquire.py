@@ -116,6 +116,18 @@ ARCGIS_LAYERS: dict[str, tuple[str, list[str]]] = {
         "https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_LandUseAndPlanning/MapServer/7",
         ["ZONE"],
     ),
+    "zoning_canby": (
+        "https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_LandUseAndPlanning/MapServer/7",
+        ["ZONE"],
+    ),
+    "zoning_sandy": (
+        "https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_LandUseAndPlanning/MapServer/7",
+        ["ZONE"],
+    ),
+    "zoning_estacada": (
+        "https://maps.orcity.org/arcgis/rest/services/GLADSTONE/Gladstone_LandUseAndPlanning/MapServer/7",
+        ["ZONE"],
+    ),
     # West Linn: DESIGNATION carries the canonical hyphenated code (R-5, R-10);
     # the sibling ZONE field is a compressed alias.
     "zoning_west_linn": (

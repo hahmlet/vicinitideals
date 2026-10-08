@@ -1,0 +1,15 @@
+16.24.020 Conditional uses.
+
+Conditional uses in the C-R zone shall be as follows:
+
+A. Uses listed as conditional in R-1 or R-1.5 zones, and not listed as permitted in section 16.24.010; residential development shall conform to the development standards of the R-2 zone.
+
+B. Uses listed as permitted outright in R-2 zones, and not listed as permitted in section 16.24.010. Such uses shall conform to the development standards of the R-2 zone.
+
+C. Motels or hotels.
+
+D. Certain telecommunications facilities, pursuant to the standards and requirements of Chapter 16.55.
+
+E. Food services, excluding auto-oriented uses.
+
+F. Self-Storage/Mini-Storage Warehouse Units. As defined in 16.04.547. (Ord. 890 section 27, 1993; Ord. 740 section 10.3.25(B), 1984; Ord. 981 section 23, 1997; Ord. 1080, 2001; Ord 1237, 2007; Ord. 1514, 2019, Ord. 1539, 2020)

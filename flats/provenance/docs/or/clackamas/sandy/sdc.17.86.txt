@@ -1,0 +1,294 @@
+CHAPTER 17.86 - PARKLAND AND OPEN SPACE[33]
+
+
+Footnotes:
+--- (33) ---
+Editor's note— Pre-republication, this chapter was last revised by Ord. No. 2013-03, effective July 3, 2013. Any amendments occurring post-republication have a history note in parenthesis at the bottom of the amended section.
+
+
+Sec. 17.86.00. - Intent.
+
+
+The availability of parkland and open space is a critical element in maintaining and improving the quality of life in Sandy. Land that features trees, grass and vegetation provides not only an aesthetically pleasing landscape but also buffers incompatible uses, and preserves sensitive environmental features and important resources. Parks and open space, together with support facilities, also help to meet the active and passive recreational needs of Sandy residents. This chapter implements policies of Goal 5 and Goal 8 of the Comprehensive Plan and the 2022 Parks and Trails Master Plan by outlining provisions for parks and open space in the City of Sandy.
+
+(Ord. No. 2022-10, § 2(Exh. B), 6-6-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.86.10. - Minimum parkland dedication requirements.
+
+
+Parkland Dedication: Residential subdivisions and partitions, single-family or multi-family developments, and manufactured dwelling park developments are required to provide parkland to serve residents of those developments. Congregate multi-family housing development that provides services and/or facilities, as defined in Chapter 17.10 of the City's Municipal Code, are considered to be multi-family developments for the purpose of parkland dedication. Licensed adult congregate care living facilities, nursing homes, and all other residential care facilities that provide clients with individual beds and sleeping quarters, but in which all other care and services are communal and provided by facility employees, are exempt from parkland dedication. The dedication or provision of parks, open space, trails, and amenities shall be located in compliance with the 2022 Parks and Trails Master Plan Maps 8 and 14, dedicated pursuant to the formula in Subsection 17.86.10.B., and in compliance with the improvement standards in Section 17.86.20. The level of service standards as well as the park and trail level of service needs as identified in Chapter 4, Table 10, of the 2022 Parks and Trails Master Plan are specifically incorporated by this reference.
+A.
+
+The required parkland shall be dedicated as a condition of approval for the following:
+
+1.
+
+Single-family and duplex building permits;
+
+2.
+
+Tentative plat for a subdivision or partition;
+
+3.
+
+Design review for a multi-family development or manufactured dwelling park;
+
+4.
+
+Design review for a multi-family development accessory to commercial or industrial development; and,
+
+5.
+
+Replat or amendment of any site plan for multi-family development or manufactured dwelling park where dedication has not previously been made or where the density of the development involved will be increased.
+
+B.
+
+Calculation of Required Dedication. The required parkland acreage to be dedicated shall be based on the following formula:
+
+Required parkland dedication (acres) = (proposed dwelling units) x (persons/dwelling unit) x 0.0068 (per person park land dedication factor)
+
+1.
+
+Population Formula: The following table shall be used to determine the number of persons per unit to be used in calculating required parkland dedication:
+
+Type of Unit                  Total Persons Per Dwelling Unit
+Single family dwelling unit   3.0
+Duplex dwelling unit          3.0 *
+Standard multi-family unit    2.0
+Manufactured dwelling unit    2.0
+Congregate multi-family unit  1.5
+
+* The total persons per unit for the entire duplex (both units) would be six.
+
+The specific formula for the dedication of land will, therefore, be subject to periodic review and amendment. A fee-in-lieu under Section 17.86.40 shall be based on the number and type of dwelling units proposed at time of plat, but an additional fee in-lieu will be required and calculated on a per lot basis if any lots are constructed or converted to add additional dwelling units. For example, if an existing single family dwelling unit is converted into a duplex dwelling unit the existing single family dwelling unit shall receive a credit, but the new dwelling unit shall pay the difference in persons per dwelling unit. This would equate to one proposed dwelling unit multiplied by three additional persons multiplied by 0.0068 for the above example.
+
+2.
+
+Per Person Parkland Dedication Factor: The total parkland dedication requirement shall be 0.0068 of an acre per person based on the adopted standard of 6.8 acres of land per 1,000 of population per the 2022 Parks and Trails Master Plan. * This standard represents the citywide land-to-population ratio for city parks at 5.25 acres of land per 1,000 of population, and land for trails at 1.55 acres of land per 1,000 of population.
+
+C.
+
+Notwithstanding Subsection 17.86.10.A. above, when the amount of land to be dedicated is less than one quarter acre, or the level of service standards for mini parks in the 2022 Parks and Trails Master Plan have been met for the subject site, the applicant shall pay a fee in lieu of dedication as provided in Subsection 17.86.40.B., with the following exceptions:
+
+1.
+
+When the land to be dedicated is for a trail identified in Map 14 Proposed Trail System, Table 12 Tier 1 Capital Improvement Plan, or Table A-4 Proposed Trail Capital Improvement Plan of the 2022 Parks and Trails Master Plan;
+
+2.
+
+When the land to be dedicated abuts existing or planned parkland that necessitates additional acreage to meet the identified parkland acreage needs as identified in Map 8 Proposed Park System, Table 12 Tier 1 Capital Improvement Plan, or Table A-3 Proposed Park Capital Improvement Plan of the 2022 Parks and Trails Master Plan.
+
+(Ord. No. 2021-03, § 8(Exh. H), 5-17-2021; Ord. No. 2021-16, § 13(Exh. L), 8-16-2021; Ord. No. 2022-10, § 2(Exh. B), 6-6-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.86.20. - Minimum parkland standards.
+
+
+Land required or proposed for parkland dedication shall be contained within a continuous unit and shall accommodate use as a mini, neighborhood, or community-park, as defined in the 2022 Parks and Trails Master Plan, based on the following criteria:
+A.
+
+The primary entrance of single-family homes and duplexes shall face towards parkland when separated by street right-of-way. Residential through lots or corner lots that abut more than one street with one of the streets defined as an arterial or collector street shall have the front door face the arterial or collector street as defined by Chapter 17.82.
+
+B.
+
+On the sides of the parkland not fronting onto a street, a pedestrian and bicycle access way shall be provided with a minimum improved surface of ten feet within a 15-foot right-of-way or tract. Pedestrian and bicycle access ways shall be spaced at least once every 400 feet. If the parkland abuts land to be developed for multi-family development or a manufactured dwelling park the multifamily development or manufactured dwelling park shall include a pedestrian and bicycle access way in a public easement from any abutting street right-of-way through the property with multi-family development or a manufactured dwelling park to the parkland.
+
+C.
+
+In all zones, where real property abuts parkland, fence height shall not exceed six feet at the common property line with the parkland. Barbed wire is not permitted on fences abutting parks. This regulation supersedes Section 17.74.40.
+
+D.
+
+A retaining wall constructed at the perimeter of a park adjacent to a public right-of-way or private street shall not exceed four feet in height.
+
+E.
+
+The required parkland dedication for parks one acre or greater shall be abutted by street right-of-way for at least 400 linear feet, with the following exceptions for trails and parks less than one acre:
+
+1.
+
+Land dedicated for trails as identified in the 2022 Parks and Trails Master Plan only need to abut street right-of-way for a total of 15 linear feet.
+
+2.
+
+If the land dedication is between half-acre and one-acre the parkland shall be abutted by street right-of-way for at least 200 linear feet.
+
+3.
+
+If the land dedication is less than half-acre the parkland shall be abutted by street right-of-way for at least 100 linear feet.
+
+F.
+
+The required dedication shall be contained as a contiguous unit and not separated into pieces or divided by streets or other pedestrian barriers.
+
+G.
+
+The parkland shall provide for park facilities, such as play structures and play fields as described in the 2022 Parks and Trails Master Plan, subject to the following standards:
+
+1.
+
+Neighborhood Parks or Community Parks: Not more than 20 percent of the park may exceed 15 percent slope. Zero percent of the park shall include wetlands.
+
+2.
+
+Mini Parks: Not more than ten percent of the park may exceed 15 percent slope. Zero percent of the park shall include wetlands.
+
+(Ord. No. 2022-10, § 2(Exh. B), 6-6-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.86.30. - Dedication procedures.
+
+
+Land dedicated to the City as parkland shall be dedicated on the final plat, or by recording a deed, easement, or other appropriate document when there is not a plat. Dedication of land in conjunction with multi-family development shall be required prior to issuance of building permits.
+A.
+
+Prior to final plat approval, the applicant shall complete the following items for all proposed dedication areas:
+
+1.
+
+The applicant shall clear, fill, and/or grade all land in accordance with the approved grading plan, install curb, gutter, and sidewalks in accordance with the 2023 Transportation System Master Plan on the park land adjacent to any street, and seed the parkland. As an alternative to constructing sidewalks, the applicant may provide a financial guarantee for sidewalk construction, consistent with Subsection 17.100.340; and,
+
+2.
+
+The applicant shall submit a Phase I Environmental Site Assessment of the parkland to the City, completed by a qualified professional according to American Society of Testing and Materials (ASTM) standards (ASTM E 1527). The results of this study shall indicate a clean environmental record prior to dedication.
+
+a.
+
+In the event that the Phase 1 Environmental Site Assessment detects the potential for contaminated soil, the applicant shall perform further assessment, testing and sampling as needed to determine the type and extent of contamination present, and potential remediation steps needed.
+
+b.
+
+If contaminated conditions are present the applicant shall either remediate the condition and submit a report to the City documenting the procedures and final soil conditions or select other property for the parkland dedication.
+
+B.
+
+Additional Requirements.
+
+1.
+
+Land dedicated or restricted for use as parkland shall not be subject to any other easements, reservations of record, or encumbrances of any kind that interfere with the use of the land for park, open space, or recreational purposes.
+
+2.
+
+Where a reservation, encumbrance, or easement exists, the applicant may propose an alternative lot or parcel for parkland dedication or the City may require payment in lieu of the dedication of lands.
+
+3.
+
+In a phased development, the required park land for the entire development shall be dedicated on the final plat for the first phase of the development. Improvements to the land as required by Subsection 17.86.30.A.1. shall be completed or bonded per the standards in Chapter 17.100 prior to approval of the final plat for the phase that includes the parkland.
+
+(Ord. No. 2022-10, § 2(Exh. B), 6-6-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.86.40. - Fee in lieu of dedication.
+
+
+A payment in lieu of land dedication is separate from Park Systems Development Charges (SDCs) and is not eligible for a credit of Park SDCs. The amount of the fee in lieu of land dedication (in dollars per acre) shall be set by City Council Resolution based on relevant economic indices and the typical market value of developed property (finished lots) in Sandy net of related development costs.
+A.
+
+The City shall accept a fee in lieu of dedication from an applicant if the land area proposed to be dedicated is not identified in Map 14 Proposed Trail System, Table 12 Tier 1 Capital Improvement Plan, or Table A-4 Proposed Trail Capital Improvement Plan of the 2022 Parks and Trails Master Plan or is not in compliance with the improvement standards in Section 17.86.20.
+
+B.
+
+The City shall accept a fee in lieu of dedication from an applicant if the land area proposed to be dedicated is not identified in Map 8 Proposed Park System, Table 12 Tier 1 Capital Improvement Plan, or Table A-3 Proposed Park Capital Improvement Plan of the 2022 Parks and Trails Master Plan or is not in compliance with the improvement standards in Section 17.86.20.
+
+C.
+
+The City shall accept a fee in lieu of dedication from an applicant if the park area to be dedicated is less than one-quarter acre, or the level of service standard for mini parks described in the 2022 Parks and Trails Master Plan has been satisfied, with the following exceptions:
+
+1.
+
+When the land to be dedicated is for a trail identified in Map 14 Proposed Trail System, Table 12 Tier 1 Capital Improvement Plan, or Table A-4 Proposed Trail Capital Improvement Plan of the 2022 Parks and Trails Master Plan;
+
+2.
+
+When the land to be dedicated abuts existing or planned parkland that necessitates additional acreage to meet the identified parkland acreage needs as identified in Map 8 Proposed Park System, Table 12 Tier 1 Capital Improvement Plan, or Table A-3 Proposed Park Capital Improvement Plan of the 2022 Parks and Trails Master Plan.
+
+D.
+
+The fee in lieu of parkland dedication for a residential subdivision shall be paid prior to approval of the final plat or as specified below:
+
+1.
+
+Fifty percent of the payment shall be paid prior to final plat approval, and
+
+2.
+
+The remaining 50 percent of the payment, plus an administrative surcharge specified by City Council resolution, shall be pro-rated equally among the lots and paid at the time of building permit issuance for each lot.
+
+E.
+
+The fee in lieu of dedication for a single-family dwelling, duplex, or multi-family dwelling not in conjunction with a residential subdivision shall be paid at the time of building permit issuance for the subject lot or parcel.
+
+(Ord. No. 2022-10, § 2(Exh. B), 6-6-2022; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)
+
+
+Sec. 17.86.50. - Minimum standards for open space dedication.
+
+
+An application for a subdivision, partition, replat or design review may propose the dedication and protection of open space areas as part of that process. However, this open space shall not be eligible to count toward the parkland dedication requirement of Sections 17.86.10 through 17.86.40.
+A.
+
+The types of open space that may be provided are:
+
+1.
+
+Natural Areas: areas of undisturbed vegetation, steep slopes, stream corridors, wetlands, wildlife habitat areas, riparian corridors, or areas replanted with native vegetation after construction.
+
+2.
+
+Greenways: linear areas linking residential areas with open space areas. These greenways may contain bicycle paths or footpaths. Connecting greenways between residences and recreational areas is encouraged.
+
+B.
+
+A subdivision, partition, replat, or design review application proposing designation of open space shall include the following information as part of the application:
+
+1.
+
+Designate the boundaries of all open space areas; and
+
+2.
+
+Specify the manner in which the open space shall be owned, maintained, and administered; and
+
+3.
+
+Provide for public access to trails included in the 2022 Parks and Trails Master Plan, including but not limited to the Tickle Creek Trail.
+
+C.
+
+Dedication of open space may occur concurrently with development of a project. For phased development, the open space may be set aside in totality and/or dedicated in conjunction with the first phase of the development or incrementally set aside and dedicated in proportion to the development occurring in each phase.
+
+D.
+
+Open space areas shall be maintained so that the use and enjoyment thereof remain safe, healthy, and functional. Open space areas may be owned, preserved, and maintained by any of the following mechanisms or combinations thereof:
+
+1.
+
+Dedication to the City of Sandy or another public agency, if there is a public agency willing to accept the dedication. Prior to acceptance of proposed open space, the City shall require the applicant to submit a Phase I Environmental Site Assessment of the open space area completed by a qualified professional according to American Society of Testing and Materials (ASTM) standards (ASTM E 1527). The results of this study shall indicate a clean environmental record prior to dedication.
+
+a.
+
+In the event that the Phase 1 Environmental Site Assessment detects the potential for contaminated soil, the applicant shall perform further assessment, testing and sampling as needed to determine the type and extent of contamination present, and potential remediation steps needed.
+
+b.
+
+If contaminated conditions are present the applicant shall either remediate the condition and submit a report to the City documenting the procedures and final soil conditions or, select another area for parkland dedication.
+
+2.
+
+Common ownership by a homeowner's association that assumes full responsibility for its maintenance;
+
+3.
+
+Dedication of development rights to another public agency with ownership remaining with the developer or homeowner's association. Maintenance responsibility will remain with the property owner; and/or
+
+4.
+
+Deed-restricted private ownership preventing development and/or subsequent land division and providing for ongoing maintenance responsibilities.
+
+E.
+
+In the event that an owner of private open space fails to maintain it according to the standards of this Code, the City of Sandy, following reasonable notice, may demand that the deficiency of maintenance be corrected, and may enter the open space for maintenance purposes. All costs thereby incurred by the City shall be charged to those persons having the primary responsibility for maintenance of the open space. The City shall enforce the maintenance requirement, pursuant to Sandy Municipal Code Chapters 1.18 or 8.16.
+
+(Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)

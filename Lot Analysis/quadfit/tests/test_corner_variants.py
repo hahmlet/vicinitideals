@@ -51,6 +51,13 @@ BY_RIGHT_GAINS = {
     "or/washington/hillsboro/R-7.max_coverage_pct",
     "or/washington/hillsboro/R-6.max_coverage_pct",
     "or/washington/hillsboro/R-4.5.max_coverage_pct",
+    # Canby 16.18.030 (D)(2) and 16.20.030 (D)(2), 2026-10-07: a corner lot's
+    # two-story rear yard is 15 ft against 20 on any other lot, no plat
+    # needed. A room gain of five feet on a corner lot's back, drafted
+    # unsigned; the corner flag is computed, so it is reachable. (C-R takes
+    # R-1.5's figures.)
+    "or/clackamas/canby/R-1.5.setback_rear_ft",
+    "or/clackamas/canby/R-2.setback_rear_ft",
 }
 
 
@@ -165,15 +172,22 @@ def test_only_fourteen_reachable_corner_rules_can_move_a_building() -> None:
     nothing the street-side yard does not already charge -- the same row is
     CC's 20 ft street side -- and CC admits the pod only on the 91 lots of the
     Residential Sub-District, none screened yet (the next full re-screen).
+
+    One joined 2026-10-07 in another NEW jurisdiction: Canby R-2's rear yard
+    on a lot that is both a corner and beside an R-1 or R-1.5 lot (CMC
+    16.20.030 (D)(5), (E)(3)) -- the buffer's height plane holds the yard at
+    the building's height whatever the corner's 15 ft would say. Canby has no
+    greens yet (its lots are weighed at the next weekly run).
     """
     audit = _audit()
     setbacky = [v for v in audit.scan()
                 if v.reachable and v.direction == "tightens"
                 and v.field.startswith("setback_")]
-    assert len(setbacky) == 15, [str(v) for v in setbacky]
+    assert len(setbacky) == 16, [str(v) for v in setbacky]
     assert {v.layer for v in setbacky} == {
         "or/multnomah/wood-village", "or/clackamas/wilsonville",
         "or/washington/hillsboro", "or/clackamas/tualatin",
+        "or/clackamas/canby",
     }, sorted({v.layer for v in setbacky})
     shares = [v for v in setbacky if getattr(v.alt, "pct", None) is not None]
     assert len(shares) == 8 and {v.field for v in shares} == {"setback_street_side_ft"}

@@ -1,0 +1,3 @@
+16.04.061 Antenna.
+
+Antenna. Defined in 47 C.F.R. § 1.6002(b). The term includes an apparatus designed for the purpose of emitting radio frequencies (RF) to be operated or operating from a fixed location pursuant to Federal Communications Commission authorization, for the provision of personal wireless service and any commingled information services. For purposes of this definition, the term antenna does not include an unintentional radiator, mobnile station, or device authorized under 47 C.F.R. Part 15. (Ord. 1539, 2020)

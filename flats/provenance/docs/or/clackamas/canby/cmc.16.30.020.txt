@@ -1,0 +1,11 @@
+16.30.020 Conditional uses.
+
+Conditional uses in the C-M zone shall be as follows:
+
+A. A use permitted outright in an M-1 zone and not listed in section 16.30.010 or below;
+
+B. A use permitted conditionally in a C-1 or C-2 zone, other than dwelling units, and not listed in section 16.30.010 or below;
+
+C. Other light industrial uses as determined by the Planning Commission;
+
+D. Detached telecommunications facilities (monopole), equal to or over 100 feet in height pursuant to the standards and requirements of Chapter 16.55. (Ord. 740 section 10.3.29(B), 1984; Ord. 981 section 28 & 29, 1997; Ord. 1237, 2007, Ord. 1539, 2020)

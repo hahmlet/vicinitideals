@@ -1,0 +1,585 @@
+label: Estacada
+kind: city
+eligible: true
+notes: >-
+  DRAFT, 2026-10-07. Estacada Municipal Code Title 16 (Development), stored from the city's
+  published code. Admits C-2, CMU and R-3 (R-3 as townhouse lots only); refuses the rest.
+
+ingest:
+  geoid: null
+  juris_city_codes:
+  - ESTACADA
+  zoning_layer: zoning_estacada
+  zone_field: ZONE
+  strip_lowercase_suffix: false
+
+code:
+- id: "emc.16.08"
+  url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+  title: "EMC Chapter 16.08 Definitions"
+  start: "Chapter 16.08 DEFINITIONS"
+  nth: 2
+  end: "Division II Zoning Districts"
+  allow_thin: true
+- id: "emc.16.zones"
+  url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+  title: "EMC Chapters 16.12 to 16.56 Zoning Districts"
+  start: "Chapter 16.12 ESTABLISHMENT OF ZONES"
+  nth: 2
+  end: "Division III Zoning Regulations"
+  allow_thin: true
+- id: "emc.16.60"
+  url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+  title: "EMC Chapter 16.60 Supplementary Regulations"
+  start: "Chapter 16.60 SUPPLEMENTARY REGULATIONS"
+  nth: 2
+  end: "Chapter 16.61 ACCESSORY DWELLING UNITS"
+  allow_thin: true
+- id: "emc.16.75"
+  url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+  title: "EMC Chapter 16.75 Pedestrian Access, Connectivity, And Transit Stops"
+  start: "Chapter 16.75 PEDESTRIAN ACCESS, CONNECTIVITY, AND TRANSIT STOPS"
+  nth: 2
+  end: "Chapter 16.76 OFF-STREET PARKING"
+  allow_thin: true
+- id: "emc.16.76"
+  url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+  title: "EMC Chapter 16.76 Off-Street Parking, Bicycle Parking And Loading Requirements"
+  start: "Chapter 16.76 OFF-STREET PARKING, BICYCLE PARKING AND LOADING REQUIREMENTS"
+  nth: 2
+  end: "Chapter 16.80 TEMPORARY USES"
+  allow_thin: true
+- id: "emc.16.88"
+  url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+  title: "EMC Chapter 16.88 Conditional Uses"
+  start: "Chapter 16.88 CONDITIONAL USES"
+  nth: 2
+  end: "Chapter 16.92 HOME OCCUPATIONS"
+  allow_thin: true
+- id: "emc.16.116"
+  url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+  title: "EMC Chapter 16.116 Design Standards And Improvements"
+  start: "Chapter 16.116 DESIGN STANDARDS AND IMPROVEMENTS"
+  nth: 2
+  end: "Division V Annexations"
+  allow_thin: true
+- id: "emc.16.132"
+  url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
+  title: "EMC Chapter 16.132 Administration"
+  start: "Chapter 16.132 ADMINISTRATION"
+  nth: 2
+  end: "Chapter 16.136 ENFORCEMENT"
+  allow_thin: true
+
+definitions:
+  # Read 2026-10-07 from EMC 16.08, on disk.
+  #
+  # THE NOUN. "Fourplex means a single building on its own lot with four
+  # dwelling units" (emc.16.08.txt L136); "Multi-family dwelling means a single
+  # building, or a portion thereof, on its own lot, that contains five or more
+  # dwelling units" (L148). So the pod is a fourplex, never a multi-family
+  # dwelling, and the "multi-family" lines of the use tables do not reach it.
+  # "Commonwall dwelling means a dwelling on its own lot which shares at least
+  # one wall ... with another dwelling on an abutting lot" (L130) is the
+  # unit-lot path.
+  #
+  # CORNER LOT. "A lot abutting on two or more streets ... if straight lines
+  # ... meet at an interior angle of less than 135 degrees" (L240).
+  #
+  # FRONT LOT LINE ON A CORNER LOT. "In the case of a corner lot, the shortest
+  # property line along a street, other than an alley" (L250). "All sides of a
+  # lot adjacent to a street other than an alley shall be considered frontage,
+  # and setbacks shall be provided as indicated" (L244): the street side takes
+  # the front setback.
+  corner_lot:
+    test: intersecting_frontages
+    max_intersection_angle_deg: 135.0
+    quote: "or/clackamas/estacada/emc.16.08.txt#L240"
+    cite: "Estacada EMC 16.08.010, Lot, corner"
+
+private_drives:
+  street: true
+  quote: "or/clackamas/estacada/emc.16.08.txt#L390"
+  says: "a public or private way created to provide ingress to, or egress from"
+  cite: "Estacada EMC 16.08.010, Road (the terms street, access drive and highway are synonymous with road)"
+  note: >-
+    "Road" is "a public or private way ... The terms street, access drive and
+    highway ... shall be synonymous with the term road" (L390), so a private
+    drive the lot abuts is a street for the yards. A doubt.
+
+defaults:
+  # PARKING COUNT. 16.76.010 table: triplex and fourplex 1.5 for each dwelling
+  # unit rounded up (L77-L78); commonwall 2 for each commonwall dwelling
+  # (L80-L81). The one-building pod is six stalls; four townhouse lots eight.
+  parking_min_per_unit:
+    value: 1.5
+    cite: Estacada EMC 16.76.010, triplex and fourplex 1.5 for each dwelling unit, rounded up
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/emc.16.76.txt#L77,L78"
+    variants:
+      - value: 2
+        when: [unit_lots]
+        cite: Estacada EMC 16.76.010, commonwall dwellings 2 for each dwelling
+        quote: "or/clackamas/estacada/emc.16.76.txt#L80,L81"
+  # THE STALL. 16.08.010: "not less than eighteen (18) feet by eight (8) feet,
+  # exclusive of maneuvering and access area" (L318). The code prints no aisle
+  # or driveway width for a dwelling court, so none is stated here.
+  parking_stall_width_ft:
+    value: 8
+    cite: Estacada EMC 16.08.010, Parking space, not less than eighteen feet by eight feet
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/emc.16.08.txt#L318"
+  parking_stall_depth_ft:
+    value: 18
+    cite: Estacada EMC 16.08.010, Parking space, not less than eighteen feet by eight feet
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/emc.16.08.txt#L318"
+  front_lot_line_corner:
+    value: shortest
+    cite: Estacada EMC 16.08.010, Lot line, front, in the case of a corner lot the shortest property line along a street
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/emc.16.08.txt#L250"
+  # WHICH STREET THE DRIVEWAY USES. 16.116.020 (C): a lot on two or more
+  # streets of different classes connects its access point to "the road of
+  # the lesser classification", unless topography or natural features make
+  # that impractical.
+  corner_access_street:
+    value: lowest_class
+    cite: Estacada EMC 16.116.020 (C), the access point shall connect with the road of the lesser classification
+    url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/estacada/emc.16.116.txt#L31"
+
+# NOT ENCODED, read 2026-10-07:
+# - Minimum residential density (16.60.070): it binds residential
+#   subdivisions and new multi-family (five or more units) development. A
+#   one-lot fourplex is neither. The unit-lot path is a land division, where
+#   half the maximum density applies; the screen draws a one-lot plat.
+# - The 20 ft garage-door front setback (C-2, R-3, CMU): the pod carries no
+#   garage.
+# - Public-utility-easement width on a side line (greater than 5 ft when an
+#   easement exists on the side line): the screen does not know the width.
+# - Geotechnical analysis at 33 percent slope or a mapped hazard (16.68.030).
+# - The Airport Safety and Compatibility overlay (16.54), Historic
+#   Resources (16.48) and Wetlands Resources (16.56) overlays: not held by
+#   FLATS for Estacada beyond the statewide flood and wetland layers.
+# - Planning-staff and conditional-use procedure (16.88, 16.132): the
+#   outright uses carry no hearing; the pod is treated as outright where the
+#   use table lists it.
+
+zones:
+  C-2:
+    cite_default:
+      cite: Estacada EMC Chapter 16.32 (Residential Commercial, C-2)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: true
+      cite: Estacada EMC 16.32.020, fourplex and commonwall dwellings permitted outright
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1572,L1574"
+    min_lot_sqft:
+      per_dwelling: 2500
+      cite: Estacada EMC 16.32.040 (A), duplex, triplex or fourplex 2,500 square feet per dwelling unit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1638"
+      variants:
+        - value: 2500
+          when: [unit_lots]
+          cite: Estacada EMC 16.32.040 (A), commonwall dwellings 2,500 square feet per lot for each dwelling unit
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L1639"
+    min_lot_width_ft:
+      exempt: true
+      cite: Estacada EMC 16.32.040, the C-2 standards print no minimum lot width
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1635,L1641"
+    max_height_ft:
+      value: 45
+      cite: Estacada EMC 16.32.040 (J), no building shall exceed a height of forty-five feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1686"
+    max_coverage_pct:
+      exempt: true
+      cite: Estacada EMC 16.32.040, the C-2 standards print no lot coverage limit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1686,L1688"
+    max_impervious_pct:
+      exempt: true
+      cite: Estacada EMC 16.32.040, the C-2 standards print no impervious surface limit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1686,L1688"
+    min_landscaped_pct:
+      value: 5
+      cite: Estacada EMC 16.32.040 (K), a minimum of five percent of the area developed shall be landscaped
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1688"
+    setback_front_ft:
+      value: 15
+      cite: Estacada EMC 16.32.040 (E)(1), the front setback shall be a minimum of fifteen feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1652"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Estacada EMC 16.32.040 (E)(1), the front setback
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1652"
+    setback_street_side_ft:
+      value: 15
+      cite: Estacada EMC 16.08.010, all sides of a lot adjacent to a street are frontage and the front setback of fifteen feet applies (16.32.040 (E)(1))
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1652"
+    setback_rear_ft:
+      value: 15
+      cite: Estacada EMC 16.32.040 (E)(3), the rear setback shall be a minimum of fifteen feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1664"
+    setback_side_ft:
+      value: 5
+      cite: Estacada EMC 16.32.040 (E)(2), minimum side setbacks shall be five feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1654"
+    notes: >-
+      DRAFT. A fourplex and commonwall dwellings are outright; multi-family
+      (five or more) is conditional and does not reach the pod. 2,500 square
+      feet a dwelling; front, street side and rear 15; side 5 (wider where
+      a utility easement sits on the side line); 45 ft; landscaping 5
+      percent.
+  CMU:
+    cite_default:
+      cite: Estacada EMC Chapter 16.37 (Central Mixed-Use, CMU)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: true
+      cite: Estacada EMC 16.37.020, fourplex and commonwall dwellings permitted outright
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2410,L2414"
+    min_lot_sqft:
+      per_dwelling: 2500
+      cite: Estacada EMC 16.37.060 (A), triplex or fourplex 2,500 square feet per dwelling unit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2478"
+      variants:
+        - value: 2500
+          when: [unit_lots]
+          cite: Estacada EMC 16.37.060 (A), commonwall dwellings 2,500 square feet per lot for the first five dwelling units
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L2479"
+    min_lot_width_ft:
+      exempt: true
+      cite: Estacada EMC 16.37.060, the CMU standards print no minimum lot width
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2475,L2481"
+    max_height_ft:
+      value: 65
+      cite: Estacada EMC 16.37.060 (G), buildings shall not exceed the maximum height of sixty-five feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2527"
+    max_coverage_pct:
+      exempt: true
+      cite: Estacada EMC 16.37.060, the CMU standards print no lot coverage limit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2527,L2531"
+    max_impervious_pct:
+      exempt: true
+      cite: Estacada EMC 16.37.060, the CMU standards print no impervious surface limit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2527,L2531"
+    setback_front_ft:
+      value: 15
+      cite: Estacada EMC 16.37.060 (C)(1), the front setback shall be a minimum of fifteen feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2489"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Estacada EMC 16.37.060 (C)(1), the front setback
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2489"
+    setback_street_side_ft:
+      value: 15
+      cite: Estacada EMC 16.08.010, all sides of a lot adjacent to a street are frontage and the front setback of fifteen feet applies (16.37.060 (C)(1))
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2489"
+    setback_rear_ft:
+      value: 15
+      cite: Estacada EMC 16.37.060 (C)(3), the rear setback shall be a minimum of fifteen feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2501"
+    setback_side_ft:
+      value: 5
+      cite: Estacada EMC 16.37.060 (C)(2), minimum side setbacks shall be five feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2491"
+    notes: >-
+      DRAFT. A fourplex and commonwall dwellings are outright. 2,500 square
+      feet a dwelling; front, street side and rear 15; side 5; 65 ft; no
+      coverage limit. No setback is required from Eagle Creek Road; the
+      screen charges the front setback there (conservative).
+  R-3:
+    cite_default:
+      cite: Estacada EMC Chapter 16.24 (Multiple Family Residential, R-3)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    # Commonwall dwellings (any number of units) and multi-family (five or
+    # more) are outright; a four-unit building on one lot is the R-2
+    # conditional "middle housing types with four dwelling units" carried
+    # into R-3 by 16.24.030 (A). So the pod is allowed on the
+    # townhouse-on-its-own-lot path only.
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.24.020 and 16.24.030 (A), a fourplex on one lot is only the R-2 conditional use (16.20.030 (B)); commonwall dwellings and five-unit multi-family are outright
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L444,L606"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: Estacada EMC 16.24.020 (E), commonwall dwellings permitted outright
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L588"
+    min_lot_sqft:
+      per_dwelling: 2500
+      cite: Estacada EMC 16.24.040 (A)(1), duplex, triplex or fourplex 2,500 square feet per dwelling unit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L636"
+      variants:
+        - value: 2500
+          when: [unit_lots]
+          cite: Estacada EMC 16.24.040 (A)(1), commonwall dwellings 2,500 square feet per lot for each dwelling unit
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L637"
+    min_lot_width_ft:
+      exempt: true
+      cite: Estacada EMC 16.24.040, the R-3 standards print no minimum lot width
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L634,L640"
+    max_height_ft:
+      value: 35
+      cite: Estacada EMC 16.24.040 (J)(1), no building shall exceed a height of thirty-five feet (forty-five for multi-family, which the pod is not)
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L698"
+    max_coverage_pct:
+      value: 55
+      cite: Estacada EMC 16.24.040 (K), buildings shall not occupy more than fifty-five percent of the lot
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L702"
+      variants:
+        - value: 70
+          when: [unit_lots]
+          cite: Estacada EMC 16.24.040 (K)(1), each commonwall dwelling may occupy up to seventy percent of its individual lot
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L704"
+    max_impervious_pct:
+      exempt: true
+      cite: Estacada EMC 16.24.040, the R-3 standards print no impervious surface limit
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L702,L708"
+    setback_front_ft:
+      value: 15
+      cite: Estacada EMC 16.24.040 (E)(1), the front setback shall be a minimum of fifteen feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L656"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: Estacada EMC 16.24.040 (E)(1), the front setback
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L656"
+    setback_street_side_ft:
+      value: 15
+      cite: Estacada EMC 16.08.010, all sides of a lot adjacent to a street are frontage and the front setback of fifteen feet applies (16.24.040 (E)(1))
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L656"
+    setback_rear_ft:
+      value: 15
+      cite: Estacada EMC 16.24.040 (E)(4), the rear setback shall be a minimum of fifteen feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L676"
+    setback_side_ft:
+      value: 5
+      cite: Estacada EMC 16.24.040 (E)(3), minimum side setbacks shall be five feet
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L666"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          cite: Estacada EMC 16.24.040 (E)(2)(c), commonwall dwellings with four units shall have a minimum side setback of ten feet for the sides that are not attached
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L664"
+    notes: >-
+      DRAFT. Commonwall dwellings are outright in any number; a fourplex on
+      one lot is conditional here, so the pod is allowed as four townhouse
+      lots only. 2,500 square feet a lot; front, street side and rear 15;
+      side 5, and 10 on the free sides of a four-unit row; 35 ft; 55 percent
+      coverage and 70 percent on a townhouse lot.
+  R-1:
+    cite_default:
+      cite: Estacada EMC Chapter 16.16 (Low Density Residential, R-1)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.16.020, the outright list stops at a duplex and commonwall dwellings up to two units
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L99,L101"
+    notes: >-
+      DRAFT. Refuses: single-family, duplex and two-unit commonwall only.
+  R-2:
+    cite_default:
+      cite: Estacada EMC Chapter 16.20 (Medium Density Residential, R-2)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.20.020 and 16.20.030 (B), triplex and commonwall up to three units are outright; middle housing with four dwelling units is a conditional use
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L426,L428,L444"
+    notes: >-
+      DRAFT. Refuses: four units is a conditional use (a hearing the screen
+      does not treat as a clear and objective path).
+  NCR:
+    cite_default:
+      cite: Estacada EMC Chapter 16.25 (North City Residential, NCR)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.25.020, a triplex, fourplex or three-plus-unit commonwall row is outright only within 200 feet of Eagle Creek Road, Hinman Road or a major collector or higher street
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L762"
+    notes: >-
+      DRAFT. Refuses for now: the four-unit use depends on the lot being
+      within 200 feet of named streets, a distance the screen does not
+      measure. A question for Steph; a street-distance field would admit it.
+  D:
+    cite_default:
+      cite: Estacada EMC Chapter 16.26 (Downtown, D)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.26.020 (D), a fourplex is outright only if no ground floor residential fronts Broadway, Main or OR 224, none sits south of OR 224, and density is at least sixteen units an acre
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L940,L942,L944"
+    notes: >-
+      DRAFT. Refuses: the four-unit use is conditioned on street fronts and
+      a density floor the one-lot screen cannot test.
+  C-1:
+    cite_default:
+      cite: Estacada EMC Chapter 16.28 (General Commercial, C-1)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.28.030, multi-family dwelling, triplex or fourplex is a conditional use
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1455"
+    notes: >-
+      DRAFT. Refuses: the fourplex is a conditional use here.
+  MMU:
+    cite_default:
+      cite: Estacada EMC Chapter 16.33 (Mill Area Mixed Use, MMU)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.33.020 (A), before development a Facilities Plan and a City Council Master Development Plan must be approved (the CMU uses are then permitted)
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L1736,L1929"
+    notes: >-
+      DRAFT. Refuses: every development needs a Council-approved master
+      plan first, a discretionary step.
+  R-C:
+    cite_default:
+      cite: Estacada EMC Chapter 16.34 (Riverfront Commercial, R-C)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.34.040 (D), multi-family dwelling only with a commercial ground floor, as a conditional use; no fourplex is listed
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2095,L2103"
+    notes: >-
+      DRAFT. Refuses: conditional, and tied to a commercial ground floor.
+  H-C:
+    cite_default:
+      cite: Estacada EMC Chapter 16.35 (Highway Commercial, H-C)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.35.040 (D), dwellings are a prohibited use
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2287"
+    notes: >-
+      DRAFT. Refuses: dwellings are prohibited.
+  O-C:
+    cite_default:
+      cite: Estacada EMC Chapter 16.38 (Outdoor Commercial, O-C)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.38.020, the only outright use is a trail, path or boardwalk
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2573"
+    notes: >-
+      DRAFT. Refuses: no dwelling use.
+  M-1:
+    cite_default:
+      cite: Estacada EMC Chapter 16.39 (Light Industrial, M-1)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.39.020, the outright uses are light industry, enclosed manufacturing and storage, agriculture and forestry; no dwelling is listed
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2693,L2695,L2697"
+    notes: >-
+      DRAFT. Refuses: industrial; no dwelling use.
+  A-P:
+    cite_default:
+      cite: Estacada EMC Chapter 16.42 (Airport, A-P)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.42.020 and 16.42.040, the outright uses are aviation uses with a caretaker's residence, on lots of at least fifty acres
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L2897,L2945"
+    notes: >-
+      DRAFT. Refuses: airport uses; no multi-unit housing.
+  O-S:
+    cite_default:
+      cite: Estacada EMC Chapter 16.44 (Open Space and Public Facilities, O-S)
+      url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
+      retrieved: '2026-10-07'
+    quadplex_allowed:
+      value: false
+      cite: Estacada EMC 16.44.015, the outright uses are public trails, public facilities and park uses
+      quote: "or/clackamas/estacada/emc.16.zones.txt#L3032,L3034"
+    notes: >-
+      DRAFT. Refuses: public open space; no dwelling use.
+
+zone_rulings:
+  R1:
+    outcome: alias
+    of: R-1
+    note: >-
+      "R1", the Oregon City regional zoning layer's spelling of Estacada's
+      R-1, Low Density Residential (EMC 16.16), on 2026-10-07. The block is R-1.
+  R2:
+    outcome: alias
+    of: R-2
+    note: >-
+      "R2", the regional zoning layer's spelling of Estacada's R-2, Medium
+      Density Residential (EMC 16.20), on 2026-10-07. The block is R-2.
+  R3:
+    outcome: alias
+    of: R-3
+    note: >-
+      "R3", the regional zoning layer's spelling of Estacada's R-3, Multiple
+      Family Residential (EMC 16.24), on 2026-10-07. The block is R-3.
+  C1:
+    outcome: alias
+    of: C-1
+    note: >-
+      "C1", the regional zoning layer's spelling of Estacada's C-1, General
+      Commercial (EMC 16.28), on 2026-10-07. The block is C-1.
+  C2:
+    outcome: alias
+    of: C-2
+    note: >-
+      "C2", the regional zoning layer's spelling of Estacada's C-2,
+      Residential Commercial (EMC 16.32), on 2026-10-07. The block is C-2.
+  RC:
+    outcome: alias
+    of: R-C
+    note: >-
+      "RC", the regional zoning layer's spelling of Estacada's R-C, Riverfront
+      Commercial (EMC 16.34), on 2026-10-07. The block is R-C.
+  HC:
+    outcome: alias
+    of: H-C
+    note: >-
+      "HC", the regional zoning layer's spelling of Estacada's H-C, Highway
+      Commercial (EMC 16.35), on 2026-10-07. The block is H-C.
+  OC:
+    outcome: alias
+    of: O-C
+    note: >-
+      "OC", the regional zoning layer's spelling of Estacada's O-C, Outdoor
+      Commercial (EMC 16.38), on 2026-10-07. The block is O-C.
+  M1:
+    outcome: alias
+    of: M-1
+    note: >-
+      "M1", the regional zoning layer's spelling of Estacada's M-1, Light
+      Industrial (EMC 16.39), on 2026-10-07. The block is M-1.
+  AP:
+    outcome: alias
+    of: A-P
+    note: >-
+      "AP", the regional zoning layer's spelling of Estacada's A-P, Airport
+      (EMC 16.42), on 2026-10-07. The block is A-P.
+  OS:
+    outcome: alias
+    of: O-S
+    note: >-
+      "OS", the regional zoning layer's spelling of Estacada's O-S, Open
+      Space and Public Facilities (EMC 16.44), on 2026-10-07. The block is O-S.

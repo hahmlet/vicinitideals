@@ -1,0 +1,81 @@
+16.18.030 Development standards.
+
+The following subsections indicate the required development standards of the R-1.5 zone. Cottage cluster developments are exempt from these standards and are instead subject to the cottage cluster development and design standards outlined in Section 16.21.080:
+
+A. Minimum and maximum lot area:
+
+1. For single family dwellings: five thousand (5,000) square feet minimum and six thousand five hundred (6,500) square feet maximum.
+
+2. For townhouse dwelling units having common wall construction:
+
+a. 3,000 square foot minimum lot size.
+
+b. 1,800 square foot minimum lot size if approved as part of a planned unit development in accordance with section 16.76.
+
+3. Minimum residential density: For two, three, and four family dwellings: new development shall achieve a minimum density of 6 units per acre and a maximum of 13 units per acre. Minimum density for a property is calculated by multiplying its area in acres (minus area required for street right-of-way and public park/open space areas) by the density standard. For example, 0.32 acres x 6 units/acre = minimum of 1.92 units. Decimals are rounded to the nearest whole number (e.g., a minimum of 1.92 units becomes a minimum of 2 units per acre). The Planning Commission may modify the density standard if it cannot be met due to existing lot dimensions, road patterns, or other site characteristics.
+
+4. The Planning Commission may approve smaller or larger lots in accordance with subsection B, below.
+
+B. Lot area exceptions:
+
+1. The Planning Commission may approve an exception to the minimum and maximum lot area standards in subsection 16.18.030.A as part of a subdivision or partition application when all of the following standards are met:
+
+a. The average area of all lots and open space tracts created through the subject land division, excluding required public park land dedications, surface water management facilities and similar public use areas, shall be no less than five thousand square feet and no greater than six thousand five hundred square feet. Non-required significant natural resource areas shall be included in the average lot size calculation to enable a transfer of density onto buildable portions of the site. Required areas include identified parks, wetland areas, riparian corridors, and other areas in which building is not permitted under local, state, or federal laws or regulations. For land in the North Redwood DCP area, the Planning Commission may allow public park land dedications to be included in the lot size averaging calculation in order to achieve community development goals and allow protection of natural resources; in this case, the resulting average lot size shall not be less than 4,000 square feet;
+
+b. No lot shall be created that contains less than four thousand square feet, unless the alternative lot layout option provided in Section 16.64.040 is used; and
+
+c. As a condition of granting the exception, the city will require the owner to record a deed restriction with the final plat that prevents the re-division of over-sized lots (six thousand five hundred square feet and larger), when such re-division would violate the average lot size provision in subsection 16.18.030.B.1.a. All lots approved for use by more than one dwelling shall be so designated on the final plat.
+
+2. A public benefit must be demonstrated in order to allow more than ten percent of the lots to be outside of the minimum and maximum lot areas in subsection 16.18.030.B.1.a.
+
+3. The Planning Commission may modify the maximum lot area requirements in subsection 16.18.030.B if these cannot be met due to existing lot dimensions, road patterns, or other site characteristics.
+
+4. The maximum lot area standard does not apply to dwellings existing prior to subdivision or partition plan approval or to lots designated for open space.
+
+C. Minimum width and frontage: forty feet, except that the Planning Commission may approve lots having less frontage subject to special conditions to assure adequate access. Twenty feet is permitted for single family attached (common wall) housing.
+
+D. Minimum yard requirements:
+
+1. Street yard: twenty feet on side with driveway; fifteen feet for all other street sides; except that street yards may be reduced to ten feet for covered porches only.
+
+2. Rear yard: all corner lots, ten feet single story or fifteen feet two-story; all other lots: fifteen feet single story ortwenty feet two-story. One story building components must meet the single story setback requirements; two story building components must meet the two-story setback requirements;
+
+3. Interior yard: seven feet, except as otherwise provided for zero-lot line housing.
+
+4. Interior and rear yards may be reduced to three feet, or the width of any existing utility easement, whichever is greater, for detached accessory structures, except accessory dwellings, erected sixty feet or more from any street other than an alley. The height limitations noted in subsection E.2 below apply. Utility easements may only be reduced with the approval of all utility providers.
+
+5. Infill standards may also apply. See CMC 16.21.050.
+
+E. Maximum building height:
+
+1. Principal building: thirty-five feet.
+
+2. Detached accessory structure:
+
+a. If located inside the allowed building footprint for the principal building, a detached accessory structure may be up to twenty-two feet tall, as measured to the highest point of the roof.
+
+b. If located outside the allowed building footprint for the principal building, a detached accessory structure is subject to a step-up height standard, and is allowed outright only if it meets this standard. The structure shall not exceed eight feet tall, as measured to the highest point of the roof, at a distance of three feet from the property line. The structure may increase in height by one foot vertically for every one foot horizontally away from the three foot line, up to the maximum height of twenty-two feet.
+
+c. A conditional use permit is required to locate the structure outside of the allowed building footprint for the principal building in violation of the step-up height standard.
+
+d. Detached accessory structures over twenty-two feet tall are not permitted.
+
+3. For detached accessory dwellings, the Planning Commission may approve building heights over twenty-two feet through the Conditional Use process, but in no case shall the accessory dwelling be higher than the principal building. The Planning Commission may only approve the use of buildings over twenty-two feet in the case of existing structures where no substantial changes to existing roof lines are proposed.
+
+F. The maximum amount of impervious surface allowed the R-1.5 zone shall be 70 percent of the lot area.
+
+1. Impervious surface includes all surface areas that create a barrier to or hinder the entry of water into the soil in comparison with natural conditions prior to development. Impervious surface include, but are not limited to, buildings, parking areas, driveways, roads, sidewalks, patios, packed earth, and oiled surfaces. Open, uncovered retention/detention facilities, green roofs, and permeable surfacing materials shall not be considered impervious surfaces. Roof surfaces are also considered ‘pervious’ when 100% of the annual average roof runoff is captured and reused on-site for irrigation or approved interior uses.
+
+2. To limit impervious surface, alternative surfacing materials may be used. Alternative surfacing includes, but is not limited to paving blocks, turf block, pervious concrete, and porous asphalt. Other similar approved materials are encouraged. Utilization of alternative surfacing methods shall be subject to review and approval by the City Public Works Department for compliance with other applicable regulations and development standards. Maintenance of alternative surfacing materials located on private property are the responsibility of the property owner.
+
+G. Other regulations:
+
+1. Vision clearance distance shall be ten feet from a street to an alley or a street to a driveway, and thirty feet from a street to any other street.
+
+2. All setbacks to be measured from the foundation line of the building. Overhangs shall not exceed two feet; mechanical units, used for the heating/cooling of residential units are exempt from interior and/or rear yard setback requirements. A chimney for a fireplace or stove shall not exceed a two foot projection.
+
+3. To provide shade, required yards on southern and western exposures may be reduced by not more than five feet for eaves, canopies, and patio covers, if the patio posts still comply with required setbacks.
+
+4. Accessory buildings shall not have a larger footprint than the primary building.
+
+5. Townhouse (common wall) development shall not exceed six attached dwellings in a group as defined in Chapter 16.04.195. If more than one group of six dwellings is constructed, then the groups shall be separated by no less than ten feet. Townhouse units are encouraged to be alley loaded when possible. (Ord. 890 sect. 19, 1993; Ord. 740 sect. 10.3.20(C), 1984; Ord. 955 sect. 6, 1996; Ord. 981 sect. 46, 1997; Ord. 1019 sect. 8, 1999; Ord. 1080, 2001; Ord 1237, 2007; Ord. 1338, 2010; Ord. 1514, 2019; Ord 1634, 2024)

@@ -1,0 +1,281 @@
+16.21.070 Multi-family design standards.
+
+A. For design review applications for multi-family dwellings (three or more units) or for development that contain 3 or more units on a single lot located in any zone, the menu in Table 16.21.070 shall apply. This menu replaces the general menu contained in Chapter 16.49 for such applications.
+
+A. A design review application for multi-family dwellings shall be considered to be compatible if
+
+1. At least five of the Design Elements for Street Facing Facades are achieved.
+
+2. A minimum of 60 percent of the total possible points from the Design Menu are accumulated for the whole development;
+
+3. 10 percent of the points used to meet (2) above are from the LID category; and,
+
+4. The applicant has received a minimum of one point in each applicable category.
+
+C. Those elements that are not applicable to a project shall not be counted toward the total possible points. (Ord. 1338; 2010)
+
+Table 16.21.070 Multi-Family Design Menu
+
+As part of review of multi-family developments, the following menu shall be used as part of the review. In order to “pass” this table 60% of total possible points shall be earned,
+
+(10% of the total possible points must be from LID elements)
+
+Design Criteria
+Possible Points
+Possible Points
+Possible Points
+Possible Points
+Possible Points
+
+Design Criteria
+Possible Points
+Possible Points
+Possible Points
+Possible Points
+Possible Points
+Parking
+0
+1
+2
+3
+4
+Screening of parking and/or loading facilities from public right-of-way
+Not screened
+Partially screened
+Fully screened
+-
+-
+Parking lot lighting provided
+No
+Yes
+-
+-
+-
+Parking location (behind building is best)
+Front
+Side
+Behind
+-
+-
+Number of parking spaces provided (% of minimum required)
+>120%
+101-120%
+100%
+-
+-
+Tree Retention
+0
+1
+2
+3
+4
+Percentage of trees retained
+<10%
+10-50%
+51-75%
+>75%
+-
+Replacement of trees removed
+<50%
+=50%
+-
+-
+-
+Building Orientation to the Street
+0
+1
+2
+3
+4
+Primary entrances face the street
+Not street-facing
+Entrance breezeway faces street
+All entrances face the street
+-
+-
+Building Orientation to the Street, cont.
+0
+1
+2
+3
+4
+Site's frontage has buildings within 25 feet of front lot line. (Full points may be given when courtyards are adjacent to the frontage.)
+0-25% of street frontage
+26-50% of street frontage
+=51% of street frontage
+-
+-
+Screening of Storage Areas and Utility Boxes
+0
+1
+2
+3
+4
+Trash storage is screened from view by solid wood fence, masonry wall or landscaping.
+No
+Yes
+-
+-
+-
+Trash storage is located away from adjacent property lines.
+0 - 10 feet from adjacent property
+11 - 25 feet from adjacent property
+>25 feet from adjacent property
+-
+-
+Utility equipment is screened from view.
+Not screened
+Partially screened
+Fully screened
+-
+-
+Prevention of Monotonous and Incompatible Design
+0
+1
+2
+3
+4
+Horizontal length of all buildings is a maximum of 120 feet.
+101 - 120 feet
+81 - 100 feet
+=80 feet
+-
+-
+Roofs have a gable, hip or gamble form, minimum pitch of 3 to 12 with at least 6-inch overhang.
+No
+Yes
+-
+-
+-
+A minimum of 15% of street façade areas contains windows or doors. All windows provide trim, recess, or other method of providing shadowing.
+No
+Yes
+-
+-
+-
+Garages are located to minimize their visual impact.
+Front of building
+Side of building
+Back of building
+-
+-
+Exterior design features include offsets, balconies, projections, window reveals, or similar elements to break up large building expanses.
+Less than one design feature within every 30 feet of longest façade.
+One design feature within every 30 feet of longest façade.
+Two or more design features within every 30 feet of longest façade.
+-
+-
+Private Open Space and Landscaping
+0
+1
+2
+3
+4
+Private open space provided in addition to what is required for the base zone.
+No additional open space.
+Patios or balconies (at least 48 square feet) provided for 50% of units.
+Patios or balconies (at least 48 square feet) provided for 51-100% of units.
+Sport court, tot lot, pool or community room is provided.
+-
+Number of non-required trees provided.
+-
+At least one tree per 500 square feet of landscaping.
+-
+-
+-
+Private Open Space and Landscaping, cont.
+0
+1
+2
+3
+4
+Amount of grass (less grass is better) (% of total landscaped area)
+>50%
+25-50%
+<25%
+-
+-
+Street and Block Framework
+0
+1
+2
+3
+4
+Multi-family developments 8 acres or larger are developed as a series of complete blocks bounded by a network of public or private streets with sidewalks and street trees.
+No blocks or network.
+10-50% of units are along a street with sidewalks, street trees, and on-street parking.
+51-100% of units are along a street with sidewalks, street trees, and on-street parking.
+-
+-
+Low Impact Development (LID)
+0
+1
+2
+3
+4
+Use of pervious paving materials (% of total paved area)
+<10%
+-
+10-50%
+51-75%
+>75%
+Provision of park or open space area for public use
+None
+-
+Open Space(Generally not for public use)
+-
+Park (public or privately owned for public use)
+Use of drought tolerant species in landscaping (% of total plants)
+<25% drought tolerant
+-
+25-50% drought tolerant
+51-75% drought tolerant
+>75% drought tolerant
+Provision of additional interior parking lot landscaping (% of minimum required)
+100%
+101-110%
+111-120%
+>120%
+-
+Provision of an eco-roof or rooftop garden (% of total roof area)
+<10%
+-
+-
+10-50%
+>50%
+Parking integrated within building footprint (below-grade, structured parking, or tuck-under parking) (% of total on-site parking)
+<10%
+-
+-
+10-50%
+>50%
+Disconnecting downspouts from city stormwater facilities
+None
+Some downspouts disconnected
+All downspouts disconnected
+-
+-
+Shared parking with adjacent uses or public parking structure (% of total required parking spaces)
+None
+<50%
+=50%
+-
+-
+Provision of rain gardens/bioretention areas for stormwater runoff (% of total landscaped area)
+None
+-
+10-50%
+51-75%
+>75%
+Total Possible Points= 67 60%=40 points (rounding down),
+10%=7 points (rounding up)
+Total Possible Points= 67 60%=40 points (rounding down),
+10%=7 points (rounding up)
+Total Possible Points= 67 60%=40 points (rounding down),
+10%=7 points (rounding up)
+Total Possible Points= 67 60%=40 points (rounding down),
+10%=7 points (rounding up)
+Total Possible Points= 67 60%=40 points (rounding down),
+10%=7 points (rounding up)
+
+(Ord. 1338, 2010)

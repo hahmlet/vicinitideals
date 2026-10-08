@@ -1,0 +1,3 @@
+16.04.615 Traffic Impact Analysis.
+
+Traffic Impact Analysis A comprehensive traffic analysis of a development proposal which includes trip generation, analysis of access/egress, accident analysis, intersection analysis, and traffic flow analysis. (Ord. 1019 section 22, 1999)

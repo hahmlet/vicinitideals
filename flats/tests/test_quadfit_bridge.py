@@ -513,7 +513,7 @@ def test_a_width_nobody_measured_is_none_not_zero() -> None:
 
 
 def test_a_jurisdiction_the_port_never_mapped_has_no_layer() -> None:
-    lot = lot_from_row(row(jurisdiction="sandy"))
+    lot = lot_from_row(row(jurisdiction="molalla"))
     assert lot.layer_id is None
 
 
@@ -610,7 +610,7 @@ def test_a_zone_the_corpus_does_not_hold_stays_unknown_signed_or_not(corpus, pol
 
 
 def test_a_jurisdiction_without_a_layer_is_reported_not_raised(corpus, policies) -> None:
-    lot = lot_from_row(row(jurisdiction="sandy"))
+    lot = lot_from_row(row(jurisdiction="molalla"))
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     assert s.rules.verdict.value == "jurisdiction_not_encoded"
     assert s.screening.triage is Triage.unknown
@@ -1448,7 +1448,13 @@ def test_every_private_drive_ruling_quotes_the_line_it_points_at(layers) -> None
     # "Street" is a way "which provides for public use" (CMC 18.195,
     # definitions L705-L706), and a private access is not in public control.
     # 21 the same day: Tigard (draft, 2026-10-01) street: true on 18.30 "Street" (three or more lots).
-    assert len(ruled) == 21
+    # 22 on 2026-10-07: Canby (FOLLOWUPS 53) rules street: false -- the stored
+    # sections define no "street" and 16.10.070 (B)(3) connects access to
+    # public streets.
+    # 23 the same day: Sandy rules street: true (17.10 Frontage: a public or private street).
+    # 24 the same day: Estacada rules street: true (16.08.010 Road: a public or
+    # private way).
+    assert len(ruled) == 24
     for layer_id, r in ruled.items():
         doc, _, rng = r.quote.partition("#L")
         a, _, b = rng.partition("-L")
@@ -1456,6 +1462,7 @@ def test_every_private_drive_ruling_quotes_the_line_it_points_at(layers) -> None
         assert norm(r.says) in norm(" ".join(lines[int(a) - 1 : int(b or a)])), layer_id
     assert {k for k, r in ruled.items() if not r.street} == {
         "or/multnomah/gresham", "or/clackamas/tualatin", "or/washington/cornelius",
+        "or/clackamas/canby",
     }
     assert {k for k, r in ruled.items() if r.access_choice} == {"or/clackamas/_unincorporated"}
     assert layers["or/multnomah/fairview"].private_drives is None

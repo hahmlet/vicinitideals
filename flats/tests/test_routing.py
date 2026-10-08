@@ -241,6 +241,22 @@ OPEN = {
     "or/clackamas/_unincorporated 510.03 -> 510.04",
     "or/clackamas/_unincorporated 511.03 -> 511.04",
     "or/clackamas/_unincorporated 602.03 -> 602.04",
+    # Estacada (FOLLOWUPS 53, 2026-10-07), each read when it was added. The
+    # fence lines (16.08.010, and 16.60.010 from the C-2, CMU and R-3 fence
+    # clauses) point at the clear vision rule, which the screen does not
+    # draw; the two 16.60.070 rows are the minimum density rule for
+    # subdivisions and five-unit buildings, neither of which is the pod; the
+    # 16.116 rows are the land-division performance agreement and the
+    # street-class driveway spacing table.
+    "or/clackamas/estacada 16.08.010 -> 16.60.010",
+    "or/clackamas/estacada 16.116.010 -> 16.116.030",
+    "or/clackamas/estacada 16.116.010 -> 16.116.050",
+    "or/clackamas/estacada 16.24.040 -> 16.60.010",
+    "or/clackamas/estacada 16.24.040 -> 16.60.070",
+    "or/clackamas/estacada 16.32.040 -> 16.60.010",
+    "or/clackamas/estacada 16.32.040 -> 16.60.070",
+    "or/clackamas/estacada 16.37.060 -> 16.60.010",
+    "or/clackamas/estacada 16.42.040 -> 16.60.010",
     "or/clackamas/milwaukie 19.309.2 -> 19.509",
     "or/clackamas/milwaukie 19.310.2 -> 19.509.2",
     "or/clackamas/milwaukie 19.310.5 -> 19.509",

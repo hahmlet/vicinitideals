@@ -15,7 +15,7 @@ This stage builds the lot table from the snapshot's taxlot file, one row per
 * **jurisdiction** -- the FLATS layer id, from RLIS ``JURIS_CITY`` through each
   layer's ``ingest.juris_city_codes``; the two unincorporated layers share the
   blank code and the county letter decides. A city with no layer is
-  ``None`` (Canby, Sandy, Molalla, Estacada, Barlow -- outside the encoded map).
+  ``None`` (Molalla, Barlow -- outside the encoded map).
 * **zone** -- the majority-area join against the layer's zoning dataset from
   the same snapshot (:meth:`flats.ingest.sources.Pipeline.for_layer`), the
   code normalised the way the layer's ingest hints say (whitespace; Portland's

@@ -621,7 +621,26 @@ def _to_text(
         if raw[:5] == b"%PDF-":
             return pdf_to_text(raw, extraction=extraction, lost=lost)
         raw = raw.decode("utf-8", errors="replace")
+    if raw.startswith('{"Docs":['):
+        return municode_json_to_text(raw)
     return html_to_text(raw) if "<" in raw[:2048] else raw.replace("\r\n", "\n")
+
+
+def municode_json_to_text(raw: str) -> str:
+    """A Municode ``CodesContent`` answer as text: each section's heading, then its body.
+
+    Municode's reader renders in JavaScript, but the content call behind it is
+    public JSON (a ``Docs`` list, each with a ``TitleHtml`` and a ``Content``
+    HTML string). Reading that is the adopted code, not a mirror of it.
+    """
+    import json
+
+    docs = json.loads(raw)["Docs"]
+    parts = [
+        html_to_text(doc.get("TitleHtml") or doc["Title"]) + "\n\n" + html_to_text(doc.get("Content") or "")
+        for doc in docs
+    ]
+    return "\n\n".join(parts)
 
 
 def implausible(text: str) -> str | None:

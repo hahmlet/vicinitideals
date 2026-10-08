@@ -113,6 +113,9 @@ OFFICIAL: frozenset[str] = frozenset(
         # its old codepublishing.com index. Distinct from municipalcodes.com,
         # the aggregator below.
         "municipal.codes",
+        # CivicPlus Municipal Code Online, the codifier Estacada publishes its
+        # code on (estacada.municipalcodeonline.com).
+        "municipalcodeonline.com",
     }
 )
 
