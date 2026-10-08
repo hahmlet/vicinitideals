@@ -1513,13 +1513,14 @@ read when the weekly full re-screen lands.
    took 5,207 s vs the base's 3,640 s: a worker was killed for memory,
    the 83 unfinished chunks re-ran with the giants one at a time (the
    recovery worked, answers identical). Warm (all cached) 66 s; mixed
-   (half cached) 1,715 s. NOT MERGED: the memory guard did not stop the
-   kill -- memory does not follow acreage (0.8-acre lots peaked at
-   2.5-3.7 GB) and a worker keeps what a giant took after it finishes,
-   while the plan runs every giant first. And `/root/weekly_chain.sh`
-   switches to 16 processes the day batch.py exists. Next: recycle a
-   worker after a big lot and budget on what the workers actually hold,
-   then re-prove cold at 14 and 16 processes. (d) rented compute
+   (half cached) 1,715 s. Fixed since on the lane branch: chunks start
+   on live free memory with a 3 GB reserve, a chunk runs its hungriest
+   lot first and holds memory only for the lots it has left, a dead
+   worker costs one lot. Proof 3 (2026-10-07): SAME at cold 16 procs
+   3,220 s and booked 14 procs 3,340 s vs base 3,640 s. Proof 4 (the
+   last memory fix, every run compared) QUEUED on heavy.lock
+   (`/root/scan-throughput/proof4.sh`); NOT MERGED until it and item 48's
+   proof read SAME -- 46 and 48 ship together. (d) rented compute
    -- DECISION PENDING, Steph's action. Steph 2026-10-06 PREFERS
    CLOUDFLARE (a commercial version would run there): Cloudflare
    Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
@@ -1579,31 +1580,36 @@ read when the weekly full re-screen lands.
    2026-10-07: "we're moving quick and stacking a lot of changes between
    runs. Don't want to lose time to avoidable problems").** Asked during
    the early weekly (2026-10-07, 12 processes, 225k/414k lots at 4 h).
-   Today on main a bridge re-run with the same `--out` DELETES its
-   `parts/` first (quadfit.py `run()`), a worker OOM-kill hangs the
-   `multiprocessing.Pool` forever while holding heavy.lock (rank-colour
-   2026-10-06, 2 h 20 min unseen), and recovery is by hand: move parts
-   aside, `--tlid-file` the missing lots, stitch. The weekly chain itself
-   (`/root/weekly_chain.sh`, scratch on 137, hand-written each week) has
-   no step markers, so a failure at the bridge re-runs the ~75 min
-   stage + quadfit too. Item 46's `batch.py` (lane scan-throughput, NOT on
-   main yet) already covers: resume via `--cache`, a dead worker ends the
-   run instead of hanging it, unfinished chunks retried once, memory
-   budget. STILL OWED, beyond 46: (a) never delete finished parts --
-   resume is the DEFAULT for the weekly, not an opt-in flag; (b) the
-   weekly chain as a committed script (`scripts/` + runbook §4b) with a
-   done-marker per step, so a re-launch skips finished steps; (c) a
-   supervisor ON 137 (not an agent's session) that relaunches a failed or
-   stalled step with resume, halving processes after an OOM, and gives up
-   after N tries with a status line; (d) a stall watchdog on 137 (no new
-   part in 30 min -> kill ONLY the run's own process group, relaunch);
-   (e) a preflight that refuses in seconds, not hours: code at the
-   intended sha, every pipeline.yaml source key present in the snapshot
-   (the 10-07 copy was missing 15), 1 m DEM tiles, institutional land,
-   curb datasets, free disk on 137 and 114; (f) the status line pushed to
-   114 (`/root/weekly137/status.txt`) committed with the chain so any
-   session can watch. Ship after 46 lands (it changes the same runner);
-   coordinate with that lane rather than fork it.
+   (a)-(f) BUILT 2026-10-07 on the scan-throughput lane branch with item
+   46 (NOT on main; ships with 46 once both proofs on 137 read SAME):
+   (a) the bridge command keeps an answer cache by default (`bridge_cache`
+   beside `--out`; `--no-cache` opts out). `parts/` is still cleared on a
+   re-launch, but each part goes into the cache the moment it is written,
+   so a re-launch screens only the unfinished lots. (b)
+   `scripts/flats_weekly_chain.py` (runbook §4 + §4b): stage, quadfit,
+   normalize, institutional, transit, bridge, assign, export, a
+   done-marker per step holding the commit; a re-launch skips finished
+   steps and refuses markers from other code unless `--from STEP`. (c)
+   it supervises on 137 itself: a failed or stalled step re-runs (3
+   tries), bridge processes halved after a memory kill, then GAVE UP in
+   the status line. (d) stall = the step's own process group used < 60
+   CPU-s in 20 min (`--stall-minutes`) -> TERM then KILL that group only.
+   CPU, not new parts: one big lot can run 30+ min without a part, and
+   the steps before the bridge write none. (e) `--preflight-only`
+   refuses in seconds: code at the sha and clean, every pipeline.yaml key
+   in the manifest, stage's check, osm_land_use + rlis_orca, curb
+   datasets, 1 m tiles + dem10_utm, free disk on 137 (10 GB) and 114 via
+   `--app-host` (5 GB); a stale spec_sha256 is a note, not a refusal
+   (10-07 had 71 and screened clean). Tried on 137's real copies: 10-01
+   refused for its 15 missing keys + institutional + curbs; 10-07 passes.
+   (f) status every 2 min to `--status-to` (`/root/weekly137/status.txt`).
+   Local suite green; 3 Linux-only tests run in CI. PROOF QUEUED behind
+   46's: `/root/scan-throughput/proof5.sh` -- the chain drives a scope_A
+   bridge, the bridge's parent is SIGKILLed (retry at 8 processes,
+   resumes from the cache), then its group SIGSTOPped (stall kill, try 3
+   finishes); lots must be SAME as an uninterrupted run. Once merged the
+   next weekly launches with the chain; remove this item after it runs
+   clean.
 49. [scan: YES for (b)-(f), (h), (i)] **The 2026-10-07 weekly (run 65 on snapshot 4, PROMOTED 2026-10-07
    ~14:45 UTC by Steph from the County copy page; prune-runs retired run 59,
    kept 61/63/65; VACUUM FULL of lot_results NOT run -- permission denied,
@@ -1671,9 +1677,21 @@ read when the weekly full re-screen lands.
    grade, not the steep cut; median slope 17.5%) go YELLOW with a flag of
    severity 7, resolution measurement (the 1 m lidar where it exists).
    Handed to the slope lane with (e)/(f) (same files). Not built yet.
-   (i) SPLICE OWED, handed to an agent 2026-10-07: one partial re-screen
-   on run 65 carrying 84e702de, 51577bb8 (44), the slope lane's (e)/(f)/(h)
-   and (c) if landed; start once (e)/(f)/(h) are on main or by 2026-10-09.
+   (i) SPLICE OWED -- TAKEN by the weekly session (vicinitideals-fa)
+   2026-10-08 (the agent handed it on 10-07 could not be found). One partial
+   re-screen on run 65 carrying 81c3b77b + 84e702de (scope
+   /root/weekly_fixes/scope.txt, 9,860), 51577bb8 (44, /root/rank-colour/
+   scope.txt, 39,743) and the slope lane's (e)/(f)/(h) (its scope2 =
+   /root/sf/tl_new2.txt + tl_reuse.txt, 111,447, or whatever it ships with);
+   2cfd13d6 (52) rides in assign. Prepared on 137: /root/s49i/scope_pre.txt
+   (48,948, the first two), chain /root/s49i/chain.sh (preflight, done-marker
+   per step: bridge -> splice onto /root/bridge_2026-10-07_weekly -> assign on
+   run 65's normalized -> export; `SHA=<main sha>`, fixed tree
+   /root/code/s49i_<sha>). NOT in it: 017f63cf (50) -- its *_site columns need
+   s5o re-run and the splice refuses a changed s5o ("different columns"), so
+   it waits for the weekly; 51/53 need a new normalize -> the weekly unless
+   51's agent is ready first. Starts once the slope work is on main, or
+   2026-10-09 without it. Load/drift/gate on 114; a warned gate is Steph's.
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
@@ -1700,10 +1718,25 @@ read when the weekly full re-screen lands.
    JURISDICTION_OFF: run 65 best pod yellow 18,516 Tigard + 4,182 Cornelius
    lots, all JURISDICTION-OFF (the comment there still says "not encoded
    yet"). Work: switch both on; check each lot finds its zone (Metro
-   regional zoning by JURIS_CITY; Cornelius R-10 by hand still owed, item
-   17); bound a sample on 137 old vs new and read gains one by one; report
-   the colour counts to Steph before shipping. Lands via 49(i)'s splice if
-   ready before it starts, else the next weekly.
+   regional zoning by JURIS_CITY); bound a sample on 137 old vs new and read
+   gains one by one; report the colour counts to Steph before shipping.
+   STATE 2026-10-07 (branch bound/f51-tigard-cornelius c54f5a7d + R-10 work,
+   NOT on main, NOT deployed): both cities switched on in the code and tested;
+   quadfit rules ported. Zone check done: of 22,996 lots 11 find no usable
+   zone -- 4 NO_ZONE (outside Metro's polygons), 3 map labels that are a
+   hair-width sliver (Tigard R-15 x2, Cornelius GI; the stored codes hold
+   neither, so they stay gated), 4 Washington County codes (3 on the west
+   side stay unencodable, item 17). Cornelius R-10: tax lot 1N335CD01200 is
+   now read R-10 by hand (`lot_zones` in cornelius.yaml, new `LotZone`
+   mechanism in rules model/loader/normalize, tested); that lot is NOT in
+   the queued bridge (it was normalized before the entry), so it is screened
+   at the next re-screen, not in this bound. Bridge /root/f51/bridge.sh is
+   queued on heavy.lock behind the slope bound (starts ~midnight PDT);
+   reading script ready at /root/f51/gains/read.py (per-city colours, every
+   green block, yellow/red samples). TO THE 49(i) SPLICE AGENT: this bound
+   will NOT be ready before your splice starts and nothing of it is on main,
+   so do not wait for it and do not include it. Tigard + Cornelius ride the
+   next weekly (or a later splice once the gains are read and shipped).
 52. [scan: lands at 49(i)'s splice or the next weekly; no re-screen, no promotion]
    **Lots dropped before a fit (run 65): 11,427 yellow NOT_MEASURED +
    2,203 yellow GEOM-UNREADABLE.** Bucketed 2026-10-07: 6,951 had no 20 ft
