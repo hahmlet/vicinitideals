@@ -599,6 +599,9 @@ def normalize(
     for row in lots:
         layer = layers.get(row["jurisdiction"]) if row["jurisdiction"] else None
         code, zone = zone_for(layer, row["zone_raw"])
+        by_hand = layer.lot_zones.get(row["tlid"]) if layer is not None else None
+        if by_hand is not None:
+            zone = by_hand.zone
         ruling = ruling_for(layer, code) if zone is None else None
         row["zone"] = zone
         row["rules_layer"] = None

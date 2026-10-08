@@ -478,6 +478,21 @@ class DrawnArea(BaseModel):
     note: str
 
 
+class LotZone(BaseModel):
+    """One tax lot whose zone the city's own map settles and the county's
+    regional layer cannot print: Cornelius's single R-10 parcel, which Metro's
+    layer spells as a county district. ``zone`` is a zone block this layer
+    holds, ``source`` names the map, ``note`` is the argument.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    tlid: str
+    zone: str
+    source: str
+    note: str
+
+
 class NeighbourRule(BaseModel):
     """Which zone codes across a lot line make one neighbour-zoning
     condition true here, and which make it false, in this code's own words.
@@ -622,6 +637,9 @@ LAYER_META = frozenset(
         # Boundaries the code draws inside a zone that no GIS publishes,
         # traced here, for `inside_mapped_use_area` (`DrawnArea`).
         "drawn_areas",
+        # Single tax lots whose zone the city's own map settles and the
+        # regional layer cannot print (`LotZone`).
+        "lot_zones",
         # Passages of our documents read and left out on purpose, with the
         # lines, so a printed page can show them apart from a blind miss.
         "set_aside",
@@ -2635,6 +2653,9 @@ class Layer(BaseModel):
     #: Areas the code draws inside a zone, traced here -- see
     #: :class:`DrawnArea`. Keyed by the area's name.
     drawn_areas: dict[str, DrawnArea] = Field(default_factory=dict)
+    #: Tax lots (TLID) assigned a zone by hand from the city's own map -- see
+    #: :class:`LotZone`. Beats the zoning layer's label for that lot only.
+    lot_zones: dict[str, LotZone] = Field(default_factory=dict)
     #: Passages read and refused on purpose -- see :class:`SetAside`.
     set_aside: tuple[SetAside, ...] = ()
 

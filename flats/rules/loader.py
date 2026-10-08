@@ -49,6 +49,7 @@ from flats.rules.net_area import DEDUCTIONS, NetArea
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
     DrawnArea,
+    LotZone,
     POCKET_ZONE_FROM_MAP,
     ZONE_RULING_OUTCOMES,
     NeighbourRule,
@@ -2003,6 +2004,50 @@ def _parse_drawn_areas(
     return out
 
 
+def _parse_lot_zones(
+    raw: object, zones: Mapping[str, Zone], *, where: str, problems: list[str]
+) -> dict[str, LotZone]:
+    """Tax lots whose zone is read off the city's own map by hand::
+
+        lot_zones:
+          1N335CD01200:
+            zone: R-10
+            source: City of Cornelius Zoning Map, April 2025 ...
+            note: >-
+              Why this lot, and how it was identified ...
+
+    The zone is a zone block of this layer; a source and a note of a ruling's
+    length are required, because this overrides the zoning layer for one lot.
+    """
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.lot_zones: expected a mapping of tax lot -> zone")
+        return {}
+    out: dict[str, LotZone] = {}
+    for tlid, body in raw.items():
+        tlid = str(tlid).strip()
+        at = f"{where}.lot_zones.{tlid}"
+        if not isinstance(body, dict) or set(body) - {"zone", "source", "note"}:
+            problems.append(f"{at}: expected zone, source and note")
+            continue
+        zone = str(body.get("zone") or "").strip()
+        if zone not in zones:
+            problems.append(f"{at}.zone: not a zone block here: {zone or 'nothing'}")
+            continue
+        source, note = body.get("source"), body.get("note")
+        if not isinstance(source, str) or not source.strip():
+            problems.append(f"{at}.source: the map the zone is read from")
+            continue
+        if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
+            problems.append(f"{at}.note: why this lot, in at least {MIN_RULING} characters")
+            continue
+        out[tlid] = LotZone(
+            tlid=tlid, zone=zone, source=" ".join(source.split()), note=" ".join(note.split())
+        )
+    return out
+
+
 def _area_file_problem(file: str) -> str | None:
     """Why ``file`` is not a traced area this loader accepts, or None."""
     if not file:
@@ -2317,6 +2362,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             drawn_areas=_parse_drawn_areas(
                 raw.get("drawn_areas"), zones, where=where, problems=problems
             ),
+            lot_zones=_parse_lot_zones(raw.get("lot_zones"), zones, where=where, problems=problems),
             set_aside=_parse_set_aside(raw.get("set_aside"), zones, where=where, problems=problems),
         )
     except Exception as exc:

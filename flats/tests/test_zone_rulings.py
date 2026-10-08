@@ -409,3 +409,14 @@ def test_without_a_use_gate_the_stage_is_the_pure_join(tmp_path: Path) -> None:
     ).to_parquet(normalized / "lots.parquet", index=False)
     meta = az.assign(normalized, bridge, tmp_path / "out")
     assert meta["assign"]["by_reason"] == {"NOT_MEASURED": 1} and meta["assign"]["prohibited_by_zone"] == {}
+
+
+def test_cornelius_reads_its_one_r10_parcel_by_hand():
+    """The city's map paints R-10 on one parcel Metro's layer cannot print;
+    that lot is read R-10 by hand, and no other lot is."""
+    from flats.rules.loader import load_rules
+
+    layer = load_rules()["or/washington/cornelius"]
+    assert set(layer.lot_zones) == {"1N335CD01200"}
+    lot = layer.lot_zones["1N335CD01200"]
+    assert lot.zone == "R-10" and "R-10" in layer.zones and lot.source and lot.note
