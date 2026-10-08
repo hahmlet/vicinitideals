@@ -1676,8 +1676,13 @@ read when the weekly full re-screen lands.
    /root/code/s49i_<sha>). NOT in it: 017f63cf (50) -- its *_site columns need
    s5o re-run and the splice refuses a changed s5o ("different columns"), so
    it waits for the weekly; 51/53 need a new normalize -> the weekly unless
-   51's agent is ready first. Slope work ON MAIN 2dacbe1c 2026-10-08 -- go;
-   2026-10-09 without it. Load/drift/gate on 114; a warned gate is Steph's.
+   51's agent is ready first. Slope work ON MAIN 2dacbe1c 2026-10-08 --
+   QUEUED 2026-10-08 ~14:10 UTC on heavy.lock behind proof5 (pid 364130):
+   SHA f16f1fd6, tree /root/code/s49i_f16f1fd6, scope /root/s49i/scope.txt =
+   162,717 lots (87 ROW pseudo-lots dropped), log /root/s49i/chain.log.
+   Expect the slope bound's 2,525 moves + the others'. Load/drift/gate on
+   114; a warned gate is Steph's. Tell vicinitideals-5c when through (it
+   cleans /root/sf after).
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
