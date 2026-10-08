@@ -1566,40 +1566,26 @@ read when the weekly full re-screen lands.
    run runbook step 7b, and pass `--institutional` to the bridge -- then
    check `institutional_were_scanned` is 0 in assign's summary. Remove
    this item once that run is promoted.
-48. [scan: YES (a proof: a run killed mid-way and resumed must come out identical to one that was not)] **PRIORITY -- scans must survive a crash without losing time (Steph
+48. [scan: NO -- proved] **PRIORITY -- scans must survive a crash without losing time (Steph
    2026-10-07: "we're moving quick and stacking a lot of changes between
-   runs. Don't want to lose time to avoidable problems").** Asked during
-   the early weekly (2026-10-07, 12 processes, 225k/414k lots at 4 h).
-   (a)-(f) BUILT 2026-10-07 on the scan-throughput lane branch (NOT on
-   main; ships once proof 5 on 137 reads SAME; item 46 shipped 24a61695):
-   (a) the bridge command keeps an answer cache by default (`bridge_cache`
-   beside `--out`; `--no-cache` opts out). `parts/` is still cleared on a
-   re-launch, but each part goes into the cache the moment it is written,
-   so a re-launch screens only the unfinished lots. (b)
-   `scripts/flats_weekly_chain.py` (runbook §4 + §4b): stage, quadfit,
-   normalize, institutional, transit, bridge, assign, export, a
-   done-marker per step holding the commit; a re-launch skips finished
-   steps and refuses markers from other code unless `--from STEP`. (c)
-   it supervises on 137 itself: a failed or stalled step re-runs (3
-   tries), bridge processes halved after a memory kill, then GAVE UP in
-   the status line. (d) stall = the step's own process group used < 60
-   CPU-s in 20 min (`--stall-minutes`) -> TERM then KILL that group only.
-   CPU, not new parts: one big lot can run 30+ min without a part, and
-   the steps before the bridge write none. (e) `--preflight-only`
-   refuses in seconds: code at the sha and clean, every pipeline.yaml key
-   in the manifest, stage's check, osm_land_use + rlis_orca, curb
-   datasets, 1 m tiles + dem10_utm, free disk on 137 (10 GB) and 114 via
-   `--app-host` (5 GB); a stale spec_sha256 is a note, not a refusal
-   (10-07 had 71 and screened clean). Tried on 137's real copies: 10-01
-   refused for its 15 missing keys + institutional + curbs; 10-07 passes.
-   (f) status every 2 min to `--status-to` (`/root/weekly137/status.txt`).
-   Local suite green; 3 Linux-only tests run in CI. PROOF QUEUED on
-   heavy.lock: `/root/scan-throughput/proof5.sh` -- the chain drives a scope_A
-   bridge, the bridge's parent is SIGKILLed (retry at 8 processes,
-   resumes from the cache), then its group SIGSTOPped (stall kill, try 3
-   finishes); lots must be SAME as an uninterrupted run. Once merged the
-   next weekly launches with the chain; remove this item after it runs
-   clean.
+   runs. Don't want to lose time to avoidable problems").** (a)-(f)
+   SHIPPED 1762716a + 66545fb6 2026-10-08 (deployed, smoke passed, CI
+   green): the bridge command keeps an answer cache by default
+   (`bridge_cache` beside `--out`; `--no-cache` off), so a re-launch
+   resumes; the weekly re-screen is `scripts/flats_weekly_chain.py`
+   (runbook §4 + §4b) -- a done-marker per step, `--preflight-only`
+   refuses in seconds, a failed or stalled step re-runs up to 3 tries
+   (bridge processes halved after a memory kill), stall = the step's own
+   group under 60 CPU-s in 20 min (CPU, not new parts: one big lot runs
+   30+ min without one), status every 2 min to 114
+   `/root/weekly137/status.txt`. Proof 5 on 137 (2026-10-08, scope_A on
+   the 10-07 weekly inputs): uninterrupted chain 37.2 min; the sabotaged
+   one -- bridge parent SIGKILLed at 16 min (retry at 8 procs, 1,636 lots
+   from the cache), then its group SIGSTOPped (stall caught in 3 min, try
+   3 resumed 2,515 lots, done at 48.8 min) -- lots SAME, no process left
+   behind. CI then caught a minute lost per stall (a zombie counted as
+   alive), fixed 66545fb6. LEFT: the next weekly launches with the chain
+   (whoever runs it); remove this item once that run is promoted.
 49. [scan: YES for (b)-(f), (h), (i)] **The 2026-10-07 weekly (run 65 on snapshot 4, PROMOTED 2026-10-07
    ~14:45 UTC by Steph from the County copy page; prune-runs retired run 59,
    kept 61/63/65; VACUUM FULL of lot_results NOT run -- permission denied,
@@ -1890,3 +1876,15 @@ read when the weekly full re-screen lands.
    places join 54's free weekly check; a change since scouting marks the card "re-scout
    before encoding". Once the state is scouted the leftover goes to re-scouting changed
    cards, then a reading list + doubts list (the item-53 kind) for the top-ranked places.
+56. [scan: NO] **Deploy smoke runs too early (found 2026-10-08, offered to Steph).**
+   `/root/deploy-vicinitideals.sh` on 114 waits `sleep 5` after `docker
+   compose up -d`, then smokes; the api now takes longer to start, so 3
+   deploys on 2026-10-08 (24a61695, 1762716a, 66545fb6) printed SMOKE
+   FAILED with `Connection refused` and passed when the smoke was re-run
+   by hand 30 s later (`cd /root/stacks/vicinitideals && docker compose
+   run --rm -e POST_DEPLOY_BASE_URL=http://api:8000 api python
+   scripts/post_deploy_smoke.py`). A false FAIL teaches agents to ignore a
+   real one. Fix: wait (up to ~2 min) for the api container's healthcheck
+   to read `healthy` before the smoke, in BOTH the live script and the
+   repo copy `scripts/deploy-vicinitideals.sh` (they differ: the live one
+   uses STACK_DIR). App-side, not FLATS.
