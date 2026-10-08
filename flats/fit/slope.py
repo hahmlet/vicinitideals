@@ -19,8 +19,17 @@ eastern third of Portland):
   elevations averaged over a square that wide, about 16 ft), never pixel
   to pixel: the 1 m model resolves curbs, ditches and the cut round a
   basement, and pixel slope read every flat Portland lot at twice its real
-  grade (FOLLOWUPS 38: 5.9% mean on 1 m against 3.1% on 10 m). The 10 m
-  model is read cell to cell -- a cell is already wider than the run.
+  grade (FOLLOWUPS 38: 5.9% mean on 1 m against 3.1% on 10 m). The run
+  averages the lot's OWN ground only: a neighbour's bank or a raised road
+  just over the line is not averaged in, where it spread a 4-5 ft bank on
+  the line into a strip of "steep" ground up to 13 ft deep across a flat
+  lot (FOLLOWUPS 49(f): 58 flat lots red on run 65). A bank's height is
+  read the same way: on the lot's own ground, straight up and down the
+  slope (:data:`BANK_WALK_M`), never along it -- where a taxlot line drawn
+  a metre or two off the ground puts the toe of that bank inside the lot,
+  the toe is the height the lot's own ground rises, not the fall of the
+  road it runs beside. The 10 m model is read cell to cell -- a cell is
+  already wider than the run.
 * :meth:`Terrain.grade` -- the fall across the ground a plan's building and
   court stand on: the plane that best fits every elevation under them, its
   steepest direction as a percentage. One number for the whole pad, which
@@ -52,6 +61,34 @@ TEN_M = "dem_10m"
 MIN_PATCH_SQFT = 100.0
 SQFT_PER_SQM = 10.763910416709722
 FT_PER_M = 3.280839895013123
+#: How far a bank's height is read each way from each of its cells, metres:
+#: straight up and down the cell's slope, over the lot's own steep 1 m
+#: cells, stopping at its line and at the top and toe of the steep ground.
+#: The fall over that walk -- not the highest cell of a steep patch less its
+#: lowest -- is the bank's height ``min_bank_ft`` rules on. A patch's
+#: highest-less-lowest ran ALONG it too: a neighbour's bank toe that a
+#: taxlot line drawn a metre or two off the ground puts inside a flat lot
+#: is a strip along the line, and it read the fall of the road beside it as
+#: the bank's (FOLLOWUPS 49(f) bound, 2026-10-07: 1N2E20DB -00100, 3 ft of
+#: neighbour's bank over two edge cells, now none). Walked across, the toe
+#: is the height the lot's own ground rises, and the lot's own bank on its
+#: line is its full height (21E26AD02702, 8 ft in its outer 2 m; 1S2E07BB
+#: -22400, a flat lot whose own ground rises 7 ft in the 3 m inside its
+#: line, stays steep there). Stopping at the toe keeps the gentle ground
+#: beyond out of it: walked on into the lot, a short toe on a lot rising 5%
+#: gained the whole rise. Twelve metres end to end: ground just over the
+#: 15% line falls 5.9 ft across it, so a hillside is never a short bank.
+BANK_WALK_M = 6.0
+
+
+def _cells(geom: Any, shape: tuple[int, int], tf: Any) -> Any:
+    """The grid cells whose centres fall inside ``geom``."""
+    import numpy as np
+    from rasterio.features import geometry_mask
+
+    if geom.is_empty:
+        return np.zeros(shape, dtype=bool)
+    return geometry_mask([geom.__geo_interface__], out_shape=shape, transform=tf, invert=True)
 
 
 #: Steph's slope ruling (HUMAN-OWNED).
@@ -151,6 +188,126 @@ def _box_mean(a: Any, k: int) -> Any:
     return out
 
 
+def _own_grade(raw: Any, keep: Any, k: int, dx: float, dy: float) -> tuple[Any, Any, Any]:
+    """Slope % at each cell over the run, read off the ``keep`` cells only,
+    and the rise per metre east and per metre south it is made of.
+
+    Each cell's elevation is the mean over the ``keep`` cells of the k x k
+    square centred on it (k odd) -- ``_box_mean`` where the square is whole
+    -- and is the ground at THEIR centroid, not at the cell's: where the
+    square is cut short by the edge of ``keep`` the centroid moves inward,
+    and the slope is solved from the two pairs of neighbours' rises over
+    the distances between their centroids. Where every square is whole
+    that is ``np.gradient`` of the box mean, exactly; across the edge it is
+    the ground of ``keep`` carried on, never what lies beyond it, and a
+    plane reads its own grade right up to the edge. A cell whose
+    neighbours' centroids fall in a line (no square, or a sliver of
+    ``keep``) takes the grade of the nearest cell that was read
+    (:func:`_carried`); with none read at all, every cell is read the old
+    way, over all the ground. ``dx``/``dy``: the cell's width and height in
+    metres."""
+    import numpy as np
+
+    r = k // 2
+
+    def window_sums(x: Any) -> Any:
+        p = np.pad(x, r)
+        c = np.zeros((p.shape[0] + 1, p.shape[1] + 1), dtype=np.float64)
+        c[1:, 1:] = np.cumsum(np.cumsum(p, axis=0), axis=1)
+        return c[k:, k:] - c[:-k, k:] - c[k:, :-k] + c[:-k, :-k]
+
+    def across(a: Any, axis: int) -> Any:
+        out = np.full(a.shape, np.nan)
+        if axis == 1:
+            out[:, 1:-1] = a[:, 2:] - a[:, :-2]
+        else:
+            out[1:-1, :] = a[2:, :] - a[:-2, :]
+        return out
+
+    keep = keep & ~np.isnan(raw)
+    rows, cols = np.indices(raw.shape, dtype=np.float64)
+    n = window_sums(keep.astype(np.float64))
+    with np.errstate(invalid="ignore", divide="ignore"):
+        per = np.where(n > 0, 1.0 / np.where(n > 0, n, 1.0), np.nan)
+        z = window_sums(np.where(keep, raw, 0.0)) * per
+        east = window_sums(np.where(keep, cols, 0.0)) * per * dx
+        south = window_sums(np.where(keep, rows, 0.0)) * per * dy
+        u1, v1, h1 = across(east, 1), across(south, 1), across(z, 1)
+        u2, v2, h2 = across(east, 0), across(south, 0), across(z, 0)
+        det = u1 * v2 - v1 * u2
+        solved = np.isfinite(det) & (np.abs(det) >= dx * dy) & np.isfinite(h1) & np.isfinite(h2)
+        safe = np.where(solved, det, 1.0)
+        a = (h1 * v2 - v1 * h2) / safe
+        b = (u1 * h2 - h1 * u2) / safe
+        pct = np.hypot(a, b) * 100.0
+    if not solved.any():
+        gy, gx = np.gradient(_box_mean(raw, k), dy, dx)
+        return np.hypot(gx, gy) * 100.0, gx, gy
+    return _carried(pct, solved, a, b)
+
+
+def _across(raw: Any, keep: Any, east: Any, south: Any, dx: float, dy: float, reach_m: float) -> Any:
+    """At each ``keep`` cell, the rise from the lowest to the highest
+    ``keep`` cell met walking ``reach_m`` each way along the cell's slope
+    (``east``/``south``: its rise per metre each way), stopping where
+    ``keep`` ends; 0 where the cell is level, NaN off ``keep``."""
+    import numpy as np
+
+    out = np.full(raw.shape, np.nan)
+    rows, cols = np.nonzero(keep & ~np.isnan(raw))
+    if not len(rows):
+        return out
+    ge, gs = east[rows, cols], south[rows, cols]
+    g = np.hypot(ge, gs)
+    level = ~np.isfinite(g) | (g == 0)
+    ue = np.where(level, 0.0, ge / np.where(level, 1.0, g))
+    us = np.where(level, 0.0, gs / np.where(level, 1.0, g))
+    lo = raw[rows, cols].copy()
+    hi = lo.copy()
+    h, w = raw.shape
+    step = min(dx, dy)
+    for sign in (1.0, -1.0):
+        alive = ~level
+        for i in range(1, int(math.ceil(reach_m / step)) + 1):
+            d = sign * i * step
+            r = np.rint(rows + us * d / dy).astype(np.int64)
+            c = np.rint(cols + ue * d / dx).astype(np.int64)
+            rr, cc = np.clip(r, 0, h - 1), np.clip(c, 0, w - 1)
+            alive &= (r == rr) & (c == cc) & keep[rr, cc] & ~np.isnan(raw[rr, cc])
+            if not alive.any():
+                break
+            z = raw[rr, cc]
+            lo = np.where(alive, np.fmin(lo, z), lo)
+            hi = np.where(alive, np.fmax(hi, z), hi)
+    out[rows, cols] = hi - lo
+    return out
+
+
+def _carried(pct: Any, solved: Any, *more: Any) -> Any:
+    """``pct`` with each cell not ``solved`` given the steepest grade of the
+    solved cells beside it, ring by ring outward from them; with ``more``,
+    ``(pct, *more)``, each of ``more`` carried from that same cell."""
+    import numpy as np
+
+    pct = np.where(solved, pct, np.nan)
+    more = [np.where(solved, m, np.nan) for m in more]
+
+    def beside(a: Any) -> Any:
+        p = np.pad(a, 1, constant_values=np.nan)
+        return np.stack([p[:-2, 1:-1], p[2:, 1:-1], p[1:-1, :-2], p[1:-1, 2:]])
+
+    for _ in range(sum(pct.shape)):
+        gap = np.isnan(pct)
+        if not gap.any():
+            break
+        near = beside(pct)
+        found = gap & ~np.isnan(near).all(axis=0)
+        pick = np.argmax(np.where(np.isnan(near), -np.inf, near), axis=0)[None]
+        pct = np.where(found, np.take_along_axis(near, pick, 0)[0], pct)
+        more = [np.where(found, np.take_along_axis(beside(m), pick, 0)[0], m) for m in more]
+    return (pct, *more) if more else pct
+
+
 class Terrain:
     """The elevation models, opened once per process.
 
@@ -239,10 +396,13 @@ class Terrain:
             return None
         return a, tf
 
-    def _slope_pct(self, geom_m: Any) -> tuple[Any, Any, str, Any] | None:
+    def _slope_pct(self, geom_m: Any) -> tuple[Any, Any, str, Any, tuple[Any, Any]] | None:
         """Slope % over the box round ``geom_m`` (model CRS), read over the
-        run on 1 m, cell to cell on 10 m; the grid's transform; the model;
-        the elevations as read, before any averaging."""
+        run on 1 m -- the run averaging only the cells whose centres fall
+        inside ``geom_m``, so ground beyond its edge never reads as its
+        slope -- and cell to cell on 10 m; the grid's transform; the model;
+        the elevations as read, before any averaging; the rise per metre
+        east and south each slope is made of."""
         import numpy as np
 
         k = max(int(round(self.run_m)) | 1, 3)
@@ -251,8 +411,10 @@ class Terrain:
         got = self._fine((b[0] - pad, b[1] - pad, b[2] + pad, b[3] + pad)) if self.tiles else None
         if got is not None:
             raw, tf = got
-            z = _box_mean(raw, k)
-            source = ONE_M
+            pct, east, south = _own_grade(raw, _cells(geom_m, raw.shape, tf), k, tf.a, abs(tf.e))
+            if pct.shape[0] < 3 or pct.shape[1] < 3:
+                return None
+            return pct, tf, ONE_M, raw, (east, south)
         elif self.coarse is not None:
             res = self.coarse.res[0]
             got = self._read(self.coarse, (b[0] - 2 * res, b[1] - 2 * res, b[2] + 2 * res, b[3] + 2 * res))
@@ -266,7 +428,7 @@ class Terrain:
         if z.shape[0] < 3 or z.shape[1] < 3:
             return None
         gy, gx = np.gradient(z, abs(tf.e), tf.a)
-        return np.hypot(gx, gy) * 100.0, tf, source, raw
+        return np.hypot(gx, gy) * 100.0, tf, source, raw, (gx, gy)
 
     # -- measuring ------------------------------------------------------------
 
@@ -281,9 +443,12 @@ class Terrain:
         """The part of ``lot`` (working CRS) steeper than ``over_pct``.
 
         A patch whose ground, inside the lot, falls less than ``min_bank_ft``
-        from its highest cell to its lowest is left out: a raised front yard
-        or a terrace wall, which the run reads as a strip of steep ground
-        but a builder regrades.
+        is left out: a raised front yard or a terrace wall, which the run
+        reads as a strip of steep ground but a builder regrades. On 1 m the
+        fall is read across the bank, straight up and down its slope over
+        the lot's own steep cells (:data:`BANK_WALK_M`), the most any of its
+        cells sees; on 10 m, from the highest cell the patch touches to its
+        lowest.
 
         ``areas_over`` asks, off the same reading, how much of the lot is at
         or steeper than each of those grades (:attr:`Steep.areas`): the cells
@@ -300,7 +465,7 @@ class Terrain:
         got = self._slope_pct(lot_m)
         if got is None:
             return None
-        pct, tf, source, raw = got
+        pct, tf, source, raw, (east, south) = got
         grades = np.nan_to_num(pct, nan=0.0)
         areas: dict[float, float] = {}
         if areas_over:
@@ -318,15 +483,26 @@ class Terrain:
         ]
         steep_m = shapely.union_all(polys).intersection(lot_m)
         if min_bank_ft > 0 and not steep_m.is_empty:
+            # On 1 m, the fall is the lot's own (steep cells centred inside
+            # it), read across the bank; a patch no steep cell of the lot's
+            # own sits in is the ground over the line. A 10 m cell is wider
+            # than most patches, so every cell touched, highest to lowest.
+            across = None
+            if source == ONE_M:
+                inside = _cells(lot_m, raw.shape, tf) & mask
+                across = _across(raw, inside, east, south, tf.a, abs(tf.e), BANK_WALK_M)
 
             def fall_ft(part: Any) -> float:
-                cells = geometry_mask(
+                touched = geometry_mask(
                     [part.__geo_interface__], out_shape=raw.shape, transform=tf,
                     invert=True, all_touched=True,
                 ) & ~np.isnan(raw)
-                if not cells.any():
+                if across is not None:
+                    own = touched & inside
+                    return float(np.nanmax(across[own])) * FT_PER_M if own.any() else 0.0
+                if not touched.any():
                     return 0.0
-                return float(np.nanmax(raw[cells]) - np.nanmin(raw[cells])) * FT_PER_M
+                return float(np.nanmax(raw[touched]) - np.nanmin(raw[touched])) * FT_PER_M
 
             tall = [
                 p for p in getattr(steep_m, "geoms", [steep_m])

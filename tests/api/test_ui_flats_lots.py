@@ -1097,6 +1097,25 @@ async def test_the_lot_page_says_how_steep_the_ground_is(
     unmeasured = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
     assert 'id="slope-pod80x25-2"' not in unmeasured.text
 
+    # FOLLOWUPS 49(h), Steph 2026-10-07: steep ground on the coarse map
+    # alone is not kept out -- the lot is screened as though it were
+    # buildable, and the page says the lidar or a survey settles it.
+    for row in rows:
+        if row.checks.get("slope", {}).get("steep_source") == "dem_10m":
+            row.checks = {**row.checks, "slope": {
+                **row.checks["slope"], "steep_blocks": False, "steep_unconfirmed": True,
+            }}
+            row.binding = [b for b in row.binding if b != "steep_ground"]
+    await session.commit()
+    page = await client.get("/flats/lots/multnomah/1N1E29DD%20%20-05600")
+    coarse = page.text.split('id="slope-pod80x25-2"', 1)[1].split("</tr>", 1)[0]
+    assert "5,200 sq ft" in coarse and "on the coarse map only" in coarse
+    assert "closer look" in coarse and "lidar or a survey" in coarse
+    assert "kept out of where" not in coarse and "do not fit on the rest" not in coarse
+    from app.api.routers.ui_flats import _REASON_WORDS
+
+    assert _REASON_WORDS["CLOSER_LOOK_STEEP_COARSE"].startswith("closer look")
+
 
 # --- the colour rule (FOLLOWUPS 37) ------------------------------------------
 

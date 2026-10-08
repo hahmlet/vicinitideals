@@ -75,7 +75,7 @@ from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
-from flats.fit.slope import ONE_M, load_rules as slope_rules
+from flats.fit.slope import ONE_M, TEN_M, load_rules as slope_rules
 from flats.geom.alley import (
     ALLEY_CLASS,
     ALLEY_FACTS,
@@ -2357,6 +2357,16 @@ def _screen_lot_once(
             won, lot, terrain, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
             roads=roads,
         )
+        if _coarse_blocked(won, lot):
+            # Eliminated on the coarse map's steep ground alone: screened
+            # again, the whole way, as though it were not there, and flagged
+            # (FOLLOWUPS 49(h), Steph 2026-10-07).
+            (won,) = _screen_lot_once(
+                unconfirmed_steep(lot), [design], rules=rules, policy=policy, relief=relief,
+                step_deg=step_deg, roads=roads, bound=bound, terrain=terrain, room=room,
+            )
+            out.append(won)
+            continue
         if bound:
             won = _bounded(
                 won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
@@ -2702,6 +2712,49 @@ def with_steep(lot: QuadfitLot, terrain: Any) -> QuadfitLot:
     return dataclasses.replace(cut(lot), second=second)
 
 
+def _coarse_blocked(s: Screened, lot: QuadfitLot) -> bool:
+    """Whether steep ground read on the coarse 10 m model alone is what
+    eliminated this plan (:attr:`LotFacts.steep_blocks`), where the coarse
+    model may not make a lot RED (``coarse_red_is_closer_look``)."""
+    return (
+        slope_rules().coarse_red_is_closer_look
+        and s.facts is not None
+        and s.facts.steep_blocks
+        and lot.steep is not None
+        and lot.facts.steep_source == TEN_M
+    )
+
+
+def unconfirmed_steep(lot: QuadfitLot) -> QuadfitLot:
+    """``lot`` with the steep ground the coarse 10 m model read left on it,
+    and that said in its facts (:attr:`LotFacts.steep_unconfirmed`).
+
+    Steph 2026-10-07: a lot the coarse map's steep ground eliminates is
+    "yellow with flag. 7 severity" -- a 10 m cell is wider than the ground
+    it would take off, and the coarse map never makes a lot RED alone
+    (``coarse_red_is_closer_look``). So the lot is screened without the
+    cut: RED only on what else it misses, and flagged SLOPE-STEEP-COARSE
+    for the 1 m lidar or a survey to settle. Its second reading
+    (:func:`drive_reading`) is screened on its own.
+    """
+    facts = dataclasses.replace(lot.facts, steep_unconfirmed=True)
+    return dataclasses.replace(lot, steep=None, facts=facts, second=None)
+
+
+def _fit_short(s: Screened) -> float | None:
+    """How far the plan's fit fell short, in feet; None where it was met."""
+    for c in s.screening.checks:
+        if c.check in ("fit_ft", STEEP_GROUND) and c.verdict is CheckVerdict.fails:
+            return c.shortfall
+    return None
+
+
+#: The steep ground takes the blame for a fit the lot misses without it too
+#: once it is most of the miss: the shortfall on the flat ground more than
+#: this many times the shortfall on the whole lot (FOLLOWUPS 49(e)).
+STEEP_SHARE = 2.0
+
+
 def _fit_missed(s: Screened) -> bool:
     """Whether the plan missed its fit -- :data:`STEEP_GROUND` is the same
     miss, named for the slope that caused it (:func:`slope_checked`)."""
@@ -2730,9 +2783,12 @@ def slope_checked(
     cannot hold even the building's footprint where the lot without the
     cut could -- Steph's test, "see if there's even enough land for the
     pod. If no, don't check pod placement" -- or the same lot screened with
-    the steep ground left on does not miss. Then the miss is the slope's
-    and is named so (:data:`flats.score.screen.STEEP_GROUND`); otherwise
-    the lot was too tight anyway and the fit keeps the blame.
+    the steep ground left on does not miss, or misses by less than half as
+    much (:data:`STEEP_SHARE`; FOLLOWUPS 49(e): 2.5 ft short on the whole
+    lot and 63 ft on its flat ground is a hillside, not a variance). Then
+    the miss is the slope's and is named so
+    (:data:`flats.score.screen.STEEP_GROUND`); otherwise the lot was too
+    tight anyway and the fit keeps the blame.
 
     Second, the fall across the ground the drawn plan's building and court
     stand on (:meth:`flats.fit.slope.Terrain.grade`), only where the drawing
@@ -2758,7 +2814,10 @@ def slope_checked(
                 bare, [s.design], rules=rules, policy=policy, relief=relief,
                 step_deg=step_deg, roads=roads, bound=False, fit_only=True,
             )
-            if not _fit_missed(alt):
+            whole_short, flat_short = _fit_short(alt), _fit_short(s)
+            if whole_short is None or (
+                flat_short is not None and flat_short > STEEP_SHARE * whole_short
+            ):
                 facts = dataclasses.replace(facts, steep_blocks=True)
     drawing = s.drawing or {}
     ring = drawing.get("building")
@@ -3157,6 +3216,7 @@ def row_for(s: Screened) -> dict[str, Any]:
         "steep_sqft": s.facts.steep_sqft if s.facts is not None else None,
         "steep_source": s.facts.steep_source if s.facts is not None else None,
         "steep_blocks": bool(s.facts.steep_blocks) if s.facts is not None else False,
+        "steep_unconfirmed": bool(s.facts.steep_unconfirmed) if s.facts is not None else False,
         "site_grade_pct": s.facts.site_grade_pct if s.facts is not None else None,
         "site_grade_source": s.facts.site_grade_source if s.facts is not None else None,
         "colour": s.signed.colour.value,

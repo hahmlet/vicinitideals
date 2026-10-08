@@ -15,7 +15,13 @@ Pinned here:
 * the screen turns each band into its colour, with no relief round a
   hillside, and names a fit lost to the steep ground as the slope's;
 * the bridge takes the steep ground off before the fit, and a lot that
-  fits only on its steep ground is RED on slope.
+  fits only on its steep ground is RED on slope -- and so is one the steep
+  ground leaves far shorter than it would be anyway (FOLLOWUPS 49(e));
+* steep ground the coarse 10 m map alone shows does not eliminate a lot: it
+  is screened as though buildable and flagged at severity 7 (FOLLOWUPS
+  49(h), Steph 2026-10-07);
+* a slope is read off the lot's own ground, never a neighbour's bank
+  (FOLLOWUPS 49(f)).
 """
 
 from __future__ import annotations
@@ -38,6 +44,7 @@ from flats.score import flags as flag_plan, relief, slack  # noqa: E402
 from flats.score.relief import NO_ZONING_RELIEF  # noqa: E402
 from flats.score.screen import (  # noqa: E402
     CLOSER_LOOK_SLOPE,
+    CLOSER_LOOK_STEEP_COARSE,
     FACT_UNOBSERVED,
     SITE_GRADE_CHECK,
     SLOPE_RULING,
@@ -99,6 +106,126 @@ def test_the_steep_part_of_a_lot_is_found_where_it_is(tmp_path: Path) -> None:
     assert got is not None and got.source == ONE_M
     assert 0.35 * LOT.area < got.sqft < 0.65 * LOT.area
     assert got.geom.centroid.x > LOT.centroid.x + 15
+
+
+@pytest.mark.parametrize("edge", ["east", "north"])
+def test_a_neighbours_bank_is_not_the_lots_slope(tmp_path: Path, edge: str) -> None:
+    """FOLLOWUPS 49(f): a flat lot below a neighbour's 6 ft bank, or a road
+    raised past its line. Averaged over the run with the ground beyond the
+    line, the bank read as a strip of steep ground inside the flat lot; the
+    run averages the lot's own ground, so the lot is flat."""
+    side = LOT.bounds[2] - LOT.bounds[0]
+    edge_m = side * 0.3048
+
+    def rise(x, y):
+        at = x if edge == "east" else y
+        return np.clip((at - edge_m - 0.5) / 2.0, 0.0, 1.0) * 1.8
+
+    got = terrain(tmp_path, rise).steep(LOT, 15.0)
+    assert got is not None and got.source == ONE_M
+    assert got.sqft == 0.0
+
+
+@pytest.mark.parametrize("edge", ["east", "west"])
+def test_a_neighbours_bank_whose_toe_the_line_misses_is_not_the_lots_slope(
+    tmp_path: Path, edge: str
+) -> None:
+    """The 49(f) bound's 1N2E20DB -00100: a taxlot line drawn a metre or two
+    off the ground puts the toe of the neighbour's bank inside the lot -- 3
+    ft over its two edge cells, 7 ft at the top beyond. Read off the cells
+    at the line that strip was "steep" and the flat lot RED; the lot's own
+    ground rises 3 ft across it, a bank under Steph's 4."""
+    side_m = (LOT.bounds[2] - LOT.bounds[0]) * 0.3048
+
+    def rise(x, y):
+        into = (x - (side_m - 1.5)) if edge == "east" else (1.5 - x)
+        return np.clip(into / 3.5, 0.0, 1.0) * 2.1
+
+    got = terrain(tmp_path, rise).steep(LOT, 15.0, min_bank_ft=4.0)
+    assert got is not None and got.source == ONE_M
+    assert got.sqft == 0.0
+
+
+@pytest.mark.parametrize("edge", ["east", "west"])
+def test_a_road_falling_along_the_line_is_not_the_height_of_its_bank(
+    tmp_path: Path, edge: str
+) -> None:
+    """The 49(f) bound's 1S2E07BB -22400: the same toe inside the line,
+    beside a road that falls 6% along it. Read from the patch's highest
+    cell to its lowest, the road's 6 ft of fall along the line made a 3 ft
+    toe a 9 ft bank; read across the bank, the lot's own ground rises 3 ft,
+    under Steph's 4."""
+    side_m = (LOT.bounds[2] - LOT.bounds[0]) * 0.3048
+
+    def rise(x, y):
+        into = (x - (side_m - 1.5)) if edge == "east" else (1.5 - x)
+        return np.clip(into / 3.5, 0.0, 1.0) * 2.1 + y * 0.06
+
+    got = terrain(tmp_path, rise).steep(LOT, 15.0, min_bank_ft=4.0)
+    assert got is not None and got.source == ONE_M
+    assert got.sqft == 0.0
+
+
+@pytest.mark.parametrize("edge", ["east", "west"])
+def test_a_short_bank_is_not_made_tall_by_the_gentle_ground_beyond_it(
+    tmp_path: Path, edge: str
+) -> None:
+    """The 49(f) bound's 1N1E36DA -14900: 2 ft of bank inside the line,
+    then the lot rising 12% on. Walked on past the bank's top, the gentle
+    ground made it 4 ft; the bank's height is the steep ground's, top to
+    toe."""
+    side_m = (LOT.bounds[2] - LOT.bounds[0]) * 0.3048
+
+    def rise(x, y):
+        inside = (side_m - x) if edge == "east" else x
+        return np.clip(inside / 2.5, 0.0, 1.0) * 0.6 + np.clip(inside, 0.0, None) * 0.12
+
+    got = terrain(tmp_path, rise).steep(LOT, 15.0, min_bank_ft=4.0)
+    assert got is not None and got.source == ONE_M
+    assert got.sqft == 0.0
+
+
+@pytest.mark.parametrize("edge", ["east", "west"])
+def test_the_lots_own_bank_on_its_line_is_its_slope(tmp_path: Path, edge: str) -> None:
+    """The 49(f) bound's 21E26AD02702: a lot on a terrace whose edge falls 8
+    ft inside its outermost 2 m. That bank is the lot's own ground: read
+    across it, it is its full height, however close to the line it sits."""
+    side_m = (LOT.bounds[2] - LOT.bounds[0]) * 0.3048
+
+    def rise(x, y):
+        inside = (side_m - 0.2 - x) if edge == "east" else (x - 0.2)
+        return np.clip(inside / 1.6, 0.0, 1.0) * 2.4
+
+    got = terrain(tmp_path, rise).steep(LOT, 15.0, min_bank_ft=4.0)
+    assert got is not None and got.source == ONE_M
+    assert got.sqft > 0
+    near = LOT.bounds[2] if edge == "east" else LOT.bounds[0]
+    assert abs(got.geom.centroid.x - near) < 15
+
+
+@pytest.mark.parametrize("turn", [0.0, 30.0])
+def test_a_hillside_reads_its_grade_right_up_to_the_line(tmp_path: Path, turn: float) -> None:
+    """Read off the lot's own ground, a square cut short at the line still
+    reads the hillside's full grade -- on a lot square to the grid or
+    turned across it -- so no edge of a steep lot reads flatter than it is."""
+    from shapely import affinity
+
+    lot = affinity.rotate(box(X0 + 10, Y0 + 10, X0 + 90, Y0 + 90), turn)
+    got = terrain(tmp_path, plane(22.0)).steep(lot, 15.0, areas_over=(20.0, 25.0))
+    assert got.sqft == pytest.approx(lot.area, rel=0.03)
+    assert got.areas[20.0] == pytest.approx(lot.area, rel=0.1)
+    assert got.areas[25.0] == 0.0
+
+
+def test_a_bank_on_the_lots_own_ground_at_its_edge_is_still_steep(tmp_path: Path) -> None:
+    """The same bank a few metres inside the line is the lot's own: steep."""
+    edge_m = (LOT.bounds[2] - LOT.bounds[0]) * 0.3048
+
+    def rise(x, y):
+        return np.clip((x - (edge_m - 8.0)) / 6.0, 0.0, 1.0) * 1.8
+
+    got = terrain(tmp_path, rise).steep(LOT, 15.0, min_bank_ft=4.0)
+    assert got is not None and got.sqft > 0.1 * LOT.area
 
 
 def test_the_coarse_model_answers_where_the_fine_one_does_not(tmp_path: Path) -> None:
@@ -229,6 +356,17 @@ def test_a_fit_lost_to_steep_ground_is_the_slopes() -> None:
     assert run(facts(steep_blocks=True)).triage is Triage.green
 
 
+def test_steep_ground_on_the_coarse_map_alone_is_a_flag_at_seven() -> None:
+    """Steph 2026-10-07: "yellow with flag. 7 severity"."""
+    got = run(facts(steep_unconfirmed=True, steep_sqft=5000.0, steep_source=TEN_M))
+    assert got.triage is Triage.yellow and got.reasons == (CLOSER_LOOK_STEEP_COARSE,)
+    (flag,) = [f for f in got.flags if f.code == "SLOPE-STEEP-COARSE"]
+    kind = flag_plan.registry()["SLOPE-STEEP-COARSE"]
+    assert kind.severity == 7 and kind.resolution.value == "measurement"
+    assert flag.source == TEN_M
+    assert got.colour is flag_plan.Colour.yellow and not got.binds
+
+
 # --- the bridge ---------------------------------------------------------------
 
 
@@ -312,6 +450,101 @@ def test_steep_ground_comes_off_before_the_pod_is_placed(tmp_path, corpus, polic
     assert next(c for c in s.screening.checks if c.check == STEEP_GROUND).verdict is Verdict.fails
 
 
+def short_row(depth_ft: float) -> dict[str, object]:
+    """:func:`bridge_row` ``depth_ft`` deep."""
+    import json
+
+    import shapely
+
+    d = depth_ft
+    edges = [
+        [X0, Y0, X0 + 80, Y0, "F"],
+        [X0 + 80, Y0, X0 + 80, Y0 + d, "S"],
+        [X0 + 80, Y0 + d, X0, Y0 + d, "R"],
+        [X0, Y0 + d, X0, Y0, "S"],
+    ]
+    return bridge_row(
+        edges_json=json.dumps(edges),
+        lot_depth_ft=d,
+        area_sqft=80 * d,
+        wkb=shapely.to_wkb(box(X0 + 5, Y0 + 10, X0 + 75, Y0 + d - 5)),
+        lot_wkb=shapely.to_wkb(box(X0, Y0, X0 + 80, Y0 + d)),
+    )
+
+
+def _bank(x, y):
+    return np.where(y > 12.0, (y - 12.0) * 0.35, 0.0)
+
+
+def test_a_fit_the_hillside_takes_most_of_is_the_hillsides(tmp_path, corpus, policies) -> None:
+    """FOLLOWUPS 49(e): a lot a few feet too shallow on the whole of its
+    ground, and far too shallow on what the steep ground leaves -- a
+    variance would not flatten the hill, so the miss is the slope's."""
+    row = short_row(84.0)
+    flat_lot = lot_from_row(row, corpus.layers)
+    (plain,) = screen_lot(
+        flat_lot, [DESIGN], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0
+    )
+    short = next(c for c in plain.screening.checks if c.check == "fit_ft")
+    assert 1.0 < short.shortfall < 10.0
+    t = bridge_terrain(tmp_path, _bank)
+    lot = with_steep(flat_lot, t)
+    (s,) = screen_lot(
+        lot, [DESIGN], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
+        terrain=t,
+    )
+    assert s.facts.steep_blocks
+    cut = next(c for c in s.screening.checks if c.check == STEEP_GROUND)
+    assert cut.shortfall > 2 * short.shortfall
+    assert [b.check for b in s.signed.binds if b.check in ("fit_ft", STEEP_GROUND)] == [STEEP_GROUND]
+    assert s.signed.triage is Triage.red and s.signed.colour is flag_plan.Colour.red
+
+
+def test_a_fit_missed_by_about_as_much_either_way_keeps_the_fits_blame(
+    tmp_path, corpus, policies
+) -> None:
+    """Steep ground at the back of a lot already far too shallow (29 ft
+    short on the whole lot, 51 ft on its flat ground): the fit is what
+    fails, and the steep ground adds less than the lot lacked anyway."""
+    row = short_row(60.0)
+
+    def back(x, y):
+        return np.where(y > 13.0, (y - 13.0) * 0.35, 0.0)
+
+    t = bridge_terrain(tmp_path, back)
+    lot = with_steep(lot_from_row(row, corpus.layers), t)
+    assert lot.steep is not None
+    (s,) = screen_lot(
+        lot, [DESIGN], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
+        terrain=t,
+    )
+    assert not s.facts.steep_blocks
+    assert any(b.check == "fit_ft" for b in s.signed.binds)
+
+
+def test_steep_ground_on_the_coarse_map_alone_does_not_eliminate_the_lot(
+    tmp_path, corpus, policies
+) -> None:
+    """FOLLOWUPS 49(h): the same hillside as the lidar test above, read on
+    the 10 m model only -- screened as though buildable, YELLOW, flagged."""
+    where = write_dem(tmp_path / "dem10" / "t.tif", ROW_LOT.bounds, _bank, res_m=10.0)
+    t = Terrain(None, where.parent)
+    lot = with_steep(lot_from_row(bridge_row(), corpus.layers), t)
+    assert lot.steep is not None and lot.facts.steep_source == TEN_M
+    (s,) = screen_lot(
+        lot, [DESIGN], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0,
+        terrain=t,
+    )
+    assert s.facts.steep_unconfirmed and not s.facts.steep_blocks
+    assert not any(c.check == STEEP_GROUND for c in s.screening.checks)
+    assert CLOSER_LOOK_STEEP_COARSE in s.signed.reasons
+    assert any(f.code == "SLOPE-STEEP-COARSE" for f in s.signed.flags)
+    assert not s.signed.binds and s.signed.colour is flag_plan.Colour.yellow
+    # The whole lot was searched: the envelope is the lot's without the cut.
+    whole = envelope_for(dataclasses.replace(lot, steep=None), s.rules)
+    assert s.envelope.sqft == pytest.approx(whole.sqft)
+
+
 # --- banks and setbacks ---------------------------------------------------------
 
 
@@ -331,7 +564,9 @@ def test_a_short_bank_is_regraded_and_a_tall_one_is_lost(tmp_path: Path) -> None
     assert t.steep(LOT, 15.0, min_bank_ft=4.0).sqft == 0.0
     t = terrain(tmp_path / "tall", tall)
     kept = t.steep(LOT, 15.0, min_bank_ft=4.0)
-    assert kept.sqft > 0 and kept.sqft == pytest.approx(t.steep(LOT, 15.0).sqft)
+    # Within 1%: with no floor the strip on the line reads its own grade
+    # everywhere, with one only where its own ground rises a bank's height.
+    assert kept.sqft > 0 and kept.sqft == pytest.approx(t.steep(LOT, 15.0).sqft, rel=0.01)
 
 
 def test_the_bank_floor_is_read_and_may_not_be_negative(tmp_path: Path) -> None:

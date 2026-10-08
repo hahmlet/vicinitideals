@@ -22,6 +22,13 @@
 #   under the building is still read, so a lot stepped in short terraces
 #   down a real hill still goes yellow or red.
 #
+# Steph, 2026-10-07, on steep ground the coarse 10 m map alone shows that
+#   would eliminate the lot (FOLLOWUPS 49(h), ~3,200 lots red on run 65):
+#   "yellow with flag. 7 severity" -- the lot is screened as though that
+#   ground were buildable and flagged SLOPE-STEEP-COARSE (flats/config/
+#   flags.yaml) for the 1 m lidar or a survey to settle. This is
+#   `coarse_red_is_closer_look` carried from the pad to the lot.
+#
 # So ground steeper than `steep_over_pct` is taken off where the building
 # and its court may stand -- the same way a hillside overlay's carve is --
 # and a lot whose remaining ground cannot hold the pod is RED on slope, not
