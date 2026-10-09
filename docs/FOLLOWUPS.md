@@ -1987,6 +1987,29 @@ read when the weekly full re-screen lands.
    golf courses and zero-value parcels are RED and never scanned, like
    schools and parks; churches and charities stay checked (item 47).
    Assigned to the zone-gaps agent: rule + bound + read every moved lot.
+   CODE LIVE bfc7dee9 (2026-10-09; rules 48aed13d on c787f79f). THE MAP WAITS
+   on the joint splice with 60+63 (ONE splice on
+   /root/bridge_spliced_2026-10-09_49j). Four tiers, first hit answers
+   (flats/config/roll_red.yaml, flats/geom/roll.py): public land (Washington
+   only, codes x20/x30/x40/x50/x60/x70/x90; the x1 variants stay screened),
+   tract (zero value + tract-style parcel number), open space (zero value +
+   8xx or 0x5), no address (zero value + blank / NO SITUS / LEVY CODE). A bare
+   no-address lot is SPARED (stays screened) when 3 or more OTHER lots built
+   in 2021+ (county YEARBUILT) are on the same tax map page (parcel number
+   less its last 5 characters) AND within 500 ft edge to edge; no year, no
+   geometry = red. Bound (assign alone, run 69 -> assign_v4 on 137
+   /root/tr/assign_v4): 3,117 lots turn red = 112 green + 3,005 yellow
+   (Clackamas 19/1,030, Multnomah 35/251, Washington 58/1,724); 635 spared
+   (190 x1 codes + 445 near new houses; 163 more went back to red under the
+   500 ft line). 4 spared greens read: all leftovers beside new
+   subdivisions. SPLICE NOTE: assign needs no new file; the roll columns are
+   already in the normalized lots table (PROP_CODE, LANDVAL, BLDGVAL,
+   TOTALVAL, ASSESSVAL, site_address, YEARBUILT, wkb). Re-run
+   `python -m flats.ingest.assign --normalized /root/zg/Nn --bridge
+   <bridge> --quadfit-dir /root/zg/Qn --snapshot-date 2026-10-01` from a
+   checkout at bfc7dee9 or later; lots that turn red need no re-screen, the
+   spared ones already hold run 69 rows. The weekly chain is unchanged: the
+   institutional step reads the same lots table.
    TIERS (agent count, run 69 green/yellow): (1) WashCo public codes
    92x/94x-97x/99x per OAR 150-308-0310; (2) $0 + tract-style number;
    (3) $0 + recreation/open-space code; (4) $0 + no street address --
