@@ -1683,6 +1683,31 @@ read when the weekly full re-screen lands.
    (50) did NOT land (s5o not re-run) -> the weekly. prune-runs retired run
    61 (kept 63/65/67); plain VACUUM ANALYZE run, VACUUM FULL still owed
    (24 GB free). flats_flags sync run 67 (926,292 opened) + check passed.
+   (j) DONE 2026-10-09 -- RUN 69 PROMOTED (agent, clean gate, ~17:55 UTC).
+   ONE splice on run 67 carrying three lanes: 57 flatter placement
+   (34b42b4f), 58/49(c) one-question (c98be01d unranked corner = yellow,
+   Portland type-2000 fire, Rockwood), 52b zone gaps (e91f05a8/30500bd4;
+   s4/s5o = /root/zg/Qn = weekly + 1,256 added lots, assign on /root/zg/Nn +
+   Qn). Code 97a1bef2, scope 20,336 lots (/root/s49j/scope.txt), bridge
+   1 h 38 min at 14 procs; bundle `data/flats/bridge/2026-10-09_49j`
+   (re-exported with --quadfit-results = the weekly lots_results.csv: Qn
+   holds none, so the first export left quadfit's columns empty -- TRAP for
+   any assign on a quadfit dir without lots_results.csv). Drift
+   `data/flats/reports/2026-10-09/drift_run69.md`: 3,671 answers, all
+   `rules`, 0 unexplained; gate 8 rows ok. Map colour, best pod: green
+   50,071 -> 50,008, yellow 153,799 -> 151,010, red 383,945 -> 386,797.
+   7,947 design rows moved; every row matched its lane's own bound
+   (/root/s57/expected.csv, /root/fo/expected.csv, /root/zg/assign_new)
+   except 10 lane interactions read one by one and replayed by the 57
+   agent (6 Portland lots green: placement drops SLOPE-GRADE AND type-2000
+   roads measure the hose route, 103-149 ft; Gresham 1N3E32BB-05100 green:
+   civic-corridor flag gone; Beaverton 1N132CC05200 green->yellow: new
+   drive on an unranked street) and 3 Clackamas MR1 lots red by ruling.
+   Lists /root/s49j/moves_{s57,fo,zg}.csv on 137. prune-runs retired run 63
+   (kept 65/67/69); plain VACUUM ANALYZE run, VACUUM FULL still owed (23 GB
+   free). flats_flags sync (33,279 opened, 34,215 cleared) + check passed.
+   Splice base for the next partial: /root/bridge_spliced_2026-10-09_49j,
+   assign quadfit dir /root/zg/Qn, normalized /root/zg/Nn.
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
@@ -1737,8 +1762,8 @@ read when the weekly full re-screen lands.
    complex-shape cap (convexity < 0.80, > 10 edges, pole-like), measured at
    a uniform inset; make_valid / buffer-0 do not apply; only 357 yellow lots
    are held yellow by that flag alone -- left as is. ZONES READ 2026-10-09 (branch flats/zone-gaps, bound on 137 over
-   6,017 lots, 48 greens gained, 163 greens lost, every one read; NOT yet
-   in a live run -- needs a splice, scope list /root/zg/scope_all.txt on 137):
+   6,017 lots, 48 greens gained, 163 greens lost, every one read; LIVE in
+   run 69, promoted 2026-10-09, spliced with 57 and 58/49(c), see 49(j)):
    (a) ZONE_TO_READ and (c) 52b zones are encoded and ported so the pod is
    measured: Gladstone C2/MR, Tualatin CC/RMH/RH/RH-HR/MUC, Milwaukie
    GMU/DMU, West Linn MU, Gresham DCC/DTM, Fairview TCC/VC, Oregon City
@@ -1913,21 +1938,8 @@ read when the weekly full re-screen lands.
    to read `healthy` before the smoke, in BOTH the live script and the
    repo copy `scripts/deploy-vicinitideals.sh` (they differ: the live one
    uses STACK_DIR). App-side, not FLATS.
-57. [scan: YES] **Flatter placement for SLOPE-GRADE yellows -- CODE LIVE 34b42b4f
-   (2026-10-09); waiting for the splice that puts it on the map.** Bound on
-   137 over 13,320 lots (26,640 results), every gain read, 150 replayed from
-   scratch with the same answers: 672 yellow-to-green (610 lots; Washington
-   Co. 208, Portland 184, Clackamas 152, Beaverton 68, Oregon City 34, rest
-   13), 0 worse, 0 new flag or bind, longest hose route 149.96 ft, highest
-   grade 5.0%, court past the envelope at most 20.0 ft (the fit's own rear
-   allowance). Cost +10% seconds per lot (0.269 -> 0.295). Steph's ruling is
-   untouched. Two-street lots keep the worse reading (a gain needs both
-   green). Not searched: 10 m ground lots, lots with an outdoor-area rule,
-   courts reached from an alley/side street. Left to do: the splice that
-   re-screens the SLOPE-GRADE yellows with the new code (coordinator books
-   it); delete this item once a run carries it.
 58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08;
-   first pass DONE c98be01d 2026-10-09).** Run 67 best-pod yellows held by a
+   first pass DONE c98be01d 2026-10-09; LIVE in run 69).** Run 67 best-pod yellows held by a
    single flag: FACT-AT-STREET-END 633, ACCESS-STREET-UNCONFIRMED 359,
    MEASURE-FIRE-ROUTE 334, FACT-CIVIC-CORRIDOR 141, PARKING-STRIP-UNCONFIRMED
    97. MEASURED: MEASURE-FIRE-ROUTE (paved type-2000 streets now count as
@@ -1962,26 +1974,160 @@ read when the weekly full re-screen lands.
    (+ public-code) rule, bound over run 67, read every moved lot. Also
    1S133AD02200 (code 911) overlaps Westgate Christian School at 17% only.
 60. [scan: YES] **Rank the unranked corner streets (opened 2026-10-09 from
-   49(c); Steph: "yellow, then measure").** 351 Washington Co. uninc
-   streets have no class: Metro's street file has no line within reach
-   (1,502 of 1,517 unranked street lines have none beside them) and the
-   county map draws classified roads only, so an absence of a classified road
-   is not a reading. Today each such corner lot is yellow
-   (ACCESS-STREET-RANK-UNKNOWN, 852 rows). Measure it from a real second
-   source: (1) OpenStreetMap `highway=` category (the coordinator measured the
-   county: 18,867 drivable ways, residential 11,644 / tertiary 2,718 /
-   secondary 1,789 / primary 1,457 / trunk 565 / unclassified 409 /
-   living_street 133; lanes= on 1% of residential and 54-83% of busy roads,
-   width= almost never, no traffic volume) -- match each of the 351 streets to
-   an OSM way (name + nearest centreline), rank by category; (2) the county's
-   own road centreline layer; (3) the street gap in the taxlot fabric.
-   Steph's call: does OSM count as the second source for the two-source rule?
-   FALLBACK only, needs Steph's yes: "no Metro line and no classified road
-   within 300 ft = local" (relaxes the two-source rule). Then bound over the
-   852 rows (`/root/fo/scope_yellow.txt`), read every lot that turns green.
+   49(c); Steph: "yellow, then measure").** In the current bound 634 lots
+   have a corner street with no class (60 street names, 69 street lines;
+   an earlier check counted 351 lots with no rank on either side). Metro's
+   street file has no street at all beside 615 of the 634 lots (1,502 of
+   1,517 unranked street lines have none beside them) and the county map
+   draws classified roads only, so an absence of a classified road is not a
+   reading. Today each such corner lot is yellow (ACCESS-STREET-RANK-UNKNOWN,
+   852 rows). Measure it from a real second source: (1) OpenStreetMap
+   `highway=` category (the coordinator measured the county: 18,867 drivable
+   ways, residential 11,644 / tertiary 2,718 / secondary 1,789 / primary
+   1,457 / trunk 565 / unclassified 409 / living_street 133; lanes= on 1% of
+   residential and 54-83% of busy roads, width= almost never, no traffic
+   volume) -- match each unranked street line to an OSM way (name, then
+   nearest parallel centreline within 60 ft), rank by category. A `service`
+   way is never a ranked street: an edge with only a service way beside it
+   stays unresolved. Known disagreement to leave unresolved under any rule:
+   Farmington Rd (county Neighborhood Route, rank 1, vs OSM primary).
+   (2) the county's own road centreline layer; (3) the street gap in the
+   taxlot fabric. Steph's call: does OSM count as the second source for the
+   two-source rule? FALLBACK only, needs Steph's yes: "no Metro line and no
+   classified road within 300 ft = local" (relaxes the two-source rule). Then
+   bound over the 852 rows (`/root/fo/scope_yellow.txt`), read every lot that
+   turns green.
+   OSM position pass + dig into the empty edges (2026-10-09, read-only,
+   scripts `/root/fo/osm_match4.py`, `osm_dig.py`; not wired into the screen).
+   Matching each unranked street edge to the nearest OSM way within 60 ft
+   that runs alongside it (within 25 degrees) gives, over the 634 lots: 151
+   lots with EVERY unranked edge on a residential-or-above way; 13 lots with
+   an arterial or collector edge; 23 with an edge that has only a service
+   way; 466 with an edge that has no OSM way (874 edges); 15 with an edge
+   reading mixed classes. THE 874 EMPTY EDGES ARE REAL STREETS: 855 are
+   street edges (RLIS minor residential, TYPE 1500, within 50 ft) and 19 are
+   private drives (TYPE 1700/1800, on 10 lots); 867 of 874 have an OSM way
+   within 60 ft (848 residential, 5 secondary, 2 tertiary, 19 service) at
+   the same distance as the RLIS line. They failed only the alongside test:
+   532 are under 25 ft long (241 under 10 ft), short side edges or chords of
+   a bend that run toward the street, not along it. Across them: 729 right-
+   of-way, 80 gap in the fabric, 65 another lot. Without the alongside test,
+   448 of the 466 lots have residential-or-above OSM on every empty edge (an
+   upper bound: their other edges' service/mixed readings are not applied);
+   Kinnaman Rd, West Union Rd, Oleson Rd and NW 143rd Ave touch 6 of the
+   lots with secondary/tertiary. BIGGER FINDING, NOT VERIFIED: only 556 of
+   the 634 yellow lots have two street edges of 25 ft or more; 68 have one
+   and 10 have none, so ~78 may not be real corners (cul-de-sac or curved
+   fronts whose short chords counted as a second street) and their yellow
+   may be wrong. Read those 78 before any ranking rule is wired.
+   READ OF THE ~78 + THE "615 vs 855" CONTRADICTION (2026-10-09, read-only;
+   nothing in shipped code changed; scripts `/root/fo/rank_why.py`,
+   `rank_fix.py`, `corner_read.py`, `county_corner.py`, what-ifs `bound8.sh`
+   `bound9.sh`). (a) THE CONTRADICTION: same cause, not the same test.
+   "615 lots have NO Metro street beside the lot line" is true OF THE RANK
+   MAP, not of Metro's file: `load_class_maps` (flats/geom/street_class.py,
+   `if not g.intersects(zone): continue`) keeps only Metro streets within
+   210 ft (150 corridor + 60 front reach) of a classified road. Washington
+   County's map lists classified roads only, so every local street farther
+   than that is cut out BEFORE the rank lookup, and the lookup finds nothing
+   beside the lot. The "855 of 874 are Metro streets within 50 ft" count
+   reads the full file. Of 2,145 unranked edges, 1,440 have no map street
+   within 60 ft (the clip); ~626 more fail the alongside/bearing test
+   (`corridor._fronted` -> `_abreast`, mostly short side edges and chords).
+   (b) A METRO-ONLY FIX EXISTS, NO OSM: skip the clip when the map has
+   `unlisted` set (one line; the design already says "a street the county
+   map leaves out is local where Metro agrees"). What-if over the 1,465
+   scope lots (`bound_noclip`): 0 changes to any already-ranked edge (0 of
+   2,675 on the 634 lots; 0 of 5,838 on a 2,500-lot WashCo sample), 1,541
+   of 2,145 unranked edges (72%) rank local, 449 rows / 445 lots go
+   yellow -> green, nothing goes red, nothing green changes, `fits` and
+   slack identical on every row. ~604 edges stay unranked (the short-chord
+   and non-alongside ones). It is the already-shipped two-source design
+   (county map + Metro type), so it is a bug fix, not a widened gate --
+   but ASK Steph/coordinator to confirm that reading before it ships; it
+   would lift 445 of the 634 yellows on its own. (c) THE ~78 NOT-CORNERS:
+   read from the edge list, street names and nearest dead end (not from a
+   picture). 14 are true corners (two named streets on separate runs, six
+   with a second frontage under 25 ft); 64 are ONE street read as two:
+   27 cul-de-sac/bulb fronts (20 `fronts_cul_de_sac` measured, 7 with a
+   dead end beside and the flag unset), 5 only short chords (no edge >=25
+   ft), 22 curved single fronts (turn 33-131 degrees), 10 a straight front
+   plus a sliver edge of 15 ft or less. No flag pole among them (a flag
+   lot is tier irregular, not corner). Washington County's CDC defines no
+   corner lot (definitions block, "CORNER LOT: SILENT"), so no legal
+   definition makes a bend a corner there.
+   See item 63 for the step that makes it, the county-wide count and the fix.
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
    encoded until each lot line carries a bearing. Measure the bearing per
    lot line, add it as a per-line field, then encode those three districts.
    Not part of branch flats/zone-gaps; start only after the weekly re-screen.
+62. [scan: YES] **Roof shape: teach the screen gable vs flat (offered 2026-10-09
+   after Steph asked what a gable costs in height; nothing signed).** The
+   design holds ONE height (26 ft) compared straight to every cap, so it
+   cannot tell a gable from a flat roof. Corpus read 2026-10-09: a gable is
+   measured at its MIDPOINT (eave-to-ridge average) in Portland, Beaverton,
+   Tigard, Hillsboro, Cornelius, Sherwood, WashCo, MultCo, Fairview, Oregon
+   City, Gladstone, Wilsonville, Troutdale (IBC "average height of highest
+   roof surface"), Milwaukie (<=12:12; steeper = peak), ClackCo (defers to
+   the state building code, text not stored); at the PEAK in Gresham
+   (3.0100 "highest point of the structure"), West Linn 41.005, Happy
+   Valley 16.12, King City 16.24; no stored definition for Tualatin, Wood
+   Village, Durham, Rivergrove. Shed roofs steeper than flat (2:12 PDX/
+   Tigard, 4:12 Beaverton) = highest point. Build: Design gets eave_ft +
+   ridge_ft + roof form; a per-layer `height_measured_to` (midpoint / peak
+   / unknown -> peak); max/min height checks read the measured figure;
+   Gresham 7.0420(G) and Milwaukie side planes read the roof profile
+   facing the line. Then `flats.encode.height` prices each roof option.
+   Current curve (426,106 lots): only exactly 25 ft keeps everything; 26
+   loses Hillsboro's 2-1/2-storey zones (~23,500); >30 loses Portland
+   R5/R7/R10/R20 (~148,700 total); >35 loses ~371,600. Wait for a drawing
+   with real eave/ridge figures before building.
+63. [scan: YES, after Steph rules] **One street bending is read as a corner
+   (found 2026-10-09 reading the ~78 of item 60; a CORRECTNESS bug, not only
+   a yellow-flag one).** A lot on ONE street whose frontage turns 45 degrees or
+   more (cul-de-sac bulb, knuckle, curved front, or a straight front with a
+   short sliver edge) is screened as a corner lot. THE STEP: s4 `classify_lot`
+   (Lot Analysis/quadfit/s4_edges.py, `street_threshold_ft` 50) calls an edge a
+   street when its midpoint is within 50 ft of ANY non-alley centreline -- no
+   name, length or bearing test -- then `cluster_bearings`
+   (flats/geom/edges.py:193, 20 degrees) makes `Tier.corner` at edges.py:333
+   when the edges form two clusters. The only guard is `corner.two_streets`
+   (corner.py:92: bearings at least 45 degrees apart), which a bulb or sharp
+   curve passes. `is_corner` (corner.py:259) then names a front by
+   `front_lot_line_corner` (WashCo: `shortest`), renames the other street
+   edges street-side, turns an interior line from rear to side, and the
+   access step asks for a rank on each "street" (the 634 yellows). Both the
+   envelope and the access reading change.
+   REACH (run 69 colours, best design, tier corner AND two streets >=45
+   degrees: 21,199 green/yellow lots, 15,137 green + 6,062 yellow): 2,311
+   have every street edge on ONE street name (1,078 green, 1,233 yellow;
+   2,266 of them one unbroken run; only 232 carry `fronts_cul_de_sac`);
+   760 of those have at most one street edge of 25 ft or more (349 green,
+   411 yellow). By city (2,311): WashCo 703, Portland 494, Beaverton 271,
+   Clackamas uninc. 247, Gresham 104, Oregon City 100, West Linn 82,
+   Tualatin 65, Wilsonville 51, Happy Valley 50. Portland, Gresham, Oregon
+   City and Beaverton WRITE their corner test (Portland: a curve <=120
+   degrees is two streets), so for them a bend can legally be a corner and
+   the count is a ceiling; WashCo, Clackamas uninc. and others are silent.
+   DIRECTION: it runs the lenient way. What-if (`bound9.sh`, 762 lots = the
+   760 + the ~64 not-corners of item 60) treating them as "one street that
+   bends" -- the screen's own rule for a turn under 45 degrees (front left
+   unnamed, every street edge takes the stricter of front and street side):
+   envelopes never grow and 796 of 1,524 rows shrink; 293 of 762 lots change
+   colour -- 67 green -> red, 1 green -> yellow, 222 yellow -> red, 3 yellow
+   -> green (no rank needed any more). That is the STRICT end; the truth is
+   between it and today, so some of today's greens on these lots are
+   probably false greens. FIX PLAN, nothing built: (1) where a city's
+   definition is written, route the corner question through
+   `definitions.decide` for a curve, as Portland/Gresham already do; (2)
+   where it is silent, a corner needs two different street names or two
+   unbroken runs; one name on one run is a bend and gets the unnamed
+   reading; (3) stop the sliver: a street edge under ~15 ft that runs
+   toward the street is not a second frontage. Step (2) turns the 67 greens
+   red -- STEPH DECIDES: bend rule (strict, 67 greens lost), or keep the
+   corner reading and flag it. Ship with item 60's unclipped-streets fix
+   (rank edges local where Metro agrees), which clears most of the yellows
+   on the same lots. Reads: `/root/fo/corner_sus.pkl` (78),
+   `county_corner.pkl` (21,199), `onebend_changes.csv`.
