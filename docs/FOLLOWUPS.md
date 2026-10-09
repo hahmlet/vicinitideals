@@ -1803,14 +1803,20 @@ read when the weekly full re-screen lands.
    Everything is `draft`. Checks Steph asked for (2026-10-08): wetlands
    overlay = the NWI layer already applied; historic overlay = inventoried
    buildings only; 33% geotechnical = already stricter in slope.yaml (15%).
-   NOT yet done: (a) the Estacada-only 137 bound -- the new fact needs the
-   city's zoning layer acquired first (the old script copies another city's
-   file as a stand-in, so it cannot count Estacada lots); then quadfit s1->s7
-   into a copy tree plus a bridge of the gained lots, every gain read, and a
-   per-zone lot count with NCR lots near the two streets (the earlier
-   `bound/fg53-three` job on 137 is STALE: old Canby/Sandy admitting rules;
-   rebuild as `bound/fg53-estacada`; it RAN 2026-10-08 13:32 UTC and found 0 lots on the stand-in layer, and its compare stopped on 20 new `ovl_*_site` columns the run-65 base lacks -- the rebuild must splice onto a base that carries them); (b) Molalla: the 2026-10-08 retry stored
-   7 of 11 chapters (5.1 came down; 2.3, 2.4, 3.2, 4.4 still 429, retried every
+   (a) BOUND RAN 2026-10-09 on 137 (real Estacada layers, tree
+   quadfit_2026-10-07_fg53e, bridge /root/bridge_fg53e): 0 lots lost, 261 gained,
+   all Estacada. Best of the two designs: C-2 3 green/27 red, CMU 6 green/4
+   yellow, NCR 7 green/4 yellow/139 red, R-3 70 red. FOUND: the 200 ft test was
+   applied to the LOT but the code (EMC 16.25.020 (G)) tests the DWELLING -- a
+   12-acre NCR corner lot (34E17 00901) came out green with the best building 335
+   ft out. FIXED in this branch: in NCR the lot ground beyond 200 ft of the named
+   streets is taken off the placement area (`reach_off_wkb`, `beyond_reach` in
+   named_street.py). The numbers above are from BEFORE the fix; RERUN the bound
+   (SHA = the fix commit, `bash /root/fg53e/bound.sh`, needs Steph's launch
+   approval) and read the NCR gains again. 21 scope TLIDs are missing from the
+   bridge output and the scope file has 262 lines against 261 gained: unexplained,
+   check on the rerun. Nothing is spliced or promoted.
+   (b) Molalla: 7 of 11 chapters (5.1 came down; 2.3, 2.4, 3.2, 4.4 still 429, retried every
    10 minutes) -- layer files are parked outside the repo again unless all 11
    land (copy in /tmp/fg53/molalla_parked + the new 5.1); gate already read:
    admits R-2, R-3, R-5, refuses R-1, C-1, C-2, M-1, M-2, PSP; ALSO check
@@ -1967,6 +1973,10 @@ read when the weekly full re-screen lands.
    is a tract / common-area / golf course RED? Then add a tract + zero-value
    (+ public-code) rule, bound over run 67, read every moved lot. Also
    1S133AD02200 (code 911) overlaps Westgate Christian School at 17% only.
+   STEPH RULED 2026-10-09: ALL RED -- HOA tracts, common areas, open space,
+   golf courses and zero-value parcels are RED and never scanned, like
+   schools and parks; churches and charities stay checked (item 47).
+   Assigned to the zone-gaps agent: rule + bound + read every moved lot.
 60. [scan: YES] **Rank the unranked corner streets (opened 2026-10-09 from
    49(c); Steph: "yellow, then measure").** In the current bound 634 lots
    have a corner street with no class (60 street names, 69 street lines;
@@ -2051,6 +2061,12 @@ read when the weekly full re-screen lands.
    corner lot (definitions block, "CORNER LOT: SILENT"), so no legal
    definition makes a bend a corner there.
    See item 63 for the step that makes it, the county-wide count and the fix.
+   STEPH RULED 2026-10-09 ("yes, when both agree"): a street line counts
+   as QUIET only when Metro's unclipped file AND OpenStreetMap both call it
+   residential/local. A busier OSM class (Kinnaman, West Union, Oleson,
+   NW 143rd) or any disagreement (Farmington) stays unranked = yellow;
+   `service` never counts. OSM becomes an acquired dataset (Geofabrik
+   Oregon extract) in the weekly snapshot; bound + report moves first.
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
@@ -2125,3 +2141,8 @@ read when the weekly full re-screen lands.
    (rank edges local where Metro agrees), which clears most of the yellows
    on the same lots. Reads: `/root/fo/corner_sus.pkl` (78),
    `county_corner.pkl` (21,199), `onebend_changes.csv`.
+   STEPH RULED 2026-10-09: ONE STREET, NOT A CORNER -- where the city's
+   code is silent, one street name on one unbroken run is a bend and takes
+   the unnamed reading (steps 2 + 3), accepting ~67 greens -> red; cities
+   that write a corner test (Portland, Gresham, Oregon City, Beaverton)
+   follow their own words (step 1). Bound + read every moved lot first.

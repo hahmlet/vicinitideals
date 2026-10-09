@@ -1,4 +1,4 @@
-"""Whether a lot lies within 200 ft of a NAMED street, read off quadfit's centrelines.
+"""Whether a lot lies within 200 ft of a NAMED street, and where on it a dwelling may stand.
 
 Estacada's North City Residential zone (EMC 16.25.020 (G)) lets a triplex,
 fourplex or commonwall row stand outright only "within 200 feet of Eagle
@@ -6,8 +6,15 @@ Creek Rd, Hinman Rd, or a street with a major collector classification or
 higher classification". Steph, 2026-10-08: the distance machinery the app
 already has is to be reused, with the NAMED streets as the origin.
 
-The answer is plain geometry: the taxlot's distance to the nearest centreline
+The fact is plain geometry: the taxlot's distance to the nearest centreline
 segment of a listed street, at or inside :data:`REACH_FT`.
+
+**The fact is the lot's; the code's test is the dwelling's.** A lot that
+touches the 200 ft band can still reach far beyond it (a 12-acre corner lot),
+and the code asks for the DWELLING within 200 feet. So the fact only admits
+the lot to the check; the ground of the lot beyond the band
+(:func:`beyond_reach`) is taken off its placement area in the zones listed in
+:data:`BAND_ZONES`, so no building, court or lane is drawn out there.
 
 **What the fact is not.** It is the *named* half of the sentence only. The
 code's other half -- any street classed a major collector or higher -- needs
@@ -38,6 +45,9 @@ STREETS: tuple[tuple[str, str], ...] = (
     ("EAGLE CREEK", "RD"),
     ("HINMAN", "RD"),
 )
+
+#: The (jurisdiction, zone) pairs whose dwelling must stand inside the band.
+BAND_ZONES: frozenset[tuple[str, str]] = frozenset({("estacada", "NCR")})
 
 #: The one fact, named the way the registry names it.
 NAMED_STREET_FACT = "near_named_street_200ft"
@@ -86,30 +96,82 @@ def observed_named_street(distance_ft: float | None) -> dict[str, bool]:
     return {NAMED_STREET_FACT: distance_ft <= REACH_FT}
 
 
-def named_street_column(frame: Any, streets: Path) -> list[float | None]:
-    """``named_street_ft`` for every row of a bridge frame holding
-    ``lot_wkb``, from s1's centrelines. A file without street names measures
-    nothing."""
+def _lot_geoms(frame: Any) -> list[Any]:
+    import shapely
+
+    return [shapely.from_wkb(w) if isinstance(w, (bytes, bytearray)) else None for w in frame["lot_wkb"]]
+
+
+def _lines_in(streets: Path) -> list[Any] | None:
+    """The listed streets' centrelines in s1's file; None where the file
+    cannot name streets."""
     import pandas as pd
     import pyarrow.parquet as pq
     import shapely
 
-    if "lot_wkb" not in frame.columns:
-        return [None] * len(frame)
     if not {"name", "ftype", "wkb"} <= set(pq.read_schema(streets).names):
-        return [None] * len(frame)
+        return None
     roads = pd.read_parquet(streets, columns=["name", "ftype", "wkb"])
-    lines = named_street_lines(
+    return named_street_lines(
         roads["name"].tolist(), roads["ftype"].tolist(), shapely.from_wkb(roads["wkb"].to_numpy())
     )
-    lots = [shapely.from_wkb(w) if isinstance(w, (bytes, bytearray)) else None for w in frame["lot_wkb"]]
-    return street_distances(lots, lines)
+
+
+def beyond_reach(lot: Any, lines: Sequence[Any]) -> Any:
+    """The part of ``lot`` more than :data:`REACH_FT` from every listed line;
+    the whole lot where there is no line to measure to (conservative)."""
+    import shapely
+
+    if not lines:
+        return lot
+    band = shapely.union_all(list(lines)).buffer(REACH_FT)
+    return lot.difference(band)
+
+
+def named_street_column(frame: Any, streets: Path) -> list[float | None]:
+    """``named_street_ft`` for every row of a bridge frame holding
+    ``lot_wkb``, from s1's centrelines. A file without street names measures
+    nothing."""
+    if "lot_wkb" not in frame.columns:
+        return [None] * len(frame)
+    lines = _lines_in(streets)
+    if lines is None:
+        return [None] * len(frame)
+    return street_distances(_lot_geoms(frame), lines)
+
+
+def beyond_reach_column(frame: Any, streets: Path) -> list[bytes | None]:
+    """``reach_off_wkb``: for each row in a :data:`BAND_ZONES` zone, the lot
+    ground beyond the band (WKB; empty where the whole lot is inside); None
+    for every other row. A street file that names no streets leaves the whole
+    lot beyond reach."""
+    import shapely
+
+    out: list[bytes | None] = [None] * len(frame)
+    if "lot_wkb" not in frame.columns or not {"jurisdiction", "zone"} <= set(frame.columns):
+        return out
+    hit = [
+        i
+        for i, (j, z) in enumerate(zip(frame["jurisdiction"], frame["zone"]))
+        if (str(j), str(z)) in BAND_ZONES
+    ]
+    if not hit:
+        return out
+    lines = _lines_in(streets) or []
+    lots = _lot_geoms(frame)
+    for i in hit:
+        if lots[i] is not None:
+            out[i] = shapely.to_wkb(beyond_reach(lots[i], lines))
+    return out
 
 
 __all__ = [
+    "BAND_ZONES",
     "NAMED_STREET_FACT",
     "REACH_FT",
     "STREETS",
+    "beyond_reach",
+    "beyond_reach_column",
     "named_street_column",
     "named_street_lines",
     "observed_named_street",

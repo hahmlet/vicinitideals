@@ -858,6 +858,20 @@ def test_the_carve_overlays_come_off_the_envelope_flats_cuts(corpus, policies) -
     assert s.envelope.sqft == pytest.approx(50 * 65)
 
 
+def test_ground_beyond_the_named_street_reach_comes_off_the_envelope(corpus, policies) -> None:
+    # Estacada NCR: the dwelling, not the lot, must stand within 200 ft of the
+    # named streets, so the far part of the lot is taken off its placement area.
+    far = shapely.box(X0, Y0 + 70, X0 + 50, Y0 + 100)
+    lot = lot_from_row(
+        cut_row(zone="CM2", neighbour_zones_json=walled(("portland", "CX")), reach_off_wkb=shapely.to_wkb(far)),
+        corpus.layers,
+    )
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.envelope.source == "flats"
+    assert s.envelope.sqft == pytest.approx(50 * 65)
+    assert not s.envelope.geom.intersects(far.buffer(-0.01))
+
+
 def test_an_irregular_lot_is_inset_at_its_largest_yard_and_charged_so() -> None:
     lot = lot_from_row(cut_row(tier="C"))
     got = Rules(setback_front_ft=10, setback_side_ft=5, setback_rear_ft=15)
