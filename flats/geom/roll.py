@@ -144,7 +144,4 @@ def read(row: Mapping[str, Any], rules: RollRules) -> dict[str, Any] | None:
         elif tier.key == "no_address":
             if zero and not real_address(row):
                 return hit(tier.key, f"{county} roll, value $0, no street address")
-        elif tier.key == "real_address":
-            if zero:
-                return hit(tier.key, f"{county} roll, value $0")
     return None

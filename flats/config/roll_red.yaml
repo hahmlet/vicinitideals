@@ -49,8 +49,6 @@ tiers:
   no_address:
     enabled: true
     words: a parcel the county values at $0 with no street address
-  real_address:
-    # Held back until Steph rules: new lots the county has not valued yet
-    # look exactly like this.
-    enabled: false
-    words: a parcel the county values at $0
+# A $0 parcel WITH a real street address is screened normally, no red and no
+# flag (Steph RULED 2026-10-09): new lots the county has not valued yet look
+# exactly like this.

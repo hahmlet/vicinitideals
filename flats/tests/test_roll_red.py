@@ -37,9 +37,9 @@ def tier(**kw: Any) -> str | None:
 # --- the ruling, as the config holds it -------------------------------------
 
 
-def test_the_tiers_steph_ruled_are_on_and_the_riskiest_is_held_back() -> None:
+def test_the_four_tiers_steph_ruled_are_on() -> None:
     on = {t.key: t.enabled for t in roll.load_rules().tiers}
-    assert on == {"public_land": True, "tract": True, "open_space": True, "no_address": True, "real_address": False}
+    assert on == {"public_land": True, "tract": True, "open_space": True, "no_address": True}
 
 
 @pytest.mark.parametrize("code", ["911", "981", "980", "910", "900", "901", "100", "400"])
@@ -89,8 +89,9 @@ def test_zero_value_with_no_street_address_is_red() -> None:
     assert tier(site_address="LEVY CODE 1234", **ZERO) == "no_address"
 
 
-def test_zero_value_with_a_real_street_address_is_held_for_steph() -> None:
-    """A lot the county has not valued yet looks exactly like this."""
+def test_zero_value_with_a_real_street_address_is_screened_normally() -> None:
+    """Steph RULED 2026-10-09: no red, no flag. A lot the county has not
+    valued yet looks exactly like this."""
     assert tier(**ZERO) is None
 
 
