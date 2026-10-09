@@ -231,6 +231,75 @@ def _place(
     return None if best is None else best[2]
 
 
+#: At most this many windows are kept per grid when the alternatives are
+#: listed (:func:`_options`), spread evenly over the ones that hold.
+OPTIONS_PER_GRID = 160
+#: The lattice the alternatives are cut on, in cells: neighbouring windows
+#: draw nearly the same pad, so every few feet is enough.
+OPTIONS_STRIDE_CELLS = 6
+
+
+def _options(
+    grids: Sequence[Grid],
+    d_cells: int,
+    w_cells: int,
+    *,
+    across_b: float,
+    deep_b: float,
+    street: np.ndarray,
+    fitter: Fitter,
+    over_ft: float,
+    max_front_ft: float | None,
+) -> list[_Placed]:
+    """Every way the window can stand on the lot with the building toward
+    the street and the court behind it, thinned to a lattice
+    (:data:`OPTIONS_STRIDE_CELLS`) and to :data:`OPTIONS_PER_GRID`.
+
+    The building must stand nearer the front lines than the court does, and
+    no further from them than ``max_front_ft`` where the code sets a
+    maximum front setback. Nothing is ranked here: the caller grades them.
+    """
+    out: list[_Placed] = []
+    if not len(street):
+        return out
+    for grid in grids:
+        masks = fitter.court_masks(grid, d_cells, w_cells, over_ft)
+        if masks is None:
+            continue
+        hits = np.argwhere(masks[0] | masks[1])
+        if not len(hits):
+            continue
+        stride = OPTIONS_STRIDE_CELLS
+        keep = (hits[:, 0] % stride == 0) & (hits[:, 1] % stride == 0)
+        # A window the lattice misses still counts where it is the only way.
+        lattice = hits[keep] if keep.any() else hits
+        if len(lattice) > OPTIONS_PER_GRID:
+            lattice = lattice[np.linspace(0, len(lattice) - 1, OPTIONS_PER_GRID).astype(int)]
+        pts = _local(street, grid)
+        res = grid.res
+        wx0 = grid.minx + lattice[:, 1] * res
+        wy0 = grid.miny + lattice[:, 0] * res
+        wx1 = wx0 + w_cells * res
+        wy1 = wy0 + d_cells * res
+        for low in (True, False):
+            way = masks[0 if low else 1][lattice[:, 0], lattice[:, 1]]
+            if not way.any():
+                continue
+            by0, by1 = (wy0, wy0 + deep_b) if low else (wy1 - deep_b, wy1)
+            cy0, cy1 = (by1, wy1) if low else (wy0, by0)
+            court = _box_distance(wx0, cy0, wx1, cy1, pts)
+            for left in (True, False):
+                bx0, bx1 = (wx0, wx0 + across_b) if left else (wx1 - across_b, wx1)
+                building = _box_distance(bx0, by0, bx1, by1, pts)
+                ok = way & (building < court)
+                if max_front_ft is not None:
+                    ok &= building <= max_front_ft
+                for i in np.nonzero(ok)[0]:
+                    hit = lattice[i]
+                    out.append(_Placed(grid, int(hit[0]), int(hit[1]), d_cells, low, left))
+    return out
+
+
 def draw(
     fitter: Fitter,
     fit: Fit,
@@ -247,6 +316,9 @@ def draw(
     gap_ft: float = 0.0,
     side_drive: bool = False,
     short_ft: float = 0.0,
+    where: _Placed | None = None,
+    listing: list[_Placed] | None = None,
+    max_front_ft: float | None = None,
 ) -> Drawing | None:
     """The fit drawn: room, building, lane and court, in world coordinates.
 
@@ -274,6 +346,12 @@ def draw(
     building and court are drawn whole, and the drawing says ``tight``. A
     building that stands somewhere is one a hose route and a pad grade can be
     measured to (FOLLOWUPS 45, 49(d)).
+
+    ``where`` draws the plan at a window :func:`_options` listed instead of
+    the one nearest the street (FOLLOWUPS 57). ``listing``, when given,
+    asks for those windows instead of a drawing: they are appended to it
+    and ``None`` comes back; ``max_front_ft`` bounds how far from the front
+    lines the building may stand in them.
     """
     if fit.across_ft is None or fit.angle_deg is None:
         return None
@@ -297,7 +375,15 @@ def draw(
         over = max(0.0, beside_len_ft - deep_b - max(court_beyond_ft, 0.0))
     else:
         over = max(0.0, court_depth_ft - max(court_beyond_ft, 0.0))
-    placed = _place(
+    if listing is not None:
+        listing.extend(
+            _options(
+                grids, need, w_cells, across_b=across_b, deep_b=deep_b, street=pts,
+                fitter=fitter, over_ft=over, max_front_ft=max_front_ft,
+            )
+        )
+        return None
+    placed = where or _place(
         grids,
         need,
         w_cells,

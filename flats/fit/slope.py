@@ -369,9 +369,11 @@ class Terrain:
         a[a < -1000] = np.nan
         return a, ds.window_transform(win)
 
-    def _fine(self, bounds: tuple[float, float, float, float]) -> tuple[Any, Any] | None:
+    def _fine(
+        self, bounds: tuple[float, float, float, float], *, strict: bool = True
+    ) -> tuple[Any, Any] | None:
         """1 m elevations over ``bounds``, stitched across tiles; None where
-        any cell is uncovered."""
+        any cell is uncovered (``strict``; else the gaps stay NaN)."""
         import numpy as np
 
         left, bottom, right, top = bounds
@@ -392,7 +394,7 @@ class Terrain:
                 continue
             gap = np.isnan(a)
             a[gap] = more[0][gap]
-        if np.isnan(a).any():
+        if strict and np.isnan(a).any():
             return None
         return a, tf
 
@@ -550,6 +552,14 @@ class Terrain:
         ) & ~np.isnan(z)
         return self._plane(z, tf, inside, source)
 
+    def surface(self, lot: Any) -> "Surface | None":
+        """The elevations under ``lot`` (a working-CRS polygon) read once,
+        to grade many pads on it (:class:`Surface`); None where no model
+        covers it or it is too big to hold."""
+        if self._fwd is None or lot is None or lot.is_empty:
+            return None
+        return Surface.read(self, lot)
+
     @staticmethod
     def _plane(z: Any, tf: Any, inside: Any, source: str) -> Grade | None:
         import numpy as np
@@ -562,3 +572,80 @@ class Terrain:
         a = np.column_stack([x - x.mean(), y - y.mean(), np.ones_like(x)])
         (gx, gy, _), *_ = np.linalg.lstsq(a, z[rows, cols], rcond=None)
         return Grade(float(math.hypot(gx, gy) * 100.0), source, int(rows.size))
+
+
+#: A lot whose elevations would run past this many cells is not held whole.
+SURFACE_MAX_CELLS = 6_000_000
+
+
+class Surface:
+    """One lot's elevations, read once, so that many candidate pads can be
+    graded without a file read each (FOLLOWUPS 57).
+
+    :meth:`grade` answers what :meth:`Terrain.grade` answers for the same
+    pad -- the same cells, the same plane -- cut from the held window: the
+    1 m model where it covers every cell round the pad, else the 10 m one.
+    It ranks candidates; the plan that is kept is graded again by
+    :meth:`Terrain.grade` itself.
+    """
+
+    def __init__(self, terrain: Terrain, fine: Any, coarse: Any) -> None:
+        self._terrain = terrain
+        self._fine = fine
+        self._coarse = coarse
+
+    @classmethod
+    def read(cls, terrain: Terrain, lot: Any) -> "Surface | None":
+        lot_m = terrain._to(lot, terrain._fwd)
+        b = lot_m.bounds
+        fine = coarse = None
+        if terrain.tiles:
+            if (b[2] - b[0] + 6) * (b[3] - b[1] + 6) > SURFACE_MAX_CELLS:
+                return None
+            fine = terrain._fine((b[0] - 3, b[1] - 3, b[2] + 3, b[3] + 3), strict=False)
+        if terrain.coarse is not None:
+            res = terrain.coarse.res[0]
+            coarse = terrain._read(
+                terrain.coarse, (b[0] - 3 * res, b[1] - 3 * res, b[2] + 3 * res, b[3] + 3 * res)
+            )
+        if fine is None and coarse is None:
+            return None
+        return cls(terrain, fine, coarse)
+
+    @staticmethod
+    def _cut(held: Any, bounds: tuple[float, float, float, float]) -> tuple[Any, Any] | None:
+        from rasterio.windows import from_bounds
+
+        z, tf = held
+        win = from_bounds(*bounds, transform=tf).round_offsets().round_lengths()
+        r0, c0, h, w = int(win.row_off), int(win.col_off), int(win.height), int(win.width)
+        if h < 1 or w < 1 or r0 < 0 or c0 < 0 or r0 + h > z.shape[0] or c0 + w > z.shape[1]:
+            return None
+        return z[r0 : r0 + h, c0 : c0 + w], tf * tf.translation(c0, r0)
+
+    def grade(self, ground: Iterable[Any]) -> Grade | None:
+        import numpy as np
+        import shapely
+        from rasterio.features import geometry_mask
+
+        pad = shapely.union_all([g for g in ground if g is not None and not g.is_empty])
+        if pad.is_empty:
+            return None
+        pad_m = self._terrain._to(pad, self._terrain._fwd)
+        b = pad_m.bounds
+        if self._fine is not None:
+            got = self._cut(self._fine, (b[0] - 1, b[1] - 1, b[2] + 1, b[3] + 1))
+            if got is not None and not np.isnan(got[0]).any():
+                z, tf = got
+                inside = geometry_mask(
+                    [pad_m.__geo_interface__], out_shape=z.shape, transform=tf, invert=True,
+                    all_touched=True,
+                )
+                return Terrain._plane(z, tf, inside, ONE_M)
+        if self._coarse is not None and self._terrain.coarse is not None:
+            res = self._terrain.coarse.res[0]
+            got = self._cut(self._coarse, (b[0] - res, b[1] - res, b[2] + res, b[3] + res))
+            if got is not None:
+                z, tf = got
+                return Terrain._plane(z, tf, ~np.isnan(z), TEN_M)
+        return None
