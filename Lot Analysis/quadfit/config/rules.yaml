@@ -1871,7 +1871,7 @@ jurisdictions:
       # unit) is not a standard OAR 660-046-0220(2)(b) lets the county apply to
       # a quadplex, and the corpus refuses it; so does this file.
       - zone: MR1
-        quadplex_allowed: true
+        quadplex_allowed: false
         setback_front_ft: 15
         setback_side_ft: 10  # note 14's larger limb; 7 where no lower-density district abuts -- see above
         setback_rear_ft: 20
@@ -1879,9 +1879,9 @@ jurisdictions:
         source: "Clackamas ZDO Section 315 Table 315-4 (Medium Density Residential MR-1: front 15, garage 20, side 7 / 10 per note 14, rear 20, height none); quadplex ZDO 315 Table 315-1; min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
-        notes: "Ported from the FLATS corpus 2026-09-23. 839 lots. Side 10 is the note-14 limb (abutting a lower-density district), carried everywhere because the envelope's sides are carved with this number; FLATS answers 7 or 10 per lot. Garage-entrance 20 not carried: the pod has no garage. Max front setback is ZDO 1005.02(E) frontage occupancy, held in the corpus as orientation axis_required. Density 3,630 sf/unit not applied (OAR 660-046-0220(2)(b))."
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required here (ZDO 1102.01(A)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-09-23. 839 lots. Side 10 is the note-14 limb (abutting a lower-density district), carried everywhere because the envelope's sides are carved with this number; FLATS answers 7 or 10 per lot. Garage-entrance 20 not carried: the pod has no garage. Max front setback is ZDO 1005.02(E) frontage occupancy, held in the corpus as orientation axis_required. Density 3,630 sf/unit not applied (OAR 660-046-0220(2)(b))."
       - zone: MR2
-        quadplex_allowed: true
+        quadplex_allowed: false
         setback_front_ft: 15
         setback_side_ft: 10  # note 14's larger limb, as MR1
         setback_rear_ft: 20
@@ -1889,9 +1889,9 @@ jurisdictions:
         source: "Clackamas ZDO Section 315 Table 315-4 (Medium High Density Residential MR-2: front 15, side 7 / 10 per note 14, rear 20, height none); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
-        notes: "Ported from the FLATS corpus 2026-09-23. 120 lots. Reads as MR1 throughout; side 10 is the note-14 limb for the same reason. Density 2,420 sf/unit not applied (OAR 660-046-0220(2)(b))."
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required here (ZDO 1102.01(A)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-09-23. 120 lots. Reads as MR1 throughout; side 10 is the note-14 limb for the same reason. Density 2,420 sf/unit not applied (OAR 660-046-0220(2)(b))."
       - zone: PMD
-        quadplex_allowed: true
+        quadplex_allowed: false
         setback_front_ft: 15
         setback_side_ft: 30
         setback_rear_ft: 30
@@ -1899,9 +1899,9 @@ jurisdictions:
         source: "Clackamas ZDO Section 315 Table 315-4 (Planned Medium Density Residential: front 15, side 30, rear 30, height none); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
-        notes: "Ported from the FLATS corpus 2026-09-23. Nine lots. No conditioned limb on any setback: note 10 (a planned unit development has no interior side or rear setback) is another application path, ruled as such in the corpus. Density 3,630 sf/unit not applied (OAR 660-046-0220(2)(b))."
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required here (ZDO 1102.01(A)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-09-23. Nine lots. No conditioned limb on any setback: note 10 (a planned unit development has no interior side or rear setback) is another application path, ruled as such in the corpus. Density 3,630 sf/unit not applied (OAR 660-046-0220(2)(b))."
       - zone: VA
-        quadplex_allowed: true
+        quadplex_allowed: false
         setback_front_ft: 10
         setback_side_ft: 0  # Table 315-4 prints "None"; held in the corpus as exempt
         setback_rear_ft: 0  # the same
@@ -1909,7 +1909,7 @@ jurisdictions:
         source: "Clackamas ZDO Section 315 Table 315-4 (Village Apartment: front 10, max front 18, side none, rear none, height 45); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
-        notes: "Ported from the FLATS corpus 2026-09-23. One lot. A street-wall district: the 18 ft maximum front setback has no column here, and note 6 (Sunnyside Road frontage measured from the centerline) is ruled unmeasured in the corpus."
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required here (ZDO 1102.01(A)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-09-23. One lot. A street-wall district: the 18 ft maximum front setback has no column here, and note 6 (Sunnyside Road frontage measured from the centerline) is ruled unmeasured in the corpus."
 
   happy_valley:
     eligible: true

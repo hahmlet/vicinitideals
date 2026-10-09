@@ -2207,8 +2207,9 @@ zones:
       # note 8. The absence of note 8 does not take Section 845 away -- 845
       # states its own scope and states no district limitation, which is
       # checked below at `min_lot_sqft` -- it just means this cell does not
-      # signpost it.
-      value: true
+      # signpost it. The use is permitted; the district is RED BY RULING for
+      # design review (notes).
+      value: false
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
     min_lot_sqft:
       # Table 315-4 prints "None" and Section 845.01 prints 7,000, and 7,000
@@ -2311,6 +2312,20 @@ zones:
       value: 10
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
+      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of 2026-10-08):
+      the use is permitted in this district (Table 315-1, a bare P) but
+      development here goes through design review, which is not by right.
+      ZDO 1102.01(A): "Design review is required for: Development,
+      redevelopment, expansions, and improvements in: ... HDR, MR-1, MR-2, MRR,
+      PMD, RCHDR, SHD, VA, and VTH Districts". The only exceptions are detached
+      single-family dwellings, manufactured dwellings, prefabricated structures
+      and their accessory uses, stormwater facilities, utility cabinets and
+      utility lines (1102.01(A)(1)-(2)); a quadplex is none of them. Design review
+      is a Type II application (1102.03). Section 1102 is not in the provenance
+      store; it was read live from codepublishing.com on 2026-10-08 and should be
+      added to the store before this ruling is relied on in a citation check.
+      The dimensions below stay so the ruling can be reversed.
+
       Encoded 2026-09-08 from Table 315-4, the first reading of this table in
       this layer. Nine lots.
 
@@ -2345,8 +2360,9 @@ zones:
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-09-08'
     quadplex_allowed:
-      # Table 315-1, Quadplexes row, sixth column. A bare P.
-      value: true
+      # Table 315-1, Quadplexes row, sixth column. A bare P -- the use is
+      # permitted; the district is RED BY RULING for design review (notes).
+      value: false
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
     min_lot_sqft:
       # 845.01, as in every district in this county. Table 315-4 prints
@@ -2456,6 +2472,20 @@ zones:
       cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-1 column ("None")
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
+      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of 2026-10-08):
+      the use is permitted in this district (Table 315-1, a bare P) but
+      development here goes through design review, which is not by right.
+      ZDO 1102.01(A): "Design review is required for: Development,
+      redevelopment, expansions, and improvements in: ... HDR, MR-1, MR-2, MRR,
+      PMD, RCHDR, SHD, VA, and VTH Districts". The only exceptions are detached
+      single-family dwellings, manufactured dwellings, prefabricated structures
+      and their accessory uses, stormwater facilities, utility cabinets and
+      utility lines (1102.01(A)(1)-(2)); a quadplex is none of them. Design review
+      is a Type II application (1102.03). Section 1102 is not in the provenance
+      store; it was read live from codepublishing.com on 2026-10-08 and should be
+      added to the store before this ruling is relied on in a citation check.
+      The dimensions below stay so the ruling can be reversed.
+
       Encoded 2026-09-08 from Table 315-4. 839 lots, the largest unencoded
       zone in either county before this commit.
 
@@ -2493,8 +2523,9 @@ zones:
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-09-08'
     quadplex_allowed:
-      # Table 315-1, Quadplexes row, seventh column. A bare P.
-      value: true
+      # Table 315-1, Quadplexes row, seventh column. A bare P -- the use is
+      # permitted; the district is RED BY RULING for design review (notes).
+      value: false
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
     min_lot_sqft:
       value: 7000
@@ -2584,6 +2615,20 @@ zones:
       cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-2 column ("None")
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
+      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of 2026-10-08):
+      the use is permitted in this district (Table 315-1, a bare P) but
+      development here goes through design review, which is not by right.
+      ZDO 1102.01(A): "Design review is required for: Development,
+      redevelopment, expansions, and improvements in: ... HDR, MR-1, MR-2, MRR,
+      PMD, RCHDR, SHD, VA, and VTH Districts". The only exceptions are detached
+      single-family dwellings, manufactured dwellings, prefabricated structures
+      and their accessory uses, stormwater facilities, utility cabinets and
+      utility lines (1102.01(A)(1)-(2)); a quadplex is none of them. Design review
+      is a Type II application (1102.03). Section 1102 is not in the provenance
+      store; it was read live from codepublishing.com on 2026-10-08 and should be
+      added to the store before this ruling is relied on in a citation check.
+      The dimensions below stay so the ruling can be reversed.
+
       Encoded 2026-09-08 from Table 315-4. 120 lots. Reads as MR-1 throughout
       except for the DLA, and carries one fewer footnote on its rear setback:
       MR-1's cell is marked 5, 10, 11 and 12 and MR-2's is marked 5 and 10.
@@ -2603,8 +2648,9 @@ zones:
       # Table 315-1, Quadplexes row, ninth column. A bare P. The Townhouses
       # row reads X in the same column, which is the corroboration worth
       # noting: this district takes the building we place and refuses the
-      # split-plat form of it.
-      value: true
+      # split-plat form of it. The use is permitted; the district is RED BY
+      # RULING for design review (notes).
+      value: false
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
     min_lot_sqft:
       value: 7000
@@ -2643,6 +2689,20 @@ zones:
       value: 20
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
+      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of 2026-10-08):
+      the use is permitted in this district (Table 315-1, a bare P) but
+      development here goes through design review, which is not by right.
+      ZDO 1102.01(A): "Design review is required for: Development,
+      redevelopment, expansions, and improvements in: ... HDR, MR-1, MR-2, MRR,
+      PMD, RCHDR, SHD, VA, and VTH Districts". The only exceptions are detached
+      single-family dwellings, manufactured dwellings, prefabricated structures
+      and their accessory uses, stormwater facilities, utility cabinets and
+      utility lines (1102.01(A)(1)-(2)); a quadplex is none of them. Design review
+      is a Type II application (1102.03). Section 1102 is not in the provenance
+      store; it was read live from codepublishing.com on 2026-10-08 and should be
+      added to the store before this ruling is relied on in a citation check.
+      The dimensions below stay so the ruling can be reversed.
+
       Encoded 2026-09-08 from Table 315-4. One lot, and encoded at the same
       care as the 839 because a district read carelessly is wrong at whatever
       size it turns out to be.
@@ -2664,6 +2724,39 @@ zones:
       area for four units -- which is below the 7,000 Section 845 asks, so
       this is the one district of the four where the county's density standard
       would not have bound anyway) and minimum density ("See Section 1012").
+  HDR:
+    cite_default:
+      cite: Clackamas ZDO Section 315 Table 315-4 (High Density Residential)
+      url: https://www.clackamas.us/planning/zdo315
+      retrieved: '2026-10-09'
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, eighth column: a bare P -- the use is
+      # permitted; the district is RED BY RULING for design review (notes).
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    notes: >-
+      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of 2026-10-08):
+      the use is permitted in this district (Table 315-1, a bare P) but
+      development here goes through design review, which is not by right.
+      ZDO 1102.01(A): "Design review is required for: Development,
+      redevelopment, expansions, and improvements in: ... HDR, MR-1, MR-2, MRR,
+      PMD, RCHDR, SHD, VA, and VTH Districts". The only exceptions are detached
+      single-family dwellings, manufactured dwellings, prefabricated structures
+      and their accessory uses, stormwater facilities, utility cabinets and
+      utility lines (1102.01(A)(1)-(2)); a quadplex is none of them. Design
+      review is a Type II application (1102.03). Section 1102 is not in the
+      provenance store; it was read live from codepublishing.com on 2026-10-08
+      and should be added to the store before this ruling is relied on in a
+      citation check.
+
+      Dimensional standards are NOT encoded. Table 315-4 answers rear setback,
+      side setback and building separation with "See Subsection 1005.02(L)": a
+      separation drawn as an angle from the top of the building -- 60 degrees to
+      the north, 15 degrees east and west, "Separation = b x .267 (tan 15
+      degrees)" -- which needs the bearing of every lot line, a measurement
+      this system does not take (Steph 2026-10-09: build it after the weekly
+      re-screen). 251 lots. If the design-review ruling is reversed, the
+      zone goes back to unencodable until that measurement exists.
   # ------------------------------------------------------------------
   # The rural half of the county, read 2026-09-08 from ZDO Section 316.
   #
@@ -3483,19 +3576,6 @@ neighbours:
 
 zone_rulings:
   # --- four residential districts read and not holdable ---------------------
-  HDR:
-    outcome: unencodable
-    note: >-
-      High Density Residential, 251 lots. Quadplexes P in Table 315-1, and
-      Table 315-4 answers rear setback, side setback and building separation
-      with "See Subsection 1005.02(L)": a separation drawn as an angle from
-      the top of the building -- 60 degrees to the north, 15 degrees east and
-      west, "Separation = b x .267 (tan 15 degrees)" -- which needs the
-      bearing of every lot line, a measurement this system does not take.
-      Not modifiable under Section 904 (1005.02(L)(4)). Expires the day
-      lot-line bearing is measured; the districts ledger holds the same
-      ruling as `encode`.
-      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because 1005.02(L) sets the separation by compass bearing and no setback class here knows a bearing.
   SHD:
     outcome: unencodable
     note: >-
