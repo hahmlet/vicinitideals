@@ -142,6 +142,35 @@ def test_only_roads_a_truck_can_use_are_loaded(tmp_path) -> None:
     assert sorted(g.coords[0][1] for g in geoms) == [0.0, 4.0, 6.0]
 
 
+def test_an_unimproved_road_with_recorded_pavement_is_one_a_truck_can_use(tmp_path) -> None:
+    import pandas as pd
+
+    from flats.geom.curbs import StreetEdges
+
+    line = lambda y: shapely.to_wkb(shapely.LineString([(0, y), (100, y)]))  # noqa: E731
+    path = tmp_path / "s1_streets.parquet"
+    pd.DataFrame(
+        {
+            "type": ["2000", "2000", "2000", "1800"],
+            "alley": [False] * 4,
+            "wkb": [line(0), line(100), line(200), line(300)],
+        }
+    ).to_parquet(path)
+    # Paved 30 ft beside the first, 12 ft (a path) beside the second, nothing
+    # beside the third; an unnamed drive stays out however wide.
+    edges = StreetEdges.build(
+        widths=[
+            (shapely.LineString([(0, 2), (100, 2)]), 30.0),
+            (shapely.LineString([(0, 102), (100, 102)]), 12.0),
+            (shapely.LineString([(0, 302), (100, 302)]), 30.0),
+        ]
+    )
+    _, geoms = fire.load_truck_roads(path, edges)
+    assert sorted(g.coords[0][1] for g in geoms) == [0.0]
+    _, bare = fire.load_truck_roads(path)
+    assert len(bare) == 0
+
+
 # --- the screen -----------------------------------------------------------
 
 WHERE = "or/multnomah/portland"
