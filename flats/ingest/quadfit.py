@@ -133,6 +133,7 @@ from flats.geom.street_class import (
 )
 from flats.geom.named_street import NAMED_STREET_FACT, named_street_column, observed_named_street
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
+from flats.ingest.flatter import flatter_checked
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
 from flats.rules.model import TRANSIT_MEASURES, Layer
@@ -2369,6 +2370,10 @@ def _screen_lot_once(
             won, lot, terrain, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
             roads=roads,
         )
+        won = flatter_checked(
+            won, lot, terrain, fitter, rules=rules, policy=policy, relief=relief,
+            step_deg=step_deg, roads=roads,
+        )
         if _coarse_blocked(won, lot):
             # Eliminated on the coarse map's steep ground alone: screened
             # again, the whole way, as though it were not there, and flagged
@@ -3072,6 +3077,9 @@ def drawing_for(
     fitter: Fitter,
     *,
     street: tuple[tuple[float, float, float, float], ...] | None = None,
+    where: Any = None,
+    listing: list[Any] | None = None,
+    max_front_ft: float | None = None,
 ) -> dict[str, Any] | None:
     """Where the fit stood this design, for the lot page (FOLLOWUPS 5).
 
@@ -3084,7 +3092,9 @@ def drawing_for(
     as near the lot's front lines as named for this screen as the room
     allows -- on a corner lot, the street it was laid out fronting; or at
     ``street``, some of those lines, where the caller names them
-    (:func:`fire_checked`).
+    (:func:`fire_checked`). ``where``, ``listing`` and ``max_front_ft`` are
+    :func:`flats.fit.draw.draw`'s: a chosen window, or the windows listed
+    (:mod:`flats.ingest.flatter`).
     """
     alley, corner = s.lot.facts.alley, s.lot.facts.corner
     rear = s.envelope.rear_cut_ft if s.envelope else None
@@ -3110,6 +3120,9 @@ def drawing_for(
             beside_band_ft=beside.band_ft,
             beside_len_ft=beside.length_ft,
             short_ft=short,
+            where=where,
+            listing=listing,
+            max_front_ft=max_front_ft,
         )
         return None if got is None else got.to_json(s.envelope.geom if s.envelope else None)
     if s.fit.column:
@@ -3136,6 +3149,9 @@ def drawing_for(
         court_beyond_ft=beyond,
         street=street,
         short_ft=short,
+        where=where,
+        listing=listing,
+        max_front_ft=max_front_ft,
     )
     if got is None:
         return None
