@@ -1932,19 +1932,6 @@ read when the weekly full re-screen lands.
    to read `healthy` before the smoke, in BOTH the live script and the
    repo copy `scripts/deploy-vicinitideals.sh` (they differ: the live one
    uses STACK_DIR). App-side, not FLATS.
-57. [scan: YES] **Flatter placement for SLOPE-GRADE yellows -- CODE LIVE 34b42b4f
-   (2026-10-09); waiting for the splice that puts it on the map.** Bound on
-   137 over 13,320 lots (26,640 results), every gain read, 150 replayed from
-   scratch with the same answers: 672 yellow-to-green (610 lots; Washington
-   Co. 208, Portland 184, Clackamas 152, Beaverton 68, Oregon City 34, rest
-   13), 0 worse, 0 new flag or bind, longest hose route 149.96 ft, highest
-   grade 5.0%, court past the envelope at most 20.0 ft (the fit's own rear
-   allowance). Cost +10% seconds per lot (0.269 -> 0.295). Steph's ruling is
-   untouched. Two-street lots keep the worse reading (a gain needs both
-   green). Not searched: 10 m ground lots, lots with an outdoor-area rule,
-   courts reached from an alley/side street. Left to do: the splice that
-   re-screens the SLOPE-GRADE yellows with the new code (coordinator books
-   it); delete this item once a run carries it.
 58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08;
    first pass DONE c98be01d 2026-10-09).** Run 67 best-pod yellows held by a
    single flag: FACT-AT-STREET-END 633, ACCESS-STREET-UNCONFIRMED 359,
