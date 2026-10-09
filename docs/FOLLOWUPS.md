@@ -1977,6 +1977,13 @@ read when the weekly full re-screen lands.
    golf courses and zero-value parcels are RED and never scanned, like
    schools and parks; churches and charities stay checked (item 47).
    Assigned to the zone-gaps agent: rule + bound + read every moved lot.
+   TIERS (agent count, run 69 green/yellow): (1) WashCo public codes
+   92x/94x-97x/99x per OAR 150-308-0310; (2) $0 + tract-style number;
+   (3) $0 + recreation/open-space code; (4) $0 + no street address --
+   all RED. (5) $0 WITH a real street address (~1,100 lots, ~55 green;
+   sample = new splits not yet valued): STEPH RULED 2026-10-09 "screen
+   them normally" -- no red, no flag. Multnomah exempt-by-value (10,041)
+   untouched: cannot tell a park from a church.
 60. [scan: YES] **Rank the unranked corner streets (opened 2026-10-09 from
    49(c); Steph: "yellow, then measure").** In the current bound 634 lots
    have a corner street with no class (60 street names, 69 street lines;
