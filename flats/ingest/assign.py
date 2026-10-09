@@ -473,7 +473,7 @@ def assign(
     measured = {str(t).rstrip() for t in frame["TLID"]}
     say(f"bridge: {len(frame):,} rows, {len(measured):,} lots, designs {designs}")
 
-    from flats.geom.roll import built_counts
+    from flats.geom.roll import built_lots
     from flats.geom.roll import load_rules as roll_rules
     from flats.geom.roll import read as roll_read
     from flats.ingest.institutional import ROLL_COLUMNS
@@ -503,7 +503,7 @@ def assign(
     inst = {k: v for k, v in by_lot(institutional).items() if v.get("whole_tlid")}
     # The county roll is read here, from the lot table, whatever the file holds.
     roll_rules_ = roll_rules()
-    built = built_counts(lot_rows, roll_rules_)
+    built = built_lots(lot_rows, roll_rules_)
     roll_hits: dict[tuple[str, str], dict[str, Any]] = {}
     for row in lot_rows:
         key = (str(row.get("county")), str(row["tlid"]).rstrip())

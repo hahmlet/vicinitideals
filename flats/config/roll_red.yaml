@@ -52,14 +52,16 @@ tiers:
     enabled: true
     words: a parcel the county values at $0 with no street address
     # Stays screened when new houses stand around it (Steph RULED 2026-10-09):
-    # a lot platted this year looks exactly like this. "Block" is the county's
-    # own tax map page: the parcel number less its last five characters, in
-    # the same county. "Built" is YEARBUILT on that county's assessor roll,
-    # a year from `since` to 2100. The lot's own year does not count. No
-    # year data, no exemption: the lot stays red.
+    # a lot platted this year looks exactly like this. "Around it" is: on the
+    # same county tax map page (the parcel number less its last five
+    # characters) AND within `within_ft` feet, edge to edge, of the bare lot.
+    # "Built" is YEARBUILT on that county's assessor roll, a year from `since`
+    # to 2100. The lot's own year does not count. No year, no geometry, no
+    # exemption: the lot stays red. Lot geometry is Oregon State Plane feet.
     keep_checked_when_block_built:
       since: 2021
       lots: 3
+      within_ft: 500
 # A $0 parcel WITH a real street address is screened normally, no red and no
 # flag (Steph RULED 2026-10-09): new lots the county has not valued yet look
 # exactly like this.

@@ -116,20 +116,29 @@ def test_a_value_the_roll_does_not_show_as_zero_is_not_zero(values: dict[str, An
 # --- a lot with new houses around it stays screened ---------------------------------
 
 
-def _block(county: str, stem: str, years: list[Any]) -> list[dict[str, Any]]:
+def _box(x: float, y: float, size: float = 50.0) -> bytes:
+    from shapely import wkb as shapely_wkb
+    from shapely.geometry import box
+
+    return shapely_wkb.dumps(box(x, y, x + size, y + size))
+
+
+def _block(county: str, stem: str, years: list[Any], at: list[float] | None = None) -> list[dict[str, Any]]:
+    """Houses on one tax map page; ``at`` is each house's west edge in feet
+    (the bare lot sits at 0..50), default 100 ft apart from the bare lot."""
     return [
-        {"county": county, "tlid": f"{stem}{i:05d}", "YEARBUILT": y, "site_address": "1 MAIN ST", **WORTH}
-        for i, y in enumerate(years, start=100)
+        {"county": county, "tlid": f"{stem}{i:05d}", "YEARBUILT": y, "site_address": "1 MAIN ST", "wkb": _box(at[n] if at else 100.0 + 10 * n, 0), **WORTH}
+        for n, (i, y) in enumerate(zip(range(100, 100 + len(years)), years))
     ]
 
 
 def _bare(tlid: str, county: str = "washington") -> dict[str, Any]:
-    return lot(county=county, tlid=tlid, PROP_CODE="000", site_address=None, YEARBUILT=0, **ZERO)
+    return lot(county=county, tlid=tlid, PROP_CODE="000", site_address=None, YEARBUILT=0, wkb=_box(0, 0), **ZERO)
 
 
 def _read_with(row: dict[str, Any], others: list[dict[str, Any]]) -> str | None:
     rules = roll.load_rules()
-    got = roll.read(row, rules, roll.built_counts([row, *others], rules))
+    got = roll.read(row, rules, roll.built_lots([row, *others], rules))
     return got["category"].removeprefix(roll.PREFIX) if got else None
 
 
@@ -143,6 +152,10 @@ def _read_with(row: dict[str, Any], others: list[dict[str, Any]]) -> str | None:
 )
 def test_the_block_is_the_tax_map_page_in_every_countys_number_format(county: str, stem: str, bare: str) -> None:
     assert roll.block({"county": county, "tlid": bare}) == (county, stem)
+
+
+def test_the_distance_rule_is_500_feet() -> None:
+    assert roll.load_rules().tier("no_address").built_within_ft == 500
 
 
 def test_three_lots_built_since_2021_in_the_block_keep_a_bare_lot_checked() -> None:
@@ -163,6 +176,34 @@ def test_the_bare_lots_own_year_does_not_count() -> None:
 def test_new_houses_in_another_block_or_county_do_not_count() -> None:
     far = _block("washington", "1S214CC", [2022, 2022, 2022]) + _block("clackamas", "1S214CD", [2022, 2022, 2022])
     assert _read_with(_bare("1S214CD27300"), far) == "no_address"
+
+
+def test_houses_are_measured_edge_to_edge_not_centre_to_centre() -> None:
+    # West edges at 550: the nearest edge is 500 ft from the bare lot's east edge (50), the centres 575 ft apart.
+    near = _block("washington", "1S214CD", [2022] * 3, at=[550.0] * 3)
+    assert _read_with(_bare("1S214CD27300"), near) is None
+
+
+def test_a_house_501_feet_away_does_not_count() -> None:
+    mixed = _block("washington", "1S214CD", [2022] * 3, at=[100.0, 100.0, 551.0])
+    assert _read_with(_bare("1S214CD27300"), mixed) == "no_address"
+
+
+def test_three_houses_on_the_page_but_far_away_spare_nothing() -> None:
+    assert _read_with(_bare("1S214CD27300"), _block("washington", "1S214CD", [2022] * 5, at=[3000.0] * 5)) == "no_address"
+
+
+def test_a_bare_lot_with_no_geometry_stays_red() -> None:
+    neighbours = _block("washington", "1S214CD", [2022] * 4)
+    for wkb in (None, float("nan"), b"not a geometry", b""):
+        assert _read_with({**_bare("1S214CD27300"), "wkb": wkb}, neighbours) == "no_address"
+
+
+def test_a_house_with_no_geometry_is_not_counted() -> None:
+    neighbours = _block("washington", "1S214CD", [2022] * 4)
+    neighbours[0]["wkb"] = None
+    neighbours[1]["wkb"] = b"junk"
+    assert _read_with(_bare("1S214CD27300"), neighbours) == "no_address"
 
 
 @pytest.mark.parametrize("years", [[None, None, None, None], [0, 0, 0, 0], ["", "n/a", 9999, 20210], [float("nan")] * 4])
@@ -237,8 +278,8 @@ def test_assign_answers_a_roll_lot_red_with_no_reading_file(tmp_path: Path) -> N
 
 
 def test_assign_and_the_reading_step_spare_a_bare_lot_among_new_houses(tmp_path: Path) -> None:
-    houses = [{"county": "washington", "tlid": f"1S214CD0{i}000", "YEARBUILT": 2022} for i in range(3)]
-    bare = {"county": "washington", "tlid": "1S214CD27300", "PROP_CODE": "000", "site_address": None, **ZERO}
+    houses = [{"county": "washington", "tlid": f"1S214CD0{i}000", "YEARBUILT": 2022, "wkb": _box(100.0 + 10 * i, 0)} for i in range(3)]
+    bare = {"county": "washington", "tlid": "1S214CD27300", "PROP_CODE": "000", "site_address": None, "wkb": _box(0, 0), **ZERO}
     bridge = _bridge(
         tmp_path,
         [{"TLID": "1S214CD27300", "design": "d1", "triage": "green", "if_signed": "green", "colour": "green"}],

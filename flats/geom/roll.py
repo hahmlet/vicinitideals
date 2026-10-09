@@ -50,6 +50,7 @@ class Tier:
     counties: frozenset[str] = frozenset()
     built_since: int | None = None
     built_lots: int = 0
+    built_within_ft: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -75,6 +76,7 @@ def load_rules(path: Path = CONFIG) -> RollRules:
             counties=frozenset(body.get("counties") or ()),
             built_since=int(keep["since"]) if (keep := body.get("keep_checked_when_block_built")) else None,
             built_lots=int(keep["lots"]) if keep else 0,
+            built_within_ft=float(keep["within_ft"]) if keep else 0.0,
         )
         for key, body in (doc.get("tiers") or {}).items()
     )
@@ -130,29 +132,44 @@ def year_built(row: Mapping[str, Any]) -> int | None:
     return int(n) if n is not None and 1000 <= n <= 2100 else None
 
 
-def built_counts(rows: Iterable[Mapping[str, Any]], rules: RollRules) -> dict[tuple[str, str], int]:
-    """Per block, the lots the assessor roll says were built since the year in
-    the ``no_address`` tier. Empty when the rule is off or no row has a year."""
+def geometry(row: Mapping[str, Any]) -> Any:
+    """The lot's shapely geometry from its ``wkb``, or None when it has none
+    or cannot be read."""
+    raw = row.get("wkb")
+    if raw is None or isinstance(raw, float):
+        return None
+    from shapely import wkb as shapely_wkb
+
+    try:
+        geom = shapely_wkb.loads(bytes(raw))
+    except Exception:
+        return None
+    return None if geom.is_empty else geom
+
+
+def built_lots(rows: Iterable[Mapping[str, Any]], rules: RollRules) -> dict[tuple[str, str], list[tuple[str, Any]]]:
+    """Per block, ``(tlid, geometry)`` of each lot the assessor roll says was
+    built since the year in the ``no_address`` tier and whose geometry reads.
+    Empty when the rule is off or no row has a year."""
     since = rules.tier("no_address").built_since
-    counts: dict[tuple[str, str], int] = {}
+    found: dict[tuple[str, str], list[tuple[str, Any]]] = {}
     if since is None:
-        return counts
+        return found
     for row in rows:
         year = year_built(row)
-        if year is not None and year >= since:
-            key = block(row)
-            counts[key] = counts.get(key, 0) + 1
-    return counts
+        if year is not None and year >= since and (geom := geometry(row)) is not None:
+            found.setdefault(block(row), []).append((str(row.get("tlid") or row.get("TLID") or "").rstrip(), geom))
+    return found
 
 
-def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str], int] | None = None) -> dict[str, Any] | None:
+def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str], list[tuple[str, Any]]] | None = None) -> dict[str, Any] | None:
     """The reading for one lot -- ``category``, ``share`` (always 1: the roll
     names the whole parcel), ``source``, ``name`` -- or ``None``.
 
     ``row`` carries county, tlid, PROP_CODE, LANDVAL, BLDGVAL, TOTALVAL,
     ASSESSVAL, site_address and YEARBUILT, as the normalized lot table does.
-    ``built`` is :func:`built_counts` over the whole table; without it a
-    lot with no address is never spared, so a missing year reads red.
+    ``built`` is :func:`built_lots` over the whole table; without it, or
+    without the lot's own geometry, a lot with no address is never spared.
     """
     county = str(row.get("county") or "")
     code = _code(row)
@@ -177,10 +194,9 @@ def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str
                 return hit(tier.key, f"{county} roll code {code}, value $0")
         elif tier.key == "no_address":
             if zero and not real_address(row):
-                if built and tier.built_since is not None:
-                    own = year_built(row)
-                    others = built.get(block(row), 0) - (1 if own is not None and own >= tier.built_since else 0)
-                    if others >= tier.built_lots:
+                if built and tier.built_since is not None and (own := geometry(row)) is not None:
+                    near = sum(1 for other, geom in built.get(block(row), ()) if other != tlid and own.distance(geom) <= tier.built_within_ft)
+                    if near >= tier.built_lots:
                         continue
                 return hit(tier.key, f"{county} roll, value $0, no street address")
     return None
