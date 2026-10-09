@@ -1994,6 +1994,14 @@ read when the weekly full re-screen lands.
    sample = new splits not yet valued): STEPH RULED 2026-10-09 "screen
    them normally" -- no red, no flag. Multnomah exempt-by-value (10,041)
    untouched: cannot tell a park from a church.
+   BOUND (assign-only over run 69, 02041372): 3,752 lots -> red (152 green,
+   3,600 yellow), nothing else moved. STEPH RULED 2026-10-09 on the two
+   risks: (i) WashCo "x1" public codes (921/941/943/951/961/971/991/993,
+   190 lots, real buildings + values, housing-authority/nonprofit) STAY
+   CHECKED -- only bare-land x0 codes go red; (ii) $0 + no-address lots in
+   blocks with 3+ neighbours built 2021 or later (~173 yellow + some green)
+   STAY CHECKED as possibly new lots. Cemeteries (93x) red; student
+   housing (90x) checked. Re-bound after the change, then ship.
 60. [scan: YES] **Rank the unranked corner streets (opened 2026-10-09 from
    49(c); Steph: "yellow, then measure").** In the current bound 634 lots
    have a corner street with no class (60 street names, 69 street lines;
