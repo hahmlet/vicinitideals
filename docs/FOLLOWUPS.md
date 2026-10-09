@@ -1621,14 +1621,29 @@ read when the weekly full re-screen lands.
    unknown->measured 657 on if_signed. Every gain and loss read.
    (b) 51577bb8 (item 44) not in run 65: 30 lots / 34 rows map-green
    (`item44_false_greens_in_weekly.csv`).
-   (c) UNCONFIRMED: ~12 corner greens whose court may open onto an arterial
-   where a local street adjoins (Beaverton 1S121BB14600, 1S124AA06000,
-   1S129DB05400, Greenway lots 1S127BC*; WashCo 1N120CD10600, 1S130CA02600,
-   1S201AC14100; OC 31E01AD00800; Wilsonville 31W13AC00800). The drawing
-   carries no driveway line and `lane` is empty on side-street plans, so the
-   access lot line cannot be read -- record it per plan, then re-check.
-   Unranked cities (Clackamas uninc 274, Sherwood 10, Hillsboro 5 gains)
-   assume the side street is lowest class with no flag.
+   (c) DONE c98be01d (deployed 2026-10-09; lands at the next splice): the
+   hole was bigger than ~12 lots. A corner lot whose code sends the driveway
+   to the lowest-class street, with a street line that has no class, was
+   screened as if the side street served, unchecked. Now the driveway is
+   tried off BOTH streets and the worse answer kept; each plan's access
+   line is recorded (bridge-only column `access_json`: rule, street charged,
+   why, the ranks read). Steph 2026-10-09: unranked corner = yellow ("yellow,
+   then measure"): where only the unranked street's reading misses, the lot
+   keeps the measured plan's answer and carries ACCESS-STREET-RANK-UNKNOWN
+   (severity 6, closer look); a miss on the measured plan itself stays red.
+   Bound over 1,465 lots vs run 67 (every moved lot read): 852 rows
+   green -> yellow with the new flag (Washington Co. uninc 636, Beaverton
+   87, Oregon City 58, West Linn 37, Wilsonville 31, Milwaukie 4), 10 rows
+   already yellow gain the flag, 0 green -> red. The named lots are inside
+   those counts. Also in the same code (read lot by lot): paved type-2000
+   streets count as fire-truck roads (Portland: 348 rows yellow -> green,
+   22 red -> green, hose routes 70-150 ft; private park drives and alleys
+   stay yellow), 28 other rows green -> yellow (Milwaukie 20 lose a
+   proven-harmless flag; Portland 4, Oregon City 3, Beaverton 2), 7 Portland
+   yellow -> red (hose > 150 ft). The lots to splice are listed in
+   `/root/fo/scope_yellow.txt` on 137 (1,465, one per line -- Portland and
+   Gresham TLIDs hold spaces, never split on whitespace). NEW ITEM 60 ranks
+   the streets.
    (e)+(f)+(h) DONE 2dacbe1c (deployed 2026-10-08; lands at the (i) splice,
    NOT in run 65): steep is read on the lot's own ground (a neighbour's bank
    or raised road no longer spills in; a bank's height is walked across the
@@ -1889,15 +1904,28 @@ read when the weekly full re-screen lands.
    courts reached from an alley/side street. Left to do: the splice that
    re-screens the SLOPE-GRADE yellows with the new code (coordinator books
    it); delete this item once a run carries it.
-58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08, brief handed
-   to a new agent).** Run 67 best-pod yellows held by a single flag a
-   measurement could settle: FACT-AT-STREET-END 633, ACCESS-STREET-
-   UNCONFIRMED 359, MEASURE-FIRE-ROUTE 334 (no hose route found for the
-   drawn plan), FACT-CIVIC-CORRIDOR 141, PARKING-STRIP-UNCONFIRMED 97.
-   49(c) (corner greens whose court may open onto an arterial; record the
-   access lot line per plan) goes FIRST: it is the false-GREEN half.
-   Measure each where the data allows; where it cannot be measured, say
-   why in one line and leave it yellow.
+58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08;
+   first pass DONE c98be01d 2026-10-09).** Run 67 best-pod yellows held by a
+   single flag: FACT-AT-STREET-END 633, ACCESS-STREET-UNCONFIRMED 359,
+   MEASURE-FIRE-ROUTE 334, FACT-CIVIC-CORRIDOR 141, PARKING-STRIP-UNCONFIRMED
+   97. MEASURED: MEASURE-FIRE-ROUTE (paved type-2000 streets now count as
+   truck roads: Portland 348 rows yellow -> green; see 49(c)) and
+   FACT-CIVIC-CORRIDOR for Rockwood (Gresham's Rockwood Design District
+   drawn from the city's own layer, `rockwood_design_district`; 290 rows /
+   ~148 lots yellow -> green: CMU 197, MDR-24 60, MDR-12 29, OFR 4; SC/SC-RJ
+   and CMF stay yellow; scope `/root/fo/scope_rockwood.txt`, inside
+   scope_yellow.txt). CANNOT BE MEASURED from data we hold, left yellow:
+   - FACT-AT-STREET-END (Gresham, 789 per-design lots): Table 4.0131 note 5
+     numbers are not encoded and the street-class layer cannot separate
+     Minor Access Streets.
+   - ACCESS-STREET-UNCONFIRMED (441): the only road line is a private drive
+     or lies across someone else's land; no map says whether the lot abuts it.
+   - PARKING-STRIP-UNCONFIRMED (213): OAR 660-046-0220(2)(e)(E) is an open
+     reading of law, not a fact on the ground (Steph ruled yellow flag
+     2026-10-04).
+   - FACT-CIVIC-CORRIDOR (the rest): Gresham's own corridor map is the
+     source, and Glisan / 162nd are not on it.
+   Counts above are per design; the best-pod counts differ.
 59. [scan: YES] **Tracts, zero-value parcels and public county codes show GREEN (found 2026-10-08
    reading item 51's gains; the leak already exists in every city).** The
    institutional rule works by map overlap only; no county property code or
@@ -1911,3 +1939,21 @@ read when the weekly full re-screen lands.
    is a tract / common-area / golf course RED? Then add a tract + zero-value
    (+ public-code) rule, bound over run 67, read every moved lot. Also
    1S133AD02200 (code 911) overlaps Westgate Christian School at 17% only.
+60. [scan: YES] **Rank the unranked corner streets (opened 2026-10-09 from
+   49(c); Steph: "yellow, then measure").** 351 Washington Co. uninc
+   streets have no class: Metro's street file has no line within reach
+   (1,502 of 1,517 unranked street lines have none beside them) and the
+   county map draws classified roads only, so an absence of a classified road
+   is not a reading. Today each such corner lot is yellow
+   (ACCESS-STREET-RANK-UNKNOWN, 852 rows). Measure it from a real second
+   source: (1) OpenStreetMap `highway=` category (the coordinator measured the
+   county: 18,867 drivable ways, residential 11,644 / tertiary 2,718 /
+   secondary 1,789 / primary 1,457 / trunk 565 / unclassified 409 /
+   living_street 133; lanes= on 1% of residential and 54-83% of busy roads,
+   width= almost never, no traffic volume) -- match each of the 351 streets to
+   an OSM way (name + nearest centreline), rank by category; (2) the county's
+   own road centreline layer; (3) the street gap in the taxlot fabric.
+   Steph's call: does OSM count as the second source for the two-source rule?
+   FALLBACK only, needs Steph's yes: "no Metro line and no classified road
+   within 300 ft = local" (relaxes the two-source rule). Then bound over the
+   852 rows (`/root/fo/scope_yellow.txt`), read every lot that turns green.
