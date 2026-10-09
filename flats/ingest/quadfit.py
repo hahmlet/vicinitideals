@@ -1632,6 +1632,9 @@ class Screened:
     #: (:func:`flats.geom.street_class.access_record`, FOLLOWUPS 49(c)); the
     #: plan this row stands on carries ``won``. None off the named-front path.
     access: tuple[dict[str, Any], ...] | None = None
+    #: Why :func:`fire_checked` found no hose route for this plan
+    #: (:func:`_fire_why`); a diagnostic column, never read by the colour.
+    fire_why: str | None = None
 
 
 def _room(s: Screened, fitter: Fitter) -> Room | None:
@@ -2602,6 +2605,7 @@ def fire_checked(
     def screened(s: Screened, route: float | None) -> Screened:
         curb = measure(s.drawing, from_curb) if from_curb is not None and route is not None and route > limit else None
         facts = dataclasses.replace(s.facts, fire_route_ft=route, fire_route_tried=True, fire_route_curb_ft=curb)
+        s = dataclasses.replace(s, fire_why=_fire_why(s, lot, streets, offset) if route is None else None)
         result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
         shadow = _if_signed(
             s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
@@ -2623,6 +2627,26 @@ def fire_checked(
         if turned is not s:
             out = screened(turned, again)
     return out
+
+
+def _fire_why(
+    s: Screened, lot: QuadfitLot, streets: Sequence[tuple[float, float, float, float]], offset: Any
+) -> str:
+    """Which input :func:`flats.fit.fire.route_ft` was missing when it
+    found no route for ``s``'s drawing."""
+    from flats.fit import fire
+
+    drawing = s.drawing or {}
+    ring = drawing.get("building")
+    if not (drawing.get("fits") and ring and len(ring) >= 4):
+        return "no_building_drawn"
+    if lot.lot_geom is None:
+        return "no_lot_polygon"
+    if not streets:
+        return "no_street_lines"
+    if offset is not None and not fire.reachable(streets, offset):
+        return "no_truck_road_within_50ft"
+    return "no_path_to_walls"
 
 
 #: The angles :func:`_turned_for_fire` draws: every one the fit searched
@@ -3244,6 +3268,7 @@ def row_for(s: Screened) -> dict[str, Any]:
         "front_deg": s.front_deg,
         "side_street_lane": side_street_fed(s.rules, s.lot.facts.alley, s.lot.facts.corner),
         "access_json": json.dumps(s.access, separators=(",", ":")) if s.access else None,
+        "fire_why": s.fire_why,
         "fit_best_depth_ft": s.fit.best_depth_ft,
         "fit_required_ft": s.fit.required_ft,
         "fit_across_ft": s.fit.across_ft,
