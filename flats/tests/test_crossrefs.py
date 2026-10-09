@@ -113,7 +113,9 @@ def test_the_reference_worth_chasing_was_chased(
     # Four since 2026-10-02: CC's lot width quotes 58.800(1), and (2) beside
     # it lets "Existing nonconforming situations" develop under Chapter 35
     # (58.central-tualatin-overlay.txt L286-L287). The same ruling.
-    assert max(d.binding for d in tualatin.values()) <= 4
+    # Six since 2026-10-08: 34.400, the already-ruled retirement-housing section, binds four
+    # more times with the Tualatin zones encoded that day; the standing ruling covers it.
+    assert max(d.binding for d in tualatin.values()) <= 6
     assert tualatin["35"].ruling
 
 

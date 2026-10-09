@@ -243,4 +243,5 @@ def test_only_cornelius_keeps_parking_out_of_its_yards() -> None:
         for zone in layer.zones.values():
             if FIELD in zone.values:
                 declaring.add(layer_id)
-    assert declaring == {CORNELIUS}
+    # Gladstone joined 2026-10-08 (FOLLOWUPS 52): C2 states the same prohibition in its own words.
+    assert declaring == {CORNELIUS, "or/clackamas/gladstone"}

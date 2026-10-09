@@ -2291,31 +2291,138 @@ zones:
       Encoded 2026-09-20 from 23.030-23.060. The heaviest zone in the city
       and the shortest reading.
 
+  MU:
+    section: ["59."]
+    cite_default:
+      cite: West Linn CDC 59.020(A), 59.030 (uses permitted outright), 59.070(A)
+        (dimensional requirements), 59.070(B) (design standards)
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC59.html
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      # Willamette Neighborhood Mixed Use Transitional Zone, 25 lots.
+      # 59.030 "The following are uses permitted outright in this zone: 1.
+      # Single-family attached or detached dwelling; ... c. Quadplex
+      # residential units; ... 3. Multifamily dwelling; 4. Townhouse".
+      #
+      # BY-RIGHT READING, a judgment call: 59.020(A) says an outright use
+      # "requires no approval ... except that all uses require design review
+      # pursuant to CDC 59.100(13)" (Chapter 55). Chapter 55 is not in the
+      # provenance store; read live from the city's published code on
+      # 2026-10-08: 55.020(A)(10) makes "New development of a single-family
+      # detached dwelling (including a duplex, triplex, or quadplex),
+      # single-family attached dwelling (including a duplex, triplex,
+      # quadplex, or townhouse), or cottage cluster in the Willamette
+      # Neighborhood Mixed-Use Transitional Zone" a CLASS I design review,
+      # decided by the Planning Director under 55.030(C), and 55.095 makes the
+      # Class I residential standards "clear and objective". That is a
+      # ministerial staff check against fixed standards, the same footing as
+      # Estacada's, and not a discretionary design review. If the ruling is
+      # that any design-review step is red, this is one line to flip.
+      value: true
+      quote: "or/clackamas/west-linn/59.mu.txt#L33,L57,L59,L65"
+    setback_front_ft:
+      # "Front yard 12 ft; A porch, patio, or pedestrian amenity may be six
+      # feet from the front property line." The porch allowance is a
+      # projection the pod does not have; the building holds 12.
+      value: 12
+      quote: "or/clackamas/west-linn/59.mu.txt#L204-L206"
+    setback_front_max_ft:
+      # The "Maximum" row under Front yard: the building may stand no further
+      # back than 20 ft. Encoded because it is a real standard of the zone;
+      # nothing screens on it yet (same footing as Oregon City MUC-1).
+      value: 20
+      quote: "or/clackamas/west-linn/59.mu.txt#L207-L209"
+    setback_side_ft:
+      # "Interior side yard 7.5 ft; Townhouse common walls that are attached
+      # may have a 0-ft side setback." The 0 is for the shared walls of
+      # townhouse lots, not the outer wall of the pod; the pod's outer sides
+      # hold 7.5.
+      value: 7.5
+      quote: "or/clackamas/west-linn/59.mu.txt#L210-L212"
+    setback_street_side_ft:
+      value: 12
+      quote: "or/clackamas/west-linn/59.mu.txt#L213-L214"
+    setback_rear_ft:
+      # "Rear yard 20 ft. Where the use abuts a residential district, the
+      # setback distance required in the residential district shall apply,
+      # and within the setback area a buffer of at least 10 feet of
+      # landscaping in addition to a fence is required." 20 ft is the stated
+      # number. The abutting-district sentence tightens it only against R-40
+      # (rear 30 ft); every other West Linn residential rear is 20 ft or less.
+      # West Linn has no neighbour-zone layer, so that case is NOT measured
+      # here: a MU lot whose rear line abuts R-40 would need 30 ft. The buffer
+      # sits inside the setback, so it costs no extra ground.
+      value: 20
+      quote: "or/clackamas/west-linn/59.mu.txt#L215-L217"
+    min_lot_sqft:
+      # The base row, 4,500 sf "Unless defined as an existing lot of record".
+      # The townhouse-project row (average 1,500 sf per lot, L183-L186) is a
+      # per-lot average on the split plat; a quadplex on one lot is held to
+      # the base figure, which is the same conservative reading the other
+      # West Linn zones take.
+      value: 4500
+      quote: "or/clackamas/west-linn/59.mu.txt#L175-L178"
+    min_lot_width_ft:
+      # "Minimum lot width at front lot line 35 ft; Does not apply to
+      # townhouses or cottage clusters." Held for the single-lot quadplex.
+      value: 35
+      quote: "or/clackamas/west-linn/59.mu.txt#L187-L192"
+    min_average_lot_width_ft:
+      value: 50
+      quote: "or/clackamas/west-linn/59.mu.txt#L193-L196"
+    min_lot_depth_ft:
+      # "Average minimum lot depth 90 ft".
+      value: 90
+      quote: "or/clackamas/west-linn/59.mu.txt#L197-L200"
+    max_height_ft:
+      # "35 ft or 2 stories above grade, whichever is less." Both limbs are
+      # encoded in the two fields that hold them; the screen takes the
+      # binding one.
+      value: 35
+      quote: "or/clackamas/west-linn/59.mu.txt#L218-L220"
+    max_height_stories:
+      value: 2
+      quote: "or/clackamas/west-linn/59.mu.txt#L218-L220"
+    max_far:
+      # "Maximum floor area ratio 0.40. Maximum FAR does not apply to cottage
+      # clusters." The only exemption named is cottage clusters, so it binds
+      # the quadplex. Type I and II lands do not count toward lot area, a
+      # denominator nothing here holds, so the lot's own area is the bound.
+      value: 0.40
+      quote: "or/clackamas/west-linn/59.mu.txt#L225-L228"
+      measured_on:
+        fact: net_developable_area
+        cite: 'West Linn CDC 59.070(A), Maximum floor area ratio, additional notes'
+        quote: "or/clackamas/west-linn/59.mu.txt#L229"
+        less: [floodplain]
+        may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
+        assumed_none:
+          - "landslide areas on NHMP Maps 16 and 17"
+          - "mineral and aggregate deposits protected under Goal 5"
+    parking_front_prohibited:
+      # 59.070(B)(3): "Off-street parking shall not be located between the
+      # building and a public or private street, except alleys; parking areas
+      # shall be located behind, under, or on the side of the building."
+      value: true
+      quote: "or/clackamas/west-linn/59.mu.txt#L241"
+    notes: >-
+      Encoded 2026-10-08 from 59.020-59.070. READ AND NOT ENCODED (no field
+      holds them): a MAXIMUM lot size of 10,000 sf unless an existing lot of
+      record (L179-L182); a MINIMUM FAR of 0.30 on the whole property
+      (L230-L233; same treatment as the Oregon City C zone); a maximum
+      building size of 6,000 sf above grade, which the pod's ~4,032 sf clears
+      (L221-L224); a 5,000 sf ground-floor cap, which the pod's 2,016 sf
+      clears (L229). 59.070(B) design standards (25 sf porch, garage not
+      forward of the facade, Chapter 55) are articulation rules, not
+      distances. Rear yard against an abutting R-40 zone is 30 ft, not 20
+      (see setback_rear_ft). Zone is not in the Willamette Historic District
+      overlay list; no MU lot is 90 percent inside the district.
+
 # Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
 # Steph's rule: read every code, write the reason down, never show it again;
 # only a code nobody has seen warns). A ruled code gates ZONE_TO_READ in the
 # copy instead of ZONE_NOT_ENCODED and folds away on the County copy page.
-zone_rulings:
-  MU:
-    outcome: to_read
-    note: >-
-      Willamette Neighborhood Mixed Use Transitional Zone, CDC Chapter 59,
-      25 lots -- the map's MU (Chapter 20 is not published; the city's own
-      pages name Chapter 59 as the MU zone). Fetched 2026-09-20 as 59.mu.txt.
-      59.030 permits outright "1. Single-family attached or detached
-      dwelling; a. Duplex; b. Triplex; c. Quadplex residential units" and
-      "4. Townhouse" (L59-L65), so the building is permitted in both forms.
-      59.070 is a dimensional table in R-2.1's shape with rows this file
-      already knows how to hold (L167-L247): 4,500 sf minimum lot and a
-      10,000 sf MAXIMUM lot, 1,500 sf average per townhouse lot, 35 ft front
-      width and 50 ft average width (neither applies to townhouses), 90 ft
-      average depth, 12 ft front setback with a 20 ft MAXIMUM, 7.5 ft
-      interior side (0 for attached townhouse walls), rear per the abutting
-      residential district, 35 ft or 2 storeys, a 6,000 sf maximum building
-      size, FAR 0.30-0.40. 59.070(B)(3) puts parking behind, under or beside
-      the building and never between it and the street -- the rear court is
-      the zone's own rule. To encode from 59.070; the maximum-lot and
-      maximum-building-size rows are the two the model has not held before.
+zone_rulings: {}
 
 # Areas the code draws inside a zone that the zoning layer does not carry
 # (2026-10-04). See flats/rules/model.py DrawnArea.

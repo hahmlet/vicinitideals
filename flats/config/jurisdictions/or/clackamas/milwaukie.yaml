@@ -11,9 +11,8 @@ notes: Ported from quadfit rules.yaml. Every value is `draft` — quadfit's veri
   depth rule no field holds -- "must be met along all street frontages for a depth of at least 25 ft
   from the front of the building" -- with Table 19.304.4 carrying the numbers. It sits in 19.304,
   the DOWNTOWN zones chapter; R-HD and R-MD are the quadplex-permitting zones here and neither is a
-  downtown district. Recorded rather than encoded because the downtown districts are among the eight
-  this layer has never declared, so whoever encodes DMU will need it, and because the depth clause is
-  a second standard hiding inside the first. Exempt there are additions to existing buildings,
+  downtown district. Encoded for DMU 2026-10-08 (min_building_height_ft 25; the depth clause has no
+  field and is named in the DMU notes). Exempt there are additions to existing buildings,
   accessory structures, and buildings under 1,000 sq ft of floor area -- the pod is twice that.
   (or/clackamas/milwaukie/19.300.base-zones.txt#L1870,L1878,L1882,L1926-L1938.)
 ingest:
@@ -88,7 +87,7 @@ readings:
       and the affordable-housing incentives that open at a hundred percent of units restricted to
       households at or below eighty percent of area median income. Reading a bonus can only ever
       let more building through, so leaving it unread is the conservative direction as well as the
-      correct one. The two zones the bonuses name are not encoded in this file in any case.
+      correct one. The two zones the bonuses name (DMU, GMU) are encoded as of 2026-10-08, with the base heights; the bonuses stay unread.
     fingerprint: 1b5af50bbd41dab8
   "19.600.parking.txt#19.606.4":
     queue: missed
@@ -138,14 +137,18 @@ readings:
     queue: missed
     outcome: not_here
     note: >-
-      Two statements that reached this card from opposite ends of the base-zones file. Line 1049
-      is a table header -- "residential density requirements (dwelling units per acre)" -- with
-      its numbers on the rows below it and none of its own. Line 3976 is the maximum front yard
-      setback in the North Milwaukie Innovation Area: ten feet in the MUTSA, thirty on key streets
-      in the NME. Both belong to Section 19.312, a district this file does not encode, and the
-      section key on this card is a cross-reference the nearest-heading rule picked up rather than
-      the section the lines are in.
-    fingerprint: 06ac44c4b7097454
+      RE-RULED 2026-10-08. One statement is left on this card, at L3976 in the footnotes of the
+      North Milwaukie Innovation Area table: "Properties in the MUTSA have a maximum front yard
+      setback of 10 ft. Properties on key streets in the NME have a maximum front yard setback of
+      30 ft." (The density header that used to share the card is now quoted.) The section key is
+      the nearest-heading pick-up rather than the section the line is in. Both districts it names
+      are encoded in this layer, MUTSA and NME, and both are quadplex_allowed false: the
+      Innovation Area's Table 19.312.2 lists no townhouse and no duplex/triplex/quadplex row, and
+      NME reads N on every residential row. A maximum setback on a use the zone refuses cannot
+      move a verdict, so there is nothing to encode until the city adds a housing row. The 10 ft
+      agrees with the 10 ft maximum held on DMU (19.508.4.A.2.b) only by coincidence of number. If
+      a middle-housing row is ever added to Table 19.312.2, this is the sentence to come back for.
+    fingerprint: b7bc381725ecc5cb
   "19.300.base-zones.txt#19.312.6":
     queue: missed
     outcome: not_here
@@ -222,18 +225,22 @@ readings:
     fingerprint: c3584aa6c4719c75
   "19.500.supplementary.txt#19.505.5":
     queue: condition
-    outcome: applies
+    outcome: never
     note: >-
-      The townhouse lot standards -- a minimum lot area of 1,500 square feet per unit -- and they
-      do reach this project, because the split-plat path puts each of the four units on its own
-      lot and Milwaukie states its townhouse row here rather than only in the zone tables. This is
-      already encoded: both R-MD and R-HD carry 1,500 as the `unit_lots` variant of min_lot_sqft,
-      so no number changes and no verdict moves. The card is ruled `applies` rather than closed
-      because the applicability answer is genuinely yes and because these lines are still uncited
-      -- the value we hold was quoted from the zone table, not from this section, and pointing a
-      second citation at the same number is bookkeeping this queue is right to keep asking for.
-      Marked so the next reader does not re-derive the answer.
-    fingerprint: b0c225b25e32c6a5
+      RE-RULED 2026-10-08. The earlier ruling (applies) was written about the townhouse lot
+      standards, and those lines are now quoted: the 1,500 sq ft minimum lot size is the unit_lots
+      variant of min_lot_sqft in R-MD, R-HD and DMU (GMU's table holds 1,500 as its base), and
+      the DMU variant cites 19.505.5.E.2 directly. What is left on the card is one sentence, 19.505.5.G (L2336): "On townhouse lots
+      with a lot width of 25 ft or less, there is no required side yard between an accessory
+      structure and a side lot line abutting a townhouse lot. All other accessory structure
+      regulations in Subsection 19.502.2.A apply." It relaxes the side yard of an ACCESSORY
+      structure, which the pod does not have (one primary structure holding four units, no
+      garage), and it moves nothing about the dwelling. It was matched to min_lot_width_ft only
+      because it prints the figure 25 ft. The sentence beside it keeps every other
+      accessory-structure rule in force, so the conservative direction is unchanged. Not encoded
+      in 19.505.5.E.1 either: the requirement of two abutting lots meeting the residential Tables
+      19.301.4 and 19.302.4 is recorded on the DMU notes as a standard no field holds.
+    fingerprint: a29592741a522e33
   "19.600.parking.txt#19.606.1":
     queue: condition
     outcome: never
@@ -361,19 +368,28 @@ readings:
     queue: condition
     outcome: never
     note: >-
-      Section 19.304 is headed "Downtown Zones", and this layer holds two zones -- R-MD from
-      19.301 and R-HD from 19.302. Nothing on this card reaches either. That matters more than
-      usual here, because the statements are the kind that would bind if they did reach: a MINIMUM
-      building height of 25 feet that must be met along all street frontages, which is the one
-      direction a height standard can point that this project's 26-foot design nearly fails; a cap
-      of two development-incentive bonuses for 24 feet of additional height; a rule that height
-      bonuses may not be applied within 50 feet of the R-MD zone; and 12 feet more for a building
-      giving a storey or a quarter of its floor area to housing. All of them are downtown
-      standards. Milwaukie's downtown districts are not missing by accident and not missing
-      unnoticed: the districts ledger reports this jurisdiction at two zones held and eight
-      undeclared, DMU among them with housing mentions against it, so the absence is that ledger's
-      business and closing this card does not close it.
-    fingerprint: dea43e27c3c81832
+      RE-RULED 2026-10-08 against the DMU encoding. The earlier ruling said this layer holds only
+      R-MD and R-HD; it now also holds DMU (Downtown Mixed Use), so the question is no longer
+      "wrong district" but whether any remaining sentence tightens the pod on the DMU townhouse
+      path, the only by-right path in the zone. None does. (1) Lines 1894-1914 are the height
+      bonuses: up to two bonuses for 24 ft above the Figure 19.304-4 height (a residential bonus
+      of 12 ft, a lodging bonus of 12 ft, a green-building bonus of 12 ft), withheld within 50 ft
+      of the R-MD zone. Every one raises the ceiling; the base is held at 45 ft, the low end of
+      the table's 45-55, and an unelected bonus is not a standard the lot has met. The 50 ft limit
+      restricts the bonuses and nothing else. (2) Line 1938 is the third exemption from the
+      minimum building height: "Buildings with less than 1,000 sq ft of floor area". The 25 ft
+      minimum height is held as min_building_height_ft and the 26 ft pod clears it with or without
+      the exemption. (3) Lines 1990 and 2002 are the Planning Commission's finding under a Type
+      III variance that lets a surface lot or curb cut sit within 50 ft of Main Street; a hearing
+      is not a by-right path, so the variance is not taken. The prohibition it relaxes (L1988, 50
+      ft of the Main Street right-of-way) is not encoded -- no field measures a distance to Main
+      Street -- and the zone cannot reach GREEN today anyway, because the townhouse variant is
+      held behind inside_mapped_use_area (Figure 19.304-2, not traced). (4) Line 2030 is E.2.b,
+      minimum density 30 du/acre for stand-alone multifamily and senior housing. Multi-unit
+      development is five or more units by MMC 19.200, a four-unit building on one lot is not
+      listed in the zone at all, and the unit-lots path is townhouses, whose minimum E.2.a is 25
+      du/acre and is encoded.
+    fingerprint: 53187061fdc10ac9
   "19.500.supplementary.txt#19.508.4":
     queue: condition
     outcome: never
@@ -403,23 +419,25 @@ readings:
     fingerprint: 3c4151e36ce4b770
   "19.300.base-zones.txt#19.303.4":
     queue: condition
-    outcome: never
+    outcome: cant_tell
     note: >-
-      Section 19.303 is "Commercial Mixed-Use Zones" and its three districts are GMU, NMU and SMU.
-      This layer holds two zones, R-MD and R-HD, so none of the eleven statements reaches a zone
-      the screen can place a pod in. The same answer as 19.304.5 for the same structural reason,
-      and the numbers are the same kind: a 45 ft base height in GMU with two development-incentive
-      bonuses available, a 15 ft step back above the base for any street-facing portion, 45 ft in
-      NMU and 35 ft in SMU with no bonuses in either, an additional storey or 12 ft for a building
-      giving one storey or a quarter of its floor area to housing, no minimum street setback and a
-      10 ft maximum, a primary entrance within 45 degrees of the street property line, and minimum
-      densities of 25 units per acre in GMU and 11.6 in NMU. Two of those would bite if the zone
-      were held -- a maximum street setback of 10 ft is the direction that can refuse a lot
-      outright, and a minimum density of 25 du/acre is a floor a four-unit building meets only on
-      a lot under about 7,000 square feet. That is the districts ledger's business, not this
-      queue's: it already reports Milwaukie at two zones held and eight undeclared, and SMU is one
-      of the eight it names. Closing this card does not close that.
-    fingerprint: 924296c5c573df8b
+      RE-RULED 2026-10-08 against the GMU/NMU/SMU encodings, replacing a ruling written when none
+      of the three was held. Five of the six statements loosen or do not reach a 26 ft pod: the 15
+      ft step back applies only above the base maximum height (45 ft in GMU), so a 26 ft building
+      never reaches it; the bonuses at L1148-L1160 (two bonuses, the residential 1 storey or 12
+      ft, the green-building 1 storey or 12 ft) only raise the ceiling and are not taken; the
+      primary-entrance rule at L1252 asks for an entrance within 45 degrees of the street property
+      line, a design choice the pod can make and no field measures. The sixth is the one that
+      turns on the site: L1192, "No minimum street setback is required. Maximum street setback is
+      10 ft", applies to properties shown as a commercial edge on Figure 19.303.4.C.2.b, an image
+      that is not stored. GMU holds the zone-wide 20 ft maximum (19.303.4.C.2.b) and the 15 ft
+      minimum of the residential street edges. The 10 ft maximum is tighter than the 20 held, but
+      on those edges the minimum is none, so a pod that fits at 15 to 20 ft can slide to 10 ft and
+      gains rear depth by doing so; the exposure is a wrong number in the report, not a false
+      GREEN. NMU and SMU are RED BY RULING (every dwelling row is a conditional use), so none of
+      this reaches them. cant_tell because the figure is the missing fact; it stays on the
+      unmeasured list until the commercial edges are traced.
+    fingerprint: b292838d04354fe6
   "19.400.overlays.txt#19.402.4":
     queue: chapter
     outcome: nothing_here
@@ -526,19 +544,6 @@ readings:
       as sqft_per_unit precisely so what is checked is the operand the table prints rather than a
       quotient nothing prints. Nothing on this card is such an operand.
     fingerprint: 46267ce3e0ba9967
-  "19.300.base-zones.txt#19.303.3":
-    queue: nofield
-    outcome: not_a_statement
-    note: >-
-      Two TABLE ROW LABELS with no cells attached: "2. Minimum street frontage (ft)" and "2.
-      Building height (ft)". The numbers that belong to them are in columns the extractor did not
-      carry onto the same line, so the card shows the question and none of the answers. This is
-      the single commonest shape in Milwaukie's base-zone chapter -- four more cards in this pass
-      are the same thing -- and it is our bug rather than the code's: a ledger of measurements has
-      captured the word "(ft)" and treated it as a measurement. Filed to the extractor list. The
-      section itself is 19.303.3, the Commercial Mixed-Use zones' development standards, which is
-      a zone this layer does not carry anyway.
-    fingerprint: d994b546843b6d73
   "19.300.base-zones.txt#19.301.4":
     queue: nofield
     outcome: not_a_statement
@@ -570,30 +575,6 @@ readings:
       tracked on its own, and it is not made smaller by ruling on a fragment. Filed to the
       extractor list.
     fingerprint: 27565de3a738282b
-  "19.300.base-zones.txt#19.510":
-    queue: nofield
-    outcome: not_a_statement
-    note: >-
-      "3. Street setbacks (ft)" -- the fifth stripped table header in this chapter and the fifth
-      identical ruling. Filed to the extractor list.
-    fingerprint: 459c5fbb165242de
-  "19.300.base-zones.txt#19.303.5":
-    queue: nofield
-    outcome: other_building
-    note: >-
-      "A minimum setback of 15 ft shall apply" -- 19.303.5(A), Standards for Residential Street
-      Edges, in the COMMERCIAL MIXED-USE zones. It reaches "properties shown as having a
-      residential edge on Figure 19.303.5, and development that occurs adjacent to or abutting
-      residential zone", and its second limb requires a 15-foot step back above 35 feet within 50
-      feet of 37th Avenue and Monroe Street. Two reasons it does not reach this pod and the first
-      is decisive: Milwaukie's encoded zones are R-MD and R-HD, and the CMU zones this section
-      governs are not among them -- the wrong-district shape this project catalogued on
-      2026-09-07. The step-back limb would not fire in any case at 26 feet. Worth naming what it
-      IS, because the shape has bound elsewhere: a setback deepened by the neighbour's zoning is
-      exactly what Oregon City's abuts_residential_zone condition holds, and neighbour-zone
-      adjacency moved onto this project's computable list on 2026-09-08. If Milwaukie's commercial
-      side is ever encoded, this is the sentence to come back for.
-    fingerprint: 6705b592f152cd39
   "19.300.base-zones.txt#19.304.3":
     queue: nofield
     outcome: other_building
@@ -620,14 +601,6 @@ readings:
       BI -- a cap on how large a secondary use may be inside an industrial district. A different
       zone and a different building, and a maximum in any case.
     fingerprint: 626bb70a2a5a728a
-  "19.300.base-zones.txt#19.507":
-    queue: nofield
-    outcome: other_building
-    note: >-
-      "Day care and child care uses are limited to 5,000 sq ft." A floorplate ceiling on a use the
-      pod does not contain. Portland states the same family at 3,000 square feet in three chapters
-      and each was ruled the same way in this pass.
-    fingerprint: beaaba5ffcefe5e7
   "19.300.base-zones.txt#19.500":
     queue: nofield
     outcome: design
@@ -1699,8 +1672,9 @@ zones:
   # the way R-MD quotes its own row, and each with nothing dimensional
   # encoded because nothing dimensional matters while the building may not
   # be built. The other four -- the three commercial mixed-use zones and the
-  # Downtown Mixed Use zone -- permit the building in one form or another and
-  # are `zone_rulings` at the foot of this file, to read.
+  # Downtown Mixed Use zone -- permit the building in one form or another;
+  # they were read and encoded as zone blocks on 2026-10-08 (GMU and DMU by
+  # right on unit lots only; NMU and SMU RED BY RULING).
   #
   # One definition does most of the work. MMC 19.200 defines "Quadplex" as
   # "4 dwelling units on a lot or parcel in any configuration"
@@ -1886,49 +1860,387 @@ zones:
       lists, which is what "the following uses ... are permitted outright"
       means and what every other zone in this chapter says of itself.
 
-# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
-# Steph's rule: read every code, write the reason down, never show it again;
-# only a code nobody has seen warns). A ruled code gates ZONE_TO_READ in the
-# copy instead of ZONE_NOT_ENCODED and folds away on the County copy page.
-# The refusals are zone blocks above, because a refusal is a rule the screen
-# answers RED with; these four permit the building in some form and wait on
-# their dimensions.
-zone_rulings:
-  GMU:
-    outcome: to_read
-    note: >-
-      General Mixed Use, 45 lots, central Milwaukie. Table 19.303.2:
-      Townhouses P (note 1 lifts the four-in-a-row limit of 19.505.5 in this
-      zone), "Duplex, Triplex, Quadplex" CU, Multi-unit housing P. So the
-      building is permitted outright split onto unit lots and conditional as
-      a quadplex on one lot -- a use block of `false` with a `unit_lots`
-      variant and a `conditional_use` variant, the R-MD shape. Its dimensions
-      are Table 19.303.3 and the rest of 19.303.3-4 (L942-L1359), unread.
-  NMU:
-    outcome: to_read
-    note: >-
-      Neighborhood Mixed Use, 51 lots. Every residential row of Table
-      19.303.2 reads CU in the NMU column -- single detached, townhouses,
-      duplex/triplex/quadplex, multi-unit, cottage cluster -- except mixed
-      use, P, and note 2 lifts conditional-use review for residential uses
-      built as part of a vertical mixed-use building. A `false` use block
-      with a `conditional_use` variant, and the same unread Table 19.303.3.
-  SMU:
-    outcome: to_read
-    note: >-
-      Small-Scale Mixed Use, 5 lots. The same CU column as NMU in Table
-      19.303.2 and the same unread standards.
+  # === The four mixed-use zones, encoded 2026-10-08 =========================
+  #
+  # DMU (117 lots), NMU (51), GMU (45) and SMU (5) were `zone_rulings` waiting
+  # on their dimensions. Read now: Tables 19.303.2 / 19.303.3 and 19.303.4-5
+  # for the three commercial mixed-use zones, Tables 19.304.2 / 19.304.4 and
+  # 19.304.3 / 19.304.5 for the downtown zone, plus the sections each points
+  # at (19.504.4 transition measures, 19.505.5 townhouses, 19.508 downtown
+  # design standards).
+  #
+  # THE USE ANSWER, by Steph's by-right-only ruling of 2026-10-08.
+  # MMC 19.200 defines "Quadplex" as "4 dwelling units on a lot or parcel in
+  # any configuration" and "Multi-unit development" as five or more, so
+  #   - NMU and SMU: every dwelling row of Table 19.303.2 reads CU in their
+  #     columns (single detached, townhouses, duplex/triplex/quadplex,
+  #     multi-unit, cottage cluster). The only P rows are mixed use and
+  #     live/work, and a four-unit pod is neither. The way in is a
+  #     conditional use (Type III hearing, 19.905): RED BY RULING.
+  #   - GMU: Townhouses P (note 1 lifts the four-in-a-row limit),
+  #     Duplex/Triplex/Quadplex CU, Multi-unit housing P. Four units on one
+  #     lot is the CU row, so the base is false; split onto four unit lots it
+  #     is townhouses, permitted outright: a `unit_lots` variant.
+  #   - DMU: Townhouse P, Multifamily P, and NO duplex/triplex/quadplex row,
+  #     so a four-unit building on one lot is "not listed" and prohibited
+  #     (19.304.2.D). On unit lots it is townhouses, permitted outright --
+  #     except "Live/work units and townhouses are not permitted on Main
+  #     Street" (19.304.3.A.1.c) and south of Scott Street no ground-floor
+  #     dwelling at all (A.1.a). Those limits are drawn on Figure 19.304-2,
+  #     an image, so the townhouse variant is held behind
+  #     `inside_mapped_use_area`, a fact nothing measures yet (Cornelius GMU
+  #     shape). The lot can therefore never be GREEN until the figure is traced.
+  #
+  # Downtown design review is NOT a bar to the DMU townhouse path:
+  # 19.508.3.A says an applicant "may elect to meet all of the applicable
+  # design standards ... Such projects can be reviewed through an
+  # administrative Type I downtown design review" (19.907, not stored); only a
+  # project that does NOT meet every standard goes to the discretionary Type
+  # II or III (B). The Type I path is the by-right one and the standards are
+  # objective. This is the one place the ruling "design review = red" was
+  # read as not applying, and it is the sentence to come back to if Steph
+  # rules otherwise.
   DMU:
-    outcome: to_read
-    note: >-
-      Downtown Mixed Use, 117 lots. Table 19.304.2: Townhouse P, Multifamily
-      P; no duplex/triplex/quadplex row, so a four-unit building on one lot
-      is not listed (19.304.2.D) and split onto unit lots it is townhouses,
-      permitted -- except on Main Street, where 19.304.3.A.1.c bars townhouses
-      and south of Scott Street bars ground-floor dwellings altogether
-      (L1587-L1599, Figure 19.304-2). A `false` use block with a `unit_lots`
-      variant, a per-street condition this model has no field for, and
-      Table 19.304.4 plus the 19.508 downtown design standards, unread.
+    section: ["19.304"]
+    cite_default:
+      cite: MMC 19.304 Downtown Zones, Tables 19.304.2 and 19.304.4, DMU column
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      value: false
+      cite: MMC 19.304.2.D (uses not listed in Table 19.304.2 are prohibited) and Table 19.304.2 (no duplex, triplex or quadplex row in the Residential rows)
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1400-L1402,L1428-L1456"
+      variants:
+        - value: true
+          when: [unit_lots, inside_mapped_use_area]
+          cite: MMC Table 19.304.2, Townhouse P in the DMU column, and 19.304.3.A.1.a and .c (no townhouses on Main Street; no ground-floor dwellings on Main Street south of Scott Street; Figure 19.304-2 not traced)
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1433-L1438,L1587-L1599"
+        # 19.401.3: inside the Willamette Greenway Zone all development is a
+        # conditional use. By-right only: no hearing variant (R-MD lifts it
+        # with a `conditional_use` relief; this ruling does not).
+        - value: false
+          when: [unit_lots, inside_mapped_use_area, willamette_greenway_zone]
+          cite: MMC 19.401.3 and 19.401.5.D
+          url: https://ecode360.com/print/MI4969?guid=43861241
+          retrieved: '2026-10-08'
+          quote: "or/clackamas/milwaukie/19.400.overlays.txt#L27,L180"
+    min_lot_sqft:
+      value: 750
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1703-L1704"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          cite: MMC 19.505.5.E.2, townhouse development must meet the minimum lot size of 1,500 sq ft (larger than the table 750)
+          url: https://ecode360.com/print/MI4969?guid=43861924
+          quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L2280"
+    min_frontage_ft:
+      value: 15
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1706-L1707"
+    max_height_ft:
+      # Table 19.304.4 prints "45-55 (height bonus available)": the base is
+      # on Figure 19.304-4, an image (19.304.5.B.2.c), and the bonuses add to
+      # it. The low end is held.
+      value: 45
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1747-L1748"
+    min_building_height_ft:
+      # 25 ft "along all street frontages for a depth of at least 25 ft from
+      # the front of the building". Exempt: additions, accessory structures
+      # and buildings under 1,000 sq ft (B.4), none of which is the pod. The
+      # depth rule has no field; the pod is 26 ft, so the number passes.
+      value: 25
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1739-L1740,L1882"
+    setback_front_ft:
+      value: 0
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1956"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures -- yards abutting or across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard, 20 ft (Table 19.301.4, quoted); read for any residential zone, the tighter reading
+          url: https://ecode360.com/print/MI4969?guid=43861924
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+    setback_front_max_ft:
+      # 19.508.4.A.2.b(2): "For other block faces, there is no build-to-line
+      # requirement and the maximum setback is 10 ft." On the block faces of
+      # Figure 19.508.4.A.2.b (an image) 75% of the first floor is built to
+      # the lot line, which a 4-unit pod cannot satisfy and nothing measures.
+      value: 10
+      cite: MMC 19.508.4.A.2.b(2), maximum setback on block faces without a build-to line
+      url: https://ecode360.com/print/MI4969?guid=43861924
+      quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L3083"
+    setback_side_ft:
+      value: 0
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1763-L1765"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4
+          url: https://ecode360.com/print/MI4969?guid=43861924
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+    setback_rear_ft:
+      value: 0
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1763-L1765"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4
+          url: https://ecode360.com/print/MI4969?guid=43861924
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+    setback_street_side_ft:
+      value: 0
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1956"
+    max_coverage_pct:
+      # Table 19.304.4 has no coverage or vegetation row, and 19.304.5 states
+      # none (whole-chapter grep of 19.304, L1577-L2036, and a whole-set grep
+      # of DMU against coverage/vegetation/impervious: nothing). Silence is
+      # none.
+      exempt: true
+      cite: MMC Table 19.304.4 (no lot-coverage row)
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1687-L1810"
+    parking_front_prohibited:
+      value: true
+      cite: MMC 19.304.5.D.2.c, off-street parking must not be located between a building and the street-facing lot line (all DMU uses, so held on the unit-lots path too)
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2006"
+    min_density_du_per_acre:
+      value: 25
+      cite: MMC 19.304.5.E.2.a, minimum density for townhouses is 25 units per acre; no maximum
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L2026"
+      measured_on:
+        fact: net_developable_area
+        cite: MMC 19.200 "Net acre"
+        quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
+        less: [floodplain, milwaukie_wqr, milwaukie_hca, slope_25]
+        may_less: [milwaukie_wetlands]
+        assumed_none:
+          - "rights-of-way"
+          - "publicly owned land designated for park, open space, and resource protection"
+    notes: >-
+      Encoded 2026-10-08. By right ONLY on unit lots and ONLY where the lot is
+      outside the Main Street townhouse bar and the south-of-Scott ground-floor
+      bar (Figure 19.304-2, not traced), so the answer is never GREEN today.
+      UNENCODED: (1) frontage occupancy of 50/75/90% by block face and the
+      75% build-to rule on Main and the secondary streets
+      (19.508.4.A.2.a-b, figures not stored) -- no field; (2) the Figure
+      19.304-4 base height (held at 45, the low end of 45-55); (3) the
+      Type I downtown design review itself, 19.907 not stored (see the block
+      comment); (4) 19.505.5.E.1, which asks for two abutting lots meeting
+      "the base zone requirements listed in Tables 19.301.4 and 19.302.4" --
+      residential tables, none of which names DMU; (5) the minimum FAR
+      (0.5:1-1:1), which 19.304.5.A.2.a confines to nonresidential
+      development. Yards abutting a residential zone: 19.504.4.A names the
+      R-MD zone and "across a right-of-way"; the variant reads any
+      residential zone and any shared edge, the tighter reading, and rides on
+      `abuts_residential_zone`, which this layer does not yet measure (no
+      `neighbours:` block), so it stays unknown.
+  NMU:
+    section: ["19.303"]
+    cite_default:
+      cite: MMC 19.303 Commercial Mixed Use Zones, Tables 19.303.2 and 19.303.3, NMU column
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      value: false
+      cite: MMC Table 19.303.2, NMU column -- single detached, townhouses, duplex/triplex/quadplex, multi-unit and cottage cluster all CU; 19.303.2.D (uses not listed are prohibited)
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L731-L756,L911-L936"
+    min_lot_sqft:
+      value: 1500
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965"
+    min_frontage_ft:
+      value: 25
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L968-L969"
+    max_height_ft:
+      value: 45
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1136"
+    setback_front_ft:
+      value: 0
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L996-L998,L1184"
+    setback_front_max_ft:
+      value: 10
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1000-L1002,L1200"
+    max_coverage_pct:
+      value: 85
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016"
+    min_landscaped_pct:
+      value: 15
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1019-L1020"
+    min_density_du_per_acre:
+      value: 11.6
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1286"
+    max_density_du_per_acre:
+      value: 14.5
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1286"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): every dwelling row of Table 19.303.2
+      reads CU in the NMU column, and a conditional use is a Type III hearing,
+      not a by-right path. Footnote 2 lifts conditional-use review only for
+      "residential uses built as part of a vertical mixed-use building", which
+      a four-unit pod is not. The standards below are kept so the ruling can
+      be reversed. Side and rear setbacks print "None" (L1005-L1008); not
+      encoded because nothing can use them while the use is refused.
+  GMU:
+    section: ["19.303"]
+    cite_default:
+      cite: MMC 19.303 Commercial Mixed Use Zones, Tables 19.303.2 and 19.303.3, GMU column
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      value: false
+      cite: MMC Table 19.303.2, GMU column -- Duplex, Triplex, Quadplex is CU (the one-lot row); 19.303.2.D
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L742-L746"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: MMC Table 19.303.2, Townhouses P in the GMU column, footnote 1 (the four-in-a-row limit of 19.505.5 does not apply in the GMU Zone)
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L737-L741,L921-L922"
+        - value: false
+          when: [unit_lots, willamette_greenway_zone]
+          cite: MMC 19.401.3 and 19.401.5.D (all development in the Willamette Greenway Zone is a conditional use; by-right only, so no hearing variant)
+          url: https://ecode360.com/print/MI4969?guid=43861241
+          retrieved: '2026-10-08'
+          quote: "or/clackamas/milwaukie/19.400.overlays.txt#L27,L180"
+    min_lot_sqft:
+      value: 1500
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965"
+    min_frontage_ft:
+      value: 25
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L968-L969"
+    max_height_ft:
+      # Base maximum; the 57-69 ft bonus heights are not taken (19.303.4.B.3).
+      value: 45
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L984-L985,L1128"
+    setback_front_ft:
+      # Table 19.303.3 prints "0-15[1]": none, except "residential street
+      # edges per Subsection 19.303.5", which are drawn on Figure 19.303.5 (an
+      # image) and "development that occurs adjacent to or abutting
+      # residential zone". The figure is not stored, so the 15 ft edge is
+      # held for every lot, and 19.504.4.A's 20 ft where the lot abuts a
+      # residential zone.
+      value: 15
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L996-L997,L1184,L1296-L1300"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          cite: MMC 19.504.4.A, transition measures -- yards abutting or across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard (20 ft), superseding the base zone yard; read for any residential zone, the tighter reading
+          url: https://ecode360.com/print/MI4969?guid=43861924
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+    setback_front_max_ft:
+      # 20 ft in the zone; 10 ft on the commercial edges of Figure
+      # 19.303.4.C.2.b (an image, not traced). The 20 is held; a pod set 10-20
+      # ft back on a commercial edge would be over the 10, and that is
+      # unmeasured.
+      value: 20
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1000-L1001,L1188"
+    setback_side_ft:
+      value: 0
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1005-L1006"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4; 19.303.5.A prints 15 for the same edge
+          url: https://ecode360.com/print/MI4969?guid=43861924
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+    setback_rear_ft:
+      value: 0
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1005-L1006"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures (as for the front yard), R-MD front yard 20 ft quoted from Table 19.301.4; 19.303.5.A prints 15 for the same edge
+          url: https://ecode360.com/print/MI4969?guid=43861924
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1184,L1296-L1300"
+    max_coverage_pct:
+      value: 85
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016"
+    min_landscaped_pct:
+      value: 15
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1019-L1020"
+    parking_front_prohibited:
+      value: true
+      cite: MMC 19.303.4.C.2.f, no vehicle parking between the building and the street (all GMU uses, so held on the unit-lots path too)
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1212"
+    min_density_du_per_acre:
+      value: 25
+      cite: MMC 19.303.4.F.2.a, minimum density for stand-alone residential development in the GMU Zone is 25 units per acre
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1282"
+      measured_on:
+        fact: net_developable_area
+        cite: MMC 19.200 "Net acre"
+        quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
+        less: [floodplain, milwaukie_wqr, milwaukie_hca, slope_25]
+        may_less: [milwaukie_wetlands]
+        assumed_none:
+          - "rights-of-way"
+          - "publicly owned land designated for park, open space, and resource protection"
+    max_density_du_per_acre:
+      value: 50
+      cite: MMC 19.303.4.F.2.a, maximum density for stand-alone residential development in the GMU Zone is 50 units per acre
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1282"
+      measured_on:
+        fact: net_developable_area
+        cite: MMC 19.200 "Net acre"
+        quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
+        less: [floodplain, milwaukie_wqr, milwaukie_hca, slope_25]
+        may_less: [milwaukie_wetlands]
+        assumed_none:
+          - "rights-of-way"
+          - "publicly owned land designated for park, open space, and resource protection"
+    notes: >-
+      Encoded 2026-10-08. By right only as townhouses on unit lots (Table
+      19.303.2 Townhouses P); four units on one lot is the Quadplex CU row, so
+      the base is false and no conditional-use variant is given. UNENCODED:
+      frontage occupancy of 50% on the block faces of Figure 19.303.4.D (image,
+      no field); the 15 ft step back above the base height (19.303.4.B.2.b;
+      the pod is 26 ft so it does not reach it). The residential-edge setback
+      rides on `abuts_residential_zone`, which this layer does not yet measure
+      (no `neighbours:` block), so the 20 ft variants stay unknown and a GMU
+      lot can read yellow until it is wired. The Figure 19.303.5 residential
+      street edges are held as a flat 15 ft front yard for the same reason.
+  SMU:
+    section: ["19.303"]
+    cite_default:
+      cite: MMC 19.303 Commercial Mixed Use Zones, Tables 19.303.2 and 19.303.3, SMU column
+      url: https://ecode360.com/print/MI4969?guid=43860500
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      value: false
+      cite: MMC Table 19.303.2, SMU column -- single detached, townhouses, duplex/triplex/quadplex, multi-unit and cottage cluster all CU; 19.303.2.D (uses not listed are prohibited)
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L731-L756,L911-L936"
+    min_lot_sqft:
+      value: 1500
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965"
+    min_frontage_ft:
+      value: 25
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L968-L969"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L987,L1140"
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L996-L999"
+    setback_front_max_ft:
+      value: 15
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1000-L1003"
+    max_coverage_pct:
+      value: 85
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016"
+    min_landscaped_pct:
+      value: 15
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1019-L1020"
+    min_density_du_per_acre:
+      value: 7.0
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1052-L1055"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): the same CU column as NMU in Table
+      19.303.2 -- every dwelling row is CU, and a conditional use is a Type III
+      hearing, not a by-right path. The standards below are kept so the ruling
+      can be reversed. NOT ENCODED: side and rear setbacks. Table 19.303.3
+      prints "5/10" in one cell (L1008) with no sentence anywhere in
+      19.303.4-5 or the stored sections saying which is the side and which the
+      rear, so neither is claimed; they are not demanded while the use is
+      refused, and whoever reverses the ruling must read the figure first.
+      The table prints no maximum density for SMU (L1057-L1060).
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.

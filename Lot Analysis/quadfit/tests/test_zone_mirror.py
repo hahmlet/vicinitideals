@@ -119,7 +119,26 @@ PORTED_FROM_A_VARIANT: frozenset[str] = frozenset({
     "washington_unincorporated/TO:R40-80",
     "washington_unincorporated/TO:BUS",
     "washington_unincorporated/CBD",
+<<<<<<< HEAD
     "cornelius/GMU",
+=======
+    # 2026-10-08 (FOLLOWUPS 52b): by-right on facts FLATS holds (a traced sub-district,
+    # a street line, a lot of record, a storefront district) and ported so the pod is measured.
+    "gresham/DCC",
+    "gresham/DTM",
+    "tualatin/CC",
+    "fairview/TCC",
+    "fairview/VC",
+    # 2026-10-08 (zone gaps, FOLLOWUPS 52a): zones whose pod is allowed only on the
+    # unit-lots path (and Milwaukie DMU only inside its mapped area); ported so the pod
+    # is measured, capped at review by needs_verification.
+    "tualatin/RMH",
+    "tualatin/RH",
+    "tualatin/RH/HR",
+    "tualatin/MUC",
+    "milwaukie/GMU",
+    "milwaukie/DMU",
+>>>>>>> ce03d26b (flats: read the zones waiting on unfinished zoning (FOLLOWUPS 52))
 })
 
 
@@ -435,6 +454,7 @@ KNOWN_ALIAS_SAME_EDGE: frozenset[str] = frozenset({
     "west_linn/R-7.min_frontage_ft", "west_linn/R-5.min_frontage_ft",
     "west_linn/R-4.5.min_frontage_ft", "west_linn/R-3.min_frontage_ft",
     "west_linn/R-2.1.min_frontage_ft",
+    "west_linn/MU.min_frontage_ft",
 })
 
 #: EMPTY since 2026-09-11, and it held seven rows for a year before that: six
@@ -949,6 +969,7 @@ def test_a_conditioned_port_carries_its_larger_limb() -> None:
 #: C-R, 13 an acre) and `max_impervious_pct` (R-1.5, R-2 and C-R, 70 percent)
 #: are the code's figures and FLATS reads them; this pipeline has no column
 #: for either.
+<<<<<<< HEAD
 #: Grew 2026-10-08 by Tigard and Cornelius (FOLLOWUPS 51), whose rows came from
 #: the corpus too: stall and aisle geometry, driveway widths, a ground-story
 #: height, covered parking and a solar-shade limit that only FLATS reads.
@@ -957,14 +978,36 @@ UNEXPRESSIBLE: dict[str, int] = {
     "min_landscaped_pct": 50,
     "setback_front_max_ft": 83,
     "max_density_du_per_acre": 48,
+=======
+#: Grew 2026-10-08 by the zone-gap ports (FOLLOWUPS 52b): Gresham DCC/DTM, Tualatin CC and
+#: Fairview TCC/VC add `setback_front_max_ft` (2), `max_density_du_per_acre` (2),
+#: `min_landscaped_pct` (2), `setback_garage_entrance_ft` (3) and `front_lot_line_through` (1).
+#: Then the same day the (a) zones (FOLLOWUPS 52a): Gladstone C2/MR, Tualatin RMH/RH/RH-HR/MUC,
+#: Milwaukie GMU/DMU and West Linn MU add front-max, stories, density, landscaping and
+#: building-height standards, and the first two parking-lot rules this pipeline cannot hold.
+UNEXPRESSIBLE: dict[str, int] = {
+    "setback_garage_entrance_ft": 111,
+    "min_landscaped_pct": 46,
+    "setback_front_max_ft": 83,
+    "max_density_du_per_acre": 50,
+>>>>>>> ce03d26b (flats: read the zones waiting on unfinished zoning (FOLLOWUPS 52))
     "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,
     "max_lot_depth_ratio": 4,
     "max_units": 13,
+<<<<<<< HEAD
     "max_height_stories": 19,
     "setback_side_total_ft": 3,
     "min_building_height_ft": 14,
+=======
+    "max_height_stories": 20,
+    "setback_side_total_ft": 3,
+    "front_lot_line_through": 1,
+    "min_building_height_ft": 15,
+    "parking_lot_line_buffer_ft": 3,
+    "parking_required_yard_prohibited": 1,
+>>>>>>> ce03d26b (flats: read the zones waiting on unfinished zoning (FOLLOWUPS 52))
     "min_building_height_stories": 6,
     "parking_area_max_frontage_pct": 17,
     "parking_aisle_two_way_ft": 12,

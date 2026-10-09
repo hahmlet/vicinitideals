@@ -503,7 +503,7 @@ code:
   # reason written down, and never shown again. Tualatin's map carried six
   # codes this layer did not hold -- 48 lots. Five refuse the building at
   # their use table (CO, CG, MC, ML, MG; zone blocks below) and RMH permits
-  # it (a `zone_rulings` entry, to read). Each chapter is one slice of the
+  # it (a zone block, encoded 2026-10-08). Each chapter is one slice of the
   # same PDF, from its own first section to the next chapter's; plain
   # extraction for the reason 40-41 gives.
   - id: "42.rmh"
@@ -1217,7 +1217,7 @@ zones:
   # written down, and never shown again. Tualatin's map carried six codes
   # this layer did not hold -- 48 lots. Five refuse the building at their
   # use table and are the use-gate refusals below; RMH permits it and is a
-  # `zone_rulings` entry at the foot of this file, to read.
+  # zone block at the foot of `zones:`, encoded 2026-10-08.
   #
   # The TDC writes every zone the same way: a use-category table opened by
   # "Use categories which are not listed are prohibited within the zone,
@@ -1339,8 +1339,7 @@ zones:
   # building at their use table and are the blocks below, read the way the
   # 2026-09-20 six were: the "not listed are prohibited" sentence, then the
   # RESIDENTIAL USE CATEGORIES block. Four permit it in some form: RH,
-  # RH/HR and MUC are `zone_rulings` entries at the foot of the file, to
-  # read, and CC is the block below the six (encoded 2026-10-02). Every chapter here also says "Additional uses may be allowed in a
+  # RH/HR and MUC are zone blocks after CC (encoded 2026-10-08), and CC is the block below the six (encoded 2026-10-02). Every chapter here also says "Additional uses may be allowed in a
   # particular overlay zone"; the overlays were read for each. Chapter 58
   # (Central Tualatin) modifies only CC, CG, CO, ML, MG, RH and RH-HR, and
   # the Tonquin Light Manufacturing Overlay inside MBP adds the ML zone's
@@ -1612,109 +1611,468 @@ zones:
       mixed-use and separate-lot multi-family rows of Table 58-7, and the
       retirement-housing conditions of 58.210(1).
 
-zone_rulings:
+  # === RMH, RH, RH/HR and MUC, encoded 2026-10-08 =========================
+  #
+  # The four codes that permit the pod only as four TOWNHOUSES ON FOUR LOTS.
+  # Each chapter's housing-type table lists Single-Family Dwelling N,
+  # Townhouse (or Rowhouse) P and Multi-Family Structure P and has no
+  # Quadplex row. TDC 31.060 defines a Multi-Family Structure as "five or
+  # more dwelling units on one lot" and a Quadplex as "four dwelling units on
+  # a lot or parcel in any configuration", and each chapter closes its use
+  # list ("Use categories which are not listed are prohibited"). So four
+  # units on ONE lot is not a listed housing type, and `quadplex_allowed` is
+  # false with a `unit_lots` variant that is the Townhouse row (the Estacada
+  # R-3 shape). No detached house is allowed in any of the four, so the state
+  # middle-housing mandate (ORS 197A.420) does not reach them.
+  #
+  # TWO RULINGS APPLY TO ALL FOUR.
+  #
+  # (1) "Architectural Review" is NOT a discretionary gate here. The tables
+  # use the phrase to let a review settle a NUMBER inside a stated range
+  # ("0-10 feet", "0-20 feet"), on a housing type the table already permits
+  # outright. TDC 73A.020(1)(c) applies the Residential Design Standards to
+  # townhouses and 73A.030 gives them a Clear and Objective (Type I) path,
+  # with the discretionary Type II (73A.060) offered only "as an alternative".
+  # Nothing here is a conditional use ("C"), a master plan or a design
+  # review that can say no, so the by-right ruling (Steph, 2026-10-08) does
+  # not make these zones RED BY RULING. A range the review settles is held at
+  # its TOP, the number no review can exceed. Chapter 33, the Architectural
+  # Review procedure, is not stored; if it makes townhouse approval
+  # discretionary, the answer changes for all four zones.
+  #
+  # (2) The setback ladders run on STRUCTURE HEIGHT, a band this model holds
+  # only on lot measures. The pod is 26 ft (`DESIGN_HEIGHT_FT`) and the height
+  # dial runs 25 to 30 ft, so it is in the "25 feet and over" row; that row is
+  # the one encoded, and it is the pod's own row rather than a conservative
+  # guess. A shorter building would be allowed smaller yards.
+  #
+  # LEFT OUT OF ALL FOUR: the Central Tualatin Overlay's own lot
+  # sizes (Table 58-7: RH Block 25 40,000 sq ft; RH-HR Blocks 31 and 33 40,000
+  # and Block 26 25,000), because the overlay applies by BLOCK number on
+  # Comprehensive Plan Map 10-3 and only the ten CC Residential Sub-District
+  # blocks are traced (`drawn_areas`). RH Blocks 25 and 4 may also mix with
+  # CC uses (58.600), where setbacks go to Architectural Review and height to
+  # 45 ft. An RH or RH-HR lot inside one of those blocks is screened on the
+  # base chapter and can read greener than the overlay allows until those
+  # blocks are traced.
   RMH:
-    outcome: to_read
-    note: >-
-      Medium High Density Residential, 4 lots. Chapter 42 was fetched
-      2026-09-20 (the districts ledger had it as `fetch` because the stored
-      40-41 slice ended on its heading). Table 42-1 gives Household Living
-      P/C by housing type, and Table 42-2 reads Townhouse (or Rowhouse) P
-      and Multi-Family Structure P with Single-Family Dwelling N
-      (42.rmh.txt#L25, L88-L97). CORRECTED 2026-10-01: this said the
-      building was permitted "in both forms", and it is permitted in one.
-      TDC 31.060 makes a Multi-Family Structure "five or more dwelling units
-      on one lot" and defines Quadplex separately (31.definitions.txt L251,
-      L255), and Table 42-2 has no Quadplex row -- so four units on one lot
-      is not a listed housing type here, and the pod is permitted only as
-      four townhouses on four lots (the unit_lots path; a block would be
-      quadplex_allowed false with a unit_lots variant, Happy Valley MURM's
-      shape). No detached house is allowed, so the state mandate does not
-      reach it. Table 42-3 (L103 on) states the townhouse rows: 1,400 sq ft
-      lot, 14 ft width, 0-10 ft front setback by architectural review, 90
-      percent coverage, 15 units per acre. Four lots when ruled; 192 on the
-      three-county coverage ledger of 2026-10-01, once Washington County's
-      side of the city was mapped -- second only to RH's 198 among
-      Tualatin's unit_lots queues. To encode from Table 42-3 with RL's
-      shape.
-  # Three of the Washington County side's four that permit the building in
-  # some form, ruled 2026-10-01 with the six refusals above (the fourth, CC,
-  # is a block since 2026-10-02). Each is a `to_read` rather than a block
-  # because a permitted zone becomes a block only when its dimensions are
-  # encoded, and each of the three has a dimension the model cannot yet hold
-  # -- written down below
-  # so the next reading starts there. Until then their lots screen unknown
-  # with reason ZONE_TO_READ -- a ruled code, never green and never red.
+    section: ["42."]
+    cite_default:
+      cite: TDC 42.220 Table 42-2 (Housing Types) and 42.300 Table 42-3 (Development Standards in the RMH Zone)
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-10-01'
+    quadplex_allowed:
+      value: false
+      cite: TDC 42.220 Table 42-2, Housing Types in the RMH Zone, no Quadplex row (a Multi-Family Structure is five or more units, TDC 31.060)
+      quote: "or/clackamas/tualatin/42.rmh.txt#L86-L101"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: TDC 42.220 Table 42-2, Townhouse (or Rowhouse) P
+          quote: "or/clackamas/tualatin/42.rmh.txt#L91,L96"
+    min_lot_sqft:
+      value: 10000
+      cite: TDC 42.300 Table 42-3, Minimum Lot Size, All Other Permitted Uses
+      quote: "or/clackamas/tualatin/42.rmh.txt#L123,L139"
+      variants:
+        - value: 1400
+          when: [unit_lots]
+          cite: TDC 42.300 Table 42-3, Minimum Lot Size, Townhouse (or Rowhouse)
+          quote: "or/clackamas/tualatin/42.rmh.txt#L123-L124"
+    min_lot_width_ft:
+      # An AVERAGE width, held as the width the way RML holds its own.
+      value: 75
+      cite: TDC 42.300 Table 42-3, Minimum Average Lot Width, All Other Permitted Uses
+      quote: "or/clackamas/tualatin/42.rmh.txt#L144,L153"
+      variants:
+        - value: 14
+          when: [unit_lots]
+          cite: TDC 42.300 Table 42-3, Minimum Average Lot Width, Townhouse (or Rowhouse)
+          quote: "or/clackamas/tualatin/42.rmh.txt#L144-L145"
+    setback_front_ft:
+      # The 25+ ft row (the pod is 26 ft); the Townhouse row is 0-10 by
+      # Architectural Review, held at its top.
+      value: 15
+      cite: TDC 42.300 Table 42-3, Front Setback (based on structure height), 25+ feet
+      quote: "or/clackamas/tualatin/42.rmh.txt#L166-L171"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          cite: TDC 42.300 Table 42-3, Front Setback, Townhouse (or Rowhouse) 0-10 feet as determined through Architectural Review (top of the range)
+          quote: "or/clackamas/tualatin/42.rmh.txt#L166-L167,L172-L173"
+    setback_street_side_ft:
+      # "Corner Lots: the setback is the same as the front yard setback on any
+      # side facing a street other than an alley."
+      value: 15
+      cite: TDC 42.300 Table 42-3, Corner Lots, same as the front yard setback
+      quote: "or/clackamas/tualatin/42.rmh.txt#L166-L171,L180-L183"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          cite: TDC 42.300 Table 42-3, Corner Lots, same as the Townhouse front setback (0-10 feet, top of the range)
+          quote: "or/clackamas/tualatin/42.rmh.txt#L166-L167,L172-L173,L180-L183"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: TDC 42.300 Table 42-3, Front Setback, minimum setback to a garage door 20 feet
+      quote: "or/clackamas/tualatin/42.rmh.txt#L168-L169"
+    setback_side_ft:
+      value: 12
+      cite: TDC 42.300 Table 42-3, Side and Rear Setback (based on structure height), 25+ feet
+      quote: "or/clackamas/tualatin/42.rmh.txt#L174-L179"
+    setback_rear_ft:
+      value: 12
+      cite: TDC 42.300 Table 42-3, Side and Rear Setback (based on structure height), 25+ feet
+      quote: "or/clackamas/tualatin/42.rmh.txt#L174-L179"
+    parking_street_setback_ft:
+      # "Parking and Vehicle Circulation Areas 10 feet; for Townhouses
+      # determined through the Architectural Review process" -- held at 10.
+      value: 10
+      cite: TDC 42.300 Table 42-3, Minimum Setbacks, Parking and Vehicle Circulation Areas
+      quote: "or/clackamas/tualatin/42.rmh.txt#L190-L194"
+    parking_lot_line_buffer_ft:
+      # The same row read against the other lot lines, as RML's note left it
+      # open: unqualified, so ten feet from any lot line. Larger than the
+      # city-wide five feet of 73C.210(3), and the row governs.
+      value: 10
+      cite: TDC 42.300 Table 42-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (any lot line)
+      quote: "or/clackamas/tualatin/42.rmh.txt#L190-L194"
+    max_height_ft:
+      value: 35
+      cite: TDC 42.300 Table 42-3, Maximum Structure Height, All Uses (50 ft by conditional use permit is not counted)
+      quote: "or/clackamas/tualatin/42.rmh.txt#L202-L207"
+    max_coverage_pct:
+      value: 40
+      cite: TDC 42.300 Table 42-3, Maximum Lot Coverage, All Other Permitted Uses
+      quote: "or/clackamas/tualatin/42.rmh.txt#L208,L210"
+      variants:
+        - value: 90
+          when: [unit_lots]
+          cite: TDC 42.300 Table 42-3, Maximum Lot Coverage, Townhouse (or Rowhouse)
+          quote: "or/clackamas/tualatin/42.rmh.txt#L208-L209"
+    max_density_du_per_acre:
+      value: 15
+      cite: TDC 42.300 Table 42-3, Maximum Density, Household Living Uses
+      quote: "or/clackamas/tualatin/42.rmh.txt#L114-L116"
+    min_density_du_per_acre:
+      value: 11
+      cite: TDC 42.300 Table 42-3, Maximum Density, Household Living Uses, Minimum
+      quote: "or/clackamas/tualatin/42.rmh.txt#L114-L116"
+    notes: >-
+      Medium High Density Residential, TDC Chapter 42; 4 lots when ruled, 192
+      on the three-county ledger of 2026-10-01. Encoded 2026-10-08 from
+      Tables 42-2 and 42-3. The pod is permitted only as townhouses on unit
+      lots (Table 42-2 has no Quadplex row); the base answer is false and the
+      `unit_lots` variant is the Townhouse row, so the lot size, width,
+      front, street-side and coverage rows each carry a Townhouse variant.
+      "Architectural Review" is not a discretionary gate (see the header
+      above); the 0-10 ft Townhouse front setback is held at 10. The 5/7/10/12
+      side and rear ladder is read at its 25+ row (12). Parking is 10 ft from
+      any lot line, a reading RML's note left open. Not encoded: the 50 ft
+      yard "adjacent to Basalt Creek Parkway" (a street-name fact nothing
+      measures); building separation (10 ft between buildings within one
+      development; the pod is one building); a 50 ft height by conditional
+      use permit; the 35 percent setback reduction beside greenways
+      (42.320), a discretionary relief. Four units need 11,616 sq ft at 15
+      units per acre; a lot above 15,840 sq ft falls under the 11 units per
+      acre floor and screens yellow, never red.
   RH:
-    outcome: to_read
-    note: >-
-      High Density Residential, TDC Chapter 43, 198 lots -- the largest of
-      the ten. Fetched and read 2026-10-01 (43.rh.txt). RMH's shape exactly:
-      Table 43-2 reads Single-Family Dwelling N, Townhouse (or Rowhouse) P,
-      Multi-Family Structure P, and has no Quadplex row (L94-L100); a
-      Multi-Family Structure is five or more units on one lot (TDC 31.060).
-      So four units on one lot is not a listed housing type and the pod is
-      permitted only as four townhouses on unit lots -- a block would be
-      quadplex_allowed false with a unit_lots variant. No detached house is
-      allowed, so ORS 197A.420 does not reach it. What stops the encoding is
-      Table 43-3: the side and rear setback is a ladder on STRUCTURE HEIGHT
-      (5 ft under 12, 7 ft to 20, 10 ft to 25, 12 ft at 25 and over;
-      L182-L187), a band this model holds only on lot measures, and the
-      townhouse front setback is "0-10 feet As determined through
-      Architectural Review process" (L172-L174), as is the townhouse
-      parking and building separation (L195, L199). The rows that are
-      plain: 1,400 sq ft townhouse lot (L130), 14 ft average width (L153),
-      90 percent townhouse coverage (L213), 35 ft height (L208), 16 to 25
-      units per acre (L116-L117). Inside the Central Tualatin Overlay,
-      Blocks 25 and 4, RH may mix with CC's uses under 58.600 and Table
-      58-7's own standards (58.central-tualatin-overlay.txt L272-L276).
-      The Comprehensive Plan's Policy 3.2.1 (Tualatin 2040, 2025, p. 16)
-      says the city will "support development of townhomes, duplexes,
-      triplexes, quadplexes ... in all residential zoning districts" -- a
-      policy for future code, not a permission the use table grants, so
-      the missing Quadplex row still governs (told to Steph 2026-10-02).
+    section: ["43."]
+    cite_default:
+      cite: TDC 43.220 Table 43-2 (Housing Types) and 43.300 Table 43-3 (Development Standards in the RH Zone)
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-10-01'
+    quadplex_allowed:
+      value: false
+      cite: TDC 43.220 Table 43-2, Housing Types in the RH Zone, no Quadplex row (a Multi-Family Structure is five or more units, TDC 31.060)
+      quote: "or/clackamas/tualatin/43.rh.txt#L92-L104"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: TDC 43.220 Table 43-2, Townhouse (or Rowhouse) P
+          quote: "or/clackamas/tualatin/43.rh.txt#L96,L99"
+    min_lot_sqft:
+      value: 10000
+      cite: TDC 43.300 Table 43-3, Minimum Lot Size, All Other Permitted Uses
+      quote: "or/clackamas/tualatin/43.rh.txt#L129,L144"
+      variants:
+        - value: 1400
+          when: [unit_lots]
+          cite: TDC 43.300 Table 43-3, Minimum Lot Size, Townhouse, or Rowhouse
+          quote: "or/clackamas/tualatin/43.rh.txt#L129-L130"
+    min_lot_width_ft:
+      value: 75
+      cite: TDC 43.300 Table 43-3, Minimum Average Lot Width, All Other Permitted Uses
+      quote: "or/clackamas/tualatin/43.rh.txt#L150,L160"
+      variants:
+        - value: 14
+          when: [unit_lots]
+          cite: TDC 43.300 Table 43-3, Minimum Average Lot Width, Townhouses (or Rowhouses)
+          quote: "or/clackamas/tualatin/43.rh.txt#L150-L153"
+    setback_front_ft:
+      value: 15
+      cite: TDC 43.300 Table 43-3, Front Setback (based on structure height), 25+ feet
+      quote: "or/clackamas/tualatin/43.rh.txt#L165-L171"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          cite: TDC 43.300 Table 43-3, Front Setback, Townhouse (or Rowhouses) 0-10 feet as determined through Architectural Review (top of the range)
+          quote: "or/clackamas/tualatin/43.rh.txt#L165-L167,L172-L175"
+    setback_street_side_ft:
+      value: 15
+      cite: TDC 43.300 Table 43-3, Corner Lots, same as the front yard setback
+      quote: "or/clackamas/tualatin/43.rh.txt#L165-L171,L188-L190"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          cite: TDC 43.300 Table 43-3, Corner Lots, same as the Townhouse front setback (0-10 feet, top of the range)
+          quote: "or/clackamas/tualatin/43.rh.txt#L165-L167,L172-L175,L188-L190"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: TDC 43.300 Table 43-3, Front Setback, minimum setback to a garage door 20 feet
+      quote: "or/clackamas/tualatin/43.rh.txt#L168-L169"
+    setback_side_ft:
+      value: 12
+      cite: TDC 43.300 Table 43-3, Side and Rear Setback (based on structure height), 25+ feet
+      quote: "or/clackamas/tualatin/43.rh.txt#L181-L187"
+    setback_rear_ft:
+      value: 12
+      cite: TDC 43.300 Table 43-3, Side and Rear Setback (based on structure height), 25+ feet
+      quote: "or/clackamas/tualatin/43.rh.txt#L181-L187"
+    parking_street_setback_ft:
+      value: 10
+      cite: TDC 43.300 Table 43-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (Townhouses by Architectural Review, held at 10)
+      quote: "or/clackamas/tualatin/43.rh.txt#L197-L200"
+    parking_lot_line_buffer_ft:
+      value: 10
+      cite: TDC 43.300 Table 43-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (any lot line)
+      quote: "or/clackamas/tualatin/43.rh.txt#L197-L200"
+    max_height_ft:
+      value: 35
+      cite: TDC 43.300 Table 43-3, Maximum Structure Height, All Uses (50 ft by conditional use permit is not counted)
+      quote: "or/clackamas/tualatin/43.rh.txt#L207-L211"
+    max_coverage_pct:
+      value: 45
+      cite: TDC 43.300 Table 43-3, Maximum Lot Coverage, All Other Permitted Uses
+      quote: "or/clackamas/tualatin/43.rh.txt#L212,L214"
+      variants:
+        - value: 90
+          when: [unit_lots]
+          cite: TDC 43.300 Table 43-3, Maximum Lot Coverage, Townhouse (or Rowhouse)
+          quote: "or/clackamas/tualatin/43.rh.txt#L212-L213"
+    max_density_du_per_acre:
+      value: 25
+      cite: TDC 43.300 Table 43-3, Maximum density, Household Living Uses
+      quote: "or/clackamas/tualatin/43.rh.txt#L115-L117"
+    min_density_du_per_acre:
+      value: 16
+      cite: TDC 43.300 Table 43-3, Maximum density, Household Living Uses, Minimum
+      quote: "or/clackamas/tualatin/43.rh.txt#L115-L117"
+    notes: >-
+      High Density Residential, TDC Chapter 43; 198 lots, the largest of the
+      four. Encoded 2026-10-08 from Tables 43-2 and 43-3 on RMH's shape
+      exactly: Table 43-2 has no Quadplex row, so the base answer is false and
+      the `unit_lots` variant is the Townhouse row. Townhouse rows: 1,400 sq
+      ft lot, 14 ft average width, 90 percent coverage, front 0-10 ft by
+      Architectural Review (held at 10; not a discretionary gate, see the
+      header above). Everything else is the "All Other Permitted Uses" row
+      (10,000 sq ft, 75 ft, 45 percent) or the structure-height ladder read
+      at 25+ ft (front 15, side and rear 12). 16 to 25 units per acre read
+      on the lot's whole area -- Table 43-3 states it on no particular
+      measure. Four units need 6,970 sq ft at 25 units per acre; a lot above
+      10,890 sq ft falls under the 16 units per acre floor and screens
+      yellow, never red. Not encoded: the 50 ft yard adjacent to Basalt
+      Creek Parkway (a street-name fact nothing measures); building
+      separation (the pod is one building); 50 ft height by conditional use
+      permit; Central Tualatin Overlay Blocks 25 and 4 (see the header
+      above).
   RH/HR:
-    outcome: to_read
-    note: >-
-      High Density High Rise, TDC Chapter 44, which the code spells RH-HR
-      in its chapter and RH/HR in Table 58-7's heading (58.central-tualatin-
-      overlay.txt L349) -- the map's spelling is the code's own, and there
-      is no block under either. 6 lots. Fetched and read 2026-10-01
-      (44.rh-hr.txt). Table 44-2 is RH's: Single-Family Dwelling N,
-      Townhouse P, Multi-Family Structure P, no Quadplex row (L96-L102), so
-      the pod is the unit_lots path only and the state mandate does not
-      reach it. Blocked on the same two things as RH, harder: the side and
-      rear ladder runs on structure height to 12 ft at 25 to under 30 and
-      to "As determined through Architectural Review" at 30 and over
-      (L173-L184), the front setback likewise (L159-L168), and Table 44-3
-      prints no townhouse lot size at all (L128-L145). RULED by Steph
-      2026-10-02: townhouses take the table's fallback row, "All Other
-      Permitted Uses 10,000 square feet" ("all other uses would be 10k for
-      townhouse") -- the minimum lot size to encode for the townhouse row
-      when the block is written. Plain rows: 14 ft townhouse average
-      width (L147), 20 ft maximum front setback (L204), 64 ft height
-      (L211), 45 percent coverage (L213), 26 to 30 units per acre
-      (L117-L118). 58.700 leaves its uses unmodified in the overlay
-      (58.central-tualatin-overlay.txt L278-L279).
+    section: ["44.", "58."]
+    cite_default:
+      cite: TDC 44.220 Table 44-2 (Housing Types) and 44.300 Table 44-3 (Development Standards in the RH-HR Zone); the code spells the zone RH-HR in its chapter and RH/HR in Table 58-7
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-10-01'
+    quadplex_allowed:
+      value: false
+      cite: TDC 44.220 Table 44-2, Housing Types in the RH-HR Zone, no Quadplex row (a Multi-Family Structure is five or more units, TDC 31.060)
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L96-L107"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: TDC 44.220 Table 44-2, Townhouse (or Rowhouse) P
+          quote: "or/clackamas/tualatin/44.rh-hr.txt#L98,L101"
+    min_lot_sqft:
+      # RULED by Steph 2026-10-02: Table 44-3 prints no Townhouse lot size, so
+      # townhouses take the "All Other Permitted Uses" row -- one number for
+      # the pod on one lot and on unit lots, hence no variant.
+      value: 10000
+      cite: TDC 44.300 Table 44-3, Minimum Lot Size, All Other Permitted Uses (townhouses have no row of their own; Steph's ruling of 2026-10-02)
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L128,L141"
+    min_lot_width_ft:
+      value: 75
+      cite: TDC 44.300 Table 44-3, Minimum Average Lot Width, All Other Permitted Uses
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L146,L154"
+      variants:
+        - value: 14
+          when: [unit_lots]
+          cite: TDC 44.300 Table 44-3, Minimum Average Lot Width, Townhouses (Rowhouses)
+          quote: "or/clackamas/tualatin/44.rh-hr.txt#L146-L147"
+    setback_front_ft:
+      # The 25 to 30 ft row (the pod is 26 ft). Table 44-3 has no Townhouse
+      # front row; at 30 ft and over the setback goes to Architectural Review.
+      value: 15
+      cite: TDC 44.300 Table 44-3, Front Setback (based on structure height), 25-30 feet
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L158-L168"
+    setback_street_side_ft:
+      value: 15
+      cite: TDC 44.300 Table 44-3, Corner Lots, same as the front yard setback
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L158-L163,L185-L188"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: TDC 44.300 Table 44-3, Front Setback, minimum setback to a garage door 20 feet
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L158-L162"
+    setback_front_max_ft:
+      value: 20
+      cite: TDC 44.300 Table 44-3, Maximum Setbacks, Front Setback 20 feet (44.315 asks 40 to 50 percent of the site width to meet it)
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L203-L204"
+    setback_side_ft:
+      value: 12
+      cite: TDC 44.300 Table 44-3, Side and Rear Setback (based on structure height), 25 to under 30 feet
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L173-L179"
+    setback_rear_ft:
+      value: 12
+      cite: TDC 44.300 Table 44-3, Side and Rear Setback (based on structure height), 25 to under 30 feet
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L173-L179"
+    parking_street_setback_ft:
+      value: 10
+      cite: TDC 44.300 Table 44-3, Minimum Setbacks, Parking and Vehicle Circulation Areas
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L193-L194"
+    parking_lot_line_buffer_ft:
+      value: 10
+      cite: TDC 44.300 Table 44-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (any lot line)
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L193-L194"
+    max_height_ft:
+      value: 64
+      cite: TDC 44.300 Table 44-3, Structure Height, Maximum Height
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L205,L211"
+    max_coverage_pct:
+      value: 45
+      cite: TDC 44.300 Table 44-3, Maximum Lot Coverage, All Uses
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L212-L213"
+    max_density_du_per_acre:
+      value: 30
+      cite: TDC 44.300 Table 44-3, Maximum Density, Household Living Uses
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L116-L118"
+    min_density_du_per_acre:
+      value: 26
+      cite: TDC 44.300 Table 44-3, Maximum Density, Household Living Uses, Minimum
+      quote: "or/clackamas/tualatin/44.rh-hr.txt#L116-L118"
+    notes: >-
+      High Density High Rise, TDC Chapter 44 (RH-HR); 6 lots. Encoded
+      2026-10-08 from Tables 44-2 and 44-3. Same use shape as RH (no Quadplex
+      row; the pod is the `unit_lots` Townhouse path) but Table 44-3 prints
+      no Townhouse lot size, so Steph's ruling of 2026-10-02 sends townhouses
+      to the 10,000 sq ft "All Other Permitted Uses" row, with no variant. The
+      front ladder is read at its 25 to 30 ft row (15) and the side and rear
+      ladder at 25 to under 30 ft (12); at 30 ft and over both go to
+      Architectural Review ("no setback must be required which is greater
+      than the height of the structure"), and a pod built to 30 ft would
+      change band. Maximum front setback 20 ft is held as stated; 44.315 asks
+      only that 40 to 50 percent of the site width meet it, so a single pod
+      on a wide lot that cannot cover that share is a real failure.
+      Maximum height 64 ft; the "Minimum Height, Multi-Family and
+      Condominium Developments 45 feet" row is NOT applied -- it is scoped to
+      those two development types, and townhouses on unit lots are neither
+      (Table 44-2 lists them as a separate housing type). If that reading is
+      wrong the zone is red for a two-storey pod. Not encoded: the 100 ft
+      yard adjacent to a Wetland Protected Area and the 50 ft yard adjacent
+      to Basalt Creek Parkway (facts nothing measures); building separation
+      (the pod is one building); Central Tualatin Overlay lot sizes for
+      Blocks 26, 31 and 33 (see the header above). 26 to 30 units per acre
+      on the lot's whole area: four units need 5,808 sq ft at 30, and a lot
+      above about 6,700 sq ft falls under the 26-unit floor and screens
+      yellow, never red.
   MUC:
-    outcome: to_read
-    note: >-
-      Mixed Use Commercial, TDC Chapter 57, 19 lots. Fetched and read
-      2026-10-01 (57.muc.txt). Household Living P/C under TDC 57.220
-      (L29), and Table 57-2 reads Single-Family Dwelling N, "Duplex;
-      Townhouse (or Rowhouse) P", Multi-Family Structure P, with no Triplex
-      or Quadplex row (L155-L162) -- the pod is the unit_lots path only, as
-      in RH, and no detached house means no state mandate. Table 57-3 is
-      short and mostly plain: no minimum lot size and no front setback
-      (L175, L177), 90 percent coverage (L200), 70 ft height (L193), a 20
-      ft minimum structure height (L190) and a 20 ft MAXIMUM front setback
-      for residential uses (L187-L188), 25 to 50 units per acre for any use
-      with a residential component (L198). Two things to rule before it is
-      a block: the interior side and rear setback is "0-20 feet", 20 where
-      the site abuts a residential district (L181) -- a per-line neighbour
-      condition this layer has not declared -- and a 25 du/acre FLOOR on a
-      four-unit pod caps the lot at 6,970 sq ft, a ceiling on lot size
-      nothing here has encoded for a townhouse row.
+    section: ["57."]
+    cite_default:
+      cite: TDC 57.220 Table 57-2 (Housing Types) and 57.300 Table 57-3 (Development Standards in the MUC District)
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-10-01'
+    quadplex_allowed:
+      value: false
+      cite: TDC 57.220 Table 57-2, Housing Types in the MUC, no Triplex or Quadplex row (a Multi-Family Structure is five or more units, TDC 31.060)
+      quote: "or/clackamas/tualatin/57.muc.txt#L152-L166"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: TDC 57.220 Table 57-2, Duplex; Townhouse (or Rowhouse) P
+          quote: "or/clackamas/tualatin/57.muc.txt#L157,L161"
+    min_lot_sqft:
+      exempt: true
+      cite: TDC 57.300 Table 57-3, Minimum Lot Size, All Uses None
+      quote: "or/clackamas/tualatin/57.muc.txt#L174-L175"
+    setback_front_ft:
+      value: 0
+      cite: TDC 57.300 Table 57-3, Minimum Setbacks, Front None
+      quote: "or/clackamas/tualatin/57.muc.txt#L176-L177"
+    setback_front_max_ft:
+      value: 20
+      cite: TDC 57.300 Table 57-3, Maximum Setbacks, Residential Uses, Front/Corner 20 feet
+      quote: "or/clackamas/tualatin/57.muc.txt#L184-L188"
+    setback_street_side_ft:
+      value: 0
+      cite: TDC 57.300 Table 57-3, Minimum Setbacks, Corner None
+      quote: "or/clackamas/tualatin/57.muc.txt#L176,L183"
+    setback_side_ft:
+      # "Interior Side and Rear 0-20 feet. Setbacks are 20 feet where the site
+      # abuts a residential district." A per-line neighbour condition this
+      # layer does not declare; held at the 20 ft the abutting case asks.
+      value: 20
+      cite: TDC 57.300 Table 57-3, Minimum Setbacks, Interior Side and Rear 0-20 feet, 20 where the site abuts a residential district (the abutting case, held for every lot)
+      quote: "or/clackamas/tualatin/57.muc.txt#L176,L181-L182"
+    setback_rear_ft:
+      value: 20
+      cite: TDC 57.300 Table 57-3, Minimum Setbacks, Interior Side and Rear 0-20 feet, 20 where the site abuts a residential district (the abutting case, held for every lot)
+      quote: "or/clackamas/tualatin/57.muc.txt#L176,L181-L182"
+    min_building_height_ft:
+      value: 20
+      cite: TDC 57.300 Table 57-3, Minimum Structure Height, All uses 20 feet
+      quote: "or/clackamas/tualatin/57.muc.txt#L189-L191"
+    max_height_ft:
+      value: 70
+      cite: TDC 57.300 Table 57-3, Maximum Structure Height, All uses 70 feet (Figure 57-1 is captioned 100-Foot Maximum Structure Height and is not read)
+      quote: "or/clackamas/tualatin/57.muc.txt#L192-L193"
+    max_coverage_pct:
+      value: 90
+      cite: TDC 57.300 Table 57-3, Maximum Lot Coverage, All uses
+      quote: "or/clackamas/tualatin/57.muc.txt#L199-L200"
+    max_density_du_per_acre:
+      value: 50
+      cite: TDC 57.300 Table 57-3, Density, All uses with a residential component 25-50 units per acre
+      quote: "or/clackamas/tualatin/57.muc.txt#L197-L198"
+    min_density_du_per_acre:
+      value: 25
+      cite: TDC 57.300 Table 57-3, Density, All uses with a residential component 25-50 units per acre
+      quote: "or/clackamas/tualatin/57.muc.txt#L197-L198"
+    notes: >-
+      Mixed Use Commercial, TDC Chapter 57; 19 lots. Encoded 2026-10-08 from
+      Tables 57-2 and 57-3. Household Living is P/C by housing type; Table
+      57-2 reads Duplex and Townhouse P, Multi-Family Structure P, Single-
+      Family Dwelling N, with no Triplex or Quadplex row, so the pod is the
+      `unit_lots` Townhouse path only. Table 57-3 states no lot size, no
+      front setback and no lot width. The interior side and rear "0-20 feet"
+      is held at 20 for every lot (20 is the case where the site abuts a
+      residential district, a per-line neighbour fact this layer does not
+      measure); a lot with no residential neighbour is screened tighter than
+      the code asks. The 20 ft MAXIMUM front/corner setback for residential
+      uses is held as stated, and the 20 ft minimum structure height is
+      cleared by the 26 ft pod. The 0.5 floor area ratio does not apply to
+      residential-only projects and is not encoded. 25 to 50 units per acre
+      on the lot's whole area: a lot above 6,970 sq ft falls under the
+      25-unit floor for four units and screens yellow, never red. TDC 57.400,
+      which Table 57-3 sends the reader to for "additional standards", is
+      NOT in the stored chapter (it ends at 57.300) and Figure 57-1 (a 100
+      ft height figure) is stored as a caption only, so this zone stays
+      draft.
 
 
 # Areas the code draws inside a zone and nobody publishes as data, traced

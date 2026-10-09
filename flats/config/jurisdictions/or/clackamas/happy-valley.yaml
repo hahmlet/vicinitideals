@@ -3116,19 +3116,22 @@ zones:
       # "Four-family dwelling (quadplex)" as its own row in every other use
       # table it appears in, so its absence here is a distinction the code is
       # drawing rather than an omission.
+      #
+      # The unit-lot door (townhouses and rowhouses, permitted outright in the
+      # same table, L1229 and L1232) was a variant until 2026-10-08 and is
+      # closed by ruling, not by the table: see the note.
       value: false
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L1225,L1229,L1232,L1233"
-      variants:
-        # Split the units onto their own lots and the same table says yes:
-        # townhouses and rowhouses are permitted outright. That is the whole
-        # of what changes -- the dimensions stay unencodable, see the note.
-        - value: true
-          when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1229,L1232"
     max_height_ft:
       value: 65
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L1306,L1315"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the only way to a four-unit building
+      here is to put the units on their own lots as townhouses, and the standards
+      for that are "determined through the master plan process or design review
+      application" (Table 16.22.060-2 note 2); a review is not by-right, so this
+      zone is refused. The unit-lot variant was removed with the ruling; it can
+      go back, with the dimensions, if the ruling is reversed.
       A zone the screen cannot clear and should not pretend to. Table
       16.22.060-2 prints "Variable" for lot size, lot width, lot depth, lot
       coverage and every building setback, and note 2 says why: "Standards are
@@ -3169,11 +3172,10 @@ zones:
       # four-family dwelling anywhere.
       value: false
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L1225,L1229,L1232,L1233"
-      variants:
-        - value: true
-          when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1229,L1232"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): see MURM, the same table and the same
+      note 2. The unit-lot variant (townhouses permitted outright) is removed
+      for the same reason.
       Stated from its own column rather than borrowed from MUR-M, because the
       two districts part company below the use table: 16.22.060-2 is headed
       MUR-M1, MUR-M2 and MUR-M3 and carries no MUR-X column at all. So MUR-X
@@ -3553,6 +3555,27 @@ zones:
       Encoded 2026-09-20 from Table 16.25.010-1, IC column. Marked X in
       the city's own legend.
 
+  PMU:
+    section:
+    - '16.31'
+    cite_default:
+      cite: HV LDC Chapter 16.31 (Rock Creek Planned Mixed Use District)
+      url: https://ecode360.com/print/HA4934?guid=43529907
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # The chapter has no use table and no dimensional table. Every standard
+      # reads "Standards are flexible and shall be determined through the
+      # master plan or a design review process" (L73, L85), a master plan is
+      # required over five acres (L37) and design review for the rest.
+      value: false
+      quote: "or/clackamas/happy-valley/16.31.rock-creek-pmu.txt#L37,L73,L85,L141"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): nothing here is by right. The
+      chapter writes no list of uses and no setback, height or coverage figure;
+      all of them are set by a master plan or a design review, which is a
+      discretionary approval. No standards are encoded because the code states
+      none; the ruling can be reversed only by reading an approved master plan.
+
 # Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
 # Steph's rule: read every code, write the reason down, never show it again;
 # only a code nobody has seen warns). An alias screens under the block it
@@ -3588,19 +3611,6 @@ zone_rulings:
     of: MURM
     note: >-
       The city's layer prints one lot with a lower-case m; the same MUR-M2.
-  PMU:
-    outcome: unencodable
-    note: >-
-      Rock Creek Planned Mixed Use District, Chapter 16.31, 2 lots. The
-      chapter has no use table: it "allows a variety of commercial uses and
-      residential dwelling types and densities" (16.31.rock-creek-pmu.txt
-      L33) and every standard reads "Standards are flexible and shall be
-      determined through the master plan or a design review process" (L73,
-      L85). A master plan with a Planning Commission hearing is required
-      for development over five acres (L23, L37) and design review for the
-      rest; there is no by-right list to check the use against and no
-      envelope to measure. MURM's "Variable" table is the nearer shape and
-      this is further -- not even the use is written down.
   # Clackamas County districts on the city's own zoning map. 16.67.070 Table
   # 16.67.070-1 note **: "Clackamas County rural residential and farm zones
   # that are annexed within the City of Happy Valley retain these

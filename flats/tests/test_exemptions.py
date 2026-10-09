@@ -143,7 +143,10 @@ pytestmark = pytest.mark.unit
 # limit for a residential use (numeric); CMU's density floor is the unit-lot
 # variant's 15 with the base exempt (numeric). Each was read against the
 # zone table when it was encoded.
-EXPECTED = {"stated": 411, "numeric": 84, "marker": 0, "dash": 2, "silent": 2}
+# 411 -> 415 stated on 2026-10-08 (zone gaps, FOLLOWUPS 52a): four more statements of no
+# limit arrived with the zones encoded that day (Tualatin MUC's lot size among them); each
+# cites its row.
+EXPECTED = {"stated": 415, "numeric": 84, "marker": 0, "dash": 2, "silent": 2}
 # 72 -> 80 numeric on 2026-10-07: Estacada (FOLLOWUPS 53), whose C-2, CMU and R-3 print
 # no lot width, coverage or impervious limit (eight exempt values, each citing the
 # standards table that is silent).

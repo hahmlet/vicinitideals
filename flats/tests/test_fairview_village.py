@@ -83,22 +83,24 @@ def test_the_permission_row_counts_to_five_and_the_pod_is_four(
 def test_the_door_asks_for_a_land_division_as_well_as_a_permit(
     fairview: Layer, rules: RuleSet,
 ) -> None:
-    """`unit_lots` is in every village variant on purpose.
+    """VC keeps its variant; VMU and VA were closed by ruling (Steph, 2026-10-08).
 
     On four lots the pod is attached single-unit dwellings and the answer is a
-    conditional use. On one lot it is a quadplex -- a term this code defines
-    separately and gives its own table row in the TCC chapter -- and no village
-    list mentions it. Asking for the division is the conservative of the two
-    readings.
+    conditional use, which is a hearing and so not by-right. VMU and VA carry
+    no variant and say so in their notes; VC keeps `unit_lots` and
+    `conditional_use` because the FLX map code observes its flex area.
     """
-    for zone in CONDITIONAL:
-        variants = fairview.zones[zone].values["quadplex_allowed"].variants
-        assert len(variants) == 1, zone
-        assert "unit_lots" in variants[0].when, zone
-        assert "conditional_use" in variants[0].when, zone
+    variants = fairview.zones["VC"].values["quadplex_allowed"].variants
+    assert len(variants) == 1
+    assert "unit_lots" in variants[0].when
+    assert "conditional_use" in variants[0].when
 
-    opened = rules.resolve(FAIRVIEW, "VMU", (*POD, "unit_lots", "conditional_use"))
-    assert opened.values["quadplex_allowed"].value is True
+    for zone in ("VMU", "VA"):
+        held = fairview.zones[zone]
+        assert held.values["quadplex_allowed"].variants == (), zone
+        assert "RED BY RULING (Steph, 2026-10-08)" in held.notes, zone
+        use = rules.resolve(FAIRVIEW, zone).values["quadplex_allowed"]
+        assert use.value is False and not use.levers, zone
 
 
 def test_village_office_is_the_one_refusal_with_no_way_out(
@@ -157,9 +159,7 @@ def test_two_zones_share_a_table_and_do_not_share_an_answer(
     assert "VC flex" in vc_text
 
     assert "inside_mapped_use_area" in vc.values["quadplex_allowed"].variants[0].when
-    assert (
-        "inside_mapped_use_area" not in vmu.values["quadplex_allowed"].variants[0].when
-    )
+    assert vmu.values["quadplex_allowed"].variants == ()
 
 
 def test_the_apartment_zone_is_the_only_one_with_a_density_floor(
