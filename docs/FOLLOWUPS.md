@@ -1736,18 +1736,34 @@ read when the weekly full re-screen lands.
    broken outlines (0 invalid, 0 multi-part, 1,544 with holes): it is the
    complex-shape cap (convexity < 0.80, > 10 edges, pole-like), measured at
    a uniform inset; make_valid / buffer-0 do not apply; only 357 yellow lots
-   are held yellow by that flag alone -- left as is. STILL OPEN (item 52b,
-   brief handed to a new agent 2026-10-08 together with run 67's
-   ZONE_TO_READ 1,032 + ZONE_UNENCODABLE 1,380 yellows):
-   the 1,738 zone lots. FLATS resolves every one to ambiguous or unverified
-   (never a clean permission), so measuring them needs those zones added to
-   quadfit's rules (port_from_flats TARGETS cover only Washington + 4
-   cities; the others are hand blocks) and a quadfit s3-s5o + bridge re-run
-   on them; they stay yellow unless the fit fails. Zones: Happy Valley MURM
-   479 / MURX 12, Gresham DCC 266 / DTM 203, Tualatin CC 139, Oregon City
-   MUE 125 / GI 53 / HC 37 / CI 28 / I 16 / NC 1, Wood Village NC 58,
-   Fairview VMU 58 / TCC 44 / VA 8 / VC 4, Portland CI1 37, Multnomah uninc
-   RR 140 / OR 17 / EFU 12, Clackamas uninc R15 1, Washington uninc R-24 1.
+   are held yellow by that flag alone -- left as is. ZONES READ 2026-10-09 (branch flats/zone-gaps, bound on 137 over
+   6,017 lots, 48 greens gained, 163 greens lost, every one read; NOT yet
+   in a live run -- needs a splice, scope list /root/zg/scope_all.txt on 137):
+   (a) ZONE_TO_READ and (c) 52b zones are encoded and ported so the pod is
+   measured: Gladstone C2/MR, Tualatin CC/RMH/RH/RH-HR/MUC, Milwaukie
+   GMU/DMU, West Linn MU, Gresham DCC/DTM, Fairview TCC/VC, Oregon City
+   MUE/GI/HC/CI/I/NC, Portland CI1, Wood Village NC, Happy Valley
+   MURM/MURX, Multnomah uninc RR/OR/EFU. Gains: Gladstone C2 34, MR 10,
+   West Linn MU 3, Tualatin CC 1; the rest measure red. Steph 2026-10-09
+   RULED: Milwaukie DMU ALLOWED (design review optional via clear and
+   objective standards); Clackamas MR-1, MR-2, HDR RED BY RULING
+   (ZDO 1102.01(A) design review) -- the same sentence also makes PMD and
+   VA red (agent extended it; tell Steph); 163 green MR-1/MR-2 lots go red;
+   Hillsboro ANX stays yellow. SHD/RCHDR/VTH stay unencodable (setbacks by
+   compass bearing, ZDO 1005.02(L)) -> item 61.
+   STILL OPEN from 52: Gladstone C2 Portland Avenue entrance + 25% window
+   rules; Tualatin RH/HR 45 ft minimum height scope, Central Tualatin
+   Overlay block lot sizes (Map 10-3), Basalt Creek Parkway 50 ft yard,
+   100 ft wetland yard, building separation, MUC 57.400 / Figure 57-1
+   height check; Milwaukie Figure 19.304-2, the neighbours block (20 ft
+   abuts-residential yards), 19.505.5.E.1, DMU 50 ft parking ban; Fairview
+   TCC Halsey storefront map (44 lots), VC stays because of the FLX alias;
+   SCMU front setback and densities; Happy Valley / Gladstone leftovers;
+   add ZDO Section 1102 to the provenance store. The weekly run must fetch
+   canby/estacada/sandy zoning (the bound needed empty placeholders). The
+   splice cannot retire lots a re-run drops from s3 (assign keeps a
+   measured lot's old row): a bound/splice scope must list those lots
+   explicitly, as the 805 MR1/MR2/PMD/VA lots were here.
 53. [scan: YES (Estacada layer is drafted and unscreened; it lands at the next weekly after the acquire of its zoning dataset)] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
    2026-10-08); Estacada is encoded; Molalla is blocked on HUMAN_TODO 29
    (Steph's PDFs); Forest Grove stays blocked on HUMAN_TODO 28.** Canby's only
@@ -1957,3 +1973,9 @@ read when the weekly full re-screen lands.
    FALLBACK only, needs Steph's yes: "no Metro line and no classified road
    within 300 ft = local" (relaxes the two-source rule). Then bound over the
    852 rows (`/root/fo/scope_yellow.txt`), read every lot that turns green.
+61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
+   (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
+   compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
+   encoded until each lot line carries a bearing. Measure the bearing per
+   lot line, add it as a per-line field, then encode those three districts.
+   Not part of branch flats/zone-gaps; start only after the weekly re-screen.
