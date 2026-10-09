@@ -514,6 +514,36 @@ def measured_access(
     return dataclasses.replace(rules, values=values)
 
 
+def unknown_access(
+    rules: "ZoneResolution", edges: LotEdges | None, front: float | None
+) -> "ZoneResolution | None":
+    """The other reading of a ``lowest_class`` corner plan, or ``None``.
+
+    Where the code sends the driveway to the lowest-class street and a street
+    line on either the named front or the side street has no rank,
+    :func:`measured_access` assumes the side street serves. Nothing says that
+    is true: the unmeasured fact takes its worst case (FOLLOWUPS 49(c), Steph
+    2026-10-08), so the caller also screens ``rules`` with the driveway off
+    the front, which this returns, and keeps the worse of the two.
+    """
+    import dataclasses
+
+    held = rules.values.get("corner_access_street")
+    if front is None or edges is None or held is None or held.value != "lowest_class":
+        return None
+    here = [
+        e.street_rank
+        for e in edges.edges
+        if e.cls is EdgeClass.front and bearing_delta(e.bearing_deg, front) <= BEARING_CLUSTER_TOL_DEG
+    ]
+    side = [e.street_rank for e in edges.edges if e.cls is EdgeClass.street_side]
+    if not here or not side or (None not in here and None not in side):
+        return None
+    values = dict(rules.values)
+    values["corner_access_street"] = dataclasses.replace(held, value=FRONT_ACCESS, shadowed=held.value)
+    return dataclasses.replace(rules, values=values)
+
+
 def access_record(
     rules: "ZoneResolution", plan_rules: "ZoneResolution", edges: LotEdges | None, front: float | None
 ) -> dict[str, object]:
@@ -617,4 +647,5 @@ __all__ = [
     "measured_access",
     "observed_local_street",
     "street_ranks",
+    "unknown_access",
 ]

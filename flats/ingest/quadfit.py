@@ -131,6 +131,7 @@ from flats.geom.street_class import (
     measured_access,
     observed_local_street,
     street_ranks,
+    unknown_access,
 )
 from flats.geom.named_street import NAMED_STREET_FACT, named_street_column, observed_named_street
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
@@ -2325,8 +2326,9 @@ def _screen_lot_once(
             # A lowest-class driveway off a corner lot whose named front is
             # the quieter street comes off the front (Steph 2026-10-05).
             plan_got = measured_access(got, plan_edges, front)
-            if front is not None:
-                access_log.append(access_record(got, plan_got, plan_edges, front))
+            # A street class nobody measured: the driveway is tried off each
+            # street and the worse answer kept (FOLLOWUPS 49(c)).
+            other_got = unknown_access(got, plan_edges, front)
             if plain is None and lot.observed.get("alley_at_rear") and rear_off_alley(here.edges):
                 # A rear line off the alley owes the ordinary rear setback:
                 # the same lot resolved without the rear alley (FOLLOWUPS 12(b)).
@@ -2353,16 +2355,26 @@ def _screen_lot_once(
                     envs.append(cut)
             # The better of the envelope cuts for this reading of the lot;
             # the readings are ranked against each other below.
-            tried.append(min(
-                (
-                    _screen_on(
-                        here, design, config, plan_got, env, front, angles, fitters, step_deg,
-                        policy=policy, relief=relief, plan=plan_key,
-                    )
-                    for env in envs
-                ),
-                key=lambda t: _front_rank(t[0]),
-            ))
+            by_access = [
+                (variant, min(
+                    (
+                        _screen_on(
+                            here, design, config, variant, env, front, angles, fitters, step_deg,
+                            policy=policy, relief=relief, plan=plan_key,
+                        )
+                        for env in envs
+                    ),
+                    key=lambda t: _front_rank(t[0]),
+                ))
+                for variant in (plan_got, other_got)
+                if variant is not None
+            ]
+            used, shot = max(
+                by_access, key=lambda v: (*_front_rank(v[1][0]), -_env_sqft(v[1][0]))
+            )
+            if front is not None:
+                access_log.append(access_record(got, used, plan_edges, front))
+            tried.append(shot)
         # Drawn for the winner only: one more window search per design.
         if worst:
             # The worse reading: the lower colour, the tighter fit, and on a
@@ -3322,10 +3334,9 @@ def _init_worker(
     _WORKER["relief"] = relief_mod.load_policy()
     _WORKER["step_deg"] = step_deg
     _WORKER["corridors"] = load_corridor_maps(sources) if sources is not None else ()
+    street_edges = load_street_edges(curbs) if curbs is not None and roads is not None else None
     _WORKER["roads"] = (
-        (*load_truck_roads(roads), load_street_edges(curbs) if curbs is not None else None)
-        if roads is not None
-        else None
+        (*load_truck_roads(roads, street_edges), street_edges) if roads is not None else None
     )
     _WORKER["terrain"] = terrain_at(dem) if dem is not None else None
 
