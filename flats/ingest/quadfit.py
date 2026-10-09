@@ -2370,9 +2370,10 @@ def _screen_lot_once(
                 for variant in (plan_got, other_got)
                 if variant is not None
             ]
-            used, shot = max(
-                by_access, key=lambda v: (*_front_rank(v[1][0]), -_env_sqft(v[1][0]))
-            )
+            # Only a plan that turns the colour or the triage worse replaces
+            # the one measured access chose: a tie keeps it, so its drawing
+            # (and the flags that drawing owes) stands.
+            used, shot = max(by_access, key=lambda v: _front_rank(v[1][0])[:3])
             if front is not None:
                 access_log.append(access_record(got, used, plan_edges, front))
             tried.append(shot)
