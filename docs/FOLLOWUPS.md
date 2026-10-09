@@ -1956,23 +1956,29 @@ read when the weekly full re-screen lands.
    (+ public-code) rule, bound over run 67, read every moved lot. Also
    1S133AD02200 (code 911) overlaps Westgate Christian School at 17% only.
 60. [scan: YES] **Rank the unranked corner streets (opened 2026-10-09 from
-   49(c); Steph: "yellow, then measure").** 351 Washington Co. uninc
-   streets have no class: Metro's street file has no line within reach
-   (1,502 of 1,517 unranked street lines have none beside them) and the
-   county map draws classified roads only, so an absence of a classified road
-   is not a reading. Today each such corner lot is yellow
-   (ACCESS-STREET-RANK-UNKNOWN, 852 rows). Measure it from a real second
-   source: (1) OpenStreetMap `highway=` category (the coordinator measured the
-   county: 18,867 drivable ways, residential 11,644 / tertiary 2,718 /
-   secondary 1,789 / primary 1,457 / trunk 565 / unclassified 409 /
-   living_street 133; lanes= on 1% of residential and 54-83% of busy roads,
-   width= almost never, no traffic volume) -- match each of the 351 streets to
-   an OSM way (name + nearest centreline), rank by category; (2) the county's
-   own road centreline layer; (3) the street gap in the taxlot fabric.
-   Steph's call: does OSM count as the second source for the two-source rule?
-   FALLBACK only, needs Steph's yes: "no Metro line and no classified road
-   within 300 ft = local" (relaxes the two-source rule). Then bound over the
-   852 rows (`/root/fo/scope_yellow.txt`), read every lot that turns green.
+   49(c); Steph: "yellow, then measure").** In the current bound 634 lots
+   have a corner street with no class (60 street names, 69 street lines;
+   an earlier check counted 351 lots with no rank on either side). Metro's
+   street file has no street at all beside 615 of the 634 lots (1,502 of
+   1,517 unranked street lines have none beside them) and the county map
+   draws classified roads only, so an absence of a classified road is not a
+   reading. Today each such corner lot is yellow (ACCESS-STREET-RANK-UNKNOWN,
+   852 rows). Measure it from a real second source: (1) OpenStreetMap
+   `highway=` category (the coordinator measured the county: 18,867 drivable
+   ways, residential 11,644 / tertiary 2,718 / secondary 1,789 / primary
+   1,457 / trunk 565 / unclassified 409 / living_street 133; lanes= on 1% of
+   residential and 54-83% of busy roads, width= almost never, no traffic
+   volume) -- match each unranked street line to an OSM way (name, then
+   nearest parallel centreline within 60 ft), rank by category. A `service`
+   way is never a ranked street: an edge with only a service way beside it
+   stays unresolved. Known disagreement to leave unresolved under any rule:
+   Farmington Rd (county Neighborhood Route, rank 1, vs OSM primary).
+   (2) the county's own road centreline layer; (3) the street gap in the
+   taxlot fabric. Steph's call: does OSM count as the second source for the
+   two-source rule? FALLBACK only, needs Steph's yes: "no Metro line and no
+   classified road within 300 ft = local" (relaxes the two-source rule). Then
+   bound over the 852 rows (`/root/fo/scope_yellow.txt`), read every lot that
+   turns green.
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
