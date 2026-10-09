@@ -297,6 +297,26 @@ def test_each_plans_access_street_is_recorded_with_why() -> None:
     assert (none["access"], none["why"], none["front_deg"]) == ("side", "no_front_named", None)
 
 
+def test_a_street_class_nobody_measured_is_tried_both_ways() -> None:
+    from flats.geom.corner import name_front
+    from flats.geom.street_class import FRONT_ACCESS, unknown_access
+
+    for main, oak in ((None, 2), (0, None), (None, None)):
+        edges, (front, _) = corner(main, oak)
+        rules = access()
+        other = unknown_access(rules, name_front(edges, front), front)
+        assert other is not None and other.get("corner_access_street") == FRONT_ACCESS
+    # Both measured, or a code that names the street: nothing to try the other way.
+    for main, oak in ((0, 2), (2, 0), (1, 1)):
+        edges, (front, _) = corner(main, oak)
+        assert unknown_access(access(), name_front(edges, front), front) is None
+    edges, (front, _) = corner(None, 2)
+    assert unknown_access(access(), edges, None) is None
+    assert unknown_access(access(), None, front) is None
+    for value in ("any", "side"):
+        assert unknown_access(access(value), name_front(edges, front), front) is None
+
+
 def test_the_bridge_carries_the_ranks_onto_the_lot_lines(monkeypatch, tmp_path) -> None:
     import flats.ingest.quadfit as bridge
 

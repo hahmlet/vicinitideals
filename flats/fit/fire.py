@@ -83,6 +83,19 @@ MAX_GAP_FT = 50.0
 TRUCK_TYPES: frozenset[int] = frozenset(
     {1200, 1300, 1400, 1450, 1500, 1550, 1560, 1700, 5301, 5401, 5451, 5500, 5501}
 )
+#: RLIS TYPE 2000 (unimproved, unmaintained access) is left out of
+#: :data:`TRUCK_TYPES`, but Portland's PBOT pavement segments run beside
+#: 287 of the 288 type-2000 streets a lot's fire route was lost to (2026-10-08:
+#: 157th Ave, Alder St, 54th Ave -- paved streets, 22 to 66 ft wide); Leif
+#: Erikson Drive is the one with no pavement. Such a line counts as a truck road where
+#: recorded pavement :data:`TRUCK_MIN_WIDTH_FT` wide runs within
+#: :data:`PAVED_REACH_FT` of at least :data:`PAVED_SHARE` of its length.
+PAVED_IF_WIDE_TYPES: frozenset[int] = frozenset({2000})
+#: The narrowest road a fire truck may use (the same 20 ft a street with no
+#: recorded width is taken as).
+TRUCK_MIN_WIDTH_FT = 20.0
+PAVED_REACH_FT = 15.0
+PAVED_SHARE = 0.5
 #: How often the street lot line is sampled for where the hose comes on.
 SOURCE_STEP_FT = 5.0
 #: Slack on "stays on the lot": a lot line traced to the tenth of a foot, and a
@@ -115,16 +128,44 @@ def street_offsets(
     return np.where(gap > MAX_GAP_FT, math.inf, np.maximum(gap - HALF_ROAD_FT, 0.0))
 
 
-def load_truck_roads(path: Path) -> tuple[shapely.STRtree, np.ndarray]:
+def load_truck_roads(
+    path: Path, edges: "StreetEdges | None" = None
+) -> tuple[shapely.STRtree, np.ndarray]:
     """quadfit s1's street centrelines a truck can stand on
-    (:data:`TRUCK_TYPES`), indexed: what :func:`street_offsets` reads."""
+    (:data:`TRUCK_TYPES`, and the paved :data:`PAVED_IF_WIDE_TYPES` where
+    ``edges`` records the pavement), indexed: what :func:`street_offsets`
+    reads."""
     import pandas as pd
 
     frame = pd.read_parquet(path, columns=["type", "alley", "wkb"])
     kind = pd.to_numeric(frame["type"], errors="coerce")
-    keep = kind.isin(TRUCK_TYPES) & ~frame["alley"].fillna(False).astype(bool)
+    not_alley = ~frame["alley"].fillna(False).astype(bool)
+    keep = kind.isin(TRUCK_TYPES) & not_alley
     geoms = shapely.from_wkb(frame.loc[keep, "wkb"].to_numpy())
+    if edges is not None and len(edges.width_geoms):
+        maybe = shapely.from_wkb(
+            frame.loc[kind.isin(PAVED_IF_WIDE_TYPES) & not_alley, "wkb"].to_numpy()
+        )
+        paved = [g for g in maybe if _paved(g, edges)]
+        if paved:
+            geoms = np.concatenate([geoms, np.asarray(paved, dtype=object)])
     return shapely.STRtree(geoms), geoms
+
+
+def _paved(line: BaseGeometry, edges: "StreetEdges") -> bool:
+    """Whether recorded pavement at least :data:`TRUCK_MIN_WIDTH_FT` wide runs
+    beside half or more of ``line``."""
+    if line.length <= 0:
+        return False
+    tree = edges._widths
+    if tree is None:
+        return False
+    near = line.buffer(PAVED_REACH_FT)
+    covered = 0.0
+    for i in tree.query(near):
+        if edges.width_ft[i] >= TRUCK_MIN_WIDTH_FT:
+            covered = max(covered, near.intersection(edges.width_geoms[i]).length)
+    return covered >= PAVED_SHARE * line.length
 
 
 def _sources(lines: Sequence[tuple[float, float, float, float]]) -> np.ndarray:
@@ -331,6 +372,7 @@ __all__ = [
     "HALF_ROAD_FT",
     "MAX_GAP_FT",
     "READINGS",
+    "PAVED_IF_WIDE_TYPES",
     "TRUCK_TYPES",
     "hose_offsets",
     "load_truck_roads",
