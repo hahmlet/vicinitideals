@@ -182,6 +182,12 @@ COURT_WIDTH_UNMEASURED = "COURT_WIDTH_UNMEASURED"
 #: is too big, and the corner, the lane and the side-street driveway it
 #: grants are not there. A person has to look at the lot (FOLLOWUPS 4).
 STREET_UNCONFIRMED = "STREET_UNCONFIRMED"
+#: A corner lot whose parking works off one street but not off the other,
+#: where a street line carries no class: nothing says the street that works
+#: is the quieter one the code sends the driveway to. A closer look, not a
+#: miss (Steph 2026-10-09: "yellow, then measure"); ranking the street
+#: settles it.
+STREET_RANK_UNKNOWN = "STREET_RANK_UNKNOWN"
 #: The plan was screened without the planted strip the code keeps between
 #: parking and the lot lines (``parking_lot_line_buffer_ft``), because with
 #: it the plan misses and without it the plan does not. Whether a townhome
@@ -2356,6 +2362,7 @@ __all__ = [
     "PARKING_STRIP_UNCONFIRMED",
     "RELIEF_UNCONFIRMED",
     "STANDARD_NOT_ENCODED",
+    "STREET_RANK_UNKNOWN",
     "STREET_UNCONFIRMED",
     "STRIP_FIELD",
     "USE_NOT_ENCODED",
