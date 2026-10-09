@@ -1347,9 +1347,9 @@ read when the weekly full re-screen lands.
    seed 31, wash data): ~25% of greens go RED on steep ground (mostly real
    hillsides, median lot grade 12%), ~7% yellow; the 4 ft bank rule
    brought back 10 flat lots (pad <=5%). Bridge time +48% overall, ~2x on
-   lots with steep ground. OPEN: (1) lands in the ~10-08 full re-screen
-   (37(c)) -- a WARNED promotion (big green->red move), Steph promotes;
-   the E2E slope test skips until a run carries slope. (b) SHIPPED
+   lots with steep ground. LANDED: run 65 (weekly, promoted 2026-10-07);
+   49(e)/(f)/(h) fixes in run 67; the E2E slope test passes on production
+   (2026-10-08). (b) SHIPPED
    2026-10-04 (code only): the bridge counts the lot area at >=20/25/35%
    on 1 m lidar and hands it to the net-acre list as `slope_20/25/35`
    (never on 10 m). Read per sentence: Hillsboro 12.01.500(6), Milwaukie
@@ -1639,8 +1639,8 @@ read when the weekly full re-screen lands.
    54; control 0. Every class read; no false GREEN. ~40 new reds sit on a
    4-4.5 ft bank: Steph 2026-10-08 KEPT the 4 ft line. 3 losses are the
    placer landing elsewhere on a bigger envelope (open_space_shape / fire).
-   OPEN, not the slope lane: water flag on overlay slivers, 48 lots < 10 sq ft, 194 < 100 sq ft
-   (`water_flag.parquet`, `permits_on` fires on any touch).
+   Water flag on overlay slivers (48 lots < 10 sq ft, 194 < 100 sq ft):
+   left yellow by item 50 (codes reach 25-100 ft past the drawn line).
    (g) DONE a7243f4f (live 2026-10-07): the lots list says why a design is
    red (every standard missed, worst first) or yellow (the open questions
    at the line), not `head`; the bridge report adds `dominant`. The
