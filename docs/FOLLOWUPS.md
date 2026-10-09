@@ -1762,8 +1762,8 @@ read when the weekly full re-screen lands.
    complex-shape cap (convexity < 0.80, > 10 edges, pole-like), measured at
    a uniform inset; make_valid / buffer-0 do not apply; only 357 yellow lots
    are held yellow by that flag alone -- left as is. ZONES READ 2026-10-09 (branch flats/zone-gaps, bound on 137 over
-   6,017 lots, 48 greens gained, 163 greens lost, every one read; NOT yet
-   in a live run -- needs a splice, scope list /root/zg/scope_all.txt on 137):
+   6,017 lots, 48 greens gained, 163 greens lost, every one read; LIVE in
+   run 69, promoted 2026-10-09, spliced with 57 and 58/49(c), see 49(j)):
    (a) ZONE_TO_READ and (c) 52b zones are encoded and ported so the pod is
    measured: Gladstone C2/MR, Tualatin CC/RMH/RH/RH-HR/MUC, Milwaukie
    GMU/DMU, West Linn MU, Gresham DCC/DTM, Fairview TCC/VC, Oregon City
