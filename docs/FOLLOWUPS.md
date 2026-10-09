@@ -2014,6 +2014,43 @@ read when the weekly full re-screen lands.
    and 10 have none, so ~78 may not be real corners (cul-de-sac or curved
    fronts whose short chords counted as a second street) and their yellow
    may be wrong. Read those 78 before any ranking rule is wired.
+   READ OF THE ~78 + THE "615 vs 855" CONTRADICTION (2026-10-09, read-only;
+   nothing in shipped code changed; scripts `/root/fo/rank_why.py`,
+   `rank_fix.py`, `corner_read.py`, `county_corner.py`, what-ifs `bound8.sh`
+   `bound9.sh`). (a) THE CONTRADICTION: same cause, not the same test.
+   "615 lots have NO Metro street beside the lot line" is true OF THE RANK
+   MAP, not of Metro's file: `load_class_maps` (flats/geom/street_class.py,
+   `if not g.intersects(zone): continue`) keeps only Metro streets within
+   210 ft (150 corridor + 60 front reach) of a classified road. Washington
+   County's map lists classified roads only, so every local street farther
+   than that is cut out BEFORE the rank lookup, and the lookup finds nothing
+   beside the lot. The "855 of 874 are Metro streets within 50 ft" count
+   reads the full file. Of 2,145 unranked edges, 1,440 have no map street
+   within 60 ft (the clip); ~626 more fail the alongside/bearing test
+   (`corridor._fronted` -> `_abreast`, mostly short side edges and chords).
+   (b) A METRO-ONLY FIX EXISTS, NO OSM: skip the clip when the map has
+   `unlisted` set (one line; the design already says "a street the county
+   map leaves out is local where Metro agrees"). What-if over the 1,465
+   scope lots (`bound_noclip`): 0 changes to any already-ranked edge (0 of
+   2,675 on the 634 lots; 0 of 5,838 on a 2,500-lot WashCo sample), 1,541
+   of 2,145 unranked edges (72%) rank local, 449 rows / 445 lots go
+   yellow -> green, nothing goes red, nothing green changes, `fits` and
+   slack identical on every row. ~604 edges stay unranked (the short-chord
+   and non-alongside ones). It is the already-shipped two-source design
+   (county map + Metro type), so it is a bug fix, not a widened gate --
+   but ASK Steph/coordinator to confirm that reading before it ships; it
+   would lift 445 of the 634 yellows on its own. (c) THE ~78 NOT-CORNERS:
+   read from the edge list, street names and nearest dead end (not from a
+   picture). 14 are true corners (two named streets on separate runs, six
+   with a second frontage under 25 ft); 64 are ONE street read as two:
+   27 cul-de-sac/bulb fronts (20 `fronts_cul_de_sac` measured, 7 with a
+   dead end beside and the flag unset), 5 only short chords (no edge >=25
+   ft), 22 curved single fronts (turn 33-131 degrees), 10 a straight front
+   plus a sliver edge of 15 ft or less. No flag pole among them (a flag
+   lot is tier irregular, not corner). Washington County's CDC defines no
+   corner lot (definitions block, "CORNER LOT: SILENT"), so no legal
+   definition makes a bend a corner there.
+   See item 63 for the step that makes it, the county-wide count and the fix.
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
@@ -2041,3 +2078,50 @@ read when the weekly full re-screen lands.
    loses Hillsboro's 2-1/2-storey zones (~23,500); >30 loses Portland
    R5/R7/R10/R20 (~148,700 total); >35 loses ~371,600. Wait for a drawing
    with real eave/ridge figures before building.
+63. [scan: YES, after Steph rules] **One street bending is read as a corner
+   (found 2026-10-09 reading the ~78 of item 60; a CORRECTNESS bug, not only
+   a yellow-flag one).** A lot on ONE street whose frontage turns 45 degrees or
+   more (cul-de-sac bulb, knuckle, curved front, or a straight front with a
+   short sliver edge) is screened as a corner lot. THE STEP: s4 `classify_lot`
+   (Lot Analysis/quadfit/s4_edges.py, `street_threshold_ft` 50) calls an edge a
+   street when its midpoint is within 50 ft of ANY non-alley centreline -- no
+   name, length or bearing test -- then `cluster_bearings`
+   (flats/geom/edges.py:193, 20 degrees) makes `Tier.corner` at edges.py:333
+   when the edges form two clusters. The only guard is `corner.two_streets`
+   (corner.py:92: bearings at least 45 degrees apart), which a bulb or sharp
+   curve passes. `is_corner` (corner.py:259) then names a front by
+   `front_lot_line_corner` (WashCo: `shortest`), renames the other street
+   edges street-side, turns an interior line from rear to side, and the
+   access step asks for a rank on each "street" (the 634 yellows). Both the
+   envelope and the access reading change.
+   REACH (run 69 colours, best design, tier corner AND two streets >=45
+   degrees: 21,199 green/yellow lots, 15,137 green + 6,062 yellow): 2,311
+   have every street edge on ONE street name (1,078 green, 1,233 yellow;
+   2,266 of them one unbroken run; only 232 carry `fronts_cul_de_sac`);
+   760 of those have at most one street edge of 25 ft or more (349 green,
+   411 yellow). By city (2,311): WashCo 703, Portland 494, Beaverton 271,
+   Clackamas uninc. 247, Gresham 104, Oregon City 100, West Linn 82,
+   Tualatin 65, Wilsonville 51, Happy Valley 50. Portland, Gresham, Oregon
+   City and Beaverton WRITE their corner test (Portland: a curve <=120
+   degrees is two streets), so for them a bend can legally be a corner and
+   the count is a ceiling; WashCo, Clackamas uninc. and others are silent.
+   DIRECTION: it runs the lenient way. What-if (`bound9.sh`, 762 lots = the
+   760 + the ~64 not-corners of item 60) treating them as "one street that
+   bends" -- the screen's own rule for a turn under 45 degrees (front left
+   unnamed, every street edge takes the stricter of front and street side):
+   envelopes never grow and 796 of 1,524 rows shrink; 293 of 762 lots change
+   colour -- 67 green -> red, 1 green -> yellow, 222 yellow -> red, 3 yellow
+   -> green (no rank needed any more). That is the STRICT end; the truth is
+   between it and today, so some of today's greens on these lots are
+   probably false greens. FIX PLAN, nothing built: (1) where a city's
+   definition is written, route the corner question through
+   `definitions.decide` for a curve, as Portland/Gresham already do; (2)
+   where it is silent, a corner needs two different street names or two
+   unbroken runs; one name on one run is a bend and gets the unnamed
+   reading; (3) stop the sliver: a street edge under ~15 ft that runs
+   toward the street is not a second frontage. Step (2) turns the 67 greens
+   red -- STEPH DECIDES: bend rule (strict, 67 greens lost), or keep the
+   corner reading and flag it. Ship with item 60's unclipped-streets fix
+   (rank edges local where Metro agrees), which clears most of the yellows
+   on the same lots. Reads: `/root/fo/corner_sus.pkl` (78),
+   `county_corner.pkl` (21,199), `onebend_changes.csv`.
