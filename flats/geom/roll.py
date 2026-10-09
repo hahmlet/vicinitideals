@@ -17,7 +17,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Iterable, Mapping
 
 import yaml
 
@@ -48,6 +48,8 @@ class Tier:
     words: str
     pattern: re.Pattern[str] | None = None
     counties: frozenset[str] = frozenset()
+    built_since: int | None = None
+    built_lots: int = 0
 
 
 @dataclass(frozen=True)
@@ -71,6 +73,8 @@ def load_rules(path: Path = CONFIG) -> RollRules:
             words=str(body["words"]),
             pattern=re.compile(body["pattern"]) if body.get("pattern") else None,
             counties=frozenset(body.get("counties") or ()),
+            built_since=int(keep["since"]) if (keep := body.get("keep_checked_when_block_built")) else None,
+            built_lots=int(keep["lots"]) if keep else 0,
         )
         for key, body in (doc.get("tiers") or {}).items()
     )
@@ -113,12 +117,42 @@ def _code(row: Mapping[str, Any]) -> str:
     return "" if code is None or str(code).lower() == "nan" else str(code).strip()
 
 
-def read(row: Mapping[str, Any], rules: RollRules) -> dict[str, Any] | None:
+def block(row: Mapping[str, Any]) -> tuple[str, str]:
+    """``(county, tax map page)``: the parcel number without punctuation or
+    spaces, less its last five characters (the tax lot)."""
+    county = str(row.get("county") or "")
+    compact = re.sub(r"[^0-9A-Za-z]", "", str(row.get("tlid") or row.get("TLID") or ""))
+    return county, compact[:-5]
+
+
+def year_built(row: Mapping[str, Any]) -> int | None:
+    n = _number(row.get("YEARBUILT"))
+    return int(n) if n is not None and 1000 <= n <= 2100 else None
+
+
+def built_counts(rows: Iterable[Mapping[str, Any]], rules: RollRules) -> dict[tuple[str, str], int]:
+    """Per block, the lots the assessor roll says were built since the year in
+    the ``no_address`` tier. Empty when the rule is off or no row has a year."""
+    since = rules.tier("no_address").built_since
+    counts: dict[tuple[str, str], int] = {}
+    if since is None:
+        return counts
+    for row in rows:
+        year = year_built(row)
+        if year is not None and year >= since:
+            key = block(row)
+            counts[key] = counts.get(key, 0) + 1
+    return counts
+
+
+def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str], int] | None = None) -> dict[str, Any] | None:
     """The reading for one lot -- ``category``, ``share`` (always 1: the roll
     names the whole parcel), ``source``, ``name`` -- or ``None``.
 
     ``row`` carries county, tlid, PROP_CODE, LANDVAL, BLDGVAL, TOTALVAL,
-    ASSESSVAL and site_address, as the normalized lot table does.
+    ASSESSVAL, site_address and YEARBUILT, as the normalized lot table does.
+    ``built`` is :func:`built_counts` over the whole table; without it a
+    lot with no address is never spared, so a missing year reads red.
     """
     county = str(row.get("county") or "")
     code = _code(row)
@@ -143,5 +177,10 @@ def read(row: Mapping[str, Any], rules: RollRules) -> dict[str, Any] | None:
                 return hit(tier.key, f"{county} roll code {code}, value $0")
         elif tier.key == "no_address":
             if zero and not real_address(row):
+                if built and tier.built_since is not None:
+                    own = year_built(row)
+                    others = built.get(block(row), 0) - (1 if own is not None and own >= tier.built_since else 0)
+                    if others >= tier.built_lots:
+                        continue
                 return hit(tier.key, f"{county} roll, value $0, no street address")
     return None

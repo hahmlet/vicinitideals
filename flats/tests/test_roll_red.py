@@ -42,10 +42,13 @@ def test_the_four_tiers_steph_ruled_are_on() -> None:
     assert on == {"public_land": True, "tract": True, "open_space": True, "no_address": True}
 
 
-@pytest.mark.parametrize("code", ["911", "981", "980", "910", "900", "901", "100", "400"])
-def test_churches_charities_student_housing_and_rural_tracts_are_not_public_land(code: str) -> None:
+@pytest.mark.parametrize(
+    "code", ["911", "981", "980", "910", "900", "901", "100", "400", "921", "941", "943", "951", "961", "971", "991", "993"]
+)
+def test_churches_charities_student_housing_rural_tracts_and_x1_codes_are_not_public_land(code: str) -> None:
     """OAR 150-308-0310: 91x church, 98x benevolent, 90x student housing stay
-    checked; class 4 is rural acreage, not an HOA tract."""
+    checked; class 4 is rural acreage, not an HOA tract. The x1 codes carry
+    values, buildings and addresses (Steph RULED 2026-10-09: screened)."""
     assert tier(PROP_CODE=code) is None
 
 
@@ -110,6 +113,78 @@ def test_a_value_the_roll_does_not_show_as_zero_is_not_zero(values: dict[str, An
     assert tier(site_address=None, tlid="1S134BC90000", **values) is None
 
 
+# --- a lot with new houses around it stays screened ---------------------------------
+
+
+def _block(county: str, stem: str, years: list[Any]) -> list[dict[str, Any]]:
+    return [
+        {"county": county, "tlid": f"{stem}{i:05d}", "YEARBUILT": y, "site_address": "1 MAIN ST", **WORTH}
+        for i, y in enumerate(years, start=100)
+    ]
+
+
+def _bare(tlid: str, county: str = "washington") -> dict[str, Any]:
+    return lot(county=county, tlid=tlid, PROP_CODE="000", site_address=None, YEARBUILT=0, **ZERO)
+
+
+def _read_with(row: dict[str, Any], others: list[dict[str, Any]]) -> str | None:
+    rules = roll.load_rules()
+    got = roll.read(row, rules, roll.built_counts([row, *others], rules))
+    return got["category"].removeprefix(roll.PREFIX) if got else None
+
+
+@pytest.mark.parametrize(
+    ("county", "stem", "bare"),
+    [
+        ("washington", "1S214CD", "1S214CD27300"),
+        ("clackamas", "22E09BD", "22E09BD02100"),
+        ("multnomah", "1S2E08AD", "1S2E08AD  -11200"),
+    ],
+)
+def test_the_block_is_the_tax_map_page_in_every_countys_number_format(county: str, stem: str, bare: str) -> None:
+    assert roll.block({"county": county, "tlid": bare}) == (county, stem)
+
+
+def test_three_lots_built_since_2021_in_the_block_keep_a_bare_lot_checked() -> None:
+    neighbours = _block("washington", "1S214CD", [2021, 2022, 2025, 1990])
+    assert _read_with(_bare("1S214CD27300"), neighbours) is None
+
+
+def test_two_new_lots_are_not_enough() -> None:
+    neighbours = _block("washington", "1S214CD", [2021, 2022, 2020, 1990])
+    assert _read_with(_bare("1S214CD27300"), neighbours) == "no_address"
+
+
+def test_the_bare_lots_own_year_does_not_count() -> None:
+    row = {**_bare("1S214CD27300"), "YEARBUILT": 2023}
+    assert _read_with(row, _block("washington", "1S214CD", [2021, 2022])) == "no_address"
+
+
+def test_new_houses_in_another_block_or_county_do_not_count() -> None:
+    far = _block("washington", "1S214CC", [2022, 2022, 2022]) + _block("clackamas", "1S214CD", [2022, 2022, 2022])
+    assert _read_with(_bare("1S214CD27300"), far) == "no_address"
+
+
+@pytest.mark.parametrize("years", [[None, None, None, None], [0, 0, 0, 0], ["", "n/a", 9999, 20210], [float("nan")] * 4])
+def test_a_year_the_roll_does_not_hold_spares_nothing(years: list[Any]) -> None:
+    assert _read_with(_bare("1S214CD27300"), _block("washington", "1S214CD", years)) == "no_address"
+
+
+def test_a_lot_table_with_no_year_column_leaves_the_lot_red() -> None:
+    rows = [{k: v for k, v in r.items() if k != "YEARBUILT"} for r in _block("washington", "1S214CD", [2022] * 4)]
+    assert _read_with({k: v for k, v in _bare("1S214CD27300").items() if k != "YEARBUILT"}, rows) == "no_address"
+
+
+def test_without_the_block_counts_a_bare_lot_is_red() -> None:
+    assert roll.read(_bare("1S214CD27300"), roll.load_rules()) is not None
+
+
+def test_new_houses_do_not_spare_a_tract_or_public_land() -> None:
+    neighbours = _block("washington", "1S214CD", [2022] * 5)
+    assert _read_with({**_bare("1S214CD90000"), "PROP_CODE": "000"}, neighbours) == "tract"
+    assert _read_with({**_bare("1S214CD27300"), "PROP_CODE": "940"}, neighbours) == "public_land"
+
+
 # --- the reading step and assign -------------------------------------------------
 
 
@@ -159,6 +234,21 @@ def test_assign_answers_a_roll_lot_red_with_no_reading_file(tmp_path: Path) -> N
     assert bind["source"] == "public land, per the washington roll code 940 (city)"
     assert meta["assign"]["roll_by_tier"] == {"public_land": 1, "no_address": 1} or meta["assign"]["roll_by_tier"] == {"no_address": 1, "public_land": 1}
     assert "COUNTY_ROLL_RED, by tier (red, out of the scan)" in (tmp_path / "out" / "summary.md").read_text(encoding="utf-8")
+
+
+def test_assign_and_the_reading_step_spare_a_bare_lot_among_new_houses(tmp_path: Path) -> None:
+    houses = [{"county": "washington", "tlid": f"1S214CD0{i}000", "YEARBUILT": 2022} for i in range(3)]
+    bare = {"county": "washington", "tlid": "1S214CD27300", "PROP_CODE": "000", "site_address": None, **ZERO}
+    bridge = _bridge(
+        tmp_path,
+        [{"TLID": "1S214CD27300", "design": "d1", "triage": "green", "if_signed": "green", "colour": "green"}],
+        {},
+    )
+    az.assign(_normalized(tmp_path, [bare, *houses]), bridge, tmp_path / "out")
+    frame = pd.read_parquet(tmp_path / "out" / "lots.parquet").set_index("TLID")
+    assert frame.loc["1S214CD27300"]["colour"] == "green"
+    lots = pd.DataFrame([{**bare, "YEARBUILT": 0}, *[{**h, "PROP_CODE": "100", "site_address": "1 MAIN ST", **WORTH} for h in houses]])
+    assert len(step.measure_roll(lots)) == 0
 
 
 def test_the_reading_step_writes_roll_lots_so_the_bridge_skips_them() -> None:

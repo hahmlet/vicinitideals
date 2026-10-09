@@ -74,7 +74,7 @@ def measure(lots: Any, land: Land) -> Any:
     return mark_whole(pd.DataFrame(rows, columns=list(COLUMNS[:-1])), tlids)
 
 
-ROLL_COLUMNS = ("county", "tlid", "PROP_CODE", "LANDVAL", "BLDGVAL", "TOTALVAL", "ASSESSVAL", "site_address")
+ROLL_COLUMNS = ("county", "tlid", "PROP_CODE", "LANDVAL", "BLDGVAL", "TOTALVAL", "ASSESSVAL", "site_address", "YEARBUILT")
 
 
 def measure_roll(lots: Any, taken: set[tuple[str, str]] | None = None) -> Any:
@@ -84,17 +84,20 @@ def measure_roll(lots: Any, taken: set[tuple[str, str]] | None = None) -> Any:
     """
     import pandas as pd
 
+    from flats.geom.roll import built_counts
     from flats.geom.roll import load_rules as roll_rules
     from flats.geom.roll import read as roll_read
 
     rules = roll_rules()
     taken = taken or set()
     rows = []
-    for rec in lots.astype(object).where(lots.notna(), None).to_dict("records"):
+    records = lots.astype(object).where(lots.notna(), None).to_dict("records")
+    built = built_counts(records, rules)
+    for rec in records:
         key = (str(rec["county"]), str(rec["tlid"]).rstrip())
         if key in taken:
             continue
-        got = roll_read(rec, rules)
+        got = roll_read(rec, rules, built)
         if got is not None:
             rows.append({"county": key[0], "TLID": key[1], **got})
     return pd.DataFrame(rows, columns=list(COLUMNS[:-1]))

@@ -33,9 +33,11 @@ version: 1
 tiers:
   public_land:
     enabled: true
-    # code: 92x school, 93x cemetery, 94x city, 95x county, 96x state,
-    # 97x federal, 99x port or other public body.
-    pattern: '^9[2-79]\d$'
+    # code: 920 school, 930 cemetery, 940 city, 950 county, 960 state,
+    # 970 federal, 990 port or other public body. The x1 variants (921, 941,
+    # 943, 951, 961, 971, 991, 993) carry values, buildings and addresses
+    # and stay screened (Steph RULED 2026-10-09).
+    pattern: '^9[2-79]0$'
     counties: [washington]
     words: public land
   tract:
@@ -49,6 +51,15 @@ tiers:
   no_address:
     enabled: true
     words: a parcel the county values at $0 with no street address
+    # Stays screened when new houses stand around it (Steph RULED 2026-10-09):
+    # a lot platted this year looks exactly like this. "Block" is the county's
+    # own tax map page: the parcel number less its last five characters, in
+    # the same county. "Built" is YEARBUILT on that county's assessor roll,
+    # a year from `since` to 2100. The lot's own year does not count. No
+    # year data, no exemption: the lot stays red.
+    keep_checked_when_block_built:
+      since: 2021
+      lots: 3
 # A $0 parcel WITH a real street address is screened normally, no red and no
 # flag (Steph RULED 2026-10-09): new lots the county has not valued yet look
 # exactly like this.
