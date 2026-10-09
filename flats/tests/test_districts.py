@@ -132,18 +132,8 @@ RULINGS: dict[str, dict[str, str]] = {
         # made it change: a ruling whose argument is that a document is
         # ABSENT goes quietly wrong the day the document arrives, and no check
         # in this file or any other was watching for it.
-        "HDR": (
-            "encode: High Density Residential -- quadplexes P in Table 315-1, "
-            "and Table 315-4 answers rear setback, side setback and building "
-            "separation with 'See Subsection 1005.02(L)'. ZDO 1005 is in the "
-            "store since 2026-09-08 and 1005.02(L) has been read: the "
-            "distance to a site area line is not a number but an angle drawn "
-            "from the top of the building -- 60 degrees to the north, 15 "
-            "degrees east and west, printed as 'Separation = b x .267 (tan 15 "
-            "degrees)'. A setback that is a function of height and of which "
-            "way a lot line points needs the bearing of every line, which "
-            "nothing here measures. 253 lots."
-        ),
+        # HDR left this list on 2026-10-09: it is encoded as RED BY RULING
+        # for design review (ZDO 1102.01(A)), so the ledger stops reporting it.
         "SHD": (
             "encode: Special High Density -- quadplexes P in Table 315-1, "
             "setbacks deferred to Subsection 1005.02(L), which is in the "
@@ -1155,6 +1145,6 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
             verdict = match.group(1)
             if verdict in owed:
                 owed[verdict].append(f"{layer}/{token}")
-    assert len(owed["encode"]) == 18, sorted(owed["encode"])
+    assert len(owed["encode"]) == 17, sorted(owed["encode"])
     assert len(owed["fetch"]) == 2, sorted(owed["fetch"])
     assert len(owed["column"]) == 10, sorted(owed["column"])
