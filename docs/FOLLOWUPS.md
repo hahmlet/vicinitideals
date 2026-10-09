@@ -1734,7 +1734,9 @@ read when the weekly full re-screen lands.
    broken outlines (0 invalid, 0 multi-part, 1,544 with holes): it is the
    complex-shape cap (convexity < 0.80, > 10 edges, pole-like), measured at
    a uniform inset; make_valid / buffer-0 do not apply; only 357 yellow lots
-   are held yellow by that flag alone -- left as is. STILL OPEN (item 52b):
+   are held yellow by that flag alone -- left as is. STILL OPEN (item 52b,
+   brief handed to a new agent 2026-10-08 together with run 67's
+   ZONE_TO_READ 1,032 + ZONE_UNENCODABLE 1,380 yellows):
    the 1,738 zone lots. FLATS resolves every one to ambiguous or unverified
    (never a clean permission), so measuring them needs those zones added to
    quadfit's rules (port_from_flats TARGETS cover only Washington + 4
@@ -1887,3 +1889,22 @@ read when the weekly full re-screen lands.
    to read `healthy` before the smoke, in BOTH the live script and the
    repo copy `scripts/deploy-vicinitideals.sh` (they differ: the live one
    uses STACK_DIR). App-side, not FLATS.
+57. [scan: YES] **Flatter placement for SLOPE-GRADE yellows (offered 2026-10-08, brief
+   handed to a new agent by Steph).** Run 67: 11,645 lots are yellow with
+   SLOPE-GRADE (the drawn building + court sits on 5-15% ground, Steph's
+   2026-10-04 band), 4,998 held by that flag ALONE. The placer draws one
+   place and grades it; it never looks for a flatter spot in the same
+   envelope. Work: where the fit has room to spare (`margins`, room
+   WIDER/DEEPER), try other placements/orientations and keep the flattest
+   one that passes EVERY check (fire route, court, setbacks re-run on the
+   new drawing, never the grade alone). The ruling does not change. Bound
+   on 137 over the 11,645, every gained green read; lands at a splice.
+58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08, brief handed
+   to a new agent).** Run 67 best-pod yellows held by a single flag a
+   measurement could settle: FACT-AT-STREET-END 633, ACCESS-STREET-
+   UNCONFIRMED 359, MEASURE-FIRE-ROUTE 334 (no hose route found for the
+   drawn plan), FACT-CIVIC-CORRIDOR 141, PARKING-STRIP-UNCONFIRMED 97.
+   49(c) (corner greens whose court may open onto an arterial; record the
+   access lot line per plan) goes FIRST: it is the false-GREEN half.
+   Measure each where the data allows; where it cannot be measured, say
+   why in one line and leave it yellow.
