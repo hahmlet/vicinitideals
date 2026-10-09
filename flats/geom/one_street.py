@@ -23,14 +23,24 @@ type) is within reach of every street edge.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 from typing import Any, Sequence
+
+from flats.geom.edges import bearing_deg, bearing_delta
 
 #: s4's own reach for calling an edge a street (``street_threshold_ft``).
 REACH_FT = 50.0
 
 #: s4's class letter for a street edge in ``edges_json``.
 STREET_CLASS = "F"
+
+#: A street edge shorter than this that runs across the lot's main street
+#: direction is a sliver, not a second frontage (FOLLOWUPS 63 step 3).
+SLIVER_FT = 15.0
+
+#: How far across the main direction a short edge must run to be a sliver.
+SLIVER_TURN_DEG = 45.0
 
 
 def _key(name: object, ftype: object) -> str:
@@ -42,11 +52,26 @@ def _key(name: object, ftype: object) -> str:
 
 
 def street_midpoints(edges_json: str | None) -> list[tuple[float, float]]:
-    """The midpoint of every street edge of one lot's ``edges_json``."""
+    """The midpoint of every street edge of one lot's ``edges_json``, slivers
+    left out: a street edge under :data:`SLIVER_FT` that turns
+    :data:`SLIVER_TURN_DEG` or more away from the lot's longest street edge
+    is where the front ends, not a second frontage."""
+    streets = [
+        e for e in json.loads(edges_json or "[]") if len(e) >= 5 and e[4] == STREET_CLASS
+    ]
+    if not streets:
+        return []
+    main = max(streets, key=lambda e: math.hypot(e[2] - e[0], e[3] - e[1]))
+    main_bearing = bearing_deg(*(float(v) for v in main[:4]))
     out: list[tuple[float, float]] = []
-    for e in json.loads(edges_json or "[]"):
-        if len(e) >= 5 and e[4] == STREET_CLASS:
-            out.append(((float(e[0]) + float(e[2])) / 2, (float(e[1]) + float(e[3])) / 2))
+    for e in streets:
+        x1, y1, x2, y2 = (float(v) for v in e[:4])
+        if (
+            math.hypot(x2 - x1, y2 - y1) < SLIVER_FT
+            and bearing_delta(bearing_deg(x1, y1, x2, y2), main_bearing) >= SLIVER_TURN_DEG
+        ):
+            continue
+        out.append(((x1 + x2) / 2, (y1 + y2) / 2))
     return out
 
 
@@ -121,4 +146,4 @@ def one_street_column(frame: Any, streets: Path) -> list[bool | None]:
     )
 
 
-__all__ = ["REACH_FT", "one_street_column", "one_street_flags", "street_midpoints"]
+__all__ = ["REACH_FT", "SLIVER_FT", "one_street_column", "one_street_flags", "street_midpoints"]

@@ -38,6 +38,7 @@ from flats.ingest.quadfit import (
     lot_from_row,
     observed_facts,
     per_lot,
+    read_as_bend,
     row_for,
     run,
     screen_lot,
@@ -1261,6 +1262,50 @@ def test_a_street_that_bends_is_not_a_corner(corpus, policies) -> None:
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     assert s.front_deg is None
     assert row_for(s)["side_street_lane"] is False
+
+
+# --- one street that bends is not a corner (FOLLOWUPS 63) -------------------
+
+
+def test_one_street_that_turns_ninety_degrees_is_a_bend_where_the_code_is_silent(corpus, policies) -> None:
+    # Washington County writes no corner test: one street name on one run is a
+    # bend (Steph, 2026-10-09) -- one front, the other bearing dropped.
+    lot = lot_from_row(
+        corner_row(jurisdiction="washington_unincorporated", zone="R5", one_street=True), corpus.layers
+    )
+    assert lot.facts.corner_read_as_bend is True
+    assert lot.facts.corner is False
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert "CORNER-READ-AS-BEND" in {f.code for f in s.screening.flags}
+
+
+def test_two_streets_or_an_unmeasured_one_stay_a_corner(corpus) -> None:
+    for over in ({"one_street": False}, {"one_street": None}, {}):
+        lot = lot_from_row(
+            corner_row(jurisdiction="washington_unincorporated", zone="R5", **over), corpus.layers
+        )
+        assert lot.facts.corner_read_as_bend is False and lot.facts.corner is True, over
+
+
+def test_a_city_that_writes_its_corner_test_follows_its_own_words(corpus) -> None:
+    # Portland: a curve of 120 degrees or less is two streets, so a 90 degree
+    # turn on one street IS a corner there (Portland 33.910).
+    for city in ("portland", "gresham", "beaverton"):
+        row = corner_row(jurisdiction=city, zone="R5", one_street=True)
+        assert read_as_bend(row, corpus.layers) is False, city
+    # Oregon City and Clackamas County: the written test needs two streets.
+    for city in ("oregon_city", "clackamas_unincorporated"):
+        row = corner_row(jurisdiction=city, zone="R5", one_street=True)
+        assert read_as_bend(row, corpus.layers) is True, city
+
+
+def test_the_bend_is_not_asked_without_the_corpus_or_two_street_directions(corpus) -> None:
+    row = corner_row(jurisdiction="washington_unincorporated", zone="R5", one_street=True)
+    assert read_as_bend(row, None) is False
+    gentle = {**row, "front_bearings_json": "[0.0, 30.0]"}
+    assert read_as_bend(gentle, corpus.layers) is False
+    single = {**row, "front_bearings_json": "[0.0]"}
+    assert read_as_bend(single, corpus.layers) is False
 
 
 # --- the drawing (FOLLOWUPS 5) -------------------------------------------------

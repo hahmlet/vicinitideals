@@ -144,6 +144,7 @@ from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_e
 from flats.ingest.flatter import flatter_checked
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
+from flats.rules.definitions import Abuts, Side, decide
 from flats.rules.model import TRANSIT_MEASURES, Layer
 from flats.rules.net_area import MEASURED as NET_MEASURED, SLOPES as NET_SLOPES, measured_deductions
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
@@ -563,15 +564,40 @@ def _counts_streets(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) 
     return False
 
 
-def _corner_test_states_bend(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> bool:
-    """Whether the lot's own code leaves a bend in one street unmade a corner:
-    it states no ``corner_lot`` test at all, or states that a lot on the
-    radius curve of a single street is not a corner (Clackamas County's
-    ``curve_is_one_street``). A code that makes a tight curve two streets
-    (Portland, Gresham) or reads any non-collinear frontage as a corner
-    (Oregon City) governs its own lots. Definitions are the layer's own or
+def _boundary_of_one_street(edges: Sequence[Sequence[Any]]) -> list[Side]:
+    """The lot's ring as a definition reads it, every street edge on the one
+    street (``one_street``): length, direction and what each line abuts."""
+    out: list[Side] = []
+    for e in edges:
+        x1, y1, x2, y2 = (float(v) for v in e[:4])
+        cls = e[4] if len(e) >= 5 else ""
+        abuts = Abuts.street if cls == STREET_CLASS else Abuts.alley if cls == ALLEY_CLASS else Abuts.none
+        out.append(
+            Side(
+                length_ft=math.hypot(x2 - x1, y2 - y1),
+                bearing_deg=math.degrees(math.atan2(y2 - y1, x2 - x1)) % 180.0,
+                abuts=abuts,
+                street_id="street" if abuts is Abuts.street else "",
+            )
+        )
+    return out
+
+
+def _bend_is_no_corner(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> bool:
+    """Whether the lot's own code leaves a bend in ONE street unmade a corner.
+
+    A code that writes a ``corner_lot`` test (Portland, Gresham, Oregon City,
+    Beaverton, Clackamas County) is asked through
+    :func:`flats.rules.definitions.decide` on the lot's ring with every street
+    edge one street: False means the code reads the bend as one street. A code
+    that answers True (Portland's curve of 120 degrees or less, Gresham's
+    delta of 60) governs its own lot, and so does one that cannot answer
+    (``None``). A jurisdiction that writes no test is silent, and Steph's
+    2026-10-09 ruling takes the more conservative reading with a flag: one
+    street name on one run is a bend. Definitions are the layer's own or
     adopted by ``definitions_from``, as :func:`_counts_streets` walks them;
-    without ``layers`` the question is not asked."""
+    without ``layers`` the question is not asked.
+    """
     if layers is None:
         return False
     queue = [_layer_id(row)]
@@ -583,7 +609,8 @@ def _corner_test_states_bend(row: Mapping[str, Any], layers: Mapping[str, Layer]
         seen.add(current)
         defn = layers[current].definitions.get("corner_lot")
         if defn is not None:
-            return bool(getattr(defn, "curve_is_one_street", False))
+            ring = _boundary_of_one_street(json.loads(row.get("edges_json") or "[]"))
+            return decide({"corner_lot": defn}, "corner_lot", ring) is False
         queue.extend(layers[current].definitions_from)
     return True
 
@@ -596,7 +623,7 @@ def read_as_bend(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> 
     (:func:`~flats.geom.corner.two_streets`), every street edge lies on one
     street (``one_street``, :mod:`flats.geom.one_street`), and the lot's code
     states no corner test that would make the bend a corner
-    (:func:`_corner_test_states_bend`). Steph, 2026-10-09: where the code is
+    (:func:`_bend_is_no_corner`). Steph, 2026-10-09: where the code is
     silent, take the more conservative reading, with a flag.
     """
     bearings = json.loads(row.get("front_bearings_json") or "[]")
@@ -604,7 +631,7 @@ def read_as_bend(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> 
         len(bearings) >= 2
         and row.get("one_street") is True
         and two_streets(bearings)
-        and _corner_test_states_bend(row, layers)
+        and _bend_is_no_corner(row, layers)
     )
 
 

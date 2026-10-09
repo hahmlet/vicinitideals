@@ -202,6 +202,32 @@ datasets:
       (a 504 after a long queue); the fetch retries, and a cut-short answer
       is refused, never written. 2026-10-06: 9,266 elements.
 
+  osm_roads:
+    kind: rlis_zip
+    label: OpenStreetMap roads (Geofabrik Oregon extract)
+    provides: streets
+    url: https://download.geofabrik.de/north-america/us/oregon-latest-free.shp.zip
+    member: gis_osm_roads_free_1.shp
+    geometry: polyline
+    native_srid: 4326
+    bbox_4326: [-123.49, 44.88, -121.65, 45.86]
+    filter: fclass in (motorway, motorway_link, trunk, trunk_link, primary, primary_link, secondary, secondary_link, tertiary, tertiary_link, unclassified, residential, living_street, service)
+    serves: [or/multnomah, or/clackamas, or/washington]
+    fields: [osm_id, code, fclass, name]
+    notes: >-
+      The second source for "this street is quiet" (FOLLOWUPS 60; Steph
+      2026-10-09: "yes, when both agree"). Washington County's TSP map draws
+      its classified roads only, so a street it leaves out is local only
+      where Metro's RLIS type AND OpenStreetMap's fclass both say
+      residential (flats/geom/street_class.py). A busier fclass beside the
+      lot line, a disagreement, or no OpenStreetMap line there leaves the
+      street unranked. `service` (driveways, parking aisles, alleys) never
+      counts as residential. Vehicle classes only -- footways and tracks do
+      not make a street busier. Geofabrik republishes the OpenStreetMap
+      state extract daily; the zip is read by range request like the
+      Metro one and the roads are reprojected and cut to the three counties
+      on the way in. Hashed and dated in the manifest like every dataset.
+
   ugb_metro:
     kind: arcgis
     label: Urban growth boundary

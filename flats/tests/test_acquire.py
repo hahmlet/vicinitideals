@@ -451,6 +451,67 @@ def test_an_rlis_member_is_pulled_by_range_and_filtered_to_our_counties(tmp_path
     ), "something asked the archive for more than a range"
 
 
+# --- OpenStreetMap roads off the Geofabrik zip (FOLLOWUPS 60) ----------------
+
+OSM_ONLY = f"""
+jurisdictions:
+  or/multnomah/portland: true
+datasets:
+  osm_roads:
+    kind: rlis_zip
+    label: OpenStreetMap roads
+    provides: streets
+    url: {RLIS}
+    member: gis_osm_roads_free_1.shp
+    geometry: polyline
+    native_srid: 4326
+    bbox_4326: [-123.49, 44.88, -121.65, 45.86]
+    filter: fclass in (residential, service)
+    fields: [osm_id, fclass, name]
+    serves: [or/multnomah]
+"""
+
+
+def osm_zip() -> bytes:
+    shp, shx, dbf = io.BytesIO(), io.BytesIO(), io.BytesIO()
+    w = shapefile.Writer(shp=shp, shx=shx, dbf=dbf, shapeType=shapefile.POLYLINE)
+    for name, size in (("osm_id", 10), ("fclass", 28), ("name", 100)):
+        w.field(name, "C", size=size)
+    for osm_id, fclass, name, line in [
+        ("1", "residential", "SE Oak St", [(-122.60, 45.50), (-122.59, 45.50)]),
+        ("2", "residential", "Far East Rd", [(-118.00, 44.00), (-117.99, 44.00)]),
+        ("3", "footway", "A Path", [(-122.60, 45.51), (-122.59, 45.51)]),
+        ("4", "service", "", [(-122.61, 45.52), (-122.60, 45.52)]),
+    ]:
+        w.line([line])
+        w.record(osm_id, fclass, name)
+    w.close()
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr("README.txt", b"Geofabrik " * 40_000, compress_type=zipfile.ZIP_STORED)
+        z.writestr("gis_osm_roads_free_1.shp", shp.getvalue())
+        z.writestr("gis_osm_roads_free_1.shx", shx.getvalue())
+        z.writestr("gis_osm_roads_free_1.dbf", dbf.getvalue())
+    return buf.getvalue()
+
+
+def test_osm_roads_are_cut_to_the_counties_filtered_and_reprojected(tmp_path: Path) -> None:
+    host = RangeHost(osm_zip())
+    pipeline = load_pipeline(registry(tmp_path, OSM_ONLY))
+    out = tmp_path / "2026-10-09"
+
+    doc = acquire(pipeline, out, client=client(host), log=quiet)
+
+    entry = doc["datasets"]["osm_roads"]
+    assert entry["status"] == "acquired", entry
+    feats = features_of(out / "osm_roads.geojson")
+    assert [f["properties"]["osm_id"] for f in feats] == ["1", "4"], (
+        "the eastern road was kept (bbox) or the footway was (filter)"
+    )
+    x, y = feats[0]["geometry"]["coordinates"][0]
+    assert x > 1_000_000 and y > 100_000, "degrees were left unprojected"
+
+
 CHANGELOG_ONLY = f"""
 jurisdictions:
   or/multnomah/portland: true

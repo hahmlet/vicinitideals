@@ -537,12 +537,21 @@ def _archive_identity(client: httpx.Client, url: str, archive: _RemoteZip) -> di
 
 
 def _fetch_rlis(
-    archive: _RemoteZip, ds: Dataset, sink: _Sink, log: Callable[[str], None]
+    archive: _RemoteZip,
+    ds: Dataset,
+    sink: _Sink,
+    log: Callable[[str], None],
+    working_srid: int | None = None,
 ) -> list[str]:
     """Every record of the member that passes the filter; returns the dbf's fields.
 
     A ``table`` member is a ``.dbf`` with no shapes beside it (the quarterly
     taxlot change list): its rows are written as features with no geometry.
+
+    A member that declares ``native_srid`` (the Geofabrik OpenStreetMap
+    roads, in degrees) is reprojected to ``working_srid`` as it is read, and
+    one that declares ``bbox_4326`` keeps only the shapes whose own box meets
+    it -- the extract is the whole state and the screen is three counties.
     """
     assert ds.member
     stem = ds.member.rsplit(".", 1)[0]
@@ -571,17 +580,41 @@ def _fetch_rlis(
             props = {names[i]: (rec[i].isoformat() if hasattr(rec[i], "year") else rec[i]) for i in keep}
             sink.add({"type": "Feature", "properties": props, "geometry": None})
         return names
+    reproject = None
+    if ds.native_srid is not None and working_srid is not None and ds.native_srid != working_srid:
+        from pyproj import Transformer
+
+        reproject = Transformer.from_crs(ds.native_srid, working_srid, always_xy=True)
+    box = ds.bbox_4326
     for sr in reader.iterShapeRecords():
         rec = sr.record
         if where and str(rec[where[0]]).strip().upper() not in where[1]:
             continue
+        if box and sr.shape.shapeType:
+            x0, y0, x1, y1 = sr.shape.bbox
+            if x1 < box[0] or x0 > box[2] or y1 < box[1] or y0 > box[3]:
+                continue
         props = {names[i]: (rec[i].isoformat() if hasattr(rec[i], "year") else rec[i]) for i in keep}
         try:
             geom = sr.shape.__geo_interface__ if sr.shape.shapeType else None
+            if geom is not None and reproject is not None:
+                geom = _reprojected(geom, reproject)
         except Exception:  # the county data has degenerate shapes
             geom = None
         sink.add({"type": "Feature", "properties": props, "geometry": geom})
     return names
+
+
+def _reprojected(geom: dict[str, Any], transformer: Any) -> dict[str, Any]:
+    """A GeoJSON geometry with every coordinate pair run through ``transformer``."""
+
+    def walk(c: Any) -> Any:
+        if c and isinstance(c[0], (int, float)):
+            x, y = transformer.transform(c[0], c[1])
+            return [x, y]
+        return [walk(p) for p in c]
+
+    return {"type": geom["type"], "coordinates": walk(geom["coordinates"])}
 
 
 # --- the stage -------------------------------------------------------------
@@ -745,7 +778,7 @@ def acquire(
                         log(f"  archive is {archive.total / 1e9:.2f} GB, {len(archive.entries)} members")
                         doc.setdefault("archives", {})[ds.url] = _archive_identity(client, ds.url, archive)
                     sink = _Sink(path, pipeline.working_srid)
-                    names = _fetch_rlis(archive, ds, sink, log)
+                    names = _fetch_rlis(archive, ds, sink, log, pipeline.working_srid)
                     entry["fields"] = {"declared": list(ds.fields), "present": names, "checked": True}
                     entry["status"] = "acquired"
                 if sink is not None:

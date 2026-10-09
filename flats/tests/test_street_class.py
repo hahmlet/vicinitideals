@@ -210,9 +210,14 @@ def test_every_ranking_map_starts_local_at_zero_and_ranks_no_proposal() -> None:
     assert class_rank(40, washington) is None  # Proposed Collector
 
 
-def unlisted_map(oak: int | None = 2, main_type: int = 1500):
+def unlisted_map(
+    oak: int | None = 2,
+    main_type: int = 1500,
+    osm: tuple[str, ...] | None = ("residential",),
+):
     """Washington County's shape of map: Oak drawn (ranked ``oak``), Main
-    not drawn at all, Metro typing Main ``main_type``."""
+    not drawn at all, Metro typing Main ``main_type``, OpenStreetMap drawing
+    a road along Main of each class in ``osm`` (None: no OpenStreetMap)."""
     return build(
         ["or/washington/_unincorporated"],
         [OAK],
@@ -223,6 +228,8 @@ def unlisted_map(oak: int | None = 2, main_type: int = 1500):
         [main_type, 1450],
         [oak],
         unlisted=0,
+        osm=[MAIN] * len(osm) if osm else (),
+        osm_classes=osm or (),
     )
 
 
@@ -241,6 +248,66 @@ def test_a_street_the_map_leaves_out_is_local_only_where_metro_says_so() -> None
     # Every other map: an undrawn street is unread.
     no_unlisted = build(["x"], [OAK], [""], [""], [MAIN, OAK], ["", ""], [1500, 1450], [2])
     assert edge_rank(ON_MAIN, no_unlisted) is None
+
+
+def test_a_street_the_map_leaves_out_is_quiet_only_where_openstreetmap_agrees() -> None:
+    """Steph 2026-10-09, "yes, when both agree": Metro AND OpenStreetMap."""
+    from flats.geom.street_class import edge_rank
+
+    assert edge_rank(ON_MAIN, unlisted_map(osm=("residential",))) == 0
+    assert edge_rank(ON_MAIN, unlisted_map(osm=("living_street",))) == 0
+    # A busier class beside the line, alone or with a residential one.
+    for busier in ("unclassified", "tertiary", "secondary", "primary"):
+        assert edge_rank(ON_MAIN, unlisted_map(osm=(busier,))) is None
+        assert edge_rank(ON_MAIN, unlisted_map(osm=("residential", busier))) is None
+    # A service road never agrees alone, and is ignored beside a residential one.
+    assert edge_rank(ON_MAIN, unlisted_map(osm=("service",))) is None
+    assert edge_rank(ON_MAIN, unlisted_map(osm=("residential", "service"))) == 0
+    # No OpenStreetMap road there, or none in the snapshot: a silent source.
+    assert edge_rank(ON_MAIN, unlisted_map(osm=None)) is None
+    # Metro disagreeing keeps it unranked whatever OpenStreetMap says.
+    assert edge_rank(ON_MAIN, unlisted_map(main_type=1450)) is None
+    # A drawn street's own rank never asks OpenStreetMap.
+    assert edge_rank(ON_OAK, unlisted_map(osm=None)) == 2
+
+
+def test_the_loader_keeps_metros_whole_file_and_reads_the_snapshots_openstreetmap(tmp_path) -> None:
+    """The washington map's rank is not clipped to its classified roads, and
+    the OpenStreetMap roads come from the snapshot's own copy."""
+    import json as _json
+
+    from shapely.geometry import mapping
+
+    from flats.geom.street_class import OSM_ROADS_KEY, load_class_maps
+    from flats.ingest.sources import load_pipeline
+
+    def write(name: str, features: list[dict]) -> None:
+        (tmp_path / f"{name}.geojson").write_text(
+            _json.dumps({"type": "FeatureCollection", "features": features}), encoding="utf-8"
+        )
+
+    far = LineString([(0, 50_000), (600, 50_000)])  # 50,000 ft from any classified road
+    write("street_class_washington", [
+        {"type": "Feature", "geometry": mapping(OAK), "properties": {"FClass2": "4"}},
+    ])
+    write("rlis_streets", [
+        {"type": "Feature", "geometry": mapping(far), "properties": {"STREETNAME": "FAR", "TYPE": 1500}},
+    ])
+    with_osm = load_pipeline()
+    assert OSM_ROADS_KEY in with_osm.datasets
+    assert with_osm.datasets[OSM_ROADS_KEY].native_srid == 4326
+    for case in ("without", "with"):
+        if case == "with":
+            write(OSM_ROADS_KEY, [
+                {"type": "Feature", "geometry": mapping(far), "properties": {"fclass": "residential"}},
+            ])
+        (washington,) = [m for m in load_class_maps(tmp_path, with_osm) if m.unlisted == 0]
+        assert len(washington.streets.lines) == 1  # far from the zone, kept
+        assert (washington.osm is not None) is (case == "with")
+        edge = [100.0, 50_000.0, 200.0, 50_000.0, "F"]
+        from flats.geom.street_class import edge_rank
+
+        assert edge_rank(edge, washington) == (0 if case == "with" else None)
 
 
 def test_a_quiet_front_sends_the_driveway_to_the_front() -> None:

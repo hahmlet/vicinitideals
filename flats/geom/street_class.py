@@ -61,8 +61,10 @@ another plan (Villebois).
 **A map that draws only the classified streets** (Washington County's TSP
 layer: neighbourhood routes and up, no local streets) ranks the street it
 does not draw as :attr:`ClassSpec.unlisted` -- but only where Metro types
-that street a minor residential one (:data:`RLIS_LOCAL`). An absence is not
-a reading, so it takes the second source a ``local_street`` True takes.
+that street a minor residential one (:data:`RLIS_LOCAL`) and OpenStreetMap
+calls it residential too (:data:`OSM_LOCAL`). An absence is not a reading,
+so it takes two sources; where they differ, or either is silent, the street
+stays unranked and the lot yellow.
 """
 
 from __future__ import annotations
@@ -96,6 +98,14 @@ LOCAL_STREET = "local_street"
 #: RLIS TYPE codes Metro gives a minor residential street: 1500, and the
 #: two unclassified Clackamas variants (named and unnamed, no addresses).
 RLIS_LOCAL: frozenset[int] = frozenset({1500, 1550, 1560})
+
+#: The registry dataset holding OpenStreetMap's roads, with ``fclass``.
+OSM_ROADS_KEY = "osm_roads"
+
+#: OpenStreetMap ``fclass`` values that call a street residential. ``service``
+#: (driveway, aisle, alley) never counts, and ``unclassified`` is a step
+#: busier than residential in OpenStreetMap's own order.
+OSM_LOCAL: frozenset[str] = frozenset({"residential", "living_street"})
 
 
 @dataclass(frozen=True)
@@ -268,6 +278,11 @@ class ClassMap:
     ranks: tuple[int | None, ...] = ()
     #: :attr:`ClassSpec.unlisted`.
     unlisted: int | None = None
+    #: OpenStreetMap's roads and each one's ``fclass``; None where the
+    #: snapshot holds none. A street the map leaves out ranks as
+    #: :attr:`unlisted` only where these agree with Metro (:func:`_osm_agrees`).
+    osm: Lines | None = None
+    osm_classes: tuple[str, ...] = ()
 
     def covers(self, layer_id: str | None) -> bool:
         return bool(layer_id) and any(layer_id == s or layer_id.startswith(f"{s}/") for s in self.serves)
@@ -312,12 +327,17 @@ def build(
     types: Sequence[int | None],
     ranks: Sequence[int | None] = (),
     unlisted: int | None = None,
+    osm: Sequence[Any] = (),
+    osm_classes: Sequence[str] = (),
 ) -> ClassMap:
     """A class map from its parts (what :func:`load_class_maps` reads, and
-    what a test draws). ``ranks`` defaults to none."""
+    what a test draws). ``ranks`` defaults to none; ``osm`` is
+    OpenStreetMap's roads, each with its ``fclass`` in ``osm_classes``."""
     keep = [i for i, g in enumerate(lines) if g is not None and not g.is_empty]
     held = Lines.build([lines[i] for i in keep], [names[i] for i in keep])
     road = [i for i, g in enumerate(streets) if g is not None and not g.is_empty]
+    osm_ix = [i for i, g in enumerate(osm) if g is not None and not g.is_empty]
+    osm_kept = [osm[i] for i in osm_ix]
     ranked = list(ranks) if ranks else [None] * len(lines)
     return ClassMap(
         serves=tuple(serves),
@@ -327,6 +347,8 @@ def build(
         types=tuple(types[i] for i in road),
         ranks=tuple(ranked[i] for i in keep),
         unlisted=unlisted,
+        osm=Lines.build(osm_kept) if osm_kept else None,
+        osm_classes=tuple(osm_classes[i] for i in osm_ix),
     )
 
 
@@ -348,6 +370,8 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
     roads_path = _dataset_path(sources, manifest, STREETS_KEY)
     if not roads_path.is_file():
         return ()
+    osm_lines: list[Any] | None = None
+    osm_classes: list[str] = []
     out: list[ClassMap] = []
     for key, spec in CLASS_MAPS.items():
         ds = pipeline.datasets.get(key)
@@ -365,16 +389,23 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
             if not f.get("geometry"):
                 continue
             g = shape(f["geometry"])
-            # A map that draws only its classified streets reads every street
-            # it leaves out as local where Metro agrees, so the local streets
-            # far from a classified road are the ones it needs: no clip
-            # (FOLLOWUPS 60; Steph 2026-10-09: "Ship").
+            # A map that draws only its classified streets ranks the streets
+            # it leaves out, and those are the ones far from a classified
+            # road, so it keeps Metro's whole file (FOLLOWUPS 60).
             if spec.unlisted is None and not g.intersects(zone):
                 continue
             p = f.get("properties") or {}
             roads.append(g)
             labels.append(_street_label(p))
             types.append(_type_of(p))
+        if spec.unlisted is not None and osm_lines is None:
+            osm_lines = []
+            osm_path = _dataset_path(sources, manifest, OSM_ROADS_KEY)
+            if osm_path.is_file():
+                for f in iter_features(osm_path):
+                    if f.get("geometry"):
+                        osm_lines.append(shape(f["geometry"]))
+                        osm_classes.append(str((f.get("properties") or {}).get("fclass") or ""))
         out.append(
             build(
                 ds.serves,
@@ -386,6 +417,8 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
                 types,
                 [class_rank(p.get(spec.field), spec) for p in props],
                 spec.unlisted,
+                osm_lines if spec.unlisted is not None and osm_lines else (),
+                osm_classes,
             )
         )
     return tuple(out)
@@ -422,16 +455,37 @@ def _kind_at(point: Any, own: float, cmap: ClassMap) -> str:
     return kind
 
 
+def _osm_agrees(point: Any, own: float, s: int, cmap: ClassMap) -> bool:
+    """Whether OpenStreetMap also calls the RLIS street ``s`` residential at
+    ``point``: some OpenStreetMap road runs abreast of the lot line on that
+    street, and every one that does is residential. A busier class there, a
+    street with no OpenStreetMap road, or a snapshot without the roads is not
+    agreement. ``service`` roads are ignored and never agree on their own."""
+    if cmap.osm is None:
+        return False
+    foot = cmap.streets.lines[s].interpolate(cmap.streets.lines[s].project(point))
+    found: set[str] = set()
+    for i in cmap.osm.near(point, CORRIDOR_REACH_FT):
+        line = cmap.osm.lines[i]
+        if line.distance(foot) <= COINCIDE_FT and _abreast(line, point, own, CORRIDOR_REACH_FT):
+            found.add(cmap.osm_classes[i])
+    found.discard("service")
+    return bool(found) and found <= OSM_LOCAL
+
+
 def _rank_at(point: Any, own: float, cmap: ClassMap) -> int | None:
     """The rank of the street a lot line abuts at ``point``; None where no
     TSP line on it is abreast, or the lines there disagree.
 
     On a map of the classified streets only (:attr:`ClassMap.unlisted`), a
-    street with no TSP line abreast that Metro types local ranks as the
-    undrawn class; one Metro types otherwise stays unread."""
+    street with no TSP line abreast ranks as the undrawn class only where
+    Metro types it local AND OpenStreetMap calls it residential (Steph
+    2026-10-09: "yes, when both agree"); otherwise it stays unread."""
     s, lines = _beside(point, own, cmap)
     if not lines and s is not None and cmap.unlisted is not None:
-        return cmap.unlisted if cmap.types[s] in RLIS_LOCAL else None
+        if cmap.types[s] in RLIS_LOCAL and _osm_agrees(point, own, s, cmap):
+            return cmap.unlisted
+        return None
     found = {cmap.ranks[i] for i in lines}
     if len(found) != 1:
         return None
