@@ -1686,33 +1686,20 @@ read when the weekly full re-screen lands.
    unless it copies `ovl_<carve>` into `ovl_<carve>_site` first (recipe
    `/root/tw/prep.py`). 49(f) slivers: left yellow (codes reach 25-100 ft
    past the drawn line).
-51. [scan: YES (a bound on Tigard + Cornelius lots; lands at the splice or the next weekly)] **Tigard and
-   Cornelius are encoded but never screened (found 2026-10-07 counting run
-   65's yellows).** Both layers merged 2026-10-01 (eligible: true, item 17),
-   but `flats/config/pipeline.yaml` `jurisdictions:` never lists them, so
-   `pipeline.enabled()` is false and `normalize.gate_for` gates every lot
-   JURISDICTION_OFF: run 65 best pod yellow 18,516 Tigard + 4,182 Cornelius
-   lots, all JURISDICTION-OFF (the comment there still says "not encoded
-   yet"). Work: switch both on; check each lot finds its zone (Metro
-   regional zoning by JURIS_CITY); bound a sample on 137 old vs new and read
-   gains one by one; report the colour counts to Steph before shipping.
-   STATE 2026-10-07 (branch bound/f51-tigard-cornelius c54f5a7d + R-10 work,
-   NOT on main, NOT deployed): both cities switched on in the code and tested;
-   quadfit rules ported. Zone check done: of 22,996 lots 11 find no usable
-   zone -- 4 NO_ZONE (outside Metro's polygons), 3 map labels that are a
-   hair-width sliver (Tigard R-15 x2, Cornelius GI; the stored codes hold
-   neither, so they stay gated), 4 Washington County codes (3 on the west
-   side stay unencodable, item 17). Cornelius R-10: tax lot 1N335CD01200 is
-   now read R-10 by hand (`lot_zones` in cornelius.yaml, new `LotZone`
-   mechanism in rules model/loader/normalize, tested); that lot is NOT in
-   the queued bridge (it was normalized before the entry), so it is screened
-   at the next re-screen, not in this bound. Bridge /root/f51/bridge.sh is
-   queued on heavy.lock behind the slope bound (starts ~midnight PDT);
-   reading script ready at /root/f51/gains/read.py (per-city colours, every
-   green block, yellow/red samples). TO THE 49(i) SPLICE AGENT: this bound
-   will NOT be ready before your splice starts and nothing of it is on main,
-   so do not wait for it and do not include it. Tigard + Cornelius ride the
-   next weekly (or a later splice once the gains are read and shipped).
+51. [scan: NO new code, check after the weekly run] **Tigard and Cornelius switched on (SHIPPED 2026-10-08; nothing shows until the next weekly).**
+   Both cities were encoded but never listed in `flats/config/pipeline.yaml`,
+   so every lot was JURISDICTION_OFF (run 65: 18,516 Tigard + 4,182
+   Cornelius yellows). Now on; quadfit rows ported from the corpus; Cornelius
+   R-10 tax lot 1N335CD01200 read by hand (`lot_zones`). Bound on 137
+   (/root/f51, can be deleted), measured lots: Cornelius 381 green / 3,406
+   red / 47 yellow; Tigard 840 green / 15,544 red / 777 yellow; unmeasured
+   Cornelius 334 red + 77 yellow, Tigard 824 red + 766 yellow. All 1,221
+   greens read: 1,034 ordinary houses, 187 commercial/apartment/public-coded
+   (the pipeline ignores existing buildings by design). 34 Cornelius greens
+   turn yellow as-if-signed on min density (as designed). AFTER THE NEXT
+   WEEKLY: check Tigard + Cornelius colour counts against the bound above;
+   R-10 lot 1N335CD01200 should now screen; 4 NO_ZONE + 3 sliver-labelled +
+   3 west-side Cornelius county-coded lots stay gated.
 52. [scan: lands at 49(i)'s splice or the next weekly; no re-screen, no promotion]
    **Lots dropped before a fit (run 65): 11,427 yellow NOT_MEASURED +
    2,203 yellow GEOM-UNREADABLE.** Bucketed 2026-10-07: 6,951 had no 20 ft
@@ -1908,3 +1895,16 @@ read when the weekly full re-screen lands.
    access lot line per plan) goes FIRST: it is the false-GREEN half.
    Measure each where the data allows; where it cannot be measured, say
    why in one line and leave it yellow.
+59. [scan: YES] **Tracts, zero-value parcels and public county codes show GREEN (found 2026-10-08
+   reading item 51's gains; the leak already exists in every city).** The
+   institutional rule works by map overlap only; no county property code or
+   value check backs it. Missed: land-and-building-value-zero tracts (e.g.
+   Tigard 2S111CD01100 = Summerfield Golf Course, 100% overlap, not in any
+   institutional map; 2S107DA12900, 2S101AC90000, 2S111DA24400; Cornelius
+   1N334DC90000) and public-looking codes 960 (parks/open space), 910, 940,
+   980, 990. Live run 67: 153 zero-value greens + 159 9xx-coded greens of
+   49,091. Churches/charities (911, 981) STAY CHECKED by Steph's ruling
+   (item 47); a golf course is not an institutional category, so ask Steph:
+   is a tract / common-area / golf course RED? Then add a tract + zero-value
+   (+ public-code) rule, bound over run 67, read every moved lot. Also
+   1S133AD02200 (code 911) overlaps Westgate Christian School at 17% only.
