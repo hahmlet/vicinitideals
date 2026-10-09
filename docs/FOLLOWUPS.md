@@ -1510,8 +1510,9 @@ read when the weekly full re-screen lands.
    MemAvailable 3.6 GB. 137 is now CPU-bound (lot-seconds 37k -> 43k
    with 16 busy), so the simulator's ~2,000 s was not reachable and more
    than 14 processes buys nothing. Proofs 1-3 caught a `python -m`
-   worker-setup bug and an OOM kill, both fixed. LEFT: (d) rented compute
-   -- DECISION PENDING, Steph's action. Steph 2026-10-06 PREFERS
+   worker-setup bug and an OOM kill, both fixed. (d) rented compute --
+   PARKED by Steph 2026-10-08 ("won't do for now"; keep the research,
+   don't delete it). Steph 2026-10-06 PREFERS
    CLOUDFLARE (a commercial version would run there): Cloudflare
    Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
    12 GiB / 20 GB each, up to 1,500 vCPU per account at once; CPU billed
@@ -1530,7 +1531,7 @@ read when the weekly full re-screen lands.
    outside the repo, a monthly budget alert. Fallback considered:
    Hetzner CCX63 in Hillsboro OR (48 vCPU / 192 GB, ~$1.64/h, billed
    until DELETED; one big machine, least build). (e) fewer lanes: not
-   pursued. (f) skip big PRIVATE lots by size -- Steph 2026-10-06
+   pursued. LEFT: (f) skip big PRIVATE lots by size -- Steph 2026-10-06
    DEFERRED: "see what the institutional changes remove" (item 47), then
    decide. Measured on quadfit_2026-10-01_wash (418,021 lots screened):
    861 lots >= 10 ac (660 10-20, 167 20-44, 34 >= 44; biggest 194.8 ac
