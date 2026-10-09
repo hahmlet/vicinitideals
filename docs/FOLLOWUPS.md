@@ -1648,27 +1648,25 @@ read when the weekly full re-screen lands.
    the app shows the map colour everywhere; the 16 STREET_UNCONFIRMED
    y->unknown rows traced: their missed standard went away, leaving the
    unconfirmed street alone (map: yellow, ACCESS-STREET-UNCONFIRMED).
-   (i) SPLICE OWED -- TAKEN by the weekly session (vicinitideals-fa)
-   2026-10-08 (the agent handed it on 10-07 could not be found). One partial
-   re-screen on run 65 carrying 81c3b77b + 84e702de (scope
-   /root/weekly_fixes/scope.txt, 9,860), 51577bb8 (44, /root/rank-colour/
-   scope.txt, 39,743) and the slope lane's (e)/(f)/(h) = 2dacbe1c (scope
-   /root/sf/scope_slope.txt, 127,093: every lot with steep under either code
-   + the coarse group; the bound's own 93,908 = scope_slope_bound.txt);
-   2cfd13d6 (52) rides in assign. Prepared on 137: /root/s49i/scope_pre.txt
-   (48,948, the first two), chain /root/s49i/chain.sh (preflight, done-marker
-   per step: bridge -> splice onto /root/bridge_2026-10-07_weekly -> assign on
-   run 65's normalized -> export; `SHA=<main sha>`, fixed tree
-   /root/code/s49i_<sha>). NOT in it: 017f63cf (50) -- its *_site columns need
-   s5o re-run and the splice refuses a changed s5o ("different columns"), so
-   it waits for the weekly; 51/53 need a new normalize -> the weekly unless
-   51's agent is ready first. Slope work ON MAIN 2dacbe1c 2026-10-08 --
-   QUEUED 2026-10-08 ~14:10 UTC on heavy.lock behind proof5 (pid 364130):
-   SHA f16f1fd6, tree /root/code/s49i_f16f1fd6, scope /root/s49i/scope.txt =
-   162,717 lots (87 ROW pseudo-lots dropped), log /root/s49i/chain.log.
-   Expect the slope bound's 2,525 moves + the others'. Load/drift/gate on
-   114; a warned gate is Steph's. Tell vicinitideals-5c when through (it
-   cleans /root/sf after).
+   (i) DONE 2026-10-08 -- RUN 67 PROMOTED (agent, clean gate, ~00:40 UTC
+   10-09). Splice of 162,717 lots on run 65 (SHA f16f1fd6: 81c3b77b +
+   84e702de, 51577bb8, 2dacbe1c; 2cfd13d6 in assign): bridge 6 h 06 min,
+   bundle `data/flats/bridge/2026-10-08_49i`, drift
+   `data/flats/reports/2026-10-08/drift_run67.md` -- 32,753 answers moved,
+   all `rules`, 0 unexplained; gate 8 rows ok. Best pod per lot (map
+   colour): green 49,091 -> 50,071, yellow 162,370 -> 153,799, red
+   376,354 -> 383,945. Lots moved 13,869: 10,024 outside the scope =
+   item 52's too-small/too-narrow yellow->red; inside 3,845, of which
+   3,757 the same move a lane's bound predicted for that lot (slope
+   movers3, weekly_fixes b_ca283cfa vs f2aa1bf3, rank moves_ABR). 88 read
+   one by one (lists `/root/weekly137/` on 114): all two fixes meeting --
+   steep ground coming off lets the building sit nearer the street, so the
+   hose route drops under 150 ft (S lots), or the new reading ranking picks
+   a tight fit that 81c3b77b now measures (R lots); 14 new greens, every
+   one with a route <= 150 ft and no steep under the building. 017f63cf
+   (50) did NOT land (s5o not re-run) -> the weekly. prune-runs retired run
+   61 (kept 63/65/67); plain VACUUM ANALYZE run, VACUUM FULL still owed
+   (24 GB free). flats_flags sync run 67 (926,292 opened) + check passed.
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
