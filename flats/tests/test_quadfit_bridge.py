@@ -114,6 +114,10 @@ def row(**over: object) -> dict[str, object]:
 # --- the facts, in the registry's words --------------------------------------
 
 
+# Diagnostics the bridge writes beside the answer; assign trims them to ROW_COLUMNS.
+BRIDGE_ONLY_COLUMNS = {"access_json", "fire_why"}
+
+
 def test_every_fact_the_bridge_observes_is_a_registered_site_fact() -> None:
     for name in OBSERVABLE:
         assert CONDITIONS[name].kind == "site_fact", name
@@ -823,7 +827,7 @@ def test_the_envelope_is_cut_with_the_yards_the_corpus_resolved(corpus, policies
     assert row_for(s)["envelope_sqft"] == pytest.approx(4750)
     # assign trims a bridge frame to ROW_COLUMNS; a column row_for writes and
     # the list lacks never reaches the database (run 18 lost the envelope).
-    assert list(row_for(s)) == list(ROW_COLUMNS)
+    assert [c for c in row_for(s) if c not in BRIDGE_ONLY_COLUMNS] == list(ROW_COLUMNS)
 
 
 def test_without_the_taxlot_or_a_street_the_envelope_stays_quadfits(corpus, policies) -> None:
@@ -1225,7 +1229,7 @@ def test_a_portland_corner_lot_fronts_its_shorter_street_and_parks_off_the_other
     assert s.fit.across_ft == pytest.approx(max(side, s.screening.stalls_charged * 9.0))
     got = row_for(s)
     assert got["front_deg"] == 0.0 and got["side_street_lane"] is True
-    assert list(got) == list(ROW_COLUMNS)
+    assert [c for c in got if c not in BRIDGE_ONLY_COLUMNS] == list(ROW_COLUMNS)
 
 
 def test_an_owners_choice_city_keeps_the_better_front(corpus, policies) -> None:
