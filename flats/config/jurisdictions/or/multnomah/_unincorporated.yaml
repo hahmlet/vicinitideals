@@ -2213,11 +2213,9 @@ zones:
       # rather than from this one because that is where the words are.
       value: false
       quote: "or/multnomah/_unincorporated/39.or.txt#L20-L33,L385-L390"
-      variants:
-        - value: true
-          when: [planned_development]
-          cite: MCC 39.4620(A) with MCC 39.5350(A)
-          quote: "or/multnomah/_unincorporated/39.pd.txt#L257-L262"
+      #
+      # Door closed by ruling, not by the code: 39.4620(A) reaches a Planned Development
+      # (MCC 39.5350(A), attached dwellings), which is a Planning Commission hearing. Was `[planned_development]`.
     min_lot_sqft:
       # 39.4625(A): "Except as provided in MCC 39.3120, 39.4630, and 39.4635,
       # and 39.5300 through 39.5350, the minimum lot size shall be one acre."
@@ -2269,6 +2267,10 @@ zones:
       cite: MCC 39.4625(B)
       quote: "or/multnomah/_unincorporated/39.or.txt#L423,L428"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the only way to a housing building of this kind is a Planned Development,
+      a Planning Commission hearing; a review is not by-right, so this zone is refused.
+      The `planned_development` variant on `quadplex_allowed` was removed with the ruling
+      and can go back if it is reversed.
       THE PLANNED DEVELOPMENT DOOR, and what it does not promise. MCC 39.5320
       says that where a PD standard conflicts with a base zone standard, "the
       standard of the PD shall apply", so every dimension encoded above is
@@ -2889,11 +2891,10 @@ zones:
       # the difference between a zone that refuses and a zone nobody read.
       value: false
       quote: "or/multnomah/_unincorporated/39.efu.txt#L175-L186,L621-L633"
-      variants:
-        - value: true
-          when: [farm_labor_housing, review_use]
-          cite: MCC 39.4225(D) and 39.4265(C)(2)(d)
-          quote: "or/multnomah/_unincorporated/39.efu.txt#L628-L633,L2179-L2198"
+      #
+      # Door closed by ruling, not by the code: 39.4265(C)(2)(d) farm labor housing is a review use
+      # (39.4225) decided on criteria, and needs the farm and a primary dwelling on the tract.
+      # Was `[farm_labor_housing, review_use]`.
     max_height_ft:
       # 39.4245(C), printed under the yard row: "Maximum Structure Height - 35
       # feet." Paragraph (E) lets barns, silos, windmills, antennae and
@@ -2948,6 +2949,10 @@ zones:
       cite: MCC 39.4245(A)
       quote: "or/multnomah/_unincorporated/39.efu.txt#L1339-L1345"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the only way to a multi-unit building here is farm labor housing as a review
+      use, decided on criteria by the approval authority; a review is not by-right, so this
+      zone is refused. The variant on `quadplex_allowed` was removed with the ruling and can
+      go back if it is reversed.
       The dimensions are encoded here and on none of the other three resource
       zones, because this is the only one of the four with a use path that
       reaches the pod at all. A zone whose use list closes needs no envelope;
@@ -3737,11 +3742,9 @@ zones:
       value: false
       quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L19-L26,L27-L32,L386-L389,L392-L393,L412-L418"
       cite: "MCC 39.4355, 39.4360(A) and 39.4370(B)(8)"
-      variants:
-        - value: true
-          when: [planned_development]
-          cite: MCC 39.4370(B)(8) with MCC 39.5350(A)
-          quote: "or/multnomah/_unincorporated/39.pd.txt#L257-L262"
+      #
+      # Door closed by ruling, not by the code: 39.4370(B)(8) reaches a Planned Development
+      # (MCC 39.5350(A), attached dwellings), which is a Planning Commission hearing. Was `[planned_development]`.
     max_height_ft:
       # MCC 39.4375: "Maximum Structure Height - 35 feet", printed directly
       # under the minimum yard table.
@@ -3809,6 +3812,10 @@ zones:
       cite: MCC 39.4375(C)
       quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450,L455"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the only way to a housing building of this kind is a Planned Development,
+      a Planning Commission hearing on a preliminary and a final plan; a review is not
+      by-right, so this zone is refused. The `planned_development` variant on
+      `quadplex_allowed` was removed with the ruling and can go back if it is reversed.
       quadfit confidence: verified. County RURAL zone, overwhelmingly outside
       the Metro UGB. Any RR parcel inside the UGB needs individual review.
 
@@ -3933,6 +3940,12 @@ zone_rulings:
       pocket zone written into the IGA; to read from Gresham planning
       (which chapter governs the 162nd pocket, and what THR stands for
       there) before this lot is screened.
+      Re-checked 2026-10-08 against the whole Multnomah store (county,
+      Gresham, Portland, Troutdale, Fairview, Wood Village): a whole-word
+      search for THR finds only THR-SW, Gresham's Springwater townhouse
+      district (4.1506), a different place and not this code, and no text
+      defines a bare THR. Kept as a ruling; nothing to encode without
+      guessing, and a guessed zone could print a false GREEN.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.

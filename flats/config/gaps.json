@@ -1,5 +1,5 @@
 {
-  "digest": "c92dd787aa33f45f8bff3fa23a719ac5e2d6bb1430382d6b8dc305718a0eeaf3",
+  "digest": "b813fa03ea09d78bae51904186aa94b4749a45829156f372cdaa4d2b890648fe",
   "layers": {
     "or": {
       "misattributed": [],
@@ -48,6 +48,20 @@
           "claimed": "17.06.290",
           "found": "17.06.290 17.06.310",
           "quote": "or/clackamas/gladstone/17.06.definitions.txt#L881,L921"
+        },
+        {
+          "zone": "C2",
+          "field": "parking_front_prohibited",
+          "claimed": "17.18.020 17.18.060",
+          "found": "17.18.070",
+          "quote": "or/clackamas/gladstone/17.18.c-2.txt#L171"
+        },
+        {
+          "zone": "C2",
+          "field": "parking_required_yard_prohibited",
+          "claimed": "17.18.020 17.18.060",
+          "found": "17.18.070",
+          "quote": "or/clackamas/gladstone/17.18.c-2.txt#L171"
         }
       ],
       "label": "Gladstone",
@@ -151,6 +165,13 @@
     },
     "or/clackamas/west-linn": {
       "misattributed": [
+        {
+          "zone": "MU",
+          "field": "parking_front_prohibited",
+          "claimed": "59.020 59.030 59.070 59.070",
+          "found": "0.30",
+          "quote": "or/clackamas/west-linn/59.mu.txt#L241"
+        },
         {
           "zone": "R-10",
           "field": "max_far",

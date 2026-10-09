@@ -352,7 +352,9 @@ pytestmark = pytest.mark.unit
 # 134 -> 135 notes and 281 -> 282 comments on 2026-10-07: Canby (FOLLOWUPS 53),
 # whose refused zones (R-1, C-1, C-2, C-M, M-1, M-2) and unencoded Downtown
 # Canby Overlay sub-area are each declared in the layer.
-EXPECTED = {"notes": 135, "comments": 284, "tests": 18}
+# 135 -> 148 notes on 2026-10-08 (zone gaps, FOLLOWUPS 52a): NOT ENCODED decisions written
+# with the Gladstone, Tualatin, Milwaukie, West Linn and Clackamas zones encoded that day.
+EXPECTED = {"notes": 148, "comments": 284, "tests": 18}
 # 282 -> 283 comments on 2026-10-07: Sandy (FOLLOWUPS 53), whose refused zones are
 # declared in the layer; the rest of its NOT ENCODED decisions repeat reasons.
 # 283 -> 284 comments on 2026-10-07: Estacada (FOLLOWUPS 53), whose NOT ENCODED

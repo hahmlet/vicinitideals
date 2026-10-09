@@ -305,6 +305,13 @@ def test_no_other_zone_turns_on_the_greenway(layers) -> None:
         for field, value in z.values.items()
         if any(GREENWAY in v.when for v in getattr(value, "variants", ()) or ())
         and not (name == MILWAUKIE and zone in {"R-MD", "R-HD"} and field == "quadplex_allowed")
+        # DMU and GMU (encoded 2026-10-08) carry a Greenway variant on the
+        # same field, but pointed the other way: `value: false` on the
+        # unit-lots townhouse path (DMU also inside_mapped_use_area), because
+        # 19.401.3 / 19.401.5.D make all development in the Greenway Zone a
+        # conditional use and by-right only means no hearing variant. It can
+        # only refuse the zone's one open path, never open anything.
+        and not (name == MILWAUKIE and zone in {"DMU", "GMU"} and field == "quadplex_allowed")
     ]
     assert stray == []
 

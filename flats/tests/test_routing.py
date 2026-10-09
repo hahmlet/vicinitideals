@@ -261,6 +261,22 @@ OPEN = {
     "or/clackamas/milwaukie 19.310.5 -> 19.509",
     "or/clackamas/milwaukie 19.607.1 -> 19.505.4",
     "or/clackamas/milwaukie 19.607.1 -> 19.505.5",
+    # 2026-10-08, Milwaukie GMU (draft). Table 19.303.2 note 1 (L922): "The
+    # limit of 4 consecutive townhouses established in 19.505.5 does not
+    # apply in the GMU Zone." A relaxation of a limit of four, and the pod is
+    # four. 19.505.5 was read whole: E.2's 1,500 sq ft lot is quoted by the
+    # DMU variant and matches GMU's own table; F's driveway and parking
+    # placement and D's entry transition are the townhouse rules R-MD and
+    # R-HD already carry. E.1 (two abutting lots meeting Tables 19.301.4 /
+    # 19.302.4) is recorded unencoded on the DMU notes; no citation lands in
+    # the section for GMU, so the row stays open.
+    "or/clackamas/milwaukie 19.303.2 -> 19.505.5",
+    # 2026-10-08, Milwaukie GMU (draft). 19.303.4.B.3 (L1148): up to two
+    # development-incentive bonuses "in Subsection 19.303.4.B.3.a. and Section
+    # 19.510". 19.510 (L4521) only defines the green-building certifications
+    # (LEED, Passive House ...) that earn the height bonus; the bonus raises
+    # the 45 ft ceiling and is not taken, so nothing in it can tighten.
+    "or/clackamas/milwaukie 19.303.4 -> 19.510",
     "or/clackamas/lake-oswego 50.04.001.3 -> 50.04.003",
     "or/clackamas/west-linn 25.070 -> 25.020",
     "or/clackamas/wilsonville 4.001 -> 4.140",
@@ -268,6 +284,15 @@ OPEN = {
     "or/clackamas/wilsonville 4.135 -> 4.156.11",
     "or/clackamas/wilsonville 4.135.5 -> 4.400",
     "or/clackamas/wilsonville 4.136 -> 4.400",
+    # 2026-10-08: was FOLLOWED while EFU's farm-labor-housing variant was
+    # encoded (its citation landed in the target). Steph's by-right-only
+    # ruling removed that variant, so the row is open again. 39.4245(A)
+    # (L1343): "Except as provided in MCC 39.3070, the minimum lot size for new
+    # parcels shall be 80 acres" -- 39.3070 is the Lot of Record section (named
+    # as such at L1193, L1464, L1631; the section itself is not stored). It
+    # lets an existing lot stand under the 80-acre minimum, a relaxation, and
+    # EFU is now refused outright, so no lot reaches it.
+    "or/multnomah/_unincorporated 39.4245 -> 39.3070",
     "or/multnomah/_unincorporated 38.3060 -> 38.3030",
     "or/multnomah/_unincorporated 39.4751 -> 39.4753",
     "or/multnomah/fairview 19.162.020 -> 19.65.050",
@@ -409,7 +434,6 @@ FOLLOWED = {
     # parking read, so neither redirect leads anywhere unread.
     "or/clackamas/_unincorporated 316.03 -> 316.04",
     "or/clackamas/_unincorporated 316.04 -> 1015",
-    "or/multnomah/_unincorporated 39.4245 -> 39.3070",
     "or/multnomah/fairview 19.115.020 -> 19.30",
     "or/multnomah/fairview 19.115.040 -> 19.30.030",
     "or/multnomah/gresham 9.0802 -> 9.0822",
@@ -467,6 +491,13 @@ FOLLOWED = {
     # 18.660, which the layer reads for those two zones' own blocks.
     "or/washington/tigard 18.280.020 -> 18.650",
     "or/washington/tigard 18.280.020 -> 18.660",
+    # 2026-10-08, Milwaukie DMU (draft). 19.508.4 (L4145) says service areas
+    # "exclude off-street parking areas which are subject to Subsection
+    # 19.304.5.C". The letter is the code's: C is Street Setbacks and the
+    # parking rules are D. Both are read and quoted -- C by the DMU front,
+    # side and rear yards and street-side yard (L1956), D.2.c by
+    # parking_front_prohibited (L2006) -- so the pointer leads nowhere unread.
+    "or/clackamas/milwaukie 19.508.4 -> 19.304.5",
 }
 
 

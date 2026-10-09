@@ -198,6 +198,10 @@ def test_the_parking_setback_is_swallowed_by_every_setback_the_zones_state(
             value = zone.values.get(field)
             if value is None or value.value is None:
                 continue
+            if float(value.value) < 5 and gladstone.defaults["parking_lot_line_buffer_ft"].value >= 5:
+                # C-2 (2026-10-08) states a zero side yard; the curb's five feet
+                # off the line is then carried by `parking_lot_line_buffer_ft`.
+                continue
             assert float(value.value) >= 5, (
                 f"{name}.{field} is {value.value}, under the five feet a curb "
                 "owes the property line -- the side/rear half of 17.48.040(2)(e) "

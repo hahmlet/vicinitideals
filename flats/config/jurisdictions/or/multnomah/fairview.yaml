@@ -2468,10 +2468,10 @@ zones:
     quadplex_allowed:
       value: false
       quote: "or/multnomah/fairview/19.135.txt#L15,L17-L18,L20-L21"
-      variants:
-        - value: true
-          when: [unit_lots, conditional_use]
-          quote: "or/multnomah/fairview/19.135.txt#L15,L17-L18,L21"
+      #
+      # Door closed by ruling, not by the table:
+      # Attached single-unit dwellings are a conditional use (19.135.010 row c); multi-unit
+      # dwellings are a separate row. Was `[unit_lots, conditional_use]`.
     # 19.135.030 states density, coverage and height for this zone and states
     # no lot size. Read and empty.
     min_lot_sqft:
@@ -2513,6 +2513,10 @@ zones:
       value: 5
       quote: "or/multnomah/fairview/19.135.txt#L52,L54-L56,L82-L84,L102-L104"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the only way to four attached homes here is a conditional use,
+      approved at a hearing; a review is not by-right, so this zone is refused. The
+      `conditional_use` variant was removed with the ruling and can go back if the ruling
+      is reversed.
       Fairview counts differently from its neighbours. FMC 19.13 defines a "multi-unit dwelling" as "a building containing five or more dwelling units", so the P on that row is not this building's P -- a quadplex is four. The same chapter defines "quadplex" as "four dwelling units on a lot or parcel in any configuration" and "single-unit attached housing (townhouses)" as "two or more single-unit dwellings with common end-walls", which the pod is. Read the five-or-more row as the permission and every village zone in this city screens green on a standard that does not apply to the building.
 
 
@@ -2620,10 +2624,10 @@ zones:
     quadplex_allowed:
       value: false
       quote: "or/multnomah/fairview/19.125.txt#L21,L23,L25-L27,L29-L31,L63,L65,L67-L69"
-      variants:
-        - value: true
-          when: [unit_lots, conditional_use]
-          quote: "or/multnomah/fairview/19.125.txt#L63,L65,L67-L69"
+      #
+      # Door closed by ruling, not by the table:
+      # Townhouses are a conditional use after Planning Commission approval (19.125.030(A)). Was
+      # `[unit_lots, conditional_use]`.
     min_lot_sqft:
       exempt: true
       quote: "or/multnomah/fairview/19.125.txt#L73,L75-L77,L79-L81,L83-L85,L87-L89"
@@ -2702,6 +2706,10 @@ zones:
       retrieved: '2026-08-26'
       quote: "or/multnomah/fairview/19.145.txt#L63,L65"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08): the only way to four attached homes here is a conditional use,
+      approved at a hearing; a review is not by-right, so this zone is refused. The
+      `conditional_use` variant was removed with the ruling and can go back if the ruling
+      is reversed.
       Fairview counts differently from its neighbours. FMC 19.13 defines a "multi-unit dwelling" as "a building containing five or more dwelling units", so the P on that row is not this building's P -- a quadplex is four. The same chapter defines "quadplex" as "four dwelling units on a lot or parcel in any configuration" and "single-unit attached housing (townhouses)" as "two or more single-unit dwellings with common end-walls", which the pod is. Read the five-or-more row as the permission and every village zone in this city screens green on a standard that does not apply to the building.
 
 

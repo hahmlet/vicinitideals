@@ -217,16 +217,20 @@ def test_the_multifamily_districts_have_no_row_for_this_building(
         assert "quadplex" not in text.lower(), zone
 
 
-def test_but_the_same_table_permits_the_units_on_their_own_lots(
-    happy_valley: Layer,
+def test_the_unit_lot_door_is_closed_by_ruling(
+    rules: RuleSet, happy_valley: Layer
 ) -> None:
+    """The table permits townhouses outright, but every dimension behind them
+    is "Variable" and settled by master plan or design review. Not by-right,
+    so the zone is refused (Steph, 2026-10-08) and nothing is left to unsettle
+    the prohibition: the use gate answers it instead of leaving the lot
+    unmeasured."""
     for zone in ("MURM", "MURX"):
-        variant = next(
-            v
-            for v in happy_valley.zones[zone].values["quadplex_allowed"].variants
-            if v.when == ("unit_lots",)
-        )
-        assert variant.value is True, zone
+        held = happy_valley.zones[zone].values["quadplex_allowed"]
+        assert held.variants == (), zone
+        assert "RED BY RULING (Steph, 2026-10-08)" in happy_valley.zones[zone].notes, zone
+        use = rules.resolve(HAPPY_VALLEY, zone).values["quadplex_allowed"]
+        assert use.value is False and not use.levers, zone
 
 
 def test_which_is_when_the_dimensions_would_matter_and_there_are_none(
@@ -241,9 +245,11 @@ def test_which_is_when_the_dimensions_would_matter_and_there_are_none(
     one, and the note says so where a reviewer will meet it.
     """
     for zone in ("MURM", "MURX"):
-        missing = rules.resolve(HAPPY_VALLEY, zone).missing_required
-        assert "min_lot_sqft" in missing, zone
-        assert "setback_front_ft" in missing, zone
+        # A settled prohibition owes no standards; the dimensions are simply
+        # not carried, because the code prints none to carry.
+        got = rules.resolve(HAPPY_VALLEY, zone)
+        assert "min_lot_sqft" not in got.values, zone
+        assert "setback_front_ft" not in got.values, zone
     assert "master plan process or design review" in happy_valley.zones["MURM"].notes
     # MUR-X's answer is blunter still: the dimensional table is headed MUR-M1,
     # MUR-M2 and MUR-M3, so this district has no column in it to be Variable.
@@ -260,3 +266,16 @@ def test_mur_x_states_its_own_column_rather_than_borrowing_mur_m(
     assert happy_valley.zones["MURX"].like is None
     assert happy_valley.zones["MURM"].values["max_height_ft"].value == 65
     assert "max_height_ft" not in happy_valley.zones["MURX"].values
+
+
+def test_rock_creek_pmu_is_red_by_ruling_and_no_longer_unencodable(
+    happy_valley: Layer,
+) -> None:
+    """16.31 states no use list and no figure: every standard is "determined
+    through the master plan or a design review process" (L73, L85). Nothing is
+    by right, so the district is a zone that refuses the pod instead of a
+    code the layer cannot read."""
+    zone = happy_valley.zones["PMU"]
+    assert zone.values["quadplex_allowed"].value is False
+    assert zone.values["quadplex_allowed"].variants == ()
+    assert zone.notes.startswith("RED BY RULING (Steph, 2026-10-08)")

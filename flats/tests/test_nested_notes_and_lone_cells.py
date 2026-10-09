@@ -307,6 +307,10 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     word ("[14]A congregate"); less five paragraphs of 401.05 the rewritten
     chapter no longer prints like notes. One of the ten, 513's note 8, sits
     in a dimensional table and joins the unread.
+
+    Twenty-five left the unread on 2026-10-08 (FOLLOWUPS 52): Table 510-2's
+    notes, ruled when SCMU and PMU1-3 were encoded from it as refusals and the
+    table started governing values. Table 510-3's two stay unread.
     """
     ruled = list(dispositions(CLACKAMAS))
     assert len(ruled) == 314
@@ -319,7 +323,7 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     # which is the property the old `not unread` assertion had and a bare
     # number would lose.
     assert unread == (
-        [("zdo.510.txt", n) for n in list(range(1531, 1580, 2)) + [1609, 1611]]
+        [("zdo.510.txt", n) for n in (1609, 1611)]
         + [("zdo.513.txt", n) for n in (334, 338, 340, 342, 344, 346, 348, 350)]
         + [("zdo.513.txt", n) for n in range(365, 380, 2)]
         + [("zdo.602.txt", n) for n in range(396, 409, 2)]

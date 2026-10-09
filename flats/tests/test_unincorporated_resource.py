@@ -114,69 +114,41 @@ def test_the_forest_zone_defines_its_way_out_of_the_question(
 def test_the_farm_zone_prints_this_building_and_the_encoding_says_so(
     uninc: Layer,
 ) -> None:
-    """The one relief in the four, and it is a real sentence in a real code.
-
-    An accessory farm dwelling sited away from the primary farm dwelling may
-    be "attached multi-unit residential structures allowed by the applicable
-    state building code". Refusing EFU flat would have been the easy read and
-    the wrong one.
-    """
+    """EFU prints the building in 39.4265(C)(2)(d) and the door is a review
+    use, so it is closed by ruling (Steph, 2026-10-08) rather than refused
+    flat: the base is false, no variant, and the note says why."""
     held = uninc.zones["EFU"].values["quadplex_allowed"]
     assert held.value is False
-    assert len(held.variants) == 1
+    assert held.variants == ()
+    assert "RED BY RULING (Steph, 2026-10-08)" in uninc.zones["EFU"].notes
 
-    variant = held.variants[0]
-    assert variant.value is True
-    assert set(variant.when) == {"farm_labor_housing", "review_use"}
-
-    text = ProvenanceStore().quote(variant.prov.quote)
+    text = ProvenanceStore().quote(
+        "or/multnomah/_unincorporated/39.efu.txt#L2179-L2198"
+    )
     assert "attached" in text
     assert "multi-unit residential structures" in text
     assert "ORS 658.750" in text
 
 
-def test_the_farm_labor_door_costs_both_a_commitment_and_a_procedure(
-    rules: RuleSet,
-) -> None:
-    """Either half alone leaves the zone shut.
-
-    The commitment without the county's decision is a building nobody
-    approved; the decision without the commitment is a permit for a use the
-    applicant is not making. Both are registered conditions, neither is
-    assumed, so a batch screen never reaches the true.
-    """
-    assert rules.resolve(UNINC, "EFU", POD).values["quadplex_allowed"].value is False
-    assert (
-        rules.resolve(UNINC, "EFU", (*POD, "farm_labor_housing"))
-        .values["quadplex_allowed"]
-        .value
-        is False
-    )
-    assert (
-        rules.resolve(UNINC, "EFU", (*POD, "review_use"))
-        .values["quadplex_allowed"]
-        .value
-        is False
-    )
-
-    opened = rules.resolve(UNINC, "EFU", (*POD, "farm_labor_housing", "review_use"))
-    assert opened.values["quadplex_allowed"].value is True
+def test_the_farm_labor_door_stays_shut_whatever_is_held(rules: RuleSet) -> None:
+    """With the variant removed by ruling, no combination of the two registered
+    conditions opens the zone."""
+    for held in ((), ("farm_labor_housing",), ("review_use",), ("farm_labor_housing", "review_use")):
+        got = rules.resolve(UNINC, "EFU", (*POD, *held))
+        assert got.values["quadplex_allowed"].value is False, held
 
 
-def test_a_review_use_is_not_a_conditional_use(uninc: Layer) -> None:
+def test_a_review_use_is_not_a_conditional_use() -> None:
     """MCC lists both, in different sections, with different findings.
 
-    39.4225 is REVIEW USES and 39.4230 is CONDITIONAL USES; the EFU relief
-    comes from the first. Folding one into the other would report a cost the
-    county does not charge, so the registry carries both names.
+    39.4225 is REVIEW USES and 39.4230 is CONDITIONAL USES. Folding one into
+    the other would report a cost the county does not charge, so the registry
+    carries both names.
     """
     review = CONDITIONS["review_use"]
     assert review.kind == "relief"
     assert review.tier is Tier.discretionary
     assert review.name != "conditional_use"
-
-    variant = uninc.zones["EFU"].values["quadplex_allowed"].variants[0]
-    assert "conditional_use" not in variant.when
 
 
 def test_farm_labor_housing_is_elective_and_never_assumed(uninc: Layer) -> None:

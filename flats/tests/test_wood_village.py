@@ -107,26 +107,18 @@ def test_the_conditional_use_is_not_enough_on_its_own(
     """NC needs a hearing AND a mixed use development, and the pod is neither.
 
     Table 230-1 says CU. 230.315.A.1 then says residential uses "shall be
-    permitted only when part of a mixed use development" -- vertical or
-    horizontal, but a development with a non-residential component in it. The
-    section even lists what satisfies that: a thousand square feet of enclosed
-    commercial space, a four-cart food pod, or a micro retail pod. None of them
-    is a thing a fixed-dimension townhome does by itself.
-
-    So the relief is a pair, and holding only half of it leaves the base false.
-    That distinction is the whole reason the condition registry separates an
-    `elective` from a `relief`: one is a business decision with a cost, the
-    other is an application, and NC asks for both at once.
+    permitted only when part of a mixed use development". The hearing is not
+    by-right, so NC is closed by ruling (Steph, 2026-10-08): no variant, and
+    no combination of the two conditions opens it.
     """
     nc = wv.zones["NC"].values["quadplex_allowed"]
     assert nc.value is False
-    assert {v.when for v in nc.variants} == {("conditional_use", "mixed_use")}
+    assert nc.variants == ()
+    assert "RED BY RULING (Steph, 2026-10-08)" in wv.zones["NC"].notes
 
-    assert rules.resolve(WV, "NC", POD).values["quadplex_allowed"].value is False
-    only_hearing = rules.resolve(WV, "NC", (*POD, "conditional_use"))
-    assert only_hearing.values["quadplex_allowed"].value is False
-    both = rules.resolve(WV, "NC", (*POD, "conditional_use", "mixed_use"))
-    assert both.values["quadplex_allowed"].value is True
+    for held in ((), ("conditional_use",), ("conditional_use", "mixed_use")):
+        got = rules.resolve(WV, "NC", (*POD, *held))
+        assert got.values["quadplex_allowed"].value is False, held
 
     assert conditions.condition("conditional_use").kind == "relief"
     assert conditions.condition("mixed_use").kind == "elective"

@@ -3216,6 +3216,198 @@ zones:
       sentence is to "preserve and manage the County's committed open space
       resources". A caretaker's dwelling is the one residence the district
       admits and it is accessory to a park.
+  SCMU:
+    cite_default:
+      cite: Clackamas ZDO 510.05 and Tables 510-1 and 510-2 (Urban Commercial and Mixed-Use Districts); ZDO 1005.09 (Fuller Road Station Community Dimensional and Design Standards)
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      # Station Community Mixed Use. Table 510-1, Quadplexes row, SCMU column
+      # (the eighth data cell, L289): a bare P with no note. The use is
+      # permitted; what makes the zone RED is the process, see the note.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L85,L281,L289"
+    min_lot_sqft:
+      # Table 510-2 gives SCMU "1/2 acre[2,4]" and note 2 limits that to
+      # subdivisions, partitions and property line adjustments, so it is not
+      # the number for a building on a lot of record. Section 845.01 is.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    setback_side_ft:
+      # 1005.09(C): "Five feet, except a zero setback is allowed for attached
+      # structures." Read as 5: the zero is for a structure attached to a
+      # neighbour's, which nothing here establishes.
+      value: 5
+      cite: Clackamas ZDO 1005.09 Minimum Side and Rear Setbacks (Table 510-2 sends the SCMU cell here)
+      url: https://www.clackamas.us/planning/zdo1005
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L490,L520"
+    setback_rear_ft:
+      value: 5
+      cite: Clackamas ZDO 1005.09 Minimum Side and Rear Setbacks (Table 510-2 sends the SCMU cell here)
+      url: https://www.clackamas.us/planning/zdo1005
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L490,L520"
+    min_building_height_ft:
+      value: 20
+      cite: Clackamas ZDO 1005.09 Minimum Building Height ("20 feet, measured to top of parapet or roof")
+      url: https://www.clackamas.us/planning/zdo1005
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L490,L518"
+    max_height_ft:
+      exempt: true
+      cite: Clackamas ZDO Table 510-2, Maximum Building Height row, SCMU cell ("None"); 1005.09 states no maximum
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1468,L1476"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): the use is permitted but every
+      development in this district goes through design review, which is not by
+      right. ZDO 1102.01(A) requires design review for "Development,
+      redevelopment, expansions, and improvements in ... Commercial zoning
+      districts", and 1102.03 makes it "a Type II application", decided by the
+      Planning Director or forwarded to the Design Review Committee (1102.04).
+      Section 1102 is not in the provenance store; it was read live from
+      codepublishing.com on 2026-10-08 and should be added to the store before
+      this ruling is relied on in a citation check. The dimensions below stay so
+      the ruling can be reversed.
+
+
+      Not encoded: setback_front_ft. Table 510-2 prints "See Subsection
+      1005.09" in all four setback cells of the SCMU column (the table omits
+      SCMU from its header; every data row carries eleven cells, so the SCMU
+      cell sits right after PMU). 1005.09 does not contain a front setback
+      number. It keys the front building line to the street TYPE (A, B, C, D) of
+      each frontage on the regulating plan, Map 1005-1, and to the building
+      frontage type chosen (Linear Building, Porch/Stoop/Terrace and others,
+      1005.09(G)): a Linear Building facade is set back at most 5 feet, a
+      Porch/Stoop/Terrace facade 5 to 15 or 10 to 15 feet by street type, and
+      50 percent of the frontage must be built out. Street type per frontage is
+      not a fact any lot here carries, so no front setback is stated. The
+      expectation that this turns on 1005.02(L) bearing-plane setbacks is
+      wrong: 1005.02(L) applies only to HDR, RCHDR and SHD.
+
+
+      Also: 1005.09(B)-(M) "do not apply in Sectors 1 and 2, as shown on Map
+      1005-1", until 40,000 square feet of new building area is developed in
+      the sector or a story is added to an existing building (1005.09(A)). In
+      those sectors the side and rear 5 feet and the 20-foot minimum height
+      above are not in force; they are held anyway, the stricter reading. The
+      pod is 26 feet high and clears the 20-foot floor either way.
+
+
+      Minimum density (Table 510-2): "20 dwelling units per net acre for
+      residential development; none for mixed-use development" [24], net acreage
+      by 1012.08(A) and (B). Not encoded; the layer does not encode 1012.08 for
+      the residential districts either (see the zdo.1012 source note).
+
+
+      Not encoded, no field: Table 510-2 minimum street frontage 100 feet [5]
+      (subdivisions, partitions and line adjustments only), maximum building
+      floor area per use ("None"), minimum floor area ratio ("None"). The
+      1005.09(D) driveway cap of 24 feet is tighter than the layer default of
+      32 and is not applied here.
+  PMU1:
+    cite_default:
+      cite: Clackamas ZDO 510.05 and Tables 510-1, 510-2 and 510-3 (Planned Mixed Use District, site PMU1)
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      # Table 510-1, Quadplexes row, PMU column (L288): a bare P. RED by
+      # process, see the note.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L84,L281,L288"
+    min_lot_sqft:
+      # Table 510-2 prints "PMU1: None". Section 845.01 still sets 7,000 for a
+      # quadplex and the table does not displace it.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    setback_front_ft:
+      value: 0
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1432,L1439"
+    setback_side_ft:
+      # Table 510-2 PMU side cell is "0[8,15]". Note 15: "If the side lot line
+      # abuts a residential zoning district, the minimum shall be 15 feet."
+      # This layer declares no abuts_residential_zone fact, so the 15 is held
+      # on every lot, the stricter reading.
+      value: 15
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1456,L1463,L1559"
+    setback_rear_ft:
+      # "0[8,10]"; note 10: 15 feet if the rear lot line abuts a residential
+      # zoning district. Held at 15 for the same reason as the side.
+      value: 15
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1444,L1451,L1549"
+    max_height_ft:
+      exempt: true
+      cite: Clackamas ZDO Table 510-2, Maximum Building Height row, PMU cell ("None")
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1468,L1475"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): a PMU site is built only through
+      design review and a master plan, neither by right. Table 510-3 sets the
+      site-specific requirement for PMU1 as 525,000 square feet of office, 500,000
+      of retail, entertainment, hotel or similar, at least 200 dwelling units
+      (with the ability to accommodate 600), a half- to one-acre public plaza,
+      an entertainment or recreation facility and transit facilities. A
+      four-unit building does not meet that for the site. ZDO 1102.03(B) then
+      says "a master plan shall be required if ... compliance with Table 510-3
+      ... is not being achieved for the entire PMU site", and 1102.01(A) puts
+      all commercial-district development through Type II design review.
+      Section 1102 is not in the provenance store (read live 2026-10-08).
+      Table 510-2 notes 8 and 22 in the store show both processes in this
+      district's own table. The dimensions stay so the ruling can be reversed.
+
+
+      Not encoded: setback_front_max_ft. The cell is "20 feet[7,8]" with a
+      10-foot maximum on Main Streets of Map X-CRC-3 (note 7), a map the lot
+      does not carry, and note 8 lets a 25-acre site propose its own. Table
+      510-2 has one PMU column for all of PMU1 to PMU6; only the lot size
+      varies by site.
+  PMU2:
+    cite_default:
+      cite: Clackamas ZDO 510.05 and Tables 510-1, 510-2 and 510-3 (Planned Mixed Use District, site PMU2)
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-10-08'
+    like:
+      zone: PMU1
+      cite: ZDO 510 Table 510-2 prints one PMU column for all Planned Mixed Use sites (PMU1 to PMU6), so the setbacks printed under it are PMU1's and this site's alike
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L65,L1387"
+    quadplex_allowed:
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L84,L281,L288"
+    min_lot_sqft:
+      # Table 510-2: "PMU2: 2 acres" = 87,120 square feet.
+      acres: 2
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1391,L1399"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): same ruling as PMU1. Table 510-3 for
+      PMU2 to PMU5 requires 50 percent of the site in office or residential
+      use, an office floor area ratio of 0.5 (lots of 2.5 acres or less) or 1.0,
+      a retail and service FAR of 0.3 and 30 dwelling units per net acre; a
+      four-unit building meets none of the site totals, so a master plan
+      through design review (ZDO 1102.03(B), live read, not in the store) is
+      the only path. Setbacks and height come from the same single PMU column
+      of Table 510-2 as PMU1. Not encoded: the 30 du per net acre minimum
+      (Table 510-3, L1604-L1605); net acreage is defined by 1012.08(A) and (B)
+      and this layer holds no net-area definition to measure it on.
+  PMU3:
+    cite_default:
+      cite: Clackamas ZDO 510.05 and Tables 510-1, 510-2 and 510-3 (Planned Mixed Use District, site PMU3)
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-10-08'
+    like:
+      zone: PMU1
+      cite: ZDO 510 Table 510-2 prints one PMU column for all Planned Mixed Use sites (PMU1 to PMU6), so the setbacks printed under it are PMU1's and this site's alike
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L65,L1387"
+    quadplex_allowed:
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L84,L281,L288"
+    min_lot_sqft:
+      # Table 510-2: "PMU3: 3 acres" = 130,680 square feet.
+      acres: 3
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1391,L1400"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): same ruling and same Table 510-3
+      column as PMU2 (PMU 2, 3, 4 and 5). Only the minimum lot size, 3 acres,
+      differs.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # ruled by Steph 2026-09-30): s4 reads a line within 50 ft of a private road
@@ -3303,12 +3495,14 @@ zone_rulings:
       Not modifiable under Section 904 (1005.02(L)(4)). Expires the day
       lot-line bearing is measured; the districts ledger holds the same
       ruling as `encode`.
+      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because 1005.02(L) sets the separation by compass bearing and no setback class here knows a bearing.
   SHD:
     outcome: unencodable
     note: >-
       Special High Density, one lot (4400 SE Naef Rd). Quadplexes P in Table
       315-1; setbacks deferred to Subsection 1005.02(L), the same bearing
       planes as HDR, and 1005.02(L)(4) closes Section 904 relief.
+      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because 1005.02(L) sets the separation by compass bearing and no setback class here knows a bearing.
   RCHDR:
     outcome: unencodable
     note: >-
@@ -3316,6 +3510,7 @@ zone_rulings:
       Table 315-1; setbacks deferred to Subsection 1005.02(L), read
       2026-09-08 and blocked on lot-line bearings. RCC and RCO below wait on
       it through Table 510-1 note 12.
+      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because 1005.02(L) sets the separation by compass bearing and no setback class here knows a bearing.
   VTH:
     outcome: unencodable
     note: >-
@@ -3324,6 +3519,7 @@ zone_rulings:
       district headings in several rows: the extractor drops empty cells, so
       lot size, coverage and rear setback are a column question before they
       are a reading (HUMAN_TODO 15). Also blocked on 1005.02(L) with HDR.
+      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because 1005.02(L) sets the separation by compass bearing and no setback class here knows a bearing.
   # --- six commercial districts that permit the building and send it to HDR
   # or RCHDR for its standards (Table 510-1 notes 12 and 14, "freestanding
   # ... quadplexes (as opposed to ... quadplexes in a mixed-use building)") --
@@ -3334,62 +3530,41 @@ zone_rulings:
       note 14 sends a freestanding quadplex to the HDR District for its
       development and dimensional standards, and HDR is blocked on
       1005.02(L)'s bearing planes. Unencodable until HDR is.
+      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
   CC:
     outcome: unencodable
     note: >-
       Corridor Commercial, 128 lots. P[14] on the Quadplexes row; the same
       referral to HDR as RTL, and the same block.
+      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
   C3:
     outcome: unencodable
     note: >-
       General Commercial, 447 lots, the largest commercial district in this
       layer. P[14] on the Quadplexes row; note 14 sends a freestanding
       quadplex to HDR, which 1005.02(L) blocks.
+      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
   OC:
     outcome: unencodable
     note: >-
       Office Commercial, 82 lots. P[14], the same referral to HDR. (510.02
       misprints its abbreviation as OA; Table 510-1's column heads print OA
       and OC as separate columns 9 and 10.)
+      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
   RCC:
     outcome: unencodable
     note: >-
       Regional Center Commercial, 103 lots. P[12] on the Quadplexes row; note
       12 sends a freestanding quadplex to the RCHDR District for its
       standards, and RCHDR is blocked on 1005.02(L).
+      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
   RCO:
     outcome: unencodable
     note: >-
       Regional Center Office, 37 lots. P[12], the same referral to RCHDR as
       RCC. Table 510-2 gives it the largest minimum lot in the section at
       2 1/2 acres, which would bind first if the district were ever held.
-  # --- four to read --------------------------------------------------------
-  SCMU:
-    outcome: to_read
-    note: >-
-      Station Community Mixed Use, 34 lots. P on the Quadplexes row with no
-      note. Table 510-2 omits SCMU from its header while every data row
-      carries eleven cells, and its cell in each setback row reads "See
-      Subsection 1005.09" -- Fuller Road Station Community standards, 365
-      lines in the store since 2026-09-08 and unread. Reading 1005.09 against
-      the SCMU column is the whole job.
-  PMU1:
-    outcome: to_read
-    note: >-
-      Planned Mixed Use site 1, 14 lots. P on the Quadplexes row, no note;
-      its dimensions are site-specific -- Table 510-2 prints six minimum lot
-      sizes under one column head (PMU1 none) and Table 510-3 states the
-      rest per site. To encode per site from Table 510-3.
-  PMU2:
-    outcome: to_read
-    note: >-
-      Planned Mixed Use site 2, 2 lots. Same shape as PMU1: Table 510-2 gives
-      it a 2-acre minimum lot and Table 510-3 the rest, per site, unread.
-  PMU3:
-    outcome: to_read
-    note: >-
-      Planned Mixed Use site 3, 1 lot. Same shape as PMU1: Table 510-2 gives
-      it a 3-acre minimum lot and Table 510-3 the rest, per site, unread.
+      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
   # --- six pockets: a city's zoning that Metro's regional fabric carries on
   # lots the assessor's roll still calls unincorporated. Found 2026-09-20 by
   # intersecting each lot with the RLIS zoning layer and reading its CITY

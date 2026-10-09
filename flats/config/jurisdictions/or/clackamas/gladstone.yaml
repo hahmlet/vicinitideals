@@ -1116,7 +1116,7 @@ zones:
   # their chapters the way R5 quotes 17.12, with nothing dimensional encoded
   # because nothing dimensional matters while the building may not be
   # built. The other five permit it outright (MR, C-2) or as a conditional
-  # use (C-1, C-3, LI) and are `zone_rulings` at the foot of this file.
+  # use (C-1, C-3, LI) and are zone blocks after OS, encoded 2026-10-08.
   #
   # The affordable-housing door is on four of the seven -- C-1, C-3, OP and
   # LI's neighbour chapters all carry "Dwelling units available to
@@ -1179,70 +1179,290 @@ zones:
       from end to end. The thirty lots are the city's parks and the
       Clackamas River frontage.
 
-# Map codes this layer does not hold as zone blocks, ruled once (2026-09-20,
-# Steph's rule: read every code, write the reason down, never show it again;
-# only a code nobody has seen warns). A ruled code gates ZONE_TO_READ in the
-# copy instead of ZONE_NOT_ENCODED and folds away on the County copy page.
-# The refusals are zone blocks above; these five permit the building
-# outright or as a conditional use and wait on their dimensions. Keyed the
-# way the county map spells them: the fabric prints Gladstone's commercial
-# zones without the ordinance's hyphen (C1, C2, C3), the way it prints R5
-# and R7.2 for the code's R-5 and R-7.2 -- the zone blocks above are keyed
-# the same way and so are these.
-zone_rulings:
+  # === The five codes that were `zone_rulings`, encoded 2026-10-08 ==========
+  #
+  # MR and C-2 permit the building outright and are real zones below, with
+  # their own numbers. C-3, LI and C-1 permit a dwelling only as a conditional
+  # use (GMC Chapter 17.70 -- a Planning Commission hearing) and are RED BY
+  # RULING (Steph, 2026-10-08, by-right only): `quadplex_allowed: false` with
+  # no variant, the dimensional standards kept so the ruling can be reversed.
+  # Each of the three says its dwellings are "subject to" another district's
+  # dimensional section -- C-3 and LI to 17.14.050 (MR), C-1 to 17.10.050
+  # (R-7.2) -- and that sentence is what `like:` cites.
+  #
+  # The county map spells these without the ordinance's hyphen (C1, C2, C3),
+  # the way it prints R5 and R7.2, and the keys below follow the map.
   MR:
-    outcome: to_read
-    note: >-
-      Multi-Household Residential, 80 lots. 17.14.020(1) allows middle
-      housing outright, and 17.14.050 is a dimensional table with its own
-      Quadplex row (5,000 sq ft minimum lot) and Townhouse project row (1,200
-      sq ft average per lot), a 20 ft front setback, 35 ft height, 20 percent
-      vegetation and a minimum density of 80 percent of the maximum
-      (17.14.mr.txt#L27-L33, L111-L166). The same shape as R5 and R7.2, which
-      this layer holds; encoding it is a morning's reading, not a decision.
-      C-2's multi-household lots borrow this table's minimum lot area.
+    section: ["17.14."]
+    cite_default:
+      cite: Gladstone Municipal Code 17.14.020 (middle housing allowed outright), 17.14.050 (dimensional
+        standards), Multi-Household Residential District
+      url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1714.html
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      # 17.14.020, "Uses allowed outright": "(1) Middle housing. (2)
+      # Multi-household dwellings." Middle housing is the statutory class and a
+      # quadplex is in it; the city states no list of its own. 17.14.040
+      # (conditional uses) is not reached.
+      value: true
+      quote: "or/clackamas/gladstone/17.14.mr.txt#L29-L33"
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/gladstone/17.14.mr.txt#L132-L133"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/gladstone/17.14.mr.txt#L137-L138"
+      variants:
+        # "Townhouse projects are allowed a zero-foot side setback for lot lines
+        # where townhouse units are attached." Printed under all four setback
+        # rows; carried on the side row only, the way R5 and R7.2 carry it.
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/gladstone/17.14.mr.txt#L140"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/gladstone/17.14.mr.txt#L147-L148"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/clackamas/gladstone/17.14.mr.txt#L142-L143"
+    min_lot_sqft:
+      # 17.14.050, Minimum Lot Area: a row per housing type, and the quadplex
+      # has its own -- 5,000 sq ft, against 4,000 for a triplex. The townhouse
+      # project row is "1,200 sf average minimum per lot within the
+      # development", so four lots want 4,800; that is the `unit_lots` path
+      # and it is the smaller number, as in R5.
+      value: 5000
+      quote: "or/clackamas/gladstone/17.14.mr.txt#L122-L123"
+      variants:
+        - per_dwelling: 1200
+          when: [unit_lots]
+          quote: "or/clackamas/gladstone/17.14.mr.txt#L126-L127"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/gladstone/17.14.mr.txt#L152-L153"
+    min_landscaped_pct:
+      # "At least 20 percent of the total area of the lot must be left or
+      # planted in vegetation." Unlike R5's row, which is against
+      # multi-household dwellings, this row names no housing type, so it is
+      # read as reaching a quadplex.
+      value: 20
+      quote: "or/clackamas/gladstone/17.14.mr.txt#L155-L156"
+    min_density_du_per_acre:
+      # "Minimum Density: 80 percent of the maximum. In no case shall the
+      # minimum density exceed 25 units per net acre." The maximum is "based on
+      # maximum number of units allowed under Minimum Lot Area", which depends
+      # on the housing type chosen, so 80 percent of it has no single operand.
+      # The cap does: whatever the maximum is, the minimum is 25 or less, and
+      # 25 is the tightest reading. It binds a four-unit pod on a lot over
+      # about 6,970 sq ft. The chapter has no sentence limiting the floor to
+      # subdivisions (R-7.2's does); its only exception is for altering an
+      # existing development.
+      value: 25
+      quote: "or/clackamas/gladstone/17.14.mr.txt#L157,L159"
+      measured_on:
+        fact: net_developable_area
+        cite: GMC 17.06.358 "Net acre", the subtraction list (road rights-of-way and dedications; open water, FM, WQ, Goal 5 resource areas, slopes over 25 percent, Section 404 wetlands)
+        quote: "or/clackamas/gladstone/17.06.definitions.txt#L1013-L1017"
+        less: [slope_25]
+        may_less: [floodplain]
+        assumed_none:
+          - "road rights-of-way and other public dedications"
+          - "open water areas"
+          - "areas in the WQ District (Map 12, a regional proxy that carves nothing)"
+          - "natural resource areas protected under Goal 5"
+          - "wetlands requiring a Section 404 permit"
+    notes: >-
+      Encoded 2026-10-08, 80 lots. Outright by 17.14.020(1). Every dimension
+      is the 17.14.050 table row; no lot coverage and no minimum lot width are
+      printed anywhere in the chapter (whole-document grep of the Gladstone
+      set for coverage, lot width, frontage). Maximum density is "based on
+      the maximum number of units allowed under Minimum Lot Area" -- a
+      ceiling the lot-area rows already carry -- so it is not a separate
+      field here. The cottage cluster reduction to five-foot setbacks is a
+      housing type this screen does not place. The minimum-density floor is
+      carried at its 25-per-net-acre cap. 17.06.358 takes slopes over 25 percent
+      off for certain (lidar) and the FM district's floodplain as a maybe; the
+      other deductions are ones nothing here measures and stay assumed absent.
   C2:
-    outcome: to_read
-    note: >-
-      Community Commercial (the ordinance's C-2), 147 lots, Portland Avenue. 17.18.020 allows
-      outright "(11) Attached residential dwellings (duplex, triplex,
-      quadplex)", "(12) Townhouses" and "(14) Multi-household residential
-      dwellings" (17.18.c-2.txt#L61-L67). 17.18.060 gives residential uses a
-      five-foot MAXIMUM front setback and a 15 ft minimum rear setback
-      (L137), sends attached dwellings and townhouses to R-5's minimum lot
-      area (L149), and 17.18.050 adds ground-floor window and Portland
-      Avenue frontage rules. The largest of Gladstone's seven and permitted
-      outright; to encode from 17.18.060 with R5's lot rows.
-  C1:
-    outcome: to_read
-    note: >-
-      Local Commercial (the ordinance's C-1), one lot. Outright uses are services, offices,
-      clinics, day care and the three conditioned housing rows (conversion,
-      60 percent AMI, moderate-income mixed use, 17.16.c-1.txt#L41-L45);
-      17.16.040(6) allows "Dwellings subject to GMC Sections 17.10.050(1)
-      through (4)" as a conditional use (L73). So the building is a
-      conditional use here on R-7.2's lot and setback rows: a `false` use
-      block with a `conditional_use` variant and 17.10.050's numbers, which
-      this layer already holds as R7.2. One lot; to encode when the
-      conditional-use zones are done together.
+    like:
+      # 17.18.060(5)(a): "Attached residential dwellings, townhouses, and
+      # cottage cluster uses shall comply with the minimum lot area
+      # requirements for the R-5 zoning district." The sentence says "the same
+      # as R-5" for lot area only, so everything else is stated locally below
+      # and the lot area is the one thing inherited.
+      zone: R5
+      cite: GMC 17.18.060(5)(a), attached residential dwellings and townhouses comply with the minimum lot area requirements of the R-5 district
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L149"
+    section: ["17.18."]
+    cite_default:
+      cite: Gladstone Municipal Code 17.18.020 (uses allowed outright), 17.18.060 (dimensional
+        standards), Community Commercial District
+      url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1718.html
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      # 17.18.020, "Uses allowed outright": "(11) Attached residential
+      # dwellings (duplex, triplex, quadplex). (12) Townhouses." The conditional
+      # list (17.18.040) holds a PUD and, at (4), any outright use that does not
+      # meet the Portland Avenue limitations of 17.18.050 -- see the note.
+      value: true
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L61-L63"
+    setback_front_ft:
+      # 17.18.060(1)(b), residential uses: "Five feet maximum front setback; 15
+      # feet minimum rear setback." No front MINIMUM is stated for a residential
+      # use, so none; the five feet is `setback_front_max_ft`.
+      value: 0
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L135-L137"
+    setback_front_max_ft:
+      value: 5
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L137"
+    setback_side_ft:
+      # The residential row states a front maximum and a rear minimum and
+      # nothing for the sides. Nonresidential uses get "no minimum setback
+      # requirements" (L135). Silence is none.
+      value: 0
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L135-L137"
+    setback_street_side_ft:
+      value: 0
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L135-L137"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L137"
+    max_height_ft:
+      # "35 feet or three stories". Both are carried; the pod is two storeys.
+      value: 35
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L141"
+    max_height_stories:
+      value: 3
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L141"
+    parking_front_prohibited:
+      # 17.18.070: "Off-street parking areas shall not be located between the
+      # building and street or within required setbacks."
+      value: true
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L171"
+    parking_required_yard_prohibited:
+      value: true
+      quote: "or/clackamas/gladstone/17.18.c-2.txt#L171"
+    notes: >-
+      Encoded 2026-10-08, 147 lots (Portland Avenue). Outright by
+      17.18.020(11) and (12); lot area is R-5's by 17.18.060(5)(a) (7,000 sq ft
+      for a quadplex, 1,500 per dwelling on the townhouse path). The five-foot
+      front setback is a MAXIMUM and the building has to come forward to it;
+      the rear is 15 and the sides print nothing for a residential use. No
+      lot coverage and no minimum lot width are printed for C-2 (whole-document
+      grep of the Gladstone set).
+
+
+      READ AND NOT ENCODED. 17.18.050(3) puts three limits on development
+      "along Portland Avenue": a primary entrance facing Portland Avenue, and
+      ground-floor windows on at least 25 percent of the residential wall
+      (L119-L121). A use that misses them falls to a conditional use
+      (17.18.040(4)). Which lots are on Portland Avenue is not a fact this
+      layer holds, so a Portland Avenue lot can screen green without the
+      entrance facing the avenue. Multi-household lot area (MR's) and cottage
+      clusters are housing types this screen does not place.
   C3:
-    outcome: to_read
-    note: >-
-      General Commercial (the ordinance's C-3), 125 lots, the McLoughlin strip. The outright list's
-      housing rows are the three conditioned ones (17.20.c-3.txt#L69-L73);
-      17.20.040(3) allows "Dwellings, subject to GMC Sections 17.14.050(1)
-      through (5)" as a conditional use (L99) -- MR's dimensional table. A
-      `false` use block with a `conditional_use` variant and MR's numbers,
-      which wait on MR above.
+    like:
+      zone: MR
+      cite: GMC 17.20.040(3), dwellings are a conditional use "subject to GMC Sections 17.14.050(1) through (5)", the Multi-Household district's dimensional standards
+      quote: "or/clackamas/gladstone/17.20.c-3.txt#L99"
+    section: ["17.20."]
+    cite_default:
+      cite: Gladstone Municipal Code 17.20.020 (uses allowed outright), 17.20.040 (conditional uses),
+        17.20.050 (dimensional standards), General Commercial District
+      url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1720.html
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      # The outright list has three housing rows and none is a market-rate
+      # building on a bare lot: (19) conversion of a commercial building, (20)
+      # "dwelling units available to households making 60 percent or less of
+      # area median income", (21) mixed use with ground-floor commercial for
+      # moderate incomes -- and (22) "mixed-use development within the
+      # Gladstone Town Center", which the definition (17.06.338) makes a
+      # building with more than one use. The pod is one use. Everything else is
+      # 17.20.040(3): "Dwellings, subject to GMC Sections 17.14.050(1) through
+      # (5)", a conditional use under Chapter 17.70.
+      value: false
+      quote: "or/clackamas/gladstone/17.20.c-3.txt#L69-L75,L93,L99"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): a dwelling here is a conditional use
+      (17.20.040(3), a Chapter 17.70 hearing), and a conditional use is not
+      by-right, so this zone is refused. The standards below are kept so the
+      ruling can be reversed: they are MR's table, which 17.20.040(3) sends
+      dwellings to, and MR's numbers are at least as tight as C-3's own front
+      and street-side 20 ft (when abutting or facing a residential zone), no
+      side or rear minimum, and 35 ft (17.20.050(1)-(3), (6), L145-L155).
+      125 lots, the McLoughlin strip. The affordable-housing and
+      conversion doors are answered once, as in OP: market rate, so no.
   LI:
-    outcome: to_read
-    note: >-
-      Light Industrial, 27 lots. Outright: a caretaker's or night
-      watchperson's dwelling (17.24.li.txt#L39) and nothing else
-      residential; 17.24.040(2) allows "Dwellings, subject to GMC Section
-      17.14.050(1) through (5)" as a conditional use (L85), the same clause
-      as C-3. A `false` use block with a `conditional_use` variant and MR's
-      numbers, which wait on MR above.
+    like:
+      zone: MR
+      cite: GMC 17.24.040(2), dwellings are a conditional use "subject to GMC Section 17.14.050(1) through (5)", the Multi-Household district's dimensional standards
+      quote: "or/clackamas/gladstone/17.24.li.txt#L85"
+    section: ["17.24."]
+    cite_default:
+      cite: Gladstone Municipal Code 17.24.020 (uses allowed outright), 17.24.040 (conditional uses),
+        17.24.060 (dimensional standards), Light Industrial District
+      url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1724.html
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      # Outright residential is "(4) Dwelling for caretaker or night
+      # watchperson on the property" -- an accessory dwelling, not a building
+      # of four -- and "(13) Uses permitted outright in C-3 district", whose
+      # housing rows are the three conditioned ones (see C3). 17.24.040(2):
+      # "Dwellings, subject to GMC Section 17.14.050(1) through (5)" is a
+      # conditional use under Chapter 17.70.
+      value: false
+      quote: "or/clackamas/gladstone/17.24.li.txt#L39,L57,L81,L85"
+    setback_side_ft:
+      # LI asks no side yard "except when a side lot line abuts a residential
+      # zoning district, in which case the minimum side setback shall be 20
+      # feet". Nothing here measures the neighbour, so the abutting figure is
+      # the one carried: it is larger than MR's 5.
+      value: 20
+      quote: "or/clackamas/gladstone/17.24.li.txt#L143"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/gladstone/17.24.li.txt#L145"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): a dwelling here is a conditional use
+      (17.24.040(2), a Chapter 17.70 hearing), and a conditional use is not
+      by-right, so this zone is refused. The standards below are kept so the
+      ruling can be reversed: MR's table, which 17.24.040(2) sends dwellings
+      to, with LI's own 20 ft side and rear yards laid over it (conservative:
+      they apply only against a residential zone, and no neighbour is
+      measured). LI prints no front or street-side minimum, so MR's 20 stands
+      for the dwelling. 27 lots.
+  C1:
+    like:
+      zone: R7.2
+      cite: GMC 17.16.040(6), dwellings are a conditional use "subject to GMC Sections 17.10.050(1) through (4)", the R-7.2 district's dimensional standards
+      quote: "or/clackamas/gladstone/17.16.c-1.txt#L73"
+    section: ["17.16."]
+    cite_default:
+      cite: Gladstone Municipal Code 17.16.020 (uses allowed outright), 17.16.040 (conditional uses),
+        17.16.060 (dimensional standards), Local Commercial District
+      url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1716.html
+      retrieved: '2026-10-08'
+    quadplex_allowed:
+      # The outright housing rows are the same three conditioned ones as C-3
+      # (L41-L45). 17.16.040(6): "Dwellings subject to GMC Sections 17.10.050(1)
+      # through (4)" is a conditional use under Chapter 17.70.
+      value: false
+      quote: "or/clackamas/gladstone/17.16.c-1.txt#L41-L45,L73"
+    setback_side_ft:
+      # "No minimum side setback requirement except when a side lot line abuts
+      # a residential zoning district, in which case ... 15 feet." The
+      # abutting figure, against R-7.2's 7.5 for the dwelling.
+      value: 15
+      quote: "or/clackamas/gladstone/17.16.c-1.txt#L113"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): a dwelling here is a conditional use
+      (17.16.040(6), a Chapter 17.70 hearing), and a conditional use is not
+      by-right, so this zone is refused. The standards below are kept so the
+      ruling can be reversed: R-7.2's table, which 17.16.040(6) sends dwellings
+      to, with C-1's 15 ft side yard laid over it (conservative: it applies
+      only against a residential zone, and no neighbour is measured). C-1's
+      front 20, rear 15 and street side 20 equal R-7.2's. One lot.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.

@@ -66,10 +66,15 @@ def test_no_zone_opens_without_the_hearing(rules: RuleSet) -> None:
         assert res.missing_required == (), zone
 
 
-def test_the_two_residential_zones_open_with_it(rules: RuleSet) -> None:
+def test_the_two_residential_zones_are_closed_by_ruling(rules: RuleSet) -> None:
+    """The Planned Development door is a Planning Commission hearing, which is
+    not by-right (Steph, 2026-10-08), so neither zone carries it any more and
+    the prohibition is settled."""
     for zone in OPENED_BY_ONE:
-        opened = rules.resolve(UNINC, zone, (*POD, "planned_development"))
-        assert opened.values["quadplex_allowed"].value is True, zone
+        got = rules.resolve(UNINC, zone, (*POD, "planned_development"))
+        assert got.values["quadplex_allowed"].value is False, zone
+        assert not got.values["quadplex_allowed"].levers, zone
+        assert "RED BY RULING (Steph, 2026-10-08)" in uninc_note(rules, zone), zone
 
 
 def test_the_agricultural_zone_does_not(rules: RuleSet) -> None:
@@ -89,23 +94,14 @@ def uninc_note(rules: RuleSet, zone: str) -> str:
 
 
 def test_the_permission_is_quoted_from_the_article_that_prints_it(
-    uninc: Layer, store: ProvenanceStore
+    store: ProvenanceStore,
 ) -> None:
-    """The zone lists a PD; the overlay says what a PD may hold.
-
-    Neither sentence is the rule on its own -- the use list names a procedure
-    and the overlay names a housing type -- so the variant quotes the overlay
-    and the citation carries both sections.
-    """
-    for zone in OPENED_BY_ONE:
-        variant = uninc.zones[zone].values["quadplex_allowed"].variants[0]
-        assert variant.prov.quote.startswith(PD_DOC), zone
-        assert "39.5350(A)" in variant.prov.cite, zone
-
-        text = store.quote(variant.prov.quote)
-        assert "In a residential zone" in text
-        assert "single family detached or attached" in text
-        assert "duplexes" in text
+    """The overlay text the door rested on is still in the store, so the ruling
+    can be reversed against the sentence it set aside."""
+    text = store.quote(f"{PD_DOC}#L257-L262")
+    assert "In a residential zone" in text
+    assert "single family detached or attached" in text
+    assert "duplexes" in text
 
 
 def test_the_zone_use_list_is_quoted_with_its_own_pd_entry(

@@ -968,15 +968,10 @@ zones:
     quadplex_allowed:
       value: false
       quote: "or/multnomah/wood-village/230.200.txt#L72-L75,L117-L118"
-      variants:
-        # Not a prohibition, and not a bare hearing either. Table 230-1 reads
-        # CU, and 230.315.A.1 then says residential is permitted only as part
-        # of a mixed use development -- so both have to be held before the use
-        # opens. The pod holds neither, which is why the base false is what a
-        # screen sees.
-        - value: true
-          when: [conditional_use, mixed_use]
-          quote: "or/multnomah/wood-village/230.200.txt#L72-L75,L117-L118"
+      #
+      # Door closed by ruling, not by the table: Table 230-1 reads CU (conditional use review) for
+      # Household Living, and 230.315.A.1 adds that residential is permitted only as part of a mixed
+      # use development. The pod is neither, so it was `[conditional_use, mixed_use]`.
     # Table 230-2 states no lot standard at all, twice: 230.310.A in prose --
     # "There is no minimum lot size or dimension for development of land or
     # creation of new lots in commercial zones" -- and then footnote (1) on the
@@ -1020,7 +1015,11 @@ zones:
       value: 5
       quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L78,L88"
     notes: >-
-      Table 230-1 reads CU on the Household Living row -- conditional use review required -- against Y for Mixed Use Residential and Commercial. So a pod on an NC lot is not refused; it needs a hearing. That is a different answer from a prohibition and the traffic light can only say so if the code's own distinction survives the encoding, which is why the base is false and the relief carries the true. The row that answers is Household Living, which 710.100 defines as "the residential occupancy of a dwelling unit or a structure by a household" with an average stay of thirty days or more. It names no housing type and excludes none, so a four-unit attached townhome is inside it -- which is how the non-residential zones speak about dwellings at all. The residential zones do the opposite and list types by name. The definition is quoted at or/multnomah/wood-village/710.100.txt#L56,L60.
+      RED BY RULING (Steph, 2026-10-08): the only way to a housing building here is a conditional use review,
+      and 230.315.A.1 also requires a mixed use development; a review is not by-right, so
+      this zone is refused. The `conditional_use` + `mixed_use` variant was removed with the
+      ruling and can go back if the ruling is reversed.
+      Table 230-1 reads CU on the Household Living row -- conditional use review required -- against Y for Mixed Use Residential and Commercial. So a pod on an NC lot is not refused; it needs a hearing. That is a different answer from a prohibition and the traffic light can only say so if the code's own distinction survives the encoding, which is why the base is false (the relief that carried the true was removed by the ruling above). The row that answers is Household Living, which 710.100 defines as "the residential occupancy of a dwelling unit or a structure by a household" with an average stay of thirty days or more. It names no housing type and excludes none, so a four-unit attached townhome is inside it -- which is how the non-residential zones speak about dwellings at all. The residential zones do the opposite and list types by name. The definition is quoted at or/multnomah/wood-village/710.100.txt#L56,L60.
 
 
       Three things in this zone are read and cannot be screened, and they are
