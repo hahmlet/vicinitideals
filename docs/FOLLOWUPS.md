@@ -1973,6 +1973,10 @@ read when the weekly full re-screen lands.
    is a tract / common-area / golf course RED? Then add a tract + zero-value
    (+ public-code) rule, bound over run 67, read every moved lot. Also
    1S133AD02200 (code 911) overlaps Westgate Christian School at 17% only.
+   STEPH RULED 2026-10-09: ALL RED -- HOA tracts, common areas, open space,
+   golf courses and zero-value parcels are RED and never scanned, like
+   schools and parks; churches and charities stay checked (item 47).
+   Assigned to the zone-gaps agent: rule + bound + read every moved lot.
 60. [scan: YES] **Rank the unranked corner streets (opened 2026-10-09 from
    49(c); Steph: "yellow, then measure").** In the current bound 634 lots
    have a corner street with no class (60 street names, 69 street lines;
@@ -2057,6 +2061,12 @@ read when the weekly full re-screen lands.
    corner lot (definitions block, "CORNER LOT: SILENT"), so no legal
    definition makes a bend a corner there.
    See item 63 for the step that makes it, the county-wide count and the fix.
+   STEPH RULED 2026-10-09 ("yes, when both agree"): a street line counts
+   as QUIET only when Metro's unclipped file AND OpenStreetMap both call it
+   residential/local. A busier OSM class (Kinnaman, West Union, Oleson,
+   NW 143rd) or any disagreement (Farmington) stays unranked = yellow;
+   `service` never counts. OSM becomes an acquired dataset (Geofabrik
+   Oregon extract) in the weekly snapshot; bound + report moves first.
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
@@ -2131,3 +2141,8 @@ read when the weekly full re-screen lands.
    (rank edges local where Metro agrees), which clears most of the yellows
    on the same lots. Reads: `/root/fo/corner_sus.pkl` (78),
    `county_corner.pkl` (21,199), `onebend_changes.csv`.
+   STEPH RULED 2026-10-09: ONE STREET, NOT A CORNER -- where the city's
+   code is silent, one street name on one unbroken run is a bend and takes
+   the unnamed reading (steps 2 + 3), accepting ~67 greens -> red; cities
+   that write a corner test (Portland, Gresham, Oregon City, Beaverton)
+   follow their own words (step 1). Bound + read every moved lot first.
