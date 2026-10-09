@@ -1803,19 +1803,22 @@ read when the weekly full re-screen lands.
    Everything is `draft`. Checks Steph asked for (2026-10-08): wetlands
    overlay = the NWI layer already applied; historic overlay = inventoried
    buildings only; 33% geotechnical = already stricter in slope.yaml (15%).
-   (a) BOUND RAN 2026-10-09 on 137 (real Estacada layers, tree
-   quadfit_2026-10-07_fg53e, bridge /root/bridge_fg53e): 0 lots lost, 261 gained,
-   all Estacada. Best of the two designs: C-2 3 green/27 red, CMU 6 green/4
-   yellow, NCR 7 green/4 yellow/139 red, R-3 70 red. FOUND: the 200 ft test was
-   applied to the LOT but the code (EMC 16.25.020 (G)) tests the DWELLING -- a
-   12-acre NCR corner lot (34E17 00901) came out green with the best building 335
-   ft out. FIXED in this branch: in NCR the lot ground beyond 200 ft of the named
-   streets is taken off the placement area (`reach_off_wkb`, `beyond_reach` in
-   named_street.py). The numbers above are from BEFORE the fix; RERUN the bound
-   (SHA = the fix commit, `bash /root/fg53e/bound.sh`, needs Steph's launch
-   approval) and read the NCR gains again. 21 scope TLIDs are missing from the
-   bridge output and the scope file has 262 lines against 261 gained: unexplained,
-   check on the rerun. Nothing is spliced or promoted.
+   (a) BOUND RE-RAN 2026-10-09 on 137 at 5f4c2e9f (the dwelling-in-band fix;
+   tree quadfit_2026-10-07_fg53e, bridge /root/bridge_fg53e). Estacada: 261 lots
+   admitted, 260 bridged (the 261st, 34E20AC00403 at 825 NW Wade St, is an
+   institutional lot left out of the scan). Best design per lot: C-2 3 green/27
+   red, CMU 6 green/4 yellow, NCR 7 green/4 yellow/139 red, R-3 70 red. Every
+   non-red NCR building now sits 134 ft or less from Eagle Creek Rd / Hinman Rd
+   (was 335 ft on 34E17 00901, now 37-64 ft); the C-2/CMU distances are not a rule
+   there. The s4 compare against the 10-07 weekly shows 805 lost (Clackamas
+   MR-1/MR-2/PMD/VA, red by main's design-review ruling) and 22,724 gained (Tigard
+   17,230, Cornelius 3,891, Gresham 479, Tualatin 416, Estacada 261, Gladstone 224,
+   Milwaukie 150, Fairview 48, West Linn 25): all main's zone-gaps lane, none from
+   this branch. bound_cols.py then crashed on the column compare, so
+   "existing lots unchanged" was NOT proven this time; the first bound (1d7209b0)
+   proved 0 lost / 261 gained. Nothing is spliced or promoted; Estacada reaches
+   the map at the next weekly (or a splice Steph's coordinator schedules, built
+   on /root/zg/Qn).
    (b) Molalla: 7 of 11 chapters (5.1 came down; 2.3, 2.4, 3.2, 4.4 still 429, retried every
    10 minutes) -- layer files are parked outside the repo again unless all 11
    land (copy in /tmp/fg53/molalla_parked + the new 5.1); gate already read:
