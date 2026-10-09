@@ -1683,6 +1683,31 @@ read when the weekly full re-screen lands.
    (50) did NOT land (s5o not re-run) -> the weekly. prune-runs retired run
    61 (kept 63/65/67); plain VACUUM ANALYZE run, VACUUM FULL still owed
    (24 GB free). flats_flags sync run 67 (926,292 opened) + check passed.
+   (j) DONE 2026-10-09 -- RUN 69 PROMOTED (agent, clean gate, ~17:55 UTC).
+   ONE splice on run 67 carrying three lanes: 57 flatter placement
+   (34b42b4f), 58/49(c) one-question (c98be01d unranked corner = yellow,
+   Portland type-2000 fire, Rockwood), 52b zone gaps (e91f05a8/30500bd4;
+   s4/s5o = /root/zg/Qn = weekly + 1,256 added lots, assign on /root/zg/Nn +
+   Qn). Code 97a1bef2, scope 20,336 lots (/root/s49j/scope.txt), bridge
+   1 h 38 min at 14 procs; bundle `data/flats/bridge/2026-10-09_49j`
+   (re-exported with --quadfit-results = the weekly lots_results.csv: Qn
+   holds none, so the first export left quadfit's columns empty -- TRAP for
+   any assign on a quadfit dir without lots_results.csv). Drift
+   `data/flats/reports/2026-10-09/drift_run69.md`: 3,671 answers, all
+   `rules`, 0 unexplained; gate 8 rows ok. Map colour, best pod: green
+   50,071 -> 50,008, yellow 153,799 -> 151,010, red 383,945 -> 386,797.
+   7,947 design rows moved; every row matched its lane's own bound
+   (/root/s57/expected.csv, /root/fo/expected.csv, /root/zg/assign_new)
+   except 10 lane interactions read one by one and replayed by the 57
+   agent (6 Portland lots green: placement drops SLOPE-GRADE AND type-2000
+   roads measure the hose route, 103-149 ft; Gresham 1N3E32BB-05100 green:
+   civic-corridor flag gone; Beaverton 1N132CC05200 green->yellow: new
+   drive on an unranked street) and 3 Clackamas MR1 lots red by ruling.
+   Lists /root/s49j/moves_{s57,fo,zg}.csv on 137. prune-runs retired run 63
+   (kept 65/67/69); plain VACUUM ANALYZE run, VACUUM FULL still owed (23 GB
+   free). flats_flags sync (33,279 opened, 34,215 cleared) + check passed.
+   Splice base for the next partial: /root/bridge_spliced_2026-10-09_49j,
+   assign quadfit dir /root/zg/Qn, normalized /root/zg/Nn.
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
