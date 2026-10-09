@@ -13,8 +13,11 @@ import shapely
 from shapely.geometry import LineString, box
 
 from flats.geom.named_street import (
+    BAND_ZONES,
     NAMED_STREET_FACT,
     REACH_FT,
+    beyond_reach,
+    beyond_reach_column,
     named_street_column,
     named_street_lines,
     observed_named_street,
@@ -98,3 +101,36 @@ def test_a_street_file_without_names_measures_nothing(tmp_path: Path) -> None:
     pd.DataFrame({"type": [1500], "alley": [False], "wkb": [shapely.to_wkb(EAGLE)]}).to_parquet(streets, index=False)
     frame = pd.DataFrame({"lot_wkb": [shapely.to_wkb(box(0, 0, 10, 10))]})
     assert named_street_column(frame, streets) == [None]
+
+
+def test_the_dwelling_must_stand_inside_the_band_not_just_the_lot() -> None:
+    # A lot that reaches the band but runs far beyond it: the ground past
+    # 200 ft is what comes off, the ground inside stays.
+    big = box(0, 50, 100, 900)
+    off = beyond_reach(big, [EAGLE])
+    assert off.bounds[1] == 200.0
+    assert off.area == 100 * 700
+    assert beyond_reach(box(0, 10, 50, 150), [EAGLE]).is_empty
+    assert beyond_reach(big, []).equals(big)
+
+
+def test_only_the_band_zones_carry_the_ground_beyond_reach(tmp_path: Path) -> None:
+    assert ("estacada", "NCR") in BAND_ZONES
+    big = shapely.to_wkb(box(0, 50, 100, 900))
+    frame = pd.DataFrame(
+        {
+            "jurisdiction": ["estacada", "estacada", "canby"],
+            "zone": ["NCR", "C-2", "NCR"],
+            "lot_wkb": [big, big, big],
+        }
+    )
+    streets = tmp_path / "s1_streets.parquet"
+    pd.DataFrame(
+        {"name": ["EAGLE CREEK"], "ftype": ["RD"], "wkb": [shapely.to_wkb(EAGLE)]}
+    ).to_parquet(streets, index=False)
+    got = beyond_reach_column(frame, streets)
+    assert got[1] is None and got[2] is None
+    assert shapely.from_wkb(got[0]).area == 100 * 700
+    nameless = tmp_path / "bare.parquet"
+    pd.DataFrame({"wkb": [shapely.to_wkb(EAGLE)]}).to_parquet(nameless, index=False)
+    assert shapely.from_wkb(beyond_reach_column(frame, nameless)[0]).equals(shapely.from_wkb(big))

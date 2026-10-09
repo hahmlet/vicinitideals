@@ -4,7 +4,7 @@ eligible: true
 notes: >-
   DRAFT, 2026-10-07. Estacada Municipal Code Title 16 (Development), stored from the city's
   published code. Admits C-2, CMU, R-3 (R-3 as townhouse lots only) and NCR (only within 200 ft
-  of Eagle Creek Rd or Hinman Rd, measured); refuses the rest.
+  of Eagle Creek Rd or Hinman Rd, measured, and the dwelling is only placed inside that band); refuses the rest.
 
 ingest:
   geoid: null
@@ -460,7 +460,9 @@ zones:
     # higher street. Steph, 2026-10-08: measure that distance with the named
     # streets as the origin. `near_named_street_200ft` is that measurement;
     # the major-collector half has no classification map, so it is not
-    # measured and such a lot screens RED (the safe way to be wrong).
+    # measured and such a lot screens RED (the safe way to be wrong). The
+    # code asks for the DWELLING in the band, so the bridge also takes the lot
+    # ground beyond 200 ft off the NCR placement area (reach_off_wkb).
     quadplex_allowed:
       value: false
       cite: Estacada EMC 16.25.020, a triplex, fourplex or three-plus-unit commonwall row is outright only within 200 feet of Eagle Creek Road, Hinman Road or a major collector or higher street
@@ -522,7 +524,7 @@ zones:
       quote: "or/clackamas/estacada/emc.16.zones.txt#L842"
     notes: >-
       DRAFT. Admitted only within 200 feet of Eagle Creek Rd or Hinman Rd
-      (measured). A lot near some other major collector, which the screen
+      (measured), and the building is placed only inside that band. A lot near some other major collector, which the screen
       has no map of, comes out RED. 2,500 square feet a dwelling; front,
       street side and rear 15; side 5; 35 ft; no coverage limit. No setback
       is required from Eagle Creek Rd; the screen charges the front setback

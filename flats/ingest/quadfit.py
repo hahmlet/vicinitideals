@@ -131,7 +131,12 @@ from flats.geom.street_class import (
     observed_local_street,
     street_ranks,
 )
-from flats.geom.named_street import NAMED_STREET_FACT, named_street_column, observed_named_street
+from flats.geom.named_street import (
+    NAMED_STREET_FACT,
+    beyond_reach_column,
+    named_street_column,
+    observed_named_street,
+)
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
@@ -372,7 +377,9 @@ def observed_facts(
       Eagle Creek Rd or Hinman Rd (``named_street_ft``, measured by
       :func:`iter_rows`), False beyond; Estacada's NCR fourplex path. The code's
       "major collector" half is not held, so a lot near an unlisted collector
-      is False (RED, never a false GREEN).
+      is False (RED, never a false GREEN). The code asks for the DWELLING
+      within 200 ft, so in NCR the lot ground beyond the band is also taken
+      off the placement area (``reach_off_wkb``).
     * ``local_street`` -- from ``local_street_obs``, which
       :func:`with_local_street` reads off a city's TSP map: True only where
       every street line is local by the map AND by Metro's street type,
@@ -718,6 +725,11 @@ class QuadfitLot:
     #: The ground s5o's carve overlays take off the lot (``carve_wkb``);
     #: None where none touches it.
     carve: Any = None
+    #: The lot ground beyond 200 ft of the named streets, where the code
+    #: asks for the dwelling within that reach (``reach_off_wkb``,
+    #: :mod:`flats.geom.named_street`); taken off like the carve. None
+    #: elsewhere.
+    reach_off: Any = None
     #: The ground too steep to build or park on (:func:`with_steep`, Steph
     #: 2026-10-04): taken off the envelope and the court's ground like the
     #: carve, but not off the yard an outdoor area may use -- a code's open
@@ -1073,7 +1085,7 @@ def envelope_for(
     if on_lot is not None and strip > 0:
         # No line named: keep the strip off every line (conservative).
         on_lot = on_lot.buffer(-strip)
-    fallback = None if lot.envelope is None else _less_carve(lot.envelope, lot.steep)
+    fallback = None if lot.envelope is None else _less_carve(_less_carve(lot.envelope, lot.steep), lot.reach_off)
     quadfit = Envelope(fallback, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot)
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
@@ -1127,11 +1139,14 @@ def _taken(lot: QuadfitLot, steep: Any = None) -> Any:
     """What nothing is built or parked on: the carve, and the steep ground
     (``steep``, or the lot's own where the caller hands none)."""
     steep = lot.steep if steep is None else steep
+    carve = lot.carve
+    if lot.reach_off is not None:
+        carve = lot.reach_off if carve is None or carve.is_empty else carve.union(lot.reach_off)
     if steep is None or steep.is_empty:
-        return lot.carve
-    if lot.carve is None or lot.carve.is_empty:
+        return carve
+    if carve is None or carve.is_empty:
         return steep
-    return lot.carve.union(steep)
+    return carve.union(steep)
 
 
 def _within(steep: Any, where: Any) -> Any:
@@ -1384,6 +1399,7 @@ def lot_from_row(
         lot_geom=lot_geom,
         edges=edges,
         carve=shapely.from_wkb(carve_wkb) if carve_wkb else None,
+        reach_off=shapely.from_wkb(row["reach_off_wkb"]) if row.get("reach_off_wkb") else None,
         rear_runs=(
             rear_cover_runs(
                 raw_edges,
@@ -1501,6 +1517,7 @@ def iter_rows(
         frame = frame.assign(
             street_end_ft=street_end_column(frame, streets),
             named_street_ft=named_street_column(frame, streets),
+            reach_off_wkb=beyond_reach_column(frame, streets),
         )
     # Every null -- NaN, NaT, pandas' NA -- leaves as None, so the readers
     # above see one shape of "no answer" whatever dtype the column arrived in.
