@@ -960,6 +960,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ROCKWOOD-DESIGN-DISTRICT:
+    description: "Whether the lot lies inside the Rockwood Design District"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the city design-district layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-ON-TRANSIT-STREET:
     description: "Whether the lot fronts a transit street"
     kind: categorical

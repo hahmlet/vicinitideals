@@ -707,7 +707,7 @@ notes:
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L480"
     digest: "cbf12e6d1150"
     state: unmeasured
-    fact: civic_corridor
+    fact: rockwood_design_district
     reason: >-
       inside the Rockwood Design District the front setbacks come from Section
       7.0512.A.2 rather than from this table, and nothing decides whether a

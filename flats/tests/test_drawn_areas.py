@@ -45,6 +45,7 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
     assert DRAWN_CONDITIONS == (
         "inside_mapped_use_area",
         "north_of_marine_drive",
+        "rockwood_design_district",
         "willamette_historic_district",
     )
     assert set(DRAWN_CONDITIONS) <= set(CONDITIONS)
@@ -264,15 +265,31 @@ WEST_LINN = "or/clackamas/west-linn"
 GRESHAM = "or/multnomah/gresham"
 WHD = "or/clackamas/west-linn/willamette-historic-district.geojson"
 MARINE = "or/multnomah/gresham/north-of-marine-drive.geojson"
+ROCKWOOD = "or/multnomah/gresham/rockwood-design-district.geojson"
 
 
 def test_west_linn_and_gresham_declare_their_areas(corpus: dict) -> None:
     (whd,) = corpus[WEST_LINN].drawn_areas.values()
     assert (whd.condition, whd.file) == ("willamette_historic_district", WHD)
     assert {"R-10", "R-5"} <= set(whd.zones)
-    (marine,) = corpus[GRESHAM].drawn_areas.values()
+    areas = corpus[GRESHAM].drawn_areas
+    marine = areas["north_of_marine_drive"]
     assert (marine.condition, marine.file) == ("north_of_marine_drive", MARINE)
     assert "LDR-5" in marine.zones
+    rockwood = areas["rockwood_design_district"]
+    assert (rockwood.condition, rockwood.file) == ("rockwood_design_district", ROCKWOOD)
+    assert {"CMU", "SC", "MDR-12"} <= set(rockwood.zones)
+
+
+def test_a_gresham_lot_in_rockwood_is_inside_and_one_downtown_is_not(layers) -> None:
+    area = load_area(ROCKWOOD)
+    inside = area.representative_point().buffer(5)
+
+    def gresham(lot) -> dict:
+        return observed_facts(row(jurisdiction="gresham", zone="CMU", lot_wkb=shapely.to_wkb(lot)), layers)
+
+    assert gresham(inside)["rockwood_design_district"] is True
+    assert gresham(box(7_706_000, 670_000, 7_706_100, 670_100))["rockwood_design_district"] is False
 
 
 def test_the_historic_district_is_the_citys_one_polygon() -> None:
