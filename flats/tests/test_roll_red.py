@@ -1,0 +1,184 @@
+"""Tracts, zero-value parcels and public county codes are RED (Steph RULED 2026-10-09, FOLLOWUPS 59).
+
+"All red": HOA tracts, common areas, open space, golf courses and parcels
+the county values at $0 land + $0 building; the public county codes with
+them. Churches and charities stay checked (FOLLOWUPS 47).
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+from typing import Any
+
+import pytest
+
+pd = pytest.importorskip("pandas")
+
+from flats.geom import roll  # noqa: E402
+from flats.ingest import assign as az  # noqa: E402
+from flats.ingest import institutional as step  # noqa: E402
+
+pytestmark = pytest.mark.unit
+
+ZERO = {"LANDVAL": 0.0, "BLDGVAL": 0.0, "TOTALVAL": 0.0, "ASSESSVAL": 0.0}
+WORTH = {"LANDVAL": 90_000.0, "BLDGVAL": 250_000.0, "TOTALVAL": 340_000.0, "ASSESSVAL": 300_000.0}
+
+
+def lot(**kw: Any) -> dict[str, Any]:
+    return {"county": "washington", "tlid": "1S101AA01100", "PROP_CODE": "100", "site_address": "123 SW MAIN ST", **WORTH, **kw}
+
+
+def tier(**kw: Any) -> str | None:
+    got = roll.read(lot(**kw), roll.load_rules())
+    return got["category"].removeprefix(roll.PREFIX) if got else None
+
+
+# --- the ruling, as the config holds it -------------------------------------
+
+
+def test_the_tiers_steph_ruled_are_on_and_the_riskiest_is_held_back() -> None:
+    on = {t.key: t.enabled for t in roll.load_rules().tiers}
+    assert on == {"public_land": True, "tract": True, "open_space": True, "no_address": True, "real_address": False}
+
+
+@pytest.mark.parametrize("code", ["911", "981", "980", "910", "900", "901", "100", "400"])
+def test_churches_charities_student_housing_and_rural_tracts_are_not_public_land(code: str) -> None:
+    """OAR 150-308-0310: 91x church, 98x benevolent, 90x student housing stay
+    checked; class 4 is rural acreage, not an HOA tract."""
+    assert tier(PROP_CODE=code) is None
+
+
+@pytest.mark.parametrize("code", ["920", "930", "940", "950", "960", "970", "990"])
+def test_the_public_codes_of_washington_are_red(code: str) -> None:
+    assert tier(PROP_CODE=code) == "public_land"
+
+
+def test_a_public_code_is_read_only_where_the_county_uses_the_code_book() -> None:
+    """Multnomah and Clackamas rolls hold no 9xx codes; a 940 there is not
+    read as a city's."""
+    assert tier(county="multnomah", PROP_CODE="940") is None
+    assert tier(county="clackamas", PROP_CODE="940") is None
+
+
+# --- zero value ----------------------------------------------------------------
+
+
+def test_a_worth_something_lot_is_untouched_whatever_its_number() -> None:
+    assert tier(tlid="1S134BC90000") is None
+
+
+def test_the_tract_number_alone_is_nothing_without_zero_value() -> None:
+    """341 Washington lots numbered 9xxxx are townhomes with a roll value."""
+    assert tier(tlid="1S136CA90311", PROP_CODE="102", area_sqft=1000.0) is None
+
+
+@pytest.mark.parametrize("tlid", ["1S134BC90000", "1N334DC90000", "37E04  80000", "21E05AANONTL", "1S2E13BC -TR-A"])
+def test_zero_value_with_a_tract_number_is_red(tlid: str) -> None:
+    assert tier(tlid=tlid, PROP_CODE="000", **ZERO) == "tract"
+
+
+def test_zero_value_open_space_and_recreation_codes_are_red() -> None:
+    assert tier(PROP_CODE="800", **ZERO) == "open_space"
+    assert tier(PROP_CODE="035", **ZERO) == "open_space"
+
+
+def test_zero_value_with_no_street_address_is_red() -> None:
+    assert tier(site_address=None, **ZERO) == "no_address"
+    assert tier(site_address="NO SITUS", **ZERO) == "no_address"
+    assert tier(site_address="LEVY CODE 1234", **ZERO) == "no_address"
+
+
+def test_zero_value_with_a_real_street_address_is_held_for_steph() -> None:
+    """A lot the county has not valued yet looks exactly like this."""
+    assert tier(**ZERO) is None
+
+
+@pytest.mark.parametrize(
+    "values",
+    [
+        {"LANDVAL": 0.0, "BLDGVAL": 0.0, "TOTALVAL": 0.0, "ASSESSVAL": 5000.0},
+        {"LANDVAL": 0.0, "BLDGVAL": 0.0, "TOTALVAL": 4000.0, "ASSESSVAL": 0.0},
+        {"LANDVAL": 0.0, "BLDGVAL": 0.0, "TOTALVAL": 0.0, "ASSESSVAL": None},
+        {"LANDVAL": None, "BLDGVAL": None, "TOTALVAL": None, "ASSESSVAL": None},
+    ],
+)
+def test_a_value_the_roll_does_not_show_as_zero_is_not_zero(values: dict[str, Any]) -> None:
+    """Specially assessed farm and forest land has zero land and building
+    beside a real assessed value; a value the roll lacks is unknown."""
+    assert tier(site_address=None, tlid="1S134BC90000", **values) is None
+
+
+# --- the reading step and assign -------------------------------------------------
+
+
+def _bridge(tmp_path: Path, rows: list[dict[str, Any]], meta: dict[str, Any]) -> Path:
+    bridge = tmp_path / "bridge"
+    bridge.mkdir()
+    pd.DataFrame([{**{c: None for c in az.ROW_COLUMNS}, **r} for r in rows]).to_parquet(bridge / "lots.parquet", index=False)
+    (bridge / "meta.json").write_text(json.dumps(meta), encoding="utf-8")
+    return bridge
+
+
+def _normalized(tmp_path: Path, rows: list[dict[str, Any]]) -> Path:
+    normalized = tmp_path / "normalized"
+    normalized.mkdir()
+    base = {"jurisdiction": "or/a", "zone": "R5", "zone_raw": "R5", "area_sqft": 5000.0, "gate": None, "site_address": "1 MAIN ST"}
+    pd.DataFrame([{**base, **WORTH, "PROP_CODE": "100", **r} for r in rows]).to_parquet(normalized / "lots.parquet", index=False)
+    return normalized
+
+
+def test_assign_answers_a_roll_lot_red_with_no_reading_file(tmp_path: Path) -> None:
+    bridge = _bridge(
+        tmp_path,
+        [
+            {"TLID": "LEFTOVER", "design": "d1", "triage": "green", "if_signed": "green", "colour": "green"},
+            {"TLID": "HOUSE", "design": "d1", "triage": "green", "if_signed": "green", "colour": "green"},
+        ],
+        {},
+    )
+    normalized = _normalized(
+        tmp_path,
+        [
+            {"county": "washington", "tlid": "LEFTOVER", "PROP_CODE": "000", "site_address": None, **ZERO},
+            {"county": "washington", "tlid": "HOUSE"},
+            {"county": "washington", "tlid": "CITY", "PROP_CODE": "940", **ZERO},
+        ],
+    )
+    meta = az.assign(normalized, bridge, tmp_path / "out")
+    frame = pd.read_parquet(tmp_path / "out" / "lots.parquet")
+    assert frame["TLID"].tolist().count("LEFTOVER") == 1, "the scan row for the leftover must go"
+    by = frame.set_index("TLID")
+    for tlid in ("LEFTOVER", "CITY"):
+        row = by.loc[tlid]
+        assert (row["triage"], row["if_signed"], row["colour"], row["reasons"]) == ("red", "red", "red", "COUNTY_ROLL_RED")
+    assert by.loc["HOUSE"]["colour"] == "green"
+    bind = json.loads(by.loc["CITY"]["binds"])[0]
+    assert bind["check"] == "roll_red"
+    assert bind["source"] == "public land, per the washington roll code 940 (city)"
+    assert meta["assign"]["roll_by_tier"] == {"public_land": 1, "no_address": 1} or meta["assign"]["roll_by_tier"] == {"no_address": 1, "public_land": 1}
+    assert "COUNTY_ROLL_RED, by tier (red, out of the scan)" in (tmp_path / "out" / "summary.md").read_text(encoding="utf-8")
+
+
+def test_the_reading_step_writes_roll_lots_so_the_bridge_skips_them() -> None:
+    lots = pd.DataFrame(
+        [
+            {"county": "washington", "tlid": "LEFTOVER", "PROP_CODE": "000", "site_address": None, **ZERO},
+            {"county": "washington", "tlid": "HOUSE", "PROP_CODE": "100", "site_address": "1 MAIN ST", **WORTH},
+            {"county": "washington", "tlid": "SHARED", "PROP_CODE": "000", "site_address": None, **ZERO},
+            {"county": "clackamas", "tlid": "SHARED", "PROP_CODE": "100", "site_address": "1 MAIN ST", **WORTH},
+        ]
+    )
+    frame = step.measure_roll(lots)
+    assert sorted(zip(frame["county"], frame["TLID"], frame["category"])) == [
+        ("washington", "LEFTOVER", "roll_no_address"),
+        ("washington", "SHARED", "roll_no_address"),
+    ]
+    frame = step.mark_whole(frame, lots["tlid"])
+    # SHARED names a lot in two counties and only one is roll land: the bridge keys on TLID alone.
+    assert dict(zip(frame["TLID"], frame["whole_tlid"])) == {"SHARED": False, "LEFTOVER": True}
+
+
+def test_a_lot_the_map_already_holds_keeps_the_map_reading() -> None:
+    lots = pd.DataFrame([{"county": "washington", "tlid": "T", "PROP_CODE": "000", "site_address": None, **ZERO}])
+    assert len(step.measure_roll(lots, {("washington", "T")})) == 0

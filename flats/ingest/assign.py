@@ -31,6 +31,11 @@ for each lot it cannot colour, why:
   it would have read, measured or not, gated or not: its rows are the
   reading's, not the screen's. Churches and charities are not in the
   reading and stay screened;
+* a lot the **county tax roll** rules out (:mod:`flats.geom.roll`: public land
+  by roll code, a tract or common parcel, open space, a parcel valued at $0
+  -- Steph 2026-10-09, FOLLOWUPS 59, "All red") is RED with ``COUNTY_ROLL_RED``
+  on the same terms: read here from the lot table, whatever the reading file
+  holds, so the colour never depends on it. Churches and charities stay;
 * a lot with no gate that quadfit still did not measure gets ``NOT_MEASURED``
   plus the step of quadfit's structural filter that dropped it
   (``s3_dropped.csv``: ``sliver_area``, ``too_narrow_20ft``,
@@ -77,7 +82,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Callable
 
-from flats.ingest.institutional import INSTITUTIONAL_USE
+from flats.ingest.institutional import INSTITUTIONAL_USE, ROLL_RED
 from flats.ingest.normalize import GATES, EXCLUDED_COLUMNS
 
 #: The reason on a lot that passed every gate and still has no measurement.
@@ -86,7 +91,7 @@ NOT_MEASURED = "NOT_MEASURED"
 USE_PROHIBITED = "USE_PROHIBITED"
 #: A lot too small or too narrow for the building, by arithmetic alone.
 POD_CANNOT_FIT = "POD_CANNOT_FIT"
-REASONS = (*GATES, NOT_MEASURED, USE_PROHIBITED, INSTITUTIONAL_USE, POD_CANNOT_FIT)
+REASONS = (*GATES, NOT_MEASURED, USE_PROHIBITED, INSTITUTIONAL_USE, ROLL_RED, POD_CANNOT_FIT)
 
 #: quadfit's s3 drops a lot whose outline has no point 10 ft from every edge
 #: (``NARROW_TEST_BUFFER_FT = -10``): no 20 ft circle fits. A rectangle whose
@@ -326,6 +331,20 @@ def _said_source(source: str) -> str:
     return source
 
 
+def roll_row(lot: dict[str, Any], design: str, reading: dict[str, Any], rules: Any) -> dict[str, Any]:
+    """The row for one lot x design the county tax roll rules out: RED as
+    screened and as signed. The bind names the tier and the roll's own
+    words (``reading['source']``)."""
+    from flats.score import flags as flag_plan
+
+    row = synthetic_row(lot, design, ROLL_RED)
+    row.update({"triage": "red", "if_signed": "red"})
+    why = str(reading["source"]).removeprefix("roll:")
+    bind = flag_plan.Bind("roll_red", None, None, None, source=f"{rules.words(str(reading['category']))}, per the {why}")
+    row.update(_plan([], [bind]))
+    return row
+
+
 def institutional_row(lot: dict[str, Any], design: str, reading: dict[str, Any], rules: Any) -> dict[str, Any]:
     """The row for one lot x design on institutional land: RED as screened
     and as signed -- no signature turns a school into a pod site. The bind
@@ -454,7 +473,12 @@ def assign(
     measured = {str(t).rstrip() for t in frame["TLID"]}
     say(f"bridge: {len(frame):,} rows, {len(measured):,} lots, designs {designs}")
 
+    from flats.geom.roll import load_rules as roll_rules
+    from flats.geom.roll import read as roll_read
+    from flats.ingest.institutional import ROLL_COLUMNS
+
     columns = ["county", "tlid", "jurisdiction", "zone", "zone_raw", "area_sqft", "gate", "rules_layer"]
+    columns += [c for c in ROLL_COLUMNS if c not in columns]
     import pyarrow.parquet as pq
 
     present = set(pq.read_schema(normalized / "lots.parquet").names)
@@ -476,6 +500,17 @@ def assign(
 
     institutional = institutional or (Path(meta["institutional"]) if meta.get("institutional") else None)
     inst = {k: v for k, v in by_lot(institutional).items() if v.get("whole_tlid")}
+    # The county roll is read here, from the lot table, whatever the file holds.
+    roll_rules_ = roll_rules()
+    roll_hits: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in lot_rows:
+        key = (str(row.get("county")), str(row["tlid"]).rstrip())
+        if key not in inst and (got := roll_read(row, roll_rules_)) is not None:
+            roll_hits[key] = got
+    for key, got in roll_hits.items():
+        shared = by_tlid[key[1]]
+        if all((str(r.get("county")), key[1]) in inst or (str(r.get("county")), key[1]) in roll_hits for r in shared):
+            inst[key] = got
     inst_tlids = {t for _c, t in inst}
     inst_rules = institutional_rules() if inst else None
     if inst_tlids & measured:
@@ -501,8 +536,13 @@ def assign(
         tlid = str(row["tlid"]).rstrip()
         reading = inst.get((str(row.get("county")), tlid))
         if reading is not None:
-            by_reason[INSTITUTIONAL_USE] += 1
             by_category[str(reading["category"])] += 1
+            if str(reading["category"]).startswith("roll_"):
+                by_reason[ROLL_RED] += 1
+                for design in designs:
+                    synthetic.append(roll_row(row, design, reading, roll_rules_))
+                continue
+            by_reason[INSTITUTIONAL_USE] += 1
             for design in designs:
                 synthetic.append(institutional_row(row, design, reading, inst_rules))
             continue
@@ -576,7 +616,8 @@ def assign(
             "not_measured_by_step": dict(sorted(by_step.items())),
             "prohibited_by_zone": dict(sorted(prohibited_zones.items())),
             "pod_cannot_fit_by_proof": dict(sorted(by_proof.items())),
-            "institutional_by_category": dict(sorted(by_category.items())),
+            "institutional_by_category": dict(sorted((k, v) for k, v in by_category.items() if not k.startswith("roll_"))),
+            "roll_by_tier": dict(sorted((k.removeprefix("roll_"), v) for k, v in by_category.items() if k.startswith("roll_"))),
             "institutional_were_scanned": inst_measured,
             "measured_not_in_lots": len(measured_not_in_lots),
             "measured_not_in_lots_examples": measured_not_in_lots[:20],
@@ -616,6 +657,11 @@ def describe(meta: dict[str, Any]) -> list[str]:
             "  - INSTITUTIONAL_USE, by category (red, out of the scan): "
             + ", ".join(f"{k} {v:,}" for k, v in a["institutional_by_category"].items())
             + (f" -- {a['institutional_were_scanned']:,} of them were scanned anyway" if a.get("institutional_were_scanned") else "")
+        )
+    if a.get("roll_by_tier"):
+        out.append(
+            "  - COUNTY_ROLL_RED, by tier (red, out of the scan): "
+            + ", ".join(f"{k} {v:,}" for k, v in a["roll_by_tier"].items())
         )
     if a.get("measured_but_excluded"):
         out.append(

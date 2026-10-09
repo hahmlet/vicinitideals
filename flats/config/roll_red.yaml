@@ -1,0 +1,56 @@
+# Lots the county's own tax roll says nobody can buy for a house: RED and
+# never scanned, like the institutional land of institutional.yaml.
+#
+# Steph RULED 2026-10-09 (FOLLOWUPS 59), "All red": HOA tracts, common areas,
+# open space, golf courses and parcels the county values at $0 land + $0
+# building are red; so are the public county codes. Churches and charities
+# STAY CHECKED (FOLLOWUPS 47), so no tier reads codes 91x or 98x.
+#
+# Code book: Oregon's statewide property class codes, OAR 150-308-0310
+# "Basic property classes" (the first digit is the class: 0 miscellaneous,
+# 1 residential, 2 commercial, 3 industrial, 4 tract, 5 farm, 6 forest,
+# 7 multi-family, 8 recreation, 9 exempt). Its exempt codes, by second digit:
+# 90 student housing, 91 church, 92 school, 93 cemetery, 94 city, 95 county,
+# 96 state, 97 federal, 98 benevolent or fraternal, 99 port or other public
+# body. Its miscellaneous codes end in 5 for open space. A "tract" in that
+# book (class 4) is rural acreage, NOT an HOA tract: no tier reads class 4.
+#
+# Only Washington County's roll carries 9xx codes (read 2026-10-09 against
+# the whole lot table); Multnomah and Clackamas rolls hold none, so the
+# public-code tier names its counties. Multnomah marks exempt land only by an
+# assessed value of 0 beside a real market value, which cannot tell a city
+# park from a church, so nothing here reads it.
+#
+# A "zero value" lot has land, building, total and assessed value all
+# exactly 0 (a lot whose value is not on the roll is not zero). Land and
+# building alone would catch farm and forest lots the county assesses
+# specially.
+#
+# Measured against live run 69 (non-red lots): see FOLLOWUPS 59.
+
+version: 1
+
+tiers:
+  public_land:
+    enabled: true
+    # code: 92x school, 93x cemetery, 94x city, 95x county, 96x state,
+    # 97x federal, 99x port or other public body.
+    pattern: '^9[2-79]\d$'
+    counties: [washington]
+    words: public land
+  tract:
+    enabled: true
+    words: a tract or common parcel the county values at $0
+  open_space:
+    enabled: true
+    # 8xx recreation; 0x5 miscellaneous open space.
+    pattern: '^(8\d\d|0\d5)$'
+    words: recreation or open space the county values at $0
+  no_address:
+    enabled: true
+    words: a parcel the county values at $0 with no street address
+  real_address:
+    # Held back until Steph rules: new lots the county has not valued yet
+    # look exactly like this.
+    enabled: false
+    words: a parcel the county values at $0

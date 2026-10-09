@@ -2732,6 +2732,7 @@ _CHECK_WORDS = {
     "driveway_frontage_share": "driveway takes more of the frontage than allowed",
     "front_yard_vehicle_share": "parking takes more of the front yard than allowed",
     "institutional_share": "institutional land, never a pod site",
+    "roll_red": "the county's tax roll marks it as public land, a tract or common parcel, or a parcel worth $0",
     "pod_footprint_area": "the lot is smaller than the building's footprint",
     "pod_width": "the lot is too narrow: no 20 ft circle fits inside it, and the building is wider than that",
 }
@@ -2762,6 +2763,7 @@ _REASON_WORDS = {
     "USE_NOT_ENCODED": "whether the zone allows a fourplex is not encoded",
     "USE_PROHIBITED": "the zone forbids the use outright",
     "INSTITUTIONAL_USE": "institutional land — a school, park, hospital, public site, utility, airport, marina, transit hub, railway, public pool or plaza, or mall — red and left out of the scan (churches and charities are still screened)",
+    "COUNTY_ROLL_RED": "the county's tax roll rules it out — public land, a tract or common parcel, open space, or a parcel the county values at $0 — red and left out of the scan (churches and charities are still screened)",
     "POD_CANNOT_FIT": "red by arithmetic: the lot is smaller than the building's footprint, or too narrow for a building 20 ft or wider — no zoning changes that",
     "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
     "STREET_RANK_UNKNOWN": "closer look: the lot's parking works off only one of its two streets, and a street has no class on file, so it is not known the street that works is the quieter one the code sends the driveway to",
