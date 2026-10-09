@@ -127,6 +127,7 @@ from flats.geom.sidewalk import (
 from flats.geom.street_class import (
     LOCAL_STREET,
     load_class_maps,
+    access_record,
     measured_access,
     observed_local_street,
     street_ranks,
@@ -1626,6 +1627,10 @@ class Screened:
     #: report, never read by the colour. None where the fit did not pass,
     #: the lot is red (it stays red whatever the pod's size) or nobody asked.
     room: Room | None = None
+    #: Which street each plan of a corner lot took its driveway from and why
+    #: (:func:`flats.geom.street_class.access_record`, FOLLOWUPS 49(c)); the
+    #: plan this row stands on carries ``won``. None off the named-front path.
+    access: tuple[dict[str, Any], ...] | None = None
 
 
 def _room(s: Screened, fitter: Fitter) -> Room | None:
@@ -2307,6 +2312,7 @@ def _screen_lot_once(
             if not plans:
                 plans = [(None, lot.edges, None)]
         tried: list[tuple[Screened, Fitter]] = []
+        access_log: list[dict[str, Any]] = []
         plain: ZoneResolution | None = None
         alleyed: ZoneResolution | None = None
         for plan_key, plan_edges, front in plans:
@@ -2316,6 +2322,8 @@ def _screen_lot_once(
             # A lowest-class driveway off a corner lot whose named front is
             # the quieter street comes off the front (Steph 2026-10-05).
             plan_got = measured_access(got, plan_edges, front)
+            if front is not None:
+                access_log.append(access_record(got, plan_got, plan_edges, front))
             if plain is None and lot.observed.get("alley_at_rear") and rear_off_alley(here.edges):
                 # A rear line off the alley owes the ordinary rear setback:
                 # the same lot resolved without the rear alley (FOLLOWUPS 12(b)).
@@ -2360,6 +2368,8 @@ def _screen_lot_once(
             won, fitter = max(tried, key=lambda t: (*_front_rank(t[0]), -_env_sqft(t[0])))
         else:
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
+        if access_log and len(access_log) == len(tried):
+            won = dataclasses.replace(won, access=_access_won(access_log, tried, won))
         if fit_only:
             out.append(won)
             continue
@@ -3151,6 +3161,16 @@ def _env_sqft(s: Screened) -> float:
     return s.envelope.sqft if s.envelope is not None else 0.0
 
 
+def _access_won(
+    log: list[dict[str, Any]], tried: list[tuple[Screened, Fitter]], won: Screened
+) -> tuple[dict[str, Any], ...]:
+    """``log`` with each plan's colour and the plan ``won`` stood on marked."""
+    return tuple(
+        {**rec, "colour": s.signed.colour.value, "won": s is won}
+        for rec, (s, _) in zip(log, tried)
+    )
+
+
 def _front_rank(s: Screened) -> tuple[int, int, int, int, float]:
     """Which of a corner lot's fronts the applicant would choose.
 
@@ -3207,6 +3227,7 @@ def row_for(s: Screened) -> dict[str, Any]:
         "fit_column": s.fit.column,
         "front_deg": s.front_deg,
         "side_street_lane": side_street_fed(s.rules, s.lot.facts.alley, s.lot.facts.corner),
+        "access_json": json.dumps(s.access, separators=(",", ":")) if s.access else None,
         "fit_best_depth_ft": s.fit.best_depth_ft,
         "fit_required_ft": s.fit.required_ft,
         "fit_across_ft": s.fit.across_ft,

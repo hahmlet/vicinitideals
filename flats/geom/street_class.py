@@ -514,6 +514,54 @@ def measured_access(
     return dataclasses.replace(rules, values=values)
 
 
+def access_record(
+    rules: "ZoneResolution", plan_rules: "ZoneResolution", edges: LotEdges | None, front: float | None
+) -> dict[str, object]:
+    """Which street one plan of a corner lot takes its driveway from, and why.
+
+    ``rules`` is the zone as resolved, ``plan_rules`` the same after
+    :func:`measured_access`. Recorded per plan because the drawing holds no
+    driveway line (FOLLOWUPS 49(c)): ``rule`` is the code's own value,
+    ``access`` the street the screen charged (``front`` or ``side``),
+    ``why`` how it came to that, and the street ranks it read.
+    """
+    held = rules.values.get("corner_access_street")
+    rule = None if held is None else held.value
+    got = plan_rules.values.get("corner_access_street")
+    served = "front" if got is not None and got.value == FRONT_ACCESS else "side"
+    here: list[int | None] = []
+    side: list[int | None] = []
+    if edges is not None and front is not None:
+        here = [
+            e.street_rank
+            for e in edges.edges
+            if e.cls is EdgeClass.front
+            and bearing_delta(e.bearing_deg, front) <= BEARING_CLUSTER_TOL_DEG
+        ]
+    if edges is not None:
+        side = [e.street_rank for e in edges.edges if e.cls is EdgeClass.street_side]
+    if rule != "lowest_class":
+        why = "code_names_street" if rule is not None else "unread"
+    elif front is None:
+        why = "no_front_named"
+    elif not here or not side:
+        why = "no_street_line"
+    elif None in here or None in side:
+        why = "rank_missing"
+    elif served == "front":
+        why = "front_quieter"
+    else:
+        why = "side_quieter_or_equal"
+    return {
+        "front_deg": None if front is None else round(front, 2),
+        "rule": rule,
+        "access": served,
+        "why": why,
+        "front_ranks": here,
+        "side_ranks": side,
+    }
+
+
 def edge_class(edge: Sequence[float], cmap: ClassMap) -> str:
     """One street lot line ``(x1, y1, x2, y2)``: ``"local"`` when every
     sample point is, ``"other"`` when every one is, else ``""``."""
@@ -559,6 +607,7 @@ __all__ = [
     "RLIS_LOCAL",
     "ClassMap",
     "ClassSpec",
+    "access_record",
     "build",
     "class_kind",
     "class_rank",
