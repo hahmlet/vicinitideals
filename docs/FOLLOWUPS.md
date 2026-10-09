@@ -1819,6 +1819,13 @@ read when the weekly full re-screen lands.
    proved 0 lost / 261 gained. Nothing is spliced or promoted; Estacada reaches
    the map at the next weekly (or a splice Steph's coordinator schedules, built
    on /root/zg/Qn).
+   DECISION (coordinator, 2026-10-09): NO splice. Estacada lands at the next weekly;
+   the weekly runbook must acquire Estacada zoning (its zoning dataset is not in the
+   snapshot yet and Qn holds none of its lots). Existing-lots-unchanged proof, by
+   reading not by bound: the new reach-off logic is gated on BAND_ZONES, which holds
+   only (estacada, NCR), and every other row gets None; near_named_street_200ft is
+   consumed in one place in all of flats/config (estacada.yaml, NCR quadplex_allowed).
+   No other zone or city carries either, so no other lot can move.
    (b) Molalla: 7 of 11 chapters (5.1 came down; 2.3, 2.4, 3.2, 4.4 still 429, retried every
    10 minutes) -- layer files are parked outside the repo again unless all 11
    land (copy in /tmp/fg53/molalla_parked + the new 5.1); gate already read:
