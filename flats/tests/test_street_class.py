@@ -275,6 +275,28 @@ def test_anything_short_of_a_measured_quieter_front_changes_nothing() -> None:
         assert measured_access(other, name_front(edges, front), front) is other
 
 
+def test_each_plans_access_street_is_recorded_with_why() -> None:
+    from flats.geom.corner import name_front
+    from flats.geom.street_class import access_record, measured_access
+
+    def record(main, oak, front_index, value="lowest_class"):
+        edges, bearings = corner(main, oak)
+        front = bearings[front_index]
+        rules = access(value)
+        named = name_front(edges, front)
+        return access_record(rules, measured_access(rules, named, front), named, front)
+
+    assert record(0, 2, 0)["access"] == "front" and record(0, 2, 0)["why"] == "front_quieter"
+    assert record(2, 0, 0)["access"] == "side" and record(2, 0, 0)["why"] == "side_quieter_or_equal"
+    for main, oak in ((None, 2), (0, None)):
+        got = record(main, oak, 0)
+        assert (got["access"], got["why"]) == ("side", "rank_missing")
+    assert record(0, 2, 0, "side")["why"] == "code_names_street"
+    edges, (front, _) = corner(0, 2)
+    none = access_record(access(), access(), edges, None)
+    assert (none["access"], none["why"], none["front_deg"]) == ("side", "no_front_named", None)
+
+
 def test_the_bridge_carries_the_ranks_onto_the_lot_lines(monkeypatch, tmp_path) -> None:
     import flats.ingest.quadfit as bridge
 
