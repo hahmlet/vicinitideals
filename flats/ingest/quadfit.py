@@ -134,6 +134,7 @@ from flats.geom.street_class import (
     unknown_access,
 )
 from flats.geom.named_street import NAMED_STREET_FACT, named_street_column, observed_named_street
+from flats.geom.one_street import one_street_column
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
 from flats.ingest.flatter import flatter_checked
 from flats.ingest.normalize import zone_for
@@ -553,6 +554,51 @@ def _counts_streets(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) 
             return getattr(defn, "test", None) == "frontage_count"
         queue.extend(layers[current].definitions_from)
     return False
+
+
+def _corner_test_states_bend(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> bool:
+    """Whether the lot's own code leaves a bend in one street unmade a corner:
+    it states no ``corner_lot`` test at all, or states that a lot on the
+    radius curve of a single street is not a corner (Clackamas County's
+    ``curve_is_one_street``). A code that makes a tight curve two streets
+    (Portland, Gresham) or reads any non-collinear frontage as a corner
+    (Oregon City) governs its own lots. Definitions are the layer's own or
+    adopted by ``definitions_from``, as :func:`_counts_streets` walks them;
+    without ``layers`` the question is not asked."""
+    if layers is None:
+        return False
+    queue = [_layer_id(row)]
+    seen: set[str] = set()
+    while queue:
+        current = queue.pop(0)
+        if current is None or current in seen or current not in layers:
+            continue
+        seen.add(current)
+        defn = layers[current].definitions.get("corner_lot")
+        if defn is not None:
+            return bool(getattr(defn, "curve_is_one_street", False))
+        queue.extend(layers[current].definitions_from)
+    return True
+
+
+def read_as_bend(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> bool:
+    """Whether a lot s4 read as a corner is ONE street that bends, and is
+    screened as one front (:data:`~flats.score.screen.CORNER_READ_AS_BEND`).
+
+    All of: the street directions pass the corner test
+    (:func:`~flats.geom.corner.two_streets`), every street edge lies on one
+    street (``one_street``, :mod:`flats.geom.one_street`), and the lot's code
+    states no corner test that would make the bend a corner
+    (:func:`_corner_test_states_bend`). Steph, 2026-10-09: where the code is
+    silent, take the more conservative reading, with a flag.
+    """
+    bearings = json.loads(row.get("front_bearings_json") or "[]")
+    return (
+        len(bearings) >= 2
+        and row.get("one_street") is True
+        and two_streets(bearings)
+        and _corner_test_states_bend(row, layers)
+    )
 
 
 def _map_code_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
@@ -1291,6 +1337,9 @@ def lot_from_row(
     """
     import shapely
 
+    bend = read_as_bend(row, layers)
+    if bend:
+        row = {**row, "front_bearings_json": json.dumps(json.loads(row["front_bearings_json"])[:1])}
     key, how = drive_reading(row, layers)
     second: QuadfitLot | None = None
     unconfirmed = False
@@ -1367,6 +1416,7 @@ def lot_from_row(
         # A permit to build on mapped stream, wetland, habitat or flood
         # ground: a closer look (FOLLOWUPS 42(b)/(c)).
         resource_permits=permits_on(row),
+        corner_read_as_bend=bend,
     )
     juris = str(row.get("jurisdiction"))
     try:
@@ -1505,6 +1555,7 @@ def iter_rows(
         frame = frame.assign(
             street_end_ft=street_end_column(frame, streets),
             named_street_ft=named_street_column(frame, streets),
+            one_street=one_street_column(frame, streets),
         )
     # Every null -- NaN, NaT, pandas' NA -- leaves as None, so the readers
     # above see one shape of "no answer" whatever dtype the column arrived in.

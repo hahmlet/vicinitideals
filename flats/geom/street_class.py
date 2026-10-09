@@ -365,7 +365,11 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
             if not f.get("geometry"):
                 continue
             g = shape(f["geometry"])
-            if not g.intersects(zone):
+            # A map that draws only its classified streets reads every street
+            # it leaves out as local where Metro agrees, so the local streets
+            # far from a classified road are the ones it needs: no clip
+            # (FOLLOWUPS 60; Steph 2026-10-09: "Ship").
+            if spec.unlisted is None and not g.intersects(zone):
                 continue
             p = f.get("properties") or {}
             roads.append(g)
