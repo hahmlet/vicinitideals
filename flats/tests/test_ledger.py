@@ -527,7 +527,7 @@ def test_observed_files_an_alias_under_its_zone_and_names_a_city_with_no_layer(
     layer rules it an alias -- but the backlog filed the 524 lots under "R9"
     and queued them as a zone nobody had written. And a city with no layer
     reached the backlog with a blank jurisdiction that grouped as the string
-    "nan", so Tigard, Forest Grove and Cornelius shared one nameless row."""
+    "nan", so Banks, Forest Grove and Cornelius shared one nameless row."""
     import pandas as pd
 
     from flats.encode.backlog import observed
@@ -542,7 +542,7 @@ def test_observed_files_an_alias_under_its_zone_and_names_a_city_with_no_layer(
             "PROP_CODE": ["", "", "", ""],
             "COUNTY": ["W", "W", "W", "W"],
             "inside_ugb": [True, True, True, True],
-            "JURIS_CITY": ["KING CITY", "KING CITY", "FOREST GROVE", "TIGARD"],
+            "JURIS_CITY": ["KING CITY", "KING CITY", "FOREST GROVE", "BANKS"],
         }
     ).to_parquet(corpus)
 
@@ -554,5 +554,5 @@ def test_observed_files_an_alias_under_its_zone_and_names_a_city_with_no_layer(
     assert got == {
         ("or/washington/king-city", "R-9"): 2,
         ("UNMAPPED/forest-grove", "(unzoned in parcel data)"): 1,
-        ("UNMAPPED/tigard", "(unzoned in parcel data)"): 1,
+        ("UNMAPPED/banks", "(unzoned in parcel data)"): 1,
     }

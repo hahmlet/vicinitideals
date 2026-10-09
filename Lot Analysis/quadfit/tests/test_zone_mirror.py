@@ -119,6 +119,23 @@ PORTED_FROM_A_VARIANT: frozenset[str] = frozenset({
     "washington_unincorporated/TO:R40-80",
     "washington_unincorporated/TO:BUS",
     "washington_unincorporated/CBD",
+    "cornelius/GMU",
+    # 2026-10-08 (FOLLOWUPS 52b): by-right on facts FLATS holds (a traced sub-district,
+    # a street line, a lot of record, a storefront district) and ported so the pod is measured.
+    "gresham/DCC",
+    "gresham/DTM",
+    "tualatin/CC",
+    "fairview/TCC",
+    "fairview/VC",
+    # 2026-10-08 (zone gaps, FOLLOWUPS 52a): zones whose pod is allowed only on the
+    # unit-lots path (and Milwaukie DMU only inside its mapped area); ported so the pod
+    # is measured, capped at review by needs_verification.
+    "tualatin/RMH",
+    "tualatin/RH",
+    "tualatin/RH/HR",
+    "tualatin/MUC",
+    "milwaukie/GMU",
+    "milwaukie/DMU",
 })
 
 
@@ -434,6 +451,7 @@ KNOWN_ALIAS_SAME_EDGE: frozenset[str] = frozenset({
     "west_linn/R-7.min_frontage_ft", "west_linn/R-5.min_frontage_ft",
     "west_linn/R-4.5.min_frontage_ft", "west_linn/R-3.min_frontage_ft",
     "west_linn/R-2.1.min_frontage_ft",
+    "west_linn/MU.min_frontage_ft",
 })
 
 #: EMPTY since 2026-09-11, and it held seven rows for a year before that: six
@@ -948,32 +966,52 @@ def test_a_conditioned_port_carries_its_larger_limb() -> None:
 #: C-R, 13 an acre) and `max_impervious_pct` (R-1.5, R-2 and C-R, 70 percent)
 #: are the code's figures and FLATS reads them; this pipeline has no column
 #: for either.
+#: Grew 2026-10-08 by Tigard and Cornelius (FOLLOWUPS 51), whose rows came from
+#: the corpus too: stall and aisle geometry, driveway widths, a ground-story
+#: height, covered parking and a solar-shade limit that only FLATS reads.
+#: Grew 2026-10-08 by the zone-gap ports (FOLLOWUPS 52b): Gresham DCC/DTM, Tualatin CC and
+#: Fairview TCC/VC add `setback_front_max_ft` (2), `max_density_du_per_acre` (2),
+#: `min_landscaped_pct` (2), `setback_garage_entrance_ft` (3) and `front_lot_line_through` (1).
+#: Then the same day the (a) zones (FOLLOWUPS 52a): Gladstone C2/MR, Tualatin RMH/RH/RH-HR/MUC,
+#: Milwaukie GMU/DMU and West Linn MU add front-max, stories, density, landscaping and
+#: building-height standards, and the first two parking-lot rules this pipeline cannot hold.
 UNEXPRESSIBLE: dict[str, int] = {
-    "setback_garage_entrance_ft": 105,
-    "min_landscaped_pct": 42,
-    "setback_front_max_ft": 75,
-    "max_density_du_per_acre": 43,
+    "setback_garage_entrance_ft": 116,
+    "min_landscaped_pct": 54,
+    "setback_front_max_ft": 91,
+    "max_density_du_per_acre": 55,
     "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,
     "max_lot_depth_ratio": 4,
     "max_units": 13,
-    "max_height_stories": 18,
+    "max_height_stories": 21,
     "setback_side_total_ft": 3,
-    "min_building_height_ft": 13,
+    "min_building_height_ft": 16,
+    "front_lot_line_through": 1,
+    "parking_lot_line_buffer_ft": 3,
+    "parking_required_yard_prohibited": 1,
     "min_building_height_stories": 6,
-    "parking_area_max_frontage_pct": 16,
-    "parking_aisle_two_way_ft": 4,
-    "parking_aisle_one_way_ft": 4,
-    "driveway_approach_max_width_ft": 4,
+    "parking_area_max_frontage_pct": 17,
+    "parking_aisle_two_way_ft": 12,
+    "parking_aisle_one_way_ft": 12,
+    "driveway_approach_max_width_ft": 10,
     "corner_access_street": 4,
-    "max_impervious_pct": 7,
+    "max_impervious_pct": 14,
     "min_average_lot_width_ft": 2,
     "setback_street_off_corridor_ft": 6,
     "setback_street_across_nonresidential_ft": 4,
     #: The outdoor square (FOLLOWUPS 7(b)): quadfit charges the open-space
     #: AMOUNT, never its shape; FLATS measures the square on the lot.
     "open_space_min_dimension_ft": 6,
+    "driveway_min_width_one_way_ft": 12,
+    "driveway_min_width_two_way_ft": 12,
+    "driveway_one_lane_ft": 1,
+    "min_ground_story_ft": 1,
+    "parking_covered_required": 5,
+    "parking_stall_depth_ft": 9,
+    "parking_stall_width_ft": 9,
+    "solar_shade_limit": 2,
 }
 
 

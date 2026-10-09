@@ -1347,9 +1347,9 @@ read when the weekly full re-screen lands.
    seed 31, wash data): ~25% of greens go RED on steep ground (mostly real
    hillsides, median lot grade 12%), ~7% yellow; the 4 ft bank rule
    brought back 10 flat lots (pad <=5%). Bridge time +48% overall, ~2x on
-   lots with steep ground. OPEN: (1) lands in the ~10-08 full re-screen
-   (37(c)) -- a WARNED promotion (big green->red move), Steph promotes;
-   the E2E slope test skips until a run carries slope. (b) SHIPPED
+   lots with steep ground. LANDED: run 65 (weekly, promoted 2026-10-07);
+   49(e)/(f)/(h) fixes in run 67; the E2E slope test passes on production
+   (2026-10-08). (b) SHIPPED
    2026-10-04 (code only): the bridge counts the lot area at >=20/25/35%
    on 1 m lidar and hands it to the net-acre list as `slope_20/25/35`
    (never on 10 m). Read per sentence: Hillsboro 12.01.500(6), Milwaukie
@@ -1510,8 +1510,9 @@ read when the weekly full re-screen lands.
    MemAvailable 3.6 GB. 137 is now CPU-bound (lot-seconds 37k -> 43k
    with 16 busy), so the simulator's ~2,000 s was not reachable and more
    than 14 processes buys nothing. Proofs 1-3 caught a `python -m`
-   worker-setup bug and an OOM kill, both fixed. LEFT: (d) rented compute
-   -- DECISION PENDING, Steph's action. Steph 2026-10-06 PREFERS
+   worker-setup bug and an OOM kill, both fixed. (d) rented compute --
+   PARKED by Steph 2026-10-08 ("won't do for now"; keep the research,
+   don't delete it). Steph 2026-10-06 PREFERS
    CLOUDFLARE (a commercial version would run there): Cloudflare
    Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
    12 GiB / 20 GB each, up to 1,500 vCPU per account at once; CPU billed
@@ -1530,7 +1531,7 @@ read when the weekly full re-screen lands.
    outside the repo, a monthly budget alert. Fallback considered:
    Hetzner CCX63 in Hillsboro OR (48 vCPU / 192 GB, ~$1.64/h, billed
    until DELETED; one big machine, least build). (e) fewer lanes: not
-   pursued. (f) skip big PRIVATE lots by size -- Steph 2026-10-06
+   pursued. LEFT: (f) skip big PRIVATE lots by size -- Steph 2026-10-06
    DEFERRED: "see what the institutional changes remove" (item 47), then
    decide. Measured on quadfit_2026-10-01_wash (418,021 lots screened):
    861 lots >= 10 ac (660 10-20, 167 20-44, 34 >= 44; biggest 194.8 ac
@@ -1566,40 +1567,26 @@ read when the weekly full re-screen lands.
    run runbook step 7b, and pass `--institutional` to the bridge -- then
    check `institutional_were_scanned` is 0 in assign's summary. Remove
    this item once that run is promoted.
-48. [scan: YES (a proof: a run killed mid-way and resumed must come out identical to one that was not)] **PRIORITY -- scans must survive a crash without losing time (Steph
+48. [scan: NO -- proved] **PRIORITY -- scans must survive a crash without losing time (Steph
    2026-10-07: "we're moving quick and stacking a lot of changes between
-   runs. Don't want to lose time to avoidable problems").** Asked during
-   the early weekly (2026-10-07, 12 processes, 225k/414k lots at 4 h).
-   (a)-(f) BUILT 2026-10-07 on the scan-throughput lane branch (NOT on
-   main; ships once proof 5 on 137 reads SAME; item 46 shipped 24a61695):
-   (a) the bridge command keeps an answer cache by default (`bridge_cache`
-   beside `--out`; `--no-cache` opts out). `parts/` is still cleared on a
-   re-launch, but each part goes into the cache the moment it is written,
-   so a re-launch screens only the unfinished lots. (b)
-   `scripts/flats_weekly_chain.py` (runbook §4 + §4b): stage, quadfit,
-   normalize, institutional, transit, bridge, assign, export, a
-   done-marker per step holding the commit; a re-launch skips finished
-   steps and refuses markers from other code unless `--from STEP`. (c)
-   it supervises on 137 itself: a failed or stalled step re-runs (3
-   tries), bridge processes halved after a memory kill, then GAVE UP in
-   the status line. (d) stall = the step's own process group used < 60
-   CPU-s in 20 min (`--stall-minutes`) -> TERM then KILL that group only.
-   CPU, not new parts: one big lot can run 30+ min without a part, and
-   the steps before the bridge write none. (e) `--preflight-only`
-   refuses in seconds: code at the sha and clean, every pipeline.yaml key
-   in the manifest, stage's check, osm_land_use + rlis_orca, curb
-   datasets, 1 m tiles + dem10_utm, free disk on 137 (10 GB) and 114 via
-   `--app-host` (5 GB); a stale spec_sha256 is a note, not a refusal
-   (10-07 had 71 and screened clean). Tried on 137's real copies: 10-01
-   refused for its 15 missing keys + institutional + curbs; 10-07 passes.
-   (f) status every 2 min to `--status-to` (`/root/weekly137/status.txt`).
-   Local suite green; 3 Linux-only tests run in CI. PROOF QUEUED on
-   heavy.lock: `/root/scan-throughput/proof5.sh` -- the chain drives a scope_A
-   bridge, the bridge's parent is SIGKILLed (retry at 8 processes,
-   resumes from the cache), then its group SIGSTOPped (stall kill, try 3
-   finishes); lots must be SAME as an uninterrupted run. Once merged the
-   next weekly launches with the chain; remove this item after it runs
-   clean.
+   runs. Don't want to lose time to avoidable problems").** (a)-(f)
+   SHIPPED 1762716a + 66545fb6 2026-10-08 (deployed, smoke passed, CI
+   green): the bridge command keeps an answer cache by default
+   (`bridge_cache` beside `--out`; `--no-cache` off), so a re-launch
+   resumes; the weekly re-screen is `scripts/flats_weekly_chain.py`
+   (runbook §4 + §4b) -- a done-marker per step, `--preflight-only`
+   refuses in seconds, a failed or stalled step re-runs up to 3 tries
+   (bridge processes halved after a memory kill), stall = the step's own
+   group under 60 CPU-s in 20 min (CPU, not new parts: one big lot runs
+   30+ min without one), status every 2 min to 114
+   `/root/weekly137/status.txt`. Proof 5 on 137 (2026-10-08, scope_A on
+   the 10-07 weekly inputs): uninterrupted chain 37.2 min; the sabotaged
+   one -- bridge parent SIGKILLed at 16 min (retry at 8 procs, 1,636 lots
+   from the cache), then its group SIGSTOPped (stall caught in 3 min, try
+   3 resumed 2,515 lots, done at 48.8 min) -- lots SAME, no process left
+   behind. CI then caught a minute lost per stall (a zombie counted as
+   alive), fixed 66545fb6. LEFT: the next weekly launches with the chain
+   (whoever runs it); remove this item once that run is promoted.
 49. [scan: YES for (b)-(f), (h), (i)] **The 2026-10-07 weekly (run 65 on snapshot 4, PROMOTED 2026-10-07
    ~14:45 UTC by Steph from the County copy page; prune-runs retired run 59,
    kept 61/63/65; VACUUM FULL of lot_results NOT run -- permission denied,
@@ -1634,14 +1621,29 @@ read when the weekly full re-screen lands.
    unknown->measured 657 on if_signed. Every gain and loss read.
    (b) 51577bb8 (item 44) not in run 65: 30 lots / 34 rows map-green
    (`item44_false_greens_in_weekly.csv`).
-   (c) UNCONFIRMED: ~12 corner greens whose court may open onto an arterial
-   where a local street adjoins (Beaverton 1S121BB14600, 1S124AA06000,
-   1S129DB05400, Greenway lots 1S127BC*; WashCo 1N120CD10600, 1S130CA02600,
-   1S201AC14100; OC 31E01AD00800; Wilsonville 31W13AC00800). The drawing
-   carries no driveway line and `lane` is empty on side-street plans, so the
-   access lot line cannot be read -- record it per plan, then re-check.
-   Unranked cities (Clackamas uninc 274, Sherwood 10, Hillsboro 5 gains)
-   assume the side street is lowest class with no flag.
+   (c) DONE c98be01d (deployed 2026-10-09; lands at the next splice): the
+   hole was bigger than ~12 lots. A corner lot whose code sends the driveway
+   to the lowest-class street, with a street line that has no class, was
+   screened as if the side street served, unchecked. Now the driveway is
+   tried off BOTH streets and the worse answer kept; each plan's access
+   line is recorded (bridge-only column `access_json`: rule, street charged,
+   why, the ranks read). Steph 2026-10-09: unranked corner = yellow ("yellow,
+   then measure"): where only the unranked street's reading misses, the lot
+   keeps the measured plan's answer and carries ACCESS-STREET-RANK-UNKNOWN
+   (severity 6, closer look); a miss on the measured plan itself stays red.
+   Bound over 1,465 lots vs run 67 (every moved lot read): 852 rows
+   green -> yellow with the new flag (Washington Co. uninc 636, Beaverton
+   87, Oregon City 58, West Linn 37, Wilsonville 31, Milwaukie 4), 10 rows
+   already yellow gain the flag, 0 green -> red. The named lots are inside
+   those counts. Also in the same code (read lot by lot): paved type-2000
+   streets count as fire-truck roads (Portland: 348 rows yellow -> green,
+   22 red -> green, hose routes 70-150 ft; private park drives and alleys
+   stay yellow), 28 other rows green -> yellow (Milwaukie 20 lose a
+   proven-harmless flag; Portland 4, Oregon City 3, Beaverton 2), 7 Portland
+   yellow -> red (hose > 150 ft). The lots to splice are listed in
+   `/root/fo/scope_yellow.txt` on 137 (1,465, one per line -- Portland and
+   Gresham TLIDs hold spaces, never split on whitespace). NEW ITEM 60 ranks
+   the streets.
    (e)+(f)+(h) DONE 2dacbe1c (deployed 2026-10-08; lands at the (i) splice,
    NOT in run 65): steep is read on the lot's own ground (a neighbour's bank
    or raised road no longer spills in; a bank's height is walked across the
@@ -1653,8 +1655,8 @@ read when the weekly full re-screen lands.
    54; control 0. Every class read; no false GREEN. ~40 new reds sit on a
    4-4.5 ft bank: Steph 2026-10-08 KEPT the 4 ft line. 3 losses are the
    placer landing elsewhere on a bigger envelope (open_space_shape / fire).
-   OPEN, not the slope lane: water flag on overlay slivers, 48 lots < 10 sq ft, 194 < 100 sq ft
-   (`water_flag.parquet`, `permits_on` fires on any touch).
+   Water flag on overlay slivers (48 lots < 10 sq ft, 194 < 100 sq ft):
+   left yellow by item 50 (codes reach 25-100 ft past the drawn line).
    (g) DONE a7243f4f (live 2026-10-07): the lots list says why a design is
    red (every standard missed, worst first) or yellow (the open questions
    at the line), not `head`; the bridge report adds `dominant`. The
@@ -1662,27 +1664,25 @@ read when the weekly full re-screen lands.
    the app shows the map colour everywhere; the 16 STREET_UNCONFIRMED
    y->unknown rows traced: their missed standard went away, leaving the
    unconfirmed street alone (map: yellow, ACCESS-STREET-UNCONFIRMED).
-   (i) SPLICE OWED -- TAKEN by the weekly session (vicinitideals-fa)
-   2026-10-08 (the agent handed it on 10-07 could not be found). One partial
-   re-screen on run 65 carrying 81c3b77b + 84e702de (scope
-   /root/weekly_fixes/scope.txt, 9,860), 51577bb8 (44, /root/rank-colour/
-   scope.txt, 39,743) and the slope lane's (e)/(f)/(h) = 2dacbe1c (scope
-   /root/sf/scope_slope.txt, 127,093: every lot with steep under either code
-   + the coarse group; the bound's own 93,908 = scope_slope_bound.txt);
-   2cfd13d6 (52) rides in assign. Prepared on 137: /root/s49i/scope_pre.txt
-   (48,948, the first two), chain /root/s49i/chain.sh (preflight, done-marker
-   per step: bridge -> splice onto /root/bridge_2026-10-07_weekly -> assign on
-   run 65's normalized -> export; `SHA=<main sha>`, fixed tree
-   /root/code/s49i_<sha>). NOT in it: 017f63cf (50) -- its *_site columns need
-   s5o re-run and the splice refuses a changed s5o ("different columns"), so
-   it waits for the weekly; 51/53 need a new normalize -> the weekly unless
-   51's agent is ready first. Slope work ON MAIN 2dacbe1c 2026-10-08 --
-   QUEUED 2026-10-08 ~14:10 UTC on heavy.lock behind proof5 (pid 364130):
-   SHA f16f1fd6, tree /root/code/s49i_f16f1fd6, scope /root/s49i/scope.txt =
-   162,717 lots (87 ROW pseudo-lots dropped), log /root/s49i/chain.log.
-   Expect the slope bound's 2,525 moves + the others'. Load/drift/gate on
-   114; a warned gate is Steph's. Tell vicinitideals-5c when through (it
-   cleans /root/sf after).
+   (i) DONE 2026-10-08 -- RUN 67 PROMOTED (agent, clean gate, ~00:40 UTC
+   10-09). Splice of 162,717 lots on run 65 (SHA f16f1fd6: 81c3b77b +
+   84e702de, 51577bb8, 2dacbe1c; 2cfd13d6 in assign): bridge 6 h 06 min,
+   bundle `data/flats/bridge/2026-10-08_49i`, drift
+   `data/flats/reports/2026-10-08/drift_run67.md` -- 32,753 answers moved,
+   all `rules`, 0 unexplained; gate 8 rows ok. Best pod per lot (map
+   colour): green 49,091 -> 50,071, yellow 162,370 -> 153,799, red
+   376,354 -> 383,945. Lots moved 13,869: 10,024 outside the scope =
+   item 52's too-small/too-narrow yellow->red; inside 3,845, of which
+   3,757 the same move a lane's bound predicted for that lot (slope
+   movers3, weekly_fixes b_ca283cfa vs f2aa1bf3, rank moves_ABR). 88 read
+   one by one (lists `/root/weekly137/` on 114): all two fixes meeting --
+   steep ground coming off lets the building sit nearer the street, so the
+   hose route drops under 150 ft (S lots), or the new reading ranking picks
+   a tight fit that 81c3b77b now measures (R lots); 14 new greens, every
+   one with a route <= 150 ft and no steep under the building. 017f63cf
+   (50) did NOT land (s5o not re-run) -> the weekly. prune-runs retired run
+   61 (kept 63/65/67); plain VACUUM ANALYZE run, VACUUM FULL still owed
+   (24 GB free). flats_flags sync run 67 (926,292 opened) + check passed.
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
@@ -1701,33 +1701,20 @@ read when the weekly full re-screen lands.
    unless it copies `ovl_<carve>` into `ovl_<carve>_site` first (recipe
    `/root/tw/prep.py`). 49(f) slivers: left yellow (codes reach 25-100 ft
    past the drawn line).
-51. [scan: YES (a bound on Tigard + Cornelius lots; lands at the splice or the next weekly)] **Tigard and
-   Cornelius are encoded but never screened (found 2026-10-07 counting run
-   65's yellows).** Both layers merged 2026-10-01 (eligible: true, item 17),
-   but `flats/config/pipeline.yaml` `jurisdictions:` never lists them, so
-   `pipeline.enabled()` is false and `normalize.gate_for` gates every lot
-   JURISDICTION_OFF: run 65 best pod yellow 18,516 Tigard + 4,182 Cornelius
-   lots, all JURISDICTION-OFF (the comment there still says "not encoded
-   yet"). Work: switch both on; check each lot finds its zone (Metro
-   regional zoning by JURIS_CITY); bound a sample on 137 old vs new and read
-   gains one by one; report the colour counts to Steph before shipping.
-   STATE 2026-10-07 (branch bound/f51-tigard-cornelius c54f5a7d + R-10 work,
-   NOT on main, NOT deployed): both cities switched on in the code and tested;
-   quadfit rules ported. Zone check done: of 22,996 lots 11 find no usable
-   zone -- 4 NO_ZONE (outside Metro's polygons), 3 map labels that are a
-   hair-width sliver (Tigard R-15 x2, Cornelius GI; the stored codes hold
-   neither, so they stay gated), 4 Washington County codes (3 on the west
-   side stay unencodable, item 17). Cornelius R-10: tax lot 1N335CD01200 is
-   now read R-10 by hand (`lot_zones` in cornelius.yaml, new `LotZone`
-   mechanism in rules model/loader/normalize, tested); that lot is NOT in
-   the queued bridge (it was normalized before the entry), so it is screened
-   at the next re-screen, not in this bound. Bridge /root/f51/bridge.sh is
-   queued on heavy.lock behind the slope bound (starts ~midnight PDT);
-   reading script ready at /root/f51/gains/read.py (per-city colours, every
-   green block, yellow/red samples). TO THE 49(i) SPLICE AGENT: this bound
-   will NOT be ready before your splice starts and nothing of it is on main,
-   so do not wait for it and do not include it. Tigard + Cornelius ride the
-   next weekly (or a later splice once the gains are read and shipped).
+51. [scan: NO new code, check after the weekly run] **Tigard and Cornelius switched on (SHIPPED 2026-10-08; nothing shows until the next weekly).**
+   Both cities were encoded but never listed in `flats/config/pipeline.yaml`,
+   so every lot was JURISDICTION_OFF (run 65: 18,516 Tigard + 4,182
+   Cornelius yellows). Now on; quadfit rows ported from the corpus; Cornelius
+   R-10 tax lot 1N335CD01200 read by hand (`lot_zones`). Bound on 137
+   (/root/f51, can be deleted), measured lots: Cornelius 381 green / 3,406
+   red / 47 yellow; Tigard 840 green / 15,544 red / 777 yellow; unmeasured
+   Cornelius 334 red + 77 yellow, Tigard 824 red + 766 yellow. All 1,221
+   greens read: 1,034 ordinary houses, 187 commercial/apartment/public-coded
+   (the pipeline ignores existing buildings by design). 34 Cornelius greens
+   turn yellow as-if-signed on min density (as designed). AFTER THE NEXT
+   WEEKLY: check Tigard + Cornelius colour counts against the bound above;
+   R-10 lot 1N335CD01200 should now screen; 4 NO_ZONE + 3 sliver-labelled +
+   3 west-side Cornelius county-coded lots stay gated.
 52. [scan: lands at 49(i)'s splice or the next weekly; no re-screen, no promotion]
    **Lots dropped before a fit (run 65): 11,427 yellow NOT_MEASURED +
    2,203 yellow GEOM-UNREADABLE.** Bucketed 2026-10-07: 6,951 had no 20 ft
@@ -1749,16 +1736,34 @@ read when the weekly full re-screen lands.
    broken outlines (0 invalid, 0 multi-part, 1,544 with holes): it is the
    complex-shape cap (convexity < 0.80, > 10 edges, pole-like), measured at
    a uniform inset; make_valid / buffer-0 do not apply; only 357 yellow lots
-   are held yellow by that flag alone -- left as is. STILL OPEN (item 52b):
-   the 1,738 zone lots. FLATS resolves every one to ambiguous or unverified
-   (never a clean permission), so measuring them needs those zones added to
-   quadfit's rules (port_from_flats TARGETS cover only Washington + 4
-   cities; the others are hand blocks) and a quadfit s3-s5o + bridge re-run
-   on them; they stay yellow unless the fit fails. Zones: Happy Valley MURM
-   479 / MURX 12, Gresham DCC 266 / DTM 203, Tualatin CC 139, Oregon City
-   MUE 125 / GI 53 / HC 37 / CI 28 / I 16 / NC 1, Wood Village NC 58,
-   Fairview VMU 58 / TCC 44 / VA 8 / VC 4, Portland CI1 37, Multnomah uninc
-   RR 140 / OR 17 / EFU 12, Clackamas uninc R15 1, Washington uninc R-24 1.
+   are held yellow by that flag alone -- left as is. ZONES READ 2026-10-09 (branch flats/zone-gaps, bound on 137 over
+   6,017 lots, 48 greens gained, 163 greens lost, every one read; NOT yet
+   in a live run -- needs a splice, scope list /root/zg/scope_all.txt on 137):
+   (a) ZONE_TO_READ and (c) 52b zones are encoded and ported so the pod is
+   measured: Gladstone C2/MR, Tualatin CC/RMH/RH/RH-HR/MUC, Milwaukie
+   GMU/DMU, West Linn MU, Gresham DCC/DTM, Fairview TCC/VC, Oregon City
+   MUE/GI/HC/CI/I/NC, Portland CI1, Wood Village NC, Happy Valley
+   MURM/MURX, Multnomah uninc RR/OR/EFU. Gains: Gladstone C2 34, MR 10,
+   West Linn MU 3, Tualatin CC 1; the rest measure red. Steph 2026-10-09
+   RULED: Milwaukie DMU ALLOWED (design review optional via clear and
+   objective standards); Clackamas MR-1, MR-2, HDR RED BY RULING
+   (ZDO 1102.01(A) design review) -- the same sentence also makes PMD and
+   VA red (agent extended it; tell Steph); 163 green MR-1/MR-2 lots go red;
+   Hillsboro ANX stays yellow. SHD/RCHDR/VTH stay unencodable (setbacks by
+   compass bearing, ZDO 1005.02(L)) -> item 61.
+   STILL OPEN from 52: Gladstone C2 Portland Avenue entrance + 25% window
+   rules; Tualatin RH/HR 45 ft minimum height scope, Central Tualatin
+   Overlay block lot sizes (Map 10-3), Basalt Creek Parkway 50 ft yard,
+   100 ft wetland yard, building separation, MUC 57.400 / Figure 57-1
+   height check; Milwaukie Figure 19.304-2, the neighbours block (20 ft
+   abuts-residential yards), 19.505.5.E.1, DMU 50 ft parking ban; Fairview
+   TCC Halsey storefront map (44 lots), VC stays because of the FLX alias;
+   SCMU front setback and densities; Happy Valley / Gladstone leftovers;
+   add ZDO Section 1102 to the provenance store. The weekly run must fetch
+   canby/estacada/sandy zoning (the bound needed empty placeholders). The
+   splice cannot retire lots a re-run drops from s3 (assign keeps a
+   measured lot's old row): a bound/splice scope must list those lots
+   explicitly, as the 805 MR1/MR2/PMD/VA lots were here.
 53. [scan: YES (Estacada layer is drafted and unscreened; it lands at the next weekly after the acquire of its zoning dataset)] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
    2026-10-08); Estacada is encoded; Molalla is blocked on HUMAN_TODO 29
    (Steph's PDFs); Forest Grove stays blocked on HUMAN_TODO 28.** Canby's only
@@ -1896,3 +1901,87 @@ read when the weekly full re-screen lands.
    places join 54's free weekly check; a change since scouting marks the card "re-scout
    before encoding". Once the state is scouted the leftover goes to re-scouting changed
    cards, then a reading list + doubts list (the item-53 kind) for the top-ranked places.
+56. [scan: NO] **Deploy smoke runs too early (found 2026-10-08, offered to Steph).**
+   `/root/deploy-vicinitideals.sh` on 114 waits `sleep 5` after `docker
+   compose up -d`, then smokes; the api now takes longer to start, so 3
+   deploys on 2026-10-08 (24a61695, 1762716a, 66545fb6) printed SMOKE
+   FAILED with `Connection refused` and passed when the smoke was re-run
+   by hand 30 s later (`cd /root/stacks/vicinitideals && docker compose
+   run --rm -e POST_DEPLOY_BASE_URL=http://api:8000 api python
+   scripts/post_deploy_smoke.py`). A false FAIL teaches agents to ignore a
+   real one. Fix: wait (up to ~2 min) for the api container's healthcheck
+   to read `healthy` before the smoke, in BOTH the live script and the
+   repo copy `scripts/deploy-vicinitideals.sh` (they differ: the live one
+   uses STACK_DIR). App-side, not FLATS.
+57. [scan: YES] **Flatter placement for SLOPE-GRADE yellows -- CODE LIVE 34b42b4f
+   (2026-10-09); waiting for the splice that puts it on the map.** Bound on
+   137 over 13,320 lots (26,640 results), every gain read, 150 replayed from
+   scratch with the same answers: 672 yellow-to-green (610 lots; Washington
+   Co. 208, Portland 184, Clackamas 152, Beaverton 68, Oregon City 34, rest
+   13), 0 worse, 0 new flag or bind, longest hose route 149.96 ft, highest
+   grade 5.0%, court past the envelope at most 20.0 ft (the fit's own rear
+   allowance). Cost +10% seconds per lot (0.269 -> 0.295). Steph's ruling is
+   untouched. Two-street lots keep the worse reading (a gain needs both
+   green). Not searched: 10 m ground lots, lots with an outdoor-area rule,
+   courts reached from an alley/side street. Left to do: the splice that
+   re-screens the SLOPE-GRADE yellows with the new code (coordinator books
+   it); delete this item once a run carries it.
+58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08;
+   first pass DONE c98be01d 2026-10-09).** Run 67 best-pod yellows held by a
+   single flag: FACT-AT-STREET-END 633, ACCESS-STREET-UNCONFIRMED 359,
+   MEASURE-FIRE-ROUTE 334, FACT-CIVIC-CORRIDOR 141, PARKING-STRIP-UNCONFIRMED
+   97. MEASURED: MEASURE-FIRE-ROUTE (paved type-2000 streets now count as
+   truck roads: Portland 348 rows yellow -> green; see 49(c)) and
+   FACT-CIVIC-CORRIDOR for Rockwood (Gresham's Rockwood Design District
+   drawn from the city's own layer, `rockwood_design_district`; 290 rows /
+   ~148 lots yellow -> green: CMU 197, MDR-24 60, MDR-12 29, OFR 4; SC/SC-RJ
+   and CMF stay yellow; scope `/root/fo/scope_rockwood.txt`, inside
+   scope_yellow.txt). CANNOT BE MEASURED from data we hold, left yellow:
+   - FACT-AT-STREET-END (Gresham, 789 per-design lots): Table 4.0131 note 5
+     numbers are not encoded and the street-class layer cannot separate
+     Minor Access Streets.
+   - ACCESS-STREET-UNCONFIRMED (441): the only road line is a private drive
+     or lies across someone else's land; no map says whether the lot abuts it.
+   - PARKING-STRIP-UNCONFIRMED (213): OAR 660-046-0220(2)(e)(E) is an open
+     reading of law, not a fact on the ground (Steph ruled yellow flag
+     2026-10-04).
+   - FACT-CIVIC-CORRIDOR (the rest): Gresham's own corridor map is the
+     source, and Glisan / 162nd are not on it.
+   Counts above are per design; the best-pod counts differ.
+59. [scan: YES] **Tracts, zero-value parcels and public county codes show GREEN (found 2026-10-08
+   reading item 51's gains; the leak already exists in every city).** The
+   institutional rule works by map overlap only; no county property code or
+   value check backs it. Missed: land-and-building-value-zero tracts (e.g.
+   Tigard 2S111CD01100 = Summerfield Golf Course, 100% overlap, not in any
+   institutional map; 2S107DA12900, 2S101AC90000, 2S111DA24400; Cornelius
+   1N334DC90000) and public-looking codes 960 (parks/open space), 910, 940,
+   980, 990. Live run 67: 153 zero-value greens + 159 9xx-coded greens of
+   49,091. Churches/charities (911, 981) STAY CHECKED by Steph's ruling
+   (item 47); a golf course is not an institutional category, so ask Steph:
+   is a tract / common-area / golf course RED? Then add a tract + zero-value
+   (+ public-code) rule, bound over run 67, read every moved lot. Also
+   1S133AD02200 (code 911) overlaps Westgate Christian School at 17% only.
+60. [scan: YES] **Rank the unranked corner streets (opened 2026-10-09 from
+   49(c); Steph: "yellow, then measure").** 351 Washington Co. uninc
+   streets have no class: Metro's street file has no line within reach
+   (1,502 of 1,517 unranked street lines have none beside them) and the
+   county map draws classified roads only, so an absence of a classified road
+   is not a reading. Today each such corner lot is yellow
+   (ACCESS-STREET-RANK-UNKNOWN, 852 rows). Measure it from a real second
+   source: (1) OpenStreetMap `highway=` category (the coordinator measured the
+   county: 18,867 drivable ways, residential 11,644 / tertiary 2,718 /
+   secondary 1,789 / primary 1,457 / trunk 565 / unclassified 409 /
+   living_street 133; lanes= on 1% of residential and 54-83% of busy roads,
+   width= almost never, no traffic volume) -- match each of the 351 streets to
+   an OSM way (name + nearest centreline), rank by category; (2) the county's
+   own road centreline layer; (3) the street gap in the taxlot fabric.
+   Steph's call: does OSM count as the second source for the two-source rule?
+   FALLBACK only, needs Steph's yes: "no Metro line and no classified road
+   within 300 ft = local" (relaxes the two-source rule). Then bound over the
+   852 rows (`/root/fo/scope_yellow.txt`), read every lot that turns green.
+61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
+   (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
+   compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
+   encoded until each lot line carries a bearing. Measure the bearing per
+   lot line, add it as a per-line field, then encode those three districts.
+   Not part of branch flats/zone-gaps; start only after the weekly re-screen.

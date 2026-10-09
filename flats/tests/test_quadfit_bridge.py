@@ -114,6 +114,10 @@ def row(**over: object) -> dict[str, object]:
 # --- the facts, in the registry's words --------------------------------------
 
 
+# Diagnostics the bridge writes beside the answer; assign trims them to ROW_COLUMNS.
+BRIDGE_ONLY_COLUMNS = {"access_json", "fire_why"}
+
+
 def test_every_fact_the_bridge_observes_is_a_registered_site_fact() -> None:
     for name in OBSERVABLE:
         assert CONDITIONS[name].kind == "site_fact", name
@@ -823,7 +827,7 @@ def test_the_envelope_is_cut_with_the_yards_the_corpus_resolved(corpus, policies
     assert row_for(s)["envelope_sqft"] == pytest.approx(4750)
     # assign trims a bridge frame to ROW_COLUMNS; a column row_for writes and
     # the list lacks never reaches the database (run 18 lost the envelope).
-    assert list(row_for(s)) == list(ROW_COLUMNS)
+    assert [c for c in row_for(s) if c not in BRIDGE_ONLY_COLUMNS] == list(ROW_COLUMNS)
 
 
 def test_without_the_taxlot_or_a_street_the_envelope_stays_quadfits(corpus, policies) -> None:
@@ -1239,7 +1243,7 @@ def test_a_portland_corner_lot_fronts_its_shorter_street_and_parks_off_the_other
     assert s.fit.across_ft == pytest.approx(max(side, s.screening.stalls_charged * 9.0))
     got = row_for(s)
     assert got["front_deg"] == 0.0 and got["side_street_lane"] is True
-    assert list(got) == list(ROW_COLUMNS)
+    assert [c for c in got if c not in BRIDGE_ONLY_COLUMNS] == list(ROW_COLUMNS)
 
 
 def test_an_owners_choice_city_keeps_the_better_front(corpus, policies) -> None:
@@ -1679,3 +1683,36 @@ def test_the_elevation_defaults_to_the_stage_trees_own_tiles(tmp_path):
     assert _default_dem(s4) == july  # an empty dem/ is not a tile set
     (s4.parent / "raw" / "dem" / "tile.tif").write_bytes(b"")
     assert _default_dem(s4) == s4.parent / "raw"
+
+
+def test_a_miss_only_off_the_unranked_street_is_a_closer_look_not_a_miss(corpus, policies) -> None:
+    # Steph 2026-10-09: "yellow, then measure." A corner lot whose parking
+    # works off the street the measured plan chose and misses off the other,
+    # where a street has no class, asks the question instead of failing.
+    from flats.ingest.quadfit import _pick_access, _rank_unknown
+
+    def shot(r):
+        lot = lot_from_row(r, corpus.layers)
+        (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+        return s
+
+    miss = shot(row(zone="R5", lot_wkb=shapely.to_wkb(shapely.box(X0, Y0, X0 + 18, Y0 + 18))))
+    clean = dataclasses.replace(miss.signed, triage=Triage.green, binds=(), flags=(), reasons=())
+    ok = dataclasses.replace(miss, screening=clean, signed=clean)
+    red, green = ok.signed.colour.__class__.red, ok.signed.colour.__class__.green
+    assert ok.signed.colour is green and miss.signed.colour is red
+
+    # A miss off the other street only: the measured plan stands, asked.
+    used, kept, asked = _pick_access([("side", (ok, None)), ("front", (miss, None))])
+    assert (used, kept[0], asked) == ("side", ok, True)
+    asked_ok = _rank_unknown(ok)
+    assert asked_ok.signed.colour.value == "yellow"
+    assert "STREET_RANK_UNKNOWN" in asked_ok.signed.reasons
+    assert any(f.code == "ACCESS-STREET-RANK-UNKNOWN" for f in asked_ok.signed.flags)
+    assert _rank_unknown(asked_ok).signed.flags == asked_ok.signed.flags
+    # The measured plan itself a miss: red stands on either street.
+    assert _pick_access([("side", (miss, None)), ("front", (miss, None))])[2] is False
+    assert _rank_unknown(miss) is miss
+    # Both ways fine, or the street ranked (one reading): nothing to ask.
+    assert _pick_access([("side", (ok, None)), ("front", (ok, None))])[2] is False
+    assert _pick_access([("side", (ok, None))]) == ("side", (ok, None), False)

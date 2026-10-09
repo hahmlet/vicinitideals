@@ -193,7 +193,8 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
     assert numbers == {("gresham", z): 8.0 for z in ("LDR-5", "LDR-7", "TLDR", "TR",
                                                      "LDR-PV", "MDR-PV", "LDR-SW",
                                                      "VLDR-SW")} | {
-        ("gresham", "HDR-PV"): 5.0, ("gresham", "DRL-1"): 6.0, ("gresham", "DRL-2"): 6.0}
+        ("gresham", "HDR-PV"): 5.0, ("gresham", "DRL-1"): 6.0, ("gresham", "DRL-2"): 6.0,
+            ("gresham", "DCC"): 6.0, ("gresham", "DTM"): 6.0}
     # and nothing the corpus holds in that shape is missing from the mirror
     field, condition = held_as["number"]
     gresham = ruleset.layers[layer_id_for("gresham")]
@@ -204,7 +205,8 @@ def test_the_alley_setback_has_to_already_be_here() -> None:
         and any(tuple(v.when or ()) == (condition,) for v in held.variants)
     }
     assert corpus_alone & carried == {z for (_, z) in numbers}
-    assert corpus_alone - carried == {"DCC", "DTM"}     # zones not in the inventory
+    # DCC and DTM stood here until they were ported (FOLLOWUPS 52c); now nothing is missing.
+    assert corpus_alone - carried == set()
 
 
 def test_the_cul_de_sac_frontage_has_to_already_be_here() -> None:
@@ -404,6 +406,8 @@ def test_a_backported_band_has_to_already_be_here() -> None:
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:
+    # 189 as of 2026-10-08: the zone gaps (FOLLOWUPS 52) -- Gresham DCC/DTM, Tualatin CC/RMH/RH/RH-HR/MUC,
+    # Fairview TCC/VC, Gladstone C2/MR, Milwaukie GMU/DMU and West Linn MU.
     # 175 as of 2026-10-07: Estacada's fifteen zones (FOLLOWUPS 53), the three it
     # admits and the twelve it refuses.
     # 160 as of 2026-10-07: Sandy's eleven zones (FOLLOWUPS 53), the three it admits and
@@ -430,14 +434,16 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # Lake Oswego's six are NOT among them -- that jurisdiction is `eligible:
     # false` by owner decision, so its rows are reference rather than debt.
     #
-    # Washington County's six (2026-09-30) are in COUNTY but not ported: their
+    # Washington County's six (2026-09-30), and Tigard and Cornelius (2026-10-07),
+    # are in COUNTY but not ported: their
     # rows were written FROM the corpus, and porting them back would overwrite
     # it with its own summary.
-    assert dry["stats"]["zones"] == 175
+    assert dry["stats"]["zones"] == 189
     assert dry["stats"]["layers"] == 21
-    assert len(COUNTY) == 27
+    assert len(COUNTY) == 29
     assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {
         "washington_unincorporated", "hillsboro", "beaverton", "sherwood", "king_city", "durham",
+        "tigard", "cornelius",
     }
 
 
@@ -481,7 +487,7 @@ def test_layer_id_mapping(jurisdiction: str, expected: str) -> None:
 
 def test_unmapped_jurisdiction_fails_loudly() -> None:
     with pytest.raises(KeyError):
-        layer_id_for("tigard")
+        layer_id_for("banks")
 
 
 def test_zone_citation_becomes_cite_default() -> None:
@@ -518,6 +524,9 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 30  # 29 jurisdictions + the state layer
+    # 511 as of 2026-10-09: Clackamas uninc HDR, RED BY RULING for design review (Steph).
+    #
+    # 510 as of 2026-10-08: the zone gaps (FOLLOWUPS 52), the ported zones plus the RED BY RULING ones.
     # 491 as of 2026-10-07: Canby's nine zones, Sandy's eleven and Estacada's fifteen (FOLLOWUPS 53).
     #
     # 456 as of 2026-10-02: Tualatin CC, the zone_ruling that became a block
@@ -646,7 +655,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 491
+    assert sum(len(l.zones) for l in rules.layers.values()) == 511
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

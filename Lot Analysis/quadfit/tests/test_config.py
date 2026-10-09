@@ -481,7 +481,8 @@ def test_the_zones_that_waive_the_setback_from_an_alley_are_the_ones_that_say_so
     assert nonzero == {("gresham", z, 8.0) for z in ("LDR-5", "LDR-7", "TLDR", "TR",
                                                      "LDR-PV", "MDR-PV", "LDR-SW",
                                                      "VLDR-SW")} | {
-        ("gresham", "HDR-PV", 5.0), ("gresham", "DRL-1", 6.0), ("gresham", "DRL-2", 6.0)}
+        ("gresham", "HDR-PV", 5.0), ("gresham", "DRL-1", 6.0), ("gresham", "DRL-2", 6.0),
+        ("gresham", "DCC", 6.0), ("gresham", "DTM", 6.0)}   # ported 2026-10-08 (FOLLOWUPS 52)
     gr = rules.jurisdictions["gresham"]
     for zn in ("MDR-12", "MDR-24", "OFR", "CMF", "CMU", "SC", "SC-RJ"):
         z = gr.rule_for(zn)

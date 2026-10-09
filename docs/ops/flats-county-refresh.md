@@ -86,7 +86,7 @@ Durations are from the first real run (2026-09-18/19, 453,782 taxlots).
 | 6 | Measure (quadfit s1–s7) | 137 | `QUADFIT_DATA_DIR=data/quadfit_<date> python "Lot Analysis/quadfit/run_all.py" --force` | ~50 min | `EXIT 0`; `data/quadfit_<date>/summary.md` |
 | 7 | Normalize every lot | 137 | `python -m flats.ingest.normalize --snapshot <date>` | ~5 min | `data/flats/normalized/<date>/` with `new_zones.json` (unruled codes) and `summary.json` (`ruled_zones` by outcome) |
 | 7b | Institutional land (FOLLOWUPS 47) | 137 | `python -m flats.ingest.institutional --lots data/flats/normalized/<date>/lots.parquet --sources data/flats/sources/<date> --out data/flats/institutional/<date>` -- needs `osm_land_use` (an OpenStreetMap extract through Overpass; the public interpreter sheds load and acquire retries a 504 four times -- a dataset `failed` with "cut the answer short" is re-run with `--keys osm_land_use`, never skipped) and `rlis_orca` | ~5 min | `institutional.json`: lots taken by category; schools, parks, hospitals, utilities, rail... are RED and never scanned (Steph 2026-10-06), churches and charities still screened |
-| 8 | Screen (the bridge) | 137 | `python -m flats.ingest.quadfit --s4 data/quadfit_<date>/s4_lots.parquet --s5o data/quadfit_<date>/s5o_lots.parquet --results data/quadfit_<date>/lots_results.csv --institutional data/flats/institutional/<date> --out /root/bridge_<date> --processes 16 --chunk-size 250 --cache /root/bridge_cache` -- `--institutional` leaves those lots out of the scan and assign answers them RED from the path the bridge's `meta.json` names (or `assign --institutional`). Without it the bridge reads the land itself from `--sources` (the lots it screens only); with neither it refuses to run -- those lots are out of EVERY scan, a partial or a test included | **~7 h** for 290k lots on 12 cores (2 counties); 16.3 h for 418k (3 counties). 137 has 16 cores / 32 GB since 2026-10-02. Since FOLLOWUPS 46 the biggest lots run first, so the run no longer ends on a few slow giants. If the run dies, re-launch the same command: `--cache` keeps every finished chunk, so it resumes. `timings.parquet` gives seconds and memory per lot | `lots.parquet` + `meta.json` in the run dir |
+| 8 | Screen (the bridge) | 137 | `python -m flats.ingest.quadfit --s4 data/quadfit_<date>/s4_lots.parquet --s5o data/quadfit_<date>/s5o_lots.parquet --results data/quadfit_<date>/lots_results.csv --institutional data/flats/institutional/<date> --out /root/bridge_<date> --processes 16 --chunk-size 250 --cache /root/bridge_cache` -- `--institutional` leaves those lots out of the scan and assign answers them RED from the path the bridge's `meta.json` names (or `assign --institutional`). Without it the bridge reads the land itself from `--sources` (the lots it screens only); with neither it refuses to run -- those lots are out of EVERY scan, a partial or a test included | **~7 h** for 290k lots on 12 cores (2 counties); 16.3 h for 418k (3 counties). 137 has 16 cores / 32 GB since 2026-10-02. Since FOLLOWUPS 46 the biggest lots run first, so the run no longer ends on a few slow giants. If the run dies, re-launch the same command: the cache keeps every finished chunk, so it resumes (since FOLLOWUPS 48 the bridge keeps one in `bridge_cache` beside `--out` unasked; `--no-cache` turns it off). `timings.parquet` gives seconds and memory per lot | `lots.parquet` + `meta.json` in the run dir |
 | 9 | Assign (measured + unmeasured → one run) | 137 | `python -m flats.ingest.assign --normalized data/flats/normalized/<date> --bridge /root/bridge_<date> --quadfit-dir data/quadfit_<date> --out /root/assign_<date>` | ~5 min | `summary.md` with the funnel; "measured by quadfit but not land" (condominium units quadfit's s1 keeps -- 2,001 in September) is normal, "measured but not in the snapshot's lot table (kept)" should be 0 -- a number there is a lot normalize lost for no named reason |
 | 10 | Export the bundle | 137 | `python scripts/flats_load_bridge.py export --run-dir /root/assign_<date> --out /root/bundle_<date>` | ~5 min | `lots.csv.gz`, `results.csv.gz`, `run.json` (`status: candidate`) |
 | 11 | Copy to 114 | 137 | `scp -r /root/bundle_<date> root@<vm114>:/root/stacks/vicinitideals/data/flats/bridge/<date>`; also `data/flats/sources/<date>/manifest.json` → `/root/stacks/vicinitideals/data/flats/sources/<date>/` and `data/flats/deltas/<date>/` → `…/data/flats/deltas/<date>/` | 2 min | files present under `/app/data/flats/…` in the container |
@@ -99,8 +99,42 @@ Durations are from the first real run (2026-09-18/19, 453,782 taxlots).
 | 18 | Promote | 114 or browser | `flats_promote.py promote --snapshot N --by "agent, standing word 2026-09-19"` (clean) / the **Promote** button, or `--by Steph --override "…"` (warned) | 1 s | the Lots pages default to the new run; the previous copy is `retired` and still reachable by `?run=` |
 | 19 | Prune, next quarter | 114 | `flats_promote.py prune --dry-run`, then real, then step 15 again | ~5 min | the database holds the copy in use, the one before it, and any candidates |
 
-Steps 5–10 chain on 137 as one nohup script (`/root/chain_<date>.sh` ending
-in `CHAIN DONE`) so the seven-hour bridge is not babysat.
+Steps 5–10 (with transit, §4d) run on 137 as one supervised chain,
+`scripts/flats_weekly_chain.py` (FOLLOWUPS 48), so the seven-hour bridge is
+not babysat and a crash costs minutes, not the night. Launch it from a plain
+shell, never from a script that already holds the lock:
+
+```
+cd /root/code/vicinitideals && nohup flock -o /root/heavy.lock   .venv/bin/python scripts/flats_weekly_chain.py --snapshot <date> --sha <the commit>     --dem-from data/quadfit_demw/raw --snapshot-date <ground date>     --transit-reuse data/flats/transit/<last>/distances.parquet     --status-to root@<vm114>:/root/weekly137/status.txt --app-host root@<vm114>   > /root/weekly_chain.log 2>&1 < /dev/null &
+```
+
+- **It refuses in seconds** when the checkout is not at `--sha` or has
+  uncommitted changes, a dataset `pipeline.yaml` names is not in the
+  snapshot (it prints the acquire line that fetches them -- the 2026-10-01
+  copy lacked 15), the curb or institutional-land datasets or the elevation
+  tiles are missing, or 137 has under 10 GB free or 114 under 5 GB (a weekly
+  writes ~3.5 GB on 137). `--preflight-only` checks and prints every step's
+  command. A dataset fetched under an older `pipeline.yaml` entry is only a
+  note: a re-screen reads the ground the copy in use was measured from (the
+  10-07 copy, which screened clean, held 71).
+- **Re-launch the same line after anything.** Each finished step leaves
+  `~/weekly_<tag>/<step>.done` and is skipped; the bridge resumes from
+  `/root/bridge_cache`. Steps finished at another commit are refused until
+  `--from STEP` says which step the change touches: that step and every
+  later one run again, and the earlier ones are kept for the new commit.
+- **It restarts what died for a passing reason**, up to 3 tries: a step
+  killed by a signal (the OOM killer), a bridge lot that killed its worker
+  twice (again on half the processes, never under 2), or a step whose
+  processes used no CPU for 20 minutes (a hang; a giant lot burns CPU the
+  whole time it writes nothing). It ends only the step's own process group.
+  Any other failure stops the chain at once: the same code fails the same
+  way.
+- **Watch it** in `~/weekly_<tag>/status.txt`, copied to 114 every 2 min:
+  the step and try, memory, the kernel's OOM-kill count, the bridge's parts
+  and the log's tail. Its last line is `WEEKLY CHAIN DONE` or `GAVE UP at
+  <step>`. Each step's output is in `~/weekly_<tag>/<step>.log`.
+
+Loading, drift and promotion stay by hand (steps 11–18, §4b R3–R7).
 
 ### 4b. A re-screen of the copy in use
 
@@ -109,7 +143,8 @@ a use gate added, a drawing fixed in s6s -- the copy is not refreshed; it is
 screened again, and the result is a **candidate run on the current copy**
 that goes through the same gate and can be undone the same way. The run the
 Lots pages show is never overwritten in place: the loader refuses to load
-onto any run that is not a `candidate`.
+onto any run that is not a `candidate`. The weekly full re-screen runs R1–R2
+as `scripts/flats_weekly_chain.py` (§4, under the step table).
 
 | # | Step | Where | Command | Done when |
 |---|---|---|---|---|

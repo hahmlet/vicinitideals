@@ -18,6 +18,7 @@ explicit path.
 | water | 42 | `flats-tigard` / `flats/net-area` | Water, wetland and flood ground before placement. Now: Portland's Constrained Sites "z" overlay (the `constrained_sites_overlay` fact, its bridge answer, the 33.418 variants in the Portland and Multnomah layers). Next: ruling each quadfit `flag` overlay (no-build carve / permit flag / ignore), the FEMA fringe, and wetland maps for the cities that have none (`Lot Analysis/quadfit/config/overlays.yaml` actions, `flats/rules/net_area.py`). |
 | utility-easement | 43 | `.claude/worktrees/bridge-cse_013p9pShugj6MCoHZD7G4bso` / `flats/utility-easement` | Steph's 2026-10-01 utility easement rule (Beaverton BDC 20.05/20.22 note 7; Oregon City if ruled): the street-yard floor the bridge fits a lot at where the code forbids building on a utility easement nobody maps, the `utility_easement` answer that floor gives, `flats/config/easements.yaml`, `flats/fit/easement.py`, and the UTILITY-EASEMENT-ASSUMED flag. In shared files only: one LotFacts field + the flag in `screen.py`, the floor in `envelope_for` and one wrapper around `_screen_lot_once` in `quadfit.py`. |
 | scan-throughput | 46 | `.claude/worktrees/bridge-cse_01Jy7PvJ5jpm4MaSvtZGhgCw` / `worktree-bridge-cse_01Jy7PvJ5jpm4MaSvtZGhgCw` | How the bridge runs, never what it answers: `flats/ingest/batch.py` (costliest lots first, chunks started as free memory allows, a dead worker costing one lot, the answer cache and the book of lot costs beside it, `timings.parquet`). In `quadfit.py` only the one call in `run()` that hands the lots to it, and the `--cache` flag. Must move no answer. |
+| flats-zone-gaps | 52 | `flats-zone-gaps` / `flats/zone-gaps` | Zones FLATS or quadfit never finished reading: the `zone_rulings` `to_read` and `unencodable` entries and the zone encodings in the city yaml files, the zones missing from `Lot Analysis/quadfit/config/rules.yaml` (with `footprints.yaml` and the zone-mirror ledgers), and the use-gate reading in `flats/rules/resolver.py`. Data and tests; the bridge itself is untouched. |
 
 ## Rules
 
@@ -85,7 +86,11 @@ explicit path.
      run of the same commit nearly free, and a run re-launched after a
      crash picks up where it stopped. Any change under `flats/` (tests
      aside) misses for every lot: the cache saves repeats, not first runs.
-     Folders unused for 14 days are deleted by the next run.
+     Folders unused for 14 days are deleted by the next run. Since
+     FOLLOWUPS 48 the bridge keeps a cache without being asked, in
+     `bridge_cache` beside `--out` (`/root/bridge_cache` for a run in
+     `/root`); keep passing the flag, because a base tree from before then
+     does not. `--no-cache` turns it off, to time a cold run.
    - Each bridge run writes `timings.parquet` beside `lots.parquet`: one
      row per lot screened, with seconds and memory. Read it before
      guessing why a run was slow.
@@ -128,7 +133,9 @@ explicit path.
    bound and scan-throughput's proof are done, on origin/main at that
    moment (`/root/weekly_chain.sh`, log `/root/weekly_chain.log`, sources
    `data/flats/sources/2026-10-07`). A change merged after it starts rides
-   the next weekly run.
+   the next weekly run. Weekly runs from then on use the committed
+   `scripts/flats_weekly_chain.py` (FOLLOWUPS 48, runbook §4), not a
+   hand-written script.
 7. **Deploy through the lock.** Run
    `ssh -o BatchMode=yes root@192.168.1.28 "flock /tmp/vicinitideals-deploy.lock bash /root/deploy-vicinitideals.sh"`,
    then read the smoke output. A deploy ships all of merged `main`, other

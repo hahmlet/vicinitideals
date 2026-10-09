@@ -536,6 +536,10 @@ class RuleSet:
         for name, r in list(resolved.items()):
             where = r.via or (zone if r.origin == "zone" else "(defaults)")
             extra = caps_for(r.layer, where).get(name, ())
+            # An unmeasured footnote only tightens placement; it cannot open a
+            # use the code forbids, so it must not unsettle that prohibition.
+            if name == "quadplex_allowed" and r.value is False and not r.levers:
+                extra = ()
             if extra:
                 resolved[name] = replace(
                     r,

@@ -85,6 +85,8 @@ slope_coverage:
   sherwood: {grade: C, note: "1 m bbox widened west on 2026-09-30; share not yet measured"}
   king_city: {grade: C, note: "1 m bbox widened west on 2026-09-30; share not yet measured"}
   durham: {grade: C, note: "1 m bbox widened west on 2026-09-30; share not yet measured"}
+  tigard: {grade: C, note: "1 m bbox widened west on 2026-09-30; share not yet measured"}
+  cornelius: {grade: C, note: "1 m bbox widened west on 2026-09-30; share not yet measured"}
 
 sewer_coverage:
   portland: {grade: A, note: "BES mains, ownership+size"}
@@ -116,6 +118,8 @@ sewer_coverage:
   sherwood: {grade: X, note: "CWS-served, no main layer loaded"}
   king_city: {grade: X, note: "CWS-served, no main layer loaded"}
   durham: {grade: X, note: "CWS-served, no main layer loaded"}
+  tigard: {grade: X, note: "CWS-served, no main layer loaded"}
+  cornelius: {grade: X, note: "CWS-served, no main layer loaded"}
 
 overlays:
   # ---------------- Portland (all KILL via PCC 33.418 z triggers) ----------
@@ -348,7 +352,7 @@ overlays:
   - key: metro_wetlands
     name: "Metro regional wetland inventory (awareness)"
     action: flag
-    jurisdictions: [troutdale, wood_village, multnomah_unincorporated, washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham]
+    jurisdictions: [troutdale, wood_village, multnomah_unincorporated, washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham, tigard, cornelius]
     citation: "no local wetland inventory in these jurisdictions; DSL removal-fill applies to the wetland footprint itself (no universal upland buffer in Oregon)"
     confidence: verified
     coverage:
@@ -361,6 +365,8 @@ overlays:
       sherwood: {grade: B, note: ""}
       king_city: {grade: B, note: ""}
       durham: {grade: B, note: ""}
+      tigard: {grade: B, note: ""}
+      cornelius: {grade: B, note: ""}
 
   # ---------------- Oregon Department of State Lands (2026-10-05) ------------
   # FOLLOWUPS 42(d). A city's own wetland map is one layer of law; the state's
@@ -412,6 +418,8 @@ overlays:
       wood_village: {grade: X, note: "no approved LWI; NWI only"}
       multnomah_unincorporated: {grade: X, note: "no approved LWI; NWI only"}
       durham: {grade: X, note: "no approved LWI; NWI only"}
+      tigard: {grade: X, note: "no local wetland inventory loaded (2026-10-07); NWI only"}
+      cornelius: {grade: X, note: "no local wetland inventory loaded (2026-10-07); NWI only"}
 
   - key: dsl_nwi_wetlands
     name: "National Wetlands Inventory wetland or pond (state removal-fill permit)"
@@ -440,6 +448,8 @@ overlays:
       sherwood: {grade: C, note: ""}
       king_city: {grade: C, note: ""}
       durham: {grade: C, note: ""}
+      tigard: {grade: C, note: ""}
+      cornelius: {grade: C, note: ""}
 
   # ---------------- Washington County (2026-09-30) ---------------------------
   # One regime covers the whole urban county, cities and county alike: Clean
@@ -460,7 +470,7 @@ overlays:
     source: metro_title3
     name: "Clean Water Services vegetated corridor (Metro Title 3 as proxy)"
     action: flag
-    jurisdictions: [washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham]
+    jurisdictions: [washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham, tigard, cornelius]
     citation: "Clean Water Services Design and Construction Standards, Chapter 3 (vegetated corridors around sensitive areas; development inside one needs a Service Provider Letter). Not yet read against the text; the local code sections that apply it are not yet cited"
     confidence: needs_verification
     coverage:
@@ -470,6 +480,8 @@ overlays:
       sherwood: {grade: C, note: "regional proxy"}
       king_city: {grade: C, note: "regional proxy"}
       durham: {grade: C, note: "regional proxy"}
+      tigard: {grade: C, note: "regional proxy"}
+      cornelius: {grade: C, note: "regional proxy"}
   # Read 2026-10-06 (FOLLOWUPS 42): none of these places regulates Metro's map
   # as such -- the Tualatin Basin Partners made it a voluntary program -- and
   # each binding rule sits on a local map. It stays a flag, the paperwork
@@ -486,8 +498,8 @@ overlays:
     source: metro_title13
     name: "Goal 5 habitat (Metro Title 13 as proxy)"
     action: flag
-    jurisdictions: [washington_unincorporated, beaverton, sherwood, king_city, durham]
-    citation: "Metro Title 13 as each Washington County jurisdiction implements it on its own map: Washington County CDC 422-4.4 ('a determination of exemption'), 422-9 tree retention; Beaverton BDC 60.60 (SNRA trees) and 60.37 (Cooper Mountain); Sherwood SZCDC 16.142.010/.020.C; King City KCC 16.114 Table 16.114-9; Durham DDC Table 2.18"
+    jurisdictions: [washington_unincorporated, beaverton, sherwood, king_city, durham, tigard, cornelius]
+    citation: "Metro Title 13 as each Washington County jurisdiction implements it on its own map: Washington County CDC 422-4.4 ('a determination of exemption'), 422-9 tree retention; Beaverton BDC 60.60 (SNRA trees) and 60.37 (Cooper Mountain); Sherwood SZCDC 16.142.010/.020.C; King City KCC 16.114 Table 16.114-9; Durham DDC Table 2.18; Tigard and Cornelius not yet read, Metro's inventory standing in"
     confidence: needs_verification
     coverage:
       washington_unincorporated: {grade: C, note: "2005-era regional habitat model standing in for the county's Goal 5 maps"}
@@ -495,6 +507,8 @@ overlays:
       sherwood: {grade: C, note: "regional proxy"}
       king_city: {grade: C, note: "regional proxy"}
       durham: {grade: C, note: "regional proxy"}
+      tigard: {grade: C, note: "regional proxy"}
+      cornelius: {grade: C, note: "regional proxy"}
   # Hillsboro's own Goal 5 map (CDC 12.27.200-.255, Ord. 6473). Building in an
   # SNR Site past 12.27.220.A.9.b.iv's 200 sq ft takes an SNRP II, approved
   # only where adverse impacts are minimised "to the extent practicable"
@@ -543,7 +557,7 @@ overlays:
     name: "Clean Water Services vegetated corridor -- no-build (Metro Title 3 riparian + wetland buffers as proxy)"
     action: carve
     buffer_ft: 0
-    jurisdictions: [washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham]
+    jurisdictions: [washington_unincorporated, hillsboro, beaverton, sherwood, king_city, durham, tigard, cornelius]
     citation: "Clean Water Services Design and Construction Standards (R&O 19-5 as amended by R&O 19-22) 3.01.5: 'Except as allowed in Sections 3.04 and 3.05, no person shall erect any structure, conduct any development or construction activities ... within a Sensitive Area and Vegetated Corridor'; 3.05.9 admits other uses only 'as approved by the District through an Alternatives Analysis process as described in Section 3.07'; 3.07.3(c)5 and 3.07.4(c)6: 'No practicable alternative to the location of the development exists that will not disturb the Sensitive Area or Vegetated Corridor'; 3.07.2 minor encroachment (20% of depth and length) applies only to 'marginal or degraded Vegetated Corridors'"
     confidence: verified
     coverage:
@@ -553,6 +567,8 @@ overlays:
       sherwood: {grade: C, note: "regional proxy, as washington_unincorporated"}
       king_city: {grade: C, note: "regional proxy, as washington_unincorporated"}
       durham: {grade: C, note: "regional proxy, as washington_unincorporated"}
+      tigard: {grade: C, note: "regional proxy, as washington_unincorporated"}
+      cornelius: {grade: C, note: "regional proxy, as washington_unincorporated"}
 
   # ---------------- Unincorporated Clackamas --------------------------------
   # The county regulates habitat and water quality thoroughly and PROHIBITS

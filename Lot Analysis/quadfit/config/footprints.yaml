@@ -1120,6 +1120,18 @@ siteplan:
       parking_street_setback_by_zone:
         RL: null
         RML: 10
+        # 2026-10-08, with the CC row: Table 53-2, parking and vehicle circulation
+        # areas 5 feet (53.cc.txt#L181-L184). The zone's own figure, not a borrowed
+        # one; the row's 20 ft building setbacks are the top of Table 53-2's 0-20 ranges.
+        CC: 5
+        # 2026-10-08, the unit-lots zones: Tables 42-3, 43-3 and 44-3 each print
+        # "Parking and Vehicle Circulation Areas 10 feet" (townhouses, by Architectural
+        # Review, held at 10 in the corpus). MUC prints none, so it takes the building
+        # setback like RL.
+        RMH: 10
+        RH: 10
+        "RH/HR": 10
+        MUC: null
       front_lot_line_corner: entrance
       corner_access_street: any
       cite: TDC 73C.030(1) and Figure 73-1 driveway rows; 73C.090(1)(a) approach; TDC 41.300 parking setback

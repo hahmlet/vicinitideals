@@ -139,3 +139,33 @@ def test_but_the_district_the_note_was_written_about_keeps_its_lever() -> None:
     use = rules.resolve("or/multnomah/gresham", "CMF").values["quadplex_allowed"]
     assert use.value is True
     assert "civic_corridor" in use.levers
+
+
+# --- a footnote that tightens placement cannot reopen a forbidden use ------
+
+
+def test_an_unmeasured_footnote_does_not_unsettle_a_prohibition() -> None:
+    """Oregon City's water footnote sits over the whole Natural Resources table
+    and reached `quadplex_allowed` in the districts that refuse the building
+    outright, so the prohibition read as one a site fact might still turn and
+    those lots were never answered at the use gate (FOLLOWUPS 52b). A cap can
+    only add a constraint; it has nothing to say about a use the code forbids.
+    """
+    rules = RuleSet(load_rules())
+    for layer, zone in (
+        ("or/clackamas/oregon-city", "MUE"),
+        ("or/clackamas/oregon-city", "I"),
+        ("or/multnomah/portland", "CI1"),
+    ):
+        use = rules.resolve(layer, zone).values["quadplex_allowed"]
+        assert use.value is False, (layer, zone)
+        assert use.levers == frozenset(), (layer, zone, sorted(use.levers))
+
+
+def test_but_an_allowed_use_keeps_the_footnote_lever() -> None:
+    # Only a settled prohibition is shielded; where the building is allowed the
+    # water note still tightens the placement and still has to reach the screen.
+    rules = RuleSet(load_rules())
+    got = rules.resolve("or/clackamas/oregon-city", "R-5")
+    assert got.values["quadplex_allowed"].value is True
+    assert "protected_water_feature" in got.levers

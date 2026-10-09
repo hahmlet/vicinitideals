@@ -392,6 +392,39 @@ def test_a_pocket_takes_the_other_layers_gates(snapshot: Path, tmp_path: Path, l
     assert row["gate"] == "JURISDICTION_OFF" and row["rules_layer"] == "or/multnomah/_unincorporated"
 
 
+def test_a_lot_zone_set_by_hand_beats_the_maps_label_for_that_lot_only(snapshot: Path, tmp_path: Path, layers, pipeline):
+    """``lot_zones``: a tax lot the city's own map settles. The lot screens
+    under the named block with no gate while its map label stays as read; the
+    lot beside it, with the same label, is untouched."""
+    from flats.rules.model import LotZone
+
+    pdx = layers["or/multnomah/portland"]
+    held = next(iter(pdx.zones))
+    ruled = {
+        **layers,
+        "or/multnomah/portland": pdx.model_copy(
+            update={
+                "lot_zones": {
+                    "1N1E01AA  -00300": LotZone(
+                        tlid="1N1E01AA  -00300", zone=held, source="the city map", note="read by hand off the city map"
+                    )
+                }
+            }
+        ),
+    }
+    nz.normalize(snapshot, tmp_path / "plain", layers=layers, pipeline=pipeline)
+    plain = pd.read_parquet(tmp_path / "plain" / "lots.parquet").set_index("tlid")
+    out = tmp_path / "by_hand"
+    nz.normalize(snapshot, out, layers=ruled, pipeline=pipeline)
+    lots = pd.read_parquet(out / "lots.parquet").set_index("tlid")
+    row = lots.loc["1N1E01AA  -00300"]
+    assert row["zone"] == held and row["zone_raw"] == "QQ9a" and pd.isna(row["gate"])
+    assert plain.loc["1N1E01AA  -00300", "gate"] == "ZONE_NOT_ENCODED"
+    rest = [t for t in lots.index if t != "1N1E01AA  -00300"]
+    assert lots.loc[rest, "zone"].fillna("").tolist() == plain.loc[rest, "zone"].fillna("").tolist()
+    assert lots.loc[rest, "gate"].fillna("").tolist() == plain.loc[rest, "gate"].fillna("").tolist()
+
+
 def test_jurisdictions_from_the_real_layers(layers):
     j = nz.Jurisdictions.from_layers(layers)
     assert j.layer_for("PORTLAND", "multnomah") == "or/multnomah/portland"

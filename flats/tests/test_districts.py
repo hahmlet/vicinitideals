@@ -132,18 +132,8 @@ RULINGS: dict[str, dict[str, str]] = {
         # made it change: a ruling whose argument is that a document is
         # ABSENT goes quietly wrong the day the document arrives, and no check
         # in this file or any other was watching for it.
-        "HDR": (
-            "encode: High Density Residential -- quadplexes P in Table 315-1, "
-            "and Table 315-4 answers rear setback, side setback and building "
-            "separation with 'See Subsection 1005.02(L)'. ZDO 1005 is in the "
-            "store since 2026-09-08 and 1005.02(L) has been read: the "
-            "distance to a site area line is not a number but an angle drawn "
-            "from the top of the building -- 60 degrees to the north, 15 "
-            "degrees east and west, printed as 'Separation = b x .267 (tan 15 "
-            "degrees)'. A setback that is a function of height and of which "
-            "way a lot line points needs the bearing of every line, which "
-            "nothing here measures. 253 lots."
-        ),
+        # HDR left this list on 2026-10-09: it is encoded as RED BY RULING
+        # for design review (ZDO 1102.01(A)), so the ledger stops reporting it.
         "SHD": (
             "encode: Special High Density -- quadplexes P in Table 315-1, "
             "setbacks deferred to Subsection 1005.02(L), which is in the "
@@ -207,16 +197,6 @@ RULINGS: dict[str, dict[str, str]] = {
             "time in one sentence, which is the county's typo and not a "
             "second Office Apartment district; Table 510-1's column heads "
             "print OA and OC as separate columns 9 and 10."
-        ),
-        "SCMU": (
-            "encode: Station Community Mixed Use -- P on the Quadplexes row "
-            "with no note at all, so nothing routes it elsewhere. What blocks "
-            "it is Table 510-2, whose header prints ten districts while every "
-            "data row carries eleven cells: SCMU is the missing head, and its "
-            "cell in each of the four setback rows is not a number but 'See "
-            "Subsection 1005.09'. That subsection is in the store since "
-            "2026-09-08 -- Fuller Road Station Community Dimensional and "
-            "Design Standards, 365 lines -- and is unread. 36 lots."
         ),
         "PMU": (
             "encode: Planned Mixed Use -- P on the Quadplexes row, no note. "
@@ -413,17 +393,6 @@ RULINGS: dict[str, dict[str, str]] = {
             "district the plan amendment process can create; no chapter holds "
             "a use table for it and no lot on the September map carries it."
         ),
-        "PMU": (
-            "conditional: the Rock Creek Planned Mixed Use District, Chapter "
-            "16.31, has no use table -- it 'allows a variety of commercial "
-            "uses and residential dwelling types and densities' (L33) and "
-            "every standard 'shall be determined through the master plan or "
-            "a design review process' (L73, L85), a master plan being "
-            "required over five acres (L23). Two lots; the layer's "
-            "zone_rulings hold it as unencodable, which is this verdict's "
-            "name in the copy: nothing is permitted until a discretionary "
-            "plan says what is."
-        ),
         "PMU6": (
             "not-a-zone: a Clackamas County comprehensive plan designation, "
             "named by 16.23.010.C as the Eagle Landing Plan Area land the "
@@ -483,26 +452,6 @@ RULINGS: dict[str, dict[str, str]] = {
         # stay are the ones the map carries and the city permits in some form;
         # the layer's `zone_rulings` holds them as `to_read` so the copy stops
         # asking, and this ledger holds them as what they are.
-        "GMU": (
-            "encode: Table 19.303.2 gives Townhouses P in the GMU column (note "
-            "1 lifts the four-in-a-row limit of 19.505.5 here) and 'Duplex, "
-            "Triplex, Quadplex' CU -- the building is permitted outright split "
-            "onto unit lots and conditional on one lot, the R-MD shape with a "
-            "conditional_use variant. Standards in Table 19.303.3, unread."
-        ),
-        "NMU": (
-            "conditional: every residential row of Table 19.303.2 reads CU in "
-            "the NMU column; note 2 lifts the review only for residential uses "
-            "built as part of a vertical mixed-use building."
-        ),
-        "SMU": "conditional: the same CU column in Table 19.303.2 as NMU.",
-        "DMU": (
-            "encode: Table 19.304.2 gives Townhouse P and Multifamily P and no "
-            "duplex, triplex or quadplex row, so a four-unit building on one "
-            "lot is not listed (19.304.2.D) and split onto unit lots it is "
-            "townhouses -- except on Main Street, where 19.304.3.A.1.c bars "
-            "them. Standards in Table 19.304.4 and 19.508, unread."
-        ),
         "NMIA": (
             "not-a-zone: the North Milwaukie Innovation Area Plan, named at "
             "MMC 19.312.1.A as what MUTSA and NME implement."
@@ -553,17 +502,6 @@ RULINGS: dict[str, dict[str, str]] = {
         ),
     },
     "or/clackamas/tualatin": {
-        "RMH": (
-            "encode: Medium High Density Residential. TDC Chapter 42 fetched "
-            "2026-09-20 (42.rmh.txt) because the September map carried it "
-            "onto four lots; Table 42-2 reads Townhouse (or Rowhouse) P and "
-            "Multi-Family Structure P with no Quadplex row (a Multi-Family "
-            "Structure is five or more units, TDC 31.060), so the building "
-            "is permitted only as townhouses on unit lots; Table 42-3 gives "
-            "the townhouse rows (1,400 sq ft, 14 ft width, 15 du/acre) -- "
-            "RL's shape. Held as `to_read` in the layer's zone_rulings until "
-            "encoded."
-        ),
         # The six chapters fetched 2026-09-20 (42, 50, 54, 56, 60, 61) each
         # run to the NEXT chapter's first section, so the next chapter's
         # heading sits at the tail of the slice and the harvest prints it.
@@ -575,35 +513,10 @@ RULINGS: dict[str, dict[str, str]] = {
         # moved from fetch to encode; CC and RH-HR arrived, and CC left
         # again when it was encoded (2026-10-02, Map 10-3 traced). Only
         # CO/MR is still the tail of another chapter's slice, with no lot.
-        "RH": (
-            "encode: High Density Residential, TDC Chapter 43 (43.rh.txt, "
-            "fetched 2026-10-01; 198 Washington-side lots). Table 43-2 "
-            "reads Townhouse P and Multi-Family Structure P with no Quadplex "
-            "row (L94-L100) -- RMH's shape, the unit_lots path only. The "
-            "side and rear setback is a ladder on structure height "
-            "(L181-L187), which no band here holds. Held as `to_read` in "
-            "the layer's zone_rulings."
-        ),
-        "RH-HR": (
-            "encode: High Density High Rise, TDC Chapter 44 (44.rh-hr.txt, "
-            "fetched 2026-10-01). The map spells it RH/HR, as Table 58-7 "
-            "does (58.central-tualatin-overlay.txt L349); 6 lots. Table "
-            "44-2 is RH's (L96-L102), the ladder runs to Architectural "
-            "Review at 30 ft (L173-L184), and Table 44-3 has no townhouse "
-            "lot size. Held as `to_read` under 'RH/HR' in zone_rulings."
-        ),
         "CO/MR": (
             "fetch: Mid-Rise/Office Commercial, TDC Chapter 55 -- its "
             "heading closes 54.cg.txt (L358). No Clackamas lot carries it, "
             "and none of the Washington side's (run 51, 2026-10-01)."
-        ),
-        "MUC": (
-            "encode: Mixed Use Commercial, TDC Chapter 57 (57.muc.txt, "
-            "fetched 2026-10-01; 19 lots). Table 57-2 reads 'Duplex; "
-            "Townhouse (or Rowhouse) P' and Multi-Family Structure P with no "
-            "Quadplex row (L155-L162), so the unit_lots path only; the "
-            "interior side and rear setback is 0-20 ft, 20 ft against a "
-            "residential district (L181). Held as `to_read` in zone_rulings."
         ),
         "TDC 73C": (
             "not-a-zone: a chapter reference split onto its own line -- "
@@ -1219,6 +1132,10 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
 
     Twenty-five on 2026-10-02: Tualatin CC encoded, its mapped blocks traced
     from Comprehensive Plan Map 10-3 into the layer's `drawn_areas`.
+
+    Eighteen on 2026-10-08 (zone gaps, FOLLOWUPS 52a): seven fall because the zones are
+    now zone blocks -- Milwaukie GMU and DMU, Tualatin RMH, RH, RH-HR and MUC, and
+    Clackamas SCMU -- and Happy Valley PMU left as a RED BY RULING block.
     """
     owed: dict[str, list[str]] = {"encode": [], "fetch": [], "column": []}
     for layer, rulings in list(RULINGS.items()) + list(BY_HAND.items()):
@@ -1228,6 +1145,6 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
             verdict = match.group(1)
             if verdict in owed:
                 owed[verdict].append(f"{layer}/{token}")
-    assert len(owed["encode"]) == 25, sorted(owed["encode"])
+    assert len(owed["encode"]) == 17, sorted(owed["encode"])
     assert len(owed["fetch"]) == 2, sorted(owed["fetch"])
     assert len(owed["column"]) == 10, sorted(owed["column"])

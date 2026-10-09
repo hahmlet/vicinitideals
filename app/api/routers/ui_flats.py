@@ -2764,6 +2764,7 @@ _REASON_WORDS = {
     "INSTITUTIONAL_USE": "institutional land — a school, park, hospital, public site, utility, airport, marina, transit hub, railway, public pool or plaza, or mall — red and left out of the scan (churches and charities are still screened)",
     "POD_CANNOT_FIT": "red by arithmetic: the lot is smaller than the building's footprint, or too narrow for a building 20 ft or wider — no zoning changes that",
     "COURT_WIDTH_UNMEASURED": "the fit was searched without the parking court's width",
+    "STREET_RANK_UNKNOWN": "closer look: the lot's parking works off only one of its two streets, and a street has no class on file, so it is not known the street that works is the quieter one the code sends the driveway to",
     "STREET_UNCONFIRMED": "one of the lot's streets may only be a private drive, and the lot could not be checked without it",
     "PARKING_STRIP_UNCONFIRMED": "fits only without the planted strip the city keeps between parking and the lot lines; whether a townhome project owes that strip is still open",
     "FIRE_HOSE_START": "the fire hose reaches if measured from the curb, not from 10 ft out from it; where the street's width is not measured, from the curb of the narrowest street a fire truck may use",

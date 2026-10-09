@@ -1558,7 +1558,31 @@ zones:
 # proposed city zoning for the territory" (16.10.030, cmc.16.annexation.txt
 # L67), and the city zones it on approval, consistent with its plan
 # (16.10.040 (F), L101). So the county district does not govern and the
-# city district is not printed. Unencodable, as in Sherwood.
+# city district is not printed. Unencodable, as in Sherwood. (The AF-5 on the
+# eastern lot 1N335CD01200 is no district at all: see lot_zones above.)
+# THE R-10 PARCEL. Metro's layer carries no R-10 (above), so the one parcel
+# the city's Zoning Map (April 2025) paints R-10, at the east end north of
+# the highway, has no polygon of its own there. Tax lot 1N335CD01200 is that
+# parcel: 26,621 sq ft with no street address, the easternmost lot but one of
+# the whole city, and the only Cornelius lot Metro's layer barely touches --
+# AF-5 covers 0.00003% of it, a hair of the edge, so the label the join
+# printed (AF-5) is a sliver artefact, not a district. The lot is read
+# R-10 by hand here (lot_zones), for that one lot only.
+lot_zones:
+  1N335CD01200:
+    zone: R-10
+    source: >-
+      City of Cornelius Zoning Map, April 2025 (DocumentCenter View/1542),
+      the single R-10 parcel at the east end, read on the printed map and
+      placed against the tax lots by position.
+    note: >-
+      Metro's zoning layer has no R-10, and under this lot it prints only a
+      sliver of the AF-5 polygon that belongs to the lots to the west. The
+      city map paints R-10 on one parcel at the east end; this is the lot
+      that sits there. Identified by position on the printed map, not by a
+      tax-lot number the map prints, so a person who finds the map's parcel
+      is another lot should move this entry.
+
 zone_rulings:
   R7:
     outcome: alias

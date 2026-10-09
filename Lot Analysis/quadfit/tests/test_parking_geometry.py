@@ -621,6 +621,19 @@ def test_the_parking_street_setback_is_mirrored_for_every_zone_it_binds_in():
             )
 
 
+#: Zones whose code prints a parking figure of its own rather than borrowing the
+#: building setback, so "never looser than the building" does not apply. Tualatin CC:
+#: Table 53-2 says 5 ft for parking, while the ported building setbacks are the tops of
+#: 0-20 ranges. Tualatin RMH/RH/RH-HR: Tables 42-3/43-3/44-3 print 10 ft for parking against
+#: a 15 ft building front.
+STATES_ITS_OWN_FIGURE = {
+    ("tualatin", "CC"),
+    ("tualatin", "RMH"),
+    ("tualatin", "RH"),
+    ("tualatin", "RH/HR"),
+}
+
+
 def test_a_borrowed_setback_is_never_looser_than_the_building_setback():
     """The whole reason this rule was refused before `same_as` existed.
 
@@ -641,6 +654,8 @@ def test_a_borrowed_setback_is_never_looser_than_the_building_setback():
         for zr in jr.zones:
             shipped = by_zone.get(zr.zone)
             if shipped is None or zr.setback_front_ft is None:
+                continue
+            if (jurisdiction, zr.zone) in STATES_ITS_OWN_FIGURE:
                 continue
             assert shipped >= zr.setback_front_ft, (
                 f"{jurisdiction} {zr.zone}: parking may stand {shipped} ft off "

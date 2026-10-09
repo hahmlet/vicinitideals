@@ -57,17 +57,21 @@ jurisdictions:
   or/clackamas/johnson-city: false      # manufactured-home park, no fourplex land
   or/clackamas/rivergrove: false        # ~500 people, no multi-dwelling zones
   or/clackamas/_unincorporated: true
-  # Washington County, first mapped 2026-09-30 (FOLLOWUPS 17(d)). The six
-  # layers the corpus holds. Tigard, Forest Grove and Cornelius are not
-  # encoded yet and stay off (an unknown jurisdiction is off); Tualatin,
-  # Portland, Wilsonville and Lake Oswego lots in the county reach the layers
-  # those cities already have by their JURIS_CITY.
+  # Washington County, first mapped 2026-09-30 (FOLLOWUPS 17(d)). The eight
+  # layers the corpus holds. Tigard and Cornelius are encoded (item 17) and
+  # were switched on 2026-10-07 (item 51); their zoning is Metro's regional
+  # layer. Forest Grove is not encoded yet and stays off (an unknown
+  # jurisdiction is off); Tualatin, Portland, Wilsonville and Lake Oswego lots
+  # in the county reach the layers those cities already have by their
+  # JURIS_CITY.
   or/washington/_unincorporated: true
   or/washington/hillsboro: true
   or/washington/beaverton: true
   or/washington/sherwood: true
   or/washington/king-city: true
   or/washington/durham: true
+  or/washington/tigard: true
+  or/washington/cornelius: true
 
 datasets:
 
@@ -126,12 +130,14 @@ datasets:
     url: https://drcmetro.maps.arcgis.com/sharing/rest/content/items/3949bc39e980444384312a8c4d7bdb08/data
     member: LAND/zoning.shp
     zone_field: ZONE
-    serves: [or/multnomah/_unincorporated, or/clackamas/_unincorporated, or/multnomah/fairview, or/washington/durham]
+    serves: [or/multnomah/_unincorporated, or/clackamas/_unincorporated, or/multnomah/fairview, or/washington/durham, or/washington/tigard, or/washington/cornelius]
     notes: >-
       Covers the jurisdictions that publish no zoning service of their own —
       Fairview's code is PDF-only, neither Multnomah nor Clackamas publishes
       unincorporated zoning through ArcGIS, and Durham publishes none (its
       21 polygons here are CITY 'Durham': SDR, MDR, OP, IP, NR).
+      Tigard and Cornelius are read from it too (2026-10-07): each lot takes
+      the Metro polygon covering most of it.
 
   rlis_orca:
     kind: rlis_zip

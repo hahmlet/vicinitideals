@@ -115,6 +115,14 @@ TARGETS: tuple[Target, ...] = (
         "zoning fabric's CITY = 'Estacada' polygons. Outside Metro: JURIS_CITY ESTACADA "
         "is read off the Clackamas roll.",
     ),
+    Target(
+        "tigard", "or/washington/tigard", ("TIGARD",), "zoning_metro", "ZONE",
+        comment="Switched on 2026-10-07 (FOLLOWUPS 51); Metro's regional layer, as Durham.",
+    ),
+    Target(
+        "cornelius", "or/washington/cornelius", ("CORNELIUS",), "zoning_metro", "ZONE",
+        comment="Switched on 2026-10-07 (FOLLOWUPS 51); Metro's regional layer, as Durham.",
+    ),
 )
 
 

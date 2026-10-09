@@ -257,6 +257,7 @@ def test_each_citys_slope_takes_the_grade_its_sentence_names(layers: dict[str, L
     want = {
         "or/washington/hillsboro": ({"slope_25"}, set()),
         "or/clackamas/milwaukie": ({"slope_25"}, set()),
+        "or/clackamas/gladstone": ({"slope_25"}, set()),
         "or/clackamas/oregon-city": ({"slope_35"}, {"slope_25"}),
         "or/clackamas/west-linn": (set(), {"slope_25"}),
         "or/washington/cornelius": ({"slope_25"}, set()),

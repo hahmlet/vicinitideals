@@ -127,9 +127,11 @@ from flats.geom.sidewalk import (
 from flats.geom.street_class import (
     LOCAL_STREET,
     load_class_maps,
+    access_record,
     measured_access,
     observed_local_street,
     street_ranks,
+    unknown_access,
 )
 from flats.geom.named_street import (
     NAMED_STREET_FACT,
@@ -138,6 +140,7 @@ from flats.geom.named_street import (
     observed_named_street,
 )
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
+from flats.ingest.flatter import flatter_checked
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
 from flats.rules.model import TRANSIT_MEASURES, Layer
@@ -163,6 +166,7 @@ from flats.score.paper import (
 from flats.score.screen import (
     COURT_SHAPED,
     STEEP_GROUND,
+    STREET_RANK_UNKNOWN,
     STREET_UNCONFIRMED,
     STRIP_FIELD,
     LotFacts,
@@ -1643,6 +1647,13 @@ class Screened:
     #: report, never read by the colour. None where the fit did not pass,
     #: the lot is red (it stays red whatever the pod's size) or nobody asked.
     room: Room | None = None
+    #: Which street each plan of a corner lot took its driveway from and why
+    #: (:func:`flats.geom.street_class.access_record`, FOLLOWUPS 49(c)); the
+    #: plan this row stands on carries ``won``. None off the named-front path.
+    access: tuple[dict[str, Any], ...] | None = None
+    #: Why :func:`fire_checked` found no hose route for this plan
+    #: (:func:`_fire_why`); a diagnostic column, never read by the colour.
+    fire_why: str | None = None
 
 
 def _room(s: Screened, fitter: Fitter) -> Room | None:
@@ -1877,6 +1888,51 @@ def _street_unconfirmed(s: Screening) -> Screening:
     if not any(f.code == "ACCESS-STREET-UNCONFIRMED" for f in flags):
         flags = (*flags, flag_plan.Flag("ACCESS-STREET-UNCONFIRMED", flag_plan.LOT, STREET_UNCONFIRMED))
     return dataclasses.replace(s, triage=triage, reasons=reasons, flags=flags)
+
+
+def _rank_unknown(s: Screened) -> Screened:
+    """``s`` as a question (:data:`~flats.score.screen.STREET_RANK_UNKNOWN`):
+    a corner lot whose parking works off the street the measured plan chose
+    and misses off the other, where nothing ranks one of its streets. Never
+    applied to a red lot: the miss stands on either street."""
+
+    def ask(x: Screening) -> Screening:
+        reasons = x.reasons if STREET_RANK_UNKNOWN in x.reasons else (*x.reasons, STREET_RANK_UNKNOWN)
+        triage = x.triage if _WORSE[x.triage] >= _WORSE[Triage.unknown] else Triage.unknown
+        flags = x.flags
+        if not any(f.code == "ACCESS-STREET-RANK-UNKNOWN" for f in flags):
+            flags = (
+                *flags,
+                flag_plan.Flag("ACCESS-STREET-RANK-UNKNOWN", flag_plan.LOT, STREET_RANK_UNKNOWN),
+            )
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    if s.signed.colour is flag_plan.Colour.red:
+        return s
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
+def _pick_access(by_access: Sequence[tuple[Any, tuple[Screened, Any]]]) -> tuple[Any, Any, bool]:
+    """The way in a corner plan is answered on: ``(access, shot, asked)``.
+
+    ``by_access`` is the measured access first, then (where a street has no
+    class) the driveway off the other street. The worse answer is kept, so
+    an unmeasured fact takes its worst case -- except a RED that only the
+    unranked street brings: the measured plan stands as a closer look,
+    ``asked`` (Steph 2026-10-09: "yellow, then measure"). Only a plan that
+    turns the colour or the triage worse replaces the measured one: a tie
+    keeps it, so its drawing (and the flags that drawing owes) stands.
+    """
+    used, shot = max(by_access, key=lambda v: _front_rank(v[1][0])[:3])
+    if (
+        len(by_access) == 2
+        and used is not by_access[0][0]
+        and shot[0].signed.colour is flag_plan.Colour.red
+        and by_access[0][1][0].signed.colour is not flag_plan.Colour.red
+    ):
+        used, shot = by_access[0]
+        return used, shot, True
+    return used, shot, False
 
 
 def _worse(first: Screened, second: Screened) -> Screened:
@@ -2324,6 +2380,8 @@ def _screen_lot_once(
             if not plans:
                 plans = [(None, lot.edges, None)]
         tried: list[tuple[Screened, Fitter]] = []
+        access_log: list[dict[str, Any]] = []
+        unranked: list[bool] = []
         plain: ZoneResolution | None = None
         alleyed: ZoneResolution | None = None
         for plan_key, plan_edges, front in plans:
@@ -2333,6 +2391,9 @@ def _screen_lot_once(
             # A lowest-class driveway off a corner lot whose named front is
             # the quieter street comes off the front (Steph 2026-10-05).
             plan_got = measured_access(got, plan_edges, front)
+            # A street class nobody measured: the driveway is tried off each
+            # street and the worse answer kept (FOLLOWUPS 49(c)).
+            other_got = unknown_access(got, plan_edges, front)
             if plain is None and lot.observed.get("alley_at_rear") and rear_off_alley(here.edges):
                 # A rear line off the alley owes the ordinary rear setback:
                 # the same lot resolved without the rear alley (FOLLOWUPS 12(b)).
@@ -2359,16 +2420,28 @@ def _screen_lot_once(
                     envs.append(cut)
             # The better of the envelope cuts for this reading of the lot;
             # the readings are ranked against each other below.
-            tried.append(min(
-                (
-                    _screen_on(
-                        here, design, config, plan_got, env, front, angles, fitters, step_deg,
-                        policy=policy, relief=relief, plan=plan_key,
-                    )
-                    for env in envs
-                ),
-                key=lambda t: _front_rank(t[0]),
-            ))
+            by_access = [
+                (variant, min(
+                    (
+                        _screen_on(
+                            here, design, config, variant, env, front, angles, fitters, step_deg,
+                            policy=policy, relief=relief, plan=plan_key,
+                        )
+                        for env in envs
+                    ),
+                    key=lambda t: _front_rank(t[0]),
+                ))
+                for variant in (plan_got, other_got)
+                if variant is not None
+            ]
+            # Only a plan that turns the colour or the triage worse replaces
+            # the one measured access chose: a tie keeps it, so its drawing
+            # (and the flags that drawing owes) stands.
+            used, shot, asked = _pick_access(by_access)
+            unranked.append(asked)
+            if front is not None:
+                access_log.append(access_record(got, used, plan_edges, front))
+            tried.append(shot)
         # Drawn for the winner only: one more window search per design.
         if worst:
             # The worse reading: the lower colour, the tighter fit, and on a
@@ -2377,14 +2450,21 @@ def _screen_lot_once(
             won, fitter = max(tried, key=lambda t: (*_front_rank(t[0]), -_env_sqft(t[0])))
         else:
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
+        ask_rank = unranked[next(i for i, t in enumerate(tried) if t[0] is won)]
+        if access_log and len(access_log) == len(tried):
+            won = dataclasses.replace(won, access=_access_won(access_log, tried, won))
         if fit_only:
-            out.append(won)
+            out.append(_rank_unknown(won) if ask_rank else won)
             continue
         won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
         won = fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter)
         won = slope_checked(
             won, lot, terrain, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
             roads=roads,
+        )
+        won = flatter_checked(
+            won, lot, terrain, fitter, rules=rules, policy=policy, relief=relief,
+            step_deg=step_deg, roads=roads,
         )
         if _coarse_blocked(won, lot):
             # Eliminated on the coarse map's steep ground alone: screened
@@ -2409,7 +2489,7 @@ def _screen_lot_once(
             won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
             roads=roads, bound=bound, terrain=terrain,
         )
-        out.append(won)
+        out.append(_rank_unknown(won) if ask_rank else won)
     return out
 
 
@@ -2604,6 +2684,7 @@ def fire_checked(
     def screened(s: Screened, route: float | None) -> Screened:
         curb = measure(s.drawing, from_curb) if from_curb is not None and route is not None and route > limit else None
         facts = dataclasses.replace(s.facts, fire_route_ft=route, fire_route_tried=True, fire_route_curb_ft=curb)
+        s = dataclasses.replace(s, fire_why=_fire_why(s, lot, streets, offset) if route is None else None)
         result = screen(s.rules, facts, s.design, s.fit, policy=policy, relief=relief, config=s.config)
         shadow = _if_signed(
             s.rules, facts, s.design, s.fit, result, policy=policy, relief=relief, config=s.config
@@ -2625,6 +2706,26 @@ def fire_checked(
         if turned is not s:
             out = screened(turned, again)
     return out
+
+
+def _fire_why(
+    s: Screened, lot: QuadfitLot, streets: Sequence[tuple[float, float, float, float]], offset: Any
+) -> str:
+    """Which input :func:`flats.fit.fire.route_ft` was missing when it
+    found no route for ``s``'s drawing."""
+    from flats.fit import fire
+
+    drawing = s.drawing or {}
+    ring = drawing.get("building")
+    if not (drawing.get("fits") and ring and len(ring) >= 4):
+        return "no_building_drawn"
+    if lot.lot_geom is None:
+        return "no_lot_polygon"
+    if not streets:
+        return "no_street_lines"
+    if offset is not None and not fire.reachable(streets, offset):
+        return "no_truck_road_within_50ft"
+    return "no_path_to_walls"
 
 
 #: The angles :func:`_turned_for_fire` draws: every one the fit searched
@@ -3089,6 +3190,9 @@ def drawing_for(
     fitter: Fitter,
     *,
     street: tuple[tuple[float, float, float, float], ...] | None = None,
+    where: Any = None,
+    listing: list[Any] | None = None,
+    max_front_ft: float | None = None,
 ) -> dict[str, Any] | None:
     """Where the fit stood this design, for the lot page (FOLLOWUPS 5).
 
@@ -3101,7 +3205,9 @@ def drawing_for(
     as near the lot's front lines as named for this screen as the room
     allows -- on a corner lot, the street it was laid out fronting; or at
     ``street``, some of those lines, where the caller names them
-    (:func:`fire_checked`).
+    (:func:`fire_checked`). ``where``, ``listing`` and ``max_front_ft`` are
+    :func:`flats.fit.draw.draw`'s: a chosen window, or the windows listed
+    (:mod:`flats.ingest.flatter`).
     """
     alley, corner = s.lot.facts.alley, s.lot.facts.corner
     rear = s.envelope.rear_cut_ft if s.envelope else None
@@ -3127,6 +3233,9 @@ def drawing_for(
             beside_band_ft=beside.band_ft,
             beside_len_ft=beside.length_ft,
             short_ft=short,
+            where=where,
+            listing=listing,
+            max_front_ft=max_front_ft,
         )
         return None if got is None else got.to_json(s.envelope.geom if s.envelope else None)
     if s.fit.column:
@@ -3153,6 +3262,9 @@ def drawing_for(
         court_beyond_ft=beyond,
         street=street,
         short_ft=short,
+        where=where,
+        listing=listing,
+        max_front_ft=max_front_ft,
     )
     if got is None:
         return None
@@ -3166,6 +3278,16 @@ _BAND_RANK: dict[str | None, int] = {"preferred": 0, "target": 1, "minimum": 2}
 
 def _env_sqft(s: Screened) -> float:
     return s.envelope.sqft if s.envelope is not None else 0.0
+
+
+def _access_won(
+    log: list[dict[str, Any]], tried: list[tuple[Screened, Fitter]], won: Screened
+) -> tuple[dict[str, Any], ...]:
+    """``log`` with each plan's colour and the plan ``won`` stood on marked."""
+    return tuple(
+        {**rec, "colour": s.signed.colour.value, "won": s is won}
+        for rec, (s, _) in zip(log, tried)
+    )
 
 
 def _front_rank(s: Screened) -> tuple[int, int, int, int, float]:
@@ -3224,6 +3346,8 @@ def row_for(s: Screened) -> dict[str, Any]:
         "fit_column": s.fit.column,
         "front_deg": s.front_deg,
         "side_street_lane": side_street_fed(s.rules, s.lot.facts.alley, s.lot.facts.corner),
+        "access_json": json.dumps(s.access, separators=(",", ":")) if s.access else None,
+        "fire_why": s.fire_why,
         "fit_best_depth_ft": s.fit.best_depth_ft,
         "fit_required_ft": s.fit.required_ft,
         "fit_across_ft": s.fit.across_ft,
@@ -3293,10 +3417,9 @@ def _init_worker(
     _WORKER["relief"] = relief_mod.load_policy()
     _WORKER["step_deg"] = step_deg
     _WORKER["corridors"] = load_corridor_maps(sources) if sources is not None else ()
+    street_edges = load_street_edges(curbs) if curbs is not None and roads is not None else None
     _WORKER["roads"] = (
-        (*load_truck_roads(roads), load_street_edges(curbs) if curbs is not None else None)
-        if roads is not None
-        else None
+        (*load_truck_roads(roads, street_edges), street_edges) if roads is not None else None
     )
     _WORKER["terrain"] = terrain_at(dem) if dem is not None else None
 
@@ -3579,7 +3702,9 @@ def run(
 
     Parts are written as they finish (``parts/NNNNN.parquet``) and
     concatenated at the end, so a run that dies at hour three keeps its
-    first three hours. Re-running with the same ``out`` starts over.
+    first three hours. Re-running with the same ``out`` starts over, but
+    for the lots ``cache`` holds -- and the command keeps one by default,
+    so a re-launch resumes (FOLLOWUPS 48).
     ``sources`` is a snapshot directory (``data/flats/sources/<date>``) whose
     corridor maps answer the corridor facts; without it they stay unasked.
     ``transit`` is the distance file :mod:`flats.ingest.transit` wrote for
@@ -3770,9 +3895,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument(
         "--cache",
         type=Path,
-        help="answer cache dir: unchanged lots are read from it, screened lots kept in it",
+        help="answer cache dir: unchanged lots are read from it, screened lots kept in it, so a "
+        "re-launch resumes (default: bridge_cache beside --out)",
     )
+    ap.add_argument("--no-cache", action="store_true", help="screen every lot afresh and keep no answers")
     args = ap.parse_args(argv)
+    # A run that dies resumes when it is launched again, by default: every
+    # chunk it finished is in the cache (FOLLOWUPS 48, Steph 2026-10-07:
+    # "Don't want to lose time to avoidable problems"). Beside --out, runs
+    # in one directory share it -- on 137 that is /root/bridge_cache.
+    cache = None if args.no_cache else args.cache or args.out.resolve().parent / "bridge_cache"
     run(
         args.out,
         s4=args.s4,
@@ -3793,7 +3925,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         dem=args.dem,
         curbs=args.curbs,
         institutional=args.institutional,
-        cache=args.cache,
+        cache=cache,
     )
     return 0
 

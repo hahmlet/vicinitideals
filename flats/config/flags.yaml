@@ -198,6 +198,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [STREET_UNCONFIRMED]
+  ACCESS-STREET-RANK-UNKNOWN:
+    description: "A corner lot's parking works off one street but not the other, and a street line has no class: nothing says the street that works is the quieter one the code sends the driveway to (Steph 2026-10-09: \"yellow, then measure\")"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Rank the unranked street from a second source (a county road centreline, OpenStreetMap, or the street gap in the taxlot fabric)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [STREET_RANK_UNKNOWN]
   PARKING-STRIP-UNCONFIRMED:
     description: "The plan fits only without the planted strip the city keeps between parking and the lot lines; whether a townhome project owes it is open"
     kind: categorical
@@ -955,6 +970,21 @@ types:
     scope: shared
     key: [jurisdiction, fact]
     path: "Our own measure from the street layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ROCKWOOD-DESIGN-DISTRICT:
+    description: "Whether the lot lies inside the Rockwood Design District"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Our own measure from the city design-district layer"
     priority: later
     status: pending
     approved_by: null
