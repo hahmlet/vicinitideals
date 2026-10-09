@@ -6093,6 +6093,20 @@ drawn_areas:
       height is not encoded. Against FLATS' own lots: 13 at least 90 percent
       north (all LDR-5, all on NE Marine Dr), 26,157 at most 10 percent, none
       the line cuts.
+  rockwood_design_district:
+    condition: rockwood_design_district
+    zones: [CC, CMF, CMU, MC, MDR-12, MDR-24, OFR, RTC, SC, SC-RJ]
+    file: or/multnomah/gresham/rockwood-design-district.geojson
+    source: >-
+      City of Gresham GIS, Planning MapServer layer 11 (Design Districts),
+      the feature named Rockwood, fetched 2026-10-08 and held in EPSG:2913.
+    quote: "or/multnomah/gresham/4.0400.corridor.txt#L480"
+    cite: GDC 4.0400, 7.0512.A.2
+    note: >-
+      Inside the Rockwood Design District the front setbacks come from
+      Section 7.0512.A.2 rather than from the zone's table, and those
+      setbacks are not encoded, so a lot inside the district stays flagged.
+      A lot outside it is settled by the table and the hold lifts.
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.

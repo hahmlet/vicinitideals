@@ -830,6 +830,21 @@ _C: tuple[ConditionDef, ...] = (
         ),
         assume=None,
     ),
+    ConditionDef(
+        "rockwood_design_district",
+        "site_fact",
+        "The lot lies inside Gresham's Rockwood Design District. There the "
+        "front setbacks come from Section 7.0512.A.2 rather than from the "
+        "zone's own table (Table 4.0400, line 480). The district is a layer "
+        "the city publishes apart from its zoning (Planning MapServer layer "
+        "11, Design Districts, Name = Rockwood), so a lot outside it is "
+        "settled by the zone's table and a lot inside it keeps the hold.",
+        evidence=(
+            "Gresham's Design Districts layer, Name = Rockwood -- held as "
+            "Gresham's drawn_areas"
+        ),
+        assume=None,
+    ),
     # --- design facts: true of the building, not of the parcel ---------
     ConditionDef(
         "multi_story",
@@ -1055,6 +1070,7 @@ PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
 DRAWN_CONDITIONS: tuple[str, ...] = (
     "inside_mapped_use_area",
     "north_of_marine_drive",
+    "rockwood_design_district",
     "willamette_historic_district",
 )
 

@@ -865,111 +865,111 @@
   "or/multnomah/gresham": {
     "CC": {
       "max_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "max_height_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_frontage_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_lot_sqft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "parking_min_per_unit": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_max_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_rear_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_street_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ]
     },
     "CMF": {
       "max_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "max_height_ft": [
-        "civic_corridor",
-        "north_of_marine_drive"
+        "north_of_marine_drive",
+        "rockwood_design_district"
       ],
       "min_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_frontage_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_lot_sqft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "parking_min_per_unit": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "quadplex_allowed": [
         "civic_corridor"
       ],
       "setback_front_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_max_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_rear_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_street_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ]
     },
     "CMU": {
       "max_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "max_height_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_frontage_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_lot_sqft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "parking_min_per_unit": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_max_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_rear_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_street_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ]
     },
     "LDR-5": {
@@ -1070,37 +1070,37 @@
     },
     "MC": {
       "max_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "max_height_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_frontage_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_lot_sqft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "parking_min_per_unit": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_max_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_rear_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_street_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ]
     },
     "MDR-12": {
@@ -1128,7 +1128,7 @@
         "through_lot"
       ],
       "setback_front_max_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_garage_entrance_ft": [
         "at_street_end",
@@ -1176,7 +1176,7 @@
         "through_lot"
       ],
       "setback_front_max_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_garage_entrance_ft": [
         "at_street_end",
@@ -1230,7 +1230,7 @@
         "through_lot"
       ],
       "setback_front_max_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_garage_entrance_ft": [
         "at_street_end",
@@ -1255,107 +1255,107 @@
     },
     "RTC": {
       "max_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "max_height_stories": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_frontage_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_lot_sqft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "parking_min_per_unit": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_max_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_rear_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_street_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ]
     },
     "SC": {
       "max_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "max_height_stories": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_frontage_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_lot_sqft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "parking_min_per_unit": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_max_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_rear_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_street_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ]
     },
     "SC-RJ": {
       "max_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "max_height_stories": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_density_du_per_acre": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_frontage_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "min_lot_sqft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "parking_min_per_unit": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_front_max_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_rear_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ],
       "setback_street_side_ft": [
-        "civic_corridor"
+        "rockwood_design_district"
       ]
     },
     "TLDR": {
