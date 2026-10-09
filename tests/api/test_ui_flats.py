@@ -3071,6 +3071,17 @@ async def test_institutional_land_is_said_in_words() -> None:
     assert _CHECK_WORDS["institutional_share"].startswith("institutional land")
 
 
+async def test_county_roll_red_is_said_in_words() -> None:
+    """FOLLOWUPS 59: a tract, public land or a $0 parcel reads as the county roll's doing."""
+    from app.api.routers.ui_flats import _CHECK_WORDS, _REASON_WORDS, _said_reason
+    from flats.ingest.institutional import ROLL_RED
+
+    assert ROLL_RED in _REASON_WORDS
+    said = _said_reason(ROLL_RED)
+    assert "left out of the scan" in said and "churches" in said
+    assert _CHECK_WORDS["roll_red"].startswith("the county")
+
+
 async def test_a_lot_too_small_for_the_pod_is_said_in_words() -> None:
     """FOLLOWUPS 52: red by arithmetic names its proof in plain words."""
     from app.api.routers.ui_flats import _CHECK_WORDS, _REASON_WORDS

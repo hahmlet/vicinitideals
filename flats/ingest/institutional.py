@@ -40,6 +40,8 @@ INSTITUTIONAL = "institutional.parquet"
 META = "institutional.json"
 #: The reason a lot answered this way carries (``checks.reasons``).
 INSTITUTIONAL_USE = "INSTITUTIONAL_USE"
+#: The reason on a lot the county tax roll rules out (FOLLOWUPS 59).
+ROLL_RED = "COUNTY_ROLL_RED"
 COLUMNS = ("county", "TLID", "category", "share", "source", "name", "whole_tlid")
 
 
@@ -69,8 +71,41 @@ def measure(lots: Any, land: Land) -> Any:
         for i, r in enumerate(got)
         if r is not None
     ]
-    frame = pd.DataFrame(rows, columns=list(COLUMNS[:-1]))
-    every = Counter(tlids.tolist())
+    return mark_whole(pd.DataFrame(rows, columns=list(COLUMNS[:-1])), tlids)
+
+
+ROLL_COLUMNS = ("county", "tlid", "PROP_CODE", "LANDVAL", "BLDGVAL", "TOTALVAL", "ASSESSVAL", "site_address", "YEARBUILT", "wkb")
+
+
+def measure_roll(lots: Any, taken: set[tuple[str, str]] | None = None) -> Any:
+    """The rows the county tax roll rules out (FOLLOWUPS 59), same columns as
+    :func:`measure`. ``lots`` carries :data:`ROLL_COLUMNS`; a lot the map
+    reading already holds (``taken``: ``(county, TLID)``) keeps that reading.
+    """
+    import pandas as pd
+
+    from flats.geom.roll import built_lots
+    from flats.geom.roll import load_rules as roll_rules
+    from flats.geom.roll import read as roll_read
+
+    rules = roll_rules()
+    taken = taken or set()
+    rows = []
+    records = lots.astype(object).where(lots.notna(), None).to_dict("records")
+    built = built_lots(records, rules)
+    for rec in records:
+        key = (str(rec["county"]), str(rec["tlid"]).rstrip())
+        if key in taken:
+            continue
+        got = roll_read(rec, rules, built)
+        if got is not None:
+            rows.append({"county": key[0], "TLID": key[1], **got})
+    return pd.DataFrame(rows, columns=list(COLUMNS[:-1]))
+
+
+def mark_whole(frame: Any, tlids: Any) -> Any:
+    """Set ``whole_tlid``: True when every lot under that TLID is in ``frame``."""
+    every = Counter(str(t).rstrip() for t in tlids)
     taken = Counter(frame["TLID"].tolist())
     frame["whole_tlid"] = [taken[t] == every[t] for t in frame["TLID"]]
     return frame
@@ -127,6 +162,13 @@ def run(lots_path: Path, sources: Path, out: Path, *, log: Callable[[str], None]
         lots["county"] = pd.read_parquet(lots_path, columns=["county"])["county"].to_numpy()
     lots = lots.rename(columns={"TLID": "tlid"})
     frame = measure(lots, land)
+    import pyarrow.parquet as pq
+
+    names = set(pq.read_schema(lots_path).names)
+    roll_lots = pd.read_parquet(lots_path, columns=[c for c in ROLL_COLUMNS if c in names])
+    roll = measure_roll(roll_lots, set(zip(frame["county"], frame["TLID"])))
+    frame = pd.concat([frame.drop(columns="whole_tlid"), roll], ignore_index=True)
+    frame = mark_whole(frame, lots["tlid"])
     out.mkdir(parents=True, exist_ok=True)
     frame.to_parquet(out / INSTITUTIONAL, index=False)
     manifest = sources / "manifest.json"
@@ -134,6 +176,7 @@ def run(lots_path: Path, sources: Path, out: Path, *, log: Callable[[str], None]
     meta = {
         "lots": int(len(lots)),
         "institutional": int(len(frame)),
+        "roll": int(frame["category"].astype(str).str.startswith("roll_").sum()),
         "by_category": {k: int(v) for k, v in sorted(Counter(frame["category"]).items())},
         "by_county": {k: int(v) for k, v in sorted(Counter(frame["county"]).items())},
         "tlids_not_whole": int((~frame["whole_tlid"].astype(bool)).sum()),
