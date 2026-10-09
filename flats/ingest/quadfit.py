@@ -160,6 +160,7 @@ from flats.score.paper import (
 from flats.score.screen import (
     COURT_SHAPED,
     STEEP_GROUND,
+    STREET_RANK_UNKNOWN,
     STREET_UNCONFIRMED,
     STRIP_FIELD,
     LotFacts,
@@ -1871,6 +1872,51 @@ def _street_unconfirmed(s: Screening) -> Screening:
     return dataclasses.replace(s, triage=triage, reasons=reasons, flags=flags)
 
 
+def _rank_unknown(s: Screened) -> Screened:
+    """``s`` as a question (:data:`~flats.score.screen.STREET_RANK_UNKNOWN`):
+    a corner lot whose parking works off the street the measured plan chose
+    and misses off the other, where nothing ranks one of its streets. Never
+    applied to a red lot: the miss stands on either street."""
+
+    def ask(x: Screening) -> Screening:
+        reasons = x.reasons if STREET_RANK_UNKNOWN in x.reasons else (*x.reasons, STREET_RANK_UNKNOWN)
+        triage = x.triage if _WORSE[x.triage] >= _WORSE[Triage.unknown] else Triage.unknown
+        flags = x.flags
+        if not any(f.code == "ACCESS-STREET-RANK-UNKNOWN" for f in flags):
+            flags = (
+                *flags,
+                flag_plan.Flag("ACCESS-STREET-RANK-UNKNOWN", flag_plan.LOT, STREET_RANK_UNKNOWN),
+            )
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    if s.signed.colour is flag_plan.Colour.red:
+        return s
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
+def _pick_access(by_access: Sequence[tuple[Any, tuple[Screened, Any]]]) -> tuple[Any, Any, bool]:
+    """The way in a corner plan is answered on: ``(access, shot, asked)``.
+
+    ``by_access`` is the measured access first, then (where a street has no
+    class) the driveway off the other street. The worse answer is kept, so
+    an unmeasured fact takes its worst case -- except a RED that only the
+    unranked street brings: the measured plan stands as a closer look,
+    ``asked`` (Steph 2026-10-09: "yellow, then measure"). Only a plan that
+    turns the colour or the triage worse replaces the measured one: a tie
+    keeps it, so its drawing (and the flags that drawing owes) stands.
+    """
+    used, shot = max(by_access, key=lambda v: _front_rank(v[1][0])[:3])
+    if (
+        len(by_access) == 2
+        and used is not by_access[0][0]
+        and shot[0].signed.colour is flag_plan.Colour.red
+        and by_access[0][1][0].signed.colour is not flag_plan.Colour.red
+    ):
+        used, shot = by_access[0]
+        return used, shot, True
+    return used, shot, False
+
+
 def _worse(first: Screened, second: Screened) -> Screened:
     """The worse of one design's two readings (:func:`drive_reading`).
 
@@ -2317,6 +2363,7 @@ def _screen_lot_once(
                 plans = [(None, lot.edges, None)]
         tried: list[tuple[Screened, Fitter]] = []
         access_log: list[dict[str, Any]] = []
+        unranked: list[bool] = []
         plain: ZoneResolution | None = None
         alleyed: ZoneResolution | None = None
         for plan_key, plan_edges, front in plans:
@@ -2372,7 +2419,8 @@ def _screen_lot_once(
             # Only a plan that turns the colour or the triage worse replaces
             # the one measured access chose: a tie keeps it, so its drawing
             # (and the flags that drawing owes) stands.
-            used, shot = max(by_access, key=lambda v: _front_rank(v[1][0])[:3])
+            used, shot, asked = _pick_access(by_access)
+            unranked.append(asked)
             if front is not None:
                 access_log.append(access_record(got, used, plan_edges, front))
             tried.append(shot)
@@ -2384,10 +2432,11 @@ def _screen_lot_once(
             won, fitter = max(tried, key=lambda t: (*_front_rank(t[0]), -_env_sqft(t[0])))
         else:
             won, fitter = min(tried, key=lambda t: _front_rank(t[0]))
+        ask_rank = unranked[next(i for i, t in enumerate(tried) if t[0] is won)]
         if access_log and len(access_log) == len(tried):
             won = dataclasses.replace(won, access=_access_won(access_log, tried, won))
         if fit_only:
-            out.append(won)
+            out.append(_rank_unknown(won) if ask_rank else won)
             continue
         won = dataclasses.replace(won, drawing=drawing_for(won, fitter))
         won = fire_checked(won, lot, roads, policy=policy, relief=relief, fitter=fitter)
@@ -2418,7 +2467,7 @@ def _screen_lot_once(
             won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
             roads=roads, bound=bound, terrain=terrain,
         )
-        out.append(won)
+        out.append(_rank_unknown(won) if ask_rank else won)
     return out
 
 

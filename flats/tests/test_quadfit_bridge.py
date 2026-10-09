@@ -1669,3 +1669,36 @@ def test_the_elevation_defaults_to_the_stage_trees_own_tiles(tmp_path):
     assert _default_dem(s4) == july  # an empty dem/ is not a tile set
     (s4.parent / "raw" / "dem" / "tile.tif").write_bytes(b"")
     assert _default_dem(s4) == s4.parent / "raw"
+
+
+def test_a_miss_only_off_the_unranked_street_is_a_closer_look_not_a_miss(corpus, policies) -> None:
+    # Steph 2026-10-09: "yellow, then measure." A corner lot whose parking
+    # works off the street the measured plan chose and misses off the other,
+    # where a street has no class, asks the question instead of failing.
+    from flats.ingest.quadfit import _pick_access, _rank_unknown
+
+    def shot(r):
+        lot = lot_from_row(r, corpus.layers)
+        (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+        return s
+
+    miss = shot(row(zone="R5", lot_wkb=shapely.to_wkb(shapely.box(X0, Y0, X0 + 18, Y0 + 18))))
+    clean = dataclasses.replace(miss.signed, triage=Triage.green, binds=(), flags=(), reasons=())
+    ok = dataclasses.replace(miss, screening=clean, signed=clean)
+    red, green = ok.signed.colour.__class__.red, ok.signed.colour.__class__.green
+    assert ok.signed.colour is green and miss.signed.colour is red
+
+    # A miss off the other street only: the measured plan stands, asked.
+    used, kept, asked = _pick_access([("side", (ok, None)), ("front", (miss, None))])
+    assert (used, kept[0], asked) == ("side", ok, True)
+    asked_ok = _rank_unknown(ok)
+    assert asked_ok.signed.colour.value == "yellow"
+    assert "STREET_RANK_UNKNOWN" in asked_ok.signed.reasons
+    assert any(f.code == "ACCESS-STREET-RANK-UNKNOWN" for f in asked_ok.signed.flags)
+    assert _rank_unknown(asked_ok).signed.flags == asked_ok.signed.flags
+    # The measured plan itself a miss: red stands on either street.
+    assert _pick_access([("side", (miss, None)), ("front", (miss, None))])[2] is False
+    assert _rank_unknown(miss) is miss
+    # Both ways fine, or the street ranked (one reading): nothing to ask.
+    assert _pick_access([("side", (ok, None)), ("front", (ok, None))])[2] is False
+    assert _pick_access([("side", (ok, None))]) == ("side", (ok, None), False)
