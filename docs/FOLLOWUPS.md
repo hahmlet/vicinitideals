@@ -1933,7 +1933,7 @@ read when the weekly full re-screen lands.
    repo copy `scripts/deploy-vicinitideals.sh` (they differ: the live one
    uses STACK_DIR). App-side, not FLATS.
 58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08;
-   first pass DONE c98be01d 2026-10-09).** Run 67 best-pod yellows held by a
+   first pass DONE c98be01d 2026-10-09; LIVE in run 69).** Run 67 best-pod yellows held by a
    single flag: FACT-AT-STREET-END 633, ACCESS-STREET-UNCONFIRMED 359,
    MEASURE-FIRE-ROUTE 334, FACT-CIVIC-CORRIDOR 141, PARKING-STRIP-UNCONFIRMED
    97. MEASURED: MEASURE-FIRE-ROUTE (paved type-2000 streets now count as
@@ -1991,6 +1991,29 @@ read when the weekly full re-screen lands.
    classified road within 300 ft = local" (relaxes the two-source rule). Then
    bound over the 852 rows (`/root/fo/scope_yellow.txt`), read every lot that
    turns green.
+   OSM position pass + dig into the empty edges (2026-10-09, read-only,
+   scripts `/root/fo/osm_match4.py`, `osm_dig.py`; not wired into the screen).
+   Matching each unranked street edge to the nearest OSM way within 60 ft
+   that runs alongside it (within 25 degrees) gives, over the 634 lots: 151
+   lots with EVERY unranked edge on a residential-or-above way; 13 lots with
+   an arterial or collector edge; 23 with an edge that has only a service
+   way; 466 with an edge that has no OSM way (874 edges); 15 with an edge
+   reading mixed classes. THE 874 EMPTY EDGES ARE REAL STREETS: 855 are
+   street edges (RLIS minor residential, TYPE 1500, within 50 ft) and 19 are
+   private drives (TYPE 1700/1800, on 10 lots); 867 of 874 have an OSM way
+   within 60 ft (848 residential, 5 secondary, 2 tertiary, 19 service) at
+   the same distance as the RLIS line. They failed only the alongside test:
+   532 are under 25 ft long (241 under 10 ft), short side edges or chords of
+   a bend that run toward the street, not along it. Across them: 729 right-
+   of-way, 80 gap in the fabric, 65 another lot. Without the alongside test,
+   448 of the 466 lots have residential-or-above OSM on every empty edge (an
+   upper bound: their other edges' service/mixed readings are not applied);
+   Kinnaman Rd, West Union Rd, Oleson Rd and NW 143rd Ave touch 6 of the
+   lots with secondary/tertiary. BIGGER FINDING, NOT VERIFIED: only 556 of
+   the 634 yellow lots have two street edges of 25 ft or more; 68 have one
+   and 10 have none, so ~78 may not be real corners (cul-de-sac or curved
+   fronts whose short chords counted as a second street) and their yellow
+   may be wrong. Read those 78 before any ranking rule is wired.
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
