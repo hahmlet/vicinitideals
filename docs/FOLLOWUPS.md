@@ -2551,3 +2551,15 @@ read when the weekly full re-screen lands.
    STEPH 2026-10-10: PARKED for later -- "eventually we will need to encode and design for this
    list" (all eight criteria). Do not start without Steph; raise it again when the pod design
    ratings exist or the market moves beyond the metro.
+73. [scan: NO (citations move, answers must not)] **The code library as a public, structured repository
+   (Steph 2026-10-10, thinking only -- "Don't begin work").** Today: 397 text files, 23 MB, 25
+   jurisdictions under flats/provenance/docs, each with .meta.json (url, retrieved, sha256,
+   extractor) and .pages.json; rules cite them 6,668 times by LINE (`file.txt#L1066-L1068`) and 641
+   times by anchor; every cite also carries a human section string ("OCMC 16.12.035.F").
+   Proposal offered: (1) STRUCTURE first -- rebuild each code as a tree of sections addressed
+   by its own numbering (16.12.035.F), line WITHIN the section as the sub-address, tables by
+   row/column; translate every citation mechanically (match the quoted text, refuse any that does
+   not match; flats/provenance/repoint.py is the starting point); pilot one city. (2) HOSTING
+   second -- its own GitHub repo, our apps read it as a dependency; git history doubles as the
+   code-change watch (item 54). Open for Steph: public or private; publisher terms (Municode
+   etc.) before going public; keep rulings/encoding private either way.
