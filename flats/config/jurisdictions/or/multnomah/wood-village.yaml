@@ -393,6 +393,8 @@ definitions:
     test: intersecting_frontages
     count: 2
     curve_at_or_below_deg: 120.0
+    # Same wording and same total-turn reading as Portland (see portland.yaml
+    # corner_lot): the per-bend reading is the alternative.
     curve_by: tangent
     drives_count: true
     quote: "or/multnomah/wood-village/720.030.definitions.txt#L250"
