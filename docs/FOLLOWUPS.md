@@ -2573,3 +2573,10 @@ read when the weekly full re-screen lands.
    rule signatures (5 verified, 13 unclear, none drained) and 244 page checks exist, carried over
    where the words match, re-queued where not. The map shows as-if-signed colours, so pausing
    signing costs the map nothing. Still not started.
+   STEPH 2026-10-10: do NOT start before Tuesday 2026-10-13 (weekly usage). LICENCE: Steph
+   withholds zero rights to the municipal-code portion -> CC0 1.0 (public-domain dedication,
+   with its fallback licence where dedication is not recognised) on the text, structure and
+   metadata, plus an "unofficial copy, not legal advice, check the city" notice. Tooling code
+   licensed separately, Steph to pick. PRIORITY (recommended): after the weekly scan settles,
+   ahead of new cities and the signing push; false-GREEN fixes carry on beside it; freeze edits
+   to the code text and citations while each city is being converted.
