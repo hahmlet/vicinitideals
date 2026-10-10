@@ -2497,3 +2497,22 @@ read when the weekly full re-screen lands.
    weekly (~2026-10-14). Open for Steph only if a Type II review on clear and objective
    criteria should count as by-right (then all 17 zones come back).
    MERGED 84f215f8 2026-10-10 (code live, map moves at the weekly).
+71. [scan: NO unless it finds a siting rule] **Building-code editions (Steph 2026-10-10: "ORSC 2026
+   came into effect 10/1/2026 -- is our app built on that or the previous version?").** The screen
+   reads NO building code for pass/fail: it is zoning + fire access (OFC 2022, _state.yaml) +
+   the OSSC 2025 accessibility chain (HUMAN_TODO ~L465, ENCODING_RULEBOOK 2026-09-03). ORSC appears
+   only as the 2023 edition in that note ("2026 edition expected 2026-10-01") and as a dismissed
+   fire-flow cross-reference (_state.yaml "302.5"). Offered: an edition check -- confirm the ORSC
+   2026 base (IRC 2024?) and its Oregon amendments for anything that changes WHERE the pod may sit
+   (exterior-wall distance to a lot line R302.1, townhouse definition/limits, R302.2), confirm the
+   fire code edition in force (is OFC 2022 still current?), update the notes; a siting change gets
+   its own item.
+72. [scan: NO] **Oregon Explorer statewide zoning viewer (Steph 2026-10-10 link,
+   oregon-explorer.apps.geocortex.com ...app=6244abbf93e54b88a13a17b6cb6b9b37).** Not opened: the
+   browser tool was offline and the app item is not public on ArcGIS Online. The DLCD statewide
+   zoning layer reachable as data (services8 .../Zoning/FeatureServer, item 72416393747c...) holds
+   per polygon: local zone code + name, a statewide standard class (orZCode/orZDesc), a link to the
+   code (codeRef), an effective date and the owner -- NO setbacks/heights/lot sizes. Use: a
+   zoning map for cities beyond the 3 counties (all-Oregon market), the codeRef link to fetch each
+   code, effDate as a change watch (item 54). Not a replacement for reading the codes. Waiting on
+   Steph to say what the viewer shows (or reconnect Chrome).
