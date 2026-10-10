@@ -1768,7 +1768,12 @@ read when the weekly full re-screen lands.
    147,262. Drift 69 -> 70: 2,067 answers moved, 0 unexplained. prune
    retired 65 (kept 67/69/70); VACUUM FULL DONE (lot_results 8 GB, 26 GB
    free). NEXT SPLICE BASE: /root/bridge_spliced_2026-10-10_49k with s4/s5o
-   /root/js/Qn (twins) and assign inputs /root/js/Qn + /root/zg/Nn.
+   /root/js/Qn (twins) and assign inputs /root/js/Qn + /root/zg/Nn;
+   bridge `--sources /root/js/snap_osm` (moved from /root/fo). 137 CLEANED
+   2026-10-10 (Steph asked): every other scratch dir and worktree under
+   /root is gone (names in /root/cleanup_2026-10-10/deleted.txt), so
+   /root/fo, /root/tr, /root/wk*, /root/s57, /root/s49j paths quoted in
+   older items no longer exist; 58 -> 36 GB used.
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
@@ -2034,7 +2039,9 @@ read when the weekly full re-screen lands.
    real one. Fix: wait (up to ~2 min) for the api container's healthcheck
    to read `healthy` before the smoke, in BOTH the live script and the
    repo copy `scripts/deploy-vicinitideals.sh` (they differ: the live one
-   uses STACK_DIR). App-side, not FLATS.
+   uses STACK_DIR). App-side, not FLATS. AGENT INSTRUCTIONS GIVEN
+   2026-10-10 ("deploy-smoke-wait"; branch only, coordinator applies the
+   live script).
 58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08;
    first pass DONE c98be01d 2026-10-09; LIVE in run 69).** Run 67 best-pod yellows held by a
    single flag: FACT-AT-STREET-END 633, ACCESS-STREET-UNCONFIRMED 359,
@@ -2212,7 +2219,8 @@ read when the weekly full re-screen lands.
    + Content-Length on it; no .md5 beside the shp ZIP) -- record the dated
    name as the release and compare it. Geofabrik publishes daily, so the
    check will always say "new"; the point is the manifest names the
-   extract a run read.
+   extract a run read. AGENT INSTRUCTIONS GIVEN 2026-10-10
+   ("osm-release-name"; must land before the ~2026-10-14 weekly acquire).
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
@@ -2339,6 +2347,7 @@ read when the weekly full re-screen lands.
    place. Stopping signal to propose to Steph: a week whose fixes move < ~0.5% of greens
    and find no new kind of problem -> switch from hunting to maintenance (code-change
    watch, item 54) + onboarding new territory. Steph to decide whether to run it.
+   AGENT INSTRUCTIONS GIVEN 2026-10-10 ("false-green-sample", first round on run 70).
 65. [scan: YES (a proof run: every answer must come out identical to 137's)] **The Windows PC
    as an idle-time scan helper (Steph 2026-10-09 asked; offered, not started).** Scans are
    CPU-bound (item 46: >14 processes buy nothing on 137; memory only sets how many run at
