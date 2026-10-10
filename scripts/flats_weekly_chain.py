@@ -14,6 +14,12 @@ someone looked, and a missing input surfaced hours in. This one:
 * **marks each step done** (``<state>/<step>.done``), so launching the same
   command again skips what finished; the bridge itself resumes from its
   answer cache, so a bridge that died at hour five loses minutes, not hours.
+* **checks what a kept step left** before the step that reads it (``gate``):
+  the bridge wants a column in ``s5o_lots.parquet`` for every overlay quadfit's
+  config declares, and the institutional and assign steps want the county-roll
+  columns in the lot table. A step kept by ``--from`` from older code -- the
+  2026-10-07 weekly's s5o lacks the ten ``*_site`` water flags (FOLLOWUPS 50)
+  -- would otherwise be read as "no flag here", a false GREEN, with nothing said.
 * **restarts a step that died for a passing reason**: killed by a signal (the
   kernel's OOM killer), a lot that killed its worker twice (with half the
   processes), or a stall -- no CPU used by the step's processes for
@@ -74,6 +80,8 @@ MEMORY_WORDS = ("killed its worker again",)
 #: Read from the snapshot by the institutional-land step (FOLLOWUPS 47).
 INSTITUTIONAL_KEYS = ("osm_land_use", "rlis_orca")
 FEWEST_PROCESSES = 2
+#: The overlays quadfit's s5o writes an ``ovl_<key>`` column for, one per entry.
+OVERLAYS = REPO_ROOT / "Lot Analysis" / "quadfit" / "config" / "overlays.yaml"
 
 
 def _now() -> str:
@@ -158,6 +166,54 @@ class Chain:
             return [py, "scripts/flats_load_bridge.py", "export", "--run-dir", str(self.work / f"assign_{self.tag}"),
                     "--out", str(self.work / f"bundle_{self.tag}")], {}
         raise ValueError(f"no step {step!r}")
+
+    def gate(self, step: str) -> list[str]:
+        """Reasons not to start ``step`` on what the steps before it left."""
+        if step == "bridge":
+            return overlay_problems(self.quadfit / "s5o_lots.parquet")
+        if step in ("institutional", "assign"):
+            return roll_problems(self.flats("normalized") / "lots.parquet")
+        return []
+
+
+# --- gates: what a kept step left -----------------------------------------------------
+
+
+def overlay_problems(s5o: Path, overlays: Path = OVERLAYS) -> list[str]:
+    """``s5o`` holds an ``ovl_<key>`` column for every overlay ``overlays``
+    declares. The bridge reads a missing one as "not on this lot": an s5o
+    from older code, or one that skipped a raw layer it could not find
+    (it only prints that), passes the lot with nothing said."""
+    import pyarrow.parquet as pq
+    import yaml
+
+    if not s5o.is_file():
+        return [f"{s5o}: no s5o file -- run from quadfit (--from quadfit)"]
+    have = set(pq.read_schema(s5o).names)
+    keys = [o["key"] for o in yaml.safe_load(overlays.read_text(encoding="utf-8"))["overlays"]]
+    missing = [k for k in keys if f"ovl_{k}" not in have]
+    if not missing:
+        return []
+    return [f"{s5o}: no column for {len(missing)} of the {len(keys)} overlays quadfit's config declares "
+            f"({', '.join(missing)}) -- an s5o from older code, or a raw layer s5o skipped; "
+            "run from quadfit (--from quadfit)"]
+
+
+def roll_problems(lots: Path) -> list[str]:
+    """The lot table holds every county-roll column the roll rule reads
+    (FOLLOWUPS 59). Both readers take the columns the table has, so a missing
+    one leaves public land, tracts and $0 parcels screened, with nothing said."""
+    import pyarrow.parquet as pq
+
+    from flats.ingest.institutional import ROLL_COLUMNS
+
+    if not lots.is_file():
+        return [f"{lots}: no lot table -- run from normalize (--from normalize)"]
+    missing = [c for c in ROLL_COLUMNS if c not in set(pq.read_schema(lots).names)]
+    if not missing:
+        return []
+    return [f"{lots}: no county-roll column {', '.join(missing)} -- the roll rule cannot read it; "
+            "run from normalize (--from normalize)"]
 
 
 # --- preflight ------------------------------------------------------------------------
@@ -484,8 +540,12 @@ def _same_commit(a: str, b: str) -> bool:
 
 def run_chain(chain: Chain, *, sha: str, state: Path, processes: int, tries: int, start_from: str | None,
               status: Status, stall_minutes: float, stall_cpu: float, poll: float = 15.0,
-              command: Callable[[str, int], tuple[list[str], dict[str, str]]] | None = None) -> int:
-    """Run every step not yet marked done; 0 when the chain finished."""
+              command: Callable[[str, int], tuple[list[str], dict[str, str]]] | None = None,
+              gate: Callable[[str], list[str]] | None = None) -> int:
+    """Run every step not yet marked done; 0 when the chain finished.
+
+    ``gate`` (``Chain.gate`` from the command line) names what is wrong with
+    a step's inputs before it starts; anything named refuses the run there."""
     command = command or chain.command
     state.mkdir(parents=True, exist_ok=True)
     if start_from:
@@ -513,6 +573,11 @@ def run_chain(chain: Chain, *, sha: str, state: Path, processes: int, tries: int
         if step in marks:
             say(f"{step}: done at {marks[step]['finished_at']}, skipped")
             continue
+        if gate and (problems := gate(step)):
+            final = f"REFUSED before {step}: " + "; ".join(problems)
+            say(final)
+            status.set(step=None, final=final)
+            return 2
         p, log = processes, state / f"{step}.log"
         for n in range(1, tries + 1):
             argv, env = command(step, p)
@@ -617,7 +682,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     os.environ.update(PYTHONIOENCODING="utf-8", PYTHONUNBUFFERED="1", OPENBLAS_NUM_THREADS="1")
     return run_chain(chain, sha=sha, state=state, processes=args.processes, tries=args.tries,
                      start_from=args.start_from, status=status, stall_minutes=args.stall_minutes,
-                     stall_cpu=args.stall_cpu_seconds)
+                     stall_cpu=args.stall_cpu_seconds, gate=chain.gate)
 
 
 if __name__ == "__main__":

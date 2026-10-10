@@ -122,6 +122,14 @@ cd /root/code/vicinitideals && nohup flock -o /root/heavy.lock   .venv/bin/pytho
   `/root/bridge_cache`. Steps finished at another commit are refused until
   `--from STEP` says which step the change touches: that step and every
   later one run again, and the earlier ones are kept for the new commit.
+- **It checks what a kept step left** before the step that reads it, and
+  stops with `REFUSED before <step>` naming the fix: the bridge wants an
+  `ovl_<key>` column in `s5o_lots.parquet` for every overlay in quadfit's
+  `overlays.yaml` (`--from quadfit`), and the institutional and assign steps
+  want every county-roll column FOLLOWUPS 59 reads in the lot table
+  (`--from normalize`). A missing column used to read as "nothing here", a
+  false GREEN with nothing said: the 10-07 weekly's s5o, and the `/root/zg/Qn`
+  splice base cut from it, lack the ten `*_site` water flags (FOLLOWUPS 50).
 - **It restarts what died for a passing reason**, up to 3 tries: a step
   killed by a signal (the OOM killer), a bridge lot that killed its worker
   twice (again on half the processes, never under 2), or a step whose

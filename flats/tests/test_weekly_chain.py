@@ -165,13 +165,13 @@ def _script(wc, tmp_path: Path, plan: dict[str, list[str]]):
 
 
 def _run(wc, tmp_path: Path, plan: dict[str, list[str]], *, sha: str = "aaaaaaa1", start_from=None,
-         stall_minutes: float = 60.0, tries: int = 3) -> int:
+         stall_minutes: float = 60.0, tries: int = 3, gated: bool = False) -> int:
     chain = _chain(wc, tmp_path)
     state = tmp_path / "state"
     status = wc.Status(state / "status.txt", chain, sha, every=3600)
     return wc.run_chain(chain, sha=sha, state=state, processes=16, tries=tries, start_from=start_from,
                         status=status, stall_minutes=stall_minutes, stall_cpu=0.5, poll=0.2,
-                        command=_script(wc, tmp_path, plan))
+                        command=_script(wc, tmp_path, plan), gate=chain.gate if gated else None)
 
 
 def _ran(tmp_path: Path) -> list[str]:
@@ -234,6 +234,78 @@ def test_steps_done_at_other_code_are_not_taken_unasked(wc, tmp_path) -> None:
     # the same commit is the same commit
     assert _run(wc, tmp_path, {}, sha="bbbbbbb2c0ffee") == 0 and len(_ran(tmp_path)) == len(wc.STEPS) + 3
     assert _run(wc, tmp_path, {}, sha="ccccccc3") == 2 and _final(tmp_path).startswith("REFUSED")
+
+
+# --- gates: what a kept step left ------------------------------------------------------------
+
+
+def _overlay_keys(wc) -> list[str]:
+    import yaml
+
+    return [o["key"] for o in yaml.safe_load(wc.OVERLAYS.read_text(encoding="utf-8"))["overlays"]]
+
+
+def _parquet(path: Path, columns) -> Path:
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    pq.write_table(pa.table({c: [1] for c in columns}), path)
+    return path
+
+
+def test_the_bridge_wants_a_column_for_every_overlay_quadfit_declares(wc, tmp_path) -> None:
+    keys = _overlay_keys(wc)
+    twins = [k for k in keys if k.endswith("_site")]
+    assert twins  # FOLLOWUPS 50's water flags, the columns the 2026-10-07 weekly's s5o lacks
+    s5o = _parquet(tmp_path / "s5o_lots.parquet", ["TLID", *(f"ovl_{k}" for k in keys), *(f"ovl_{k}_sqft" for k in keys)])
+    assert wc.overlay_problems(s5o) == []
+    _parquet(s5o, ["TLID", *(f"ovl_{k}" for k in keys if k not in twins)])
+    said = wc.overlay_problems(s5o)
+    assert len(said) == 1 and f"no column for {len(twins)} of the {len(keys)} overlays" in said[0]
+    assert all(t in said[0] for t in twins) and "--from quadfit" in said[0]
+    assert "no s5o file" in wc.overlay_problems(tmp_path / "none.parquet")[0]
+
+
+def test_the_roll_rule_wants_every_county_roll_column(wc, tmp_path) -> None:
+    from flats.ingest.institutional import ROLL_COLUMNS
+
+    lots = _parquet(tmp_path / "lots.parquet", ROLL_COLUMNS)
+    assert wc.roll_problems(lots) == []
+    _parquet(lots, [c for c in ROLL_COLUMNS if c != "YEARBUILT"])
+    said = wc.roll_problems(lots)
+    assert len(said) == 1 and "no county-roll column YEARBUILT" in said[0] and "--from normalize" in said[0]
+    assert "no lot table" in wc.roll_problems(tmp_path / "none.parquet")[0]
+
+
+@pytest.mark.timeout(120)
+def test_a_measurement_kept_from_older_code_stops_the_chain_before_the_bridge(wc, tmp_path) -> None:
+    from flats.ingest.institutional import ROLL_COLUMNS
+
+    chain = _chain(wc, tmp_path)
+    keys = _overlay_keys(wc)
+    _parquet(chain.flats("normalized") / "lots.parquet", ROLL_COLUMNS)
+    s5o = _parquet(chain.quadfit / "s5o_lots.parquet", [f"ovl_{k}" for k in keys if not k.endswith("_site")])
+    assert _run(wc, tmp_path, {}, gated=True) == 2
+    before = list(wc.STEPS[:wc.STEPS.index("bridge")])
+    assert [line.split()[0] for line in _ran(tmp_path)] == before
+    assert _final(tmp_path).startswith("REFUSED before bridge: ") and "_site" in _final(tmp_path)
+    assert not (tmp_path / "state" / "bridge.done").exists()
+    # quadfit run again at this code writes the columns; the same line goes on
+    _parquet(s5o, [f"ovl_{k}" for k in keys])
+    assert _run(wc, tmp_path, {}, gated=True) == 0
+    assert [line.split()[0] for line in _ran(tmp_path)] == list(wc.STEPS)
+
+
+@pytest.mark.timeout(120)
+def test_a_lot_table_without_the_roll_stops_the_chain_before_institutional_land(wc, tmp_path) -> None:
+    from flats.ingest.institutional import ROLL_COLUMNS
+
+    chain = _chain(wc, tmp_path)
+    _parquet(chain.flats("normalized") / "lots.parquet", [c for c in ROLL_COLUMNS if c != "PROP_CODE"])
+    assert _run(wc, tmp_path, {}, gated=True) == 2
+    assert [line.split()[0] for line in _ran(tmp_path)] == ["stage", "quadfit", "normalize"]
+    assert _final(tmp_path).startswith("REFUSED before institutional: ") and "PROP_CODE" in _final(tmp_path)
 
 
 @LINUX
