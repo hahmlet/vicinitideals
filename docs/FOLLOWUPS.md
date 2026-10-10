@@ -2394,8 +2394,21 @@ read when the weekly full re-screen lands.
    feed arrives (vendor TBD, ~2 months): build so a second price source slots in ahead of the
    county value with no rework (each price carries its source + date). No scan needed: the
    county values are already loaded per lot (scripts/flats_load_bridge.py ASSESSOR; lot page
-   ui_flats.py ~3804). AGENT INSTRUCTIONS GIVEN 2026-10-10 ("price-per-unit", branch
-   flats/price-per-unit).
+   ui_flats.py ~3804). BUILT 2026-10-10 on branch flats/price-per-unit (not merged, not
+   deployed): "Price per home" column + opt-in filter (default $30,000, adjustable, with sq ft
+   per pod and roads % boxes and a cheapest-first sort) on the Lots page; a price block on
+   the lot page (pods, homes, ESTIMATE, county value, source + as-of, last sale shown but not
+   used). Colour never moves. Settings: flats/config/price.yaml. Price sources are an ordered
+   list in flats/score/price.py PRICE_SOURCES -- a paid feed goes IN FRONT with one entry.
+   SQL twin: app/services/flats_price.py (parity test tests/api/test_ui_flats_price.py).
+   Run 70 greens (49,960), per home: <= $30k 716 / $60k 9,115 / $100k 23,441 with the zone
+   density cap; 843 / 11,199 / 29,282 without. 8,727 greens lose pods to the cap. 62 greens
+   have no county value (green+yellow 4,959, mostly Washington County unincorporated 2,728).
+   Open: (a) filter is opt-in, not on by default -- Steph to say if it should start ON;
+   (b) cap reads units/acre and the townhouse-lot minimum only, on gross area; max_units and
+   net-area density not applied; (c) ~10 greens carry county values under $1 a sq ft (price
+   per home of $17-$950) -- shown as-is; (d) after deploy run
+   tests/e2e/test_flats_price.py against viciniti.deals.
 67. [scan: YES, after the weekly re-screen (a rule change; gains none, greens turn yellow or red)]
    **Washington County makes the owner hand over road land first; the fit ignores it (found
    2026-10-10 by item 64's sample, 2 of 11 WashCo greens wrong).** CDC 302-2.14 C(1) (and 303-2.14
