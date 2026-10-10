@@ -398,6 +398,39 @@ class FlatsLot(Base):
     )
 
 
+class FlatsLotPrice(Base):
+    """One lot's price inputs as plain numbers, so the Lots page can filter and
+    sort on price per home without reading the wide lot row or its JSON.
+
+    Filled by ``flats.ingest.lot_prices`` (the loader, and the backfill script
+    for a copy loaded earlier). A lot with no row, or a row with no ``amount``,
+    reads as "no price". Pods and price per home are arithmetic on these columns
+    (``app.services.flats_price``), so the pod size and road share stay adjustable.
+    """
+
+    __tablename__ = "lot_prices"
+    __table_args__ = (
+        Index("ix_flats_lot_prices_snapshot", "snapshot_id"),
+        {"schema": SCHEMA},
+    )
+
+    lot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.lots.id", ondelete="CASCADE"), primary_key=True
+    )
+    snapshot_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey(f"{SCHEMA}.snapshots.id", ondelete="CASCADE"), nullable=False
+    )
+    #: The first positive price in ``PRICE_SOURCES`` order, with its name and as-of.
+    amount: Mapped[float | None] = mapped_column(Numeric(16, 2), nullable=True)
+    source: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    as_of: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    #: Copy of ``lots.area_sqft`` so the page never joins the wide lot row.
+    area_sqft: Mapped[float | None] = mapped_column(Numeric(14, 2), nullable=True)
+    #: The zone's density limits; NULL where the zone states none.
+    cap_du_per_acre: Mapped[float | None] = mapped_column(Numeric(10, 2), nullable=True)
+    cap_unit_lot_sqft: Mapped[float | None] = mapped_column(Numeric(12, 2), nullable=True)
+
+
 class FlatsLotResult(Base):
     """The screening verdict for one lot, one design, one run.
 
