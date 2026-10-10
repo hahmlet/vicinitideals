@@ -102,6 +102,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from flats.designs.model import Design, load_catalog  # noqa: E402
 from flats.encode.port_quadfit import COUNTY, layer_id_for  # noqa: E402
+from flats.ingest import lot_prices  # noqa: E402
 from flats.ingest.checks import blocking, snapshot_checks, warnings  # noqa: E402
 from flats.rules.loader import CONFIG_ROOT as RULES_ROOT  # noqa: E402
 
@@ -1059,6 +1060,10 @@ async def load(
                 after = await conn.fetchval("SELECT count(*) FROM flats.lots WHERE snapshot_id = $1", snapshot_id)
                 report["lots_inserted"] = after - before
                 report["lots_updated"] = n_lots - (after - before)
+                # The Lots page's price filter reads these stored numbers, not the lot's JSON.
+                report["lot_prices_written"] = await lot_prices.refresh(
+                    conn, snapshot_id, lot_prices.current_caps(), run_id=run_id
+                )
 
                 # Results, the same way, joined to the lot ids just written.
                 await conn.execute(

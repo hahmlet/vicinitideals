@@ -94,6 +94,10 @@
 
   {% set base_query = "run=" ~ run.id ~ "&jurisdiction=" ~ (jurisdiction|urlencode) ~ "&zone=" ~ (zone|urlencode) ~ "&design=" ~ (design|urlencode) ~ "&q=" ~ (q|urlencode) ~ ("&ppu=1" if price_on else "") ~ "&ppu_max=" ~ price_ceiling ~ "&pod=" ~ price_pod ~ "&road=" ~ price_road ~ ("&sort=ppu" if cheapest_first else "") ~ ("&tight=1" if tight else "") %}
 
+  {% if too_slow %}
+  <div class="alert alert-warning" id="lots-too-slow">This view took too long to work out. Narrow it with a city, a zone or a colour and try again.</div>
+  {% endif %}
+
   <div id="lot-counts" class="toolbar" style="gap:18px;flex-wrap:wrap;align-items:baseline">
     <div>
       <span class="muted">Lots</span>

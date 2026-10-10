@@ -2394,21 +2394,43 @@ read when the weekly full re-screen lands.
    feed arrives (vendor TBD, ~2 months): build so a second price source slots in ahead of the
    county value with no rework (each price carries its source + date). No scan needed: the
    county values are already loaded per lot (scripts/flats_load_bridge.py ASSESSOR; lot page
-   ui_flats.py ~3804). BUILT 2026-10-10 on branch flats/price-per-unit (not merged, not
-   deployed): "Price per home" column + opt-in filter (default $30,000, adjustable, with sq ft
-   per pod and roads % boxes and a cheapest-first sort) on the Lots page; a price block on
-   the lot page (pods, homes, ESTIMATE, county value, source + as-of, last sale shown but not
-   used). Colour never moves. Settings: flats/config/price.yaml. Price sources are an ordered
-   list in flats/score/price.py PRICE_SOURCES -- a paid feed goes IN FRONT with one entry.
-   SQL twin: app/services/flats_price.py (parity test tests/api/test_ui_flats_price.py).
+   ui_flats.py ~3804). BUILT 2026-10-10 on branch flats/price-per-unit: "Price per home"
+   column + opt-in filter (default $30,000, adjustable, with sq ft per pod and roads % boxes
+   and a cheapest-first sort) on the Lots page; a price block on the lot page (pods, homes,
+   ESTIMATE, county value, source + as-of, last sale shown but not used). Colour never moves.
+   Settings: flats/config/price.yaml. Price sources are an ordered list in
+   flats/score/price.py PRICE_SOURCES -- a paid feed goes IN FRONT with one entry.
+   FIRST DEPLOY (34e1a771) HUNG PRODUCTION AND WAS REVERTED (4670491e): the filter worked the
+   price out of each lot's JSON, per row, against the wide lot table. REBUILT 2026-10-10 on
+   stored columns: table flats.lot_prices (migration 0143), one narrow row per lot: price,
+   source name, as-of, a copy of the area, the zone's two density limits (flats/ingest/
+   lot_prices.py). Pods and price per home are plain arithmetic on those columns
+   (app/services/flats_price.py; parity test tests/api/test_ui_flats_price.py), so pod size
+   and roads % stay adjustable. Filled by the bridge loader (scripts/flats_load_bridge.py,
+   only the lots a bundle writes) and by scripts/flats_backfill_lot_prices.py (a whole
+   snapshot: run it for the live copy, and again after a rule change moves a zone's density
+   limit). Page queries now run with work_mem 128MB and a 25 s statement_timeout inside a
+   savepoint; past the clock the page says "took too long" instead of hanging. The counts skip
+   the wide lot table unless a city/zone/search is set; cheapest-first takes its 50 ids off the
+   narrow tables, then fetches those lots.
+   DEPLOY ORDER: (1) deploy (runs migration 0143, table starts empty: every lot reads "no
+   price", nothing hidden); (2) `uv run python scripts/flats_backfill_lot_prices.py --snapshot
+   3 --snapshot 4` on the app box (add --dry-run first); (3) re-time green+filter+sort and
+   run tests/e2e/test_flats_price.py against viciniti.deals. The row label on the page is
+   still worked out from the lot's facts, so until step 2 a label can show a price the filter
+   does not know.
+   TIMINGS (read-only, production, run 70, snapshot 4): upper bounds only, the table cannot
+   be made read-only-safe. Best-colour aggregate 4.9 s at the default 4MB work_mem (sort
+   spilling 1.4 GB), 1.6 s at 128MB. Stand-in for the stored table (a CTE built from the
+   JSONB): filtered count 7.6-16 s, filtered+sorted 50 rows 10.6 s; 15 s of that is the cold
+   read of the wide lot table, which the stored table removes. RE-MEASURE after step 2.
    Run 70 greens (49,960), per home: <= $30k 716 / $60k 9,115 / $100k 23,441 with the zone
    density cap; 843 / 11,199 / 29,282 without. 8,727 greens lose pods to the cap. 62 greens
    have no county value (green+yellow 4,959, mostly Washington County unincorporated 2,728).
    Open: (a) filter is opt-in, not on by default -- Steph to say if it should start ON;
    (b) cap reads units/acre and the townhouse-lot minimum only, on gross area; max_units and
    net-area density not applied; (c) ~10 greens carry county values under $1 a sq ft (price
-   per home of $17-$950) -- shown as-is; (d) after deploy run
-   tests/e2e/test_flats_price.py against viciniti.deals.
+   per home of $17-$950) -- shown as-is; (d) a "value looks too low" mark -- Steph to decide.
 67. [scan: YES, after the weekly re-screen (a rule change; gains none, greens turn yellow or red)]
    **Washington County makes the owner hand over road land first; the fit ignores it (found
    2026-10-10 by item 64's sample, 2 of 11 WashCo greens wrong).** CDC 302-2.14 C(1) (and 303-2.14
@@ -2459,3 +2481,8 @@ read when the weekly full re-screen lands.
    Suspects: the per-run best-design subquery (`_best`) and the verdict/colour count over the whole
    copy on every page load. Offered to Steph: profile with EXPLAIN ANALYZE (read-only), then a
    stored best-colour per lot per run or an index, plus a statement_timeout on page queries.
+   FINDING 2026-10-10: `_best` is the cost. At the default 4MB work_mem it sort-aggregates the
+   run's lot_results (about 1.4 GB spilled to disk): 4.9 s warm, 15 s+ under load; at 128MB it
+   hash-aggregates in 1.6 s. The price rebuild (item 66) now sets work_mem 128MB and a 25 s
+   statement_timeout for the Lots page queries only; if the page is still slow after that, the
+   next step is a stored best-colour per lot per run, filled by the loader.

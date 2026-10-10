@@ -48,7 +48,8 @@ from urllib.parse import quote
 
 from fastapi import APIRouter, Form, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
-from sqlalchemy import case, func, or_, select
+from sqlalchemy import case, func, or_, select, text
+from sqlalchemy.exc import DBAPIError
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
@@ -57,6 +58,7 @@ from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templa
 from app.models.flats import (
     FlatsCrossrefRuling,
     FlatsLot,
+    FlatsLotPrice,
     FlatsLotResult,
     FlatsReadingRuling,
     FlatsReviewDecision,
@@ -3112,9 +3114,10 @@ def _rank(column: Any) -> Any:
     return case(*[(column == c, i) for i, c in enumerate(_COLOURS)], else_=len(_COLOURS))
 
 
-def _best(run_id: int, design: str | None) -> Any:
+def _best(run_id: int, design: str | None, lot_ids: Sequence[int] | None = None) -> Any:
     """One row per lot: the lowest verdict rank and the lowest colour rank
-    across the run's designs (or the one design asked for)."""
+    across the run's designs (or the one design asked for). ``lot_ids`` limits
+    it to a page's lots, so the aggregate does not run over the whole run."""
     result = FlatsLotResult
     colour = _colour_column()
     stmt = select(
@@ -3124,6 +3127,8 @@ def _best(run_id: int, design: str | None) -> Any:
     ).where(result.run_id == run_id)
     if design:
         stmt = stmt.where(result.design_key == design)
+    if lot_ids is not None:
+        stmt = stmt.where(result.lot_id.in_(lot_ids))
     return stmt.group_by(result.lot_id).subquery("best")
 
 
@@ -3140,6 +3145,26 @@ def _lot_conditions(jurisdiction: str, zone: str, q: str) -> list[Any]:
     return conditions
 
 
+#: The Lots page's own limits for one request: memory so the per-lot best
+#: aggregate hashes instead of spilling a gigabyte to disk, and a clock so a
+#: bad filter answers "too slow" instead of hanging the site (2026-10-10).
+_LOTS_WORK_MEM = "128MB"
+_LOTS_TIMEOUT_MS = 25_000
+
+
+async def _lots_limits(session: DBSession) -> None:
+    """Apply the Lots page limits to this request's transaction only."""
+    await session.execute(text(f"SET LOCAL work_mem = '{_LOTS_WORK_MEM}'"))
+    await session.execute(text(f"SET LOCAL statement_timeout = {_LOTS_TIMEOUT_MS}"))
+
+
+def _timed_out(exc: DBAPIError) -> bool:
+    """Whether the database stopped the query for running past the clock."""
+    orig = exc.orig
+    code = getattr(orig, "sqlstate", None) or getattr(orig, "pgcode", None)
+    return code == "57014" or "statement timeout" in str(orig)
+
+
 async def _lot_counts(
     session: DBSession,
     run_id: int,
@@ -3149,18 +3174,15 @@ async def _lot_counts(
 ) -> dict[str, dict[str, int]]:
     """How many lots wear each verdict and each signed colour under the filter."""
     best = _best(run_id, design)
-    stmt = (
-        select(best.c.verdict, best.c.colour, func.count())
-        .select_from(FlatsLot)
-        .join(best, best.c.lot_id == FlatsLot.id)
-        .where(*conditions)
-        .group_by(best.c.verdict, best.c.colour)
-    )
+    stmt = select(best.c.verdict, best.c.colour, func.count()).select_from(best)
+    if conditions:
+        stmt = stmt.join(FlatsLot, FlatsLot.id == best.c.lot_id).where(*conditions)
     if price is not None and price.get("ceiling") is not None:
-        pods = flats_price.pods_column(price["cfg"], _zone_caps(), best.c.colour)
-        stmt = stmt.where(
+        pods = flats_price.pods_column(price["cfg"], best.c.colour)
+        stmt = stmt.outerjoin(FlatsLotPrice, FlatsLotPrice.lot_id == best.c.lot_id).where(
             flats_price.within(flats_price.per_home_column(price["cfg"], pods), pods, price["ceiling"])
         )
+    stmt = stmt.group_by(best.c.verdict, best.c.colour)
     verdicts = {c: 0 for c in _COLOURS}
     colours = {c: 0 for c in _COLOURS}
     for verdict, colour, n in (await session.execute(stmt)).all():
@@ -3389,24 +3411,42 @@ async def _lot_rows(
     cheapest_first: bool = False,
 ) -> list[dict[str, Any]]:
     best = _best(run_id, design)
-    stmt = (
-        select(FlatsLot, best.c.verdict, best.c.colour)
-        .join(best, best.c.lot_id == FlatsLot.id)
-        .where(*conditions)
-    )
-    if colour in _COLOURS:
-        stmt = stmt.where(best.c.colour == _COLOURS.index(colour))
-    pods = flats_price.pods_column(price["cfg"], _zone_caps(), best.c.colour)
+    pods = flats_price.pods_column(price["cfg"], best.c.colour)
     per_home = flats_price.per_home_column(price["cfg"], pods)
-    if price.get("ceiling") is not None:
-        stmt = stmt.where(flats_price.within(per_home, pods, price["ceiling"]))
-    order = [per_home.asc().nulls_last()] if cheapest_first else []
-    stmt = (
-        stmt.order_by(*order, FlatsLot.jurisdiction, FlatsLot.tlid)
-        .offset((page - 1) * _LOTS_PAGE)
-        .limit(_LOTS_PAGE)
+    ceiling = price.get("ceiling")
+    base = select(best.c.lot_id).select_from(best)
+    if conditions or not cheapest_first:
+        base = base.join(FlatsLot, FlatsLot.id == best.c.lot_id).where(*conditions)
+    if cheapest_first or ceiling is not None:
+        base = base.outerjoin(FlatsLotPrice, FlatsLotPrice.lot_id == best.c.lot_id)
+    if colour in _COLOURS:
+        base = base.where(best.c.colour == _COLOURS.index(colour))
+    if ceiling is not None:
+        base = base.where(flats_price.within(per_home, pods, ceiling))
+    if cheapest_first:
+        # Cheapest first never reads the wide lot row to sort: the page's
+        # fifty ids come off the stored price columns, then the lots are fetched.
+        order = [per_home.asc().nulls_last(), best.c.lot_id]
+    else:
+        order = [FlatsLot.jurisdiction, FlatsLot.tlid]
+    ids_page = (
+        (await session.execute(base.order_by(*order).offset((page - 1) * _LOTS_PAGE).limit(_LOTS_PAGE)))
+        .scalars()
+        .all()
     )
-    lots = (await session.execute(stmt)).all()
+    rank = {lot_id: i for i, lot_id in enumerate(ids_page)}
+    page_best = _best(run_id, design, ids_page)
+    found_lots = (
+        (
+            await session.execute(
+                select(FlatsLot, page_best.c.verdict, page_best.c.colour)
+                .join(page_best, page_best.c.lot_id == FlatsLot.id)
+            )
+        ).all()
+        if ids_page
+        else []
+    )
+    lots = sorted(found_lots, key=lambda row: rank[row[0].id])
     by_lot: dict[int, list[dict[str, Any]]] = {}
     ids = [lot.id for lot, _, _ in lots]
     if ids:
@@ -3779,14 +3819,22 @@ async def flats_lots(
     if await _ruled_run(session, chosen.id):
         ctx["colour_words"] = _RULE_COLOUR_WORDS
         ctx["ruled"] = True
-    counts = await _lot_counts(session, chosen.id, picked, conditions, price)
-    shown = counts["if_signed"].get(colour, counts["lots"]) if colour in _COLOURS else counts["lots"]
-    ctx["counts"] = counts
-    ctx["shown"] = shown
-    ctx["pages"] = max(1, -(-shown // _LOTS_PAGE))
     price["as_of"] = await _county_as_of(session, chosen.snapshot_id)
     ctx["price_as_of"] = price["as_of"]
-    ctx["lots"] = await _lot_rows(session, chosen.id, picked, conditions, colour, page, price, cheapest)
+    try:
+        # A savepoint, so a query the clock stops leaves the page's other reads usable.
+        async with session.begin_nested():
+            await _lots_limits(session)
+            counts = await _lot_counts(session, chosen.id, picked, conditions, price)
+            shown = counts["if_signed"].get(colour, counts["lots"]) if colour in _COLOURS else counts["lots"]
+            ctx["counts"] = counts
+            ctx["shown"] = shown
+            ctx["pages"] = max(1, -(-shown // _LOTS_PAGE))
+            ctx["lots"] = await _lot_rows(session, chosen.id, picked, conditions, colour, page, price, cheapest)
+    except DBAPIError as exc:
+        if not _timed_out(exc):
+            raise
+        ctx["too_slow"] = True
     ctx["zones"] = await _zones_in(session, jurisdiction, chosen.snapshot_id)
     return templates.TemplateResponse(request, "flats_lots.html", ctx)
 
