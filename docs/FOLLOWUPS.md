@@ -2194,3 +2194,13 @@ read when the weekly full re-screen lands.
    the unnamed reading (steps 2 + 3), accepting ~67 greens -> red; cities
    that write a corner test (Portland, Gresham, Oregon City, Beaverton)
    follow their own words (step 1). Bound + read every moved lot first.
+64. [scan: NO (a reading exercise; fixes it finds get their own items)] **Measure the
+   false-GREEN rate, so "are we converging?" has a number (offered 2026-10-09 when Steph
+   asked whether the work ever ends).** Draw a random sample of ~100 GREEN lots from the
+   live run (stratified by county/city, not by flag), read each one deeply and blind
+   (zoning words, lot shape, access, fire, slope, tract/ownership) and count how many are
+   wrong and why. Repeat after each weekly. Also log per fix: greens moved as a share of
+   all greens, and whether the cause was a NEW kind of problem or a known kind in a new
+   place. Stopping signal to propose to Steph: a week whose fixes move < ~0.5% of greens
+   and find no new kind of problem -> switch from hunting to maintenance (code-change
+   watch, item 54) + onboarding new territory. Steph to decide whether to run it.
