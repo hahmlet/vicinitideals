@@ -271,3 +271,113 @@ def test_a_dataset_written_from_two_layers_is_counted_across_both(tmp_path: Path
 
     county.down.add(part)
     assert by_key(probe(pipe, manifest(pipe), client(county)))["zoning_portland"] == ["unreachable"]
+
+
+# --- the Geofabrik extract: a "latest" URL that redirects to a dated file --------
+
+LATEST = "https://download.example.org/oregon-latest-free.shp.zip"
+DATED_OLD = "https://download.example.org/oregon-261008-free.shp.zip"
+DATED_NEW = "https://download.example.org/oregon-261012-free.shp.zip"
+
+OSM_REGISTRY = f"""
+working_srid: 2913
+display_srid: 4326
+jurisdictions:
+  or/multnomah/portland: true
+datasets:
+  osm_roads:
+    kind: rlis_zip
+    label: OpenStreetMap roads
+    provides: streets
+    url: {LATEST}
+    member: gis_osm_roads_free_1.shp
+    geometry: polyline
+    native_srid: 4326
+    fields: [osm_id, fclass]
+    serves: [or/multnomah]
+"""
+
+OLD_COPY = {"release": "oregon-261008-free.shp.zip", "modified": "2026-10-08", "size": 280_000_000, "members": 20}
+
+
+def osm_case(tmp_path: Path, recorded: dict[str, Any] | None):
+    p = tmp_path / "pipeline.yaml"
+    p.write_text(OSM_REGISTRY, encoding="utf-8")
+    pipe = load_pipeline(p)
+    doc = {
+        "snapshot": "2026-10-09",
+        "working_srid": 2913,
+        "archives": {LATEST: recorded} if recorded is not None else {},
+        "datasets": {
+            "osm_roads": {"status": "acquired", "features": 9, "spec_sha256": _spec_sha(pipe.datasets["osm_roads"])}
+        },
+    }
+    return pipe, doc
+
+
+def geofabrik(*, to: str | None = DATED_NEW, modified: str = "Mon, 12 Oct 2026 20:00:00 GMT"):
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert request.method == "HEAD", "the probe must not download the extract"
+        if str(request.url) == LATEST and to is not None:
+            return httpx.Response(307, headers={"location": to})
+        return httpx.Response(200, headers={"last-modified": modified})
+
+    return handler
+
+
+def test_a_newer_dated_extract_is_said_old_against_new_and_raises_no_banner(tmp_path: Path) -> None:
+    pipe, doc = osm_case(tmp_path, OLD_COPY)
+
+    found = probe(pipe, doc, client(geofabrik()))
+
+    (f,) = found
+    assert f.finding == "ok", "Geofabrik posts daily; a newer file must not raise the Metro-release banner"
+    assert "oregon-261012-free.shp.zip" in f.detail and "oregon-261008-free.shp.zip" in f.detail
+    assert "2026-10-12" in f.detail and "2026-10-08" in f.detail
+    assert summarize(found) == "ok"
+
+
+def test_the_same_dated_extract_is_ok_and_names_it(tmp_path: Path) -> None:
+    pipe, doc = osm_case(tmp_path, OLD_COPY)
+
+    (f,) = probe(pipe, doc, client(geofabrik(to=DATED_OLD, modified="Thu, 08 Oct 2026 20:03:11 GMT")))
+
+    assert f.finding == "ok"
+    assert f.detail == "release oregon-261008-free.shp.zip, modified 2026-10-08"
+
+
+def test_a_host_that_stops_redirecting_fails_safe(tmp_path: Path) -> None:
+    pipe, doc = osm_case(tmp_path, OLD_COPY)
+
+    (f,) = probe(pipe, doc, client(geofabrik(to=None)))
+
+    assert f.finding == "ok"
+    assert "named no dated file" in f.detail
+
+
+def test_a_copy_taken_before_the_release_was_recorded_is_not_accused(tmp_path: Path) -> None:
+    pipe, doc = osm_case(tmp_path, {"release": None, "size": 280_000_000, "members": 20})
+
+    (f,) = probe(pipe, doc, client(geofabrik()))
+
+    assert f.finding == "ok"
+    assert "recorded no release name" in f.detail and "oregon-261012-free.shp.zip" in f.detail
+
+
+def test_a_copy_with_no_archive_entry_at_all_still_probes_without_a_crash(tmp_path: Path) -> None:
+    pipe, doc = osm_case(tmp_path, None)
+
+    (f,) = probe(pipe, doc, client(geofabrik()))
+
+    assert f.finding == "ok"
+
+
+def test_an_unreachable_host_is_unreachable_not_a_crash(tmp_path: Path) -> None:
+    pipe, doc = osm_case(tmp_path, OLD_COPY)
+
+    def down(request: httpx.Request) -> httpx.Response:
+        raise httpx.ConnectError("no route to host", request=request)
+
+    (f,) = probe(pipe, doc, client(down))
+
+    assert f.finding == "unreachable"

@@ -22,6 +22,11 @@ What it can find, per dataset:
   matches the registry that describes it.
 * ``new_release`` -- the RLIS archive on the portal is not the one the copy
   was read from (its modified date or size changed).
+  The Geofabrik OpenStreetMap extract is not a portal item: its "latest" URL
+  redirects to a dated file, and that name is compared. Geofabrik publishes
+  daily, so a newer file is the normal case; it is said in the ``ok`` detail
+  and is NOT a ``new_release`` (that finding raises the banner about Metro's
+  quarterly release).
 * ``unreachable`` -- the request did not complete. Deliberately not the same
   finding as ``moved``: a site being down is not evidence its data changed,
   the same rule :mod:`flats.provenance.store` applies to the code documents.
@@ -40,7 +45,7 @@ from typing import Any, Callable
 
 import httpx
 
-from flats.ingest.acquire import _spec_sha, data_edited
+from flats.ingest.acquire import _spec_sha, data_edited, redirect_identity
 from flats.ingest.sources import Dataset, Kind, Pipeline, Provides
 
 #: Findings that mean the county's side changed, or ours did.
@@ -168,7 +173,7 @@ def probe_archive(client: httpx.Client, url: str, recorded: dict[str, Any] | Non
     """Is the RLIS archive on the portal the one the copy was read from?"""
     item = re.sub(r"/data/?$", "", url)
     if item == url:
-        return Finding(url, "ok", "not a portal item; nothing to compare")
+        return probe_extract(client, url, recorded)
     if not recorded:
         return Finding(url, "ok", "the copy recorded no archive identity to compare (taken before 2026-09-19)")
     meta, why = _get(client, item, {"f": "json"})
@@ -190,6 +195,39 @@ def probe_archive(client: httpx.Client, url: str, recorded: dict[str, Any] | Non
             f"{was_size / 1e9:.2f} -> {size / 1e9:.2f} GB (the copy is release {recorded.get('release') or '?'})",
         )
     return Finding(url, "ok", f"release {recorded.get('release') or '?'}, modified {modified or '?'}")
+
+
+def probe_extract(client: httpx.Client, url: str, recorded: dict[str, Any] | None) -> Finding:
+    """Which dated file does a "latest" URL name today, against the one the copy read?
+
+    One HEAD, nothing downloaded. A URL that does not redirect to a differently
+    named file, a copy that recorded no release name, or a host that does not
+    answer all fall back to a plain ``ok`` or ``unreachable`` saying so -- never
+    an exception, never a false alarm.
+    """
+    try:
+        resp = client.head(url, follow_redirects=True)
+        resp.raise_for_status()
+    except httpx.HTTPError as exc:
+        return Finding(url, "unreachable", f"{type(exc).__name__}: {exc}")
+    now = redirect_identity(url, str(resp.url), resp.headers.get("last-modified"))
+    release = now.get("release")
+    if not release:
+        return Finding(url, "ok", "the host named no dated file for this URL; nothing to compare")
+    was = (recorded or {}).get("release")
+    if not was:
+        return Finding(
+            url, "ok", f"the copy recorded no release name to compare; the host now serves {release}"
+        )
+    if release == was:
+        return Finding(url, "ok", f"release {release}, modified {now.get('modified') or '?'}")
+    return Finding(
+        url,
+        "ok",
+        f"the host now serves {release} (modified {now.get('modified') or '?'}); the copy was read from "
+        f"{was} (modified {(recorded or {}).get('modified') or '?'}). The publisher posts a new file daily, so "
+        "this is expected; the manifest says which one a run read.",
+    )
 
 
 def probe(

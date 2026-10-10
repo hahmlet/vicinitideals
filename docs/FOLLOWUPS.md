@@ -2205,8 +2205,13 @@ read when the weekly full re-screen lands.
    + Content-Length on it; no .md5 beside the shp ZIP) -- record the dated
    name as the release and compare it. Geofabrik publishes daily, so the
    check will always say "new"; the point is the manifest names the
-   extract a run read. AGENT INSTRUCTIONS GIVEN 2026-10-10
-   ("osm-release-name"; must land before the ~2026-10-14 weekly acquire).
+   extract a run read. DONE on branch
+   flats/osm-release-name (2026-10-10): acquire records the dated file
+   name as `release`, plus `modified` (Last-Modified) and `resolved_url`,
+   and `size` is the Content-Length; the probe HEADs the redirect and says
+   old vs new as an `ok` finding (NOT `new_release`, which raises the
+   Metro banner). No redirect = "release ?", never an error. Remove this
+   paragraph once merged.
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
