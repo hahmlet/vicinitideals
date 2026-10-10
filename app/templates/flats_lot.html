@@ -33,6 +33,21 @@
       <span class="badge {{ lot.badge }}" style="font-size:14px">{{ lot.colour }}</span>
       <span class="muted" style="font-size:12px">{{ lot.colour_words }}</span>
     </div>
+    {% set pr = lot.price %}
+    <div id="lot-price">
+      <span class="muted">Price per home</span>
+      <span class="badge badge-gray" style="font-size:14px" id="lot-price-text">{{ pr.text }}</span>
+      {% if pr.estimate %}<span class="badge badge-orange" id="lot-price-estimate" title="More than one pod: new roads or a land division may need a review, which is against the by-right rule.">ESTIMATE</span>{% endif %}
+      <span class="muted" style="font-size:12px" id="lot-price-how">
+        {% if pr.homes %}{{ pr.pods }} pod{{ "s" if pr.pods != 1 }} = {{ pr.homes }} homes{% if pr.roads %} (after {{ "%g"|format(pr.road_pct) }}% for roads){% endif %}
+        at {{ "{:,.0f}".format(pr.pod_sqft) }} sf a pod{% if pr.capped_by == "density" %}; held down by the zone's density limit ({{ "%g"|format(pr.density_du_per_acre) }} homes an acre){% elif pr.capped_by == "unit lot" %}; held down by the zone's smallest townhouse lot ({{ "{:,.0f}".format(pr.unit_lot_sqft) }} sf){% endif %}.
+        {% else %}No pod fits.{% endif %}
+        {% if pr.source %}Price ${{ "{:,.0f}".format(pr.amount) }} from <span id="lot-price-source">{{ pr.source }}</span> ({{ pr.basis }}), as of <span id="lot-price-asof">{{ pr.as_of or "unknown" }}</span>.
+        {% if pr.sale_price or pr.sale_date %}Last sale {% if pr.sale_price %}${{ "{:,.0f}".format(pr.sale_price) }}{% endif %}{% if pr.sale_date %} on {{ pr.sale_date }}{% endif %} (shown, not used).{% endif %}
+        {% elif pr.homes %}No county value on file for this lot.{% endif %}
+        Never changes the colour.
+      </span>
+    </div>
     {% if quadfit.triage %}
     <div>
       <span class="muted">County map says</span>
