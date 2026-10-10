@@ -134,9 +134,12 @@ from flats.geom.street_class import (
     unknown_access,
 )
 from flats.geom.named_street import (
+    AVENUE_FACT,
     NAMED_STREET_FACT,
+    avenue_column,
     beyond_reach_column,
     named_street_column,
+    observed_avenue,
     observed_named_street,
 )
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
@@ -303,6 +306,8 @@ OBSERVABLE: tuple[str, ...] = (
     STREET_END_FACT,
     # True within 200 ft of a street the code names, False beyond.
     NAMED_STREET_FACT,
+    # Gladstone's lots only: True touching Portland Avenue, False off it.
+    AVENUE_FACT,
     # Only where a city's TSP map serves the lot (flats.geom.street_class).
     LOCAL_STREET,
     *NEIGHBOUR_FACTS,
@@ -384,6 +389,11 @@ def observed_facts(
       is False (RED, never a false GREEN). The code asks for the DWELLING
       within 200 ft, so in NCR the lot ground beyond the band is also taken
       off the placement area (``reach_off_wkb``).
+    * ``along_portland_avenue`` -- on Gladstone's lots only, True where the
+      taxlot lies within :data:`~flats.geom.named_street.AVENUE_REACH_FT` of
+      Portland Avenue's centreline (``avenue_ft``, measured by
+      :func:`iter_rows`), False beyond; GMC 17.18.050(3)'s limits on
+      development along the avenue in C-2.
     * ``local_street`` -- from ``local_street_obs``, which
       :func:`with_local_street` reads off a city's TSP map: True only where
       every street line is local by the map AND by Metro's street type,
@@ -492,6 +502,7 @@ def observed_facts(
     out.update(observed_cul_de_sac(_is_true(row.get("fronts_cul_de_sac"))))
     out.update(observed_street_end(_finite(row.get("street_end_ft"))))
     out.update(observed_named_street(_finite(row.get("named_street_ft"))))
+    out.update(observed_avenue(_finite(row.get("avenue_ft"))))
     if isinstance(row.get("local_street_obs"), bool):
         out[LOCAL_STREET] = row["local_street_obs"]
     out.update(observed_sidewalk_easement(_finite(row.get("sidewalk_easement_ft"))))
@@ -1521,6 +1532,7 @@ def iter_rows(
         frame = frame.assign(
             street_end_ft=street_end_column(frame, streets),
             named_street_ft=named_street_column(frame, streets),
+            avenue_ft=avenue_column(frame, streets),
             reach_off_wkb=beyond_reach_column(frame, streets),
         )
     # Every null -- NaN, NaT, pandas' NA -- leaves as None, so the readers

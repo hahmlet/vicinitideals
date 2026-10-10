@@ -915,6 +915,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-ALONG-PORTLAND-AVENUE:
+    description: "The lot is along Portland Avenue (Gladstone C-2): the building needs a primary entrance facing the avenue and ground-floor windows over 25% of the residential ground-floor wall (GMC 17.18.050(3)(b)+(c)), and nothing on file says the pod has them (Steph 2026-10-09: yellow until known)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "Read the pod's elevations against GMC 17.18.050(3)(b)+(c): an entrance on the avenue side and 25% ground-floor glass; one answer settles every lot on the avenue"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-MIDDLE-HOUSING-CHILD-LOT:
     description: "Whether the lot is a middle-housing land division child lot"
     kind: categorical

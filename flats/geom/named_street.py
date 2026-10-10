@@ -29,6 +29,25 @@ and ``ftype``. Eagle Creek Road is ``EAGLE CREEK`` / ``RD`` and Hinman Road
 ``HINMAN`` / ``RD``; ``EAGLE CREEK LN`` and ``LOOP`` (private streets in the
 same neighbourhood) are different streets and do not match. Read against the
 2026-10-07 three-county file: 40 Eagle Creek Rd and 5 Hinman Rd segments.
+
+**A second named street: Portland Avenue, Gladstone** (FOLLOWUPS 52, Steph
+2026-10-09). GMC 17.18.050(3) puts limits on "developments along Portland
+Avenue" in the C-2 zone: a primary entrance facing the avenue and ground-floor
+windows over a quarter of the residential ground-floor wall. The same
+distance machinery answers ``along_portland_avenue``, with
+:data:`AVENUE_REACH_FT` for the reach. "Along" is a lot that touches the
+avenue, so the reach is s4's own reach for a street lot line -- 50 ft to a
+centreline -- with the slack the corridor reading takes
+(:data:`flats.geom.corridor.FRONT_REACH_FT`). Read against the 2026-10-07
+file on Gladstone's 138 C-2 lots, the gap it sits in is wide: every lot with
+a lot line on the avenue lies 34-45 ft from its centreline (a corner lot on a
+side street included); the one lot between is 1050 Portland Ave, 55 ft, whose
+corner meets the avenue at the Jersey Street junction; the nearest lot behind
+is 84 ft out. A lot within the reach may face the avenue only at a corner;
+counting it is the conservative way to be wrong, since a lot the reach
+misses would screen green without the entrance the code asks for. Measured
+only on the lots of :data:`AVENUE_JURISDICTIONS`: Metro's file has Portland
+Avenues elsewhere, and the rule is Gladstone's.
 """
 
 from __future__ import annotations
@@ -52,14 +71,33 @@ BAND_ZONES: frozenset[tuple[str, str]] = frozenset({("estacada", "NCR")})
 #: The one fact, named the way the registry names it.
 NAMED_STREET_FACT = "near_named_street_200ft"
 
+#: Gladstone GMC 17.18.050(3)'s avenue, as (RLIS STREETNAME, RLIS FTYPE).
+AVENUE_STREETS: tuple[tuple[str, str], ...] = (("PORTLAND", "AVE"),)
+
+#: How far from the avenue's centreline a lot still touches it: s4's 50 ft
+#: street-line reach with the corridor reading's slack (see the module
+#: docstring for the gap it sits in).
+AVENUE_REACH_FT = 60.0
+
+#: The s4 jurisdictions the avenue is measured for.
+AVENUE_JURISDICTIONS: frozenset[str] = frozenset({"gladstone"})
+
+#: The avenue's fact, named the way the registry names it.
+AVENUE_FACT = "along_portland_avenue"
+
 
 def _key(value: object) -> str:
     return " ".join(str(value or "").upper().split())
 
 
-def named_street_lines(names: Sequence[object], ftypes: Sequence[object], geoms: Sequence[Any]) -> list[Any]:
-    """The centrelines of the listed streets."""
-    wanted = {(_key(n), _key(t)) for n, t in STREETS}
+def named_street_lines(
+    names: Sequence[object],
+    ftypes: Sequence[object],
+    geoms: Sequence[Any],
+    listed: Sequence[tuple[str, str]] = STREETS,
+) -> list[Any]:
+    """The centrelines of the ``listed`` streets."""
+    wanted = {(_key(n), _key(t)) for n, t in listed}
     return [
         g
         for n, t, g in zip(names, ftypes, geoms)
@@ -96,14 +134,23 @@ def observed_named_street(distance_ft: float | None) -> dict[str, bool]:
     return {NAMED_STREET_FACT: distance_ft <= REACH_FT}
 
 
+def observed_avenue(distance_ft: float | None) -> dict[str, bool]:
+    """``along_portland_avenue`` for one lot: True at or inside
+    :data:`AVENUE_REACH_FT` of the avenue, False beyond, nothing where it was
+    never measured (a lot outside :data:`AVENUE_JURISDICTIONS` included)."""
+    if distance_ft is None or distance_ft != distance_ft:
+        return {}
+    return {AVENUE_FACT: distance_ft <= AVENUE_REACH_FT}
+
+
 def _lot_geoms(frame: Any) -> list[Any]:
     import shapely
 
     return [shapely.from_wkb(w) if isinstance(w, (bytes, bytearray)) else None for w in frame["lot_wkb"]]
 
 
-def _lines_in(streets: Path) -> list[Any] | None:
-    """The listed streets' centrelines in s1's file; None where the file
+def _lines_in(streets: Path, listed: Sequence[tuple[str, str]] = STREETS) -> list[Any] | None:
+    """The ``listed`` streets' centrelines in s1's file; None where the file
     cannot name streets."""
     import pandas as pd
     import pyarrow.parquet as pq
@@ -113,7 +160,7 @@ def _lines_in(streets: Path) -> list[Any] | None:
         return None
     roads = pd.read_parquet(streets, columns=["name", "ftype", "wkb"])
     return named_street_lines(
-        roads["name"].tolist(), roads["ftype"].tolist(), shapely.from_wkb(roads["wkb"].to_numpy())
+        roads["name"].tolist(), roads["ftype"].tolist(), shapely.from_wkb(roads["wkb"].to_numpy()), listed
     )
 
 
@@ -138,6 +185,25 @@ def named_street_column(frame: Any, streets: Path) -> list[float | None]:
     if lines is None:
         return [None] * len(frame)
     return street_distances(_lot_geoms(frame), lines)
+
+
+def avenue_column(frame: Any, streets: Path) -> list[float | None]:
+    """``avenue_ft`` for every row of a bridge frame: the lot's distance to
+    the avenue's centreline on rows of :data:`AVENUE_JURISDICTIONS`, None on
+    every other row and wherever the file cannot name streets."""
+    out: list[float | None] = [None] * len(frame)
+    if "lot_wkb" not in frame.columns or "jurisdiction" not in frame.columns:
+        return out
+    hit = [i for i, j in enumerate(frame["jurisdiction"]) if str(j) in AVENUE_JURISDICTIONS]
+    if not hit:
+        return out
+    lines = _lines_in(streets, AVENUE_STREETS)
+    if lines is None:
+        return out
+    lots = _lot_geoms(frame)
+    for i, d in zip(hit, street_distances([lots[i] for i in hit], lines)):
+        out[i] = d
+    return out
 
 
 def beyond_reach_column(frame: Any, streets: Path) -> list[bytes | None]:
@@ -166,14 +232,20 @@ def beyond_reach_column(frame: Any, streets: Path) -> list[bytes | None]:
 
 
 __all__ = [
+    "AVENUE_FACT",
+    "AVENUE_JURISDICTIONS",
+    "AVENUE_REACH_FT",
+    "AVENUE_STREETS",
     "BAND_ZONES",
     "NAMED_STREET_FACT",
     "REACH_FT",
     "STREETS",
+    "avenue_column",
     "beyond_reach",
     "beyond_reach_column",
     "named_street_column",
     "named_street_lines",
+    "observed_avenue",
     "observed_named_street",
     "street_distances",
 ]

@@ -1303,9 +1303,20 @@ zones:
       # 17.18.020, "Uses allowed outright": "(11) Attached residential
       # dwellings (duplex, triplex, quadplex). (12) Townhouses." The conditional
       # list (17.18.040) holds a PUD and, at (4), any outright use that does not
-      # meet the Portland Avenue limitations of 17.18.050 -- see the note.
+      # meet the Portland Avenue limitations of 17.18.050. Those limitations
+      # are about the building -- an entrance facing the avenue, a quarter of
+      # the ground-floor residential wall in glass -- which the catalog does
+      # not describe. Steph 2026-10-09 (FOLLOWUPS 52): yellow until known, no
+      # assumption about the pod. So the permission is qualified on the lot
+      # being along the avenue: off it (measured) the outright answer stands,
+      # on it the lot is held open with FACT-ALONG-PORTLAND-AVENUE, and a lot
+      # red for any other reason stays red.
       value: true
       quote: "or/clackamas/gladstone/17.18.c-2.txt#L61-L63"
+      qualified_by:
+        fact: along_portland_avenue
+        cite: GMC 17.18.050(3)(b) and (c), developments along Portland Avenue provide ground-floor windows over at least 25 percent of the residential ground-floor wall and a primary entrance facing Portland Avenue; 17.18.040(4) makes an outright use that misses them a conditional use
+        quote: "or/clackamas/gladstone/17.18.c-2.txt#L115-L121"
     setback_front_ft:
       # 17.18.060(1)(b), residential uses: "Five feet maximum front setback; 15
       # feet minimum rear setback." No front MINIMUM is stated for a residential
@@ -1352,13 +1363,17 @@ zones:
       grep of the Gladstone set).
 
 
-      READ AND NOT ENCODED. 17.18.050(3) puts three limits on development
-      "along Portland Avenue": a primary entrance facing Portland Avenue, and
-      ground-floor windows on at least 25 percent of the residential wall
-      (L119-L121). A use that misses them falls to a conditional use
-      (17.18.040(4)). Which lots are on Portland Avenue is not a fact this
-      layer holds, so a Portland Avenue lot can screen green without the
-      entrance facing the avenue. Multi-household lot area (MR's) and cottage
+      Portland Avenue, encoded 2026-10-09 (FOLLOWUPS 52). 17.18.050(3) puts
+      limits on development "along Portland Avenue": a primary entrance
+      facing the avenue, and ground-floor windows on at least 25 percent of
+      the residential wall (L119-L121); a use that misses them falls to a
+      conditional use (17.18.040(4)). Which lots are along the avenue is now
+      measured (`along_portland_avenue`, flats.geom.named_street: within 60 ft
+      of the avenue's centreline, a corner lot on a side street included);
+      whether the pod has the entrance and the glass is not, so
+      `quadplex_allowed` is qualified on the fact and a lot along the avenue
+      is held open (Steph 2026-10-09: yellow until known). Run 69 had 23
+      greens along the avenue. Multi-household lot area (MR's) and cottage
       clusters are housing types this screen does not place.
   C3:
     like:
