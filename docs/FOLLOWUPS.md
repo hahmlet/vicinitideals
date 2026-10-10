@@ -2336,6 +2336,20 @@ read when the weekly full re-screen lands.
    shopping centre (item 47, red), it is not a false GREEN under today's rules.
    The sample counts such greens separately; ask Steph whether a lot whose
    pod sits on a working building's parking or yard should stay green.
+   ROUND 1 DONE 2026-10-10 (branch flats/false-green-sample, data/flats/false_green/2026-10-10/:
+   SUMMARY.md, false_green_round1.csv, seed fgs-2026-10-10-seed1, query work/draw.sql). 102 greens
+   from run 70 (49,960), 19 cities: 97 RIGHT, 4 WRONG, 1 CAN'T TELL. Weighted false-GREEN rate
+   3.4% (about 1,700 lots), 95% range about 1%-10%; 4.8% if the can't-tell is wrong. Portland 0
+   of 38; the 4 sit in WashCo unincorporated (2 of 11) and Hillsboro (2 of 3). Kinds: NEW x2 =
+   right-of-way dedication to the centre line not taken out of the fit (item 67); KNOWN x2 =
+   item 53 (by-right: Development Review) in a new city, Hillsboro, owned by the lane
+   flats/hillsboro-review-red (reach 152 of 427 Hillsboro greens). Existing-building POLICY
+   class counted apart: 17 of 102 greens carry one (11 non-house); run 70 about 3,000 greens
+   (6%) carry a 5,000+ sq ft non-house building, about 900 (1.8%) a 20,000+ one; none counted
+   wrong (item 66). CAN'T TELL: 1N2E21AD  -06200, Portland RM1, 50 x 200 ft, red if on Map 120-2
+   (item 68). Not read: the 59 PUB greens (maybe item 59's public-code rule). Stopping signal not
+   met (new kinds found). Round 2: after items 67 and the Hillsboro fix ship, redraw with a new
+   seed and weight the same way (scripts: work/consolidate.py).
 65. [scan: YES (a proof run: every answer must come out identical to 137's)] **The Windows PC
    as an idle-time scan helper (Steph 2026-10-09 asked; offered, not started).** Scans are
    CPU-bound (item 46: >14 processes buy nothing on 137; memory only sets how many run at
@@ -2376,3 +2390,29 @@ read when the weekly full re-screen lands.
    multi-pod counts labelled ESTIMATE (new roads / a land division may need a review, against
    the by-right rule); county market value by default, last sale shown beside it; the two
    defaults (4,500 sq ft a pod, 25% roads) adjustable. True layouts stay item 31 / parked 27.
+67. [scan: YES, after the weekly re-screen (a rule change; gains none, greens turn yellow or red)]
+   **Washington County makes the owner hand over road land first; the fit ignores it (found
+   2026-10-10 by item 64's sample, 2 of 11 WashCo greens wrong).** CDC 302-2.14 C(1) (and 303-2.14
+   C for R-6) says a middle-housing lot must give land out to a set distance from the road's
+   centre line: 25 ft on a local street, 30 ft on a neighbourhood route, 37 ft on a collector,
+   recorded before the first building permit (C(2)); no strip is due where the road is already
+   built to the county's final width. Our file says "NOT ENCODED: right-of-way dedication"
+   (_unincorporated.yaml ~485-495) because nothing measures the road's existing half-width.
+   Wrong lots: 1S201CC12500 (about 3.6 ft due, pod had 0.0 ft spare) and 1N120AD09600 (about 4 ft
+   due, pod about 2.5 ft short after it). REACH (measured as alley width is, across the gap between
+   lots, read-only SQL on run 70): of 7,711 WashCo unincorporated greens, 778 (10.1%) face a road
+   at least 2 ft short; 206 (2.7%) might lose fit; 180 (2.3%) red-grade. For 4+ ft short: 504 / 144
+   / 134. PROPOSAL (nothing built): measure each fronting road's half-width from the lot-fabric gap
+   (`Lot Analysis/quadfit/s4_edges.py` `_alley_width` ray-cast), take the missing strip off the
+   envelope on that side, rescreen. Unmeasured road = worst case, per the standing rule. Decision
+   pending: none for Steph unless a lot with exactly 0 ft to spare is wanted yellow rather than red.
+68. [scan: YES, after Steph or the agent supplies the maps] **Portland Maps 120-2 and 120-3 are not
+   held (found 2026-10-10 by item 64's sample, 1 can't-tell).** 33.120.206 bars new homes on a site
+   deeper than 160 ft with under 90 ft of frontage, but only on the sites shown on Map 120-2
+   (Eastern Portland centres); 33.120.220.C adds a rear-setback rule for Map 120-3 (Eastern Pattern
+   Area). Neither map is in the store (portland.yaml ~724), so both are left out and the lots stay
+   green. Upper-bound reach: 902 Portland multi-dwelling greens are deeper than 160 ft with under
+   90 ft of frontage (RM1 647, RM2 208, RM3 47); how many sit on the map is unknown. Sample lot:
+   1N2E21AD  -06200 (RM1, 50 x 200 ft). PROPOSAL: fetch the two maps from the City's open-data
+   portal as polygons (or get them from Steph), then add a frontage check and the rear setback with
+   a corner exemption. Until then, consider marking these 902 yellow.
