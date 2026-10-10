@@ -2364,3 +2364,15 @@ read when the weekly full re-screen lands.
    (never red: an owner may sell part of a big lot). Either needs Steph's land budget per pod
    (dollars a 4-home project can pay for land, maybe by city). Kept OUT of the fit colour by
    default so "can it be placed" stays honest. Steph to choose (A)/(B) and give the budget.
+   STEPH RULED 2026-10-10: (A) -- colour unchanged, a PRICE PER UNIT label + a filter set at
+   $30k/unit ($120k a pod), adjustable ("land price is passed to the buyer, so it flexes with
+   the market"; look at everything). Units = pods the lot could hold x 4, NOT one pod: a big
+   lot pays for (lot area - roads to serve the pods) / (pod + its parking), with parking
+   possibly pooled to save buffers and planters (pods stay independent). Rough cut measured
+   on run 70 greens (county total value; 4,500 sq ft a pod incl. parking + yard share; 25% to
+   roads on lots of 3+ pods): one-pod basis 126 lots <= $30k/unit; capacity basis 771 <= $30k,
+   4,911 <= $60k, 13,651 <= $100k; 1S2E02BB  -01100 (the closed big box) ~48 pods, ~$26k/unit.
+   Coordinator's proposed guards (Steph to confirm): pods capped by the zone's density limit;
+   multi-pod counts labelled ESTIMATE (new roads / a land division may need a review, against
+   the by-right rule); county market value by default, last sale shown beside it; the two
+   defaults (4,500 sq ft a pod, 25% roads) adjustable. True layouts stay item 31 / parked 27.
