@@ -111,10 +111,8 @@ KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
 #: variant per lot; the row is needs_verification, so quadfit caps it at
 #: review. Not a dispute: the same reading, written at two resolutions.
 PORTED_FROM_A_VARIANT: frozenset[str] = frozenset({
-    "hillsboro/MU-C",
-    "hillsboro/UC-AC",
-    "hillsboro/UC-NC",
-    "hillsboro/UC-OR",
+    # Hillsboro MU-C, UC-AC, UC-NC and UC-OR left on 2026-10-10: Development
+    # Review (CDC 12.80.040 B.1) makes them RED BY RULING, false in both files.
     "washington_unincorporated/TO:R24-40",
     "washington_unincorporated/TO:R40-80",
     "washington_unincorporated/TO:BUS",

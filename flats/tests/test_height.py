@@ -476,7 +476,10 @@ def test_the_sweep_at_the_design_height_agrees_with_the_screen() -> None:
 #: sweep's feet-only reading wrong for anyone else: the zone is out at every
 #: height, so it moves no row of the curve. It is a doubt in the Washington
 #: handoff, and the day the draft is read with the cores drawn, it leaves.
-STOREY_FLOOR_ABOVE_TWO = {("or/washington/hillsboro", "MU-VTC")}
+#: 2026-10-10: it left another way -- MU-VTC is RED BY RULING for Development
+#: Review (CDC 12.80.040 B.1), so its use row refuses the pod and the sweep no
+#: longer weighs it. If that ruling is reversed, the zone comes back here.
+STOREY_FLOOR_ABOVE_TWO: set[tuple[str, str]] = set()
 
 
 def test_no_storey_standard_binds_on_a_two_storey_building() -> None:
