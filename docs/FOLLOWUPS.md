@@ -1512,7 +1512,12 @@ read when the weekly full re-screen lands.
    than 14 processes buys nothing. Proofs 1-3 caught a `python -m`
    worker-setup bug and an OOM kill, both fixed. (d) rented compute --
    PARKED by Steph 2026-10-08 ("won't do for now"; keep the research,
-   don't delete it). Steph 2026-10-06 PREFERS
+   don't delete it). 2026-10-09 RE-ASKED (Steph moving to Max 20x
+   and 7-9 parallel agents; the Proxmox host is maxed -- 137 already has
+   16 of the i5-14600KF's 20 threads, so no free home capacity): est.
+   at 7-9 agents ~3,000-4,000 vCPU-h/month beyond 137 = ~$250-350/month.
+   Steph: NOT YET, MEASURE FIRST -- run a week at 7-9 agents, log how long
+   checks wait on heavy.lock per day, decide with that number. Steph 2026-10-06 PREFERS
    CLOUDFLARE (a commercial version would run there): Cloudflare
    Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
    12 GiB / 20 GB each, up to 1,500 vCPU per account at once; CPU billed
