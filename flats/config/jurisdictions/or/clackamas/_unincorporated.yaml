@@ -986,6 +986,19 @@ code:
   start: "702.01"
   end: "Return to the Zoning and Development Ordinance main page"
   allow_thin: true
+# Design review. 1102.01(A) is the sentence behind the by-right-only ruling's
+# RED in HDR, MR-1, MR-2, PMD, VA and the commercial districts (SCMU, PMU):
+# development there goes through a Type II application (1102.03). Read live
+# on 2026-10-08 and stored 2026-10-09 (FOLLOWUPS 52) so the ruling cites the
+# words it rests on. allow_thin: read in full on 2026-10-09, all 169 lines;
+# it is a procedure section, submittal lists and approval criteria with
+# almost no numbers, and the thin guard was refusing it for that.
+- id: zdo.1102
+  url: https://www.clackamas.us/planning/zdo1102
+  title: Clackamas County ZDO Section 1102 - Design Review
+  start: "1102.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  allow_thin: true
 defaults:
   # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27 out of Section 845, which
   # is the section Table 315-1's note 8 sends this building to for everything.
@@ -2209,8 +2222,11 @@ zones:
       # checked below at `min_lot_sqft` -- it just means this cell does not
       # signpost it. The use is permitted; the district is RED BY RULING for
       # design review (notes).
+      # The value is the ruling's, so it cites design review, not the cell
+      # (which says P; zdo.315.txt#L41,L43-L54,L295-L306).
       value: false
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
     min_lot_sqft:
       # Table 315-4 prints "None" and Section 845.01 prints 7,000, and 7,000
       # is the one that binds. 845.01 states "the subject lot shall be a
@@ -2312,19 +2328,27 @@ zones:
       value: 10
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
-      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of 2026-10-08):
-      the use is permitted in this district (Table 315-1, a bare P) but
-      development here goes through design review, which is not by right.
-      ZDO 1102.01(A): "Design review is required for: Development,
-      redevelopment, expansions, and improvements in: ... HDR, MR-1, MR-2, MRR,
-      PMD, RCHDR, SHD, VA, and VTH Districts". The only exceptions are detached
-      single-family dwellings, manufactured dwellings, prefabricated structures
-      and their accessory uses, stormwater facilities, utility cabinets and
-      utility lines (1102.01(A)(1)-(2)); a quadplex is none of them. Design review
-      is a Type II application (1102.03). Section 1102 is not in the provenance
-      store; it was read live from codepublishing.com on 2026-10-08 and should be
-      added to the store before this ruling is relied on in a citation check.
-      The dimensions below stay so the ruling can be reversed.
+      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
+      2026-10-08): the use is permitted in this district (Table 315-1, a
+      bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
+      goes through design review, which is not by right. ZDO
+      1102.01(A)(1)(c): "Design review is required for: Development,
+      redevelopment, expansions, and improvements in: ... HDR, MR-1,
+      MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts"
+      (zdo.1102.txt#L5,L7,L13), and 1102.03 makes it "a Type II
+      application" (L131). Neither exception reaches a quadplex.
+      1102.01(B) (L21) lifts design review for detached single-family
+      dwellings, manufactured dwellings and prefabricated structures,
+      and 1102.01(C) (L23) for stormwater facilities, utility cabinets
+      and utility facilities. "Prefabricated structure" is the one that
+      sounds like this building, and it is not: ZDO 202 defines it as a
+      building manufactured off site that "is designed for use as a
+      single-family dwelling" (zdo.202.definitions.txt#L421). A
+      factory-built four-unit building is off-site construction and not
+      a single-family dwelling, so the exception is a single-family word
+      and the pod is outside it. Section 1102 was stored 2026-10-09
+      (FOLLOWUPS 52) and the value above cites it rather than the use
+      table. The dimensions below stay so the ruling can be reversed.
 
       Encoded 2026-09-08 from Table 315-4, the first reading of this table in
       this layer. Nine lots.
@@ -2362,8 +2386,11 @@ zones:
     quadplex_allowed:
       # Table 315-1, Quadplexes row, sixth column. A bare P -- the use is
       # permitted; the district is RED BY RULING for design review (notes).
+      # The value is the ruling's, so it cites design review, not the cell
+      # (which says P; zdo.315.txt#L41,L43-L54,L295-L306).
       value: false
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
     min_lot_sqft:
       # 845.01, as in every district in this county. Table 315-4 prints
       # "None[1]" here and note 1 is about a nonconforming detached
@@ -2472,19 +2499,27 @@ zones:
       cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-1 column ("None")
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
-      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of 2026-10-08):
-      the use is permitted in this district (Table 315-1, a bare P) but
-      development here goes through design review, which is not by right.
-      ZDO 1102.01(A): "Design review is required for: Development,
-      redevelopment, expansions, and improvements in: ... HDR, MR-1, MR-2, MRR,
-      PMD, RCHDR, SHD, VA, and VTH Districts". The only exceptions are detached
-      single-family dwellings, manufactured dwellings, prefabricated structures
-      and their accessory uses, stormwater facilities, utility cabinets and
-      utility lines (1102.01(A)(1)-(2)); a quadplex is none of them. Design review
-      is a Type II application (1102.03). Section 1102 is not in the provenance
-      store; it was read live from codepublishing.com on 2026-10-08 and should be
-      added to the store before this ruling is relied on in a citation check.
-      The dimensions below stay so the ruling can be reversed.
+      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
+      2026-10-08): the use is permitted in this district (Table 315-1, a
+      bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
+      goes through design review, which is not by right. ZDO
+      1102.01(A)(1)(c): "Design review is required for: Development,
+      redevelopment, expansions, and improvements in: ... HDR, MR-1,
+      MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts"
+      (zdo.1102.txt#L5,L7,L13), and 1102.03 makes it "a Type II
+      application" (L131). Neither exception reaches a quadplex.
+      1102.01(B) (L21) lifts design review for detached single-family
+      dwellings, manufactured dwellings and prefabricated structures,
+      and 1102.01(C) (L23) for stormwater facilities, utility cabinets
+      and utility facilities. "Prefabricated structure" is the one that
+      sounds like this building, and it is not: ZDO 202 defines it as a
+      building manufactured off site that "is designed for use as a
+      single-family dwelling" (zdo.202.definitions.txt#L421). A
+      factory-built four-unit building is off-site construction and not
+      a single-family dwelling, so the exception is a single-family word
+      and the pod is outside it. Section 1102 was stored 2026-10-09
+      (FOLLOWUPS 52) and the value above cites it rather than the use
+      table. The dimensions below stay so the ruling can be reversed.
 
       Encoded 2026-09-08 from Table 315-4. 839 lots, the largest unencoded
       zone in either county before this commit.
@@ -2525,8 +2560,11 @@ zones:
     quadplex_allowed:
       # Table 315-1, Quadplexes row, seventh column. A bare P -- the use is
       # permitted; the district is RED BY RULING for design review (notes).
+      # The value is the ruling's, so it cites design review, not the cell
+      # (which says P; zdo.315.txt#L41,L43-L54,L295-L306).
       value: false
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
     min_lot_sqft:
       value: 7000
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
@@ -2615,19 +2653,27 @@ zones:
       cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-2 column ("None")
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
-      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of 2026-10-08):
-      the use is permitted in this district (Table 315-1, a bare P) but
-      development here goes through design review, which is not by right.
-      ZDO 1102.01(A): "Design review is required for: Development,
-      redevelopment, expansions, and improvements in: ... HDR, MR-1, MR-2, MRR,
-      PMD, RCHDR, SHD, VA, and VTH Districts". The only exceptions are detached
-      single-family dwellings, manufactured dwellings, prefabricated structures
-      and their accessory uses, stormwater facilities, utility cabinets and
-      utility lines (1102.01(A)(1)-(2)); a quadplex is none of them. Design review
-      is a Type II application (1102.03). Section 1102 is not in the provenance
-      store; it was read live from codepublishing.com on 2026-10-08 and should be
-      added to the store before this ruling is relied on in a citation check.
-      The dimensions below stay so the ruling can be reversed.
+      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
+      2026-10-08): the use is permitted in this district (Table 315-1, a
+      bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
+      goes through design review, which is not by right. ZDO
+      1102.01(A)(1)(c): "Design review is required for: Development,
+      redevelopment, expansions, and improvements in: ... HDR, MR-1,
+      MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts"
+      (zdo.1102.txt#L5,L7,L13), and 1102.03 makes it "a Type II
+      application" (L131). Neither exception reaches a quadplex.
+      1102.01(B) (L21) lifts design review for detached single-family
+      dwellings, manufactured dwellings and prefabricated structures,
+      and 1102.01(C) (L23) for stormwater facilities, utility cabinets
+      and utility facilities. "Prefabricated structure" is the one that
+      sounds like this building, and it is not: ZDO 202 defines it as a
+      building manufactured off site that "is designed for use as a
+      single-family dwelling" (zdo.202.definitions.txt#L421). A
+      factory-built four-unit building is off-site construction and not
+      a single-family dwelling, so the exception is a single-family word
+      and the pod is outside it. Section 1102 was stored 2026-10-09
+      (FOLLOWUPS 52) and the value above cites it rather than the use
+      table. The dimensions below stay so the ruling can be reversed.
 
       Encoded 2026-09-08 from Table 315-4. 120 lots. Reads as MR-1 throughout
       except for the DLA, and carries one fewer footnote on its rear setback:
@@ -2650,8 +2696,11 @@ zones:
       # noting: this district takes the building we place and refuses the
       # split-plat form of it. The use is permitted; the district is RED BY
       # RULING for design review (notes).
+      # The value is the ruling's, so it cites design review, not the cell
+      # (which says P; zdo.315.txt#L41,L43-L54,L295-L306).
       value: false
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
     min_lot_sqft:
       value: 7000
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
@@ -2689,19 +2738,27 @@ zones:
       value: 20
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
-      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of 2026-10-08):
-      the use is permitted in this district (Table 315-1, a bare P) but
-      development here goes through design review, which is not by right.
-      ZDO 1102.01(A): "Design review is required for: Development,
-      redevelopment, expansions, and improvements in: ... HDR, MR-1, MR-2, MRR,
-      PMD, RCHDR, SHD, VA, and VTH Districts". The only exceptions are detached
-      single-family dwellings, manufactured dwellings, prefabricated structures
-      and their accessory uses, stormwater facilities, utility cabinets and
-      utility lines (1102.01(A)(1)-(2)); a quadplex is none of them. Design review
-      is a Type II application (1102.03). Section 1102 is not in the provenance
-      store; it was read live from codepublishing.com on 2026-10-08 and should be
-      added to the store before this ruling is relied on in a citation check.
-      The dimensions below stay so the ruling can be reversed.
+      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
+      2026-10-08): the use is permitted in this district (Table 315-1, a
+      bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
+      goes through design review, which is not by right. ZDO
+      1102.01(A)(1)(c): "Design review is required for: Development,
+      redevelopment, expansions, and improvements in: ... HDR, MR-1,
+      MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts"
+      (zdo.1102.txt#L5,L7,L13), and 1102.03 makes it "a Type II
+      application" (L131). Neither exception reaches a quadplex.
+      1102.01(B) (L21) lifts design review for detached single-family
+      dwellings, manufactured dwellings and prefabricated structures,
+      and 1102.01(C) (L23) for stormwater facilities, utility cabinets
+      and utility facilities. "Prefabricated structure" is the one that
+      sounds like this building, and it is not: ZDO 202 defines it as a
+      building manufactured off site that "is designed for use as a
+      single-family dwelling" (zdo.202.definitions.txt#L421). A
+      factory-built four-unit building is off-site construction and not
+      a single-family dwelling, so the exception is a single-family word
+      and the pod is outside it. Section 1102 was stored 2026-10-09
+      (FOLLOWUPS 52) and the value above cites it rather than the use
+      table. The dimensions below stay so the ruling can be reversed.
 
       Encoded 2026-09-08 from Table 315-4. One lot, and encoded at the same
       care as the 839 because a district read carelessly is wrong at whatever
@@ -2732,22 +2789,33 @@ zones:
     quadplex_allowed:
       # Table 315-1, Quadplexes row, eighth column: a bare P -- the use is
       # permitted; the district is RED BY RULING for design review (notes).
+      # The value is the ruling's, so it cites design review, not the cell
+      # (which says P; zdo.315.txt#L41,L43-L54,L295-L306).
       value: false
-      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
     notes: >-
-      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of 2026-10-08):
-      the use is permitted in this district (Table 315-1, a bare P) but
-      development here goes through design review, which is not by right.
-      ZDO 1102.01(A): "Design review is required for: Development,
-      redevelopment, expansions, and improvements in: ... HDR, MR-1, MR-2, MRR,
-      PMD, RCHDR, SHD, VA, and VTH Districts". The only exceptions are detached
-      single-family dwellings, manufactured dwellings, prefabricated structures
-      and their accessory uses, stormwater facilities, utility cabinets and
-      utility lines (1102.01(A)(1)-(2)); a quadplex is none of them. Design
-      review is a Type II application (1102.03). Section 1102 is not in the
-      provenance store; it was read live from codepublishing.com on 2026-10-08
-      and should be added to the store before this ruling is relied on in a
-      citation check.
+      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
+      2026-10-08): the use is permitted in this district (Table 315-1, a
+      bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
+      goes through design review, which is not by right. ZDO
+      1102.01(A)(1)(c): "Design review is required for: Development,
+      redevelopment, expansions, and improvements in: ... HDR, MR-1,
+      MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts"
+      (zdo.1102.txt#L5,L7,L13), and 1102.03 makes it "a Type II
+      application" (L131). Neither exception reaches a quadplex.
+      1102.01(B) (L21) lifts design review for detached single-family
+      dwellings, manufactured dwellings and prefabricated structures,
+      and 1102.01(C) (L23) for stormwater facilities, utility cabinets
+      and utility facilities. "Prefabricated structure" is the one that
+      sounds like this building, and it is not: ZDO 202 defines it as a
+      building manufactured off site that "is designed for use as a
+      single-family dwelling" (zdo.202.definitions.txt#L421). A
+      factory-built four-unit building is off-site construction and not
+      a single-family dwelling, so the exception is a single-family word
+      and the pod is outside it. Section 1102 was stored 2026-10-09
+      (FOLLOWUPS 52) and the value above cites it rather than the use
+      table.
 
       Dimensional standards are NOT encoded. Table 315-4 answers rear setback,
       side setback and building separation with "See Subsection 1005.02(L)": a
@@ -3318,8 +3386,11 @@ zones:
       # Station Community Mixed Use. Table 510-1, Quadplexes row, SCMU column
       # (the eighth data cell, L289): a bare P with no note. The use is
       # permitted; what makes the zone RED is the process, see the note.
+      # The value is the ruling's, so it cites design review, not the cell
+      # (zdo.510.txt#L85,L281,L289).
       value: false
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L85,L281,L289"
+      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (ZDO 202, a district regulated by Section 500; 510.02 names SCMU), as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L21,L131"
     min_lot_sqft:
       # Table 510-2 gives SCMU "1/2 acre[2,4]" and note 2 limits that to
       # subdivisions, partitions and property line adjustments, so it is not
@@ -3352,15 +3423,22 @@ zones:
       quote: "or/clackamas/_unincorporated/zdo.510.txt#L1468,L1476"
     notes: >-
       RED BY RULING (Steph, 2026-10-08): the use is permitted but every
-      development in this district goes through design review, which is not by
-      right. ZDO 1102.01(A) requires design review for "Development,
-      redevelopment, expansions, and improvements in ... Commercial zoning
-      districts", and 1102.03 makes it "a Type II application", decided by the
-      Planning Director or forwarded to the Design Review Committee (1102.04).
-      Section 1102 is not in the provenance store; it was read live from
-      codepublishing.com on 2026-10-08 and should be added to the store before
-      this ruling is relied on in a citation check. The dimensions below stay so
-      the ruling can be reversed.
+      development in this district goes through design review, which is
+      not by right. ZDO 1102.01(A)(1)(a) requires design review for
+      "Development, redevelopment, expansions, and improvements in ...
+      Commercial zoning districts" (zdo.1102.txt#L5,L7,L9); ZDO 202
+      makes a commercial zoning district one "regulated by Section 500,
+      Commercial Districts" (zdo.202.definitions.txt#L661), and 510.02
+      names SCMU among them. 1102.03 makes it "a Type II application"
+      (L131), decided by the Planning Director or forwarded to the
+      Design Review Committee (1102.04). The 1102.01(B) exception (L21)
+      is for detached single-family dwellings, manufactured dwellings
+      and prefabricated structures, and ZDO 202 defines a prefabricated
+      structure as one "designed for use as a single-family dwelling"
+      (zdo.202.definitions.txt#L421), so a factory-built four-unit
+      building is outside it. Section 1102 was stored 2026-10-09
+      (FOLLOWUPS 52) and the value above cites it. The dimensions below
+      stay so the ruling can be reversed.
 
 
       Not encoded: setback_front_ft. Table 510-2 prints "See Subsection
@@ -3405,8 +3483,11 @@ zones:
     quadplex_allowed:
       # Table 510-1, Quadplexes row, PMU column (L288): a bare P. RED by
       # process, see the note.
+      # The value is the ruling's, so it cites design review and the master
+      # plan, not the cell (which says P; zdo.510.txt#L84,L281,L288).
       value: false
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L84,L281,L288"
+      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (510.02 names PMU), as a Type II application (1102.03), with a master plan where Table 510-3 is not met for the entire site (1102.03(B))
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L131,L135"
     min_lot_sqft:
       # Table 510-2 prints "PMU1: None". Section 845.01 still sets 7,000 for a
       # quadplex and the table does not displace it.
@@ -3443,8 +3524,8 @@ zones:
       four-unit building does not meet that for the site. ZDO 1102.03(B) then
       says "a master plan shall be required if ... compliance with Table 510-3
       ... is not being achieved for the entire PMU site", and 1102.01(A) puts
-      all commercial-district development through Type II design review.
-      Section 1102 is not in the provenance store (read live 2026-10-08).
+      all commercial-district development through Type II design review
+      (zdo.1102.txt#L5,L7,L9,L131,L135; stored 2026-10-09, FOLLOWUPS 52).
       Table 510-2 notes 8 and 22 in the store show both processes in this
       district's own table. The dimensions stay so the ruling can be reversed.
 
@@ -3464,8 +3545,11 @@ zones:
       cite: ZDO 510 Table 510-2 prints one PMU column for all Planned Mixed Use sites (PMU1 to PMU6), so the setbacks printed under it are PMU1's and this site's alike
       quote: "or/clackamas/_unincorporated/zdo.510.txt#L65,L1387"
     quadplex_allowed:
+      # The value is the ruling's, so it cites design review and the master
+      # plan, not the cell (which says P; zdo.510.txt#L84,L281,L288).
       value: false
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L84,L281,L288"
+      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (510.02 names PMU), as a Type II application (1102.03), with a master plan where Table 510-3 is not met for the entire site (1102.03(B))
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L131,L135"
     min_lot_sqft:
       # Table 510-2: "PMU2: 2 acres" = 87,120 square feet.
       acres: 2
@@ -3476,7 +3560,7 @@ zones:
       use, an office floor area ratio of 0.5 (lots of 2.5 acres or less) or 1.0,
       a retail and service FAR of 0.3 and 30 dwelling units per net acre; a
       four-unit building meets none of the site totals, so a master plan
-      through design review (ZDO 1102.03(B), live read, not in the store) is
+      through design review (ZDO 1102.03(B), zdo.1102.txt#L135) is
       the only path. Setbacks and height come from the same single PMU column
       of Table 510-2 as PMU1. Not encoded: the 30 du per net acre minimum
       (Table 510-3, L1604-L1605); net acreage is defined by 1012.08(A) and (B)
@@ -3491,8 +3575,11 @@ zones:
       cite: ZDO 510 Table 510-2 prints one PMU column for all Planned Mixed Use sites (PMU1 to PMU6), so the setbacks printed under it are PMU1's and this site's alike
       quote: "or/clackamas/_unincorporated/zdo.510.txt#L65,L1387"
     quadplex_allowed:
+      # The value is the ruling's, so it cites design review and the master
+      # plan, not the cell (which says P; zdo.510.txt#L84,L281,L288).
       value: false
-      quote: "or/clackamas/_unincorporated/zdo.510.txt#L84,L281,L288"
+      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (510.02 names PMU), as a Type II application (1102.03), with a master plan where Table 510-3 is not met for the entire site (1102.03(B))
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L131,L135"
     min_lot_sqft:
       # Table 510-2: "PMU3: 3 acres" = 130,680 square feet.
       acres: 3
