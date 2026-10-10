@@ -66,6 +66,7 @@ from app.models.flats import (
     FlatsWordRuling,
 )
 from app.services import flats_flags as flag_history
+from app.services import flats_price
 from app.services import flats_refresh as refresh_service
 from app.services.flats_refresh import refresh_notices
 from flats.encode import legible
@@ -95,6 +96,7 @@ from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.net_area import SHOWN as net_area_shown
 from flats.rules.ledger import CoverageRow, read_coverage
+from flats.score import price as price_calc
 from flats.rules.loader import MIN_RULING
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
@@ -360,6 +362,12 @@ def _catalog() -> Any:
 @lru_cache(maxsize=1)
 def _ruleset() -> RuleSet:
     return RuleSet(_layers())
+
+
+@lru_cache(maxsize=1)
+def _zone_caps() -> dict[tuple[str, str], price_calc.ZoneCap]:
+    """Which zones state a density ceiling, read once through the resolver."""
+    return price_calc.zone_caps(_ruleset(), _layers())
 
 
 def _designs() -> list[Design]:
@@ -3133,7 +3141,11 @@ def _lot_conditions(jurisdiction: str, zone: str, q: str) -> list[Any]:
 
 
 async def _lot_counts(
-    session: DBSession, run_id: int, design: str | None, conditions: list[Any]
+    session: DBSession,
+    run_id: int,
+    design: str | None,
+    conditions: list[Any],
+    price: Mapping[str, Any] | None = None,
 ) -> dict[str, dict[str, int]]:
     """How many lots wear each verdict and each signed colour under the filter."""
     best = _best(run_id, design)
@@ -3144,6 +3156,11 @@ async def _lot_counts(
         .where(*conditions)
         .group_by(best.c.verdict, best.c.colour)
     )
+    if price is not None and price.get("ceiling") is not None:
+        pods = flats_price.pods_column(price["cfg"], _zone_caps(), best.c.colour)
+        stmt = stmt.where(
+            flats_price.within(flats_price.per_home_column(price["cfg"], pods), pods, price["ceiling"])
+        )
     verdicts = {c: 0 for c in _COLOURS}
     colours = {c: 0 for c in _COLOURS}
     for verdict, colour, n in (await session.execute(stmt)).all():
@@ -3269,7 +3286,69 @@ def _net_land(lot: FlatsLot) -> list[dict[str, Any]]:
     return list(out.values())
 
 
-def _lot_row(lot: FlatsLot, verdict: int, colour: int, results: list[dict[str, Any]]) -> dict[str, Any]:
+def _price_params(on: str, ceiling: str, pod: str, road: str) -> dict[str, Any]:
+    """The price-per-home settings a request carries: the county defaults with
+    any override, and the filter's ceiling (applied only when ``on`` is "1")."""
+    cfg = price_calc.settings().adjusted(pod_sqft=pod, road_share_pct=road)
+    amount = price_calc.as_decimal(ceiling)
+    if amount is None or amount <= 0:
+        amount = cfg.default_per_home_max
+    return {"cfg": cfg, "on": on == "1", "ceiling_value": amount, "ceiling": amount if on == "1" else None}
+
+
+async def _county_as_of(session: DBSession, snapshot_id: int | None) -> str:
+    """When the county roll in this copy dates from, for a price's as-of."""
+    if snapshot_id is None:
+        return ""
+    snap = await session.get(FlatsSnapshot, snapshot_id)
+    if snap is None:
+        return ""
+    release = f"RLIS {snap.rlis_release} release, " if snap.rlis_release else ""
+    return f"{release}county copy of {snap.snapshot_date.isoformat()}"
+
+
+def _price_label(lot: FlatsLot, colour: int, cfg: price_calc.PriceSettings, as_of: str) -> dict[str, Any]:
+    """The lot's price per home and how it was reached, for the page."""
+    facts = lot.facts or {}
+    cap = _zone_caps().get((_pocket_of(facts) or lot.jurisdiction, lot.zone or ""))
+    got = price_calc.price_per_home(
+        lot.area_sqft, facts, cfg, cap=cap, keep_one=colour <= 1, county_as_of=as_of
+    )
+    if got.per_home is not None:
+        text = f"${got.per_home:,.0f}"
+    elif got.homes == 0:
+        text = "under 1 pod"
+    else:
+        text = "no price"
+    roll = facts.get("assessor") or {}
+    return {
+        "text": text,
+        "per_home": float(got.per_home) if got.per_home is not None else None,
+        "pods": got.pods,
+        "homes": got.homes,
+        "estimate": got.estimate,
+        "roads": got.roads_taken,
+        "capped_by": got.capped_by,
+        "amount": float(got.quote.amount) if got.quote else None,
+        "source": got.quote.source if got.quote else "",
+        "basis": got.quote.basis if got.quote else "",
+        "as_of": got.quote.as_of if got.quote else "",
+        "sale_price": roll.get("sale_price"),
+        "sale_date": _roll_date(roll["sale_date"]) if roll.get("sale_date") else "",
+        "pod_sqft": float(cfg.pod_sqft),
+        "road_pct": float(cfg.road_share_pct),
+        "density_du_per_acre": float(cap.du_per_acre) if cap and cap.du_per_acre is not None else None,
+        "unit_lot_sqft": float(cap.unit_lot_sqft) if cap and cap.unit_lot_sqft is not None else None,
+    }
+
+
+def _lot_row(
+    lot: FlatsLot,
+    verdict: int,
+    colour: int,
+    results: list[dict[str, Any]],
+    price: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
     facts = lot.facts or {}
     words = _RULE_COLOUR_WORDS if any(r.get("ruled") for r in results) else _COLOUR_WORDS
     best_colour = _COLOURS[colour] if 0 <= colour < len(_COLOURS) else "unknown"
@@ -3295,6 +3374,7 @@ def _lot_row(lot: FlatsLot, verdict: int, colour: int, results: list[dict[str, A
         "results": results,
         "quadfit": facts.get("quadfit") or {},
         "href": _lot_href(lot.county, lot.tlid),
+        "price": _price_label(lot, colour, price["cfg"], price["as_of"]) if price is not None else None,
     }
 
 
@@ -3305,6 +3385,8 @@ async def _lot_rows(
     conditions: list[Any],
     colour: str,
     page: int,
+    price: Mapping[str, Any],
+    cheapest_first: bool = False,
 ) -> list[dict[str, Any]]:
     best = _best(run_id, design)
     stmt = (
@@ -3314,8 +3396,13 @@ async def _lot_rows(
     )
     if colour in _COLOURS:
         stmt = stmt.where(best.c.colour == _COLOURS.index(colour))
+    pods = flats_price.pods_column(price["cfg"], _zone_caps(), best.c.colour)
+    per_home = flats_price.per_home_column(price["cfg"], pods)
+    if price.get("ceiling") is not None:
+        stmt = stmt.where(flats_price.within(per_home, pods, price["ceiling"]))
+    order = [per_home.asc().nulls_last()] if cheapest_first else []
     stmt = (
-        stmt.order_by(FlatsLot.jurisdiction, FlatsLot.tlid)
+        stmt.order_by(*order, FlatsLot.jurisdiction, FlatsLot.tlid)
         .offset((page - 1) * _LOTS_PAGE)
         .limit(_LOTS_PAGE)
     )
@@ -3332,7 +3419,10 @@ async def _lot_rows(
             if design and row.design_key != design:
                 continue
             by_lot.setdefault(row.lot_id, []).append(_result_card(row))
-    return [_lot_row(lot, verdict, colour_rank, by_lot.get(lot.id, [])) for lot, verdict, colour_rank in lots]
+    return [
+        _lot_row(lot, verdict, colour_rank, by_lot.get(lot.id, []), price)
+        for lot, verdict, colour_rank in lots
+    ]
 
 
 async def _zones_in(session: DBSession, jurisdiction: str, snapshot_id: int | None) -> list[str]:
@@ -3376,6 +3466,8 @@ def _lots_ctx(
     q: str = "",
     tight: bool = False,
     page: int = 1,
+    price: Mapping[str, Any] | None = None,
+    cheapest_first: bool = False,
 ) -> dict[str, Any]:
     cities = sorted(
         ((layer_id, layer.label) for layer_id, layer in _layers().items()), key=lambda kv: kv[1]
@@ -3391,6 +3483,11 @@ def _lots_ctx(
         "q": q,
         "tight": tight,
         "page": page,
+        "price_on": bool(price and price["on"]),
+        "price_ceiling": f"{price['ceiling_value']:.0f}" if price else "30000",
+        "price_pod": f"{price['cfg'].pod_sqft:.0f}" if price else "4500",
+        "price_road": f"{price['cfg'].road_share_pct:g}" if price else "25",
+        "cheapest_first": cheapest_first,
         "per_page": _LOTS_PAGE,
         "colours": _COLOURS,
         "colour_words": _COLOUR_WORDS,
@@ -3635,6 +3732,11 @@ async def flats_lots(
     design: str = Query(""),
     q: str = Query(""),
     tight: str = Query(""),
+    ppu: str = Query(""),
+    ppu_max: str = Query(""),
+    pod: str = Query(""),
+    road: str = Query(""),
+    sort: str = Query(""),
     run: int | None = Query(None),
     page: int = Query(1, ge=1),
 ) -> HTMLResponse:
@@ -3643,11 +3745,13 @@ async def flats_lots(
     runs = await _runs(session)
     chosen = _chosen_run(runs, run)
     tight_only = tight == "1"
+    price = _price_params(ppu, ppu_max, pod, road)
+    cheapest = sort == "ppu"
     ctx = {
         **_base_ctx(user, dedup_count, "flats_lots", conflicts_count=conflicts_count),
         **_lots_ctx(
             runs, chosen, jurisdiction=jurisdiction, zone=zone, colour=colour, design=design, q=q,
-            tight=tight_only, page=page,
+            tight=tight_only, page=page, price=price, cheapest_first=cheapest,
         ),
         "refresh": await _refresh(session),
         "counts": {"verdict": {}, "if_signed": {}, "lots": 0},
@@ -3675,12 +3779,14 @@ async def flats_lots(
     if await _ruled_run(session, chosen.id):
         ctx["colour_words"] = _RULE_COLOUR_WORDS
         ctx["ruled"] = True
-    counts = await _lot_counts(session, chosen.id, picked, conditions)
+    counts = await _lot_counts(session, chosen.id, picked, conditions, price)
     shown = counts["if_signed"].get(colour, counts["lots"]) if colour in _COLOURS else counts["lots"]
     ctx["counts"] = counts
     ctx["shown"] = shown
     ctx["pages"] = max(1, -(-shown // _LOTS_PAGE))
-    ctx["lots"] = await _lot_rows(session, chosen.id, picked, conditions, colour, page)
+    price["as_of"] = await _county_as_of(session, chosen.snapshot_id)
+    ctx["price_as_of"] = price["as_of"]
+    ctx["lots"] = await _lot_rows(session, chosen.id, picked, conditions, colour, page, price, cheapest)
     ctx["zones"] = await _zones_in(session, jurisdiction, chosen.snapshot_id)
     return templates.TemplateResponse(request, "flats_lots.html", ctx)
 
@@ -3932,6 +4038,8 @@ async def flats_lot(
     county: str,
     tlid: str,
     run: int | None = Query(None),
+    pod: str = Query(""),
+    road: str = Query(""),
 ) -> HTMLResponse:
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
@@ -3977,7 +4085,9 @@ async def flats_lot(
             r["plan"] = _plan(geojson, r["drawing"])
     ranks = [_COLOURS.index(r["colour"]) if r["colour"] in _COLOURS else len(_COLOURS) for r in results]
     verdicts = [_COLOURS.index(r["verdict"]) if r["verdict"] in _COLOURS else len(_COLOURS) for r in results]
-    card = _lot_row(lot, min(verdicts) if verdicts else 2, min(ranks) if ranks else 2, results)
+    price = _price_params("", "", pod, road)
+    price["as_of"] = await _county_as_of(session, lot.snapshot_id)
+    card = _lot_row(lot, min(verdicts) if verdicts else 2, min(ranks) if ranks else 2, results, price)
     facts = lot.facts or {}
     return templates.TemplateResponse(
         request,
