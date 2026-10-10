@@ -1789,6 +1789,14 @@ read when the weekly full re-screen lands.
    splice cannot retire lots a re-run drops from s3 (assign keeps a
    measured lot's old row): a bound/splice scope must list those lots
    explicitly, as the 805 MR1/MR2/PMD/VA lots were here.
+   LEFTOVERS TRIAGED 2026-10-09 (run 69): only Gladstone C2 Portland Avenue
+   reaches greens (23 of 34 C2 greens abut the avenue). STEPH RULED
+   2026-10-09: YELLOW until known -- avenue-facing entrance + 25% ground-floor
+   glass (GMC 17.18.050(3)(b)+(c)) is a fact about the building the catalog
+   does not hold; no assumption about the pod. Everything else touches 0
+   greens: ZDO 1102 into the store, Milwaukie neighbours block, then recorded
+   refusals / measured-zero; Tualatin block tracing + RH-HR min height
+   deferred (0 lots). Assigned to the "Remaining zone codes" agent.
 53. [scan: YES (Estacada layer is drafted and unscreened; it lands at the next weekly after the acquire of its zoning dataset)] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
    2026-10-08); Estacada is encoded; Molalla is blocked on HUMAN_TODO 29
    (Steph's PDFs); Forest Grove stays blocked on HUMAN_TODO 28.** Canby's only
