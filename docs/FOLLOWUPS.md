@@ -999,8 +999,11 @@ read when the weekly full re-screen lands.
    for OC Ord. 22-1001 (reopen if one turns up). Recorded as NOT ENCODED/overridden in
    oregon-city.yaml; no colour moves (the pod keeps one approach). Sweep: no other encoded city
    states a per-unit approach MINIMUM; Hillsboro/Tigard cap "one per two units" (never binds a
-   one-approach pod); Sherwood/Durham/Cornelius pairing-or-sharing limits are open (see
-   report). Do NOT merge flats/oc-two-approaches; Steph to confirm, then delete it. Item 25
+   one-approach pod). DURHAM 7.12.9 pairing = an option for front drives, the pod uses Option 2 (rear
+   court): nothing to encode. CORNELIUS (R-7/R-10/A-2/CR/GMU) "not more than two lots may be served by
+   one shared driveway" is NOT state-overridden (it binds detached lots too) and would need a 2nd
+   approach on the unit-lots plat; not encoded (no field, item 25 held); run 70 Cornelius = 0 green,
+   so no colour moves. REOPEN when Cornelius is signed or item 25 is built. Do NOT merge flats/oc-two-approaches; Steph to confirm, then delete it. Item 25
    no longer needs a second approach for item 24.
    AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-two-approaches"; reach first,
    bound + read every move, lands at the weekly; stop and ask if it needs

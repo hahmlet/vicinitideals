@@ -359,7 +359,10 @@ pytestmark = pytest.mark.unit
 # 284 -> 285 comments on 2026-10-10: Oregon City 16.12.035.F (one approach per two
 # townhouses) recorded as NOT ENCODED and OVERRIDDEN by OAR 660-046-0225(1)(c) and the
 # Large Cities Model Code (FOLLOWUPS 24, branch flats/driveway-state-law).
-EXPECTED = {"notes": 150, "comments": 285, "tests": 18}
+# 285 -> 287 comments on 2026-10-10: Cornelius (two lots per shared driveway, not
+# state-overridden, no colour to move) and Durham 7.12.9 (paired front driveways, an option
+# the pod does not use), both from the FOLLOWUPS 24 driveway sweep.
+EXPECTED = {"notes": 150, "comments": 287, "tests": 18}
 # 149 -> 148 notes on 2026-10-09: Gladstone C-2's Portland Avenue limitations
 # (GMC 17.18.050(3)) were READ AND NOT ENCODED; `along_portland_avenue` now
 # measures the lot and qualifies the permission (FOLLOWUPS 52,
