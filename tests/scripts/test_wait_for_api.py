@@ -45,6 +45,8 @@ def _run(tmp_path: Path, statuses: list[str], *, timeout: int, container: str = 
     bindir = tmp_path / "bin"
     bindir.mkdir()
     (bindir / "docker").write_bytes(STUB_DOCKER.replace("\r\n", "\n").encode())
+    # Linux skips a non-executable file on PATH and finds the real docker.
+    (bindir / "docker").chmod(0o755)
     (bindir / "statuses").write_text("\n".join(statuses) + "\n")
     script = tmp_path / "wait-for-api.sh"
     script.write_bytes(SCRIPT.read_bytes().replace(b"\r\n", b"\n"))
