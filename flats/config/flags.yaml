@@ -306,6 +306,38 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FIRE_HOSE_START]
+  CORNER-READ-AS-BEND:
+    description: "Every street line of the lot is one street that bends 45 degrees or more, and the lot's code states no corner test: screened as one front on one street, not a corner lot -- the stricter reading (Steph 2026-10-09)"
+    kind: categorical
+    risk: possible
+    # Marks the reading, never holds a green: below the yellow line.
+    severity: 1
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot]
+    path: "Ask the planning counter whether the bend is a corner lot; the code is silent (FOLLOWUPS 63)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CORNER_READ_AS_BEND]
+  CURVE-ON-THE-LINE:
+    description: "The lot's street curve measured within a degree of the angle its code's corner clause turns on (the bounds are the measured angle and the clause's ceiling); the digitising error is that size, so it is read as one street that bends, not a corner"
+    kind: parametric
+    risk: possible
+    # Marks the reading, never holds a green: below the yellow line.
+    severity: 1
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "Measure the lot's frontage on the plat, or ask the planning counter whether the curve is a corner lot (FOLLOWUPS 63)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CURVE_ON_THE_LINE]
   MEASURE-SITE-GRADE:
     description: "No elevation model covers the ground the drawn plan stands on, so its slope is not known"
     kind: categorical

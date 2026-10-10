@@ -110,6 +110,7 @@ from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.drawn import load_area, observed_drawn
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
+from flats.geom.frontage_curve import BAND_DEG, angle_of, is_unbroken, makes_corner
 from flats.geom.neighbour import (
     NEIGHBOUR_FACTS,
     lines_from_quadfit,
@@ -142,10 +143,12 @@ from flats.geom.named_street import (
     observed_avenue,
     observed_named_street,
 )
+from flats.geom.one_street import one_street_column
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
 from flats.ingest.flatter import flatter_checked
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
+from flats.rules.definitions import Abuts, Definition, Side, decide
 from flats.rules.model import TRANSIT_MEASURES, Layer
 from flats.rules.net_area import MEASURED as NET_MEASURED, SLOPES as NET_SLOPES, measured_deductions
 from flats.rules.resolver import RuleSet, Verdict as RuleVerdict, ZoneResolution
@@ -571,6 +574,121 @@ def _counts_streets(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) 
             return getattr(defn, "test", None) == "frontage_count"
         queue.extend(layers[current].definitions_from)
     return False
+
+
+def _boundary_of_one_street(edges: Sequence[Sequence[Any]]) -> list[Side]:
+    """The lot's ring as a definition reads it, every street edge on the one
+    street (``one_street``): length, direction and what each line abuts."""
+    out: list[Side] = []
+    for e in edges:
+        x1, y1, x2, y2 = (float(v) for v in e[:4])
+        cls = e[4] if len(e) >= 5 else ""
+        abuts = Abuts.street if cls == STREET_CLASS else Abuts.alley if cls == ALLEY_CLASS else Abuts.none
+        out.append(
+            Side(
+                length_ft=math.hypot(x2 - x1, y2 - y1),
+                bearing_deg=math.degrees(math.atan2(y2 - y1, x2 - x1)) % 180.0,
+                abuts=abuts,
+                street_id="street" if abuts is Abuts.street else "",
+            )
+        )
+    return out
+
+
+def _corner_lot_definition(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> Definition | None:
+    """The ``corner_lot`` test the lot's code writes: its own layer's, or the
+    first adopted through ``definitions_from`` (as :func:`_counts_streets`
+    walks them). None where the code writes none, or without ``layers``."""
+    if layers is None:
+        return None
+    queue = [_layer_id(row)]
+    seen: set[str] = set()
+    while queue:
+        current = queue.pop(0)
+        if current is None or current in seen or current not in layers:
+            continue
+        seen.add(current)
+        defn = layers[current].definitions.get("corner_lot")
+        if defn is not None:
+            return defn
+        queue.extend(layers[current].definitions_from)
+    return None
+
+
+def _bend_is_no_corner(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> bool:
+    """Whether the lot's own code leaves a bend in ONE street unmade a corner.
+
+    A code that writes a ``corner_lot`` test (Portland, Gresham, Oregon City,
+    Beaverton, Clackamas County) is asked through
+    :func:`flats.rules.definitions.decide` on the lot's ring with every street
+    edge one street: False means the code reads the bend as one street. A code
+    that answers True (Portland's curve of 120 degrees or less, Gresham's
+    delta of 60) governs its own lot, and so does one that cannot answer
+    (``None``). A curve clause measured as ONE angle across the frontage is
+    pulled in by :data:`~flats.geom.frontage_curve.BAND_DEG`, the digitising
+    error: a curve within a degree of the ceiling is a bend. A jurisdiction
+    that writes no test is silent, and Steph's 2026-10-09 ruling takes the
+    more conservative reading with a flag: one street name on one run is a
+    bend. Without ``layers`` the question is not asked.
+    """
+    if layers is None:
+        return False
+    defn = _corner_lot_definition(row, layers)
+    if defn is None:
+        return True
+    ring = _boundary_of_one_street(json.loads(row.get("edges_json") or "[]"))
+    if defn.curve_by == "vertex":
+        return decide({"corner_lot": defn}, "corner_lot", ring) is False
+    # A curve clause written as ONE angle across the whole curve is
+    # measured on the lot's frontage, not bend by bend.
+    plain = dataclasses.replace(defn, curve_at_or_below_deg=None, curve_by="vertex")
+    return decide({"corner_lot": plain}, "corner_lot", ring) is False and not makes_corner(
+        defn.curve_by,
+        defn.curve_at_or_below_deg or 0.0,
+        inclusive=defn.curve_inclusive,
+        inside_only=defn.curve_inside_only,
+        edges_json=row.get("edges_json"),
+        margin_deg=BAND_DEG,
+    )
+
+
+def curve_on_the_line(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> tuple[float, float] | None:
+    """``(measured angle, the clause's ceiling)`` when the lot's code writes a
+    curve clause measured as one angle and the lot lies within
+    :data:`~flats.geom.frontage_curve.BAND_DEG` of its ceiling, else None.
+    Called on a lot already read as a bend: the flag says which way the
+    reading would have gone without the margin (CURVE-ON-THE-LINE)."""
+    defn = _corner_lot_definition(row, layers)
+    if defn is None or defn.curve_by == "vertex" or defn.curve_at_or_below_deg is None:
+        return None
+    angle = angle_of(defn.curve_by, inside_only=defn.curve_inside_only, edges_json=row.get("edges_json"))
+    if angle is None or abs(angle - defn.curve_at_or_below_deg) > BAND_DEG:
+        return None
+    return round(angle, 2), float(defn.curve_at_or_below_deg)
+
+
+def read_as_bend(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> bool:
+    """Whether a lot s4 read as a corner is ONE street that bends, and is
+    screened as one front (:data:`~flats.score.screen.CORNER_READ_AS_BEND`).
+
+    All of: the street directions pass the corner test
+    (:func:`~flats.geom.corner.two_streets`), every street edge lies on one
+    street (``one_street``, :mod:`flats.geom.one_street`), and the lot's code
+    states no corner test that would make the bend a corner
+    (:func:`_bend_is_no_corner`), and the street edges are ONE unbroken run
+    of the ring (:func:`~flats.geom.frontage_curve.is_unbroken`) -- one name
+    on two fronts parted by a rear or side line is two fronts, not a bend.
+    Steph, 2026-10-09: where the code is silent, take the more conservative
+    reading, with a flag.
+    """
+    bearings = json.loads(row.get("front_bearings_json") or "[]")
+    return (
+        len(bearings) >= 2
+        and row.get("one_street") is True
+        and two_streets(bearings)
+        and is_unbroken(row.get("edges_json"))
+        and _bend_is_no_corner(row, layers)
+    )
 
 
 def _map_code_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
@@ -1317,6 +1435,9 @@ def lot_from_row(
     """
     import shapely
 
+    bend = read_as_bend(row, layers)
+    if bend:
+        row = {**row, "front_bearings_json": json.dumps(json.loads(row["front_bearings_json"])[:1])}
     key, how = drive_reading(row, layers)
     second: QuadfitLot | None = None
     unconfirmed = False
@@ -1393,6 +1514,8 @@ def lot_from_row(
         # A permit to build on mapped stream, wetland, habitat or flood
         # ground: a closer look (FOLLOWUPS 42(b)/(c)).
         resource_permits=permits_on(row),
+        corner_read_as_bend=bend,
+        curve_on_the_line=curve_on_the_line(row, layers) if bend else None,
     )
     juris = str(row.get("jurisdiction"))
     try:
@@ -1533,6 +1656,7 @@ def iter_rows(
             street_end_ft=street_end_column(frame, streets),
             named_street_ft=named_street_column(frame, streets),
             avenue_ft=avenue_column(frame, streets),
+            one_street=one_street_column(frame, streets),
             reach_off_wkb=beyond_reach_column(frame, streets),
         )
     # Every null -- NaN, NaT, pandas' NA -- leaves as None, so the readers

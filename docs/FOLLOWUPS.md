@@ -2264,6 +2264,39 @@ read when the weekly full re-screen lands.
    the unnamed reading (steps 2 + 3), accepting ~67 greens -> red; cities
    that write a corner test (Portland, Gresham, Oregon City, Beaverton)
    follow their own words (step 1). Bound + read every moved lot first.
+   BUILT 2026-10-09 (branch flats/items-60-63; bound read lot by lot; NOT merged,
+   NOT spliced). Where the city's code is silent, a one-street bend takes the
+   unnamed reading unless the front is broken: `read_as_bend` = two+ bearings,
+   one street name, one UNBROKEN run (flats/geom/frontage_curve.py), and the
+   city's own corner words (if any) say "not a corner". Curve clauses are ONE
+   angle across the whole frontage: Beaverton BDC 90 = chord angle at the
+   foremost point, strict < 135; Gresham 3.0100 = inside curve, total turn
+   >= 60 (tangent <= 120); Portland PCC 33.910 + Wood Village WVDC 720.030 =
+   tangent <= 120. PORTLAND/WOOD VILLAGE AMBIGUITY: "angles that are 120
+   degrees or less" read as TOTAL turn (ruled); the per-bend reading is a
+   one-line config change and keeps 44 lots as corners (noted in both layers).
+   Oregon City has no curve clause, so a one-street bend is never a corner.
+   SLIVER RULE: a street edge < 15 ft turning >= SLIVER_TURN_DEG off the
+   longest is ignored ONLY inside a stretch that also holds a real front edge;
+   an isolated short piece is a second front (a through lot), so the run is
+   broken. +-1 DEGREE BAND (BAND_DEG): digitising error is 0.5-2 deg (0.5 ft
+   slip) to 1-4 deg (1 ft), so a lot within 1 deg of a ceiling (Beaverton 135,
+   Portland/Wood Village 120, Gresham 60/120) takes the bend reading and
+   carries flag CURVE-ON-THE-LINE (sev 1) with bounds (measured, ceiling).
+   Band re-bound (80 lots, 160 rows): 4 colour moves -- Beaverton 134.4 /
+   134.9 / 134.95 deg: green -> red 1, yellow -> red 2 (each also CORNER-READ-
+   AS-BEND); Portland 119.48 deg: yellow -> green 1; flags on all as expected.
+   FINAL NUMBERS (best design per lot, vs main or item-60-only): WashCo uninc.
+   green -> red 84, green -> yellow 2, yellow -> red 225, yellow -> green 5,
+   red -> yellow 1; item-60 gains 374 yellow -> green, all WashCo uninc., 66 of
+   them FIT-TIGHT; Clackamas uninc. green -> red 25, yellow -> green 2, yellow
+   -> red 36; Portland green -> red 59, green -> yellow 3, yellow -> green 2,
+   red -> yellow 1, yellow -> red 13; Beaverton green -> red 4, yellow -> red
+   20; Gresham green -> red 4, yellow -> red 20; Tualatin green -> red 22,
+   green -> yellow 1, yellow -> red 19; West Linn 14/33; Oregon City 19/1/28;
+   others small. Scopes (137): /root/fo/scope_curve.txt (6,809), scope_unb_diff
+   .txt (312), scope_band.txt (80). STILL TO DO: the one joint splice from
+   main (coordinator), and the weekly acquire must include `osm_roads`.
 64. [scan: NO (a reading exercise; fixes it finds get their own items)] **Measure the
    false-GREEN rate, so "are we converging?" has a number (offered 2026-10-09 when Steph
    asked whether the work ever ends).** Draw a random sample of ~100 GREEN lots from the
