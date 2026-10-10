@@ -2336,6 +2336,20 @@ read when the weekly full re-screen lands.
    shopping centre (item 47, red), it is not a false GREEN under today's rules.
    The sample counts such greens separately; ask Steph whether a lot whose
    pod sits on a working building's parking or yard should stay green.
+   ROUND 1 DONE 2026-10-10 (branch flats/false-green-sample, data/flats/false_green/2026-10-10/:
+   SUMMARY.md, false_green_round1.csv, seed fgs-2026-10-10-seed1, query work/draw.sql). 102 greens
+   from run 70 (49,960), 19 cities: 97 RIGHT, 4 WRONG, 1 CAN'T TELL. Weighted false-GREEN rate
+   3.4% (about 1,700 lots), 95% range about 1%-10%; 4.8% if the can't-tell is wrong. Portland 0
+   of 38; the 4 sit in WashCo unincorporated (2 of 11) and Hillsboro (2 of 3). Kinds: NEW x2 =
+   right-of-way dedication to the centre line not taken out of the fit (item 67); KNOWN x2 =
+   item 53 (by-right: Development Review) in a new city, Hillsboro, owned by the lane
+   flats/hillsboro-review-red (reach 152 of 427 Hillsboro greens). Existing-building POLICY
+   class counted apart: 17 of 102 greens carry one (11 non-house); run 70 about 3,000 greens
+   (6%) carry a 5,000+ sq ft non-house building, about 900 (1.8%) a 20,000+ one; none counted
+   wrong (item 66). CAN'T TELL: 1N2E21AD  -06200, Portland RM1, 50 x 200 ft, red if on Map 120-2
+   (item 68). Not read: the 59 PUB greens (maybe item 59's public-code rule). Stopping signal not
+   met (new kinds found). Round 2: after items 67 and the Hillsboro fix ship, redraw with a new
+   seed and weight the same way (scripts: work/consolidate.py).
 65. [scan: YES (a proof run: every answer must come out identical to 137's)] **The Windows PC
    as an idle-time scan helper (Steph 2026-10-09 asked; offered, not started).** Scans are
    CPU-bound (item 46: >14 processes buy nothing on 137; memory only sets how many run at
@@ -2350,3 +2364,118 @@ read when the weekly full re-screen lands.
    point), and a cap so the PC never runs hot while in use (item 32). ~2-4 days of agent
    work. Steph to decide; measure the 137 queue first (46(d) lockwatch on 137,
    /root/lockwatch.log, every 5 min since 2026-10-10).
+66. [scan: NO for (A); YES for (B)] **A price check beside the fit (Steph 2026-10-10: "Do we
+   not have a financial screen? If there's a large commercial use ... redevelopment wouldn't
+   support").** No: FLATS answers legal + physical fit only and ignores existing buildings by
+   design; nothing compares what a lot would cost with what a 4-home pod can pay for land.
+   The county's land, building and total values and the last sale price are already in the
+   normalized lot table for every lot (RLIS LANDVAL/BLDGVAL/TOTALVAL/SALEPRICE). Run 70 greens
+   (49,960): county total value > $1M 7,994, > $2M 3,324, > $3M 2,123; building worth more than
+   the land AND total > $1M 5,143; ~3,000 carry a 5,000+ sq ft non-house building, ~900 a
+   20,000+ one (item 64's sample: 1S2E02BB  -01100, a closed 75,050 sq ft big box, $5.8M sale
+   2020). Offered: (A) SHOW, don't screen -- a likely-price figure and an "over budget" label
+   on every lot + a Lots-page filter, colour unchanged; (B) SCREEN -- over budget = YELLOW
+   (never red: an owner may sell part of a big lot). Either needs Steph's land budget per pod
+   (dollars a 4-home project can pay for land, maybe by city). Kept OUT of the fit colour by
+   default so "can it be placed" stays honest. Steph to choose (A)/(B) and give the budget.
+   STEPH RULED 2026-10-10: (A) -- colour unchanged, a PRICE PER UNIT label + a filter set at
+   $30k/unit ($120k a pod), adjustable ("land price is passed to the buyer, so it flexes with
+   the market"; look at everything). Units = pods the lot could hold x 4, NOT one pod: a big
+   lot pays for (lot area - roads to serve the pods) / (pod + its parking), with parking
+   possibly pooled to save buffers and planters (pods stay independent). Rough cut measured
+   on run 70 greens (county total value; 4,500 sq ft a pod incl. parking + yard share; 25% to
+   roads on lots of 3+ pods): one-pod basis 126 lots <= $30k/unit; capacity basis 771 <= $30k,
+   4,911 <= $60k, 13,651 <= $100k; 1S2E02BB  -01100 (the closed big box) ~48 pods, ~$26k/unit.
+   Coordinator's proposed guards (Steph to confirm): pods capped by the zone's density limit;
+   multi-pod counts labelled ESTIMATE (new roads / a land division may need a review, against
+   the by-right rule); county market value by default, last sale shown beside it; the two
+   defaults (4,500 sq ft a pod, 25% roads) adjustable. True layouts stay item 31 / parked 27.
+   STEPH CONFIRMED 2026-10-10: the defaults and the guards. Price is rough until a PAID price
+   feed arrives (vendor TBD, ~2 months): build so a second price source slots in ahead of the
+   county value with no rework (each price carries its source + date). No scan needed: the
+   county values are already loaded per lot (scripts/flats_load_bridge.py ASSESSOR; lot page
+   ui_flats.py ~3804). BUILT 2026-10-10 on branch flats/price-per-unit: "Price per home"
+   column + opt-in filter (default $30,000, adjustable, with sq ft per pod and roads % boxes
+   and a cheapest-first sort) on the Lots page; a price block on the lot page (pods, homes,
+   ESTIMATE, county value, source + as-of, last sale shown but not used). Colour never moves.
+   Settings: flats/config/price.yaml. Price sources are an ordered list in
+   flats/score/price.py PRICE_SOURCES -- a paid feed goes IN FRONT with one entry.
+   FIRST DEPLOY (34e1a771) HUNG PRODUCTION AND WAS REVERTED (4670491e): the filter worked the
+   price out of each lot's JSON, per row, against the wide lot table. REBUILT 2026-10-10 on
+   stored columns: table flats.lot_prices (migration 0143), one narrow row per lot: price,
+   source name, as-of, a copy of the area, the zone's two density limits (flats/ingest/
+   lot_prices.py). Pods and price per home are plain arithmetic on those columns
+   (app/services/flats_price.py; parity test tests/api/test_ui_flats_price.py), so pod size
+   and roads % stay adjustable. Filled by the bridge loader (scripts/flats_load_bridge.py,
+   only the lots a bundle writes) and by scripts/flats_backfill_lot_prices.py (a whole
+   snapshot: run it for the live copy, and again after a rule change moves a zone's density
+   limit). Page queries now run with work_mem 128MB and a 25 s statement_timeout inside a
+   savepoint; past the clock the page says "took too long" instead of hanging. The counts skip
+   the wide lot table unless a city/zone/search is set; cheapest-first takes its 50 ids off the
+   narrow tables, then fetches those lots.
+   DEPLOY ORDER: (1) deploy (runs migration 0143, table starts empty: every lot reads "no
+   price", nothing hidden); (2) `uv run python scripts/flats_backfill_lot_prices.py --snapshot
+   3 --snapshot 4` on the app box (add --dry-run first); (3) re-time green+filter+sort and
+   run tests/e2e/test_flats_price.py against viciniti.deals. The row label on the page is
+   still worked out from the lot's facts, so until step 2 a label can show a price the filter
+   does not know.
+   TIMINGS (read-only, production, run 70, snapshot 4): upper bounds only, the table cannot
+   be made read-only-safe. Best-colour aggregate 4.9 s at the default 4MB work_mem (sort
+   spilling 1.4 GB), 1.6 s at 128MB. Stand-in for the stored table (a CTE built from the
+   JSONB): filtered count 7.6-16 s, filtered+sorted 50 rows 10.6 s; 15 s of that is the cold
+   read of the wide lot table, which the stored table removes. RE-MEASURE after step 2.
+   Run 70 greens (49,960), per home: <= $30k 716 / $60k 9,115 / $100k 23,441 with the zone
+   density cap; 843 / 11,199 / 29,282 without. 8,727 greens lose pods to the cap. 62 greens
+   have no county value (green+yellow 4,959, mostly Washington County unincorporated 2,728).
+   Open: (a) filter is opt-in, not on by default -- Steph to say if it should start ON;
+   (b) cap reads units/acre and the townhouse-lot minimum only, on gross area; max_units and
+   net-area density not applied; (c) ~10 greens carry county values under $1 a sq ft (price
+   per home of $17-$950) -- shown as-is; (d) a "value looks too low" mark -- Steph to decide.
+   LIVE 2026-10-10 (merge d1d8c03f): migration 0143 ran, backfill done (snapshot 3: 400,032 rows,
+   390,554 priced; snapshot 4: 590,282 / 566,553; 148 zone caps), ANALYZE run. Production
+   timings (e2e user): plain 4.7 s, green 6.4 s, green+sort 6.5 s, green+filter 7.5 s,
+   green+filter+sort 7.3 s; no query left running; tests/e2e/test_flats_price.py 3 passed on
+   viciniti.deals. Only (a) and (d) wait on Steph.
+67. [scan: YES, after the weekly re-screen (a rule change; gains none, greens turn yellow or red)]
+   **Washington County makes the owner hand over road land first; the fit ignores it (found
+   2026-10-10 by item 64's sample, 2 of 11 WashCo greens wrong).** CDC 302-2.14 C(1) (and 303-2.14
+   C for R-6) says a middle-housing lot must give land out to a set distance from the road's
+   centre line: 25 ft on a local street, 30 ft on a neighbourhood route, 37 ft on a collector,
+   recorded before the first building permit (C(2)); no strip is due where the road is already
+   built to the county's final width. Our file says "NOT ENCODED: right-of-way dedication"
+   (_unincorporated.yaml ~485-495) because nothing measures the road's existing half-width.
+   Wrong lots: 1S201CC12500 (about 3.6 ft due, pod had 0.0 ft spare) and 1N120AD09600 (about 4 ft
+   due, pod about 2.5 ft short after it). REACH (measured as alley width is, across the gap between
+   lots, read-only SQL on run 70): of 7,711 WashCo unincorporated greens, 778 (10.1%) face a road
+   at least 2 ft short; 206 (2.7%) might lose fit; 180 (2.3%) red-grade. For 4+ ft short: 504 / 144
+   / 134. PROPOSAL (nothing built): measure each fronting road's half-width from the lot-fabric gap
+   (`Lot Analysis/quadfit/s4_edges.py` `_alley_width` ray-cast), take the missing strip off the
+   envelope on that side, rescreen. Unmeasured road = worst case, per the standing rule. Decision
+   pending: none for Steph unless a lot with exactly 0 ft to spare is wanted yellow rather than red.
+68. [scan: YES, after Steph or the agent supplies the maps] **Portland Maps 120-2 and 120-3 are not
+   held (found 2026-10-10 by item 64's sample, 1 can't-tell).** 33.120.206 bars new homes on a site
+   deeper than 160 ft with under 90 ft of frontage, but only on the sites shown on Map 120-2
+   (Eastern Portland centres); 33.120.220.C adds a rear-setback rule for Map 120-3 (Eastern Pattern
+   Area). Neither map is in the store (portland.yaml ~724), so both are left out and the lots stay
+   green. Upper-bound reach: 902 Portland multi-dwelling greens are deeper than 160 ft with under
+   90 ft of frontage (RM1 647, RM2 208, RM3 47); how many sit on the map is unknown. Sample lot:
+   1N2E21AD  -06200 (RM1, 50 x 200 ft). PROPOSAL: fetch the two maps from the City's open-data
+   portal as polygons (or get them from Steph), then add a frontage check and the rear setback with
+   a corner exemption. Until then, consider marking these 902 yellow.
+69. [scan: YES, at the next weekly (a zone-level refusal; no bound needed)] **Hillsboro zones that
+   need Development Review are RED BY RULING (found 2026-10-10 by item 64's sample, 2 of 3
+   Hillsboro greens wrong; branch flats/hillsboro-review-red).** CDC 12.80.040 B.1 requires a Type
+   II Development Review for new development in any zone except D.1's list, and D.1 exempts middle
+   housing only in MR-1, SCR-LD, SCR-MD and the R zones (cdc.12.80.applications.txt L318-L320,
+   L338-L343, E at L379-L380). Ruling applied: Steph 2026-10-08 by-right only (item 53; Sandy's Type
+   II Director's review is the precedent). State law does not lift it: OAR 660-046-0215 asks only
+   for the same process as a detached house, which in these zones needs the same review, and
+   clear and objective criteria, which the residential criteria H.1-H.6 already are (H.7, the
+   discretionary one, is non-residential only). 17 zones refused, standards kept: MR-2, MR-3,
+   SCR-HD, SCR-OTC, SCR-DNC, SCR-V, SCC-SC, SCC-MM, MU-N, MU-C, MU-VTC, UC-RM, UC-MU, UC-AC,
+   UC-NC, UC-OR, UC-RP. Run 70 reach (best design per lot): green -> red 152 (MR-2 84, SCR-HD 46,
+   SCR-V 11, MR-3 5, MU-N 3, SCC-MM 2, UC-RM 1); yellow -> red 212 (SCR-V 128, MR-2 18, MR-3 18,
+   SCR-DNC 16, SCC-MM 12, SCR-HD 8, UC-RM 7, MU-N 5); 275 SCR-MD greens stay. Lands at the next
+   weekly (~2026-10-14). Open for Steph only if a Type II review on clear and objective
+   criteria should count as by-right (then all 17 zones come back).
+   MERGED 84f215f8 2026-10-10 (code live, map moves at the weekly).
