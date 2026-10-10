@@ -9,6 +9,7 @@ never a miss, and only where the code states the requirement.
 
 from __future__ import annotations
 
+import copy
 from datetime import date
 
 import pytest
@@ -19,6 +20,7 @@ from flats.designs.model import load_catalog  # noqa: E402
 from flats.fit.rectangle import Fit  # noqa: E402
 from flats.rules.fields import FIELDS, OPTIONAL_FIELDS  # noqa: E402
 from flats.rules.loader import load_rules  # noqa: E402
+from flats.rules.resolver import RuleSet  # noqa: E402
 from flats.rules.model import Provenance, Status  # noqa: E402
 from flats.rules.resolver import Resolved, ZoneResolution  # noqa: E402
 from flats.rules.resolver import Verdict as RuleVerdict  # noqa: E402
@@ -30,6 +32,7 @@ from flats.score.screen import (  # noqa: E402
     LotFacts,
     Triage,
     approaches_missing,
+    approaches_overridden,
     screen,
 )
 from flats.score.slack import SlackPolicy  # noqa: E402
@@ -37,6 +40,8 @@ from flats.score.slack import SlackPolicy  # noqa: E402
 pytestmark = pytest.mark.unit
 
 WHERE = "or/clackamas/oregon-city"
+STATE = "or"
+FIELD = "driveway_units_per_approach"
 PROV = Provenance(cite="OCMC 16.12.035.F", url="https://example.invalid", retrieved=date(2026, 10, 10))
 POLICY = SlackPolicy(tolerance={"fit_ft": 0.5})
 DESIGN = load_catalog().latest("pod56x36")
@@ -152,7 +157,94 @@ def test_only_oregon_city_states_the_requirement_and_cites_the_sentence() -> Non
         if "driveway_units_per_approach" in layer.defaults
         or any("driveway_units_per_approach" in z.values for z in layer.zones.values())
     }
-    assert holders == {WHERE}
+    # The statewide layer holds the override; the one city holding a rule is OC.
+    assert holders == {STATE, WHERE}
     value = layers[WHERE].defaults["driveway_units_per_approach"]
     assert value.value == 2
     assert "16.12.035.F" in value.prov.cite
+
+
+# -- state law over the city's rule (OAR 660-046-0225(1)(c)) ------------------
+
+
+def resolved_field(layers, where: str = WHERE) -> Resolved:
+    """The field as the real hierarchy resolves it for some zone of ``where``."""
+    rule_set = RuleSet(layers)
+    zone = next(iter(layers[where].zones))
+    got = rule_set.resolve(where, zone).values[FIELD]
+    return got
+
+
+def with_resolved(resolved: Resolved) -> ZoneResolution:
+    base = rules()
+    return ZoneResolution(
+        jurisdiction=base.jurisdiction, zone=base.zone, verdict=base.verdict,
+        values={**base.values, FIELD: resolved},
+    )
+
+
+def flag_codes(got) -> set[str]:
+    return {f.code for f in got.flags}
+
+
+def test_state_law_overrides_the_city_and_the_resolver_says_so() -> None:
+    held = resolved_field(load_rules())
+    assert held.preempted is True
+    assert held.shadowed == 2
+    assert held.value == 4
+    assert held.layer == STATE
+    assert "OAR 660-046-0225(1)(c)" in held.prov.cite
+
+
+def test_overridden_the_pod_needs_one_approach_and_the_page_shows_both() -> None:
+    zone = with_resolved(resolved_field(load_rules()))
+    assert approaches_missing(zone, DESIGN) == 0
+    assert approaches_overridden(zone, DESIGN) == 2
+    got = run(zone)
+    assert got.triage is Triage.green and got.reasons == ()
+    codes = flag_codes(got)
+    assert "DRIVEWAY-SECOND-APPROACH" not in codes
+    (record,) = [f for f in got.flags if f.code == "DRIVEWAY-STATE-OVERRIDE"]
+    assert record.bounds == (1, 2)
+    assert "OAR 660-046-0225(1)(c)" in record.source
+    kind = flag_plan.registry()["DRIVEWAY-STATE-OVERRIDE"]
+    assert kind.severity < flag_plan.colour_rules().yellow_at_severity
+    assert got.colour is flag_plan.Colour.green
+
+
+def test_with_the_override_deleted_the_same_lot_is_yellow_with_the_flag() -> None:
+    layers = copy.deepcopy(load_rules())
+    del layers[STATE].defaults[FIELD]
+    held = resolved_field(layers)
+    assert held.value == 2 and not held.preempted
+    zone = with_resolved(held)
+    assert approaches_missing(zone, DESIGN) == 1
+    got = run(zone)
+    assert got.triage is Triage.yellow
+    assert got.reasons == (CLOSER_LOOK_SECOND_APPROACH,)
+    assert flag_codes(got) >= {"DRIVEWAY-SECOND-APPROACH"}
+    assert "DRIVEWAY-STATE-OVERRIDE" not in flag_codes(got)
+
+
+def test_a_city_asking_fewer_approaches_is_untouched_by_the_state_cap() -> None:
+    layers = copy.deepcopy(load_rules())
+    city = layers[WHERE].defaults[FIELD]
+    layers[WHERE].defaults[FIELD] = city.model_copy(update={"value": 8})
+    held = resolved_field(layers)
+    assert held.value == 8 and not held.preempted
+    assert approaches_missing(with_resolved(held), DESIGN) == 0
+
+
+def test_a_city_with_no_per_unit_rule_is_untouched() -> None:
+    layers = load_rules()
+    other = next(
+        name for name, layer in layers.items()
+        if layer.zones and name not in (STATE, WHERE) and FIELD not in layer.defaults
+    )
+    held = resolved_field(layers, other)
+    assert held.value == 4 and not held.preempted and held.shadowed is None
+    zone = with_resolved(held)
+    assert approaches_missing(zone, DESIGN) == 0 and approaches_overridden(zone, DESIGN) == 0
+    got = run(zone)
+    assert got.triage is Triage.green
+    assert not flag_codes(got) & {"DRIVEWAY-SECOND-APPROACH", "DRIVEWAY-STATE-OVERRIDE"}

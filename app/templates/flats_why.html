@@ -27,7 +27,7 @@
       as resolved for {{ chain.zone }}, {{ layer.label }}, with no conditions elected.
       {% if chain.answer.when %}This is the exception for {{ chain.answer.when | join(", ") }}.{% endif %}
       {% if chain.answer.via %}Read from {{ chain.answer.via }}, which this zone's code adopts by reference.{% endif %}
-      {% if chain.answer.preempted %}A less specific layer's rule preempts the local one.{% endif %}
+      {% if chain.answer.preempted %}{{ chain.winner or "A less specific layer" }} overrides the local rule{% if chain.answer.shadowed is not none %} (the local code asks {{ chain.answer.shadowed }}){% endif %}.{% endif %}
     </div>
     <div style="margin-top:6px">
       {% if chain.answer.status == "verified" %}
@@ -88,6 +88,7 @@
           <td style="font-size:12px">
             {% if step.silent %}says nothing about this standard
             {% elif step.won %}<strong>this is the answer</strong>
+            {% elif step.overridden %}overridden by {{ chain.winner }}, which preempts the local rule
             {% elif step.preempts %}preempts anything more local
             {% else %}overridden by a more specific layer{% endif %}
             {% if step.exceptions %}

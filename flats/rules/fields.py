@@ -624,8 +624,11 @@ _F: tuple[FieldDef, ...] = (
         "odd number of dwellings)\" -- two approaches for the four-unit pod "
         "(Steph 2026-09-30: a requirement, not a cap). Stated by one city in "
         "the corpus; the others print only caps (Sherwood's share of frontage) "
-        "or per-lot limits that this pod never reaches.",
-        False,
+        "or per-lot limits that this pod never reaches. A divisor, so MORE units "
+        "per approach means FEWER approaches: the loose direction runs up, which "
+        "is why it is declared like a ceiling -- state law (OAR 660-046-0225(1)(c)) "
+        "clips a city asking fewer units per approach and leaves one asking more.",
+        True,
     ),
     FieldDef(
         "parking_maneuvering_max_width_ft",

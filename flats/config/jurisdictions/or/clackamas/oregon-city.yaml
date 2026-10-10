@@ -584,7 +584,8 @@ defaults:
   # draws one shared drive and nothing here holds a second approach's
   # geometry (spacing, the 5 ft offset, one per local frontage -- FOLLOWUPS
   # 25), so the screen asks a closer look instead of passing it
-  # (DRIVEWAY-SECOND-APPROACH).
+  # (DRIVEWAY-SECOND-APPROACH). State law overrides this value today -- see the
+  # note under the spacing table below and _state.yaml.
   driveway_units_per_approach:
     value: 2
     cite: OCMC 16.12.035.F, townhouses, one driveway approach for every two dwelling units
@@ -751,25 +752,19 @@ defaults:
   # size. 16.12.035.D allows one driveway per local-street frontage and never
   # more than two; 16.12.035.E.1 allows a middle housing property with one
   # building "one driveway for every two units", which is two for this pod
-  # (encoded as driveway_units_per_approach from F, which makes it a requirement). (or/clackamas/oregon-city/16.12.streets.txt#L978-L1091)
+  # (F, encoded above). (or/clackamas/oregon-city/16.12.streets.txt#L978-L1091)
   #
-  # NOT ENCODED, AND RULED OVERRIDDEN BY STATE LAW (2026-10-10): 16.12.035.F,
-  # "Townhouses shall have one driveway approach for every two dwelling units
-  # (round up ...)", read as a requirement (two approaches for this pod) and
-  # as a cap alike. Oregon City is a Large City (Metro, over 1,000). OAR
-  # 660-046-0020(4) counts driveways as a design standard, and 660-046-0225(1)
-  # lets a Large City apply only the Model Code's, a less restrictive one, or
-  # "the same clear and objective design standards that the Large City applies
-  # to detached single-unit structures in the same zone. Design standards may
-  # not scale by the number of dwelling units" (a detached house gets exactly
-  # one driveway, 16.12.035.D.1). 660-046-0220(3)(f)(C) says the same of
-  # townhouse "access, and circulation standards". The Large Cities Model Code
-  # (OAR 660-046 Exhibit B, stored) states no per-unit minimum: townhouses
-  # "A maximum of one (1) driveway approach is allowed for every townhouse",
-  # and a project with no corner lot "shall consolidate access for all lots
-  # into a single driveway" -- which is also OC's own 17.16.040.B.3. The one
-  # door left open is an alternative standard under 660-046-0235, which needs
-  # findings filed with the state; none was found. If one turns up, reopen.
+  # ENCODED AND OVERRIDDEN BY STATE LAW (2026-10-10): 16.12.035.F is carried
+  # above as driveway_units_per_approach = 2, and the statewide layer
+  # (_state.yaml) clips it back: Oregon City is a Large City, OAR 660-046-0020(4)
+  # counts driveways as a design standard, and 660-046-0225(1)(c) lets a Large
+  # City apply only the "same clear and objective design standards ... to
+  # detached single-unit structures" -- "Design standards may not scale by the
+  # number of dwelling units". The Large Cities Model Code states no per-unit
+  # minimum. Today the override wins and the pod needs one approach; delete the
+  # driveway_units_per_approach entry in _state.yaml (a 660-046-0235
+  # alternative-standards filing by Oregon City, or a change in the law) and
+  # this rule binds as written. None was found for Ord. 22-1001.
   # (or/clackamas/oregon-city/16.12.streets.txt#L1043-L1068)
   #
   # NOT ENCODED: the driveway's own offset from a lot line. Note 2 under Table

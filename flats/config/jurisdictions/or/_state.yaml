@@ -133,6 +133,14 @@ code:
   # Rule prose with (1)(a)(A) numbering, not dimension tables: 55 of 1,233
   # lines look like code to the plausibility guard. Read 2026-09-29.
   allow_thin: true
+# The Large Cities Middle Housing Model Code (OAR 660-046 Exhibit B, adopted
+# 2020-12-09), which 660-046-0225(1)(a)/(b) make the ceiling on a Large City's
+# design standards. Stored so the driveway override below can quote what it
+# does NOT say: no minimum number of driveway approaches per dwelling.
+- id: oar.660-046.exhibit-b-large-cities-model-code.2020-12-09
+  url: https://www.oregon.gov/lcd/Housing/Documents/OAR660046_EXHIBIT_B-Large_Cities_Middle_Housing_Model_Code_20201209.pdf
+  title: OAR 660-046 Exhibit B -- Large Cities Middle Housing Model Code (2020-12-09)
+  allow_thin: true
 - id: oar.660-047.draft-v5
   url: https://www.oregon.gov/lcd/LAR/Documents/Div47_Proposed_Rules_Interim_v5_9.22.26.pdf
   title: OAR 660-047 Oregon Homes, proposed rules, interim version 5 (2026-09-22, DRAFT)
@@ -334,6 +342,52 @@ defaults:
         band: {measure: lot_sqft, at_least: 5000, less_than: 7000}
         cite: "OAR 660-046-0220(2)(e)(B)(iii)"
         quote: "or/oar.660-046-0220.txt#L79,L87-L88"
+
+  # OAR 660-046-0225(1)(c): a Large City that applies design standards to
+  # middle housing may apply only the Model Code's, a less restrictive one, or
+  # "the same clear and objective design standards that the Large City applies
+  # to detached single-unit structures in the same zone. Design standards may
+  # not scale by the number of dwelling units". 660-046-0020(4) lists
+  # "driveways" among the design standards. So a city may not ask more
+  # driveway approaches of four units than of a house on the same ground, and
+  # the Large Cities Model Code (Exhibit B) states no per-unit minimum at all:
+  # townhouses get "a maximum of one (1) driveway approach ... for every
+  # townhouse" (4.a.ii) and a project with no corner lot "shall consolidate
+  # access for all lots into a single driveway" (4.b.iii). Oregon City
+  # 16.12.035.F ("one driveway approach for every two dwelling units") is the
+  # one rule in the corpus that scales this way, and it is encoded in
+  # oregon-city.yaml AS WRITTEN; this entry is what overrides it. Delete this
+  # one entry (an Oregon City filing under OAR 660-046-0235, or a change in
+  # the law) and the city's rule binds again with every consequence built
+  # (DRIVEWAY-SECOND-APPROACH).
+  #
+  # `cap`, not `always`: the rule bars a city from asking for MORE approaches,
+  # it does not oblige one to ask for any. The field is a divisor -- dwellings
+  # served by one approach -- so MORE is looser, fewer approaches; it is
+  # declared like a ceiling (looser as it rises), which is what makes a city
+  # asking 8 untouched and a city asking 2 clipped to this value. 4 is the
+  # largest building the project places (a quadplex): one approach however
+  # many of the four units there are, the same as a house. A cap that lets the
+  # screen read 4 for every city is harmless -- nobody else prints a ratio, and
+  # four units on four per approach is the one drive the plan draws.
+  #
+  # Reach: this layer carries no Large-City scoping of its own; its defaults
+  # fall on every jurisdiction beneath it, as the parking cap beside it does.
+  # Canby, Sandy and Estacada sit outside Metro under 25,000 people, so they
+  # are Medium or smaller cities and this rule is not written for them; none
+  # prints a per-unit approach ratio, so the cap resolves to 4 for them and
+  # asks nothing. Were one to print a ratio, this entry would clip it, which
+  # would be wrong for a city the division reaches differently -- scope it then.
+  # Text read is the version LCDC adopted 2026-08-27 (operative 2027-01-01);
+  # the operative 2020 Model Code says the same of driveways.
+  driveway_units_per_approach:
+    value: 4
+    preempts: cap
+    cite: "OAR 660-046-0225(1)(c) (design standards may not scale by the number of dwelling units); driveways are design standards, OAR 660-046-0020(4); the Large Cities Model Code (Exhibit B) states no per-unit minimum"
+    url: "https://www.oregon.gov/lcd/LAR/Documents/Div46_Proposed_Rules_August_LCDC_Final.pdf"
+    retrieved: 2026-10-10
+    status: draft
+    quote: "or/oar.660-046.adopted-2026-08.txt#L783-L785"
 
   # NOT ENCODED: OAR 660-046-0220(2)(e)(E), which says a Large City "must apply
   # the same off-street parking surfacing, dimensional, landscaping, access,

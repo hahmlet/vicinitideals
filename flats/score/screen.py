@@ -1243,6 +1243,18 @@ def approaches_missing(rules: ZoneResolution, design: Design) -> int:
     return max(0, math.ceil(design.units / per - 1e-9) - PLAN_APPROACHES)
 
 
+def approaches_overridden(rules: ZoneResolution, design: Design) -> int:
+    """How many approaches a city's own per-unit rule would ask of the plan
+    when state law has overridden it, 0 where it asks no more than the plan
+    draws or was not overridden. ``approaches_missing`` is the rule standing;
+    this is the rule shadowed, kept so a page can say both."""
+    held = rules.values.get("driveway_units_per_approach")
+    if held is None or not held.preempted or not held.shadowed:
+        return 0
+    asked = math.ceil(design.units / held.shadowed - 1e-9)
+    return asked if asked > PLAN_APPROACHES else 0
+
+
 def _slope_closer(lot: LotFacts) -> bool:
     """Whether the plan's ground falls enough to want a closer look and not
     so much that a check failed on it (Steph 2026-10-04)."""
@@ -2317,6 +2329,14 @@ def _account(
             "DRIVEWAY-SECOND-APPROACH",
             CLOSER_LOOK_SECOND_APPROACH,
             bounds=(PLAN_APPROACHES, PLAN_APPROACHES + missing),
+            source=_cite(rules, "driveway_units_per_approach"),
+        )
+    asked = approaches_overridden(rules, design)
+    if asked:
+        flag(
+            "DRIVEWAY-STATE-OVERRIDE",
+            "DRIVEWAY_STATE_OVERRIDE",
+            bounds=(PLAN_APPROACHES, asked),
             source=_cite(rules, "driveway_units_per_approach"),
         )
     # Fitted clear of an easement assumed along every street line (Steph

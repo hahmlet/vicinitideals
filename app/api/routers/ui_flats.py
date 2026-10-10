@@ -1624,7 +1624,10 @@ def _chain(layer_id: str, zone: str, field: str) -> dict[str, Any]:
                 "origin": origin,
                 "won": won,
                 "silent": number is None,
-                "preempts": bool(number is not None and getattr(number, "preempts", False)),
+                "preempts": bool(number is not None and number.preempts.binds),
+                "overridden": bool(
+                    resolved and resolved.preempted and not won and number is not None
+                ),
                 "base": _evidence(number) if number is not None else None,
                 "exceptions": [_evidence(v) for v in (number.variants if number else ())],
             }
@@ -1634,6 +1637,7 @@ def _chain(layer_id: str, zone: str, field: str) -> dict[str, Any]:
         "zone": zone,
         "field": field,
         "answer": resolved,
+        "winner": next((x["label"] for x in steps if x["won"]), None),
         "steps": steps,
         "verdict": resolution.verdict.value,
         # Taken off the encoded exceptions rather than off the resolution's
