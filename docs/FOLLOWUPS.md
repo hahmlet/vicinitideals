@@ -1835,6 +1835,20 @@ read when the weekly full re-screen lands.
    centreline is held YELLOW under FACT-ALONG-PORTLAND-AVENUE (GMC
    17.18.050(3)(b)+(c)); bound 23 lots green->yellow, 51 lots flagged, 0
    other moves (/root/wk52/b_after). Map waits on the joint splice.
+   52 STILL OPEN leftovers: DONE 2026-10-09 (slices 1-4: b9ced2fe, 9eb9f618).
+   Gladstone C2 Portland Ave yellow; ZDO 1102 stored and cited (prefab
+   exemption = single-family only, ZDO 202); Milwaukie neighbours block
+   (R-MD/R-HD true; DMU/GMU street yards held on across-street; bound 0
+   colour moves, 14 abutting lots take the 20 ft yard, all already red;
+   13 abut R-HD only -- the letter of 19.504.4 names R-MD, R-HD read as the
+   tighter side). OFFERED, not done: read faces_residential_zone_across_street
+   per street line outside Portland so those street yards can be released
+   (0 lots today, all DMU/GMU red). Tualatin Basalt Creek 50 ft yard
+   measured-zero (2,234 ft to the built parkway; re-measure when the
+   extension is mapped or on annexation); Central Tualatin Overlay blocks
+   and RH-HR min height DEFERRED (0 lots, all red). "Happy Valley /
+   Gladstone leftovers" had no list behind it: every refusal there
+   loosens or does not reach a 4-unit lot.
 53. [scan: YES (Estacada layer is drafted and unscreened; it lands at the next weekly after the acquire of its zoning dataset)] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
    2026-10-08); Estacada is encoded; Molalla is blocked on HUMAN_TODO 29
    (Steph's PDFs); Forest Grove stays blocked on HUMAN_TODO 28.** Canby's only
