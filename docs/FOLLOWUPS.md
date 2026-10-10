@@ -1713,6 +1713,35 @@ read when the weekly full re-screen lands.
    free). flats_flags sync (33,279 opened, 34,215 cleared) + check passed.
    Splice base for the next partial: /root/bridge_spliced_2026-10-09_49j,
    assign quadfit dir /root/zg/Qn, normalized /root/zg/Nn.
+   (k) LAUNCH CHECKLIST, next weekly (~2026-10-14; audited 2026-10-09,
+   chain gates c2650098 on flats/weekly-gates). BEFORE launch, on 137:
+   - Acquire the three zoning layers into the weekly's snapshot (absent
+     from 2026-10-07; the preflight refuses without them): `cd
+     /root/code/vicinitideals && PYTHONIOENCODING=utf-8 .venv/bin/python
+     -m flats.ingest.acquire --snapshot <date> --keys zoning_canby
+     zoning_sandy zoning_estacada` (scratch fetch 2026-10-09: 49 / 128 /
+     38 features). A full acquire at a new date fetches them anyway.
+   - Once item 60 merges, the same line with `--keys osm_roads`
+     (Geofabrik Oregon ZIP, 0.45 GB; 255,488 roads in the scratch fetch).
+     The preflight then demands it, but that branch's bridge does NOT
+     refuse without the file -- streets just stay unranked (yellow).
+   - `--preflight-only` first; it must name no problem.
+   - Launch line (runbook §4) with `--transit-reuse
+     data/flats/transit/2026-10-07_weekly/distances.parquet` (Tigard,
+     Cornelius and Estacada lots are measured fresh).
+   - Run the WHOLE chain: quadfit must re-run (the 10-07 s5o lacks the
+     ten `ovl_*_site` columns of item 50; the chain now stops `--from
+     bridge` on it with "REFUSED before bridge").
+   AT LOAD (114): VACUUM FULL of lot_results (owed since run 65).
+   AFTER THE RUN, before promotion:
+   - 51: Tigard + Cornelius colour counts vs 51's bound; Cornelius R-10
+     lot 1N335CD01200 screens (not JURISDICTION_OFF).
+   - 47: assign's report shows `institutional_were_scanned` 0 -> remove 47.
+   - 50: the 42 green -> yellow movers (West Linn 19, Gresham 15, Tualatin
+     6, Troutdale 2) carry RESOURCE-PERMIT on a `*_site` key; compare with
+     `/root/tw/` on 137.
+   - 53: Estacada lots screen (no 1 m tiles: coarse steep = yellow sev 7).
+   - 48: remove once this weekly is promoted.
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
@@ -2128,6 +2157,16 @@ read when the weekly full re-screen lands.
    NW 143rd) or any disagreement (Farmington) stays unranked = yellow;
    `service` never counts. OSM becomes an acquired dataset (Geofabrik
    Oregon extract) in the weekly snapshot; bound + report moves first.
+   MONTHLY PROBE IS BLIND TO OSM (found 2026-10-09, weekly readiness
+   audit): `probe_archive` (flats/ingest/probe.py) compares ArcGIS portal
+   items only; for the Geofabrik URL it answers "not a portal item;
+   nothing to compare", and acquire records "release ?, modified ?". Use
+   the file's own identity: `oregon-latest-free.shp.zip` 307-redirects to
+   a dated file (`oregon-261008-free.shp.zip` on 2026-10-09, Last-Modified
+   + Content-Length on it; no .md5 beside the shp ZIP) -- record the dated
+   name as the release and compare it. Geofabrik publishes daily, so the
+   check will always say "new"; the point is the manifest names the
+   extract a run read.
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
