@@ -69,7 +69,7 @@ def _full_of(bridge: Path, meta: dict[str, Any]) -> dict[str, Any]:
     return {"bridge": str(bridge.resolve()), "finished_at": meta.get("finished_at")}
 
 
-def _only_added(base_file: Path, partial_file: Path, scope: set[str]) -> str | None:
+def _only_added(base_file: Path, partial_file: Path, scope: set[str], added_columns: tuple[str, ...] = ()) -> str | None:
     """Why ``partial_file`` is not ``base_file`` plus new lots; None when it is.
 
     A partial run may measure from a re-run of quadfit that kept lots the old
@@ -78,14 +78,22 @@ def _only_added(base_file: Path, partial_file: Path, scope: set[str]) -> str | N
     and every added lot is one the partial run screened -- a lot measured and
     never screened would reach assign with no rows. The spliced run then
     names the larger files, so the next splice compares against them.
+
+    A new measurement column (``added_columns``) is the same county only when
+    it is DECLARED: nothing here can tell which lots the new column moves, so
+    the person splicing names it and answers for the scope covering every lot
+    it can change (the item 50 ``ovl_*_site`` twins, FOLLOWUPS 49(k)). Every
+    old column must still match on every old lot.
     """
     import pandas as pd
 
     if not base_file.is_file() or not partial_file.is_file():
         return "the measurement files cannot be compared"
     a, b = pd.read_parquet(base_file), pd.read_parquet(partial_file)
-    if list(a.columns) != list(b.columns):
-        return "different columns"
+    extra = [c for c in b.columns if c not in a.columns]
+    if [c for c in b.columns if c in a.columns] != list(a.columns) or set(extra) != set(added_columns):
+        return f"different columns (added {extra}, declared {list(added_columns)})"
+    b = b[list(a.columns)]
     lost = set(a["TLID"]) - set(b["TLID"])
     if lost:
         return f"{len(lost):,} lots the base measured are missing"
@@ -105,7 +113,7 @@ def _only_added(base_file: Path, partial_file: Path, scope: set[str]) -> str | N
     return None
 
 
-def splice(base: Path, partial: Path, out: Path, *, change: str) -> dict[str, Any]:
+def splice(base: Path, partial: Path, out: Path, *, change: str, added_columns: tuple[str, ...] = ()) -> dict[str, Any]:
     """Write ``out`` = ``base`` with every lot ``partial`` screened replaced; returns its meta.
 
     Refuses to mix runs that measured different lots (other s4/s5o files,
@@ -133,7 +141,7 @@ def splice(base: Path, partial: Path, out: Path, *, change: str) -> dict[str, An
     grown: dict[str, str] = {}
     for key in ("s4", "s5o"):
         if Path(bm[key]).resolve() != Path(pm[key]).resolve():
-            why = _only_added(Path(bm[key]), Path(pm[key]), touched)
+            why = _only_added(Path(bm[key]), Path(pm[key]), touched, added_columns if key == "s5o" else ())
             if why:
                 raise SystemExit(f"{key} differs: base {bm[key]} vs partial {pm[key]} ({why})")
             grown[key] = pm[key]
@@ -154,6 +162,7 @@ def splice(base: Path, partial: Path, out: Path, *, change: str) -> dict[str, An
         "new_lots": len(touched - set(old["TLID"])),
         "finished_at": pm.get("finished_at"),
         **({"measured": grown} if grown else {}),
+        **({"added_columns": list(added_columns)} if added_columns else {}),
     }
     meta = {
         **bm,
@@ -301,6 +310,8 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("--partial", type=Path, required=True)
     sp.add_argument("--out", type=Path, required=True)
     sp.add_argument("--change", required=True, help="what changed, in a line (the commit and its scope)")
+    sp.add_argument("--added-columns", default="", help="comma-separated s5o columns the partial run's measurement "
+                    "adds; you answer for the scope covering every lot they can move")
     au = sub.add_parser("audit", help="a full re-screen vs the spliced run it replaces")
     au.add_argument("--spliced", type=Path, required=True)
     au.add_argument("--full", type=Path, required=True)
@@ -308,7 +319,8 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
 
     if args.cmd == "splice":
-        meta = splice(args.base, args.partial, args.out, change=args.change)
+        added = tuple(c for c in args.added_columns.split(",") if c)
+        meta = splice(args.base, args.partial, args.out, change=args.change, added_columns=added)
         last = meta["lineage"]["splices"][-1]
         print(f"spliced {last['lots']:,} lots ({last['new_lots']:,} new) into {meta['lots']:,}; "
               f"{len(meta['lineage']['splices'])} partial run(s) since the full run "

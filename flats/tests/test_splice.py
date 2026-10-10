@@ -174,3 +174,34 @@ def test_the_audit_needs_a_full_run(tmp_path: Path) -> None:
 
     with pytest.raises(SystemExit, match="not a full"):
         audit(tmp_path / "s", tmp_path / "wv")
+
+
+def test_a_new_measurement_column_splices_only_when_declared(tmp_path: Path) -> None:
+    """The item 50 site twins: the partial's s5o adds a column and changes no old
+    one. Undeclared it is another county; declared it splices and is recorded."""
+    s5a = _measured(tmp_path / "s5a.parquet", {"W1": 1.0, "W2": 2.0})
+    pd.read_parquet(s5a).assign(ovl_x_site=[True, False]).to_parquet(tmp_path / "s5b.parquet", index=False)
+    s5b = str(tmp_path / "s5b.parquet")
+    base = bridge(tmp_path / "full", {"W1": "red", "W2": "red"}, s5o=s5a)
+    part = bridge(tmp_path / "p", {"W1": "yellow"}, s5o=s5b, tlids=["W1"])
+
+    with pytest.raises(SystemExit, match="different columns"):
+        splice(base, part, tmp_path / "out", change="x")
+    with pytest.raises(SystemExit, match="different columns"):
+        splice(base, part, tmp_path / "out", change="x", added_columns=("ovl_y_site",))
+    meta = splice(base, part, tmp_path / "out", change="twins", added_columns=("ovl_x_site",))
+
+    assert meta["s5o"] == s5b
+    assert meta["lineage"]["splices"][-1]["added_columns"] == ["ovl_x_site"]
+
+
+def test_a_declared_column_does_not_excuse_a_changed_old_one(tmp_path: Path) -> None:
+    s5a = _measured(tmp_path / "s5a.parquet", {"W1": 1.0, "W2": 2.0})
+    pd.DataFrame({"TLID": ["W1", "W2"], "area_sqft": [1.0, 9.0], "ovl_x_site": [True, False]}).to_parquet(
+        tmp_path / "s5b.parquet", index=False
+    )
+    base = bridge(tmp_path / "full", {"W1": "red", "W2": "red"}, s5o=s5a)
+    part = bridge(tmp_path / "p", {"W1": "yellow"}, s5o=str(tmp_path / "s5b.parquet"), tlids=["W1"])
+
+    with pytest.raises(SystemExit, match="changed 'area_sqft'"):
+        splice(base, part, tmp_path / "out", change="x", added_columns=("ovl_x_site",))
