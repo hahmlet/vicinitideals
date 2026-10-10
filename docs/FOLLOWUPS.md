@@ -2028,20 +2028,6 @@ read when the weekly full re-screen lands.
    places join 54's free weekly check; a change since scouting marks the card "re-scout
    before encoding". Once the state is scouted the leftover goes to re-scouting changed
    cards, then a reading list + doubts list (the item-53 kind) for the top-ranked places.
-56. [scan: NO] **Deploy smoke runs too early (found 2026-10-08, offered to Steph).**
-   `/root/deploy-vicinitideals.sh` on 114 waits `sleep 5` after `docker
-   compose up -d`, then smokes; the api now takes longer to start, so 3
-   deploys on 2026-10-08 (24a61695, 1762716a, 66545fb6) printed SMOKE
-   FAILED with `Connection refused` and passed when the smoke was re-run
-   by hand 30 s later (`cd /root/stacks/vicinitideals && docker compose
-   run --rm -e POST_DEPLOY_BASE_URL=http://api:8000 api python
-   scripts/post_deploy_smoke.py`). A false FAIL teaches agents to ignore a
-   real one. Fix: wait (up to ~2 min) for the api container's healthcheck
-   to read `healthy` before the smoke, in BOTH the live script and the
-   repo copy `scripts/deploy-vicinitideals.sh` (they differ: the live one
-   uses STACK_DIR). App-side, not FLATS. AGENT INSTRUCTIONS GIVEN
-   2026-10-10 ("deploy-smoke-wait"; branch only, coordinator applies the
-   live script).
 58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08;
    first pass DONE c98be01d 2026-10-09; LIVE in run 69).** Run 67 best-pod yellows held by a
    single flag: FACT-AT-STREET-END 633, ACCESS-STREET-UNCONFIRMED 359,

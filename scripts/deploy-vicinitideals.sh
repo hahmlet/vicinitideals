@@ -20,6 +20,15 @@ docker compose run --rm api python -m alembic upgrade head
 echo "==> Starting containers..."
 docker compose up -d
 
+echo "==> Pruning dangling images and stale build cache..."
+# Keep disk usage stable across deploys. Only removes UNUSED images and cache;
+# never touches volumes (postgres data is in a named volume).
+docker image prune -f >/dev/null 2>&1 || true
+docker builder prune -f >/dev/null 2>&1 || true
+
+echo "==> Disk after prune:"
+df -h / | tail -1
+
 echo "==> Waiting for the api to become healthy..."
 bash "$STACK_DIR/scripts/wait-for-api.sh" \
   || echo "WARNING: api never reported healthy -- the smoke below will likely fail for real"
