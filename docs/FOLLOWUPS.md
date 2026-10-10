@@ -973,6 +973,9 @@ read when the weekly full re-screen lands.
    Next: a field for approaches required per N townhouses + the site plan
    drawing (and charging frontage for) a second approach; check which other
    cities state the same rule before building it for one.
+   AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-two-approaches"; reach first,
+   bound + read every move, lands at the weekly; stop and ask if it needs
+   item 25's approach geometry).
 25. [scan: YES, when built (on hold)] **Driveway approach geometry, ahead of a second approach (Steph
    2026-09-30, flag only -- do not build yet).** What is measured today: the
    drive lane's width (`driveway_min_width_one_way_ft` / `_two_way_ft`, read
