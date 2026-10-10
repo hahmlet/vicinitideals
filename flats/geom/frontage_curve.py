@@ -62,22 +62,42 @@ def _runs(ring: Sequence[Edge]) -> list[list[Edge]]:
     A street edge under :data:`SLIVER_FT` that turns :data:`SLIVER_TURN_DEG`
     or more off the longest street edge is where the front ends, not a break
     and not frontage (:func:`flats.geom.one_street.street_midpoints`); it is
-    set aside. Any other edge that is not a street ends the stretch.
+    set aside -- but only inside a stretch that also holds a real front edge.
+    A short piece with no street edge joining it to the front is a second
+    frontage, however short. Any other edge that is not a street ends the
+    stretch.
     """
     streets = [e for e in ring if e[4] == STREET_CLASS]
     if not streets:
         return []
     main = max(streets, key=_length)
     main_bearing = bearing_deg(*(float(v) for v in main[:4]))
-    kept: list[Edge] = []
-    for e in ring:
-        if (
+
+    def is_sliver(e: Edge) -> bool:
+        return (
             e[4] == STREET_CLASS
             and _length(e) < SLIVER_FT
             and bearing_delta(bearing_deg(*(float(v) for v in e[:4])), main_bearing) >= SLIVER_TURN_DEG
-        ):
+        )
+
+    n_ring = len(ring)
+    on_street = [e[4] == STREET_CLASS for e in ring]
+    stretch = [-1] * n_ring
+    sid = 0
+    first = next((i for i in range(n_ring) if on_street[i] and not on_street[i - 1]), 0)
+    for step in range(n_ring):
+        i = (first + step) % n_ring
+        if not on_street[i]:
             continue
-        kept.append(e)
+        if step and on_street[i - 1]:
+            stretch[i] = stretch[i - 1]
+        else:
+            stretch[i] = sid
+            sid += 1
+    has_front = {stretch[i] for i in range(n_ring) if on_street[i] and not is_sliver(ring[i])}
+    kept: list[Edge] = [
+        e for i, e in enumerate(ring) if not (on_street[i] and stretch[i] in has_front and is_sliver(e))
+    ]
     flags = [e[4] == STREET_CLASS for e in kept]
     n = len(kept)
     if all(flags):

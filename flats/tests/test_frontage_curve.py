@@ -102,6 +102,21 @@ def test_a_run_that_wraps_past_the_first_edge_is_one_run() -> None:
     assert is_unbroken(wrapped) is True
 
 
+def test_a_short_piece_with_no_street_edge_joining_it_is_a_second_front() -> None:
+    # A through lot: 70 ft on one street, 13 ft on the other end, parted by
+    # rear/side lines. The short piece turns off the long one but is no sliver.
+    through = ring_json(
+        [(0, 0), (70, 0), (70, 100), (13, 100), (0, 100)],
+        ["F", "R", "R", "F", "R"],
+    )
+    assert is_unbroken(through) is False
+    pair = ring_json(
+        [(0, 0), (80, 0), (80, 100), (14, 100), (0, 105), (0, 20)],
+        ["F", "R", "R", "F", "R", "R"],
+    )
+    assert is_unbroken(pair) is False
+
+
 def test_a_short_sliver_turning_away_does_not_break_the_run() -> None:
     sliver = ring_json(
         [(0, 0), (100, 0), (100, 100), (10, 100), (0, 100), (0, 10)],
