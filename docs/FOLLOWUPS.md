@@ -973,6 +973,9 @@ read when the weekly full re-screen lands.
    Next: a field for approaches required per N townhouses + the site plan
    drawing (and charging frontage for) a second approach; check which other
    cities state the same rule before building it for one.
+   AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-two-approaches"; reach first,
+   bound + read every move, lands at the weekly; stop and ask if it needs
+   item 25's approach geometry).
 25. [scan: YES, when built (on hold)] **Driveway approach geometry, ahead of a second approach (Steph
    2026-09-30, flag only -- do not build yet).** What is measured today: the
    drive lane's width (`driveway_min_width_one_way_ft` / `_two_way_ft`, read
@@ -2028,20 +2031,6 @@ read when the weekly full re-screen lands.
    places join 54's free weekly check; a change since scouting marks the card "re-scout
    before encoding". Once the state is scouted the leftover goes to re-scouting changed
    cards, then a reading list + doubts list (the item-53 kind) for the top-ranked places.
-56. [scan: NO] **Deploy smoke runs too early (found 2026-10-08, offered to Steph).**
-   `/root/deploy-vicinitideals.sh` on 114 waits `sleep 5` after `docker
-   compose up -d`, then smokes; the api now takes longer to start, so 3
-   deploys on 2026-10-08 (24a61695, 1762716a, 66545fb6) printed SMOKE
-   FAILED with `Connection refused` and passed when the smoke was re-run
-   by hand 30 s later (`cd /root/stacks/vicinitideals && docker compose
-   run --rm -e POST_DEPLOY_BASE_URL=http://api:8000 api python
-   scripts/post_deploy_smoke.py`). A false FAIL teaches agents to ignore a
-   real one. Fix: wait (up to ~2 min) for the api container's healthcheck
-   to read `healthy` before the smoke, in BOTH the live script and the
-   repo copy `scripts/deploy-vicinitideals.sh` (they differ: the live one
-   uses STACK_DIR). App-side, not FLATS. AGENT INSTRUCTIONS GIVEN
-   2026-10-10 ("deploy-smoke-wait"; branch only, coordinator applies the
-   live script).
 58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08;
    first pass DONE c98be01d 2026-10-09; LIVE in run 69).** Run 67 best-pod yellows held by a
    single flag: FACT-AT-STREET-END 633, ACCESS-STREET-UNCONFIRMED 359,
@@ -2210,17 +2199,9 @@ read when the weekly full re-screen lands.
    NW 143rd) or any disagreement (Farmington) stays unranked = yellow;
    `service` never counts. OSM becomes an acquired dataset (Geofabrik
    Oregon extract) in the weekly snapshot; bound + report moves first.
-   MONTHLY PROBE IS BLIND TO OSM (found 2026-10-09, weekly readiness
-   audit): `probe_archive` (flats/ingest/probe.py) compares ArcGIS portal
-   items only; for the Geofabrik URL it answers "not a portal item;
-   nothing to compare", and acquire records "release ?, modified ?". Use
-   the file's own identity: `oregon-latest-free.shp.zip` 307-redirects to
-   a dated file (`oregon-261008-free.shp.zip` on 2026-10-09, Last-Modified
-   + Content-Length on it; no .md5 beside the shp ZIP) -- record the dated
-   name as the release and compare it. Geofabrik publishes daily, so the
-   check will always say "new"; the point is the manifest names the
-   extract a run read. AGENT INSTRUCTIONS GIVEN 2026-10-10
-   ("osm-release-name"; must land before the ~2026-10-14 weekly acquire).
+   OSM RELEASE NAME DONE 2026-10-10 (merged flats/osm-release-name): the
+   manifest names the dated Geofabrik file a run read; the probe compares it
+   as an `ok` finding (daily files are expected, no Metro banner).
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
@@ -2348,6 +2329,27 @@ read when the weekly full re-screen lands.
    and find no new kind of problem -> switch from hunting to maintenance (code-change
    watch, item 54) + onboarding new territory. Steph to decide whether to run it.
    AGENT INSTRUCTIONS GIVEN 2026-10-10 ("false-green-sample", first round on run 70).
+   POLICY QUESTION FOR STEPH (raised 2026-10-10 by the sample): FLATS ignores
+   existing buildings by design, so a 6.66-acre Portland CE lot carrying an
+   operating 75,050 sq ft commercial building (1S2E02BB  -01100) is GREEN with
+   the pod in a corner (quadfit had it red, existing_commercial). Unless it is a
+   shopping centre (item 47, red), it is not a false GREEN under today's rules.
+   The sample counts such greens separately; ask Steph whether a lot whose
+   pod sits on a working building's parking or yard should stay green.
+   ROUND 1 DONE 2026-10-10 (branch flats/false-green-sample, data/flats/false_green/2026-10-10/:
+   SUMMARY.md, false_green_round1.csv, seed fgs-2026-10-10-seed1, query work/draw.sql). 102 greens
+   from run 70 (49,960), 19 cities: 97 RIGHT, 4 WRONG, 1 CAN'T TELL. Weighted false-GREEN rate
+   3.4% (about 1,700 lots), 95% range about 1%-10%; 4.8% if the can't-tell is wrong. Portland 0
+   of 38; the 4 sit in WashCo unincorporated (2 of 11) and Hillsboro (2 of 3). Kinds: NEW x2 =
+   right-of-way dedication to the centre line not taken out of the fit (item 67); KNOWN x2 =
+   item 53 (by-right: Development Review) in a new city, Hillsboro, owned by the lane
+   flats/hillsboro-review-red (reach 152 of 427 Hillsboro greens). Existing-building POLICY
+   class counted apart: 17 of 102 greens carry one (11 non-house); run 70 about 3,000 greens
+   (6%) carry a 5,000+ sq ft non-house building, about 900 (1.8%) a 20,000+ one; none counted
+   wrong (item 66). CAN'T TELL: 1N2E21AD  -06200, Portland RM1, 50 x 200 ft, red if on Map 120-2
+   (item 68). Not read: the 59 PUB greens (maybe item 59's public-code rule). Stopping signal not
+   met (new kinds found). Round 2: after items 67 and the Hillsboro fix ship, redraw with a new
+   seed and weight the same way (scripts: work/consolidate.py).
 65. [scan: YES (a proof run: every answer must come out identical to 137's)] **The Windows PC
    as an idle-time scan helper (Steph 2026-10-09 asked; offered, not started).** Scans are
    CPU-bound (item 46: >14 processes buy nothing on 137; memory only sets how many run at
@@ -2362,3 +2364,55 @@ read when the weekly full re-screen lands.
    point), and a cap so the PC never runs hot while in use (item 32). ~2-4 days of agent
    work. Steph to decide; measure the 137 queue first (46(d) lockwatch on 137,
    /root/lockwatch.log, every 5 min since 2026-10-10).
+66. [scan: NO for (A); YES for (B)] **A price check beside the fit (Steph 2026-10-10: "Do we
+   not have a financial screen? If there's a large commercial use ... redevelopment wouldn't
+   support").** No: FLATS answers legal + physical fit only and ignores existing buildings by
+   design; nothing compares what a lot would cost with what a 4-home pod can pay for land.
+   The county's land, building and total values and the last sale price are already in the
+   normalized lot table for every lot (RLIS LANDVAL/BLDGVAL/TOTALVAL/SALEPRICE). Run 70 greens
+   (49,960): county total value > $1M 7,994, > $2M 3,324, > $3M 2,123; building worth more than
+   the land AND total > $1M 5,143; ~3,000 carry a 5,000+ sq ft non-house building, ~900 a
+   20,000+ one (item 64's sample: 1S2E02BB  -01100, a closed 75,050 sq ft big box, $5.8M sale
+   2020). Offered: (A) SHOW, don't screen -- a likely-price figure and an "over budget" label
+   on every lot + a Lots-page filter, colour unchanged; (B) SCREEN -- over budget = YELLOW
+   (never red: an owner may sell part of a big lot). Either needs Steph's land budget per pod
+   (dollars a 4-home project can pay for land, maybe by city). Kept OUT of the fit colour by
+   default so "can it be placed" stays honest. Steph to choose (A)/(B) and give the budget.
+   STEPH RULED 2026-10-10: (A) -- colour unchanged, a PRICE PER UNIT label + a filter set at
+   $30k/unit ($120k a pod), adjustable ("land price is passed to the buyer, so it flexes with
+   the market"; look at everything). Units = pods the lot could hold x 4, NOT one pod: a big
+   lot pays for (lot area - roads to serve the pods) / (pod + its parking), with parking
+   possibly pooled to save buffers and planters (pods stay independent). Rough cut measured
+   on run 70 greens (county total value; 4,500 sq ft a pod incl. parking + yard share; 25% to
+   roads on lots of 3+ pods): one-pod basis 126 lots <= $30k/unit; capacity basis 771 <= $30k,
+   4,911 <= $60k, 13,651 <= $100k; 1S2E02BB  -01100 (the closed big box) ~48 pods, ~$26k/unit.
+   Coordinator's proposed guards (Steph to confirm): pods capped by the zone's density limit;
+   multi-pod counts labelled ESTIMATE (new roads / a land division may need a review, against
+   the by-right rule); county market value by default, last sale shown beside it; the two
+   defaults (4,500 sq ft a pod, 25% roads) adjustable. True layouts stay item 31 / parked 27.
+67. [scan: YES, after the weekly re-screen (a rule change; gains none, greens turn yellow or red)]
+   **Washington County makes the owner hand over road land first; the fit ignores it (found
+   2026-10-10 by item 64's sample, 2 of 11 WashCo greens wrong).** CDC 302-2.14 C(1) (and 303-2.14
+   C for R-6) says a middle-housing lot must give land out to a set distance from the road's
+   centre line: 25 ft on a local street, 30 ft on a neighbourhood route, 37 ft on a collector,
+   recorded before the first building permit (C(2)); no strip is due where the road is already
+   built to the county's final width. Our file says "NOT ENCODED: right-of-way dedication"
+   (_unincorporated.yaml ~485-495) because nothing measures the road's existing half-width.
+   Wrong lots: 1S201CC12500 (about 3.6 ft due, pod had 0.0 ft spare) and 1N120AD09600 (about 4 ft
+   due, pod about 2.5 ft short after it). REACH (measured as alley width is, across the gap between
+   lots, read-only SQL on run 70): of 7,711 WashCo unincorporated greens, 778 (10.1%) face a road
+   at least 2 ft short; 206 (2.7%) might lose fit; 180 (2.3%) red-grade. For 4+ ft short: 504 / 144
+   / 134. PROPOSAL (nothing built): measure each fronting road's half-width from the lot-fabric gap
+   (`Lot Analysis/quadfit/s4_edges.py` `_alley_width` ray-cast), take the missing strip off the
+   envelope on that side, rescreen. Unmeasured road = worst case, per the standing rule. Decision
+   pending: none for Steph unless a lot with exactly 0 ft to spare is wanted yellow rather than red.
+68. [scan: YES, after Steph or the agent supplies the maps] **Portland Maps 120-2 and 120-3 are not
+   held (found 2026-10-10 by item 64's sample, 1 can't-tell).** 33.120.206 bars new homes on a site
+   deeper than 160 ft with under 90 ft of frontage, but only on the sites shown on Map 120-2
+   (Eastern Portland centres); 33.120.220.C adds a rear-setback rule for Map 120-3 (Eastern Pattern
+   Area). Neither map is in the store (portland.yaml ~724), so both are left out and the lots stay
+   green. Upper-bound reach: 902 Portland multi-dwelling greens are deeper than 160 ft with under
+   90 ft of frontage (RM1 647, RM2 208, RM3 47); how many sit on the map is unknown. Sample lot:
+   1N2E21AD  -06200 (RM1, 50 x 200 ft). PROPOSAL: fetch the two maps from the City's open-data
+   portal as polygons (or get them from Steph), then add a frontage check and the rear setback with
+   a corner exemption. Until then, consider marking these 902 yellow.
