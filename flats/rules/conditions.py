@@ -293,6 +293,21 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "along_portland_avenue",
+        "site_fact",
+        "The taxlot touches Portland Avenue in Gladstone, a corner lot on a "
+        "side street included. GMC 17.18.050(3) puts limits on "
+        "\"developments along Portland Avenue\" in the C-2 zone: a primary "
+        "entrance facing the avenue and ground-floor windows over 25 percent "
+        "of the residential ground-floor wall, and 17.18.040(4) makes an "
+        "outright use that misses them a conditional use. Whether the "
+        "building has them is not a fact the catalog holds, so a lot answered "
+        "True is held open, never certified (Steph 2026-10-09: yellow until "
+        "known). Measured to the avenue's centreline (flats.geom.named_street).",
+        evidence="quadfit s1 street centrelines named Portland Ave: the taxlot's distance to the nearest, at most flats.geom.named_street.AVENUE_REACH_FT, on Gladstone's lots only",
+        assume=None,
+    ),
+    ConditionDef(
         "beyond_ugb_mile",
         "site_fact",
         "The parcel is more than one mile from the Metro Urban Growth "
