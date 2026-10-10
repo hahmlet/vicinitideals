@@ -2422,3 +2422,19 @@ read when the weekly full re-screen lands.
    1N2E21AD  -06200 (RM1, 50 x 200 ft). PROPOSAL: fetch the two maps from the City's open-data
    portal as polygons (or get them from Steph), then add a frontage check and the rear setback with
    a corner exemption. Until then, consider marking these 902 yellow.
+69. [scan: YES, at the next weekly (a zone-level refusal; no bound needed)] **Hillsboro zones that
+   need Development Review are RED BY RULING (found 2026-10-10 by item 64's sample, 2 of 3
+   Hillsboro greens wrong; branch flats/hillsboro-review-red).** CDC 12.80.040 B.1 requires a Type
+   II Development Review for new development in any zone except D.1's list, and D.1 exempts middle
+   housing only in MR-1, SCR-LD, SCR-MD and the R zones (cdc.12.80.applications.txt L318-L320,
+   L338-L343, E at L379-L380). Ruling applied: Steph 2026-10-08 by-right only (item 53; Sandy's Type
+   II Director's review is the precedent). State law does not lift it: OAR 660-046-0215 asks only
+   for the same process as a detached house, which in these zones needs the same review, and
+   clear and objective criteria, which the residential criteria H.1-H.6 already are (H.7, the
+   discretionary one, is non-residential only). 17 zones refused, standards kept: MR-2, MR-3,
+   SCR-HD, SCR-OTC, SCR-DNC, SCR-V, SCC-SC, SCC-MM, MU-N, MU-C, MU-VTC, UC-RM, UC-MU, UC-AC,
+   UC-NC, UC-OR, UC-RP. Run 70 reach (best design per lot): green -> red 152 (MR-2 84, SCR-HD 46,
+   SCR-V 11, MR-3 5, MU-N 3, SCC-MM 2, UC-RM 1); yellow -> red 212 (SCR-V 128, MR-2 18, MR-3 18,
+   SCR-DNC 16, SCC-MM 12, SCR-HD 8, UC-RM 7, MU-N 5); 275 SCR-MD greens stay. Lands at the next
+   weekly (~2026-10-14). Open for Steph only if a Type II review on clear and objective
+   criteria should count as by-right (then all 17 zones come back).
