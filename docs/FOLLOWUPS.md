@@ -2390,6 +2390,12 @@ read when the weekly full re-screen lands.
    multi-pod counts labelled ESTIMATE (new roads / a land division may need a review, against
    the by-right rule); county market value by default, last sale shown beside it; the two
    defaults (4,500 sq ft a pod, 25% roads) adjustable. True layouts stay item 31 / parked 27.
+   STEPH CONFIRMED 2026-10-10: the defaults and the guards. Price is rough until a PAID price
+   feed arrives (vendor TBD, ~2 months): build so a second price source slots in ahead of the
+   county value with no rework (each price carries its source + date). No scan needed: the
+   county values are already loaded per lot (scripts/flats_load_bridge.py ASSESSOR; lot page
+   ui_flats.py ~3804). AGENT INSTRUCTIONS GIVEN 2026-10-10 ("price-per-unit", branch
+   flats/price-per-unit).
 67. [scan: YES, after the weekly re-screen (a rule change; gains none, greens turn yellow or red)]
    **Washington County makes the owner hand over road land first; the fit ignores it (found
    2026-10-10 by item 64's sample, 2 of 11 WashCo greens wrong).** CDC 302-2.14 C(1) (and 303-2.14
