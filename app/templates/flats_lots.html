@@ -69,30 +69,14 @@
            title="Fits or misses by 6 inches or less. Green, but the survey decides.">
       <input type="checkbox" name="tight" value="1" {% if tight %}checked{% endif %}> Only tight fits
     </label>
-    <label style="display:flex;align-items:center;gap:4px;font-size:12px" class="muted"
-           title="Price per home = the county's value of the lot / the homes it could hold. A label only: it never changes a lot's colour. Lots with no county value stay in the list.">
-      <input type="checkbox" name="ppu" id="ppu-on" value="1" {% if price_on %}checked{% endif %}> Price per home at or under $
-      <input type="text" name="ppu_max" id="ppu-max" value="{{ price_ceiling }}" inputmode="numeric" style="width:84px">
-    </label>
-    <label style="display:flex;flex-direction:column;gap:2px;font-size:12px" class="muted"
-           title="One pod (four homes) plus its parking and share of yard.">Sq ft per pod
-      <input type="text" name="pod" id="ppu-pod" value="{{ price_pod }}" inputmode="numeric" style="width:70px">
-    </label>
-    <label style="display:flex;flex-direction:column;gap:2px;font-size:12px" class="muted"
-           title="What new roads take on lots big enough for 3 or more pods.">Roads %
-      <input type="text" name="road" id="ppu-road" value="{{ price_road }}" inputmode="numeric" style="width:50px">
-    </label>
-    <label style="display:flex;align-items:center;gap:4px;font-size:12px" class="muted">
-      <input type="checkbox" name="sort" id="ppu-sort" value="ppu" {% if cheapest_first %}checked{% endif %}> Cheapest first
-    </label>
     <input type="hidden" name="colour" value="{{ colour }}">
     <button class="btn btn-sm btn-primary" type="submit">Show</button>
-    {% if jurisdiction or zone or q or colour or design or tight or price_on or cheapest_first %}
+    {% if jurisdiction or zone or q or colour or design or tight %}
       <a class="btn btn-sm btn-secondary" href="/flats/lots?run={{ run.id }}">Clear</a>
     {% endif %}
   </form>
 
-  {% set base_query = "run=" ~ run.id ~ "&jurisdiction=" ~ (jurisdiction|urlencode) ~ "&zone=" ~ (zone|urlencode) ~ "&design=" ~ (design|urlencode) ~ "&q=" ~ (q|urlencode) ~ ("&ppu=1" if price_on else "") ~ "&ppu_max=" ~ price_ceiling ~ "&pod=" ~ price_pod ~ "&road=" ~ price_road ~ ("&sort=ppu" if cheapest_first else "") ~ ("&tight=1" if tight else "") %}
+  {% set base_query = "run=" ~ run.id ~ "&jurisdiction=" ~ (jurisdiction|urlencode) ~ "&zone=" ~ (zone|urlencode) ~ "&design=" ~ (design|urlencode) ~ "&q=" ~ (q|urlencode) ~ ("&tight=1" if tight else "") %}
 
   <div id="lot-counts" class="toolbar" style="gap:18px;flex-wrap:wrap;align-items:baseline">
     <div>
@@ -129,7 +113,6 @@
           <th class="col-right">Lot size</th>
           <th>Verdict</th>
           <th>If signed</th>
-          <th class="col-right" title="County value / homes the lot could hold. A label; it never changes the colour.">Price per home</th>
           <th>Per design</th>
           <th>County map says</th>
         </tr>
@@ -144,11 +127,6 @@
           <td class="col-right">{% if lot.area %}{{ "{:,.0f}".format(lot.area) }} sf{% else %}—{% endif %}</td>
           <td><span class="badge {{ badges.get(lot.verdict, 'badge-gray') }}" title="{{ lot.verdict_words }}">{{ lot.verdict }}</span></td>
           <td><span class="badge {{ lot.badge }}" title="{{ lot.colour_words }}">{{ lot.colour }}</span></td>
-          <td class="col-right ppu-cell" style="font-size:12px"
-              title="{{ lot.price.pods }} pod(s), {{ lot.price.homes }} homes{% if lot.price.source %}; {{ lot.price.source }}, {{ lot.price.as_of }}{% endif %}">
-            {{ lot.price.text }}{% if lot.price.estimate and lot.price.per_home is not none %} <span class="badge badge-orange" title="More than one pod: new roads or a land division may need a review.">ESTIMATE</span>{% endif %}
-            {% if lot.price.homes %}<div class="muted" style="font-size:11px">{{ lot.price.homes }} homes</div>{% endif %}
-          </td>
           <td style="font-size:12px">
             {% for r in lot.results %}
               <div><span class="muted">{{ r.design }}</span>
@@ -168,7 +146,7 @@
           </td>
         </tr>
         {% else %}
-        <tr><td colspan="10" class="muted">No lots match.</td></tr>
+        <tr><td colspan="9" class="muted">No lots match.</td></tr>
         {% endfor %}
       </tbody>
     </table>
