@@ -2196,22 +2196,9 @@ read when the weekly full re-screen lands.
    NW 143rd) or any disagreement (Farmington) stays unranked = yellow;
    `service` never counts. OSM becomes an acquired dataset (Geofabrik
    Oregon extract) in the weekly snapshot; bound + report moves first.
-   MONTHLY PROBE IS BLIND TO OSM (found 2026-10-09, weekly readiness
-   audit): `probe_archive` (flats/ingest/probe.py) compares ArcGIS portal
-   items only; for the Geofabrik URL it answers "not a portal item;
-   nothing to compare", and acquire records "release ?, modified ?". Use
-   the file's own identity: `oregon-latest-free.shp.zip` 307-redirects to
-   a dated file (`oregon-261008-free.shp.zip` on 2026-10-09, Last-Modified
-   + Content-Length on it; no .md5 beside the shp ZIP) -- record the dated
-   name as the release and compare it. Geofabrik publishes daily, so the
-   check will always say "new"; the point is the manifest names the
-   extract a run read. DONE on branch
-   flats/osm-release-name (2026-10-10): acquire records the dated file
-   name as `release`, plus `modified` (Last-Modified) and `resolved_url`,
-   and `size` is the Content-Length; the probe HEADs the redirect and says
-   old vs new as an `ok` finding (NOT `new_release`, which raises the
-   Metro banner). No redirect = "release ?", never an error. Remove this
-   paragraph once merged.
+   OSM RELEASE NAME DONE 2026-10-10 (merged flats/osm-release-name): the
+   manifest names the dated Geofabrik file a run read; the probe compares it
+   as an `ok` finding (daily files are expected, no Metro banner).
 61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
    (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
    compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
