@@ -201,11 +201,15 @@ definitions:
     # abutting on a curved street or streets shall be considered a corner lot
     # if straight lines drawn from the foremost points of the side lot lines
     # to the foremost point of the lot meet at an interior angle of less than
-    # 135 degrees." "Less than 135" excludes 135 itself; the field takes the
-    # figure as at-or-below, a one-degree gap recorded as a doubt. The
-    # definition says nothing of alleys; alleys_count stays at its default.
+    # 135 degrees." "Less than 135" excludes 135 itself (curve_inclusive:
+    # false). The angle is ONE angle across the whole curve, made at the
+    # foremost point by lines to the frontage's two ends (curve_by: apex),
+    # not a bend-by-bend test. The definition says nothing of alleys;
+    # alleys_count stays at its default.
     test: intersecting_frontages
     curve_at_or_below_deg: 135.0
+    curve_by: apex
+    curve_inclusive: false
     quote: "or/washington/beaverton/bdc.90.definitions.txt#L1412-L1414"
     cite: "Beaverton BDC Chapter 90, Lot, Corner"
 

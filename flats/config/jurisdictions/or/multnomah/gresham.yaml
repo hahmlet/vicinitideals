@@ -1521,6 +1521,10 @@ definitions:
     test: frontage_count
     count: 2
     curve_at_or_below_deg: 120.0
+    # The delta angle is the whole curve's deflection, and only a lot on the
+    # inside of the curve counts.
+    curve_by: tangent
+    curve_inside_only: true
     quote: "or/multnomah/gresham/3.0100.definitions.txt#L1304-L1305"
     cite: "Gresham Development Code 3.0100, Lot, Corner Lot"
 

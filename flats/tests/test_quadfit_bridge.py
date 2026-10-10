@@ -23,6 +23,7 @@ from flats.encode.load import load_trusted
 from flats.fit.angles import sweep
 from flats.ingest.assign import ROW_COLUMNS
 from flats.tests.dem import plane, write_dem
+from flats.tests.test_frontage_curve import arc_lot
 from flats.geom.edges import EdgeClass, Tier
 from flats.ingest.quadfit import (
     OBSERVABLE,
@@ -1297,6 +1298,39 @@ def test_a_city_that_writes_its_corner_test_follows_its_own_words(corpus) -> Non
     for city in ("oregon_city", "clackamas_unincorporated"):
         row = corner_row(jurisdiction=city, zone="R5", one_street=True)
         assert read_as_bend(row, corpus.layers) is True, city
+
+
+def test_a_gentle_curve_is_measured_the_way_each_code_writes_it(corpus) -> None:
+    # 100 degrees over four lot lines, every bend 25: Beaverton's chord angle
+    # at the apex is 130 (< 135), Portland's and Gresham's ends meet at 105
+    # (<= 120). Oregon City writes no curve, so it stays a bend.
+    arc = arc_lot(100.0, 4)
+    for city in ("beaverton", "portland", "gresham"):
+        row = corner_row(jurisdiction=city, zone="R5", one_street=True, edges_json=arc)
+        row["front_bearings_json"] = "[0.0, 100.0]"
+        assert read_as_bend(row, corpus.layers) is False, city
+    row = corner_row(jurisdiction="oregon_city", zone="R5", one_street=True, edges_json=arc)
+    row["front_bearings_json"] = "[0.0, 100.0]"
+    assert read_as_bend(row, corpus.layers) is True
+    # 60 degrees: under every construction's threshold.
+    gentle = corner_row(jurisdiction="beaverton", zone="R5", one_street=True, edges_json=arc_lot(60.0, 4))
+    gentle["front_bearings_json"] = "[0.0, 60.0]"
+    assert read_as_bend(gentle, corpus.layers) is True
+
+
+def test_one_name_on_two_separate_fronts_is_not_a_bend(corpus) -> None:
+    broken = json.dumps(
+        [
+            [0, 0, 100, 0, "F"],
+            [100, 0, 100, 50, "R"],
+            [100, 50, 200, 50, "R"],
+            [200, 50, 200, 150, "F"],
+            [200, 150, 0, 150, "R"],
+            [0, 150, 0, 0, "R"],
+        ]
+    )
+    r = corner_row(jurisdiction="washington_unincorporated", zone="R5", one_street=True, edges_json=broken)
+    assert read_as_bend(r, corpus.layers) is False
 
 
 def test_the_bend_is_not_asked_without_the_corpus_or_two_street_directions(corpus) -> None:

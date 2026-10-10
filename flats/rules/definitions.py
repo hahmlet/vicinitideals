@@ -311,6 +311,21 @@ class Definition:
     #: Silence is a third thing again: Oregon City states no angle, so a
     #: non-collinear frontage is read as an intersection.
     curve_is_one_street: bool = False
+    #: How ``curve_at_or_below_deg`` is measured when it is ONE angle across a
+    #: whole curve and not one bend at a time: ``"apex"`` (Beaverton -- lines
+    #: from the frontage's ends to its foremost point), ``"tangent"``
+    #: (Portland, Wood Village, Gresham -- the angle between the frontage's
+    #: first and last lot lines, Gresham's "delta angle"). ``"vertex"`` is the
+    #: junction-by-junction test :func:`_intersecting` runs. The measuring
+    #: needs the lot's geometry, so it lives in
+    #: :mod:`flats.geom.frontage_curve`, not here.
+    curve_by: str = "vertex"
+    #: False where the curve ceiling is "less than" (Beaverton) rather than
+    #: "or less" (Portland) -- exactly the ceiling is not a corner.
+    curve_inclusive: bool = True
+    #: True where the clause covers only a lot on the INSIDE of the curve
+    #: (Gresham: "a lot abutting the inside curve of a street").
+    curve_inside_only: bool = False
     #: Whether the stated ceiling is itself allowed. "Does not exceed 135
     #: degrees" includes 135; "less than 135 degrees" does not. One boundary
     #: angle apart, and the two codes that state a ceiling state it both ways.
@@ -347,6 +362,10 @@ class Definition:
                 f"{self.term}: curve_is_one_street contradicts "
                 f"curve_at_or_below_deg={self.curve_at_or_below_deg}"
             )
+        if self.curve_by not in ("vertex", "apex", "tangent"):
+            raise ValueError(f"{self.term}: curve_by must be vertex, apex or tangent, got {self.curve_by!r}")
+        if self.curve_by != "vertex" and self.curve_at_or_below_deg is None:
+            raise ValueError(f"{self.term}: curve_by={self.curve_by} needs curve_at_or_below_deg")
         if self.count < 1:
             raise ValueError(f"{self.term}: count must be at least 1")
         for name in ("curve_at_or_below_deg", "max_intersection_angle_deg"):

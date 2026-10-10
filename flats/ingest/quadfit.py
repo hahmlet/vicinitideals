@@ -110,6 +110,7 @@ from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.drawn import load_area, observed_drawn
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
 from flats.geom.envelope import Setbacks, buildable
+from flats.geom.frontage_curve import is_unbroken, makes_corner
 from flats.geom.neighbour import (
     NEIGHBOUR_FACTS,
     lines_from_quadfit,
@@ -610,7 +611,18 @@ def _bend_is_no_corner(row: Mapping[str, Any], layers: Mapping[str, Layer] | Non
         defn = layers[current].definitions.get("corner_lot")
         if defn is not None:
             ring = _boundary_of_one_street(json.loads(row.get("edges_json") or "[]"))
-            return decide({"corner_lot": defn}, "corner_lot", ring) is False
+            if defn.curve_by == "vertex":
+                return decide({"corner_lot": defn}, "corner_lot", ring) is False
+            # A curve clause written as ONE angle across the whole curve is
+            # measured on the lot's frontage, not bend by bend.
+            plain = dataclasses.replace(defn, curve_at_or_below_deg=None, curve_by="vertex")
+            return decide({"corner_lot": plain}, "corner_lot", ring) is False and not makes_corner(
+                defn.curve_by,
+                defn.curve_at_or_below_deg or 0.0,
+                inclusive=defn.curve_inclusive,
+                inside_only=defn.curve_inside_only,
+                edges_json=row.get("edges_json"),
+            )
         queue.extend(layers[current].definitions_from)
     return True
 
@@ -623,14 +635,18 @@ def read_as_bend(row: Mapping[str, Any], layers: Mapping[str, Layer] | None) -> 
     (:func:`~flats.geom.corner.two_streets`), every street edge lies on one
     street (``one_street``, :mod:`flats.geom.one_street`), and the lot's code
     states no corner test that would make the bend a corner
-    (:func:`_bend_is_no_corner`). Steph, 2026-10-09: where the code is
-    silent, take the more conservative reading, with a flag.
+    (:func:`_bend_is_no_corner`), and the street edges are ONE unbroken run
+    of the ring (:func:`~flats.geom.frontage_curve.is_unbroken`) -- one name
+    on two fronts parted by a rear or side line is two fronts, not a bend.
+    Steph, 2026-10-09: where the code is silent, take the more conservative
+    reading, with a flag.
     """
     bearings = json.loads(row.get("front_bearings_json") or "[]")
     return (
         len(bearings) >= 2
         and row.get("one_street") is True
         and two_streets(bearings)
+        and is_unbroken(row.get("edges_json"))
         and _bend_is_no_corner(row, layers)
     )
 

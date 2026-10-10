@@ -1576,6 +1576,9 @@ definitions:
   corner_lot:
     test: intersecting_frontages
     curve_at_or_below_deg: 120.0
+    # The angle of the street's curve, read between the frontage's first and
+    # last lot lines (the centre line is not held; the lot lines abut it).
+    curve_by: tangent
     quote: "or/multnomah/portland/33.910.definitions.txt#L701-L705"
     cite: "PCC 33.910, Lot-Related Definitions, Corner Lot"
 

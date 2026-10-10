@@ -393,6 +393,7 @@ definitions:
     test: intersecting_frontages
     count: 2
     curve_at_or_below_deg: 120.0
+    curve_by: tangent
     drives_count: true
     quote: "or/multnomah/wood-village/720.030.definitions.txt#L250"
     cite: "WVDC 720.030, Lot, Corner Lot"
