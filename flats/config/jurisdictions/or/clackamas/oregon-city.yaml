@@ -575,6 +575,22 @@ defaults:
         when: [unit_lots]
         cite: OCMC Table 16.12.035.D, maximum driveway approach width, Townhouses row
         quote: "or/clackamas/oregon-city/16.12.streets.txt#L1096-L1099,L1102"
+  # One approach for every two dwelling units, rounded up: two approaches for
+  # the four-unit pod. Steph ruled 2026-09-30 that F is a requirement, not a
+  # cap. It is a townhouse sentence, and every pod this project screens sits
+  # on one lot, so it is carried on the base value and not on a unit_lots
+  # variant (which nothing screens): the one-lot reading, E.1's "may be
+  # allowed one driveway for every two units", is the same count. The plan
+  # draws one shared drive and nothing here holds a second approach's
+  # geometry (spacing, the 5 ft offset, one per local frontage -- FOLLOWUPS
+  # 25), so the screen asks a closer look instead of passing it
+  # (DRIVEWAY-SECOND-APPROACH).
+  driveway_units_per_approach:
+    value: 2
+    cite: OCMC 16.12.035.F, townhouses, one driveway approach for every two dwelling units
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1066-L1068"
   # On one lot, OCMC 17.16.060.D, Triplex and quadplex development
   # requirements: "In residential zones, garages on the front facade and
   # off-street parking areas in the front yard, are permitted in compliance
@@ -734,8 +750,8 @@ defaults:
   # street whose classification is unmeasured, with an escape keyed to lot
   # size. 16.12.035.D allows one driveway per local-street frontage and never
   # more than two; 16.12.035.E.1 allows a middle housing property with one
-  # building "one driveway for every two units", which is two for this pod and
-  # more than it draws. (or/clackamas/oregon-city/16.12.streets.txt#L978-L1091)
+  # building "one driveway for every two units", which is two for this pod
+  # (encoded as driveway_units_per_approach from F, which makes it a requirement). (or/clackamas/oregon-city/16.12.streets.txt#L978-L1091)
   #
   # NOT ENCODED: the driveway's own offset from a lot line. Note 2 under Table
   # 16.12.035.A is one sentence and it is not conditioned on anything -- "All

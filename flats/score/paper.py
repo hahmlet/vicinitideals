@@ -1409,7 +1409,9 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # Gresham and Tigard), so a single approach can always serve
                 # the pod's one drive; the drive on the lot is held to its
                 # own widths (`drive_width`). Spacing between approaches and
-                # a second approach are FOLLOWUPS 24/25. Bound by
+                # a second approach are FOLLOWUPS 25; the count the code asks
+                # is `driveway_units_per_approach`, read by `screen`
+                # (DRIVEWAY-SECOND-APPROACH). Bound by
                 # `test_every_approach_maximum_admits_one_car`.
                 "driveway_approach_min_width_ft (in the right of way, not on the lot)",
                 "driveway_approach_max_width_ft (in the right of way; every maximum admits one car)",
