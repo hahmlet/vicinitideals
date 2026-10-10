@@ -573,6 +573,23 @@ defaults:
 # on a corner lot short of 100 feet along a street it leaves that street no
 # drive except by the city's finding. A doubt.
 #
+# NOT ENCODED, A REAL RULE WITH NOTHING TO BITE ON YET (FOLLOWUPS 24 sweep,
+# 2026-10-10): R-7 18.20.060 (C)(2), R-10 18.25.060 (C)(2), A-2 18.35.060
+# (E)(2), CR 18.70.060 (C)(2) and GMU 18.75.065 (J)(2) all end the driveway
+# sentence "and not more than two lots may be served by one shared driveway"
+# (R-7: cmc.18.20.r-7.txt#L280). On the four-townhouse-lot plat that is a
+# second driveway: four lots cannot share one. Unlike Oregon City 16.12.035.F
+# this is NOT overridden by state law: it is written for every new driveway,
+# detached lots included, so it is "the same standard that applies to
+# detached single-unit structures" (OAR 660-046-0225(1)(c), 0220(3)(f)(C)),
+# which a Large City may apply to middle housing. It reaches only the
+# unit-lots plat; the one-lot quadplex has one driveway on one lot. Not
+# encoded because (a) no field holds a limit on lots per shared driveway and
+# the plan draws one drive for the pod, so honouring it needs a second
+# approach drawn (FOLLOWUPS 25, held by Steph), and (b) run 70 has Cornelius
+# at 0 green, 4,093 yellow, 152 red: no colour moves while the layer is
+# unsigned. REOPEN when Cornelius is signed or item 25 is built.
+#
 # NOT ENCODED: 18.100.070, the design features a detached house or middle
 # housing must pick from (Type I site design review, 18.100.030 (A)(2),
 # cmc.18.100.site-design.txt L89). Design, not placement.
