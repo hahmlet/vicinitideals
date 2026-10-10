@@ -1013,6 +1013,14 @@ read when the weekly full re-screen lands.
    AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-driveway-preempt"): reuse the field/flag/screen code
    from flats/oc-two-approaches, OC value 2 cited to F, a _state.yaml preempts entry cited to
    OAR 660-046-0225(1)(c) + the stored Model Code; expected moves ZERO, proven by an OC bound.
+   DONE ON flats/oc-driveway-preempt (2026-10-10, awaiting merge): OC value 2 (oregon-city.yaml, 16.12.035.F) is
+   encoded and OVERRIDDEN by a `preempts: cap` value 4 in or/_state.yaml (OAR 660-046-0225(1)(c)); the field is
+   now is_maximum (a divisor: more units per approach = looser). To bring the city's rule back, delete that one
+   _state.yaml entry: the lot is then YELLOW with DRIVEWAY-SECOND-APPROACH (tests cover both states). While the
+   override stands a record-only flag DRIVEWAY-STATE-OVERRIDE (sev 1, no colour) shows both rules on the lot page,
+   and the why-page names the winner (fixed a Preempt.none truthiness bug there). Reach: the state cap falls on
+   every city; Canby, Sandy and Estacada print no ratio so it asks nothing. Cornelius's two-lots-per-shared-drive
+   stays unencoded. Bound: see the report to the coordinator (expected zero colour moves).
 25. [scan: YES, when built (on hold)] **Driveway approach geometry, ahead of a second approach (Steph
    2026-09-30, flag only -- do not build yet).** What is measured today: the
    drive lane's width (`driveway_min_width_one_way_ft` / `_two_way_ft`, read
