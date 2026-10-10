@@ -2764,6 +2764,7 @@ _REASON_WORDS = {
     "CLOSER_LOOK_MIN_DENSITY": "closer look: the lot is big enough that the city wants more homes on it than four",
     "CLOSER_LOOK_SLOPE": "closer look: the ground under the building and its parking slopes between 5% and 15% — a stepped foundation or retaining walls to price",
     "CLOSER_LOOK_STEEP_COARSE": "closer look: the coarse elevation map shows ground too steep to build on where the building and its parking would go — the lot was screened as though it were buildable until the detailed lidar map or a survey checks it",
+    "CLOSER_LOOK_SECOND_APPROACH": "closer look: the city asks one driveway entrance for every two homes, which is two for this building, and the plan draws one shared drive — whether a second entrance fits on the street side, with its width, its distance from the lot line and its spacing, has not been drawn or measured yet",
     "CLOSER_LOOK_RESOURCE": "closer look: part of the lot is a mapped stream, wetland, habitat or flood area where the city allows building only with a permit — a report, replanting or a raised floor to price",
     "FACT_UNOBSERVED": "a fact about the site nothing has measured decides which number applies",
     "FACT_ASSUMED": "a fact about the site was assumed rather than measured",

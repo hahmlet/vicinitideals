@@ -160,6 +160,14 @@ CLOSER_LOOK_RESOURCE = "CLOSER_LOOK_RESOURCE"
 #: (``coarse_red_is_closer_look``). Steph 2026-10-07: "yellow with flag. 7
 #: severity" -- the 1 m lidar, or a survey, settles it.
 CLOSER_LOOK_STEEP_COARSE = "CLOSER_LOOK_STEEP_COARSE"
+#: The code requires one driveway approach for every N dwelling units and the
+#: pod's plan draws one drive (Oregon City 16.12.035.F, a requirement: Steph
+#: 2026-09-30). Nothing here holds a second approach's geometry -- its width,
+#: spacing, offset from the lot line and count per frontage are FOLLOWUPS 25
+#: -- so the lot is a closer look, never GREEN, and never a miss.
+CLOSER_LOOK_SECOND_APPROACH = "CLOSER_LOOK_SECOND_APPROACH"
+#: Driveway approaches the drawn plan holds: one shared drive to the court.
+PLAN_APPROACHES = 1
 #: The plan's fit, missed on the ground left once the steep ground is taken
 #: off and met without that (:attr:`LotFacts.steep_blocks`): the slope
 #: eliminates the lot, not the pod's placement (Steph 2026-10-04). The fit
@@ -1225,6 +1233,16 @@ def _checks(
     return out, unchecked, unmeasured
 
 
+def approaches_missing(rules: ZoneResolution, design: Design) -> int:
+    """How many driveway approaches the code asks beyond the one the plan
+    draws: ``ceil(units / driveway_units_per_approach) - PLAN_APPROACHES``,
+    0 where the code states no such requirement."""
+    per = rules.get("driveway_units_per_approach")
+    if not per:
+        return 0
+    return max(0, math.ceil(design.units / per - 1e-9) - PLAN_APPROACHES)
+
+
 def _slope_closer(lot: LotFacts) -> bool:
     """Whether the plan's ground falls enough to want a closer look and not
     so much that a check failed on it (Steph 2026-10-04)."""
@@ -2075,6 +2093,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_RESOURCE)
     if lot.steep_unconfirmed:
         closer = (*closer, CLOSER_LOOK_STEEP_COARSE)
+    if approaches_missing(rules, design):
+        closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
 
     if any(not o.available for o in walls):
         # A verified standard the code offers no way around. Nothing still
@@ -2291,6 +2311,14 @@ def _account(
         flag("RESOURCE-PERMIT", CLOSER_LOOK_RESOURCE, fact=key, source="mapped")
     if lot.steep_unconfirmed:
         flag("SLOPE-STEEP-COARSE", CLOSER_LOOK_STEEP_COARSE, source=lot.steep_source or "")
+    missing = approaches_missing(rules, design)
+    if missing:
+        flag(
+            "DRIVEWAY-SECOND-APPROACH",
+            CLOSER_LOOK_SECOND_APPROACH,
+            bounds=(PLAN_APPROACHES, PLAN_APPROACHES + missing),
+            source=_cite(rules, "driveway_units_per_approach"),
+        )
     # Fitted clear of an easement assumed along every street line (Steph
     # 2026-10-01): a plat showing a wider one, or one on a side or rear
     # line, would move the building. A record, below the yellow line.
@@ -2379,6 +2407,7 @@ __all__ = [
     "CURVE_ON_THE_LINE",
     "CLOSER_LOOK_MIN_DENSITY",
     "CLOSER_LOOK_RESOURCE",
+    "CLOSER_LOOK_SECOND_APPROACH",
     "CLOSER_LOOK_STEEP_COARSE",
     "GEOMETRY_UNREADABLE",
     "MIN_DENSITY_CHECKS",

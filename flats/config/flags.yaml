@@ -475,6 +475,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_STEEP_COARSE]
+  DRIVEWAY-SECOND-APPROACH:
+    description: "The code asks one driveway approach for every two dwelling units (Oregon City 16.12.035.F, a requirement: Steph 2026-09-30), which is two for the four-unit pod, and the plan draws one shared drive; no second approach's width, spacing or offset is held to prove it fits (the bounds are the approaches the plan draws and the approaches the code asks)"
+    kind: parametric
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Draw a second approach on the lot's street frontage that meets the approach width, the 5 ft offset from the lot line and the spacing (FOLLOWUPS 25), or ask the city engineer whether one shared approach is accepted"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_SECOND_APPROACH]
   RESOURCE-PERMIT:
     description: "Part of the lot is a mapped stream, wetland, habitat or flood area where the code lets a house go up only with a permit: a report, mitigation planting or a raised floor (FOLLOWUPS 42)"
     kind: categorical
