@@ -1413,6 +1413,15 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # `test_every_approach_maximum_admits_one_car`.
                 "driveway_approach_min_width_ft (in the right of way, not on the lot)",
                 "driveway_approach_max_width_ft (in the right of way; every maximum admits one car)",
+                # Washington County CDC 302-2.14 C(1): the strip a lot gives up to
+                # reach a distance from the street's centre line. It turns on the
+                # street's class and on the measured half-width of THAT street, both
+                # facts about a lot line; the paper fit has no edges. The envelope
+                # (`flats.geom.dedication`, applied in `flats.ingest.quadfit`) cuts it.
+                "row_to_centerline_local_ft (right-of-way dedication; the paper fit has no street lines)",
+                "row_to_centerline_neighborhood_route_ft (right-of-way dedication; the paper fit has no street lines)",
+                "row_to_centerline_collector_ft (right-of-way dedication; the paper fit has no street lines)",
+                "row_to_centerline_arterial_ft (right-of-way dedication; the paper fit has no street lines)",
             ),
         )
         if best is None or _worse(best, candidate):

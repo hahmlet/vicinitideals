@@ -155,6 +155,10 @@ class Setbacks:
         alley number is about "a lot line abutting an alley", and nothing
         says where along this one the neighbour's yard begins.
         """
+        return self._plain(edge) + edge.dedication_ft
+
+    def _plain(self, edge: Edge) -> float:
+        """:meth:`for_edge` before any right-of-way is given up."""
         if edge.alley and edge.cls is EdgeClass.side and self.alley_side_ft is not None:
             return self.alley_side_ft
         if edge.alley and edge.cls is EdgeClass.rear and self.alley_rear_ft is not None:
@@ -313,7 +317,10 @@ def buildable(
     if not use_strips:
         # Irregular, flag, or unclassifiable: shrink uniformly by the worst
         # setback. Conservative on purpose — see the module docstring.
-        env = lot.buffer(-setbacks.largest_ft) if setbacks.largest_ft > 0 else lot
+        # A right-of-way strip (:attr:`Edge.dedication_ft`) is given up on top
+        # of the largest yard, on the deepest street line.
+        shrink = setbacks.largest_ft + max((e.dedication_ft for e in edges.edges), default=0.0)
+        env = lot.buffer(-shrink) if shrink > 0 else lot
         return _clean(_less(env, less), min_part_sqft)
 
     strips = []

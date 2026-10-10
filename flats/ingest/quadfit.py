@@ -106,6 +106,7 @@ from flats.geom.corner import (
     through_plans,
     two_streets,
 )
+from flats.geom import dedication
 from flats.geom.culdesac import CUL_DE_SAC_FACTS, observed_cul_de_sac
 from flats.geom.drawn import load_area, observed_drawn
 from flats.geom.edges import Edge, EdgeClass, LotEdges, Tier, bearing_deg
@@ -967,11 +968,16 @@ def lot_edges(
     ranks = json.loads(row.get("street_ranks_json") or "[]")
     if len(ranks) != len(raw):
         ranks = [None] * len(raw)
+    # Each street line's measured half-width and class for the right-of-way a
+    # lot gives up (:func:`with_local_street`), looked up by the line's
+    # coordinates so a second reading of the lot finds its remaining lines.
+    widths = {dedication.key(*m[:4]): m for m in json.loads(row.get("road_widths_json") or "[]")}
     edges: list[Edge] = []
     for (x1, y1, x2, y2, letter), stretch, off_line, clear_line, rank in zip(
         raw, cover, off, clear, ranks, strict=True
     ):
         x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
+        road = widths.get(dedication.key(x1, y1, x2, y2)) if letter == STREET_CLASS else None
         if letter == ALLEY_CLASS:
             cls = EdgeClass.rear if next(named) == "rear" else EdgeClass.side
         else:
@@ -990,6 +996,9 @@ def lot_edges(
                 off_corridor=bool(off_line),
                 across_clear=bool(clear_line) and letter == STREET_CLASS,
                 street_rank=int(rank) if rank is not None and letter == STREET_CLASS else None,
+                half_width_ft=None if road is None or road[4] is None else float(road[4]),
+                road_rank=None if road is None or road[5] is None else int(road[5]),
+                public_road=True if road is None else bool(road[6]),
             )
         )
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -1166,6 +1175,32 @@ def part_rear_alley(lot: QuadfitLot) -> bool:
     )
 
 
+def dedicated(edges: LotEdges, rules: ZoneResolution) -> LotEdges:
+    """``edges`` with each street line carrying the right-of-way strip its
+    lot gives up there (:attr:`Edge.dedication_ft`), where the lot's code
+    states the four distances to centreline
+    (:data:`flats.geom.dedication.RANK_FIELDS`); unchanged otherwise.
+
+    The strip is the distance for the line's street class less the measured
+    half-width, never below zero; an unmeasured line gives up the whole
+    distance and an unread class takes the deepest (WashCo CDC 302-2.14
+    C(1)). A line on a private road gives up nothing."""
+    distances: list[float] = []
+    for name in dedication.RANK_FIELDS:
+        got = rules.get(name)
+        if isinstance(got, bool) or not isinstance(got, (int, float)):
+            return edges
+        distances.append(float(got))
+    out = []
+    for e in edges.edges:
+        if e.alley or e.cls not in (EdgeClass.front, EdgeClass.street_side) or not e.public_road:
+            out.append(e)
+            continue
+        strip = dedication.depth_ft(dedication.required_ft(e.road_rank, distances), e.half_width_ft)
+        out.append(dataclasses.replace(e, dedication_ft=strip))
+    return dataclasses.replace(edges, edges=tuple(out))
+
+
 def envelope_for(
     lot: QuadfitLot,
     rules: ZoneResolution,
@@ -1222,6 +1257,7 @@ def envelope_for(
     quadfit = Envelope(fallback, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot)
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
+    edges = dedicated(lot.edges, rules)
     split = rear_off_alley(lot.edges)
     part = alleyed is not None and part_rear_alley(lot)
     setbacks = setbacks_for(rules, plain if split else None, alleyed if part else None)
@@ -1252,8 +1288,8 @@ def envelope_for(
         # Steep ground in the setbacks is left to the grader (Steph
         # 2026-10-04): only what lies where the building may stand comes
         # off, the court's ground included.
-        taken = _taken(lot, _within(lot.steep, buildable(lot.lot_geom, lot.edges, setbacks)))
-    geom = buildable(lot.lot_geom, lot.edges, setbacks, less=taken)
+        taken = _taken(lot, _within(lot.steep, buildable(lot.lot_geom, edges, setbacks)))
+    geom = buildable(lot.lot_geom, edges, setbacks, less=taken)
     cut = None if strips else setbacks.largest_ft
     if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
         cut = setbacks.alley_rear_ft
@@ -1264,7 +1300,7 @@ def envelope_for(
         rear_ft=strip,
         alley_rear_ft=None if setbacks.alley_rear_ft is None else strip,
     )
-    ground = buildable(lot.lot_geom, lot.edges, open_rear, less=taken)
+    ground = buildable(lot.lot_geom, edges, open_rear, less=taken)
     return Envelope(geom, cut, "flats", setbacks, ground)
 
 
@@ -1670,7 +1706,9 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
     (``local_street_obs``: True, False, or absent), and say how many. The
     same rows carry each street line's class rank (``street_ranks_json``,
     :func:`flats.geom.street_class.street_ranks`) for the lowest-class
-    driveway rule.
+    driveway rule, and, where the layer's code makes a lot dedicate
+    right-of-way, each street line's measured half-width
+    (``road_widths_json``, :func:`flats.geom.dedication.measure`).
 
     Read off the row's own s4 edges, so a lot screened a second way without
     its private drive (:func:`_sans_row`) carries the first reading -- where
@@ -1687,7 +1725,10 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
         if not any(m.covers(layer_id) for m in maps):
             continue
         edges = json.loads(row.get("edges_json") or "[]")
-        row["street_ranks_json"] = json.dumps(street_ranks(edges, layer_id, maps))
+        ranks = street_ranks(edges, layer_id, maps)
+        row["street_ranks_json"] = json.dumps(ranks)
+        if dedication.applies(layer_id):
+            row["road_widths_json"] = json.dumps(dedication.measure(edges, ranks, layer_id, maps))
         got = observed_local_street(edges, layer_id, maps)
         if LOCAL_STREET in got:
             row["local_street_obs"] = got[LOCAL_STREET]

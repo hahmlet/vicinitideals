@@ -144,6 +144,22 @@ class Edge:
     #: the default, and the answer on every line that is not a street, or
     #: that no map reads -- ranks nothing.
     street_rank: int | None = None
+    #: How far the street's centreline runs from this street lot line, at
+    #: the narrowest point measured (:func:`flats.geom.dedication.half_width_ft`).
+    #: None -- the default, and the answer where too little of the line has a
+    #: centreline beside it -- is unmeasured. Read only where the lot's code
+    #: asks a dedication (:func:`flats.geom.dedication.depth_ft`).
+    half_width_ft: float | None = None
+    #: The street's class rank for the dedication, off the county's TSP map
+    #: (:attr:`street_rank` reads the same map but stays unset when a second
+    #: reading of the lot lost the positional match); None where unread.
+    road_rank: int | None = None
+    #: The street is a public one. False on a line that abuts a private road:
+    #: nothing is dedicated there.
+    public_road: bool = True
+    #: The strip this street line gives up to the right-of-way, in feet:
+    #: added to the line's setback (:meth:`flats.geom.envelope.Setbacks.for_edge`).
+    dedication_ft: float = 0.0
 
 
 @dataclass(frozen=True, slots=True)

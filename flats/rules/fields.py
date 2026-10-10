@@ -151,6 +151,10 @@ _LABELS: dict[str, str] = {
     "setback_alley_side_ft": "alley-side setback",
     "setback_street_off_corridor_ft": "street setback off a mapped corridor",
     "setback_street_across_nonresidential_ft": "street setback facing no residential zone",
+    "row_to_centerline_local_ft": "right-of-way to centerline, local street",
+    "row_to_centerline_neighborhood_route_ft": "right-of-way to centerline, neighborhood route",
+    "row_to_centerline_collector_ft": "right-of-way to centerline, collector",
+    "row_to_centerline_arterial_ft": "right-of-way to centerline, arterial",
 }
 
 
@@ -227,6 +231,66 @@ _F: tuple[FieldDef, ...] = (
         "line. The envelope applies it to a street edge flagged both "
         "off_corridor and across_clear and to no other; absent, every street "
         "line keeps the across-the-street number.",
+        False,
+    ),
+    FieldDef(
+        "row_to_centerline_local_ft",
+        "length_ft",
+        "Right-of-way a lot on a local street must reach, measured from the street's "
+        "centre line, before its first building permit (Washington County CDC "
+        "302-2.14 C(1) and 303 to 306: 25 / 30 / 37 / 45 ft for local street, "
+        "neighborhood route, collector, arterial). The lot dedicates the "
+        "shortfall of the existing half-width and its yards run from the new "
+        "line; nothing is due where the street is already that wide. Held as "
+        "four fields because the distance turns on the street's class, a fact "
+        "about ONE street line. The envelope measures the half-width "
+        "(flats/geom/dedication.py) and applies the strip to street lines "
+        "only.",
+        False,
+    ),
+    FieldDef(
+        "row_to_centerline_neighborhood_route_ft",
+        "length_ft",
+        "Right-of-way a lot on a neighborhood route must reach, measured from the street's "
+        "centre line, before its first building permit (Washington County CDC "
+        "302-2.14 C(1) and 303 to 306: 25 / 30 / 37 / 45 ft for local street, "
+        "neighborhood route, collector, arterial). The lot dedicates the "
+        "shortfall of the existing half-width and its yards run from the new "
+        "line; nothing is due where the street is already that wide. Held as "
+        "four fields because the distance turns on the street's class, a fact "
+        "about ONE street line. The envelope measures the half-width "
+        "(flats/geom/dedication.py) and applies the strip to street lines "
+        "only.",
+        False,
+    ),
+    FieldDef(
+        "row_to_centerline_collector_ft",
+        "length_ft",
+        "Right-of-way a lot on a collector must reach, measured from the street's "
+        "centre line, before its first building permit (Washington County CDC "
+        "302-2.14 C(1) and 303 to 306: 25 / 30 / 37 / 45 ft for local street, "
+        "neighborhood route, collector, arterial). The lot dedicates the "
+        "shortfall of the existing half-width and its yards run from the new "
+        "line; nothing is due where the street is already that wide. Held as "
+        "four fields because the distance turns on the street's class, a fact "
+        "about ONE street line. The envelope measures the half-width "
+        "(flats/geom/dedication.py) and applies the strip to street lines "
+        "only.",
+        False,
+    ),
+    FieldDef(
+        "row_to_centerline_arterial_ft",
+        "length_ft",
+        "Right-of-way a lot on an arterial must reach, measured from the street's "
+        "centre line, before its first building permit (Washington County CDC "
+        "302-2.14 C(1) and 303 to 306: 25 / 30 / 37 / 45 ft for local street, "
+        "neighborhood route, collector, arterial). The lot dedicates the "
+        "shortfall of the existing half-width and its yards run from the new "
+        "line; nothing is due where the street is already that wide. Held as "
+        "four fields because the distance turns on the street's class, a fact "
+        "about ONE street line. The envelope measures the half-width "
+        "(flats/geom/dedication.py) and applies the strip to street lines "
+        "only.",
         False,
     ),
     FieldDef(
@@ -1251,6 +1315,13 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # CX, 33.130.215.B.1.b), and a zone silent about it keeps the
         # across-the-street number on every street line.
         "setback_street_across_nonresidential_ft",
+        # The right-of-way a lot gives up to reach a distance from the street's
+        # centre line: one county's Middle Housing sections state it (Washington
+        # County CDC 302-2.14 C(1) to 306), so silence is the ordinary case.
+        "row_to_centerline_local_ft",
+        "row_to_centerline_neighborhood_route_ft",
+        "row_to_centerline_collector_ft",
+        "row_to_centerline_arterial_ft",
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",

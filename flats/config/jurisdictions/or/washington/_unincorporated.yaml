@@ -482,14 +482,13 @@ defaults:
 # held; the `sidewalk_easement` condition names the fact and nothing measures
 # it. A doubt in the handoff.
 #
-# NOT ENCODED: right-of-way dedication. 30X-2 C (Type I) requires, on a
-# public street, right-of-way of 25 ft to centreline on a local street, 30 on
-# a neighborhood route, 37 on a collector and 45 on an arterial, or a Type II
-# exemption under 501-8.4 (R-5 at cdc.302.r-5.txt#L94-L111). Lot area is
-# measured before the dedication (7.1 A), but yards run from the new line.
-# How much a lot gives up depends on the existing half-width, which nothing
-# measures. 418-2's future-right-of-way setback does not apply to Middle
-# Housing (cdc.418-419.setbacks-height.txt#L34-L36).
+# RIGHT-OF-WAY DEDICATION is encoded per district as the four
+# row_to_centerline_*_ft distances (302-2.14 C(1) and its 303 to 306
+# twins). Lot area is measured before the dedication (7.1 A), but yards run
+# from the new line; the bridge measures each street line's half-width
+# and takes the missing strip off the envelope (flats/geom/dedication.py).
+# 418-2's future-right-of-way setback does not apply to Middle Housing
+# (cdc.418-419.setbacks-height.txt#L34-L36).
 #
 # NOT ENCODED: 419-1, "Within 20 feet of another primary district with a
 # lower height restriction, the height restriction of the adjacent district
@@ -561,6 +560,27 @@ zones:
       cite: Washington County CDC 302 (R-5 District), 302-7.1 Middle Housing dimensional requirements
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
+    row_to_centerline_local_ft:
+      # Middle Housing on a public street gives up right-of-way to this
+      # distance from the centre line before its first building permit;
+      # the yards then run from the new line, and no strip is due where
+      # the street is already that wide (flats/geom/dedication.py). The
+      # same four distances are printed in 303 through 306 (R-6 to R-24).
+      value: 25
+      cite: Washington County CDC 302-2.14 C(1)(a), local street, 25 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L94-L103"
+    row_to_centerline_neighborhood_route_ft:
+      value: 30
+      cite: Washington County CDC 302-2.14 C(1)(b), neighborhood route, 30 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L94-L103"
+    row_to_centerline_collector_ft:
+      value: 37
+      cite: Washington County CDC 302-2.14 C(1)(c), collector, 37 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L94-L103"
+    row_to_centerline_arterial_ft:
+      value: 45
+      cite: Washington County CDC 302-2.14 C(1)(d), arterial, 45 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L94-L103"
     quadplex_allowed:
       # 302-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 302-3 takes the rest through Type II; both
@@ -662,6 +682,22 @@ zones:
       cite: Washington County CDC 303 (R-6 District), 303-7.1 Middle Housing dimensional requirements
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
+    row_to_centerline_local_ft:
+      value: 25
+      cite: Washington County CDC 303-2.14 C(1)(a), local street, 25 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L93-L100,L103-L104"
+    row_to_centerline_neighborhood_route_ft:
+      value: 30
+      cite: Washington County CDC 303-2.14 C(1)(b), neighborhood route, 30 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L93-L100,L103-L104"
+    row_to_centerline_collector_ft:
+      value: 37
+      cite: Washington County CDC 303-2.14 C(1)(c), collector, 37 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L93-L100,L103-L104"
+    row_to_centerline_arterial_ft:
+      value: 45
+      cite: Washington County CDC 303-2.14 C(1)(d), arterial, 45 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L93-L100,L103-L104"
     quadplex_allowed:
       # 303-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 303-3 takes the rest through Type II; both
@@ -763,6 +799,22 @@ zones:
       cite: Washington County CDC 304 (R-9 District), 304-7.1 Middle Housing dimensional requirements
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
+    row_to_centerline_local_ft:
+      value: 25
+      cite: Washington County CDC 304-2.14 C(1)(a), local street, 25 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L101-L110"
+    row_to_centerline_neighborhood_route_ft:
+      value: 30
+      cite: Washington County CDC 304-2.14 C(1)(b), neighborhood route, 30 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L101-L110"
+    row_to_centerline_collector_ft:
+      value: 37
+      cite: Washington County CDC 304-2.14 C(1)(c), collector, 37 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L101-L110"
+    row_to_centerline_arterial_ft:
+      value: 45
+      cite: Washington County CDC 304-2.14 C(1)(d), arterial, 45 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L101-L110"
     quadplex_allowed:
       # 304-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 304-3 takes the rest through Type II; both
@@ -864,6 +916,22 @@ zones:
       cite: Washington County CDC 305 (R-15 District), 305-7.1 Middle Housing dimensional requirements
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
+    row_to_centerline_local_ft:
+      value: 25
+      cite: Washington County CDC 305-2.14 C(1)(a), local street, 25 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L96-L105"
+    row_to_centerline_neighborhood_route_ft:
+      value: 30
+      cite: Washington County CDC 305-2.14 C(1)(b), neighborhood route, 30 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L96-L105"
+    row_to_centerline_collector_ft:
+      value: 37
+      cite: Washington County CDC 305-2.14 C(1)(c), collector, 37 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L96-L105"
+    row_to_centerline_arterial_ft:
+      value: 45
+      cite: Washington County CDC 305-2.14 C(1)(d), arterial, 45 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L96-L105"
     quadplex_allowed:
       # 305-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 305-3 takes the rest through Type II; both
@@ -965,6 +1033,22 @@ zones:
       cite: Washington County CDC 306 (R-24 District), 306-7.1 Middle Housing dimensional requirements
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
+    row_to_centerline_local_ft:
+      value: 25
+      cite: Washington County CDC 306-2.14 C(1)(a), local street, 25 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L95-L104"
+    row_to_centerline_neighborhood_route_ft:
+      value: 30
+      cite: Washington County CDC 306-2.14 C(1)(b), neighborhood route, 30 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L95-L104"
+    row_to_centerline_collector_ft:
+      value: 37
+      cite: Washington County CDC 306-2.14 C(1)(c), collector, 37 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L95-L104"
+    row_to_centerline_arterial_ft:
+      value: 45
+      cite: Washington County CDC 306-2.14 C(1)(d), arterial, 45 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L95-L104"
     quadplex_allowed:
       # 306-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 306-3 takes the rest through Type II; both
@@ -1066,6 +1150,25 @@ zones:
       cite: Washington County CDC 307 (R-25+ District), 307-7.1 Middle Housing dimensional requirements
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
+    row_to_centerline_local_ft:
+      # Middle Housing gives up right-of-way to this distance from the centre line
+      # before its first building permit (flats/geom/dedication.py); same four
+      # distances as 302 to 306.
+      value: 25
+      cite: Washington County CDC 307-2.13 C(1), local street, 25 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L98-L111"
+    row_to_centerline_neighborhood_route_ft:
+      value: 30
+      cite: Washington County CDC 307-2.13 C(1), neighborhood route, 30 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L98-L111"
+    row_to_centerline_collector_ft:
+      value: 37
+      cite: Washington County CDC 307-2.13 C(1), collector, 37 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L98-L111"
+    row_to_centerline_arterial_ft:
+      value: 45
+      cite: Washington County CDC 307-2.13 C(1), arterial, 45 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L98-L111"
     quadplex_allowed:
       # 307-2 permits Middle Housing (430-84) on an existing lot through a
       # Type I procedure, and 307-3 takes the rest through Type II; both
@@ -1235,6 +1338,24 @@ zones:
       cite: Washington County CDC 390-9 (R-9 North Bethany District), 304-7.2 by 390-9.6
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
+    row_to_centerline_local_ft:
+      # North Bethany's own Middle Housing dedication (390-9.2 E(2)), the same four
+      # distances as 302 to 306; flats/geom/dedication.py.
+      value: 25
+      cite: Washington County CDC 390-9.2 E(2)(a), local street, 25 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L467-L480"
+    row_to_centerline_neighborhood_route_ft:
+      value: 30
+      cite: Washington County CDC 390-9.2 E(2)(a), neighborhood route, 30 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L467-L480"
+    row_to_centerline_collector_ft:
+      value: 37
+      cite: Washington County CDC 390-9.2 E(2)(a), collector, 37 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L467-L480"
+    row_to_centerline_arterial_ft:
+      value: 45
+      cite: Washington County CDC 390-9.2 E(2)(a), arterial, 45 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L467-L480"
     quadplex_allowed:
       # Not the Middle Housing path. 390-9.2 E and 390-9.3 B permit Middle
       # Housing only "on a lot or parcel that was approved for the
@@ -1534,6 +1655,24 @@ zones:
       cite: Washington County CDC 375 (Transit Oriented Districts), Table A, Table B(1) and Table C(1) (Middle Housing)
       url: https://api.municode.com/PublicationPdfDownload/3090
       retrieved: '2026-09-28'
+    row_to_centerline_local_ft:
+      # Transit Oriented Middle Housing dedication (375 Table A, 30.c), the same four
+      # distances as 302 to 306; TO:R12-18 and TO:R18-24 inherit it through `like`.
+      value: 25
+      cite: Washington County CDC 375 Table A, 30.c(ii), local street, 25 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L446-L460"
+    row_to_centerline_neighborhood_route_ft:
+      value: 30
+      cite: Washington County CDC 375 Table A, 30.c(ii), neighborhood route, 30 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L446-L460"
+    row_to_centerline_collector_ft:
+      value: 37
+      cite: Washington County CDC 375 Table A, 30.c(ii), collector, 37 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L446-L460"
+    row_to_centerline_arterial_ft:
+      value: 45
+      cite: Washington County CDC 375 Table A, 30.c(ii), arterial, 45 feet to centerline
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L446-L460"
     quadplex_allowed:
       # Table A, "Middle Housing - Section 430-84 (Use is distinct from
       # others in this table) (30.c.)": I/II in TO:R9-12, TO:R12-18 and
