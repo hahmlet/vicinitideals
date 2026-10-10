@@ -1831,6 +1831,10 @@ read when the weekly full re-screen lands.
    greens: ZDO 1102 into the store, Milwaukie neighbours block, then recorded
    refusals / measured-zero; Tualatin block tracing + RH-HR min height
    deferred (0 lots). Assigned to the "Remaining zone codes" agent.
+   Slice 1 DONE ef4b272f: Gladstone C2 within 60 ft of the Portland Ave
+   centreline is held YELLOW under FACT-ALONG-PORTLAND-AVENUE (GMC
+   17.18.050(3)(b)+(c)); bound 23 lots green->yellow, 51 lots flagged, 0
+   other moves (/root/wk52/b_after). Map waits on the joint splice.
 53. [scan: YES (Estacada layer is drafted and unscreened; it lands at the next weekly after the acquire of its zoning dataset)] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
    2026-10-08); Estacada is encoded; Molalla is blocked on HUMAN_TODO 29
    (Steph's PDFs); Forest Grove stays blocked on HUMAN_TODO 28.** Canby's only
