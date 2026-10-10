@@ -2350,3 +2350,17 @@ read when the weekly full re-screen lands.
    point), and a cap so the PC never runs hot while in use (item 32). ~2-4 days of agent
    work. Steph to decide; measure the 137 queue first (46(d) lockwatch on 137,
    /root/lockwatch.log, every 5 min since 2026-10-10).
+66. [scan: NO for (A); YES for (B)] **A price check beside the fit (Steph 2026-10-10: "Do we
+   not have a financial screen? If there's a large commercial use ... redevelopment wouldn't
+   support").** No: FLATS answers legal + physical fit only and ignores existing buildings by
+   design; nothing compares what a lot would cost with what a 4-home pod can pay for land.
+   The county's land, building and total values and the last sale price are already in the
+   normalized lot table for every lot (RLIS LANDVAL/BLDGVAL/TOTALVAL/SALEPRICE). Run 70 greens
+   (49,960): county total value > $1M 7,994, > $2M 3,324, > $3M 2,123; building worth more than
+   the land AND total > $1M 5,143; ~3,000 carry a 5,000+ sq ft non-house building, ~900 a
+   20,000+ one (item 64's sample: 1S2E02BB  -01100, a closed 75,050 sq ft big box, $5.8M sale
+   2020). Offered: (A) SHOW, don't screen -- a likely-price figure and an "over budget" label
+   on every lot + a Lots-page filter, colour unchanged; (B) SCREEN -- over budget = YELLOW
+   (never red: an owner may sell part of a big lot). Either needs Steph's land budget per pod
+   (dollars a 4-home project can pay for land, maybe by city). Kept OUT of the fit colour by
+   default so "can it be placed" stays honest. Steph to choose (A)/(B) and give the budget.
