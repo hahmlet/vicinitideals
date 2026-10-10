@@ -2438,3 +2438,11 @@ read when the weekly full re-screen lands.
    SCR-DNC 16, SCC-MM 12, SCR-HD 8, UC-RM 7, MU-N 5); 275 SCR-MD greens stay. Lands at the next
    weekly (~2026-10-14). Open for Steph only if a Type II review on clear and objective
    criteria should count as by-right (then all 17 zones come back).
+   MERGED 84f215f8 2026-10-10 (code live, map moves at the weekly).
+70. [scan: NO] **The Lots page takes 26-36 s even unfiltered (measured 2026-10-10 on production,
+   /flats/lots and ?colour=green, e2e user).** Found while timing item 66 (price filter merged
+   34e1a771, REVERTED 4670491e: filter 524 at 125 s, sort 502 at 74 s, count queries ran 8+ min in
+   Postgres after the request died; the price-per-unit agent is moving the price to stored columns).
+   Suspects: the per-run best-design subquery (`_best`) and the verdict/colour count over the whole
+   copy on every page load. Offered to Steph: profile with EXPLAIN ANALYZE (read-only), then a
+   stored best-colour per lot per run or an index, plus a statement_timeout on page queries.
