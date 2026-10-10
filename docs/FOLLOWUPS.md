@@ -991,6 +991,17 @@ read when the weekly full re-screen lands.
    (660-046-0010(4)(b), not in the store) -- if it states a per-unit approach ratio, OC may apply
    it. AGENT INSTRUCTIONS GIVEN 2026-10-10 ("driveway-state-law"): fetch the Model Code, settle it,
    sweep every encoded city for any driveway/curb-cut per-unit ratio, report before encoding.
+   RULED 2026-10-10 (driveway-state-law, branch flats/driveway-state-law): (i) STATE LAW
+   OVERRIDES F. Large Cities Model Code (Exhibit B, stored) has NO per-unit minimum: townhouse
+   "maximum of one (1) driveway approach ... for every townhouse", no corner lot "consolidate
+   access for all lots into a single driveway". 0225(1)(c) + 0220(3)(f)(C) bar F as requirement
+   or cap. HB 2138 s.22 strengthens, not weakens. No 0235 alternative-standards filing found
+   for OC Ord. 22-1001 (reopen if one turns up). Recorded as NOT ENCODED/overridden in
+   oregon-city.yaml; no colour moves (the pod keeps one approach). Sweep: no other encoded city
+   states a per-unit approach MINIMUM; Hillsboro/Tigard cap "one per two units" (never binds a
+   one-approach pod); Sherwood/Durham/Cornelius pairing-or-sharing limits are open (see
+   report). Do NOT merge flats/oc-two-approaches; Steph to confirm, then delete it. Item 25
+   no longer needs a second approach for item 24.
    AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-two-approaches"; reach first,
    bound + read every move, lands at the weekly; stop and ask if it needs
    item 25's approach geometry).

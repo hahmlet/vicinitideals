@@ -1,0 +1,966 @@
+Large Cities Middle Housing Model Code
+
+         User’s Guide:
+         Oregon House Bill 2001 (2019) (HB 2001) requires that “Large Cities” (defined as cities
+         with a population of 25,000 or more and each county or city within a metropolitan
+         service district) must allow: (1) all middle housing types in areas zoned for residential
+         use that allow for the development of detached single              -family dwellings; and (2) a duplex
+         on each lot or parcel zoned for residential use that allows for the development of
+         detached single-family dwellings. Middle housing, which HB 2001 defines as duplexes,
+         triplexes, quadplexes, cottage clusters, and townhouses,               provides an opportunity to
+         increase housing supply in developed neighborhoods and can blend in well with
+         detached single-family dwellings.
+         The bill allows local governments to regulate siting and design of               middle housing,
+         provided that the regulations do not, individually or cumul              atively, discourage middle
+         housing development through unreasonable costs or delay.                   When regulating siting and
+         design of middle housing, Large Cities should balance concerns about neighborhood
+         compatibility and other factors against the need to address Ore                gon’s housing shortage
+         by removing barriers to development and should ensure that any siting and design
+         regulations do not, individually or cumulatively, discourage the development of                    middle
+         housing through unreasonable costs or delay.
+         Large Cities may develop their own standards in compliance with the requirements of
+         HB 2001. This model code may provide guidance toward that end. However, if                        Large
+         Cities do not wish to prepare their own standards or if             Large Cities do not adopt the
+         required code amendments by June 30, 2022, they must directly apply this model code
+         prepared by the Department of Land and Conservation Development (DCLD) to
+         development in their jurisdictions. The model code is intended to be straightforward
+         and implementable by Large Cities throughout the state, and is consistent with the
+         requirements and intent of HB 2001. The model code will be adopted by reference into
+         Oregon Administrative Rules.
+
+         To the extent they are applicable, the Administrative Rules contained in Chapter 660,
+         Division 46 apply to and may be used to interpret this model code.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                           1 of 33
+Chapter 1. Combined Standards for All Middle Housing
+
+Sections:
+     A.   Purpose
+     B.   Definitions
+     C.   Applicability
+     D.   Relationship to Other Regulations
+     E.   Duplex, Triplex, and Quadplex Examples
+
+A.   Purpose
+The purpose of this middle housing model code (“code”) is to implement HB 2001, codified in ORS
+197.758 et seq, by providing siting and design standards for middle housing developed in areas zoned
+for residential use that allow for the development of detached single family dwellings.
+
+B.   Definitions
+The following definitions shall apply for the purposes of this code, notwithstanding other definitions in
+the development code:
+
+     1.   “Building footprint” means the horizontal area as seen in plan, measured from out                     side of all
+          exterior walls and supporting columns. It includes dwellings              and any area of attached garage
+          that exceeds 200 square feet. It does not include detached garages or carports; accessory
+          structures; trellises; patios; areas of porch, deck, and balcony less than 30 inches from finished
+          grade; cantilevered covers, porches or projections; or ramps and stairways required for access.
+
+     2.   “Common courtyard” means a common area for use by residents of a cottage cluster. A
+          common courtyard may function as a com              munity yard. Hard and soft landscape features may be
+          included in a common courtyard, such as pedestrian paths, lawn, groundcover, trees, shrubs,
+          patios, benches, or gazebos.
+
+     3.   “Common wall” means a wall or set of walls in a single structure shared by two or                     more dwelling
+          units. The common wall must be shared for at least 25 percent of the length of the side of the
+          building of the dwelling units. The common wall may be any wall of the building, including the
+          walls of attached garages.
+
+     4.   “Cottage” means an individual dwelling unit that is part of a cottage cluster.
+
+     5.   “Cottage cluster” means a grouping of no fewer than four detached dwelling units per acre,
+          each with a footprint of less than 900 square feet, located on a single lot or parcel that includes
+          a common courtyard. Cottage cluster may also be known as “cluster housing,” “cottage
+          housing,” “bungalow court,” “cottage court,” or “pocket neighborhood.”
+
+     6.   “Cottage cluster project” means a development site with one or more cottage clusters. Each
+          cottage cluster as part of a cottage cluster project must have its own common courtyard.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                           2 of 33
+     7.   “Detached single family dwelling” means a detached structure on a lot or parcel that is
+          comprised of a single dwelling unit. Detached single family dwellings may be constructed off                         -
+          site, e.g., manufactured dwellings or modular homes.
+
+     8.   “Door area” is the area of the portion of a door other than a garage door that moves and does
+          not include the frame.
+
+     9.   “Driveway approach” means the edge of a driveway where it abuts a public right                        -of-way.
+
+     10. “Duplex” means two dwelling units on a lot or parcel in any configuration. In instances where a
+          development can meet the definition of a duplex and also meets the definition of a primary
+          dwelling unit with an accessory dwelling unit (ADU), the applicant s                 hall specify at the time of
+          application review whether the development is considered a duplex or a primary dwelling unit
+          with an ADU. See Figure 3 through Figure 8 in Section E for examples of possible duplex
+          configurations.
+
+     11. “Floor area” means the total area of all floors of a building. Floor area is mea                  sured for each floor
+          from the exterior faces of a building or structure. Floor area includes stairwells, ramps, shafts,
+          chases, and the area devoted to garages and structured parking. Floor area does not include the
+          following (see Figure 1):
+
+          •    Areas where the elevation of the floor is 4 feet or more below the adjacent right                     -of way;
+
+          •    Roof area, including roof top parking;
+
+          •    Roof top mechanical equipment; and
+
+          •    Roofed porches, exterior balconies, or other similar areas, unless they are enclosed by walls
+               that are more than 42 inches in height for 75 percent or more of their perimeter.
+
+                                 Figure 1. Areas Excluded from Floor Area Calculation
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                              3 of 33
+     12. “Floor area ratio (FAR)” means the amount of floor area of a building or structure in relation to
+          the amount of site area, expressed in square feet. For example, a floor area ratio of                     0.7 to 1
+          means 0.7 square feet of floor area for every one              square foot of site area. FAR is calculated by
+          dividing the total floor area of all buildings on a site by the total site area              (See Figure 2).
+
+                                       Figure 2. Floor Area Ratio (FAR) Calculation
+
+     13. “Frontage” means the portion of a lot or parcel that abuts a street.
+
+     14. “Goal Protected Lands” means lands protected or designated pursuant to                         any one of the
+          following statewide planning goals:
+
+          •    Goal 5 Natural Resources, Scenic and Historic Areas, and Open Spaces;
+
+          •    Goal 6 Air, Water, and Land Resource Quality
+
+          •    Goal 7 Areas Subject to Natural Hazards;
+
+          •    Goal 9 Economic Development;
+
+          •    Goal 15 Willamette River Greenway;
+
+          •    Goal 16 Estuarine Resources;
+
+          •    Goal 17 Coastal Shorelands; or
+
+          •    Goal 18 Beaches and Dunes.
+
+     15. “Lot or parcel” means any legally created unit of land.
+
+     16. “Middle housing” means duplexes, triplexes, quadplexes, cottage clusters, and townhouses.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                              4 of 33
+     17. “Quadplex” means four dwelling units on a lot or parcel in any configuration                     . See Figure 11 and
+          Figure 12 in Section E for examples of possible quadplex con                figurations.
+
+     18. “Site area” means the total area of a development site calculated after subtracting any required
+          or planned dedication of public rights         -of-way and/or designation of private rights-of-way.
+
+     19. “Story” means a portion of a building between the surface of any floor and the surface of the
+          floor next above it, or, if there is no floor above it, the space between such floor and the ceiling
+          next above it, provided that the following shall not be deemed a stor                  y:
+
+          •    A basement or cellar if the height from finished grade at the exterior perimeter of the
+               building to the finish floor elevation above is six (6) feet or less for at least 50 percent of the
+               perimeter and does not exceed twelve (12) feet above grade at any po                     int;
+
+          •    An attic or similar space under a gable, hip, or gambrel roof, the wall plates of which on at
+               least two opposite exterior walls are not more than two (2) feet above the floor of such
+               space.
+
+     20. “Sufficient Infrastructure” means the following level of publ               ic services to serve new Triplexes,
+          Quadplexes, Townhouses, or Cottage Cluster development:
+          •    Connection to a public sewer system capable of meeting established service levels.
+
+          •    Connection to a public water system capable of meeting established service levels                      .
+
+          •    Access via public or private streets meeting adopted emergency vehicle access standards to
+               a city’s public street system.
+
+          •    Storm drainage facilities capable of meeting established service levels for storm drainage.
+
+     21. “Townhouse” means a dwelling unit const               ructed in a row of two or more attached units, where
+          each dwelling unit is located on an individual lot or parcel and shares at least one common wall
+          with an adjacent unit. A townhouse is also commonly called a “rowhouse,” “attached house,” or
+          “common-wall house.”
+
+     22. “Townhouse project” means one or more townhouse structures constructed, or proposed to be
+          constructed, together with the development site where the land has been divided, or is
+          proposed to be divided, to reflect the townhouse property lines and                    any commonly owned
+          property.
+
+     23. “Triplex” means three dwelling units on a lot or parcel in any configuration.                    See Figure 9 and
+          Figure 10 in Section E for examples of possible triplex configurations                .
+
+     24. “Window area” means the aggregate area of the glass within each window, including any
+          interior grids, mullions, or transoms.
+
+     25. “Zoned for residential use” means a zoning district in which residential dwellings are the primary
+          use and which implements a residential Comprehensive Plan map designation.                          This excludes
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                             5 of 33
+          lands zoned primarily for commercial, industrial, agricultural, public, or mixed use                    s, even if those
+          zones allow for the development of detached single family dwellings.
+
+C.   Applicability
+     1.   Applicability of Code Sections.
+
+          a.   Code sections applicable to all middle housing types are: Chapter 1, Sections A (Purpose), B
+               (Definitions), C (Applicability), and D (Relationship to Other Regulations).
+
+          b.   Code standards applicable to specific housing types are listed below:
+
+               •    Duplexes: Chapter 2.
+               •    Triplexes: Chapter 3.
+               •    Quadplexes: Chapter 3.
+               •    Townhouses: Chapter 4.
+               •    Cottage clusters: Chapter 5.
+
+     2.   Applicability by Development Type and Location.
+
+          a.   Except as specified in subsection (b) of this section (C)(2), the standards in this code allow
+               for the following development on lots or parcels zoned for residential use that allow for the
+               development of detached single family dwellings:
+
+               •    New duplexes and those created through conversion of existing detached single family
+                    dwellings.
+
+               •    New triplexes, quadplexes, cottage clusters, and townhouses, and those created
+                    through conversion of existing detached single family dwellings or duplexes, on lots or
+                    parcels with Sufficient Infrastructure.
+
+          b.   Exceptions. The standards in this code do not allow the following, unless otherwise
+               permitted by the development code through clear and objective standards, criteria, and
+               procedures:
+
+               •    On Goal Protected Lands, the creation of triplexes, quadplexes, cottage clusters, or
+                    townhouses, or the creation of more than two dwelling units on a single lot or parcel,
+                    including accessory dwelling units.
+
+               •    On lands that are not zoned for residential use, the creation of middle housing.
+
+D.   Relationship to Other Regulations
+     1.   Conflicts. In the event of a conflict between this code and other local jurisdictional standards
+          applicable to a middle housing development, the standards of this code control.
+
+     2.   Public Works Standards. Clear and objective exceptions to public works stand                      ards granted to
+          single family dwellings shall also be granted to duplexes.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                              6 of 33
+     3.   Protective Measures. Middle housing shall comply with protective measures (plans, policies, or
+          regulations) adopted pursuant to statewide land use planning goals (e.g., environm                      ental and
+          natural hazard protections).
+
+E.   Duplex, Triplex, and        Quadplex Examples
+The following figures illustrate examples of possible            configurations for duplexes, triplexes, and
+quadplexes. Other configurations may also be acceptable, provided the develop                       ment meets the
+definition of duplex, triplex, or quadplex, pursuant to Section B.
+
+                 Figure 3. Stacked Duplex                                        Figure 4. Side-by-Side Duplex
+
+       Figure 5. Duplex Attached by         Breezeway                   Figure 6. Duplex Attached by Garage Wall
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                             7 of 33
+    Figure 7. Detached Duplex Units Side-by-Side                     Figure 8. Detached Duplex Units Front and Back
+
+       Figure 9. Attached Triplex Front and Back                          Figure 10. Attached Triplex Side-by-Side
+
+               Figure 11. Stacked Quadplex                                      Figure 12. Detached Quadplex
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                             8 of 33
+Chapter 2. Duplexes
+
+Sections:
+    A.   Permitted Uses and Approval Process
+    B.   Development Standards
+    C.   Design Standards
+    D.   Duplex Conversions
+
+A.  Permitted Uses and Approval Process
+Duplexes are permitted outright on lots or parcels zoned for residential use that allow for the
+development of detached single family dwellings. Duplexes are subject to the same approval process as
+that for detached single family dwellings in the same zone and are subject only to clear and objective
+standards, approval criteria, conditions, and procedures, unless discretionary standards and criteria
+have been adopted in accordance with ORS 197.307(5). Alternatively, an applicant may choose to
+submit an application for a duplex subject to discretionary standards and criteria adopted in accordance
+with ORS 197.307(6), if such a process is available.
+
+B.  Development Standards
+Except as specified below, duplexes shall meet all clear and objective development standards that
+apply to detached single family dwellings in the same zone (including, but not limited to, minimum
+and maximum lot size, minimum and maximum setbacks, and building height), unless those
+standards conflict with this code.
+
+The following development standards are invalid and do not apply to duplexes being developed on lots
+or parcels zoned for residential use that allow the development of a detached single family dwelling:
+
+    1.   Maximum Density.         The jurisdiction’s pre-existing density maximums and minimum lot sizes for
+         duplexes do not apply.
+
+    2.   Setbacks. A minimum front setback of greater than 20 feet or a minimum rear setback of greater
+         than 15 feet except for those minimum setbacks applicable to garages and carports.
+
+    3.   Off-Street Parking. Any off-street parking requirement.
+
+C.  Design Standards
+New duplexes shall meet all clear and objective design standards (e.g., entry orientation, window
+coverage, articulation, etc.) that apply to detached single family dwellings in the same zone, unless
+those standards conflict with this code. Facades of dwellings that are separated from the street property
+line by another dwelling are exempt from meeting building design standards.
+
+Any design standards that apply only to duplexes are invalid.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                         9 of 33
+D.  Duplex Conversions
+Conversion of an existing detached single family structure to a duplex is allowed, pursuant to
+Chapter 1, Section C (Applicability), provided that the conversion does not increase
+nonconformance with applicable clear and objective standards.
+
+Chapter 3. Triplexes and Quadplexes
+
+Sections:
+    A.   Permitted Uses and Approval Process
+    B.   Development Standards
+    C.   Design Standards
+    D.   Triplex and Quadplex Conversions
+
+A.  Permitted Uses and Approval Process
+    1.   Permitted Use. Triplexes and quadplexes are permitted outright wherever they are allowed as
+         provided in Chapter 1, Section C (Applicability).
+
+    2.   Approval Process. Triplexes and quadplexes are subject to the same approval process as that for
+         detached single family dwellings in the same zone and are subject only to clear and objective
+         standards, approval criteria, conditions, and procedures, unless discretionary standards and
+         criteria have been adopted in accordance with ORS 197.307(5). Alternatively, an applicant may
+         choose to submit an application for a triplex or quadplex subject to discretionary standards and
+         criteria adopted in accordance with ORS 197.307(6), if such a process is available.
+
+    3.   Sufficient Infrastructure. Applicants must demonstrate that Sufficient Infrastructure is provided,
+         or will be provided, upon submittal of a triplex or quadplex development application.
+
+B.  Development Standards
+    1.   Applicability.
+
+         a.   Triplexes and quadplexes shall meet:
+
+              •    The standards in subsections (2) through (7) of this section (B).
+
+              •    All other clear and objective development standards that apply to detached single
+                   family dwellings in the same zone (including, but not limited to, lot size and dimensions,
+                   minimum and maximum setbacks, and building height), unless those standards conflict
+                   with this code and except as specified in subsections (1)(b) and (2) through (7) of this
+                   section (B).
+
+         b.   The following standards are invalid and do not apply to triplexes or quadplexes allowed by
+              this code:
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                         10 of 33
+               •    Maximum lot coverage, minimum landscape area, or minimum open space standards.
+
+               •    The jurisdiction’s development standards other than those in subsections (2) through (7)
+                    of this section (B) that apply only to triplexes, quadplexes, or multifamily development.
+
+     2.   Number of Units. This code does not allow for the creation of more than four (4) dwelling units
+          on a lot, including accessory dwelling units.
+
+     3.   Maximum Density. The jurisdiction’s pre-existing density maximums do not apply.
+
+     4.   Setbacks. Minimum front and street side setbacks greater than 10 feet and minimum rear
+          setbacks greater than 10 feet are invalid, except for those minimum setbacks applicable to
+          garages and carports.
+
+     5.   Building Height. A maximum height of less than 35 feet or three                  (3) stories is invalid. Building
+          height is measured in accordance with the development code.
+
+     6.   Maximum Floor Area Ratio (FAR)           . The maximum floor area ratio for all buildings onsite,
+          cumulatively, is based on the minimum lot size for a detached single family dwelling in the same
+          zone, as provided below:
+
+               Minimum Lot Size for Detached Single Family                            Maximum
+               Dwellings                                                              FAR
+               3,000 sf or less                                                       1.4 to 1
+               More than 3,000 sf, up to and including 5,000 sf                       1.1 to 1
+               More than 5,000 sf, up to and including 10,000 sf                      0.7 to 1
+               More than 10,000 sf but less than 20,000 sf                            0.6 to 1
+               20,000 sf or more                                                      0.4 to 1
+
+     7.   Off-Street Parking.
+
+          a.   Required Off-Street Parking. The minimum number of required off-street parking spaces is:
+
+               i.   In zones with a minimum lot size of less than 5,000 square feet, one (1) off-street
+                    parking space per development.
+
+               ii.  In zones with a minimum lot size of 5,000 square feet or more, two (2) off-street parking
+                    spaces per development.
+
+               A credit for on-street parking shall be granted for some or all the required off-street parking
+               as provided in subsection (b). No additional parking spaces shall be required for conversion
+               of a detached single family dwelling to a triplex or quadplex, including those created
+               through the addition of detached units.
+
+          b.   On-Street Credit. If on-street parking spaces meet all the standards in subsections (i)-(iv)
+               below, they shall be counted toward the minimum off-street parking requirement.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                           11 of 33
+               i.   The space must be abutting the subject site;
+
+               ii.  The space must be in a location where on-street parking is allowed by the jurisdiction;
+
+               iii.  The space must be a minimum of 22 feet long; and
+
+               iv.  The space must not obstruct a required sight distance area.
+
+C.   Design Standards
+     1.   Applicability.
+
+          a.   New triplexes and quadplexes, including those created by adding building square footage on
+               a site occupied by an existing dwelling, shall meet:
+
+               •    The design standards in subsections (2) through (5) of this section (C); and
+
+               •    All other clear and objective design standards that apply to detached single family
+                    dwellings in the same zone, unless those standards conflict with this code and except as
+                    specified in subsection (1)(b) of this section (C).
+
+          b.   The following standards are invalid and do not apply to triplexes or quadplexes allowed by
+               this code:
+
+               •    Mandates for construction of a garage or carport.
+
+               •    The jurisdiction’s design standards other than those in subsections (2) through (5) of this
+                    section (C) that apply only to triplexes, quadplexes, or multifamily development.
+
+     2.   Entry Orientation. At least one main entrance for each triplex or quadplex structure must                          meet
+          the standards in subsections (a) and (b) below. Any detached structure for which more than 50
+          percent of its street-facing facade is separated from the street property line by a dwelling is
+          exempt from meeting these standards.
+
+          a.   The entrance must be within 8 feet of the longest street-facing wall of the dwelling unit; and
+
+          b.   The entrance must either:
+
+               i.   Face the street (see Figure 13);
+
+               ii.  Be at an angle of up to 45 degrees from the street (see Figure 14);
+
+               iii. Face a common open space that is adjacent to the street and is abutted by dwellings on
+                    at least two sides (see Figure 15); or
+
+               iv.  Open onto a porch (see Figure 16). The porch must:
+
+                    (A)  Be at least 25 square feet in area; and
+
+                    (B)  Have at least one entrance facing the street or have a roof.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                             12 of 33
+                                      Figure 13. Main Entrance Facing the Street
+
+                                Figure 14. Main Entrance at 45° Angle from the Street
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                          13 of 33
+                              Figure 15. Main Entrance Facing Common Open Space
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                     14 of 33
+                                   Figure 16. Main Entrance Opening onto a Porch
+
+    3.   Windows. A minimum of 15 percent of the area of all street-facing facades must include
+         windows or entrance doors. Facades separated from the street property line by a dwelling are
+         exempt from meeting this standard. See Figure 17.
+
+                                              Figure 17. Window Coverage
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                        15 of 33
+     4.   Garages and Off-Street Parking Areas           . Garages and off-street parking areas shall not be located
+          between a building and a public street (other than an alley), except in compliance with the
+          standards in subsections (a) and (b) of this subsection (C)(4).
+
+          a.   The garage or off-street parking area is separated from the street property line by a
+               dwelling; or
+
+          b.   The combined width of all garages and outdoor on-site parking and maneuvering areas does
+               not exceed a total of 50 percent of the street frontage (see Figure 18).
+
+                                    Figure 18. Width of Garages and Parking Areas
+
+     5.   Driveway Approach. Driveway approaches must comply with the following:
+
+          a.   The total width of all driveway approaches must not exceed 32 feet per frontage, as
+               measured at the property line (see Figure 19). For lots or parcels with more than one
+               frontage, see subsection (5)(c) of this subsection (C).
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                            16 of 33
+          b.   Driveway approaches may be separated when located on a local street (see Figure 19). If
+               approaches are separated, they must             meet the jurisdiction’s driveway spacing standards
+               applicable to local streets.
+
+          c.   In addition, lots or parcels with more than one frontage must comply with the following:
+
+               i.   Lots or parcels must access the street with the lowest transportation classification for
+                    vehicle traffic. For lots or parcels abutting an improved alley (defined as an alley that
+                    meets the jurisdiction’s standards for width and pavement), access must be taken from
+                    the alley (see Figure 20).
+
+               ii.  Lots or parcels with frontages only on collectors and/or arterial streets must meet the
+                    jurisdiction’s access standards applicable to collectors and/or arterials.
+
+               iii. Triplexes and quadplexes on lots or parcels with frontages only on local streets may
+                    have either:
+
+                    •    Two driveway approaches not exceeding 32 feet in total width on one frontage; or
+
+                    •    One maximum 16-foot-wide driveway approach per frontage (see Figure 21).
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                            17 of 33
+                      Figure 19. Driveway Approach Width and Separation on Local Street
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                        18 of 33
+                                                   Figure 20. Alley Access
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                           19 of 33
+                   Figure 21. Driveway Approach Options for Multiple Local Street Frontages
+
+D.   Conversions to Triplex and Quadplex
+Internal conversion of an existing detached single family structure or duplex to a triplex or quadplex is
+allowed, pursuant to Chapter 1, Section C (Applicabili            ty), provided that the conversion does not increase
+nonconformance with applicable clear and objective standards, unless increasing nonconformance is
+otherwise permitted by the development code.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                          20 of 33
+Chapter 4. Townhouses
+
+Sections
+     A.   Permitted Uses and Approval Process
+     B.   Development Standards
+     C.   Design Standards
+
+A.   Permitted Uses and Approval Process
+     1.   Permitted Use. Townhouses are permitted outright wherever they are allowed as provided in
+          Chapter 1, Section C (Applicability).
+
+     2.   Approval Process. Townhouse structures are subject to the same approval process as that for
+          detached single family dwellings in the same zone. Townhouse projects are subject only to clear
+          and objective standards, approval criteria, conditions, and procedures                 , unless discretionary
+          standards and criteria have been adopted in accordance with ORS 197.307(5)                      . Alternatively, an
+          applicant may choose to submit an application for a townhouse project subject to discretionary
+          standards and criteria adopted in accordance with ORS 197.307                  (6), if such a process is available.
+
+     3.   New Lots or Parcels. Creation of new lots or parcels as part of a townhouse project is subject to
+          the applicable land division approval process.
+
+     4.   Sufficient Infrastructure. Applicants must demonstrate that Sufficient Infrastructure is provided,
+          or will be provided, upon submittal of a townhouse development application.
+
+B.   Development Standards
+     1.   Applicability.
+
+          a.   Townhouses shall meet the standards in subsections (3), (4), and (5) of this section (B).
+
+          b.   Townhouse projects shall meet:
+
+               •    The standards in subsections (2), (5), and (6) of this section (B).
+
+               •    Any applicable clear and objective platting standards, unless those standards conflict
+                    with this code.
+
+          c.   The following standards are invalid and do not apply to townhouses or townhouse projects
+               allowed by this code, except as specified in this section (B):
+
+               •    Additional development standards of the applicable base zone related to the standards
+                    addressed under subsections (2) through (6) of this section (B).
+
+               •    Development standards of the applicable base zone related to lot dimensions, lot
+                    coverage, landscape or open space area, or the siting or design of dwellings.
+
+               •    The jurisdiction’s other development standards that apply only to townhouses and that
+                    conflict with provisions of this code.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                          21 of 33
+     2.   Maximum Density. The maximum density for a townhouse project is as follows:
+
+               •    In zones in which the minimum lot size for detached single family dwellings is 2,500
+                    square feet or less, townhouse projects are allowed two (2) times the allowed density
+                    for detached single family dwellings.
+
+               •    In zones in which the minimum lot size for detached single family dwellings is more than
+                    2,500 square feet but less than 5,000 square feet, townhouse projects are allowed three
+                    (3) times the allowed density for detached single family dwellings.
+
+               •    In zones in which the minimum lot size for detached single family dwellings is 5,000
+                    square feet or more, townhouse projects are allowed four (4) times the allowed density
+                    for detached single family dwellings.
+
+     3.   Setbacks. Townhouses shall meet the minimum and maximum setback standards that apply to
+          detached single family dwellings in the same zone, except as noted below:
+
+          •    Front and Street Side: Minimum front and street side yard setbacks greater than 10 feet are
+               invalid, except those applicable to garages or carports.
+
+          •    Rear: Minimum rear setbacks greater than 10 feet and minimum rear setbacks greater than
+               zero (0) feet for lots with rear alley access are invalid.
+
+          •    Non-street Side:
+
+               o    The minimum setback for a common wall lot line where units are attached is zero (0)
+                    feet.
+
+               o    The minimum side setback for an exterior wall at the end of a townhouse structure is
+                    five (5) feet.
+
+     4.   Building Height. Townhouses shall meet the maximum building height standards that apply to
+          detached single family dwellings in the same zone, except a maximum height of less than 35 feet
+          or three (3) stories is invalid. Building height is measured in accordance with the development
+          code.
+
+     5.   Off-Street Parking.
+
+          a.   Required Off-Street Parking. The minimum number of required off-street parking spaces for
+               a townhouse project is one (1) space per unit. Spaces may be provided on individual lots or
+               in a shared parking area on a common tract. A credit for on-street parking shall be granted
+               for some or all of the required off-street parking as provided in subsection (b).
+
+          b.   On-Street Credit. If on-street parking spaces meet all the standards in subsections (i)-(iv)
+               below, they shall be counted toward the minimum off                 -street parking requirement.
+
+               i.   The space must be abutting the subject site;
+
+               ii.  The space must be in a location where on-street parking is allowed by the jurisdiction;
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                           22 of 33
+               iii.  The space must be a minimum of 22 feet long; and
+
+               iv.  The space must not obstruct a required sight distance area.
+
+     6.   Areas Owned in Common. Common areas must be maintained by a homeowners association or
+          other legal entity. A homeowners association may also be responsible for exterior building
+          maintenance. A copy of any applicable covenants, restrictions and conditions must be recorded
+          and provided to the jurisdiction prior to issuance of a building permit.
+
+C.   Design Standards
+New townhouses shall meet the design standards in subsections (1) through (4) of this section (C).
+Mandates for construction of a garage or carport and any other design standards are invalid.
+
+     1.   Entry Orientation. The main entrance of each townhouse must:
+
+          a.   Be within 8 feet of the longest street-facing wall of the dwelling unit, if the lot has public
+               street frontage; and
+
+          b.   Either:
+
+               i.   Face the street (see Figure 13);
+               ii.  Be at an angle of up to 45 degrees from the street (see Figure 14);
+
+               iii. Face a common open space or private access or driveway that is abutted by dwellings
+                    on at least two sides; or
+
+               iv.  Open onto a porch (see Figure 16). The porch must:
+                    (A)  Be at least 25 square feet in area; and
+
+                    (B)  Have at least one entrance facing the street or have a roof.
+
+     2.   Unit definition. Each townhouse must include at least one of                 the following on at least one
+          street-facing façade (see Figure 22):
+
+          a.   A roof dormer a minimum of 4 feet in width, or
+
+          b.   A balcony a minimum of 2 feet in depth and 4 feet in width and accessible from an interior
+               room, or
+
+          c.   A bay window that extends from the facade a minimum of 2 feet, or
+          d.   An offset of the facade of a minimum of 2 feet in depth, either from the neighboring
+               townhouse or within the façade of a single townhouse, or
+          e.   An entryway that is recessed a minimum of 3 feet, or
+
+          f.   A covered entryway with a minimum depth of 4 feet, or
+          g.   A porch meeting the standards of subsection (1)(b)(iv) of this section (C).
+
+          Balconies and bay windows may encroach into a required setback area.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                            23 of 33
+                                                 Figure 22. Townhouse Unit Definition
+
+     3.   Windows. A minimum of 15 percent of the area of all street-facing facades on each individual
+          unit must include windows or entrance doors. Half of the window area in the door of an
+          attached garage may count toward meeting this standard. See Figure 17.
+
+     4.   Driveway Access and Parking. Townhouses with frontage on a public street                      shall meet the
+          following standards:
+
+          a.   Garages on the front façade of a townhouse, off-street parking areas in the front yard, and
+               driveways in front of a townhouse are allowed if they meet the following standards (see
+               Figure 23).
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                          24 of 33
+               i.   Each townhouse lot has a street frontage of at least 15 feet on a local street.
+
+               ii.  A maximum of one (1) driveway approach is allowed for every townhouse. Driveway
+                    approaches and/or driveways may be shared.
+
+               iii. Outdoor on-site parking and maneuvering areas do not exceed 12 feet wide on any lot.
+
+               iv.  The garage width does not exceed 12 feet, as measured from the inside of the garage
+                    door frame.
+
+                                   Figure 23. Townhouses with Parking in Front Yard
+
+          b.   The following standards apply to driveways and parking areas for townhouse projects that
+               do not meet all of the standards in subsection (a).
+
+               i.   Off-street parking areas shall be accessed on the back façade or located in the rear yard.
+                    No off-street parking shall be allowed in the front yard or side yard of a townhouse.
+
+               ii.  A townhouse project that includes a corner lot shall take access from a single driveway
+                    approach on the side of the corner lot. See Figure 24.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                           25 of 33
+                              Figure 24. Townhouses on Corner Lot with Shared Access
+
+               iii. Townhouse projects that do not include a corner lot shall consolidate access for all lots
+                    into a single driveway. The driveway and approach are not allowed in the area directly
+                    between the front façade and front lot line of any of the townhouses.                   See Figure 25.
+
+                                   Figure 25. Townhouses with Consolidated Access
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                           26 of 33
+               iv.  A townhouse project that includes consolidated access or shared driveways shall grant
+                    access easements to allow normal vehicular access and emergency access.
+
+          c.   Townhouse projects in which all units take exclusive access from a rear alley are exempt
+               from compliance with subsection (b).
+
+Chapter 5. Cottage Clusters
+
+Sections:
+     A.   Permitted Uses and Approval Process
+     B.   Development Standards
+     C.   Design Standards
+
+A.   Permitted Uses and Approval Process
+     1.   Permitted Use. Cottage cluster projects are permitted outright wherever they are                      allowed as
+          provided in Chapter 1, Section C (Applicability).
+
+     2.   Approval Process. Cottage cluster projects are subject to the same approval process as that for
+          detached single family dwellings in the same zone and are subject only to clear and objective
+          standards, approval criteria, conditions, and procedures,              unless discretionary standards and
+          criteria have been adopted in accordance with ORS 197.307(5)                  . Alternatively, an applicant may
+          choose to submit an application for a cottage cluster project subject t                o discretionary standards
+          and criteria adopted in accordance with ORS 197.307               (6), if such a process is available.
+
+     3.   Sufficient Infrastructure. Applicants must demonstrate that Sufficient Infrastructure is provided,
+          or will be provided, upon submittal of a cottage cluster development application.
+
+B.   Development Standards
+     1.   Applicability.
+
+          a.   Cottage clusters shall meet the standards in subsections (2) through (7) of this section (B).
+
+          b.   The following standards are invalid and do not apply to cottage clusters allowed by this
+               code, except as specified in this section (B):
+
+               •    Additional development standards of the applicable base zone related to the standards
+                    addressed under subsections (2) through (7) of this section (B).
+
+               •    Development standards of the applicable base zone related to lot dimensions, lot
+                    coverage, floor area ratio, landscape or open space area, or the siting or design of
+                    dwellings.
+
+               •    The jurisdiction’s other development standards that apply only to cottage clusters and
+                    that conflict with provisions of this code.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                          27 of 33
+     2.   Minimum Lot Size and Dimensions. Cottage clusters shall meet the minimum lot size, width, and
+          depth standards that apply to detached single family dwellings in the same zone.
+
+     3.   Maximum Density.         The jurisdiction’s pre-existing density maximums do not apply.
+
+     4.   Setbacks and Building Separation.
+
+          a.   Setbacks. Cottage clusters shall meet the minimum and maximum setback standards that
+               apply to detached single family dwellings in the same zone, except that minimum setbacks
+               for dwellings in excess of the following are invalid:
+
+               •    Front setbacks: 10 feet
+
+               •    Side setbacks: 5 feet
+
+               •    Rear setbacks: 10 feet
+
+          b.   Building Separation. Cottages shall be separated by a minimum distance of six (6) feet. The
+               minimum distance between all other structures, including accessory structures, shall be in
+               accordance with building code requirements.
+
+     5.   Average Unit Size. The maximum average floor area for a cottage cluster is 1,400 square feet per
+          dwelling unit. Community buildings shall be included in the average floor area calculation for a
+          cottage cluster.
+
+     6.   Building Height. The maximum building height for all structures is 25 feet or two (2) stories,
+          whichever is greater.
+
+     7.   Off-Street Parking.
+
+          a.   Required Off-Street Parking. The minimum number of required off-street parking spaces for
+               a cottage cluster project is zero (0) spaces per unit with a floor area less than 1,000 square
+               feet and one (1) space per unit with a floor area of 1,000 square feet or more. Spaces may
+               be provided for individual cottages or in shared parking clusters. A credit for on-street
+               parking shall be granted for some or all of the required off-street parking as provided in
+               subsection (b).
+
+          b.   On-Street Credit. If on-street parking spaces meet all the standards in subsections (i)-(iv)
+               below, they shall be counted toward the minimum off-street parking requirement.
+
+               i.   The space must be abutting the subject site;
+
+               ii.  The space must be in a location where on-street parking is allowed by the jurisdiction;
+
+               iii.  The space must be a minimum of 22 feet long; and
+
+               iv.  The space must not obstruct a required sight distance area.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                            28 of 33
+C.  Design Standards
+Cottage clusters shall meet the design standards in subsections (1) through (8) of this section (C). No
+other design standards shall apply to cottage clusters unless noted in this section. Mandates for
+construction of a garage or carport and any other design standards are invalid, except as specified in this
+Section (C).
+
+    1.   Cottage Orientation. Cottages must be clustered around a common courtyard, meaning they
+         abut the associated common courtyard or are directly connected to it by a pedestrian path, and
+         must meet the following standards (see Figure 26):
+
+         a.   Each cottage within a cluster must either abut the common courtyard or must be directly
+              connected to it by a pedestrian path.
+
+         b.   A minimum of 50 percent of cottages within a cluster must be oriented to the common
+              courtyard and must:
+
+              i.   Have a main entrance facing the common courtyard;
+
+              ii.  Be within 10 feet from the common courtyard, measured from the façade of the cottage
+                   to the nearest edge of the common courtyard; and
+
+              iii. Be connected to the common courtyard by a pedestrian path.
+
+         c.   Cottages within 20 feet of a street property line may have their entrances facing the street.
+
+         d.   Cottages not facing the common courtyard or the street must have their main entrances
+              facing a pedestrian path that is directly connected to the common courtyard.
+
+    2.   Common Courtyard Design Standards. Each cottage cluster must share a common courtyard in
+         order to provide a sense of openness and community of residents. Common courtyards must
+         meet the following standards (see Figure 26):
+
+         a.   The common courtyard must be a single, contiguous piece.
+
+         b.   Cottages must abut the common courtyard on at least two sides of the courtyard.
+
+         c.   The common courtyard must contain a minimum of 150 square feet per cottage within the
+              associated cluster (as defined in subsection (1) of this section (C)).
+
+         d.   The common courtyard must be a minimum of 15 feet wide at its narrowest dimension.
+
+         e.   The common courtyard shall be developed with a mix of landscaping, lawn area, pedestrian
+              paths, and/or paved courtyard area, and may also include recreational amenities.
+              Impervious elements of the common courtyard shall not exceed 75 percent of the total
+              common courtyard area.
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                        29 of 33
+         f.   Pedestrian paths must be included in a common courtyard. Paths that are contiguous to a
+              courtyard shall count toward the courtyard’s minimum dimension and area. Parking areas,
+              required setbacks, and driveways do not qualify as part of a common courtyard.
+
+                   Figure 26. Cottage Cluster Orientation and           Common Courtyard Standards
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                        30 of 33
+     3.   Community Buildings. Cottage cluster projects may include community buildings for the shared
+          use of residents that provide space for accessory uses such as community meeting rooms, guest
+          housing, exercise rooms, day care,          or community eating areas. Community buildings must meet
+          the following standards:
+
+          a.   Each cottage cluster is permitted one community building, which shall count towards the
+               maximum average floor area, pursuant to subsection (B)(5).
+
+          b.   A community building that meets the development code’s definition of a dwelling unit must
+               meet the maximum 900 square foot footprint limitation that applies to cottages, unless a
+               covenant is recorded against the property stating that the structure is not a l                  egal dwelling
+               unit and will not be used as a primary dwelling.
+
+     4.   Pedestrian Access.
+
+          a.   An accessible pedestrian path must be provided that connects the main entrance of each
+               cottage to the following:
+
+               i.   The common courtyard;
+
+               ii.  Shared parking areas;
+
+               iii.  Community buildings; and
+
+               iv.  Sidewalks in public rights-of-way abutting the site or rights-of-way if there are no
+                    sidewalks.
+
+          b.   The pedestrian path must be hard-surfaced and a minimum of four (4) feet wide.
+
+     5.   Windows. Cottages within 20 feet of a street property line must meet any window coverage
+          requirement that applies to detached single family dwellings in the same zone.
+
+     6.   Parking Design (see Figure 27).
+
+          a.   Clustered parking. Off-street parking may be arranged in clusters, subject to the following
+               standards:
+
+               i.   Cottage cluster projects with fewer than 16 cottages are permitted parking clusters of
+                    not more than five (5) contiguous spaces.
+
+               ii.  Cottage cluster projects with 16 cottages or more are permitted parking clusters of not
+                    more than eight (8) contiguous spaces.
+
+               iii. Parking clusters must be separated from other spaces by at least four (4) feet of
+                    landscaping.
+
+               iv.  Clustered parking areas may be covered.
+
+          b.   Parking location and access.
+
+               i.   Off-street parking spaces and vehicle maneuvering areas shall not be located:
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                            31 of 33
+                    •    Within of 20 feet from any street property line, except alley property lines;
+
+                    •    Between a street property line and the front façade of cottages located closest to
+                         the street property line. This standard does not apply to alleys.
+
+               ii.  Off-street parking spaces shall not be located within 10 feet of any other property line,
+                    except alley property lines. Driveways and drive aisles are permitted within 10 feet of
+                    other property lines.
+
+          c.   Screening. Landscaping, fencing, or walls at least three feet tall shall separate clustered
+               parking areas and parking structures from common courtyards and public streets.
+
+          d.   Garages and carports.
+
+               i.   Garages and carports (whether shared or individual) must not abut common courtyards.
+
+               ii.  Individual attached garages up to 200 square feet shall be exempted from the
+                    calculation of maximum building footprint for cottages.
+
+               iii. Individual detached garages must not exceed 400 square feet in floor area.
+
+               iii. Garage doors for attached and detached individual garages must not exceed 20 feet in
+                    width.
+
+     7.   Accessory Structures. Accessory structures must not exceed 400 square feet in floor area.
+
+     8.   Existing Structures. On a lot or parcel to be used for a cottage cluster project, a                n existing
+          detached single family dwelling on the same lot at the time of proposed development of the
+          cottage cluster may remain within the cottage cluster project area under the following
+          conditions:
+
+          a.   The existing dwelling may be nonconforming with respect to the requirements of this code.
+
+          b.   The existing dwelling may be expanded up to the maximum height in subsection (B)(4) or
+               the maximum building footprint in Chapter 1, subsection (B)(1); however, existing dwellings
+               that exceed the maximum height and/or footprint of this code may not be expanded.
+
+          c.   The floor area of the existing dwelling shall not count towards the maximum average floor
+               area of a cottage cluster.
+
+          d.   The existing dwelling shall be excluded from the calculation of orientation toward the
+               common courtyard, per subsection (1)(a) of this section (C).
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                            32 of 33
+                                Figure 27. Cottage Cluster Parking Design Standards
+
+OAR 660-046 Exhibit B – Large Cities Middle Housing Model Code                                                         33 of 33
