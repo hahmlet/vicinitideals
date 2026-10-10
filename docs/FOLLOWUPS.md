@@ -2526,3 +2526,6 @@ read when the weekly full re-screen lands.
    that exceed them (re-engineering = a cost, YELLOW at most, never RED by itself). Confirm the
    map matches the ORSC 2026 edition (item 71). Steph to say whether to build; (b) needs the
    manufacturer's ratings.
+   STEPH 2026-10-10: PARKED for later -- "eventually we will need to encode and design for this
+   list" (all eight criteria). Do not start without Steph; raise it again when the pod design
+   ratings exist or the market moves beyond the metro.
