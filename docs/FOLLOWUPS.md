@@ -2563,3 +2563,13 @@ read when the weekly full re-screen lands.
    second -- its own GitHub repo, our apps read it as a dependency; git history doubles as the
    code-change watch (item 54). Open for Steph: public or private; publisher terms (Municode
    etc.) before going public; keep rulings/encoding private either way.
+   STEPH 2026-10-10: PUBLIC. Publisher terms not a concern ("we cite the code, not their
+   interpretation"). Readability cleanup is part of it: collapse extra spaces, rejoin words split
+   by the PDF reader ("dri v ewa y s"), strip running page headers/footers left mid-sentence
+   ("Oregon City Supp. No. 46 266.4"), join hyphenated line breaks; NEVER auto-change a character
+   inside a number (1/l, 0/O) -- flag it; keep the raw download beside the clean text as proof.
+   ORDER (coordinator recommendation, put to Steph): restructure + clean FIRST, human signing
+   AFTER. Signatures are hashed over value + citation, so a new citation withdraws them; only 18
+   rule signatures (5 verified, 13 unclear, none drained) and 244 page checks exist, carried over
+   where the words match, re-queued where not. The map shows as-if-signed colours, so pausing
+   signing costs the map nothing. Still not started.
