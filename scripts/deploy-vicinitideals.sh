@@ -20,8 +20,11 @@ docker compose run --rm api python -m alembic upgrade head
 echo "==> Starting containers..."
 docker compose up -d
 
+echo "==> Waiting for the api to become healthy..."
+bash "$STACK_DIR/scripts/wait-for-api.sh" \
+  || echo "WARNING: api never reported healthy -- the smoke below will likely fail for real"
+
 echo "==> Running post-deploy smoke checks..."
-sleep 5
 docker compose run --rm -e POST_DEPLOY_BASE_URL=http://api:8000 api python scripts/post_deploy_smoke.py \
   || echo "WARNING: post-deploy smoke check failed — check logs above"
 
