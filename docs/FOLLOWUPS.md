@@ -973,6 +973,12 @@ read when the weekly full re-screen lands.
    Next: a field for approaches required per N townhouses + the site plan
    drawing (and charging frontage for) a second approach; check which other
    cities state the same rule before building it for one.
+   BUILT 2026-10-10 on flats/oc-two-approaches (aa1dff63 + ac827c09, needs a rebase), NOT
+   MERGED: optional driveway_units_per_approach = 2, Oregon City only; a lot needing two is
+   YELLOW (DRIVEWAY-SECOND-APPROACH, sev 5) until item 25 can prove a second approach fits.
+   BOUND (OC 11,944 lots): 2,197 greens -> yellow (nearly every OC green), 0 gained, no red
+   moves. OFFERED TO STEPH 2026-10-10: merge before the weekly (OC greens go yellow until
+   item 25) or hold; and whether to start item 25 (a major build, on hold by Steph).
    AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-two-approaches"; reach first,
    bound + read every move, lands at the weekly; stop and ask if it needs
    item 25's approach geometry).
