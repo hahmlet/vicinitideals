@@ -973,9 +973,16 @@ read when the weekly full re-screen lands.
    Next: a field for approaches required per N townhouses + the site plan
    drawing (and charging frontage for) a second approach; check which other
    cities state the same rule before building it for one.
-   AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-two-approaches"; reach first,
-   bound + read every move, lands at the weekly; stop and ask if it needs
-   item 25's approach geometry).
+   BUILT 2026-10-10, branch flats/oc-two-approaches (aa1dff63), NOT MERGED:
+   optional field driveway_units_per_approach = 2, Oregon City only (no other
+   encoded city states the rule); the screen cannot prove a second approach
+   fits (needs item 25), so a lot that needs two is never GREEN: YELLOW flag
+   DRIVEWAY-SECOND-APPROACH (sev 5). BOUND, Oregon City 11,944 lots on the
+   weekly 2026-10-07 inputs: 2,197 greens -> yellow (best design per lot),
+   0 gained, no red moves; reds/yellows keep their colour. The 34 slope-flag
+   moves: the flatter-spot search only runs while the grade alone holds a lot
+   out of green, so the new yellow lot keeps its first spot (grade flag).
+   Colour unaffected. Item 25 turns the yellow into green/red.
 25. [scan: YES, when built (on hold)] **Driveway approach geometry, ahead of a second approach (Steph
    2026-09-30, flag only -- do not build yet).** What is measured today: the
    drive lane's width (`driveway_min_width_one_way_ft` / `_two_way_ft`, read
