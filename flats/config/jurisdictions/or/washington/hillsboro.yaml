@@ -9,6 +9,15 @@ notes: >-
   12.01.200-1; the city's zoning layer (LandUseGallery_Prod MapServer layer
   23, field DESCRIPTIO) spells two of them differently, and those spellings
   are ruled under zone_rulings at the end of the file.
+
+  RED BY RULING (Steph's by-right-only ruling of 2026-10-08, applied
+  2026-10-10): CDC 12.80.040 B.1 requires a Type II Development Review for
+  new development in every zone but those D.1 exempts, and D.1 exempts
+  middle housing only in MR-1, SCR-LD, SCR-MD and the R zones. Every other
+  zone that permits the pod (MR-2, MR-3, SCR-HD, SCR-OTC, SCR-DNC, SCR-V,
+  SCC-SC, SCC-MM, MU-N, MU-C, MU-VTC, UC-RM, UC-MU, UC-AC, UC-NC, UC-OR,
+  UC-RP) is refused; each zone's notes give the reading and keep its
+  standards so the ruling can be reversed.
 ingest:
   geoid: null
   juris_city_codes:
@@ -1085,7 +1094,9 @@ zones:
       # a flag lot that already exists, the stricter reading, so the flag
       # lot refuses. The alley-only lot is NOT ENCODED (no condition says a
       # lot fronts only an alley).
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.21.720-1, Housing Types Permitted in the SCR-OTC Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1661-L1662,L1667"
       variants:
@@ -1193,6 +1204,28 @@ zones:
       cite: Hillsboro CDC Table 12.21.750-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1889,L1914"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320), and B.3
+      separately for "new construction of any structure" in the SCR-DNC and
+      SCR-OTC zones (#L323-L324). The one exemption that reaches the pod, D.1,
+      names only "Middle housing and single detached dwellings in the MR-1,
+      SCR-LD, or SCR-MD zones or any R zone" (#L338-L343), and this zone is none
+      of them. Development Review is a Type II application (12.80.040 E,
+      #L379-L380). Its residential criteria are compliance with the code's
+      standards (H.1-H.6, #L427-L436; the discretionary H.7 reaches
+      non-residential uses only), so it is a staff review on clear and objective
+      criteria, but with notice and appeal it is not a ministerial check: the
+      same kind of review as Sandy's Type II Director's design review, ruled
+      red. State law does not lift it: this is a middle housing zone (Table
+      12.01.200-1), and OAR 660-046-0215 asks a Large City only for "the same
+      approval process" as a detached single-unit dwelling, which here goes
+      through the same review (D.1 exempts it only in the zones it names) and
+      clear and objective criteria, which H.1-H.6 are. The standards below are
+      kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted (not on a flag lot). 7,500 sq ft lot, 50 x
       150, frontage 50; min 6 du/na, max density off for quadplexes; yards
       5 (max 20) / 5 (sum 15) / 10 (16 to an alley); 2 stories and 35 ft;
@@ -1203,7 +1236,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.21.820-1, Housing Types Permitted in the SCR-DNC Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1981-L1982,L1987"
     min_lot_sqft:
@@ -1316,6 +1351,28 @@ zones:
       cite: Hillsboro CDC Table 12.21.850-1, Maximum Building Coverage None
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L2184,L2230"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320), and B.3
+      separately for "new construction of any structure" in the SCR-DNC and
+      SCR-OTC zones (#L323-L324). The one exemption that reaches the pod, D.1,
+      names only "Middle housing and single detached dwellings in the MR-1,
+      SCR-LD, or SCR-MD zones or any R zone" (#L338-L343), and this zone is none
+      of them. Development Review is a Type II application (12.80.040 E,
+      #L379-L380). Its residential criteria are compliance with the code's
+      standards (H.1-H.6, #L427-L436; the discretionary H.7 reaches
+      non-residential uses only), so it is a staff review on clear and objective
+      criteria, but with notice and appeal it is not a ministerial check: the
+      same kind of review as Sandy's Type II Director's design review, ruled
+      red. State law does not lift it: this is a middle housing zone (Table
+      12.01.200-1), and OAR 660-046-0215 asks a Large City only for "the same
+      approval process" as a detached single-unit dwelling, which here goes
+      through the same review (D.1 exempts it only in the zones it names) and
+      clear and objective criteria, which H.1-H.6 are. The standards below are
+      kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. 7,000 sq ft quadplex lot, width and
       frontage 22, depth 85; min 15 du/na (the within-1,300-ft row, held
       everywhere), max density off for quadplexes; yards 20 (the Main Street
@@ -1435,7 +1492,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.22.220-1, Housing Types Permitted in the MR-2 Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L421-L422,L427"
     min_lot_sqft:
@@ -1525,6 +1584,25 @@ zones:
           cite: Hillsboro CDC Table 12.22.250-1, Maximum Lot Coverage, townhouse on individual lot
           quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L586,L589,L594"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. 2,000 sq ft per unit (8,000 for four),
       55 x 85, frontage 25; 17 to 21.25 du/na with no quadplex exemption;
       yards 15 / 5 / 10; 3 stories or 40 ft; coverage 50%.
@@ -1534,7 +1612,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.22.320-1, Housing Types Permitted in the MR-3 Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L649-L650,L655"
     min_lot_sqft:
@@ -1620,6 +1700,25 @@ zones:
           cite: Hillsboro CDC Table 12.22.350-1, Maximum Lot Coverage, townhouse on individual lot
           quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L818,L821,L826"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. 6,000 sq ft lot, 55 x 85, frontage 25; 23
       to 28.75 du/na with no quadplex exemption; yards 10 / 5 / 10; 3
       stories; coverage 60%.
@@ -1731,7 +1830,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.22.520-1, Housing Types Permitted in the SCR-HD Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1197-L1198,L1203"
     min_lot_sqft:
@@ -1842,6 +1943,25 @@ zones:
       cite: Hillsboro CDC Table 12.22.560-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1407,L1429"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. 1,500 sq ft per unit (6,000 for four; the
       1,800-per-unit maximum is not encoded), width and frontage 22; 24 to
       30 du/na with no quadplex exemption (7 near a standard-zone
@@ -1978,7 +2098,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.23.420-1, Housing Types Permitted in the SCC-SC Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L945-L947,L951"
     min_lot_sqft:
@@ -2081,6 +2203,25 @@ zones:
       cite: Hillsboro CDC Table 12.23.460-1, Maximum Lot Coverage Not applicable
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1131,L1169"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. No lot area; 25 x 25; density held at 30
       du/na (the within-1,300-ft floor and the beyond-1,300-ft ceiling); no
       minimum setbacks, residential front maximum 15; minimum height 30 ft
@@ -2091,7 +2232,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.23.520-1, Housing Types Permitted in the SCC-MM Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1233-L1235,L1239"
     min_lot_sqft:
@@ -2169,6 +2312,25 @@ zones:
       cite: Hillsboro CDC Table 12.23.560-1, Maximum Lot Coverage Not applicable
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1413,L1434"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. No lot area, frontage 25; 15 to 30 du/na;
       no minimum setbacks, residential front maximum 15 (held everywhere);
       50 ft.
@@ -2207,7 +2369,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.24.120-1, Housing Types Permitted in the MU-N Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L261-L262,L267"
     min_lot_sqft:
@@ -2314,6 +2478,26 @@ zones:
       cite: Hillsboro CDC Table 12.24.160-1, Minimum Usable Open Space (residential development)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L483,L535-L538"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: this is a
+      middle housing zone (Table 12.01.200-1), and OAR 660-046-0215 asks a Large
+      City only for "the same approval process" as a detached single-unit
+      dwelling, which here goes through the same review (D.1 exempts it only in
+      the zones it names) and clear and objective criteria, which H.1-H.6 are.
+      The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. 7,000 sq ft quadplex lot, width and
       frontage 18, no depth; min 12 du/na (8 on a local street), max density
       off for quadplexes; yards 10 (max 20) / 5 / 10; 45 ft; 100 sq ft of
@@ -2335,11 +2519,13 @@ zones:
       value: false
       cite: Hillsboro CDC 12.24.250 G, Vertical Mixed-Use Required on Arterial and Collector Streets
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L730,L757-L763"
-      variants:
-        - value: true
-          when: [local_street]
-          cite: Hillsboro CDC Table 12.24.220-1 (Quadplex P) and 12.24.250 G (arterial and collector frontages only)
-          quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L608-L609,L614,L730,L757-L758"
+      # RED BY RULING for Development Review (notes): the permission
+      # below is switched off, not deleted. Restore it to reverse.
+      # variants:
+      #   - value: true
+      #     when: [local_street]
+      #     cite: Hillsboro CDC Table 12.24.220-1 (Quadplex P) and 12.24.250 G (arterial and collector frontages only)
+      #     quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L608-L609,L614,L730,L757-L758"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.260-1, Minimum Lot Size None
@@ -2434,6 +2620,27 @@ zones:
       cite: Hillsboro CDC 12.50.210 F.1 and Table 12.50.210-1, MU-C with residential, project under 3.0 acres
       quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L788-L790,L796-L800,L805,L811-L812"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The permission that was a variant is kept as a comment
+      under quadplex_allowed. The standards below are kept so the ruling can be
+      reversed.
+
       DRAFT. Quadplex permitted by the table but refused on an arterial or
       collector frontage (60% active ground floor), so allowed only on a
       local street. No lot area, width and frontage 18; min 23 du/na, no
@@ -2453,7 +2660,9 @@ zones:
       # district's, and the zone "may be applied to all areas within" it
       # (12.24.300 B.1); a MU-VTC lot outside the district, if the map ever
       # draws one, is held to it too.
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.24.320-1, Housing Types Permitted in the MU-VTC Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L971-L972,L985"
       variants:
@@ -2534,6 +2743,26 @@ zones:
       cite: Hillsboro CDC Table 12.24.360-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1365-L1366,L1368"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: this is a
+      middle housing zone (Table 12.01.200-1), and OAR 660-046-0215 asks a Large
+      City only for "the same approval process" as a detached single-unit
+      dwelling, which here goes through the same review (D.1 exempts it only in
+      the zones it names) and clear and objective criteria, which H.1-H.6 are.
+      The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted, not on a flag lot (12.65.540). 7,000 sq ft
       quadplex lot, width 22, no depth; density is a plan-area count, not encoded; no minimum front or
       side yard, front max 20, rear 10; minimum 3 stories (the Center Core
@@ -2544,7 +2773,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.24.420-1, Housing Types Permitted in the SCR-V Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1443-L1444,L1449"
     min_lot_sqft:
@@ -2624,6 +2855,26 @@ zones:
       cite: Hillsboro CDC Table 12.24.460-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1737,L1753"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: this is a
+      middle housing zone (Table 12.01.200-1), and OAR 660-046-0215 asks a Large
+      City only for "the same approval process" as a detached single-unit
+      dwelling, which here goes through the same review (D.1 exempts it only in
+      the zones it names) and clear and objective criteria, which H.1-H.6 are.
+      The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. No lot area, width 20, no depth; min 24
       du/na (the near-station row, held everywhere), max density off for
       quadplexes; front 0 (max 15), side 5, rear 10; 2 to 3 stories; no
@@ -2634,7 +2885,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.24.520-1, Housing Types Permitted in the UC-RM Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1813-L1814,L1821"
     min_lot_sqft:
@@ -2727,6 +2980,25 @@ zones:
       cite: Hillsboro CDC Table 12.24.560-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2008"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. No lot area, 18 x 50, frontage 18; 24 to 43
       du/na, no quadplex exemption; front 0 (max 15), side 5, rear 10;
       25 to 55 ft; no coverage limit. The 75% front-facade occupancy is not
@@ -2737,7 +3009,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.24.620-1, Housing Types Permitted in the UC-MU Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2082-L2083,L2088"
     min_lot_sqft:
@@ -2822,6 +3096,25 @@ zones:
       cite: Hillsboro CDC Table 12.24.660-1, Maximum Lot Coverage, first 90 feet None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2290,L2306,L2310"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. No lot area, width or frontage, depth 50;
       min 43 du/na, no maximum; front 0 (max 15), side and rear 10 (the
       next-to-a-building row, held everywhere); minimum height 35 ft,
@@ -2845,11 +3138,13 @@ zones:
       value: false
       cite: Hillsboro CDC Table 12.24.720-1, Quadplex P/L, no ground-floor dwellings on a Retail Focus Frontage
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2374-L2375,L2379-L2383"
-      variants:
-        - value: true
-          when: [inside_mapped_use_area]
-          cite: Hillsboro CDC Table 12.24.720-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
-          quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2374-L2375,L2379-L2383"
+      # RED BY RULING for Development Review (notes): the permission
+      # below is switched off, not deleted. Restore it to reverse.
+      # variants:
+      #   - value: true
+      #     when: [inside_mapped_use_area]
+      #     cite: Hillsboro CDC Table 12.24.720-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
+      #     quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2374-L2375,L2379-L2383"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.760-1, Minimum Lot Size None
@@ -2924,6 +3219,27 @@ zones:
       cite: Hillsboro CDC Table 12.24.760-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2558,L2563"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The permission that was a variant is kept as a comment
+      under quadplex_allowed. The standards below are kept so the ruling can be
+      reversed.
+
       DRAFT. Quadplex refused on a primary street frontage in the Retail
       Focus Frontage Area and permitted elsewhere, behind a boundary nobody
       holds, so refused for now. No lot or dimension minimums; min 43
@@ -2943,11 +3259,13 @@ zones:
       value: false
       cite: Hillsboro CDC Table 12.24.820-1, Quadplex P/L, not on a Retail Focus Frontage
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2628-L2629,L2633-L2636"
-      variants:
-        - value: true
-          when: [inside_mapped_use_area]
-          cite: Hillsboro CDC Table 12.24.820-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
-          quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2628-L2629,L2633-L2636"
+      # RED BY RULING for Development Review (notes): the permission
+      # below is switched off, not deleted. Restore it to reverse.
+      # variants:
+      #   - value: true
+      #     when: [inside_mapped_use_area]
+      #     cite: Hillsboro CDC Table 12.24.820-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
+      #     quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2628-L2629,L2633-L2636"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.860-1, Minimum Lot Size None
@@ -3017,6 +3335,27 @@ zones:
       cite: Hillsboro CDC Table 12.24.860-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2844"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The permission that was a variant is kept as a comment
+      under quadplex_allowed. The standards below are kept so the ruling can be
+      reversed.
+
       DRAFT. Quadplex refused on a primary street frontage in the Retail
       Focus Frontage Area and permitted elsewhere, behind a boundary nobody
       holds, so refused for now. No lot or dimension minimums (the
@@ -3035,11 +3374,13 @@ zones:
       value: false
       cite: Hillsboro CDC Table 12.24.920-1, Quadplex P/L, no ground-floor dwellings on a Retail Focus Frontage
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2908-L2909,L2913-L2917"
-      variants:
-        - value: true
-          when: [inside_mapped_use_area]
-          cite: Hillsboro CDC Table 12.24.920-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
-          quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2908-L2909,L2913-L2917"
+      # RED BY RULING for Development Review (notes): the permission
+      # below is switched off, not deleted. Restore it to reverse.
+      # variants:
+      #   - value: true
+      #     when: [inside_mapped_use_area]
+      #     cite: Hillsboro CDC Table 12.24.920-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
+      #     quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2908-L2909,L2913-L2917"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.960-1, Minimum Lot Size None
@@ -3103,6 +3444,27 @@ zones:
       cite: Hillsboro CDC Table 12.24.960-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L3082,L3093"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The permission that was a variant is kept as a comment
+      under quadplex_allowed. The standards below are kept so the ruling can be
+      reversed.
+
       DRAFT. Quadplex refused on a primary street frontage in the Retail
       Focus Frontage Area and permitted elsewhere, behind a boundary nobody
       holds, so refused for now. No lot or dimension minimums; min 30
@@ -3113,7 +3475,9 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      value: true
+      # The use is permitted (the row cited below); the zone is RED BY
+      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
+      value: false
       cite: Hillsboro CDC Table 12.24.1020-1, Housing Types Permitted in the UC-RP Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L3164-L3165,L3171"
     min_lot_sqft:
@@ -3190,6 +3554,25 @@ zones:
       cite: Hillsboro CDC Table 12.24.1060-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L3294,L3305"
     notes: >-
+      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
+      development in this zone needs a Development Review approval, which is not
+      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      excluding the exemptions listed in Subsection D."
+      (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
+      exemption that reaches the pod, D.1, names only "Middle housing and single
+      detached dwellings in the MR-1, SCR-LD, or SCR-MD zones or any R zone"
+      (#L338-L343), and this zone is none of them. Development Review is a Type
+      II application (12.80.040 E, #L379-L380). Its residential criteria are
+      compliance with the code's standards (H.1-H.6, #L427-L436; the
+      discretionary H.7 reaches non-residential uses only), so it is a staff
+      review on clear and objective criteria, but with notice and appeal it is
+      not a ministerial check: the same kind of review as Sandy's Type II
+      Director's design review, ruled red. State law does not lift it: Table
+      12.01.200-1 does not mark this zone a middle housing zone (one that
+      permits single detached dwellings), so ORS 197A.420 does not reach it, and
+      ORS 197A.400 asks for clear and objective criteria, which H.1-H.6 are, not
+      for no review. The standards below are kept so the ruling can be reversed.
+
       DRAFT. Quadplex permitted. No lot area, width 30, no depth; 18 to 65
       du/na; no minimum yards, front max 15 ("15 feet/none", held); 25 to
       55 ft; no coverage limit.

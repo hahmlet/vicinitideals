@@ -3732,29 +3732,13 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro SCR-LD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "SCR-OTC"
-        quadplex_allowed: true
-        setback_front_ft: 5
-        setback_side_ft: 5
-        setback_rear_ft: 16
-        min_lot_sqft: 7500
-        min_frontage_ft: 50
-        min_lot_width_ft: 50
-        min_lot_depth_ft: 150
-        min_density_du_per_acre: 6
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.21.720-1, Housing Types Permitted in the SCR-OTC Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro SCR-OTC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "SCR-DNC"
-        quadplex_allowed: true
-        setback_front_ft: 20
-        setback_side_ft: 10
-        setback_rear_ft: 10
-        min_lot_sqft: 7000
-        min_frontage_ft: 25
-        min_lot_width_ft: 22
-        min_lot_depth_ft: 85
-        min_density_du_per_acre: 15
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.21.820-1, Housing Types Permitted in the SCR-DNC Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
@@ -3775,31 +3759,13 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro MR-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "MR-2"
-        quadplex_allowed: true
-        setback_front_ft: 15
-        setback_side_ft: 5
-        setback_rear_ft: 10
-        min_lot_sqft: 8000
-        max_coverage_pct: 50
-        min_frontage_ft: 25
-        min_lot_width_ft: 55
-        min_lot_depth_ft: 85
-        min_density_du_per_acre: 17
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.22.220-1, Housing Types Permitted in the MR-2 Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro MR-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "MR-3"
-        quadplex_allowed: true
-        setback_front_ft: 10
-        setback_side_ft: 5
-        setback_rear_ft: 10
-        min_lot_sqft: 6000
-        max_coverage_pct: 60
-        min_frontage_ft: 25
-        min_lot_width_ft: 55
-        min_lot_depth_ft: 85
-        min_density_du_per_acre: 23
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.22.320-1, Housing Types Permitted in the MR-3 Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
@@ -3818,14 +3784,7 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro SCR-MD) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "SCR-HD"
-        quadplex_allowed: true
-        setback_front_ft: 5
-        setback_side_ft: 5
-        setback_rear_ft: 10
-        min_lot_sqft: 6000
-        min_frontage_ft: 25
-        min_lot_width_ft: 22
-        min_density_du_per_acre: 24
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.22.520-1, Housing Types Permitted in the SCR-HD Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
@@ -3837,138 +3796,73 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro SCC-DT) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "SCC-SC"
-        quadplex_allowed: true
-        setback_front_ft: 0
-        setback_side_ft: 0
-        setback_rear_ft: 0
-        min_lot_width_ft: 25
-        min_lot_depth_ft: 25
-        min_density_du_per_acre: 30
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.23.420-1, Housing Types Permitted in the SCC-SC Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro SCC-SC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "SCC-MM"
-        quadplex_allowed: true
-        setback_front_ft: 0
-        setback_side_ft: 0
-        setback_rear_ft: 0
-        min_frontage_ft: 25
-        min_density_du_per_acre: 15
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.23.520-1, Housing Types Permitted in the SCC-MM Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro SCC-MM) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "MU-N"
-        quadplex_allowed: true
-        setback_front_ft: 10
-        setback_side_ft: 5
-        setback_rear_ft: 10
-        min_lot_sqft: 7000
-        min_frontage_ft: 25
-        min_lot_width_ft: 18
-        min_density_du_per_acre: 12
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.24.120-1, Housing Types Permitted in the MU-N Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro MU-N) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "MU-C"
-        quadplex_allowed: true
-        setback_front_ft: 5
-        setback_side_ft: 5
-        setback_rear_ft: 10
-        min_frontage_ft: 25
-        min_lot_width_ft: 18
-        min_density_du_per_acre: 23
+        quadplex_allowed: false
         source: "Hillsboro CDC 12.24.250 G, Vertical Mixed-Use Required on Arterial and Collector Streets"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro MU-C) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "MU-VTC"
-        quadplex_allowed: true
-        setback_front_ft: 0
-        setback_side_ft: 0
-        setback_rear_ft: 10
-        min_lot_sqft: 7000
-        min_lot_width_ft: 22
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.24.320-1, Housing Types Permitted in the MU-VTC Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro MU-VTC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "SCR-V"
-        quadplex_allowed: true
-        setback_front_ft: 0
-        setback_side_ft: 5
-        setback_rear_ft: 10
-        min_lot_width_ft: 20
-        min_density_du_per_acre: 24
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.24.420-1, Housing Types Permitted in the SCR-V Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro SCR-V) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "UC-RM"
-        quadplex_allowed: true
-        setback_front_ft: 0
-        setback_side_ft: 5
-        setback_rear_ft: 10
-        min_frontage_ft: 25
-        min_lot_width_ft: 18
-        min_lot_depth_ft: 50
-        min_density_du_per_acre: 24
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.24.520-1, Housing Types Permitted in the UC-RM Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-RM) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "UC-MU"
-        quadplex_allowed: true
-        setback_front_ft: 0
-        setback_side_ft: 10
-        setback_rear_ft: 10
-        min_frontage_ft: 25
-        min_lot_depth_ft: 50
-        min_density_du_per_acre: 43
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.24.620-1, Housing Types Permitted in the UC-MU Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-MU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "UC-AC"
-        quadplex_allowed: true
-        setback_front_ft: 0
-        setback_side_ft: 0
-        setback_rear_ft: 0
-        min_frontage_ft: 25
-        min_density_du_per_acre: 43
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.24.720-1, Quadplex P/L, no ground-floor dwellings on a Retail Focus Frontage"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-AC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "UC-NC"
-        quadplex_allowed: true
-        setback_front_ft: 0
-        setback_side_ft: 15
-        setback_rear_ft: 15
-        min_density_du_per_acre: 30
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.24.820-1, Quadplex P/L, not on a Retail Focus Frontage"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-NC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "UC-OR"
-        quadplex_allowed: true
-        setback_front_ft: 0
-        setback_side_ft: 0
-        setback_rear_ft: 0
-        min_density_du_per_acre: 30
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.24.920-1, Quadplex P/L, no ground-floor dwellings on a Retail Focus Frontage"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/hillsboro UC-OR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "UC-RP"
-        quadplex_allowed: true
-        setback_front_ft: 0
-        setback_side_ft: 0
-        setback_rear_ft: 0
-        min_lot_width_ft: 30
-        min_density_du_per_acre: 18
+        quadplex_allowed: false
         source: "Hillsboro CDC Table 12.24.1020-1, Housing Types Permitted in the UC-RP Zone (Quadplex P)"
         source_url: "https://api.municode.com/PublicationPdfDownload/4450"
         confidence: "needs_verification"
