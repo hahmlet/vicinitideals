@@ -2516,3 +2516,13 @@ read when the weekly full re-screen lands.
    zoning map for cities beyond the 3 counties (all-Oregon market), the codeRef link to fetch each
    code, effDate as a change watch (item 54). Not a replacement for reading the codes. Waiting on
    Steph to say what the viewer shows (or reconnect Chrome).
+   STEPH 2026-10-10: the viewer is the building code's site-design map, NOT zoning: ground snow
+   load, basic design wind speed, seismic design category, weathering, frost line depth, decay,
+   air freezing index, radon mitigation for new dwellings (the ORSC Table R301.2 climatic and
+   geographic design criteria, state-wide in one place). Not a siting rule; it decides what the
+   factory-built pod must be ENGINEERED for at each lot. OFFERED: (a) fetch the layers behind
+   the viewer, measure each lot, show the values on the lot page (show, don't screen); (b) once
+   Steph gives the pod's rated snow load / wind speed / seismic category / frost depth, flag lots
+   that exceed them (re-engineering = a cost, YELLOW at most, never RED by itself). Confirm the
+   map matches the ORSC 2026 edition (item 71). Steph to say whether to build; (b) needs the
+   manufacturer's ratings.
