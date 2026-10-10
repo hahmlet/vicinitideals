@@ -979,6 +979,18 @@ read when the weekly full re-screen lands.
    BOUND (OC 11,944 lots): 2,197 greens -> yellow (nearly every OC green), 0 gained, no red
    moves. OFFERED TO STEPH 2026-10-10: merge before the weekly (OC greens go yellow until
    item 25) or hold; and whether to start item 25 (a major build, on hold by Steph).
+   STEPH 2026-10-10: (A), then asked whether state law overrides the rule. MERGE HELD. Coordinator
+   reading (stored text): OAR 660-046-0020(4) counts DRIVEWAYS as a design standard;
+   660-046-0225(1)(c): a Large City (OC is in Metro) may apply only Model Code standards, less
+   restrictive ones, or the SAME as detached houses, and "design standards may not scale by the
+   number of dwelling units"; 660-046-0220(2)(e)(E) and (3)(f)(C): the SAME access standards as
+   detached houses (OC 16.12.035.D.1: a house on one local frontage gets exactly one driveway).
+   OC's own 17.16.040.B.3 (rear-parked townhouses, no corner lot) says "consolidate access for all
+   lots into a single driveway"; B.2 corner lot: a single driveway on the side. So F likely cannot
+   demand a second approach for the pod. NOT YET READ: the Large Cities Model Code itself
+   (660-046-0010(4)(b), not in the store) -- if it states a per-unit approach ratio, OC may apply
+   it. AGENT INSTRUCTIONS GIVEN 2026-10-10 ("driveway-state-law"): fetch the Model Code, settle it,
+   sweep every encoded city for any driveway/curb-cut per-unit ratio, report before encoding.
    AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-two-approaches"; reach first,
    bound + read every move, lands at the weekly; stop and ask if it needs
    item 25's approach geometry).
