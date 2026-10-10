@@ -2329,6 +2329,13 @@ read when the weekly full re-screen lands.
    and find no new kind of problem -> switch from hunting to maintenance (code-change
    watch, item 54) + onboarding new territory. Steph to decide whether to run it.
    AGENT INSTRUCTIONS GIVEN 2026-10-10 ("false-green-sample", first round on run 70).
+   POLICY QUESTION FOR STEPH (raised 2026-10-10 by the sample): FLATS ignores
+   existing buildings by design, so a 6.66-acre Portland CE lot carrying an
+   operating 75,050 sq ft commercial building (1S2E02BB  -01100) is GREEN with
+   the pod in a corner (quadfit had it red, existing_commercial). Unless it is a
+   shopping centre (item 47, red), it is not a false GREEN under today's rules.
+   The sample counts such greens separately; ask Steph whether a lot whose
+   pod sits on a working building's parking or yard should stay green.
 65. [scan: YES (a proof run: every answer must come out identical to 137's)] **The Windows PC
    as an idle-time scan helper (Steph 2026-10-09 asked; offered, not started).** Scans are
    CPU-bound (item 46: >14 processes buy nothing on 137; memory only sets how many run at
