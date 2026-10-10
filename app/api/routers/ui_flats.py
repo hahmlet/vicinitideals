@@ -2770,6 +2770,8 @@ _REASON_WORDS = {
     "STREET_UNCONFIRMED": "one of the lot's streets may only be a private drive, and the lot could not be checked without it",
     "PARKING_STRIP_UNCONFIRMED": "fits only without the planted strip the city keeps between parking and the lot lines; whether a townhome project owes that strip is still open",
     "FIRE_HOSE_START": "the fire hose reaches if measured from the curb, not from 10 ft out from it; where the street's width is not measured, from the curb of the narrowest street a fire truck may use",
+    "CORNER_READ_AS_BEND": "the lot's street lines are all one street that bends, and the city's code does not say whether that makes a corner lot, so it was screened the stricter way: one front on one street",
+    "CURVE_ON_THE_LINE": "the street's curve measured within a degree of the angle the city's corner rule turns on, closer than the map can be trusted, so it was read as one street that bends, not a corner",
     # The county copy's own reasons (flats.ingest.normalize gates and the
     # assign stage): why a lot on the map was never screened.
     "JURISDICTION_NOT_ENCODED": "the city this lot is in has no encoded rules",
