@@ -2431,6 +2431,11 @@ read when the weekly full re-screen lands.
    (b) cap reads units/acre and the townhouse-lot minimum only, on gross area; max_units and
    net-area density not applied; (c) ~10 greens carry county values under $1 a sq ft (price
    per home of $17-$950) -- shown as-is; (d) a "value looks too low" mark -- Steph to decide.
+   LIVE 2026-10-10 (merge d1d8c03f): migration 0143 ran, backfill done (snapshot 3: 400,032 rows,
+   390,554 priced; snapshot 4: 590,282 / 566,553; 148 zone caps), ANALYZE run. Production
+   timings (e2e user): plain 4.7 s, green 6.4 s, green+sort 6.5 s, green+filter 7.5 s,
+   green+filter+sort 7.3 s; no query left running; tests/e2e/test_flats_price.py 3 passed on
+   viciniti.deals. Only (a) and (d) wait on Steph.
 67. [scan: YES, after the weekly re-screen (a rule change; gains none, greens turn yellow or red)]
    **Washington County makes the owner hand over road land first; the fit ignores it (found
    2026-10-10 by item 64's sample, 2 of 11 WashCo greens wrong).** CDC 302-2.14 C(1) (and 303-2.14
@@ -2474,15 +2479,3 @@ read when the weekly full re-screen lands.
    weekly (~2026-10-14). Open for Steph only if a Type II review on clear and objective
    criteria should count as by-right (then all 17 zones come back).
    MERGED 84f215f8 2026-10-10 (code live, map moves at the weekly).
-70. [scan: NO] **The Lots page takes 26-36 s even unfiltered (measured 2026-10-10 on production,
-   /flats/lots and ?colour=green, e2e user).** Found while timing item 66 (price filter merged
-   34e1a771, REVERTED 4670491e: filter 524 at 125 s, sort 502 at 74 s, count queries ran 8+ min in
-   Postgres after the request died; the price-per-unit agent is moving the price to stored columns).
-   Suspects: the per-run best-design subquery (`_best`) and the verdict/colour count over the whole
-   copy on every page load. Offered to Steph: profile with EXPLAIN ANALYZE (read-only), then a
-   stored best-colour per lot per run or an index, plus a statement_timeout on page queries.
-   FINDING 2026-10-10: `_best` is the cost. At the default 4MB work_mem it sort-aggregates the
-   run's lot_results (about 1.4 GB spilled to disk): 4.9 s warm, 15 s+ under load; at 128MB it
-   hash-aggregates in 1.6 s. The price rebuild (item 66) now sets work_mem 128MB and a 25 s
-   statement_timeout for the Lots page queries only; if the page is still slow after that, the
-   next step is a stored best-colour per lot per run, filled by the loader.
