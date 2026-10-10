@@ -1008,6 +1008,11 @@ read when the weekly full re-screen lands.
    AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-two-approaches"; reach first,
    bound + read every move, lands at the weekly; stop and ask if it needs
    item 25's approach geometry).
+   STEPH 2026-10-10: ENCODE the city rule anyway, with the state override on top, so a
+   pre-emption filing by OC or a change in state law flips it back by deleting one override.
+   AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-driveway-preempt"): reuse the field/flag/screen code
+   from flats/oc-two-approaches, OC value 2 cited to F, a _state.yaml preempts entry cited to
+   OAR 660-046-0225(1)(c) + the stored Model Code; expected moves ZERO, proven by an OC bound.
 25. [scan: YES, when built (on hold)] **Driveway approach geometry, ahead of a second approach (Steph
    2026-09-30, flag only -- do not build yet).** What is measured today: the
    drive lane's width (`driveway_min_width_one_way_ft` / `_two_way_ft`, read
@@ -2484,6 +2489,9 @@ read when the weekly full re-screen lands.
    (`Lot Analysis/quadfit/s4_edges.py` `_alley_width` ray-cast), take the missing strip off the
    envelope on that side, rescreen. Unmeasured road = worst case, per the standing rule. Decision
    pending: none for Steph unless a lot with exactly 0 ft to spare is wanted yellow rather than red.
+   AGENT INSTRUCTIONS GIVEN 2026-10-10 ("washco-road-dedication"): measure each fronting road's
+   half-width, take the missing strip off the envelope, bound WashCo unincorporated, read every
+   loss; lands at a splice or the weekly after it.
 68. [scan: YES, after Steph or the agent supplies the maps] **Portland Maps 120-2 and 120-3 are not
    held (found 2026-10-10 by item 64's sample, 1 can't-tell).** 33.120.206 bars new homes on a site
    deeper than 160 ft with under 90 ft of frontage, but only on the sites shown on Map 120-2
