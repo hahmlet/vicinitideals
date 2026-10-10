@@ -1742,6 +1742,33 @@ read when the weekly full re-screen lands.
      `/root/tw/` on 137.
    - 53: Estacada lots screen (no 1 m tiles: coarse steep = yellow sev 7).
    - 48: remove once this weekly is promoted.
+   - 50: the twins are already on the map since run 70 (below); the weekly
+     only re-measures them natively -- expect ~0 new RESOURCE-PERMIT moves.
+   (l) RUN 70 PROMOTED 2026-10-10 ~04:47 UTC (agent, gate clean): ONE joint
+   splice on run 69 carrying 59 (county roll, assign-only), 60+63 (quiet
+   street = Metro AND OSM; a one-street bend is not a corner; curve clauses),
+   52 slice 1 (Gladstone Portland Ave) and 50 (ovl_*_site twins copied into
+   /root/js/Qn s5o). Screen code 7f354aa4, splice 7f68b122 (a splice may add
+   a DECLARED column: `--added-columns`, recorded in the lineage). Scope
+   47,135 lots (/root/js/scope.txt), bridge 52 min at 14 procs, tag
+   2026-10-10_49k. TRAP FOUND: the 60+63 lane's scope files were built with
+   `.read().split()`, which cuts spaced Multnomah TLIDs in two; the bridge
+   drops the pieces silently (scope rebuilt line by line). Moves, best design
+   per lot (4,242 lots, 0 outside the scope): 59 = 3,117 (112 green + 3,005
+   yellow -> red), exactly its bound; Gladstone 23 green -> yellow (51
+   flagged), exactly its bound; 50 = 43 green -> yellow (RESOURCE-PERMIT);
+   60+63 = 1,051: 228 green -> red and 446 yellow -> red (every one
+   CORNER_READ_AS_BEND), 367 yellow -> green (354 rank now known, 10 slope,
+   4 Gresham civic-corridor clears from c98be01d whose scope missed them),
+   7 green -> yellow, 3 red -> yellow. 1,032 of the 1,051 match the lane's
+   last bounds lot for lot, 0 disagree; the 19 its broken scope never saw
+   (Troutdale 14, Fairview 1, Gresham 4) were read one by one: one street
+   name on every street edge (cul-de-sac bulbs / curves), cities silent ->
+   the ruled bend reading. Map green 50,008 -> 49,960, yellow 151,010 ->
+   147,262. Drift 69 -> 70: 2,067 answers moved, 0 unexplained. prune
+   retired 65 (kept 67/69/70); VACUUM FULL DONE (lot_results 8 GB, 26 GB
+   free). NEXT SPLICE BASE: /root/bridge_spliced_2026-10-10_49k with s4/s5o
+   /root/js/Qn (twins) and assign inputs /root/js/Qn + /root/zg/Nn.
 50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
    no-build water area keeps the lot a closer look once the pod clears it.**
    City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
@@ -1834,7 +1861,7 @@ read when the weekly full re-screen lands.
    Slice 1 DONE ef4b272f: Gladstone C2 within 60 ft of the Portland Ave
    centreline is held YELLOW under FACT-ALONG-PORTLAND-AVENUE (GMC
    17.18.050(3)(b)+(c)); bound 23 lots green->yellow, 51 lots flagged, 0
-   other moves (/root/wk52/b_after). Map waits on the joint splice.
+   other moves (/root/wk52/b_after). LIVE in run 70 (49(l)): 23 + 51 exact.
    52 STILL OPEN leftovers: DONE 2026-10-09 (slices 1-4: b9ced2fe, 9eb9f618).
    Gladstone C2 Portland Ave yellow; ZDO 1102 stored and cited (prefab
    exemption = single-family only, ZDO 202); Milwaukie neighbours block
@@ -2059,7 +2086,8 @@ read when the weekly full re-screen lands.
    less its last 5 characters) AND within 500 ft edge to edge; no year, no
    geometry = red. Bound (assign alone, run 69 -> assign_v4 on 137
    /root/tr/assign_v4): 3,117 lots turn red = 112 green + 3,005 yellow
-   (Clackamas 19/1,030, Multnomah 35/251, Washington 58/1,724); 635 spared
+   (Clackamas 19/1,030, Multnomah 35/251, Washington 58/1,724) -- LIVE in run
+   70 (49(l)), 3,117 of 3,117 exactly; 635 spared
    (190 x1 codes + 445 near new houses; 163 more went back to red under the
    500 ft line). 4 spared greens read: all leftovers beside new
    subdivisions. SPLICE NOTE: assign needs no new file; the roll columns are
@@ -2295,8 +2323,12 @@ read when the weekly full re-screen lands.
    20; Gresham green -> red 4, yellow -> red 20; Tualatin green -> red 22,
    green -> yellow 1, yellow -> red 19; West Linn 14/33; Oregon City 19/1/28;
    others small. Scopes (137): /root/fo/scope_curve.txt (6,809), scope_unb_diff
-   .txt (312), scope_band.txt (80). STILL TO DO: the one joint splice from
-   main (coordinator), and the weekly acquire must include `osm_roads`.
+   .txt (312), scope_band.txt (80). LIVE in run 70 (49(l)); the counts above
+   came from a scope that dropped spaced Multnomah TLIDs -- the splice's
+   numbers replace them: green -> red 228 (Portland 59, WashCo uninc. 65,
+   Clackamas uninc. 25, Tualatin 20, Oregon City 19, West Linn 13, Troutdale
+   10, Beaverton 5, Gresham 4, Durham 4, others 4), yellow -> red 446, yellow
+   -> green 367. STILL TO DO: the weekly acquire must include `osm_roads`.
 64. [scan: NO (a reading exercise; fixes it finds get their own items)] **Measure the
    false-GREEN rate, so "are we converging?" has a number (offered 2026-10-09 when Steph
    asked whether the work ever ends).** Draw a random sample of ~100 GREEN lots from the
