@@ -512,6 +512,98 @@ def test_osm_roads_are_cut_to_the_counties_filtered_and_reprojected(tmp_path: Pa
     assert x > 1_000_000 and y > 100_000, "degrees were left unprojected"
 
 
+# --- the Geofabrik "latest" URL names a dated file (FOLLOWUPS 60 tail) ------
+
+LATEST = "https://download.example.org/north-america/us/oregon-latest-free.shp.zip"
+DATED = "https://download.example.org/north-america/us/oregon-261008-free.shp.zip"
+LAST_MODIFIED = "Thu, 08 Oct 2026 20:03:11 GMT"
+
+
+class GeofabrikHost:
+    """A host whose "latest" file 307-redirects to the dated one; Range on the dated one."""
+
+    def __init__(self, body: bytes, *, redirect: bool = True, last_modified: str | None = LAST_MODIFIED) -> None:
+        self.body = body
+        self.redirect = redirect
+        self.last_modified = last_modified
+        self.requests: list[httpx.Request] = []
+
+    def __call__(self, request: httpx.Request) -> httpx.Response:
+        self.requests.append(request)
+        url = str(request.url)
+        if url == LATEST and self.redirect:
+            return httpx.Response(307, headers={"location": DATED})
+        assert url in (LATEST, DATED), url
+        extra = {"last-modified": self.last_modified} if self.last_modified else {}
+        if request.method == "HEAD":
+            return httpx.Response(200, headers={"content-length": str(len(self.body)), **extra})
+        m = re.fullmatch(r"bytes=(\d+)-(\d+)", request.headers.get("range", ""))
+        assert m, "the acquire stage must never ask for the whole archive"
+        start, end = int(m.group(1)), min(int(m.group(2)), len(self.body) - 1)
+        return httpx.Response(
+            206,
+            content=self.body[start : end + 1],
+            headers={"content-range": f"bytes {start}-{end}/{len(self.body)}", **extra},
+        )
+
+
+def _acquire_osm(tmp_path: Path, host: GeofabrikHost) -> dict[str, Any]:
+    pipeline = load_pipeline(registry(tmp_path, OSM_ONLY.replace(f"url: {RLIS}", f"url: {LATEST}")))
+    # acquire() builds its own client with follow_redirects=True; the fake must match.
+    redirecting = httpx.Client(transport=httpx.MockTransport(host), follow_redirects=True)
+    return acquire(pipeline, tmp_path / "2026-10-09", client=redirecting, log=quiet)
+
+
+def _archive_line(doc: dict[str, Any]) -> str:
+    return next(x for x in describe(doc) if x.startswith("archive "))
+
+
+def test_the_manifest_names_the_dated_file_the_latest_url_redirected_to(tmp_path: Path) -> None:
+    host = GeofabrikHost(osm_zip())
+
+    doc = _acquire_osm(tmp_path, host)
+
+    assert doc["datasets"]["osm_roads"]["status"] == "acquired"
+    archive = doc["archives"][LATEST]
+    assert archive["release"] == "oregon-261008-free.shp.zip"
+    assert archive["modified"] == "2026-10-08"
+    assert archive["size"] == len(host.body)
+    assert archive["resolved_url"] == DATED
+    assert "release oregon-261008-free.shp.zip, modified 2026-10-08" in _archive_line(doc)
+    assert all(r.method == "HEAD" or r.headers.get("range") for r in host.requests), (
+        "naming the release must not download the archive"
+    )
+    assert all(str(r.url) == DATED for r in host.requests if r.headers.get("range")), (
+        "the members were not read from the dated file the manifest names"
+    )
+
+
+def test_no_redirect_leaves_the_release_unnamed_and_does_not_fail(tmp_path: Path) -> None:
+    doc = _acquire_osm(tmp_path, GeofabrikHost(osm_zip(), redirect=False))
+
+    assert doc["datasets"]["osm_roads"]["status"] == "acquired"
+    archive = doc["archives"][LATEST]
+    assert archive["release"] is None
+    assert "resolved_url" not in archive
+    assert "release ?, modified 2026-10-08" in _archive_line(doc)
+
+
+def test_an_unreadable_last_modified_is_left_out_not_fatal(tmp_path: Path) -> None:
+    doc = _acquire_osm(tmp_path, GeofabrikHost(osm_zip(), last_modified="sometime last week"))
+
+    archive = doc["archives"][LATEST]
+    assert archive["release"] == "oregon-261008-free.shp.zip"
+    assert "modified" not in archive
+    assert "modified ?" in _archive_line(doc)
+
+
+def test_a_redirect_that_keeps_the_file_name_names_no_release() -> None:
+    same = stage.redirect_identity(
+        "http://example.org/x/oregon-latest-free.shp.zip", "https://cdn.example.org/y/oregon-latest-free.shp.zip", None
+    )
+    assert same == {}
+
+
 CHANGELOG_ONLY = f"""
 jurisdictions:
   or/multnomah/portland: true

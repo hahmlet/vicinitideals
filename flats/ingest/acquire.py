@@ -61,8 +61,10 @@ import struct
 import sys
 import time
 import zlib
-from pathlib import Path
+from email.utils import parsedate_to_datetime
+from pathlib import Path, PurePosixPath
 from typing import Any, Callable, Iterable
+from urllib.parse import urlsplit
 
 import httpx
 import shapefile  # pyshp
@@ -252,6 +254,29 @@ def data_edited(meta: dict[str, Any]) -> int | None:
     return int(got) if isinstance(got, (int, float)) else None
 
 
+def redirect_identity(requested: str, final: str, last_modified: str | None) -> dict[str, Any]:
+    """What a "latest" URL pointed at: the dated file's name and its date.
+
+    Geofabrik's ``oregon-latest-free.shp.zip`` answers 307 with the dated
+    file (``oregon-261008-free.shp.zip``); that name is the only release
+    label the extract carries. A URL that was not redirected to a different
+    file name names no release, and the answer is empty -- "release ?", never
+    an error. ``modified`` is the Last-Modified header as an ISO date, kept
+    even without a redirect; an unreadable header is left out.
+    """
+    out: dict[str, Any] = {}
+    name = PurePosixPath(urlsplit(final).path).name
+    if name and name != PurePosixPath(urlsplit(requested).path).name:
+        out["release"] = name
+        out["resolved_url"] = final
+    if last_modified:
+        try:
+            out["modified"] = parsedate_to_datetime(last_modified).astimezone(dt.UTC).date().isoformat()
+        except (TypeError, ValueError):
+            pass
+    return out
+
+
 def _json(resp: httpx.Response) -> dict[str, Any]:
     resp.raise_for_status()
     doc = resp.json()
@@ -414,17 +439,20 @@ class _RemoteZip:
         self.client = client
         self.url = url
         self.total = 0
+        self.last_modified: str | None = None
         try:
             head = client.head(url)
             head.raise_for_status()
             self.url = str(head.url)
             self.total = int(head.headers.get("content-length") or 0)
+            self.last_modified = head.headers.get("last-modified")
         except httpx.HTTPStatusError:
             pass  # a host that answers HEAD with 405 still answers a one-byte range
         if not self.total:
             probe = self._range(0, 0)
             self.url = str(probe.url)
             self.total = int(probe.headers["content-range"].rsplit("/", 1)[1])
+            self.last_modified = self.last_modified or probe.headers.get("last-modified")
         self.entries = self._central_directory()
 
     def _range(self, start: int, end: int) -> httpx.Response:
@@ -520,6 +548,12 @@ def _archive_identity(client: httpx.Client, url: str, archive: _RemoteZip) -> di
     out: dict[str, Any] = {"size": archive.total, "members": len(archive.entries), "release": release}
     item = re.sub(r"/data/?$", "", url)
     if item == url:
+        # Not a portal item (the Geofabrik extract): the redirect to the dated
+        # file the members were read from is the identity. archive.url is that
+        # file, so a republish between the HEAD and now cannot rename it.
+        found = redirect_identity(url, archive.url, archive.last_modified)
+        out["release"] = out["release"] or found.pop("release", None)
+        out.update(found)
         return out
     try:
         meta = _json(client.get(item, params={"f": "json"}))
