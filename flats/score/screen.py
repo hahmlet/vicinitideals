@@ -208,6 +208,10 @@ FIRE_HOSE_START = "FIRE_HOSE_START"
 #: 2026-10-09: "whichever is more conservative, with a flag"). The flag
 #: marks the reading; it never holds a green.
 CORNER_READ_AS_BEND = "CORNER_READ_AS_BEND"
+#: A bend whose curve clause measured within a degree of its ceiling: the
+#: digitising error is that size, so it is read as a bend and the flag names
+#: the measured angle and the ceiling (CURVE-ON-THE-LINE; FOLLOWUPS 63).
+CURVE_ON_THE_LINE = "CURVE_ON_THE_LINE"
 
 #: The code caps the building's height by the shade it casts on the lot to
 #: the north, and nothing here knows which line faces north or where the
@@ -416,6 +420,10 @@ class LotFacts:
     #: where its code states no corner test (:data:`CORNER_READ_AS_BEND`,
     #: :func:`flats.ingest.quadfit.read_as_bend`). Set by the bridge.
     corner_read_as_bend: bool = False
+    #: ``(measured angle, ceiling)`` when the lot's curve clause measured
+    #: within a degree of its ceiling and the lot was read as a bend
+    #: (:func:`flats.ingest.quadfit.curve_on_the_line`). Set by the bridge.
+    curve_on_the_line: tuple[float, float] | None = None
     #: The ground on this lot steeper than Steph's slope ruling allows
     #: building or parking on (``flats/config/slope.yaml``,
     #: :meth:`flats.fit.slope.Terrain.steep`), square feet, and the
@@ -2251,6 +2259,9 @@ def _account(
         flag("SOLAR-SHADE", SOLAR_SHADE)
     if lot.corner_read_as_bend:
         flag("CORNER-READ-AS-BEND", CORNER_READ_AS_BEND)
+    if lot.curve_on_the_line is not None:
+        angle, ceiling = lot.curve_on_the_line
+        flag("CURVE-ON-THE-LINE", CURVE_ON_THE_LINE, bounds=(min(angle, ceiling), max(angle, ceiling)))
     # Red on the hose alone measured from 10 ft out from the curb, and
     # clear measured from the curb (Steph 2026-10-05: "stricter", "with a
     # flag to check later"). The bind stands; the flag says one answer
@@ -2365,6 +2376,7 @@ def backlog(results: Sequence[Screening]) -> dict[str, int]:
 
 __all__ = [
     "CORNER_READ_AS_BEND",
+    "CURVE_ON_THE_LINE",
     "CLOSER_LOOK_MIN_DENSITY",
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_STEEP_COARSE",

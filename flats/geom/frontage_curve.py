@@ -28,6 +28,10 @@ from flats.geom.one_street import SLIVER_FT, SLIVER_TURN_DEG, STREET_CLASS
 
 #: A farthest vertex closer to the chord than this is not a bulge, it is noise.
 APEX_MIN_FT = 0.5
+#: The digitising error of a measured curve angle (0.5-2 degrees on a 0.5-1 ft
+#: slip of the lot corners, FOLLOWUPS 63): a lot this close to a clause's
+#: ceiling is not evidence of a corner, so it is read as a bend.
+BAND_DEG = 1.0
 
 Edge = Sequence[Any]
 
@@ -166,6 +170,17 @@ def measure(edges_json: str | None) -> Curve | None:
     return Curve(tangent_deg=tangent, apex_deg=apex_deg, inside=inside)
 
 
+def angle_of(curve_by: str, *, inside_only: bool, edges_json: str | None) -> float | None:
+    """The one angle a curve clause compares: ``apex`` (a chord construction)
+    or ``tangent`` (the angle between the frontage's ends). None where the
+    frontage is not measurable, or is not the inside of the curve a clause
+    that names the inside curve asks for."""
+    c = measure(edges_json)
+    if c is None or (inside_only and not c.inside):
+        return None
+    return c.apex_deg if curve_by == "apex" else c.tangent_deg
+
+
 def makes_corner(
     curve_by: str,
     ceiling_deg: float,
@@ -173,18 +188,18 @@ def makes_corner(
     inclusive: bool,
     inside_only: bool,
     edges_json: str | None,
+    margin_deg: float = 0.0,
 ) -> bool:
     """Whether the frontage's curve is two streets by the clause this code
-    wrote: ``apex`` (a chord construction) or ``tangent`` (the angle between
-    the frontage's ends). Anything it cannot measure is not a corner here --
-    the caller keeps the corner reading on a doubt before it gets this far."""
-    c = measure(edges_json)
-    if c is None or (inside_only and not c.inside):
-        return False
-    angle = c.apex_deg if curve_by == "apex" else c.tangent_deg
+    wrote. ``margin_deg`` pulls the ceiling in by the measurement's own error
+    (:data:`BAND_DEG`): a curve inside the margin is not called a corner.
+    Anything it cannot measure is not a corner here -- the caller keeps the
+    corner reading on a doubt before it gets this far."""
+    angle = angle_of(curve_by, inside_only=inside_only, edges_json=edges_json)
     if angle is None:
         return False
-    return angle <= ceiling_deg if inclusive else angle < ceiling_deg
+    ceiling = ceiling_deg - margin_deg
+    return angle <= ceiling if inclusive else angle < ceiling
 
 
-__all__ = ["APEX_MIN_FT", "Curve", "is_unbroken", "makes_corner", "measure"]
+__all__ = ["APEX_MIN_FT", "BAND_DEG", "Curve", "angle_of", "is_unbroken", "makes_corner", "measure"]

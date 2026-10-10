@@ -1318,6 +1318,28 @@ def test_a_gentle_curve_is_measured_the_way_each_code_writes_it(corpus) -> None:
     assert read_as_bend(gentle, corpus.layers) is True
 
 
+def test_a_curve_within_a_degree_of_the_ceiling_is_a_bend_with_a_flag(corpus, policies) -> None:
+    # Portland's curve of 120 degrees or less: the digitising error is a
+    # degree or more, so 119.5 is not evidence of a corner (FOLLOWUPS 63).
+    def lot(turn: float):
+        # arc_lot's four lines turn three times: the frontage turns 3/4 of delta.
+        delta = turn * 4 / 3
+        row = corner_row(jurisdiction="portland", zone="R5", one_street=True, edges_json=arc_lot(delta, 4))
+        row["front_bearings_json"] = f"[0.0, {turn}]"
+        return lot_from_row(row, corpus.layers)
+
+    near = lot(60.5)  # tangent 119.5
+    assert near.facts.corner_read_as_bend is True
+    assert near.facts.curve_on_the_line == pytest.approx((119.5, 120.0), abs=0.05)
+    (s,) = screen_lot(near, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    (flag,) = [f for f in s.screening.flags if f.code == "CURVE-ON-THE-LINE"]
+    assert flag.bounds == pytest.approx((119.5, 120.0), abs=0.05)
+    far = lot(62.0)  # tangent 118: a corner
+    assert far.facts.corner_read_as_bend is False and far.facts.curve_on_the_line is None
+    over = lot(58.0)  # tangent 122: a bend by the code's own words, off the line
+    assert over.facts.corner_read_as_bend is True and over.facts.curve_on_the_line is None
+
+
 def test_one_name_on_two_separate_fronts_is_not_a_bend(corpus) -> None:
     broken = json.dumps(
         [

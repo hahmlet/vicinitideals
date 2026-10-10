@@ -128,3 +128,15 @@ def test_a_short_sliver_turning_away_does_not_break_the_run() -> None:
         ["F", "F", "R", "R", "F"],
     )
     assert is_unbroken(cut) is True
+
+
+def test_a_margin_pulls_the_ceiling_in_by_the_measuring_error() -> None:
+    edges = arc_lot(100.0, 4)  # apex 130.0, tangent 105.0
+    c = measure(edges)
+    assert c is not None and c.apex_deg is not None
+    assert makes_corner("apex", c.apex_deg + 0.5, inclusive=False, inside_only=False, edges_json=edges) is True
+    assert (
+        makes_corner("apex", c.apex_deg + 0.5, inclusive=False, inside_only=False, edges_json=edges, margin_deg=1.0)
+        is False
+    )
+    assert makes_corner("tangent", 107.0, inclusive=True, inside_only=False, edges_json=edges, margin_deg=1.0) is True
