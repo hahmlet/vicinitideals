@@ -66,9 +66,15 @@ def test_a_quadplex_is_refused_with_no_way_back_in(layer: Layer, store: Provenan
     held = layer.zones[zone].values["quadplex_allowed"]
     assert held.value is False
     assert not held.variants  # by right only: no conditional path to green
+    # The red is the ruling's, so the value quotes what the ruling rests on:
+    # 1102.01(A)'s commercial line and 1102.03's Type II process (Section
+    # 1102 stored 2026-10-09, FOLLOWUPS 52), not Table 510-1's P.
     text = store.quote(held.prov.quote)
-    assert "Quadplexes" in text  # the Table 510-1 row the ruling rests on
-    assert zone[:3] in text  # and the column head: SCMU or PMU
+    assert held.prov.quote.startswith(f"{LAYER}/zdo.1102.txt#")
+    assert "Commercial zoning districts" in text
+    assert "Type II application" in text
+    if zone.startswith("PMU"):
+        assert "a master plan shall be required" in text  # 1102.03(B)
 
 
 @pytest.mark.parametrize("zone", RED_ZONES)

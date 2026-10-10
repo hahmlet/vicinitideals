@@ -1287,6 +1287,35 @@ defaults:
   # it is moot anyway wherever 19.505.3.D.4.a keeps parking out of the strip
   # in front of the building. (or/clackamas/milwaukie/19.600.parking.txt#L931-L999)
 
+# Which zones across a lot line make a DMU or GMU yard 20 ft (MMC 19.504.4.A;
+# FOLLOWUPS 52, 2026-10-09). Only DMU and GMU reach the building (by unit lots),
+# so only their side and rear variants read it.
+neighbours:
+  abuts_residential_zone:
+    true_for: [R-MD, R-HD]
+    false_for: [DMU, GMU, NMU, SMU, C-CS, C-G, MUTSA, NME, BI, M, OS]
+    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L599-L605"
+    cite: MMC 19.504.4 (Transition Area Measures) and 19.504.4.A; the zones are
+      the thirteen of Chapter 19.300 that Milwaukie's map carries
+    note: >-
+      19.504.4: "Where commercial, mixed-use, or industrial development is
+      proposed abutting or adjacent to properties zoned R-MD", and A: "All
+      yards that abut, or are adjacent across a right-of-way from the R-MD
+      Zone shall be at least as wide as the required front yard width of the
+      adjacent R-MD Zone" -- 20 ft (Table 19.301.4). The sentence names R-MD
+      alone; R-HD is on the true_for side too, the reading the DMU and GMU
+      variants already state ("read for any residential zone, the tighter
+      reading"). The false_for side is every other zone on the map, none of
+      them residential. The condition is true of a lot when ANY non-street
+      line has an R-MD or R-HD lot across it, and then every side and rear
+      yard takes the 20, which is coarse in the direction that never buys a
+      GREEN; false needs every line fully read with nothing residential
+      across any of them. A lot across a city line is unresolved on purpose.
+      This reads the "abut" half only. The "across a right-of-way" half is a
+      street line, and Milwaukie's street yards are held open on
+      faces_residential_zone_across_street (DMU and GMU setback_front_ft and
+      setback_street_side_ft) because no lot-level reading of it exists.
+
 zones:
   R-MD:
     section: ["19.301"]
@@ -1952,6 +1981,10 @@ zones:
     setback_front_ft:
       value: 0
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1956"
+      qualified_by:
+        fact: faces_residential_zone_across_street
+        cite: MMC 19.504.4.A, all yards that are adjacent across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard (20 ft); a street line, so held open until Milwaukie reads the zone across the street per line
+        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L605"
       variants:
         - value: 20
           when: [abuts_residential_zone]
@@ -1988,6 +2021,10 @@ zones:
     setback_street_side_ft:
       value: 0
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1956"
+      qualified_by:
+        fact: faces_residential_zone_across_street
+        cite: MMC 19.504.4.A, all yards that are adjacent across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard (20 ft); a street line, so held open until Milwaukie reads the zone across the street per line
+        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L605"
     max_coverage_pct:
       # Table 19.304.4 has no coverage or vegetation row, and 19.304.5 states
       # none (whole-chapter grep of 19.304, L1577-L2036, and a whole-set grep
@@ -2029,8 +2066,13 @@ zones:
       development. Yards abutting a residential zone: 19.504.4.A names the
       R-MD zone and "across a right-of-way"; the variant reads any
       residential zone and any shared edge, the tighter reading, and rides on
-      `abuts_residential_zone`, which this layer does not yet measure (no
-      `neighbours:` block), so it stays unknown.
+      `abuts_residential_zone`, measured since 2026-10-09 from the layer's
+      `neighbours:` block (FOLLOWUPS 52). The "across a right-of-way" half
+      is a street line and no lot-level reading of it exists, so the front
+      and street-side yards are qualified on
+      `faces_residential_zone_across_street` and held open: a DMU lot reads
+      yellow at best until Milwaukie's street lines are read per line the
+      way Portland's are.
   NMU:
     section: ["19.303"]
     cite_default:
@@ -2116,6 +2158,10 @@ zones:
       # residential zone.
       value: 15
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L996-L997,L1184,L1296-L1300"
+      qualified_by:
+        fact: faces_residential_zone_across_street
+        cite: MMC 19.504.4.A, all yards that are adjacent across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard (20 ft); a street line, so held open until Milwaukie reads the zone across the street per line
+        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L605"
       variants:
         - value: 20
           when: [abuts_residential_zone]
@@ -2150,6 +2196,10 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1184,L1296-L1300"
+      qualified_by:
+        fact: faces_residential_zone_across_street
+        cite: MMC 19.504.4.A, all yards that are adjacent across a right-of-way from the R-MD Zone are at least as wide as the R-MD front yard (20 ft); a street line, so held open until Milwaukie reads the zone across the street per line
+        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L605"
     max_coverage_pct:
       value: 85
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016"
@@ -2193,10 +2243,13 @@ zones:
       frontage occupancy of 50% on the block faces of Figure 19.303.4.D (image,
       no field); the 15 ft step back above the base height (19.303.4.B.2.b;
       the pod is 26 ft so it does not reach it). The residential-edge setback
-      rides on `abuts_residential_zone`, which this layer does not yet measure
-      (no `neighbours:` block), so the 20 ft variants stay unknown and a GMU
-      lot can read yellow until it is wired. The Figure 19.303.5 residential
-      street edges are held as a flat 15 ft front yard for the same reason.
+      rides on `abuts_residential_zone`, measured since 2026-10-09 from the
+      layer's `neighbours:` block (FOLLOWUPS 52); the "across a right-of-way"
+      half is a street line with no lot-level reading, so the front and
+      street-side yards are qualified on `faces_residential_zone_across_street`
+      and held open, and a GMU lot reads yellow at best until Milwaukie's
+      street lines are read per line. The Figure 19.303.5 residential street
+      edges are held as a flat 15 ft front yard, the figure being an image.
   SMU:
     section: ["19.303"]
     cite_default:

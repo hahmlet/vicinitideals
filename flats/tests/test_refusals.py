@@ -356,11 +356,16 @@ pytestmark = pytest.mark.unit
 # with the Gladstone, Tualatin, Milwaukie, West Linn and Clackamas zones encoded that day.
 # 148 -> 149 notes on 2026-10-09: Clackamas uninc HDR (RED BY RULING; its bearing-plane
 # setbacks stay unencoded).
-EXPECTED = {"notes": 148, "comments": 284, "tests": 18}
+EXPECTED = {"notes": 150, "comments": 284, "tests": 18}
 # 149 -> 148 notes on 2026-10-09: Gladstone C-2's Portland Avenue limitations
 # (GMC 17.18.050(3)) were READ AND NOT ENCODED; `along_portland_avenue` now
 # measures the lot and qualifies the permission (FOLLOWUPS 52,
 # test_portland_avenue).
+# 148 -> 150 notes on 2026-10-09: Tualatin RL and RML record the 50 ft Basalt
+# Creek Parkway yard as NOT ENCODED and measured to reach no lot (nearest
+# Tualatin lot 2,234 ft from the built parkway, 343 ft from a straight course
+# for its unbuilt extension; FOLLOWUPS 52). The reading cards that called it
+# "corridor geometry" were corrected in the same change.
 # 282 -> 283 comments on 2026-10-07: Sandy (FOLLOWUPS 53), whose refused zones are
 # declared in the layer; the rest of its NOT ENCODED decisions repeat reasons.
 # 283 -> 284 comments on 2026-10-07: Estacada (FOLLOWUPS 53), whose NOT ENCODED

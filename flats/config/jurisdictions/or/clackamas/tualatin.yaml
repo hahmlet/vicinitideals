@@ -310,10 +310,14 @@ readings:
       Review, and these two sentences are the bounds on that discretion. A ten-foot setback around
       parking would be a serious charge against a rear court, which is exactly why the row it sits
       on had to be read: the pod is an outright permitted quadplex in RL and takes the front-15,
-      side-5, rear-15 line above it, which this layer encodes. The other two fragments are a
-      50-foot yard along Basalt Creek Parkway, corridor geometry on one named road, and the Type
-      II Architectural Review bonus that raises height to 50 feet where every setback is at least
-      one and a half times the building height -- discretion, and a bonus.
+      side-5, rear-15 line above it, which this layer encodes. The Type II Architectural Review
+      bonus that raises height to 50 feet where every setback is at least one and a half times
+      the building height is discretion, and a bonus. CORRECTED 2026-10-09 (FOLLOWUPS 52): the
+      third fragment, "Any Yard Area Adjacent to Basalt Creek Parkway 50 feet" (L234-L235), is a
+      row of its own, NOT the conditional-use row, and it does reach this building on a lot beside
+      the parkway; the outcome above is the conditional-use row's. Measured instead: the nearest
+      Tualatin lot is 2,234 ft from the built parkway and 343 ft from a straight course for its
+      unbuilt extension east, so the yard reaches no lot (RL notes).
     fingerprint: 30e18c2a11efb844
   "40-41.residential.txt#40.220":
     queue: nofield
@@ -351,8 +355,11 @@ readings:
       Townhouse, Triplex, or Quadplex" and states a flat 10-foot front, 20-foot garage door,
       5-foot side and 10-foot rear, which is exactly what this file holds for RML. The five-foot
       side on this card is common to both blocks and agrees. The 50-foot yard along Basalt Creek
-      Parkway is corridor geometry on one named road. This is the check that a height-keyed
-      setback deserves and it comes out clean.
+      Parkway (L568-L570) is a row of its own and does reach this building on a lot beside the
+      parkway -- corrected 2026-10-09 (FOLLOWUPS 52): measured, the nearest Tualatin lot is 2,234
+      ft from the built parkway and 343 ft from a straight course for its unbuilt extension east,
+      so it reaches no lot (RL and RML notes). This is the check that a height-keyed setback
+      deserves and it comes out clean.
     fingerprint: 0d8aebc8d82c6c8f
   "40-41.residential.txt#41.210":
     queue: nofield
@@ -1080,7 +1087,14 @@ zones:
       turn it green, so it stays out of the encoding rather than being carried as relief. TDC 36.400
       is lot creation — double frontage, side lot lines at right angles, and a public-street frontage
       requirement on lots created after 1 September 1979 — none of which bind development on a lot
-      that already exists.'
+      that already exists. NOT ENCODED, measured to reach no lot (FOLLOWUPS 52, 2026-10-09): "Any
+      Yard Area Adjacent to Basalt Creek Parkway 50 feet" (40-41.residential.txt#L234-L235) is a row
+      of its own and reaches this building, but measured against the street centrelines run 69
+      screened with, the nearest Tualatin lot is 2,234 ft from the parkway. That file holds only the
+      built stretch, 124th Avenue to Grahams Ferry Road; the extension east to Boones Ferry Road is
+      not in it, so it was measured as a straight course due east from the Grahams Ferry end, and the
+      nearest Tualatin lot is 343 ft from that. No RL lot is adjacent to either. Re-measure when the
+      extension reaches the street file or Tualatin annexes Basalt Creek land beside the parkway.'
   RML:
     max_density_du_per_acre:
       # Table 41-3, MAXIMUM DENSITY. The table states a ceiling per
@@ -1210,7 +1224,13 @@ zones:
       TDC 41.300(1) sends the reader to "TDC 36.410(2)(b)" for the lot size, lot width, building
       coverage and setbacks that apply in small lot subdivisions; Ord. 1463-21 repealed that section
       and enacted a new 36.410 that states lot size and nothing else. The cross-reference points at a
-      rule that no longer exists, so there is nothing behind it to encode.'
+      rule that no longer exists, so there is nothing behind it to encode. NOT ENCODED, measured to
+      reach no lot (FOLLOWUPS 52, 2026-10-09): the 50 ft yard adjacent to Basalt Creek Parkway
+      (40-41.residential.txt#L568-L570) reaches this building, but the nearest Tualatin lot in the
+      screen is 2,234 ft from the built parkway and 343 ft from a straight course due east from its
+      Grahams Ferry end standing in for the unbuilt extension to Boones Ferry Road (see the RL notes),
+      so no RML lot is adjacent to it. Re-measure when the extension reaches the street file or
+      Tualatin annexes Basalt Creek land beside the parkway.'
   # === The September 2026 map's six codes, ruled 2026-09-20 ================
   #
   # Steph's rule: every code the county map carries is read once, its reason
@@ -1654,7 +1674,9 @@ zones:
   # CC uses (58.600), where setbacks go to Architectural Review and height to
   # 45 ft. An RH or RH-HR lot inside one of those blocks is screened on the
   # base chapter and can read greener than the overlay allows until those
-  # blocks are traced.
+  # blocks are traced. DEFERRED 2026-10-09 (FOLLOWUPS 52): every RH and RH-HR
+  # lot is red in run 69 on other grounds (0 green, 0 yellow), so tracing the
+  # blocks moves no lot today; trace them before either zone shows a green.
   RMH:
     section: ["42."]
     cite_default:
@@ -1768,8 +1790,10 @@ zones:
       above); the 0-10 ft Townhouse front setback is held at 10. The 5/7/10/12
       side and rear ladder is read at its 25+ row (12). Parking is 10 ft from
       any lot line, a reading RML's note left open. Not encoded: the 50 ft
-      yard "adjacent to Basalt Creek Parkway" (a street-name fact nothing
-      measures); building separation (10 ft between buildings within one
+      yard "adjacent to Basalt Creek Parkway" (measured 2026-10-09: the
+      nearest Tualatin lot is 2,234 ft from the built parkway and 343 ft
+      from its unbuilt extension's course, so it reaches none; RL notes);
+      building separation (10 ft between buildings within one
       development; the pod is one building); a 50 ft height by conditional
       use permit; the 35 percent setback reduction beside greenways
       (42.320), a discretionary relief. Four units need 11,616 sq ft at 15
@@ -1881,10 +1905,11 @@ zones:
       measure. Four units need 6,970 sq ft at 25 units per acre; a lot above
       10,890 sq ft falls under the 16 units per acre floor and screens
       yellow, never red. Not encoded: the 50 ft yard adjacent to Basalt
-      Creek Parkway (a street-name fact nothing measures); building
-      separation (the pod is one building); 50 ft height by conditional use
-      permit; Central Tualatin Overlay Blocks 25 and 4 (see the header
-      above).
+      Creek Parkway (measured 2026-10-09: the nearest Tualatin lot is 2,234
+      ft from the built parkway and 343 ft from its unbuilt extension's
+      course, so it reaches none; RL notes); building separation (the
+      pod is one building); 50 ft height by conditional use permit; Central
+      Tualatin Overlay Blocks 25 and 4 (see the header above).
   RH/HR:
     section: ["44.", "58."]
     cite_default:
@@ -1983,9 +2008,14 @@ zones:
       Condominium Developments 45 feet" row is NOT applied -- it is scoped to
       those two development types, and townhouses on unit lots are neither
       (Table 44-2 lists them as a separate housing type). If that reading is
-      wrong the zone is red for a two-storey pod. Not encoded: the 100 ft
-      yard adjacent to a Wetland Protected Area and the 50 ft yard adjacent
-      to Basalt Creek Parkway (facts nothing measures); building separation
+      wrong the zone is red for a two-storey pod. DEFERRED 2026-10-09
+      (FOLLOWUPS 52): that scope question moves no lot today, because every
+      RH/HR lot is red in run 69 on other grounds; read it again when one is
+      not. Not encoded: the 100 ft yard adjacent to a Wetland Protected Area
+      (no field holds a yard measured from a resource line) and the 50 ft
+      yard adjacent to Basalt Creek Parkway (measured 2026-10-09: the
+      nearest Tualatin lot is 2,234 ft from the built parkway and 343 ft
+      from its unbuilt extension's course; RL notes); building separation
       (the pod is one building); Central Tualatin Overlay lot sizes for
       Blocks 26, 31 and 33 (see the header above). 26 to 30 units per acre
       on the lot's whole area: four units need 5,808 sq ft at 30, and a lot
