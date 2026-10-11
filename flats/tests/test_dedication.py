@@ -166,6 +166,22 @@ def test_the_half_width_is_the_nearest_centreline_distance() -> None:
     assert dedication.half_width_ft(FRONT[:4], nothing) == (None, True)
 
 
+def test_a_stub_no_centreline_runs_beside_reads_the_nearest_one() -> None:
+    cross = LineString([(X0 + 20, Y0 - 500), (X0 + 20, Y0 - 5)])
+    cmap = ClassMap(
+        serves=(LAYER,),
+        lines=Lines.build([cross], [""]),
+        kinds=("",),
+        streets=Lines.build([cross], [""]),
+        types=(1500,),
+    )
+    stub = [X0 + 18, Y0, X0 + 22, Y0]
+    width, public = dedication.half_width_ft(stub, cmap)
+    assert public and width is not None and 5.0 <= width <= 20.0
+    private = ClassMap(**{**cmap.__dict__, "types": (1700,)})
+    assert dedication.half_width_ft(stub, private) == (None, False)
+
+
 def test_only_unincorporated_washington_county_is_measured() -> None:
     assert dedication.applies(LAYER)
     assert not dedication.applies("or/washington/hillsboro")

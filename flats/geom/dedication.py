@@ -20,10 +20,14 @@ the half-width meeting the distance. The lot gives up the shortfall of the
 NARROWEST measured point, never below zero, along the whole line: the strip
 is taken as a setback is, a uniform offset of the lot line.
 
-**What is not.** A street line is *unmeasured* when fewer than
-:data:`MIN_MEASURED` of its nine points have a centreline running beside
-them, and the lot then gives up the whole distance (the worst case: the lot
-line on the centreline). A line whose street class is unread takes the
+Where fewer than :data:`MIN_MEASURED` points have a centreline running beside
+them (a stub, a curve), the nearest centreline of any bearing within reach of
+every point is read instead (:func:`_nearest`) -- never farther than the street
+truly abutted, so never a short strip.
+
+**What is not.** A street line is *unmeasured* when even that finds no
+centreline within reach of some point, and the lot then gives up the whole
+distance (the worst case: the lot line on the centreline). A line whose street class is unread takes the
 deepest distance the code lists (:func:`required_ft`). A street that is not
 public (a private road, RLIS TYPE 1700 / 1800) is not "a public street"
 and takes nothing.
@@ -36,7 +40,7 @@ from __future__ import annotations
 
 from typing import Any, Iterable, Sequence
 
-from flats.geom.corridor import SAMPLES, STREET_CLASS, _fronted
+from flats.geom.corridor import FRONT_REACH_FT, SAMPLES, STREET_CLASS, _fronted
 from flats.geom.street_class import ClassMap, _samples
 
 #: Layers whose code makes a lot dedicate right-of-way. Only these rows are
@@ -84,8 +88,26 @@ def half_width_ft(edge: Sequence[float], cmap: ClassMap) -> tuple[float | None, 
         if cmap.types[s] in PRIVATE_TYPES:
             return None, False
         widths.append(float(cmap.streets.lines[s].distance(p)))
-    if len(widths) < MIN_MEASURED:
-        return None, True
+    if len(widths) >= MIN_MEASURED:
+        return min(widths), True
+    return _nearest(points, cmap)
+
+
+def _nearest(points: Sequence[Any], cmap: ClassMap) -> tuple[float | None, bool]:
+    """The reading for a line no centreline runs beside (a stub, a curve):
+    the distance to the nearest centreline of any bearing within reach of
+    EVERY sample point. It can only be shorter than the distance to the
+    street the lot truly abuts, so the strip it asks for is never short.
+    None where some point has no centreline within reach."""
+    widths: list[float] = []
+    for p in points:
+        near = cmap.streets.near(p, FRONT_REACH_FT)
+        if not near:
+            return None, True
+        s = min(near, key=lambda i: cmap.streets.lines[i].distance(p))
+        if cmap.types[s] in PRIVATE_TYPES:
+            return None, False
+        widths.append(float(cmap.streets.lines[s].distance(p)))
     return min(widths), True
 
 
