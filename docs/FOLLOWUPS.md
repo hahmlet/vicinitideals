@@ -2494,6 +2494,21 @@ read when the weekly full re-screen lands.
    local one. Road Design Standards 130.010 only points back to the Plan. Our "unranked" is also
    not "off the county map": it is the residue Metro and OpenStreetMap do not both call
    residential (street_class.py, item 60). Not stored in provenance (no reading adopted).
+   NARROWER READING (30 ft, not 45, for a street absent from the county's classified layer)
+   CHECKED 2026-10-11 AND NOT ADOPTED. (1) The TSP has no sentence saying collectors and
+   arterials exist only by designation; the support is inference (Strategy 5.1.1; a change to
+   the Functional Classification Map needs a legislative plan amendment, PDF p. 109; only
+   Neighborhood Routes and Local Streets carry the "may be established via the land development
+   process" sentence), and Commercial/Industrial Streets, a collector variant, are applied "through
+   the development review process". (2) FAILS: the layer (street_class_washington, MapServer layer
+   4) is not a complete list of collector-class streets. Against Metro RLIS it matches type 1200
+   at 100% but type 1400 at 89.9% (missing Bankston ~2,294 ft, Grabhorn ~207 ft, Glencoe ~50 ft)
+   and type 1450 at 97% (missing Roy ~1,609 ft); the same MapServer's layer 8 "Special Area
+   Streets" holds Special Area Commercial Streets (collector variant, 37 ft) that layer 4 covers
+   only 6-9%, and Special Area Local Streets only 4-8% (Special Area Collectors 100%). A street
+   absent from layer 4 can be a 37 ft street. A 30 ft ceiling would need layer 8 added as a
+   dataset (registry, snapshot, weekly acquire) plus "stays 45" exceptions near RLIS 1400/1450,
+   OSM tertiary-or-higher and layer-8 collector/commercial lines; not built. Option A stands.
    OPEN: (a) DECISION for the coordinator/Steph: read an unranked street's class from the nearest
    ranked street within reach instead of 45 ft (would give back up to ~42% of the losses) --
    a judgement, not the county's words; (b)
