@@ -2492,6 +2492,12 @@ read when the weekly full re-screen lands.
    AGENT INSTRUCTIONS GIVEN 2026-10-10 ("washco-road-dedication"): measure each fronting road's
    half-width, take the missing strip off the envelope, bound WashCo unincorporated, read every
    loss; lands at a splice or the weekly after it.
+   BUILT + BOUNDED 2026-10-11 (flats/washco-road-dedication a0fc88f6, NOT MERGED): RLIS
+   centre-line distance per street line, worst case where unmeasured, unranked class = 45 ft.
+   WashCo uninc greens 7,728 -> 1,491 red + 98 yellow lost (20.6%); ~42% of losses rest on the
+   45 ft guess for unranked streets. Gains 36 (flatter-placement instability, each read).
+   OFFERED TO STEPH: ship at the weekly; agent first reads the county TSP for "streets not shown
+   are Local" (option C) which would turn the guess into a reading (25 ft).
 68. [scan: YES, after Steph or the agent supplies the maps] **Portland Maps 120-2 and 120-3 are not
    held (found 2026-10-10 by item 64's sample, 1 can't-tell).** 33.120.206 bars new homes on a site
    deeper than 160 ft with under 90 ft of frontage, but only on the sites shown on Map 120-2
@@ -2580,3 +2586,9 @@ read when the weekly full re-screen lands.
    licensed separately, Steph to pick. PRIORITY (recommended): after the weekly scan settles,
    ahead of new cities and the signing push; false-GREEN fixes carry on beside it; freeze edits
    to the code text and citations while each city is being converted.
+74. [scan: YES (a bound in every city; may find false GREENs)] **The placement cache ignores the
+   envelope shape (found 2026-10-11 by washco-road-dedication).** quadfit `_screen_on` caches a
+   placement by (source, setbacks, front, plan); a second design on the same lot with equal
+   setbacks but a different envelope is placed in the FIRST design's envelope. If that envelope
+   is larger, the second design can come out green on ground it does not have. Fix: key on the
+   envelope geometry (or its hash); bound every city, read every lost green. Not assigned.
