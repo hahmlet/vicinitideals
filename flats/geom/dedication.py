@@ -107,7 +107,12 @@ def _nearest(points: Sequence[Any], cmap: ClassMap) -> tuple[float | None, bool]
         s = min(near, key=lambda i: cmap.streets.lines[i].distance(p))
         if cmap.types[s] in PRIVATE_TYPES:
             return None, False
-        widths.append(float(cmap.streets.lines[s].distance(p)))
+        d = float(cmap.streets.lines[s].distance(p))
+        if cmap.osm is not None:
+            # A street Metro's file lacks may run closer: OpenStreetMap's roads
+            # can only bring the reading in, never push it out.
+            d = min([d, *(float(cmap.osm.lines[i].distance(p)) for i in cmap.osm.near(p, FRONT_REACH_FT))])
+        widths.append(d)
     return min(widths), True
 
 
