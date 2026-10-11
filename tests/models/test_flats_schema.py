@@ -111,6 +111,9 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # What each lot did between two copies (0133); read at promotion.
         "lot_changes",
         "lots",
+        # Price inputs as plain columns (0143) so the Lots page can filter and
+        # sort on price per home without reading the wide lot row.
+        "lot_prices",
         "lot_results",
         "rules",
         "clauses",
