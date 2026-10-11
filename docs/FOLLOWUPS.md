@@ -2484,15 +2484,23 @@ read when the weekly full re-screen lands.
    yellow -> red; 36 yellow -> green (only the slope flag lost); reds 2 -> yellow. That is far more
    than the 206/180 estimated above: about 42% of losses ride on the 45-ft unranked-class guess,
    about 58% are real shortfalls, 717 of the 1,589 were already within 1 ft of failing.
+   OPTION C CHECKED 2026-10-11 AND NOT ADOPTED: the county says nothing that makes an unmapped
+   street local. Its Transportation System Plan (Effective Sept 24, 2026; washingtoncountyor.gov
+   /lut/planning/transportation-system-plan, PDF p. 8 and 33-35) says only that it "designates
+   major transportation system elements" and addresses local streets through connectivity maps,
+   that "New Local Streets that are not in this plan may be established via the land development
+   process", and that "other neighborhood routes may be designated through the development review
+   process" -- so a street left off the map can be a neighbourhood route (30 ft) as easily as a
+   local one. Road Design Standards 130.010 only points back to the Plan. Our "unranked" is also
+   not "off the county map": it is the residue Metro and OpenStreetMap do not both call
+   residential (street_class.py, item 60). Not stored in provenance (no reading adopted).
    OPEN: (a) DECISION for the coordinator/Steph: read an unranked street's class from the nearest
-   ranked street within reach instead of 45 ft (would give back up to ~42% of the losses); (b)
+   ranked street within reach instead of 45 ft (would give back up to ~42% of the losses) --
+   a judgement, not the county's words; (b)
    lots whose tax lot includes the roadway (lot line under ~12 ft from centre line) understate the
    road and are left at worst case (63 lost, 73 kept green); (c) Sherwood SDC 16.106.030 D is the
-   same idea as a setback from centre line, NOT encoded; (d) PRE-EXISTING bug found: the Fitter
-   cache in quadfit `_screen_on` keys on (source, setbacks, front, plan) and ignores the envelope
-   shape, so a second design with equal setbacks but a different envelope is placed in the first
-   one's envelope (seen on 1N128CD05600); the key should carry the envelope geometry. Fixing it
-   moves answers on every county, so it needs its own bound.
+   same idea as a setback from centre line, NOT encoded; (d) the Fitter cache-key bug in
+   quadfit `_screen_on` (seen on 1N128CD05600) is its own item 74, not fixed here.
 68. [scan: YES, after Steph or the agent supplies the maps] **Portland Maps 120-2 and 120-3 are not
    held (found 2026-10-10 by item 64's sample, 1 can't-tell).** 33.120.206 bars new homes on a site
    deeper than 160 ft with under 90 ft of frontage, but only on the sites shown on Map 120-2
