@@ -175,7 +175,8 @@ def _parse_values(
         if isinstance(node, dict) and (
             {"value", "exempt", "per_dwelling", "sqft_per_unit", "per_units",
              "spaces_total", "acres", "acres_per_dwelling", "per_height_ft",
-             "floor_ft", "same_as", "step_back", "qualified_by", "stories"}
+             "floor_ft", "same_as", "step_back", "qualified_by", "stories",
+             "from_top_degrees"}
             & set(node)
         ):
             body = dict(node)
@@ -188,6 +189,7 @@ def _parse_values(
             acres = body.pop("acres", None)
             acres_each = body.pop("acres_per_dwelling", None)
             per_height = body.pop("per_height_ft", None)
+            from_top = body.pop("from_top_degrees", None)
             floor_ft = body.pop("floor_ft", None)
             same_as = body.pop("same_as", None)
             step_back = _parse_step_back(
@@ -387,6 +389,26 @@ def _parse_values(
                 value = _off_the_building(
                     float(per_height), None if floor_ft is None else float(floor_ft)
                 )
+            if from_top is not None:
+                if value is not None or exempt or per_height is not None:
+                    problems.append(
+                        f"{where}.{key}: a value states a distance or an angle "
+                        f"off the top of the building, not both"
+                    )
+                    continue
+                if not isinstance(from_top, (int, float)) or isinstance(
+                    from_top, bool
+                ) or not 0 < float(from_top) < 90:
+                    problems.append(
+                        f"{where}.{key}: from_top_degrees {from_top!r} is not an "
+                        f"angle between the vertical and the horizontal"
+                    )
+                    continue
+                # ZDO 1005.02(L): "a 60-degree angle line from the top of the
+                # structure", and "b x .267 (tan 15 degrees)" says the angle
+                # is measured from the vertical. 45 feet for a 26 ft pod,
+                # printed nowhere.
+                value = _off_the_top(float(from_top))
             if stories is not None:
                 if value is not None or exempt:
                     problems.append(
@@ -446,7 +468,7 @@ def _parse_values(
                     form is not None
                     for form in (per_dwelling, sqft_per_unit, per_units,
                                  spaces_total, acres, acres_each, per_height,
-                                 same_as, stories)
+                                 same_as, stories, from_top)
                 ):
                     problems.append(
                         f"{where}.{key}: 'plus_per_story_ft' adds to the "
@@ -485,7 +507,7 @@ def _parse_values(
                     form is not None
                     for form in (per_dwelling, sqft_per_unit, per_units,
                                  spaces_total, acres, acres_each, per_height,
-                                 same_as, stories)
+                                 same_as, stories, from_top)
                 ):
                     problems.append(
                         f"{where}.{key}: 'acre_sqft' says how big this city's "
@@ -539,6 +561,7 @@ def _parse_values(
             value = node
             exempt = False
             per_height = None
+            from_top = None
             floor_ft = None
             same_as = None
             step_back = None
@@ -634,6 +657,7 @@ def _parse_values(
                     None if acres_each is None else float(acres_each)
                 ),
                 per_height_ft=None if per_height is None else float(per_height),
+                from_top_degrees=None if from_top is None else float(from_top),
                 floor_ft=None if floor_ft is None else float(floor_ft),
                 same_as=None if same_as is None else str(same_as),
                 step_back_at_ft=None if step_back is None else step_back.at_ft,
@@ -749,6 +773,19 @@ def _off_the_building(per_height: float, floor: float | None) -> float:
     """
     off_height = round(DESIGN_HEIGHT_FT / per_height, 3)
     total = max(off_height, floor) if floor is not None else off_height
+    return int(total) if float(total).is_integer() else total
+
+
+def _off_the_top(degrees: float) -> float:
+    """How far a line from the top of the building reaches along the ground.
+
+    Clackamas ZDO 1005.02(L) separates a structure from the lot line by a line
+    drawn from its top at a printed angle, and its own arithmetic --
+    "Separation = b x .267 (tan 15 degrees)" -- measures that angle from the
+    vertical: the reach is the height times the tangent. Sixty degrees off a
+    26 ft roof is 45.03 ft; fifteen is 6.97.
+    """
+    total = round(DESIGN_HEIGHT_FT * math.tan(math.radians(degrees)), 3)
     return int(total) if float(total).is_integer() else total
 
 

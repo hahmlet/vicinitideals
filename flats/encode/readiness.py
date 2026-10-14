@@ -244,6 +244,10 @@ def _printed(value: object) -> object:
         # and prints 10 and prints 13 nowhere.
         else value.per_height_ft
         if getattr(value, "per_height_ft", None) is not None
+        # An angle off the top of the building is checked against the angle.
+        # ZDO 1005.02(L) prints 60 and 15 and prints 45.03 nowhere.
+        else value.from_top_degrees
+        if getattr(value, "from_top_degrees", None) is not None
         # A standard stated as EQUAL TO another is checked against the floor,
         # which is the only figure its own sentence carries. HV 16.43.030.E.4
         # prints ten and comes to twenty-two, and the twenty-two is printed in

@@ -124,80 +124,12 @@ RULINGS: dict[str, dict[str, str]] = {
             "of its three-column rows; lot size, coverage and rear setback "
             "are a column question before they are a reading."
         ),
-        # These three were `fetch` until 2026-09-08, on the ground that "no
-        # ZDO 1005 is in the store". It is in the store now, fetched with
-        # Section 510 because Table 510-1 notes 12 and 14 send a freestanding
-        # quadplex in six commercial districts to exactly these standards. So
-        # the reason had to change, and the interesting part is that nothing
-        # made it change: a ruling whose argument is that a document is
-        # ABSENT goes quietly wrong the day the document arrives, and no check
-        # in this file or any other was watching for it.
-        # HDR left this list on 2026-10-09: it is encoded as RED BY RULING
-        # for design review (ZDO 1102.01(A)), so the ledger stops reporting it.
-        "SHD": (
-            "encode: Special High Density -- quadplexes P in Table 315-1, "
-            "setbacks deferred to Subsection 1005.02(L), which is in the "
-            "store since 2026-09-08 and states the same 60-degree and "
-            "15-degree separation planes as HDR. 1005.02(L)(4) says they are "
-            "not modifiable under Section 904, so there is no relief to read "
-            "our way out of."
-        ),
-        "RCHDR": (
-            "encode: Regional Center High Density Residential -- quadplexes P "
-            "in Table 315-1, setbacks deferred to Subsection 1005.02(L), read "
-            "2026-09-08 and blocked on the same lot-line bearings. 32 lots of "
-            "its own, and RCC and RCO in Section 510 wait on it: Table 510-1 "
-            "note 12 sends a freestanding quadplex there for its standards."
-        ),
-        # ZDO Section 510 arrived on 2026-09-08 and declared eleven urban
-        # commercial and mixed-use districts, in 510.02 as a parenthesised
-        # list and again as the column heads of Table 510-1. Three were
-        # encoded the same day and are gone from this dict: NC and C-2 read X
-        # on the Quadplexes row, and OA reads L[15], a permission for a
-        # quadplex inside somebody else's building. The other eight permit the
-        # pod outright, which is why every ruling below is `encode` and not a
-        # refusal -- this is the loosest land in the layer.
-        #
-        # Six of the eight cannot be encoded before a residential district is,
-        # and that is the whole shape of the remaining work here. Table 510-1
-        # note 12 sends a freestanding quadplex to the RCHDR District for its
-        # development and dimensional standards; note 14 sends it to HDR. The
-        # county's own words are "freestanding ... (as opposed to ... in a
-        # mixed-use building)", and freestanding is the only kind this
-        # building is.
-        "RCC": (
-            "encode: Regional Center Commercial -- Quadplexes row of Table "
-            "510-1 reads P[12], and note 12 sends a freestanding quadplex to "
-            "the RCHDR District for its development and dimensional "
-            "standards. 107 lots, blocked behind RCHDR above."
-        ),
-        "RCO": (
-            "encode: Regional Center Office -- P[12] on the same row as RCC "
-            "and the same referral to RCHDR. 38 lots. Table 510-2 gives it "
-            "the largest minimum lot in the section at 2 1/2 acres."
-        ),
-        "RTL": (
-            "encode: Retail Commercial -- P[14], and note 14 sends a "
-            "freestanding quadplex to the HDR District, except that Table "
-            "510-2's own minimum and maximum density standards still apply. "
-            "65 lots, minimum lot 1/2 acre."
-        ),
-        "CC": (
-            "encode: Corridor Commercial -- P[14], same referral to HDR. 130 "
-            "lots, no minimum lot size and no maximum height of its own."
-        ),
-        "C-3": (
-            "encode: General Commercial -- P[14], same referral to HDR. 470 "
-            "lots, the largest commercial district in this layer and the "
-            "second largest unencoded zone left in it."
-        ),
-        "OC": (
-            "encode: Office Commercial -- P[14], same referral to HDR. 86 "
-            "lots. 510.02 misprints its abbreviation as (OA), the second "
-            "time in one sentence, which is the county's typo and not a "
-            "second Office Apartment district; Table 510-1's column heads "
-            "print OA and OC as separate columns 9 and 10."
-        ),
+        # SHD and RCHDR, and the six commercial districts Table 510-1 notes 13
+        # and 15 send to RCHDR or HDR (RCC, RCO; RTL, CC, C-3, OC), left this
+        # list on 2026-10-14 (FOLLOWUPS 61): 1005.02(L)'s bearing separations
+        # are measured per lot line now (flats/geom/bearing.py), and all eight
+        # are encoded -- RED BY RULING for design review (ZDO 1102.01(A)) like
+        # HDR, which left on 2026-10-09 -- so the ledger stops reporting them.
         "PMU": (
             "encode: Planned Mixed Use -- P on the Quadplexes row, no note. "
             "Its dimensions are site-specific: Table 510-2 prints six "
@@ -1136,6 +1068,10 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
     Eighteen on 2026-10-08 (zone gaps, FOLLOWUPS 52a): seven fall because the zones are
     now zone blocks -- Milwaukie GMU and DMU, Tualatin RMH, RH, RH-HR and MUC, and
     Clackamas SCMU -- and Happy Valley PMU left as a RED BY RULING block.
+
+    Nine on 2026-10-14 (FOLLOWUPS 61): Clackamas SHD, RCHDR and the six commercial
+    districts that borrow their standards (RTL, CC, C-3, OC, RCC, RCO) are zone
+    blocks now, 1005.02(L) encoded by lot-line bearing.
     """
     owed: dict[str, list[str]] = {"encode": [], "fetch": [], "column": []}
     for layer, rulings in list(RULINGS.items()) + list(BY_HAND.items()):
@@ -1145,6 +1081,6 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
             verdict = match.group(1)
             if verdict in owed:
                 owed[verdict].append(f"{layer}/{token}")
-    assert len(owed["encode"]) == 17, sorted(owed["encode"])
+    assert len(owed["encode"]) == 9, sorted(owed["encode"])
     assert len(owed["fetch"]) == 2, sorted(owed["fetch"])
     assert len(owed["column"]) == 10, sorted(owed["column"])

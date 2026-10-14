@@ -89,6 +89,7 @@ from flats.geom.alley import (
     side_alley_along,
     usable_run_ft,
 )
+from flats.geom.bearing import true_north_deg
 from flats.geom.corridor import (
     CORRIDOR_FACTS,
     FRONT_REACH_FT,
@@ -148,6 +149,7 @@ from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_e
 from flats.ingest.flatter import flatter_checked
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
+from flats.rules.fields import BEARING_FIELDS
 from flats.rules.definitions import Abuts, Definition, Side, decide
 from flats.rules.model import TRANSIT_MEASURES, Layer
 from flats.rules.net_area import MEASURED as NET_MEASURED, SLOPES as NET_SLOPES, measured_deductions
@@ -967,9 +969,14 @@ def lot_edges(
     ranks = json.loads(row.get("street_ranks_json") or "[]")
     if len(ranks) != len(raw):
         ranks = [None] * len(raw)
+    # Which street lines are on a public way (ZDO 1005.02(L)'s "public,
+    # County or state road"); none where s4 recorded no kinds.
+    kinds = _street_kinds(row) or []
+    if len(kinds) != len(raw):
+        kinds = [None] * len(raw)
     edges: list[Edge] = []
-    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line, rank in zip(
-        raw, cover, off, clear, ranks, strict=True
+    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line, rank, kind in zip(
+        raw, cover, off, clear, ranks, kinds, strict=True
     ):
         x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
         if letter == ALLEY_CLASS:
@@ -990,6 +997,7 @@ def lot_edges(
                 off_corridor=bool(off_line),
                 across_clear=bool(clear_line) and letter == STREET_CLASS,
                 street_rank=int(rank) if rank is not None and letter == STREET_CLASS else None,
+                public_road=letter == STREET_CLASS and kind == "street",
             )
         )
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -1061,6 +1069,17 @@ def setbacks_for(
     front, side, rear = (number(f"setback_{c}_ft") for c in ("front", "side", "rear"))
     if front is None or side is None or rear is None:
         return None
+    # ZDO 1005.02(L): a side or rear yard that says "See 1005.02(L)" is
+    # stated EQUAL TO the north separation, the answer a reader that knows no
+    # bearing must take on every line. The envelope cuts each line by the way
+    # it faces instead (:mod:`flats.geom.bearing`), so the stand-in gives way
+    # to what its own sentence floors it at -- RCHDR's 20 ft rear, its 15 ft
+    # side -- or to nothing.
+    north = number("setback_north_ft") or 0.0
+    east_west = number("setback_east_west_ft") or 0.0
+    if north > 0 or east_west > 0:
+        side = _stand_in(rules, "setback_side_ft", side)
+        rear = _stand_in(rules, "setback_rear_ft", rear)
     total = number("setback_side_total_ft")
     if total is not None:
         side = max(side, total / 2)
@@ -1105,7 +1124,63 @@ def setbacks_for(
         street_off_corridor_ft=off_corridor,
         alley_rear_ft=alley_rear,
         street_clear_ft=clear,
+        north_ft=north,
+        east_west_ft=east_west,
+        north_street_credit_ft=number("setback_north_street_credit_ft") or 0.0,
     )
+
+
+def _stand_in(rules: ZoneResolution, name: str, held: float) -> float:
+    """The yard ``name`` comes to where the envelope cuts by bearing: its
+    floor where it is stated equal to a bearing field, else ``held``."""
+    got = rules.values.get(name)
+    if getattr(got, "same_as", None) not in BEARING_FIELDS:
+        return held
+    return float(getattr(got, "floor_ft", None) or 0.0)
+
+
+def _bearing_rear_cut(edges: LotEdges, setbacks: Setbacks, lot: Any, at_least: float) -> float:
+    """The strip a lot's rear lines lost, where the envelope was also cut by
+    bearing: on each rear line the larger of ``at_least`` (the class yard the
+    envelope took) and the depth of the sweep square to it, and the smallest
+    of those over the rear lines -- the court is charged against the least
+    the envelope gave up (never larger than the legal envelope). A lot with
+    no rear line reports ``at_least``."""
+    depths = []
+    for e in edges.edges:
+        if e.cls is not EdgeClass.rear:
+            continue
+        depths.append(max(at_least, _swept_depth(e, setbacks, lot)))
+    return min(depths) if depths else at_least
+
+
+def _swept_depth(edge: Edge, setbacks: Setbacks, lot: Any) -> float:
+    """How deep :func:`flats.geom.bearing.bearing_cut` reaches square to one
+    straight line: the north separation times the share of the line facing
+    north, the east-west one times the share facing east or west."""
+    length = math.hypot(edge.x2 - edge.x1, edge.y2 - edge.y1)
+    if length <= 0 or lot is None:
+        return 0.0
+    # The outward normal: the side of the midpoint that is off the lot.
+    ux, uy = (edge.y2 - edge.y1) / length, -(edge.x2 - edge.x1) / length
+    mx, my = (edge.x1 + edge.x2) / 2, (edge.y1 + edge.y2) / 2
+    import shapely
+
+    if lot.contains(shapely.Point(mx + 0.5 * ux, my + 0.5 * uy)):
+        ux, uy = -ux, -uy
+    road = edge.public_road and edge.cls in (EdgeClass.front, EdgeClass.street_side)
+    north = (
+        max(0.0, setbacks.north_ft - setbacks.north_street_credit_ft) if road else setbacks.north_ft
+    )
+    east_west = 0.0 if road else setbacks.east_west_ft
+    out = 0.0
+    tn = setbacks.true_north_deg
+    for az in {0.0} if tn is None else {0.0, tn}:
+        r = math.radians(az)
+        facing_north = ux * math.sin(r) + uy * math.cos(r)
+        facing_east = ux * math.cos(r) - uy * math.sin(r)
+        out = max(out, north * max(0.0, facing_north), east_west * abs(facing_east))
+    return out
 
 
 @dataclass(frozen=True, slots=True)
@@ -1253,16 +1328,33 @@ def envelope_for(
         # 2026-10-04): only what lies where the building may stand comes
         # off, the court's ground included.
         taken = _taken(lot, _within(lot.steep, buildable(lot.lot_geom, lot.edges, setbacks)))
+    if setbacks.by_bearing:
+        # Both norths, grid and true (:mod:`flats.geom.bearing`).
+        at = lot.lot_geom.centroid
+        setbacks = dataclasses.replace(setbacks, true_north_deg=true_north_deg(at.x, at.y))
     geom = buildable(lot.lot_geom, lot.edges, setbacks, less=taken)
     cut = None if strips else setbacks.largest_ft
     if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
         cut = setbacks.alley_rear_ft
+    if setbacks.by_bearing:
+        # The rear strip the sweep took, so the court is charged against the
+        # ground the envelope really lost behind the building.
+        cut = _bearing_rear_cut(
+            lot.edges,
+            setbacks,
+            lot.lot_geom,
+            setbacks.rear_ft if cut is None else cut,
+        )
     # The court may use the rear yard, less any planted strip the code keeps
-    # between parking and the line (``parking_lot_line_buffer_ft``).
+    # between parking and the line (``parking_lot_line_buffer_ft``). A
+    # separation 1005.02(L) draws off the top of a STRUCTURE does not reach
+    # the court.
     open_rear = dataclasses.replace(
         setbacks,
         rear_ft=strip,
         alley_rear_ft=None if setbacks.alley_rear_ft is None else strip,
+        north_ft=0.0,
+        east_west_ft=0.0,
     )
     ground = buildable(lot.lot_geom, lot.edges, open_rear, less=taken)
     return Envelope(geom, cut, "flats", setbacks, ground)
