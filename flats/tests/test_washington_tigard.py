@@ -77,11 +77,15 @@ def _text(quote: str) -> str:
 
 
 def test_every_zone_metro_prints_is_held(tigard: Layer) -> None:
-    """Thirteen zone blocks and no map rulings: Metro's ZONE values for
-    Tigard are the code's own names. FAR and INST, which the district
-    harvest finds in the text, are ruled in test_districts."""
+    """Thirteen zone blocks and one map ruling: Metro's ZONE values for
+    Tigard are the code's own names, bar the county's R-15 on two annexed
+    public lots (unencodable: 18.720.030 gives annexed land a city zone and
+    the map prints none). FAR and INST, which the district harvest finds in
+    the text, are ruled in test_districts."""
     assert set(tigard.zones) == {*ADMITTED, *REFUSED}
-    assert dict(tigard.zone_rulings) == {}
+    assert {code: r.outcome for code, r in tigard.zone_rulings.items()} == {
+        "R-15": "unencodable"
+    }
     assert list(tigard.ingest["juris_city_codes"]) == ["TIGARD"]
 
 

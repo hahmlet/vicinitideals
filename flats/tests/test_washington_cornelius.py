@@ -77,7 +77,8 @@ def test_every_district_is_held_and_the_map_spellings_ruled(cornelius: Layer) ->
     assert set(cornelius.zones) == {*ADMITTED, *REFUSED}
     rulings = dict(cornelius.zone_rulings)
     aliases = {code: r.of for code, r in rulings.items() if r.outcome == "alias"}
-    assert aliases == {"R7": "R-7", "A2": "A-2", "C2": "C-2", "M1": "M-1"}
+    # GI: the map's spelling of General Industrial, which 18.05.030 (L66) names M-1.
+    assert aliases == {"R7": "R-7", "A2": "A-2", "C2": "C-2", "M1": "M-1", "GI": "M-1"}
     unencodable = {code for code, r in rulings.items() if r.outcome == "unencodable"}
     # Washington County codes on annexed land; the code keeps no county zoning.
     assert unencodable == {"FD-20", "FD-10", "AF-5"}

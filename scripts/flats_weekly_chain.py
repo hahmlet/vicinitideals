@@ -9,8 +9,11 @@ someone looked, and a missing input surfaced hours in. This one:
 * **checks first** (``preflight``), in seconds: the code is at ``--sha`` and
   clean; every dataset ``flats/config/pipeline.yaml`` names is in the snapshot
   as it is registered today (the 2026-10-07 copy lacked 15); the 1 m elevation
-  tiles, the institutional-land and curb datasets are there; 137 (and the app
-  host, given ``--app-host``) has the disk. Anything wrong refuses the run.
+  tiles, the institutional-land and curb datasets are there; the elevation
+  tiles cover every jurisdiction with measured lots (FOLLOWUPS 75: the
+  2026-10-12 weekly ran on the July tiles, which stop east of Cornelius); 137
+  (and the app host, given ``--app-host``) has the disk. Anything wrong
+  refuses the run.
 * **marks each step done** (``<state>/<step>.done``), so launching the same
   command again skips what finished; the bridge itself resumes from its
   answer cache, so a bridge that died at hour five loses minutes, not hours.
@@ -170,7 +173,8 @@ class Chain:
     def gate(self, step: str) -> list[str]:
         """Reasons not to start ``step`` on what the steps before it left."""
         if step == "bridge":
-            return overlay_problems(self.quadfit / "s5o_lots.parquet")
+            return [*overlay_problems(self.quadfit / "s5o_lots.parquet"),
+                    *elevation_problems(self.quadfit / "s4_lots.parquet", self.quadfit / "raw")]
         if step in ("institutional", "assign"):
             return roll_problems(self.flats("normalized") / "lots.parquet")
         return []
@@ -214,6 +218,66 @@ def roll_problems(lots: Path) -> list[str]:
         return []
     return [f"{lots}: no county-roll column {', '.join(missing)} -- the roll rule cannot read it; "
             "run from normalize (--from normalize)"]
+
+
+def elevation_problems(lots: Path, raw: Path) -> list[str]:
+    """Every measured lot stands on an elevation model in ``raw`` (FOLLOWUPS 75).
+
+    The 2026-10-12 weekly staged its tiles from the July tree, whose 1 m tiles
+    stop at UTM easting 500,000 and whose ~10 m model stops at -122.95: nothing
+    covered Cornelius, and the run finished clean with every measured lot there
+    flagged MEASURE-SITE-GRADE and steep ground unseen (three red lots read
+    yellow). A lot whose centre lies in neither the 1 m tiles' footprint nor the
+    ~10 m model's is one the slope cannot read; one such lot in a jurisdiction
+    names it. The footprints are the rasters' bounds, read from their headers,
+    so a lidar hole inside a tile is not caught -- a missing tile is."""
+    import pandas as pd
+    import rasterio
+    import shapely
+    from pyproj import Transformer
+
+    from flats.fit.slope import CRS_WORKING
+
+    if not lots.is_file():
+        return [f"{lots}: no lot table to check the elevation against -- run from quadfit (--from quadfit)"]
+    frame = pd.read_parquet(lots, columns=["jurisdiction", "wkb"]).dropna(subset=["wkb"])
+    if frame.empty:
+        return []
+    boxes, crs = [], None
+    for path in [*sorted((raw / "dem").glob("*.tif")), *sorted((raw / "dem10_utm").glob("*.tif"))]:
+        try:
+            with rasterio.open(path) as tile:
+                boxes.append(shapely.box(*tile.bounds))
+                crs = crs or tile.crs
+        except rasterio.errors.RasterioIOError:
+            continue
+    fix = "stage from a tree whose tiles cover them (--dem-from data/quadfit_demw/raw, runbook §4e)"
+    if not boxes:
+        return [f"elevation: no readable elevation model in {raw} for {len(frame):,} measured lots; {fix}"]
+    centres = shapely.centroid(shapely.from_wkb(frame["wkb"].to_numpy()))
+    x, y = Transformer.from_crs(CRS_WORKING, crs, always_xy=True).transform(
+        shapely.get_x(centres), shapely.get_y(centres))
+    covered = shapely.union_all(boxes)
+    shapely.prepare(covered)
+    bare = frame.loc[~shapely.contains_xy(covered, x, y), "jurisdiction"].value_counts()
+    if bare.empty:
+        return []
+    totals = frame["jurisdiction"].value_counts()
+    named = ", ".join(f"{j} {n:,} of {totals[j]:,}" for j, n in bare.items())
+    return [f"elevation: {int(bare.sum()):,} measured lots stand on no elevation model in {raw} ({named}) -- "
+            f"their slope goes unmeasured (MEASURE-SITE-GRADE, steep ground unseen); {fix}"]
+
+
+def measured_lots(chain: Chain) -> Path | None:
+    """The lot table the preflight checks the elevation against: this run's
+    own s4 when a step kept from an earlier launch left one, else the newest
+    run's under ``--data`` -- the jurisdictions the copy in use measured. A
+    jurisdiction this run switches on is caught at the bridge's gate."""
+    own = chain.quadfit / "s4_lots.parquet"
+    if own.is_file():
+        return own
+    found = sorted(chain.data.glob("quadfit_*/s4_lots.parquet"), key=lambda p: p.stat().st_mtime)
+    return found[-1] if found else None
 
 
 # --- preflight ------------------------------------------------------------------------
@@ -624,8 +688,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--root", type=Path, default=SNAPSHOTS, help="where snapshots live")
     ap.add_argument("--data", type=Path, default=REPO_ROOT / "data", help="the data tree")
     ap.add_argument("--work", type=Path, default=Path.home(), help="where bridge/assign/bundle dirs go (default ~)")
-    ap.add_argument("--dem-from", type=Path, default=REPO_ROOT / "data" / "quadfit" / "raw",
-                    help="raw dir whose elevation tiles are linked in")
+    ap.add_argument("--dem-from", type=Path, default=REPO_ROOT / "data" / "quadfit_demw" / "raw",
+                    help="raw dir whose elevation tiles are linked in (default: the Washington tree; the July "
+                    "data/quadfit/raw stops east of Cornelius)")
+    ap.add_argument("--measured-lots", type=Path,
+                    help="s4_lots.parquet whose lots the --dem-from tiles must cover (default: this run's, else "
+                    "the newest under --data)")
     ap.add_argument("--transit-reuse", type=Path, help="an earlier distances.parquet to start from")
     ap.add_argument("--snapshot-date", help="assign's --snapshot-date (the ground date of the copy in use)")
     ap.add_argument("--processes", type=int, default=16, help="bridge processes (halved after a memory death)")
@@ -655,6 +723,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     notes: list[str] = []
     problems = code_problems(REPO_ROOT, args.sha)
     problems += snapshot_problems(chain.sources, chain.dem_from, notes=notes)
+    lots = args.measured_lots or measured_lots(chain)
+    if lots is None:
+        notes.append("no earlier lot table under --data to check the elevation against; the bridge's gate checks")
+    else:
+        problems += elevation_problems(lots, chain.dem_from)
     for note in notes:
         say(f"note: {note}")
     if args.transit_reuse and not args.transit_reuse.is_file():

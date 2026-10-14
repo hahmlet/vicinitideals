@@ -1586,52 +1586,6 @@ read when the weekly full re-screen lands.
    Clackamas's 181 unsorted). Re-measure with the first full run's
    `timings.parquet` after 47 lands. (g) GPU: Steph 2026-10-07 dropped
    it ("forget those two questions").
-47. [scan: YES] **Institutional land is RED and never scanned (Steph RULED
-   2026-10-06: "hospitals, schools, municipal, parks, water treatment/heavy
-   infrastructure should just be flagged red and flagged out of scans for
-   any reason").** Found when a 44-acre R-5 school campus (1N1190002300,
-   4200 NW 185th Ave, Westview HS) held 137's lock alone for 70+ min. No
-   owner name in the RLIS feed. Signals measured on the 10-01 s1 (656,383
-   records): Washington `LANDUSE = PUB` (4,387; 1,899 in the screened
-   universe; PROP_CODE 9xx); Multnomah has no PUB but `ASSESSVAL = 0` with
-   `TOTALVAL > 0` marks tax-exempt land (10,572: PCC Sylvania, Mt Hood CC,
-   David Douglas HS... -- also churches and nonprofits); Clackamas has
-   neither -- needs map layers (ORCA parks held; schools/hospitals/utility
-   sites to find). Scope ANSWERED 2026-10-06: churches and charities stay
-   CHECKED; ADDED airports, marinas, transit hubs, rail, public pools/
-   plazas, waste treatment, malls; a church's school is a SCHOOL (Steph,
-   asked 2026-10-06). SHIPPED ca06c2ff (deployed, smoke passed): OSM
-   extract `osm_land_use` + ORCA public parks/school land, >= 50% of the
-   lot; assign answers RED (INSTITUTIONAL_USE / institutional_share),
-   bridge `--institutional` skips. EVERY bridge scan (agents' test and
-   partial scans too) skips them since c1a96d81: the bridge reads the land
-   from `--sources`, else refuses; agents on 137 pass `--institutional
-   /root/institutional_sources/2026-10-06`. Measured vs run 63: 9,923 of 587,815
-   lots -> RED (381 green, 1,906 yellow, 3,926 unmeasured); every green
-   read. LEFT: the WEEKLY RUN (~10-08) must `acquire --keys osm_land_use`,
-   run runbook step 7b, and pass `--institutional` to the bridge -- then
-   check `institutional_were_scanned` is 0 in assign's summary. Remove
-   this item once that run is promoted.
-48. [scan: NO -- proved] **PRIORITY -- scans must survive a crash without losing time (Steph
-   2026-10-07: "we're moving quick and stacking a lot of changes between
-   runs. Don't want to lose time to avoidable problems").** (a)-(f)
-   SHIPPED 1762716a + 66545fb6 2026-10-08 (deployed, smoke passed, CI
-   green): the bridge command keeps an answer cache by default
-   (`bridge_cache` beside `--out`; `--no-cache` off), so a re-launch
-   resumes; the weekly re-screen is `scripts/flats_weekly_chain.py`
-   (runbook §4 + §4b) -- a done-marker per step, `--preflight-only`
-   refuses in seconds, a failed or stalled step re-runs up to 3 tries
-   (bridge processes halved after a memory kill), stall = the step's own
-   group under 60 CPU-s in 20 min (CPU, not new parts: one big lot runs
-   30+ min without one), status every 2 min to 114
-   `/root/weekly137/status.txt`. Proof 5 on 137 (2026-10-08, scope_A on
-   the 10-07 weekly inputs): uninterrupted chain 37.2 min; the sabotaged
-   one -- bridge parent SIGKILLed at 16 min (retry at 8 procs, 1,636 lots
-   from the cache), then its group SIGSTOPped (stall caught in 3 min, try
-   3 resumed 2,515 lots, done at 48.8 min) -- lots SAME, no process left
-   behind. CI then caught a minute lost per stall (a zombie counted as
-   alive), fixed 66545fb6. LEFT: the next weekly launches with the chain
-   (whoever runs it); remove this item once that run is promoted.
 49. [scan: YES for (b)-(f), (h), (i)] **The 2026-10-07 weekly (run 65 on snapshot 4, PROMOTED 2026-10-07
    ~14:45 UTC by Steph from the County copy page; prune-runs retired run 59,
    kept 61/63/65; VACUUM FULL of lot_results NOT run -- permission denied,
@@ -1832,20 +1786,18 @@ read when the weekly full re-screen lands.
    unless it copies `ovl_<carve>` into `ovl_<carve>_site` first (recipe
    `/root/tw/prep.py`). 49(f) slivers: left yellow (codes reach 25-100 ft
    past the drawn line).
-51. [scan: NO new code, check after the weekly run] **Tigard and Cornelius switched on (SHIPPED 2026-10-08; nothing shows until the next weekly).**
-   Both cities were encoded but never listed in `flats/config/pipeline.yaml`,
-   so every lot was JURISDICTION_OFF (run 65: 18,516 Tigard + 4,182
-   Cornelius yellows). Now on; quadfit rows ported from the corpus; Cornelius
-   R-10 tax lot 1N335CD01200 read by hand (`lot_zones`). Bound on 137
-   (/root/f51, can be deleted), measured lots: Cornelius 381 green / 3,406
-   red / 47 yellow; Tigard 840 green / 15,544 red / 777 yellow; unmeasured
-   Cornelius 334 red + 77 yellow, Tigard 824 red + 766 yellow. All 1,221
-   greens read: 1,034 ordinary houses, 187 commercial/apartment/public-coded
-   (the pipeline ignores existing buildings by design). 34 Cornelius greens
-   turn yellow as-if-signed on min density (as designed). AFTER THE NEXT
-   WEEKLY: check Tigard + Cornelius colour counts against the bound above;
-   R-10 lot 1N335CD01200 should now screen; 4 NO_ZONE + 3 sliver-labelled +
-   3 west-side Cornelius county-coded lots stay gated.
+51. [DONE 2026-10-14, run 73 LIVE] **Tigard and Cornelius switched on.** Run 73 (best
+   design per lot): Tigard 829 green / 785 yellow / 17,137 red of 18,751 (the bound said
+   840 / 777 / 15,544); Cornelius 0 green / 434 yellow / 3,811 red (the bound said 381
+   green: the DEM-less scan and the solar-shade flag keep R-7 / R-10 off green, see 75).
+   829 Tigard greens read 2026-10-14 (30-lot sample + the 39 non-house greens with over
+   $500k of buildings): the sample is ordinary RES-B houses; the odd ones are existing
+   apartment complexes (28 lots, prop code 701, $0.6M-$19.6M of buildings: RES-D 15, RES-E
+   7, TMU 5, RES-B 1), churches kept checked by ruling (911/913), one 981 charity at 11895
+   SW 91st Ave ($13.2M of buildings), and occupied TMU commercial. STILL OPEN: Cornelius
+   R-10 tax lot 1N335CD01200 screens yellow `zone_not_in_rules` (the bridge reads the map
+   code AF-5 and not the `lot_zones` R-10) -- one lot; the apartment-complex greens are a
+   Steph decision (does an occupied complex count as buyable?).
 52. [scan: lands at 49(i)'s splice or the next weekly; no re-screen, no promotion]
    **Lots dropped before a fit (run 65): 11,427 yellow NOT_MEASURED +
    2,203 yellow GEOM-UNREADABLE.** Bucketed 2026-10-07: 6,951 had no 20 ft
@@ -1921,7 +1873,18 @@ read when the weekly full re-screen lands.
    and RH-HR min height DEFERRED (0 lots, all red). "Happy Valley /
    Gladstone leftovers" had no list behind it: every refusal there
    loosens or does not reach a 4-unit lot.
-53. [scan: YES (Estacada layer is drafted and unscreened; it lands at the next weekly after the acquire of its zoning dataset)] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
+53. [scan: Estacada + Canby/Sandy DONE in run 73; (b)-(f) below still open] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
+   RUN 73 (2026-10-14, LIVE): Estacada 14 green / 7 yellow / 2,860 red of 2,881 (best
+   design). All 14 greens read by hand: the 5 NCR greens have their building 42-64 ft
+   (farthest corner 80-104 ft) from Eagle Creek Rd, inside the 200 ft band (distances
+   measured on the 10-12 s1 streets); the 6 CMU and 3 C-2 greens are not band-bound. Every
+   Estacada green is RULE_UNVERIFIED as-if-signed (draft). Doubts, none changed: 34E17
+   02000 (30941 SE River Mill Rd) is a split-zone lot, 47% NCR, and its band could not be
+   checked against the zone line; 34E20AB01200 (30905 SE Eagle Creek Rd) is an occupied
+   apartment complex ($3.9M of buildings) and 34E20AB00800 next to it is vacant multifamily
+   land; 34E20AC00200/00201 (1015 NW Wade St, beside the library) are two COM lots whose
+   owner the roll does not give; `inside_ugb` is false on all 14 (the UGB layer is not
+   read).
    2026-10-08); Estacada is encoded; Molalla is blocked on HUMAN_TODO 29
    (Steph's PDFs); Forest Grove stays blocked on HUMAN_TODO 28.** Canby's only
    path to the pod is a Type III site and design review, Sandy's is a Type II
@@ -2508,23 +2471,12 @@ read when the weekly full re-screen lands.
    1N2E21AD  -06200 (RM1, 50 x 200 ft). PROPOSAL: fetch the two maps from the City's open-data
    portal as polygons (or get them from Steph), then add a frontage check and the rear setback with
    a corner exemption. Until then, consider marking these 902 yellow.
-69. [scan: YES, at the next weekly (a zone-level refusal; no bound needed)] **Hillsboro zones that
-   need Development Review are RED BY RULING (found 2026-10-10 by item 64's sample, 2 of 3
-   Hillsboro greens wrong; branch flats/hillsboro-review-red).** CDC 12.80.040 B.1 requires a Type
-   II Development Review for new development in any zone except D.1's list, and D.1 exempts middle
-   housing only in MR-1, SCR-LD, SCR-MD and the R zones (cdc.12.80.applications.txt L318-L320,
-   L338-L343, E at L379-L380). Ruling applied: Steph 2026-10-08 by-right only (item 53; Sandy's Type
-   II Director's review is the precedent). State law does not lift it: OAR 660-046-0215 asks only
-   for the same process as a detached house, which in these zones needs the same review, and
-   clear and objective criteria, which the residential criteria H.1-H.6 already are (H.7, the
-   discretionary one, is non-residential only). 17 zones refused, standards kept: MR-2, MR-3,
-   SCR-HD, SCR-OTC, SCR-DNC, SCR-V, SCC-SC, SCC-MM, MU-N, MU-C, MU-VTC, UC-RM, UC-MU, UC-AC,
-   UC-NC, UC-OR, UC-RP. Run 70 reach (best design per lot): green -> red 152 (MR-2 84, SCR-HD 46,
-   SCR-V 11, MR-3 5, MU-N 3, SCC-MM 2, UC-RM 1); yellow -> red 212 (SCR-V 128, MR-2 18, MR-3 18,
-   SCR-DNC 16, SCC-MM 12, SCR-HD 8, UC-RM 7, MU-N 5); 275 SCR-MD greens stay. Lands at the next
-   weekly (~2026-10-14). Open for Steph only if a Type II review on clear and objective
-   criteria should count as by-right (then all 17 zones come back).
-   MERGED 84f215f8 2026-10-10 (code live, map moves at the weekly).
+69. [DONE 2026-10-14, run 73 LIVE] **Hillsboro zones that need Development Review are
+   RED BY RULING (17 zones, 84f215f8).** Landed at run 73: 152 green -> red and 212 yellow
+   -> red against run 70; 275 SCR-MD greens stay (run 73 Hillsboro: 275 green / 21 yellow /
+   30,453 red). Open for Steph only if a Type II review on clear and objective criteria
+   should count as by-right (then all 17 zones come back). Prune this line at the next
+   housekeeping.
 71. [scan: NO unless it finds a siting rule] **Building-code editions (Steph 2026-10-10: "ORSC 2026
    came into effect 10/1/2026 -- is our app built on that or the previous version?").** The screen
    reads NO building code for pass/fail: it is zoning + fire access (OFC 2022, _state.yaml) +
@@ -2601,9 +2553,26 @@ read when the weekly full re-screen lands.
    MEASURE-SITE-GRADE (469 lots), so FOLLOWUPS 51's 381 Cornelius greens show yellow; 54
    Hillsboro + 11 WashCo uninc lots carry it too; 2 WashCo R-9 lots (1N336BD01200,
    1N336BD00200) and 1N3240001300 went red -> yellow because steep ground they had is no
-   longer seen. Fix: rebuild the Washington DEM (`cp -al data/quadfit/raw
-   data/quadfit_demw/raw`, `QUADFIT_DATA_DIR=data/quadfit_demw s0_acquire.py --only dem`,
-   runbook §4e), re-run quadfit for the affected lots and splice; keep demw out of any cleanup.
+   longer seen. **FIXED 2026-10-14, bundle waits on 137 for the coordinator to load and
+   promote**: `data/quadfit_demw` rebuilt (34 tiles, 8 new x48/x49: Forest Grove, Cornelius,
+   west Hillsboro, Banks, Gaston). No quadfit re-run: FLATS reads slope only through the
+   bridge's own `--dem` (s5o's slope columns feed nothing, and a splice refuses changed s5o
+   columns). Scope = every lot touching a new tile, 4,180 (Cornelius 3,891, Hillsboro 276,
+   WashCo 13; holds all 534 flagged lots), bridged at 286eb696 against demw (152 s), spliced
+   onto run 73's bridge: `/root/bridge_spliced_2026-10-14_demw` (partial
+   `/root/bridge_demw_2026-10-14_partial`, `fu75_moves.csv` + `fu75_scope.txt` inside),
+   `/root/assign_2026-10-14_demw`, `/root/bundle_2026-10-14_demw` (same code/rules/screen
+   versions as run 73). Bound vs run 73: 321 moves, 0 outside scope, MEASURE-SITE-GRADE 534 ->
+   0. Cornelius yellow 431 -> green 308 / red +10 / yellow 113 (left: street rank, solar
+   shade, resource permit -- none elevation). Gains read one by one: 286 lost only the grade
+   flag (pad grade 0.1-4.9%), 22 also had net area measured and now carry the sev-2
+   DENSITY-MIN flag. 13 to red, each read: steep ground blocks placement (6, incl.
+   1N336BD01200 / 1N336BD00200) or the pod moves off steep ground and the hose route passes
+   150 ft (7, incl. 1N3240001300 at 262 ft). Hillsboro: flags cleared, no colour moved.
+   Guard 1fa8a611 on `flats/washco-elevation-restore`: the chain's preflight refuses tiles
+   that leave a measured lot on no model (checks the newest s4; the bridge's gate re-checks
+   the run's own; on the real run-73 s4 the July tree names 4,109 lots, demw 0, 2 s), and
+   `--dem-from` defaults to demw; runbook says never clean `data/quadfit_demw`.
    Run 73 map vs run 70: green 49,960 -> 50,648, yellow 147,262 -> 113,253, red 390,593 ->
    423,914. Moves: Tigard 829 green / 16,160 red (51's bound 840 / 15,544+824); Canby 5,901 and
    Sandy 4,443 all red (ruling); Estacada 14 green / 2,798 red; Hillsboro 152 green + 212
@@ -2613,3 +2582,9 @@ read when the weekly full re-screen lands.
    96 answers, all rules, 0 unexplained. Run 72 (same scan before 286eb696) is superseded:
    the use gate missed Sandy R-1 / Hillsboro SCR-OTC / MU-VTC (1,104 lots yellow, not red).
    Checklist 49(k): institutional_were_scanned 0 -> 47 can go; 48 goes on promotion.
+76. [scan: none to look; a fix may need a splice] **Tigard pod80x25 red at exactly -43 ft.**
+   weekly-closeout (2026-10-14) saw dozens of Tigard RES-B lots where the pod80x25 design
+   shows red at exactly -43 ft -- one shared value across different lots looks like a
+   sentinel or a fixed reference length, not a measurement. Red is the safe direction, but
+   a sentinel can hide a lot that fits (false RED) or mask a bug elsewhere. Find which check
+   emits it (run 73, `flats.lot_results` checks for Tigard pod80x25), say whether -43 is real.

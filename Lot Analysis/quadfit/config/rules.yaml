@@ -5064,6 +5064,7 @@ jurisdictions:
     zone_aliases:
       "A2": "A-2"
       "C2": "C-2"
+      "GI": "M-1"
       "M1": "M-1"
       "R7": "R-7"
     zones:

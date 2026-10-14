@@ -112,7 +112,12 @@ cd /root/code/vicinitideals && nohup flock -o /root/heavy.lock   .venv/bin/pytho
   uncommitted changes, a dataset `pipeline.yaml` names is not in the
   snapshot (it prints the acquire line that fetches them -- the 2026-10-01
   copy lacked 15), the curb or institutional-land datasets or the elevation
-  tiles are missing, or 137 has under 10 GB free or 114 under 5 GB (a weekly
+  tiles are missing, the elevation tiles leave a measured lot on no model
+  (checked against the newest `data/quadfit_*/s4_lots.parquet`, and again
+  against the run's own lots before the bridge -- FOLLOWUPS 75: the
+  2026-10-12 weekly ran on the July tiles, which stop east of Cornelius,
+  and finished clean with 469 Cornelius lots unable to read their slope),
+  or 137 has under 10 GB free or 114 under 5 GB (a weekly
   writes ~3.5 GB on 137). `--preflight-only` checks and prints every step's
   command. A dataset fetched under an older `pipeline.yaml` entry is only a
   note: a re-screen reads the ground the copy in use was measured from (the
@@ -281,8 +286,14 @@ it on. What is different:
 - **The DEM.** The 1 m tiles for the wider bbox go into a hard-linked copy of
   the July raw (`cp -al data/quadfit/raw data/quadfit_demw/raw`, then
   `QUADFIT_DATA_DIR=data/quadfit_demw s0_acquire.py --only dem`), and step 5
-  stages with `--dem-from data/quadfit_demw/raw`. The July tree is never
-  written: every older run's slope reads it.
+  stages with `--dem-from data/quadfit_demw/raw` (the chain's default since
+  FOLLOWUPS 75). The July tree is never written: every older run's slope
+  reads it. **Never clean `data/quadfit_demw`** (nor `data/quadfit`): it
+  looks like one more quadfit tree, but it is the only copy of the
+  Washington tiles. The 2026-10-10 cleanup deleted it, the next weekly
+  staged the July tiles, and every measured Cornelius lot lost its slope
+  (FOLLOWUPS 75; rebuilt 2026-10-14, 34 tiles). A cleanup of
+  `data/quadfit_<date>` trees keeps both.
 - **The delta** leaves the new county out (`first_covered` in its summary) --
   the old copy never held it, so every one of its lots would read "added".
   When the RLIS release is the one the copy before was taken from (the
