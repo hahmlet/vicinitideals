@@ -22,6 +22,7 @@ from shapely.geometry import LineString
 
 from flats.geom import dedication
 from flats.geom.corridor import Lines
+from flats.geom.edges import EdgeClass
 from flats.geom.street_class import CLASS_MAPS, ClassMap
 from flats.ingest.quadfit import dedicated, envelope_for, lot_from_row
 from flats.rules.loader import load_rules
@@ -84,7 +85,7 @@ def strip(rules, layer: str, zone: str, half: float | None, names=None, classes=
     """The strip the lot's front line gives up under ``layer``'s ``zone``."""
     lot = lot_from_row(row(half, None, public, names, classes or {}))
     out = dedicated(lot.edges, rules.resolve(layer, zone))
-    (front,) = [e for e in out.edges if e.cls.value == "F"] or [out.edges[0]]
+    (front,) = [e for e in out.edges if e.cls is EdgeClass.front]
     return front.dedication_ft
 
 
