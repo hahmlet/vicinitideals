@@ -1010,6 +1010,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     "parking_stall_depth_ft": 9,
     "parking_stall_width_ft": 9,
     "solar_shade_limit": 2,
+    #: Yards by lot-line bearing (Clackamas ZDO 1005.02(L), FOLLOWUPS 61):
+    #: quadfit's yards are front/side/rear; FLATS assigns them per compass edge.
+    "setback_north_ft": 9,
+    "setback_east_west_ft": 9,
+    "setback_north_street_credit_ft": 9,
 }
 
 
