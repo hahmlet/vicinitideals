@@ -2202,28 +2202,40 @@ read when the weekly full re-screen lands.
    OSM RELEASE NAME DONE 2026-10-10 (merged flats/osm-release-name): the
    manifest names the dated Geofabrik file a run read; the probe compares it
    as an `ok` finding (daily files are expected, no Metro banner).
-61. [scan: YES, after the weekly re-screen] **Which way does each lot line face
-   (Steph 2026-10-09: BUILD it).** Clackamas ZDO 1005.02(L) sets setbacks by
-   compass bearing (north/south/east/west), so SHD, RCHDR and VTH cannot be
-   encoded until each lot line carries a bearing. Measure the bearing per
-   lot line, add it as a per-line field, then encode those three districts.
-   Not part of branch flats/zone-gaps; start only after the weekly re-screen.
-   AGENT INSTRUCTIONS GIVEN 2026-10-14 ("lot-line-bearing", branch flats/lot-line-bearing).
-   HELD 2026-10-14 FOR A STEPH PICK -- the build moves no colour today:
-   ZDO 1102.01(A)(1)(c) (zdo.1102.txt#L13) puts SHD, RCHDR and VTH under the
-   same Type II design review that made HDR/MR-1/MR-2/PMD/VA RED BY RULING;
-   (A)(1)(a) does the same for "Commercial zoning districts" (RTL 59, CC 128,
-   C3 447, OC 82, RCC 103, RCO 37 -- grey only because they borrow HDR/RCHDR
-   standards). VTH is not a bearing case at all: 1005.02(L) names only HDR,
-   RCHDR, SHD (zdo.1005.txt#L143); VTH waits on HUMAN_TODO 15. 1005.02(L)
-   read: north = height x tan 60 (~45 ft for 26 ft; the angle is from the
-   vertical, as the code's own "b x .267 (tan 15)" shows), east/west =
-   0.267 x height (~7 ft, not along a road), south none; "on a north-south
-   axis" settles diagonals exactly (per-line yard = N x north-facing share
-   + EW x east/west-facing share), curves segment by segment. Options:
-   (A) SHD/RCHDR/VTH RED BY RULING, 144 lots grey -> red, assign-only;
-   (A+) plus the six commercial districts, 1,000 lots; (B) also build the
-   bearing field + (L) encoding for reversal-readiness (0 colours move).
+61. [scan: rides the weekly ~2026-10-19] **Lot-line bearing + Clackamas ZDO
+   1005.02(L) -- BUILT on flats/lot-line-bearing (ef27d90e), bound done
+   2026-10-14, waiting on merge (this branch first, then e0's round2-rulings
+   rebases onto it).** Built: three per-line bearing fields (OPTIONAL;
+   unmeasured = full distances), flats/geom/bearing.py cuts the exact
+   ground (north 26 x tan60 = 45.033 ft, east/west 26 x tan15 = 6.967 ft,
+   south none; diagonals and curves segment by segment; grid AND true north;
+   a public-road line owes N-15 and no east/west); zone blocks for SHD,
+   RCHDR and the six borrowers (RTL, CC, C3, OC from HDR; RCC, RCO from
+   RCHDR), each quadplex_allowed false citing 1102 like HDR, the use table's
+   own answer kept in notes for e0's flip. VTH stays unencodable (HUMAN_TODO
+   15, the dropped-cell column read).
+   BOUND on run 74 (all on 137): this branch alone moves 866 lots, all
+   Clackamas uninc, all ZONE-UNENCODABLE yellow -> red by the 1102 block
+   (C3 438, CC 128, RCC 101, OC 81, RTL 59, RCO 33, RCHDR 25, SHD 1; the
+   other 21 of the 887 were already roll/institutional red); 0 moves
+   anywhere else; a 1,974-lot control is identical on every column.
+   Bundle-ready: /root/bundle_2026-10-14_llb (assign /root/assign_2026-10-14_llb
+   over run 74's own bridge). It NEEDS a fresh normalize: the unencodable
+   gate is written there, so a bridge-only splice of this branch moves nothing.
+   AS IF PERMITTED (e0's flip, rehearsed): quadfit s3-s7 re-run on the
+   1,683 lots with the quadfit rows flipped, 1,061 bridged (26 institutional
+   left out), splice OK: 234 green / 145 yellow / rest red. Green by zone:
+   C3 104, CC 35, HDR 29, OC 19, RCC 16, RTL 15, RCHDR 12, RCO 4; median lot
+   30,000 sqft, 203 with > 20 ft of fit room. Every non-red drawing replayed
+   against (L) independently on the real taxlot ring: all clear. About half
+   the red lots fail a fit whose depth carries the bearing yard.
+   e0's flip needs the quadfit rules.yaml rows flipped too (quadfit s3
+   drops quadplex-false zones, so they are never measured), then a quadfit
+   s3-s5o pass; a SPLICED flip must drop the bridge's institutional lots
+   from the added set (a full weekly is fine).
+   Accepted limits: flat ground; street width counted as 0 (N-15 only);
+   ~3 ft court over-charge on south-facing rears; RCHDR floors always
+   charged; (L)(1)(b)/(c) not taken; unmeasured street kind = no relief.
 62. [scan: YES] **Roof shape: teach the screen gable vs flat (offered 2026-10-09
    after Steph asked what a gable costs in height; nothing signed).** The
    design holds ONE height (26 ft) compared straight to every cap, so it
