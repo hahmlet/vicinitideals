@@ -240,6 +240,34 @@ def test_a_width_the_lot_cannot_hold_reads_as_a_total_miss() -> None:
     assert fit.slack_ft == pytest.approx(-20.0)
 
 
+def test_a_total_miss_reports_the_width_it_fell_short_by() -> None:
+    # The depth of a window nobody can find is zero whatever the lot, so the
+    # miss is scored by width (FOLLOWUPS 76): the lot is 60 ft wide and the
+    # pod asks for 60.3 -- three tenths of a foot, not "20 ft of depth".
+    fit = fitter(LOT, res=0.1).fit(60.3, 20, allow_flip=False)
+
+    assert not fit.fits
+    assert fit.best_depth_ft == 0.0
+    assert fit.width_short_ft == pytest.approx(0.3, abs=0.11)
+    far = fitter(LOT).fit(80, 20, allow_flip=False)
+    assert far.width_short_ft == pytest.approx(20.0)
+
+
+def test_a_depth_that_was_found_leaves_no_width_to_report() -> None:
+    assert fitter(LOT).fit(56, 44).width_short_ft is None
+    assert fitter(LOT).fit(56, 36).width_short_ft is None
+
+
+def test_two_orientations_with_no_window_keep_the_nearer_miss() -> None:
+    # 70 x 30 on a 60 x 40 lot: end-on, 30 wide by 70 deep is no window either,
+    # but the lot is 10 ft narrow turned one way and 30 ft the other.
+    fit = fitter(LOT).fit(70, 30)
+
+    assert fit.best_depth_ft == 0.0
+    assert fit.width_short_ft == pytest.approx(10.0)
+    assert fit.orientation is Orientation.width_facing
+
+
 def test_turning_the_pod_sideways_can_save_the_lot() -> None:
     deep = shapely.box(0, 0, 40, 60)
 

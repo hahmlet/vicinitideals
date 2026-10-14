@@ -1,0 +1,136 @@
+# What each city's code says about a lot in more than one zoning district
+# (FOLLOWUPS 76(b); flats/geom/split_zone.py).
+#
+# Steph 2026-10-14: "first check if the city has a rule on this. If no, I
+# would say yellow." Every layer with split-zoned lots was searched
+# (2026-10-14) for a rule about a lot divided by a zone line, and what was
+# found is below, with the line it stands on. A layer in `rulings` has a rule
+# and the screen applies it; a layer in `silent` has none that was found, and
+# a lot whose building, lane or court stands on another district's ground is
+# YELLOW, ZONE-SPLIT, naming the district.
+#
+# rule:
+#   majority_within  the whole lot is placed in the district with the greater
+#                    area when the boundary need move no more than `ft` to
+#                    take the rest in (`inclusive`: "20 feet or less" against
+#                    "less than 20 feet"). Further than that the districts
+#                    apply as mapped -- a change of zone is needed to move
+#                    the line -- and the lot falls to the silent path below.
+#   majority         the whole lot is in the district with the greater area,
+#                    however far the boundary lies (no distance is stated).
+#   each_zone        each district's standards apply to its own part of the
+#                    lot; nothing here says which governs a building across
+#                    the line, so a plan that reaches the other district is
+#                    YELLOW, citing this.
+#
+# The text is under flats/provenance/docs (cite = path#Lstart-Lend); where it
+# is not stored, the cite is a URL. `quote` is checked against the cited lines
+# by flats/tests/test_split_zone.py.
+
+rulings:
+  or/washington/beaverton:
+    rule: majority_within
+    ft: 20
+    inclusive: true
+    cite: "or/washington/beaverton/bdc.10.general-provisions.txt#L274-L278"
+    section: "BDC 10.35.2.C"
+    quote: "the entire lot shall be placed in the district that accounts for the greater area of the lot by the adjustment of the district boundary, provided that the boundary adjustment is for a distance of 20 feet or less"
+  or/washington/cornelius:
+    rule: majority_within
+    ft: 20
+    inclusive: false
+    cite: "or/washington/cornelius/cmc.18.05.general.txt#L98-L98"
+    section: "CMC 18.05 (D)(3)"
+    quote: "the entire lot shall be placed in the district that accounts for the greater area of the lot by the adjustment of the district boundary; provided, that the boundary adjustment is for a distance of less than 20 feet"
+  or/washington/hillsboro:
+    rule: majority_within
+    ft: 20
+    inclusive: false
+    cite: "or/washington/hillsboro/cdc.12.01.general.txt#L184-L188"
+    section: "Hillsboro CDC 12.01 (C)(1)"
+    quote: "the entire lot shall be placed in the zone that accounts for the greater area of the lot by the adjustment of the boundaries, provided the boundary adjustment is a distance of less than 20 feet"
+  or/clackamas/canby:
+    rule: majority_within
+    ft: 20
+    inclusive: false
+    cite: "or/clackamas/canby/cmc.16.08.030.txt#L3-L3"
+    section: "CMC 16.08.030"
+    quote: "the entire lot shall be considered to be in the zone containing the greater lot area, provided the boundary adjustment is a distance of less than twenty feet"
+  or/clackamas/milwaukie:
+    rule: majority_within
+    ft: 20
+    inclusive: true
+    cite: "https://ecode360.com/43860128"
+    section: "MMC 19.107.5 Zoning of Lots with Multiple Zones"
+    quote: "the entire lot shall be deemed to be in the base zone in which the greater area of the lot lies"
+  or/clackamas/sandy:
+    rule: majority
+    cite: "or/clackamas/sandy/sdc.17.04.txt#L115-L115"
+    section: "SDC 17.04.80.B.6"
+    quote: "the applicable uses and development standards shall be those of the district that contains the majority of the land area of a lot of record"
+  or/multnomah/portland:
+    rule: each_zone
+    cite: "or/multnomah/portland/33.110.txt#L721-L722"
+    section: "PCC 33.110.220 (split zoning); 33.610.500"
+    quote: "No setbacks are required from an internal lot line that is also a zoning line on sites with split zoning"
+  or/multnomah/_unincorporated:
+    rule: each_zone
+    cite: "or/multnomah/_unincorporated/33.110.txt#L721-L722"
+    section: "MCC 33.110 (split zoning)"
+    quote: "No setbacks are required from an internal lot line that is also a zoning line on sites with split zoning"
+
+# No rule found for a lot in two base districts. `searched` is what was read;
+# `note` is what turned up that is NOT such a rule, so nobody searches for it
+# again.
+silent:
+  or/clackamas/_unincorporated:
+    searched: "all stored ZDO chapters; ZDO 103.02 on the county's site (https://www.clackamas.us/planning/zdo103)"
+    note: "103.02 says boundaries follow lot lines and the Planning Director interprets them; nothing on a lot divided by one"
+  or/clackamas/gladstone:
+    searched: "stored GMC 17.06 and zone chapters; the city's code site refused the fetch (403)"
+    note: "overlay-only: 17.27 and 17.29 move density to the part of the property outside a water-quality or flood overlay"
+  or/clackamas/oregon-city:
+    searched: "stored Title 17 (17.06.025 Boundaries of zoning districts)"
+    note: "17.06.025 covers streets, lot lines and that districts do not move with land divisions; not a lot in two zones"
+  or/clackamas/estacada:
+    searched: "stored EMC 16 zones (16.12.030)"
+    note: "16.12.030 says only that zone boundaries are lot lines, centrelines or such lines extended"
+  or/clackamas/west-linn:
+    searched: "stored CDC 05.040"
+    note: "boundaries follow streets, lot lines, city limits and watercourses"
+  or/clackamas/wilsonville:
+    searched: "stored Sec. 4.111"
+    note: "boundaries follow lot lines; the Planning Director decides disputes"
+  or/clackamas/tualatin:
+    searched: "stored chapters (no boundary chapter held)"
+    note: "only a Parking Zone A dual-zone rule"
+  or/clackamas/happy-valley:
+    searched: "stored chapters (no boundary chapter held)"
+    note: ""
+  or/multnomah/gresham:
+    searched: "all 17 stored files; Article 2 and Sections 4.0100, 4.0200 on the city's site"
+    note: "4.1117 (Downtown) and 4.1214 (Civic Neighborhood) let a site in two sub-districts be developed under either, inside those plan districts only; none for the base districts"
+  or/multnomah/troutdale:
+    searched: "stored 3.zoning-districts (boundary alignment only)"
+    note: ""
+  or/multnomah/fairview:
+    searched: "stored chapters (no boundary chapter held)"
+    note: ""
+  or/multnomah/wood-village:
+    searched: "stored chapters (no boundary chapter held)"
+    note: ""
+  or/washington/_unincorporated:
+    searched: "stored CDC chapters (no Article I boundary section held); web search"
+    note: "CDC 391-7 (Bonny Slope West) and 390-26 (North Bethany) have a 20 ft majority rule for their own subareas only; 300-2.3 forbids moving allowable density between land use designations"
+  or/washington/sherwood:
+    searched: "all 17 stored files (16.04.030)"
+    note: "16.40 pools density across zones for a PUD only"
+  or/washington/tigard:
+    searched: "stored chapters (no general chapter held)"
+    note: ""
+  or/washington/king-city:
+    searched: "stored KCC 16.80"
+    note: "boundary alignment only"
+  or/washington/durham:
+    searched: "stored DDC 2.2.1, 8.4.5"
+    note: "boundary alignment only; a lot-line adjustment may not create a parcel in two districts"

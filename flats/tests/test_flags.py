@@ -22,6 +22,7 @@ And Steph's four answers:
 from __future__ import annotations
 
 import json
+from dataclasses import replace
 
 import pytest
 
@@ -47,7 +48,9 @@ from flats.score.screen import (  # noqa: E402
 from flats.score.configure import configure  # noqa: E402
 from flats.score.relief import USE, ReliefPath, ReliefPolicy  # noqa: E402
 from flats.rules.conditions import Tier  # noqa: E402
+from flats.fit.rectangle import Fit  # noqa: E402
 from flats.tests.test_screen import (  # noqa: E402
+    ACROSS_FT,
     DESIGN,
     LOT,
     NO_RELIEF,
@@ -253,6 +256,48 @@ def test_the_screen_makes_a_near_miss_yellow() -> None:
     assert b.check == "fit_ft" and b.shortfall == pytest.approx(0.8)
     assert s.colour is Colour.yellow
     assert run(f=fit(over_ft=-1.5), relief=READ).colour is Colour.red
+
+
+def _no_window(width_short: float) -> Fit:
+    """A fit that found no window as wide as it asked at ANY depth (so the
+    depth observed is zero, the floor), missing by ``width_short`` feet of
+    width."""
+    return Fit(
+        fits=False,
+        width_ft=56.0,
+        depth_ft=36.0,
+        best_depth_ft=0.0,
+        slack_ft=-36.0,
+        across_ft=ACROSS_FT,
+        width_short_ft=width_short,
+    )
+
+
+def test_a_lot_with_no_window_at_all_is_scored_by_the_width_it_missed() -> None:
+    """FOLLOWUPS 76: a lot that holds no window as wide as the pod, at any
+    depth, read as the floor (-43 ft) however close it came, so the 1-ft line
+    never saw it. Steph 2026-10-14: apply the line to the real shortfall."""
+    for short in (0.6, 0.8, 0.99):
+        s = run(f=_no_window(short), relief=READ)
+        (b,) = s.binds
+        assert b.check == "fit_ft" and b.shortfall == pytest.approx(short), short
+        assert s.colour is Colour.yellow, short
+    # Inside the survey tolerance (half a foot) it is green and tight, like any fit.
+    tight = run(f=_no_window(0.3), relief=READ)
+    assert tight.colour is Colour.green and tight.tight_fit is True
+    # Exactly a foot, and more, are red -- 1.0 is red (Steph 2026-10-03).
+    for short in (1.0, 5.0):
+        s = run(f=_no_window(short), relief=READ)
+        (b,) = s.binds
+        assert b.shortfall == pytest.approx(short), short
+        assert s.colour is Colour.red, short
+    # Never worse than the old floor: a width miss bigger than everything the
+    # pod needs is that floor.
+    old = run(f=replace(_no_window(0.0), width_short_ft=None), relief=READ)
+    (floor,) = run(f=_no_window(500.0), relief=READ).binds
+    assert floor.shortfall == pytest.approx(old.binds[0].shortfall)
+    # A fit with a depth found keeps measuring the depth.
+    assert run(f=fit(over_ft=-0.8), relief=READ).binds[0].shortfall == pytest.approx(0.8)
 
 
 # --- the screen writes them -------------------------------------------------

@@ -460,6 +460,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_SLOPE]
+  ZONE-SPLIT:
+    description: "The lot lies in more than one zoning district and its building, lane or court stands on another district's ground; every standard was read from the one district the lot screens under, and the city's code has no rule that puts the whole lot in it (Steph 2026-10-14: \"first check if the city has a rule on this. If no, I would say yellow\")"
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot]
+    path: "Ask the planning counter which district's standards govern a building on both sides of the line, or have a survey say where the line runs"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_SPLIT_ZONE]
   SLOPE-STEEP-COARSE:
     description: "Ground steeper than 15% on the coarse 10 m elevation map alone would keep the building and its parking off the lot; the lot was screened as though it were not there (Steph 2026-10-07: \"yellow with flag. 7 severity\")"
     kind: categorical
