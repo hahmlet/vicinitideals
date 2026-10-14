@@ -1389,3 +1389,28 @@ zones:
       quote: "or/washington/tigard/tdc.18.140.parks.txt#L81,L84-L86"
     notes: >-
       DRAFT. Refuses: Residential Use prohibited.
+
+# THE MAP'S OTHER CODES. Metro's regional zoning layer (CITY 'Tigard') prints
+# the code's own names (RES-A to RES-E, COM, MUC, MUE, MUR, MU-CBD, TMU, IND,
+# PR), and on the 2026-10-12 weekly copy two polygons under tax lots
+# 2S105BC04000 and 2S105BD02200 (about 1.4 and 1.5 acres) print R-15.
+zone_rulings:
+  R-15:
+    outcome: unencodable
+    note: >-
+      Washington County's R-15 district (15 units per acre), two polygons
+      on Metro's zoning layer under CITY 'Tigard' on the 2026-10-12 weekly
+      copy, beside the county's own R-15 land. Not a Tigard district: the
+      Tigard map names RES-A to RES-E (Chapter 18.110). Annexed land takes a
+      city zone, not the county's: "The comprehensive plan designation and
+      the zoning designation placed on the property is the city's base zone
+      that most closely implements the city's or county's comprehensive plan
+      map designation" (18.720.030 (B)), and Table 18.720.1 converts the
+      county's R-15 to RES-E (tdc.18.720.annexations.txt L60). The table is
+      a guide to the zone an annexation application receives, not a
+      statement that this lot holds it, and the map prints the county code,
+      so the lot's Tigard zone is not printed and is not guessed here (RES-E
+      admits the pod; a guess could turn a county sliver green). Unencodable,
+      as Cornelius treats its county codes. Both lots are public land on the
+      Washington roll (code 990) and were already RED in run 73, so this
+      ruling moves no lot.

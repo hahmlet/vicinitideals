@@ -1631,6 +1631,20 @@ zone_rulings:
       "M1", 62 polygons on Metro's zoning layer (CITY 'Cornelius') on
       2026-09-30. The map's spelling of M-1, General Industrial, in the
       18.05.030 district list (cmc.18.05.general.txt L66). The block is M-1.
+  GI:
+    outcome: alias
+    of: M-1
+    note: >-
+      "GI", one polygon (tax lot 1N333CC14000, about 2.2 acres) on Metro's
+      zoning layer (CITY 'Cornelius') on the 2026-10-12 weekly copy. No
+      "GI" district exists in 18.05.030 (cmc.18.05.general.txt L47-L70); the
+      only district the code names General Industrial is M-1 (L66), and the
+      only other industrial district is Light Industrial, LI (L67), which the
+      map spells out in full. The polygon sits among M1 lots and manufactured
+      home park, not residential ones. Read as the map's spelling of M-1,
+      like M1; the block is M-1, which refuses (18.55.040 (B), no residential
+      use). The lot is public land on the Washington roll (code 960) and was
+      already RED in run 73, so this ruling moves no lot.
   FD-20:
     outcome: unencodable
     note: >-
