@@ -1,0 +1,15 @@
+1S2E17AD  -07700|or/multnomah/portland|RM2|portland_1S2E17AD---07700
+1S3E06CB  -06300|or/multnomah/portland|R7|portland_1S3E06CB---06300
+1S2E04CB  -03900|or/multnomah/portland|RM1|portland_1S2E04CB---03900
+1S1E07DC  -02900|or/multnomah/portland|R10|portland_1S1E07DC---02900
+1S2E16DB  -06700|or/multnomah/portland|CM3|portland_1S2E16DB---06700
+1S1E18BA  -00300|or/multnomah/portland|R10|portland_1S1E18BA---00300
+1N2E26AC  -01700|or/multnomah/portland|R7|portland_1N2E26AC---01700
+1S1E21DC  -13600|or/multnomah/portland|R5|portland_1S1E21DC---13600
+1S2E17AA  -00301|or/multnomah/portland|R2.5|portland_1S2E17AA---00301
+1S2E11DB  -03505|or/multnomah/portland|R5|portland_1S2E11DB---03505
+1N1E24BC  -08200|or/multnomah/portland|R5|portland_1N1E24BC---08200
+1N2E32DD  -11000|or/multnomah/portland|CM2|portland_1N2E32DD---11000
+1N2E24CD  -09200|or/multnomah/portland|RM1|portland_1N2E24CD---09200
+1N1E22DC  -04300|or/multnomah/portland|R2.5|portland_1N1E22DC---04300
+1S2E06AC  -13200|or/multnomah/portland|R5|portland_1S2E06AC---13200

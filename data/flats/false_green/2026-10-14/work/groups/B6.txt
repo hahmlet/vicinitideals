@@ -1,0 +1,14 @@
+34E20DA01800|or/clackamas/estacada|C-2|estacada_34E20DA01800
+34E20DD00201|or/clackamas/estacada|C-2|estacada_34E20DD00201
+34E17D 00700|or/clackamas/estacada|NCR|estacada_34E17D-00700
+34E17  02000|or/clackamas/estacada|NCR|estacada_34E17--02000
+22E17DB00316|or/clackamas/gladstone|R7.2|gladstone_22E17DB00316
+22E20CC05400|or/clackamas/gladstone|R5|gladstone_22E20CC05400
+23E06AB00600|or/clackamas/happy-valley|SFA|happy-valley_23E06AB00600
+23E06BB00502|or/clackamas/happy-valley|MURA|happy-valley_23E06BB00502
+21E12CB04900|or/clackamas/_unincorporated|R7|_unincorporated_21E12CB04900
+21E19BB09300|or/clackamas/_unincorporated|R10|_unincorporated_21E19BB09300
+22E07DD00255|or/clackamas/_unincorporated|R10|_unincorporated_22E07DD00255
+12E32BA01100|or/clackamas/_unincorporated|R10|_unincorporated_12E32BA01100
+12E32AC02700|or/clackamas/_unincorporated|R7|_unincorporated_12E32AC02700
+22E07CA07100|or/clackamas/_unincorporated|R10|_unincorporated_22E07CA07100

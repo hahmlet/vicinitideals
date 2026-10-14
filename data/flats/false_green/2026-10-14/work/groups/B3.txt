@@ -1,0 +1,15 @@
+1S118BC04000|or/washington/_unincorporated|R-5|_unincorporated_1S118BC04000
+1S103DA00200|or/washington/_unincorporated|TO:R18-24|_unincorporated_1S103DA00200
+1S124DD04600|or/washington/_unincorporated|R-5|_unincorporated_1S124DD04600
+1S201CA07300|or/washington/_unincorporated|R-5|_unincorporated_1S201CA07300
+1S211BA06900|or/washington/_unincorporated|R-6|_unincorporated_1S211BA06900
+2S108BD05100|or/washington/_unincorporated|R-6|_unincorporated_2S108BD05100
+1S125CD03300|or/washington/_unincorporated|R-5|_unincorporated_1S125CD03300
+1N223DA11500|or/washington/_unincorporated|R-5|_unincorporated_1N223DA11500
+1S123DA07500|or/washington/_unincorporated|R-5|_unincorporated_1S123DA07500
+1S112CB04300|or/washington/_unincorporated|R-5|_unincorporated_1S112CB04300
+1N129CA03500|or/washington/_unincorporated|R-5|_unincorporated_1N129CA03500
+1S201CA07600|or/washington/_unincorporated|R-5|_unincorporated_1S201CA07600
+1S118AD01624|or/washington/_unincorporated|R-5|_unincorporated_1S118AD01624
+1S112DD02600|or/washington/_unincorporated|R-5|_unincorporated_1S112DD02600
+1N120AD07000|or/washington/_unincorporated|R-6|_unincorporated_1N120AD07000

@@ -1,0 +1,12 @@
+1N334DD06300|or/washington/cornelius|R-7|cornelius_1N334DD06300
+1S304AA04600|or/washington/cornelius|R-7|cornelius_1S304AA04600
+1N334DD06100|or/washington/cornelius|R-7|cornelius_1N334DD06100
+1S304AC00321|or/washington/cornelius|R-7|cornelius_1S304AC00321
+1N333CC01700|or/washington/cornelius|A-2|cornelius_1N333CC01700
+1N334CC02400|or/washington/cornelius|CR|cornelius_1N334CC02400
+1N231DA08200|or/washington/hillsboro|SCR-MD|hillsboro_1N231DA08200
+1S206AC01402|or/washington/hillsboro|SCR-MD|hillsboro_1S206AC01402
+1N336DA01700|or/washington/hillsboro|SCR-MD|hillsboro_1N336DA01700
+1N231DD00505|or/washington/hillsboro|SCR-MD|hillsboro_1N231DD00505
+1N231DD00200|or/washington/hillsboro|SCR-MD|hillsboro_1N231DD00200
+1S206AB06600|or/washington/hillsboro|SCR-MD|hillsboro_1S206AB06600

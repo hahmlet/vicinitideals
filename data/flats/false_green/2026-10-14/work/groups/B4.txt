@@ -1,0 +1,13 @@
+2S113CD02000|or/washington/durham|SDR|durham_2S113CD02000
+2S113CD02200|or/washington/durham|SDR|durham_2S113CD02200
+2S116AA14200|or/washington/king-city|R-9|king-city_2S116AA14200
+2S132CD12600|or/washington/sherwood|LDR|sherwood_2S132CD12600
+2S132AC01500|or/washington/sherwood|LDR|sherwood_2S132AC01500
+2S112BB03800|or/washington/tigard|RES-C|tigard_2S112BB03800
+2S111BB01503|or/washington/tigard|RES-D|tigard_2S111BB01503
+2S103AD00104|or/washington/tigard|RES-B|tigard_2S103AD00104
+2S103CA02100|or/washington/tigard|RES-B|tigard_2S103CA02100
+1S134DD00400|or/washington/tigard|RES-B|tigard_1S134DD00400
+2S101DB00800|or/washington/tigard|RES-E|tigard_2S101DB00800
+1S134CD02600|or/washington/tigard|RES-B|tigard_1S134CD02600
+2S103CB02200|or/washington/tigard|RES-B|tigard_2S103CB02200

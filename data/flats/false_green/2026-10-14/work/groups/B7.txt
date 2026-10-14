@@ -1,0 +1,13 @@
+22E31DC02000|or/clackamas/oregon-city|R-6|oregon-city_22E31DC02000
+31E01DA00229|or/clackamas/oregon-city|R-10|oregon-city_31E01DA00229
+31E01CA05600|or/clackamas/oregon-city|R-10|oregon-city_31E01CA05600
+2S126CB10300|or/clackamas/tualatin|RL|tualatin_2S126CB10300
+2S135BD04700|or/clackamas/tualatin|RL|tualatin_2S135BD04700
+22E30BC03300|or/clackamas/west-linn|R-10|west-linn_22E30BC03300
+21E23BB03900|or/clackamas/west-linn|R-15|west-linn_21E23BB03900
+31W15DC05351|or/clackamas/wilsonville|PDR2|wilsonville_31W15DC05351
+31W22DC01400|or/clackamas/wilsonville|PDR4|wilsonville_31W22DC01400
+1N131BD01100|or/washington/beaverton|RMB|beaverton_1N131BD01100
+1S128BC02300|or/washington/beaverton|RMC|beaverton_1S128BC02300
+1N131DB04200|or/washington/beaverton|RMC|beaverton_1N131DB04200
+1S116DC04100|or/washington/beaverton|RMB|beaverton_1S116DC04100

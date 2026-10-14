@@ -1,0 +1,11 @@
+12E30DB06500|or/clackamas/milwaukie|R-MD|milwaukie_12E30DB06500
+12E31BD08100|or/clackamas/milwaukie|R-MD|milwaukie_12E31BD08100
+1S3E15AA  -04600|or/multnomah/gresham|LDR-5|gresham_1S3E15AA---04600
+1S3E03CB  -00702|or/multnomah/gresham|LDR-5|gresham_1S3E03CB---00702
+1N3E31DB  -06200|or/multnomah/gresham|TLDR|gresham_1N3E31DB---06200
+1N3E35CA  -04100|or/multnomah/troutdale|LDR-1|troutdale_1N3E35CA---04100
+1N3E35CA  -10200|or/multnomah/troutdale|LDR-1|troutdale_1N3E35CA---10200
+1S2E20DC  -13100|or/multnomah/_unincorporated|R7|_unincorporated_1S2E20DC---13100
+1S3E18B   -00200|or/multnomah/_unincorporated|R5|_unincorporated_1S3E18B----00200
+1N3E34B   -00807|or/multnomah/wood-village|TC|wood-village_1N3E34B----00807
+1N3E34AD  -02500|or/multnomah/wood-village|LR 12|wood-village_1N3E34AD---02500

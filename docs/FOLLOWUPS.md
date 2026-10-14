@@ -2358,6 +2358,23 @@ read when the weekly full re-screen lands.
    (item 68). Not read: the 59 PUB greens (maybe item 59's public-code rule). Stopping signal not
    met (new kinds found). Round 2: after items 67 and the Hillsboro fix ship, redraw with a new
    seed and weight the same way (scripts: work/consolidate.py).
+   ROUND 2 DONE 2026-10-14 (branch flats/false-green-sample-r2, data/flats/false_green/2026-10-14/:
+   SUMMARY.md, false_green_round2.csv, seed fgs-2026-10-14-seed2, work/draw.sql). 108 greens from
+   run 74 (50,956), 22 places, Tigard/Cornelius/Estacada/Hillsboro/WashCo oversampled and weighted
+   back: 97 RIGHT, 7 WRONG, 4 CAN'T TELL. Weighted 5.5% (about 2,800 lots), 95% range 1.7%-14.6%
+   (exact binomial on the effective sample size, ~67; round 1 recomputed the same way: 3.4%,
+   0.3%-9.6%); 8.0% if every can't-tell is wrong. BOTH ROUNDS POOLED (207 lots, 9 wrong): 3.9%,
+   1.5%-8.9% -- the number to quote; no change between rounds. New cities Tigard/Cornelius/Estacada
+   (18 read): 0 wrong. Wrongs: road land to the centre line x5 (KNOWN-67: WashCo 1 same place;
+   Sherwood 2, King City 1, Oregon City 1 new places -> item 77); WashCo transit-district Type II-
+   only path x1 (KNOWN-53 new place -> item 79); Portland Main Street overlay minimum FAR x1 (NEW
+   -> item 78). Can't tell: Portland Map 120-3 (item 68), Wilsonville x2 and Wood Village TC x1
+   (item 80 rulings). POLICY class: 13 of 108 carry an existing building (one, a protected 1910
+   house in a Portland conservation district, needs Steph -> item 78). PER-FIX LOG run 70 -> 74:
+   hunting fixes moved 156 greens = 0.31% (Hillsboro DR 152, unranked street 3, West Linn resource
+   1, all known kinds); gains 1,152 from new territory (Tigard 829, Cornelius 308, Estacada 14,
+   Portland 1). STOPPING SIGNAL NOT MET: moves < 0.5% but one new kind and two known kinds in five
+   new places; item 67 alone will move ~3% of greens. Round 3 after 67 ships and 77-79 are decided.
 65. [scan: YES (a proof run: every answer must come out identical to 137's)] **The Windows PC
    as an idle-time scan helper (Steph 2026-10-09 asked; offered, not started).** Scans are
    CPU-bound (item 46: >14 processes buy nothing on 137; memory only sets how many run at
@@ -2647,3 +2664,60 @@ read when the weekly full re-screen lands.
    the city community room 915 NW Wade, not these lots. Human lookup needed (Clackamas
    assessor, tax lot 34E20AC00201): if the owner is the city or a district, it is a miss
    the roll cannot see.
+77. [scan: YES, after the weekly re-screen (greens only turn yellow or red)] **Road land to the
+   centre line in the cities, not just unincorporated Washington County (found 2026-10-14 by
+   item 64 round 2: 4 of the 7 wrong lots).** Item 67 (built, not merged) takes the county's
+   strip off the fit for WashCo unincorporated only. Same kind, not encoded: Sherwood 16.106.020 A
+   + 16.106.040 D (added setback to 26/32/37/61 ft from the centre line by class; wrong lots
+   2S132CD12600, 2S132AC01500 -- 2 of 2 Sherwood greens read); King City 16.80.060 A (and the
+   county 304-2.14 C in its county-zoned pocket; 2S116AA14200); Oregon City 16.12.011.B + Table
+   16.12.016 (middle housing dedicates to the TSP width; 31E01DA00229 on South End Rd loses ~20 ft
+   and drops under 10,000 sf). Seen unencoded, no lot moved: Tigard 18.210.030.A.1 (setbacks from
+   the future street edge), Milwaukie Table 19.501.2.A (street yards from the centre line),
+   Beaverton (dedication at the decision-maker's call, no width stated). Sample weight about 1.7%
+   of all greens outside WashCo. PROPOSAL (nothing built): reuse 67's centre-line distance per
+   street line, add each city's class -> distance table and its own form (dedication vs added
+   setback); class comes from each city's TSP map (Sherwood Figure 17 not stored; Oregon City has a
+   TSP layer). Unranked class = worst case, as in 67. Bound per city, read every loss.
+78. [scan: YES once the maps are held] **Portland overlay zones and plan districts are not held
+   (found 2026-10-14 by item 64 round 2, NEW kind).** 1S1E22BA  -02300 (CM2, 6805 S Macadam) sits
+   in the Centers Main Street "m" overlay: 33.415.310.A sets a minimum FAR of 0.5 in the Inner
+   Pattern Area (0.25 elsewhere); the fixed pod gives 4,032 sf / 8,907 sf = 0.45 -> RED. Upper
+   bound: 3,690 Portland commercial-zone greens are over 8,064 sf (1,531 over 16,128 sf); how many
+   are in the overlay is unknown. Also unheld, no lot moved in the sample: Glendoveer 33.530.040
+   (30/10/15 ft setbacks), Macadam 33.550.220 (wall-plane setbacks), d overlay, conservation /
+   historic districts, and 33.430 environmental overlays (round 1). PROPOSAL: fetch the City's
+   overlay, plan-district and pattern-area polygons (portlandmaps Public/Zoning, BPS
+   Zoning_Code_Layers) and chapters 33.415/33.420/33.445/33.5xx into the store; add min FAR as a
+   check. DECISION FOR STEPH: 1N1E22CB  -01200 carries a 1910 house that is a CONTRIBUTING
+   resource in the Mississippi Conservation District -- removing it needs demolition review and
+   closes the by-right design-standards path. Treat a protected building like any existing
+   building (green), or red?
+79. [scan: YES, if Steph rules Type II red] **Washington County lots whose only middle-housing
+   path is a Type II review show GREEN (found 2026-10-14 by item 64 round 2).** The county's
+   Type I path ends at a lot size in every zone: R-5 16,500 sf buildable and R-6 13,100 sf, then
+   only if four homes meet the zone's minimum density; R-9/R-15/R-24/R-25+ and the transit
+   districts 10,000 sf (same density escape), AND only on a lot created by a standard subdivision
+   or partition plat (302-2.14 .. 307-2.13, 375-7 30.c). Our file allows Type II on purpose and
+   records it as a doubt (_unincorporated.yaml ~566-571, ~1538-1544). Wrong lot 1S103DA00200
+   (TO:R18-24, 21,377 sf). Reach by lot size alone: 405 of 7,708 WashCo greens (R-24 158, R-15 86,
+   R-9 45, R-5 39, R-6 34, R-25+ 21, transit 22); lots not from a standard plat add more (no plat
+   fact held, so "unmeasured = worst case" would redden every R-9+ lot -- needs a plat source
+   first). DECISION FOR STEPH, the same question item 69 left open: does a Type II review on clear
+   and objective criteria count as by-right? If no, encode the gates (buildable area = lot less
+   unbuildable land) and bound.
+80. [scan: NO until ruled] **Readings for Steph from item 64 round 2 (no lot changed colour yet).**
+   (a) "Parking may cover at most half of a street frontage" caps (Wilsonville 4.113(.14)D.3,
+   Hillsboro 12.50.715 C.1, Clackamas ZDO 845.02(D), Beaverton): the screen applies them only to
+   parking beside the building. Does a rear court behind the building, or one facing a second
+   street, count? Decides 31W15DC05351 and 31W22DC01400 (Wilsonville, red if it counts).
+   (b) Hillsboro SCR-MD/SCR-HD 5 ft MAXIMUM side setback (12.22 tables): "one wall within 5 ft"
+   (12.50.130.C.3.a; every lot passes) or "both side walls" (nearly every SCR-MD/HD green red)?
+   (c) Wood Village TC: building goes through a "Town Center Development Plan" (the old Master
+   Plan); its approval type is in 235.400/235.490, not stored, and the site answers 403 to every
+   fetch. A human copy of those sections decides 10 TC greens (1N3E34B   -00807 can't tell).
+   (d) Estacada is charged 4 stalls (state middle-housing cap) but is under 25,000 people and
+   outside Metro, so its own 1.5 per home = 6 stalls applies (emc.16.76.txt:77-78). Every Estacada
+   green still seats 6+ except 34E17D 00700 (5, room for more): a fix with no colour change.
+   (e) Noticed: flats.flag_instances was last refreshed at run 70 (no row seen after it), so it
+   still shows JURISDICTION-OFF on Tigard lots; run 74's own results carry the right flags.
