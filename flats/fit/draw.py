@@ -81,6 +81,12 @@ class Drawing:
     #: the drive could run, and more. Empty where not asked. Read by the
     #: outdoor-area shape test (FOLLOWUPS 7(b)), never by the page.
     paved: tuple[BaseGeometry, ...] = ()
+    #: The stalls and aisle alone, one shape per :attr:`paved` shape: the
+    #: same row without the lane that reaches it, and on a side-fed court the
+    #: court's depth band across the room only (where the drive meets it is
+    #: not known, and the drive is not parking). Read by the parking share of
+    #: each street frontage (:mod:`flats.fit.frontage`), never by the page.
+    rows: tuple[BaseGeometry, ...] = ()
     #: The room is short of the plan by no more than the fit's tolerance
     #: (``short_ft``): a fit the screen passed tight, drawn where it stands.
     tight: bool = False
@@ -454,6 +460,7 @@ def draw(
         return None if g is None else affinity.rotate(g, grid.angle_deg, origin=grid.origin)
 
     paved: list[BaseGeometry] = []
+    rows: list[BaseGeometry] = []
     if side_drive and court_depth_ft > 0:
         # The drive meets the court somewhere along a side lot line the
         # drawing does not know: pave the court's depth band clean across,
@@ -462,6 +469,7 @@ def draw(
         paved.append(
             world(band(deep_b + gap_ft, deep_b + court_depth_ft, x0 - reach, x0 + across + reach))
         )
+        rows.append(world(band(deep_b + gap_ft, deep_b + court_depth_ft, x0, x0 + across)))
     elif paved_across_ft is not None and court_depth_ft > 0:
         pw = min(paved_across_ft, across)
         if lane_ft > 0:
@@ -473,6 +481,7 @@ def draw(
         for left in dict.fromkeys(sides):
             left = min(max(left, x0), x0 + across - pw)
             shape = band(deep_b + gap_ft, deep_b + court_depth_ft, left, left + pw)
+            rows.append(world(shape))
             if way_in is not None:
                 shape = shape.union(way_in)
             paved.append(world(shape))
@@ -484,5 +493,6 @@ def draw(
         court=world(court),
         fits=fits,
         paved=tuple(paved),
+        rows=tuple(rows),
         tight=tight,
     )

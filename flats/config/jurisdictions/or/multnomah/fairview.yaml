@@ -2513,7 +2513,7 @@ zones:
       value: 5
       quote: "or/multnomah/fairview/19.135.txt#L52,L54-L56,L82-L84,L102-L104"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): the only way to four attached homes here is a conditional use,
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.440, are not stored, and the stored text shows the review may add conditions (19.163, "the city may require additional landscaping through the conditional use permit process"); held red until 19.440 is read. The 2026-10-08 ruling read: the only way to four attached homes here is a conditional use,
       approved at a hearing; a review is not by-right, so this zone is refused. The
       `conditional_use` variant was removed with the ruling and can go back if the ruling
       is reversed.
@@ -2706,7 +2706,7 @@ zones:
       retrieved: '2026-08-26'
       quote: "or/multnomah/fairview/19.145.txt#L63,L65"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): the only way to four attached homes here is a conditional use,
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.440, are not stored, and the stored text shows the review may add conditions (19.163, "the city may require additional landscaping through the conditional use permit process"); held red until 19.440 is read. The 2026-10-08 ruling read: the only way to four attached homes here is a conditional use,
       approved at a hearing; a review is not by-right, so this zone is refused. The
       `conditional_use` variant was removed with the ruling and can go back if the ruling
       is reversed.

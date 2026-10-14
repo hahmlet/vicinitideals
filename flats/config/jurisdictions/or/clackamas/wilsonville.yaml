@@ -1209,6 +1209,14 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1951
     retrieved: '2026-08-27'
     quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
+  parking_area_frontage_any_street:
+    # The cap above is read on EVERY street the lot has: Steph 2026-10-14 (FOLLOWUPS 80(a)): "I read this as 'any' street frontage. So front, back, side streets if they exist."
+    # A court behind the building on a lot with no street behind it is not reached.
+    value: true
+    cite: "Wilsonville Development Code 4.113(.14)D.3, combined width of garages and outdoor parking and maneuvering areas as a share of any street frontage (any street frontage: front, side and rear streets)"
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
   # Exempt rather than true: D.3 caps front-yard parking at half the frontage
   # and does not ban it. The ban is E.5.c, on the townhouse path, and reached
   # only by a project that fails the four standards at E.5.b.

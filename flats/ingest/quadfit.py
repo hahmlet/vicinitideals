@@ -73,6 +73,7 @@ from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
+from flats.fit.frontage import parking_share_pct, street_chains
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
 from flats.fit.slope import ONE_M, TEN_M, load_rules as slope_rules
@@ -2150,11 +2151,16 @@ def _screen_on(
     policy: SlackPolicy,
     relief: ReliefPolicy,
     plan: Any = None,
+    streets: LotEdges | None = None,
 ) -> tuple[Screened, Fitter]:
     """One design screened on one envelope and one named front, for
     :func:`screen_lot` to rank against the others it tries. ``plan`` names
     the reading of a through lot's ends (FOLLOWUPS 6(i)); the search itself
-    is shared by the ground it stands on (:func:`_search_key`)."""
+    is shared by the ground it stands on (:func:`_search_key`). ``streets``
+    is the lot's edges as the streets lie, before ``plan`` renamed any
+    (:func:`parking_frontage`); ``here.edges`` where not given."""
+    if streets is None:
+        streets = here.edges
     key = _search_key(env)
     if key not in fitters:
         fitters[key] = Fitter(env.geom, angles, ground=env.ground)
@@ -2205,6 +2211,15 @@ def _screen_on(
             square = outdoor_square(here, design, got, fit, fitters[key], env)
             if square is not None:
                 facts = dataclasses.replace(facts, outdoor_square_ft=square)
+                result = screen(
+                    got, facts, design, fit, policy=policy, relief=relief, config=config
+                )
+        if "parking_frontage_share" in result.unchecked:
+            # The zone caps the parking on every street frontage: measure
+            # this plan's share on the drawn plan and screen again on it.
+            share = parking_frontage(here, streets, design, got, fit, fitters[key], env)
+            if share is not None:
+                facts = dataclasses.replace(facts, parking_frontage_share_pct=share)
                 result = screen(
                     got, facts, design, fit, policy=policy, relief=relief, config=config
                 )
@@ -2910,7 +2925,7 @@ def _screen_lot_once(
                     (
                         _screen_on(
                             here, design, config, variant, env, front, angles, fitters, step_deg,
-                            policy=policy, relief=relief, plan=plan_key,
+                            policy=policy, relief=relief, plan=plan_key, streets=lot.edges,
                         )
                         for env in envs
                     ),
@@ -3585,6 +3600,41 @@ def outdoor_square(
         return _largest_left(here, got, side, street, front_ft, fit, [(drawn.building, drawn.court)])
     if side_drive and fit.column:
         return None
+    drawn = _court_drawn(here, design, got, fit, fitter, env, street)
+    if drawn is None:
+        return None
+    # A plan the fit passed only on the tolerance draws a room a cell or so
+    # short (``drawn.fits`` False): its shapes still stand where the plan
+    # does, and whatever they overhang is taken off the ground all the same.
+    # The column's side of the room is not drawn: the whole court band goes.
+    plans = [(drawn.building, p) for p in drawn.paved] or [
+        (drawn.building, drawn.lane, drawn.court)
+    ]
+    return _largest_left(here, got, side, street, front_ft, fit, plans)
+
+
+def _court_drawn(
+    here: QuadfitLot,
+    design: Design,
+    got: ZoneResolution,
+    fit: Fit,
+    fitter: Fitter,
+    env: Envelope,
+    street: tuple[tuple[float, float, float, float], ...],
+) -> Any:
+    """The plan drawn with its pavement (:attr:`flats.fit.draw.Drawing.paved`
+    and ``rows``): building at the street end, lane beside it, the court's
+    stalls and aisle behind the standoff, for :func:`outdoor_square` and
+    :func:`parking_frontage`. A court reached across a side yard (a side
+    street or a side alley, no lane) is a side drive. None where the
+    drawing finds no room."""
+    facts = here.facts
+    alley, corner = facts.alley, facts.corner
+    fix = _fix(fit)
+    across = court_across(design, got, alley, corner=corner, fix=fix)
+    side_drive = bool(
+        design.parking.parks and across.stalls and not across.lane_ft and not facts.alley_at_rear
+    )
     if fit.column:
         column = side_column(design, got, alley)
         court = column[0] if column is not None else 0.0
@@ -3593,7 +3643,7 @@ def outdoor_square(
     gap = design.parking.building_gap_ft
     if (stated := got.get("parking_building_buffer_ft")) is not None:
         gap = max(gap, float(stated))
-    drawn = draw(
+    return draw(
         fitter,
         fit,
         width_ft=design.footprint.width_ft,
@@ -3614,16 +3664,43 @@ def outdoor_square(
         gap_ft=gap,
         side_drive=side_drive,
     )
-    if drawn is None:
+
+
+def parking_frontage(
+    here: QuadfitLot,
+    streets: LotEdges | None,
+    design: Design,
+    got: ZoneResolution,
+    fit: Fit,
+    fitter: Fitter,
+    env: Envelope,
+) -> float | None:
+    """The parking's share of the worst street frontage this plan has, in
+    percent (FOLLOWUPS 80(a); :func:`flats.fit.frontage.parking_share_pct`),
+    or None where it cannot be measured.
+
+    ``streets`` is the lot's edges as the streets lie, before a reading of
+    a through lot renamed its far end the rear: the far street is still a
+    street. The plan is drawn as :func:`outdoor_square` draws it. A lot
+    with one street has its court behind the building, which the cap does
+    not reach (Steph 2026-10-14), so it is 0 without a drawing. A court
+    beside the building is held to the cap on the way in
+    (:func:`flats.score.paper.side_court`); a column along a side alley is
+    not measured. None where there is no lot polygon or no drawing.
+    """
+    if here.lot_geom is None or streets is None or fit.beside or fit.column:
         return None
-    # A plan the fit passed only on the tolerance draws a room a cell or so
-    # short (``drawn.fits`` False): its shapes still stand where the plan
-    # does, and whatever they overhang is taken off the ground all the same.
-    # The column's side of the room is not drawn: the whole court band goes.
-    plans = [(drawn.building, p) for p in drawn.paved] or [
-        (drawn.building, drawn.lane, drawn.court)
-    ]
-    return _largest_left(here, got, side, street, front_ft, fit, plans)
+    if len(street_chains(streets)) < 2:
+        return 0.0
+    street: tuple[tuple[float, float, float, float], ...] = ()
+    if here.edges is not None:
+        street = tuple((e.x1, e.y1, e.x2, e.y2) for e in here.edges.of_class(EdgeClass.front))
+    if not street:
+        return None
+    drawn = _court_drawn(here, design, got, fit, fitter, env, street)
+    if drawn is None or not drawn.rows:
+        return None
+    return parking_share_pct(here.lot_geom, streets, drawn.rows, drawn.building)
 
 
 def _largest_left(

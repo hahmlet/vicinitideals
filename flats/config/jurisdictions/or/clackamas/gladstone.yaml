@@ -1399,7 +1399,7 @@ zones:
       value: false
       quote: "or/clackamas/gladstone/17.20.c-3.txt#L69-L75,L93,L99"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): a dwelling here is a conditional use
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, Chapter 17.70, are not stored, and the only conditional-use criteria this code stores, 17.22.040 for the Office Park zone, are all judgement -- "minimal adverse impact", "compatible with the character and scale" (or/clackamas/gladstone/17.22.op.txt#L163-L171); held red until 17.70 is read. The 2026-10-08 ruling read: a dwelling here is a conditional use
       (17.20.040(3), a Chapter 17.70 hearing), and a conditional use is not
       by-right, so this zone is refused. The standards below are kept so the
       ruling can be reversed: they are MR's table, which 17.20.040(3) sends
@@ -1439,7 +1439,7 @@ zones:
       value: 20
       quote: "or/clackamas/gladstone/17.24.li.txt#L145"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): a dwelling here is a conditional use
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, Chapter 17.70, are not stored, and the only conditional-use criteria this code stores, 17.22.040 for the Office Park zone, are all judgement -- "minimal adverse impact", "compatible with the character and scale" (or/clackamas/gladstone/17.22.op.txt#L163-L171); held red until 17.70 is read. The 2026-10-08 ruling read: a dwelling here is a conditional use
       (17.24.040(2), a Chapter 17.70 hearing), and a conditional use is not
       by-right, so this zone is refused. The standards below are kept so the
       ruling can be reversed: MR's table, which 17.24.040(2) sends dwellings
@@ -1471,7 +1471,7 @@ zones:
       value: 15
       quote: "or/clackamas/gladstone/17.16.c-1.txt#L113"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): a dwelling here is a conditional use
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, Chapter 17.70, are not stored, and the only conditional-use criteria this code stores, 17.22.040 for the Office Park zone, are all judgement -- "minimal adverse impact", "compatible with the character and scale" (or/clackamas/gladstone/17.22.op.txt#L163-L171); held red until 17.70 is read. The 2026-10-08 ruling read: a dwelling here is a conditional use
       (17.16.040(6), a Chapter 17.70 hearing), and a conditional use is not
       by-right, so this zone is refused. The standards below are kept so the
       ruling can be reversed: R-7.2's table, which 17.16.040(6) sends dwellings

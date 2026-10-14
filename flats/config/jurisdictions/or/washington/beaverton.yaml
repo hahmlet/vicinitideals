@@ -583,6 +583,12 @@ zones:
       value: 50
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
+    parking_area_frontage_any_street:
+      # The cap above is read on EVERY street the lot has: Steph 2026-10-14 (FOLLOWUPS 80(a)): "I read this as 'any' street frontage. So front, back, side streets if they exist."
+      # A court behind the building on a lot with no street behind it is not reached.
+      value: true
+      cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -711,6 +717,12 @@ zones:
       # lot fact, and nothing states where along the lot the share is read.
       value: 50
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
+    parking_area_frontage_any_street:
+      # The cap above is read on EVERY street the lot has: Steph 2026-10-14 (FOLLOWUPS 80(a)): "I read this as 'any' street frontage. So front, back, side streets if they exist."
+      # A court behind the building on a lot with no street behind it is not reached.
+      value: true
+      cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
     driveway_approach_max_width_ft:
       value: 32
@@ -846,6 +858,12 @@ zones:
       value: 50
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
+    parking_area_frontage_any_street:
+      # The cap above is read on EVERY street the lot has: Steph 2026-10-14 (FOLLOWUPS 80(a)): "I read this as 'any' street frontage. So front, back, side streets if they exist."
+      # A court behind the building on a lot with no street behind it is not reached.
+      value: true
+      cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
     driveway_approach_max_width_ft:
       value: 32
       cite: "Beaverton BDC Table 60.05.60.2 S13.a, total driveway approach width per street frontage"
@@ -977,6 +995,12 @@ zones:
       # lot fact, and nothing states where along the lot the share is read.
       value: 50
       cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
+    parking_area_frontage_any_street:
+      # The cap above is read on EVERY street the lot has: Steph 2026-10-14 (FOLLOWUPS 80(a)): "I read this as 'any' street frontage. So front, back, side streets if they exist."
+      # A court behind the building on a lot with no street behind it is not reached.
+      value: true
+      cite: "Beaverton BDC Table 60.05.60.2 S11, garages and parking and maneuvering areas no more than 50 percent of any street frontage (any street frontage: front, side and rear streets)"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L3079-L3080,L3088-L3096"
     driveway_approach_max_width_ft:
       value: 32

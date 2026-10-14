@@ -95,6 +95,10 @@ KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
     "multnomah_unincorporated/LR7",
     "multnomah_unincorporated/RF",
     "portland/RF",
+    # 2026-10-14: Sandy R-1 back on this list -- the review rule admits it
+    # again, on individual lots only (17.36.10 A.4); rules.yaml says yes so
+    # the lots are measured at all.
+    "sandy/R-1",
     # 2026-10-07: Estacada R-3 permits a townhouse row on individual lots only
     # (the unit_lots variant); rules.yaml says yes so the lots are measured at all.
     "estacada/R-3",
@@ -111,8 +115,10 @@ KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
 #: variant per lot; the row is needs_verification, so quadfit caps it at
 #: review. Not a dispute: the same reading, written at two resolutions.
 PORTED_FROM_A_VARIANT: frozenset[str] = frozenset({
-    # Hillsboro MU-C, UC-AC, UC-NC and UC-OR left on 2026-10-10: Development
-    # Review (CDC 12.80.040 B.1) makes them RED BY RULING, false in both files.
+    "hillsboro/MU-C",
+    "hillsboro/UC-AC",
+    "hillsboro/UC-NC",
+    "hillsboro/UC-OR",
     "washington_unincorporated/TO:R24-40",
     "washington_unincorporated/TO:R40-80",
     "washington_unincorporated/TO:BUS",
@@ -653,7 +659,16 @@ UNSCREENED_ZONES: dict[str, tuple[str, ...]] = {
 #: counts a rules.yaml figure matching ANY limb of a corpus value as
 #: agreement, so the twenty is not reported. See the comment above the rows in
 #: rules.yaml, and `test_a_conditioned_port_carries_its_larger_limb` below.
-AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {}
+#:
+#: 2026-10-14: two again. Steph's review rule admits Clackamas HDR and SCMU
+#: (design review, YELLOW in FLATS), and neither can be ported: HDR's
+#: dimensions were never encoded (its setbacks are the 1005.02(L) solar plane,
+#: which needs a lot line's bearing), and SCMU's front setback is keyed to a
+#: street-type map (1005.09) nothing reads. quadfit refuses a zone with no
+#: yards, so they wait here until the corpus fills them.
+AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {
+    "clackamas_unincorporated": ("HDR", "SCMU"),
+}
 
 
 def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> None:
@@ -1024,6 +1039,15 @@ UNEXPRESSIBLE: dict[str, int] = {
     "setback_north_ft": 9,
     "setback_east_west_ft": 9,
     "setback_north_street_credit_ft": 9,
+    #: Steph's rulings of 2026-10-14: the review a fourplex goes through
+    #: (FLATS flags it; quadfit's needs_verification is its nearest cap) and
+    #: the parking cap read on every street frontage, measured on FLATS's
+    #: drawn plan.
+    "review_discretion": 28,
+    "type_i_max_buildable_sqft": 11,
+    "type_i_density_escape_du_per_acre": 8,
+    "type_i_standard_plat_required": 8,
+    "parking_area_frontage_any_street": 4,
 }
 
 

@@ -1018,7 +1018,7 @@ zones:
       value: 5
       quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L78,L88"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): the only way to a housing building here is a conditional use review,
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: red on a measurable standard, not on the review: "Residential uses shall be permitted only when part of a mixed use development" (230.315.A.1, or/multnomah/wood-village/230.315.txt#L60-L62), and the pod is one use. The 2026-10-08 ruling read: the only way to a housing building here is a conditional use review,
       and 230.315.A.1 also requires a mixed use development; a review is not by-right, so
       this zone is refused. The `conditional_use` + `mixed_use` variant was removed with the
       ruling and can go back if the ruling is reversed.
