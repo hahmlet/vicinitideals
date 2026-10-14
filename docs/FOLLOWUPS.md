@@ -2461,31 +2461,49 @@ read when the weekly full re-screen lands.
    timings (e2e user): plain 4.7 s, green 6.4 s, green+sort 6.5 s, green+filter 7.5 s,
    green+filter+sort 7.3 s; no query left running; tests/e2e/test_flats_price.py 3 passed on
    viciniti.deals. Only (a) and (d) wait on Steph.
-67. [scan: YES, after the weekly re-screen (a rule change; gains none, greens turn yellow or red)]
-   **Washington County makes the owner hand over road land first; the fit ignores it (found
-   2026-10-10 by item 64's sample, 2 of 11 WashCo greens wrong).** CDC 302-2.14 C(1) (and 303-2.14
-   C for R-6) says a middle-housing lot must give land out to a set distance from the road's
-   centre line: 25 ft on a local street, 30 ft on a neighbourhood route, 37 ft on a collector,
-   recorded before the first building permit (C(2)); no strip is due where the road is already
-   built to the county's final width. Our file says "NOT ENCODED: right-of-way dedication"
-   (_unincorporated.yaml ~485-495) because nothing measures the road's existing half-width.
-   Wrong lots: 1S201CC12500 (about 3.6 ft due, pod had 0.0 ft spare) and 1N120AD09600 (about 4 ft
-   due, pod about 2.5 ft short after it). REACH (measured as alley width is, across the gap between
-   lots, read-only SQL on run 70): of 7,711 WashCo unincorporated greens, 778 (10.1%) face a road
-   at least 2 ft short; 206 (2.7%) might lose fit; 180 (2.3%) red-grade. For 4+ ft short: 504 / 144
-   / 134. PROPOSAL (nothing built): measure each fronting road's half-width from the lot-fabric gap
-   (`Lot Analysis/quadfit/s4_edges.py` `_alley_width` ray-cast), take the missing strip off the
-   envelope on that side, rescreen. Unmeasured road = worst case, per the standing rule. Decision
-   pending: none for Steph unless a lot with exactly 0 ft to spare is wanted yellow rather than red.
-   AGENT INSTRUCTIONS GIVEN 2026-10-10 ("washco-road-dedication"): measure each fronting road's
-   half-width, take the missing strip off the envelope, bound WashCo unincorporated, read every
-   loss; lands at a splice or the weekly after it.
-   BUILT + BOUNDED 2026-10-11 (flats/washco-road-dedication a0fc88f6, NOT MERGED): RLIS
-   centre-line distance per street line, worst case where unmeasured, unranked class = 45 ft.
-   WashCo uninc greens 7,728 -> 1,491 red + 98 yellow lost (20.6%); ~42% of losses rest on the
-   45 ft guess for unranked streets. Gains 36 (flatter-placement instability, each read).
-   OFFERED TO STEPH: ship at the weekly; agent first reads the county TSP for "streets not shown
-   are Local" (option C) which would turn the guess into a reading (25 ft).
+67. [scan: YES, after the weekly re-screen; BUILT on flats/washco-road-dedication, bounded, not yet promoted]
+   **Washington County makes the owner hand over road land first (CDC 302-2.14 C(1), 303-306,
+   307-2.13, 375, 390).** BUILT 2026-10-11: 25/30/37/45 ft to centre line (local / neighbourhood
+   route / collector / arterial), measured per street lot line from Metro's centreline (a stub
+   with no street beside it reads the nearest centreline, OSM included, which can only be nearer);
+   the shortfall comes off the envelope like a setback; unmeasured = whole distance; unranked class
+   = 45 ft; private roads (RLIS 1700/1800) take nothing. Cities untouched. BOUND (snap_osm, 63,513
+   lots, best design per lot): 7,728 greens -> 6,139 stay, 1,491 red, 98 yellow (20.6% lost); 811
+   yellow -> red; 36 yellow -> green (only the slope flag lost); reds 2 -> yellow. That is far more
+   than the 206/180 estimated above: about 42% of losses ride on the 45-ft unranked-class guess,
+   about 58% are real shortfalls, 717 of the 1,589 were already within 1 ft of failing.
+   OPTION C CHECKED 2026-10-11 AND NOT ADOPTED: the county says nothing that makes an unmapped
+   street local. Its Transportation System Plan (Effective Sept 24, 2026; washingtoncountyor.gov
+   /lut/planning/transportation-system-plan, PDF p. 8 and 33-35) says only that it "designates
+   major transportation system elements" and addresses local streets through connectivity maps,
+   that "New Local Streets that are not in this plan may be established via the land development
+   process", and that "other neighborhood routes may be designated through the development review
+   process" -- so a street left off the map can be a neighbourhood route (30 ft) as easily as a
+   local one. Road Design Standards 130.010 only points back to the Plan. Our "unranked" is also
+   not "off the county map": it is the residue Metro and OpenStreetMap do not both call
+   residential (street_class.py, item 60). Not stored in provenance (no reading adopted).
+   NARROWER READING (30 ft, not 45, for a street absent from the county's classified layer)
+   CHECKED 2026-10-11 AND NOT ADOPTED. (1) The TSP has no sentence saying collectors and
+   arterials exist only by designation; the support is inference (Strategy 5.1.1; a change to
+   the Functional Classification Map needs a legislative plan amendment, PDF p. 109; only
+   Neighborhood Routes and Local Streets carry the "may be established via the land development
+   process" sentence), and Commercial/Industrial Streets, a collector variant, are applied "through
+   the development review process". (2) FAILS: the layer (street_class_washington, MapServer layer
+   4) is not a complete list of collector-class streets. Against Metro RLIS it matches type 1200
+   at 100% but type 1400 at 89.9% (missing Bankston ~2,294 ft, Grabhorn ~207 ft, Glencoe ~50 ft)
+   and type 1450 at 97% (missing Roy ~1,609 ft); the same MapServer's layer 8 "Special Area
+   Streets" holds Special Area Commercial Streets (collector variant, 37 ft) that layer 4 covers
+   only 6-9%, and Special Area Local Streets only 4-8% (Special Area Collectors 100%). A street
+   absent from layer 4 can be a 37 ft street. A 30 ft ceiling would need layer 8 added as a
+   dataset (registry, snapshot, weekly acquire) plus "stays 45" exceptions near RLIS 1400/1450,
+   OSM tertiary-or-higher and layer-8 collector/commercial lines; not built. Option A stands.
+   OPEN: (a) DECISION for the coordinator/Steph: read an unranked street's class from the nearest
+   ranked street within reach instead of 45 ft (would give back up to ~42% of the losses) --
+   a judgement, not the county's words; (b)
+   lots whose tax lot includes the roadway (lot line under ~12 ft from centre line) understate the
+   road and are left at worst case (63 lost, 73 kept green); (c) Sherwood SDC 16.106.030 D is the
+   same idea as a setback from centre line, NOT encoded; (d) the Fitter cache-key bug in
+   quadfit `_screen_on` (seen on 1N128CD05600) is its own item 74, not fixed here.
 68. [scan: YES, after Steph or the agent supplies the maps] **Portland Maps 120-2 and 120-3 are not
    held (found 2026-10-10 by item 64's sample, 1 can't-tell).** 33.120.206 bars new homes on a site
    deeper than 160 ft with under 90 ft of frontage, but only on the sites shown on Map 120-2
