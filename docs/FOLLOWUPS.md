@@ -1797,7 +1797,7 @@ read when the weekly full re-screen lands.
    SW 91st Ave ($13.2M of buildings), and occupied TMU commercial. STILL OPEN: Cornelius
    R-10 tax lot 1N335CD01200 screens yellow `zone_not_in_rules` (the bridge reads the map
    code AF-5 and not the `lot_zones` R-10) -- one lot; the apartment-complex greens are a
-   Steph decision (does an occupied complex count as buyable?).
+   Steph RULED 2026-10-14: occupied apartment complexes STAY GREEN (the map answers "does the pod fit", not "is it for sale").
 52. [scan: lands at 49(i)'s splice or the next weekly; no re-screen, no promotion]
    **Lots dropped before a fit (run 65): 11,427 yellow NOT_MEASURED +
    2,203 yellow GEOM-UNREADABLE.** Bucketed 2026-10-07: 6,951 had no 20 ft
@@ -2208,6 +2208,7 @@ read when the weekly full re-screen lands.
    encoded until each lot line carries a bearing. Measure the bearing per
    lot line, add it as a per-line field, then encode those three districts.
    Not part of branch flats/zone-gaps; start only after the weekly re-screen.
+   AGENT INSTRUCTIONS GIVEN 2026-10-14 ("lot-line-bearing", branch flats/lot-line-bearing).
 62. [scan: YES] **Roof shape: teach the screen gable vs flat (offered 2026-10-09
    after Steph asked what a gable costs in height; nothing signed).** The
    design holds ONE height (26 ft) compared straight to every cap, so it
@@ -2328,13 +2329,15 @@ read when the weekly full re-screen lands.
    place. Stopping signal to propose to Steph: a week whose fixes move < ~0.5% of greens
    and find no new kind of problem -> switch from hunting to maintenance (code-change
    watch, item 54) + onboarding new territory. Steph to decide whether to run it.
+   ROUND 2 AGENT INSTRUCTIONS GIVEN 2026-10-14 ("false-green-sample-r2", on run 74).
    AGENT INSTRUCTIONS GIVEN 2026-10-10 ("false-green-sample", first round on run 70).
    POLICY QUESTION FOR STEPH (raised 2026-10-10 by the sample): FLATS ignores
    existing buildings by design, so a 6.66-acre Portland CE lot carrying an
    operating 75,050 sq ft commercial building (1S2E02BB  -01100) is GREEN with
    the pod in a corner (quadfit had it red, existing_commercial). Unless it is a
    shopping centre (item 47, red), it is not a false GREEN under today's rules.
-   The sample counts such greens separately; ask Steph whether a lot whose
+   The sample counts such greens separately; (Steph 2026-10-14 on the Tigard apartment greens: existing
+   buildings STAY GREEN) ask Steph whether a lot whose
    pod sits on a working building's parking or yard should stay green.
    ROUND 1 DONE 2026-10-10 (branch flats/false-green-sample, data/flats/false_green/2026-10-10/:
    SUMMARY.md, false_green_round1.csv, seed fgs-2026-10-10-seed1, query work/draw.sql). 102 greens
@@ -2564,8 +2567,8 @@ read when the weekly full re-screen lands.
    MEASURE-SITE-GRADE (469 lots), so FOLLOWUPS 51's 381 Cornelius greens show yellow; 54
    Hillsboro + 11 WashCo uninc lots carry it too; 2 WashCo R-9 lots (1N336BD01200,
    1N336BD00200) and 1N3240001300 went red -> yellow because steep ground they had is no
-   longer seen. **FIXED 2026-10-14, bundle waits on 137 for the coordinator to load and
-   promote**: `data/quadfit_demw` rebuilt (34 tiles, 8 new x48/x49: Forest Grove, Cornelius,
+   longer seen. **FIXED 2026-10-14, LIVE as run 74 (promoted by Steph 2026-10-14: 308 yellow->green,
+   13 yellow->red, all Cornelius/west WashCo; 0 moves elsewhere)**: `data/quadfit_demw` rebuilt (34 tiles, 8 new x48/x49: Forest Grove, Cornelius,
    west Hillsboro, Banks, Gaston). No quadfit re-run: FLATS reads slope only through the
    bridge's own `--dem` (s5o's slope columns feed nothing, and a splice refuses changed s5o
    columns). Scope = every lot touching a new tile, 4,180 (Cornelius 3,891, Hillsboro 276,
@@ -2599,3 +2602,5 @@ read when the weekly full re-screen lands.
    sentinel or a fixed reference length, not a measurement. Red is the safe direction, but
    a sentinel can hide a lot that fits (false RED) or mask a bug elsewhere. Find which check
    emits it (run 73, `flats.lot_results` checks for Tigard pod80x25), say whether -43 is real.
+   AGENT INSTRUCTIONS GIVEN 2026-10-14 ("run74-loose-ends", with 51's Cornelius AF-5 lot and
+   the Estacada doubts).
