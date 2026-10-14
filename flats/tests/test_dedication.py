@@ -435,18 +435,35 @@ def test_a_piece_whose_street_is_read_nowhere_else_on_the_lot_stays_unread() -> 
     assert cut[6] == ["EDY RD"] and cut[7] == {"street_class_washington": None}
 
 
-def test_a_piece_on_two_streets_stays_unread() -> None:
+_CROSS = LineString([(X0 + 82, Y0 - 500), (X0 + 82, Y0 + 500)])
+_CHORD = [X0 + 50, Y0, X0 + 60, Y0 + 10, "F"]
+_SIDE = [X0 + 60, Y0 + 10, X0 + 60, Y0 + 100, "F"]
+
+
+def test_a_piece_on_two_read_streets_takes_the_deeper() -> None:
     # A corner lot: the cut-off between the two street lines runs beside
-    # neither street, so it may be on either. Both streets read local on the
-    # lot's other lines; the piece still keeps the worst case.
-    cross = LineString([(X0 + 82, Y0 - 500), (X0 + 82, Y0 + 500)])
+    # neither street, so it may be on either. Edy Rd reads local on the
+    # front, 150th Ave collector on the flank: the piece takes the collector,
+    # the deeper of the two (coordinator ruling 2026-10-14).
     cmap = _two_maps(
-        [EDY_TSP, cross], ["SW EDY RD", "SW 150TH AVE"], (0, 0), [EDY, cross], ["SW EDY RD", "SW 150TH AVE"]
+        [EDY_TSP, _CROSS], ["SW EDY RD", "SW 150TH AVE"], (0, 2), [EDY, _CROSS], ["SW EDY RD", "SW 150TH AVE"]
     )
-    chord = [X0 + 50, Y0, X0 + 60, Y0 + 10, "F"]
-    side = [X0 + 60, Y0 + 10, X0 + 60, Y0 + 100, "F"]
-    front, cut, flank = dedication.measure([FRONT, chord, side], WASHCO, [cmap])
-    assert front[7] == flank[7] == {"street_class_washington": "local"}
+    front, cut, flank = dedication.measure([FRONT, _CHORD, _SIDE], WASHCO, [cmap])
+    assert front[7] == {"street_class_washington": "local"}
+    assert flank[7] == {"street_class_washington": "collector"}
+    assert cut[6] == ["150TH AVE", "EDY RD"]
+    assert cut[7] == {"street_class_washington": "collector"}
+
+
+def test_a_piece_on_two_streets_one_unread_stays_unread() -> None:
+    # The same corner, but the lot has no flank line on 150th Ave, so that
+    # street is read on no other line of the lot: the piece may be on an
+    # unread street and keeps the worst case.
+    cmap = _two_maps(
+        [EDY_TSP, _CROSS], ["SW EDY RD", "SW 150TH AVE"], (0, 2), [EDY, _CROSS], ["SW EDY RD", "SW 150TH AVE"]
+    )
+    front, cut = dedication.measure([FRONT, _CHORD], WASHCO, [cmap])
+    assert front[7] == {"street_class_washington": "local"}
     assert cut[6] == ["150TH AVE", "EDY RD"]
     assert cut[7] == {"street_class_washington": None}
 

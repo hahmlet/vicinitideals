@@ -112,7 +112,13 @@ cd /root/code/vicinitideals && nohup flock -o /root/heavy.lock   .venv/bin/pytho
   uncommitted changes, a dataset `pipeline.yaml` names is not in the
   snapshot (it prints the acquire line that fetches them -- the 2026-10-01
   copy lacked 15), the curb or institutional-land datasets or the elevation
-  tiles are missing, the elevation tiles leave a measured lot on no model
+  tiles are missing, a street-class map road dedication reads is missing
+  or not `acquired`/`present` (`street_class_washington`,
+  `street_class_sherwood`, `street_class_oregon_city`,
+  `street_class_milwaukie` and the `rlis_streets` centrelines --
+  FOLLOWUPS 67/77: the bridge does not fail without one, it gives every
+  street line that map ranks the deepest distance, a whole city screened
+  at the worst case; re-fetch with `--keys <key>`), the elevation tiles leave a measured lot on no model
   (checked against the newest `data/quadfit_*/s4_lots.parquet`, and again
   against the run's own lots before the bridge -- FOLLOWUPS 75: the
   2026-10-12 weekly ran on the July tiles, which stop east of Cornelius,

@@ -82,6 +82,18 @@ STEPS = ("stage", "quadfit", "normalize", "institutional", "transit", "bridge", 
 MEMORY_WORDS = ("killed its worker again",)
 #: Read from the snapshot by the institutional-land step (FOLLOWUPS 47).
 INSTITUTIONAL_KEYS = ("osm_land_use", "rlis_orca")
+
+
+def dedication_keys() -> tuple[str, ...]:
+    """Read from the snapshot by the road-dedication measure (FOLLOWUPS 67/77):
+    every street-class map a code's distance table is ranked by, the map whose
+    streets reach a pocket, and the centrelines they are all matched to. A
+    missing one is not an error to the bridge: every street line it would have
+    read takes the deepest distance, a whole city screened at the worst case."""
+    from flats.geom import dedication
+    from flats.geom.street_class import STREETS_KEY
+
+    return tuple(dict.fromkeys((*dedication.CLASS_BY_MAP.values(), *dedication.STREETS_FROM.values(), STREETS_KEY)))
 FEWEST_PROCESSES = 2
 #: The overlays quadfit's s5o writes an ``ovl_<key>`` column for, one per entry.
 OVERLAYS = REPO_ROOT / "Lot Analysis" / "quadfit" / "config" / "overlays.yaml"
@@ -346,6 +358,11 @@ def snapshot_problems(
     for key in INSTITUTIONAL_KEYS:
         if datasets.get(key, {}).get("status") not in ("acquired", "present"):
             problems.append(f"{key}: institutional land needs it and the snapshot does not hold it")
+    for key in dedication_keys():
+        entry = datasets.get(key, {})
+        if entry.get("status") not in ("acquired", "present") or not (snapshot / str(entry.get("file") or "")).is_file():
+            problems.append(f"{key}: road dedication reads it and the snapshot does not hold it (without it every "
+                            f"street line it reads takes the deepest distance): {fetch} {key}")
     lacking = curbs.missing(snapshot)
     if lacking:
         problems.append(f"curb datasets missing (the bridge refuses without them): {', '.join(lacking)}")

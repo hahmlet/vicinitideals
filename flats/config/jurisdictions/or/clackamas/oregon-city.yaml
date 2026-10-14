@@ -440,8 +440,13 @@ defaults:
   # across the street is not read, so each class holds its WIDEST row: 126
   # feet major arterial (residential), 118 minor arterial (industrial), 88
   # collector (industrial), 62 local (mixed use/commercial/public). Read
-  # residential-both-sides it would be 126 / 100 / 85 / 54; which reading
-  # stands is a question for Steph. The table states the whole width, so
+  # residential-both-sides it would be 126 / 100 / 85 / 54. Ruled
+  # 2026-10-14 (coordinator, on "never a false green"): the row is keyed to
+  # the street's class, which the TSP map gives, AND to the plan
+  # designation of the land on BOTH sides, the wider governing; the land
+  # across the street is not measured for this, so the widest row stays.
+  # A residential lot on a major arterial already takes its own row (126 is
+  # the widest). The table states the whole width, so
   # half of it is the distance from the centre line
   # (row_to_centerline_stated_as_width). The city's TSP map ranks the class
   # (street_class_oregon_city); its Expressway and Freeway have no row here,

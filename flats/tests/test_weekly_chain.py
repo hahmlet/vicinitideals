@@ -478,7 +478,8 @@ def test_the_preflight_names_what_the_snapshot_lacks(wc, tmp_path) -> None:
     from flats.geom import curbs
 
     snap, dem, pipeline, datasets = _snapshot(tmp_path)
-    spare = [k for k in sorted(datasets) if k not in {*wc.INSTITUTIONAL_KEYS, *curbs.CURB_KEYS, *curbs.WIDTH_KEYS}
+    spare = [k for k in sorted(datasets) if k not in {*wc.INSTITUTIONAL_KEYS, *curbs.CURB_KEYS, *curbs.WIDTH_KEYS,
+                                                      *wc.dedication_keys()}
              and not k.startswith(("rlis_taxlots", "rlis_streets", "rlis_zoning", "ugb"))]
     gone, older = spare[:2], spare[2]
     for key in gone:
@@ -502,6 +503,21 @@ def test_the_preflight_names_what_the_snapshot_lacks(wc, tmp_path) -> None:
     assert "no 1 m elevation tiles" in said
     assert wc.snapshot_problems(tmp_path / "sources" / "2026-10-08", dem, pipeline) == [
         f"{tmp_path / 'sources' / '2026-10-08'}: no snapshot"]
+
+
+def test_the_preflight_refuses_a_snapshot_without_a_street_class_map(wc, tmp_path) -> None:
+    # Road dedication ranks Sherwood and Oregon City streets off their own TSP
+    # maps; a snapshot without one would screen every street line there at the
+    # deepest distance, so the run is refused instead.
+    snap, dem, pipeline, datasets = _snapshot(tmp_path)
+    assert {"street_class_sherwood", "street_class_oregon_city", "street_class_washington",
+            "street_class_milwaukie", "rlis_streets"} <= set(wc.dedication_keys())
+    datasets["street_class_sherwood"]["status"] = "failed"
+    (snap / datasets["street_class_oregon_city"]["file"]).unlink()
+    (snap / "manifest.json").write_text(json.dumps({"snapshot": snap.name, "datasets": datasets}), encoding="utf-8")
+    said = [p for p in wc.snapshot_problems(snap, dem, pipeline) if "road dedication reads it" in p]
+    assert sorted(p.split(":")[0] for p in said) == ["street_class_oregon_city", "street_class_sherwood"]
+    assert all(p.endswith(f"--keys {p.split(':')[0]}") for p in said)
 
 
 def _git(repo: Path, *args: str) -> str:

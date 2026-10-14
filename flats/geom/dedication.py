@@ -45,9 +45,10 @@ the street truly abutted -- and every street within reach counts as a name
 the line might be on.
 
 A short piece whose own class reading fails (a corner cut-off, a curve) but
-whose one street is read with a class on another line of the same lot takes
-the busiest class read for it (:func:`_lot_ranks`); a piece on two streets
-or an unread one stays at the worst case.
+whose street -- or each of its two streets -- is read with a class on
+another line of the same lot takes the busiest class read for them
+(:func:`_lot_ranks`); a piece with no name, or with any street read on no
+other line of the lot, stays at the worst case.
 
 **What is not.** A line no centreline reaches is *unmeasured* and gives up the
 whole distance (the lot line on the centre line). A line whose class or
@@ -323,19 +324,19 @@ def _lot_ranks(
     lines: Sequence[Sequence[Any]], names: Sequence[tuple[str, ...] | None], cmap: ClassMap
 ) -> list[int | None]:
     """Each street line's class rank on ``cmap``: :func:`edge_rank`, or, for a
-    line it leaves unread, the busiest rank read for that line's one street
+    line it leaves unread, the busiest rank read for that line's street(s)
     on the lot's other lines.
 
     A corner cut-off or a short curve piece has no TSP line abreast at some
     sample point, so its own reading fails; left unread it takes the zone's
-    deepest distance (61 ft on a Sherwood local street). Where the piece is
-    on ONE named street and that street is read with a class on another line
-    of the same lot, the piece takes the busiest class read for it there and
-    on the piece's own sample points -- the rank only rises with the
-    distance on every map here, so it is never shallower than the street it
-    is on. A piece with no name, with two names (it may be on either
-    street), or whose name is read on no other line of this lot stays
-    unread: the worst case (coordinator ruling 2026-10-14)."""
+    deepest distance (61 ft on a Sherwood local street). Where every street
+    the piece may be on (one, or the two of a corner) is read with a class on
+    another line of the same lot, the piece takes the busiest class read for
+    any of them there and on the piece's own sample points -- the rank only
+    rises with the distance on every map here, so it is never shallower than
+    either street it may be on (the deeper of the two, coordinator ruling
+    2026-10-14). A piece with no name, or with any street read on no other
+    line of this lot, stays unread: the worst case."""
     own = [edge_rank(e, cmap) for e in lines]  # type: ignore[arg-type]
     by_name: dict[str, int] = {}
     for rank, got in zip(own, names):
@@ -343,9 +344,9 @@ def _lot_ranks(
             by_name[got[0]] = max(rank, by_name.get(got[0], rank))
     out: list[int | None] = []
     for e, rank, got in zip(lines, own, names):
-        if rank is None and got is not None and len(got) == 1 and got[0] in by_name:
+        if rank is None and got and all(n in by_name for n in got):
             seen = [r for r in _point_ranks(e, cmap) if r is not None]
-            rank = max([by_name[got[0]], *seen])
+            rank = max([by_name[n] for n in got] + seen)
         out.append(rank)
     return out
 
