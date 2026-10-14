@@ -2461,7 +2461,7 @@ read when the weekly full re-screen lands.
    timings (e2e user): plain 4.7 s, green 6.4 s, green+sort 6.5 s, green+filter 7.5 s,
    green+filter+sort 7.3 s; no query left running; tests/e2e/test_flats_price.py 3 passed on
    viciniti.deals. Only (a) and (d) wait on Steph.
-67. [scan: YES, after the weekly re-screen; BUILT on flats/washco-road-dedication, bounded, not yet promoted]
+67. [scan: YES, after the weekly re-screen; BUILT on flats/road-dedication-ship (a212b7f5), bounded, not merged]
    **Washington County makes the owner hand over road land first (CDC 302-2.14 C(1), 303-306,
    307-2.13, 375, 390).** BUILT 2026-10-11: 25/30/37/45 ft to centre line (local / neighbourhood
    route / collector / arterial), measured per street lot line from Metro's centreline (a stub
@@ -2497,9 +2497,28 @@ read when the weekly full re-screen lands.
    absent from layer 4 can be a 37 ft street. A 30 ft ceiling would need layer 8 added as a
    dataset (registry, snapshot, weekly acquire) plus "stays 45" exceptions near RLIS 1400/1450,
    OSM tertiary-or-higher and layer-8 collector/commercial lines; not built. Option A stands.
+   SHIP BRANCH 2026-10-14: flats/road-dedication-ship (merge d27821a4 onto main 6e5734a8; cities
+   7cbc3346 = item 77; corner/curve-piece fix a212b7f5). BOUND vs run 74's own rows
+   (/root/bridge_spliced_2026-10-14_demw; proven a valid base: 6e5734a8 re-run on 1,000 random
+   scope lots = 2,000 rows identical in every column), 86,299 lots, best design per lot, WITH the
+   fix: WashCo uninc green->red 1,395, green->yellow 91, yellow->red 685, yellow->green 34, red->
+   yellow 2 (first bound without the fix 1,490/98/761/36/2). All gains read: placement-search
+   artefacts (slope flag lost on a flatter placement, 1N128AA00300 a shorter hose route,
+   1N130BD06100 a 1-ft grid step), none a dedication error. Deepest strip of the 3,693 moved lots
+   (all cities): stated class 2,223 (median 7.8 ft), two-street corner piece 890 (median 22.6),
+   street read nowhere on the lot 317 (median 25.2), unmeasured 182 (45-63), Milwaukie named 81.
+   THE FIX (a212b7f5): a short piece whose own class reading fails (corner cut-off, curve) and
+   whose ONE street is read with a class on another line of the same lot takes that class (or a
+   busier one its own points read); no name, two names, or a name read nowhere else on the lot
+   stay worst case (coordinator ruling 2026-10-14). Gave back 126 greens + 92 yellows.
    OPEN: (a) DECISION for the coordinator/Steph: read an unranked street's class from the nearest
    ranked street within reach instead of 45 ft (would give back up to ~42% of the losses) --
-   a judgement, not the county's words; (b)
+   a judgement, not the county's words; (a2) DECISION: a corner cut-off that may be on either of
+   two streets, BOTH read with a class on the lot, could take the busier of the two (never
+   shallower than either street asks). Estimated (strip arithmetic, not bridged): the deepest strip
+   falls >=1 ft on 751 of 890 such lots, 563 of them green->red now; median strip 20.7 -> 6.0 ft
+   WashCo, 36.6 -> 9.1 OC, 36.7 -> 9.5 Sherwood (/root data gone; re-derive with dedication.py);
+   (b)
    lots whose tax lot includes the roadway (lot line under ~12 ft from centre line) understate the
    road and are left at worst case (63 lost, 73 kept green); (c) Sherwood SDC 16.106.030 D is the
    same idea as a setback from centre line, NOT encoded; (d) the Fitter cache-key bug in
@@ -2682,7 +2701,7 @@ read when the weekly full re-screen lands.
    the city community room 915 NW Wade, not these lots. Human lookup needed (Clackamas
    assessor, tax lot 34E20AC00201): if the owner is the city or a district, it is a miss
    the roll cannot see.
-77. [scan: YES, after the weekly re-screen (greens only turn yellow or red)] **Road land to the
+77. [scan: YES, after the weekly re-screen; BUILT on flats/road-dedication-ship 7cbc3346 + a212b7f5, bounded, not merged] **Road land to the
    centre line in the cities, not just unincorporated Washington County (found 2026-10-14 by
    item 64 round 2: 4 of the 7 wrong lots).** Item 67 (built, not merged) takes the county's
    strip off the fit for WashCo unincorporated only. Same kind, not encoded: Sherwood 16.106.020 A
@@ -2697,6 +2716,21 @@ read when the weekly full re-screen lands.
    street line, add each city's class -> distance table and its own form (dedication vs added
    setback); class comes from each city's TSP map (Sherwood Figure 17 not stored; Oregon City has a
    TSP layer). Unranked class = worst case, as in 67. Bound per city, read every loss.
+   BUILT 2026-10-14 (flats/road-dedication-ship): Sherwood 26/32/32/37/61 by its TSP class map
+   (street_class_sherwood; a street the consultant map lacks = 61); King City by named streets,
+   99W borrowing Sherwood's 61, county pockets on the county rule; Oregon City half the widest
+   Table 16.12.016 right-of-way 31/44/59/63 by street_class_oregon_city; Milwaukie its 29 named
+   rows of Table 19.501.2.A. Tigard NOT ENCODED (TSP widths not held: a remaining false-GREEN gap);
+   Beaverton a refusal note (no width stated). BOUND with the corner-piece fix (vs run 74, best
+   design per lot): Oregon City green->red 798, green->yellow 54, yellow->red 236, yellow->green 18
+   (876 greens in the moved set -> 42); Sherwood 21/1/37/2; Milwaukie 17/18/57/6; King City 3
+   yellow->red. Check lots 2S132CD12600, 2S132AC01500, 2S116AA14200, 31E01DA00229 all red.
+   Overall greens in scope 10,402 -> about 8,067. WEEKLY MUST ACQUIRE street_class_sherwood and
+   street_class_oregon_city (without them every line there takes the worst case). OPEN DECISIONS:
+   OC widest right-of-way vs the residential column (27/42.5/50/63); segment qualifiers in the
+   tables applied to the whole street; lot area not reduced by the strip (only the envelope);
+   an unmeasured public line gives up the whole 40-63 ft; item 67 (a2) applies here too (OC 196,
+   Sherwood 2 still-red lots ride on a two-street corner piece).
 78. [scan: YES once the maps are held] **Portland overlay zones and plan districts are not held
    (found 2026-10-14 by item 64 round 2, NEW kind).** 1S1E22BA  -02300 (CM2, 6805 S Macadam) sits
    in the Centers Main Street "m" overlay: 33.415.310.A sets a minimum FAR of 0.5 in the Inner
