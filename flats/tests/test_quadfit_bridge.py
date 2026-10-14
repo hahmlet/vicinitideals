@@ -1144,6 +1144,64 @@ def test_a_real_alley_stub_long_enough_for_the_row_is_its_aisle(corpus, policies
     assert asked(six) == pytest.approx(asked(six_plain))
 
 
+def test_two_designs_with_the_same_yards_are_each_placed_on_their_own_envelope(
+    corpus, policies
+) -> None:
+    # FOLLOWUPS 74: the envelope search is shared between the designs one lot
+    # screens, and was looked up by the yards it was cut with. Two envelopes
+    # cut with the same yards can still differ -- a planted strip, a carve,
+    # the end of a through lot named the rear -- and the second design was
+    # then fitted on the FIRST one's ground: a pod that does not fit its own
+    # envelope came out GREEN on ground it does not have.
+    from flats.fit.angles import angles_for
+    from flats.ingest.quadfit import _screen_on, drawing_for
+    from flats.score.configure import configure
+
+    lot = lot_from_row(real_row(None), corpus.layers)
+    angles = angles_for(lot.front_bearings, step_deg=30.0)
+
+    def resolved(design: Design):
+        config = configure(lot.facts, design, observed=lot.observed)
+        return config, corpus.resolve(lot.layer_id, lot.zone, config.conditions, lot=config.measures)
+
+    def on(env, design: Design, fitters):
+        config, got = resolved(design)
+        return _screen_on(
+            lot, design, config, got, env, None, angles, fitters, 30.0,
+            policy=policies[0], relief=policies[1],
+        )
+
+    wide = envelope_for(lot, resolved(pod4())[1])
+    x0, y0, x1, y1 = wide.geom.bounds
+
+    def south(frac: float):
+        """The same envelope, the same yards, only its southern ``frac`` left."""
+        keep = shapely.box(x0 - 50, y0 - 50, x1 + 50, y0 + frac * (y1 - y0))
+        return dataclasses.replace(
+            wide, geom=wide.geom.intersection(keep), ground=wide.ground.intersection(keep)
+        )
+
+    for frac in (0.3, 0.6):
+        narrow = south(frac)
+        assert narrow.setbacks == wide.setbacks and narrow.source == wide.source
+        alone, _ = on(narrow, pod(), {})
+        for first, second in ((wide, narrow), (narrow, wide)):
+            fitters: dict = {}
+            on(first, pod4(), fitters)
+            got, fitter = on(second, pod(), fitters)
+            expected = alone if second is narrow else on(wide, pod(), {})[0]
+            assert got.fit == expected.fit
+            assert got.signed.triage is expected.signed.triage
+            if second is narrow and got.fit.fits:
+                drawing = drawing_for(got, fitter)
+                assert drawing is not None and drawing.get("building")
+                building = shapely.Polygon(drawing["building"])
+                assert narrow.geom.buffer(1.0).contains(building)
+    # The 30% strip holds no pod: a miss on its own ground, never GREEN.
+    shallow, _ = on(south(0.3), pod(), {})
+    assert not shallow.fit.fits and shallow.signed.triage is not Triage.green
+
+
 def test_an_alley_beside_the_lot_drops_the_street_lane(corpus, policies) -> None:
     # Steph, 2026-09-25: "Alleys along side yards is important." Portland R5,
     # the 50 x 100 lot with its alley along a side line: the code sends the

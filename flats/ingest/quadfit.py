@@ -1849,6 +1849,24 @@ def _access_deg(here: QuadfitLot, front: float | None) -> tuple[float, ...]:
     )
 
 
+def _search_key(env: Envelope) -> tuple[bytes | None, bytes | None]:
+    """What one envelope search is shared by: the exact ground it is built
+    on, the envelope and the court's ground (FOLLOWUPS 74). A
+    :class:`~flats.fit.rectangle.Fitter` reads nothing else (the angles key
+    the pool around it), so two designs share a search only where they
+    would have built the same one. The yards the envelope was cut with are
+    not enough: a planted strip, a carve or which end of a through lot is
+    named the rear changes the ground under the same yards, and a design
+    searched on another design's larger envelope can come out GREEN on
+    ground it does not have."""
+    import shapely
+
+    return (
+        None if env.geom is None else shapely.to_wkb(env.geom),
+        None if env.ground is None else shapely.to_wkb(env.ground),
+    )
+
+
 def _screen_on(
     here: QuadfitLot,
     design: Design,
@@ -1865,9 +1883,10 @@ def _screen_on(
     plan: Any = None,
 ) -> tuple[Screened, Fitter]:
     """One design screened on one envelope and one named front, for
-    :func:`screen_lot` to rank against the others it tries. ``plan`` keys
-    the search apart where a through lot's ends are named (FOLLOWUPS 6(i))."""
-    key = (env.source, env.setbacks, front, plan)
+    :func:`screen_lot` to rank against the others it tries. ``plan`` names
+    the reading of a through lot's ends (FOLLOWUPS 6(i)); the search itself
+    is shared by the ground it stands on (:func:`_search_key`)."""
+    key = _search_key(env)
     if key not in fitters:
         fitters[key] = Fitter(env.geom, angles, ground=env.ground)
     if here.facts.alley_at_rear and not here.facts.alley_rear_whole:
