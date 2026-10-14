@@ -2565,3 +2565,9 @@ read when the weekly full re-screen lands.
    96 answers, all rules, 0 unexplained. Run 72 (same scan before 286eb696) is superseded:
    the use gate missed Sandy R-1 / Hillsboro SCR-OTC / MU-VTC (1,104 lots yellow, not red).
    Checklist 49(k): institutional_were_scanned 0 -> 47 can go; 48 goes on promotion.
+76. [scan: none to look; a fix may need a splice] **Tigard pod80x25 red at exactly -43 ft.**
+   weekly-closeout (2026-10-14) saw dozens of Tigard RES-B lots where the pod80x25 design
+   shows red at exactly -43 ft -- one shared value across different lots looks like a
+   sentinel or a fixed reference length, not a measurement. Red is the safe direction, but
+   a sentinel can hide a lot that fits (false RED) or mask a bug elsewhere. Find which check
+   emits it (run 73, `flats.lot_results` checks for Tigard pod80x25), say whether -43 is real.
