@@ -986,9 +986,11 @@ code:
   start: "702.01"
   end: "Return to the Zoning and Development Ordinance main page"
   allow_thin: true
-# Design review. 1102.01(A) is the sentence behind the by-right-only ruling's
-# RED in HDR, MR-1, MR-2, PMD, VA and the commercial districts (SCMU, PMU):
-# development there goes through a Type II application (1102.03). Read live
+# Design review. 1102.01(A) puts development in HDR, MR-1, MR-2, PMD, VA and
+# the commercial districts (SCMU, PMU) through a Type II application
+# (1102.03). Under Steph's 2026-10-14 review rule it makes those zones YELLOW
+# (review_discretion: judgement, the 1005 criteria) where it was the RED of
+# the 2026-10-08 by-right-only ruling; PMU stays RED on Table 510-3. Read live
 # on 2026-10-08 and stored 2026-10-09 (FOLLOWUPS 52) so the ruling cites the
 # words it rests on. allow_thin: read in full on 2026-10-09, all 169 lines;
 # it is a procedure section, submittal lists and approval criteria with
@@ -1028,6 +1030,14 @@ defaults:
   parking_area_max_frontage_pct:
     value: 50
     cite: Clackamas ZDO 845.02, combined width of garages and off-street parking areas between a building and a public street
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55"
+  parking_area_frontage_any_street:
+    # The cap above is read on EVERY street the lot has: Steph 2026-10-14 (FOLLOWUPS 80(a)): "I read this as 'any' street frontage. So front, back, side streets if they exist."
+    # A court behind the building on a lot with no street behind it is not reached.
+    value: true
+    cite: "Clackamas ZDO 845.02, combined width of garages and off-street parking areas between a building and a public street (any street frontage: front, side and rear streets)"
     url: https://www.clackamas.us/planning/zdo845
     retrieved: '2026-08-27'
     quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55"
@@ -2220,13 +2230,20 @@ zones:
       # note 8. The absence of note 8 does not take Section 845 away -- 845
       # states its own scope and states no district limitation, which is
       # checked below at `min_lot_sqft` -- it just means this cell does not
-      # signpost it. The use is permitted; the district is RED BY RULING for
-      # design review (notes).
-      # The value is the ruling's, so it cites design review, not the cell
-      # (which says P; zdo.315.txt#L41,L43-L54,L295-L306).
-      value: false
-      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
-      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
+      # signpost it. The use is permitted. Design review weighs judgement
+      # words, so the district is YELLOW (review_discretion, Steph
+      # 2026-10-14).
+      value: true
+      cite: Clackamas ZDO Table 315-1, Quadplexes row, fifth column (P)
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    review_discretion:
+      # Steph 2026-10-14: a review whose criteria weigh judgement words beside
+      # its measurable standards is YELLOW. 1005's measurable checklist
+      # (entry depth, eaves, glazing) does not count against green; these
+      # words do. 1307 (procedures, the conditions power) is not stored.
+      value: judgement
+      cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
     min_lot_sqft:
       # Table 315-4 prints "None" and Section 845.01 prints 7,000, and 7,000
       # is the one that binds. 845.01 states "the subject lot shall be a
@@ -2328,7 +2345,13 @@ zones:
       value: 10
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
-      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08): design review here weighs
+      judgement words beside measurable standards (`review_discretion`
+      cites them), so the lot is screened on the standards below and
+      flagged REVIEW-CONDITIONS. The 2026-10-08 reading follows, kept for
+      its reasons.
+      Was red by ruling (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
       bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
       goes through design review, which is not by right. ZDO
@@ -2384,13 +2407,20 @@ zones:
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-09-08'
     quadplex_allowed:
-      # Table 315-1, Quadplexes row, sixth column. A bare P -- the use is
-      # permitted; the district is RED BY RULING for design review (notes).
-      # The value is the ruling's, so it cites design review, not the cell
-      # (which says P; zdo.315.txt#L41,L43-L54,L295-L306).
-      value: false
-      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
-      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
+      # Table 315-1, Quadplexes row, sixth column. A bare P. The use is
+      # permitted. Design review weighs judgement words, so the district is
+      # YELLOW (review_discretion, Steph 2026-10-14).
+      value: true
+      cite: Clackamas ZDO Table 315-1, Quadplexes row, sixth column (P)
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    review_discretion:
+      # Steph 2026-10-14: a review whose criteria weigh judgement words beside
+      # its measurable standards is YELLOW. 1005's measurable checklist
+      # (entry depth, eaves, glazing) does not count against green; these
+      # words do. 1307 (procedures, the conditions power) is not stored.
+      value: judgement
+      cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
     min_lot_sqft:
       # 845.01, as in every district in this county. Table 315-4 prints
       # "None[1]" here and note 1 is about a nonconforming detached
@@ -2499,7 +2529,13 @@ zones:
       cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-1 column ("None")
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
-      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08): design review here weighs
+      judgement words beside measurable standards (`review_discretion`
+      cites them), so the lot is screened on the standards below and
+      flagged REVIEW-CONDITIONS. The 2026-10-08 reading follows, kept for
+      its reasons.
+      Was red by ruling (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
       bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
       goes through design review, which is not by right. ZDO
@@ -2558,13 +2594,20 @@ zones:
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-09-08'
     quadplex_allowed:
-      # Table 315-1, Quadplexes row, seventh column. A bare P -- the use is
-      # permitted; the district is RED BY RULING for design review (notes).
-      # The value is the ruling's, so it cites design review, not the cell
-      # (which says P; zdo.315.txt#L41,L43-L54,L295-L306).
-      value: false
-      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
-      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
+      # Table 315-1, Quadplexes row, seventh column. A bare P. The use is
+      # permitted. Design review weighs judgement words, so the district is
+      # YELLOW (review_discretion, Steph 2026-10-14).
+      value: true
+      cite: Clackamas ZDO Table 315-1, Quadplexes row, seventh column (P)
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    review_discretion:
+      # Steph 2026-10-14: a review whose criteria weigh judgement words beside
+      # its measurable standards is YELLOW. 1005's measurable checklist
+      # (entry depth, eaves, glazing) does not count against green; these
+      # words do. 1307 (procedures, the conditions power) is not stored.
+      value: judgement
+      cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
     min_lot_sqft:
       value: 7000
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
@@ -2653,7 +2696,13 @@ zones:
       cite: Clackamas ZDO Table 315-4, Minimum Building Separation row, MR-2 column ("None")
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
-      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08): design review here weighs
+      judgement words beside measurable standards (`review_discretion`
+      cites them), so the lot is screened on the standards below and
+      flagged REVIEW-CONDITIONS. The 2026-10-08 reading follows, kept for
+      its reasons.
+      Was red by ruling (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
       bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
       goes through design review, which is not by right. ZDO
@@ -2694,13 +2743,20 @@ zones:
       # Table 315-1, Quadplexes row, ninth column. A bare P. The Townhouses
       # row reads X in the same column, which is the corroboration worth
       # noting: this district takes the building we place and refuses the
-      # split-plat form of it. The use is permitted; the district is RED BY
-      # RULING for design review (notes).
-      # The value is the ruling's, so it cites design review, not the cell
-      # (which says P; zdo.315.txt#L41,L43-L54,L295-L306).
-      value: false
-      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
-      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
+      # split-plat form of it. The use is permitted. Design review weighs
+      # judgement words, so the district is YELLOW (review_discretion, Steph
+      # 2026-10-14).
+      value: true
+      cite: Clackamas ZDO Table 315-1, Quadplexes row, ninth column (P)
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    review_discretion:
+      # Steph 2026-10-14: a review whose criteria weigh judgement words beside
+      # its measurable standards is YELLOW. 1005's measurable checklist
+      # (entry depth, eaves, glazing) does not count against green; these
+      # words do. 1307 (procedures, the conditions power) is not stored.
+      value: judgement
+      cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
     min_lot_sqft:
       value: 7000
       cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
@@ -2738,7 +2794,13 @@ zones:
       value: 20
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1612-L1619"
     notes: >-
-      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08): design review here weighs
+      judgement words beside measurable standards (`review_discretion`
+      cites them), so the lot is screened on the standards below and
+      flagged REVIEW-CONDITIONS. The 2026-10-08 reading follows, kept for
+      its reasons.
+      Was red by ruling (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
       bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
       goes through design review, which is not by right. ZDO
@@ -2787,15 +2849,28 @@ zones:
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-10-09'
     quadplex_allowed:
-      # Table 315-1, Quadplexes row, eighth column: a bare P -- the use is
-      # permitted; the district is RED BY RULING for design review (notes).
-      # The value is the ruling's, so it cites design review, not the cell
-      # (which says P; zdo.315.txt#L41,L43-L54,L295-L306).
-      value: false
-      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
-      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
+      # Table 315-1, Quadplexes row, eighth column: a bare P. The use is
+      # permitted. Design review weighs judgement words, so the district is
+      # YELLOW (review_discretion, Steph 2026-10-14).
+      value: true
+      cite: Clackamas ZDO Table 315-1, Quadplexes row, eighth column (P)
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    review_discretion:
+      # Steph 2026-10-14: a review whose criteria weigh judgement words beside
+      # its measurable standards is YELLOW. 1005's measurable checklist
+      # (entry depth, eaves, glazing) does not count against green; these
+      # words do. 1307 (procedures, the conditions power) is not stored.
+      value: judgement
+      cite: Clackamas ZDO 1102.01(A)(1)(c) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
     notes: >-
-      RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08): design review here weighs
+      judgement words beside measurable standards (`review_discretion`
+      cites them), so the lot is screened on the standards below and
+      flagged REVIEW-CONDITIONS. The 2026-10-08 reading follows, kept for
+      its reasons.
+      Was red by ruling (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
       bare P, zdo.315.txt#L41,L43-L54,L295-L306) but development here
       goes through design review, which is not by right. ZDO
@@ -3385,12 +3460,19 @@ zones:
     quadplex_allowed:
       # Station Community Mixed Use. Table 510-1, Quadplexes row, SCMU column
       # (the eighth data cell, L289): a bare P with no note. The use is
-      # permitted; what makes the zone RED is the process, see the note.
-      # The value is the ruling's, so it cites design review, not the cell
-      # (zdo.510.txt#L85,L281,L289).
-      value: false
-      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (ZDO 202, a district regulated by Section 500; 510.02 names SCMU), as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
-      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L21,L131"
+      # permitted. Design review weighs judgement words, so the district is
+      # YELLOW (review_discretion, Steph 2026-10-14).
+      value: true
+      cite: Clackamas ZDO Table 510-1, Quadplexes row, SCMU column (P)
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L85,L281,L289"
+    review_discretion:
+      # Steph 2026-10-14: a review whose criteria weigh judgement words beside
+      # its measurable standards is YELLOW. 1005's measurable checklist
+      # (entry depth, eaves, glazing) does not count against green; these
+      # words do. 1307 (procedures, the conditions power) is not stored.
+      value: judgement
+      cite: Clackamas ZDO 1102.01(A)(1)(a) design review (Type II, 1102.03) holds development to Section 1005 (1102.03(A)), whose facade and materials criteria weigh judgement words beside the measurable ones -- "architectural relief, variety and visual interest", "Provide visual interest", "compatible with the neighborhood's intended visual identity" -- and 1102.04 speaks of "conditions of design review approval" (zdo.1102.txt#L13,L131,L133,L155)
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L174,L176,L180,L214"
     min_lot_sqft:
       # Table 510-2 gives SCMU "1/2 acre[2,4]" and note 2 limits that to
       # subdivisions, partitions and property line adjustments, so it is not
@@ -3422,7 +3504,13 @@ zones:
       cite: Clackamas ZDO Table 510-2, Maximum Building Height row, SCMU cell ("None"); 1005.09 states no maximum
       quote: "or/clackamas/_unincorporated/zdo.510.txt#L1468,L1476"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): the use is permitted but every
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08): design review here weighs
+      judgement words beside measurable standards (`review_discretion`
+      cites them), so the lot is screened on the standards below and
+      flagged REVIEW-CONDITIONS. The 2026-10-08 reading follows, kept for
+      its reasons.
+      Was red by ruling (Steph, 2026-10-08): the use is permitted but every
       development in this district goes through design review, which is
       not by right. ZDO 1102.01(A)(1)(a) requires design review for
       "Development, redevelopment, expansions, and improvements in ...
@@ -3515,8 +3603,14 @@ zones:
       cite: Clackamas ZDO Table 510-2, Maximum Building Height row, PMU cell ("None")
       quote: "or/clackamas/_unincorporated/zdo.510.txt#L1468,L1475"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): a PMU site is built only through
-      design review and a master plan, neither by right. Table 510-3 sets the
+      RED, RE-RULED 2026-10-14 under Steph's review rule (replacing the
+      by-right-only ruling of 2026-10-08): the pod misses the measured site
+      program of Table 510-3 below, and the only way past it is a master
+      plan that must "demonstrate that it is feasible to achieve full
+      compliance with a future phase" (1102.03(B), zdo.1102.txt#L135), a
+      one-off judgement no single lot can carry. The 2026-10-08 reading
+      follows: a PMU site is built only through design review and a master
+      plan. Table 510-3 sets the
       site-specific requirement for PMU1 as 525,000 square feet of office, 500,000
       of retail, entertainment, hotel or similar, at least 200 dwelling units
       (with the ability to accommodate 600), a half- to one-acre public plaza,
@@ -3555,7 +3649,7 @@ zones:
       acres: 2
       quote: "or/clackamas/_unincorporated/zdo.510.txt#L1391,L1399"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): same ruling as PMU1. Table 510-3 for
+      RED, RE-RULED 2026-10-14 (the same reason as PMU1). Table 510-3 for
       PMU2 to PMU5 requires 50 percent of the site in office or residential
       use, an office floor area ratio of 0.5 (lots of 2.5 acres or less) or 1.0,
       a retail and service FAR of 0.3 and 30 dwelling units per net acre; a
@@ -3585,7 +3679,7 @@ zones:
       acres: 3
       quote: "or/clackamas/_unincorporated/zdo.510.txt#L1391,L1400"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): same ruling and same Table 510-3
+      RED, RE-RULED 2026-10-14 (the same reason as PMU1), and the same Table 510-3
       column as PMU2 (PMU 2, 3, 4 and 5). Only the minimum lot size, 3 acres,
       differs.
 

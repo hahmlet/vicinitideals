@@ -120,7 +120,7 @@ def test_the_farm_zone_prints_this_building_and_the_encoding_says_so(
     held = uninc.zones["EFU"].values["quadplex_allowed"]
     assert held.value is False
     assert held.variants == ()
-    assert "RED BY RULING (Steph, 2026-10-08)" in uninc.zones["EFU"].notes
+    assert "RED, RE-CHECKED 2026-10-14 under Steph's review rule" in uninc.zones["EFU"].notes
 
     text = ProvenanceStore().quote(
         "or/multnomah/_unincorporated/39.efu.txt#L2179-L2198"

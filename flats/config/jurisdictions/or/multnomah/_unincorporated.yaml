@@ -2267,7 +2267,7 @@ zones:
       cite: MCC 39.4625(B)
       quote: "or/multnomah/_unincorporated/39.or.txt#L423,L428"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): the only way to a housing building of this kind is a Planned Development,
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the Planned Development criteria are judgement throughout -- "superior living or development arrangements", "harmonious ways", "warranted by the design", "compatible with the natural environment" (or/multnomah/_unincorporated/39.pd.txt#L9,L17,L73,L125) -- a one-off decision. The 2026-10-08 ruling read: the only way to a housing building of this kind is a Planned Development,
       a Planning Commission hearing; a review is not by-right, so this zone is refused.
       The `planned_development` variant on `quadplex_allowed` was removed with the ruling
       and can go back if it is reversed.
@@ -2949,7 +2949,7 @@ zones:
       cite: MCC 39.4245(A)
       quote: "or/multnomah/_unincorporated/39.efu.txt#L1339-L1345"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): the only way to a multi-unit building here is farm labor housing as a review
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: red on the use, not on the review: farm labor housing is for farm workers on a working farm (39.4265(C)(2)(d)), not housing for sale or rent. The 2026-10-08 ruling read: the only way to a multi-unit building here is farm labor housing as a review
       use, decided on criteria by the approval authority; a review is not by-right, so this
       zone is refused. The variant on `quadplex_allowed` was removed with the ruling and can
       go back if it is reversed.
@@ -3812,7 +3812,7 @@ zones:
       cite: MCC 39.4375(C)
       quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450,L455"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): the only way to a housing building of this kind is a Planned Development,
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the Planned Development criteria are judgement throughout -- "superior living or development arrangements", "harmonious ways", "warranted by the design", "compatible with the natural environment" (or/multnomah/_unincorporated/39.pd.txt#L9,L17,L73,L125) -- a one-off decision. The 2026-10-08 ruling read: the only way to a housing building of this kind is a Planned Development,
       a Planning Commission hearing on a preliminary and a final plan; a review is not
       by-right, so this zone is refused. The `planned_development` variant on
       `quadplex_allowed` was removed with the ruling and can go back if it is reversed.

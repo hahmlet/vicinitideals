@@ -76,7 +76,7 @@ def test_the_conditional_use_columns_are_red_by_ruling(
     assert held.value is False
     assert held.variants == ()
     assert (milwaukie.zones[zone].notes or "").startswith(
-        "RED BY RULING (Steph, 2026-10-08)"
+        "RED, RE-CHECKED 2026-10-14 under Steph's review rule"
     )
     for extra in ((), ("unit_lots",), ("unit_lots", "inside_mapped_use_area"),
                   ("conditional_use",), ("mixed_use",)):

@@ -566,11 +566,20 @@ zones:
       # Type I procedure, and 302-3 takes the rest through Type II; both
       # are headed "Uses Permitted", neither is the Type III list. The pod is
       # a Quadplex (106-173), and 106-124 names this district as one where a
-      # Quadplex is Middle Housing. Type II is administrative with notice,
-      # which is recorded as a doubt in the handoff rather than as a refusal.
+      # Quadplex is Middle Housing. Type II approval "may be further
+      # conditioned" (207-5): YELLOW where the lot is past the Type I gates
+      # below (Steph 2026-10-14, FOLLOWUPS 79), no longer a handoff doubt.
       value: true
       cite: Washington County CDC 302-2 and 302-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
       quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L14,L87-L93,L124,L174-L183"
+    type_i_max_buildable_sqft:
+      value: 16500
+      cite: 'Washington County CDC 302-2.14 A and 302-3.15 A, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L87-L93,L124-L129,L174-L179"
+    type_i_density_escape_du_per_acre:
+      value: 4
+      cite: Washington County CDC 302-2.14 A and 302-3.15 A, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
+      quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L87-L93,L124-L129,L174-L179"
     max_units:
       value: 4
       cite: Washington County CDC 302-6.1 A(3), Quadplex - maximum four units per lot
@@ -667,11 +676,20 @@ zones:
       # Type I procedure, and 303-3 takes the rest through Type II; both
       # are headed "Uses Permitted", neither is the Type III list. The pod is
       # a Quadplex (106-173), and 106-124 names this district as one where a
-      # Quadplex is Middle Housing. Type II is administrative with notice,
-      # which is recorded as a doubt in the handoff rather than as a refusal.
+      # Quadplex is Middle Housing. Type II approval "may be further
+      # conditioned" (207-5): YELLOW where the lot is past the Type I gates
+      # below (Steph 2026-10-14, FOLLOWUPS 79), no longer a handoff doubt.
       value: true
       cite: Washington County CDC 303-2 and 303-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
       quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L14,L86-L92,L123,L179-L188"
+    type_i_max_buildable_sqft:
+      value: 13100
+      cite: 'Washington County CDC 303-2.14 and 303-3.20, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L86-L92,L123-L127,L179"
+    type_i_density_escape_du_per_acre:
+      value: 5
+      cite: Washington County CDC 303-2.14 and 303-3.20, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
+      quote: "or/washington/_unincorporated/cdc.303.r-6.txt#L86-L92,L123-L127,L179"
     max_units:
       value: 4
       cite: Washington County CDC 303-6.1 A(3), Quadplex - maximum four units per lot
@@ -768,11 +786,24 @@ zones:
       # Type I procedure, and 304-3 takes the rest through Type II; both
       # are headed "Uses Permitted", neither is the Type III list. The pod is
       # a Quadplex (106-173), and 106-124 names this district as one where a
-      # Quadplex is Middle Housing. Type II is administrative with notice,
-      # which is recorded as a doubt in the handoff rather than as a refusal.
+      # Quadplex is Middle Housing. Type II approval "may be further
+      # conditioned" (207-5): YELLOW where the lot is past the Type I gates
+      # below (Steph 2026-10-14, FOLLOWUPS 79), no longer a handoff doubt.
       value: true
       cite: Washington County CDC 304-2 and 304-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
       quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L17,L92-L100,L131,L185-L194"
+    type_i_max_buildable_sqft:
+      value: 10000
+      cite: 'Washington County CDC 304-2.14 and 304-3.20, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L92-L100,L131-L135,L185"
+    type_i_density_escape_du_per_acre:
+      value: 7
+      cite: Washington County CDC 304-2.14 and 304-3.20, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L92-L100,L131-L135,L185"
+    type_i_standard_plat_required:
+      value: true
+      cite: Washington County CDC 304-2.14, Type I only on a lot "approved for the construction of a Single Detached Dwelling Unit through a Standard Subdivision or Standard Partition" plat; no site fact holds how a lot was made, so every lot is flagged
+      quote: "or/washington/_unincorporated/cdc.304.r-9.txt#L92-L100,L131-L135,L185"
     max_units:
       value: 4
       cite: Washington County CDC 304-6.1 A(3), Quadplex - maximum four units per lot
@@ -869,11 +900,24 @@ zones:
       # Type I procedure, and 305-3 takes the rest through Type II; both
       # are headed "Uses Permitted", neither is the Type III list. The pod is
       # a Quadplex (106-173), and 106-124 names this district as one where a
-      # Quadplex is Middle Housing. Type II is administrative with notice,
-      # which is recorded as a doubt in the handoff rather than as a refusal.
+      # Quadplex is Middle Housing. Type II approval "may be further
+      # conditioned" (207-5): YELLOW where the lot is past the Type I gates
+      # below (Steph 2026-10-14, FOLLOWUPS 79), no longer a handoff doubt.
       value: true
       cite: Washington County CDC 305-2 and 305-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
       quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L12,L88-L95,L127,L182-L191"
+    type_i_max_buildable_sqft:
+      value: 10000
+      cite: 'Washington County CDC 305-2.14 and 305-3, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L88-L95,L127-L131"
+    type_i_density_escape_du_per_acre:
+      value: 12
+      cite: Washington County CDC 305-2.14 and 305-3, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L88-L95,L127-L131"
+    type_i_standard_plat_required:
+      value: true
+      cite: Washington County CDC 305-2.14, Type I only on a lot approved through a Standard Subdivision or Standard Partition plat; no site fact holds how a lot was made, so every lot is flagged
+      quote: "or/washington/_unincorporated/cdc.305.r-15.txt#L88-L95,L127-L131"
     max_units:
       value: 4
       cite: Washington County CDC 305-6.1 A(3), Quadplex - maximum four units per lot
@@ -970,11 +1014,24 @@ zones:
       # Type I procedure, and 306-3 takes the rest through Type II; both
       # are headed "Uses Permitted", neither is the Type III list. The pod is
       # a Quadplex (106-173), and 106-124 names this district as one where a
-      # Quadplex is Middle Housing. Type II is administrative with notice,
-      # which is recorded as a doubt in the handoff rather than as a refusal.
+      # Quadplex is Middle Housing. Type II approval "may be further
+      # conditioned" (207-5): YELLOW where the lot is past the Type I gates
+      # below (Steph 2026-10-14, FOLLOWUPS 79), no longer a handoff doubt.
       value: true
       cite: Washington County CDC 306-2 and 306-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
       quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L12,L87-L94,L125,L177-L186"
+    type_i_max_buildable_sqft:
+      value: 10000
+      cite: 'Washington County CDC 306-2.14 and 306-3, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L87-L94,L125-L129"
+    type_i_density_escape_du_per_acre:
+      value: 19
+      cite: Washington County CDC 306-2.14 and 306-3, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L87-L94,L125-L129"
+    type_i_standard_plat_required:
+      value: true
+      cite: Washington County CDC 306-2.14, Type I only on a lot approved through a Standard Subdivision or Standard Partition plat; no site fact holds how a lot was made, so every lot is flagged
+      quote: "or/washington/_unincorporated/cdc.306.r-24.txt#L87-L94,L125-L129"
     max_units:
       value: 4
       cite: Washington County CDC 306-6.1 A(3), Quadplex - maximum four units per lot
@@ -1071,11 +1128,24 @@ zones:
       # Type I procedure, and 307-3 takes the rest through Type II; both
       # are headed "Uses Permitted", neither is the Type III list. The pod is
       # a Quadplex (106-173), and 106-124 names this district as one where a
-      # Quadplex is Middle Housing. Type II is administrative with notice,
-      # which is recorded as a doubt in the handoff rather than as a refusal.
+      # Quadplex is Middle Housing. Type II approval "may be further
+      # conditioned" (207-5): YELLOW where the lot is past the Type I gates
+      # below (Steph 2026-10-14, FOLLOWUPS 79), no longer a handoff doubt.
       value: true
       cite: Washington County CDC 307-2 and 307-3 (Middle Housing through Type I and Type II) + 106-124, 106-173
       quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L13,L87-L95,L126,L179-L188"
+    type_i_max_buildable_sqft:
+      value: 10000
+      cite: 'Washington County CDC 307-2.13 and 307-3, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L87-L94,L126-L130"
+    type_i_density_escape_du_per_acre:
+      value: 20
+      cite: Washington County CDC 307-2.13 and 307-3, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L87-L94,L126-L130"
+    type_i_standard_plat_required:
+      value: true
+      cite: Washington County CDC 307-2.13, Type I only on a lot approved through a Standard Subdivision or Standard Partition plat; no site fact holds how a lot was made, so every lot is flagged
+      quote: "or/washington/_unincorporated/cdc.307.r-25plus.txt#L87-L94,L126-L130"
     max_units:
       value: 4
       cite: Washington County CDC 307-6.1 A(3), Quadplex - maximum four units per lot
@@ -1205,11 +1275,19 @@ zones:
       # 390-8.2 E permits Middle Housing (430-84) on an existing lot through
       # a Type I procedure; 390-8.3 B takes a large lot whose units fall
       # short of five per acre through Type II. Both headed "Uses Permitted".
-      # 106-124 lists R-6 NB among the Middle Housing districts. The Type II
-      # doubt is the same as in the urban R districts.
+      # 106-124 lists R-6 NB among the Middle Housing districts. Past the
+      # Type I gates the lot is YELLOW, as in the urban R districts.
       value: true
       cite: Washington County CDC 390-8.2 E and 390-8.3 B (Middle Housing, Type I and Type II) + 106-124
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L131,L184-L191,L234,L245-L251"
+    type_i_max_buildable_sqft:
+      value: 13100
+      cite: 'Washington County CDC 390-8.2 E and 390-8.3 B, Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L184-L191,L234-L239,L245-L252"
+    type_i_density_escape_du_per_acre:
+      value: 5
+      cite: Washington County CDC 390-8.2 E and 390-8.3 B, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L184-L191,L234-L239,L245-L252"
     max_units:
       value: 4
       cite: Washington County CDC 390-8.5 A(1)(c), Quadplex - maximum four units per lot
@@ -1254,6 +1332,10 @@ zones:
       value: true
       cite: Washington County CDC 390-9.3 A (Attached Dwelling Units, Type II) + 390-16.2 A-B + 106-70.1 B
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L510,L516,L1525-L1531,L1536-L1537"
+    review_discretion:
+      value: conditions
+      cite: 'Washington County CDC 390-9.3, the Attached Dwelling Units this zone is read through are a Type II use; "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L510-L515"
     max_density_du_per_acre:
       # The Planned Development bonus in B(2) is a Type III application and
       # is not carried.
@@ -1333,6 +1415,14 @@ zones:
       value: true
       cite: Washington County CDC 390-10.2 K and 390-10.3 B (Middle Housing, Type I and Type II) + 106-124
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L657,L707-L711,L734,L741-L746"
+    type_i_density_escape_du_per_acre:
+      value: 12
+      cite: Washington County CDC 390-10.2 K and 390-10.3 B, past the size limit Type I only where the Middle Housing units "meet or exceed the minimum density required for other housing types in the district"
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L707-L710,L734-L745"
+    type_i_standard_plat_required:
+      value: false
+      cite: Washington County CDC 390-10.2 K, the Type I Middle Housing path in R-15 NB states no plat condition (overrides R-15)
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L707-L710,L734-L745"
     max_units:
       value: 4
       cite: Washington County CDC 390-10.5 A(1)(c), Quadplex - maximum four units per lot
@@ -1367,6 +1457,10 @@ zones:
       value: true
       cite: Washington County CDC 390-11.3 A (Attached Dwelling Units, Type II) + 390-16.2 + 106-70.1 B
       quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L887,L893,L1525-L1530"
+    review_discretion:
+      value: conditions
+      cite: 'Washington County CDC 390-11.3 A, Attached Dwelling Units are a Type II use; "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.390.north-bethany.txt#L887-L893"
     max_density_du_per_acre:
       value: 24
       cite: Washington County CDC 390-11.5, no more than 24 units per acre
@@ -1538,11 +1632,19 @@ zones:
       # Table A, "Middle Housing - Section 430-84 (Use is distinct from
       # others in this table) (30.c.)": I/II in TO:R9-12, TO:R12-18 and
       # TO:R18-24, N everywhere else. 30.c. is the Type I path on an existing
-      # platted lot of up to 10,000 sq ft buildable; the rest is Type II. The
-      # Type II doubt is the one the urban R districts carry.
+      # platted lot of up to 10,000 sq ft buildable; the rest is Type II,
+      # YELLOW as in the urban R districts (Steph 2026-10-14).
       value: true
       cite: Washington County CDC 375 Table A, Middle Housing row (I/II), and 375-7 30.c. + 106-124
       quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L684,L695,L697-L700,L885-L888"
+    type_i_max_buildable_sqft:
+      value: 10000
+      cite: 'Washington County CDC 375-7 30.c (i) and Table A (I/II), Type I Middle Housing up to this buildable area; past it Type II, on which "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L94-L100,L439-L445,L697-L700"
+    type_i_standard_plat_required:
+      value: true
+      cite: Washington County CDC 375-7 30.c, Type I only "on an existing lot or parcel that was approved through a Standard Subdivision or Standard Partition plat"; no site fact holds how a lot was made, so every lot is flagged
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L94-L100,L439-L445,L697-L700"
     max_units:
       value: 4
       cite: Washington County CDC 375 Table C(1), Quadplex - four units per parent lot
@@ -1902,6 +2004,10 @@ zones:
       value: true
       cite: Washington County CDC 392-4, Attached Dwelling Unit (Type II in NMU) + 106-70.1 B
       quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L42-L43,L53-L54"
+    review_discretion:
+      value: conditions
+      cite: 'Washington County CDC 392-4, Attached Dwelling Unit is a Type II use in NMU; "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L30-L39"
     min_lot_sqft:
       value: 6000
       cite: Washington County CDC 392-8, Lot Area Minimum
@@ -1981,6 +2087,10 @@ zones:
       value: true
       cite: Washington County CDC 392-4, Attached Dwelling Unit (Type II in CCMU) + 106-70.1 B
       quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L42-L43,L53-L54"
+    review_discretion:
+      value: conditions
+      cite: 'Washington County CDC 392-4, Attached Dwelling Unit is a Type II use in CCMU; "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L30-L39"
     min_lot_sqft:
       value: 6000
       cite: Washington County CDC 392-8, Lot Area Minimum

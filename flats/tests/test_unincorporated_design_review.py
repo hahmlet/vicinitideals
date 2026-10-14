@@ -1,28 +1,46 @@
-"""Clackamas districts that need design review are RED, not green (Steph 2026-10-09).
+"""Clackamas districts that need design review are YELLOW (Steph 2026-10-14).
 
 ZDO 1102.01(A) requires design review for development in HDR, MR-1, MR-2, PMD
-and VA, and a quadplex is none of the listed exceptions. The by-right-only
-ruling (2026-10-08) makes those districts red, although Table 315-1 prints a
-bare P for the use. 163 MR-1/MR-2 lots were green on the live map before this.
+and VA (and every commercial district), and a quadplex is none of the listed
+exceptions. From 2026-10-09 the by-right-only ruling (2026-10-08) made those
+districts red. Steph's review rule of 2026-10-14 replaced it: a review held to
+measurable standards is green, one that may add conditions or weighs judgement
+beside them is yellow, one that is all judgement is red. Design review holds a
+quadplex to Section 1005 (1102.03(A)), whose facade criteria mix measurable
+standards with judgement words ("architectural relief, variety and visual
+interest"), so the districts admit the pod with ``review_discretion:
+judgement`` (REVIEW-CONDITIONS, yellow). PMU1-3 stay red: Table 510-3 and the
+master plan (1102.03(B)) are a one-off decision.
 """
 
 from __future__ import annotations
 
 import pytest
 
+from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
 
 pytestmark = pytest.mark.unit
 
 LAYER = "or/clackamas/_unincorporated"
+REVIEWED = ["HDR", "MR1", "MR2", "PMD", "VA", "SCMU"]
+#: HDR's setbacks are the 1005.02(L) solar plane, which needs the north lot
+#: line's bearing (FOLLOWUPS 69, the lot-line-bearing lane): admitted by the
+#: use, and grey until those are encoded. Nothing is invented for it here.
+#: SCMU's front building line turns on the street type of each frontage on
+#: Map 1005-1 (1005.09), which no lot carries, so it is grey for the same
+#: reason.
+UNENCODED = {"HDR", "SCMU"}
 
 
-@pytest.mark.parametrize("zone", ["HDR", "MR1", "MR2", "PMD", "VA"])
-def test_design_review_districts_refuse_the_pod_outright(zone: str) -> None:
-    use = RuleSet(load_rules()).resolve(LAYER, zone).values["quadplex_allowed"]
-    assert use.value is False
-    assert use.levers == frozenset()
+@pytest.mark.parametrize("zone", REVIEWED)
+def test_design_review_districts_admit_the_pod_with_a_judgement_flag(zone: str) -> None:
+    got = RuleSet(load_rules()).resolve(LAYER, zone)
+    assert got.values["quadplex_allowed"].value is True
+    assert got.values["review_discretion"].value == "judgement"
+    if zone not in UNENCODED:
+        assert got.missing_required == (), zone
 
 
 def test_the_districts_that_stay_by_right_are_untouched() -> None:
@@ -39,27 +57,34 @@ def _held(zone: str):
     return load_rules()[LAYER].zones[zone].values["quadplex_allowed"]
 
 
-@pytest.mark.parametrize("zone", ["HDR", "MR1", "MR2", "PMD", "VA"])
-def test_the_refusal_cites_the_design_review_sentence_not_the_use_table(zone: str) -> None:
-    # The use table says P; the red is the ruling's, so the value quotes
-    # 1102.01(A), which names the district, and 1102.03, the Type II process.
-    from flats.provenance.store import ProvenanceStore
+@pytest.mark.parametrize("zone", REVIEWED)
+def test_the_flag_cites_the_design_review_and_the_judgement_words(zone: str) -> None:
+    # The use table says P and the value quotes it; the yellow is the
+    # review's, so review_discretion quotes the 1005 words a reviewer weighs
+    # and names 1102.01(A) and the Type II process in its cite.
+    store = ProvenanceStore()
+    held = load_rules()[LAYER].zones[zone].values
+    assert "zdo.1102.txt" not in held["quadplex_allowed"].prov.quote
+    review = held["review_discretion"]
+    assert "1102.01(A)" in review.prov.cite and "Type II" in review.prov.cite
+    words = " ".join(store.quote(review.prov.quote).split())
+    assert "architectural relief, variety and visual interest" in words
+    assert "Provide visual interest" in words
+    gate = " ".join(store.quote(f"{LAYER}/zdo.1102.txt#L13,L131,L155").split())
+    assert "HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts" in gate
+    assert "Type II application" in gate
+    assert "conditions of design review approval" in gate
 
-    quote = _held(zone).prov.quote
-    assert quote.startswith("or/clackamas/_unincorporated/zdo.1102.txt#")
-    text = ProvenanceStore().quote(quote)
-    assert "Design review is required for" in text
-    assert "HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA, and VTH Districts" in text
-    assert "Type II application" in text
 
-
-@pytest.mark.parametrize("zone", ["SCMU", "PMU1", "PMU2", "PMU3"])
-def test_the_commercial_refusals_cite_the_commercial_line(zone: str) -> None:
-    from flats.provenance.store import ProvenanceStore
-
-    text = ProvenanceStore().quote(_held(zone).prov.quote)
+@pytest.mark.parametrize("zone", ["PMU1", "PMU2", "PMU3"])
+def test_the_master_plan_districts_stay_red_and_cite_the_commercial_line(zone: str) -> None:
+    held = _held(zone)
+    assert held.value is False
+    assert not held.variants
+    text = ProvenanceStore().quote(held.prov.quote)
     assert "Commercial zoning districts" in text
     assert "Type II application" in text
+    assert "a master plan shall be required" in text
 
 
 def test_the_prefabricated_exception_is_a_single_family_word() -> None:

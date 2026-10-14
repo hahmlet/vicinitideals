@@ -2111,7 +2111,7 @@ zones:
       value: 14.5
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1286"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): every dwelling row of Table 19.303.2
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.905, are not stored; held red until they are read. The 2026-10-08 ruling read: every dwelling row of Table 19.303.2
       reads CU in the NMU column, and a conditional use is a Type III hearing,
       not a by-right path. Footnote 2 lifts conditional-use review only for
       "residential uses built as part of a vertical mixed-use building", which
@@ -2285,7 +2285,7 @@ zones:
       value: 7.0
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1052-L1055"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): the same CU column as NMU in Table
+      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.905, are not stored; held red until they are read. The 2026-10-08 ruling read: the same CU column as NMU in Table
       19.303.2 -- every dwelling row is CU, and a conditional use is a Type III
       hearing, not a by-right path. The standards below are kept so the ruling
       can be reversed. NOT ENCODED: side and rear setbacks. Table 19.303.3

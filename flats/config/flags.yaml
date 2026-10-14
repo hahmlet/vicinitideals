@@ -490,6 +490,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_RESOURCE]
+  REVIEW-CONDITIONS:
+    description: "The pod is taken here only through a review whose standards are clear and measurable but whose decider may add conditions, or whose criteria also weigh judgement words (\"compatible\", \"character\"). The fact says which: `conditions` or `judgement` (the zone's review, named in the citation), or, in Washington County, `buildable_area` (the lot is past the quick Type I review's size limit and four homes miss the district's minimum density) or `standard_plat` (the Type I path needs a lot made by a standard subdivision or partition plat, which nothing here holds), either of which leaves the Type II review, on which the county may add conditions (CDC 207-5). Steph 2026-10-14: \"If it's otherwise clear and measurable, but there is a 'may add conditions', yellow.\" Never red, never green."
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot, design, fact]
+    path: "Ask the city or county what conditions the review would put on four homes here, or apply. In Washington County, where the fact is the plat, the county's plat records may show the lot came from a standard subdivision or partition, which keeps it on the Type I path"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_REVIEW_CONDITIONS]
 
   # --- a path round a bind, once the rule set accepts it -----------------
   APPROVAL-NEEDED:
