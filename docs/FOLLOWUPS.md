@@ -2593,8 +2593,8 @@ read when the weekly full re-screen lands.
    is larger, the second design can come out green on ground it does not have. Fix: key on the
    envelope geometry (or its hash); bound every city, read every lost green. Not assigned.
 75. [scan: YES, a splice of Cornelius + west Washington County] **The 2026-10-12 weekly (run 73,
-   CANDIDATE, waits for Steph: the gate's `lots_drift` blocks on +4.1% measured lots, which is
-   Tigard/Cornelius/Estacada switched on) ran on the July 1 m elevation, not the Washington
+   PROMOTED by Steph 2026-10-14 over the `lots_drift` gate, +4.1% measured lots = Tigard/Cornelius/
+   Estacada switched on; runs 67 and 72 pruned) ran on the July 1 m elevation, not the Washington
    one.** `data/quadfit_demw` (the tree with the Washington 1 m tiles) was deleted in the
    2026-10-10 cleanup; the chain's default `--dem-from data/quadfit/raw` holds Portland-metro
    tiles only (x50-x55). Effect, all toward caution: every measured Cornelius lot carries
