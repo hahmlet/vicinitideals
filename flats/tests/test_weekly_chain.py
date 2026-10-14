@@ -278,12 +278,97 @@ def test_the_roll_rule_wants_every_county_roll_column(wc, tmp_path) -> None:
     assert "no lot table" in wc.roll_problems(tmp_path / "none.parquet")[0]
 
 
+#: UTM 10N (the 1 m tiles' CRS) points: one under the July tiles (east of
+#: easting 500,000, Hillsboro) and one west of them and of the ~10 m model
+#: (Cornelius), the ground the 2026-10-12 weekly could not see.
+UNDER_JULY, WEST_OF_JULY = (501_000.0, 5_040_700.0), (495_300.0, 5_040_700.0)
+
+
+def _tile(path: Path, west: float, east: float, south: float = 5_030_000.0, north: float = 5_050_000.0) -> Path:
+    """A one-band GeoTIFF over the box, in the 1 m tiles' CRS, 1 km pixels."""
+    import numpy as np
+    import rasterio
+    from rasterio.transform import from_bounds
+
+    width, height = int((east - west) // 1000), int((north - south) // 1000)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with rasterio.open(path, "w", driver="GTiff", width=width, height=height, count=1, dtype="float32",
+                       crs="EPSG:26910", transform=from_bounds(west, south, east, north, width, height)) as out:
+        out.write(np.zeros((1, height, width), dtype="float32"))
+    return path
+
+
+def _lots(path: Path, lots: list[tuple[str, tuple[float, float]]]) -> Path:
+    """An s4-shaped lot table: a 10 m square lot (in the working CRS) per (jurisdiction, UTM point)."""
+    import pandas as pd
+    import shapely
+    from pyproj import Transformer
+
+    tf = Transformer.from_crs("EPSG:26910", "EPSG:2913", always_xy=True)
+    rows = []
+    for n, (jurisdiction, (e, north)) in enumerate(lots):
+        x, y = tf.transform(e, north)
+        rows.append({"TLID": f"T{n}", "jurisdiction": jurisdiction, "wkb": shapely.box(x, y, x + 33, y + 33).wkb})
+    path.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(rows).to_parquet(path, index=False)
+    return path
+
+
+def test_measured_lots_on_no_elevation_model_refuse_the_run(wc, tmp_path) -> None:
+    raw = tmp_path / "raw"
+    _tile(raw / "dem" / "x50.tif", 500_000, 510_000)  # the July tiles stop at easting 500,000
+    lots = _lots(tmp_path / "s4_lots.parquet", [("hillsboro", UNDER_JULY), ("cornelius", WEST_OF_JULY),
+                                                 ("cornelius", WEST_OF_JULY)])
+    said = wc.elevation_problems(lots, raw)
+    assert len(said) == 1 and "2 measured lots stand on no elevation model" in said[0]
+    assert "cornelius 2 of 2" in said[0] and "hillsboro" not in said[0] and "quadfit_demw" in said[0]
+    # the ~10 m model covers a lot as well as a 1 m tile does: the slope reads it
+    _tile(raw / "dem10_utm" / "coarse.tif", 490_000, 500_000)
+    assert wc.elevation_problems(lots, raw) == []
+    # the Washington tiles alone do too
+    (raw / "dem10_utm" / "coarse.tif").unlink()
+    _tile(raw / "dem" / "x49.tif", 490_000, 500_000)
+    assert wc.elevation_problems(lots, raw) == []
+    assert "no readable elevation model" in wc.elevation_problems(lots, tmp_path / "empty")[0]
+    assert "no lot table" in wc.elevation_problems(tmp_path / "none.parquet", raw)[0]
+
+
+def test_the_preflight_checks_the_elevation_against_this_runs_lots_else_the_newest(wc, tmp_path) -> None:
+    chain = _chain(wc, tmp_path)
+    assert wc.measured_lots(chain) is None
+    older = _lots(tmp_path / "data" / "quadfit_2026-10-01_wash" / "s4_lots.parquet", [("cornelius", WEST_OF_JULY)])
+    newer = _lots(tmp_path / "data" / "quadfit_2026-10-07_weekly_x" / "s4_lots.parquet", [("cornelius", WEST_OF_JULY)])
+    os.utime(older, (1, 1))
+    assert wc.measured_lots(chain) == newer
+    own = _lots(chain.quadfit / "s4_lots.parquet", [("cornelius", WEST_OF_JULY)])
+    os.utime(own, (1, 1))
+    assert wc.measured_lots(chain) == own
+
+
+@pytest.mark.timeout(120)
+def test_lots_off_the_elevation_stop_the_chain_before_the_bridge(wc, tmp_path) -> None:
+    from flats.ingest.institutional import ROLL_COLUMNS
+
+    chain = _chain(wc, tmp_path)
+    _parquet(chain.flats("normalized") / "lots.parquet", ROLL_COLUMNS)
+    _parquet(chain.quadfit / "s5o_lots.parquet", [f"ovl_{k}" for k in _overlay_keys(wc)])
+    _lots(chain.quadfit / "s4_lots.parquet", [("hillsboro", UNDER_JULY), ("cornelius", WEST_OF_JULY)])
+    _tile(chain.quadfit / "raw" / "dem" / "x50.tif", 500_000, 510_000)
+    assert _run(wc, tmp_path, {}, gated=True) == 2
+    assert _final(tmp_path).startswith("REFUSED before bridge: elevation: 1 measured lots")
+    assert not (tmp_path / "state" / "bridge.done").exists()
+    _tile(chain.quadfit / "raw" / "dem" / "x49.tif", 490_000, 500_000)
+    assert _run(wc, tmp_path, {}, gated=True) == 0
+
+
 @pytest.mark.timeout(120)
 def test_a_measurement_kept_from_older_code_stops_the_chain_before_the_bridge(wc, tmp_path) -> None:
     from flats.ingest.institutional import ROLL_COLUMNS
 
     chain = _chain(wc, tmp_path)
     keys = _overlay_keys(wc)
+    _lots(chain.quadfit / "s4_lots.parquet", [("hillsboro", UNDER_JULY)])
+    _tile(chain.quadfit / "raw" / "dem" / "x50.tif", 500_000, 510_000)
     _parquet(chain.flats("normalized") / "lots.parquet", ROLL_COLUMNS)
     s5o = _parquet(chain.quadfit / "s5o_lots.parquet", [f"ovl_{k}" for k in keys if not k.endswith("_site")])
     assert _run(wc, tmp_path, {}, gated=True) == 2
