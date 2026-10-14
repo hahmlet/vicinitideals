@@ -257,7 +257,8 @@ def use_gate_for(rules: Any, relief: Any) -> Callable[[str, str], UseGate | None
 
     Mirrors the two lines of :func:`flats.score.screen.screen` that decide it:
     ``quadplex_allowed`` resolved ``False`` with no lever that could turn it
-    true is a settled prohibition; RED unless the relief policy lists a
+    true (none at all, or every combination of them also ``False``) is a
+    settled prohibition; RED unless the relief policy lists a
     conditional-use path for the use there, in which case yellow. As screened,
     the answer is the signed one only when the resolution is trusted; until
     the use line is signed it is ``unknown`` with the resolution's own reason,
@@ -266,6 +267,26 @@ def use_gate_for(rules: Any, relief: Any) -> Callable[[str, str], UseGate | None
     from flats.rules.resolver import Verdict as RuleVerdict
 
     memo: dict[tuple[str, str], UseGate | None] = {}
+
+    def _false_on_every_lever(layer_id: str, zone: str, use: Any) -> bool:
+        # A prohibition whose every exception is also a prohibition is still
+        # settled: Hillsboro SCR-OTC is false, and false again on a flag lot;
+        # Sandy R-1 is false, and false on unit lots. Without this the lever
+        # alone kept the gate silent and an unmeasured lot in a zone the city
+        # forbids screened yellow, not red (the 2026-10-12 weekly: 1,104 lots).
+        # A zone that encodes its own relief path is left to the screen.
+        if getattr(use, "relief", ()) or len(use.levers) > 6:
+            return False
+        names = sorted(use.levers)
+        for mask in range(1, 1 << len(names)):
+            on = [n for i, n in enumerate(names) if mask >> i & 1]
+            try:
+                other = rules.resolve(layer_id, zone, on).values.get("quadplex_allowed")
+            except Exception:
+                return False
+            if other is None or other.value is not False or getattr(other, "ambiguous", ()):
+                return False
+        return True
 
     def gate(layer_id: str, zone: str) -> UseGate | None:
         key = (layer_id, zone)
@@ -278,7 +299,7 @@ def use_gate_for(rules: Any, relief: Any) -> Callable[[str, str], UseGate | None
             got = None
         if got is not None:
             use = got.values.get("quadplex_allowed")
-            if use is not None and use.value is False and not use.levers:
+            if use is not None and use.value is False and (not use.levers or _false_on_every_lever(layer_id, zone, use)):
                 path = relief.for_use(layer_id)
                 signed = "yellow" if path.available else "red"
                 if got.verdict is RuleVerdict.trusted:

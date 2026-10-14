@@ -276,8 +276,10 @@ class _Rules:
         self.table = table
         self.calls = 0
 
-    def resolve(self, layer_id, zone):
+    def resolve(self, layer_id, zone, conditions=()):
         self.calls += 1
+        if conditions and (layer_id, zone, frozenset(conditions)) in self.table:
+            return self.table[(layer_id, zone, frozenset(conditions))]
         if (layer_id, zone) not in self.table:
             raise KeyError(zone)
         return self.table[(layer_id, zone)]
@@ -298,6 +300,9 @@ def test_the_use_gate_mirrors_the_screen() -> None:
             ("or/a", "R5"): _Resolution(True, trusted=False),
             ("or/a", "R7"): _Resolution(None, trusted=False),
             ("or/a", "LR7"): _Resolution(False, trusted=False, levers=frozenset({"conditional_use"})),
+            ("or/a", "LR7", frozenset({"conditional_use"})): _Resolution(True, trusted=False, levers=frozenset({"conditional_use"})),
+            # False, and false again on a flag lot (Hillsboro SCR-OTC): still forbidden.
+            ("or/a", "OTC"): _Resolution(False, trusted=True, levers=frozenset({"flag_lot"})),
             ("or/b", "C3"): _Resolution(False, trusted=True),
             ("or/c", "C3"): _Resolution(False, trusted=True),
         }
@@ -307,6 +312,8 @@ def test_the_use_gate_mirrors_the_screen() -> None:
     assert gate("or/a", "C3") == ("unknown", "RULE_UNVERIFIED", "red", "USE_PROHIBITED")
     # Permitted, no answer, or a prohibition some condition can lift: no answer here.
     assert gate("or/a", "R5") is None and gate("or/a", "R7") is None and gate("or/a", "LR7") is None
+    # Every exception also forbids it: the lever changes nothing, so it is settled.
+    assert gate("or/a", "OTC") == ("red", "USE_PROHIBITED", "red", "USE_PROHIBITED")
     # A zone the resolver does not hold is not an answer either.
     assert gate("or/a", "ZZ") is None
     # Signed: the same colour both ways.
