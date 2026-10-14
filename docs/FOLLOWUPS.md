@@ -1794,9 +1794,14 @@ read when the weekly full re-screen lands.
    $500k of buildings): the sample is ordinary RES-B houses; the odd ones are existing
    apartment complexes (28 lots, prop code 701, $0.6M-$19.6M of buildings: RES-D 15, RES-E
    7, TMU 5, RES-B 1), churches kept checked by ruling (911/913), one 981 charity at 11895
-   SW 91st Ave ($13.2M of buildings), and occupied TMU commercial. STILL OPEN: Cornelius
-   R-10 tax lot 1N335CD01200 screens yellow `zone_not_in_rules` (the bridge reads the map
-   code AF-5 and not the `lot_zones` R-10) -- one lot; the apartment-complex greens are a
+   SW 91st Ave ($13.2M of buildings), and occupied TMU commercial. CORNELIUS R-10 lot
+   1N335CD01200 FIXED on flats/run74-loose-ends (2026-10-14, rides the next weekly, no
+   splice): the lot is not read by the bridge at all -- Metro's layer prints 0.00003% of it
+   as county AF-5 (zone_frac 2.5e-7), so quadfit s2 gave it AF-5 and s3 dropped it
+   `zone_not_in_rules`; only FLATS normalize applied the `lot_zones` hand assignment.
+   s3_filter.lot_zone_rewrites now applies it (home_zone_raw keeps AF-5; test in
+   test_structural_filter.py). It is the ONLY lot in the corpus with a `lot_zones` entry,
+   so one lot shares the cause. The apartment-complex greens are a
    Steph RULED 2026-10-14: occupied apartment complexes STAY GREEN (the map answers "does the pod fit", not "is it for sale").
 52. [scan: lands at 49(i)'s splice or the next weekly; no re-screen, no promotion]
    **Lots dropped before a fit (run 65): 11,427 yellow NOT_MEASURED +
@@ -2602,5 +2607,43 @@ read when the weekly full re-screen lands.
    sentinel or a fixed reference length, not a measurement. Red is the safe direction, but
    a sentinel can hide a lot that fits (false RED) or mask a bug elsewhere. Find which check
    emits it (run 73, `flats.lot_results` checks for Tigard pod80x25), say whether -43 is real.
-   AGENT INSTRUCTIONS GIVEN 2026-10-14 ("run74-loose-ends", with 51's Cornelius AF-5 lot and
-   the Estacada doubts).
+   READ 2026-10-14 (run74-loose-ends, run 74):
+   (a) -43 is NOT a sentinel and NOT a measurement of how far off a lot is: it is the floor
+   fit_ft reports when no window as wide as building + lane (80 + 20 = 100 ft) exists at any
+   street bearing (axis_required Tigard RES-B etc.: only street bearings tried, flip
+   forbidden): best_depth 0 minus (25 ft building + 18 ft court behind the rear) = -43.
+   pod56x36 floors at -36 the same way. Same value in 20+ cities (run 74 pod80x25@2, -43:
+   Tigard 6,340, Portland 684, WashCo uninc 632, Clackamas uninc 291, Gresham 259,
+   Tualatin 111, ...). Checked against independent exact geometry (shapely sweep-erode,
+   calibrated on 45 known fits, 45/45 agree) over 257 + 785 floored designs: all true
+   no-fits except raster near-misses -- 3 of 785 (0.4%) fit at width-0.5 ft, 5 (0.6%) at
+   width-1 ft. So no false-RED bug at scale and NO code change; the near-misses are lots
+   whose window is under a half-foot short of 100 ft, shown as -43 (red) instead of a small
+   miss in the 0.5 ft tight band. DECISION OPEN (colour-changing, so not done): measure the
+   width shortfall when best_depth is 0 so a <0.5 ft miss lands tight/review; ~0.4% of the
+   floored designs (est. ~25 Tigard lots), would need a bound on 137 and a read of every
+   gained lot.
+   (b) Estacada 34E17  02000 (30941 SE River Mill Rd) is split-zoned: NCR 46.9% / CMU 40.6%
+   / HC 12.5% of the lot, screened as NCR (plurality). The drawn pod's BUILDING is 24.9% in
+   NCR and 75.1% in CMU (court 100% NCR, envelope 54.8% NCR) -- so the green is a FALSE GREEN
+   in the sense asked: the pod does not lie wholly inside NCR. Split-zoned lots are handled
+   the same way everywhere: ONE zone per lot (majority/plurality zone, zone_frac < 0.9 sets
+   split_zone), the whole lot read under it, and no flag is emitted (flags [] on this lot);
+   only Lake Oswego has a footnote on it and the `split_zone` condition is a never-measured
+   site fact. Run 74 pod80x25@2: 4,744 split-zoned results (226 green / 919 yellow / 3,599
+   red). Crude check of the 226 greens (drawn building vs the polygons carrying the lot's
+   own zone code, quadfit zoning layers): 145 wholly inside, 37 partly outside (Portland 29,
+   Clackamas uninc 3, WashCo uninc 3, Estacada 1, Beaverton 1), 44 unresolved (Portland 40,
+   WashCo uninc 2, Gresham 1, Cornelius 1: layer code spelling differs from the lot's
+   zone_raw, so the test found no polygon).
+   OPEN, needs Steph's ruling before a build: put the pod in the zone it sits in, or flag
+   every green split-zoned lot yellow, or red when the building leaves the zone.
+   (c) Estacada 34E20AC00200 / 00201 (1015 NW Wade St): owner NOT in our data (the RLIS
+   roll carries no owner name). The roll says: commercial vacant/improved class 201, COM,
+   2017-09 transfer for $0, 00201 built 1965 with $657k of buildings and assessed value
+   $555k (00200: land only, assessed $156k). Clackamas rolls hold no 9xx exempt codes and
+   mark exempt land only by assessed value 0; both lots are assessed > 0, so the roll says
+   TAXED, and the public-land rule correctly did not fire. The library is 825 NW Wade and
+   the city community room 915 NW Wade, not these lots. Human lookup needed (Clackamas
+   assessor, tax lot 34E20AC00201): if the owner is the city or a district, it is a miss
+   the roll cannot see.

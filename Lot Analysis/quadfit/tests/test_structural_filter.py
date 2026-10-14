@@ -22,7 +22,7 @@ import shapely
 
 from common import load_rules
 from s1_normalize import condo_columns
-from s3_filter import pocket_rewrites, structural_filter
+from s3_filter import lot_zone_rewrites, pocket_rewrites, structural_filter
 from s5o_overlays import overlay_reach
 
 
@@ -208,3 +208,23 @@ def test_a_pocket_lot_is_carved_by_both_jurisdictions_overlays() -> None:
     assert overlay_reach(lots) == [("milwaukie", "clackamas_unincorporated"), ("portland",)]
     # A stage file from before the column reads the lot's own only.
     assert overlay_reach(lots.drop(columns=["home_jurisdiction"])) == [("milwaukie",), ("portland",)]
+
+
+# -- s3: tax lots a FLATS layer assigns by hand ----------------------------
+
+
+def test_the_hand_assigned_cornelius_lot_is_measured_under_its_own_zone(rules, layers) -> None:
+    """FOLLOWUPS 51: 1N335CD01200 prints 0.00003% of itself as the county
+    district AF-5 on Metro's layer; the city's map (and FLATS's lot_zones) say
+    R-10. s3 used to drop it `zone_not_in_rules`; it must keep it as R-10 and
+    still record the printed code. A neighbour carrying AF-5 stays dropped."""
+    assert lot_zone_rewrites(rules, layers) == {("cornelius", "1N335CD01200"): "R-10"}
+    rows = [
+        _lot("1N335CD01200", "cornelius", "AF-5", COUNTY="W"),
+        _lot("OTHER-AF5", "cornelius", "AF-5", COUNTY="W"),
+    ]
+    kept, _funnel, gone = _run(rows, rules, layers)
+    assert set(kept.index) == {"1N335CD01200"}
+    assert gone.loc["OTHER-AF5", "step"] == "zone_not_in_rules"
+    k = kept.loc["1N335CD01200"]
+    assert (k["jurisdiction"], k["zone_raw"], k["zone"], k["home_zone_raw"]) == ("cornelius", "R-10", "R-10", "AF-5")

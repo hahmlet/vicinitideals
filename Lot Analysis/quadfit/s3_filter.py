@@ -125,6 +125,34 @@ def pocket_rewrites(
     return out
 
 
+def lot_zone_rewrites(rules: Any, layers: dict[str, Any] | None = None) -> dict[tuple[str, str], str]:
+    """``(quadfit jurisdiction, TLID) -> zone`` for every tax lot a FLATS layer
+    assigns by hand (``lot_zones``): the lot whose zone the city's own map
+    settles and the regional layer cannot print. ``flats.ingest.normalize``
+    applies them to the lots it screens; s2 reads only the regional layer, so
+    Cornelius's single R-10 parcel (1N335CD01200, 0.00003% of it printed as
+    the county district AF-5) reached s3 as ``AF-5`` and was dropped
+    ``zone_not_in_rules``. A hand assignment is used only where quadfit's rules
+    hold the zone; one they do not hold changes nothing here.
+    """
+    from flats.encode.port_quadfit import layer_id_for
+
+    if layers is None:
+        from flats.rules.loader import load_rules as load_layers
+
+        layers = load_layers()
+    out: dict[tuple[str, str], str] = {}
+    for slug, home in rules.jurisdictions.items():
+        try:
+            layer = layers.get(layer_id_for(slug))
+        except KeyError:
+            continue
+        for tlid, lot_zone in (getattr(layer, "lot_zones", None) or {}).items():
+            if home.rule_for(lot_zone.zone) is not None:
+                out[(slug, str(tlid))] = lot_zone.zone
+    return out
+
+
 def structural_filter(
     lots: Any, rules: Any, layers: dict[str, Any] | None = None, *, say: Any = print
 ) -> tuple[Any, list[dict], Any]:
@@ -188,7 +216,22 @@ def structural_filter(
     lots["home_jurisdiction"] = lots["jurisdiction"]
     lots["home_zone_raw"] = lots["zone_raw"]
     lots["pocket_of"] = pd.Series([None] * len(lots), index=lots.index, dtype=object)
-    keys = [(str(j), str(z)) if isinstance(z, str) else None
+
+    # Tax lots a FLATS layer assigns by hand: the zone FLATS screens them
+    # under. home_zone_raw keeps the code the regional map printed.
+    by_hand = lot_zone_rewrites(rules, layers)
+    if by_hand:
+        pairs = [(str(j), str(t)) for j, t in zip(lots["jurisdiction"], lots["TLID"])]
+        hand = np.array([p in by_hand for p in pairs], dtype=bool)
+        if hand.any():
+            lots["zone_raw"] = lots["zone_raw"].astype(object)
+            lots.loc[hand, "zone_raw"] = [by_hand[p] for p, h in zip(pairs, hand) if h]
+            for (j, t), z in sorted(by_hand.items()):
+                n = sum(1 for p in pairs if p == (j, t))
+                if n:
+                    say(f"  lot_zones: {j} {t} read as {z!r} (assigned by hand)")
+
+    keys =[(str(j), str(z)) if isinstance(z, str) else None
             for j, z in zip(lots["jurisdiction"], lots["zone_raw"])]
     rewrites = pocket_rewrites(sorted({k for k in keys if k is not None}), rules, layers)
     hit = np.array([k in rewrites for k in keys], dtype=bool)
