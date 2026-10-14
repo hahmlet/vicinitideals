@@ -194,6 +194,36 @@ def test_the_split_survives_the_row() -> None:
     assert not sz.decode(None)
 
 
+def test_the_join_reads_the_zoning_map_quadfit_s1_stores_under_its_real_name(tmp_path) -> None:
+    # quadfit s1 writes ``s1_<zoning_layer>.parquet`` where the layer is itself
+    # named ``zoning_<city>`` (so ``s1_zoning_zoning_beaverton``). The first
+    # bound read ``s1_zoning_beaverton`` -- no such file -- joined nothing, and
+    # no unit test reached the file.
+    import pandas as pd
+
+    from flats.encode.port_quadfit import QUADFIT_RULES
+
+    layers = sz.zoning_layers(QUADFIT_RULES)
+    layer = layers["beaverton"]
+    polys, codes = zones(("R5", (0, 70)), ("CM2", (70, 200)))
+    pd.DataFrame({"zone_raw": codes, "wkb": [shapely.to_wkb(p) for p in polys]}).to_parquet(
+        tmp_path / f"s1_zoning_{layer}.parquet"
+    )
+    split_row = {
+        "jurisdiction": "beaverton",
+        "split_zone": True,
+        "lot_wkb": shapely.to_wkb(lot_100()),
+    }
+    one_zone = {"jurisdiction": "beaverton", "split_zone": False, "lot_wkb": shapely.to_wkb(lot_100())}
+    rows = [split_row, one_zone]
+
+    taken = sz.with_split_zones(rows, tmp_path, layers, own=lambda r, c: c == "R5", name=lambda r, c: c)
+
+    assert taken == 1
+    assert [p.zone for p in sz.decode(split_row[sz.ROW_KEY]).pieces] == ["CM2"]
+    assert sz.ROW_KEY not in one_zone
+
+
 # --- the screen ---------------------------------------------------------
 
 W, D = 100, 150

@@ -222,7 +222,7 @@ def with_split_zones(
             wanted.setdefault(layer, []).append(row)
     taken = 0
     for layer, members in sorted(wanted.items()):
-        path = stage_dir / f"s1_{layer}.parquet"
+        path = stage_dir / f"s1_zoning_{layer}.parquet"
         if not path.is_file():
             continue
         frame = pd.read_parquet(path, columns=["zone_raw", "wkb"])
