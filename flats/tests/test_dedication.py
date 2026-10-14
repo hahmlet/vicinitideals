@@ -402,6 +402,67 @@ def test_measure_reads_width_name_and_every_class_map_for_the_layer() -> None:
     assert county_only[7] == {"street_class_washington": "collector"}
 
 
+def _two_maps(tsp, tsp_names, ranks, streets, street_names) -> ClassMap:
+    return ClassMap(
+        serves=(WASHCO,),
+        lines=Lines.build(tsp, tsp_names),
+        kinds=("",) * len(tsp),
+        streets=Lines.build(streets, street_names),
+        types=(1500,) * len(streets),
+        ranks=ranks,
+        key="street_class_washington",
+    )
+
+
+# The front line reads the local class off a TSP line that stops at the
+# corner; the corner cut-off beyond it has no TSP line abreast.
+EDY = LineString([(X0 - 500, Y0 - 22), (X0 + 500, Y0 - 22)])
+EDY_TSP = LineString([(X0 - 500, Y0 - 22), (X0 + 50, Y0 - 22)])
+CUT = [X0 + 50, Y0, X0 + 70, Y0, "F"]
+
+
+def test_a_corner_piece_takes_the_class_read_for_its_street_on_the_lot() -> None:
+    cmap = _two_maps([EDY_TSP], ["SW EDY RD"], (0,), [EDY], ["SW EDY RD"])
+    assert dedication.edge_rank(CUT, cmap) is None
+    front, cut = dedication.measure([FRONT, CUT], WASHCO, [cmap])
+    assert front[6] == cut[6] == ["EDY RD"]
+    assert front[7] == cut[7] == {"street_class_washington": "local"}
+
+
+def test_a_piece_whose_street_is_read_nowhere_else_on_the_lot_stays_unread() -> None:
+    cmap = _two_maps([EDY_TSP], ["SW EDY RD"], (0,), [EDY], ["SW EDY RD"])
+    (cut,) = dedication.measure([CUT], WASHCO, [cmap])
+    assert cut[6] == ["EDY RD"] and cut[7] == {"street_class_washington": None}
+
+
+def test_a_piece_on_two_streets_stays_unread() -> None:
+    # A corner lot: the cut-off between the two street lines runs beside
+    # neither street, so it may be on either. Both streets read local on the
+    # lot's other lines; the piece still keeps the worst case.
+    cross = LineString([(X0 + 82, Y0 - 500), (X0 + 82, Y0 + 500)])
+    cmap = _two_maps(
+        [EDY_TSP, cross], ["SW EDY RD", "SW 150TH AVE"], (0, 0), [EDY, cross], ["SW EDY RD", "SW 150TH AVE"]
+    )
+    chord = [X0 + 50, Y0, X0 + 60, Y0 + 10, "F"]
+    side = [X0 + 60, Y0 + 10, X0 + 60, Y0 + 100, "F"]
+    front, cut, flank = dedication.measure([FRONT, chord, side], WASHCO, [cmap])
+    assert front[7] == flank[7] == {"street_class_washington": "local"}
+    assert cut[6] == ["150TH AVE", "EDY RD"]
+    assert cut[7] == {"street_class_washington": None}
+
+
+def test_a_piece_keeps_a_busier_class_its_own_points_read() -> None:
+    # The cut-off's far half is abreast of a collector stretch: the piece is
+    # unread (its points disagree), and takes the collector, not the local
+    # class its street reads on the front line.
+    collector = LineString([(X0 + 60, Y0 - 22), (X0 + 500, Y0 - 22)])
+    cmap = _two_maps([EDY_TSP, collector], ["SW EDY RD", "SW EDY RD"], (0, 2), [EDY], ["SW EDY RD"])
+    assert dedication.edge_rank(CUT, cmap) is None
+    front, cut = dedication.measure([FRONT, CUT], WASHCO, [cmap])
+    assert front[7] == {"street_class_washington": "local"}
+    assert cut[7] == {"street_class_washington": "collector"}
+
+
 def test_a_layer_with_no_map_measures_nothing() -> None:
     assert dedication.measure([FRONT], OREGON_CITY, []) == []
 

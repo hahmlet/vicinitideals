@@ -44,6 +44,11 @@ any bearing within reach of every point is read instead -- never farther than
 the street truly abutted -- and every street within reach counts as a name
 the line might be on.
 
+A short piece whose own class reading fails (a corner cut-off, a curve) but
+whose one street is read with a class on another line of the same lot takes
+the busiest class read for it (:func:`_lot_ranks`); a piece on two streets
+or an unread one stays at the worst case.
+
 **What is not.** A line no centreline reaches is *unmeasured* and gives up the
 whole distance (the lot line on the centre line). A line whose class or
 name is unread takes the deepest distance the zone states
@@ -61,7 +66,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Iterable, Mapping, Sequence
 
 from flats.geom.corridor import FRONT_REACH_FT, SAMPLES, STREET_CLASS, _fronted
-from flats.geom.street_class import ClassMap, _samples, edge_rank
+from flats.geom.street_class import ClassMap, _rank_at, _samples, edge_rank
 
 if TYPE_CHECKING:
     from flats.rules.resolver import ZoneResolution
@@ -293,14 +298,14 @@ def measure(edges: Iterable[Sequence[Any]], layer_id: str | None, maps: Sequence
     if cmap is None:
         return []
     ranked = [m for m in maps if _reads(m, layer_id)]
+    lines = [e for e in edges if len(e) >= 5 and e[4] == STREET_CLASS]
+    reads = [read_line(e, cmap) for e in lines]  # type: ignore[arg-type]
+    ranks = {m.key: _lot_ranks(lines, [names for _, _, names in reads], m) for m in ranked}
     out: list[list[Any]] = []
-    for e in edges:
-        if len(e) < 5 or e[4] != STREET_CLASS:
-            continue
-        width, public, names = read_line(e, cmap)  # type: ignore[arg-type]
+    for i, (e, (width, public, names)) in enumerate(zip(lines, reads)):
         classes: dict[str, str | None] = {}
         for m in ranked:
-            rank = edge_rank(e, m)  # type: ignore[arg-type]
+            rank = ranks[m.key][i]
             classes[m.key] = None if rank is None else BUCKETS.get(m.key, {}).get(rank)
         out.append(
             [
@@ -312,6 +317,45 @@ def measure(edges: Iterable[Sequence[Any]], layer_id: str | None, maps: Sequence
             ]
         )
     return out
+
+
+def _lot_ranks(
+    lines: Sequence[Sequence[Any]], names: Sequence[tuple[str, ...] | None], cmap: ClassMap
+) -> list[int | None]:
+    """Each street line's class rank on ``cmap``: :func:`edge_rank`, or, for a
+    line it leaves unread, the busiest rank read for that line's one street
+    on the lot's other lines.
+
+    A corner cut-off or a short curve piece has no TSP line abreast at some
+    sample point, so its own reading fails; left unread it takes the zone's
+    deepest distance (61 ft on a Sherwood local street). Where the piece is
+    on ONE named street and that street is read with a class on another line
+    of the same lot, the piece takes the busiest class read for it there and
+    on the piece's own sample points -- the rank only rises with the
+    distance on every map here, so it is never shallower than the street it
+    is on. A piece with no name, with two names (it may be on either
+    street), or whose name is read on no other line of this lot stays
+    unread: the worst case (coordinator ruling 2026-10-14)."""
+    own = [edge_rank(e, cmap) for e in lines]  # type: ignore[arg-type]
+    by_name: dict[str, int] = {}
+    for rank, got in zip(own, names):
+        if rank is not None and got is not None and len(got) == 1:
+            by_name[got[0]] = max(rank, by_name.get(got[0], rank))
+    out: list[int | None] = []
+    for e, rank, got in zip(lines, own, names):
+        if rank is None and got is not None and len(got) == 1 and got[0] in by_name:
+            seen = [r for r in _point_ranks(e, cmap) if r is not None]
+            rank = max([by_name[got[0]], *seen])
+        out.append(rank)
+    return out
+
+
+def _point_ranks(edge: Sequence[Any], cmap: ClassMap) -> list[int | None]:
+    got = _samples(edge)  # type: ignore[arg-type]
+    if got is None:
+        return []
+    points, own = got
+    return [_rank_at(p, own, cmap) for p in points]
 
 
 def key(x1: float, y1: float, x2: float, y2: float) -> tuple[float, float, float, float]:
