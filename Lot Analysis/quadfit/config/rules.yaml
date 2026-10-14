@@ -1910,6 +1910,96 @@ jurisdictions:
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
         notes: "RED BY RULING (Steph 2026-10-09): design review is required here (ZDO 1102.01(A)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-09-23. One lot. A street-wall district: the 18 ft maximum front setback has no column here, and note 6 (Sunnyside Road frontage measured from the centerline) is ruled unmeasured in the corpus."
+      - zone: HDR
+        quadplex_allowed: false
+        setback_front_ft: 15
+        setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
+        setback_rear_ft: 45.033  # the same
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO Section 315 Table 315-4 (High Density Residential: front 15, rear and side See 1005.02(L), height none); ZDO 1005.02(L); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required here (ZDO 1102.01(A)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). About 251 lots. Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback. Density 1,742 sf/unit not applied (OAR 660-046-0220(2)(b))."
+      - zone: SHD
+        quadplex_allowed: false
+        setback_front_ft: 15
+        setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
+        setback_rear_ft: 45.033  # the same
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO Section 315 Table 315-4 (Special High Density Residential: front 15, rear and side See 1005.02(L), height none); ZDO 1005.02(L); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required here (ZDO 1102.01(A)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). One lot. Reads as HDR. Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback."
+      - zone: RCHDR
+        quadplex_allowed: false
+        setback_front_ft: 15
+        setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
+        setback_rear_ft: 45.033  # the same
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO Section 315 Table 315-4 (Regional Center High Density Residential: front 15 per note 8, rear See 1005.02(L) with 20 per note 13, side See 1005.02(L) with 15 per note 16, height none); ZDO 1005.02(L); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required here (ZDO 1102.01(A)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). 29 lots. Reads as HDR, with notes 13 and 16's 20 ft rear and 15 ft side floors under the bearing separation. Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback."
+      - zone: RTL
+        quadplex_allowed: false
+        setback_front_ft: 15
+        setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
+        setback_rear_ft: 45.033  # the same
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO 510 Table 510-1 note 15 (Retail Commercial: a freestanding quadplex takes the HDR District's development and dimensional standards); ZDO Table 315-4 (HDR); ZDO 1005.02(L); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required in commercial districts (ZDO 1102.01(A)(1)(a)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). 59 lots. Reads as HDR (Table 510-1 note 15). Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback."
+      - zone: CC
+        quadplex_allowed: false
+        setback_front_ft: 15
+        setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
+        setback_rear_ft: 45.033  # the same
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO 510 Table 510-1 note 15 (Corridor Commercial: a freestanding quadplex takes the HDR District's development and dimensional standards); ZDO Table 315-4 (HDR); ZDO 1005.02(L); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required in commercial districts (ZDO 1102.01(A)(1)(a)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). 128 lots. Reads as HDR (Table 510-1 note 15). Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback."
+      - zone: C3
+        quadplex_allowed: false
+        setback_front_ft: 15
+        setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
+        setback_rear_ft: 45.033  # the same
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO 510 Table 510-1 note 15 (General Commercial: a freestanding quadplex takes the HDR District's development and dimensional standards); ZDO Table 315-4 (HDR); ZDO 1005.02(L); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required in commercial districts (ZDO 1102.01(A)(1)(a)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). 447 lots. Reads as HDR (Table 510-1 note 15). Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback."
+      - zone: OC
+        quadplex_allowed: false
+        setback_front_ft: 15
+        setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
+        setback_rear_ft: 45.033  # the same
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO 510 Table 510-1 note 15 (Office Commercial: a freestanding quadplex takes the HDR District's development and dimensional standards); ZDO Table 315-4 (HDR); ZDO 1005.02(L); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required in commercial districts (ZDO 1102.01(A)(1)(a)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). 82 lots. Reads as HDR (Table 510-1 note 15). Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback."
+      - zone: RCC
+        quadplex_allowed: false
+        setback_front_ft: 15
+        setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
+        setback_rear_ft: 45.033  # the same
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO 510 Table 510-1 note 13 (Regional Center Commercial: a freestanding quadplex takes the RCHDR District's development and dimensional standards); ZDO Table 315-4 (RCHDR); ZDO 1005.02(L); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required in commercial districts (ZDO 1102.01(A)(1)(a)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). 103 lots. Reads as RCHDR (Table 510-1 note 13). Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback."
+      - zone: RCO
+        quadplex_allowed: false
+        setback_front_ft: 15
+        setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
+        setback_rear_ft: 45.033  # the same
+        min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        source: "Clackamas ZDO 510 Table 510-1 note 13 (Regional Center Office: a freestanding quadplex takes the RCHDR District's development and dimensional standards); ZDO Table 315-4 (RCHDR); ZDO 1005.02(L); min lot ZDO 845.01"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: needs_verification
+        notes: "RED BY RULING (Steph 2026-10-09): design review is required in commercial districts (ZDO 1102.01(A)(1)(a)), so the quadplex is not by right; dimensions kept so the ruling can be reversed. Ported from the FLATS corpus 2026-10-14 (FOLLOWUPS 61). 37 lots. Reads as RCHDR (Table 510-1 note 13). Side and rear are 1005.02(L)'s bearing separation, carried here as its north figure (60 degrees off the top of a 26 ft pod: 45.033 ft) on every line because this file has no bearing; FLATS cuts each line by the way it faces (flats/geom/bearing.py), and this row's envelope is only the fallback."
 
   happy_valley:
     eligible: true

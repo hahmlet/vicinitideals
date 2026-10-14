@@ -143,6 +143,13 @@ class Resolved:
     #: the unqualified one. The screen reads this to keep a True from
     #: certifying a lot against a standard the code says no longer applies.
     unencoded: frozenset[str] = frozenset()
+    #: The standard this one is stated as EQUAL TO, and the floor its own
+    #: sentence prints, when the base standard was selected. A reader that
+    #: measures the lender per lot line -- ZDO 1005.02(L)'s side and rear
+    #: yards are "See 1005.02(L)", which is a distance toward the north --
+    #: has to be able to tell a stand-in from a yard of its own.
+    same_as: str | None = None
+    floor_ft: float | None = None
 
     @property
     def trusted(self) -> bool:
@@ -489,6 +496,8 @@ class RuleSet:
                             net_area=val.net_area,
                             relief=_relief_of(val), whole_project=eff.whole_project,
                             unencoded=_qualified(val),
+                            same_as=None if eff.when else val.same_as,
+                            floor_ft=None if eff.when else val.floor_ft,
                         )
                         continue
                     # Either the ancestor wins outright, or the local number is
@@ -518,6 +527,8 @@ class RuleSet:
                     relief=_relief_of(val),
                     whole_project=eff.whole_project,
                     unencoded=_qualified(val),
+                    same_as=None if eff.when else val.same_as,
+                    floor_ft=None if eff.when else val.floor_ft,
                 )
                 if val.preempts.binds:
                     locked[name] = (val.preempts, eff.value)

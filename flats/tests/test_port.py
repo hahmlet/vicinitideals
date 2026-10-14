@@ -406,6 +406,10 @@ def test_a_backported_band_has_to_already_be_here() -> None:
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:
+    # 198 as of 2026-10-14: Clackamas HDR, SHD, RCHDR and the six commercial
+    # districts that borrow their standards (RTL, CC, C3, OC, RCC, RCO),
+    # ported corpus to rules.yaml once 1005.02(L)'s bearing was measured
+    # (FOLLOWUPS 61).
     # 189 as of 2026-10-08: the zone gaps (FOLLOWUPS 52) -- Gresham DCC/DTM, Tualatin CC/RMH/RH/RH-HR/MUC,
     # Fairview TCC/VC, Gladstone C2/MR, Milwaukie GMU/DMU and West Linn MU.
     # 175 as of 2026-10-07: Estacada's fifteen zones (FOLLOWUPS 53), the three it
@@ -438,7 +442,7 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # are in COUNTY but not ported: their
     # rows were written FROM the corpus, and porting them back would overwrite
     # it with its own summary.
-    assert dry["stats"]["zones"] == 189
+    assert dry["stats"]["zones"] == 198
     assert dry["stats"]["layers"] == 21
     assert len(COUNTY) == 29
     assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {
@@ -524,6 +528,8 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 30  # 29 jurisdictions + the state layer
+    # 519 as of 2026-10-14: Clackamas uninc SHD, RCHDR, RTL, CC, C3, OC, RCC and RCO,
+    # encoded on 1005.02(L)'s bearing and RED BY RULING for design review (FOLLOWUPS 61).
     # 511 as of 2026-10-09: Clackamas uninc HDR, RED BY RULING for design review (Steph).
     #
     # 510 as of 2026-10-08: the zone gaps (FOLLOWUPS 52), the ported zones plus the RED BY RULING ones.
@@ -655,7 +661,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 511
+    assert sum(len(l.zones) for l in rules.layers.values()) == 519
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

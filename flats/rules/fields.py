@@ -151,6 +151,9 @@ _LABELS: dict[str, str] = {
     "setback_alley_side_ft": "alley-side setback",
     "setback_street_off_corridor_ft": "street setback off a mapped corridor",
     "setback_street_across_nonresidential_ft": "street setback facing no residential zone",
+    "setback_north_ft": "setback from a lot line to the north (by bearing)",
+    "setback_east_west_ft": "setback from a lot line to the east or west (by bearing)",
+    "setback_north_street_credit_ft": "street credit toward the north setback",
 }
 
 
@@ -227,6 +230,48 @@ _F: tuple[FieldDef, ...] = (
         "line. The envelope applies it to a street edge flagged both "
         "off_corridor and across_clear and to no other; absent, every street "
         "line keeps the across-the-street number.",
+        False,
+    ),
+    FieldDef(
+        "setback_north_ft",
+        "length_ft",
+        "Minimum distance from the building to a site line NORTH of it, "
+        "measured on a north-south axis rather than square to the line: "
+        "Clackamas ZDO 1005.02(L)(1), \"The minimum distance on a "
+        "north-south axis between any building and a site area line north "
+        "of said building\", drawn as a 60-degree line from the top of the "
+        "structure (`from_top_degrees`). A rule about which way a line "
+        "FACES, so no setback class holds it: the envelope sweeps every "
+        "segment of the taxlot ring this far south and takes the swept "
+        "ground off (:mod:`flats.geom.bearing`) -- the full distance "
+        "behind a line facing due north, none behind one facing south, "
+        "the north-facing component between, a curve one segment at a "
+        "time. A line on a public road owes it less "
+        "`setback_north_street_credit_ft`. Absent, no line owes it.",
+        False,
+    ),
+    FieldDef(
+        "setback_north_street_credit_ft",
+        "length_ft",
+        "What a public road on the north line counts toward "
+        "`setback_north_ft`, besides the road itself: ZDO 1005.02(L)(1)(a), "
+        "\"The separation distance may include intervening streets plus 15 "
+        "feet into the property north of the street\". The road's own "
+        "width is not measured and counts as nothing. Absent, a road "
+        "counts for nothing at all.",
+        False,
+    ),
+    FieldDef(
+        "setback_east_west_ft",
+        "length_ft",
+        "Minimum distance from the building to a site line east or west of "
+        "it, measured on an east-west axis: Clackamas ZDO 1005.02(L)(3), "
+        "a 15-degree line from the top of the structure, \"except when "
+        "abutting a public, County or state road\". Swept per segment like "
+        "`setback_north_ft`, east and west: the full distance behind a "
+        "line facing due east or west, none behind one facing north or "
+        "south, the east-west component between; a segment on a public "
+        "road owes none. Absent, no line owes it.",
         False,
     ),
     FieldDef(
@@ -1183,6 +1228,20 @@ HEIGHT_RATIO_FIELDS: frozenset[str] = frozenset(
     }
 )
 
+#: Fields set by the BEARING of a lot line rather than by its class, and the
+#: only fields a rule file may state as an angle drawn from the top of the
+#: building (`from_top_degrees`). Clackamas ZDO 1005.02(L) is the case: "a
+#: 60-degree angle line from the top of the structure to the natural ground
+#: elevation north of the structure", and a 15-degree one east and west,
+#: "Separation = b x .267 (tan 15 degrees)". The formula fixes how the angle
+#: is measured -- b x tan 15 is a distance, so the 15 is off the VERTICAL --
+#: and the 60 is read the same way: 26 ft x tan 60 is 45 ft, printed nowhere.
+#: The envelope cuts them from each lot line by the way it faces
+#: (:mod:`flats.geom.bearing`); a reader that knows no facing must take the
+#: north figure on every line, which is what a zone's side and rear say when
+#: they point here (`same_as: setback_north_ft`).
+BEARING_FIELDS: frozenset[str] = frozenset({"setback_north_ft", "setback_east_west_ft"})
+
 #: Fields a rule file may state with a STEP-BACK behind them -- a second rule,
 #: usually in a different chapter, that limits how tall a building may be near
 #: the line and so decides how far back a building of a given height has to
@@ -1251,6 +1310,13 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # CX, 33.130.215.B.1.b), and a zone silent about it keeps the
         # across-the-street number on every street line.
         "setback_street_across_nonresidential_ft",
+        # Distances set by which way a lot line faces rather than by its
+        # class. One code in the corpus writes them (Clackamas ZDO
+        # 1005.02(L), in HDR, SHD and RCHDR), and a zone silent about them
+        # is a zone whose lines owe only their class's setback.
+        "setback_north_ft",
+        "setback_east_west_ft",
+        "setback_north_street_credit_ft",
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",

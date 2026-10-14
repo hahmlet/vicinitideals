@@ -144,6 +144,13 @@ class Edge:
     #: the default, and the answer on every line that is not a street, or
     #: that no map reads -- ranks nothing.
     street_rank: int | None = None
+    #: A street line on a public way -- s4's ``street_kind_json`` read
+    #: ``street`` for it, not a private road or a drive. Clackamas ZDO
+    #: 1005.02(L) relieves a line "abutting a public, County or state road"
+    #: of its east-west separation and lets the street count toward the
+    #: north one (:mod:`flats.geom.bearing`). False -- the default, and the
+    #: answer wherever nothing read the way -- relieves nothing.
+    public_road: bool = False
 
 
 @dataclass(frozen=True, slots=True)
