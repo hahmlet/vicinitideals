@@ -2311,9 +2311,25 @@ def check_kind(name: str, v: Any) -> None:
             raise ValueError(f"{name}: percent value {v} exceeds 100")
     elif kind == "curve":
         _validate_curve(name, v)
+    elif kind == "street_table":
+        _validate_street_table(name, v)
     elif kind == "enum":
         if v not in fd.choices:
             raise ValueError(f"{name}: {v!r} not one of {list(fd.choices)}")
+
+
+def _validate_street_table(name: str, v: Any) -> None:
+    """A street table is [[street as the code prints it, feet], ...]."""
+    if not isinstance(v, list) or not v:
+        raise ValueError(f"{name}: expected a non-empty list of [street, feet] rows")
+    for i, row in enumerate(v):
+        if not isinstance(row, (list, tuple)) or len(row) != 2:
+            raise ValueError(f"{name}: row {i} must be [street, feet]")
+        street, ft = row
+        if not isinstance(street, str) or not street.strip():
+            raise ValueError(f"{name}: row {i} street must be a non-empty string, got {street!r}")
+        if isinstance(ft, bool) or not isinstance(ft, (int, float)) or ft < 0:
+            raise ValueError(f"{name}: row {i} feet must be a non-negative number, got {ft!r}")
 
 
 def _validate_curve(name: str, v: Any) -> None:

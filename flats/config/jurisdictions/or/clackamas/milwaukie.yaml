@@ -849,6 +849,51 @@ code:
     allow_thin: true
 
 defaults:
+  # ADDITIONAL YARD ON MAJOR STREETS. 19.501.2.A: "buildings along certain
+  # major streets are subject to additional yard requirements ... the
+  # minimum distance from the center line of the right-of-way to the closest
+  # point of any building is the distance listed in Table 19.501.2.A plus
+  # the yard requirement of the underlying zone" (#L33-L67). Held by street
+  # name as printed; the stretch in brackets is not read, so the distance
+  # holds along the whole street, and Harrison Street, listed at 40 and at
+  # 30 for two stretches, takes 40 everywhere. A street the table leaves out
+  # takes none. A street line whose street cannot be named takes the
+  # deepest, 40 feet (flats/geom/dedication.py).
+  row_to_centerline_named_ft:
+    value:
+      - ["Firwood Street (55th Ave. to Stanley Ave.)", 25]
+      - ["Harmony Road", 40]
+      - ["Harrison Street (Milwaukie Expressway to 44th Ave.)", 40]
+      - ["Harrison Street (Milwaukie Expressway to McLoughlin Blvd.)", 30]
+      - ["Harvey Street (32nd Ave. to 42nd Ave.)", 25]
+      - ["Howe Street (42nd Ave. to 43rd Ave.)", 30]
+      - ["Johnson Creek Boulevard", 30]
+      - ["King Road", 40]
+      - ["Linwood Avenue", 40]
+      - ["Lake Road", 30]
+      - ["Logus Road", 25]
+      - ["Monroe Street (52nd Ave. to Linwood Ave.)", 30]
+      - ["Oak Street", 30]
+      - ["Oatfield Road", 30]
+      - ["Ochoco Street", 30]
+      - ["Olsen Street", 25]
+      - ["Railroad Avenue", 30]
+      - ["River Road (south of Lark St.)", 30]
+      - ["Roswell Street (32nd Ave. to 42nd Ave.)", 25]
+      - ["Washington Street (west of Railroad Ave.)", 30]
+      - ["Willow Street (Windsor Dr. to Stanley Ave.)", 25]
+      - ["17th Avenue (Ochoco St. to McLoughlin Blvd.)", 40]
+      - ["32nd Avenue (north of Harrison St.)", 30]
+      - ["37th Avenue (Lake Rd. to Grogan Ave.)", 25]
+      - ["40th Avenue (Harvey St. to Railroad Ave.)", 30]
+      - ["42nd Avenue (Johnson Creek Blvd. to Howe St.)", 30]
+      - ["42nd Avenue (Harrison St. to King Rd.)", 30]
+      - ["43rd Avenue (Howe St. to King Rd.)", 30]
+      - ["55th Avenue (Firwood St. to Johnson Creek Blvd.)", 25]
+    cite: Milwaukie MMC Table 19.501.2.A, additional yard requirements, distance from centerline plus the zone's yard, by major street
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L35-L67"
   # PARKING, read 2026-08-27. Milwaukie states no vehicle-parking minimum for
   # a quadplex, caps one at four spaces, dimensions the space, and dimensions
   # no aisle it is allowed to use. Every part of that is in Chapter 19.600

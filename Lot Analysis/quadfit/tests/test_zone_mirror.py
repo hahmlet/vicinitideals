@@ -1010,6 +1010,15 @@ UNEXPRESSIBLE: dict[str, int] = {
     "parking_stall_depth_ft": 9,
     "parking_stall_width_ft": 9,
     "solar_shade_limit": 2,
+    #: Road land to a distance from the street's centre line (FOLLOWUPS 67/77):
+    #: per street lot line, measured by the FLATS bridge
+    #: (flats/geom/dedication.py); quadfit has no street lines to charge it on.
+    #: Counted where a ZONE states it (Washington County's twelve middle-housing
+    #: districts); the cities state theirs once, in the layer defaults.
+    "row_to_centerline_local_ft": 12,
+    "row_to_centerline_neighborhood_route_ft": 12,
+    "row_to_centerline_collector_ft": 12,
+    "row_to_centerline_arterial_ft": 12,
 }
 
 

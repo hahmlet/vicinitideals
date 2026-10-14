@@ -997,8 +997,9 @@ def lot_edges(
                 across_clear=bool(clear_line) and letter == STREET_CLASS,
                 street_rank=int(rank) if rank is not None and letter == STREET_CLASS else None,
                 half_width_ft=None if road is None or road[4] is None else float(road[4]),
-                road_rank=None if road is None or road[5] is None else int(road[5]),
-                public_road=True if road is None else bool(road[6]),
+                public_road=True if road is None else bool(road[5]),
+                road_names=None if road is None or road[6] is None else tuple(str(n) for n in road[6]),
+                road_classes=() if road is None else tuple(sorted((road[7] or {}).items())),
             )
         )
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -1176,28 +1177,28 @@ def part_rear_alley(lot: QuadfitLot) -> bool:
 
 
 def dedicated(edges: LotEdges, rules: ZoneResolution) -> LotEdges:
-    """``edges`` with each street line carrying the right-of-way strip its
-    lot gives up there (:attr:`Edge.dedication_ft`), where the lot's code
-    states the four distances to centreline
-    (:data:`flats.geom.dedication.RANK_FIELDS`); unchanged otherwise.
+    """``edges`` with each street line carrying the strip its lot gives up
+    there (:attr:`Edge.dedication_ft`), where the lot's code states a
+    distance to centre line (:func:`flats.geom.dedication.rule_of`):
+    Washington County's dedication (CDC 302-2.14 C(1)) and Oregon City's
+    (16.12.011.B), Sherwood's, King City's and Milwaukie's added setbacks
+    (16.106.030 D, 16.80.060 A, 19.501.2.A). Unchanged otherwise.
 
-    The strip is the distance for the line's street class less the measured
-    half-width, never below zero; an unmeasured line gives up the whole
-    distance and an unread class takes the deepest (WashCo CDC 302-2.14
-    C(1)). A line on a private road gives up nothing."""
-    distances: list[float] = []
-    for name in dedication.RANK_FIELDS:
-        got = rules.get(name)
-        if isinstance(got, bool) or not isinstance(got, (int, float)):
-            return edges
-        distances.append(float(got))
+    The strip is the distance for the line's street -- by its class, or its
+    name where the code lists streets -- less the measured half-width, never
+    below zero; an unmeasured line gives up the whole distance and an unread
+    class or name takes the deepest the zone states. A line on a private
+    road gives up nothing."""
+    rule = dedication.rule_of(rules)
+    if rule is None:
+        return edges
     out = []
     for e in edges.edges:
         if e.alley or e.cls not in (EdgeClass.front, EdgeClass.street_side) or not e.public_road:
             out.append(e)
             continue
-        strip = dedication.depth_ft(dedication.required_ft(e.road_rank, distances), e.half_width_ft)
-        out.append(dataclasses.replace(e, dedication_ft=strip))
+        need = rule.required(e.road_names, dict(e.road_classes))
+        out.append(dataclasses.replace(e, dedication_ft=dedication.depth_ft(need, e.half_width_ft)))
     return dataclasses.replace(edges, edges=tuple(out))
 
 
@@ -1722,13 +1723,16 @@ def with_local_street(rows: list[dict[str, Any]], sources: Path | None) -> int:
     answered = 0
     for row in rows:
         layer_id = _layer_id(row)
-        if not any(m.covers(layer_id) for m in maps):
+        measured = dedication.applies(layer_id)
+        ranked = any(m.access and m.covers(layer_id) for m in maps)
+        if not measured and not ranked:
             continue
         edges = json.loads(row.get("edges_json") or "[]")
-        ranks = street_ranks(edges, layer_id, maps)
-        row["street_ranks_json"] = json.dumps(ranks)
-        if dedication.applies(layer_id):
-            row["road_widths_json"] = json.dumps(dedication.measure(edges, ranks, layer_id, maps))
+        if measured:
+            row["road_widths_json"] = json.dumps(dedication.measure(edges, layer_id, maps))
+        if not ranked:
+            continue
+        row["street_ranks_json"] = json.dumps(street_ranks(edges, layer_id, maps))
         got = observed_local_street(edges, layer_id, maps)
         if LOCAL_STREET in got:
             row["local_street_obs"] = got[LOCAL_STREET]

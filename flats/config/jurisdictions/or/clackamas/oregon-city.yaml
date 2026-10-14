@@ -100,7 +100,8 @@ readings:
       alley line is the one worth naming because alley presence is on this project's
       unmeasured-site-facts list and an alley-fed court is the cheapest version of this building;
       the note here is that Oregon City would want the garage off the alley, and this pod has no
-      garage.
+      garage. The right-of-way column itself is now read for the dedication 16.12.011.B asks
+      of middle housing (row_to_centerline_*_ft in the defaults, 2026-10-14).
     fingerprint: 26525af742250445
   "16.12.streets.txt#16.12.035":
     queue: nofield
@@ -428,6 +429,61 @@ code:
     # four defined terms this city never defined.
     definitions_at: L834-L3883
 defaults:
+  # RIGHT-OF-WAY DEDICATION. 16.12.011.B: "All single-family detached
+  # residential and middle housing units shall provide any necessary
+  # dedications, easements or agreements as identified in the
+  # transportation system plan and this chapter" (#L79-L90). 16.12.016 and
+  # its table give the right-of-way by TSP class and "the comprehensive plan
+  # designation of the adjacent property", and "If the comprehensive plan
+  # designation for lands on either side of the street differs, the wider
+  # right-of-way standard shall apply" (#L291-L301,L327-L332). The land
+  # across the street is not read, so each class holds its WIDEST row: 126
+  # feet major arterial (residential), 118 minor arterial (industrial), 88
+  # collector (industrial), 62 local (mixed use/commercial/public). Read
+  # residential-both-sides it would be 126 / 100 / 85 / 54; which reading
+  # stands is a question for Steph. The table states the whole width, so
+  # half of it is the distance from the centre line
+  # (row_to_centerline_stated_as_width). The city's TSP map ranks the class
+  # (street_class_oregon_city); its Expressway and Freeway have no row here,
+  # so a line on one, or unranked, takes the deepest, 63 feet. The table is
+  # "maximum design standards" that "may be reduced with an alternative
+  # street design" (16.12.013), a discretionary path this does not take.
+  row_to_centerline_class_by:
+    value: oregon_city
+    cite: Oregon City OCMC 16.12.016, street improvements by the street classification set forth in the transportation system plan
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L291-L296"
+  row_to_centerline_stated_as_width:
+    value: true
+    cite: Oregon City OCMC Table 16.12.016 notes, the right-of-way width identified includes the total street section
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L413-L415"
+  row_to_centerline_major_arterial_ft:
+    value: 126
+    cite: Oregon City OCMC Table 16.12.016, major arterial, residential, 126 ft right-of-way (the widest row; the wider standard applies where the two sides differ)
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L343"
+  row_to_centerline_minor_arterial_ft:
+    value: 118
+    cite: Oregon City OCMC Table 16.12.016, minor arterial, industrial, 118 ft right-of-way (the widest row; the wider standard applies where the two sides differ)
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L350"
+  row_to_centerline_collector_ft:
+    value: 88
+    cite: Oregon City OCMC Table 16.12.016, collector, industrial, 88 ft right-of-way (the widest row; the wider standard applies where the two sides differ)
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L402"
+  row_to_centerline_local_ft:
+    value: 62
+    cite: Oregon City OCMC Table 16.12.016, local, mixed use/commercial/public, 62 ft right-of-way (the widest row; the wider standard applies where the two sides differ)
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L406"
   # PARKING, read 2026-08-27 -- the whole of Chapter 17.52 plus the middle
   # housing chapter that overrides parts of it. What Oregon City has to say
   # about this building's parking splits cleanly in two, and the seam is

@@ -283,6 +283,27 @@ private_drives:
     car comes in off the private way; and the corner test stays public-only.
 
 defaults:
+  # ADDITIONAL YARD FROM THE CENTRE LINE (16.80.060 A; see the note above
+  # the zones). 99W's 61 feet is Sherwood's, borrowed: King City's code
+  # defers to ODOT and states no figure.
+  row_to_centerline_named_ft:
+    value:
+      - [Pacific Highway, 61]
+      - [Beef Bend Road, 33]
+      - [131st Avenue, 33]
+      - [Fischer Road, 33]
+      - [116th Avenue, 30]
+      - [Royalty Parkway, 30]
+    cite: King City KCC 16.80.060 A.2.a-f, right-of-way from centerline by street (99W held at Sherwood SZCDC 16.106.030 D's 61 feet; ODOT states King City's)
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.80.general.txt#L105-L129"
+  row_to_centerline_other_ft:
+    value: 25
+    cite: King City KCC 16.80.060 A.2.g, all other city streets twenty-five feet from centerline
+    url: https://api.municode.com/PublicationPdfDownload/3913
+    retrieved: '2026-09-29'
+    quote: "or/washington/king-city/kcc.16.80.general.txt#L113-L114,L129"
   # EVERY VALUE BELOW IS KINGSTON TERRACE'S. Only the four Kingston Terrace
   # zones admit the pod, and Table 16.114-1 sends new development there to
   # 16.114.130 instead of the citywide parking chapter: "Parking and Loading
@@ -392,13 +413,20 @@ defaults:
 # triangle reaches the building face wherever the lot line sits within ten
 # feet of the curb. A doubt; the handoff has it.
 #
-# NOT ENCODED: 16.80.060 A, "Where a yard or setback abuts a street having
-# insufficient right-of-way width, the minimum yard or setback requirement
-# shall be increased" by the right-of-way needed -- 33 feet from the
-# centerline on Beef Bend Road, 131st Avenue and Fischer Road, 25 on "All
-# other city streets" (kcc.16.80.general.txt#L105-L129). It pushes a yard
-# back by a width nothing measures. The same kind of rule as in the county
-# and Sherwood layers.
+# SUBSTANDARD RIGHT-OF-WAY. 16.80.060 A: "Where a yard or setback abuts a
+# street having insufficient right-of-way width, the minimum yard or
+# setback requirement shall be increased by the amount of right-of-way,
+# measured from the street centerline, necessary" -- 33 feet on Beef Bend
+# Road, 131st Avenue and Fischer Road, 30 on 116th Avenue and Royalty
+# Parkway, 25 on "All other city streets" (kcc.16.80.general.txt#L105-L129).
+# Encoded in the defaults as row_to_centerline_named_ft and _other_ft. The
+# "between X and Y" stretches of 131st, 116th and Royalty are not read: the
+# distance holds along the whole street, which can only push a yard back.
+# Pacific Highway (99W) is "as determined by the Oregon Department of
+# Transportation", which states no number; it is held at Sherwood's 61 feet
+# for the same highway (16.106.030 D, "Principle Arterial (99W)"), the
+# nearest stated figure. A borrowed number and a question for Steph.
+# The county-zoned "(WC)" districts read the county's dedication instead.
 #
 # NOT ENCODED: 16.80.060 B, projections into yards (L130-L149). An
 # allowance; nothing here reads one in any zone.

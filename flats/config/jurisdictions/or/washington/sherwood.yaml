@@ -351,6 +351,47 @@ private_drives:
     L170); a drive through the lot itself is screened both ways anyway.
 
 defaults:
+  # ADDITIONAL SETBACK FROM THE CENTRE LINE (16.106.030 D; see the
+  # right-of-way note above the zones). The street's class comes from the
+  # city's TSP web map (registry street_class_sherwood, Kittelson's
+  # functional-class layer; read for this and nothing else). A street line
+  # the map does not class takes the deepest, 61 feet: the 99W row.
+  row_to_centerline_class_by:
+    value: sherwood
+    cite: Sherwood SZCDC 16.106.020 A, right-of-way by functional classification in the Transportation System Plan, Figure 17
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.106.transportation.txt#L118-L125"
+  row_to_centerline_principal_arterial_ft:
+    value: 61
+    cite: Sherwood SZCDC 16.106.030 D, additional setback measured from the street centerline, Principle Arterial (99W) 61 feet
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.106.transportation.txt#L282-L296"
+  row_to_centerline_arterial_ft:
+    value: 37
+    cite: Sherwood SZCDC 16.106.030 D, additional setback measured from the street centerline, Arterial 37 feet
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.106.transportation.txt#L282-L296"
+  row_to_centerline_collector_ft:
+    value: 32
+    cite: Sherwood SZCDC 16.106.030 D, additional setback measured from the street centerline, Collector 32 feet
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.106.transportation.txt#L282-L296"
+  row_to_centerline_neighborhood_route_ft:
+    value: 32
+    cite: Sherwood SZCDC 16.106.030 D, additional setback measured from the street centerline, Neighborhood Route 32 feet
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.106.transportation.txt#L282-L296"
+  row_to_centerline_local_ft:
+    value: 26
+    cite: Sherwood SZCDC 16.106.030 D, additional setback measured from the street centerline, Local 26 feet
+    url: https://api.municode.com/PublicationPdfDownload/3865
+    retrieved: '2026-09-29'
+    quote: "or/washington/sherwood/sdc.16.106.transportation.txt#L282-L296"
   # PARKING COUNT. Table 1 of 16.94.020 counts a quadplex's stalls by lot
   # area: "1 space total" under 3,000 square feet, 2 under 5,000, 3 under
   # 7,000 and "4 spaces total" at 7,000 or more, with "None" as the maximum
@@ -515,10 +556,16 @@ defaults:
 # B.2's 750-square-foot side elevation planes and C's garage orientation on
 # lots 60 feet wide or less, which are design.
 #
-# NOT ENCODED: 16.106 right-of-way dedication and street improvements on
-# frontage (sdc.16.106.transportation.txt). They push the building back by
-# a width the TSP sets per street, which nothing measures; the same kind of
-# rule as in the county layer. A doubt.
+# RIGHT-OF-WAY. 16.106.020 A: a development abutting a street "that is
+# either unimproved or substandard in right-of-way width ... shall dedicate
+# the necessary right-of-way prior to the issuance of building permits",
+# by "functional classification of the street network as established in the
+# Transportation System Plan, Figure 17"; 16.106.030 D keeps the strip
+# unbuilt meanwhile, "measured at right angles from the centerline of the
+# street" (sdc.16.106.transportation.txt#L118-L125,L282-L296). Encoded in
+# the defaults as the row_to_centerline_*_ft distances of 030 D, read
+# against the city's TSP classes (flats/geom/dedication.py). NOT ENCODED:
+# the 16.106.020 B street improvements, which build the street, not the lot.
 #
 # NOT ENCODED: 16.50 projections into yards. Note 5 of the residential
 # table refuses front-yard reductions for architectural features in MDRL,

@@ -189,7 +189,7 @@ _WINDOW: dict[str, tuple[Decimal, Decimal]] = {
 
 #: Kinds this cannot compare at all. A bool has no figure; an enum has no
 #: order; a curve is a table and its rows are checked by the column ledger.
-_UNCOMPARABLE = frozenset({"bool", "enum", "curve"})
+_UNCOMPARABLE = frozenset({"bool", "enum", "curve", "street_table"})
 
 #: How near two figures may be and still count as the same standard. Codes
 #: print "twenty-two feet" as 22 and a table prints 22.0; nothing in this

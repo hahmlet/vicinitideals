@@ -150,10 +150,13 @@ class Edge:
     #: centreline beside it -- is unmeasured. Read only where the lot's code
     #: asks a dedication (:func:`flats.geom.dedication.depth_ft`).
     half_width_ft: float | None = None
-    #: The street's class rank for the dedication, off the county's TSP map
-    #: (:attr:`street_rank` reads the same map but stays unset when a second
-    #: reading of the lot lost the positional match); None where unread.
-    road_rank: int | None = None
+    #: The streets this line may be on, by name (:func:`flats.geom.dedication.street_key`),
+    #: for a code that lists its distances by street; None where unread.
+    road_names: tuple[str, ...] | None = None
+    #: The street's class on each TSP map a dedication reads here, as
+    #: ``(map key, class or None)`` pairs (:data:`flats.geom.dedication.BUCKETS`);
+    #: a map left out, or a None, is unread.
+    road_classes: tuple[tuple[str, str | None], ...] = ()
     #: The street is a public one. False on a line that abuts a private road:
     #: nothing is dedicated there.
     public_road: bool = True

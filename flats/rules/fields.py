@@ -25,7 +25,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal
 
-Kind = Literal["bool", "length_ft", "area_sqft", "ratio", "percent", "count", "curve", "enum"]
+Kind = Literal["bool", "length_ft", "area_sqft", "ratio", "percent", "count", "curve", "enum", "street_table"]
 
 
 @dataclass(frozen=True, slots=True)
@@ -155,7 +155,32 @@ _LABELS: dict[str, str] = {
     "row_to_centerline_neighborhood_route_ft": "right-of-way to centerline, neighborhood route",
     "row_to_centerline_collector_ft": "right-of-way to centerline, collector",
     "row_to_centerline_arterial_ft": "right-of-way to centerline, arterial",
+    "row_to_centerline_minor_arterial_ft": "right-of-way to centerline, minor arterial",
+    "row_to_centerline_major_arterial_ft": "right-of-way to centerline, major arterial",
+    "row_to_centerline_principal_arterial_ft": "right-of-way to centerline, principal arterial",
+    "row_to_centerline_named_ft": "right-of-way to centerline, by street",
+    "row_to_centerline_other_ft": "right-of-way to centerline, other streets",
+    "row_to_centerline_class_by": "street classes for right-of-way, whose plan",
+    "row_to_centerline_stated_as_width": "right-of-way stated as whole width",
 }
+
+
+#: What every row_to_centerline_* field means, said once.
+_ROW_TO_CENTERLINE = (
+    "the zone's own yards are measured. Two forms come to the same line: a "
+    "DEDICATION (Washington County CDC 302-2.14 C(1) and 303 to 307, 375, 390: "
+    "25 / 30 / 37 / 45 ft for local street, neighborhood route, collector, "
+    "arterial, recorded before the first building permit; Oregon City "
+    "16.12.011.B to the right-of-way of Table 16.12.016) moves the lot line, and "
+    "an ADDED SETBACK (Sherwood 16.106.030 D, 26 / 32 / 32 / 37 / 61 ft; King "
+    "City 16.80.060 A; Milwaukie 19.501.2.A) keeps the strip unbuilt. Either "
+    "way the lot loses the stated distance less the street's existing "
+    "half-width, never below zero, on that street line only. Held per class "
+    "(or per street name) because the distance turns on the street, a fact "
+    "about ONE lot line; flats/geom/dedication.py measures the half-width and "
+    "reads the class or name per line. An unmeasured line gives up the whole "
+    "distance; an unread class or name takes the deepest the zone states."
+)
 
 
 _F: tuple[FieldDef, ...] = (
@@ -236,62 +261,97 @@ _F: tuple[FieldDef, ...] = (
     FieldDef(
         "row_to_centerline_local_ft",
         "length_ft",
-        "Right-of-way a lot on a local street must reach, measured from the street's "
-        "centre line, before its first building permit (Washington County CDC "
-        "302-2.14 C(1) and 303 to 306: 25 / 30 / 37 / 45 ft for local street, "
-        "neighborhood route, collector, arterial). The lot dedicates the "
-        "shortfall of the existing half-width and its yards run from the new "
-        "line; nothing is due where the street is already that wide. Held as "
-        "four fields because the distance turns on the street's class, a fact "
-        "about ONE street line. The envelope measures the half-width "
-        "(flats/geom/dedication.py) and applies the strip to street lines "
-        "only.",
+        "How far from the centre line of a local street a lot's building line must sit before "
+        + _ROW_TO_CENTERLINE,
         False,
     ),
     FieldDef(
         "row_to_centerline_neighborhood_route_ft",
         "length_ft",
-        "Right-of-way a lot on a neighborhood route must reach, measured from the street's "
-        "centre line, before its first building permit (Washington County CDC "
-        "302-2.14 C(1) and 303 to 306: 25 / 30 / 37 / 45 ft for local street, "
-        "neighborhood route, collector, arterial). The lot dedicates the "
-        "shortfall of the existing half-width and its yards run from the new "
-        "line; nothing is due where the street is already that wide. Held as "
-        "four fields because the distance turns on the street's class, a fact "
-        "about ONE street line. The envelope measures the half-width "
-        "(flats/geom/dedication.py) and applies the strip to street lines "
-        "only.",
+        "How far from the centre line of a neighborhood route a lot's building line must sit before "
+        + _ROW_TO_CENTERLINE,
         False,
     ),
     FieldDef(
         "row_to_centerline_collector_ft",
         "length_ft",
-        "Right-of-way a lot on a collector must reach, measured from the street's "
-        "centre line, before its first building permit (Washington County CDC "
-        "302-2.14 C(1) and 303 to 306: 25 / 30 / 37 / 45 ft for local street, "
-        "neighborhood route, collector, arterial). The lot dedicates the "
-        "shortfall of the existing half-width and its yards run from the new "
-        "line; nothing is due where the street is already that wide. Held as "
-        "four fields because the distance turns on the street's class, a fact "
-        "about ONE street line. The envelope measures the half-width "
-        "(flats/geom/dedication.py) and applies the strip to street lines "
-        "only.",
+        "How far from the centre line of a collector a lot's building line must sit before "
+        + _ROW_TO_CENTERLINE,
         False,
     ),
     FieldDef(
         "row_to_centerline_arterial_ft",
         "length_ft",
-        "Right-of-way a lot on an arterial must reach, measured from the street's "
-        "centre line, before its first building permit (Washington County CDC "
-        "302-2.14 C(1) and 303 to 306: 25 / 30 / 37 / 45 ft for local street, "
-        "neighborhood route, collector, arterial). The lot dedicates the "
-        "shortfall of the existing half-width and its yards run from the new "
-        "line; nothing is due where the street is already that wide. Held as "
-        "four fields because the distance turns on the street's class, a fact "
-        "about ONE street line. The envelope measures the half-width "
-        "(flats/geom/dedication.py) and applies the strip to street lines "
-        "only.",
+        "How far from the centre line of an arterial a lot's building line must sit before "
+        + _ROW_TO_CENTERLINE,
         False,
+    ),
+    FieldDef(
+        "row_to_centerline_minor_arterial_ft",
+        "length_ft",
+        "How far from the centre line of a minor arterial a lot's building line must sit before "
+        + _ROW_TO_CENTERLINE,
+        False,
+    ),
+    FieldDef(
+        "row_to_centerline_major_arterial_ft",
+        "length_ft",
+        "How far from the centre line of a major arterial a lot's building line must sit before "
+        + _ROW_TO_CENTERLINE,
+        False,
+    ),
+    FieldDef(
+        "row_to_centerline_principal_arterial_ft",
+        "length_ft",
+        "How far from the centre line of a principal arterial a lot's building line must sit before "
+        + _ROW_TO_CENTERLINE,
+        False,
+    ),
+    FieldDef(
+        "row_to_centerline_named_ft",
+        "street_table",
+        "The same distance from the centre line, listed by STREET NAME rather than "
+        "by class: King City 16.80.060 A (Beef Bend Road, 131st Avenue and Fischer "
+        "Road 33 ft; 116th Avenue and Royalty Parkway 30 ft), Milwaukie Table "
+        "19.501.2.A (29 major streets at 25, 30 or 40 ft). Held as a list of "
+        "[street as the code prints it, feet]; a stretch the code names in brackets "
+        "is not read, so the distance holds along the whole street, and a street "
+        "listed twice takes the deeper. A street the list leaves out takes "
+        "row_to_centerline_other_ft where the code states one, else none. "
+        + _ROW_TO_CENTERLINE,
+        False,
+    ),
+    FieldDef(
+        "row_to_centerline_other_ft",
+        "length_ft",
+        "The distance from the centre line for every street a "
+        "row_to_centerline_named_ft list leaves out, where the code states one "
+        "(King City 16.80.060 A.2.g, \"All other city streets -- Twenty-five feet\"). "
+        + _ROW_TO_CENTERLINE,
+        False,
+    ),
+    FieldDef(
+        "row_to_centerline_stated_as_width",
+        "bool",
+        "True where the code states the WHOLE right-of-way width for each class, "
+        "both sides of the centre line together, rather than the distance from "
+        "it: Oregon City Table 16.12.016 prints 54 to 126 feet of right-of-way. "
+        "The row_to_centerline_*_ft values then hold the printed width and half "
+        "of it is the distance (flats/geom/dedication.py), so the number on file "
+        "is the number on the page.",
+        None,
+    ),
+    FieldDef(
+        "row_to_centerline_class_by",
+        "enum",
+        "Whose Transportation System Plan classifies the streets the "
+        "row_to_centerline_*_ft classes are read against: the county's for "
+        "Washington County's districts (and its pockets inside cities), the "
+        "city's own for Sherwood and Oregon City. Picks the map "
+        "(flats/geom/dedication.py CLASS_BY_MAP); a class no map reads is the "
+        "deepest distance the zone states.",
+        None,
+        choices=("washington_county", "sherwood", "oregon_city"),
     ),
     FieldDef(
         "setback_front_max_ft",
@@ -1322,6 +1382,13 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "row_to_centerline_neighborhood_route_ft",
         "row_to_centerline_collector_ft",
         "row_to_centerline_arterial_ft",
+        "row_to_centerline_minor_arterial_ft",
+        "row_to_centerline_major_arterial_ft",
+        "row_to_centerline_principal_arterial_ft",
+        "row_to_centerline_named_ft",
+        "row_to_centerline_other_ft",
+        "row_to_centerline_class_by",
+        "row_to_centerline_stated_as_width",
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.
         "setback_side_total_ft",

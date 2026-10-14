@@ -351,6 +351,18 @@ private_drives:
     (106-71.1, L508-L510).
 
 defaults:
+  # WHOSE STREET CLASSES. 302-2.14 C(1) and its 303 to 306 twins state the
+  # dedication by the county's own street classes ("Local street ...
+  # Neighborhood route ... Collector ... Arterial"), which are the
+  # Washington County TSP's functional classes; the county map draws them
+  # countywide, so a county-zoned pocket inside a city reads it too. A line
+  # the map does not rank takes the arterial 45 feet (flats/geom/dedication.py).
+  row_to_centerline_class_by:
+    value: washington_county
+    cite: Washington County CDC 302-2.14 C(1), dedication to centerline by county street class (local, neighborhood route, collector, arterial)
+    url: https://api.municode.com/PublicationPdfDownload/3090
+    retrieved: '2026-09-28'
+    quote: "or/washington/_unincorporated/cdc.302.r-5.txt#L94-L101"
   # PARKING COUNT. 413-6.1 is headed "Minimum Off-Street Parking Spaces
   # Required outside the UGB" and says in the heading itself: "Development
   # inside the UGB is exempt from minimum parking standards". Every district

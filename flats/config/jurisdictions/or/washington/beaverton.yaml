@@ -301,6 +301,14 @@ defaults:
 # THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-29. Each applies
 # in every zone below unless the zone says otherwise.
 #
+# NOT ENCODED: right-of-way dedication. 60.55.10: "Dedication of
+# right-of-way shall be determined by the decision-making authority"
+# (bdc.60.55.transportation.txt#L30). Beaverton states no width or distance
+# from the centre line for a lot to give up, only that a decision-maker
+# sets one, so there is no number to encode and none is invented. A
+# Beaverton street line takes no strip; the county-zoned pockets inside the
+# city read the county's 25 to 45 feet. A doubt (FOLLOWUPS 77).
+#
 # NOT ENCODED: minimum FAR. The Multiple Use table prints a minimum floor
 # area ratio (row B.1, 0.30 to 0.60; bdc.20.20.multiple-use.txt#L106-L108)
 # and the Cooper Mountain table one for CM-CS and CM-HDR (row I.1, 0.4;

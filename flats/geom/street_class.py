@@ -125,6 +125,8 @@ class ClassSpec:
     ``unlisted`` is the rank of a street the map does not draw at all, for
     a map that draws only its classified streets; None (every other map):
     an undrawn street is unread.
+
+    ``access`` False keeps a map to the road-dedication reading only.
     """
 
     field: str
@@ -132,6 +134,10 @@ class ClassSpec:
     other: frozenset[str]
     rank: Mapping[str, int] = dataclass_field(default_factory=dict)
     unlisted: int | None = None
+    #: False for a map read only for the distance to centre line a lot's
+    #: code asks (:mod:`flats.geom.dedication`): its ranks feed no driveway
+    #: rule and it answers no ``local_street``.
+    access: bool = True
 
 
 #: Registry dataset -> how its classes read.
@@ -260,6 +266,26 @@ CLASS_MAPS: dict[str, ClassSpec] = {
         rank={"5": 1, "4": 2, "3": 3, "2": 4, "1": 5},
         unlisted=0,
     ),
+    # Sherwood 16.106.030 D: additional setbacks from the centre line by the
+    # TSP's class (Principle Arterial (99W), Arterial, Collector,
+    # Neighborhood Route, Local). The city publishes no classification
+    # layer; this is the TSP update's map (Kittelson project 30785, the
+    # "Functional Class" layer of its webmap), RLIS centrelines carrying a
+    # kai_func_class. It draws the classified streets only -- its "Local"
+    # lines are private roads and drives (RLIS 1700/1800), and 689 public
+    # minor residential streets carry no class -- so the registry keeps the
+    # classed lines and a street it leaves out ranks local only where Metro
+    # and OpenStreetMap both call it residential, as on the county's map.
+    # Read for the dedication only (``access``): Sherwood's lowest-class
+    # driveway rule keeps its standing reading until the map is adopted.
+    "street_class_sherwood": ClassSpec(
+        field="kai_func_class",
+        local=frozenset(),
+        other=frozenset(),
+        rank={"Local": 0, "Neighborhood": 1, "Collector": 2, "Arterial": 3, "Principal Arterial": 4},
+        unlisted=0,
+        access=False,
+    ),
 }
 
 
@@ -283,6 +309,10 @@ class ClassMap:
     #: :attr:`unlisted` only where these agree with Metro (:func:`_osm_agrees`).
     osm: Lines | None = None
     osm_classes: tuple[str, ...] = ()
+    #: The registry dataset the map was read from ("" for one a test draws).
+    key: str = ""
+    #: :attr:`ClassSpec.access`.
+    access: bool = True
 
     def covers(self, layer_id: str | None) -> bool:
         return bool(layer_id) and any(layer_id == s or layer_id.startswith(f"{s}/") for s in self.serves)
@@ -329,6 +359,8 @@ def build(
     unlisted: int | None = None,
     osm: Sequence[Any] = (),
     osm_classes: Sequence[str] = (),
+    key: str = "",
+    access: bool = True,
 ) -> ClassMap:
     """A class map from its parts (what :func:`load_class_maps` reads, and
     what a test draws). ``ranks`` defaults to none; ``osm`` is
@@ -349,6 +381,8 @@ def build(
         unlisted=unlisted,
         osm=Lines.build(osm_kept) if osm_kept else None,
         osm_classes=tuple(osm_classes[i] for i in osm_ix),
+        key=key,
+        access=access,
     )
 
 
@@ -419,6 +453,8 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
                 spec.unlisted,
                 osm_lines if spec.unlisted is not None and osm_lines else (),
                 osm_classes,
+                key,
+                spec.access,
             )
         )
     return tuple(out)
@@ -520,7 +556,7 @@ def street_ranks(
     """:func:`edge_rank` for every s4 edge (``[x1, y1, x2, y2, cls]``), None
     on a line that is not a street or that no map serving the layer reads.
     Two maps serving one layer must agree."""
-    serving = [m for m in maps if m.covers(layer_id)]
+    serving = [m for m in maps if m.access and m.covers(layer_id)]
     out: list[int | None] = []
     for e in edges:
         if not serving or len(e) < 5 or e[4] != STREET_CLASS:
@@ -677,7 +713,7 @@ def observed_local_street(
     collector or an arterial, absent otherwise.
     """
     street = [e for e in edges if len(e) >= 5 and e[4] == STREET_CLASS]
-    serving = [m for m in maps if m.covers(layer_id)]
+    serving = [m for m in maps if m.access and m.covers(layer_id)]
     if not street or not serving:
         return {}
     kinds = {edge_class(e, m) for e in street for m in serving}  # type: ignore[arg-type]

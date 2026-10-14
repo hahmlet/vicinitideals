@@ -657,7 +657,32 @@ datasets:
       local street is drawn and no line is named: a lot line is matched by
       where the line runs, and a street the map leaves out ranks local only
       where Metro types it a minor residential street. For CDC 501-8.5 B's
-      access gates (corner_access_street: lowest_class).
+      access gates (corner_access_street: lowest_class). Also read, in every
+      Washington County layer, for the county's road dedication
+      (row_to_centerline_*, CDC 302-2.14 C(1)) on county-zoned land.
+
+  street_class_sherwood:
+    kind: arcgis
+    label: Sherwood TSP functional classification (TSP update webmap)
+    provides: streets
+    url: https://services.arcgis.com/4qIOeADCgonipFEW/arcgis/rest/services/30785_02_Sherwood_TSPWebmap_WFL1/FeatureServer/28
+    geometry: polyline
+    fields: [PREFIX, STREETNAME, FTYPE, TYPE, kai_func_class]
+    where: kai_func_class IS NOT NULL
+    serves: [or/washington/sherwood]
+    notes: >-
+      The "Functional Class" layer of the Sherwood TSP update's webmap
+      (Kittelson & Associates project 30785; 1,288 RLIS centrelines, edited
+      2026-01-19, read 2026-10-14). The city publishes no classification
+      layer of its own and the adopted TSP's Figure 17 is not held.
+      kai_func_class: Principal Arterial (52 lines, all RLIS 1200, 99W),
+      Arterial (156, RLIS 1400), Collector (174), Neighborhood (116), Local
+      (99, every one a private road or drive, RLIS 1700/1800); 691 lines
+      carry no class (689 of them RLIS 1500 minor residential) and are left
+      out by the query, so a street the map does not draw ranks local only
+      where Metro and OpenStreetMap both call it residential, as on the
+      county's map. Read only for 16.106.030 D's additional setbacks
+      (flats/geom/dedication.py); no driveway rule reads its ranks.
 
   # --- curbs and pavement widths (flats/geom/curbs.py) ----------------------
   # Where the fire truck stands (FOLLOWUPS 29): the hose's 150 ft

@@ -199,6 +199,18 @@ defaults:
 
 # THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-30.
 #
+# NOT ENCODED: 18.210.030.A.1, "Where the ultimate right-of-way width, as
+# shown in the Transportation System Plan, is wider than the current
+# right-of-way width, required setbacks are measured from the ultimate
+# right-of-way width" (tdc.18.210.residential-general.txt#L45-L51). The
+# rule is the same as the county's and the neighbours' (flats/geom/
+# dedication.py), but its widths are in the Tigard TSP's street
+# cross-sections, which this store does not hold and which could not be
+# fetched on 2026-10-14 (the city's site and ecode360 refuse a script), and
+# no Tigard class map is held. No number is written without its page, so a
+# Tigard street line takes no strip: the one place the dedication can still
+# leave a false GREEN. A doubt and a question for Steph (FOLLOWUPS 77).
+#
 # NOT ENCODED: the rowhouse maximum shared access width, "the maximum width
 # is 24 feet" (18.280.040.D.1.b, tdc.18.280.rowhouses.txt L123). A ceiling
 # on the drive, not the approach; no field holds a maximum drive width. The
