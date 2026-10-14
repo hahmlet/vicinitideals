@@ -74,7 +74,7 @@ def test_the_two_residential_zones_are_closed_by_ruling(rules: RuleSet) -> None:
         got = rules.resolve(UNINC, zone, (*POD, "planned_development"))
         assert got.values["quadplex_allowed"].value is False, zone
         assert not got.values["quadplex_allowed"].levers, zone
-        assert "RED BY RULING (Steph, 2026-10-08)" in uninc_note(rules, zone), zone
+        assert "RED, RE-CHECKED 2026-10-14 under Steph's review rule" in uninc_note(rules, zone), zone
 
 
 def test_the_agricultural_zone_does_not(rules: RuleSet) -> None:

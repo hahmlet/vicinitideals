@@ -3126,8 +3126,12 @@ zones:
       value: 65
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L1306,L1315"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): the only way to a four-unit building
-      here is to put the units on their own lots as townhouses, and the standards
+      RED, RE-RULED 2026-10-14 under Steph's review rule (it replaces the
+      by-right-only ruling of 2026-10-08 and keeps this zone red): the review
+      does not check the pod against standards, it writes them -- lot size,
+      width, depth, coverage and every setback are "Variable" until the
+      review sets them, a one-off decision. The 2026-10-08 reading: the only
+      way to a four-unit building here is to put the units on their own lots as townhouses, and the standards
       for that are "determined through the master plan process or design review
       application" (Table 16.22.060-2 note 2); a review is not by-right, so this
       zone is refused. The unit-lot variant was removed with the ruling; it can
@@ -3173,8 +3177,8 @@ zones:
       value: false
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L1225,L1229,L1232,L1233"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): see MURM, the same table and the same
-      note 2. The unit-lot variant (townhouses permitted outright) is removed
+      RED, RE-RULED 2026-10-14 (the same reason as MURM): see MURM, the same
+      table and the same note 2. The unit-lot variant (townhouses permitted outright) is removed
       for the same reason.
       Stated from its own column rather than borrowed from MUR-M, because the
       two districts part company below the use table: 16.22.060-2 is headed
@@ -3570,7 +3574,8 @@ zones:
       value: false
       quote: "or/clackamas/happy-valley/16.31.rock-creek-pmu.txt#L37,L73,L85,L141"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08): nothing here is by right. The
+      RED, RE-RULED 2026-10-14 under Steph's review rule: the master plan or
+      design review sets every standard, a one-off decision. The
       chapter writes no list of uses and no setback, height or coverage figure;
       all of them are set by a master plan or a design review, which is a
       discretionary approval. No standards are encoded because the code states

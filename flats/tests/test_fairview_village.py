@@ -98,7 +98,7 @@ def test_the_door_asks_for_a_land_division_as_well_as_a_permit(
     for zone in ("VMU", "VA"):
         held = fairview.zones[zone]
         assert held.values["quadplex_allowed"].variants == (), zone
-        assert "RED BY RULING (Steph, 2026-10-08)" in held.notes, zone
+        assert "RED, RE-CHECKED 2026-10-14 under Steph's review rule" in held.notes, zone
         use = rules.resolve(FAIRVIEW, zone).values["quadplex_allowed"]
         assert use.value is False and not use.levers, zone
 

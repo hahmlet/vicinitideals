@@ -222,13 +222,14 @@ def test_the_unit_lot_door_is_closed_by_ruling(
 ) -> None:
     """The table permits townhouses outright, but every dimension behind them
     is "Variable" and settled by master plan or design review. Not by-right,
-    so the zone is refused (Steph, 2026-10-08) and nothing is left to unsettle
+    so the zone is refused (Steph, 2026-10-08; re-ruled red 2026-10-14 under the
+    review rule, every standard a one-off decision) and nothing is left to unsettle
     the prohibition: the use gate answers it instead of leaving the lot
     unmeasured."""
     for zone in ("MURM", "MURX"):
         held = happy_valley.zones[zone].values["quadplex_allowed"]
         assert held.variants == (), zone
-        assert "RED BY RULING (Steph, 2026-10-08)" in happy_valley.zones[zone].notes, zone
+        assert happy_valley.zones[zone].notes.startswith("RED, RE-RULED 2026-10-14"), zone
         use = rules.resolve(HAPPY_VALLEY, zone).values["quadplex_allowed"]
         assert use.value is False and not use.levers, zone
 
@@ -278,4 +279,4 @@ def test_rock_creek_pmu_is_red_by_ruling_and_no_longer_unencodable(
     zone = happy_valley.zones["PMU"]
     assert zone.values["quadplex_allowed"].value is False
     assert zone.values["quadplex_allowed"].variants == ()
-    assert zone.notes.startswith("RED BY RULING (Steph, 2026-10-08)")
+    assert zone.notes.startswith("RED, RE-RULED 2026-10-14")

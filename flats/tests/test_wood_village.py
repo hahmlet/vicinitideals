@@ -114,7 +114,7 @@ def test_the_conditional_use_is_not_enough_on_its_own(
     nc = wv.zones["NC"].values["quadplex_allowed"]
     assert nc.value is False
     assert nc.variants == ()
-    assert "RED BY RULING (Steph, 2026-10-08)" in wv.zones["NC"].notes
+    assert "RED, RE-CHECKED 2026-10-14 under Steph's review rule" in wv.zones["NC"].notes
 
     for held in ((), ("conditional_use",), ("conditional_use", "mixed_use")):
         got = rules.resolve(WV, "NC", (*POD, *held))

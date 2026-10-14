@@ -66,7 +66,7 @@ from flats.fit.rectangle import Fit, Fitter
 from flats.fit.slope import load_rules as slope_rules
 from flats.geom.edges import Tier as GeometryTier
 from flats.rules.conditions import CONDITIONS, Tier
-from flats.rules.fields import REQUIRED_FIELDS
+from flats.rules.fields import REQUIRED_FIELDS, SQFT_PER_ACRE
 from flats.rules.net_area import net_span
 from flats.rules.resolver import ALTERNATIVES, Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
@@ -167,6 +167,12 @@ CLOSER_LOOK_STEEP_COARSE = "CLOSER_LOOK_STEEP_COARSE"
 #: would say yellow." The standards were read from the one district the lot
 #: screens under.
 CLOSER_LOOK_SPLIT_ZONE = "CLOSER_LOOK_SPLIT_ZONE"
+#: The pod is taken here only through a review whose decider may add
+#: conditions, or whose criteria weigh judgement words beside the measurable
+#: standards (:func:`review_with_conditions`). Steph 2026-10-14: "If it's
+#: otherwise clear and measurable, but there is a 'may add conditions',
+#: yellow." Never RED, never GREEN.
+CLOSER_LOOK_REVIEW_CONDITIONS = "CLOSER_LOOK_REVIEW_CONDITIONS"
 #: The plan's fit, missed on the ground left once the steep ground is taken
 #: off and met without that (:attr:`LotFacts.steep_blocks`): the slope
 #: eliminates the lot, not the pod's placement (Steph 2026-10-04). The fit
@@ -257,6 +263,7 @@ CHECK_FIELD: dict[str, str] = {
     "min_lot_area_sqft": "min_lot_sqft",
     "min_frontage_ft": "min_frontage_ft",
     "driveway_frontage_share": "driveway_max_frontage_pct",
+    "parking_frontage_share": "parking_area_max_frontage_pct",
     "front_yard_vehicle_share": "parking_front_yard_max_pct",
     "min_lot_width_ft": "min_lot_width_ft",
     "min_average_lot_width_ft": "min_average_lot_width_ft",
@@ -402,6 +409,14 @@ class LotFacts:
     #: polygon, no front setback, no drawing), which leaves the shape a fact
     #: nobody observed rather than a miss.
     outdoor_square_ft: float | None = None
+    #: The parking's share of the worst street frontage this plan has, in
+    #: percent (:func:`flats.fit.frontage.parking_share_pct`): the stalls and
+    #: aisle as wide as they face each street, front, side or rear (Steph
+    #: 2026-10-14, FOLLOWUPS 80(a)). Measured by the bridge on the plan it
+    #: draws, only where the zone caps the parking on every street frontage
+    #: (``parking_area_frontage_any_street``); None where nobody measured it,
+    #: which leaves the check unrun.
+    parking_frontage_share_pct: float | None = None
     #: Distances to transit, feet, as ``(measure, ft)`` pairs
     #: (:data:`flats.rules.model.TRANSIT_MEASURES`), measured once per
     #: transit release by :mod:`flats.ingest.transit` and read by the rules
@@ -852,6 +867,28 @@ def _checks(
                 "driveway_frontage_share",
                 drive,
                 share / 100.0 * lot.frontage_ft,
+                is_maximum=True,
+            )
+    # The parking's share of EVERY street frontage (Steph 2026-10-14 on the
+    # model code's half-the-frontage cap: "front, back, side streets if they
+    # exist"). The court beside the building is held to it on the way in
+    # (:func:`flats.score.paper.side_court`); this is the court behind the
+    # building, which faces a side street or a through lot's far street.
+    # Measured on the drawn plan by the bridge; unmeasured leaves it unrun.
+    parking_cap = rules.get("parking_area_max_frontage_pct")
+    if (
+        parking_cap is not None
+        and rules.get("parking_area_frontage_any_street") is True
+        and beside is None
+        and design.parking.parks
+    ):
+        if lot.parking_frontage_share_pct is None:
+            unchecked.append("parking_frontage_share")
+        else:
+            check(
+                "parking_frontage_share",
+                lot.parking_frontage_share_pct,
+                float(parking_cap),
                 is_maximum=True,
             )
     # The front yard's share in vehicle area (Portland 33.266.120.C.1.b, 40
@@ -2094,6 +2131,8 @@ def screen(
         closer = (*closer, CLOSER_LOOK_RESOURCE)
     if lot.steep_unconfirmed:
         closer = (*closer, CLOSER_LOOK_STEEP_COARSE)
+    if review_with_conditions(rules, lot, design) is not None:
+        closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
 
     if any(not o.available for o in walls):
         # A verified standard the code offers no way around. Nothing still
@@ -2123,6 +2162,60 @@ def screen(
         return Screening(triage=Triage.yellow, reasons=closer, **common)
 
     return Screening(triage=Triage.green, reasons=(), **common)
+
+
+#: Why :func:`review_with_conditions` holds, and the field whose citation
+#: names the review.
+REVIEW_FIELDS: dict[str, str] = {
+    "conditions": "review_discretion",
+    "judgement": "review_discretion",
+    "buildable_area": "type_i_max_buildable_sqft",
+    "standard_plat": "type_i_standard_plat_required",
+}
+
+
+def review_with_conditions(rules: ZoneResolution, lot: LotFacts, design: Design) -> str | None:
+    """Why the pod's path on this lot is a review that may add conditions,
+    or None where it is not (Steph 2026-10-14: YELLOW with the review
+    flagged, never red, never green).
+
+    ``"conditions"`` or ``"judgement"``: the zone says so
+    (``review_discretion``) -- a review whose decider may add conditions, or
+    a mixed one weighing words like "compatible" beside its standards.
+
+    Otherwise Washington County's split between its reviews: the middle-
+    housing Type I path (302-2.14 .. 307-2.13, 390-8.2 E .. 390-10.2 K,
+    375-7 30.c) holds on a lot within a buildable area
+    (``type_i_max_buildable_sqft``) OR, past it, where the homes meet the
+    district's minimum density (``type_i_density_escape_du_per_acre``); a
+    zone stating neither limb sets no size gate. Past them the path is the
+    Type II review, on which the county may add conditions (207-5).
+    Buildable area is the lot less unbuildable land and never more than the
+    lot, so the lot's own area is read: the most buildable area can be, the
+    lowest density the homes can score. A lot over either line on its own
+    area is flagged even where mapped flood or resource land might bring it
+    under -- the flag is the question, not a miss. In the denser zones the
+    Type I path is open only on a lot a standard subdivision or partition
+    plat created (``type_i_standard_plat_required``), which nothing here
+    measures, so every such lot is flagged too (``"buildable_area"`` named
+    before ``"standard_plat"``, the first that holds).
+    """
+    if (how := rules.get("review_discretion")) is not None:
+        return str(how)
+    size = rules.get("type_i_max_buildable_sqft")
+    escape = rules.get("type_i_density_escape_du_per_acre")
+    if size is not None or escape is not None:
+        within = size is not None and lot.lot_sqft <= float(size)
+        dense = (
+            escape is not None
+            and lot.lot_sqft > 0
+            and design.units / (lot.lot_sqft / SQFT_PER_ACRE) >= float(escape)
+        )
+        if not (within or dense):
+            return "buildable_area"
+    if rules.get("type_i_standard_plat_required") is True:
+        return "standard_plat"
+    return None
 
 
 #: The flag type for each verdict that leaves a rule set untrusted.
@@ -2310,6 +2403,8 @@ def _account(
         flag("RESOURCE-PERMIT", CLOSER_LOOK_RESOURCE, fact=key, source="mapped")
     if lot.steep_unconfirmed:
         flag("SLOPE-STEEP-COARSE", CLOSER_LOOK_STEEP_COARSE, source=lot.steep_source or "")
+    if (why := review_with_conditions(rules, lot, design)) is not None:
+        flag("REVIEW-CONDITIONS", CLOSER_LOOK_REVIEW_CONDITIONS, fact=why, source=_cite(rules, REVIEW_FIELDS[why]))
     # Fitted clear of an easement assumed along every street line (Steph
     # 2026-10-01): a plat showing a wider one, or one on a side or rear
     # line, would move the building. A record, below the yellow line.
@@ -2400,6 +2495,7 @@ __all__ = [
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_SPLIT_ZONE",
     "CLOSER_LOOK_STEEP_COARSE",
+    "CLOSER_LOOK_REVIEW_CONDITIONS",
     "GEOMETRY_UNREADABLE",
     "MIN_DENSITY_CHECKS",
     "NO_FRONTAGE",
@@ -2422,4 +2518,5 @@ __all__ = [
     "backlog",
     "histogram",
     "screen",
+    "review_with_conditions",
 ]

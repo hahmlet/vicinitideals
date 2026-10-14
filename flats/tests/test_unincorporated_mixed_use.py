@@ -1,11 +1,14 @@
-"""Clackamas unincorporated SCMU and PMU1-3, red by ruling.
+"""Clackamas unincorporated SCMU (yellow) and PMU1-3 (red).
 
 All four were ``to_read`` rulings until 2026-10-08. Table 510-1 permits a
 quadplex outright in both districts, but development in a commercial district
 goes through Type II design review (ZDO 1102.01(A)) and a PMU site also needs a
-master plan (1102.03(B)), so Steph's by-right rule (2026-10-08) makes them RED.
-These tests pin the use answer (false, no variants), the numbers kept for a
-reversal, and the quote behind each, so a later edit that moves a number has to
+master plan (1102.03(B)). Steph's by-right rule (2026-10-08) made all four RED;
+the review rule of 2026-10-14 replaced it: SCMU's design review mixes
+measurable standards with judgement words, so it admits the pod with a
+REVIEW-CONDITIONS flag (yellow), while PMU's master plan against Table 510-3 is
+a one-off decision and stays RED. These tests pin the use answers, the numbers
+kept, and the quote behind each, so a later edit that moves a number has to
 move its citation too.
 """
 
@@ -20,7 +23,8 @@ from flats.rules.model import Layer
 pytestmark = pytest.mark.unit
 
 LAYER = "or/clackamas/_unincorporated"
-RED_ZONES = ["SCMU", "PMU1", "PMU2", "PMU3"]
+ZONES = ["SCMU", "PMU1", "PMU2", "PMU3"]
+RED_ZONES = ["PMU1", "PMU2", "PMU3"]
 
 #: zone -> field -> (value, a phrase the quoted lines must contain)
 EXPECTED = {
@@ -55,7 +59,7 @@ def store() -> ProvenanceStore:
     return ProvenanceStore()
 
 
-@pytest.mark.parametrize("zone", RED_ZONES)
+@pytest.mark.parametrize("zone", ZONES)
 def test_zone_is_a_block_and_no_longer_a_to_read_ruling(layer: Layer, zone: str) -> None:
     assert zone in layer.zones
     assert zone not in (layer.zone_rulings or {})
@@ -73,14 +77,21 @@ def test_a_quadplex_is_refused_with_no_way_back_in(layer: Layer, store: Provenan
     assert held.prov.quote.startswith(f"{LAYER}/zdo.1102.txt#")
     assert "Commercial zoning districts" in text
     assert "Type II application" in text
-    if zone.startswith("PMU"):
-        assert "a master plan shall be required" in text  # 1102.03(B)
+    assert "a master plan shall be required" in text  # 1102.03(B)
 
 
-@pytest.mark.parametrize("zone", RED_ZONES)
+def test_scmu_admits_the_pod_with_a_judgement_flag(layer: Layer, store: ProvenanceStore) -> None:
+    held = layer.zones["SCMU"].values
+    assert held["quadplex_allowed"].value is True
+    assert "Quadplexes" in store.quote(held["quadplex_allowed"].prov.quote)
+    assert held["review_discretion"].value == "judgement"
+
+
+@pytest.mark.parametrize("zone", ZONES)
 def test_the_notes_carry_the_ruling(layer: Layer, zone: str) -> None:
     notes = layer.zones[zone].notes or ""
-    assert "RED BY RULING (Steph, 2026-10-08)" in notes
+    colour = "YELLOW" if zone == "SCMU" else "RED"
+    assert notes.startswith(f"{colour}, RE-RULED 2026-10-14"), zone
 
 
 @pytest.mark.parametrize(
@@ -109,7 +120,7 @@ def test_pmu_sites_share_the_one_table_510_2_column(layer: Layer) -> None:
         assert layer.zones[zone].like.zone == "PMU1"
 
 
-@pytest.mark.parametrize("zone", RED_ZONES)
+@pytest.mark.parametrize("zone", ZONES)
 def test_everything_is_draft(layer: Layer, zone: str) -> None:
     for name, held in layer.zones[zone].values.items():
         assert str(getattr(held, "confidence", "draft")).endswith("draft"), (zone, name)

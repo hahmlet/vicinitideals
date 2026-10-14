@@ -37,12 +37,12 @@ argue with it.
   off the county's map; SID I-P and SC-BP are the map's spellings of I-P and
   SCBP.
 
-- **Development Review is the gate** (RED BY RULING, Steph 2026-10-08,
-  applied 2026-10-10). 12.80.040 B.1 requires a Type II Development Review
-  for new development in any zone but those D.1 exempts, and D.1 exempts
-  middle housing only in MR-1, SCR-LD, SCR-MD and the R zones. A review is
-  not by right, so every other zone that permits the pod is refused; its
-  use row and standards stay so the ruling can be reversed
+- **Development Review may add conditions** (YELLOW, Steph's review rule of
+  2026-10-14, which replaced the by-right-only ruling that refused these
+  zones on 2026-10-10). 12.80.040 B.1 requires a Type II Development Review
+  for new development in any zone but those D.1 exempts, and the Review
+  Authority "may impose conditions" (12.80.040 I). The use rows stand and the
+  zones carry `review_discretion: conditions`
   (test_hillsboro_development_review.py).
 
 One smaller fact rides along: Hillsboro sets no parking minimum at all (12.50.310
@@ -73,11 +73,6 @@ ONE_LOT = (
 )
 #: Quadplex P in the use table, refused by where the pod parks (12.50.350 D.1).
 PARKED_INSIDE = ("SCC-DT",)
-#: One-lot zones 12.80.040 D.1 exempts from Development Review: still by right.
-BY_RIGHT = (
-    "R-10", "R-8.5", "R-7", "R-6", "R-4.5",
-    "SCR-LD", "MR-1", "SCR-MD",
-)
 #: Height in stories at ten feet a story (12.50.140 B.6): zone -> stories.
 IN_STORIES = {
     "R-10": 2.5, "R-8.5": 2.5, "R-7": 2.5, "R-6": 2.5, "R-4.5": 2.5,
@@ -112,11 +107,8 @@ def test_every_zone_the_code_lists_is_encoded(hillsboro: Layer) -> None:
 
 
 def test_the_pod_goes_on_one_lot_in_twenty_one_zones(hillsboro: Layer) -> None:
-    # Twenty-one zones print the use; since 2026-10-10 only the eight that
-    # 12.80.040 D.1 exempts from Development Review admit it (RED BY RULING).
     admitted = {z for z in hillsboro.zones if _use(hillsboro, z).value is True}
-    assert admitted == set(BY_RIGHT)
-    assert set(BY_RIGHT) < set(ONE_LOT)
+    assert admitted == set(ONE_LOT)
     assert len(ONE_LOT) == 21
     for zone in ONE_LOT:
         if zone in FLAG_LOT_REFUSED:
@@ -125,12 +117,9 @@ def test_the_pod_goes_on_one_lot_in_twenty_one_zones(hillsboro: Layer) -> None:
 
 
 def test_mu_c_admits_the_pod_only_off_an_arterial(hillsboro: Layer) -> None:
-    # The local_street permission is switched off by the Development Review
-    # ruling (2026-10-10); the base refusal on 12.24.250 G stands under it.
     use = _use(hillsboro, "MU-C")
     assert use.value is False
-    assert use.variants == ()
-    assert "RED BY RULING" in hillsboro.zones["MU-C"].notes
+    assert [(v.value, v.when) for v in use.variants] == [(True, ("local_street",))]
 
 
 def test_the_retail_frontage_zones_admit_only_outside_it(hillsboro: Layer) -> None:
@@ -138,9 +127,9 @@ def test_the_retail_frontage_zones_admit_only_outside_it(hillsboro: Layer) -> No
     for zone in RETAIL_FRONTAGE:
         use = _use(hillsboro, zone)
         assert use.value is False, zone
-        # The inside_mapped_use_area permission is switched off by the
-        # Development Review ruling (2026-10-10).
-        assert use.variants == (), zone
+        assert [(v.value, v.when) for v in use.variants] == [
+            (True, ("inside_mapped_use_area",))
+        ], zone
         text = " ".join(store.quote(use.prov.quote).split())
         assert "Retail Focus Frontage" in text, zone
 
@@ -155,9 +144,7 @@ def test_the_retail_frontage_zones_admit_only_outside_it(hillsboro: Layer) -> No
 def test_two_zones_refuse_a_flag_lot(hillsboro: Layer, zone: str, words: str) -> None:
     assert set(FLAG_LOT_REFUSED) == {"SCR-OTC", "MU-VTC"}
     use = _use(hillsboro, zone)
-    # The base is false since 2026-10-10 (Development Review, RED BY RULING);
-    # the flag-lot refusal stays so it still holds if the ruling is reversed.
-    assert use.value is False
+    assert use.value is True
     assert [(v.value, v.when) for v in use.variants] == [(False, ("flag_lot",))]
     text = " ".join(ProvenanceStore().quote(use.variants[0].prov.quote).split())
     assert words in text

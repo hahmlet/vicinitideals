@@ -121,6 +121,7 @@ _LABELS: dict[str, str] = {
     "orientation_constraint": "building orientation rule",
     "parking_area_max_frontage_pct": "max. parking share of frontage",
     "parking_area_max_width_ft": "max. parking area width",
+    "parking_area_frontage_any_street": "parking share capped on every street frontage",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
@@ -141,6 +142,10 @@ _LABELS: dict[str, str] = {
     "parking_min_per_unit": "min. parking per unit",
     "parking_street_setback_ft": "min. parking setback from street",
     "quadplex_allowed": "fourplex allowed",
+    "type_i_max_buildable_sqft": "largest buildable area on the quick (Type I) review",
+    "type_i_density_escape_du_per_acre": "density that keeps a bigger lot on the quick (Type I) review",
+    "type_i_standard_plat_required": "quick (Type I) review only on a lot from a standard plat",
+    "review_discretion": "discretion left to the review",
     "setback_front_ft": "front setback",
     "setback_front_max_ft": "max. front setback",
     "setback_garage_entrance_ft": "garage entrance setback",
@@ -483,6 +488,75 @@ _F: tuple[FieldDef, ...] = (
         True,
         "max_density",
     ),
+    # --- the review a fourplex goes through --------------------------------
+    #
+    # Steph 2026-10-14, replacing the 2026-10-08 "a review is not by-right"
+    # ruling: "if it's a clear and measurable standard, green. If it's
+    # otherwise clear and measurable, but there is a 'may add conditions',
+    # yellow. If it's clear that everything is a one-off arbitrary decision,
+    # red." A review on measurable standards alone is no field at all (the
+    # standards are encoded and checked; a design checklist nothing checks
+    # -- glazing, eaves, roof pitch -- does not block green, Steph the same
+    # day). An all-judgement review is `quadplex_allowed: false`. The yellow
+    # middle is `review_discretion`, and Washington County's split between
+    # its Type I and Type II reviews is the three `type_i_*` fields: past
+    # them the path is the Type II review, which may add conditions
+    # (CDC 207-5). Both raise one flag, REVIEW-CONDITIONS
+    # (:func:`flats.score.screen.review_with_conditions`).
+    FieldDef(
+        "review_discretion",
+        "enum",
+        "The review the pod must pass here is not one of measurable "
+        "standards alone. `conditions`: its standards are clear and "
+        "measurable but the decider \"may add conditions\" (or impose them) "
+        "-- Washington County's Type II review (207-5). `judgement`: a mixed "
+        "review whose criteria include words no measurement settles "
+        "(\"compatible\", \"character\", \"visual interest\"), which Steph "
+        "treats the same way; the citation names the words. Either is "
+        "YELLOW with REVIEW-CONDITIONS, never red, never green (Steph "
+        "2026-10-14). Silent: no review, or one on measurable standards "
+        "only. A review that is all judgement is not this field: the zone "
+        "is refused (`quadplex_allowed: false`).",
+        None,
+        choices=("conditions", "judgement"),
+    ),
+    FieldDef(
+        "type_i_max_buildable_sqft",
+        "area_sqft",
+        "Largest BUILDABLE area on which middle housing still goes through "
+        "the Type I review. Past it the path is a Type II review, unless the "
+        "four homes meet `type_i_density_escape_du_per_acre`. Washington "
+        "County R-5 16,500, R-6 13,100, R-9 and denser and the transit "
+        "districts 10,000 (302-2.14 .. 307-2.13, 375-7 30.c). Buildable area "
+        "is the lot less the county's unbuildable land (300-3.1), never more "
+        "than the lot: the lot's own area is the bound read, so a lot over "
+        "the limit is flagged even where its mapped flood or resource land "
+        "might bring it under.",
+        True,
+    ),
+    FieldDef(
+        "type_i_density_escape_du_per_acre",
+        "ratio",
+        "The density the homes must meet or exceed for a lot past "
+        "`type_i_max_buildable_sqft` to stay on the Type I path -- \"the "
+        "minimum density required for other housing types in the district\" "
+        "(Washington County R-5 four units per acre, R-6 five, R-9 seven, "
+        "R-15 twelve, R-24 nineteen, R-25+ twenty). Where a zone states no "
+        "size limit it is the whole Type I test (North Bethany R-9 NB, R-15 "
+        "NB). Four homes on the lot's own area: the most buildable area can "
+        "be, so the lowest density it can score.",
+        False,
+    ),
+    FieldDef(
+        "type_i_standard_plat_required",
+        "bool",
+        "True where the Type I path is open only on a lot \"approved for the "
+        "construction of a Single Detached Dwelling Unit through a Standard "
+        "Subdivision or Standard Partition\" (Washington County R-9, R-15, "
+        "R-24, R-25+, R-9 NB and the transit districts). Nothing here holds "
+        "how a lot was created, so every such lot carries REVIEW-CONDITIONS "
+        "(Steph 2026-10-14: unmeasured, the same yellow flag, not red).",
+    ),
     # --- parking and open space ----------------------------------------
     FieldDef("parking_min_per_unit", "ratio", "Required off-street stalls per unit.", False, "parking_min"),
     FieldDef(
@@ -694,6 +768,23 @@ _F: tuple[FieldDef, ...] = (
         "states one (17.16.060.D.1, forty feet), and on a wide lot it is the "
         "limb that binds.",
         True,
+    ),
+    FieldDef(
+        "parking_area_frontage_any_street",
+        "bool",
+        "True where `parking_area_max_frontage_pct` caps the parking along "
+        "EVERY street frontage the lot has -- front, side street and rear "
+        "street -- not only the court beside the building at the front. "
+        "Steph 2026-10-14 on Wilsonville 4.113(.14)D.3, Hillsboro 12.50.715 "
+        "C.1, Clackamas ZDO 845.02(D) and Beaverton 60.05.60.2 S11: \"I "
+        "read this as 'any' street frontage. So front, back, side streets "
+        "if they exist.\" Measured on the drawn plan "
+        "(:mod:`flats.fit.frontage`): the stalls and aisle standing between "
+        "the building and a street, as wide as they run along it, against "
+        "the share of that street's frontage. A rear court on a lot with no "
+        "street behind it is not reached; on a through lot it faces the far "
+        "street. The driveway is not counted, as for the court beside the "
+        "building (`driveway_max_frontage_pct` holds a driveway cap).",
     ),
     FieldDef(
         "parking_front_yard_max_pct",
@@ -1388,6 +1479,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_maneuvering_max_width_ft",
         "parking_area_max_frontage_pct",
         "parking_area_max_width_ft",
+        "parking_area_frontage_any_street",
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
         "parking_alley_access_required",
@@ -1415,6 +1507,13 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "private_open_space_min_dimension_ft",
         "min_landscaped_pct",
         "orientation_constraint",
+        # The review path, not a dimension (Steph 2026-10-14, FOLLOWUPS 79).
+        # A zone silent on it has a review on measurable standards, or none,
+        # and is not incomplete.
+        "review_discretion",
+        "type_i_max_buildable_sqft",
+        "type_i_density_escape_du_per_acre",
+        "type_i_standard_plat_required",
     }
 )
 

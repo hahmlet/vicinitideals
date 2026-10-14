@@ -66,7 +66,7 @@ def test_the_conditional_use_zones_are_red_by_ruling(layer, rules, zone) -> None
     field = layer.zones[zone].values["quadplex_allowed"]
     assert field.value is False
     assert field.variants == ()
-    assert "RED BY RULING (Steph, 2026-10-08)" in (layer.zones[zone].notes or "")
+    assert "RED, RE-CHECKED 2026-10-14 under Steph's review rule" in (layer.zones[zone].notes or "")
     # No lever lifts it: not the conditional-use path, not the unit-lot path.
     for levers in ((), *((*POD, lv) for lv in LEVERS), (*POD, *LEVERS)):
         got = rules.resolve(G, zone, levers)

@@ -10,14 +10,16 @@ notes: >-
   23, field DESCRIPTIO) spells two of them differently, and those spellings
   are ruled under zone_rulings at the end of the file.
 
-  RED BY RULING (Steph's by-right-only ruling of 2026-10-08, applied
+  YELLOW, RE-RULED 2026-10-14 (Steph's review rule replacing the
+  by-right-only ruling of 2026-10-08, which made these zones RED on
   2026-10-10): CDC 12.80.040 B.1 requires a Type II Development Review for
   new development in every zone but those D.1 exempts, and D.1 exempts
   middle housing only in MR-1, SCR-LD, SCR-MD and the R zones. Every other
   zone that permits the pod (MR-2, MR-3, SCR-HD, SCR-OTC, SCR-DNC, SCR-V,
   SCC-SC, SCC-MM, MU-N, MU-C, MU-VTC, UC-RM, UC-MU, UC-AC, UC-NC, UC-OR,
-  UC-RP) is refused; each zone's notes give the reading and keep its
-  standards so the ruling can be reversed.
+  UC-RP) is screened on its standards and flagged REVIEW-CONDITIONS,
+  because "the Review Authority may impose conditions" on a Development
+  Review (12.80.040 I); each zone's notes give the reading.
 ingest:
   geoid: null
   juris_city_codes:
@@ -298,6 +300,14 @@ defaults:
   parking_area_max_frontage_pct:
     value: 50
     cite: Hillsboro CDC 12.50.715 C.1, garages and parking areas no more than 50% of any street frontage
+    url: https://api.municode.com/PublicationPdfDownload/4450
+    retrieved: '2026-09-29'
+    quote: "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173"
+  parking_area_frontage_any_street:
+    # The cap above is read on EVERY street the lot has: Steph 2026-10-14 (FOLLOWUPS 80(a)): "I read this as 'any' street frontage. So front, back, side streets if they exist."
+    # A court behind the building on a lot with no street behind it is not reached.
+    value: true
+    cite: "Hillsboro CDC 12.50.715 C.1, garages and parking areas no more than 50% of any street frontage (any street frontage: front, side and rear streets)"
     url: https://api.municode.com/PublicationPdfDownload/4450
     retrieved: '2026-09-29'
     quote: "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173"
@@ -1094,9 +1104,7 @@ zones:
       # a flag lot that already exists, the stricter reading, so the flag
       # lot refuses. The alley-only lot is NOT ENCODED (no condition says a
       # lot fronts only an alley).
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.21.720-1, Housing Types Permitted in the SCR-OTC Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1661-L1662,L1667"
       variants:
@@ -1104,6 +1112,10 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC Table 12.21.750-1, Minimum Lot Dimensions (flag lots not permitted)
           quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1816,L1827,L1832-L1834"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       # The Orenco plan district says the same of a quadplex in this zone:
       # none on a lot under 7,500 square feet (cdc.12.62.orenco.txt#L93-L97).
@@ -1204,9 +1216,12 @@ zones:
       cite: Hillsboro CDC Table 12.21.750-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1889,L1914"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320), and B.3
       separately for "new construction of any structure" in the SCR-DNC and
@@ -1236,11 +1251,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.21.820-1, Housing Types Permitted in the SCR-DNC Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1981-L1982,L1987"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       value: 7000
       cite: Hillsboro CDC Table 12.21.850-1, Minimum Lot Size, Quadplex or Cottage Cluster
@@ -1351,9 +1368,12 @@ zones:
       cite: Hillsboro CDC Table 12.21.850-1, Maximum Building Coverage None
       quote: "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L2184,L2230"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320), and B.3
       separately for "new construction of any structure" in the SCR-DNC and
@@ -1492,11 +1512,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.22.220-1, Housing Types Permitted in the MR-2 Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L421-L422,L427"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       # "6,000 sq. ft.; 2,000 sq. ft. per dwelling unit", read as both, so
       # four units need 8,000, which is more than 6,000. Townhouse lot
@@ -1584,9 +1606,12 @@ zones:
           cite: Hillsboro CDC Table 12.22.250-1, Maximum Lot Coverage, townhouse on individual lot
           quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L586,L589,L594"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -1612,11 +1637,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.22.320-1, Housing Types Permitted in the MR-3 Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L649-L650,L655"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       # "6,000 sq. ft.; 1,500 sq. ft. per dwelling unit": four units at
       # 1,500 is 6,000, so the two agree for the pod.
@@ -1700,9 +1727,12 @@ zones:
           cite: Hillsboro CDC Table 12.22.350-1, Maximum Lot Coverage, townhouse on individual lot
           quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L818,L821,L826"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -1803,8 +1833,23 @@ zones:
       cite: Hillsboro CDC Table 12.22.460-1, Minimum Setbacks, rear yard to dwelling
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1105,L1112-L1115"
     setback_front_max_ft:
-      # NOT ENCODED: the 5-foot maximum side setback for all structures
-      # (L1132); no field holds a maximum side setback.
+      # The 5-foot maximum side setback for all structures (L1132).
+      # READ 2026-10-14 (FOLLOWUPS 80(b)), held as ONE WALL WITHIN 5 FT: the
+      # table says "Side Yard (all structures) 5 feet", and 12.50.130 C.3.a says a
+      # maximum setback "is considered met" for middle housing "where at least 1
+      # facade, including a porch, is located no farther from the property line
+      # than the setback specified" (cdc.12.50.100-270.lot-and-site.txt#L349-L354).
+      # The search that did not settle it: for BOTH side walls, "(all
+      # structures)", the exemption for townhouse common walls (a wall that
+      # could only matter if both sides counted), other Hillsboro zones that
+      # limit the side maximum to street sides, and the 12.22 drawings; for ONE
+      # wall, C.3.a's "at least 1 facade" and Carlie Court (PUD-007-18), a
+      # middle-housing plan that needed no side adjustment. The research lean was
+      # both walls, at moderate confidence; nothing in the text decides it, so by
+      # the instruction for this case the one-wall reading stands: the pod can
+      # always stand one side wall within 5 ft of a side line, so no lot moves
+      # and no field is needed. If the city reads it as both walls, nearly every
+      # SCR-MD and SCR-HD green is red.
       value: 13
       cite: Hillsboro CDC Table 12.22.460-1, Maximum Setbacks, front yard, middle housing
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1105,L1120,L1122,L1128"
@@ -1830,11 +1875,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.22.520-1, Housing Types Permitted in the SCR-HD Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1197-L1198,L1203"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       # NOT ENCODED: "Maximum Lot Size 1,800 sq. ft. per unit" (7,200 for
       # four); no field holds a maximum lot size. A doubt: a larger SCR-HD
@@ -1929,7 +1976,23 @@ zones:
     # NOT ENCODED: the maximum front setback. The rows are Duplex 13,
     # Townhouse 13 and Multiple dwelling structure 15 (L1410-L1423), with no
     # row for a triplex or quadplex; a doubt. The 5-foot maximum side
-    # setback (L1424) has no field.
+    # setback (L1424):
+    # READ 2026-10-14 (FOLLOWUPS 80(b)), held as ONE WALL WITHIN 5 FT: the
+    # table says "Side Yard (all structures) 5 feet", and 12.50.130 C.3.a says a
+    # maximum setback "is considered met" for middle housing "where at least 1
+    # facade, including a porch, is located no farther from the property line
+    # than the setback specified" (cdc.12.50.100-270.lot-and-site.txt#L349-L354).
+    # The search that did not settle it: for BOTH side walls, "(all
+    # structures)", the exemption for townhouse common walls (a wall that
+    # could only matter if both sides counted), other Hillsboro zones that
+    # limit the side maximum to street sides, and the 12.22 drawings; for ONE
+    # wall, C.3.a's "at least 1 facade" and Carlie Court (PUD-007-18), a
+    # middle-housing plan that needed no side adjustment. The research lean was
+    # both walls, at moderate confidence; nothing in the text decides it, so by
+    # the instruction for this case the one-wall reading stands: the pod can
+    # always stand one side wall within 5 ft of a side line, so no lot moves
+    # and no field is needed. If the city reads it as both walls, nearly every
+    # SCR-MD and SCR-HD green is red.
     min_building_height_stories:
       value: 2
       cite: Hillsboro CDC Table 12.22.560-1, Minimum Building Height
@@ -1943,9 +2006,12 @@ zones:
       cite: Hillsboro CDC Table 12.22.560-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1407,L1429"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -2098,11 +2164,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.23.420-1, Housing Types Permitted in the SCC-SC Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L945-L947,L951"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.23.460-1, Minimum Lot Size None
@@ -2203,9 +2271,12 @@ zones:
       cite: Hillsboro CDC Table 12.23.460-1, Maximum Lot Coverage Not applicable
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1131,L1169"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -2232,11 +2303,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.23.520-1, Housing Types Permitted in the SCC-MM Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1233-L1235,L1239"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.23.560-1, Minimum Lot Size None
@@ -2312,9 +2385,12 @@ zones:
       cite: Hillsboro CDC Table 12.23.560-1, Maximum Lot Coverage Not applicable
       quote: "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L1413,L1434"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -2369,11 +2445,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.24.120-1, Housing Types Permitted in the MU-N Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L261-L262,L267"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       value: 7000
       cite: Hillsboro CDC Table 12.24.160-1, Minimum Lot Size, Quadplex or Cottage Cluster
@@ -2478,9 +2556,12 @@ zones:
       cite: Hillsboro CDC Table 12.24.160-1, Minimum Usable Open Space (residential development)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L483,L535-L538"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -2519,13 +2600,15 @@ zones:
       value: false
       cite: Hillsboro CDC 12.24.250 G, Vertical Mixed-Use Required on Arterial and Collector Streets
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L730,L757-L763"
-      # RED BY RULING for Development Review (notes): the permission
-      # below is switched off, not deleted. Restore it to reverse.
-      # variants:
-      #   - value: true
-      #     when: [local_street]
-      #     cite: Hillsboro CDC Table 12.24.220-1 (Quadplex P) and 12.24.250 G (arterial and collector frontages only)
-      #     quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L608-L609,L614,L730,L757-L758"
+      variants:
+        - value: true
+          when: [local_street]
+          cite: Hillsboro CDC Table 12.24.220-1 (Quadplex P) and 12.24.250 G (arterial and collector frontages only)
+          quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L608-L609,L614,L730,L757-L758"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.260-1, Minimum Lot Size None
@@ -2620,9 +2703,12 @@ zones:
       cite: Hillsboro CDC 12.50.210 F.1 and Table 12.50.210-1, MU-C with residential, project under 3.0 acres
       quote: "or/washington/hillsboro/cdc.12.50.100-270.lot-and-site.txt#L788-L790,L796-L800,L805,L811-L812"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -2660,9 +2746,7 @@ zones:
       # district's, and the zone "may be applied to all areas within" it
       # (12.24.300 B.1); a MU-VTC lot outside the district, if the map ever
       # draws one, is held to it too.
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.24.320-1, Housing Types Permitted in the MU-VTC Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L971-L972,L985"
       variants:
@@ -2670,6 +2754,10 @@ zones:
           when: [flag_lot]
           cite: Hillsboro CDC 12.65.540, Flag Lot Driveways (flag lots are prohibited within the MU-VTC zone)
           quote: "or/washington/hillsboro/cdc.12.65.south-hillsboro.txt#L1095-L1097"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       value: 7000
       cite: Hillsboro CDC Table 12.24.360-1, Minimum Lot Size, Quadplex or Cottage Cluster
@@ -2743,9 +2831,12 @@ zones:
       cite: Hillsboro CDC Table 12.24.360-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1365-L1366,L1368"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -2773,11 +2864,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.24.420-1, Housing Types Permitted in the SCR-V Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1443-L1444,L1449"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.460-1, Minimum Lot Size, triplex, quadplex ... None
@@ -2855,9 +2948,12 @@ zones:
       cite: Hillsboro CDC Table 12.24.460-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1737,L1753"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -2885,11 +2981,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.24.520-1, Housing Types Permitted in the UC-RM Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1813-L1814,L1821"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.560-1, Minimum Lot Size None
@@ -2980,9 +3078,12 @@ zones:
       cite: Hillsboro CDC Table 12.24.560-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2008"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -3009,11 +3110,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.24.620-1, Housing Types Permitted in the UC-MU Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2082-L2083,L2088"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.660-1, Minimum Lot Size None
@@ -3096,9 +3199,12 @@ zones:
       cite: Hillsboro CDC Table 12.24.660-1, Maximum Lot Coverage, first 90 feet None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2290,L2306,L2310"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -3138,13 +3244,15 @@ zones:
       value: false
       cite: Hillsboro CDC Table 12.24.720-1, Quadplex P/L, no ground-floor dwellings on a Retail Focus Frontage
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2374-L2375,L2379-L2383"
-      # RED BY RULING for Development Review (notes): the permission
-      # below is switched off, not deleted. Restore it to reverse.
-      # variants:
-      #   - value: true
-      #     when: [inside_mapped_use_area]
-      #     cite: Hillsboro CDC Table 12.24.720-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
-      #     quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2374-L2375,L2379-L2383"
+      variants:
+        - value: true
+          when: [inside_mapped_use_area]
+          cite: Hillsboro CDC Table 12.24.720-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
+          quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2374-L2375,L2379-L2383"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.760-1, Minimum Lot Size None
@@ -3219,9 +3327,12 @@ zones:
       cite: Hillsboro CDC Table 12.24.760-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2558,L2563"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -3259,13 +3370,15 @@ zones:
       value: false
       cite: Hillsboro CDC Table 12.24.820-1, Quadplex P/L, not on a Retail Focus Frontage
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2628-L2629,L2633-L2636"
-      # RED BY RULING for Development Review (notes): the permission
-      # below is switched off, not deleted. Restore it to reverse.
-      # variants:
-      #   - value: true
-      #     when: [inside_mapped_use_area]
-      #     cite: Hillsboro CDC Table 12.24.820-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
-      #     quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2628-L2629,L2633-L2636"
+      variants:
+        - value: true
+          when: [inside_mapped_use_area]
+          cite: Hillsboro CDC Table 12.24.820-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
+          quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2628-L2629,L2633-L2636"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.860-1, Minimum Lot Size None
@@ -3335,9 +3448,12 @@ zones:
       cite: Hillsboro CDC Table 12.24.860-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2844"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -3374,13 +3490,15 @@ zones:
       value: false
       cite: Hillsboro CDC Table 12.24.920-1, Quadplex P/L, no ground-floor dwellings on a Retail Focus Frontage
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2908-L2909,L2913-L2917"
-      # RED BY RULING for Development Review (notes): the permission
-      # below is switched off, not deleted. Restore it to reverse.
-      # variants:
-      #   - value: true
-      #     when: [inside_mapped_use_area]
-      #     cite: Hillsboro CDC Table 12.24.920-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
-      #     quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2908-L2909,L2913-L2917"
+      variants:
+        - value: true
+          when: [inside_mapped_use_area]
+          cite: Hillsboro CDC Table 12.24.920-1, Quadplex P/L, permitted off the Retail Focus Frontage Area
+          quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2908-L2909,L2913-L2917"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.960-1, Minimum Lot Size None
@@ -3444,9 +3562,12 @@ zones:
       cite: Hillsboro CDC Table 12.24.960-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L3082,L3093"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
@@ -3475,11 +3596,13 @@ zones:
       url: https://api.municode.com/PublicationPdfDownload/4450
       retrieved: '2026-09-29'
     quadplex_allowed:
-      # The use is permitted (the row cited below); the zone is RED BY
-      # RULING for Development Review, CDC 12.80.040 B.1 and D.1 (notes).
-      value: false
+      value: true
       cite: Hillsboro CDC Table 12.24.1020-1, Housing Types Permitted in the UC-RP Zone (Quadplex P)
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L3164-L3165,L3171"
+    review_discretion:
+      value: conditions
+      cite: Hillsboro CDC 12.80.040, Development Review (Type II, 12.80.040 E) on criteria that reach the pod only as code standards (H.1-H.6), but "the Review Authority may impose conditions on the approval of a Development Review application to ensure compliance with the approval criteria" (12.80.040 I); Steph 2026-10-14, a review that may add conditions is YELLOW
+      quote: "or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320,L379-L380,L452-L454"
     min_lot_sqft:
       exempt: true
       cite: Hillsboro CDC Table 12.24.1060-1, Minimum Lot Size None
@@ -3554,9 +3677,12 @@ zones:
       cite: Hillsboro CDC Table 12.24.1060-1, Maximum Lot Coverage None
       quote: "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L3294,L3305"
     notes: >-
-      RED BY RULING (Steph, 2026-10-08, by right only; applied 2026-10-10): new
-      development in this zone needs a Development Review approval, which is not
-      by right. CDC 12.80.040 B.1 requires it for "New development in any zone
+      YELLOW, RE-RULED 2026-10-14 (Steph's review rule, replacing the
+      by-right-only ruling of 2026-10-08, which made this zone red): new
+      development in this zone needs a Development Review approval, on which
+      "the Review Authority may impose conditions" (12.80.040 I, #L452-L454),
+      so the lot is screened on the standards below and flagged
+      REVIEW-CONDITIONS (`review_discretion`). CDC 12.80.040 B.1 requires it for "New development in any zone
       excluding the exemptions listed in Subsection D."
       (or/washington/hillsboro/cdc.12.80.applications.txt#L318-L320). The one
       exemption that reaches the pod, D.1, names only "Middle housing and single
