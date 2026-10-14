@@ -2592,3 +2592,24 @@ read when the weekly full re-screen lands.
    setbacks but a different envelope is placed in the FIRST design's envelope. If that envelope
    is larger, the second design can come out green on ground it does not have. Fix: key on the
    envelope geometry (or its hash); bound every city, read every lost green. Not assigned.
+75. [scan: YES, a splice of Cornelius + west Washington County] **The 2026-10-12 weekly (run 73,
+   CANDIDATE, waits for Steph: the gate's `lots_drift` blocks on +4.1% measured lots, which is
+   Tigard/Cornelius/Estacada switched on) ran on the July 1 m elevation, not the Washington
+   one.** `data/quadfit_demw` (the tree with the Washington 1 m tiles) was deleted in the
+   2026-10-10 cleanup; the chain's default `--dem-from data/quadfit/raw` holds Portland-metro
+   tiles only (x50-x55). Effect, all toward caution: every measured Cornelius lot carries
+   MEASURE-SITE-GRADE (469 lots), so FOLLOWUPS 51's 381 Cornelius greens show yellow; 54
+   Hillsboro + 11 WashCo uninc lots carry it too; 2 WashCo R-9 lots (1N336BD01200,
+   1N336BD00200) and 1N3240001300 went red -> yellow because steep ground they had is no
+   longer seen. Fix: rebuild the Washington DEM (`cp -al data/quadfit/raw
+   data/quadfit_demw/raw`, `QUADFIT_DATA_DIR=data/quadfit_demw s0_acquire.py --only dem`,
+   runbook §4e), re-run quadfit for the affected lots and splice; keep demw out of any cleanup.
+   Run 73 map vs run 70: green 49,960 -> 50,648, yellow 147,262 -> 113,253, red 390,593 ->
+   423,914. Moves: Tigard 829 green / 16,160 red (51's bound 840 / 15,544+824); Canby 5,901 and
+   Sandy 4,443 all red (ruling); Estacada 14 green / 2,798 red; Hillsboro 152 green + 212
+   yellow -> red (69, exact); Cornelius 3,659 red, 0 green (above); 9 others read one by one
+   (3 WashCo street rank unknown, 1 West Linn RESOURCE-PERMIT, 1 Portland CX severity-0 flag,
+   the 3 elevation lots, 1 Happy Valley fire route 150.6 -> 150.0 ft, yellow). Drift 70 -> 73:
+   96 answers, all rules, 0 unexplained. Run 72 (same scan before 286eb696) is superseded:
+   the use gate missed Sandy R-1 / Hillsboro SCR-OTC / MU-VTC (1,104 lots yellow, not red).
+   Checklist 49(k): institutional_were_scanned 0 -> 47 can go; 48 goes on promotion.
