@@ -2209,6 +2209,21 @@ read when the weekly full re-screen lands.
    lot line, add it as a per-line field, then encode those three districts.
    Not part of branch flats/zone-gaps; start only after the weekly re-screen.
    AGENT INSTRUCTIONS GIVEN 2026-10-14 ("lot-line-bearing", branch flats/lot-line-bearing).
+   HELD 2026-10-14 FOR A STEPH PICK -- the build moves no colour today:
+   ZDO 1102.01(A)(1)(c) (zdo.1102.txt#L13) puts SHD, RCHDR and VTH under the
+   same Type II design review that made HDR/MR-1/MR-2/PMD/VA RED BY RULING;
+   (A)(1)(a) does the same for "Commercial zoning districts" (RTL 59, CC 128,
+   C3 447, OC 82, RCC 103, RCO 37 -- grey only because they borrow HDR/RCHDR
+   standards). VTH is not a bearing case at all: 1005.02(L) names only HDR,
+   RCHDR, SHD (zdo.1005.txt#L143); VTH waits on HUMAN_TODO 15. 1005.02(L)
+   read: north = height x tan 60 (~45 ft for 26 ft; the angle is from the
+   vertical, as the code's own "b x .267 (tan 15)" shows), east/west =
+   0.267 x height (~7 ft, not along a road), south none; "on a north-south
+   axis" settles diagonals exactly (per-line yard = N x north-facing share
+   + EW x east/west-facing share), curves segment by segment. Options:
+   (A) SHD/RCHDR/VTH RED BY RULING, 144 lots grey -> red, assign-only;
+   (A+) plus the six commercial districts, 1,000 lots; (B) also build the
+   bearing field + (L) encoding for reversal-readiness (0 colours move).
 62. [scan: YES] **Roof shape: teach the screen gable vs flat (offered 2026-10-09
    after Steph asked what a gable costs in height; nothing signed).** The
    design holds ONE height (26 ft) compared straight to every cap, so it
