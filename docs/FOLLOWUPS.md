@@ -2773,3 +2773,24 @@ read when the weekly full re-screen lands.
    green still seats 6+ except 34E17D 00700 (5, room for more): a fix with no colour change.
    (e) Noticed: flats.flag_instances was last refreshed at run 70 (no row seen after it), so it
    still shows JURISDICTION-OFF on Tigard lots; run 74's own results carry the right flags.
+81. [scan: YES once the widths are held] **Tigard road land is not held, so its road-dedication
+   false-GREEN gap stays open (coordinator 2026-10-14).** Tigard 18.210.030.A.1 measures setbacks
+   from the future street edge the TSP sets, but the store holds neither Tigard's TSP street
+   cross-section widths by class nor a Tigard class map, so item 77 encodes nothing for Tigard and
+   a Tigard green beside a street that will widen can be false. To close: fetch the Tigard TSP
+   (2035 TSP, street design standards / typical sections: right-of-way per functional class) and
+   its functional-class map (a GIS layer if the city publishes one; else trace it like a drawn
+   area), register the map as street_class_tigard (+ weekly preflight via dedication_keys), add
+   Tigard's class -> half-width table with citations in or/washington/tigard, bound Tigard and read
+   every loss. Item 64 round 2 saw no Tigard lot wrong from this, so the size is unknown.
+82. [scan: YES (greens only gain where both sides read residential)] **Oregon City: read the zone
+   across the street for the dedication width (offered 2026-10-14).** Table 16.12.016 keys the
+   right-of-way to the street's TSP class AND the plan designation on both sides (the wider wins).
+   Item 77 keeps the widest row per class (local 62, collector 88, minor arterial 118, major 126 ft)
+   because the land across the street is not read for it. s4 already casts five rays across every
+   street line (street_across_json, flats.geom.neighbour.street_lines_clear); where every ray and
+   the lot itself land in a residential zone (OC's R-zones; needs a zone -> plan-designation list,
+   cited) the residential row applies: half-widths local 27 not 31, collector 42.5 not 44, minor
+   arterial 50 not 59 (major 63 either way). Any ray unread or non-residential keeps the widest.
+   Decision pending: whether the zone may stand in for the plan designation (they normally match;
+   the comprehensive plan map is not held).
