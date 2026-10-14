@@ -2101,7 +2101,7 @@ def split_zone_checked(s: Screened, lot: QuadfitLot) -> Screened:
     if not zones:
         return s
     flag = flag_plan.Flag(
-        "ZONE-SPLIT",
+        ZONE_SPLIT,
         flag_plan.LOT,
         CLOSER_LOOK_SPLIT_ZONE,
         source=f"across the line: {', '.join(zones)}; {ruling.says()}",
@@ -2254,6 +2254,7 @@ def _same_numbers(a: ZoneResolution, b: ZoneResolution) -> bool:
 #: drawing, before it may be GREEN (a route found past the limit is a bind,
 #: and still ends the search).
 FIRE_ROUTE_UNFOUND = "MEASURE-FIRE-ROUTE"
+ZONE_SPLIT = "ZONE-SPLIT"
 
 
 def _bounded(
@@ -2353,6 +2354,7 @@ def _bounded(
         if alt.signed.binds or any(
             (f.code, f.key) not in known
             and f.code != FIRE_ROUTE_UNFOUND
+            and f.code != ZONE_SPLIT
             and flag_plan.severity_of(f, reg) >= line
             for f in alt.signed.flags
         ):

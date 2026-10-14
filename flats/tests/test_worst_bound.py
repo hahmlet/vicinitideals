@@ -20,6 +20,7 @@ import pytest
 import shapely
 
 from flats.encode.load import load_trusted
+from flats.geom import split_zone as sz
 from flats.ingest.quadfit import _screen_lot_once, lot_from_row
 from flats.score import flags as flag_plan, relief, slack
 from flats.tests.test_quadfit_bridge import X0, Y0, pod4, row
@@ -134,3 +135,20 @@ def test_a_red_plan_is_left_alone(corpus, policies) -> None:
     )
     assert s.signed.binds
     assert all(f.severity is None for f in s.signed.flags)
+
+
+def test_a_split_zone_question_does_not_hold_back_the_relief_of_another_fact(
+    corpus, policies
+) -> None:
+    # A lot whose plan stands across a zone line is yellow for that, and for
+    # that alone: the neighbour facts it clears at their worst reading still
+    # drop to 0. The re-screens the bound runs raise ZONE-SPLIT too (their
+    # plans stand somewhere else); that question is not "a new miss", and
+    # must not keep the other flags at their full severity.
+    east = sz.Piece("CM2", 40 * D, shapely.box(X0 + 60, Y0, X0 + W, Y0 + D), 40.0)
+    split = {sz.ROW_KEY: sz.encode(sz.Split((east,), own_sqft=60 * D))}
+    s = screened(corpus, policies, bound=True, jurisdiction="portland", zone="CM2", **split)
+    got = severities(s)
+    assert "ZONE-SPLIT" in got
+    assert all(got[c] == 0 for c in NEIGHBOURS)
+    assert s.signed.colour is flag_plan.Colour.yellow
