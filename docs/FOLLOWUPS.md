@@ -2553,9 +2553,26 @@ read when the weekly full re-screen lands.
    MEASURE-SITE-GRADE (469 lots), so FOLLOWUPS 51's 381 Cornelius greens show yellow; 54
    Hillsboro + 11 WashCo uninc lots carry it too; 2 WashCo R-9 lots (1N336BD01200,
    1N336BD00200) and 1N3240001300 went red -> yellow because steep ground they had is no
-   longer seen. Fix: rebuild the Washington DEM (`cp -al data/quadfit/raw
-   data/quadfit_demw/raw`, `QUADFIT_DATA_DIR=data/quadfit_demw s0_acquire.py --only dem`,
-   runbook §4e), re-run quadfit for the affected lots and splice; keep demw out of any cleanup.
+   longer seen. **FIXED 2026-10-14, bundle waits on 137 for the coordinator to load and
+   promote**: `data/quadfit_demw` rebuilt (34 tiles, 8 new x48/x49: Forest Grove, Cornelius,
+   west Hillsboro, Banks, Gaston). No quadfit re-run: FLATS reads slope only through the
+   bridge's own `--dem` (s5o's slope columns feed nothing, and a splice refuses changed s5o
+   columns). Scope = every lot touching a new tile, 4,180 (Cornelius 3,891, Hillsboro 276,
+   WashCo 13; holds all 534 flagged lots), bridged at 286eb696 against demw (152 s), spliced
+   onto run 73's bridge: `/root/bridge_spliced_2026-10-14_demw` (partial
+   `/root/bridge_demw_2026-10-14_partial`, `fu75_moves.csv` + `fu75_scope.txt` inside),
+   `/root/assign_2026-10-14_demw`, `/root/bundle_2026-10-14_demw` (same code/rules/screen
+   versions as run 73). Bound vs run 73: 321 moves, 0 outside scope, MEASURE-SITE-GRADE 534 ->
+   0. Cornelius yellow 431 -> green 308 / red +10 / yellow 113 (left: street rank, solar
+   shade, resource permit -- none elevation). Gains read one by one: 286 lost only the grade
+   flag (pad grade 0.1-4.9%), 22 also had net area measured and now carry the sev-2
+   DENSITY-MIN flag. 13 to red, each read: steep ground blocks placement (6, incl.
+   1N336BD01200 / 1N336BD00200) or the pod moves off steep ground and the hose route passes
+   150 ft (7, incl. 1N3240001300 at 262 ft). Hillsboro: flags cleared, no colour moved.
+   Guard 1fa8a611 on `flats/washco-elevation-restore`: the chain's preflight refuses tiles
+   that leave a measured lot on no model (checks the newest s4; the bridge's gate re-checks
+   the run's own; on the real run-73 s4 the July tree names 4,109 lots, demw 0, 2 s), and
+   `--dem-from` defaults to demw; runbook says never clean `data/quadfit_demw`.
    Run 73 map vs run 70: green 49,960 -> 50,648, yellow 147,262 -> 113,253, red 390,593 ->
    423,914. Moves: Tigard 829 green / 16,160 red (51's bound 840 / 15,544+824); Canby 5,901 and
    Sandy 4,443 all red (ruling); Estacada 14 green / 2,798 red; Hillsboro 152 green + 212
