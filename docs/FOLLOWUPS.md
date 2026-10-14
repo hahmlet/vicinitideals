@@ -2538,12 +2538,23 @@ read when the weekly full re-screen lands.
    licensed separately, Steph to pick. PRIORITY (recommended): after the weekly scan settles,
    ahead of new cities and the signing push; false-GREEN fixes carry on beside it; freeze edits
    to the code text and citations while each city is being converted.
-74. [scan: YES (a bound in every city; may find false GREENs)] **The placement cache ignores the
-   envelope shape (found 2026-10-11 by washco-road-dedication).** quadfit `_screen_on` caches a
-   placement by (source, setbacks, front, plan); a second design on the same lot with equal
-   setbacks but a different envelope is placed in the FIRST design's envelope. If that envelope
-   is larger, the second design can come out green on ground it does not have. Fix: key on the
-   envelope geometry (or its hash); bound every city, read every lost green. Not assigned.
+74. [scan: NO -- the fix moves no lot on the run-73 rules] **The placement cache ignores the
+   envelope shape (found 2026-10-11 by washco-road-dedication). FIXED on branch
+   flats/placement-cache-fix 2026-10-14, waiting for the coordinator to merge.** quadfit
+   `_screen_on` shared a placement search by (source, setbacks, front, plan); now by the exact
+   envelope and court ground (`_search_key`, their WKB), which is all a Fitter reads, so equal
+   ground still shares one. Test: `test_two_designs_with_the_same_yards_are_each_placed_on_their_own_envelope`
+   (real coordinates; the old key fitted a pod on the other design's envelope and called it
+   GREEN). BOUND on 137 (base 3d681747 vs the fix, run-73 inputs): 5,997 lots (2,500 in the four
+   planted-strip cities, 2,500 through lots, 1,000 random), 11,994 rows, 0 moves in ANY column;
+   base reproduced run 73 exactly; a check inside the fixed run counted 19,119 placements and 0
+   where the old key would have handed over another envelope. Why none: under one shared
+   search, two envelopes cut with the same yards can differ only by the planted strip
+   (`parking_lot_line_buffer_ft`) or the through-lot end rule (`front_lot_line_through`), and
+   both are one fixed value per zone in the corpus (no variants, no `unless`; re-read after
+   rebasing on 893c2c17). The bug was latent: a variant on either field, or an envelope cut
+   per design (the kind the road-dedication lane was building), would have set it off. No
+   re-screen needed.
 75. [scan: YES, a splice of Cornelius + west Washington County] **The 2026-10-12 weekly (run 73,
    PROMOTED by Steph 2026-10-14 over the `lots_drift` gate, +4.1% measured lots = Tigard/Cornelius/
    Estacada switched on; runs 67 and 72 pruned) ran on the July 1 m elevation, not the Washington
