@@ -119,6 +119,7 @@ from flats.geom.neighbour import (
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
+from flats.geom import split_zone as split_zones
 from flats.geom.sidewalk import (
     depth_for,
     easement_depth_ft,
@@ -172,6 +173,7 @@ from flats.score.paper import (
     side_street_fed,
 )
 from flats.score.screen import (
+    CLOSER_LOOK_SPLIT_ZONE,
     COURT_SHAPED,
     STEEP_GROUND,
     STREET_RANK_UNKNOWN,
@@ -895,6 +897,10 @@ class QuadfitLot:
     #: setback is measured from there. None where the code asks nothing of
     #: one, or nothing was read.
     sidewalk_easement_ft: float | None = None
+    #: The ground of other districts this lot lies in, where the maps put it
+    #: in more than one (:mod:`flats.geom.split_zone`,
+    #: :func:`with_split_zones`); empty on a lot in one.
+    split: split_zones.Split = split_zones.Split()
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -1642,6 +1648,7 @@ def lot_from_row(
         second=second,
         second_better=how == "better" and second is not None,
         sidewalk_easement_ft=_finite(row.get("sidewalk_easement_ft")),
+        split=split_zones.decode(row.get(split_zones.ROW_KEY)),
     )
 
 
@@ -1816,6 +1823,35 @@ def with_sidewalk_easement(rows: list[dict[str, Any]], sources: Path | None) -> 
             row["sidewalk_easement_ft"] = got
             taken += 1
     return taken
+
+
+def with_split_zones(rows: list[dict[str, Any]], stage_dir: Path, layers: Mapping[str, Layer]) -> int:
+    """Join the ground each split-zoned lot has in other districts onto its
+    row, in place, and say how many (:mod:`flats.geom.split_zone`).
+
+    The district a map code names is spelled the way the corpus screens it
+    (:func:`_normaliser`), so a polygon the map writes ``R-10`` is the lot's
+    own ``R10`` and not another district. Read off the zoning maps quadfit s1
+    stored beside the lot file; without them nothing is joined, and the lot
+    is screened as before.
+    """
+    from flats.encode.port_quadfit import QUADFIT_RULES
+
+    normalise = _normaliser(layers)
+
+    def spelled(row: Mapping[str, Any], code: str) -> str | None:
+        return normalise(str(row.get("jurisdiction")), code)
+
+    def own(row: Mapping[str, Any], code: str) -> bool:
+        got = spelled(row, code)
+        return got is not None and got in {screened_zone(row, layers), str(row.get("zone"))}
+
+    def name(row: Mapping[str, Any], code: str) -> str:
+        return spelled(row, code) or code
+
+    return split_zones.with_split_zones(
+        rows, stage_dir, split_zones.zoning_layers(QUADFIT_RULES), own=own, name=name
+    )
 
 
 def scope_mask(frame: Any, jurisdictions: Iterable[str] = (), zones: Iterable[str] = (), tlids: Iterable[str] = ()) -> Any:
@@ -2126,6 +2162,65 @@ def _shown(s: Screened) -> tuple[int, int]:
     return _COLOUR[s.signed.colour], _WORSE[s.signed.triage]
 
 
+def split_zone_checked(s: Screened, lot: QuadfitLot) -> Screened:
+    """``s`` with the district across the zone line named where its plan
+    stands on one (FOLLOWUPS 76(b), Steph 2026-10-14: "first check if the city
+    has a rule on this. If no, I would say yellow").
+
+    Every standard was read from the one district the lot screens under. A
+    lot in two is answered by its city's rule where it has one
+    (:func:`flats.geom.split_zone.governed`: the whole lot in the district
+    covering most of it, within a stated distance); otherwise the building,
+    its lane and its court are laid over the other districts' ground
+    (:func:`flats.geom.split_zone.reached`) and ZONE-SPLIT is raised, naming
+    them, with the cite of the rule or the plain statement that none was
+    found. A plan that was not drawn, or a lot whose own district the maps
+    do not show, reaches every other district: unmeasured is the worst case.
+    The colour reads the flag; a red lot keeps it, and only a lot that would
+    have been GREEN is moved.
+    """
+    split = lot.split
+    if not split:
+        return s
+    ruling = split_zones.ruling_for(lot.layer_id)
+    if split_zones.governed(split, ruling):
+        return s
+    plan = s.drawing
+    if split.unresolved or plan is None:
+        zones = tuple(p.zone for p in split.pieces)
+    else:
+        zones = split_zones.reached(split, _plan_shapes(plan))
+    if not zones:
+        return s
+    flag = flag_plan.Flag(
+        ZONE_SPLIT,
+        flag_plan.LOT,
+        CLOSER_LOOK_SPLIT_ZONE,
+        source=f"across the line: {', '.join(zones)}; {ruling.says()}",
+    )
+
+    def ask(x: Screening) -> Screening:
+        reasons = x.reasons if CLOSER_LOOK_SPLIT_ZONE in x.reasons else (*x.reasons, CLOSER_LOOK_SPLIT_ZONE)
+        triage = Triage.yellow if x.triage is Triage.green else x.triage
+        flags = x.flags
+        if not any(f.code == flag.code for f in flags):
+            flags = (*flags, flag)
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
+def _plan_shapes(drawing: Mapping[str, Any]) -> list[Any]:
+    """The building, lane and court of a stored drawing as polygons."""
+    from shapely.geometry import Polygon
+
+    return [
+        Polygon(drawing[name])
+        for name in ("building", "lane", "court")
+        if drawing.get(name)
+    ]
+
+
 def _street_unconfirmed(s: Screening) -> Screening:
     """``s`` as a question (:data:`~flats.score.screen.STREET_UNCONFIRMED`),
     unless it is already the worse answer."""
@@ -2251,6 +2346,7 @@ def _same_numbers(a: ZoneResolution, b: ZoneResolution) -> bool:
 #: drawing, before it may be GREEN (a route found past the limit is a bind,
 #: and still ends the search).
 FIRE_ROUTE_UNFOUND = "MEASURE-FIRE-ROUTE"
+ZONE_SPLIT = "ZONE-SPLIT"
 
 
 def _bounded(
@@ -2350,6 +2446,7 @@ def _bounded(
         if alt.signed.binds or any(
             (f.code, f.key) not in known
             and f.code != FIRE_ROUTE_UNFOUND
+            and f.code != ZONE_SPLIT
             and flag_plan.severity_of(f, reg) >= line
             for f in alt.signed.flags
         ):
@@ -2736,6 +2833,7 @@ def _screen_lot_once(
             won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
             roads=roads, bound=bound, terrain=terrain,
         )
+        won = split_zone_checked(won, lot)
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
 
@@ -4032,6 +4130,11 @@ def run(
     eased = with_sidewalk_easement(rows, sources)
     if eased:
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
+    from flats.encode.load import load_trusted
+
+    split = with_split_zones(rows, s4.parent, load_trusted(strict=False).rules.layers)
+    if split:
+        log(f"bridge: the other districts of {split:,} split-zoned lots read off the zoning maps")
     # Costliest lots first, started as free memory allows, and the answers a
     # cache already holds not screened again (FOLLOWUPS 46): the same
     # records in the same order as lot by lot in file order.

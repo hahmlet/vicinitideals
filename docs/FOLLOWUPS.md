@@ -2663,10 +2663,22 @@ read when the weekly full re-screen lands.
    no-fits except raster near-misses -- 3 of 785 (0.4%) fit at width-0.5 ft, 5 (0.6%) at
    width-1 ft. So no false-RED bug at scale and NO code change; the near-misses are lots
    whose window is under a half-foot short of 100 ft, shown as -43 (red) instead of a small
-   miss in the 0.5 ft tight band. DECISION OPEN (colour-changing, so not done): measure the
-   width shortfall when best_depth is 0 so a <0.5 ft miss lands tight/review; ~0.4% of the
-   floored designs (est. ~25 Tigard lots), would need a bound on 137 and a read of every
-   gained lot.
+   miss in the 0.5 ft tight band.
+   BUILT 2026-10-14 (agent sznm, branch flats/split-zone-near-miss, 72f96818, NOT merged, NOT
+   spliced -- rides the weekly re-screen ~2026-10-19): Steph ruled yes. When best_depth is 0
+   the fit now reports the real width shortfall (`Fit.width_short_ft`, flats/fit/rectangle.py;
+   screen.py fit_ft check) so the standing 1-ft rule applies: >= 1 ft red, < 1 ft yellow
+   (FIT-TIGHT), exactly 1 ft red. Raster grid is 0.5 ft so the smallest reported miss is 0.5.
+   BOUND on 137 vs run-74 inputs (168,000 lots; base == run 74 EXACTLY on the 2,036-row
+   control): 50 design rows red -> yellow (Tigard 47: RES-B 43, RES-D 2, MUR, RES-C; Gresham 2
+   DRL-2; Happy Valley 1 R7), nothing else changes colour. Four more floored designs now read
+   -0.5 but stay red on other checks (Gresham DTM/DCC/CMF: lot area 4,999.8 vs 5,000, use,
+   frontage). SIDE EFFECT, colour-neutral, all on RED lots: the fit slack shown on a red
+   lot is now the real shortfall (-37/-48/-56/-80 ft ...) instead of the -43/-54 floor, and
+   because `fit_for` now prefers the nearer miss between two tries, ~1,100 red rows gain or
+   lose an informational flag (Milwaukie MEASURE-OUTDOOR-SHAPE +542, Beaverton net-area
+   swaps, steep-coarse +-). If the lot page should keep the old numbers for red lots, that
+   is a separate decision.
    (b) Estacada 34E17  02000 (30941 SE River Mill Rd) is split-zoned: NCR 46.9% / CMU 40.6%
    / HC 12.5% of the lot, screened as NCR (plurality). The drawn pod's BUILDING is 24.9% in
    NCR and 75.1% in CMU (court 100% NCR, envelope 54.8% NCR) -- so the green is a FALSE GREEN
@@ -2680,8 +2692,35 @@ read when the weekly full re-screen lands.
    Clackamas uninc 3, WashCo uninc 3, Estacada 1, Beaverton 1), 44 unresolved (Portland 40,
    WashCo uninc 2, Gresham 1, Cornelius 1: layer code spelling differs from the lot's
    zone_raw, so the test found no polygon).
-   OPEN, needs Steph's ruling before a build: put the pod in the zone it sits in, or flag
-   every green split-zoned lot yellow, or red when the building leaves the zone.
+   BUILT 2026-10-14 (same branch). Steph's ruling: "first check if the city has a rule on
+   this. If no, I would say yellow." Each city's code was read; the answer lives in
+   flats/config/split_zone.yaml with the cite and quote (a test checks quote against the
+   stored text) and flats/geom/split_zone.py. The district across the line is read off the
+   zoning maps (the 44 spelling mismatches now resolve: 0 unresolved). Rule found -> applied
+   (the whole lot is the larger district when the line need move <= 20 ft, Beaverton BDC
+   10.35.2.C and Milwaukie MMC 19.107.5 inclusive; Cornelius CMC 18.05(D)(3), Hillsboro CDC
+   12.01(C)(1) and Canby CMC 16.08.030 "less than" 20 ft; Sandy SDC 17.04.80.B.6 majority
+   with no distance; Portland and Multnomah-unincorporated PCC 33.110 each district for its
+   own part -> yellow where the plan reaches the other). No rule found -> a green whose
+   building, lane or court stands on another district's ground goes YELLOW, ZONE-SPLIT
+   (severity 4, CLOSER_LOOK_SPLIT_ZONE), naming the district; an undrawn plan or an
+   unresolved district is the worst case. What was searched in the 17 silent layers is
+   written in the yaml so nobody searches again (Gresham 4.1117/4.1214 are plan-district
+   only; Washington-uninc has 20 ft majority rules for Bonny Slope West / North Bethany
+   only; Tualatin has only a parking dual-zone rule). Milwaukie's rule is cited by URL
+   (not stored). A red lot keeps the flag and stays red.
+   BOUND (2,545 split-zoned lots, 5,090 design rows; base == run 74 exactly): 262 design rows /
+   134 lots green -> yellow, all carrying ZONE-SPLIT, nothing else changes colour. By city
+   (lots, best design): Portland 94, Washington-uninc 20, Clackamas-uninc 12, Troutdale 3,
+   Gresham 2, Beaverton 1, Cornelius 1, Wood Village 1. 137 split-zoned lots stay green as their best design. 154 lots turn out to
+   have only one district after spelling is normalised. ZONE-SPLIT is also on 3,134 red and
+   561 yellow rows (informational). Found and fixed in the bound: the re-screens the
+   worst-case bound runs raised ZONE-SPLIT too and blocked another flag's severity-0 relief
+   (1 Portland lot yellow with no split flag) -- 72f96818, test in test_worst_bound.py.
+   Estacada 34E17  02000 (the lot that raised this): pod80x25@2 now yellow ZONE-SPLIT; pod56x36@2
+   stays green (its building does not reach the other district), so the lot's best design is still
+   green. REMAINING: nothing is live until the weekly re-screen (or a splice, if Steph wants it
+   sooner); Milwaukie's rule is cited by URL and should be stored with the code text.
    (c) Estacada 34E20AC00200 / 00201 (1015 NW Wade St): owner NOT in our data (the RLIS
    roll carries no owner name). The roll says: commercial vacant/improved class 201, COM,
    2017-09 transfer for $0, 00201 built 1965 with $657k of buildings and assessed value
