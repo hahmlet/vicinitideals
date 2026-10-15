@@ -16,10 +16,13 @@ National Register Landmark, or a contributing resource in a Historic or
 Conservation District. Demolishing any of them needs demolition review
 (33.445.100.E, 110.E, 120.E, 200.E, 210.E), a hearing nobody can count on.
 Every other existing building stays green (a separate ruling). A contributing
-resource in a National Register District (Eastmoreland) is held to the same
-demolition review by 33.445.220.E, but the ruling named Historic and
-Conservation Districts only: it is recorded on the row and NOT read as red
-until Steph rules (``NR_DISTRICT_RED``).
+resource in a National Register District (Eastmoreland) is protected the same
+way: 33.445.220.E.1 puts its demolition under demolition review, and E.3 lets
+the permit issue only "if the review body approves" -- a discretionary
+review, not a delay or a notice period, so it is RED under the standing
+ruling (coordinator 2026-10-15, ``NR_DISTRICT_RED``). The voluntary historic
+resource review of 220.D/E.2.d exempts alterations only, never a total
+demolition. It stays on its own row field, ``pdx_nr_district_resource``.
 
 What is read per lot, off the acquire snapshot (``flats/config/pipeline.yaml``):
 
@@ -82,9 +85,10 @@ PROTECTED_STATUS: frozenset[str] = frozenset(
 _LANDMARKS = frozenset({"historic landmark", "conservation landmark", "national register landmark"})
 
 #: Whether a contributing resource in a National Register District reds the
-#: lot. 33.445.220.E puts it under demolition review like the others; Steph's
-#: 2026-10-14 ruling named Historic and Conservation Districts only.
-NR_DISTRICT_RED = False
+#: lot: yes. 33.445.220.E.1 puts its demolition under demolition review and
+#: E.3 issues the permit only if the review body approves -- discretionary, so
+#: protected under Steph's 2026-10-14 rule (``CITES["nr_district_approval"]``).
+NR_DISTRICT_RED = True
 
 #: Screen reasons (said in words in ``app/api/routers/ui_flats.py``).
 MIN_FAR_REASON = "PDX_MAIN_STREET_MIN_FAR"
@@ -122,6 +126,11 @@ CITES: Mapping[str, tuple[str, str, str]] = {
         "PCC 33.445.220.E.1",
         "or/multnomah/portland/33.445.txt#L1697-L1699",
         "of a contributing resource in a National Register District is subject to demolition",
+    ),
+    "nr_district_approval": (
+        "PCC 33.445.220.E.3",
+        "or/multnomah/portland/33.445.txt#L1743-L1744",
+        "If the review body approves demolition of the resource",
     ),
     "historic landmark": (
         "PCC 33.445.100.E.1",

@@ -198,13 +198,25 @@ def test_a_landmark_footprint_on_the_lot_is_protected(tmp_path) -> None:
     assert bind.source.startswith("PCC 33.445.100.E.1")
 
 
-def test_a_national_register_district_resource_is_held_not_red(tmp_path) -> None:
+def test_a_national_register_district_contributor_is_red_on_its_demolition_review(tmp_path) -> None:
+    # 33.445.220.E: demolition review, and a permit only "if the review body
+    # approves" -- a discretionary review, not a delay, so protected
+    # (coordinator 2026-10-15 under Steph's 2026-10-14 rule).
+    assert pdx.NR_DISTRICT_RED
     props = {"Status": "Contributing", "DistStatus": "Contributing",
              "DistName": "EASTMORELAND NATIONAL REGISTER DISTRICT", "Address": "X", "YearBuilt": 1920}
     maps = pdx.load(snapshot(tmp_path, resources=[(props, RESOURCES[0][1])]))
     got = pdx.read(MISSOURI, maps)
     assert got.protected == () and len(got.nr_district) == 1
-    assert pdx.binds_for(got, 4032, MISSOURI.area) == ()
+    assert got.red_resources == got.nr_district
+    (bind,) = pdx.binds_for(got, 4032, MISSOURI.area)
+    assert bind.check == pdx.PROTECTED_RESOURCE_CHECK
+    assert bind.source.startswith("PCC 33.445.220.E.1")
+    assert "Eastmoreland National Register District" in bind.source
+    # A non-contributing house there is not.
+    other = {**props, "Status": "Non-contributing", "DistStatus": "Non-contributing"}
+    maps = pdx.load(snapshot(tmp_path, resources=[(other, RESOURCES[0][1])]))
+    assert pdx.binds_for(pdx.read(MISSOURI, maps), 4032, MISSOURI.area) == ()
 
 
 # --- on the bridge -----------------------------------------------------------
