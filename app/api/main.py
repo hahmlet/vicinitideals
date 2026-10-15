@@ -647,6 +647,10 @@ def create_app() -> FastAPI:
     from app.api.routers.ui_flats import router as ui_flats_router
     app.include_router(ui_flats_router)
 
+    # FLATS property lookup for agents — JSON, in the schema, so the MCP server below exposes it.
+    from app.api.routers.flats_api import router as flats_api_router
+    app.include_router(flats_api_router)
+
     # Static files (CSS, etc.) — must be mounted after routes
     if _static_dir.exists():
         app.mount("/static", StaticFiles(directory=str(_static_dir)), name="static")
