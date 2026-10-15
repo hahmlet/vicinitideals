@@ -1046,7 +1046,8 @@ defaults:
   # except in compliance with Subsections 845.02(1) and (2)", and (2) is "the
   # combined width of all garages and off-street parking areas located between
   # a building and a public street does not exceed a total of 50 percent of
-  # the street frontage".
+  # the street frontage". The screening cap is checked separately on every
+  # street frontage, with the largest parking share governing.
   parking_area_max_frontage_pct:
     value: 50
     cite: Clackamas ZDO 845.02, combined width of garages and off-street parking areas between a building and a public street
