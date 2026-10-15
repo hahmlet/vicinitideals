@@ -85,6 +85,30 @@ code:
 - id: "tdc.18.840.sublot-plats"
   url: https://ecode360.com/print/TI5024?guid=43709217
   title: Chapter 18.840 Sublot Plats
+- id: "tdc.18.910.improvement-standards"
+  url: https://ecode360.com/print/TI5024?guid=43709279
+  title: Chapter 18.910 Improvement Standards
+# The 2040 Transportation System Plan ("Tigard on the Move", Fehr & Peers,
+# January 2022), from the State Library of Oregon's depository copy:
+# tigard-or.gov answers a script 403 (Akamai), and the depository holds the
+# adopted plan as published. Two slices of the one PDF: 4.7, the motor
+# vehicle plan (its classes, Table 5, and where the cross-sections are
+# kept), and 8.1, the code changes it asks of Title 18. Read 2026-10-15 for
+# 18.210.030.A.1's ultimate right-of-way (FOLLOWUPS 81).
+- id: "tsp.2040.4.7.motor-vehicle"
+  url: https://digitalcollections.library.oregon.gov/assets/downloadwiz/371571
+  title: 2040 Transportation System Plan, 4.7 Motor Vehicle Plan
+  start: "Motor Vehicle Plan"
+  nth: 2
+  end: "TDM and TSMO Plan"
+  allow_thin: true
+- id: "tsp.2040.8.1.code-changes"
+  url: https://digitalcollections.library.oregon.gov/assets/downloadwiz/371571
+  title: 2040 Transportation System Plan, 8.1 Programmatic and Code Changes
+  start: "Programmatic and Code"
+  nth: 2
+  end: "Other Key Policy Shifts"
+  allow_thin: true
 - id: "tdc.18.920.access"
   url: https://ecode360.com/print/TI5024?guid=43709491
   title: Chapter 18.920 Access, Egress, and Circulation
@@ -197,19 +221,96 @@ defaults:
     retrieved: '2026-09-30'
     quote: "or/washington/tigard/tdc.18.280.rowhouses.txt#L93-L97"
 
+  # SETBACKS FROM THE ULTIMATE RIGHT-OF-WAY (FOLLOWUPS 81). 18.210.030.A.1:
+  # "Where the ultimate right-of-way width, as shown in the Transportation
+  # System Plan, is wider than the current right-of-way width, required
+  # setbacks are measured from the ultimate right-of-way width"
+  # (tdc.18.210.residential-general.txt#L45-L51). Chapter 18.210 governs
+  # "all residential development in residential and commercial zones"
+  # (18.210.010, L17), so it is held layer-wide. The yards stay; they are measured from
+  # a line the ultimate width puts back from the lot line -- the added-
+  # setback form of flats/geom/dedication.py (Sherwood, Milwaukie).
+  #
+  # THE WIDTHS. The 2040 TSP (adopted January 2022) shows the functional
+  # classes (Table 5, Figure 11) but no cross-section: "Title 18 of Tigard's
+  # Municipal Code (Development Code), developed by the City Engineering
+  # Department, identifies the design standards for roadway cross-section
+  # elements based on the street functional class" (tsp.2040.4.7.motor-
+  # vehicle.txt#L3-L13; 8.1.1 names "Subsection 910", tsp.2040.8.1.code-
+  # changes.txt#L19-L21). That is Table 18.910.1, whose rows are keyed to
+  # "The type of road as provided in the comprehensive plan transportation
+  # chapter - functional street classification" (18.910.030.E.1). It prints
+  # ranges -- Arterial 64-128, Collector 58-96, Neighborhood Route 50-58,
+  # Local Residential up to 54 (Industrial/Commercial 50) -- with the width
+  # in a range "determined by the decision-making authority based upon
+  # anticipated average daily traffic" (E). Nothing measures that traffic
+  # or the lane count the Arterial and Collector rows send to the TSP, so
+  # each class holds the TOP of its range, the widest the street may be
+  # made (the Oregon City precedent, FOLLOWUPS 77), and half of it is the
+  # distance from the centre line (row_to_centerline_stated_as_width).
+  #
+  # THE CLASS comes from the city's own TSP layer (street_class_tigard).
+  # Principal Arterial (99W, Barbur Blvd) and the Special Transportation
+  # Area stretch of Hall Blvd take the Arterial row, the only one printed
+  # for them (Upper Hall's own 94 ft row is narrower and "shall not be
+  # considered final", note [7]). A private street ranks local. A Freeway, a
+  # street the city leaves unclassed ("Other") and an unread line take the
+  # deepest, 64 feet; a line no centreline reaches gives up the whole
+  # distance.
+  #
+  # NOT ENCODED: "plus additional right-of-way as needed for slopes,
+  # retaining walls, etc." (18.640.080.A.1, River Terrace): no width is stated.
+  # The Downtown street character rows (Table 18.910.1, Downtown Mixed Use 1
+  # to 4, Urban Residential) are keyed to a map in the TSP's Technical
+  # Appendix that is not held; MU-CBD below holds their widest row instead.
+  row_to_centerline_class_by:
+    value: tigard
+    cite: Tigard CDC 18.210.030.A.1, required setbacks are measured from the ultimate right-of-way width as shown in the Transportation System Plan
+    url: https://ecode360.com/print/TI5024?guid=43705636
+    retrieved: '2026-10-15'
+    quote: "or/washington/tigard/tdc.18.210.residential-general.txt#L45-L51"
+  row_to_centerline_stated_as_width:
+    value: true
+    cite: Tigard CDC 18.910.030.E and Table 18.910.1, right-of-way width by the functional street classification (the whole width of the street)
+    url: https://ecode360.com/print/TI5024?guid=43709279
+    retrieved: '2026-10-15'
+    quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L177-L183,L225-L246"
+  row_to_centerline_arterial_ft:
+    value: 128
+    cite: Tigard CDC Table 18.910.1, Arterial, right-of-way width 64-128 ft (the top of the range)
+    url: https://ecode360.com/print/TI5024?guid=43709279
+    retrieved: '2026-10-15'
+    quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L245-L246,L255-L256"
+  row_to_centerline_collector_ft:
+    value: 96
+    cite: Tigard CDC Table 18.910.1, Collector, right-of-way width 58-96 ft (the top of the range)
+    url: https://ecode360.com/print/TI5024?guid=43709279
+    retrieved: '2026-10-15'
+    quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L245-L246,L265-L266"
+  row_to_centerline_neighborhood_route_ft:
+    value: 58
+    cite: Tigard CDC Table 18.910.1, Neighborhood Route, right-of-way width 50-58 ft (the top of the range)
+    url: https://ecode360.com/print/TI5024?guid=43709279
+    retrieved: '2026-10-15'
+    quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L245-L246,L275-L276"
+  row_to_centerline_local_ft:
+    value: 54
+    cite: Tigard CDC Table 18.910.1, Local Residential under 1500 ADT, right-of-way width 54 ft (the widest local row; Local Industrial/Commercial 50 ft)
+    url: https://ecode360.com/print/TI5024?guid=43709279
+    retrieved: '2026-10-15'
+    quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L245-L246,L285-L286,L295-L297"
+  # River Terrace Boulevard, a Collector on the TSP layer, is held by its
+  # own standard: "Right-of-way width must be 110 feet", wider
+  # than the Collector row (18.640.080.A.1).
+  row_to_centerline_named_ft:
+    value:
+      - ["River Terrace Boulevard", 110]
+    cite: Tigard CDC 18.640 (River Terrace Plan District), 18.640.080.A.1, design standards for River Terrace Boulevard, right-of-way width must be 110 feet
+    url: https://ecode360.com/print/TI5024?guid=43707570
+    retrieved: '2026-10-15'
+    quote: "or/washington/tigard/tdc.18.640.river-terrace.txt#L709-L719"
+
 # THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-30.
-#
-# NOT ENCODED: 18.210.030.A.1, "Where the ultimate right-of-way width, as
-# shown in the Transportation System Plan, is wider than the current
-# right-of-way width, required setbacks are measured from the ultimate
-# right-of-way width" (tdc.18.210.residential-general.txt#L45-L51). The
-# rule is the same as the county's and the neighbours' (flats/geom/
-# dedication.py), but its widths are in the Tigard TSP's street
-# cross-sections, which this store does not hold and which could not be
-# fetched on 2026-10-14 (the city's site and ecode360 refuse a script), and
-# no Tigard class map is held. No number is written without its page, so a
-# Tigard street line takes no strip: the one place the dedication can still
-# leave a false GREEN. A doubt and a question for Steph (FOLLOWUPS 77).
 #
 # NOT ENCODED: the rowhouse maximum shared access width, "the maximum width
 # is 24 feet" (18.280.040.D.1.b, tdc.18.280.rowhouses.txt L123). A ceiling
@@ -1136,6 +1237,25 @@ zones:
       cite: Tigard CDC 18.650 (Tigard Downtown Plan District)
       url: https://ecode360.com/print/TI5024?guid=43707834
       retrieved: '2026-09-30'
+    # THE DOWNTOWN STREETS. Inside the Tigard Downtown Plan District Table
+    # 18.910.1's street character rows govern instead of its class rows
+    # (18.910.030.E), by a designation map in the TSP's Technical Appendix
+    # that is not held. Their widest, Downtown Mixed Use 3 - Upper Burnham
+    # at 62-74 ft, is wider than the Local and Neighborhood Route rows, so a
+    # downtown local or neighbourhood street is held at 74 (the Collector and
+    # Arterial rows are wider already). Halved like the defaults.
+    row_to_centerline_local_ft:
+      value: 74
+      cite: Tigard CDC 18.910.030.E and Table 18.910.1, Downtown Mixed Use 3 - Upper Burnham, right-of-way width 62-74 ft (the widest downtown street character row; the designation map is not held)
+      url: https://ecode360.com/print/TI5024?guid=43709279
+      retrieved: '2026-10-15'
+      quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L177,L245-L246,L356-L357,L366-L367,L376-L377,L386-L387,L396-L397"
+    row_to_centerline_neighborhood_route_ft:
+      value: 74
+      cite: Tigard CDC 18.910.030.E and Table 18.910.1, Downtown Mixed Use 3 - Upper Burnham, right-of-way width 62-74 ft (the widest downtown street character row; the designation map is not held)
+      url: https://ecode360.com/print/TI5024?guid=43709279
+      retrieved: '2026-10-15'
+      quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L177,L245-L246,L356-L357,L366-L367,L376-L377,L386-L387,L396-L397"
     quadplex_allowed:
       value: true
       cite: Tigard CDC Table 18.650.1, Residential Use A/R in MU-CBD, Table 18.650.2, Rowhouses Y, and 18.650.030.B.2.a with 18.650.040.B.1 (Type II review on the chapter's standards)

@@ -2888,19 +2888,19 @@ read when the weekly full re-screen lands.
    green still seats 6+ except 34E17D 00700 (5, room for more): a fix with no colour change.
    (e) Noticed: flats.flag_instances was last refreshed at run 70 (no row seen after it), so it
    still shows JURISDICTION-OFF on Tigard lots; run 74's own results carry the right flags.
-81. [scan: YES once the widths are held] **Tigard road land is not held, so its road-dedication
-   false-GREEN gap stays open (coordinator 2026-10-14).** Tigard 18.210.030.A.1 measures setbacks
-   from the future street edge the TSP sets, but the store holds neither Tigard's TSP street
-   cross-section widths by class nor a Tigard class map, so item 77 encodes nothing for Tigard and
-   a Tigard green beside a street that will widen can be false. To close: fetch the Tigard TSP
-   (2035 TSP, street design standards / typical sections: right-of-way per functional class) and
-   its functional-class map (a GIS layer if the city publishes one; else trace it like a drawn
-   area), register the map as street_class_tigard (+ weekly preflight via dedication_keys), add
-   Tigard's class -> half-width table with citations in or/washington/tigard, bound Tigard and read
-   every loss. Item 64 round 2 saw no Tigard lot wrong from this, so the size is unknown.
+81. [scan: YES -- bound pending] **Tigard road widths: DONE in code (branch flats/tigard-road-widths,
+   merged to main 2026-10-15), bound pending.** Tigard measures setbacks from the future street edge.
+   Widths come from the code's own street table (TDC 18.910.1) keyed to the city's TSP class map
+   (street_class_tigard, now in the weekly preflight); each class takes the top of its printed range,
+   half from the centre line: Local 27, Neighborhood Route 29, Collector 48, Arterial 64 ft (Principal
+   Arterial and the Hall Blvd stretch included); River Terrace Blvd 55. Downtown (MU-CBD) local and
+   neighbourhood streets held at 37 ft (downtown street map not stored). Freeway, unclassed and unread
+   lines take 64; a line with no centre line nearby gives up the whole 64. The class map has no street
+   names: matched by position (~1.5% unmatched overall, none on collectors/arterials). Arterial lots
+   likely lose greens. Next: bound Tigard on 137 vs run 74, read every loss, report moves to Steph.
 82. [scan: YES -- greens only gain] **Oregon City: the zone across the street stands in for the plan
-   designation (RULED + BUILT 2026-10-14, branch flats/oc-road-zone-standin 5c4051cc, awaiting
-   merge; bound read, NOT spliced).** Steph: use the measured zone on each side as the stand-in for
+   designation (RULED + BUILT 2026-10-14, MERGED 16d07f44 2026-10-15; bound read, rides
+   the next weekly).** Steph: use the measured zone on each side as the stand-in for
    Table 16.12.016's plan designation; flag it low-risk, severity 2, so a GREEN lot stays GREEN
    (OC-ROAD-ZONE-STANDIN); keep the widest row where the land across is unread or its zone maps to
    no clear designation. Zone -> designation is Table 17.06.030 (R-10..R-2 residential; C, MUD,

@@ -371,6 +371,14 @@ OPEN = {
     # Bridgeport is not drawn on any map held, and its figures are recorded
     # in the layer's Doubts, not encoded.
     "or/washington/tigard 18.280.020 -> 18.620",
+    # 2026-10-15 (FOLLOWUPS 81): 18.910 is stored for its right-of-way table,
+    # which surfaces TMU's adequate-utilities sentence (tdc.18.660 L208):
+    # easements, sanitary sewers and undergrounding of utilities. Read: public
+    # facility standards for the Public Works permit, no dimension the pod
+    # meets on its lot.
+    "or/washington/tigard 18.660.040 -> 18.910.050",
+    "or/washington/tigard 18.660.040 -> 18.910.090",
+    "or/washington/tigard 18.660.040 -> 18.910.120",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth

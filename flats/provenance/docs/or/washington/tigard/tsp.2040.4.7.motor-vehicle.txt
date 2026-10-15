@@ -1,0 +1,436 @@
+Motor Vehicle Plan                                       to internal circulation. Tigard has multiple access
+                                                                                             points to I-5 and Highway 217, which connect to
+         The street network serves as the backbone of                                        the rest of the region. The functional classes in
+         Tigard’s multi-modal transportation system. These                                   Tigard are shown in Table 5 and Figure 11.                                        Figure
+         facilities must accommodate many travel modes                                       12 identifies the roadways that currently have 4-5
+         within their rights of way, with users’ experience                                  lanes and locations where there is planned
+         also shaped by the surrounding land use. Overall,                                   widening.
+         the roadway network is intended to be multimodal,                                   Title 18 of Tigard’s Municipal Code (Development
+         serving auto, freight, and transit needs, as well as                                Code), developed by the City Engineering
+         people walking and riding bicycles.                                                 Department, identifies the design standards for
+         4.7.1.                                                    Existing Motor Vehicle    roadway cross-section elements based on the
+                                                                                             street functional class. These standards are
+         Network                                                                             currently under revision and being updated.
+
+         Streets in Tigard are owned and maintained by                                       I-5, Highway 217, Pacific Highway, and Scholls Ferry
+         ODOT, Washington County, and the City. They are                                     Road are designated by the                                      Federal Highway
+         designed to fit the purpose that they serve,                                        Administration (FHWA) as part of the National
+         generally ranging from longer distance mobility to                                  Highway System (NHS). The federal government
+         neighborhood circulation to direct access. Their                                    defines the NHS as roads important to the nation’s
+         characteristics, including functional class, speed,                                 economy, defense, and mobility 6 and thus
+         number of lanes, and intersection treatments,                                       emphasizes the importance of maintaining vehicle
+         should match the intended use of the facility.                                      mobility. I-       5, Highway 217, and Pacific Highway                               are
+                                                                                             also lifeline 7 routes and future planning for these
+         4.7.1.1.                                              Functional class              routes will be consistent with the Oregon Resiliency
+                                                                                             Plan.
+         The street network in Tigard is a mix of arterials
+         that accommodate higher volumes and speeds to                                       SW Hall Boulevard, currently under state
+         promote regional mobility and local roads oriented                                  jurisdiction, is under consideration for a
+                                                                                             jurisdictional transfer to the City of Tigard. This
+
+         6 https://www.fhwa.dot.gov/planning/national_highway_system/
+
+         7 Seismic Lifeline Routes are roadways and bridges that play a critical role in emergency response and evacuation in
+           the event of a seismic event.                               https://www.oregon.gov/ODOT/Planning/Documents/Seismic-Lifelines                            -Evaluation-
+           Vulnerability-Synthese             -Identification.pdf
+
+JANUARY                        2022    TIGARD ON THE MOVE: 2040 TRANSPORTATION SYSTEM PLAN                                                                                                                                                           - PAGE   60
+        CHAPTER 4 MODAL PLANS
+     Table of Contents
+
+        transfer would enable the City to establish its own                             area outweighs the considerations of highway
+        vision for SW Hall Boulevard, including its functional                          mobility, and there is a focus on planning this
+        classification designation, design standards, and                               section of the state highway to accommodate non-
+        performance expectations. At the same time, this                                auto modes and local circulation.
+        transfer would require the City to take over                                    Downtown Tigard has special street designations
+        responsibility for maintenance and the associated                               and a plan to build out the street grid to increase
+        expenses. Hall Boulevard from Scholls Ferry Road                                connectivity. A map of these designations can be
+        to SW Hemlock Street is currently designated by                                 found in the Technical Appendix.
+        ODOT as a Special Transportation Area, meaning
+        that the need for appropriate local access in this
+
+JANUARY                        2022  TIGARD ON THE MOVE: 2040 TRANSPORTATION SYSTEM PLAN                                                                                                                                                                - PAGE   61
+        CHAPTER 4 MODAL PLANS
+     Table of Contents
+
+        Table 5. Classifications of Roadway
+            ROADWAY                    DESCRIPTION / PURPOSE                           EXAMPLE                            PHOTO
+                TYPE
+
+          Freeway1               Freeways primarily serve long distance               I-5
+                                 travel between cities and carry high                 OR 217
+                                 volumes. They provide only limited
+                                 access via grade separation and
+                                 access ramps.
+
+          Principal              Principal arterials tend to carry the                OR 99W
+          Arterial1              highest volumes of any roadway type
+                                 below freeway routes. They can
+                                 potentially serve regional through-
+                                 trips and connect the region. Mobility
+                                 is a priority on principal arterials and
+
+                                 access control is important.
+
+          Arterial               Arterials are designed for higher                    Hall
+                                 volumes, but tend not to be major                    Boulevard
+                                 regional travel ways. Minor arterial                 Durham
+                                 streets provide inter-neighborhood                   Road
+                                 connections.
+
+          Collectors             Collectors distribute trips between                  135th
+                                 local streets and arterials and serve as             Avenue
+                                 transition roadways to or from                       Locust
+                                 commercial and residential areas.                    Street
+                                 Collectors have lower volumes than
+                                 arterials, and must balance experience
+                                 for all modes.
+
+JANUARY                        2022 TIGARD ON THE MOVE: 2040 TRANSPORTATION SYSTEM PLAN                                                                                                                                                           - PAGE   62
+        CHAPTER 4 MODAL PLANS
+     Table of Contents
+
+            ROADWAY                      DESCRIPTION / PURPOSE                            EXAMPLE                             PHOTO
+                TYPE
+
+          Neighborhood            Neighborhood streets serve a similar                   North
+          Streets                 purpose to Collectors, however they                    Dakota
+                                  are distinguished by having lower                      Street
+                                  traffic volumes and more connecting                    Sattler
+                                  driveways. Neighborhood streets offer                  Street
+                                  more access at lower speed and with
+
+                                  fewer travel lanes.
+
+          Local Streets           Local streets are the lowest functional                SW 88th
+                                  classification, providing circulation and              Avenue
+                                  access within residential
+                                  neighborhoods. They provide access
+                                  to homes and properties, and serve a
+                                  slower-moving mix of modes.
+
+        1Freeway and Principal Arterial are both ODOT c              lassifications.
+        Photo Credit: Google Maps, 2021
+
+JANUARY                        2022  TIGARD ON THE MOVE: 2040 TRANSPORTATION SYSTEM PLAN                                                                                                                                                           - PAGE   63
+                                                                                                                                                                                                        217                                               Taylors Ferry Rd
+
+                                                                                                                                                                                                                                           Locus t       St         80th Ave
+
+                                                                                                                                                Sc holls        Ferry        Rd                                                                                    Oak St
+
+                                                                                                                                                                                                                                                                                                68th Pkwy
+                                                                                                                                                                                      North Dakota St
+                                                                                                                                                                                                                      Greenburg      Rd               Pfaffle St       78th Ave
+                                                                                                                                                                                          Tigard St
+                                                                                                                               135thAve
+                                                                                                                                                                                                      Tiedeman Ave                                                          Dart mout h       S t
+
+                                                                                                                                                                                                                                     Burnham St        Hunz ik er     Rd
+                                                                 Barrows         Rd                                                    Walnut St                                                                                                                                                     5
+                                                                                                                                                                                                                                                                                              68th Ave
+
+                                                                                                                                                                                                                                                              Wall St
+
+                                                                  Roshak       Rd
+                                                                                                                                                         Gaarde St                                               Mcdonald St
+
+                                                                                                                                                                                           99W
+
+                                                                                                                                               Bull Mountain Rd                                                                                                    Bonita Rd
+
+                                                                                                                                                                                                                                                                                        72nd Ave
+
+                                                                                                                                                                                                                                                                                             Sequ
+                                        Roy Rogers Rd                                   150thAve
+
+                                                                                                                                                                                                                             Durham Rd
+                                                                                              B eef      B end       Rd
+
+                                                                                                                                                                                                                                                  85th Ave
+
+                                                                                                                        Miles
+        N             0                       ½                       1                                               2
+
+Roadway Classific ation                                                                                Planned Connections                                              Tigard City Boundar y                                                                                                                    Figure 11
+        Freeway                                     Collector                                                    Local
+        Principal Ar terial                         Neighborhood                                                Collector                                                                                         Tigard Functional Classifications
+        Ar terial                                   Special Transportation Area                                 Neighborhood
+                                                                                                                                                                                                             217                                                Taylors Ferry Rd
+
+                                                                                                                                                                                                                                                 Locus t       St          80th Ave
+
+                                                                                                                                                    Sc holls        Ferry        Rd                                                                                       Oak St
+
+                                                                                                                                                                                                                                                                                                       68th Pkwy
+                                                                                                                                                                                           North Dakota St
+                                                                                                                                                                                                                            Greenburg      Rd                Pfaffle St       78th Ave
+                                                                                                                                                                                               Tigard St
+                                                                                                                                  135thAve
+                                                                                                                                                                                                           Tiedeman Ave                                                            Dart mout h       S t
+
+                                                                                                                                                                                                                                            Burnham St        Hunz ik er     Rd
+                                                                   Barrows         Rd                                                      Walnut St                                                                                                                                                         5
+                                                                                                                                                                                                                                                                                                      68th Ave
+
+                                                                                                                                                                                                                                                                     Wall St
+
+                                                                    Roshak       Rd
+                                                                                                                                                             Gaarde St                                                 Mcdonald St
+
+                                                                                                                                                                                                99W
+
+                                                                                                                                                   Bull Mountain Rd                                                                                                       Bonita Rd
+
+                                                                                                                                                                                                                                                                                               72nd Ave
+
+                                                                                                                                                                                                                                                                                                     Sequ
+                                         Roy Rogers Rd                                    150thAve
+
+                                                                                                                                                                                                                                   Durham Rd
+                                                                                                 B eef      B end       Rd
+
+                                                                                                                                                                                                                                                         85th Ave
+
+                                                                                                                           Miles
+        N              0                       ½                        1                                                2
+
+Existing 4+ Lane Roads                                                                                                                                                                                                                                                                                                   Figure 12
+           Principal Ar terial                                          Planned W idenings to 4-5 Lanes                                                      Tigard City Boundar y
+
+           Ar terial                                                    Planned W idenings to 6-7 Lanes                                                                                                                             Planned Roadway Widenings
+
+           Collector
+        CHAPTER 4 MODAL PLANS
+     Table of Contents
+
+        4.7.1.2.                                      Access Management                     4.7.1.3.                         Traffic Operations
+
+        The Oregon Transportation Planning Rule (TPR)                                       The evaluation of existing traffic conditions focused
+        defines “Access Management” as “…measures                                           on daily volumes along key corridors in Tigard,
+        regulating access to streets, roads and highways                                    along with 30th highest hour operations at 30
+        from public roads and private driveways.” A                                         intersections in the City. Outside of I-5 and
+        requirement of the TPR is that new connections to                                   Highway 217, Pacific Highway and Scholls Ferry
+                                                                                            Road carry the highest volumes in Tigard. Most of
+        both arterials and state highways must follow                                       the City’s other high volume streets are designated
+        designated access management categories.                                            as arterials, indicating that they are built to
+        Typically, existing accesses can remain as long as                                  accommodate the traffic volumes they carry. There
+        the land use does not change.                                                       are exceptions, however: Dartmouth Street is a
+
+        In general, access management standards require                                     collector that carries 13,000 ADT and Sattler Street
+        more spacing for higher capacity roadways.                                          and SW 98th Avenue are local streets that carry
+        However, the specific spacing value may vary by                                     high enough volumes to be considered for an
+        jurisdiction and agency. The City of Tigard’s access                                upgrade in their functional classification.
+        spacing standards are found in Chapter 18.920.030                                   Of the 30 intersections studied, ten study
+        of the Tigard Development Code. Washington                                          intersections have an LOS E or F, indicating high
+        County has access standards which are established                                   amounts of delay. These are spread across the City,
+        in the Washington County Community                                                  with several on SW Tiedeman Avenue, Main Street,
+        Development Code, in Section 501-8.5(A). Projects                                   and 72nd Avenue. Seven intersections exceed a v/c
+        being considered on County facilities such as                                       ratio of 0.99:
+        Scholls Ferry Road will need to refer to these
+        standards.                                                                                                                     SW Greenburg Road & SW Tiedeman
+        The Oregon Highway Plan (OHP) includes access                                                 Avenue
+        management spacing standards for ODOT                                                                                          SW 121st Avenue & SW North Dakota Street
+        highways. Hall Boulevard and Pacific Highway are                                                                                SW Tiedeman Avenue & SW North Dakota
+        under ODOT management and must follow OHP                                                     Street
+        standards.                                                                                                                     SW Tiedeman Avenue & SW Tigard Street
+                                                                                                                                       SW Walnut Street & SW Gaarde Street
+                                                                                                                                        SW Hall Boulevard & SW McDonald Street
+                                                                                                                                       SW Durham Road & SW Hall Boulevard
+
+JANUARY                        2022    TIGARD ON THE MOVE: 2040 TRANSPORTATION SYSTEM PLAN                                                                                                                                                           - PAGE   66
+        CHAPTER 4 MODAL PLANS
+     Table of Contents
+
+        4.7.1.4.                       Freight                                             serving areas within and outside of Tigard making
+                                                                                           efficient truck movement and the delivery of raw
+        Freight movement is essential to bring goods to                                    materials, goods, services, and finished products
+        residents and to move products throughout the                                      possible. Freight routes are designated to identify
+        region. Tigard, Washington County, and ODOT all                                    where improvements may be needed for the safe
+        designate freight routes, as shown in                   Figure 13.                 and efficient movement of trucks and to minimize
+        This system provides connections with truck routes                                 negative impacts on local streets.
+
+JANUARY                        2022    TIGARD ON THE MOVE: 2040 TRANSPORTATION SYSTEM PLAN                                                                                                                                                           - PAGE   67
+                                                                                                                                                                                                          217                                                 Taylors Ferry Rd
+
+                                                                                                                                                                                                                                               Locus t       St          80th Ave
+
+                                                                                                                                               Sc holls        Ferry        Rd                                                                                          Oak St
+
+                                                                                                                                                                                                                                                                                                       68th Pkwy
+                                                                                                                                                                                       North Dakota St
+                                                                                                                                                                                                                         Greenburg      Rd                 Pfaffle St       78th Ave
+                                                                                                                                                                                           Tigard St
+                                                                                                                             135thAve
+                                                                                                                                                                                                        Tiedeman Ave                                                              Dart mout h       S t
+
+                                                                                                                                                                                                                                         Burnham St         Hunz ik er     Rd
+                                                            Barrows         Rd                                                        Walnut St                                                                                                                                                      68th Ave5
+
+                                                                                                                                                                                                                                                                   Wall St
+
+                                                             Roshak       Rd
+                                                                                                                                                        Gaarde St                                                   Mcdonald St
+
+                                                                                                                                                                                            99W
+
+                                                                                                                                               Bull Mountain Rd                                                                                                         Bonita Rd
+
+                                                                                                                                                                                                                                                                                              72nd Ave
+
+                                  Roy Rogers Rd                                     150thAve                                                                                                                                                                                                       Sequoia
+
+                                                                                                                                                                                                                                Durham Rd
+                                                                                          B eef      B end       Rd
+
+                                                                                                                                                                                                                                                       85th Ave
+
+                                                                                                                      Miles
+N              0                       ½                         1                                                  2
+
+Truck R oute                                                                                                                                                                                                                                                                                                             Figure 13
+
+Railroad
+Tigard City Boundary                                                                                                                                                                                            Tigard Designated Freight Routes
+        CHAPTER 4 MODAL PLANS
+     Table of Contents
+
+        4.7.1.5.                                                                               Safety Compared to the State of Oregon and ODOT Region 1
+                                                                                             averages, collisions at intersections and collisions
+        In evaluating the performance of Tigard’s street network,                            involving pedestrians or bicyclists are overrepresented in
+        it is important to consider this performance from a safety                           Tigard as shown in Table 6         . In contrast, collisions
+        perspective. The collision data and analysis discussed                               attributed to roadway departure or speeding are
+        here is derived from Tigard’s 2019 Transportation Safety                             underrepresented. This is likely due to the more urban
+        Action Plan (TSAP). The TSAP used data from ODOT,                                    nature of Tigard’s streets compared to roadways
+        Metro, TriMet, and the City of Tigard collected between                              statewide or even across ODOT Region 1.
+        2013 and 2017. The analysis does not include collisions
+        on freeway mainline segments and ramp segments.
+
+        Table 6. Fatal and Injury Collisions by Attribute
+
+         CRASH ATTRIBUTE                                                 CITY OF TIGARD             OREGON STATEWIDE                        ODOT REGION 1
+                                                                            (2013-2017)                    (2009-2013)                         (2009-2013)
+
+         Roadway Departure                                                        22%                            54%                                 37%
+         Intersection                                                             54%                            34%                                 45%
+         Speeding                                                                  11%                            27%                                 21%
+         Alcohol and/or Other Drug Use                                            20%                             22%                                 21%
+         Motorcycle                                                               12%                             15%                                 14%
+         Pedestrian                                                               25%                             10%                                 14%
+         Bicyclist                                                                15%                             4%                                  6%
+
+        Source: Tigard TSAP 2019
+
+        Over half of collisions (and 60% of fatal and severe injury                          between 2013 and 2017, with no substantial temporal
+        collisions) in Tigard occurred at intersections with at least                        trend discernable.
+        one arterial or principal arterial roadway. The collision
+        analysis identified 20 priority intersections, based on
+        collision occurrence. Of these 20 priority intersections, 12
+        are located on Pacific Highway, and four are on Scholls
+        Ferry Road. Overall, collision rates have remained stable
+
+JANUARY                        2022   TIGARD ON THE MOVE: 2040 TRANSPORTATION SYSTEM PLAN                                                                                                                                                                                                                                             - PAGE   69
+          CHAPTER 4 MODAL PLANS
+      Table of Contents
+
+          4.7.2.                                                                                              Future Motor Vehicle Needs 2010 TSP, and included on the TSP project list. The future
+                                                                                                                traffic analysis can be reviewed in more detail in the
+          Key challenges on Tigard’s roadway system were                                                        Technical Appendix.
+          identified through the existing and future conditions                                                 4.7.2.2.                Street Classifications
+          analyses: operational constraints, inconsistencies
+          between streets’ classification and function, areas where                                             Several streets in Tigard that carry consistently higher
+          connectivity is lacking, and how to address parking in the                                            volumes than their functional classification would suggest
+          Tigard Triangle.                                                                                      (see                                     Table 7). The City should consider appropriate
+          4.7.2.1.                                      Traffic Operations                                      classifications for these roadways, including potential
+                                                                                                                adjustments to design and operating characteristics.
+          By 2040, it is expected that 18 of the 30 study                                                       The TSP reclassifies          some of the roadways whose
+          intersections will have LOS E or F operations during the                                              function has changed since the last TSP. These include
+          30th highest hour volume and 17 intersections will exceed                                             85th Avenue south of Durham Road, 92nd Avenue, and
+          a v/c ratio of 0.99, indicating high amounts of delay.                                                90th Avenue.
+          These intersections were evaluated for potential
+          mitigations, including projects that were identified in the
+
+          Table 7. Streets Carry Higher Volumes than Functional Classification Guidance
+                           COLLECTORS WITH >6,500 ADT                                                            LOCAL AND NEIGHBORHOOD ROADS
+                                                                                                                          CARRYING 3,750-6,500 ADT
+                                                        SW Dartmouth Street                                      SW North Dakota Street (121st Avenue to
+                                                        SW 68th Avenue                                            Tiedeman Avenue)
+                                                        SW Hunziker Street                                                                        SW Tigard Street (Tiedeman Avenue to Main
+                                                        SW Tiedeman Avenue                                        Street)
+                                                        SW 121st Avenue                                                                           SW Beveland Street (72nd Avenue to 68th
+                                                        SW Main Street                                            Avenue)
+                                                        SW Bull Mountain Road                                                                      SW 69th Avenue
+                                                       SW Sequoia Parkway (south of SW Bonita                                                     SW Sattler Street (98th Avenue to Hall
+                       Road)                                                                                       Boulevard)
+                                                        SW Durham Road (south of Upper Boones                                                      SW 98th Avenue (Durham Road to Sattler
+                       Ferry)                                                                                      Avenue)
+
+JANUARY                        2022           TIGARD ON THE MOVE: 2040 TRANSPORTATION SYSTEM PLAN                                                                                                                                                                                                                                              - PAGE   70
+          CHAPTER 4 MODAL PLANS
+      Table of Contents
+
+          4.7.2.3.                 Speed Limit Considerations                                                    Posted speed limits are not based solely on the
+                                                                                                                 functional class, but consider operational factors such as
+          Nine street sections in Tigard were identified that have                                               roadway width, surface, lanes, shoulders, signals,
+          posted speed limits that may be inconsistent with their                                                intersections, roadside development, parking, accidents
+          functional classification                   (Table 8         ). This                                       TSP also identifies and 85th percentile speed. Further, changes in posted
+          the intention to reduce posted speeds to no higher than                                                speed limits require ODOT approval so this TSP identifies
+          35 mph on City-owned facilities, and a citywide                                                        these roadways to inform future deliberations,
+          expansion of 20 mph speed zones on all local and high -                                                coordination with the County, and potential requests to
+          priority neighborhood streets.                                                                         ODOT for approval of speed reductions.
+
+          Table 8. Streets for Consideration of Speed Limit Change
+                      STREET                                        EXTENT                                 FUNCTIONAL                     POSTED SPEED                       RECOMMENDED
+                                                                                                                 CLASS                                                               SPEED1
+           Bull Mountain Road2                   All sections within City limits                                Collector                             40                                  35
+           66th Avenue                           Hampton Street to end                                             Local                              45                                  20
+
+           Sattler Street                        94th Avenue to Hall Boulevard                             Neighborhood                               35                                  20
+           Tigard Street                         Main Street to Twin Park Place                            Neighborhood                               35                                  20
+           Pfaffle Street                        Pacific Highway to 78th Avenue                                    Local                              35                                  20
+           Hampton Street                        68th Avenue to 66th Avenue                                        Local                              35                                  20
+           Commercial Street                     Main Street to Hall Boulevard                                     Local                              30                                  20
+           SW 135th Avenue                       Scholls Ferry Rd to Walnut St                                  Collector                             40                                  35
+
+           Hall Boulevard3                       Pfaffle Street to northern City                                 Arterial                                                                                                                                                                                                                         40                                                                                                                                                                                                                                                                                                 35
+                                                 limits
+
+          1 This is a planning level assessment only and would need to be further explored through a speed study and discussion with ODOT.
+          2 Some sections of Bull Mountain Road are owned by Washington County
+          3 Currently owned by ODOT, under consideration for jurisdictional transfer to the City of Tigard
+
+JANUARY                        2022           TIGARD ON THE MOVE: 2040 TRANSPORTATION SYSTEM PLAN                                                                                                                                                                                                                                                   - PAGE   71
+        CHAPTER 4 MODAL PLANS
+     Table of Contents
+
+        Outside of speed limit reductions, the City can also                             Transportation Demand Management (TDM) and
+        manage speeds on local roads through establishment of                            Transportation Systems Management and Operations
+        a neighborhood traffic calming program. This program                             (TSMO) are two strategies to enhance the existing
+        (discussed further in Chapter 6) would identify locations                        transportation system without major capital expansion.
+        where traffic calming is needed and the appropriate                              TDM is focused on reducing vehicle demand while
+        solutions to slow traffic speeds.                                                TSMO is focused on making the current system more
+                                                                                         efficient.
+        4.7.2.4.               Freight
+        Freight and commerce are essential to the economic                               4.8.1.                             Transportation Demand
+
+        vibrancy of Tigard. While critical to the City’s success,                        Management
+        freight traffic in and through Tigard can present
+        challenges to the City’s transportation system. Conflicts                        TDM programs aim to reduce the use of single-
+        between freight and other modes (walking, bicycling,                             occupancy vehicles and promote active modes of
+        transit, and personal vehicles) along Tigard’s most                              transportation. Many TDM programs are employer-
+        heavily travelled freight corridors pose safety and                              based and can consist of incentives such as free transit
+        efficiency concerns. Non-                   freight specific transportation      passes, infrastructure such as secure bicycle parking,
+        projects should be aware of freight system needs and                             employee education programs on transportation
+        implement solutions that accommodate                                             choices, or site changes such as reduced parking. The
+        freight movement.                                                                Westside Transportation Alliance is a Transportation
+                                                                                         Management Association in Washington County that
+        The current freight network classifications generally                            works with both employers and local governments to
+        reflect the needs for access to commercial and industrial                        encourage behavior change for commute trips and
+        areas, as well as major transportation connections. Minor                        provide transportation options.
+        updates are recommended that are consistent with this
+        purpose, and that would bring Tigard’s classification into                       The TPR requires jurisdictions to take steps to reduce
+        consistency with Washington County: a freight                                    single-occupancy vehicle use. TDM measures can help to
+        designation on SW Roy Rogers Road and on SW 72nd                                 accomplish these goals. Metro recently completed a
+        Avenue south of Highway 217.                                                     TDM Inventory 8 that assessed the needs and
+                                                                                         opportunities for TDM programs throughout the
+        4.8.

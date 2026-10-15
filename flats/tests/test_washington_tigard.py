@@ -372,7 +372,7 @@ def test_the_corner_and_the_private_road(tigard: Layer) -> None:
 
 def test_the_footnotes_are_all_ruled() -> None:
     rows = notes(TIGARD)
-    assert by_state(rows) == {"encoded": 5, "dismissed": 5}
+    assert by_state(rows) == {"encoded": 5, "dismissed": 12}
     encoded = {(n.doc.rsplit("/", 1)[-1], n.line) for n in rows if n.state == "encoded"}
     assert encoded == {
         ("tdc.18.110.residential-zones.txt", 215),

@@ -2,11 +2,12 @@
 # eCode360 TI5024, current through Ordinance 26-13). Draft, cloud session
 # 2026-10-01. Nothing here is verified.
 #
-# The census finds four notes blocks and ten bodies in the Tigard documents:
-# Table 18.110.3 (residential housing types, two notes), Table 18.280.1
-# (rowhouse development standards, two), Table 18.640.1 (River Terrace
-# Boulevard reduced lots, one) and Table 18.650.3 (Downtown development
-# standards, five). Every body is ruled below.
+# The census finds five notes blocks and seventeen bodies in the Tigard
+# documents: Table 18.110.3 (residential housing types, two notes), Table
+# 18.280.1 (rowhouse development standards, two), Table 18.640.1 (River
+# Terrace Boulevard reduced lots, one), Table 18.650.3 (Downtown development
+# standards, five) and Table 18.910.1 (minimum rights-of-way, seven). Every
+# body is ruled below.
 #
 # WHAT THE CENSUS MISSES. Read by eye on 2026-10-01: Tables 18.660.9 and
 # 18.660.10 (Triangle street elements) print a "Notes" COLUMN, not a notes
@@ -106,3 +107,53 @@ notes:
       area overlay (Map 18.650.B). A relaxation of the 50 units per acre the
       layer holds, keyed to an overlay that is not mapped; holding 50 is
       the stricter reading.
+  # Table 18.910.1 (minimum rights-of-way by street class), stored
+  # 2026-10-15 for road dedication (FOLLOWUPS 81). Seven notes; none changes
+  # a right-of-way width. The layer holds the top of each class's range.
+  - quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L428"
+    digest: "bbe497ff463b"
+    state: dismissed
+    reason: >-
+      Note 1 says when an arterial or collector needs a median (5- and
+      7-lane roads). It fixes the lanes inside the street, not the
+      right-of-way; the layer holds the widest right-of-way of the class,
+      which already allows for the most lanes.
+  - quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L429"
+    digest: "e9d87693721e"
+    state: dismissed
+    reason: >-
+      Note 2 allows on-street parking on downtown collectors. It is about
+      what goes inside the street; the right-of-way width is unchanged.
+  - quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L430"
+    digest: "d0fd11d2dc63"
+    state: dismissed
+    reason: >-
+      Note 3 leaves bike lanes on downtown collectors to the City Engineer.
+      Inside the street; the right-of-way width is unchanged.
+  - quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L431"
+    digest: "c50ac73774e0"
+    state: dismissed
+    reason: >-
+      Note 4 sets the sidewalk width on the rows that carry it. Inside the
+      right-of-way; its width is unchanged.
+  - quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L432"
+    digest: "a7c0b8b5aeb4"
+    state: dismissed
+    reason: >-
+      Note 5 marks a street unstriped. No width.
+  - quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L433"
+    digest: "3c772b527bdc"
+    state: dismissed
+    reason: >-
+      Note 6 permits "skinny street" roadway widths where the cross section
+      and review criteria are met: a narrower street on review, a
+      relaxation. The layer holds the widest local right-of-way, the
+      stricter reading.
+  - quote: "or/washington/tigard/tdc.18.910.improvement-standards.txt#L434"
+    digest: "14b38dd83c25"
+    state: dismissed
+    reason: >-
+      Note 7 says the Upper Hall Boulevard street character row (94 ft) is
+      not final until a corridor plan is done. The layer does not use that
+      row: Hall Boulevard is an arterial on the city's TSP map and takes the
+      Arterial row, 128 ft, the wider.

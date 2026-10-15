@@ -506,12 +506,12 @@ def test_the_preflight_names_what_the_snapshot_lacks(wc, tmp_path) -> None:
 
 
 def test_the_preflight_refuses_a_snapshot_without_a_street_class_map(wc, tmp_path) -> None:
-    # Road dedication ranks Sherwood and Oregon City streets off their own TSP
+    # Road dedication ranks Sherwood, Oregon City and Tigard streets off their own TSP
     # maps; a snapshot without one would screen every street line there at the
     # deepest distance, so the run is refused instead.
     snap, dem, pipeline, datasets = _snapshot(tmp_path)
     assert {"street_class_sherwood", "street_class_oregon_city", "street_class_washington",
-            "street_class_milwaukie", "rlis_streets"} <= set(wc.dedication_keys())
+            "street_class_milwaukie", "street_class_tigard", "rlis_streets"} <= set(wc.dedication_keys())
     datasets["street_class_sherwood"]["status"] = "failed"
     (snap / datasets["street_class_oregon_city"]["file"]).unlink()
     (snap / "manifest.json").write_text(json.dumps({"snapshot": snap.name, "datasets": datasets}), encoding="utf-8")

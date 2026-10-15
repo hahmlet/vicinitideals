@@ -815,6 +815,11 @@ RULINGS: dict[str, dict[str, str]] = {
             "equivalent of the adjacent county zone "
             "(tdc.18.720.annexations L66). Not a Tigard zone."
         ),
+        "ADT": (
+            "not-a-zone: average daily traffic, the count Table 18.910.1's "
+            "right-of-way ranges are decided by "
+            "(tdc.18.910.improvement-standards L177)."
+        ),
     },
 }
 

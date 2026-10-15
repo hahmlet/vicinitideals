@@ -1033,8 +1033,8 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: (flats/geom/dedication.py); quadfit has no street lines to charge it on.
     #: Counted where a ZONE states it (Washington County's twelve middle-housing
     #: districts); the cities state theirs once, in the layer defaults.
-    "row_to_centerline_local_ft": 12,
-    "row_to_centerline_neighborhood_route_ft": 12,
+    "row_to_centerline_local_ft": 13,
+    "row_to_centerline_neighborhood_route_ft": 13,
     "row_to_centerline_collector_ft": 12,
     "row_to_centerline_arterial_ft": 12,
     #: Yards by lot-line bearing (Clackamas ZDO 1005.02(L), FOLLOWUPS 61):

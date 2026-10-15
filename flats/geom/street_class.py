@@ -286,6 +286,41 @@ CLASS_MAPS: dict[str, ClassSpec] = {
         unlisted=0,
         access=False,
     ),
+    # Tigard 18.210.030.A.1: setbacks from "the ultimate right-of-way width,
+    # as shown in the Transportation System Plan" -- the cross-section of the
+    # street's TSP class (Table 18.910.1). The city's own layer, "Street
+    # functional class designation within the City of Tigard, Oregon as per
+    # the City's Transportation System Plan", draws its local streets too,
+    # so a street it leaves out is unread (no ``unlisted``). CITY_TSP values
+    # verbatim (the field holds both "LOCAL" and "Local"): Local, Neighborhood,
+    # Collector (and its Major / Minor Collector lines on Cascade Ave, Locust
+    # St and Oak St), Arterial with the Special Transportation Area stretch of
+    # Hall Blvd (an arterial the TSP's Figure 11 draws apart), Principal
+    # Arterial (99W, Barbur Blvd), Freeway. PRIVATE ranks with the local
+    # streets: no TSP class sets its width, and the local row is the most it
+    # could be asked. "Other" / "OTHER" (streets the city does not class,
+    # most outside it) and a blank rank nothing: the deepest distance. Read
+    # for the dedication only (``access``); no Tigard driveway rule reads a
+    # class.
+    "street_class_tigard": ClassSpec(
+        field="CITY_TSP",
+        local=frozenset(),
+        other=frozenset(),
+        rank={
+            "LOCAL": 0,
+            "Local": 0,
+            "PRIVATE": 0,
+            "NEIGHBORHOOD": 1,
+            "COLLECTOR": 2,
+            "MAJOR COLLECTOR": 2,
+            "MINOR COLLECTOR": 2,
+            "ARTERIAL": 3,
+            "STA": 3,
+            "PCPL Arterial": 4,
+            "FREEWAY": 5,
+        },
+        access=False,
+    ),
 }
 
 
