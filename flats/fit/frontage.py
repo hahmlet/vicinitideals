@@ -37,6 +37,7 @@ import numpy as np
 import shapely
 from shapely.geometry.base import BaseGeometry
 
+from flats.geom.corner import STREET_CLASS, through_lot, two_streets
 from flats.geom.edges import Edge, EdgeClass, LotEdges, bearing_delta
 
 #: How far apart the looks into the lot are, feet. A foot is finer than any
@@ -53,11 +54,19 @@ def street_chains(edges: LotEdges) -> tuple[tuple[Edge, ...], ...]:
     Lines next to one another around the lot are one street until the street
     turns: each line goes to the nearer of the lot's (at most two) street
     directions, and a change of direction starts another street. Lines apart
-    -- the two ends of a through lot -- are two streets.
+    -- the two ends of a through lot -- are two streets. Two directions closer
+    than the corner test's angle (:func:`flats.geom.corner.two_streets`, the
+    ONE test for "two streets") are one street that bends, or a cul-de-sac
+    bulb, and stay one street. So are runs apart along one street direction
+    that are not a through lot's two ends (:func:`flats.geom.corner.through_lot`,
+    the test the ``through_lot`` site fact asks): a jog or a notch in one
+    frontage.
     """
     ring = edges.edges
     n = len(ring)
     bearings = [float(b) for b in edges.front_bearings[:2]]
+    if not two_streets(bearings):
+        bearings = bearings[:1]
 
     def street_of(e: Edge) -> int:
         if len(bearings) < 2:
@@ -89,6 +98,11 @@ def street_chains(edges: LotEdges) -> tuple[tuple[Edge, ...], ...]:
             chains.append([])
         chains[-1].append(ring[i])
         last = here
+    if len(chains) > 1 and len(bearings) < 2 and not through_lot(
+        [(e.x1, e.y1, e.x2, e.y2, STREET_CLASS if on[i] else "") for i, e in enumerate(ring)],
+        edges.front_bearings,
+    ):
+        return (tuple(e for c in chains for e in c),)
     return tuple(tuple(c) for c in chains)
 
 

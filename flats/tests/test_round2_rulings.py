@@ -259,6 +259,28 @@ def test_a_street_that_wraps_past_the_ring_start_is_one_street() -> None:
     assert [len(c) for c in street_chains(ring)] == [2]
 
 
+def test_a_street_that_bends_short_of_a_corner_is_one_street() -> None:
+    # Two directions 30 degrees apart: one street bending (or a cul-de-sac
+    # bulb), not two -- the corner test's angle decides, as it does for the
+    # corner_lot fact.
+    bend = _edges(
+        [(0, 0, 40, 0, F), (40, 0, 80, 23, F), (80, 23, 80, 120, S), (80, 120, 0, 120, R), (0, 120, 0, 0, S)],
+        [0.0, 30.0],
+    )
+    assert [len(c) for c in street_chains(bend)] == [2]
+
+
+def test_a_jog_in_one_frontage_is_one_street() -> None:
+    # Two runs of front line 10 ft apart across the street: a step in one
+    # frontage, not a through lot's two ends (those are 120 ft apart above).
+    jog = _edges(
+        [(0, 0, 40, 0, F), (40, 0, 40, 10, S), (40, 10, 80, 10, F), (80, 10, 80, 120, S),
+         (80, 120, 0, 120, R), (0, 120, 0, 0, S)],
+        [0.0],
+    )
+    assert [len(c) for c in street_chains(jog)] == [2]
+
+
 def test_the_best_way_to_stand_the_row_is_kept() -> None:
     corner = _edges([(0, 0, 80, 0, F), (80, 0, 80, 120, SS), (80, 120, 0, 120, R), (0, 120, 0, 0, S)], [0.0, 90.0])
     away = box(4, 60, 44, 102)
