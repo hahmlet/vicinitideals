@@ -101,8 +101,12 @@ def test_ledger_diff_suppresses_reviewed_notice_and_orders_oldest_first():
     ]
 
 
-def test_committed_ledger_starts_empty():
-    assert load_ledger() == []
+def test_committed_ledger_is_valid_and_encodes_name_a_followup():
+    ledger = load_ledger()
+    for entry in ledger:
+        if entry["verdict"] == "encode":
+            assert entry["kind"] == "adopted", entry["id"]
+            assert entry["note"] and entry["followup"], entry["id"]
 
 
 def test_ledger_loader_accepts_unquoted_yaml_dates(tmp_path):

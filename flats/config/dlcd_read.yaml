@@ -1,1 +1,1614 @@
-[]
+# DLCD plan-amendment notices read for FLATS (docs/ops/flats-county-refresh.md 4f).
+# One entry per notice id; flats/watch/dlcd.py validates the keys. Backlog of 168
+# notices (2026-01-01 to 2026-10-14) read 2026-10-15. A proposed notice whose adoption
+# is in the ledger points at that adopted entry, which carries the verdict.
+- id: proposed:Wilsonville:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/wilsonville
+  received: '2026-01-07'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Wilsonville:001-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Washington County:002-25
+  kind: adopted
+  jurisdiction: or/washington/_unincorporated
+  received: '2026-01-08'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Washington County Ord. 908: Raleigh Hills Town Center boundary in the comprehensive plan; no
+    zoning code text.'
+  followup: null
+- id: adopted:Washington County:004-25
+  kind: adopted
+  jurisdiction: or/washington/_unincorporated
+  received: '2026-01-08'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Washington County Ord. 910: Forest Grove urban planning area agreement; coordination policy only.'
+  followup: null
+- id: adopted:Lake Oswego:013-25
+  kind: adopted
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-01-09'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego single-parcel annexation (Lake Oswego switched off in FLATS).
+  followup: null
+- id: adopted:Oregon City:003-25
+  kind: adopted
+  jurisdiction: or/clackamas/oregon-city
+  received: '2026-01-12'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Oregon City emergency annexation of one 19,660 sq ft property (failed septic).
+  followup: null
+- id: adopted:Oregon City:004-25
+  kind: adopted
+  jurisdiction: or/clackamas/oregon-city
+  received: '2026-01-12'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Oregon City emergency annexation of one 20,834 sq ft property (failed septic).
+  followup: null
+- id: adopted:Oregon City:005-25
+  kind: adopted
+  jurisdiction: or/clackamas/oregon-city
+  received: '2026-01-12'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Oregon City plan/zone change on two city-owned sites (public to Medium Density Residential); site-specific.
+  followup: null
+- id: proposed:Gladstone:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/gladstone
+  received: '2026-01-13'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Gladstone:001-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Hillsboro:001-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-01-14'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro single-property zone change to R-4.5 (0.57 acres); site-specific.
+  followup: null
+- id: proposed:Hillsboro:002-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-01-14'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro single-property zone change to Industrial Park; site-specific.
+  followup: null
+- id: adopted:Gladstone:002-25
+  kind: adopted
+  jurisdiction: or/clackamas/gladstone
+  received: '2026-01-15'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Gladstone TXT-25-03: design review, subdivision/partition/lot line adjustment and nonconforming-use
+    procedures made clear and objective (17.44, 17.46, 17.80, 17.94). Gladstone middle housing already
+    screens as allowed outright with no review flag, so nothing loosens; no dimensional change.'
+  followup: null
+- id: adopted:Gladstone:003-25
+  kind: adopted
+  jurisdiction: or/clackamas/gladstone
+  received: '2026-01-16'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Gladstone annexation of three properties; site-specific.
+  followup: null
+- id: proposed:Sherwood:001-26
+  kind: proposed
+  jurisdiction: or/washington/sherwood
+  received: '2026-01-20'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Sherwood food cart pods in LI; not housing.
+  followup: null
+- id: proposed:Hillsboro:003-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-01-21'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Hillsboro:003-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Cornelius:005-25
+  kind: adopted
+  jurisdiction: or/washington/cornelius
+  received: '2026-01-22'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Cornelius parks master plan replacement; no code text.
+  followup: null
+- id: adopted:Cornelius:006-25
+  kind: adopted
+  jurisdiction: or/washington/cornelius
+  received: '2026-01-22'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Cornelius urban planning area agreement replacement; coordination only.
+  followup: null
+- id: adopted:Milwaukie:004-25
+  kind: adopted
+  jurisdiction: or/clackamas/milwaukie
+  received: '2026-01-22'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Milwaukie ZA-2025-004 minor code fixes, stated not to change meaning (Ord. 2260, 2026-01-20, already
+    in stored code).
+  followup: null
+- id: adopted:Clackamas County:004-25
+  kind: adopted
+  jurisdiction: or/clackamas/_unincorporated
+  received: '2026-01-27'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Clackamas County single-site plan/zone change R-10 to HDR (Rose Villa); site-specific.
+  followup: null
+- id: proposed:Gresham:001-26
+  kind: proposed
+  jurisdiction: or/multnomah/gresham
+  received: '2026-01-28'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Gresham:001-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Hillsboro:004-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-01-28'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Hillsboro:004-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Estacada:005-25
+  kind: adopted
+  jurisdiction: or/clackamas/estacada
+  received: '2026-01-29'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Estacada single-property annexation (30405 SE River Mill Rd).
+  followup: null
+- id: proposed:Tualatin:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/tualatin
+  received: '2026-01-29'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Tualatin:001-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Canby:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/canby
+  received: '2026-02-02'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Canby:001-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Hillsboro:005-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-02-04'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Hillsboro:005-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Portland:001-26
+  kind: proposed
+  jurisdiction: or/multnomah/portland
+  received: '2026-02-05'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Portland:001-26 (verdict there: encode).'
+  followup: null
+- id: proposed:Canby:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/canby
+  received: '2026-02-12'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Canby:002-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Gresham:002-26
+  kind: proposed
+  jurisdiction: or/multnomah/gresham
+  received: '2026-02-13'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Gresham:002-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Sandy:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/sandy
+  received: '2026-02-13'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Sandy:001-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Hillsboro:006-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-02-18'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Hillsboro:006-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Hillsboro:007-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-02-24'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Hillsboro:007-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Lake Oswego:011-25
+  kind: adopted
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-02-25'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego single-site plan/zone change (switched off in FLATS).
+  followup: null
+- id: adopted:Lake Oswego:012-25
+  kind: adopted
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-02-25'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Lake Oswego LOC 50 clarifications; Lake Oswego is switched off in FLATS (eligible: false).'
+  followup: null
+- id: adopted:Oregon City:006-25
+  kind: adopted
+  jurisdiction: or/clackamas/oregon-city
+  received: '2026-02-26'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Oregon City HB 2658 frontage-improvement exemptions (OCMC 16.12); a public-improvement cost rule,
+    not a placement standard.
+  followup: null
+- id: adopted:Washington County:003-25
+  kind: adopted
+  jurisdiction: or/washington/_unincorporated
+  received: '2026-02-27'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Washington County Ord. 909: Cornelius urban planning area agreement; coordination only.'
+  followup: null
+- id: adopted:Multnomah County:002-25
+  kind: adopted
+  jurisdiction: or/multnomah/_unincorporated
+  received: '2026-03-02'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Multnomah County Planning Commission rules of order; procedure only.
+  followup: null
+- id: proposed:Multnomah County:001-26
+  kind: proposed
+  jurisdiction: or/multnomah/_unincorporated
+  received: '2026-03-02'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: Multnomah County Ch. 39 lot-of-record, definitions, nonconforming-use amendments (ZCIP first part);
+    lot of record decides whether an unincorporated lot is buildable. Re-check at adoption.
+  followup: null
+- id: adopted:Cornelius:007-25
+  kind: adopted
+  jurisdiction: or/washington/cornelius
+  received: '2026-03-03'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Cornelius removes a collector designation from one street segment (transportation plan).
+  followup: null
+- id: proposed:Lake Oswego:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-03-03'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego single-parcel annexation (switched off).
+  followup: null
+- id: proposed:Lake Oswego:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-03-03'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego single-parcel annexation (switched off).
+  followup: null
+- id: proposed:Tigard:001-26
+  kind: proposed
+  jurisdiction: or/washington/tigard
+  received: '2026-03-03'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Tigard:001-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Troutdale:001-26
+  kind: proposed
+  jurisdiction: or/multnomah/troutdale
+  received: '2026-03-04'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Troutdale Main Streets on Halsey code audit: structural, dimensional and design standard changes
+    along Halsey. Re-check dimensional tables at adoption.'
+  followup: null
+- id: adopted:Hillsboro:003-26
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-03-05'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro annexation of six properties (45.9 acres) with zone change; area lands as one PUD (see
+    131). Site-specific, picked up by the next county zoning copy.
+  followup: null
+- id: adopted:Hillsboro:011-25
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-03-05'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro PUD approval for one multi-dwelling project; site-specific.
+  followup: null
+- id: adopted:Portland:004-25
+  kind: adopted
+  jurisdiction: or/multnomah/portland
+  received: '2026-03-05'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Portland AHOP: map changes on 32 sites owned by nonprofits/public bodies; the next zoning-map
+    copy carries them, no code text for the pod.'
+  followup: null
+- id: adopted:Milwaukie:005-25
+  kind: adopted
+  jurisdiction: or/clackamas/milwaukie
+  received: '2026-03-09'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: encode
+  note: 'Milwaukie CPA-2025-001 (new TSP + Title 19 TPR amendments), Ord. 2262 adopted 2026-03-03 (effective
+    about 30 days later): primary entrance must face the street and not face on-site parking, parking
+    location in commercial/mixed-use zones (19.303.4, 19.307.3, 19.308.5, 19.505.7, 19.508.4), walkway
+    accessibility (19.504.7). ALREADY IN STORED CODE: 19.300 and 19.500 (ecode360, retrieved 2026-08-27)
+    carry Ord. 2262 history lines and the new entrance text. Source: https://ecode360.com/print/MI4969?guid=43860500'
+  followup: none -- already in stored code (Ord. 2262)
+- id: proposed:Gresham:003-26
+  kind: proposed
+  jurisdiction: or/multnomah/gresham
+  received: '2026-03-09'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Gresham stormwater facilities in natural resource areas; public facilities, not the pod.
+  followup: null
+- id: adopted:Tigard:004-25
+  kind: adopted
+  jurisdiction: or/washington/tigard
+  received: '2026-03-10'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Tigard removes Goal 5 protection from 127 sq ft of wetland on one site.
+  followup: null
+- id: adopted:Tigard:005-25
+  kind: adopted
+  jurisdiction: or/washington/tigard
+  received: '2026-03-10'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Tigard removes Goal 5 protection from 0.04 acre of wetland on one site.
+  followup: null
+- id: proposed:Portland:002-26
+  kind: proposed
+  jurisdiction: or/multnomah/portland
+  received: '2026-03-10'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Portland:002-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Gladstone:001-26
+  kind: adopted
+  jurisdiction: or/clackamas/gladstone
+  received: '2026-03-11'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Gladstone TXT-26-01 ADU standards (clear and objective); ADUs are not screened.
+  followup: null
+- id: proposed:Hillsboro:008-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-03-17'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Hillsboro:008-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Wilsonville:001-26
+  kind: adopted
+  jurisdiction: or/clackamas/wilsonville
+  received: '2026-03-20'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Wilsonville Economic Opportunities Analysis and economic development strategy; no code text.
+  followup: null
+- id: adopted:Tualatin:001-26
+  kind: adopted
+  jurisdiction: or/clackamas/tualatin
+  received: '2026-03-25'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Tualatin: domestic fowl allowed in Low Density Residential; not screened.'
+  followup: null
+- id: adopted:Portland:003-25
+  kind: adopted
+  jurisdiction: or/multnomah/portland
+  received: '2026-03-30'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Portland public infrastructure environmental code (utilities/public works in environmental zones);
+    not private housing.
+  followup: null
+- id: proposed:Clackamas County:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/_unincorporated
+  received: '2026-04-06'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Clackamas County:001-26 (verdict there:
+    encode).'
+  followup: null
+- id: proposed:Hillsboro:009-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-04-08'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Hillsboro:009-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Hillsboro:010-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-04-08'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Hillsboro:010-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Wilsonville:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/wilsonville
+  received: '2026-04-08'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Wilsonville:002-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Gladstone:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/gladstone
+  received: '2026-04-14'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Gladstone:002-26 (verdict there: encode).'
+  followup: null
+- id: adopted:Estacada:002-22
+  kind: adopted
+  jurisdiction: or/clackamas/estacada
+  received: '2026-04-15'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Estacada annexation of one 9.77-acre lot to R-1; site-specific.
+  followup: null
+- id: adopted:Estacada:002-25
+  kind: adopted
+  jurisdiction: or/clackamas/estacada
+  received: '2026-04-15'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Estacada annexation of one 1.51-acre lot; site-specific.
+  followup: null
+- id: adopted:Estacada:004-25
+  kind: adopted
+  jurisdiction: or/clackamas/estacada
+  received: '2026-04-15'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Estacada Ord. 2025-010: schools as a conditional use in NCR; not housing.'
+  followup: null
+- id: adopted:Estacada:006-25
+  kind: adopted
+  jurisdiction: or/clackamas/estacada
+  received: '2026-04-15'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Estacada Ord. 2025-013 Phase 1: error corrections, no policy change; already in stored code (retrieved
+    2026-10-07).'
+  followup: null
+- id: adopted:King City:004-25
+  kind: adopted
+  jurisdiction: or/washington/king-city
+  received: '2026-04-16'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'King City: DSL-approved Locally Significant Wetland inventory map and code. Wetland ground is
+    a map layer (water lane), not a zone standard; no residential standard changed.'
+  followup: null
+- id: proposed:Hillsboro:011-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-04-21'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Hillsboro:011-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Portland:006-26
+  kind: proposed
+  jurisdiction: or/multnomah/portland
+  received: '2026-04-21'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Portland Central City Code Amendment Project: Central City parking, design overlay, design review,
+    plan district (33.510). Re-check at adoption for Central City lots.'
+  followup: null
+- id: adopted:Hillsboro:004-26
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-04-23'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro single-lot zone change (0.21 acres from R-7); site-specific.
+  followup: null
+- id: proposed:Wilsonville:003-26
+  kind: proposed
+  jurisdiction: or/clackamas/wilsonville
+  received: '2026-04-23'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: Wilsonville annexation and rezoning of residential land from county EFU to RN; new screenable
+    land. Re-check at adoption.
+  followup: null
+- id: proposed:Sandy:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/sandy
+  received: '2026-04-24'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Sandy:002-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Washington County:001-26
+  kind: proposed
+  jurisdiction: or/washington/_unincorporated
+  received: '2026-04-30'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Washington County:001-26 (verdict there:
+    no_effect).'
+  followup: null
+- id: adopted:Washington County:005-25
+  kind: adopted
+  jurisdiction: or/washington/_unincorporated
+  received: '2026-05-01'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Washington County Ord. 912: rural ADUs; rural lands, ADUs not screened.'
+  followup: null
+- id: proposed:Lake Oswego:003-26
+  kind: proposed
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-05-04'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Lake Oswego:003-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Sandy:001-26
+  kind: adopted
+  jurisdiction: or/clackamas/sandy
+  received: '2026-05-05'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Sandy 26-004: residential homes/facilities (ORS 197.660-667, HB 2005); not the pod.'
+  followup: null
+- id: proposed:Hillsboro:012-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-05-06'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Hillsboro:012-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Hillsboro:005-26
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-05-07'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro comprehensive plan update to match the TSP; no zoning code text.
+  followup: null
+- id: proposed:Estacada:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/estacada
+  received: '2026-05-11'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Estacada annexation of two lots (14 acres); site-specific.
+  followup: null
+- id: proposed:Sandy:003-26
+  kind: proposed
+  jurisdiction: or/clackamas/sandy
+  received: '2026-05-15'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Sandy:003-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Portland:003-26
+  kind: proposed
+  jurisdiction: or/multnomah/portland
+  received: '2026-05-18'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Portland State Land Use Compliance Project: 2025-26 state bills into Title 33 and review procedures
+    (likely HB 2138 / SB 974 / HB 4037 items). Re-check review types and middle-housing rules at adoption.'
+  followup: null
+- id: proposed:Wilsonville:004-26
+  kind: proposed
+  jurisdiction: or/clackamas/wilsonville
+  received: '2026-05-18'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Wilsonville Sysco expansion: 32.66-acre zone change to PDI-RSIA (Ord. 904); industrial, site-specific.'
+  followup: null
+- id: adopted:Gresham:004-25
+  kind: adopted
+  jurisdiction: or/multnomah/gresham
+  received: '2026-05-19'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: encode
+  note: 'Gresham CPA-25-00460 (Development Code and Process Update Phase 2 Part 2), EFFECTIVE 2026-06-04:
+    townhouse design standards (7.0430), Type I design-review threshold raised, design districts rewritten
+    (4.1100, 4.1200, 7.0100, 7.0500), cottage cluster changes, Corridor ground-floor commercial reduced,
+    flag-lot buffer removed (9.0100). ALREADY IN STORED CODE (Gresham corpus retrieved 2026-08-27 carries
+    the Phase 2 Part 2 text). Note 7.0100 Corridor Design District itself is not in the stored code. Source:
+    https://www.greshamoregon.gov/development-code-and-process-update'
+  followup: none -- already in stored code (retrieved 2026-08-27)
+- id: adopted:Hillsboro:006-26
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-05-21'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro parks and recreation goals and policies; no code text.
+  followup: null
+- id: adopted:Hillsboro:008-26
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-05-26'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Hillsboro Ord. 6516 (CDCA-001-26), effective about 2026-06-18: child care centers (HB 3560),
+    residential treatment (HB 2005), middle housing land divisions processed concurrently, ORS 197.612.
+    No standard the pod screen reads; Hillsboro''s HB 2138 work is a separate 2027 project.'
+  followup: null
+- id: proposed:Happy Valley:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/happy-valley
+  received: '2026-06-01'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Happy Valley:001-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Lake Oswego:004-26
+  kind: proposed
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-06-02'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Lake Oswego:004-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Lake Oswego:005-26
+  kind: proposed
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-06-02'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Lake Oswego:005-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Tigard:001-26
+  kind: adopted
+  jurisdiction: or/washington/tigard
+  received: '2026-06-08'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Tigard water system plan addendum (Kingston Terrace); no code text.
+  followup: null
+- id: proposed:Clackamas County:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/_unincorporated
+  received: '2026-06-08'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Clackamas County:002-26 (verdict there:
+    no_effect).'
+  followup: null
+- id: proposed:Estacada:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/estacada
+  received: '2026-06-10'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Estacada Ord. 2026-010 industrial hemp prohibition; not housing.
+  followup: null
+- id: proposed:Washington County:002-26
+  kind: proposed
+  jurisdiction: or/washington/_unincorporated
+  received: '2026-06-10'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Washington County:002-26 (verdict there:
+    no_effect).'
+  followup: null
+- id: proposed:Portland:004-26
+  kind: proposed
+  jurisdiction: or/multnomah/portland
+  received: '2026-06-15'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Portland Housing Bonus Alignment: recalibrates bonuses in RM1-RM4, RX, CM1-CM3, CE, CX. Pod screens
+    base standards; re-check whether base FAR/height rows move at adoption.'
+  followup: null
+- id: adopted:Canby:001-26
+  kind: adopted
+  jurisdiction: or/clackamas/canby
+  received: '2026-06-17'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Canby new comprehensive plan (policy chapters + plan map); zoning code text not changed by this
+    notice. Canby lots sit outside the UGB in our data anyway.
+  followup: null
+- id: adopted:Wilsonville:002-26
+  kind: adopted
+  jurisdiction: or/clackamas/wilsonville
+  received: '2026-06-18'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Wilsonville Ord. 903 (LP26-0002), effective 2026-07-01: procedure only -- Class II staff decisions
+    for residential (4.030), appeals (4.022), notice (4.012), waivers 4.119, one DRB panel from 2027.
+    No dimensional change; residential already exempt from Site Design Review when clear and objective
+    (4.420(.01)A.1). Source: https://wilsonvilleoregon.gov/DocumentCenter/View/20691'
+  followup: null
+- id: proposed:Cornelius:001-26
+  kind: proposed
+  jurisdiction: or/washington/cornelius
+  received: '2026-06-23'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Cornelius:001-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Fairview:001-26
+  kind: proposed
+  jurisdiction: or/multnomah/fairview
+  received: '2026-06-23'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Fairview: removes Storefront District overlay from two TCC properties; site-specific.'
+  followup: null
+- id: adopted:Gresham:001-26
+  kind: adopted
+  jurisdiction: or/multnomah/gresham
+  received: '2026-06-24'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Gresham capital improvement plan update; no code text.
+  followup: null
+- id: proposed:Tigard:002-26
+  kind: proposed
+  jurisdiction: or/washington/tigard
+  received: '2026-06-24'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Tigard:002-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Hillsboro:009-26
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-06-29'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro single-site plan map amendment; site-specific.
+  followup: null
+- id: adopted:Hillsboro:010-26
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-06-29'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Hillsboro Ord. 6518 (CDCA-003-26), emergency, effective 2026-07-01: residential PUDs, adjustments
+    and density-raising zone changes to Type II; variances and major adjustments merged; HB 4037 housing
+    decisions without hearing, notice 100/500 ft, applicant-only appeal. Development Review stays Type
+    II ''may impose conditions'', so the YELLOW review flag stands; FLATS uses no variances or PUDs. Source:
+    https://hillsboro-oregon.civicweb.net/document/261037/'
+  followup: null
+- id: proposed:Beaverton:001-26
+  kind: proposed
+  jurisdiction: or/washington/beaverton
+  received: '2026-06-29'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Beaverton boundary adjustment between two existing PUDs; site-specific.
+  followup: null
+- id: proposed:Happy Valley:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/happy-valley
+  received: '2026-06-30'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Happy Valley:002-26 (verdict there: encode).'
+  followup: null
+- id: adopted:Gresham:002-26
+  kind: adopted
+  jurisdiction: or/multnomah/gresham
+  received: '2026-07-01'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Gresham TSP policy update; no code text.
+  followup: null
+- id: proposed:Clackamas County:003-26
+  kind: proposed
+  jurisdiction: or/clackamas/_unincorporated
+  received: '2026-07-06'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Clackamas County Goal 14 exception + FF-10 to RA-2 on one rural site; rural, site-specific.
+  followup: null
+- id: proposed:Milwaukie:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/milwaukie
+  received: '2026-07-06'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Milwaukie:001-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Canby:002-26
+  kind: adopted
+  jurisdiction: or/clackamas/canby
+  received: '2026-07-07'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Canby TSP update; no code text the pod screen reads.
+  followup: null
+- id: proposed:Hillsboro:013-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-07-08'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro data centers / energy storage definitions and allowances; industrial.
+  followup: null
+- id: proposed:Wilsonville:005-26
+  kind: proposed
+  jurisdiction: or/clackamas/wilsonville
+  received: '2026-07-08'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Wilsonville:005-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Washington County:001-26
+  kind: adopted
+  jurisdiction: or/washington/_unincorporated
+  received: '2026-07-09'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Washington County Ord. 914: minor Significant Natural Resource map/text changes in community
+    plans and CDC. FLATS does not encode SNR standards for unincorporated Washington County (no SNR field
+    in _unincorporated.yaml); ''minor'' changes do not open that.'
+  followup: null
+- id: adopted:Hillsboro:007-26
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-07-10'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro single-lot zone change (4.54 acres from SCBP); site-specific.
+  followup: null
+- id: adopted:Hillsboro:011-26
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-07-10'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro single-site plan map amendment; site-specific.
+  followup: null
+- id: adopted:Lake Oswego:004-26
+  kind: adopted
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-07-10'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego single-parcel annexation (switched off).
+  followup: null
+- id: adopted:Lake Oswego:005-26
+  kind: adopted
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-07-13'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego single-parcel annexation (switched off).
+  followup: null
+- id: proposed:Canby:003-26
+  kind: proposed
+  jurisdiction: or/clackamas/canby
+  received: '2026-07-20'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Canby UGB expansion: adds land to a city we screen (Canby is outside-UGB in our data today).
+    Re-check at adoption and at the next UGB layer copy.'
+  followup: null
+- id: proposed:Gresham:004-26
+  kind: proposed
+  jurisdiction: or/multnomah/gresham
+  received: '2026-07-20'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Gresham Goal 9 economic development findings and policies; no zoning text.
+  followup: null
+- id: proposed:Rivergrove:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/rivergrove
+  received: '2026-07-20'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Rivergrove: council temporarily takes Planning Commission duties; procedure only.'
+  followup: null
+- id: proposed:Sandy:004-26
+  kind: proposed
+  jurisdiction: or/clackamas/sandy
+  received: '2026-07-20'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Sandy:004-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Sandy:002-26
+  kind: adopted
+  jurisdiction: or/clackamas/sandy
+  received: '2026-08-04'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Sandy temporary uses and structures; not screened.
+  followup: null
+- id: adopted:Sandy:003-26
+  kind: adopted
+  jurisdiction: or/clackamas/sandy
+  received: '2026-08-04'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Sandy SB 1561 rebuilding of damaged/destroyed dwellings; not the pod.
+  followup: null
+- id: proposed:Troutdale:002-26
+  kind: proposed
+  jurisdiction: or/multnomah/troutdale
+  received: '2026-08-05'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Troutdale locally designated, non-regulatory historic district; non-regulatory.
+  followup: null
+- id: proposed:Wilsonville:006-26
+  kind: proposed
+  jurisdiction: or/clackamas/wilsonville
+  received: '2026-08-05'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Wilsonville Basalt Creek master plan (employment/industrial).
+  followup: null
+- id: proposed:Estacada:003-26
+  kind: proposed
+  jurisdiction: or/clackamas/estacada
+  received: '2026-08-10'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Estacada Development Code Update Phase 2 (Ord. 2026-012): streamlining, state mandates, minor
+    policy updates to Title 16; hearings 2026-09-30 / 2026-10-12. Re-check at adoption.'
+  followup: null
+- id: proposed:Lake Oswego:006-26
+  kind: proposed
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-08-10'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego LOC 50 maintenance and policy amendments; Lake Oswego switched off (re-read if it
+    is re-enabled).
+  followup: null
+- id: adopted:Clackamas County:001-26
+  kind: adopted
+  jurisdiction: or/clackamas/_unincorporated
+  received: '2026-08-11'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: encode
+  note: 'Clackamas County Ord. ZDO-293, EFFECTIVE 2026-09-08: front/rear/side lot-line definitions (ZDO
+    202), flag-lot setbacks made clear and objective (903), urban parking minimum to 0 (1015.02(B)(1)),
+    SB 974 design exemption for 20+ units, HDR height limit dropped in the Willamette River Greenway,
+    child care / residential treatment uses. ALREADY ENCODED: _unincorporated.yaml re-read 2026-09-27
+    (8cdbc40a, 3d584c47). Sources: https://www.clackamas.us/node/199181 ; https://www.clackamas.us/planning/zdo1015'
+  followup: none -- already encoded 2026-09-27 (8cdbc40a)
+- id: proposed:Beaverton:002-26
+  kind: proposed
+  jurisdiction: or/washington/beaverton
+  received: '2026-08-11'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Beaverton:002-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Portland:002-26
+  kind: adopted
+  jurisdiction: or/multnomah/portland
+  received: '2026-08-12'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Portland single site Open Space to R5 map change; site-specific.
+  followup: null
+- id: proposed:Milwaukie:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/milwaukie
+  received: '2026-08-13'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: Milwaukie ZA-2026-004 housekeeping amendments. Re-check at adoption for anything beyond wording.
+  followup: null
+- id: proposed:Tualatin:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/tualatin
+  received: '2026-08-14'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Tualatin:002-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Milwaukie:003-26
+  kind: proposed
+  jurisdiction: or/clackamas/milwaukie
+  received: '2026-08-17'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Milwaukie single-site plan/zone change R-MD to SMU; site-specific.
+  followup: null
+- id: proposed:Oregon City:001-26
+  kind: proposed
+  jurisdiction: or/clackamas/oregon-city
+  received: '2026-08-17'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Oregon City historic review trigger for additions to non-designated buildings; additions, not
+    new pods.
+  followup: null
+- id: proposed:Portland:005-26
+  kind: proposed
+  jurisdiction: or/multnomah/portland
+  received: '2026-08-18'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Portland Design Review Temporary Suspension: mandatory design review suspended to 2029-07-01.
+    PC hearing 2026-09-22, council later in 2026. If adopted, design-overlay (d) lots now YELLOW for review
+    could go GREEN -- the biggest colour mover in the batch. Re-check at adoption.'
+  followup: null
+- id: adopted:Happy Valley:001-26
+  kind: adopted
+  jurisdiction: or/clackamas/happy-valley
+  received: '2026-08-20'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Happy Valley minor TSP update (Ord. 604, effective 2026-08-18): roadway alignments; street classes
+    may shift slightly at the next street-class refresh, no code text.'
+  followup: null
+- id: adopted:Happy Valley:002-26
+  kind: adopted
+  jurisdiction: or/clackamas/happy-valley
+  received: '2026-08-20'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: encode
+  note: 'Happy Valley Ord. 603 (LU-0010-2026), adopted 2026-08-18 with emergency clause, EFFECTIVE 2026-08-18.
+    Housekeeping: corner/through/flag front-lot-line definitions (16.12.030; already in stored 16.12,
+    retrieved 2026-08-27, and encoded as front_lot_line_corner/through: owner), 16.43.030 middle-housing
+    exemption cross-references, 16.34.070-.080 NROZ easement/mitigation wording, 16.41.040 pathway wording,
+    a new ''variation of design'' rule for land divisions over 50 lots, design-review criteria list. The
+    ordinance renumbers 16.44.120.B.3 to B.4 -- ''Street Access Development'' for single-family, townhome,
+    duplex-quadplex and cottage cluster: one driveway per frontage; approach width at most half the parcel
+    frontage (min 12 ft, max 35 ft); and B.4.b.iv ''Lots and parcels with more than one frontage shall
+    access the street with the lowest street classification in the Transportation System Plan.'' That
+    rule predates Ord. 603 (history Ord. 561/566, 2022) but chapter 16.44 is not in the stored code, and
+    happy-valley.yaml corner_access_street is `any` on the claim that Happy Valley names no street --
+    so multi-frontage lots whose plan drives off the busier street may be false GREEN. Not a new law;
+    a gap this reading surfaced. Source: https://ecode360.com/HA4934/laws/LF2820737.pdf (Ord. 603) and
+    https://ecode360.com/43526523 (16.44.120 as codified).'
+  followup: 'to file: new FOLLOWUPS item -- Happy Valley 16.44.120.B.4.b fetch + encode (corner_access_street
+    lowest_class; driveway approach <= half frontage, 12-35 ft)'
+- id: adopted:Hillsboro:012-26
+  kind: adopted
+  jurisdiction: or/washington/hillsboro
+  received: '2026-08-24'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro 398-lot PUD on the 45.9-acre annexation; site-specific.
+  followup: null
+- id: proposed:Hillsboro:014-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-08-24'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro single-lot city-initiated zone change to R-10; site-specific.
+  followup: null
+- id: proposed:Hillsboro:015-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-08-24'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Hillsboro single-lot zone change FD-20 to MR-1; site-specific.
+  followup: null
+- id: proposed:Oregon City:002-26
+  kind: proposed
+  jurisdiction: or/clackamas/oregon-city
+  received: '2026-08-24'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Oregon City Goal 5 cultural areas rule, technical implementation; no mapped sites or standards
+    in the notice.
+  followup: null
+- id: adopted:Portland:001-26
+  kind: adopted
+  jurisdiction: or/multnomah/portland
+  received: '2026-08-25'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: encode
+  note: 'Portland RICAP 11, Ordinance 192213, adopted 2026-08-06, EFFECTIVE 2026-11-01. MP18: Household
+    and Group Living allowed in CI1 with RM1 standards (encoded under FOLLOWUPS 86 C1, merged on main).
+    Other items in the as-adopted exhibit that touch the pod, for that lane to rule on: MP5 33.266.130.F.1.b(1)
+    -- the exception letting a parking area of no more than 2 spaces back onto the roadway now applies
+    to every small parking area on a site (two 2-stall pads could each back out; touches the Portland
+    turn/court reading); MP4 33.910 figures 910-13/14 -- the area behind a parking space is an aisle,
+    not a driveway (aisle widths of 33.266.130 apply); TA7/MP10 required outdoor area may be covered unless
+    walled over 42 in on 75% of its perimeter, and balconies may not encroach into RM common outdoor area;
+    MP3 parking in front setbacks only for garage conversions; TA9 Eastern Pattern Area rear setback wording
+    (33.120.220); TA31 step-down heights still apply with bonus height. Source: flats/provenance/docs/or/multnomah/portland/amended/ricap11.txt
+    (RICAP 11 As-Adopted, Aug 2026).'
+  followup: 86 C1 (merged on main 2026-10-15)
+- id: adopted:Washington County:002-26
+  kind: adopted
+  jurisdiction: or/washington/_unincorporated
+  received: '2026-08-27'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Washington County Ord. 915: community involvement chapters of the plan; procedure only.'
+  followup: null
+- id: proposed:Happy Valley:003-26
+  kind: proposed
+  jurisdiction: or/clackamas/happy-valley
+  received: '2026-08-31'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Happy Valley:003-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Lake Oswego:007-26
+  kind: proposed
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-08-31'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Lake Oswego:007-26 (verdict there: no_effect).'
+  followup: null
+- id: proposed:Lake Oswego:008-26
+  kind: proposed
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-08-31'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego single-parcel annexation (switched off).
+  followup: null
+- id: proposed:Lake Oswego:009-26
+  kind: proposed
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-08-31'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Lake Oswego:009-26 (verdict there: no_effect).'
+  followup: null
+- id: adopted:Milwaukie:001-26
+  kind: adopted
+  jurisdiction: or/clackamas/milwaukie
+  received: '2026-09-02'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Milwaukie M and BI industrial zones (19.309, 19.310): uses and formatting; no housing in either
+    zone.'
+  followup: null
+- id: proposed:Happy Valley:004-26
+  kind: proposed
+  jurisdiction: or/clackamas/happy-valley
+  received: '2026-09-02'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: Happy Valley Main Street District overlay + rezoning those properties to MCC (+662 units). Re-check
+    at adoption for the rezoned lots and overlay standards.
+  followup: null
+- id: proposed:Clackamas County:004-26
+  kind: proposed
+  jurisdiction: or/clackamas/_unincorporated
+  received: '2026-09-03'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Clackamas County Historic Landmark overlay on the relocated Carus School building; single site.
+  followup: null
+- id: proposed:Milwaukie:004-26
+  kind: proposed
+  jurisdiction: or/clackamas/milwaukie
+  received: '2026-09-08'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: Milwaukie ZA-2026-001 multi-section revisions (formatting, clarity, minor policy). Re-check at
+    adoption.
+  followup: null
+- id: adopted:Gladstone:002-26
+  kind: adopted
+  jurisdiction: or/clackamas/gladstone
+  received: '2026-09-09'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: encode
+  note: 'Gladstone Ord. 1545 (TXT-26-02), 2nd reading 2026-07-14, EFFECTIVE 2026-08-13. GMC 17.10.050
+    (R-7.2) minimum lot area: the single ''Middle housing 3,600 sf'' row becomes ''Duplex, triplex, quadplex,
+    cottage cluster 7,200 sf'' (townhouse 1,500 sf average; multi-household 3,600 sf/unit unchanged).
+    Stored code (codepublishing, retrieved 2026-09-20, codified only through Ord. 1544) still says 3,600
+    and gladstone.yaml R7.2 (and the R10 placeholder that copies it) encode min_lot_sqft 3600 -- so R-7.2
+    lots of 3,600-7,199 sq ft screen GREEN that should be RED. R-5 (duplex/triplex 5,000, quadplex 7,000)
+    and MR (5,000) unchanged. Also: 17.48.030 middle-housing parking now by lot size (quadplex on >6,999
+    sf: 4 spaces; 3,000-4,999: 2; 5,000+: 3) -- no effect, the screen already charges 4; residential review
+    moved to staff with notice to 100 ft and applicant-only appeal (SB 974/HB 4037); C-1, C-3, OP allow
+    60%-AMI housing outright (not screenable). Source: Ordinance 1545 + Exhibit A in City Council packet
+    2026-07-14, https://www.ci.gladstone.or.us/media/30151 (exhibit pp. 9-1 to 9-30; June 9 minutes p.
+    1-3).'
+  followup: 'to file: new FOLLOWUPS item -- Gladstone R-7.2 middle-housing minimum lot 3,600 -> 7,200
+    sq ft (Ord. 1545, in force 2026-08-13)'
+- id: adopted:Lake Oswego:003-26
+  kind: adopted
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-09-09'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego tree code + CDC tree track (HB 2138/HB 4037); Lake Oswego switched off, and trees
+    are not screened.
+  followup: null
+- id: adopted:Tigard:002-26
+  kind: adopted
+  jurisdiction: or/washington/tigard
+  received: '2026-09-09'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Tigard removes Goal 5 protection from 0.03 acre of wetland on one site.
+  followup: null
+- id: proposed:Hillsboro:016-26
+  kind: proposed
+  jurisdiction: or/washington/hillsboro
+  received: '2026-09-09'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Hillsboro: equitable development strategy incorporated into the comprehensive plan; policy only.'
+  followup: null
+- id: proposed:Wilsonville:007-26
+  kind: proposed
+  jurisdiction: or/clackamas/wilsonville
+  received: '2026-09-09'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Wilsonville code enforcement process and penalties; not a development standard.
+  followup: null
+- id: adopted:Cornelius:001-26
+  kind: adopted
+  jurisdiction: or/washington/cornelius
+  received: '2026-09-11'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Cornelius: auto-oriented uses phased out in one zone; not housing.'
+  followup: null
+- id: proposed:Gladstone:003-26
+  kind: proposed
+  jurisdiction: or/clackamas/gladstone
+  received: '2026-09-15'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Gladstone food cart and food cart pod standards; not housing.
+  followup: null
+- id: proposed:Oregon City:003-26
+  kind: proposed
+  jurisdiction: or/clackamas/oregon-city
+  received: '2026-09-18'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Oregon City OCMC 17.44 geologic hazards: a Type II clear-and-objective path and a Type III discretionary
+    path inside the mapped hazard overlay. Could change how hazard-overlay lots read. Re-check at adoption.'
+  followup: null
+- id: proposed:Clackamas County:005-26
+  kind: proposed
+  jurisdiction: or/clackamas/_unincorporated
+  received: '2026-09-21'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Clackamas County ZDO-294 (FY2027 minor/time-sensitive): state mandates effective by 2027-01-01,
+    FU-10 accessory setbacks, 21 ZDO sections. Re-check at adoption for urban residential items.'
+  followup: null
+- id: proposed:Sandy:005-26
+  kind: proposed
+  jurisdiction: or/clackamas/sandy
+  received: '2026-09-21'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Sandy HB 2138 compliance: Chapters 17.10, 17.38, 17.40, 17.64, 17.84, 17.98 (middle housing).
+    Hearings 2026-10-26 / 2026-11-16. Re-check at adoption.'
+  followup: null
+- id: adopted:Clackamas County:002-26
+  kind: adopted
+  jurisdiction: or/clackamas/_unincorporated
+  received: '2026-09-23'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Clackamas County single mill-site plan/zone change (ORS 197.719); site-specific.
+  followup: null
+- id: adopted:Wilsonville:005-26
+  kind: adopted
+  jurisdiction: or/clackamas/wilsonville
+  received: '2026-09-25'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Wilsonville Ord. 906 Town Center (4.132) building heights; TC does not allow a quadplex in the
+    screen.
+  followup: null
+- id: proposed:Happy Valley:005-26
+  kind: proposed
+  jurisdiction: or/clackamas/happy-valley
+  received: '2026-10-01'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: watch
+  note: 'Happy Valley citywide Title 16 update (Ord. 607, LU-0013-2026): housing review procedures, middle
+    housing, variances, land divisions, HPS actions. PC hearing 2026-11-10. Re-check at adoption.'
+  followup: null
+- id: adopted:Tualatin:002-26
+  kind: adopted
+  jurisdiction: or/clackamas/tualatin
+  received: '2026-10-02'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Tualatin food cart review procedure; not housing.
+  followup: null
+- id: proposed:Gresham:005-26
+  kind: proposed
+  jurisdiction: or/multnomah/gresham
+  received: '2026-10-05'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Gresham tree regulations made clear and objective; trees are not screened by FLATS.
+  followup: null
+- id: proposed:Happy Valley:006-26
+  kind: proposed
+  jurisdiction: or/clackamas/happy-valley
+  received: '2026-10-05'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Happy Valley limited comprehensive plan reorganization; no zoning text.
+  followup: null
+- id: adopted:Sandy:004-26
+  kind: adopted
+  jurisdiction: or/clackamas/sandy
+  received: '2026-10-06'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Sandy FSH overlay applied to one subdivision's wetland tract (to be conveyed to the city); site-specific.
+  followup: null
+- id: proposed:Happy Valley:007-26
+  kind: proposed
+  jurisdiction: or/clackamas/happy-valley
+  received: '2026-10-06'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Happy Valley single-site plan/zone change + PUD for a 32-lot development; site-specific.
+  followup: null
+- id: adopted:Happy Valley:003-26
+  kind: adopted
+  jurisdiction: or/clackamas/happy-valley
+  received: '2026-10-12'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Happy Valley annexation of two parcels (1.6 acres); site-specific.
+  followup: null
+- id: adopted:Lake Oswego:007-26
+  kind: adopted
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-10-12'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego single-parcel annexation (switched off).
+  followup: null
+- id: adopted:Lake Oswego:009-26
+  kind: adopted
+  jurisdiction: or/clackamas/lake-oswego
+  received: '2026-10-12'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Lake Oswego single-parcel annexation (switched off).
+  followup: null
+- id: adopted:Beaverton:002-26
+  kind: adopted
+  jurisdiction: or/washington/beaverton
+  received: '2026-10-13'
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: Beaverton single-site annexation (5200 SW Scholls Ferry); site-specific.
+  followup: null
+- id: proposed:Estacada:002-22
+  kind: proposed
+  jurisdiction: or/clackamas/estacada
+  received: null
+  read_on: '2026-10-15'
+  read_by: dlcd-reader (Opus) 2026-10-15
+  verdict: no_effect
+  note: 'Proposal stage only; the adoption is read as adopted:Estacada:002-22 (verdict there: no_effect).'
+  followup: null
