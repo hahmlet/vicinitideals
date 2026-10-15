@@ -2948,13 +2948,11 @@ read when the weekly full re-screen lands.
    uninc), test_rulings_register.py. Left out as unattributed/ambiguous: FEMA fringe yellow, landslide
    list, Tigard MUR stricter column (tigard.yaml L972), Portland total-turn, Hillsboro SCR side,
    Milwaukie 22 ft aisle -- add when Steph rules. RULE: every new Steph ruling gets a register entry
-   in the same commit that encodes it. (C1) RICAP 11 on flats/ricap11 (Opus, phase 1). (C2)
-   RESEARCHED: DLCD PAPA adopted/proposed notice reports
-   (db.lcd.state.or.us/papa_website_reports/PublicNoticeAdoptedAmendments.aspx) filter by city +
-   date and export CSV; browser-only (needs automation); no effective date, no ordinance text;
-   RICAP 11 notice arrived 19 days after adoption and its summary never mentions CI1 housing, so
-   every notice from our cities needs a read, not a keyword filter. Offered to Steph: a weekly watch
-   that lists new notices for our cities for an agent read.
+   in the same commit that encodes it. (C1) RICAP 11 on flats/ricap11 (Opus, phase 1). (C2) GO
+   (Steph 2026-10-15) and BUILT: scripts/flats_dlcd_watch.py + flats/watch/dlcd.py, ledger
+   flats/config/dlcd_read.yaml, runbook docs/ops/flats-county-refresh.md 4f. BACKLOG to read: 76
+   adopted + 92 proposed notices from our cities since 2026-01-01 (incl. RICAP 11, DLCD 001-26) --
+   Opus reading lane next; each `encode` verdict becomes its own FOLLOWUPS item.
 87. [scan: YES -- greens only lose] **Protected historic buildings outside Portland (found
    2026-10-15 by the register audit).** Steph's 2026-10-14 ruling (protected historic building on
    the lot = RED) is built only from Portland's historic resource map (Portland + Multnomah uninc).
