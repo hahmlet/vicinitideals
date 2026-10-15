@@ -29,6 +29,7 @@ from flats.fit import (  # noqa: E402
     rasterize,
     sweep,
 )
+from flats.fit.raster import Grid, _integral  # noqa: E402
 from flats.score.slack import SlackPolicy, Verdict  # noqa: E402
 
 pytestmark = pytest.mark.unit
@@ -168,6 +169,18 @@ def test_the_deepest_window_is_the_longest_run_of_wide_rows() -> None:
     l_shape = shapely.Polygon([(0, 0), (60, 0), (60, 50), (30, 50), (30, 120), (0, 120)])
     [grid] = rasterize(l_shape, 0.0, res=1.0)
     assert [grid.max_depth_cells(w) for w in (1, 30, 31, 60, 61)] == [120, 120, 50, 50, 0]
+
+
+def test_the_deepest_window_matches_brute_force_on_small_rasters() -> None:
+    import numpy as np
+
+    rng = np.random.default_rng(37)
+    for _ in range(40):
+        cells = rng.random((rng.integers(1, 12), rng.integers(1, 12))) < 0.75
+        grid = Grid(_integral(cells), 0.0, 0.0, 1.0, 0.0, (0.0, 0.0))
+        for w in range(0, grid.cols + 2):
+            brute = max((d for d in range(1, grid.rows + 1) if grid.has_window(d, w)), default=0)
+            assert grid.max_depth_cells(w) == brute, (cells.astype(int), w)
 
 
 def test_an_empty_envelope_rasterizes_to_nothing() -> None:
