@@ -1439,3 +1439,23 @@
   effect: The conservative reading is held; it costs nothing.
   source: Steph 2026-09-08 (flats/config/jurisdictions/or/multnomah/fairview.yaml)
   encoded_in: [flats/config/jurisdictions/or/multnomah/fairview.yaml]
+
+- id: 2026-08-06-portland-ricap11-ci1-housing
+  kind: adopted_change
+  date: 2026-08-06
+  effective: 2026-11-01
+  scope: {county: multnomah, city: portland, zones: [CI1]}
+  question: Is housing allowed in Portland's CI1 zone?
+  ruling: >-
+    Yes from 2026-11-01. RICAP 11 (Ordinance 192213, adopted 2026-08-06) allows
+    Household and Group Living in CI1 under RM1 development and parking standards,
+    whether or not the city has codified it yet.
+  effect: >-
+    CI1 screens under RM1 standards on runs on or after 2026-11-01 (portland.yaml
+    CI1 amended[ricap11]); before then it screens as printed and the lot page says
+    when the change takes effect. RM1's 4,000 sq ft minimum is held (conservative).
+  source: >-
+    RICAP 11 As-Adopted Report (Ordinance 192213 Exhibit B),
+    https://efiles.portlandoregon.gov/record/18006154/file/document pp. 12, 77, 79, 95;
+    found by Steph in the council materials 2026-10-15
+  encoded_in: [flats/config/jurisdictions/or/multnomah/portland.yaml]

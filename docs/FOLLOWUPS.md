@@ -2948,7 +2948,10 @@ read when the weekly full re-screen lands.
    uninc), test_rulings_register.py. Left out as unattributed/ambiguous: FEMA fringe yellow, landslide
    list, Tigard MUR stricter column (tigard.yaml L972), Portland total-turn, Hillsboro SCR side,
    Milwaukie 22 ft aisle -- add when Steph rules. RULE: every new Steph ruling gets a register entry
-   in the same commit that encodes it. (C1) RICAP 11 on flats/ricap11 (Opus, phase 1). (C2) GO
+   in the same commit that encodes it. (C1) RICAP 11 MERGED 2026-10-15: adopted changes carry adopted/effective dates on the zone (rules
+   loader `law_on`, run-key `law`), CI1 opens 2026-11-01 under RM1 standards (est. 60-95 of 143 CI1
+   lots leave red at the first run after Nov 1 -- READ that run's CI1 moves); RICAP 11 MP5 back-out
+   parking, TA9 rooftop rear setback not encoded (check later). (C2) GO
    (Steph 2026-10-15) and BUILT: scripts/flats_dlcd_watch.py + flats/watch/dlcd.py, ledger
    flats/config/dlcd_read.yaml, runbook docs/ops/flats-county-refresh.md 4f. BACKLOG to read: 76
    adopted + 92 proposed notices from our cities since 2026-01-01 (incl. RICAP 11, DLCD 001-26) --
