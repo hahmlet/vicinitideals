@@ -24,6 +24,14 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   where it still dangles — 11.50.050 A applies the density standards to "sites within the city and the County Urban
   Pocket Areas" by name.
 
+  READ AND NOT ENCODED: 33.700.060, Covenants with the City. Fetched with Chapter 33.700 on
+  2026-10-15 (FOLLOWUPS 78, for the 33.700.070.F rule on sites in more than one zone). It is the
+  requirements a recorded covenant has to meet, cited wherever Title 33 asks for one: density
+  transfers, structures left standing after a land division or lot confirmation. A. sets what the
+  covenant states and B. that the City Attorney approves its form and it is recorded with the deed
+  before a building permit issues. It sets what the document says, not what may be built. No
+  distance in it.
+
   A USE PROHIBITION ON THIS EXACT BUILDING, READ 2026-09-09, AND NOT ENCODED. PCC 33.110.240.E opens
   the triplex and fourplex standards with a sentence that is not a standard: "Triplexes and
   fourplexes that meet the following standards are allowed in the R20 through R2.5 zones. Triplexes
@@ -1611,13 +1619,6 @@ crossrefs:
       Short Term, Mass, and Outdoor Shelters -- "Short term, mass, and outdoor shelters are
       regulated by Chapter 33.285". A different use category from Household Living, with its own
       chapter and, in most zones, a conditional use. The pod is four dwelling units.
-  "33.700.060":
-    outcome: procedure
-    note: >-
-      The requirements a recorded covenant has to meet, cited wherever Title 33 asks for one:
-      density transfers, structures left standing after a land division or lot confirmation. It
-      sets what the document says and how it is recorded with the deed, not what may be built. No
-      distance in it.
   "3.75":
     outcome: misread
     note: >-
