@@ -2,7 +2,7 @@
 distance from the street's centre line -- and how far that takes its
 building line back.
 
-Six codes in the screen's reach write the same idea two ways:
+Seven codes in the screen's reach write the same idea two ways:
 
 * **Dedication** -- the lot hands over the strip before its first building
   permit and its yards run from the new line. Washington County CDC 302-2.14
@@ -21,7 +21,12 @@ Six codes in the screen's reach write the same idea two ways:
   / 25 ft by named street); Milwaukie 19.501.2.A: "the minimum distance from
   the center line of the right-of-way to the closest point of any building is
   the distance listed in Table 19.501.2.A plus the yard requirement of the
-  underlying zone" (25 / 30 / 40 ft by named street).
+  underlying zone" (25 / 30 / 40 ft by named street); Tigard 18.210.030.A.1:
+  "Where the ultimate right-of-way width, as shown in the Transportation
+  System Plan, is wider than the current right-of-way width, required
+  setbacks are measured from the ultimate right-of-way width" -- the TSP
+  leaves the widths to Title 18, so half the widest right-of-way of Table
+  18.910.1 for the street's class (27 / 29 / 48 / 64 ft).
 
 Both come to the same line on the ground: the building stands the zone's
 yard back from a line the stated distance off the centre line, or the yard
@@ -91,6 +96,7 @@ LAYERS: tuple[str, ...] = (
     "or/washington/hillsboro",
     "or/washington/king-city",
     "or/washington/sherwood",
+    "or/washington/tigard",
     "or/clackamas/oregon-city",
     "or/clackamas/milwaukie",
     "or/clackamas/_unincorporated",
@@ -119,8 +125,9 @@ OTHER_FIELD = "row_to_centerline_other_ft"
 #: Whose TSP map ranks the classes the code reads.
 CLASS_BY_FIELD = "row_to_centerline_class_by"
 
-#: True where the class values are the printed WHOLE right-of-way width
-#: (Oregon City Table 16.12.016): half of each is the distance.
+#: True where the class and named values are the printed WHOLE right-of-way
+#: width (Oregon City Table 16.12.016, Tigard Table 18.910.1 and River
+#: Terrace Boulevard's 110 feet): half of each is the distance.
 WIDTH_FIELD = "row_to_centerline_stated_as_width"
 
 #: The distance by the street's class AND the plan designation of the land
@@ -163,6 +170,7 @@ CLASS_BY_MAP: dict[str, str] = {
     "washington_county": "street_class_washington",
     "sherwood": "street_class_sherwood",
     "oregon_city": "street_class_oregon_city",
+    "tigard": "street_class_tigard",
 }
 
 #: Each map's rank (:attr:`flats.geom.street_class.ClassSpec.rank`) -> the
@@ -191,6 +199,16 @@ BUCKETS: dict[str, dict[int, str]] = {
         3: "arterial",
         4: "principal_arterial",
     },
+    # Table 18.910.1 rows: Arterial, Collector, Neighborhood Route, Local.
+    # The TSP's Principal Arterial (99W, Barbur Blvd) takes the Arterial row,
+    # the only one the table prints for it; a Freeway has no row (unread).
+    "street_class_tigard": {
+        0: "local",
+        1: "neighborhood_route",
+        2: "collector",
+        3: "arterial",
+        4: "arterial",
+    },
 }
 
 #: Which layers each class map is read for. A county-zoned pocket inside a
@@ -200,6 +218,7 @@ READS: dict[str, tuple[str, ...]] = {
     "street_class_washington": ("or/washington",),
     "street_class_oregon_city": ("or/clackamas/oregon-city",),
     "street_class_sherwood": ("or/washington/sherwood",),
+    "street_class_tigard": ("or/washington/tigard",),
 }
 
 #: A layer no class map serves whose lots a dedication reaches through a
@@ -511,6 +530,8 @@ def rule_of(rules: "ZoneResolution") -> Rule | None:
             ft = _number(entry[1]) if isinstance(entry, (list, tuple)) and len(entry) == 2 else None
             if ft is not None:
                 named.append((street_key(entry[0]), ft))
+    if rules.get(WIDTH_FIELD) is True:
+        named = [(n, ft / 2.0) for n, ft in named]
     other = _number(rules.get(OTHER_FIELD))
     if not classes and not named and other is None:
         return None

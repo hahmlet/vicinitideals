@@ -684,6 +684,28 @@ datasets:
       county's map. Read only for 16.106.030 D's additional setbacks
       (flats/geom/dedication.py); no driveway rule reads its ranks.
 
+  street_class_tigard:
+    kind: arcgis
+    label: Tigard TSP street functional classification
+    provides: streets
+    url: https://svr.tigardmaps.com/arcgis/rest/services/Framework/Tigard_Transportation/MapServer/1
+    geometry: polyline
+    fields: [FULL_NAME, CITY_TSP]
+    serves: [or/washington/tigard]
+    notes: >-
+      The city's "Street Functional Classification" layer, "Street functional
+      class designation within the City of Tigard, Oregon as per the City's
+      Transportation System Plan" (read 2026-10-15; 4,033 lines). CITY_TSP:
+      LOCAL 1,838 (+ "Local" 17), NEIGHBORHOOD 619, COLLECTOR 240 (+ MAJOR /
+      MINOR COLLECTOR 13), ARTERIAL 229, STA 9 (Hall Blvd, the Special
+      Transportation Area), PCPL Arterial 40 (99W, Barbur Blvd), FREEWAY 83,
+      PRIVATE 487, "Other" / "OTHER" 457 (streets the city does not class,
+      most outside it), blank 1. Draws every street, local ones included, so
+      a street it leaves out is unread. No PREFIX/STREETNAME fields: lines are
+      matched to Metro's by where they run. Read only for 18.210.030.A.1's
+      ultimate right-of-way (flats/geom/dedication.py, FOLLOWUPS 81); no
+      driveway rule reads its ranks.
+
   # --- curbs and pavement widths (flats/geom/curbs.py) ----------------------
   # Where the fire truck stands (FOLLOWUPS 29): the hose's 150 ft
   # (OFC 503.1.1) is measured from 10 ft out from the near curb (Steph

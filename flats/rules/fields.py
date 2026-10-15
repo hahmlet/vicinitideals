@@ -372,11 +372,11 @@ _F: tuple[FieldDef, ...] = (
         "Whose Transportation System Plan classifies the streets the "
         "row_to_centerline_*_ft classes are read against: the county's for "
         "Washington County's districts (and its pockets inside cities), the "
-        "city's own for Sherwood and Oregon City. Picks the map "
+        "city's own for Sherwood, Oregon City and Tigard. Picks the map "
         "(flats/geom/dedication.py CLASS_BY_MAP); a class no map reads is the "
         "deepest distance the zone states.",
         None,
-        choices=("washington_county", "sherwood", "oregon_city"),
+        choices=("washington_county", "sherwood", "oregon_city", "tigard"),
     ),
     FieldDef(
         "setback_north_ft",
