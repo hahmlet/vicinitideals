@@ -375,6 +375,10 @@
         "protected_water_feature",
         "utility_easement"
       ],
+      "parking_area_frontage_front_yard": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
       "parking_area_max_frontage_pct": [
         "protected_water_feature"
       ],

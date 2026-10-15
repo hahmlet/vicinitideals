@@ -913,10 +913,17 @@ def _checks(
     # (:func:`flats.score.paper.side_court`); this is the court behind the
     # building, which faces a side street or a through lot's far street.
     # Measured on the drawn plan by the bridge; unmeasured leaves it unrun.
+    # Where the code caps parking "in the front yard" and names one front
+    # (`parking_area_frontage_front_yard`, Oregon City 17.16.060.D) the bridge
+    # measures the front lot lines only: a corner lot's side street is not
+    # the front yard.
     parking_cap = rules.get("parking_area_max_frontage_pct")
     if (
         parking_cap is not None
-        and rules.get("parking_area_frontage_any_street") is True
+        and (
+            rules.get("parking_area_frontage_any_street") is True
+            or rules.get("parking_area_frontage_front_yard") is True
+        )
         and beside is None
         and design.parking.parks
     ):

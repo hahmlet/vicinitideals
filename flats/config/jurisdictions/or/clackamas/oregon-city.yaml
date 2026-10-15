@@ -683,30 +683,42 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
     quote: "or/clackamas/oregon-city/17.zoning.txt#L5417-L5432"
-  # ON WHICH STREET (FOLLOWUPS 84). D.1 is worded for parking "in the front
-  # yard" against "the lot frontage", not the model code's "any street
-  # frontage", and it is still read on every street the lot has. 17.04.495
-  # makes "frontage" every part of a parcel that "abuts a dedicated public
-  # street", not the front line alone, and 17.08.045.B gives a through lot
-  # "the required front yard on each street", so a court facing a through
-  # lot's far street IS front-yard parking against that street's frontage.
-  # A corner lot's side street is the stretch the wording leaves open: the
-  # court behind the building there stands in the rear yard, which 17.04.1520
-  # runs the full width of the lot, and D names only the front yard. It is
-  # read on the side street anyway, under Steph's standing rule for the
-  # half-frontage cap (2026-10-14, FOLLOWUPS 80(a)): "I read this as 'any'
-  # street frontage. So front, back, side streets if they exist." The
-  # conservative of the two readings, and the one the bound should watch. The forty-foot limb rides with it: the screen
-  # holds the longest run the parking faces on any one street to the forty
-  # feet as well as to half that street (`parking_frontage_width`), which
-  # is what "whichever is less" asks. A court behind the building on a lot
-  # with no street behind it is not reached.
+  # ON WHICH STREET (FOLLOWUPS 84, phase 3 re-read 2026-10-15). D is
+  # worded for "off-street parking areas in the front yard", and the stated
+  # words govern: Steph's any-street ruling of 2026-10-14 answered caps on a
+  # share of "street frontage", and this one names a yard. 17.04.1515: the
+  # "Front yard" is "a yard extending the full width of the lot, the depth of
+  # which is the minimum distance from the front lot line to the main
+  # building". 17.04.490: "Front lot line" means a lot line abutting a
+  # street; "For corner lots, the front lot line is that with the narrowest
+  # frontage." 17.04.1530 names the "Corner side yard" -- the yard along the
+  # side lot line abutting the street -- as a yard of its own. So a corner
+  # lot has ONE front yard, off its narrowest frontage, and a court facing
+  # the side street is in the corner side or rear yard, which D does not
+  # reach. A through lot is different: 17.08.045.B, "Through lots having a
+  # frontage on two streets shall provide the required front yard on each
+  # street", so a court facing a through lot's far street IS front-yard
+  # parking and is held. Phase 1 read every street (the conservative reading
+  # under the any-street rule); the 2026-10-15 bound moved 538 Oregon City
+  # lots on it, about 450 of them corner lots red on a side-street court
+  # 40-45 ft wide.
   parking_area_frontage_any_street:
-    value: true
-    cite: "OCMC 17.16.060.D.1, outdoor on-site parking and maneuvering areas no more than forty feet wide or fifty percent of the lot frontage; 17.04.495 Frontage; 17.08.045.B through lots (any street frontage: front, side and rear streets)"
+    value: false
+    cite: "OCMC 17.16.060.D, off-street parking areas in the front yard; 17.04.1515 Front yard; 17.04.490 Front lot line (corner lot: narrowest frontage); 17.04.1530 Corner side yard"
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
-    quote: "or/clackamas/oregon-city/17.zoning.txt#L1715-L1718,L4174-L4177,L5417-L5432"
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L1701-L1704,L3852-L3855,L3870-L3875,L5417-L5420"
+  # The forty-foot limb rides with the share: the screen holds the longest
+  # run the parking faces on any one front street to the forty feet as well
+  # as to half that street (`parking_frontage_width`), which is what
+  # "whichever is less" asks. A court behind the building on a lot with no
+  # street behind it is not reached.
+  parking_area_frontage_front_yard:
+    value: true
+    cite: "OCMC 17.16.060.D.1, outdoor on-site parking and maneuvering areas in the front yard no more than forty feet wide or fifty percent of the lot frontage; 17.04.1515 Front yard; 17.04.490 Front lot line; 17.08.045.B through lots (a front yard on each street)"
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L1701-L1704,L3852-L3855,L4174-L4177,L5417-L5432"
   # Exempt rather than true: 17.16.060.D opens "garages on the front facade
   # and off-street parking areas in the front yard, are permitted in
   # compliance with the following standards". Oregon City permits front-yard
