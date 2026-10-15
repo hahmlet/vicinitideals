@@ -3059,6 +3059,18 @@ async def test_every_screen_reason_is_said_in_words() -> None:
     assert "private drive" in _said_reason("STREET_UNCONFIRMED")
 
 
+async def test_portland_overlay_reasons_are_said_in_words() -> None:
+    """FOLLOWUPS 78: the main street minimum floor area and a protected
+    historic building read as sentences, never as their codes."""
+    from app.api.routers.ui_flats import _CHECK_WORDS, _REASON_WORDS
+    from flats.geom import pdx_overlays
+
+    for code in pdx_overlays.REASONS:
+        assert code in _REASON_WORDS, code
+    assert "floor area" in _CHECK_WORDS[pdx_overlays.MIN_FAR_CHECK]
+    assert "historic" in _CHECK_WORDS[pdx_overlays.PROTECTED_RESOURCE_CHECK]
+
+
 async def test_institutional_land_is_said_in_words() -> None:
     """A school, park or rail lot answered RED by assign reads as
     institutional land, and says churches are still screened (FOLLOWUPS 47)."""

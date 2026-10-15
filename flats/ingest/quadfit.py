@@ -4327,7 +4327,9 @@ def run(
             f"no {', '.join(lacking)} for where the fire truck stands in {curbs}: "
             "run acquire, or pass --curbs a snapshot that holds them"
         )
-    if lacking := pdx.missing(sources):
+    # Like the corridor maps, read off --sources; a snapshot that lacks them
+    # is an old one, refused (FOLLOWUPS 78). No snapshot at all reads none.
+    if sources is not None and (lacking := pdx.missing(sources)):
         raise FileNotFoundError(
             f"no {', '.join(lacking)} for Portland's main street overlay and historic resources in "
             f"{sources}: run acquire (FOLLOWUPS 78)"

@@ -236,7 +236,7 @@ def _dataset_path(sources: Path, manifest: Mapping[str, Any], key: str) -> Path:
 def missing(sources: Path | None) -> tuple[str, ...]:
     """The layers an acquire snapshot lacks -- every one where there is no
     snapshot. Without them a lot in the overlay or holding a landmark would
-    pass GREEN unread, so the bridge refuses a run missing one."""
+    pass GREEN unread, so the bridge refuses a snapshot missing one."""
     if sources is None:
         return KEYS
     manifest = _manifest(sources)

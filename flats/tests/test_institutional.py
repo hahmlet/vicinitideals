@@ -331,6 +331,7 @@ def test_every_scan_reads_the_land_itself_and_assign_answers_red(tmp_path: Path,
     a snapshot, the bridge reads the lots it screens, writes the reading
     beside its output, and assign finds it there (Steph 2026-10-06:
     "flagged out of scans for any reason")."""
+    from flats.geom import pdx_overlays
     from flats.ingest import quadfit as qf
 
     campus, house = box(0, 0, 100, 100), box(1000, 0, 1100, 100)
@@ -349,6 +350,8 @@ def test_every_scan_reads_the_land_itself_and_assign_answers_red(tmp_path: Path,
     (dem / "dem").mkdir(parents=True)
     (dem / "dem" / "t.tif").write_bytes(b"")
     snap = _snapshot(tmp_path, [osm(box(-50, -50, 150, 150), amenity="school", name="Westview")], [])
+    for key in pdx_overlays.KEYS:  # FOLLOWUPS 78: the bridge refuses a snapshot without them
+        (snap / f"{key}.geojson").write_text('{"type": "FeatureCollection", "features": []}', encoding="utf-8")
     kw = dict(s4=tmp_path / "s4.parquet", s5o=tmp_path / "s5o.parquet", results=None, roads=roads, dem=dem, log=lambda _m: None)
 
     with pytest.raises(FileNotFoundError, match="no institutional land"):
