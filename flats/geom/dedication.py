@@ -59,7 +59,10 @@ other line of the lot, stays at the worst case.
 whole distance (the lot line on the centre line). A line whose class or
 name is unread takes the deepest distance the zone states
 (:meth:`Rule.deepest`). A street that is not public (RLIS TYPE 1700 / 1800,
-a private road or drive) takes nothing.
+a private road or drive) takes nothing: the codes widen public streets
+(Tigard's chapter: "the term 'streets' shall mean 'public streets'",
+18.910.020.E; a private street's design is "established by the City
+Engineer", 18.910.030.T.1).
 
 **The land on both sides.** Oregon City's table keys the row to the plan
 designation of the land beside the street too, the wider where the two sides
@@ -75,12 +78,11 @@ only how a class rank or a street name picks one.
 from __future__ import annotations
 
 import dataclasses
-import re
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Iterable, Mapping, Sequence
 
 from flats.geom.corridor import FRONT_REACH_FT, SAMPLES, STREET_CLASS, _fronted
-from flats.geom.street_class import ClassMap, _rank_at, _samples, edge_rank
+from flats.geom.street_class import ClassMap, _rank_at, _samples, edge_rank, street_key
 
 if TYPE_CHECKING:
     from flats.rules.resolver import ZoneResolution
@@ -232,35 +234,6 @@ PRIVATE_TYPES: frozenset[int] = frozenset({1700, 1800})
 #: Fewest sample points (of :data:`SAMPLES`) that must have a centreline
 #: beside them for a line to count as measured.
 MIN_MEASURED = SAMPLES // 2 + 1
-
-#: How a code spells a street type, and how Metro's file does.
-_TYPES: dict[str, str] = {
-    "AVENUE": "AVE",
-    "BOULEVARD": "BLVD",
-    "COURT": "CT",
-    "DRIVE": "DR",
-    "HIGHWAY": "HWY",
-    "LANE": "LN",
-    "PARKWAY": "PKWY",
-    "PLACE": "PL",
-    "ROAD": "RD",
-    "STREET": "ST",
-    "TERRACE": "TER",
-}
-_DIRECTIONS = frozenset({"N", "S", "E", "W", "NE", "NW", "SE", "SW"})
-
-
-def street_key(label: object) -> str:
-    """A street's name as both a code and Metro's file can be compared on:
-    upper case, directions dropped, the street type abbreviated, anything in
-    brackets (a code's "(55th Ave. to Stanley Ave.)") left out."""
-    text = re.sub(r"\([^)]*\)", " ", str(label or "")).upper().replace(".", " ")
-    words = [_TYPES.get(w, w) for w in text.split()]
-    while words and words[0] in _DIRECTIONS:
-        words = words[1:]
-    while words and words[-1] in _DIRECTIONS:
-        words = words[:-1]
-    return " ".join(words)
 
 
 def applies(layer_id: str | None) -> bool:

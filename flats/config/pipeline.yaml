@@ -759,8 +759,13 @@ datasets:
       Transportation Area), PCPL Arterial 40 (99W, Barbur Blvd), FREEWAY 83,
       PRIVATE 487, "Other" / "OTHER" 457 (streets the city does not class,
       most outside it), blank 1. Draws every street, local ones included, so
-      a street it leaves out is unread. No PREFIX/STREETNAME fields: lines are
-      matched to Metro's by where they run. Read only for 18.210.030.A.1's
+      a street it leaves out is unread. FULL_NAME holds the street name
+      without its direction ("GALLO AVE"); lines are matched to Metro's by
+      that name, confirmed by position (within 60 ft of Metro's centreline),
+      and by position alone only where neither names the street. PRIVATE
+      takes the Local row where Metro calls the street public; where Metro
+      types it private the line gives up nothing (18.910.020.E: "streets"
+      means public streets). Read only for 18.210.030.A.1's
       ultimate right-of-way (flats/geom/dedication.py, FOLLOWUPS 81); no
       driveway rule reads its ranks.
 
