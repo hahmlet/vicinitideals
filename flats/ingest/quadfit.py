@@ -73,7 +73,7 @@ from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
-from flats.fit.frontage import parking_share_pct, street_chains
+from flats.fit.frontage import parking_share, street_chains
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
 from flats.fit.slope import ONE_M, TEN_M, load_rules as slope_rules
@@ -1740,6 +1740,9 @@ def lot_from_row(
         # Two streets that really are two: the side street may take the
         # driveway (:func:`flats.score.paper.side_street_fed`).
         corner=is_corner(edges),
+        # The shortest street's line: what a cap on a share of "any street
+        # lot line" is read against (FOLLOWUPS 84), not the summed frontage.
+        street_line_min_ft=street_line_min_ft(edges),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
         street_unconfirmed=unconfirmed,
@@ -2080,7 +2083,7 @@ def _room(s: Screened, fitter: Fitter) -> Room | None:
         carved_rear_ft=s.envelope.rear_cut_ft if s.envelope is not None else None,
         alley=facts.alley,
         corner=facts.corner,
-        frontage_ft=facts.frontage_ft,
+        frontage_ft=facts.cap_frontage_ft,
         street_deg=_access_deg(s.lot, s.front_deg),
     )
 
@@ -2187,7 +2190,7 @@ def _screen_on(
         carved_rear_ft=env.rear_cut_ft,
         alley=facts.alley,
         corner=facts.corner,
-        frontage_ft=facts.frontage_ft,
+        frontage_ft=facts.cap_frontage_ft,
         street_deg=_access_deg(here, front),
     )
     if fit.beside and not beside_reaches_street(here, design, got, fit, fitters[key], env):
@@ -2203,7 +2206,7 @@ def _screen_on(
             carved_rear_ft=env.rear_cut_ft,
             alley=facts.alley,
             corner=facts.corner,
-            frontage_ft=facts.frontage_ft,
+            frontage_ft=facts.cap_frontage_ft,
             street_deg=(),
         )
     base = facts
@@ -2220,12 +2223,20 @@ def _screen_on(
                 result = screen(
                     got, facts, design, fit, policy=policy, relief=relief, config=config
                 )
-        if "parking_frontage_share" in result.unchecked:
+        if (
+            "parking_frontage_share" in result.unchecked
+            or "parking_frontage_width" in result.unchecked
+        ):
             # The zone caps the parking on every street frontage: measure
-            # this plan's share on the drawn plan and screen again on it.
+            # this plan's share (and run in feet) on the drawn plan and
+            # screen again on it.
             share = parking_frontage(here, streets, design, got, fit, fitters[key], env)
             if share is not None:
-                facts = dataclasses.replace(facts, parking_frontage_share_pct=share)
+                facts = dataclasses.replace(
+                    facts,
+                    parking_frontage_share_pct=share[0],
+                    parking_frontage_run_ft=share[1],
+                )
                 result = screen(
                     got, facts, design, fit, policy=policy, relief=relief, config=config
                 )
@@ -2243,7 +2254,7 @@ def _screen_on(
             carved_rear_ft=env.rear_cut_ft,
             alley=base.alley,
             corner=base.corner,
-            frontage_ft=base.frontage_ft,
+            frontage_ft=base.cap_frontage_ft,
             street_deg=_access_deg(here, front),
             menu=menu,
         )
@@ -3501,7 +3512,7 @@ def _beside_drawn(
         return None
     facts = here.facts
     beside = side_court(
-        design, got, facts.alley, corner=facts.corner, frontage_ft=facts.frontage_ft
+        design, got, facts.alley, corner=facts.corner, frontage_ft=facts.cap_frontage_ft
     )
     beyond = None if beside is None else _beside_beyond(
         beside, fit.required_ft, got, env.rear_cut_ft
@@ -3673,6 +3684,19 @@ def _court_drawn(
     )
 
 
+def street_line_min_ft(edges: LotEdges | None) -> float | None:
+    """The shortest of the lot's streets, in feet: each street's run of
+    street lot line, corner to corner (:func:`flats.fit.frontage.street_chains`,
+    alleys excluded). None where the lot has no edges or no street line.
+    :attr:`flats.score.screen.LotFacts.street_line_min_ft`."""
+    if edges is None:
+        return None
+    chains = street_chains(edges)
+    if not chains:
+        return None
+    return min(sum(e.length_ft for e in chain) for chain in chains)
+
+
 def parking_frontage(
     here: QuadfitLot,
     streets: LotEdges | None,
@@ -3681,10 +3705,11 @@ def parking_frontage(
     fit: Fit,
     fitter: Fitter,
     env: Envelope,
-) -> float | None:
+) -> tuple[float, float] | None:
     """The parking's share of the worst street frontage this plan has, in
-    percent (FOLLOWUPS 80(a); :func:`flats.fit.frontage.parking_share_pct`),
-    or None where it cannot be measured.
+    percent, and the longest run of one street it faces, in feet
+    (FOLLOWUPS 80(a), 84; :func:`flats.fit.frontage.parking_share`), or None
+    where it cannot be measured.
 
     ``streets`` is the lot's edges as the streets lie, before a reading of
     a through lot renamed its far end the rear: the far street is still a
@@ -3698,7 +3723,7 @@ def parking_frontage(
     if here.lot_geom is None or streets is None or fit.beside or fit.column:
         return None
     if len(street_chains(streets)) < 2:
-        return 0.0
+        return 0.0, 0.0
     street: tuple[tuple[float, float, float, float], ...] = ()
     if here.edges is not None:
         street = tuple((e.x1, e.y1, e.x2, e.y2) for e in here.edges.of_class(EdgeClass.front))
@@ -3707,7 +3732,7 @@ def parking_frontage(
     drawn = _court_drawn(here, design, got, fit, fitter, env, street)
     if drawn is None or not drawn.rows:
         return None
-    return parking_share_pct(here.lot_geom, streets, drawn.rows, drawn.building)
+    return parking_share(here.lot_geom, streets, drawn.rows, drawn.building)
 
 
 def _largest_left(
@@ -3787,7 +3812,7 @@ def drawing_for(
     short = _tight_ft(s)
     if s.fit.beside:
         beside = side_court(
-            s.design, s.rules, alley, corner=corner, frontage_ft=s.lot.facts.frontage_ft
+            s.design, s.rules, alley, corner=corner, frontage_ft=s.lot.facts.cap_frontage_ft
         )
         beyond = None if beside is None else _beside_beyond(beside, s.fit.required_ft, s.rules, rear)
         if beside is None or beyond is None or math.isinf(beyond):

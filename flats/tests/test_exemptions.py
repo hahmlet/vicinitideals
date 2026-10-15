@@ -146,7 +146,9 @@ pytestmark = pytest.mark.unit
 # 411 -> 415 stated on 2026-10-08 (zone gaps, FOLLOWUPS 52a): four more statements of no
 # limit arrived with the zones encoded that day (Tualatin MUC's lot size among them); each
 # cites its row.
-EXPECTED = {"stated": 418, "numeric": 84, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 418, "numeric": 85, "marker": 0, "dash": 2, "silent": 2}
+# 84 -> 85 numeric on 2026-10-15 (FOLLOWUPS 84): Troutdale `parking_front_prohibited`,
+# exempt where TDC 8.120.C.4.d lets parking stand inside half the street frontage.
 # 415 -> 418 stated on 2026-10-14: Clackamas HDR, SHD and RCHDR, whose Table
 # 315-4 height cells print "None" (FOLLOWUPS 61, the 1005.02(L) bearing).
 # 72 -> 80 numeric on 2026-10-07: Estacada (FOLLOWUPS 53), whose C-2, CMU and R-3 print

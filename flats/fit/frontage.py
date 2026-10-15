@@ -17,10 +17,15 @@ the lot has, one street at a time:
         seen from the street the building faces, is not reached
       the street's share is the feet counted over the line's length
 
-and the worst street is the answer. A rear court on a lot with one street
-is behind the building and counts nothing; on a corner lot it faces the side
-street across its depth; on a through lot it faces the far street across
-its width.
+and the worst street is the answer, with the feet it faces on that street
+(:func:`street_runs`) for a cap stated in feet as well as a share -- Oregon
+City 17.16.060.D.1, "forty feet wide or fifty percent of the lot frontage,
+whichever is less". Oregon City, Fairview 19.30.040(E)(2), Troutdale
+8.120.C.4.d and Sandy 17.90.160 F read the same cap (FOLLOWUPS 84).
+
+A rear court on a lot with one street is behind the building and counts
+nothing; on a corner lot it faces the side street across its depth; on a
+through lot it faces the far street across its width.
 
 Pure geometry on the lot's own coordinates (EPSG:2913, feet). Overlays, the
 planted strip and the lane are not obstacles to the look: a strip of
@@ -159,10 +164,24 @@ def street_shares(
 ) -> tuple[float, ...]:
     """Each street's share of its frontage that the parking ``rows`` face,
     in percent, in :func:`street_chains` order."""
+    return tuple(pct for pct, _ in street_runs(lot, edges, rows, building))
+
+
+def street_runs(
+    lot: BaseGeometry,
+    edges: LotEdges,
+    rows: BaseGeometry,
+    building: BaseGeometry,
+) -> tuple[tuple[float, float], ...]:
+    """Each street's ``(share in percent, feet)`` of frontage that the
+    parking ``rows`` face, in :func:`street_chains` order. The feet are what
+    a cap in feet reads (Oregon City 17.16.060.D.1, "forty feet wide or fifty
+    percent of the lot frontage, whichever is less"); the share is the same
+    run over the street's length."""
     minx, miny, maxx, maxy = lot.bounds
     reach = math.hypot(maxx - minx, maxy - miny) + 1.0
     corners = shapely.points(np.asarray(shapely.get_coordinates(building)))
-    out: list[float] = []
+    out: list[tuple[float, float]] = []
     for chain in street_chains(edges):
         frontage = sum(math.hypot(e.x2 - e.x1, e.y2 - e.y1) for e in chain)
         if frontage <= 0:
@@ -175,7 +194,8 @@ def street_shares(
         parked = _first_seen(pts, lines, rows)
         built = _first_seen(pts, lines, building)
         seen = (parked < built) & (parked < far_wall)
-        out.append(100.0 * min(frontage, float(seen.sum()) * piece) / frontage)
+        run = min(frontage, float(seen.sum()) * piece)
+        out.append((100.0 * run / frontage, run))
     return tuple(out)
 
 
@@ -189,18 +209,42 @@ def parking_share_pct(
     best of the ways to stand the row (``rows``, one shape each); None
     where there is no building or row to measure, or no street.
     """
+    got = parking_share(lot, edges, rows, building)
+    return None if got is None else got[0]
+
+
+def parking_share(
+    lot: BaseGeometry,
+    edges: LotEdges,
+    rows: Sequence[BaseGeometry],
+    building: BaseGeometry | None,
+) -> tuple[float, float] | None:
+    """``(percent, feet)``: the worst street's share of frontage and the
+    longest run of frontage in feet that the parking faces, both read off
+    the SAME way of standing the row -- the one with the smallest worst
+    share (the feet break a tie). Pairing the share of one row with the feet
+    of another would pass a plan no single drawing passes. None where
+    :func:`parking_share_pct` is None.
+    """
     if building is None or building.is_empty or not rows:
         return None
-    best: float | None = None
+    best: tuple[float, float] | None = None
     for row in rows:
         if row is None or row.is_empty:
             continue
-        shares = street_shares(lot, edges, row.intersection(lot), building)
-        if not shares:
+        runs = street_runs(lot, edges, row.intersection(lot), building)
+        if not runs:
             return None
-        worst = max(shares)
+        worst = (max(pct for pct, _ in runs), max(ft for _, ft in runs))
         best = worst if best is None else min(best, worst)
     return best
 
 
-__all__ = ["STEP_FT", "parking_share_pct", "street_chains", "street_shares"]
+__all__ = [
+    "STEP_FT",
+    "parking_share",
+    "parking_share_pct",
+    "street_chains",
+    "street_runs",
+    "street_shares",
+]

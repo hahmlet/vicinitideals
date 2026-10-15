@@ -337,8 +337,10 @@ def test_beaverton_reads_it_where_s11_states_it_and_not_on_the_35_percent_line(c
         got = corpus.resolve("or/washington/beaverton", zone).values
         cap = got.get("parking_area_max_frontage_pct")
         any_street = got.get("parking_area_frontage_any_street")
-        if cap is not None and cap.value == 35:
-            assert any_street is None, zone
+        # The 35 percent line (60.05.15.6.C) is the driveway inside the
+        # ten-foot strip, `driveway_max_frontage_pct` (FOLLOWUPS 84;
+        # flats/tests/test_frontage_caps.py), not a parking cap.
+        assert cap is None or cap.value != 35, zone
         if any_street is not None:
             assert cap is not None and cap.value == 50, zone
 

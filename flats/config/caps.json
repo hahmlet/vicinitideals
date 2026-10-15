@@ -371,6 +371,10 @@
       "front_lot_line_corner": [
         "utility_easement"
       ],
+      "parking_area_frontage_any_street": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
       "parking_area_max_frontage_pct": [
         "protected_water_feature"
       ],

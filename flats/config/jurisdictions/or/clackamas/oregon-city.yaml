@@ -683,6 +683,30 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-08-27'
     quote: "or/clackamas/oregon-city/17.zoning.txt#L5417-L5432"
+  # ON WHICH STREET (FOLLOWUPS 84). D.1 is worded for parking "in the front
+  # yard" against "the lot frontage", not the model code's "any street
+  # frontage", and it is still read on every street the lot has. 17.04.495
+  # makes "frontage" every part of a parcel that "abuts a dedicated public
+  # street", not the front line alone, and 17.08.045.B gives a through lot
+  # "the required front yard on each street", so a court facing a through
+  # lot's far street IS front-yard parking against that street's frontage.
+  # A corner lot's side street is the stretch the wording leaves open: the
+  # court behind the building there stands in the rear yard, which 17.04.1520
+  # runs the full width of the lot, and D names only the front yard. It is
+  # read on the side street anyway, under Steph's standing rule for the
+  # half-frontage cap (2026-10-14, FOLLOWUPS 80(a)): "I read this as 'any'
+  # street frontage. So front, back, side streets if they exist." The
+  # conservative of the two readings, and the one the bound should watch. The forty-foot limb rides with it: the screen
+  # holds the longest run the parking faces on any one street to the forty
+  # feet as well as to half that street (`parking_frontage_width`), which
+  # is what "whichever is less" asks. A court behind the building on a lot
+  # with no street behind it is not reached.
+  parking_area_frontage_any_street:
+    value: true
+    cite: "OCMC 17.16.060.D.1, outdoor on-site parking and maneuvering areas no more than forty feet wide or fifty percent of the lot frontage; 17.04.495 Frontage; 17.08.045.B through lots (any street frontage: front, side and rear streets)"
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L1715-L1718,L4174-L4177,L5417-L5432"
   # Exempt rather than true: 17.16.060.D opens "garages on the front facade
   # and off-street parking areas in the front yard, are permitted in
   # compliance with the following standards". Oregon City permits front-yard

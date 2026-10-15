@@ -264,6 +264,7 @@ CHECK_FIELD: dict[str, str] = {
     "min_frontage_ft": "min_frontage_ft",
     "driveway_frontage_share": "driveway_max_frontage_pct",
     "parking_frontage_share": "parking_area_max_frontage_pct",
+    "parking_frontage_width": "parking_area_max_width_ft",
     "front_yard_vehicle_share": "parking_front_yard_max_pct",
     "min_lot_width_ft": "min_lot_width_ft",
     "min_average_lot_width_ft": "min_average_lot_width_ft",
@@ -417,6 +418,22 @@ class LotFacts:
     #: (``parking_area_frontage_any_street``); None where nobody measured it,
     #: which leaves the check unrun.
     parking_frontage_share_pct: float | None = None
+    #: The longest run of any one street frontage that same plan's parking
+    #: faces, in feet (:func:`flats.fit.frontage.parking_share`), for a cap
+    #: in feet stated beside the share (``parking_area_max_width_ft``; Oregon
+    #: City 17.16.060.D.1). Measured with the share and from the same
+    #: drawing; None leaves that check unrun.
+    parking_frontage_run_ft: float | None = None
+    #: The shortest of the lot's streets, in feet: one street's run of
+    #: street lot line, corner to corner (:func:`flats.fit.frontage.street_chains`).
+    #: ``frontage_ft`` is the SUM of every street line, and a cap on a share
+    #: of "any street lot line" (Beaverton 60.05.15.6.C) or of "the street
+    #: frontage" read on any street (Steph 2026-10-14) is a share of ONE
+    #: street's line: summed, a corner lot's two lines double the allowance.
+    #: Where the screen cannot say which street the driveway or the court
+    #: beside the building faces, the worst (shortest) is the one held to the
+    #: cap (FOLLOWUPS 84). None where nothing measured the lot's streets.
+    street_line_min_ft: float | None = None
     #: Distances to transit, feet, as ``(measure, ft)`` pairs
     #: (:data:`flats.rules.model.TRANSIT_MEASURES`), measured once per
     #: transit release by :mod:`flats.ingest.transit` and read by the rules
@@ -484,6 +501,23 @@ class LotFacts:
     #: measured the lot, and a key missing where that one deduction was not:
     #: either way a rate on a net acre keeps to the gross-area bound.
     net_deductions: Mapping[str, float] | None = None
+
+    @property
+    def cap_frontage_ft(self) -> float | None:
+        """The street frontage a share-of-frontage cap is read against.
+
+        The shortest street line where the streets were measured; the summed
+        ``frontage_ft`` where the lot has one street; None on an unmeasured
+        corner lot, whose sum would read the cap across two streets -- the
+        lenient reading, so the cap there is unchecked rather than passed.
+        """
+        if self.street_line_min_ft is not None:
+            if self.frontage_ft > 0.0:
+                return min(self.street_line_min_ft, self.frontage_ft)
+            return self.street_line_min_ft
+        if self.corner:
+            return None
+        return self.frontage_ft
 
     @property
     def landlocked(self) -> bool:
@@ -821,7 +855,7 @@ def _checks(
     # no evidence either way. That is a hole in the measurement, not a miss
     # on the lot, and it is reported as one rather than scored.
     if _searched_narrower_than(
-        fit, design, rules, lot.alley, corner=lot.corner, frontage_ft=lot.frontage_ft
+        fit, design, rules, lot.alley, corner=lot.corner, frontage_ft=lot.cap_frontage_ft
     ):
         unchecked.append("fit_across_ft")
 
@@ -852,21 +886,25 @@ def _checks(
     # The driveway's share of the street frontage (Sherwood 16.14.030 A.2,
     # "Total width of all driveways shall not exceed 50 percent of the street
     # frontage"). The pod has one drive, so its width at the street against
-    # the share of the frontage the code allows. `frontage_ft` is the sum of
-    # every street edge, so on a corner lot this is the looser reading of
-    # "the street frontage"; unmeasured frontage leaves it unchecked.
+    # the share of the frontage the code allows -- of ONE street's line
+    # (`cap_frontage_ft`: the shortest street where the lot has more than
+    # one, since the drive's street is not attributed here). Beaverton
+    # 60.05.15.6.C caps "any street lot line"; Steph 2026-10-14 reads a
+    # frontage cap on any street. Summing a corner lot's two lines would
+    # double the allowance (FOLLOWUPS 84). Unmeasured leaves it unchecked.
     share = rules.get("driveway_max_frontage_pct")
     if share is not None:
         drive = drive_at_street(
             design, rules, lot.alley, corner=lot.corner, beside=beside
         )
-        if lot.landlocked:
+        line = lot.cap_frontage_ft
+        if lot.landlocked or (drive and line is None):
             unchecked.append("driveway_frontage_share")
         elif drive:
             check(
                 "driveway_frontage_share",
                 drive,
-                share / 100.0 * lot.frontage_ft,
+                share / 100.0 * line,
                 is_maximum=True,
             )
     # The parking's share of EVERY street frontage (Steph 2026-10-14 on the
@@ -891,6 +929,21 @@ def _checks(
                 float(parking_cap),
                 is_maximum=True,
             )
+        # The same sentence's ceiling in feet, where the code prints one
+        # beside the share and binds "whichever is less" (Oregon City
+        # 17.16.060.D.1, forty feet): the longest run of any one street the
+        # parking faces, off the same drawing as the share.
+        width_cap = rules.get("parking_area_max_width_ft")
+        if width_cap is not None:
+            if lot.parking_frontage_run_ft is None:
+                unchecked.append("parking_frontage_width")
+            else:
+                check(
+                    "parking_frontage_width",
+                    lot.parking_frontage_run_ft,
+                    float(width_cap),
+                    is_maximum=True,
+                )
     # The front yard's share in vehicle area (Portland 33.266.120.C.1.b, 40
     # percent; Milwaukie 19.607.1.D, 50). An AREA share of the ground between
     # the front lot line and the building, which the pod's drive crosses
@@ -1596,7 +1649,7 @@ def _fix(fit: Fit) -> Fix | None:
 
 def _beside_for(design: Design, rules: ZoneResolution, lot: LotFacts) -> Beside:
     """The court beside the building that :func:`fit_for` searched for this lot."""
-    got = side_court(design, rules, lot.alley, corner=lot.corner, frontage_ft=lot.frontage_ft)
+    got = side_court(design, rules, lot.alley, corner=lot.corner, frontage_ft=lot.cap_frontage_ft)
     assert got is not None, "a court beside the building was charged where none is offered"
     return got
 

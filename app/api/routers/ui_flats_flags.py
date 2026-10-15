@@ -288,6 +288,7 @@ CHECK_WORDS: dict[str, tuple[str, str]] = {
     "max_lot_depth_ratio": ("Lot depth to width", ""),
     "driveway_frontage_share": ("Driveway width at the street", "ft"),
     "parking_frontage_share": ("Parking along the worst street", "% of frontage"),
+    "parking_frontage_width": ("Parking along the worst street", "ft"),
     "front_yard_vehicle_share": ("Paving across the front yard", "ft"),
     "parking_stalls": ("Parking stalls", "stalls"),
     "parking_cap": ("Parking cap", "stalls"),
