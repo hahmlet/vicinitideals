@@ -30,6 +30,7 @@ from __future__ import annotations
 import argparse
 import re
 from dataclasses import dataclass, replace
+from functools import lru_cache
 from pathlib import Path
 from typing import Iterable, Sequence
 
@@ -685,6 +686,82 @@ def paragraphs(text: str) -> list[tuple[int, int, str]]:
     return out
 
 
+@lru_cache(maxsize=1)
+def _prose(
+    text: str, path: str, jurisdiction: str, section: str, spaced: bool
+) -> tuple[str, str, tuple[Clause, ...], tuple[Candidate, ...]]:
+    """Parse zone-independent prose once for the current document."""
+    if spaced:
+        text = repair_text(text)
+    from flats.encode.tables import blank_tables
+
+    blanked = blank_tables(text)
+    clauses: list[Clause] = []
+    proposed: list[Candidate] = []
+    current = section
+    in_exceptions = False
+
+    for first, last, stripped in paragraphs(blanked):
+        n = first
+        quote = f"{path}#L{first}" if first == last else f"{path}#L{first}-L{last}"
+        found = _SECTION.match(stripped)
+        if found and _heading_like(stripped):
+            # A wrapped citation can match the section pattern too, but only
+            # a heading is allowed to move the section cursor.
+            current = found.group("sec")
+        if _TOP_LEVEL.match(stripped):
+            # Exceptions scope every following clause in their outline block.
+            in_exceptions = bool(_EXCEPTION_HEADING.search(stripped.split(".", 1)[1][:80]))
+
+        tag = tag_of(stripped)
+        if in_exceptions and tag in (Rase.requirement, None):
+            tag = Rase.exception
+        if tag is None and found and len(stripped.split()) <= 8:
+            # Headings state no rule and should not become untagged clauses.
+            tag = Rase.non_normative
+        clauses.append(
+            Clause(
+                id=quote,
+                jurisdiction=jurisdiction,
+                section=current,
+                quote=quote,
+                text=stripped,
+                tag=tag,
+            )
+        )
+        if tag is not Rase.exception:
+            proposed.extend(
+                replace(candidate, section=current)
+                for candidate in candidates_in(stripped, n, path, quote=quote)
+            )
+
+    return text, blanked, tuple(clauses), tuple(proposed)
+
+
+@lru_cache(maxsize=1)
+def _pairs(blanked: str, path: str) -> tuple[Candidate, ...]:
+    from flats.encode.tables import read_pairs
+
+    return tuple(read_pairs(blanked, path=path))
+
+
+@lru_cache(maxsize=1)
+def _zone_tables(text: str, path: str):
+    from flats.encode.tables import (
+        read_collapsed_grids,
+        read_stacked_grids,
+        read_tables,
+        read_transposed_grids,
+    )
+
+    return (
+        read_tables(text),
+        read_stacked_grids(text, path=path),
+        read_collapsed_grids(text, path=path),
+        read_transposed_grids(text, path=path),
+    )
+
+
 def extract(
     text: str,
     *,
@@ -707,70 +784,16 @@ def extract(
     in a table of single-digit cells that is two cells rather than one number
     — a judgement no statistic over the document makes safely.
     """
-    if spaced:
-        text = repair_text(text)
-    # Imported here because the table reader is built on this module's subject
-    # matching: prose and grid ask the same question of a label.
-    from flats.encode.tables import (
-        blank_tables,
-        candidates_for,
-        read_collapsed_grids,
-        read_pairs,
-        read_stacked_grids,
-        read_tables,
-        read_transposed_grids,
-        stacked_candidates_for,
-    )
-
-    clauses: list[Clause] = []
-    proposed: list[Candidate] = []
-    current = section
-
-    in_exceptions = False
-
-    for first, last, stripped in paragraphs(blank_tables(text)):
-        n = first
-        quote = f"{path}#L{first}" if first == last else f"{path}#L{first}-L{last}"
-        found = _SECTION.match(stripped)
-        if found and _heading_like(stripped):
-            # Only a heading moves the section cursor. A paragraph that opens
-            # on a wrapped citation — "TDC 36.410, or Greenway and ..." —
-            # matches the section pattern too, and taking its number would
-            # file everything until the next real heading under a
-            # cross-reference.
-            current = found.group("sec")
-        if _TOP_LEVEL.match(stripped):
-            # Codes are outlines, and scope is inherited. Everything under
-            # "D. Exceptions to the required setbacks" qualifies the standard
-            # rather than stating it, however plainly the sub-clause reads.
-            in_exceptions = bool(_EXCEPTION_HEADING.search(stripped.split(".", 1)[1][:80]))
-
-        tag = tag_of(stripped)
-        if in_exceptions and tag in (Rase.requirement, None):
-            tag = Rase.exception
-        if tag is None and found and len(stripped.split()) <= 8:
-            # A section heading states no rule. Leaving it untagged would put
-            # every heading in the document on the review queue, which is the
-            # fastest way to teach a reviewer to ignore the queue.
-            tag = Rase.non_normative
-        clauses.append(
-            Clause(
-                id=quote,
-                jurisdiction=jurisdiction,
-                section=current,
-                quote=quote,
-                text=stripped,
-                tag=tag,
-            )
-        )
-        if tag is not Rase.exception:
-            proposed.extend(
-                replace(candidate, section=current)
-                for candidate in candidates_in(stripped, n, path, quote=quote)
-            )
+    text, blanked, clauses, prose = _prose(text, path, jurisdiction, section, spaced)
+    proposed = list(prose)
 
     if zone:
-        for table in read_tables(text):
+        # Imported here because the table reader is built on this module's
+        # subject matching: prose and grid ask the same question of a label.
+        from flats.encode.tables import candidates_for, stacked_candidates_for
+
+        tables, stacked, collapsed, transposed = _zone_tables(text, path)
+        for table in tables:
             found = candidates_for(table, zone, path=path)
             if table.typed:
                 # A housing-type table names no zone; the section it is
@@ -779,7 +802,7 @@ def extract(
                 # zone declares it — the same rule prose lives under.
                 found = [replace(c, section=_section_at(text, c.line)) for c in found]
             proposed.extend(found)
-        proposed.extend(stacked_candidates_for(read_stacked_grids(text, path=path), zone))
+        proposed.extend(stacked_candidates_for(stacked, zone))
         # A grid whose column spacing did not survive extraction. Zone-keyed
         # like the others — the header names the columns and the count says
         # which is which — so it reads as cell evidence, but only where no
@@ -787,7 +810,7 @@ def extract(
         # of belongs to the readers that use it.
         proposed.extend(
             replace(candidate, section=_section_at(text, candidate.line))
-            for candidate in stacked_candidates_for(read_collapsed_grids(text, path=path), zone)
+            for candidate in stacked_candidates_for(collapsed, zone)
         )
         # A table with the standards across the top and the districts down
         # the side. Zone-keyed like the others, because the row names the
@@ -795,15 +818,15 @@ def extract(
         # most of a setback table's columns are variants it has to refuse.
         proposed.extend(
             replace(candidate, section=_section_at(text, candidate.line))
-            for candidate in stacked_candidates_for(read_transposed_grids(text, path=path), zone)
+            for candidate in stacked_candidates_for(transposed, zone)
         )
 
     # Stacked label/value pairs — a table that lost its geometry to HTML
     # linearisation. Zone-blind like prose, so they carry their section and
     # count only where a declared section or a single-zone document binds them.
-    proposed.extend(read_pairs(blank_tables(text), path=path))
+    proposed.extend(_pairs(blanked, path))
 
-    return Extraction(path=path, clauses=tuple(clauses), candidates=tuple(_mark(proposed)))
+    return Extraction(path=path, clauses=clauses, candidates=tuple(_mark(proposed)))
 
 
 def _section_at(text: str, line: int) -> str:
