@@ -73,7 +73,7 @@ from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
-from flats.fit.frontage import parking_share_pct, street_chains
+from flats.fit.frontage import parking_share, street_chains
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
 from flats.fit.slope import ONE_M, TEN_M, load_rules as slope_rules
@@ -2220,12 +2220,20 @@ def _screen_on(
                 result = screen(
                     got, facts, design, fit, policy=policy, relief=relief, config=config
                 )
-        if "parking_frontage_share" in result.unchecked:
+        if (
+            "parking_frontage_share" in result.unchecked
+            or "parking_frontage_width" in result.unchecked
+        ):
             # The zone caps the parking on every street frontage: measure
-            # this plan's share on the drawn plan and screen again on it.
+            # this plan's share (and run in feet) on the drawn plan and
+            # screen again on it.
             share = parking_frontage(here, streets, design, got, fit, fitters[key], env)
             if share is not None:
-                facts = dataclasses.replace(facts, parking_frontage_share_pct=share)
+                facts = dataclasses.replace(
+                    facts,
+                    parking_frontage_share_pct=share[0],
+                    parking_frontage_run_ft=share[1],
+                )
                 result = screen(
                     got, facts, design, fit, policy=policy, relief=relief, config=config
                 )
@@ -3681,10 +3689,11 @@ def parking_frontage(
     fit: Fit,
     fitter: Fitter,
     env: Envelope,
-) -> float | None:
+) -> tuple[float, float] | None:
     """The parking's share of the worst street frontage this plan has, in
-    percent (FOLLOWUPS 80(a); :func:`flats.fit.frontage.parking_share_pct`),
-    or None where it cannot be measured.
+    percent, and the longest run of one street it faces, in feet
+    (FOLLOWUPS 80(a), 84; :func:`flats.fit.frontage.parking_share`), or None
+    where it cannot be measured.
 
     ``streets`` is the lot's edges as the streets lie, before a reading of
     a through lot renamed its far end the rear: the far street is still a
@@ -3698,7 +3707,7 @@ def parking_frontage(
     if here.lot_geom is None or streets is None or fit.beside or fit.column:
         return None
     if len(street_chains(streets)) < 2:
-        return 0.0
+        return 0.0, 0.0
     street: tuple[tuple[float, float, float, float], ...] = ()
     if here.edges is not None:
         street = tuple((e.x1, e.y1, e.x2, e.y2) for e in here.edges.of_class(EdgeClass.front))
@@ -3707,7 +3716,7 @@ def parking_frontage(
     drawn = _court_drawn(here, design, got, fit, fitter, env, street)
     if drawn is None or not drawn.rows:
         return None
-    return parking_share_pct(here.lot_geom, streets, drawn.rows, drawn.building)
+    return parking_share(here.lot_geom, streets, drawn.rows, drawn.building)
 
 
 def _largest_left(

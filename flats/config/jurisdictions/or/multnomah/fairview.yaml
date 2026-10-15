@@ -1117,6 +1117,21 @@ defaults:
     url: https://ecode360.com/50509420
     retrieved: '2026-08-27'
     quote: "or/multnomah/fairview/19.30.txt#L666-L676"
+  parking_area_frontage_any_street:
+    # The cap above is read on EVERY street the lot has (FOLLOWUPS 84). (E)
+    # reaches parking "between a building and a public street (other than an
+    # alley)" -- any public street, not the front alone -- and (E)(2) takes
+    # its share of "the property street frontage". The model-code sentence
+    # Wilsonville 4.113(.14)D.3 and Clackamas 845.02 print, and Steph's
+    # standing reading of it (2026-10-14, FOLLOWUPS 80(a)): "I read this as
+    # 'any' street frontage. So front, back, side streets if they exist." A
+    # court behind the building on a lot with no street behind it is not
+    # reached.
+    value: true
+    cite: "FMC 19.30.040(E) and (E)(2), garages and parking between a building and a public street, within 50 percent of the property street frontage (any street frontage: front, side and rear streets)"
+    url: https://ecode360.com/50509420
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.30.txt#L666-L676"
   # The other limb of the same sentence, (E)(1), is why this is exempt rather
   # than true: a garage or parking area IS allowed between the building and
   # the street where it "is separated from the street property line by a

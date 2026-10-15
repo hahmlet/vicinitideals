@@ -264,6 +264,7 @@ CHECK_FIELD: dict[str, str] = {
     "min_frontage_ft": "min_frontage_ft",
     "driveway_frontage_share": "driveway_max_frontage_pct",
     "parking_frontage_share": "parking_area_max_frontage_pct",
+    "parking_frontage_width": "parking_area_max_width_ft",
     "front_yard_vehicle_share": "parking_front_yard_max_pct",
     "min_lot_width_ft": "min_lot_width_ft",
     "min_average_lot_width_ft": "min_average_lot_width_ft",
@@ -417,6 +418,12 @@ class LotFacts:
     #: (``parking_area_frontage_any_street``); None where nobody measured it,
     #: which leaves the check unrun.
     parking_frontage_share_pct: float | None = None
+    #: The longest run of any one street frontage that same plan's parking
+    #: faces, in feet (:func:`flats.fit.frontage.parking_share`), for a cap
+    #: in feet stated beside the share (``parking_area_max_width_ft``; Oregon
+    #: City 17.16.060.D.1). Measured with the share and from the same
+    #: drawing; None leaves that check unrun.
+    parking_frontage_run_ft: float | None = None
     #: Distances to transit, feet, as ``(measure, ft)`` pairs
     #: (:data:`flats.rules.model.TRANSIT_MEASURES`), measured once per
     #: transit release by :mod:`flats.ingest.transit` and read by the rules
@@ -891,6 +898,21 @@ def _checks(
                 float(parking_cap),
                 is_maximum=True,
             )
+        # The same sentence's ceiling in feet, where the code prints one
+        # beside the share and binds "whichever is less" (Oregon City
+        # 17.16.060.D.1, forty feet): the longest run of any one street the
+        # parking faces, off the same drawing as the share.
+        width_cap = rules.get("parking_area_max_width_ft")
+        if width_cap is not None:
+            if lot.parking_frontage_run_ft is None:
+                unchecked.append("parking_frontage_width")
+            else:
+                check(
+                    "parking_frontage_width",
+                    lot.parking_frontage_run_ft,
+                    float(width_cap),
+                    is_maximum=True,
+                )
     # The front yard's share in vehicle area (Portland 33.266.120.C.1.b, 40
     # percent; Milwaukie 19.607.1.D, 50). An AREA share of the ground between
     # the front lot line and the building, which the pod's drive crosses

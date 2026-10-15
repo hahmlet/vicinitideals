@@ -213,8 +213,10 @@ def test_front_parking_is_capped_at_half_the_frontage_and_not_banned(
     8.120.C.4.b reads like Portland's outright ban until the next two
     subsections except a parking area separated from the street by a dwelling
     OR one at half the street frontage or less. Encoding the ban would invent a
-    red on a lot the code lets through, so `parking_front_prohibited` stays
-    empty and the fifty percent is what binds.
+    red on a lot the code lets through, so `parking_front_prohibited` is
+    `exempt` (it was once empty, which reads as the conservative unknown and
+    refused a corner lot the court beside the building -- FOLLOWUPS 84) and
+    the fifty percent, on every street, is what binds.
 
     The cross-reference in (b) points at "Subsections a. and b. of this
     Subsection C.4." -- a. is "garages and carports are not required" and b. is
@@ -223,7 +225,8 @@ def test_front_parking_is_capped_at_half_the_frontage_and_not_banned(
     the broken pointer does not conclude the exceptions are unreachable.
     """
     assert troutdale.defaults["parking_area_max_frontage_pct"].value == 50
-    assert "parking_front_prohibited" not in troutdale.defaults
+    assert troutdale.defaults["parking_front_prohibited"].exempt is True
+    assert troutdale.defaults["parking_area_frontage_any_street"].value is True
 
     lines = _lines(store, STANDARDS)
     assert "shall not be located between a building and a" in lines[597]

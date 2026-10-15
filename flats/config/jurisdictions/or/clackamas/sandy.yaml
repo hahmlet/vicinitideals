@@ -420,16 +420,45 @@ defaults:
     url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.98PALOACRE
     retrieved: '2026-10-07'
     quote: "or/clackamas/sandy/sdc.17.98.txt#L440"
+  # PARKING SHARE OF EVERY STREET FRONTAGE (FOLLOWUPS 84). 17.90.160 binds
+  # "Multi-family residential developments in residential zones" (L2224), and
+  # its F. is a number, not a design menu item: "Parking lots in
+  # multi-family developments shall not occupy more than 50 percent of the
+  # frontage of any public street abutting the lot or building" (L2291).
+  # 17.90.10 B holds residential development to the clear and objective
+  # standards of the chapter (L126), and this is one. The pod is a
+  # multi-family dwelling here ("at least three dwelling units ... located
+  # on a lot or development site", 17.10), and so are four row houses on one
+  # development site ("one or more adjacent ... lots", 17.10 L289), so the
+  # cap is read on both paths -- the conservative reading of two overlapping
+  # definitions. "Parking lot" is not defined; the court of stalls and its
+  # aisle is read as one. "Any public street abutting the lot": every street
+  # the lot has, the shape Steph read into the model code's half-frontage
+  # cap (2026-10-14, FOLLOWUPS 80(a)). A court behind the building on a lot
+  # with no street behind it is not reached.
+  parking_area_max_frontage_pct:
+    value: 50
+    cite: Sandy SDC 17.90.160 F, parking lots in multi-family developments no more than 50 percent of the frontage of any public street abutting the lot or building
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.90DEST
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2289,L2291"
+  parking_area_frontage_any_street:
+    value: true
+    cite: "Sandy SDC 17.90.160 F, parking lots no more than 50 percent of the frontage of any public street abutting the lot or building (any street frontage: front, side and rear streets)"
+    url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.90DEST
+    retrieved: '2026-10-07'
+    quote: "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2289,L2291"
 
 # NOT ENCODED, read 2026-10-07:
 # - Design review (17.90, a Type II Director's review for multi-family
 #   development, 17.90.40 B), and the multi-family design menu of 17.90.160
 #   (roofs, entries, facade offsets, 48 sq ft private outdoor areas,
-#   a landscaped parking lot frontage of no more than 50 percent of a street,
 #   recreation areas above five units): the menu is clear and objective
 #   (17.90, L126) and nothing checks it; Steph 2026-10-14, an unchecked
-#   design checklist does not block green. The review's elevation to a
-#   Type III hearing with conditions is the zones' REVIEW-CONDITIONS flag.
+#   design checklist does not block green. Its F., the parking lots' share
+#   of every street frontage, is a measured standard and IS encoded above
+#   (FOLLOWUPS 84). The review's elevation to a Type III hearing with
+#   conditions is the zones' REVIEW-CONDITIONS flag.
 # - Garage setbacks in the zone tables (20 or 22 ft to a garage door, 15 ft
 #   perpendicular, 5 ft alley): the pod carries no garage.
 # - R-1, R-2 and R-3 "lots with 40 feet or less of street frontage shall be

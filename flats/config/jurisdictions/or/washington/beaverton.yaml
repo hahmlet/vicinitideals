@@ -1178,14 +1178,25 @@ zones:
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -1281,14 +1292,25 @@ zones:
       value: 2.0
       cite: "Beaverton BDC Table 20.22.15, J.0 Maximum Floor Area Ratio"
       quote: "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -1405,14 +1427,25 @@ zones:
       value: 40
       cite: "Beaverton BDC Table 20.10.15, F.1 Building Height - Maximum (NS 40)"
       quote: "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -1508,14 +1541,25 @@ zones:
           when: [abuts_residential_zone]
           cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
           quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -1602,14 +1646,25 @@ zones:
           when: [abuts_residential_zone]
           cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
           quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -1703,14 +1758,25 @@ zones:
           when: [abuts_residential_zone]
           cite: "Beaverton BDC 60.05.15.7.A, height transition within 30 feet of RMA, RMB or RMC (60 feet or the abutting zone's maximum, whichever is greater)"
           quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L328-L333"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -1808,14 +1874,25 @@ zones:
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -1905,14 +1982,25 @@ zones:
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -2002,14 +2090,25 @@ zones:
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -2108,14 +2207,25 @@ zones:
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -2215,14 +2325,25 @@ zones:
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"
@@ -2320,14 +2441,25 @@ zones:
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
-    parking_area_max_frontage_pct:
-      # 60.05.15.6.C caps vehicle parking and circulation areas within 10
-      # feet of a street lot line at 35 percent of that line's length; read
-      # as the share of frontage vehicle area may take, which is how the
-      # field is measured.
+    driveway_max_frontage_pct:
+      # 60.05.15.6.C: "Vehicle parking and circulation areas within 10 feet
+      # of a street lot line shall be limited to no more than 35 percent of
+      # the length of any street lot line." Read against its own wording
+      # (FOLLOWUPS 84) it reaches only the 10-foot strip along each street,
+      # and in this zone 60.05.20.6.A.1-2 keeps every auto parking area at
+      # least 20 feet from the right-of-way on every frontage. So no stall
+      # and no court aisle can stand in the strip; what crosses it is the
+      # driveway, which Chapter 90 counts as a vehicle area ("parking areas,
+      # driveways, drive aisles", bdc.90.definitions.txt L2775-L2776). It
+      # is therefore a cap on the drive's width at the street, the field's
+      # shape (Sherwood 16.14.030 A.2). Not `parking_area_max_frontage_pct`
+      # and not on every street: a court behind or beside the building, 20
+      # feet back, is outside the strip the sentence measures. A doubt: the
+      # field reads the drive against the sum of the street lines, where the
+      # code reads each line on its own, so a corner lot is read loosely.
       value: 35
-      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length"
-      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325"
+      cite: "Beaverton BDC 60.05.15.6.C, vehicle areas within 10 feet of a street lot line no more than 35 percent of its length; 60.05.20.6.A.1-2, auto parking areas no closer than 20 feet to the right-of-way (so only the driveway crosses that strip)"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265,L324-L325,L669-L676"
     parking_front_prohibited:
       value: true
       cite: "Beaverton BDC 60.05.20.6.A, vehicle areas not between a building and an abutting Primary Frontage (MR and Commercial and Multiple Use zones)"

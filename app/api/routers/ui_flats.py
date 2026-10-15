@@ -2741,6 +2741,7 @@ _CHECK_WORDS = {
     "site_grade_pct": "too steep: the ground under the building and its parking falls more than 15%",
     "driveway_frontage_share": "driveway takes more of the frontage than allowed",
     "parking_frontage_share": "the parking faces more of a street frontage than allowed (front, side or rear street)",
+    "parking_frontage_width": "the parking faces a longer stretch of a street than the feet allowed (front, side or rear street)",
     "front_yard_vehicle_share": "parking takes more of the front yard than allowed",
     "institutional_share": "institutional land, never a pod site",
     "roll_red": "the county's tax roll marks it as public land, a tract or common parcel, or a parcel worth $0",

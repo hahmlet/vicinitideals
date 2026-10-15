@@ -733,8 +733,12 @@ defaults:
   # street frontage. The ban is therefore NOT absolute the way Portland's
   # 33.266.120.C.1.a and Milwaukie's 19.505.3.D.4.a are, and encoding it as
   # one would invent a red on a lot the code lets through -- so the fifty
-  # percent is what this file carries and `parking_front_prohibited` stays
-  # empty.
+  # percent is what this file carries and `parking_front_prohibited` is
+  # `exempt`, below. (It used to stay empty, and an empty field reads as the
+  # conservative unknown: a corner lot was refused the court beside the
+  # building that the code lets through inside half the frontage. FOLLOWUPS
+  # 84; Wilsonville, Oregon City, Fairview and Clackamas print the same
+  # sentence and carry it as exempt.)
   #
   # The cross-reference in (b) is broken: it excepts compliance with
   # "Subsections a. and b. of this Subsection C.4.", where a. is "garages and
@@ -749,6 +753,36 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1813
     retrieved: '2026-08-29'
     quote: "or/multnomah/troutdale/8.development-standards.txt#L501,L596,L598,L603-L604"
+  parking_area_frontage_any_street:
+    # The cap above is read on EVERY street the lot has (FOLLOWUPS 84). C.4.b
+    # reaches parking "between a building and a public street (other than an
+    # alley)", any public street, and d. takes its share of "the street
+    # frontage" -- the model-code sentence of Wilsonville 4.113(.14)D.3, read
+    # by Steph 2026-10-14 (FOLLOWUPS 80(a)): "I read this as 'any' street
+    # frontage. So front, back, side streets if they exist." A court behind
+    # the building on a lot with no street behind it is not reached.
+    value: true
+    cite: "TDC 8.120.C.4.b and d, garages and parking between a building and a public street, within 50 percent of the street frontage (any street frontage: front, side and rear streets)"
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/8.development-standards.txt#L501,L596,L598-L604"
+  # Exempt rather than true: C.4.b lets parking stand between the building
+  # and the street where a dwelling screens it (c.) or it stays inside half
+  # the frontage (d.). The front-yard ban is 8.130.C.4.b.i, on the townhouse
+  # path a project reaches only by failing the standards at 8.130.C.4.a --
+  # held as `parking_side_prohibited`'s unit-lot variant below, and on the
+  # front the court beside the building is the only ground it reaches.
+  parking_front_prohibited:
+    exempt: true
+    cite: TDC 8.120.C.4.b to d, parking between a building and a public street allowed where a dwelling screens it or within half the street frontage
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/8.development-standards.txt#L501,L596,L598-L604"
+    variants:
+      - value: true
+        when: [unit_lots]
+        cite: TDC 8.130.C.4.b.i, off-street parking accessed on the back facade or in the rear yard; none in the front yard or side yard of a townhouse
+        quote: "or/multnomah/troutdale/8.development-standards.txt#L816-L818"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from
