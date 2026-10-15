@@ -115,8 +115,8 @@ cd /root/code/vicinitideals && nohup flock -o /root/heavy.lock   .venv/bin/pytho
   tiles are missing, a street-class map road dedication reads is missing
   or not `acquired`/`present` (`street_class_washington`,
   `street_class_sherwood`, `street_class_oregon_city`,
-  `street_class_milwaukie` and the `rlis_streets` centrelines --
-  FOLLOWUPS 67/77: the bridge does not fail without one, it gives every
+  `street_class_milwaukie`, `street_class_tigard` and the `rlis_streets`
+  centrelines -- FOLLOWUPS 67/77/81: the bridge does not fail without one, it gives every
   street line that map ranks the deepest distance, a whole city screened
   at the worst case; re-fetch with `--keys <key>`), the elevation tiles leave a measured lot on no model
   (checked against the newest `data/quadfit_*/s4_lots.parquet`, and again

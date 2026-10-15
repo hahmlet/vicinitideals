@@ -6,7 +6,9 @@ county class), Sherwood 16.106.030 D (26 / 32 / 32 / 37 / 61 ft by city
 class), King City 16.80.060 A (33 / 30 ft on named streets, 25 elsewhere),
 Oregon City Table 16.12.016 (half the widest right-of-way of the class, or of
 the row the zones on both sides stand in for, FOLLOWUPS 82) and
-Milwaukie Table 19.501.2.A (25 / 30 / 40 ft on named streets). These tests pin
+Milwaukie Table 19.501.2.A (25 / 30 / 40 ft on named streets) and Tigard
+18.210.030.A.1 (half the widest right-of-way of Table 18.910.1 by TSP class,
+FOLLOWUPS 81). These tests pin
 each city's distance, what is assumed when nothing can be read, that the
 strip comes off the envelope like a setback, and that every layer one of these
 rules reaches is measured. Geometry sits at real Oregon State Plane North
@@ -43,6 +45,7 @@ SHERWOOD = "or/washington/sherwood"
 KING_CITY = "or/washington/king-city"
 OREGON_CITY = "or/clackamas/oregon-city"
 MILWAUKIE = "or/clackamas/milwaukie"
+TIGARD = "or/washington/tigard"
 # A lot in unincorporated Washington County near Bull Mountain.
 X0, Y0 = 7_620_000.0, 650_000.0
 FRONT = [X0, Y0, X0 + 50, Y0, "F"]
@@ -196,7 +199,7 @@ def test_a_private_road_gives_up_nothing(rules) -> None:
 
 def test_a_code_without_the_distances_is_untouched(rules) -> None:
     lot = lot_from_row(row(20.0, "local"))
-    for layer, zone in (("or/multnomah/portland", "CM2"), ("or/washington/tigard", "RES-B"), ("or/washington/beaverton", "RMA")):
+    for layer, zone in (("or/multnomah/portland", "CM2"), ("or/washington/beaverton", "RMA")):
         assert dedicated(lot.edges, rules.resolve(layer, zone)) is lot.edges, layer
 
 
@@ -556,6 +559,152 @@ def test_milwaukie_lists_all_twenty_nine_rows(rules) -> None:
     assert sorted({ft for _, ft in table}) == [25, 30, 40]
 
 
+# --- Tigard (18.210.030.A.1, Table 18.910.1) ------------------------------
+#
+# Setbacks are measured from "the ultimate right-of-way width as shown in the
+# Transportation System Plan"; the TSP sends the widths to Table 18.910.1,
+# keyed to its functional class. Each class holds the top of its printed
+# range, half of it from the centre line: Local 54 -> 27, Neighborhood Route
+# 58 -> 29, Collector 96 -> 48, Arterial 128 -> 64. River Terrace Boulevard
+# states its own 110 ft (55); downtown (MU-CBD) local and neighbourhood
+# streets hold the widest street character row, 74 ft (37). A street name is
+# passed below: Tigard lists one street by name, so an unread name takes the
+# deepest distance, as in King City and Milwaukie.
+
+
+def tigard(rules, bucket, half=20.0, zone="RES-B", names=("MAIN ST",)):
+    return strip(
+        rules,
+        TIGARD,
+        zone,
+        half,
+        names=list(names) if names is not None else None,
+        classes={"street_class_tigard": bucket},
+    )
+
+
+def test_tigard_takes_half_the_widest_right_of_way_of_its_class(rules) -> None:
+    assert [tigard(rules, b) for b in ("local", "neighborhood_route", "collector", "arterial")] == [7, 9, 28, 44]
+    assert tigard(rules, "local", half=27.0) == 0.0
+    assert tigard(rules, "local", half=25.5) == pytest.approx(1.5)
+
+
+def test_tigard_holds_the_printed_widths(rules) -> None:
+    got = rules.resolve(TIGARD, "RES-B")
+    assert [got.get(dedication.CLASS_FIELDS[c]) for c in ("local", "neighborhood_route", "collector", "arterial")] == [
+        54,
+        58,
+        96,
+        128,
+    ]
+    assert got.get(dedication.WIDTH_FIELD) is True
+    assert got.get(dedication.CLASS_BY_FIELD) == "tigard"
+
+
+def test_tigard_unranked_unread_or_unmeasured_takes_the_arterial_distance(rules) -> None:
+    # A Freeway, an "Other" line, a line no TSP line runs on: unranked.
+    assert tigard(rules, None) == 44
+    # The map missing from the snapshot.
+    assert strip(rules, TIGARD, "RES-B", 20.0, names=["MAIN ST"], classes={}) == 44
+    # No centre line close enough: the whole deepest distance.
+    assert tigard(rules, "local", half=None, names=None) == 64
+    # A centre line read but no name: the deepest.
+    assert tigard(rules, "local", names=None) == 44
+
+
+def test_tigard_reads_its_own_map_not_the_countys(rules) -> None:
+    got = strip(
+        rules,
+        TIGARD,
+        "RES-B",
+        20.0,
+        names=["MAIN ST"],
+        classes={"street_class_washington": "collector", "street_class_tigard": "local"},
+    )
+    assert got == 7.0
+
+
+def test_river_terrace_boulevard_is_half_its_own_110_feet(rules) -> None:
+    # Metro's name, read the way the bridge reads it.
+    metro = [dedication.street_key("SW RIVER TERRACE BLVD")]
+    assert metro == [dedication.street_key("River Terrace Boulevard")]
+    for zone in ("RES-B", "RES-C"):
+        assert tigard(rules, "collector", zone=zone, names=metro) == 35, zone
+        # Its own standard governs whatever class the map reads.
+        assert tigard(rules, "arterial", zone=zone, names=metro) == 35, zone
+
+
+def test_downtown_local_streets_hold_the_widest_street_character_row(rules) -> None:
+    assert tigard(rules, "local", zone="MU-CBD") == 17
+    assert tigard(rules, "neighborhood_route", zone="MU-CBD") == 17
+    # The Collector and Arterial rows are wider already and stand.
+    assert tigard(rules, "collector", zone="MU-CBD") == 28
+    assert tigard(rules, "arterial", zone="MU-CBD") == 44
+
+
+def test_tigards_map_is_read_for_the_dedication_only() -> None:
+    from flats.geom.street_class import class_rank
+
+    spec = CLASS_MAPS["street_class_tigard"]
+    assert spec.access is False
+    buckets = dedication.BUCKETS["street_class_tigard"]
+    assert buckets == {0: "local", 1: "neighborhood_route", 2: "collector", 3: "arterial", 4: "arterial"}
+
+    def bucket(value):
+        rank = class_rank(value, spec)
+        return None if rank is None else buckets.get(rank)
+
+    # The layer's CITY_TSP values, as served 2026-10-15.
+    assert [bucket(v) for v in ("LOCAL", "Local", "PRIVATE")] == ["local"] * 3
+    assert bucket("NEIGHBORHOOD") == "neighborhood_route"
+    assert [bucket(v) for v in ("COLLECTOR", "MAJOR COLLECTOR", "MINOR COLLECTOR")] == ["collector"] * 3
+    # Principal Arterial and the Hall Blvd STA stretch take the Arterial row.
+    assert [bucket(v) for v in ("ARTERIAL", "STA", "PCPL Arterial")] == ["arterial"] * 3
+    # No row: unread, the deepest.
+    assert [bucket(v) for v in ("FREEWAY", "Other", "OTHER", None, "")] == [None] * 5
+
+
+# A Tigard lot on SW 107th Ave near Greenburg Road, where the city's TSP line
+# and Metro's centre line were checked to run together.
+TX, TY = 7_614_700.0, 648_300.0
+T_FRONT = [TX, TY, TX + 50, TY, "F"]
+
+
+def _tigard_map(tsp: LineString, rank: int) -> ClassMap:
+    # The city's TSP layer carries no street name: it is matched by position.
+    return ClassMap(
+        serves=(TIGARD,),
+        lines=Lines.build([tsp], [""]),
+        kinds=("",),
+        streets=Lines.build([tsp], [""]),
+        types=(1500,),
+        ranks=(rank,),
+        key="street_class_tigard",
+    )
+
+
+def test_tigard_reads_the_class_off_its_own_tsp_line_and_the_width_off_metros() -> None:
+    street = LineString([(TX - 500, TY - 21), (TX + 500, TY - 21)])
+    county = _cmap([street], ["SW 107TH AVE"], (1500,), ranks=(2,))
+    city = _tigard_map(LineString([(TX - 400, TY - 24), (TX + 400, TY - 24)]), 1)
+    (got,) = dedication.measure([T_FRONT], TIGARD, [county, city])
+    # The half-width is Metro's centre line, not the city's drawing.
+    assert got[4] == pytest.approx(21.0) and got[5] is True and got[6] == ["107TH AVE"]
+    assert got[7]["street_class_tigard"] == "neighborhood_route"
+    # Outside Tigard the city's map is not read.
+    (county_only,) = dedication.measure([FRONT], WASHCO, [county, city])
+    assert "street_class_tigard" not in county_only[7]
+
+
+def test_a_tigard_line_far_from_any_tsp_line_is_unread() -> None:
+    street = LineString([(TX - 500, TY - 21), (TX + 500, TY - 21)])
+    county = _cmap([street], ["SW 107TH AVE"], (1500,), ranks=(0,))
+    city = _tigard_map(LineString([(TX - 400, TY - 300), (TX + 400, TY - 300)]), 0)
+    (got,) = dedication.measure([T_FRONT], TIGARD, [county, city])
+    assert got[4] == pytest.approx(21.0)
+    assert got[7]["street_class_tigard"] is None
+
+
 # --- the rule ------------------------------------------------------------
 
 
@@ -725,7 +874,7 @@ def test_every_layer_a_dedication_reaches_is_measured(layers) -> None:
         )
 
     stating = {lid for lid, layer in layers.items() if states(layer)}
-    assert stating == {WASHCO, SHERWOOD, KING_CITY, OREGON_CITY, MILWAUKIE}
+    assert stating == {WASHCO, SHERWOOD, KING_CITY, OREGON_CITY, MILWAUKIE, TIGARD}
     reached = set(stating)
     for lid, layer in layers.items():
         for ruling in layer.zone_rulings.values():
