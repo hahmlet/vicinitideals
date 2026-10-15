@@ -2653,23 +2653,6 @@ read when the weekly full re-screen lands.
    licensed separately, Steph to pick. PRIORITY (recommended): after the weekly scan settles,
    ahead of new cities and the signing push; false-GREEN fixes carry on beside it; freeze edits
    to the code text and citations while each city is being converted.
-74. [scan: NO -- the fix moves no lot on the run-73 rules] **The placement cache ignores the
-   envelope shape (found 2026-10-11 by washco-road-dedication). FIXED on branch
-   flats/placement-cache-fix 2026-10-14, waiting for the coordinator to merge.** quadfit
-   `_screen_on` shared a placement search by (source, setbacks, front, plan); now by the exact
-   envelope and court ground (`_search_key`, their WKB), which is all a Fitter reads, so equal
-   ground still shares one. Test: `test_two_designs_with_the_same_yards_are_each_placed_on_their_own_envelope`
-   (real coordinates; the old key fitted a pod on the other design's envelope and called it
-   GREEN). BOUND on 137 (base 3d681747 vs the fix, run-73 inputs): 5,997 lots (2,500 in the four
-   planted-strip cities, 2,500 through lots, 1,000 random), 11,994 rows, 0 moves in ANY column;
-   base reproduced run 73 exactly; a check inside the fixed run counted 19,119 placements and 0
-   where the old key would have handed over another envelope. Why none: under one shared
-   search, two envelopes cut with the same yards can differ only by the planted strip
-   (`parking_lot_line_buffer_ft`) or the through-lot end rule (`front_lot_line_through`), and
-   both are one fixed value per zone in the corpus (no variants, no `unless`; re-read after
-   rebasing on 893c2c17). The bug was latent: a variant on either field, or an envelope cut
-   per design (the kind the road-dedication lane was building), would have set it off. No
-   re-screen needed.
 75. [scan: YES, a splice of Cornelius + west Washington County] **The 2026-10-12 weekly (run 73,
    PROMOTED by Steph 2026-10-14 over the `lots_drift` gate, +4.1% measured lots = Tigard/Cornelius/
    Estacada switched on; runs 67 and 72 pruned) ran on the July 1 m elevation, not the Washington
@@ -2925,15 +2908,40 @@ read when the weekly full re-screen lands.
    Washington County Assessment & Taxation property records (legal description per tax lot), the
    county surveyor's plat index. First step: confirm either holds the legal description in bulk
    for the WashCo uninc lots, then rule how a PUD plat is told apart.
-84. [scan: YES] **Frontage caps not yet read as caps (found 2026-10-14, round2-rulings).** The any-
-   street half-frontage cap is wired for Wilsonville, Hillsboro, Clackamas 845.02 and Beaverton
-   S11 only. Read next, each against its own wording: Oregon City, Fairview, Troutdale (its note
-   looks too strict), Sandy 17.90.160, Beaverton 60.05.15.6.C (35%, 12 blocks not flagged). Also
-   seen: Fairview VC's variant reads inconsistently; Clackamas uninc yaml ~L863 carries a stale
-   comment; SCMU stays grey (dimensions not encoded).
+   SOURCE FOUND 2026-10-15: Washington County's Taxlots FeatureServer/151
+   (gispub.co.washington.or.us/server/rest/services/Urban_Services_Plan_Framework/Urban_Services_Framework/FeatureServer/151),
+   free, 2,000 per page, LEGAL_DESCRIPTION on 201,183 of 201,678 lots ("VIEW CREST, LOT 3",
+   "2016-037 PARTITION PLAT, LOT 1"; metes and bounds otherwise). PUD named in the text on only
+   58 lots; no case-type index found, so standard vs PUD is not separable from it. Next: read the
+   CDC gate -- does a PUD plat change the answer? If not, measure "made by a plat" and go.
+84. [scan: YES -- bound pending] **Frontage caps read as caps on every street (MERGED 2026-10-15,
+   branch flats/frontage-caps 667f57e9).** Oregon City 17.16.060.D.1 (40 ft or 50% of the frontage,
+   whichever is less -- new check `parking_frontage_width`, worst street), Fairview 19.30.040(E)(2)
+   50%, Troutdale 8.120.C.4.d 50% (front parking was blank = banned; now allowed except the
+   townhouse path 8.130.C.4.b.i), Sandy 17.90.160 F 50% of any abutting public street, Beaverton
+   60.05.15.6.C 35% of any street lot line read as a DRIVEWAY cap (parking is held 20 ft back by
+   60.05.20.6.A.1) in all 12 blocks. Every % cap is now per street line (the side court and
+   Sherwood's driveway cap summed frontages before -- lenient, fixed; unknown street = shortest
+   line). Fairview VC's conditional-use path still open (1 lot, 1N3E33AB-00500; the zone-gaps
+   lane's). Next: bound the five cities + Sherwood and the side-court cities' corner/through lots,
+   read every move, report to Steph. Watch: OC corner side courts (43 ft > 40), Beaverton side
+   courts may gain, Sandy/Fairview through lots lose, small corners stay yellow (court not drawn).
 85. [scan: YES if Steph says yes] **ORS 197A.400(1)(a) "clear and objective" for housing (question
    for Steph, 2026-10-14).** State law requires clear and objective standards for housing; where a
    city's conditional-use or design-review path for the pod rests on judgement words, the state
    rule may let the pod through on the stated standards alone. If Steph wants it weighed, read the
    statute and its exceptions and list which RED-by-ruling zones (Canby, PMU1-3, Happy Valley,
    ...) it could lift; nothing is encoded on it now.
+86. [scan: NO for (A)/(B); YES for (C1) once an ordinance is entered] **Agents could not recall
+   a property ruling (Steph 2026-10-15, offered, waiting on Steph's go).** An agent on another
+   surface answered Portland CI1 from our stored code (housing not allowed) and had no record of an
+   earlier conversation; Steph had found Portland RICAP 11 (adopted 2026-08-06, effective
+   2026-11-01: Household and Group Living ALLOWED in CI1 under RM1 rules) in the City Council
+   materials package (Exhibit B pp. 74-79), not the published code. claude-mem search was failing
+   (500) at the time. Offered: (A) a property lookup agents run first -- address/TLID -> the lot
+   page's colour, reasons, citations, flags and any ruling; (B) a rulings register keyed by place
+   (city/zone/lot), written when a ruling is made; (C1) adopted-not-yet-codified ordinances
+   entered by hand with their effective date, citing the adopted exhibit (an ordinance governs from
+   its effective date whether or not the city has codified it; Steph doubts Portland codifies RICAP
+   11 by Nov 1) -- CI1 first; (C2) check whether DLCD's notices of proposed/adopted amendments
+   (ORS 197.610) can be searched, as one statewide watch instead of 20+ council minutes.

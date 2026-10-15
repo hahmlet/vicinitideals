@@ -1008,7 +1008,7 @@ UNEXPRESSIBLE: dict[str, int] = {
     "parking_lot_line_buffer_ft": 3,
     "parking_required_yard_prohibited": 1,
     "min_building_height_stories": 6,
-    "parking_area_max_frontage_pct": 17,
+    "parking_area_max_frontage_pct": 5,
     "parking_aisle_two_way_ft": 12,
     "parking_aisle_one_way_ft": 12,
     "driveway_approach_max_width_ft": 10,
@@ -1052,6 +1052,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     "type_i_density_escape_du_per_acre": 8,
     "type_i_standard_plat_required": 8,
     "parking_area_frontage_any_street": 4,
+    #: FOLLOWUPS 84 (2026-10-15): Beaverton 60.05.15.6.C's 35 percent is the
+    #: driveway inside the ten-foot street strip, not a parking cap -- twelve
+    #: blocks move off `parking_area_max_frontage_pct` (17 -> 5).
+    "driveway_max_frontage_pct": 12,
 }
 
 
