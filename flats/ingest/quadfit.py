@@ -1740,6 +1740,9 @@ def lot_from_row(
         # Two streets that really are two: the side street may take the
         # driveway (:func:`flats.score.paper.side_street_fed`).
         corner=is_corner(edges),
+        # The shortest street's line: what a cap on a share of "any street
+        # lot line" is read against (FOLLOWUPS 84), not the summed frontage.
+        street_line_min_ft=street_line_min_ft(edges),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
         street_unconfirmed=unconfirmed,
@@ -2080,7 +2083,7 @@ def _room(s: Screened, fitter: Fitter) -> Room | None:
         carved_rear_ft=s.envelope.rear_cut_ft if s.envelope is not None else None,
         alley=facts.alley,
         corner=facts.corner,
-        frontage_ft=facts.frontage_ft,
+        frontage_ft=facts.cap_frontage_ft,
         street_deg=_access_deg(s.lot, s.front_deg),
     )
 
@@ -2187,7 +2190,7 @@ def _screen_on(
         carved_rear_ft=env.rear_cut_ft,
         alley=facts.alley,
         corner=facts.corner,
-        frontage_ft=facts.frontage_ft,
+        frontage_ft=facts.cap_frontage_ft,
         street_deg=_access_deg(here, front),
     )
     if fit.beside and not beside_reaches_street(here, design, got, fit, fitters[key], env):
@@ -2203,7 +2206,7 @@ def _screen_on(
             carved_rear_ft=env.rear_cut_ft,
             alley=facts.alley,
             corner=facts.corner,
-            frontage_ft=facts.frontage_ft,
+            frontage_ft=facts.cap_frontage_ft,
             street_deg=(),
         )
     base = facts
@@ -2251,7 +2254,7 @@ def _screen_on(
             carved_rear_ft=env.rear_cut_ft,
             alley=base.alley,
             corner=base.corner,
-            frontage_ft=base.frontage_ft,
+            frontage_ft=base.cap_frontage_ft,
             street_deg=_access_deg(here, front),
             menu=menu,
         )
@@ -3509,7 +3512,7 @@ def _beside_drawn(
         return None
     facts = here.facts
     beside = side_court(
-        design, got, facts.alley, corner=facts.corner, frontage_ft=facts.frontage_ft
+        design, got, facts.alley, corner=facts.corner, frontage_ft=facts.cap_frontage_ft
     )
     beyond = None if beside is None else _beside_beyond(
         beside, fit.required_ft, got, env.rear_cut_ft
@@ -3681,6 +3684,19 @@ def _court_drawn(
     )
 
 
+def street_line_min_ft(edges: LotEdges | None) -> float | None:
+    """The shortest of the lot's streets, in feet: each street's run of
+    street lot line, corner to corner (:func:`flats.fit.frontage.street_chains`,
+    alleys excluded). None where the lot has no edges or no street line.
+    :attr:`flats.score.screen.LotFacts.street_line_min_ft`."""
+    if edges is None:
+        return None
+    chains = street_chains(edges)
+    if not chains:
+        return None
+    return min(sum(e.length_ft for e in chain) for chain in chains)
+
+
 def parking_frontage(
     here: QuadfitLot,
     streets: LotEdges | None,
@@ -3796,7 +3812,7 @@ def drawing_for(
     short = _tight_ft(s)
     if s.fit.beside:
         beside = side_court(
-            s.design, s.rules, alley, corner=corner, frontage_ft=s.lot.facts.frontage_ft
+            s.design, s.rules, alley, corner=corner, frontage_ft=s.lot.facts.cap_frontage_ft
         )
         beyond = None if beside is None else _beside_beyond(beside, s.fit.required_ft, s.rules, rear)
         if beside is None or beyond is None or math.isinf(beyond):

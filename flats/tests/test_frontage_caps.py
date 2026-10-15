@@ -210,9 +210,61 @@ def test_beaverton_holds_the_driveway_to_35_percent_of_the_frontage(
     assert (share.verdict is Verdict.passes) is passes
 
 
+@pytest.mark.parametrize(
+    ("corner", "line", "frontage", "verdict"),
+    [
+        # A corner lot: 30 ft front, 140 ft side street. Summed, 35 percent
+        # of 170 ft is 59.5 ft and the drive passes; on the 30 ft line it is
+        # 10.5 ft and the drive does not.
+        (True, 30.0, 170.0, "fails"),
+        (True, 100.0, 170.0, "passes"),
+        # A corner nobody measured street by street (the bridge always
+        # measures one; this is a bare LotFacts): the sum would be the
+        # lenient reading, so the cap is unrun rather than passed.
+        (True, None, 170.0, "unchecked"),
+        # One street: its line is the frontage.
+        (False, None, 60.0, "passes"),
+    ],
+)
+def test_the_driveway_share_is_of_one_street_line_not_the_sum(
+    corner: bool, line: float | None, frontage: float, verdict: str
+) -> None:
+    from flats.score.screen import LotFacts
+
+    lot = LotFacts(
+        lot_sqft=12000, frontage_ft=frontage, lot_width_ft=60, corner=corner, street_line_min_ft=line
+    )
+    got = run(lot, rules(driveway_max_frontage_pct=35))
+    share = check(got, "driveway_frontage_share")
+    if verdict == "unchecked":
+        assert share is None
+        assert "driveway_frontage_share" in got.unchecked
+        return
+    assert share is not None
+    assert share.threshold == pytest.approx(0.35 * (line if line is not None else frontage))
+    assert (share.verdict is Verdict.passes) is (verdict == "passes")
+    if verdict == "fails":
+        assert got.colour is not Colour.green
+
+
+def test_the_court_beside_the_building_is_held_to_one_street_line() -> None:
+    from flats.score.paper import side_court
+    from flats.score.screen import LotFacts
+
+    lot = LotFacts(lot_sqft=12000, frontage_ft=200.0, corner=True, street_line_min_ft=60.0)
+    assert lot.cap_frontage_ft == 60.0
+    assert LotFacts(lot_sqft=12000, frontage_ft=200.0, corner=True).cap_frontage_ft is None
+    cap = rules(parking_area_max_frontage_pct=50, parking_front_prohibited=False, parking_side_prohibited=False)
+    # 50 percent of 200 ft would take the court's aisle and stall; of 60 ft it
+    # does not.
+    assert side_court(DESIGN, cap, None, corner=True, frontage_ft=lot.frontage_ft) is not None
+    assert side_court(DESIGN, cap, None, corner=True, frontage_ft=lot.cap_frontage_ft) is None
+
+
 # --- the bridge, on real coordinates ----------------------------------------
 
 OREGON_CITY = (7_662_529.0, 614_687.0)
+BEAVERTON_AT = (7_600_226.0, 661_811.0)
 SANDY = (7_749_541.0, 635_766.0)
 TROUTDALE = (7_717_882.0, 688_269.0)
 
@@ -273,3 +325,17 @@ def test_troutdale_measures_the_side_street_on_a_corner_lot(corpus: RuleSet) -> 
     s = _screen(corpus, "troutdale", "MDR", TROUTDALE, 120.0, 140.0, "corner")
     share = check(s.screening, "parking_frontage_share")
     assert share is not None and share.threshold == 50.0
+
+
+def test_beaverton_holds_a_corner_lots_drive_to_its_short_street(corpus: RuleSet) -> None:
+    # 30 ft on the front street, 140 ft on the side street: the summed
+    # frontage (170 ft) would allow a 59.5 ft drive; the 30 ft line allows
+    # 10.5 ft, and the pod's drive is wider than that.
+    s = _screen(corpus, "beaverton", "CM-HDR", BEAVERTON_AT, 30.0, 140.0, "corner")
+    assert s.lot.facts.street_line_min_ft == pytest.approx(30.0)
+    share = check(s.screening, "driveway_frontage_share")
+    assert share is not None
+    assert share.threshold == pytest.approx(0.35 * 30.0)
+    assert 0.35 * 170.0 > share.observed > share.threshold
+    assert share.verdict is not Verdict.passes
+    assert s.screening.colour is not Colour.green
