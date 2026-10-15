@@ -1878,7 +1878,13 @@ read when the weekly full re-screen lands.
    and RH-HR min height DEFERRED (0 lots, all red). "Happy Valley /
    Gladstone leftovers" had no list behind it: every refusal there
    loosens or does not reach a 4-unit lot.
-53. [scan: Estacada + Canby/Sandy DONE in run 73; (b)-(f) below still open] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
+53. [scan: Estacada + Canby/Sandy DONE in run 73; Sandy REVERSED on flats/round2-rulings-r3, rides the weekly ~2026-10-19; (b)-(f) below still open] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
+   REVIEW TIERS (Steph 2026-10-14, r3): Sandy R-1/R-2/R-3 come back YELLOW -- the 17.90.40 B
+   design review applies stated standards but may add conditions (REVIEW-CONDITIONS). Bound on
+   run 74's inputs (as-if quadfit, the zones were never measured): 0 green / 108 yellow / 1,853
+   red of 1,961 (R-1 779 red, 719 on fit; R-2 69 y / 510 r and R-3 39 y / 564 r, mostly the
+   landscaped-area minimum). Canby re-checked and stays RED: the 16.49.030 Type III review is a
+   one-off judgement (zone notes quote it).
    RUN 73 (2026-10-14, LIVE): Estacada 14 green / 7 yellow / 2,860 red of 2,881 (best
    design). All 14 greens read by hand: the 5 NCR greens have their building 42-64 ft
    (farthest corner 80-104 ft) from Eagle Creek Rd, inside the 200 ft band (distances
@@ -2241,6 +2247,11 @@ read when the weekly full re-screen lands.
    Accepted limits: flat ground; street width counted as 0 (N-15 only);
    ~3 ft court over-charge on south-facing rears; RCHDR floors always
    charged; (L)(1)(b)/(c) not taken; unmeasured street kind = no relief.
+   e0's FLIP BUILT 2026-10-14 on flats/round2-rulings-r3 (b48bec70): HDR, SHD, RCHDR, RTL, CC,
+   C3, OC, RCC, RCO are YELLOW (REVIEW-CONDITIONS, Steph's review tiers) and their quadfit
+   rules.yaml rows are flipped. NOT in r3's bound (that ran before the flip); the rehearsal above
+   (234 green / 145 yellow of 1,061 bridged; the flag makes each green yellow) is the estimate.
+   It reaches the map only through the weekly's fresh normalize + quadfit pass.
 62. [scan: YES] **Roof shape: teach the screen gable vs flat (offered 2026-10-09
    after Steph asked what a gable costs in height; nothing signed).** The
    design holds ONE height (26 ft) compared straight to every cap, so it
@@ -2570,12 +2581,17 @@ read when the weekly full re-screen lands.
    1N2E21AD  -06200 (RM1, 50 x 200 ft). PROPOSAL: fetch the two maps from the City's open-data
    portal as polygons (or get them from Steph), then add a frontage check and the rear setback with
    a corner exemption. Until then, consider marking these 902 yellow.
-69. [DONE 2026-10-14, run 73 LIVE] **Hillsboro zones that need Development Review are
+69. [SUPERSEDED 2026-10-14 by the review tiers, r3 rides the weekly ~2026-10-19] **Hillsboro zones that need Development Review are
    RED BY RULING (17 zones, 84f215f8).** Landed at run 73: 152 green -> red and 212 yellow
    -> red against run 70; 275 SCR-MD greens stay (run 73 Hillsboro: 275 green / 21 yellow /
    30,453 red). Open for Steph only if a Type II review on clear and objective criteria
    should count as by-right (then all 17 zones come back). Prune this line at the next
    housekeeping.
+   REVIEW TIERS (Steph 2026-10-14, r3): the 17 zones come back YELLOW -- 12.80.040 I "may impose
+   conditions" (REVIEW-CONDITIONS). Bound (as-if quadfit, run 74 inputs): 3,385 lots brought into
+   measurement, 0 green / 354 yellow / 3,031 red (SCR-V 133 y / 956 r, MR-2 101 / 879, SCR-HD
+   51 / 63, MR-3 23 / 254; MU-VTC 0 / 166 on its 3-storey minimum; the UC zones red on minimum
+   density). SCR-MD's Zoning Review ("subject to conditions of approval") stays green.
 71. [scan: NO unless it finds a siting rule] **Building-code editions (Steph 2026-10-10: "ORSC 2026
    came into effect 10/1/2026 -- is our app built on that or the previous version?").** The screen
    reads NO building code for pass/fail: it is zoning + fire access (OFC 2022, _state.yaml) +
@@ -2824,7 +2840,7 @@ read when the weekly full re-screen lands.
    resource in the Mississippi Conservation District -- removing it needs demolition review and
    closes the by-right design-standards path. Treat a protected building like any existing
    building (green), or red?
-79. [scan: YES, if Steph rules Type II red] **Washington County lots whose only middle-housing
+79. [scan: BUILT on flats/round2-rulings-r3, rides the weekly ~2026-10-19] **Washington County lots whose only middle-housing
    path is a Type II review show GREEN (found 2026-10-14 by item 64 round 2).** The county's
    Type I path ends at a lot size in every zone: R-5 16,500 sf buildable and R-6 13,100 sf, then
    only if four homes meet the zone's minimum density; R-9/R-15/R-24/R-25+ and the transit
@@ -2837,13 +2853,33 @@ read when the weekly full re-screen lands.
    first). DECISION FOR STEPH, the same question item 69 left open: does a Type II review on clear
    and objective criteria count as by-right? If no, encode the gates (buildable area = lot less
    unbuildable land) and bound.
-80. [scan: NO until ruled] **Readings for Steph from item 64 round 2 (no lot changed colour yet).**
+   RULED (Steph 2026-10-14, review tiers): the Type II path may add conditions = YELLOW
+   (REVIEW-CONDITIONS). Built: past the buildable-area line and under the density escape, or off
+   a standard plat (unmeasured = worst, so every R-9+ lot), the lot is yellow. Bound: 1,190
+   WashCo greens -> yellow, none red (R-9 599, R-15 216, R-24 199, CCMU 42, R-5 39, R-6 34, NMU
+   26, R-25+ 23, TO:R9-12 11, R-15 NB 1); by gate standard_plat 731, buildable_area 391, the
+   zone's own conditions 68. The 731 could be measured instead: item 83.
+80. [scan: (a)(b) RULED + BUILT on flats/round2-rulings-r3, ride the weekly ~2026-10-19; (c)-(e) open] **Readings for Steph from item 64 round 2.**
    (a) "Parking may cover at most half of a street frontage" caps (Wilsonville 4.113(.14)D.3,
    Hillsboro 12.50.715 C.1, Clackamas ZDO 845.02(D), Beaverton): the screen applies them only to
    parking beside the building. Does a rear court behind the building, or one facing a second
    street, count? Decides 31W15DC05351 and 31W22DC01400 (Wilsonville, red if it counts).
+   RULED (Steph 2026-10-14): ANY street frontage. Built (flats/fit/frontage.py, measured on the
+   drawn plan): a court behind the building on a one-street lot counts nothing, so both
+   Wilsonville lots STAY GREEN. Bound: 241 lots go red on the cap, every one a corner or through
+   lot (Clackamas 105, Beaverton 103, Wilsonville 23, Hillsboro SCR-MD 10); 190 lots the review
+   tiers brought in also fail it (6 on the cap alone). Reading the losses found two ways one
+   street was read as two (a street bending under the 45-degree corner angle; a jog in one
+   frontage): fixed, 38 lots back to their run 74 colour. Side moves, all read: 15 green ->
+   yellow where the next plan carries a flag (ACCESS-STREET-RANK-UNKNOWN / SLOPE-GRADE /
+   PARKING-STRIP-UNCONFIRMED); 3 red where the other design fails steep ground; 1 gain,
+   1S113BA07700 (Beaverton RMC yellow -> green: base's preferred plan was yellow on SLOPE-GRADE,
+   the cap pushed it to a green plan off the other front -- QUESTION for Steph: should a yellow
+   preferred plan hide a green one?).
    (b) Hillsboro SCR-MD/SCR-HD 5 ft MAXIMUM side setback (12.22 tables): "one wall within 5 ft"
    (12.50.130.C.3.a; every lot passes) or "both side walls" (nearly every SCR-MD/HD green red)?
+   RULED (coordinator 2026-10-14): one wall within 5 ft; moved no lot in the bound (the
+   research leaned "both walls", moderate confidence -- recorded in hillsboro.yaml).
    (c) Wood Village TC: building goes through a "Town Center Development Plan" (the old Master
    Plan); its approval type is in 235.400/235.490, not stored, and the site answers 403 to every
    fetch. A human copy of those sections decides 10 TC greens (1N3E34B   -00807 can't tell).
@@ -2880,3 +2916,25 @@ read when the weekly full re-screen lands.
    and 1 on ZONE-SPLIT (the deeper envelope let the widest-slack placement land on steeper ground /
    over a zone line), 1 green->red 32E06DB00600 (hose 144 -> 152 ft on the moved plan). Placement artefacts, not the stand-in: the strip never
    widens. Every scoped lot carries the flag; 1,406 are green with it.
+83. [scan: YES (yellows only go green)] **Measure Washington County's "standard plat" gate instead
+   of flagging it (offered 2026-10-14, item 79).** 731 R-9/R-15/... lots are yellow only because
+   nothing says whether the lot was made by a standard subdivision or partition plat (302-2.14 ..
+   307-2.13), so unmeasured = worst. A lot's recorded legal description names its plat ("PARTITION
+   PLAT 2004-123, LOT 2", or a subdivision name and lot) where it was platted, and reads metes and
+   bounds where it was not -- that measures "made by a plat". "Standard" vs a PUD or expedited land
+   division needs the land-use case type behind the plat. Candidate sources, NOT checked yet:
+   Washington County Assessment & Taxation property records (legal description per tax lot), the
+   county surveyor's plat index. First step: confirm either holds the legal description in bulk
+   for the WashCo uninc lots, then rule how a PUD plat is told apart.
+84. [scan: YES] **Frontage caps not yet read as caps (found 2026-10-14, round2-rulings).** The any-
+   street half-frontage cap is wired for Wilsonville, Hillsboro, Clackamas 845.02 and Beaverton
+   S11 only. Read next, each against its own wording: Oregon City, Fairview, Troutdale (its note
+   looks too strict), Sandy 17.90.160, Beaverton 60.05.15.6.C (35%, 12 blocks not flagged). Also
+   seen: Fairview VC's variant reads inconsistently; Clackamas uninc yaml ~L863 carries a stale
+   comment; SCMU stays grey (dimensions not encoded).
+85. [scan: YES if Steph says yes] **ORS 197A.400(1)(a) "clear and objective" for housing (question
+   for Steph, 2026-10-14).** State law requires clear and objective standards for housing; where a
+   city's conditional-use or design-review path for the pod rests on judgement words, the state
+   rule may let the pod through on the stated standards alone. If Steph wants it weighed, read the
+   statute and its exceptions and list which RED-by-ruling zones (Canby, PMU1-3, Happy Valley,
+   ...) it could lift; nothing is encoded on it now.

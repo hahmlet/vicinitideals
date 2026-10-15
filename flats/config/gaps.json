@@ -1,5 +1,5 @@
 {
-  "digest": "99bc89c6550f50ce11f0b09bc69cf9987df479d8ece3c60a3de3b72e9eddda1a",
+  "digest": "f6ced011270f94efe2ce3f8955a31aded9f37e201a5df4bbdf4477a3c2d080c1",
   "layers": {
     "or": {
       "misattributed": [],
@@ -1140,6 +1140,13 @@
         {
           "zone": "(defaults)",
           "field": "parking_area_max_frontage_pct",
+          "claimed": "12.50.715",
+          "found": "12.50.715 12.50.710",
+          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "parking_area_frontage_any_street",
           "claimed": "12.50.715",
           "found": "12.50.715 12.50.710",
           "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173"
