@@ -706,18 +706,25 @@ def _prose(
         quote = f"{path}#L{first}" if first == last else f"{path}#L{first}-L{last}"
         found = _SECTION.match(stripped)
         if found and _heading_like(stripped):
-            # A wrapped citation can match the section pattern too, but only
-            # a heading is allowed to move the section cursor.
+            # Only a heading moves the section cursor. A paragraph that opens
+            # on a wrapped citation — "TDC 36.410, or Greenway and ..." —
+            # matches the section pattern too, and taking its number would
+            # file everything until the next real heading under a
+            # cross-reference.
             current = found.group("sec")
         if _TOP_LEVEL.match(stripped):
-            # Exceptions scope every following clause in their outline block.
+            # Codes are outlines, and scope is inherited. Everything under
+            # "D. Exceptions to the required setbacks" qualifies the standard
+            # rather than stating it, however plainly the sub-clause reads.
             in_exceptions = bool(_EXCEPTION_HEADING.search(stripped.split(".", 1)[1][:80]))
 
         tag = tag_of(stripped)
         if in_exceptions and tag in (Rase.requirement, None):
             tag = Rase.exception
         if tag is None and found and len(stripped.split()) <= 8:
-            # Headings state no rule and should not become untagged clauses.
+            # A section heading states no rule. Leaving it untagged would put
+            # every heading in the document on the review queue, which is the
+            # fastest way to teach a reviewer to ignore the queue.
             tag = Rase.non_normative
         clauses.append(
             Clause(
