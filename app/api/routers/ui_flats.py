@@ -4087,21 +4087,17 @@ async def _lot_decisions(session: DBSession, county: str, tlid: str) -> list[dic
     return out
 
 
-@router.get("/flats/lots/{county}/{tlid:path}", response_class=HTMLResponse)
-async def flats_lot(
-    request: Request,
+async def _lot_view(
     session: DBSession,
     county: str,
     tlid: str,
-    run: int | None = Query(None),
-    pod: str = Query(""),
-    road: str = Query(""),
-) -> HTMLResponse:
-    user = await _get_user(session, request)
-    dedup_count, conflicts_count = await _get_counts(session)
-    runs = await _runs(session)
-    chosen = _chosen_run(runs, run)
-    refresh = await _refresh(session)
+    chosen: FlatsRun | None,
+    pod: str = "",
+    road: str = "",
+    plans: bool = True,
+) -> tuple[FlatsLot, str | None, float | None, float | None, dict[str, Any]] | None:
+    """The lot as the chosen run read it, with its card; None when the lot is
+    unknown. The lot page and the JSON lookup both read it here."""
     # The lot as the chosen run read it: a run's results point at the lot
     # rows of the county copy it screened, so the row is looked up in that
     # copy. A run that names no copy falls back to the newest row for the id.
@@ -4117,6 +4113,44 @@ async def flats_lot(
         stmt = stmt.order_by(FlatsLot.snapshot_id.desc()).limit(1)
     found = (await session.execute(stmt)).first()
     if found is None:
+        return None
+    lot, geojson, lat, lon = found
+    results: list[dict[str, Any]] = []
+    if chosen is not None:
+        rows = await session.execute(
+            select(FlatsLotResult)
+            .where(FlatsLotResult.run_id == chosen.id, FlatsLotResult.lot_id == lot.id)
+            .order_by(FlatsLotResult.design_key)
+        )
+        results = [_result_card(r) for r in rows.scalars()]
+        if plans:
+            for r in results:
+                r["plan"] = _plan(geojson, r["drawing"])
+    ranks = [_COLOURS.index(r["colour"]) if r["colour"] in _COLOURS else len(_COLOURS) for r in results]
+    verdicts = [_COLOURS.index(r["verdict"]) if r["verdict"] in _COLOURS else len(_COLOURS) for r in results]
+    price = _price_params("", "", pod, road)
+    price["as_of"] = await _county_as_of(session, lot.snapshot_id)
+    card = _lot_row(lot, min(verdicts) if verdicts else 2, min(ranks) if ranks else 2, results, price)
+    return lot, geojson, lat, lon, card
+
+
+@router.get("/flats/lots/{county}/{tlid:path}", response_class=HTMLResponse)
+async def flats_lot(
+    request: Request,
+    session: DBSession,
+    county: str,
+    tlid: str,
+    run: int | None = Query(None),
+    pod: str = Query(""),
+    road: str = Query(""),
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    runs = await _runs(session)
+    chosen = _chosen_run(runs, run)
+    refresh = await _refresh(session)
+    view = await _lot_view(session, county, tlid, chosen, pod, road)
+    if view is None:
         ctx = {
             **_base_ctx(user, dedup_count, "flats_lots", conflicts_count=conflicts_count),
             **_lots_ctx(runs, chosen),
@@ -4128,22 +4162,7 @@ async def flats_lot(
             "missing": f"{county} {tlid}",
         }
         return templates.TemplateResponse(request, "flats_lots.html", ctx, status_code=404)
-    lot, geojson, lat, lon = found
-    results: list[dict[str, Any]] = []
-    if chosen is not None:
-        rows = await session.execute(
-            select(FlatsLotResult)
-            .where(FlatsLotResult.run_id == chosen.id, FlatsLotResult.lot_id == lot.id)
-            .order_by(FlatsLotResult.design_key)
-        )
-        results = [_result_card(r) for r in rows.scalars()]
-        for r in results:
-            r["plan"] = _plan(geojson, r["drawing"])
-    ranks = [_COLOURS.index(r["colour"]) if r["colour"] in _COLOURS else len(_COLOURS) for r in results]
-    verdicts = [_COLOURS.index(r["verdict"]) if r["verdict"] in _COLOURS else len(_COLOURS) for r in results]
-    price = _price_params("", "", pod, road)
-    price["as_of"] = await _county_as_of(session, lot.snapshot_id)
-    card = _lot_row(lot, min(verdicts) if verdicts else 2, min(ranks) if ranks else 2, results, price)
+    lot, geojson, lat, lon, card = view
     facts = lot.facts or {}
     return templates.TemplateResponse(
         request,
