@@ -121,6 +121,8 @@ class Grid:
             return 0
         s = self.integral
         ok = (s[1:, w_cells:] - s[:-1, w_cells:] - s[1:, :-w_cells] + s[:-1, :-w_cells]) == w_cells
+        if ok.size == 0:
+            return 0
         rows = np.arange(ok.shape[0], dtype=np.int32)[:, None]
         # The last failed row for each column, carried down the column.
         broke = np.where(ok, -1, rows)
@@ -142,6 +144,8 @@ class Grid:
             return 0
         s = self.integral
         ok = (s[d_cells:, 1:] - s[:-d_cells, 1:] - s[d_cells:, :-1] + s[:-d_cells, :-1]) == d_cells
+        if ok.size == 0:
+            return 0
         cols = np.arange(ok.shape[1], dtype=np.int32)[None, :]
         broke = np.where(ok, -1, cols)
         np.maximum.accumulate(broke, axis=1, out=broke)
