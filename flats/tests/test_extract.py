@@ -194,6 +194,36 @@ def test_a_real_section_yields_the_standards_it_states() -> None:
     assert got["max_coverage_pct"] == 45
 
 
+def test_extract_reuses_document_parsing_across_zones(tmp_path, monkeypatch) -> None:
+    from importlib import import_module
+
+    extraction = import_module("flats.encode.extract")
+    tables = import_module("flats.encode.tables")
+    calls = {"paragraphs": 0, "stacked": 0}
+    original_paragraphs = extraction.paragraphs
+    original_stacked = tables.read_stacked_grids
+
+    def count_paragraphs(text):
+        calls["paragraphs"] += 1
+        return original_paragraphs(text)
+
+    def count_stacked(text, *, path):
+        calls["stacked"] += 1
+        return original_stacked(text, path=path)
+
+    monkeypatch.setattr(extraction, "paragraphs", count_paragraphs)
+    monkeypatch.setattr(tables, "read_stacked_grids", count_stacked)
+    text = SECTION + f"\n# {tmp_path.name}\n"
+    path = f"or/test/{tmp_path.name}.txt"
+
+    first = extraction.extract(text, path=path, zone="R5")
+    second = extraction.extract(text, path=path, zone="R7")
+
+    assert first.clauses == second.clauses
+    assert first.candidates == second.candidates
+    assert calls == {"paragraphs": 1, "stacked": 1}
+
+
 def test_clauses_carry_the_section_number_they_sit_under() -> None:
     result = one(SECTION)
 

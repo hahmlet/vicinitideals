@@ -853,7 +853,8 @@ code:
 # the north and 15 to the east and west, and prints the second as a formula --
 # "Separation = b x .267 (tan 15 degrees)". A setback that is a function of
 # height and of which way a lot line points is not a number; it needs the
-# bearing of every lot line, which nothing here measures. 1005.02(L)(4) closes
+# bearing of every lot line, which flats/geom/bearing.py has measured since
+# 2026-10-14 (setback_north_ft / setback_east_west_ft). 1005.02(L)(4) closes
 # the obvious escape by saying these standards are not modifiable under
 # Section 904, Height Exceptions.
 - id: zdo.1005
@@ -1046,7 +1047,8 @@ defaults:
   # except in compliance with Subsections 845.02(1) and (2)", and (2) is "the
   # combined width of all garages and off-street parking areas located between
   # a building and a public street does not exceed a total of 50 percent of
-  # the street frontage".
+  # the street frontage". The screening cap is checked separately on every
+  # street frontage, with the largest parking share governing.
   parking_area_max_frontage_pct:
     value: 50
     cite: Clackamas ZDO 845.02, combined width of garages and off-street parking areas between a building and a public street
