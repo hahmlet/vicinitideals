@@ -184,14 +184,21 @@ def test_the_re_ruled_zones_admit_the_pod_with_the_review_flagged(
 
 
 @pytest.mark.parametrize("zone", ["R-1.5", "R-2", "C-R"])
-def test_canby_stays_red_on_a_one_off_review(corpus: RuleSet, zone: str) -> None:
+def test_canbys_one_off_review_is_a_judgement_path(corpus: RuleSet, zone: str) -> None:
     # The Board's Type III review judges "compatible" and "the INTENT"; a
     # townhouse group is not the exempt "single family" (16.04.190: detached).
+    # RED by the 2026-10-14 rule; since 2026-10-15 ORS 197A.400 reduces the
+    # review to the clear and objective standards inside a UGB, so it is a
+    # `judgement_review` path the screen clears there (GREEN with a flag).
     got = corpus.resolve("or/clackamas/canby", zone).values
     assert got["quadplex_allowed"].value is False
     assert "review_discretion" not in got
+    assert any(v is True and "judgement_review" in when for when, v, _ in got["quadplex_allowed"].relief)
+    opened = corpus.resolve("or/clackamas/canby", zone, ("judgement_review",)).values
+    assert opened["quadplex_allowed"].value is True
     notes = corpus.layers["or/clackamas/canby"].zones[zone].notes
-    assert notes.startswith("RED, RE-CHECKED 2026-10-14 under Steph's review rule")
+    assert notes.startswith("OPENED 2026-10-15 BY ORS 197A.400")
+    assert "RED, RE-CHECKED 2026-10-14 under Steph's review rule" in notes
 
 
 # --- any street frontage: the measure ---------------------------------------

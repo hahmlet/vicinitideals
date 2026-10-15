@@ -1659,6 +1659,24 @@ def _sans_row(row: Mapping[str, Any], key: str) -> dict[str, Any] | None:
     }
 
 
+def inside_ugb_of(row: Mapping[str, Any]) -> bool | None:
+    """Whether the lot lies inside an urban growth boundary, for ORS
+    197A.400 (Steph 2026-10-15, FOLLOWUPS 85; :attr:`LotFacts.inside_ugb`).
+
+    An incorporated city's lot is inside its city's UGB: Goal 14 draws every
+    UGB round a city, and a city annexes only inside its own. quadfit s2's
+    ``inside_ugb`` reads Metro's boundary alone, so a Canby or Sandy lot
+    reads False there and is not asked. An unincorporated lot takes s2's
+    answer; None where the row does not carry one.
+    """
+    if not str(row.get("jurisdiction") or "").endswith("_unincorporated"):
+        return True
+    got = row.get("inside_ugb")
+    if got is None or (isinstance(got, float) and math.isnan(got)):
+        return None
+    return bool(got)
+
+
 def lot_from_row(
     row: Mapping[str, Any],
     layers: Mapping[str, Layer] | None = None,
@@ -1756,6 +1774,7 @@ def lot_from_row(
         resource_permits=permits_on(row),
         corner_read_as_bend=bend,
         curve_on_the_line=curve_on_the_line(row, layers) if bend else None,
+        inside_ugb=inside_ugb_of(row),
     )
     juris = str(row.get("jurisdiction"))
     try:

@@ -146,6 +146,7 @@ _LABELS: dict[str, str] = {
     "type_i_density_escape_du_per_acre": "density that keeps a bigger lot on the quick (Type I) review",
     "type_i_standard_plat_required": "quick (Type I) review only on a lot from a standard plat",
     "review_discretion": "discretion left to the review",
+    "clear_objective_housing": "state law allows only clear and objective standards for housing",
     "setback_front_ft": "front setback",
     "setback_front_max_ft": "max. front setback",
     "setback_garage_entrance_ft": "garage entrance setback",
@@ -654,12 +655,37 @@ _F: tuple[FieldDef, ...] = (
         "review whose criteria include words no measurement settles "
         "(\"compatible\", \"character\", \"visual interest\"), which Steph "
         "treats the same way; the citation names the words. Either is "
-        "YELLOW with REVIEW-CONDITIONS, never red, never green (Steph "
-        "2026-10-14). Silent: no review, or one on measurable standards "
-        "only. A review that is all judgement is not this field: the zone "
-        "is refused (`quadplex_allowed: false`).",
+        "YELLOW with REVIEW-CONDITIONS (Steph 2026-10-14) -- except where "
+        "`clear_objective_housing` reaches the lot, which since Steph "
+        "2026-10-15 is GREEN with CLEAR-OBJECTIVE instead. Silent: no "
+        "review, or one on measurable standards only. A review that is all "
+        "judgement is not this field: `quadplex_allowed` is false and opens "
+        "through the `conditional_use` or `judgement_review` relief.",
         None,
         choices=("conditions", "judgement"),
+    ),
+    # Steph 2026-10-15 (FOLLOWUPS 85): ORS 197A.400 lets a city apply only
+    # clear and objective standards to housing inside a UGB; a judgement path
+    # is lawful only beside a clear one (East Park v. Salem, LUBA 2022). So
+    # where the statute reaches, a review's judgement test and its "may add
+    # conditions" do not decide the lot: the lot is judged on its measured
+    # standards and carries CLEAR-OBJECTIVE, below the yellow line
+    # (:func:`flats.score.screen.clear_objective_reaches`).
+    FieldDef(
+        "clear_objective_housing",
+        "bool",
+        "ORS 197A.400(1) reaches housing here: the city or county may apply "
+        "only clear and objective standards, conditions and procedures to it. "
+        "True on the state layer for every jurisdiction; a layer the "
+        "statute's own exceptions cover (197A.400(2): Portland's central city "
+        "plan and Metro regional center, designated historic areas) holds "
+        "false. Where true and the lot is inside an urban growth boundary, a "
+        "use whose only path is a conditional use or a review on judgement "
+        "criteria (the `conditional_use` and `judgement_review` reliefs) is "
+        "screened on its clear standards, and a review that may add "
+        "conditions (`review_discretion`) holds no lot yellow: either way "
+        "the lot carries CLEAR-OBJECTIVE, severity 2 (Steph 2026-10-15).",
+        None,
     ),
     FieldDef(
         "type_i_max_buildable_sqft",
@@ -1670,6 +1696,9 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "type_i_max_buildable_sqft",
         "type_i_density_escape_du_per_acre",
         "type_i_standard_plat_required",
+        # A statute's reach, stated once on the state layer (Steph
+        # 2026-10-15), not a dimension a zone owes.
+        "clear_objective_housing",
     }
 )
 

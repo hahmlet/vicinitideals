@@ -434,8 +434,8 @@ readings:
       minimum of the residential street edges. The 10 ft maximum is tighter than the 20 held, but
       on those edges the minimum is none, so a pod that fits at 15 to 20 ft can slide to 10 ft and
       gains rear depth by doing so; the exposure is a wrong number in the report, not a false
-      GREEN. NMU and SMU are RED BY RULING (every dwelling row is a conditional use), so none of
-      this reaches them. cant_tell because the figure is the missing fact; it stays on the
+      GREEN. NMU's own maximum is 10 ft (19.303.4.C.2.c) and SMU's 15, with no commercial-edge
+      figure, so none of this reaches them. cant_tell because the figure is the missing fact; it stays on the
       unmeasured list until the commercial edges are traced.
     fingerprint: b292838d04354fe6
   "19.400.overlays.txt#19.402.4":
@@ -1748,7 +1748,8 @@ zones:
   # be built. The other four -- the three commercial mixed-use zones and the
   # Downtown Mixed Use zone -- permit the building in one form or another;
   # they were read and encoded as zone blocks on 2026-10-08 (GMU and DMU by
-  # right on unit lots only; NMU and SMU RED BY RULING).
+  # right on unit lots only; NMU and SMU RED BY RULING, opened 2026-10-15
+  # by ORS 197A.400 through a `conditional_use` variant).
   #
   # One definition does most of the work. MMC 19.200 defines "Quadplex" as
   # "4 dwelling units on a lot or parcel in any configuration"
@@ -1950,7 +1951,9 @@ zones:
   #     columns (single detached, townhouses, duplex/triplex/quadplex,
   #     multi-unit, cottage cluster). The only P rows are mixed use and
   #     live/work, and a four-unit pod is neither. The way in is a
-  #     conditional use (Type III hearing, 19.905): RED BY RULING.
+  #     conditional use (Type III hearing, 19.905): RED BY RULING until
+  #     2026-10-15, when ORS 197A.400 reduced the hearing to the clear and
+  #     objective standards inside a UGB (a `conditional_use` variant).
   #   - GMU: Townhouses P (note 1 lifts the four-in-a-row limit),
   #     Duplex/Triplex/Quadplex CU, Multi-unit housing P. Four units on one
   #     lot is the CU row, so the base is false; split onto four unit lots it
@@ -2128,6 +2131,11 @@ zones:
       value: false
       cite: MMC Table 19.303.2, NMU column -- single detached, townhouses, duplex/triplex/quadplex, multi-unit and cottage cluster all CU; 19.303.2.D (uses not listed are prohibited)
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L731-L756,L911-L936"
+      variants:
+        - value: true
+          when: [conditional_use]
+          cite: "MMC Table 19.303.2, NMU column, Duplex, Triplex, Quadplex CU (Section 19.905); ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L742-L746"
     min_lot_sqft:
       value: 1500
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965"
@@ -2143,6 +2151,27 @@ zones:
     setback_front_max_ft:
       value: 10
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1000-L1002,L1200"
+    # Table 19.303.3 row B.3.c, "Side and rear setbacks": None in the NMU
+    # column (the second of GMU, NMU, SMU). Encoded 2026-10-15 once ORS
+    # 197A.400 opened the zone; the residential-edge transition as GMU's.
+    setback_side_ft:
+      value: 0
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L955-L957,L1005,L1007"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures, yards abutting the R-MD Zone at least as wide as the R-MD front yard (20 ft); the NMU exception there is for the FRONT yard only, and 19.303.5.A's 15 ft is smaller
+          url: https://ecode360.com/print/MI4969?guid=43861924
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+    setback_rear_ft:
+      value: 0
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L955-L957,L1005,L1007"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          cite: MMC 19.504.4.A (19.500.supplementary.txt#L603-L605), transition measures, yards abutting the R-MD Zone at least as wide as the R-MD front yard (20 ft); the NMU exception there is for the FRONT yard only, and 19.303.5.A's 15 ft is smaller
+          url: https://ecode360.com/print/MI4969?guid=43861924
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
     max_coverage_pct:
       value: 85
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016"
@@ -2156,13 +2185,14 @@ zones:
       value: 14.5
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1286"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): every dwelling row is a conditional use (19.905) on criteria state law reduces to the clear and objective standards inside a UGB, so a `conditional_use` variant carries the true and the lot is judged on the standards below, flagged CLEAR-OBJECTIVE (green, below the yellow line). Side and rear yards are now encoded from the same table. Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.905, are not stored; held red until they are read. The 2026-10-08 ruling read: every dwelling row of Table 19.303.2
       reads CU in the NMU column, and a conditional use is a Type III hearing,
       not a by-right path. Footnote 2 lifts conditional-use review only for
       "residential uses built as part of a vertical mixed-use building", which
       a four-unit pod is not. The standards below are kept so the ruling can
-      be reversed. Side and rear setbacks print "None" (L1005-L1008); not
-      encoded because nothing can use them while the use is refused.
+      be reversed. Side and rear setbacks print "None" (L1005-L1008), encoded
+      2026-10-15.
   GMU:
     section: ["19.303"]
     cite_default:
@@ -2305,6 +2335,11 @@ zones:
       value: false
       cite: MMC Table 19.303.2, SMU column -- single detached, townhouses, duplex/triplex/quadplex, multi-unit and cottage cluster all CU; 19.303.2.D (uses not listed are prohibited)
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L731-L756,L911-L936"
+      variants:
+        - value: true
+          when: [conditional_use]
+          cite: "MMC Table 19.303.2, SMU column, Duplex, Triplex, Quadplex CU (Section 19.905); ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L742-L746"
     min_lot_sqft:
       value: 1500
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965"
@@ -2330,6 +2365,7 @@ zones:
       value: 7.0
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1052-L1055"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): every dwelling row is a conditional use (19.905) on criteria state law reduces to the clear and objective standards inside a UGB, so a `conditional_use` variant carries the true; the side and rear yards are still not encoded (below), so an SMU lot reads UNKNOWN, not green, until the 5/10 cell is read. Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.905, are not stored; held red until they are read. The 2026-10-08 ruling read: the same CU column as NMU in Table
       19.303.2 -- every dwelling row is CU, and a conditional use is a Type III
       hearing, not a by-right path. The standards below are kept so the ruling

@@ -95,12 +95,17 @@ def test_the_door_asks_for_a_land_division_as_well_as_a_permit(
     assert "unit_lots" in variants[0].when
     assert "conditional_use" in variants[0].when
 
+    # Reopened 2026-10-15: ORS 197A.400 reduces the conditional-use hearing
+    # to the clear and objective standards inside a UGB (FOLLOWUPS 85), so the
+    # `[unit_lots, conditional_use]` variant is back, cited to the statute.
     for zone in ("VMU", "VA"):
         held = fairview.zones[zone]
-        assert held.values["quadplex_allowed"].variants == (), zone
+        (door,) = held.values["quadplex_allowed"].variants
+        assert set(door.when) == {"unit_lots", "conditional_use"}, zone
+        assert "ORS 197A.400" in door.prov.cite, zone
+        assert held.notes.startswith("OPENED 2026-10-15 BY ORS 197A.400"), zone
         assert "RED, RE-CHECKED 2026-10-14 under Steph's review rule" in held.notes, zone
-        use = rules.resolve(FAIRVIEW, zone).values["quadplex_allowed"]
-        assert use.value is False and not use.levers, zone
+        assert rules.resolve(FAIRVIEW, zone).values["quadplex_allowed"].value is False, zone
 
 
 def test_village_office_is_the_one_refusal_with_no_way_out(
@@ -159,7 +164,8 @@ def test_two_zones_share_a_table_and_do_not_share_an_answer(
     assert "VC flex" in vc_text
 
     assert "inside_mapped_use_area" in vc.values["quadplex_allowed"].variants[0].when
-    assert vmu.values["quadplex_allowed"].variants == ()
+    (door,) = vmu.values["quadplex_allowed"].variants
+    assert "inside_mapped_use_area" not in door.when
 
 
 def test_the_apartment_zone_is_the_only_one_with_a_density_floor(

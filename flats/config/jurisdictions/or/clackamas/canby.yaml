@@ -1991,6 +1991,11 @@ zones:
       value: false
       cite: Canby CMC 16.18.010 (D), four-family dwellings, one fourplex on each lot (and (C), townhouses in groups of up to six)
       quote: "or/clackamas/canby/cmc.16.18.010.txt#L9,L11"
+      variants:
+        - value: true
+          when: [judgement_review]
+          cite: Canby CMC 16.49.030 (A)(1), site and design review for all new buildings, decided by the Board on 16.49.40 (B)(2), (B)(3) and (D), "compatible", "design character" and "the INTENT" -- judgement criteria ORS 197A.400 voids inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)
+          quote: "or/clackamas/canby/cmc.16.49.40.txt#L5,L9,L11,L23"
     # No lot area is printed for a four-family dwelling: 16.18.030 (A)(1)
     # prints 5,000 to 6,500 for single-family dwellings and (A)(2) 3,000 for
     # townhouse lots. The single-family minimum is held for the fourplex, the
@@ -2073,7 +2078,7 @@ zones:
       cite: Canby CMC 16.18.030 (D)(3), interior yard seven feet
       quote: "or/clackamas/canby/cmc.16.18.030.txt#L43"
     notes: >-
-      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the Type III site and design review (16.49.030 A.1, "All new buildings"; the B.8 exemption is for "Single family or two-family dwellings", and 16.04.190 makes a single-family dwelling "a detached building", so a townhouse group is not exempt) is decided by the Board on "compatible with the design of other developments in the same general vicinity", "appropriate to the design character of other structures in the same vicinity" and "the INTENT of the design review standards" (16.49.40 B.2, B.3, D, or/clackamas/canby/cmc.16.49.40.txt#L9,L11,L23), a one-off judgement beside its points matrix; the Type II path (16.49.035 A.1) is not stored. The 2026-10-08 ruling read: the use is permitted here but only after a Type III site and design review (16.49.030: every new building but a single-family or two-family dwelling); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): the use is permitted outright, and the only thing refusing it was the Type III review's judgement criteria, which state law voids for housing inside a UGB; the `judgement_review` variant carries the true, so the lot is judged on the standards below and flagged CLEAR-OBJECTIVE (green, below the yellow line). Before that: RED, RE-CHECKED 2026-10-14 under Steph's review rule: the Type III site and design review (16.49.030 A.1, "All new buildings"; the B.8 exemption is for "Single family or two-family dwellings", and 16.04.190 makes a single-family dwelling "a detached building", so a townhouse group is not exempt) is decided by the Board on "compatible with the design of other developments in the same general vicinity", "appropriate to the design character of other structures in the same vicinity" and "the INTENT of the design review standards" (16.49.40 B.2, B.3, D, or/clackamas/canby/cmc.16.49.40.txt#L9,L11,L23), a one-off judgement beside its points matrix; the Type II path (16.49.035 A.1) is not stored. The 2026-10-08 ruling read: the use is permitted here but only after a Type III site and design review (16.49.030: every new building but a single-family or two-family dwelling); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
       DRAFT. Fourplex permitted outright, one to a lot; townhouses up to six
       in a row. 5,000 sq ft lot (3,000 for a townhouse lot), 40 wide (20
       townhouse), 6 to 13 units an acre; front 20, street side 20, side 7,
@@ -2089,6 +2094,11 @@ zones:
       value: false
       cite: Canby CMC 16.20.010 (D), multi-family dwelling (and (A), the R-1.5 uses; (B), townhouses)
       quote: "or/clackamas/canby/cmc.16.20.010.txt#L5,L7,L11"
+      variants:
+        - value: true
+          when: [judgement_review]
+          cite: Canby CMC 16.49.030 (A)(1), site and design review for all new buildings, decided by the Board on 16.49.40 (B)(2), (B)(3) and (D), "compatible", "design character" and "the INTENT" -- judgement criteria ORS 197A.400 voids inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)
+          quote: "or/clackamas/canby/cmc.16.49.40.txt#L5,L9,L11,L23"
     # No lot area is printed for R-2 (16.20.030 prints density, width, yards,
     # height and impervious surface); (B) puts a townhouse on a maximum
     # 3,000 sq ft lot to meet the density.
@@ -2179,7 +2189,7 @@ zones:
             cite: Canby CMC 16.20.030 (E)(3), building height not greater than one foot for each foot of distance from the R-1 and/or R-1.5 property line (15 ft of height at the 15 ft buffer line)
             quote: "or/clackamas/canby/cmc.16.20.030.txt#L21,L43"
     notes: >-
-      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the Type III site and design review (16.49.030 A.1, "All new buildings"; the B.8 exemption is for "Single family or two-family dwellings", and 16.04.190 makes a single-family dwelling "a detached building", so a townhouse group is not exempt) is decided by the Board on "compatible with the design of other developments in the same general vicinity", "appropriate to the design character of other structures in the same vicinity" and "the INTENT of the design review standards" (16.49.40 B.2, B.3, D, or/clackamas/canby/cmc.16.49.40.txt#L9,L11,L23), a one-off judgement beside its points matrix; the Type II path (16.49.035 A.1) is not stored. The 2026-10-08 ruling read: the use is permitted here but only after a Type III site and design review (16.49.030: every new building but a single-family or two-family dwelling); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): the use is permitted outright, and the only thing refusing it was the Type III review's judgement criteria, which state law voids for housing inside a UGB; the `judgement_review` variant carries the true, so the lot is judged on the standards below and flagged CLEAR-OBJECTIVE (green, below the yellow line). Before that: RED, RE-CHECKED 2026-10-14 under Steph's review rule: the Type III site and design review (16.49.030 A.1, "All new buildings"; the B.8 exemption is for "Single family or two-family dwellings", and 16.04.190 makes a single-family dwelling "a detached building", so a townhouse group is not exempt) is decided by the Board on "compatible with the design of other developments in the same general vicinity", "appropriate to the design character of other structures in the same vicinity" and "the INTENT of the design review standards" (16.49.40 B.2, B.3, D, or/clackamas/canby/cmc.16.49.40.txt#L9,L11,L23), a one-off judgement beside its points matrix; the Type II path (16.49.035 A.1) is not stored. The 2026-10-08 ruling read: the use is permitted here but only after a Type III site and design review (16.49.030: every new building but a single-family or two-family dwelling); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
       DRAFT. Multi-family dwelling permitted outright (a fourplex is
       multi-family, 16.04.180). No lot minimum printed; 20 wide; at least 14
       units an acre; front 20, street side 20, side 7, rear 20 (15 on a
@@ -2200,6 +2210,11 @@ zones:
       value: false
       cite: Canby CMC 16.24.010 (A), uses permitted outright in the R-1.5 zone, conforming to the development standards of the R-1.5 zone
       quote: "or/clackamas/canby/cmc.16.24.010.txt#L5"
+      variants:
+        - value: true
+          when: [judgement_review]
+          cite: Canby CMC 16.49.030 (A)(1), site and design review for all new buildings, decided by the Board on 16.49.40 (B)(2), (B)(3) and (D), "compatible", "design character" and "the INTENT" -- judgement criteria ORS 197A.400 voids inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)
+          quote: "or/clackamas/canby/cmc.16.49.40.txt#L5,L9,L11,L23"
     min_lot_width_ft:
       value: 60
       cite: Canby CMC 16.24.030 (B), minimum width and frontage sixty feet (stricter than R-1.5's forty)
@@ -2209,7 +2224,7 @@ zones:
       cite: Canby CMC 16.24.030 (E), maximum lot coverage sixty percent
       quote: "or/clackamas/canby/cmc.16.24.030.txt#L23"
     notes: >-
-      RED, RE-CHECKED 2026-10-14 under Steph's review rule: the Type III site and design review (16.49.030 A.1, "All new buildings"; the B.8 exemption is for "Single family or two-family dwellings", and 16.04.190 makes a single-family dwelling "a detached building", so a townhouse group is not exempt) is decided by the Board on "compatible with the design of other developments in the same general vicinity", "appropriate to the design character of other structures in the same vicinity" and "the INTENT of the design review standards" (16.49.40 B.2, B.3, D, or/clackamas/canby/cmc.16.49.40.txt#L9,L11,L23), a one-off judgement beside its points matrix; the Type II path (16.49.035 A.1) is not stored. The 2026-10-08 ruling read: the use is permitted here but only after a Type III site and design review (16.49.030: every new building but a single-family or two-family dwelling); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): the use is permitted outright, and the only thing refusing it was the Type III review's judgement criteria, which state law voids for housing inside a UGB; the `judgement_review` variant carries the true, so the lot is judged on the standards below and flagged CLEAR-OBJECTIVE (green, below the yellow line). Before that: RED, RE-CHECKED 2026-10-14 under Steph's review rule: the Type III site and design review (16.49.030 A.1, "All new buildings"; the B.8 exemption is for "Single family or two-family dwellings", and 16.04.190 makes a single-family dwelling "a detached building", so a townhouse group is not exempt) is decided by the Board on "compatible with the design of other developments in the same general vicinity", "appropriate to the design character of other structures in the same vicinity" and "the INTENT of the design review standards" (16.49.40 B.2, B.3, D, or/clackamas/canby/cmc.16.49.40.txt#L9,L11,L23), a one-off judgement beside its points matrix; the Type II path (16.49.035 A.1) is not stored. The 2026-10-08 ruling read: the use is permitted here but only after a Type III site and design review (16.49.030: every new building but a single-family or two-family dwelling); a review is not by-right, so this zone is refused. The standards below are kept so the ruling can be reversed.
       DRAFT. The R-1.5 uses are permitted "conforming to the development
       standards of the R-1.5 zone", so R-1.5's figures hold and C-R's own
       stricter ones are laid over them: 60 wide, 60 percent lot coverage.

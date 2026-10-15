@@ -1249,6 +1249,28 @@ jurisdictions:
         source_url: "https://ecode360.com/50511016"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/multnomah/fairview VC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      # ported 2026-10-15 (FOLLOWUPS 85) by port_from_flats.zone_row: VMU, VA open through a conditional use that ORS 197A.400 reduces to the clear and objective standards inside a UGB (Steph 2026-10-15); ported so the pod is measured. FLATS keeps the verdict.
+      - zone: "VMU"
+        quadplex_allowed: true
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        max_coverage_pct: 75
+        setback_front_ft: 0
+        source: "FMC 19.135.010 (Permitted uses, VC and VMU), Residential Uses rows b and c; FMC 19.135.030 Development standards"
+        source_url: "https://ecode360.com/50511016"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/fairview VMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "VA"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        max_coverage_pct: 65
+        min_density_du_per_acre: 20
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        source: "FMC 19.125.020 (Permitted uses, VA); FMC 19.125.030 (Conditional uses, VA); FMC 19.125.040 (Development standards)"
+        source_url: "https://ecode360.com/50510970"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/fairview VA) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
 
   wood_village:
     eligible: true
@@ -2424,6 +2446,33 @@ jurisdictions:
         source_url: "https://ecode360.com/print/MI4969?guid=43860500"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/milwaukie DMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      # ported 2026-10-15 (FOLLOWUPS 85) by port_from_flats.zone_row: NMU, SMU open through a conditional use that ORS 197A.400 reduces to the clear and objective standards inside a UGB (Steph 2026-10-15); ported so the pod is measured. FLATS keeps the verdict.
+      - zone: "NMU"
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 20
+        setback_rear_ft: 20
+        min_lot_sqft: 1500
+        max_coverage_pct: 85
+        min_frontage_ft: 25
+        min_density_du_per_acre: 11.6
+        source: "MMC Table 19.303.2, NMU column -- single detached, townhouses, duplex/triplex/quadplex, multi-unit and cottage cluster all CU; 19.303.2.D (uses not listed are prohibited)"
+        source_url: "https://ecode360.com/print/MI4969?guid=43860500"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/milwaukie NMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "SMU"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        min_lot_sqft: 1500
+        max_coverage_pct: 85
+        min_frontage_ft: 25
+        min_density_du_per_acre: 7
+        setback_side_ft: 20
+        setback_rear_ft: 20
+        source: "MMC Table 19.303.2, SMU column -- single detached, townhouses, duplex/triplex/quadplex, multi-unit and cottage cluster all CU; 19.303.2.D (uses not listed are prohibited)"
+        source_url: "https://ecode360.com/print/MI4969?guid=43860500"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/milwaukie SMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
 
   oregon_city:
     eligible: true
@@ -2691,6 +2740,42 @@ jurisdictions:
         source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1714.html"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/gladstone MR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      # ported 2026-10-15 (FOLLOWUPS 85) by port_from_flats.zone_row: C1, C3, LI open through a conditional use that ORS 197A.400 reduces to the clear and objective standards inside a UGB (Steph 2026-10-15); ported so the pod is measured. FLATS keeps the verdict.
+      - zone: "C1"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 15
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 3600
+        source: "Gladstone Municipal Code 17.16.020 (uses allowed outright), 17.16.040 (conditional uses), 17.16.060 (dimensional standards), Local Commercial District"
+        source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1716.html"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/gladstone C1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "C3"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 5000
+        min_density_du_per_acre: 25
+        source: "Gladstone Municipal Code 17.20.020 (uses allowed outright), 17.20.040 (conditional uses), 17.20.050 (dimensional standards), General Commercial District"
+        source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1720.html"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/gladstone C3) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "LI"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 20
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 5000
+        min_density_du_per_acre: 25
+        source: "Gladstone Municipal Code 17.24.020 (uses allowed outright), 17.24.040 (conditional uses), 17.24.060 (dimensional standards), Light Industrial District"
+        source_url: "https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1724.html"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/gladstone LI) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
 
   west_linn:
     eligible: true
@@ -4839,19 +4924,40 @@ jurisdictions:
       "R2": "R-2"
     zones:
       - zone: "R-1.5"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 7
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 5000
+        min_lot_width_ft: 40
+        min_density_du_per_acre: 6
         source: "Canby CMC 16.18.010 (D), four-family dwellings, one fourplex on each lot (and (C), townhouses in groups of up to six)"
         source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38514"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/canby R-1.5) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "R-2"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 26
+        setback_rear_ft: 26
+        setback_street_side_ft: 20
+        min_lot_width_ft: 20
+        min_density_du_per_acre: 14
         source: "Canby CMC 16.20.010 (D), multi-family dwelling (and (A), the R-1.5 uses; (B), townhouses)"
         source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38567"
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/canby R-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "C-R"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 7
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 5000
+        max_coverage_pct: 60
+        min_lot_width_ft: 60
+        min_density_du_per_acre: 6
         source: "Canby CMC 16.24.010 (A), uses permitted outright in the R-1.5 zone, conforming to the development standards of the R-1.5 zone"
         source_url: "https://codelibrary.amlegal.com/codes/canby/latest/canby_or/0-0-0-38796"
         confidence: "needs_verification"
@@ -5058,11 +5164,14 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/estacada R-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "R-2"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 10
+        setback_rear_ft: 15
         source: "Estacada EMC 16.20.020 and 16.20.030 (B), triplex and commonwall up to three units are outright; middle housing with four dwelling units is a conditional use"
         source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
         confidence: "needs_verification"
-        notes: "Ported from the FLATS corpus (or/clackamas/estacada R-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada R-2) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_front_ft, setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
       - zone: "NCR"
         quadplex_allowed: true
         setback_front_ft: 15
@@ -5081,11 +5190,14 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/clackamas/estacada D) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "C-1"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 10
+        setback_rear_ft: 15
         source: "Estacada EMC 16.28.030, multi-family dwelling, triplex or fourplex is a conditional use"
         source_url: "https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT"
         confidence: "needs_verification"
-        notes: "Ported from the FLATS corpus (or/clackamas/estacada C-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+        notes: "Ported from the FLATS corpus (or/clackamas/estacada C-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_front_ft, setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
       - zone: "MMU"
         quadplex_allowed: false
         source: "Estacada EMC 16.33.020 (A), before development a Facilities Plan and a City Council Master Development Plan must be approved (the CMU uses are then permitted)"
@@ -5357,11 +5469,14 @@ jurisdictions:
         confidence: "needs_verification"
         notes: "Ported from the FLATS corpus (or/washington/cornelius CC) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: "CMU"
-        quadplex_allowed: false
+        quadplex_allowed: true
+        setback_front_ft: 25
+        setback_side_ft: 10
+        setback_rear_ft: 25
         source: "Cornelius CMC 18.60.020 (I) (dwellings above the ground floor) and 18.60.030 (B) (ground-floor dwellings conditional)"
         source_url: "https://ecode360.com/print/CO4396?guid=47338143"
         confidence: "needs_verification"
-        notes: "Ported from the FLATS corpus (or/washington/cornelius CMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+        notes: "Ported from the FLATS corpus (or/washington/cornelius CMU) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage. PLACEHOLDER setback_front_ft, setback_side_ft, setback_rear_ft: the corpus has not read this yard; held at the largest the layer states anywhere, and FLATS answers the lot UNKNOWN on it."
       - zone: "GMU"
         quadplex_allowed: true
         setback_front_ft: 5

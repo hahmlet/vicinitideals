@@ -116,6 +116,19 @@ code:
   # One section of statute is prose, not a table of dimensions, so it does not
   # read like code to the plausibility check. Read before storing.
   allow_thin: true
+# The clear and objective rule for housing (formerly ORS 197.307(4)-(7)):
+# inside an urban growth boundary a city or county may apply only clear and
+# objective standards, conditions and procedures to the development of
+# housing, a discretionary path being lawful only beside a clear one. The
+# statute `clear_objective_housing` below quotes (Steph 2026-10-15, FOLLOWUPS
+# 85). Sliced from the section's heading in the body (the contents list
+# spells it with a stray character) to the note on chapter 330 after it.
+- id: ors.197a.400
+  url: https://www.oregonlegislature.gov/bills_laws/ors/ors197A.html
+  title: ORS 197A.400 Clear and objective approval criteria required; alternative approval process
+  start: "197A.400 Clear"
+  end: "Note: Sections 7 to 9, chapter 330"
+  allow_thin: true
 # The post-2027 sources (FOLLOWUPS 21; Steph 2026-09-29: "design the system
 # for a post-2027 world"). Stored so they can be quoted and watched for
 # change; nothing cites them yet. HB 2138 (2025) rewrites ORS 197A.420 and
@@ -145,6 +158,25 @@ code:
   url: https://clackamasfire.com/wp-content/uploads/2023/08/Oregon-Fire-Code-Applications-Guide-2022.pdf
   title: Oregon Fire Code Applications Guide, based on the 2022 OFC (Clackamas Fire, revised 2023-06-21)
 defaults:
+  # Steph 2026-10-15 (FOLLOWUPS 85): inside an urban growth boundary a city
+  # or county "may adopt and apply only clear and objective standards,
+  # conditions and procedures regulating ... the development of housing"
+  # (1)(a), (c)(A); a judgement path is lawful only beside a clear one (3)(a).
+  # LUBA applied it to conditional-use criteria in East Park v. Salem (2022)
+  # and ordered approval. The screen lifts a conditional use or a judgement
+  # review, and a review's "may add conditions", where this holds and the
+  # lot is inside a UGB (flats.score.screen.clear_objective_reaches); the lot
+  # carries CLEAR-OBJECTIVE. The exceptions in (2) are held by the layers
+  # they reach: Portland's central city and Gateway regional center (held
+  # false city-wide in portland.yaml), and designated historic areas --
+  # which no layer outside Portland holds a map of yet (FOLLOWUPS 87).
+  clear_objective_housing:
+    value: true
+    cite: "ORS 197A.400(1)(a)(A) and (1)(c)(A)"
+    url: "https://www.oregonlegislature.gov/bills_laws/ors/ors197A.html"
+    retrieved: 2026-10-15
+    status: draft
+    quote: "or/ors.197a.400.txt#L1,L3,L15,L17"
   # Splitting the four units onto four lots does not create four lots that each
   # have to meet the zone. ORS 92.031(2)(b) requires the plan to comply with the
   # land use regulations "applicable to the original lot or parcel", and

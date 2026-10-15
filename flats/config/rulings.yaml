@@ -766,9 +766,63 @@
     REVIEW-CONDITIONS (severity 5, YELLOW). Zones refused under the
     by-right-only ruling were re-read: Sandy, Hillsboro's 17 review-gated
     zones, Washington County's Type II gates and Clackamas MR1, MR2, HDR,
-    PMD and VA became YELLOW; Canby and Clackamas PMU stayed RED.
+    PMD and VA became YELLOW; Canby and Clackamas PMU stayed RED. Narrowed
+    2026-10-15 inside urban growth boundaries: the YELLOW tier and the RED
+    for a judgement-only path both became GREEN with a flag there
+    (2026-10-15-clear-objective-green-flag).
   source: Steph 2026-10-14, FOLLOWUPS 79 (memory feedback_rulings_2026_10_14.md), commit 3504f7fe
   encoded_in: [flats/config/flags.yaml]
+
+- id: 2026-10-15-clear-objective-green-flag
+  kind: ruling
+  date: 2026-10-15
+  scope: {}
+  question: >-
+    ORS 197A.400 lets a city or county apply only clear and objective
+    standards to housing inside an urban growth boundary. What colour is a
+    lot whose only bar is a judgement-based path -- a conditional use on
+    judgement criteria, a one-off judgement review -- or a review that may
+    add conditions?
+  ruling: >-
+    Where the only thing turning a lot red is a judgement-based path, it is
+    GREEN WITH A FLAG, below the yellow line: "state law voids the judgement
+    test; the city may refuse at first and an appeal may be needed". The
+    "may add conditions" review tier goes the same way, because any
+    condition added must itself be clear and objective, so a lot with a
+    measurable review can never rank below a judgement-only lot that is now
+    green. Mixed lists that include judgement criteria are covered too.
+    Unchanged: a use not allowed or not listed; land outside a UGB; the
+    statute's own exceptions (Portland's central city and Gateway, historic
+    areas); a measured standard the pod fails (red); a zone with no clear
+    standards to judge by (grey, never invented numbers).
+  effect: >-
+    Narrows 2026-10-14-review-tiers inside UGBs; that entry still governs
+    outside them and wherever an exception applies, so it is not superseded.
+    clear_objective_housing is true on the state layer and false on
+    Portland's (no central-city or Gateway map is held, so all of Portland
+    keeps the 10-14 rule). Where it is true and the lot is inside a UGB (a
+    city lot, or an unincorporated lot inside Metro's boundary), a
+    quadplex_allowed variant that asks only for conditional_use or
+    judgement_review opens the use with no bind, and review_discretion or
+    Washington County's Type I gates no longer make YELLOW: both raise
+    CLEAR-OBJECTIVE (severity 2). Zones opened: Canby R-1.5, R-2, C-R
+    (judgement_review on CMC 16.49.030/16.49.40); Gladstone C1, C3, LI;
+    Fairview VMU, VA; Milwaukie NMU, SMU; Estacada R-2, R-3, C-1; Cornelius
+    CMU (conditional_use). SMU, Estacada R-2 and C-1 and Cornelius CMU have
+    no dimensional standards encoded, so their lots go UNKNOWN, not green.
+  source: Steph 2026-10-15, FOLLOWUPS 85 (ruling and scope change relayed by the coordinator)
+  encoded_in:
+    - flats/config/jurisdictions/or/_state.yaml
+    - flats/config/jurisdictions/or/multnomah/portland.yaml
+    - flats/config/flags.yaml
+    - flats/score/screen.py
+    - flats/ingest/quadfit.py
+    - flats/config/jurisdictions/or/clackamas/canby.yaml
+    - flats/config/jurisdictions/or/clackamas/gladstone.yaml
+    - flats/config/jurisdictions/or/clackamas/milwaukie.yaml
+    - flats/config/jurisdictions/or/clackamas/estacada.yaml
+    - flats/config/jurisdictions/or/multnomah/fairview.yaml
+    - flats/config/jurisdictions/or/washington/cornelius.yaml
 
 - id: 2026-10-14-unchecked-design-details
   kind: ruling

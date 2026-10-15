@@ -69,23 +69,28 @@ def test_the_four_codes_are_zones_now_and_no_longer_rulings(
 
 
 @pytest.mark.parametrize("zone", ["NMU", "SMU"])
-def test_the_conditional_use_columns_are_red_by_ruling(
+def test_the_conditional_use_columns_open_by_the_statute(
     milwaukie: Layer, rules: RuleSet, zone: str
 ) -> None:
+    # RED by ruling until 2026-10-15, when ORS 197A.400 reduced the Type III
+    # hearing to the clear and objective standards inside a UGB (FOLLOWUPS 85).
     held = _value(milwaukie, zone, "quadplex_allowed")
     assert held.value is False
-    assert held.variants == ()
-    assert (milwaukie.zones[zone].notes or "").startswith(
-        "RED, RE-CHECKED 2026-10-14 under Steph's review rule"
-    )
-    for extra in ((), ("unit_lots",), ("unit_lots", "inside_mapped_use_area"),
-                  ("conditional_use",), ("mixed_use",)):
-        use = _use(rules, zone, *extra)
-        assert use.value is False
-        assert not use.levers
+    (door,) = held.variants
+    assert tuple(door.when) == ("conditional_use",)
+    assert "ORS 197A.400" in door.prov.cite
+    notes = milwaukie.zones[zone].notes or ""
+    assert notes.startswith("OPENED 2026-10-15 BY ORS 197A.400")
+    assert "RED, RE-CHECKED 2026-10-14 under Steph's review rule" in notes
+    for extra in ((), ("unit_lots",), ("unit_lots", "inside_mapped_use_area"), ("mixed_use",)):
+        assert _use(rules, zone, *extra).value is False
+    assert _use(rules, zone, "conditional_use").value is True
     resolved = rules.resolve(MILWAUKIE, zone, (*POD, "unit_lots"))
-    # A settled refusal does not demand the standards it will never use.
-    assert resolved.missing_required == ()
+    # No longer a settled refusal, so the standards are demanded: NMU's side
+    # and rear "None" are encoded; SMU's "5/10" cell is not read, so its lots
+    # read UNKNOWN, never a green the yards were not checked for.
+    want = () if zone == "NMU" else ("setback_rear_ft", "setback_side_ft")
+    assert tuple(sorted(resolved.missing_required)) == want
 
 
 def test_gmu_is_by_right_only_as_townhouses_on_unit_lots(
