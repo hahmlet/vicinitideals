@@ -2955,7 +2955,12 @@ read when the weekly full re-screen lands.
    (Steph 2026-10-15) and BUILT: scripts/flats_dlcd_watch.py + flats/watch/dlcd.py, ledger
    flats/config/dlcd_read.yaml, runbook docs/ops/flats-county-refresh.md 4f. BACKLOG to read: 76
    adopted + 92 proposed notices from our cities since 2026-01-01 (incl. RICAP 11, DLCD 001-26) --
-   Opus reading lane next; each `encode` verdict becomes its own FOLLOWUPS item.
+   READ 2026-10-15 (ledger flats/config/dlcd_read.yaml): 6 encode, 16 watch, 146 no effect;
+   encode items -> 88, 89. WATCH: Portland design-review suspension to 2029 (yellow->green
+   possible), Happy Valley code update (PC 2026-11-10), Sandy middle housing (2026-10-26/11-16),
+   Canby UGB + Wilsonville annexation (new land), Oregon City geohazard clear path, Portland
+   state-law compliance + central-city projects. RICAP 11 MP5 (back-out pads <=2 stalls) and MP4
+   (aisle) noted under C1.
 87. [scan: YES -- greens only lose] **Protected historic buildings outside Portland (found
    2026-10-15 by the register audit).** Steph's 2026-10-14 ruling (protected historic building on
    the lot = RED) is built only from Portland's historic resource map (Portland + Multnomah uninc).
@@ -2964,3 +2969,14 @@ read when the weekly full re-screen lands.
    source (Oregon SHPO Historic Sites Database / National Register GIS; ORS 197.772 + OAR
    660-023-0200 decide which listings are "protected"), else per-city maps; apply the standing rule
    (no re-ask), bound, read losses. Standing rule, no question for Steph.
+88. [scan: YES -- greens only lose] **Gladstone Ord. 1545 (in force 2026-08-13): R-7.2 minimum
+   lot for duplex..quadplex 3,600 -> 7,200 sq ft** (DLCD watch, 2026-10-15). Stored code predates
+   it; the R10 placeholder copies the same number. R-7.2 lots 3,600-7,199 sq ft screen green and
+   should be red. Source: council packet https://www.ci.gladstone.or.us/media/30151. Store the
+   ordinance (adopted-change mechanism, effective already past), encode, bound, read the losses.
+89. [scan: YES -- greens only lose] **Happy Valley 16.44 driveway access never fetched** (found via
+   Ord. 603, DLCD watch 2026-10-15). A lot with more than one street frontage takes its driveway
+   from the lowest-class street; driveway at most half the frontage (12-35 ft). In force since
+   2022; our rules let the drive use any street -> possible false GREEN. Source
+   https://ecode360.com/43526523. Fetch + store 16.44, encode (corner_access_street: lowest_class;
+   street class per lot line exists since FOLLOWUPS 41), bound, read the losses.
