@@ -666,8 +666,11 @@ UNSCREENED_ZONES: dict[str, tuple[str, ...]] = {
 #: which needs a lot line's bearing), and SCMU's front setback is keyed to a
 #: street-type map (1005.09) nothing reads. quadfit refuses a zone with no
 #: yards, so they wait here until the corpus fills them.
+#:
+#: 2026-10-14, later: one. The lot-line-bearing lane encoded HDR's dimensions
+#: (FOLLOWUPS 61) and its row is ported; SCMU still waits.
 AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {
-    "clackamas_unincorporated": ("HDR", "SCMU"),
+    "clackamas_unincorporated": ("SCMU",),
 }
 
 
@@ -1042,8 +1045,9 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: Steph's rulings of 2026-10-14: the review a fourplex goes through
     #: (FLATS flags it; quadfit's needs_verification is its nearest cap) and
     #: the parking cap read on every street frontage, measured on FLATS's
-    #: drawn plan.
-    "review_discretion": 28,
+    #: drawn plan. 28 -> 37 the same day: Clackamas HDR and the eight 1102
+    #: blocks (SHD, RCHDR, RTL, CC, C3, OC, RCC, RCO) admitted by the same rule.
+    "review_discretion": 37,
     "type_i_max_buildable_sqft": 11,
     "type_i_density_escape_du_per_acre": 8,
     "type_i_standard_plat_required": 8,
