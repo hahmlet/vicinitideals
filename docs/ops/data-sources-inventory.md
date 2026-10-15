@@ -1,6 +1,6 @@
 # Data Sources Inventory
 
-Last updated: 2026-04-11
+Last updated: 2026-10-15
 
 Full historical record of every source evaluated. Status: **active**, **downloaded-limited**, **rejected**, or **planned**.
 
@@ -27,6 +27,13 @@ For currently active sources and their field mappings, see [data-sources-active.
 - **Rejected layers:**
   - `zoning_or_statewide` — QA'd against Gresham: `localZCode` completely empty for all Gresham features. `orZCode` only produces 2 coarse values (MURMH, Res.) across 302 features. Designed for statewide comparative analysis, not local zoning decisions. Disabled.
   - `comp_plan_designations_or` — Same DLCD source, not independently evaluated. Disabled alongside zoning layer.
+
+## DLCD plan-amendment notices
+- **Status:** Active — weekly manual watch for FLATS jurisdictions
+- **Reports:** [Adopted](https://db.lcd.state.or.us/papa_website_reports/PublicNoticeAdoptedAmendments.aspx) · [Proposed](https://db.lcd.state.or.us/papa_website_reports/PublicNoticeProposedAmendments.aspx)
+- **Run:** `python scripts/flats_dlcd_watch.py --since YYYY-MM-DD`; defaults to the last 21 days and writes under `data/flats/dlcd/<today>/`.
+- **Output:** Report CSVs plus `new.json` and an agent reading list in `new.md`. The watch only fetches, filters, and lists; it does not evaluate notices. After reading, record the verdict and notes in `flats/config/dlcd_read.yaml`.
+- **Notes:** DLCD exports use `City of <name>` labels for adopted notices and bare city names for proposed notices. The date picker rejects an end date newer than its latest available date; the fetcher retries with that published date.
 
 ## Oregon Navigator (navigator.state.or.us)
 - **Status:** Rejected as data source; geocoder retained

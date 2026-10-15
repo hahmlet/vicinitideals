@@ -1,0 +1,59 @@
+# DLCD export labels (verified against the live #ddlJurisdictionID options
+# on 2026-10-15) mapped to FLATS jurisdiction slugs. Adopted exports prepend
+# "City of" to city names; proposed exports omit it. County names match exactly.
+# Every held Oregon jurisdiction was present; there are no naming gaps.
+"Clackamas County": or/clackamas/_unincorporated
+"City of Canby": or/clackamas/canby
+"City of Estacada": or/clackamas/estacada
+"City of Gladstone": or/clackamas/gladstone
+"City of Happy Valley": or/clackamas/happy-valley
+"City of Johnson City": or/clackamas/johnson-city
+"City of Lake Oswego": or/clackamas/lake-oswego
+"City of Milwaukie": or/clackamas/milwaukie
+"City of Oregon City": or/clackamas/oregon-city
+"City of Rivergrove": or/clackamas/rivergrove
+"City of Sandy": or/clackamas/sandy
+"City of Tualatin": or/clackamas/tualatin
+"City of West Linn": or/clackamas/west-linn
+"City of Wilsonville": or/clackamas/wilsonville
+"Canby": or/clackamas/canby
+"Estacada": or/clackamas/estacada
+"Gladstone": or/clackamas/gladstone
+"Happy Valley": or/clackamas/happy-valley
+"Johnson City": or/clackamas/johnson-city
+"Lake Oswego": or/clackamas/lake-oswego
+"Milwaukie": or/clackamas/milwaukie
+"Oregon City": or/clackamas/oregon-city
+"Rivergrove": or/clackamas/rivergrove
+"Sandy": or/clackamas/sandy
+"Tualatin": or/clackamas/tualatin
+"West Linn": or/clackamas/west-linn
+"Wilsonville": or/clackamas/wilsonville
+"Washington County": or/washington/_unincorporated
+"City of Beaverton": or/washington/beaverton
+"City of Cornelius": or/washington/cornelius
+"City of Durham": or/washington/durham
+"City of Hillsboro": or/washington/hillsboro
+"City of King City": or/washington/king-city
+"City of Sherwood": or/washington/sherwood
+"City of Tigard": or/washington/tigard
+"Beaverton": or/washington/beaverton
+"Cornelius": or/washington/cornelius
+"Durham": or/washington/durham
+"Hillsboro": or/washington/hillsboro
+"King City": or/washington/king-city
+"Sherwood": or/washington/sherwood
+"Tigard": or/washington/tigard
+"Multnomah County": or/multnomah/_unincorporated
+"City of Fairview": or/multnomah/fairview
+"City of Gresham": or/multnomah/gresham
+"City of Maywood Park": or/multnomah/maywood-park
+"City of Portland": or/multnomah/portland
+"City of Troutdale": or/multnomah/troutdale
+"City of Wood Village": or/multnomah/wood-village
+"Fairview": or/multnomah/fairview
+"Gresham": or/multnomah/gresham
+"Maywood Park": or/multnomah/maywood-park
+"Portland": or/multnomah/portland
+"Troutdale": or/multnomah/troutdale
+"Wood Village": or/multnomah/wood-village
