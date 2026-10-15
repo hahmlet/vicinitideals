@@ -2649,7 +2649,7 @@ zones:
         - value: true
           when: [unit_lots, conditional_use]
           cite: "FMC 19.125.030 (A), townhouses a conditional use after Planning Commission approval; ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
-          quote: "or/multnomah/fairview/19.125.txt#L21,L23,L25-L27,L29-L31,L63,L65,L67-L69"
+          quote: "or/multnomah/fairview/19.125.txt#L63,L65,L67-L69"
       #
       # Closed by the 2026-10-08 ruling, reopened 2026-10-15 by ORS 197A.400:
       # Townhouses are a conditional use after Planning Commission approval (19.125.030(A)).
