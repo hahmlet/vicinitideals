@@ -21,6 +21,15 @@
     </div>
   </div>
 
+  {# An adopted change to this zone's law, said against today and the run shown. #}
+  {% for change in law_changes %}
+  <div class="alert alert-warning" style="font-size:13px" id="law-change-{{ change.id }}" data-status="{{ change.status }}">
+    <strong>{{ change.label }}</strong>: {{ change.effect }}
+    {{ change.words }}
+    <a href="{{ change.url }}" target="_blank" rel="noopener">{{ change.cite }}</a>
+  </div>
+  {% endfor %}
+
   {# The answer, first. Verdict, then the colour beside it -- in that order. #}
   <div id="lot-verdict" class="toolbar" style="gap:24px;flex-wrap:wrap;align-items:baseline">
     <div>

@@ -1292,3 +1292,59 @@ async def test_the_lot_page_shows_the_questions_it_has_carried_over_time(
     # A lot with no history shows no section.
     other = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
     assert 'id="flag-history"' not in other.text
+
+
+# --- law adopted with a later effective date ---------------------------------
+
+
+async def _ci1_lot(session: AsyncSession, run: FlatsRun) -> None:
+    session.add(
+        FlatsLot(
+            tlid="1S1E24AA  -00100", county="multnomah", jurisdiction="or/multnomah/portland",
+            zone_raw="CI1", zone="CI1", site_address="3203 SE WOODSTOCK BLVD", area_sqft=8000,
+            geom=_box(7_652_000, 672_000, 80, 100), centroid="SRID=4326;POINT(-122.6305 45.4810)",
+            condo_verdict="land", facts={"source": "quadfit"},
+            first_seen_run_id=run.id, updated_run_id=run.id, snapshot_id=run.snapshot_id,
+        )
+    )
+    await session.commit()
+
+
+async def test_a_ci1_lot_says_ricap_11_is_coming_before_it_takes_effect(
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
+):
+    # Portland's RICAP 11, adopted 2026-08-06, effective 2026-11-01: until
+    # then CI1 screens under the code as printed, and the lot page says what
+    # is coming and when -- on CI1 lots only.
+    await _login(client, session)
+    run = await _seed(session)
+    await _ci1_lot(session, run)
+    monkeypatch.setenv("FLATS_LAW_ON", "2026-10-15")
+
+    page = await client.get("/flats/lots/multnomah/1S1E24AA%20%20-00100")
+    assert page.status_code == 200
+    said = page.text.split('id="law-change-ricap11"', 1)[1].split("</div>", 1)[0]
+    assert 'data-status="pending"' in said
+    assert "RICAP 11" in said and "RM1" in said
+    assert "Adopted 6 Aug 2026" in said and "takes effect 1 Nov 2026" in said
+    assert "efiles.portlandoregon.gov/record/18006154" in said
+
+    other = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+    assert "law-change-" not in other.text
+
+
+async def test_a_ci1_lot_says_when_the_run_shown_predates_the_change(
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
+):
+    # After the date, a run from before it screened under the old text; the
+    # page says so rather than letting that colour read as the new law's.
+    await _login(client, session)
+    run = await _seed(session)
+    await _ci1_lot(session, run)
+    monkeypatch.setenv("FLATS_LAW_ON", "2026-11-02")
+
+    page = await client.get("/flats/lots/multnomah/1S1E24AA%20%20-00100")
+    said = page.text.split('id="law-change-ricap11"', 1)[1].split("</div>", 1)[0]
+    assert 'data-status="arrived"' in said
+    assert "In force since 1 Nov 2026" in said
+    assert "started before then" in said

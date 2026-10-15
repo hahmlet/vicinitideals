@@ -41,7 +41,7 @@ from __future__ import annotations
 
 import json
 import re
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from functools import lru_cache
 from typing import Any, Mapping, Sequence
 from urllib.parse import quote
@@ -99,7 +99,7 @@ from flats.rules.fields import FIELDS
 from flats.rules.net_area import SHOWN as net_area_shown
 from flats.rules.ledger import CoverageRow, read_coverage
 from flats.score import price as price_calc
-from flats.rules.loader import MIN_RULING
+from flats.rules.loader import MIN_RULING, law_on
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
     CROSSREF_WORK,
@@ -4087,6 +4087,80 @@ async def _lot_decisions(session: DBSession, county: str, tlid: str) -> list[dic
     return out
 
 
+def _day(d: date) -> str:
+    return f"{d.day} {d:%b %Y}"
+
+
+def _run_law_on(run: FlatsRun | None) -> date | None:
+    """The date whose law a run applied: the bridge records it (``law_on`` in
+    its meta, carried into the run's params); an older run is taken at the
+    Oregon date it started."""
+    if run is None:
+        return None
+    pinned = (run.params or {}).get("law_on")
+    if pinned:
+        try:
+            return date.fromisoformat(str(pinned))
+        except ValueError:
+            pass
+    if run.started_at is None:
+        return None
+    try:
+        from zoneinfo import ZoneInfo
+
+        return run.started_at.astimezone(ZoneInfo("America/Los_Angeles")).date()
+    except Exception:  # noqa: BLE001 -- no tz database: the stored instant's own date
+        return run.started_at.date()
+
+
+def _law_changes(
+    layer_id: str, zone: str | None, *, run_on: date | None = None, today: date | None = None
+) -> list[dict[str, Any]]:
+    """The adopted changes to a lot's zone, said against today and the run shown.
+
+    The corpus is read as written (:func:`_layers`), so every amendment is
+    still on the zone whatever the date; whether it is in force is decided
+    here, against the same Oregon date the screens use. A run that started
+    before an amendment took effect screened under the old text, and the page
+    says so rather than letting its colour read as the new law's answer.
+    """
+    layer = _layers().get(layer_id or "")
+    block = layer.zones.get(zone or "") if layer is not None else None
+    if block is None or not block.amended:
+        return []
+    on = law_on(today)
+    out = []
+    for a in block.amended:
+        if not a.in_force(on):
+            status = "pending"
+            words = (
+                f"Adopted {_day(a.adopted)}; takes effect {_day(a.effective)}. "
+                "Until then this zone screens under the code as printed, and the first run "
+                "on or after that date screens it under the change."
+            )
+        elif run_on is not None and run_on < a.effective:
+            status = "arrived"
+            words = (
+                f"In force since {_day(a.effective)}. The run shown started before then and "
+                "screened this lot under the old text; the next run screens it under the change."
+            )
+        else:
+            status = "applied"
+            words = f"In force since {_day(a.effective)}, and the run shown screened this lot under it."
+        out.append(
+            {
+                "id": a.id,
+                "label": a.label,
+                "effect": a.effect,
+                "status": status,
+                "words": words,
+                "url": a.prov.url,
+                "cite": a.prov.cite,
+            }
+        )
+    return out
+
+
 async def _lot_view(
     session: DBSession,
     county: str,
@@ -4172,6 +4246,9 @@ async def flats_lot(
             **_lots_ctx(runs, chosen),
             "refresh": refresh,
             "lot": card,
+            "law_changes": _law_changes(
+                lot.jurisdiction, lot.zone, run_on=_run_law_on(chosen)
+            ),
             "decisions": await _lot_decisions(session, county, tlid),
             "flag_history": await _flag_history(session, county, tlid),
             "facts": _fact_rows(facts),
