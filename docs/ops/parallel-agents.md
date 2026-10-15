@@ -5,6 +5,35 @@ FOLLOWUPS item, called a lane. Read this file before you start, and again
 before every merge. It sits on top of [worktrees.md](worktrees.md) and
 CLAUDE.md, and does not replace them.
 
+## Avoiding conflicts and wasted usage (Steph 2026-10-15)
+
+These rules come from 2026-10-14. Three lanes rebased three times between them, two invented the same field name with opposite meanings, and waiting agents burned ~40% of a week's usage. Where an older rule below disagrees, these win.
+
+1. **The coordinator plans the overlap BEFORE launching lanes.** Each lane's instructions name:
+   - the areas it will change;
+   - any new field, flag or screen-reason names it will add, claimed up front.
+
+   Lanes that touch the same core area run one after the other. If they must overlap, the second does not start its long 137 check until the first has merged. Core areas: one screen in `flats/score/screen.py`; the fit or envelope in `flats/geom/`, `flats/fit/`; the bridge's lot reading in `flats/ingest/quadfit.py`; `flats/geom/edges.py` fields.
+2. **Lanes never commit the shared bookkeeping files.** The coordinator rebuilds these once, at merge time:
+   - `docs/FOLLOWUPS.md`: put the item text in your report; the coordinator writes it. This replaces rule 9.
+   - `flats/config/gaps.json`: regenerated after the merge.
+   - Inventory and count tests: `Lot Analysis/quadfit/tests/test_zone_mirror.py` `UNEXPRESSIBLE`, `flats/tests/test_refusals.py` counts. Report the new numbers; the coordinator updates them.
+   - The quadfit port: `Lot Analysis/quadfit/config/rules.yaml` via `port_from_flats.py --write`. Re-port in your worktree to RUN the tests, but leave the regenerated file out of your commits.
+
+   A lane whose change NEEDS one of these edits (e.g. a new rules.yaml row the port cannot produce) says so in its report.
+3. **Merge code before the long check, not after.** Merging code does not move the map; only the weekly re-screen and a promotion do. Once a lane's tests pass, it reports and the coordinator merges. The lane then runs its bound on current main, so it never goes stale. **The safeguard:** the weekly re-screen does not start until every change merged since the last one has had its bound read and its move sizes reported to Steph. A bound that finds a bug is fixed on main before the weekly.
+4. **Rebase before the long check, never after it.** Re-run the check only if main moved inside your own area.
+5. **No polling.** After queuing a 137 job (`nohup flock -o /root/heavy.lock ...`), register a wait:
+   ```bash
+   echo '<your session name>|<done-marker>|<failed-glob>' > /root/watch/<name>.want
+   ```
+   Then END YOUR TURN, with no timers and no sleep loops. The coordinator's `scripts/agent_watch.py` loop wakes you. See "Waiting on 137 without polling" below.
+6. **Model per role.** The coordinator picks the model in the instructions:
+   - top model, high effort: reading code text, encoding rules, and reading moved lots;
+   - mid model, medium effort: ops, merges, re-runs, tooling and mechanical fixes.
+
+   Reports stay under ~300 words.
+
 ## Lanes
 
 Update this table when a lane opens or closes. Commit it on `main` by
