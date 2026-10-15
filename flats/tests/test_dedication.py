@@ -26,7 +26,7 @@ from shapely.geometry import LineString
 from flats.geom import dedication
 from flats.geom.corridor import Lines
 from flats.geom.edges import EdgeClass
-from flats.geom.street_class import CLASS_MAPS, ClassMap
+from flats.geom.street_class import CLASS_MAPS, PRIVATE_RANK, ClassMap
 from flats.ingest.quadfit import (
     ROAD_ZONE_STANDIN,
     dedicated,
@@ -648,7 +648,7 @@ def test_tigards_map_is_read_for_the_dedication_only() -> None:
     spec = CLASS_MAPS["street_class_tigard"]
     assert spec.access is False
     buckets = dedication.BUCKETS["street_class_tigard"]
-    assert buckets == {0: "local", 1: "neighborhood_route", 2: "collector", 3: "arterial", 4: "arterial"}
+    assert buckets == {-1: "local", 0: "local", 1: "neighborhood_route", 2: "collector", 3: "arterial", 4: "arterial"}
 
     def bucket(value):
         rank = class_rank(value, spec)
@@ -787,16 +787,51 @@ def test_an_unranked_tsp_line_on_the_street_leaves_the_tigard_line_unread() -> N
     assert tigard_rank(mixed) is None
 
 
-def test_a_tigard_private_street_gives_up_nothing(rules) -> None:
+def _private_lot(city):
+    """A lot line on SW Angus Ct, which Metro types a private road (1700)."""
+    county = _cmap([T_STREET], ["SW ANGUS CT"], (1700,), ranks=(0,))
+    maps = [county] if city is None else [county, city]
+    (got,) = dedication.measure([T_FRONT], TIGARD, maps)
+    return got
+
+
+def _angus(tsps, ranks, names):
+    return _tigard_map(tsps, ranks, names, street_names=("SW ANGUS CT",), types=(1700,))
+
+
+def test_a_tigard_private_street_gives_up_nothing_only_where_both_maps_say_so(rules) -> None:
     # 18.910.020.E: "the term 'streets' shall mean 'public streets'"; a
     # private street's design is the City Engineer's (18.910.030.T.1) and
-    # the TSP shows it no ultimate right-of-way. Metro types it private:
-    # the line is not public and gives up nothing.
-    county = _cmap([T_STREET], ["SW ANGUS CT"], (1700,), ranks=(0,))
-    city = _tigard_map([_tsp(21)], [0], ["ANGUS CT"], street_names=("SW ANGUS CT",), types=(1700,))
-    (got,) = dedication.measure([T_FRONT], TIGARD, [county, city])
+    # the TSP shows it no ultimate right-of-way. Metro types it private and
+    # the city's line along it says PRIVATE: the line is not public.
+    got = _private_lot(_angus([_tsp(21)], [PRIVATE_RANK], ["ANGUS CT"]))
     assert got[5] is False
     assert strip(rules, TIGARD, "RES-B", None, names=None, classes={"street_class_tigard": None}, public=False) == 0.0
+    # No city line along it at all: the city does not call it public either.
+    assert _private_lot(_angus([_tsp(300)], [0], ["ANGUS CT"]))[5] is False
+    # A public street meeting the lot line end-on is not along it.
+    across = LineString([(TX + 80, TY - 500), (TX + 80, TY + 500)])
+    assert _private_lot(_angus([_tsp(21), across], [PRIVATE_RANK, 2], ["ANGUS CT", "HALL BLVD"]))[5] is False
+
+
+def test_a_street_metro_calls_private_and_tigard_public_takes_the_citys_row() -> None:
+    # The city classes the street a Collector: its row, measured to Metro's line.
+    got = _private_lot(_angus([_tsp(21)], [2], ["ANGUS CT"]))
+    assert got[5] is True and got[4] == pytest.approx(21.0)
+    assert got[7]["street_class_tigard"] == "collector"
+    # Drawn 40 ft off and unnamed, but running along the line: still the city's.
+    got = _private_lot(_angus([_tsp(55)], [1], [""]))
+    assert got[5] is True and got[7]["street_class_tigard"] == "neighborhood_route"
+
+
+def test_a_tigard_private_street_the_maps_disagree_on_otherwise_keeps_the_deepest_row(rules) -> None:
+    # An unranked city line along it (a Freeway, an "Other").
+    got = _private_lot(_angus([_tsp(21)], [None], ["ANGUS CT"]))
+    assert got[5] is True and got[7]["street_class_tigard"] is None
+    # The city's map missing from the snapshot: Metro alone is one source.
+    got = _private_lot(None)
+    assert got[5] is True and "street_class_tigard" not in got[7]
+    assert strip(rules, TIGARD, "RES-B", 21.0, names=["ANGUS CT"], classes={}) == 43.0
 
 
 def test_a_street_tigard_calls_private_and_metro_public_takes_the_local_row(rules) -> None:
@@ -804,6 +839,7 @@ def test_a_street_tigard_calls_private_and_metro_public_takes_the_local_row(rule
     # the centre line), never nothing.
     county = _cmap([T_STREET], ["SW 107TH AVE"], (1500,), ranks=(0,))
     rank = class_rank_of("PRIVATE")
+    assert rank == PRIVATE_RANK
     city = _tigard_map([_tsp(21)], [rank], ["107TH AVE"])
     (got,) = dedication.measure([T_FRONT], TIGARD, [county, city])
     assert got[5] is True and got[7]["street_class_tigard"] == "local"

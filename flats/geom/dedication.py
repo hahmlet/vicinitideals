@@ -81,8 +81,16 @@ import dataclasses
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Iterable, Mapping, Sequence
 
-from flats.geom.corridor import FRONT_REACH_FT, SAMPLES, STREET_CLASS, _fronted
-from flats.geom.street_class import ClassMap, _rank_at, _samples, edge_rank, street_key
+from flats.geom.corridor import CORRIDOR_REACH_FT, FRONT_REACH_FT, SAMPLES, STREET_CLASS, _abreast, _fronted
+from flats.geom.street_class import (
+    CLASS_MAPS,
+    PRIVATE_RANK,
+    ClassMap,
+    _rank_at,
+    _samples,
+    edge_rank,
+    street_key,
+)
 
 if TYPE_CHECKING:
     from flats.rules.resolver import ZoneResolution
@@ -203,8 +211,10 @@ BUCKETS: dict[str, dict[int, str]] = {
     },
     # Table 18.910.1 rows: Arterial, Collector, Neighborhood Route, Local.
     # The TSP's Principal Arterial (99W, Barbur Blvd) takes the Arterial row,
-    # the only one the table prints for it; a Freeway has no row (unread).
+    # the only one the table prints for it; a Freeway has no row (unread). A
+    # street the city calls PRIVATE and Metro public takes the Local row.
     "street_class_tigard": {
+        PRIVATE_RANK: "local",
         0: "local",
         1: "neighborhood_route",
         2: "collector",
@@ -267,29 +277,41 @@ def half_width_ft(edge: Sequence[float], cmap: ClassMap) -> tuple[float | None, 
     return width, public
 
 
-def read_line(edge: Sequence[float], cmap: ClassMap) -> tuple[float | None, bool, tuple[str, ...] | None]:
+def read_line(
+    edge: Sequence[float], cmap: ClassMap, through_private: bool = False
+) -> tuple[float | None, bool, tuple[str, ...] | None]:
     """:func:`half_width_ft` and the names of the streets the line may be on
-    (:func:`street_key`), None where some point has no street within reach."""
+    (:func:`street_key`), None where some point has no street within reach.
+
+    ``through_private`` measures a line on a private road as on any street
+    (the public flag still says private), for a city map that calls the
+    street public (:func:`measure`)."""
     got = _samples(edge)
     if got is None:
         return None, True, None
     points, own = got
     widths: list[float] = []
     names: set[str] = set()
+    public = True
     for p in points:
         s = _fronted(p, own, cmap.streets)
         if s is None:
             continue
         if cmap.types[s] in PRIVATE_TYPES:
-            return None, False, None
+            if not through_private:
+                return None, False, None
+            public = False
         widths.append(float(cmap.streets.lines[s].distance(p)))
         names.add(street_key(cmap.streets.names[s]))
     if len(widths) >= MIN_MEASURED:
-        return min(widths), True, tuple(sorted(names))
-    return _nearest(points, cmap)
+        return min(widths), public, tuple(sorted(names))
+    width, near_public, near_names = _nearest(points, cmap, through_private)
+    return width, public and near_public, near_names
 
 
-def _nearest(points: Sequence[Any], cmap: ClassMap) -> tuple[float | None, bool, tuple[str, ...] | None]:
+def _nearest(
+    points: Sequence[Any], cmap: ClassMap, through_private: bool = False
+) -> tuple[float | None, bool, tuple[str, ...] | None]:
     """The reading for a line no centreline runs beside (a stub, a curve):
     the distance to the nearest centreline of any bearing within reach of
     EVERY sample point. It can only be shorter than the distance to the
@@ -299,13 +321,16 @@ def _nearest(points: Sequence[Any], cmap: ClassMap) -> tuple[float | None, bool,
     within reach."""
     widths: list[float] = []
     names: set[str] = set()
+    public = True
     for p in points:
         near = cmap.streets.near(p, FRONT_REACH_FT)
         if not near:
-            return None, True, None
+            return None, public, None
         s = min(near, key=lambda i: cmap.streets.lines[i].distance(p))
         if cmap.types[s] in PRIVATE_TYPES:
-            return None, False, None
+            if not through_private:
+                return None, False, None
+            public = False
         names.update(street_key(cmap.streets.names[i]) for i in near)
         d = float(cmap.streets.lines[s].distance(p))
         if cmap.osm is not None:
@@ -313,7 +338,7 @@ def _nearest(points: Sequence[Any], cmap: ClassMap) -> tuple[float | None, bool,
             # can only bring the reading in, never push it out.
             d = min([d, *(float(cmap.osm.lines[i].distance(p)) for i in cmap.osm.near(p, FRONT_REACH_FT))])
         widths.append(d)
-    return min(widths), True, tuple(sorted(names))
+    return min(widths), public, tuple(sorted(names))
 
 
 def _reads(cmap: ClassMap, layer_id: str | None) -> bool:
@@ -334,6 +359,19 @@ def measure(edges: Iterable[Sequence[Any]], layer_id: str | None, maps: Sequence
     lines = [e for e in edges if len(e) >= 5 and e[4] == STREET_CLASS]
     reads = [read_line(e, cmap) for e in lines]  # type: ignore[arg-type]
     ranks = {m.key: _lot_ranks(lines, [names for _, _, names in reads], m) for m in ranked}
+    # A city map naming its private streets: Metro's "private" alone gives up
+    # nothing only where that map agrees (:func:`_private_reading`).
+    named = {m.key: m for m in ranked if m.by_name}
+    for key in _name_matched(layer_id):
+        for i, (e, (_, public, _)) in enumerate(zip(lines, reads)):
+            if public:
+                continue
+            width, _, names = read_line(e, cmap, through_private=True)  # type: ignore[arg-type]
+            got = _private_reading(e, names or (), named.get(key))
+            if got == "private":
+                continue
+            reads[i] = (width, True, names)
+            ranks.setdefault(key, [None] * len(lines))[i] = None if got == "unread" else got  # type: ignore[assignment]
     out: list[list[Any]] = []
     for i, (e, (width, public, names)) in enumerate(zip(lines, reads)):
         classes: dict[str, str | None] = {}
@@ -350,6 +388,56 @@ def measure(edges: Iterable[Sequence[Any]], layer_id: str | None, maps: Sequence
             ]
         )
     return out
+
+
+def _name_matched(layer_id: str | None) -> list[str]:
+    """The maps read for ``layer_id`` that name their streets (Tigard's), loaded
+    or not: a private street there needs that map's agreement."""
+    return [
+        key
+        for key, places in READS.items()
+        if key in CLASS_MAPS
+        and CLASS_MAPS[key].name_field is not None
+        and bool(layer_id)
+        and any(layer_id == s or layer_id.startswith(f"{s}/") for s in places)
+    ]
+
+
+def _private_reading(edge: Sequence[Any], names: Iterable[str], cmap: ClassMap | None) -> str | int:
+    """What a city map that names its streets says of a lot line Metro puts
+    on a private road or drive.
+
+    ``"private"`` -- the line gives up nothing -- only where no city line
+    runs along it, or every one that does is private: a line abreast of a
+    sample point within :data:`~flats.geom.corridor.FRONT_REACH_FT`, or one
+    within :data:`~flats.geom.corridor.CORRIDOR_REACH_FT` carrying the name
+    of Metro's street there. A public classed line along it gives its rank
+    (the busiest one): the city calls the street public, and its row
+    applies. An unranked line (a Freeway, an "Other") or no map loaded:
+    ``"unread"``, the deepest distance (Steph's two-source rule, 2026-10-09:
+    the permissive answer needs both maps)."""
+    if cmap is None:
+        return "unread"
+    got = _samples(edge)  # type: ignore[arg-type]
+    if got is None:
+        return "unread"
+    points, own = got
+    from shapely.geometry import LineString
+
+    segment = LineString([(float(edge[0]), float(edge[1])), (float(edge[2]), float(edge[3]))])
+    keys = {n for n in names if n}
+    along: set[int] = set()
+    for i in cmap.lines.near(segment, CORRIDOR_REACH_FT):
+        line = cmap.lines.lines[i]
+        if keys and street_key(cmap.lines.names[i]) in keys:
+            along.add(i)
+        elif line.distance(segment) <= FRONT_REACH_FT and any(_abreast(line, p, own, FRONT_REACH_FT) for p in points):
+            along.add(i)
+    ranks = [cmap.ranks[i] for i in along]
+    if any(r is None for r in ranks):
+        return "unread"
+    public = [r for r in ranks if r != PRIVATE_RANK]
+    return max(public) if public else "private"  # type: ignore[type-var]
 
 
 def _lot_ranks(

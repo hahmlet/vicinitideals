@@ -145,6 +145,10 @@ class ClassSpec:
     name_field: str | None = None
 
 
+#: The rank of a street a city's TSP map calls private (Tigard's PRIVATE):
+#: below every public class, so a public line read beside it outranks it.
+PRIVATE_RANK = -1
+
 #: Registry dataset -> how its classes read.
 CLASS_MAPS: dict[str, ClassSpec] = {
     # MMC 12.16.040.E.3: "local or neighborhood streets" against "collector
@@ -306,14 +310,14 @@ CLASS_MAPS: dict[str, ClassSpec] = {
     # deepest distance. Read for the dedication only (``access``); no Tigard
     # driveway rule reads a class.
     #
-    # PRIVATE: a private street is not a "street" for the chapter's widths
-    # (18.910.020.E: "the term 'streets' shall mean 'public streets'"; its
-    # design is "established by the City Engineer", 18.910.030.T.1), and the
-    # TSP shows it no ultimate right-of-way. Where Metro too types the street
-    # a private road or drive (RLIS 1700 / 1800) the line is not public and
-    # gives up nothing (:mod:`flats.geom.dedication`). Where Metro calls it a
-    # public street the two disagree, and the line takes the Local row, the
-    # wider of the two readings: PRIVATE ranks with the local streets.
+    # PRIVATE (:data:`PRIVATE_RANK`): a private street is not a "street" for
+    # the chapter's widths (18.910.020.E: "the term 'streets' shall mean
+    # 'public streets'"; its design is "established by the City Engineer",
+    # 18.910.030.T.1), and the TSP shows it no ultimate right-of-way. A line
+    # gives up nothing only where both maps say private: Metro types the
+    # street a private road or drive AND no public classed city line runs
+    # along it (:func:`flats.geom.dedication.measure`). Where Metro calls it
+    # public, the line takes the Local row, the wider of the two readings.
     #
     # The layer names its streets in FULL_NAME ("GALLO AVE", no direction),
     # so its lines are matched to Metro's by name (``name_field``;
@@ -325,7 +329,7 @@ CLASS_MAPS: dict[str, ClassSpec] = {
         rank={
             "LOCAL": 0,
             "Local": 0,
-            "PRIVATE": 0,
+            "PRIVATE": -1,
             "NEIGHBORHOOD": 1,
             "COLLECTOR": 2,
             "MAJOR COLLECTOR": 2,
@@ -910,6 +914,7 @@ __all__ = [
     "CLASS_MAPS",
     "FRONT_ACCESS",
     "LOCAL_STREET",
+    "PRIVATE_RANK",
     "RLIS_LOCAL",
     "ClassMap",
     "ClassSpec",
