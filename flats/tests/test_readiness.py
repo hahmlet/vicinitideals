@@ -885,6 +885,20 @@ def test_a_ratio_printed_as_a_percent_still_reads() -> None:
     assert not states_as_percent(line, "max_far", 5)
 
 
+def test_a_percent_written_as_half_states_fifty() -> None:
+    """Happy Valley 16.44.120.B.4.b.iii limits an approach "to half the parcel
+    frontage width": 50 percent, printed nowhere as 50."""
+    from flats.encode.readiness import states_as_share_word
+
+    line = "Residential driveway approach widths shall be limited to half the parcel frontage width"
+    assert states_as_share_word(line, "driveway_max_frontage_pct", 50)
+    assert states_as_share_word("one-half of the frontage", "driveway_max_frontage_pct", 50)
+    # Only the share the word is, only a percent field, and only the word.
+    assert not states_as_share_word(line, "driveway_max_frontage_pct", 40)
+    assert not states_as_share_word(line, "max_far", 0.5)
+    assert not states_as_share_word("behalf of the owner", "driveway_max_frontage_pct", 50)
+
+
 def test_no_value_anywhere_in_the_corpus_is_misquoted() -> None:
     """A ratchet, in the shape the footnote gate already uses.
 

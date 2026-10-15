@@ -341,6 +341,20 @@ RULINGS: dict[str, dict[str, str]] = {
             "not-a-zone: traffic impact analysis, the study 16.25.005's "
             "master plan submittal list requires (L350, L454)."
         ),
+        # 2026-10-15 (FOLLOWUPS 89): 16.44 came into the store for its
+        # driveway sentences and prints two legacy district names.
+        "GC": (
+            "not-a-zone: General Commercial, named only in 16.44.060.C.1's "
+            "affordable-housing density bonus list (16.44.special-standards.txt "
+            "L1452), a bonus for projects of five or more units (L1424). No "
+            "chapter of the current Title 16 holds the district -- 16.23's are "
+            "MUC, MUE, RCMU, VC, VO, CCC and MCC -- and the city's map prints "
+            "no GC lot."
+        ),
+        "NC": (
+            "not-a-zone: Neighborhood Commercial, named in the same 16.44.060.C.1 "
+            "list as GC (L1452); no chapter holds it and the map prints no NC lot."
+        ),
     },
     "or/clackamas/lake-oswego": {
         # LOC 50.03.002's use table is the loosest residential permission in

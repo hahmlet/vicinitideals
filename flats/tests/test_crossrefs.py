@@ -695,6 +695,7 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         "or/clackamas/tualatin/appendix-b.figures.txt",
         # An ordinance's adopted exhibit, cited by page, not a codified chapter.
         "or/multnomah/portland/amended/ricap11.txt",
+        "or/clackamas/gladstone/amended/ord1545.txt",
         "or/washington/beaverton/wc.beaverton-upaa.txt",
         # ORS 197A.400, the state's clear-and-objective statute (FOLLOWUPS 85).
         "or/ors.197a.400.txt",

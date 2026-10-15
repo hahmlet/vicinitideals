@@ -929,6 +929,122 @@ zones:
     # half the facade, and 17.10.065(6) governs floor area and courtyards.
     # Nothing is lost by the removal -- an attached garage's face is the
     # building's face, and setback_front_ft already holds it at 20 ft.
+    #
+    # ---- Ordinance 1545, in force 2026-08-13 (FOLLOWUPS 88) ----
+    #
+    # The block above is 17.10 as codepublishing prints it, codified through
+    # Ord. 1544. Ord. 1545 (TXT-26-02) re-reads 17.10.050 and its quadplex
+    # row is the one that matters: the single "Middle housing 3,600 sf" row
+    # becomes "Duplex, triplex, quadplex, cottage cluster 7,200 sf". Adopted
+    # on second reading 2026-07-14 (4-3; the June 9 first reading was not
+    # unanimous, so the charter wanted a second). The minutes of that
+    # meeting are a scan with no text layer -- council meeting 189,
+    # https://www.ci.gladstone.or.us/media/30581, pp. 2-3: "Councilor Huckaby
+    # made a motion to approve Ordinance 1545 ... Motion passed with a vote
+    # of 4-3. Ordinance 1545 is approved." -- so the adoption date is cited
+    # here and the quote is the ordinance's own Section 4, thirty days from
+    # adoption. The DLCD post-acceptance notice (Gladstone 002-26, received
+    # 2026-09-09) confirms it was adopted as proposed.
+    #
+    # The ordinance's caption reads "CHAPTERS 17.44, 17.46, 17.80 AND 17.94,
+    # CITY FILE TXT-25-03", a caption carried over from an earlier
+    # ordinance; its recitals and Section 1 name 17.10 and the rest, and the
+    # exhibit is the text adopted. Exhibit A reprints each amended section
+    # whole, as it reads, with no strike-through.
+    amended:
+      - id: ord1545
+        label: Gladstone Ordinance 1545 (TXT-26-02)
+        adopted: 2026-07-14
+        effective: 2026-08-13
+        cite: Gladstone Ordinance 1545, Section 4 Effective Date (p. 9-2), with Exhibit A, 17.10.050 Minimum Lot Area (p. 9-5); adopted 2026-07-14, council minutes https://www.ci.gladstone.or.us/media/30581 pp. 2-3
+        url: https://www.ci.gladstone.or.us/media/30151
+        retrieved: '2026-10-15'
+        quote: "or/clackamas/gladstone/amended/ord1545.txt#L39-L40,L123-L124,L129-L132"
+        effect: >-
+          The minimum lot for a duplex, triplex or quadplex in R-7.2 rises from 3,600 to
+          7,200 sq ft (17.10.050). The side setback becomes one 5 ft row instead of "7.5 ft
+          or 5 ft", and the four-units-per-lot sentence is gone from the density rows.
+        zone:
+          section: ["17.10."]
+          cite_default:
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.020 (p. 9-4), 17.10.050 (pp. 9-5 to 9-7)
+            url: https://www.ci.gladstone.or.us/media/30151
+            retrieved: '2026-10-15'
+          quadplex_allowed:
+            # 17.10.020 as re-read: "(2) Middle housing." Unchanged in
+            # substance; the list gains SRO, residential homes and PUDs.
+            value: true
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.020(2) (p. 9-4)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L87-L88,L91"
+          min_lot_sqft:
+            # THE CHANGE. "Duplex, triplex, quadplex, cottage cluster 7,200
+            # sf", the same figure as the detached house. A quadplex on an
+            # R-7.2 lot of 3,600 to 7,199 sq ft no longer meets the table.
+            value: 7200
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Minimum Lot Area (p. 9-5)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L123-L124,L129-L132"
+            variants:
+              # A new row: "Townhouse 1,500 sf (average of all units)". Four
+              # dwellings want 6,000, done in the loader as R5's is. R-7.2
+              # states no separate townhouse-project minimum (R-5 does).
+              - per_dwelling: 1500
+                when: [unit_lots]
+                cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Minimum Lot Area, Townhouse (p. 9-5)
+                quote: "or/clackamas/gladstone/amended/ord1545.txt#L133-L134"
+          setback_front_ft:
+            value: 20
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Minimum Setbacks (p. 9-5)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L146"
+          setback_side_ft:
+            # One side row now, "5 ft (No setback required on side of
+            # townhouse when attached to another unit)", with "Interior side
+            # setback 5 ft" below it. The "7.5 ft or 5 ft due to irregular
+            # shaped lots" row the codified block holds at 7.5 is gone, which
+            # settles the open question in that block's notes the loose way.
+            value: 5
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Side setback, Interior side setback (p. 9-6)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L148,L175-L177"
+            variants:
+              - value: 0
+                when: [attached_wall, unit_lots]
+                cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Side setback (p. 9-6)
+                quote: "or/clackamas/gladstone/amended/ord1545.txt#L148-L150,L161-L163"
+          setback_street_side_ft:
+            value: 20
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Street side setback (p. 9-6)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L172-L174"
+          setback_rear_ft:
+            value: 15
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Rear setback (p. 9-6)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L178"
+          max_height_ft:
+            value: 35
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Maximum Building Height (p. 9-6)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L179-L181"
+          max_density_du_per_acre:
+            # "Maximum Density ... Middle housing None", as before. The
+            # minimum-density rows are still for subdivisions, PUDs and
+            # cottage clusters, none of which is this building on a lot.
+            exempt: true
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Maximum Density (p. 9-7)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L200-L201,L210"
+          notes: >-
+            R-7.2 as Ordinance 1545 leaves it (in force 2026-08-13). Quadplex lot minimum 7,200 sq ft
+            (was 3,600); townhouse average 1,500 sq ft per unit on the unit-lot path; one 5 ft side
+            setback (the "7.5 ft or 5 ft" row is gone); front 20, street side 20, rear 15, height 35,
+            no middle-housing density cap. No max_units: the codified block's "this code does not allow
+            for the creation of more than four dwelling units on a lot" is not in the re-read Maximum
+            Density rows, and four units would sit on it anyway.
+
+
+            Read in the same exhibit and not encoded: "For middle housing land division, the setbacks
+            shall be applied to the parent parcel prior to land division" (p. 9-5), a land-division rule;
+            "Mechanical equipment such as heat pumps ... may not project into a required setback" (p.
+            9-6), equipment the pod footprint already carries or that sits outside the yards; the
+            traffic-impact exemption for middle housing of 12 units or fewer (p. 9-7), which only
+            removes a study. 17.48.030 Table 1 now scales middle-housing parking by lot size (a
+            quadplex on a lot over 6,999 sq ft: 4 spaces total, p. 9-37); every R-7.2 quadplex lot is
+            now over 6,999, so the 1-per-unit default still charges exactly what the code asks here.
   R5:
     section: ["17.12."]
     cite_default:
@@ -1107,6 +1223,77 @@ zones:
     # NOT ENCODED, following R7.2, whose numbers this placeholder zone copies:
     # the 20 ft removed there was a garage door width maximum misread as a
     # setback, and Gladstone states no garage entrance setback in Title 17.
+    #
+    # Ordinance 1545 follows R7.2 here for the same reason the numbers above
+    # do: this placeholder copies 17.10, and 17.10 changed on 2026-08-13 (see
+    # R7.2's amended entry for the adoption record). Left at 3,600 it would
+    # screen GREEN a lot R-7.2 itself now refuses.
+    amended:
+      - id: ord1545
+        label: Gladstone Ordinance 1545 (TXT-26-02)
+        adopted: 2026-07-14
+        effective: 2026-08-13
+        cite: Gladstone Ordinance 1545, Section 4 Effective Date (p. 9-2), with Exhibit A, 17.10.050 Minimum Lot Area (p. 9-5); adopted 2026-07-14, council minutes https://www.ci.gladstone.or.us/media/30581 pp. 2-3
+        url: https://www.ci.gladstone.or.us/media/30151
+        retrieved: '2026-10-15'
+        quote: "or/clackamas/gladstone/amended/ord1545.txt#L39-L40,L123-L124,L129-L132"
+        effect: >-
+          This placeholder copies R-7.2 (there is no R-10 chapter), and R-7.2's minimum lot for a
+          duplex, triplex or quadplex rises from 3,600 to 7,200 sq ft; its side setback becomes 5 ft.
+        zone:
+          section: ["17.10."]
+          cite_default:
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10 (no R-10 chapter; standards mirror R-7.2), 17.10.020 (p. 9-4), 17.10.050 (pp. 9-5 to 9-7)
+            url: https://www.ci.gladstone.or.us/media/30151
+            retrieved: '2026-10-15'
+          quadplex_allowed:
+            value: true
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.020(2) (p. 9-4)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L87-L88,L91"
+          min_lot_sqft:
+            value: 7200
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Minimum Lot Area (p. 9-5)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L123-L124,L129-L132"
+            variants:
+              - per_dwelling: 1500
+                when: [unit_lots]
+                cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Minimum Lot Area, Townhouse (p. 9-5)
+                quote: "or/clackamas/gladstone/amended/ord1545.txt#L133-L134"
+          setback_front_ft:
+            value: 20
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Minimum Setbacks (p. 9-5)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L146"
+          setback_side_ft:
+            value: 5
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Side setback, Interior side setback (p. 9-6)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L148,L175-L177"
+            variants:
+              - value: 0
+                when: [attached_wall, unit_lots]
+                cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Side setback (p. 9-6)
+                quote: "or/clackamas/gladstone/amended/ord1545.txt#L148-L150,L161-L163"
+          setback_street_side_ft:
+            value: 20
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Street side setback (p. 9-6)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L172-L174"
+          setback_rear_ft:
+            value: 15
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Rear setback (p. 9-6)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L178"
+          max_height_ft:
+            value: 35
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Maximum Building Height (p. 9-6)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L179-L181"
+          max_density_du_per_acre:
+            exempt: true
+            cite: Gladstone Ordinance 1545 Exhibit A -- GMC 17.10.050 Maximum Density (p. 9-7)
+            quote: "or/clackamas/gladstone/amended/ord1545.txt#L200-L201,L210"
+          notes: >-
+            DISCREPANCY carried from the codified block: Title 17 defines no R-10 district and one map
+            polygon carries ZONE='R10'. Placeholder standards copied from R-7.2 as Ordinance 1545 leaves
+            it (in force 2026-08-13): quadplex minimum lot 7,200 sq ft, side setback 5 ft, front 20,
+            street side 20, rear 15, height 35. See R7.2's amended entry for what was read and not
+            encoded.
   # === The September 2026 map's seven codes, ruled 2026-09-20 ==============
   #
   # Steph's rule: every code the county map carries is read once, its reason

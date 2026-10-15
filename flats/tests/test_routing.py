@@ -379,6 +379,13 @@ OPEN = {
     "or/washington/tigard 18.660.040 -> 18.910.050",
     "or/washington/tigard 18.660.040 -> 18.910.090",
     "or/washington/tigard 18.660.040 -> 18.910.120",
+    # 2026-10-15 (FOLLOWUPS 89): Happy Valley 16.44 is stored for 16.44.120's
+    # driveway and corner-access sentences, which surfaces three use-table
+    # rows sending wireless telecommunication facilities to 16.44.020.
+    # Somebody else's building: a cell tower.
+    "or/clackamas/happy-valley 16.23.020 -> 16.44.020",
+    "or/clackamas/happy-valley 16.25.005 -> 16.44.020",
+    "or/clackamas/happy-valley 16.25.010 -> 16.44.020",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth

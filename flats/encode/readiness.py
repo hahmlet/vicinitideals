@@ -899,6 +899,27 @@ def states_as_percent(text: str, field: str, value) -> bool:
     return False
 
 
+#: A share a code writes as a word. Only "half": it is the one this corpus
+#: has met (Happy Valley 16.44.120.B.4.b.iii, approaches "limited to half the
+#: parcel frontage width"), and a word list longer than the evidence would
+#: pass quotes nobody has read.
+_SHARE_WORDS = {50.0: re.compile(r"\b(?:one[-\s])?half\b", re.I)}
+
+
+def states_as_share_word(text: str, field: str, value) -> bool:
+    """Whether the line writes a percent field's value as a word.
+
+    Happy Valley caps a driveway approach at "half the parcel frontage
+    width": 50 percent, printed nowhere as 50. Narrow on purpose: only a
+    ``percent`` field, and only a share in :data:`_SHARE_WORDS`.
+    """
+    kind = FIELDS[field].kind if field in FIELDS else None
+    if kind != "percent" or isinstance(value, bool) or not isinstance(value, (int, float)):
+        return False
+    word = _SHARE_WORDS.get(float(value))
+    return bool(word and word.search(text))
+
+
 def quotes_the_number(
     text: str, value, *, spaced: bool = False, glued: bool = False
 ) -> bool:
@@ -995,7 +1016,7 @@ def readiness_for(
         doc_id = quote.split("#", 1)[0]
         states = quotes_the_number(
             cited, number, spaced=doc_id in spaced, glued=doc_id in glued
-        ) or states_as_percent(cited, name, number)
+        ) or states_as_percent(cited, name, number) or states_as_share_word(cited, name, number)
         if not states or cites_a_different_unit(cited, name, number):
             misquoted.append((zone_code, name))
 

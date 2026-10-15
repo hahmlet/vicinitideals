@@ -149,7 +149,7 @@ def test_before_the_date_ci1_is_the_codified_zone(written, before) -> None:
     assert zone == written[PORTLAND].zones["CI1"]
     assert zone.in_force is None
     assert [a.id for a in zone.pending(DAY_BEFORE)] == ["ricap11"]
-    assert amendments_in_force(before) == []
+    assert [a for a in amendments_in_force(before) if a.startswith(PORTLAND)] == []
 
     got = RuleSet(before).resolve(PORTLAND, "CI1").values
     assert got["quadplex_allowed"].value is False
@@ -172,7 +172,7 @@ def test_from_the_date_ci1_reads_as_rm1_and_allows_the_use(after) -> None:
     zone = after[PORTLAND].zones["CI1"]
     assert zone.in_force == "ricap11"
     assert [a.id for a in zone.amended] == ["ricap11"]
-    assert amendments_in_force(after) == [f"{PORTLAND}:CI1:ricap11"]
+    assert [a for a in amendments_in_force(after) if a.startswith(PORTLAND)] == [f"{PORTLAND}:CI1:ricap11"]
 
     rules = RuleSet(after)
     ci1 = rules.resolve(PORTLAND, "CI1")
@@ -244,8 +244,10 @@ def test_no_other_zone_moves_on_the_date(before, after) -> None:
         if after[layer_id].zones[code] != before[layer_id].zones.get(code)
     }
     assert moved == {(PORTLAND, "CI1")}
-    # Every other layer object is the very same one, untouched.
-    assert all(after[k] is before[k] for k in after if k != PORTLAND)
+    # Every other layer is the same on both days. (Equal, not identical: a
+    # layer with an amendment already in force on both sides -- Gladstone's
+    # Ordinance 1545 -- is rebuilt each time.)
+    assert all(after[k] == before[k] for k in after if k != PORTLAND)
 
 
 def test_no_other_portland_zone_resolves_differently(before, after) -> None:

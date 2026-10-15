@@ -226,11 +226,16 @@ readings:
       its tract standard asks each recreation area to be 100 feet by 100 -- ten thousand square
       feet, which nothing sized at 1,600 could ever satisfy. Read alone that would close the row.
       But 16.42.080.B exempts "multifamily housing subject to the outdoor recreation area
-      requirements of Section 16.44.010(C)(9)", and Chapter 16.44 is not in the store. So the
-      table points at a section written for subdivisions, which in turn points at a chapter nobody
-      here has read, and the number that governs a four-unit building on one lot is in the chapter
-      we do not hold. Fetching 16.44 is the next move; until then the row stays a question rather
-      than a dismissal. The other statements on this card are answered and none of them reaches
+      requirements of Section 16.44.010(C)(9)", and Chapter 16.44 was not in the store when this
+      was first read. So the table pointed at a section written for subdivisions, which in turn
+      pointed at a chapter nobody here had read. The chapter has since been fetched (2026-10-15)
+      and does not settle it: the recreation
+      standard is now 16.44.010.B.9, written for "Multifamily residential development ...
+      containing more than five dwelling units", and 16.12 defines multifamily as five or more
+      families, so the exemption in 16.42.080.B never reaches a fourplex. That leaves the row
+      pointing only at a section addressed to subdivisions of 30 or more units; whether the
+      table's own 400 feet binds a four-unit lot anyway is the open question, and it stays a
+      question rather than a dismissal. The other statements on this card are answered and none of them reaches
       this building: footnote 8 caps single-family DETACHED floor area at 2,000 square feet in
       MUR-A inside the Town Center Plan Area; footnote 3 sets 20-foot setbacks for public and
       institutional uses in SFA and a 10-foot perimeter for cottage clusters; footnote 8 again
@@ -442,13 +447,6 @@ readings:
 crossrefs:
 
   # --- two accessory-use references out of the district use table ----------
-  "16.44.050":
-    outcome: other_building
-    note: >-
-      Accessory dwelling units: "As an accessory use, there may be the customary outbuildings and
-      no more than one accessory dwelling unit, complying with the requirements of Section
-      16.44.050." A subordinate second unit on a lot with a house. This screen places four attached
-      primary units, and the chapter would at most permit a fifth.
   "16.69.020":
     outcome: other_building
     note: >-
@@ -526,12 +524,6 @@ crossrefs:
       apply to the middle housing parent lot, not to the middle housing child lot." That is what
       this layer already encodes as land_division_parent_standards, from these same table notes.
       The chapter behind it governs how the split is approved, which is a path no pod declares.
-  "16.44.080":
-    outcome: other_path
-    note: >-
-      Neighborhood commercial uses. All three mentions are the same table note attached to a
-      neighborhood commercial row of a residential zone's use table, which is why they land beside
-      the dimensional standards printed above. This screen places a dwelling.
 
 definitions:
   # "Corner lot. A lot bounded entirely by streets, or a lot which adjoins the
@@ -644,6 +636,28 @@ code:
   # Fetched for one table: 16.67.070-1, the county-to-city zone conversion on
   # annexation, whose note ** is why county rural districts sit on the city's
   # zoning map.
+- id: 16.44.special-standards
+  url: https://ecode360.com/print/HA4934?guid=43529967
+  title: HV LDC Chapter 16.44 - Special Standards for Certain Uses
+  # Fetched 2026-10-15 for DLCD notice Happy Valley 002-26 (Ordinance 603,
+  # 8/18/2026, FOLLOWUPS 89), which wrote the corner-access sentence into
+  # 16.44.120.B.4.b. The chapter was already owed: 16.42.080.B sends
+  # multifamily recreation areas here. Read whole; what reaches this building
+  # is 16.44.120 (design standards for townhomes, duplexes, triplexes,
+  # quadplexes and cottage clusters). 16.44.010 is multifamily, which 16.12
+  # defines as five or more families, and the rest is wireless towers, model
+  # homes, lighting, mobile home parks, ADUs, accessory structures, affordable
+  # housing bonuses, agriculture, neighborhood commercial, drive-throughs,
+  # solar, cottage clusters and live/work units.
+  #
+  # READ AND NOT ENCODED, moved here from the crossrefs ledger once the chapter
+  # was held (rulings on a resolvable reference report as stale):
+  # 16.44.050, accessory dwelling units -- "no more than one accessory
+  # dwelling unit, complying with the requirements of Section 16.44.050", a
+  # subordinate second unit on a lot with a house; this screen places four
+  # attached primary units. 16.44.080, neighborhood commercial uses -- the
+  # same table note on a neighborhood commercial row of a residential use
+  # table; this screen places a dwelling.
 
 defaults:
   # PARKING, read 2026-08-27. Happy Valley is the first city in this corpus to
@@ -779,6 +793,40 @@ defaults:
     url: https://ecode360.com/print/HA4934?guid=43529957
     retrieved: '2026-08-27'
     quote: "or/clackamas/happy-valley/16.41.access.txt#L27,L53-L59"
+  # DRIVEWAY APPROACH, read 2026-10-15 out of Chapter 16.44 (Ord. 603,
+  # 8/18/2026). 16.44.120.B.4.b.iii: "Residential driveway approach widths
+  # shall be limited to half the parcel frontage width, with a minimum
+  # approach width of 12 feet and a maximum approach width of 35 feet. A
+  # wider approach may be approved by the City Engineer." The 16.41 note
+  # above said this layer held a driveway minimum and no approach maximum;
+  # 16.44 is where the maximum was. B.4.b.i allows "One driveway ... per
+  # frontage", so half the frontage for the approach is half for all the
+  # driveways on that street: Sherwood's 50 percent, in Sherwood's field.
+  # The City Engineer's wider approach is discretion, not a right.
+  driveway_approach_min_width_ft:
+    value: 12
+    cite: HV LDC 16.44.120.B.4.b.iii, minimum residential driveway approach width (Ord. 603, 8/18/2026)
+    url: https://ecode360.com/print/HA4934?guid=43529967
+    retrieved: '2026-10-15'
+    quote: "or/clackamas/happy-valley/16.44.special-standards.txt#L1888-L1890,L1900-L1902"
+  driveway_approach_max_width_ft:
+    value: 35
+    cite: HV LDC 16.44.120.B.4.b.iii, maximum residential driveway approach width (Ord. 603, 8/18/2026)
+    url: https://ecode360.com/print/HA4934?guid=43529967
+    retrieved: '2026-10-15'
+    quote: "or/clackamas/happy-valley/16.44.special-standards.txt#L1888-L1890,L1900-L1902"
+  driveway_max_frontage_pct:
+    value: 50
+    cite: HV LDC 16.44.120.B.4.b.iii, approach no wider than half the parcel frontage, with B.4.b.i one driveway per frontage (Ord. 603, 8/18/2026)
+    url: https://ecode360.com/print/HA4934?guid=43529967
+    retrieved: '2026-10-15'
+    quote: "or/clackamas/happy-valley/16.44.special-standards.txt#L1888-L1894,L1900-L1902"
+  #
+  # NOT ENCODED: 16.44.120.B.4.b.v, "Driveways shall comply with the City's
+  # access spacing standards", which turns on the neighbours' driveways and
+  # the street's class, neither measured; and B.4.a, alley access created at
+  # a land division, which is a path this screen does not take. B.1 and B.2
+  # (window share and eight façade features) are design, not placement.
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from
@@ -806,15 +854,28 @@ defaults:
   # with the lowest functional classification (which nothing measures yet, so
   # a drawing treats it as `any` and says so), `any` names none.
   #
-  # Happy Valley names no street (whole-document grep of the folder for lowest
-  # or lower classification and for corner-lot access, 2026-09-19: nothing).
-  # `any`, citing the parking-location subsection that would have said so.
+  # Happy Valley named no street until Ordinance 603 (8/18/2026; DLCD notice
+  # Happy Valley 002-26, FOLLOWUPS 89). The 2026-09-19 grep for lowest or
+  # lower classification found nothing because the sentence is in Chapter
+  # 16.44, which was not in the store until 2026-10-15. 16.44.120.B.4.b.iv, inside the
+  # design standards that 16.44.120.A applies to "New construction ...
+  # townhomes, duplexes, triplexes, quadplexes, and cottage clusters": "Lots
+  # and parcels with more than one frontage shall access the street with the
+  # lowest street classification in the Transportation System Plan." B.4.b
+  # governs "Development with access directly from a public or private
+  # street". Happy Valley has no class map in this pipeline, so a corner lot
+  # here is an unranked corner: yellow under the 2026-10-09 ruling, never a
+  # guessed street.
+  #
+  # NOT ENCODED, conservative: B.4 says "This section is not applicable to
+  # middle housing child lots", so a pod divided onto unit lots would be free
+  # of iv and iii. Holding the rule on every plat can only cost colour.
   corner_access_street:
-    value: any
-    cite: HV LDC 16.43.030.E, Parking Location, which places parking and names no street a corner lot must take access from
-    url: https://ecode360.com/print/HA4934?guid=43529966
-    retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+    value: lowest_class
+    cite: HV LDC 16.44.120.B.4.b.iv, lots with more than one frontage access the street with the lowest TSP classification (Ord. 603, 8/18/2026)
+    url: https://ecode360.com/print/HA4934?guid=43529967
+    retrieved: '2026-10-15'
+    quote: "or/clackamas/happy-valley/16.44.special-standards.txt#L1720,L1724,L1868-L1870,L1888-L1890,L1904-L1906"
   # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
   # lets the site plan know whether it may try each street as the front: only
   # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
