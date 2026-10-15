@@ -82,6 +82,7 @@ and none of them residential, :func:`flats.geom.neighbour.street_lines_clear`).
 
 from __future__ import annotations
 
+import dataclasses
 import math
 from dataclasses import dataclass
 
@@ -133,6 +134,25 @@ class Setbacks:
     #: None means the zone does not distinguish it. Read for a front or
     #: street-side edge flagged both ``off_corridor`` and ``across_clear``.
     street_clear_ft: float | None = None
+    #: Clackamas ZDO 1005.02(L): the separation a line drawn off the top of
+    #: the building owes toward the north (``setback_north_ft``) and toward
+    #: the east and west (``setback_east_west_ft``), cut by the bearing of
+    #: each lot line rather than by its class (:mod:`flats.geom.bearing`).
+    #: Zero where the zone states neither, which is every zone but three.
+    north_ft: float = 0.0
+    east_west_ft: float = 0.0
+    #: What a public road on the north line counts toward ``north_ft``:
+    #: 1005.02(L)(1)(a)'s "plus 15 feet into the property", the road's own
+    #: width unmeasured.
+    north_street_credit_ft: float = 0.0
+    #: Where true north points at this lot, in degrees from grid north
+    #: (:func:`flats.geom.bearing.true_north_deg`). None sweeps grid north
+    #: alone.
+    true_north_deg: float | None = None
+
+    @property
+    def by_bearing(self) -> bool:
+        return self.north_ft > 0 or self.east_west_ft > 0
 
     def for_class(self, cls: EdgeClass) -> float:
         return {
@@ -196,15 +216,8 @@ class Setbacks:
         """The same setbacks, with street edges taking the stricter standard."""
         if self.street_side_ft is None:
             return self
-        return Setbacks(
-            front_ft=max(self.front_ft, self.street_side_ft),
-            side_ft=self.side_ft,
-            rear_ft=self.rear_ft,
-            street_side_ft=self.street_side_ft,
-            alley_side_ft=self.alley_side_ft,
-            street_off_corridor_ft=self.street_off_corridor_ft,
-            alley_rear_ft=self.alley_rear_ft,
-            street_clear_ft=self.street_clear_ft,
+        return dataclasses.replace(
+            self, front_ft=max(self.front_ft, self.street_side_ft)
         )
 
 
@@ -215,6 +228,26 @@ def _clean(env: BaseGeometry, min_part_sqft: float) -> MultiPolygon:
         if p.geom_type == "Polygon" and p.area >= min_part_sqft
     ]
     return MultiPolygon(parts)
+
+
+def _by_bearing(
+    lot: BaseGeometry, env: BaseGeometry, edges: LotEdges, setbacks: Setbacks
+) -> BaseGeometry:
+    """``env`` less the ground 1005.02(L) keeps a building off, swept from
+    the taxlot's own lines (:func:`flats.geom.bearing.bearing_cut`)."""
+    if not setbacks.by_bearing or env.is_empty:
+        return env
+    from flats.geom.bearing import bearing_cut
+
+    cut = bearing_cut(
+        lot,
+        edges.edges,
+        north_ft=setbacks.north_ft,
+        east_west_ft=setbacks.east_west_ft,
+        street_credit_ft=setbacks.north_street_credit_ft,
+        true_north=setbacks.true_north_deg,
+    )
+    return env if cut is None else env.difference(cut)
 
 
 def _less(env: BaseGeometry, less: BaseGeometry | None) -> BaseGeometry:
@@ -321,6 +354,7 @@ def buildable(
         # of the largest yard, on the deepest street line.
         shrink = setbacks.largest_ft + max((e.dedication_ft for e in edges.edges), default=0.0)
         env = lot.buffer(-shrink) if shrink > 0 else lot
+        env = _by_bearing(lot, env, edges, setbacks)
         return _clean(_less(env, less), min_part_sqft)
 
     strips = []
@@ -334,4 +368,5 @@ def buildable(
                 )
             )
     env = lot.difference(shapely.union_all(strips)) if strips else lot
+    env = _by_bearing(lot, env, edges, setbacks)
     return _clean(_less(env, less), min_part_sqft)

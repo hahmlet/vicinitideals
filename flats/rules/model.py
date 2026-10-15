@@ -45,6 +45,7 @@ from flats.rules.net_area import NetArea
 from flats.rules.fields import (
     ACRE_PER_DWELLING_FIELDS,
     ACRE_STATED_FIELDS,
+    BEARING_FIELDS,
     HEIGHT_RATIO_FIELDS,
     MEASURED_ON_FIELDS,
     PARKING_TOTAL_FIELDS,
@@ -1441,6 +1442,16 @@ class Value(BaseModel):
     #: put on the lot, which is why the constant it uses is the tallest design
     #: rather than a typical one.
     per_height_ft: float | None = None
+    #: The angle the code prints for a line drawn from the TOP of the building
+    #: down to the ground, measured from the vertical. Clackamas ZDO
+    #: 1005.02(L) separates HDR, SHD and RCHDR buildings from the lot line on
+    #: their north by "a 60-degree angle line from the top of the structure",
+    #: and on their east and west by a 15-degree one -- "Separation = b x .267
+    #: (tan 15 degrees)", which is what says the angle is off the vertical.
+    #: `value` is the height times the tangent: 45.03 ft and 6.97 ft for the
+    #: pod, printed nowhere. Only the per-line bearing fields take it, because
+    #: the angle is drawn toward one compass direction.
+    from_top_degrees: float | None = None
     #: The floor the same sentence states -- "but not less than 10 ft." Stated
     #: separately because it is a second printed number, and because a ratio
     #: without one is a real rule too: below the floor the ratio governs, above
@@ -1758,6 +1769,23 @@ class Value(BaseModel):
             raise ValueError(
                 f"{self.name}: the feet a story may be is a rule somebody read; "
                 f"cite and quote it"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _an_angle_off_the_top_faces_a_bearing(self) -> Value:
+        if self.from_top_degrees is None:
+            return self
+        if self.name not in BEARING_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'from_top_degrees' draws a line toward one "
+                f"compass direction, and applies to "
+                f"{', '.join(sorted(BEARING_FIELDS))}"
+            )
+        if not 0 < self.from_top_degrees < 90:
+            raise ValueError(
+                f"{self.name}: from_top_degrees {self.from_top_degrees} is not "
+                f"an angle off the vertical"
             )
         return self
 

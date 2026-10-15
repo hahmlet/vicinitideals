@@ -157,12 +157,22 @@ class Edge:
     #: ``(map key, class or None)`` pairs (:data:`flats.geom.dedication.BUCKETS`);
     #: a map left out, or a None, is unread.
     road_classes: tuple[tuple[str, str | None], ...] = ()
-    #: The street is a public one. False on a line that abuts a private road:
-    #: nothing is dedicated there.
-    public_road: bool = True
+    #: The road-dedication measure read the street as a PRIVATE road or
+    #: drive (:func:`flats.geom.dedication.measure`): nothing is dedicated
+    #: there. False -- the default, and the answer wherever nothing read the
+    #: street -- dedicates (the worst case). Distinct from ``public_road``,
+    #: which relieves a bearing yard and so defaults the other way.
+    road_private: bool = False
     #: The strip this street line gives up to the right-of-way, in feet:
     #: added to the line's setback (:meth:`flats.geom.envelope.Setbacks.for_edge`).
     dedication_ft: float = 0.0
+    #: A street line on a public way -- s4's ``street_kind_json`` read
+    #: ``street`` for it, not a private road or a drive. Clackamas ZDO
+    #: 1005.02(L) relieves a line "abutting a public, County or state road"
+    #: of its east-west separation and lets the street count toward the
+    #: north one (:mod:`flats.geom.bearing`). False -- the default, and the
+    #: answer wherever nothing read the way -- relieves nothing.
+    public_road: bool = False
 
 
 @dataclass(frozen=True, slots=True)

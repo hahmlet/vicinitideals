@@ -89,6 +89,7 @@ from flats.geom.alley import (
     side_alley_along,
     usable_run_ft,
 )
+from flats.geom.bearing import true_north_deg
 from flats.geom.corridor import (
     CORRIDOR_FACTS,
     FRONT_REACH_FT,
@@ -119,6 +120,7 @@ from flats.geom.neighbour import (
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
+from flats.geom import split_zone as split_zones
 from flats.geom.sidewalk import (
     depth_for,
     easement_depth_ft,
@@ -149,6 +151,7 @@ from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_e
 from flats.ingest.flatter import flatter_checked
 from flats.ingest.normalize import zone_for
 from flats.rules.conditions import ACROSS_STREET_CONDITIONS
+from flats.rules.fields import BEARING_FIELDS
 from flats.rules.definitions import Abuts, Definition, Side, decide
 from flats.rules.model import TRANSIT_MEASURES, Layer
 from flats.rules.net_area import MEASURED as NET_MEASURED, SLOPES as NET_SLOPES, measured_deductions
@@ -171,6 +174,7 @@ from flats.score.paper import (
     side_street_fed,
 )
 from flats.score.screen import (
+    CLOSER_LOOK_SPLIT_ZONE,
     COURT_SHAPED,
     STEEP_GROUND,
     STREET_RANK_UNKNOWN,
@@ -894,6 +898,10 @@ class QuadfitLot:
     #: setback is measured from there. None where the code asks nothing of
     #: one, or nothing was read.
     sidewalk_easement_ft: float | None = None
+    #: The ground of other districts this lot lies in, where the maps put it
+    #: in more than one (:mod:`flats.geom.split_zone`,
+    #: :func:`with_split_zones`); empty on a lot in one.
+    split: split_zones.Split = split_zones.Split()
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -972,9 +980,14 @@ def lot_edges(
     # lot gives up (:func:`with_local_street`), looked up by the line's
     # coordinates so a second reading of the lot finds its remaining lines.
     widths = {dedication.key(*m[:4]): m for m in json.loads(row.get("road_widths_json") or "[]")}
+    # Which street lines are on a public way (ZDO 1005.02(L)'s "public,
+    # County or state road"); none where s4 recorded no kinds.
+    kinds = _street_kinds(row) or []
+    if len(kinds) != len(raw):
+        kinds = [None] * len(raw)
     edges: list[Edge] = []
-    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line, rank in zip(
-        raw, cover, off, clear, ranks, strict=True
+    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line, rank, kind in zip(
+        raw, cover, off, clear, ranks, kinds, strict=True
     ):
         x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
         road = widths.get(dedication.key(x1, y1, x2, y2)) if letter == STREET_CLASS else None
@@ -997,9 +1010,10 @@ def lot_edges(
                 across_clear=bool(clear_line) and letter == STREET_CLASS,
                 street_rank=int(rank) if rank is not None and letter == STREET_CLASS else None,
                 half_width_ft=None if road is None or road[4] is None else float(road[4]),
-                public_road=True if road is None else bool(road[5]),
+                road_private=False if road is None else not bool(road[5]),
                 road_names=None if road is None or road[6] is None else tuple(str(n) for n in road[6]),
                 road_classes=() if road is None else tuple(sorted((road[7] or {}).items())),
+                public_road=letter == STREET_CLASS and kind == "street",
             )
         )
     hull = geom.convex_hull.area if geom is not None else 0.0
@@ -1071,6 +1085,17 @@ def setbacks_for(
     front, side, rear = (number(f"setback_{c}_ft") for c in ("front", "side", "rear"))
     if front is None or side is None or rear is None:
         return None
+    # ZDO 1005.02(L): a side or rear yard that says "See 1005.02(L)" is
+    # stated EQUAL TO the north separation, the answer a reader that knows no
+    # bearing must take on every line. The envelope cuts each line by the way
+    # it faces instead (:mod:`flats.geom.bearing`), so the stand-in gives way
+    # to what its own sentence floors it at -- RCHDR's 20 ft rear, its 15 ft
+    # side -- or to nothing.
+    north = number("setback_north_ft") or 0.0
+    east_west = number("setback_east_west_ft") or 0.0
+    if north > 0 or east_west > 0:
+        side = _stand_in(rules, "setback_side_ft", side)
+        rear = _stand_in(rules, "setback_rear_ft", rear)
     total = number("setback_side_total_ft")
     if total is not None:
         side = max(side, total / 2)
@@ -1115,7 +1140,63 @@ def setbacks_for(
         street_off_corridor_ft=off_corridor,
         alley_rear_ft=alley_rear,
         street_clear_ft=clear,
+        north_ft=north,
+        east_west_ft=east_west,
+        north_street_credit_ft=number("setback_north_street_credit_ft") or 0.0,
     )
+
+
+def _stand_in(rules: ZoneResolution, name: str, held: float) -> float:
+    """The yard ``name`` comes to where the envelope cuts by bearing: its
+    floor where it is stated equal to a bearing field, else ``held``."""
+    got = rules.values.get(name)
+    if getattr(got, "same_as", None) not in BEARING_FIELDS:
+        return held
+    return float(getattr(got, "floor_ft", None) or 0.0)
+
+
+def _bearing_rear_cut(edges: LotEdges, setbacks: Setbacks, lot: Any, at_least: float) -> float:
+    """The strip a lot's rear lines lost, where the envelope was also cut by
+    bearing: on each rear line the larger of ``at_least`` (the class yard the
+    envelope took) and the depth of the sweep square to it, and the smallest
+    of those over the rear lines -- the court is charged against the least
+    the envelope gave up (never larger than the legal envelope). A lot with
+    no rear line reports ``at_least``."""
+    depths = []
+    for e in edges.edges:
+        if e.cls is not EdgeClass.rear:
+            continue
+        depths.append(max(at_least, _swept_depth(e, setbacks, lot)))
+    return min(depths) if depths else at_least
+
+
+def _swept_depth(edge: Edge, setbacks: Setbacks, lot: Any) -> float:
+    """How deep :func:`flats.geom.bearing.bearing_cut` reaches square to one
+    straight line: the north separation times the share of the line facing
+    north, the east-west one times the share facing east or west."""
+    length = math.hypot(edge.x2 - edge.x1, edge.y2 - edge.y1)
+    if length <= 0 or lot is None:
+        return 0.0
+    # The outward normal: the side of the midpoint that is off the lot.
+    ux, uy = (edge.y2 - edge.y1) / length, -(edge.x2 - edge.x1) / length
+    mx, my = (edge.x1 + edge.x2) / 2, (edge.y1 + edge.y2) / 2
+    import shapely
+
+    if lot.contains(shapely.Point(mx + 0.5 * ux, my + 0.5 * uy)):
+        ux, uy = -ux, -uy
+    road = edge.public_road and edge.cls in (EdgeClass.front, EdgeClass.street_side)
+    north = (
+        max(0.0, setbacks.north_ft - setbacks.north_street_credit_ft) if road else setbacks.north_ft
+    )
+    east_west = 0.0 if road else setbacks.east_west_ft
+    out = 0.0
+    tn = setbacks.true_north_deg
+    for az in {0.0} if tn is None else {0.0, tn}:
+        r = math.radians(az)
+        facing_north = ux * math.sin(r) + uy * math.cos(r)
+        facing_east = ux * math.cos(r) - uy * math.sin(r)
+        out = max(out, north * max(0.0, facing_north), east_west * abs(facing_east))
+    return out
 
 
 @dataclass(frozen=True, slots=True)
@@ -1194,7 +1275,7 @@ def dedicated(edges: LotEdges, rules: ZoneResolution) -> LotEdges:
         return edges
     out = []
     for e in edges.edges:
-        if e.alley or e.cls not in (EdgeClass.front, EdgeClass.street_side) or not e.public_road:
+        if e.alley or e.cls not in (EdgeClass.front, EdgeClass.street_side) or e.road_private:
             out.append(e)
             continue
         need = rule.required(e.road_names, dict(e.road_classes))
@@ -1290,16 +1371,33 @@ def envelope_for(
         # 2026-10-04): only what lies where the building may stand comes
         # off, the court's ground included.
         taken = _taken(lot, _within(lot.steep, buildable(lot.lot_geom, edges, setbacks)))
+    if setbacks.by_bearing:
+        # Both norths, grid and true (:mod:`flats.geom.bearing`).
+        at = lot.lot_geom.centroid
+        setbacks = dataclasses.replace(setbacks, true_north_deg=true_north_deg(at.x, at.y))
     geom = buildable(lot.lot_geom, edges, setbacks, less=taken)
     cut = None if strips else setbacks.largest_ft
     if part and setbacks.alley_rear_ft is not None and setbacks.alley_rear_ft < setbacks.rear_ft:
         cut = setbacks.alley_rear_ft
+    if setbacks.by_bearing:
+        # The rear strip the sweep took, so the court is charged against the
+        # ground the envelope really lost behind the building.
+        cut = _bearing_rear_cut(
+            lot.edges,
+            setbacks,
+            lot.lot_geom,
+            setbacks.rear_ft if cut is None else cut,
+        )
     # The court may use the rear yard, less any planted strip the code keeps
-    # between parking and the line (``parking_lot_line_buffer_ft``).
+    # between parking and the line (``parking_lot_line_buffer_ft``). A
+    # separation 1005.02(L) draws off the top of a STRUCTURE does not reach
+    # the court.
     open_rear = dataclasses.replace(
         setbacks,
         rear_ft=strip,
         alley_rear_ft=None if setbacks.alley_rear_ft is None else strip,
+        north_ft=0.0,
+        east_west_ft=0.0,
     )
     ground = buildable(lot.lot_geom, edges, open_rear, less=taken)
     return Envelope(geom, cut, "flats", setbacks, ground)
@@ -1587,6 +1685,7 @@ def lot_from_row(
         second=second,
         second_better=how == "better" and second is not None,
         sidewalk_easement_ft=_finite(row.get("sidewalk_easement_ft")),
+        split=split_zones.decode(row.get(split_zones.ROW_KEY)),
     )
 
 
@@ -1769,6 +1868,35 @@ def with_sidewalk_easement(rows: list[dict[str, Any]], sources: Path | None) -> 
             row["sidewalk_easement_ft"] = got
             taken += 1
     return taken
+
+
+def with_split_zones(rows: list[dict[str, Any]], stage_dir: Path, layers: Mapping[str, Layer]) -> int:
+    """Join the ground each split-zoned lot has in other districts onto its
+    row, in place, and say how many (:mod:`flats.geom.split_zone`).
+
+    The district a map code names is spelled the way the corpus screens it
+    (:func:`_normaliser`), so a polygon the map writes ``R-10`` is the lot's
+    own ``R10`` and not another district. Read off the zoning maps quadfit s1
+    stored beside the lot file; without them nothing is joined, and the lot
+    is screened as before.
+    """
+    from flats.encode.port_quadfit import QUADFIT_RULES
+
+    normalise = _normaliser(layers)
+
+    def spelled(row: Mapping[str, Any], code: str) -> str | None:
+        return normalise(str(row.get("jurisdiction")), code)
+
+    def own(row: Mapping[str, Any], code: str) -> bool:
+        got = spelled(row, code)
+        return got is not None and got in {screened_zone(row, layers), str(row.get("zone"))}
+
+    def name(row: Mapping[str, Any], code: str) -> str:
+        return spelled(row, code) or code
+
+    return split_zones.with_split_zones(
+        rows, stage_dir, split_zones.zoning_layers(QUADFIT_RULES), own=own, name=name
+    )
 
 
 def scope_mask(frame: Any, jurisdictions: Iterable[str] = (), zones: Iterable[str] = (), tlids: Iterable[str] = ()) -> Any:
@@ -2079,6 +2207,65 @@ def _shown(s: Screened) -> tuple[int, int]:
     return _COLOUR[s.signed.colour], _WORSE[s.signed.triage]
 
 
+def split_zone_checked(s: Screened, lot: QuadfitLot) -> Screened:
+    """``s`` with the district across the zone line named where its plan
+    stands on one (FOLLOWUPS 76(b), Steph 2026-10-14: "first check if the city
+    has a rule on this. If no, I would say yellow").
+
+    Every standard was read from the one district the lot screens under. A
+    lot in two is answered by its city's rule where it has one
+    (:func:`flats.geom.split_zone.governed`: the whole lot in the district
+    covering most of it, within a stated distance); otherwise the building,
+    its lane and its court are laid over the other districts' ground
+    (:func:`flats.geom.split_zone.reached`) and ZONE-SPLIT is raised, naming
+    them, with the cite of the rule or the plain statement that none was
+    found. A plan that was not drawn, or a lot whose own district the maps
+    do not show, reaches every other district: unmeasured is the worst case.
+    The colour reads the flag; a red lot keeps it, and only a lot that would
+    have been GREEN is moved.
+    """
+    split = lot.split
+    if not split:
+        return s
+    ruling = split_zones.ruling_for(lot.layer_id)
+    if split_zones.governed(split, ruling):
+        return s
+    plan = s.drawing
+    if split.unresolved or plan is None:
+        zones = tuple(p.zone for p in split.pieces)
+    else:
+        zones = split_zones.reached(split, _plan_shapes(plan))
+    if not zones:
+        return s
+    flag = flag_plan.Flag(
+        ZONE_SPLIT,
+        flag_plan.LOT,
+        CLOSER_LOOK_SPLIT_ZONE,
+        source=f"across the line: {', '.join(zones)}; {ruling.says()}",
+    )
+
+    def ask(x: Screening) -> Screening:
+        reasons = x.reasons if CLOSER_LOOK_SPLIT_ZONE in x.reasons else (*x.reasons, CLOSER_LOOK_SPLIT_ZONE)
+        triage = Triage.yellow if x.triage is Triage.green else x.triage
+        flags = x.flags
+        if not any(f.code == flag.code for f in flags):
+            flags = (*flags, flag)
+        return dataclasses.replace(x, triage=triage, reasons=reasons, flags=flags)
+
+    return dataclasses.replace(s, screening=ask(s.screening), signed=ask(s.signed))
+
+
+def _plan_shapes(drawing: Mapping[str, Any]) -> list[Any]:
+    """The building, lane and court of a stored drawing as polygons."""
+    from shapely.geometry import Polygon
+
+    return [
+        Polygon(drawing[name])
+        for name in ("building", "lane", "court")
+        if drawing.get(name)
+    ]
+
+
 def _street_unconfirmed(s: Screening) -> Screening:
     """``s`` as a question (:data:`~flats.score.screen.STREET_UNCONFIRMED`),
     unless it is already the worse answer."""
@@ -2204,6 +2391,7 @@ def _same_numbers(a: ZoneResolution, b: ZoneResolution) -> bool:
 #: drawing, before it may be GREEN (a route found past the limit is a bind,
 #: and still ends the search).
 FIRE_ROUTE_UNFOUND = "MEASURE-FIRE-ROUTE"
+ZONE_SPLIT = "ZONE-SPLIT"
 
 
 def _bounded(
@@ -2303,6 +2491,7 @@ def _bounded(
         if alt.signed.binds or any(
             (f.code, f.key) not in known
             and f.code != FIRE_ROUTE_UNFOUND
+            and f.code != ZONE_SPLIT
             and flag_plan.severity_of(f, reg) >= line
             for f in alt.signed.flags
         ):
@@ -2689,6 +2878,7 @@ def _screen_lot_once(
             won, lot, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
             roads=roads, bound=bound, terrain=terrain,
         )
+        won = split_zone_checked(won, lot)
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
 
@@ -3985,6 +4175,11 @@ def run(
     eased = with_sidewalk_easement(rows, sources)
     if eased:
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
+    from flats.encode.load import load_trusted
+
+    split = with_split_zones(rows, s4.parent, load_trusted(strict=False).rules.layers)
+    if split:
+        log(f"bridge: the other districts of {split:,} split-zoned lots read off the zoning maps")
     # Costliest lots first, started as free memory allows, and the answers a
     # cache already holds not screened again (FOLLOWUPS 46): the same
     # records in the same order as lot by lot in file order.

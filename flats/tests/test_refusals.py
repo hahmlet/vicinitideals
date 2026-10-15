@@ -369,7 +369,11 @@ pytestmark = pytest.mark.unit
 # right-of-way refusals are replaced by the rule (16.106.030 D, 16.80.060 A); Tigard
 # 18.210.030.A.1 (TSP widths not held) and Beaverton 60.55.10.5 (no width stated) are
 # recorded as NOT ENCODED, and Sherwood's 16.106.020 B street improvements likewise.
-EXPECTED = {"notes": 150, "comments": 287, "tests": 18}
+EXPECTED = {"notes": 153, "comments": 287, "tests": 18}
+# 150 -> 153 notes on 2026-10-14 (FOLLOWUPS 61): Clackamas RTL, CC, C3 and OC
+# each record Table 510-2's residential density as not encoded (net acreage
+# undefined here; the maximum is one OAR 660-046-0220(2)(b) forbids), and HDR's
+# old "Dimensional standards are NOT encoded" went with the bearing it waited on.
 # 149 -> 148 notes on 2026-10-09: Gladstone C-2's Portland Avenue limitations
 # (GMC 17.18.050(3)) were READ AND NOT ENCODED; `along_portland_avenue` now
 # measures the lot and qualifies the permission (FOLLOWUPS 52,

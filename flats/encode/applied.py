@@ -164,6 +164,7 @@ _FIGURES = (
     "acres",
     "acres_per_dwelling",
     "per_height_ft",
+    "from_top_degrees",
     "floor_ft",
     "pct_of_lot_width",
     "reduce_pct",

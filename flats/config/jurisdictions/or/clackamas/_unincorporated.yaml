@@ -730,6 +730,26 @@ crossrefs:
       the citing sentence is about SCMU and SCMU is not encoded -- argues about our corpus rather
       than about the page and expires the day somebody encodes SCMU. Section 1021 is not in the
       store. `fetch` keeps the row in the queue, which is where it belongs.
+  # --- two made binding on 2026-10-14 by encoding 1005.02(L) (FOLLOWUPS 61) --
+  "904":
+    outcome: other_path
+    note: >-
+      Height Exceptions, named by 1005.02(L)'s own footnote only to be shut out: "The standards
+      of Subsection 1005.02(L) are not subject to modification pursuant to Section 904, Height
+      Exceptions" (ZDO 1005 L170). The sentence goes on that the standards "may be modified if
+      the modification requested is necessary to allow development of primary uses at densities
+      allowed for the site area", which is relief somebody grants on an application, and this
+      screen takes no relief it has to ask for. Reading 904 could only loosen the bearing
+      setbacks, and the citing sentence says it does not.
+  "1206.03":
+    outcome: other_building
+    note: >-
+      Nonconforming uses and structures. Cited once, in 1005.09(A)'s tally of new building area
+      in the 82nd Avenue sectors, the trigger that decides whether 1005.09(B) through (M) apply:
+      "'Lawfully commenced' shall have the meaning given in Subsection 1206.03(B)" (ZDO 1005
+      L508), about a building damaged or destroyed and then restored. A building rebuilt after a
+      fire is not four attached units placed new, and the term only decides whether a rebuilt
+      footprint counts toward the 40,000 sq ft tally.
 
 definitions:
   # "LOT, CORNER: A lot with more than one front lot line, where at least two
@@ -2090,14 +2110,15 @@ zones:
   #
   # HDR (253 lots), RCHDR (32) and SHD (1) print "See Subsection 1005.02(L)"
   # where their rear and side setbacks belong. ZDO 1005 was fetched on
-  # 2026-09-08 and 1005.02(L) is now READ -- and it is worse than a missing
-  # document. It sets a north-south separation as a function of building
-  # height and the BEARING of the northern lot line ("Separation = b x .267
-  # (tan 15 degrees)"), which is a measurement nothing in this system takes;
-  # lot-line bearing is on the computable half of the unmeasured-site-facts
-  # list but is not computed yet. So these three stay `zone_missing` for a
-  # reason that has changed under them: not "we have not read it" but "we have
-  # read it and cannot hold it". They remain a queue entry with a lot count.
+  # 2026-09-08 and 1005.02(L) was read then: it sets the separation from
+  # the lot line by the BEARING of the line -- a 60-degree line off the top
+  # of the building to the north, 15 degrees east and west, "Separation = b
+  # x .267 (tan 15 degrees)". Nothing measured a bearing until 2026-10-14
+  # (FOLLOWUPS 61): the three districts are now encoded below, with
+  # setback_north_ft and setback_east_west_ft cut per lot line by
+  # flats/geom/bearing.py, and the six commercial districts that send a
+  # freestanding quadplex to HDR or RCHDR (Table 510-1 notes 13 and 15)
+  # with them.
   #
   # VTH (115) is refused for a different and more uncomfortable reason: its
   # column in Table 315-3 cannot be read by position. The extractor drops empty
@@ -2785,7 +2806,7 @@ zones:
     cite_default:
       cite: Clackamas ZDO Section 315 Table 315-4 (High Density Residential)
       url: https://www.clackamas.us/planning/zdo315
-      retrieved: '2026-10-09'
+      retrieved: '2026-10-14'
     quadplex_allowed:
       # Table 315-1, Quadplexes row, eighth column: a bare P -- the use is
       # permitted; the district is RED BY RULING for design review (notes).
@@ -2794,6 +2815,69 @@ zones:
       value: false
       cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
       quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
+    min_lot_sqft:
+      # Table 315-4 prints "None"; 845.01's 7,000 binds, the same reading as
+      # PMD and the R zones.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_height_ft:
+      # "None", printed, as in PMD. 1005.02(L) is what limits a tall
+      # building here: every foot of it pushes the building further off the
+      # north line.
+      exempt: true
+      cite: Clackamas ZDO Table 315-4, Maximum Building Height row, HDR column ("None"); Section 845 states no height for a quadplex
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1604,L1608"
+    setback_front_ft:
+      # "15 feet[5]"; note 5 is about nonconforming detached houses.
+      value: 15
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572,L1576"
+    orientation_constraint:
+      # The Maximum Front Setback cell reads "See Subsections 1005.02(E) and
+      # (H)", as PMD's does; encoded as PMD's is (see the note there).
+      value: axis_required
+      cite: "Clackamas ZDO 1005.02(E), general site design standards -- frontage occupancy, cited as this district's maximum front setback by Table 315-4"
+      url: https://www.clackamas.us/planning/zdo1005
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L25,L65"
+    setback_north_ft:
+      # 1005.02(L)(1): "drawing a 60-degree angle line from the top of the
+      # structure to the natural ground elevation north of the structure".
+      # The angle is off the vertical -- (L)(3)'s own formula, "b x .267
+      # (tan 15 degrees)", is the height times the tangent -- so the
+      # separation is the height times tan 60: 45.03 ft for the 26 ft pod.
+      # Cut from each lot line by the way it faces (flats/geom/bearing.py),
+      # on grid north and on true north both.
+      from_top_degrees: 60
+      cite: Clackamas ZDO 1005.02(L)(1), north-south separation in the HDR, RCHDR and SHD Districts (Table 315-4 sends this district's rear and side setbacks here)
+      url: https://www.clackamas.us/planning/zdo1005
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L143,L145"
+    setback_north_street_credit_ft:
+      # (L)(1)(a): "Intervening streets and 15 feet of setback into the
+      # property on the north side of said street may be included". The
+      # street's own width is not measured and counts as nothing.
+      value: 15
+      cite: Clackamas ZDO 1005.02(L)(1)(a), intervening streets and 15 feet on the north side of the street count toward the north-south separation
+      url: https://www.clackamas.us/planning/zdo1005
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L145,L147"
+    setback_east_west_ft:
+      # 1005.02(L)(3): a 15-degree line, "Separation = b x .267 (tan 15
+      # degrees)": 6.97 ft for the pod, owed by no line on a public road.
+      from_top_degrees: 15
+      cite: Clackamas ZDO 1005.02(L)(3), east-west separation in the HDR, RCHDR and SHD Districts, except when abutting a public, County or state road
+      url: https://www.clackamas.us/planning/zdo1005
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L161,L162,L164"
+    setback_rear_ft:
+      # "See Subsection 1005.02(L)[5]". The cell's whole answer is the
+      # bearing separation, so it is stated EQUAL TO the north one: a reader
+      # that knows no lot line's bearing must take 45 ft on every line. The
+      # bridge cuts each line by its bearing instead and keeps nothing of
+      # this number but its floor, and there is none here.
+      same_as: setback_north_ft
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1588,L1592"
+    setback_side_ft:
+      same_as: setback_north_ft
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1596,L1600"
     notes: >-
       RED BY RULING (Steph 2026-10-09, the by-right-only ruling of
       2026-10-08): the use is permitted in this district (Table 315-1, a
@@ -2813,18 +2897,128 @@ zones:
       single-family dwelling" (zdo.202.definitions.txt#L421). A
       factory-built four-unit building is off-site construction and not
       a single-family dwelling, so the exception is a single-family word
-      and the pod is outside it. Section 1102 was stored 2026-10-09
-      (FOLLOWUPS 52) and the value above cites it rather than the use
-      table.
+      and the pod is outside it. The dimensions below stay so the ruling
+      can be reversed.
 
-      Dimensional standards are NOT encoded. Table 315-4 answers rear setback,
-      side setback and building separation with "See Subsection 1005.02(L)": a
-      separation drawn as an angle from the top of the building -- 60 degrees to
-      the north, 15 degrees east and west, "Separation = b x .267 (tan 15
-      degrees)" -- which needs the bearing of every lot line, a measurement
-      this system does not take (Steph 2026-10-09: build it after the weekly
-      re-screen). 251 lots. If the design-review ruling is reversed, the
-      zone goes back to unencodable until that measurement exists.
+
+      DIMENSIONS ENCODED 2026-10-14 (FOLLOWUPS 61). Table 315-4 answers the
+      rear setback, the side setback and the building separation with "See
+      Subsection 1005.02(L)", which draws the separation off the TOP of the
+      building toward a compass direction: 60 degrees to the north (45.03 ft
+      for the pod), 15 degrees east and west (6.97 ft, waived on a public
+      road), nothing to the south. Held as setback_north_ft and
+      setback_east_west_ft and cut from each lot line by the way it faces --
+      a diagonal line by its north and east components, a curved one
+      segment by segment -- on both grid and true north
+      (flats/geom/bearing.py). The rear and side yards are stated equal to
+      the north separation, which is what a reader that knows no bearing
+      must take. NOT HELD: "natural ground elevation" (flat ground assumed;
+      a lot falling to the north owes more); the intervening street's own
+      width (counted as nothing, only the 15 ft); (L)(1)(b) and (c), the
+      neighbour's parking area and a separation easement, facts about the
+      lot next door; the building separation, which for one pod separates
+      nothing. The (L) standards are "not subject to modification pursuant
+      to Section 904" (L170). Density (1,742 sq ft of district land area a
+      unit) is not applied, OAR 660-046-0220(2)(b).
+  SHD:
+    cite_default:
+      cite: Clackamas ZDO Section 315 Table 315-4 (Special High Density Residential)
+      url: https://www.clackamas.us/planning/zdo315
+      retrieved: '2026-10-14'
+    like:
+      zone: HDR
+      cite: Clackamas ZDO Table 315-4 prints SHD's rear and side setbacks and building separation as "See Subsection 1005.02(L)" and its maximum front setback as "See Subsections 1005.02(E) and (H)", as HDR's, and 1005.02(L) applies "in the HDR, RCHDR, and SHD Districts"; the cells that differ are stated below
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1538,L1546,L1586,L1594,L1602"
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row: P. The use is permitted; the district
+      # is RED BY RULING for design review (notes).
+      value: false
+      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572,L1578"
+    max_height_ft:
+      exempt: true
+      cite: Clackamas ZDO Table 315-4, Maximum Building Height row, SHD column ("None"); Section 845 states no height for a quadplex
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1604,L1610"
+    notes: >-
+      RED BY RULING for design review, the same ruling and the same
+      1102.01(A)(1)(c) sentence as HDR (see HDR's note). The use-table
+      answer is a P (Table 315-1, zdo.315.txt#L41,L43-L54,L295-L306).
+      Special High Density, one lot (4400 SE Naef Rd). Dimensions are
+      HDR's by the same cells (like: HDR): 1005.02(L)'s bearing
+      separations for rear and side, 1005.02(E) for the maximum front
+      setback, 15 ft front, no height limit. Encoded 2026-10-14
+      (FOLLOWUPS 61); was a zone_rulings entry, unencodable on the bearing.
+      Density (726 sq ft of district land area a unit) is not applied,
+      OAR 660-046-0220(2)(b).
+  RCHDR:
+    cite_default:
+      cite: Clackamas ZDO Section 315 Table 315-4 (Regional Center High Density Residential)
+      url: https://www.clackamas.us/planning/zdo315
+      retrieved: '2026-10-14'
+    like:
+      zone: HDR
+      cite: 1005.02(L) applies "in the HDR, RCHDR, and SHD Districts", and Table 315-4 sends RCHDR's rear and side setbacks and building separation to it as it sends HDR's; the cells that differ are stated below
+      url: https://www.clackamas.us/planning/zdo1005
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L143"
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row: P. The use is permitted; the district
+      # is RED BY RULING for design review (notes).
+      value: false
+      cite: Clackamas ZDO 1102.01(A)(1)(c), design review is required for development in the HDR, MR-1, MR-2, MRR, PMD, RCHDR, SHD, VA and VTH Districts, as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L13,L21,L131"
+    setback_front_ft:
+      # "5 feet[8]", and note 8: "For dwellings and structures accessory to
+      # dwellings, the minimum front setback shall be 15 feet, and there
+      # shall be no maximum setback." A quadplex is dwellings, so 15. HDR's
+      # orientation_constraint is kept: it is 1005.02(E), a frontage rule
+      # 1005.02 applies to development generally, not the table's maximum
+      # depth that note 8 removes (the stricter reading).
+      value: 15
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1572,L1579,L1635"
+    max_height_ft:
+      exempt: true
+      cite: Clackamas ZDO Table 315-4, Maximum Building Height row, RCHDR column ("None"); Section 845 states no height for a quadplex
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1604,L1611"
+    setback_north_ft:
+      # 1005.02(L) restated here, not borrowed: a borrowed standard is only
+      # as readable as the row it borrows from, and the rear and side below
+      # borrow this one in the same block.
+      from_top_degrees: 60
+      cite: Clackamas ZDO 1005.02(L)(1), north-south separation in the HDR, RCHDR and SHD Districts (Table 315-4 sends this district's rear and side setbacks here)
+      url: https://www.clackamas.us/planning/zdo1005
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L143,L145"
+    setback_rear_ft:
+      # "See Subsection 1005.02(L)[13]", and note 13: "If the rear lot line
+      # abuts a residential zoning district other than HDR, SHD, or RCHDR,
+      # the minimum rear setback is 20 feet." Charged on every lot, the
+      # stricter reading: the note is about one line's neighbour, and the
+      # fact this layer reads is per lot and names a different list.
+      same_as: setback_north_ft
+      floor_ft: 20
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1588,L1595,L1651"
+    setback_side_ft:
+      # "See Subsection 1005.02(L)[16]", and note 16: 15 feet where the side
+      # line abuts a residential district other than HDR, SHD or RCHDR.
+      # Charged on every lot, as the rear's 20.
+      same_as: setback_north_ft
+      floor_ft: 15
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1596,L1603,L1657"
+    notes: >-
+      RED BY RULING for design review, the same ruling and the same
+      1102.01(A)(1)(c) sentence as HDR (see HDR's note). The use-table
+      answer is a P (Table 315-1, zdo.315.txt#L41,L43-L54,L295-L306).
+      Regional Center High Density Residential, 29 lots. Encoded
+      2026-10-14 (FOLLOWUPS 61); was a zone_rulings entry, unencodable on
+      the bearing. 1005.02(L)'s east-west separation and north street
+      credit, 1005.02(E) and the 845.01 lot size come from HDR (like: HDR).
+      Its own cells: front 15 ft (note 8), the rear and side floors of
+      notes 13 and 16 -- 20 ft and 15 ft, charged on every lot because the
+      neighbour fact they turn on is per line and not declared here
+      (stricter than the code where the neighbour is HDR, SHD, RCHDR or
+      not residential). Density is "Not Applicable".
   # ------------------------------------------------------------------
   # The rural half of the county, read 2026-09-08 from ZDO Section 316.
   #
@@ -3588,6 +3782,156 @@ zones:
       RED BY RULING (Steph, 2026-10-08): same ruling and same Table 510-3
       column as PMU2 (PMU 2, 3, 4 and 5). Only the minimum lot size, 3 acres,
       differs.
+  RTL:
+    cite_default:
+      cite: Clackamas ZDO 510 Table 510-1 note 15 (Retail Commercial; a freestanding quadplex takes HDR's development and dimensional standards)
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-10-14'
+    like:
+      zone: HDR
+      cite: Clackamas ZDO Table 510-1, Quadplexes row, RTL column "P[15]", and note 15, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the HDR District", except that the minimum and maximum residential density standards of Table 510-2 ... apply
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L81,L281,L285,L1274"
+    quadplex_allowed:
+      # Table 510-1, Quadplexes row, RTL column: "P[15]" (L285). The
+      # use is permitted; the district is RED BY RULING for design review
+      # (notes). The value is the ruling's, so it cites design review.
+      value: false
+      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (ZDO 202, a district regulated by Section 500; 510.02 names RTL), as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L21,L131"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): the same design-review ruling as
+      SCMU and PMU (see SCMU's note). The use-table answer is P[15]
+      (Table 510-1, Quadplexes row, zdo.510.txt#L81,L281,L285). Retail Commercial,
+      59 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
+      entry, unencodable while HDR was. Note 15 sends a freestanding
+      quadplex to the HDR District for its development and dimensional
+      standards (like: HDR): 1005.02(L)'s bearing separations, the
+      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
+  CC:
+    cite_default:
+      cite: Clackamas ZDO 510 Table 510-1 note 15 (Corridor Commercial; a freestanding quadplex takes HDR's development and dimensional standards)
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-10-14'
+    like:
+      zone: HDR
+      cite: Clackamas ZDO Table 510-1, Quadplexes row, CC column "P[15]", and note 15, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the HDR District", except that the minimum and maximum residential density standards of Table 510-2 ... apply
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L82,L281,L286,L1274"
+    quadplex_allowed:
+      # Table 510-1, Quadplexes row, CC column: "P[15]" (L286). The
+      # use is permitted; the district is RED BY RULING for design review
+      # (notes). The value is the ruling's, so it cites design review.
+      value: false
+      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (ZDO 202, a district regulated by Section 500; 510.02 names CC), as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L21,L131"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): the same design-review ruling as
+      SCMU and PMU (see SCMU's note). The use-table answer is P[15]
+      (Table 510-1, Quadplexes row, zdo.510.txt#L82,L281,L286). Corridor Commercial,
+      128 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
+      entry, unencodable while HDR was. Note 15 sends a freestanding
+      quadplex to the HDR District for its development and dimensional
+      standards (like: HDR): 1005.02(L)'s bearing separations, the
+      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
+  C3:
+    cite_default:
+      cite: Clackamas ZDO 510 Table 510-1 note 15 (General Commercial; a freestanding quadplex takes HDR's development and dimensional standards)
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-10-14'
+    like:
+      zone: HDR
+      cite: Clackamas ZDO Table 510-1, Quadplexes row, C-3 column "P[15]", and note 15, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the HDR District", except that the minimum and maximum residential density standards of Table 510-2 ... apply
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L83,L281,L287,L1274"
+    quadplex_allowed:
+      # Table 510-1, Quadplexes row, C-3 column: "P[15]" (L287). The
+      # use is permitted; the district is RED BY RULING for design review
+      # (notes). The value is the ruling's, so it cites design review.
+      value: false
+      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (ZDO 202, a district regulated by Section 500; 510.02 names C-3), as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L21,L131"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): the same design-review ruling as
+      SCMU and PMU (see SCMU's note). The use-table answer is P[15]
+      (Table 510-1, Quadplexes row, zdo.510.txt#L83,L281,L287). General Commercial,
+      447 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
+      entry, unencodable while HDR was. Note 15 sends a freestanding
+      quadplex to the HDR District for its development and dimensional
+      standards (like: HDR): 1005.02(L)'s bearing separations, the
+      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
+  OC:
+    cite_default:
+      cite: Clackamas ZDO 510 Table 510-1 note 15 (Office Commercial; a freestanding quadplex takes HDR's development and dimensional standards)
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-10-14'
+    like:
+      zone: HDR
+      cite: Clackamas ZDO Table 510-1, Quadplexes row, OC column "P[15]", and note 15, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the HDR District", except that the minimum and maximum residential density standards of Table 510-2 ... apply
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L87,L281,L291,L1274"
+    quadplex_allowed:
+      # Table 510-1, Quadplexes row, OC column: "P[15]" (L291). The
+      # use is permitted; the district is RED BY RULING for design review
+      # (notes). The value is the ruling's, so it cites design review.
+      value: false
+      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (ZDO 202, a district regulated by Section 500; 510.02 names OC), as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L21,L131"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): the same design-review ruling as
+      SCMU and PMU (see SCMU's note). The use-table answer is P[15]
+      (Table 510-1, Quadplexes row, zdo.510.txt#L87,L281,L291). Office Commercial,
+      82 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
+      entry, unencodable while HDR was. Note 15 sends a freestanding
+      quadplex to the HDR District for its development and dimensional
+      standards (like: HDR): 1005.02(L)'s bearing separations, the
+      15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
+  RCC:
+    cite_default:
+      cite: Clackamas ZDO 510 Table 510-1 note 13 (Regional Center Commercial; a freestanding quadplex takes RCHDR's development and dimensional standards)
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-10-14'
+    like:
+      zone: RCHDR
+      cite: Clackamas ZDO Table 510-1, Quadplexes row, RCC column "P[13]", and note 13, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the RCHDR District"
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L80,L281,L284,L1270"
+    quadplex_allowed:
+      # Table 510-1, Quadplexes row, RCC column: "P[13]" (L284). The
+      # use is permitted; the district is RED BY RULING for design review
+      # (notes). The value is the ruling's, so it cites design review.
+      value: false
+      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (ZDO 202, a district regulated by Section 500; 510.02 names RCC), as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L21,L131"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): the same design-review ruling as
+      SCMU and PMU (see SCMU's note). The use-table answer is P[13]
+      (Table 510-1, Quadplexes row, zdo.510.txt#L80,L281,L284). Regional Center Commercial,
+      103 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
+      entry, unencodable while RCHDR was. Note 13 sends a freestanding
+      quadplex to the RCHDR District for its development and dimensional
+      standards (like: RCHDR): 1005.02(L)'s bearing separations, the
+      15 ft front, 845.01's 7,000 sq ft. Note 13 keeps no Table 510-2 standard, so the minimum lot size that table prints for this district does not reach the building -- and Table 510-2 note 2 limits it to land divisions in any case (zdo.510.txt#L1533).
+  RCO:
+    cite_default:
+      cite: Clackamas ZDO 510 Table 510-1 note 13 (Regional Center Office; a freestanding quadplex takes RCHDR's development and dimensional standards)
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-10-14'
+    like:
+      zone: RCHDR
+      cite: Clackamas ZDO Table 510-1, Quadplexes row, RCO column "P[13]", and note 13, freestanding quadplexes "are subject to the development and dimensional standards applicable to ... quadplexes in the RCHDR District"
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L88,L281,L292,L1270"
+    quadplex_allowed:
+      # Table 510-1, Quadplexes row, RCO column: "P[13]" (L292). The
+      # use is permitted; the district is RED BY RULING for design review
+      # (notes). The value is the ruling's, so it cites design review.
+      value: false
+      cite: Clackamas ZDO 1102.01(A)(1)(a), design review is required for development in commercial zoning districts (ZDO 202, a district regulated by Section 500; 510.02 names RCO), as a Type II application (1102.03); the 1102.01(B) exception is for single-family, manufactured and prefabricated (single-family, ZDO 202) dwellings only
+      quote: "or/clackamas/_unincorporated/zdo.1102.txt#L5,L7,L9,L21,L131"
+    notes: >-
+      RED BY RULING (Steph, 2026-10-08): the same design-review ruling as
+      SCMU and PMU (see SCMU's note). The use-table answer is P[13]
+      (Table 510-1, Quadplexes row, zdo.510.txt#L88,L281,L292). Regional Center Office,
+      37 lots. Encoded 2026-10-14 (FOLLOWUPS 61); was a zone_rulings
+      entry, unencodable while RCHDR was. Note 13 sends a freestanding
+      quadplex to the RCHDR District for its development and dimensional
+      standards (like: RCHDR): 1005.02(L)'s bearing separations, the
+      15 ft front, 845.01's 7,000 sq ft. Note 13 keeps no Table 510-2 standard, so the minimum lot size that table prints for this district does not reach the building -- and Table 510-2 note 2 limits it to land divisions in any case (zdo.510.txt#L1533).
 
 # Whether a private drive the lot abuts is a street here (FOLLOWUPS 4,
 # ruled by Steph 2026-09-30): s4 reads a line within 50 ft of a private road
@@ -3662,22 +4006,7 @@ neighbours:
       -- coarse in the direction that never buys a GREEN.
 
 zone_rulings:
-  # --- four residential districts read and not holdable ---------------------
-  SHD:
-    outcome: unencodable
-    note: >-
-      Special High Density, one lot (4400 SE Naef Rd). Quadplexes P in Table
-      315-1; setbacks deferred to Subsection 1005.02(L), the same bearing
-      planes as HDR, and 1005.02(L)(4) closes Section 904 relief.
-      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because 1005.02(L) sets the separation by compass bearing and no setback class here knows a bearing.
-  RCHDR:
-    outcome: unencodable
-    note: >-
-      Regional Center High Density Residential, 29 lots. Quadplexes P in
-      Table 315-1; setbacks deferred to Subsection 1005.02(L), read
-      2026-09-08 and blocked on lot-line bearings. RCC and RCO below wait on
-      it through Table 510-1 note 12.
-      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because 1005.02(L) sets the separation by compass bearing and no setback class here knows a bearing.
+  # --- a residential district read and not holdable ---------------------------
   VTH:
     outcome: unencodable
     note: >-
@@ -3685,53 +4014,12 @@ zone_rulings:
       standards are in Table 315-3, which prints two cells under three
       district headings in several rows: the extractor drops empty cells, so
       lot size, coverage and rear setback are a column question before they
-      are a reading (HUMAN_TODO 15). Also blocked on 1005.02(L) with HDR.
-      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because 1005.02(L) sets the separation by compass bearing and no setback class here knows a bearing.
-  # --- six commercial districts that permit the building and send it to HDR
-  # or RCHDR for its standards (Table 510-1 notes 12 and 14, "freestanding
-  # ... quadplexes (as opposed to ... quadplexes in a mixed-use building)") --
-  RTL:
-    outcome: unencodable
-    note: >-
-      Retail Commercial, 59 lots. P[14] on the Quadplexes row of Table 510-1;
-      note 14 sends a freestanding quadplex to the HDR District for its
-      development and dimensional standards, and HDR is blocked on
-      1005.02(L)'s bearing planes. Unencodable until HDR is.
-      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
-  CC:
-    outcome: unencodable
-    note: >-
-      Corridor Commercial, 128 lots. P[14] on the Quadplexes row; the same
-      referral to HDR as RTL, and the same block.
-      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
-  C3:
-    outcome: unencodable
-    note: >-
-      General Commercial, 447 lots, the largest commercial district in this
-      layer. P[14] on the Quadplexes row; note 14 sends a freestanding
-      quadplex to HDR, which 1005.02(L) blocks.
-      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
-  OC:
-    outcome: unencodable
-    note: >-
-      Office Commercial, 82 lots. P[14], the same referral to HDR. (510.02
-      misprints its abbreviation as OA; Table 510-1's column heads print OA
-      and OC as separate columns 9 and 10.)
-      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
-  RCC:
-    outcome: unencodable
-    note: >-
-      Regional Center Commercial, 103 lots. P[12] on the Quadplexes row; note
-      12 sends a freestanding quadplex to the RCHDR District for its
-      standards, and RCHDR is blocked on 1005.02(L).
-      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
-  RCO:
-    outcome: unencodable
-    note: >-
-      Regional Center Office, 37 lots. P[12], the same referral to RCHDR as
-      RCC. Table 510-2 gives it the largest minimum lot in the section at
-      2 1/2 acres, which would bind first if the district were ever held.
-      Re-checked 2026-10-08 against the stored text (FOLLOWUPS 52): holds, because the standards it points at are 1005.02(L)'s compass-bearing planes.
+      are a reading (HUMAN_TODO 15). That dropped-cell column read is the
+      whole block. 1005.02(L)'s bearing separations do not reach VTH: (L)
+      applies "in the HDR, RCHDR, and SHD Districts" only
+      (zdo.1005.txt#L143), and HDR, SHD and RCHDR are encoded with them
+      since 2026-10-14 (FOLLOWUPS 61). Corrected 2026-10-14; the note of
+      2026-10-08 named (L) as a second block, which it never was.
   # --- six pockets: a city's zoning that Metro's regional fabric carries on
   # lots the assessor's roll still calls unincorporated. Found 2026-09-20 by
   # intersecting each lot with the RLIS zoning layer and reading its CITY

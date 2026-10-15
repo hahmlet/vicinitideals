@@ -57,6 +57,13 @@ class Fit:
     slack_ft: float
     angle_deg: float | None = None
     orientation: Orientation | None = None
+    #: Set only where ``best_depth_ft`` is zero -- no window as wide as the
+    #: search asked for, at any depth, so the depth says nothing about how
+    #: close the lot came. The feet by which the widest window the building's
+    #: own depth fits falls short of ``across_ft``, never less than one grid
+    #: step (a miss is a miss). The screen scores the miss by it, so the 1-ft near-miss rule sees the
+    #: real distance instead of the floor of ``-required_ft``.
+    width_short_ft: float | None = None
     #: What the envelope was searched for, across, in the winning orientation:
     #: the design's own side, or wider where the caller charged the drive lane
     #: beside the building or the parking court behind it (the court sits
@@ -353,6 +360,20 @@ class Fitter:
             best = lo
         return best * self.res
 
+    def _width_short(
+        self, got_ft: float, across_ft: float, depth_ft: float, over_ft: float
+    ) -> float | None:
+        """The width a search that found no window at all fell short by.
+
+        ``None`` where ``got_ft`` is not zero: a depth found measures the
+        miss itself. Where it is zero the depth says nothing, and the width
+        is the honest distance -- how much narrower than ``across_ft`` the
+        widest window ``depth_ft`` deep is (:meth:`widest`).
+        """
+        if got_ft > 0 or depth_ft <= 0:
+            return None
+        return max(self.res, across_ft - self.widest(depth_ft, over_ft=over_ft))
+
     def fit(
         self,
         width_ft: float,
@@ -391,7 +412,16 @@ class Fitter:
         for orientation, across_ft, d_ft in options:
             got_ft, grid = self._best(across_ft, over_ft=over_ft)
             slack = got_ft - d_ft
-            if best is None or slack > best.slack_ft:
+            short = self._width_short(got_ft, across_ft, d_ft, over_ft)
+            if (
+                best is None
+                or (
+                    # Two orientations with no window at all: the nearer miss.
+                    short < best.width_short_ft
+                    if short is not None and best.width_short_ft is not None
+                    else slack > best.slack_ft
+                )
+            ):
                 best = Fit(
                     fits=got_ft >= d_ft,
                     width_ft=width_ft,
@@ -401,6 +431,7 @@ class Fitter:
                     angle_deg=grid.angle_deg if grid else None,
                     orientation=orientation,
                     across_ft=across_ft,
+                    width_short_ft=short,
                 )
                 best_grid = grid
 
@@ -425,6 +456,7 @@ class Fitter:
             angle_deg=best.angle_deg,
             orientation=best.orientation,
             across_ft=best.across_ft,
+            width_short_ft=best.width_short_ft,
             placement=best_grid.to_world(row, col, d_cells, w_cells),
         )
 
@@ -479,7 +511,12 @@ class Fitter:
             across_ft = side + band_ft
             got_ft, grid = self._best(across_ft, angles, over_ft=run)
             room = got_ft - deep - extra
-            if best is None or room > best[0]:
+            short = self._width_short(got_ft, across_ft, deep, run)
+            if best is None or (
+                short < best[1].width_short_ft
+                if short is not None and best[1].width_short_ft is not None
+                else room > best[0]
+            ):
                 best = (
                     room,
                     Fit(
@@ -491,6 +528,7 @@ class Fitter:
                         angle_deg=grid.angle_deg if grid else None,
                         orientation=orientation,
                         across_ft=across_ft,
+                        width_short_ft=short,
                         beside=True,
                     ),
                     grid,

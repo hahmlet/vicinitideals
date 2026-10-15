@@ -1375,6 +1375,17 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 # The paper fit has no lines to read across; it keeps 5 on the
                 # front, the conservative direction.
                 "setback_street_across_nonresidential_ft (street lines facing no residential zone; the paper fit has no edges)",
+                # Clackamas ZDO 1005.02(L): separations owed by the way each
+                # lot line faces -- north, east and west -- and the street
+                # credit toward the north one. The paper fit has no lines to
+                # face anything; the district's side and rear are stated
+                # equal to the north separation (`same_as`), so it asks 45 ft
+                # of every side and rear, the conservative direction. The
+                # envelope cuts each line by its bearing
+                # (`flats.geom.bearing`).
+                "setback_north_ft (by each lot line's bearing; the paper fit has no edges)",
+                "setback_east_west_ft (by each lot line's bearing; the paper fit has no edges)",
+                "setback_north_street_credit_ft (a street on the north line; the paper fit has no edges)",
                 "min_frontage_ft (measured at the street, not the envelope)",
                 # Ruled 2026-09-08: the pod parks in a rear court and has no
                 # garage, so a garage-entrance setback cannot reach it. This is

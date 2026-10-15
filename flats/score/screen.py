@@ -160,6 +160,13 @@ CLOSER_LOOK_RESOURCE = "CLOSER_LOOK_RESOURCE"
 #: (``coarse_red_is_closer_look``). Steph 2026-10-07: "yellow with flag. 7
 #: severity" -- the 1 m lidar, or a survey, settles it.
 CLOSER_LOOK_STEEP_COARSE = "CLOSER_LOOK_STEEP_COARSE"
+#: The lot lies in more than one zoning district and its plan stands on
+#: another's ground, where the city's code has no rule that puts the whole lot
+#: in one (:func:`flats.ingest.quadfit.split_zone_checked`, FOLLOWUPS 76(b)).
+#: Steph 2026-10-14: "first check if the city has a rule on this. If no, I
+#: would say yellow." The standards were read from the one district the lot
+#: screens under.
+CLOSER_LOOK_SPLIT_ZONE = "CLOSER_LOOK_SPLIT_ZONE"
 #: The plan's fit, missed on the ground left once the steep ground is taken
 #: off and met without that (:attr:`LotFacts.steep_blocks`): the slope
 #: eliminates the lot, not the pod's placement (Steph 2026-10-04). The fit
@@ -758,23 +765,30 @@ def _checks(
     # A court BESIDE the building (`fit.beside`, FOLLOWUPS 4(a)) asks past
     # the rear wall only what its row runs beyond it (`_beside_beyond`).
     beside = _beside_for(design, rules, lot) if fit.beside else None
+    fit_needs = fit.required_ft + (
+        _beside_beyond(beside, fit.required_ft, rules, lot.envelope_rear_ft)
+        if beside is not None
+        else _court_beyond_rear(
+            design,
+            rules,
+            lot.envelope_rear_ft,
+            lot.alley,
+            column=fit.column,
+            corner=lot.corner,
+            fix=_fix(fit),
+        )
+    )
+    # Where no window was found at any depth the depth observed is zero and
+    # the miss would read as the whole of what was needed (-43 ft on a pod).
+    # The lot missed by how much narrower it is than the building asked, so
+    # that is the shortfall the near-miss rule sees (never more than the
+    # old floor).
     fitted = policy.evaluate(
         "fit_ft",
-        fit.best_depth_ft,
-        fit.required_ft
-        + (
-            _beside_beyond(beside, fit.required_ft, rules, lot.envelope_rear_ft)
-            if beside is not None
-            else _court_beyond_rear(
-                design,
-                rules,
-                lot.envelope_rear_ft,
-                lot.alley,
-                column=fit.column,
-                corner=lot.corner,
-                fix=_fix(fit),
-            )
-        ),
+        fit_needs - min(fit.width_short_ft, fit_needs)
+        if fit.width_short_ft is not None
+        else fit.best_depth_ft,
+        fit_needs,
         is_maximum=False,
         jurisdiction=where,
     )
@@ -1829,7 +1843,12 @@ def fit_for(
         room = got.slack_ft - _court_beyond_rear(
             design, rules, carved_rear_ft, alley, corner=corner, fix=court.fix
         )
-        if fit is None or room > best_room:
+        if fit is None or (
+            # Two tries that found no window at all: the one nearer in width.
+            got.width_short_ft < fit.width_short_ft
+            if got.width_short_ft is not None and fit.width_short_ft is not None
+            else room > best_room
+        ):
             fit, best_room = dataclasses.replace(got, court_fix=court.fix), room
         if room >= 0:
             break
@@ -2379,6 +2398,7 @@ __all__ = [
     "CURVE_ON_THE_LINE",
     "CLOSER_LOOK_MIN_DENSITY",
     "CLOSER_LOOK_RESOURCE",
+    "CLOSER_LOOK_SPLIT_ZONE",
     "CLOSER_LOOK_STEEP_COARSE",
     "GEOMETRY_UNREADABLE",
     "MIN_DENSITY_CHECKS",

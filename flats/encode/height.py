@@ -51,6 +51,7 @@ Run it::
 from __future__ import annotations
 
 import argparse
+import math
 from collections import defaultdict
 from dataclasses import dataclass, replace
 from typing import Iterable, Sequence
@@ -231,6 +232,12 @@ def derived(layers=None) -> list[Derived]:
             for field, value in sorted(zone.values.items()):
                 at = getattr(value, "step_back_at_ft", None)
                 per = getattr(value, "per_height_ft", None)
+                top = getattr(value, "from_top_degrees", None)
+                if top is not None:
+                    # An angle off the top is a ratio of the height like any
+                    # other: 1005.02(L)'s sixty degrees is one foot of reach
+                    # per 0.577 ft of building.
+                    per = 1.0 / math.tan(math.radians(float(top)))
                 if at is None and per is None:
                     continue
                 out.append(

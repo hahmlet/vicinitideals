@@ -1019,6 +1019,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     "row_to_centerline_neighborhood_route_ft": 12,
     "row_to_centerline_collector_ft": 12,
     "row_to_centerline_arterial_ft": 12,
+    #: Yards by lot-line bearing (Clackamas ZDO 1005.02(L), FOLLOWUPS 61):
+    #: quadfit's yards are front/side/rear; FLATS assigns them per compass edge.
+    "setback_north_ft": 9,
+    "setback_east_west_ft": 9,
+    "setback_north_street_credit_ft": 9,
 }
 
 
