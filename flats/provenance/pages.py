@@ -59,6 +59,18 @@ _LABELS = (
     re.compile(r"^(?P<label>[0-9]{1,4})\s+[A-Z][A-Za-z ]{2,30}Supp"),
 )
 
+#: A running footer that says "Page" in words: "August 2026   RICAP 11--
+#: As-Adopted   Page 79", and its mirror on the facing page, "Page 76   RICAP
+#: 11--As-Adopted   August 2026". Tried on every edge line before any shape in
+#: :data:`_LABELS`, because the word is the one thing on the sheet that cannot
+#: be a table or a contents entry. Without it the Portland amendment report
+#: took "Table 150-1" from the top of page 77, and a contents line "266-1"
+#: from the foot of page 23, as their page labels.
+_RUNNING = (
+    re.compile(r"\S\s{2,}page\s+(?P<label>[0-9]{1,4})$", re.I),
+    re.compile(r"^page\s+(?P<label>[0-9]{1,4})\s{2,}\S", re.I),
+)
+
 #: Runs of whitespace inside a label. Several of these documents are
 #: letter-spaced, so the printed "232-12" arrives as "232 - 12".
 _SPACING = re.compile(r"\s+")
@@ -132,6 +144,10 @@ def _label(lines: Sequence[str]) -> str:
     same shapes and would put "4.0100" where the page belongs.
     """
     edges = [line.strip() for line in lines[-_FURNITURE:] + lines[:_FURNITURE]]
+    for line in edges:
+        for pattern in _RUNNING:
+            if found := pattern.search(line):
+                return found.group("label")
     for line in edges:
         # Letter-spaced scans print "232 - 12" as "2 3 2 - 1 2", so the
         # de-spaced form is tried as well as the literal one. Oregon City's

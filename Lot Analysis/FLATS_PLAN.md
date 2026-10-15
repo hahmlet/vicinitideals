@@ -5257,3 +5257,40 @@ went red on the next corpus commit, and it stayed red across six of them because
 a red build was not treated as a stop — and it took the whole full gate down
 with it, which is the part that actually cost something. A ratchet is only worth what
 somebody does when it moves.
+
+## Law adopted for a later date — 2026-10-15
+
+Portland Council adopted RICAP 11 on 2026-08-06 (Ordinance 192213) and set it
+in force from 2026-11-01. It turns Table 150-1's N for Household Living in CI1
+into a Y and puts homes there on the RM1 standards. Title 33 as stored still
+prints the N, and will for some months: an ordinance governs from its
+effective date whether or not the chapter has been reprinted. Until now the
+corpus had no notion of a date at all.
+
+A zone may now carry `amended:` — a list of adopted changes, each with `id`,
+`label`, `adopted`, `effective`, `effect` (plain words for the lot page), the
+adopting text's citation and quote, and `zone:`, the whole block as it reads
+once in force. Every entry is parsed the day it is written, so a mistake in
+next month's law is a load problem today; a block with an unquoted value, an
+entry with no quote, or an effective date before adoption is refused.
+
+`load_rules(on=...)` puts the latest amendment in force on that date in place
+of the codified block. With no date the corpus is the text as written, which
+is what every ledger, digest and encoding tool reads — they describe what was
+read, and must not move with the calendar. The screens pass
+`flats.rules.loader.law_on()`: `FLATS_LAW_ON` if set, else today in Oregon.
+The bridge fixes that date once at the start of a run, hands it to every
+worker, records it in `meta.json` (`law_on`, `law_in_force`), and puts the
+amendments in force into the answer cache's run key — nothing in the code or
+the rule files changes on the morning a law takes effect, so without that the
+first run under the new law would replay the old law's answers. `assign` reads
+the bridge's date rather than its own. The lot page says, on a zone with an
+amendment, what is coming and when, or that the run shown predates it.
+
+The codified block's footnote caps (`caps.json`) do not follow an amendment:
+they were read on other text. Borrowed values keep the caps of the zone they
+come from.
+
+The adopting exhibit is stored under `<layer>/amended/` and not declared under
+`code:`: it is an amending act, and every chapter ledger would read its
+strike-and-underline copies of a dozen chapters as the city's code.

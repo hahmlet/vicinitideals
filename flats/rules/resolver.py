@@ -544,8 +544,21 @@ class RuleSet:
         # qualifies. The fact it turns on becomes a lever, which is all the
         # screen needs: nothing measures it, so it resolves as unknown, and a
         # standard turning on an unknown may not be certified.
+        #
+        # The footnotes were read on the codified block. A block an adopted
+        # amendment put in its place (Amendment) is other text, and the
+        # codified block's footnotes are not its footnotes: Table 150-2's
+        # note [3] says nothing about a CI1 home built to the RM1 standards.
+        # Its caps are looked up under its own name, which nothing has
+        # written yet; the borrowed values keep the caps of the zone they
+        # were borrowed from.
+        amended_body = {
+            (owner.layer, block.zone): block.in_force for owner, block in blocks if block.in_force
+        }
         for name, r in list(resolved.items()):
             where = r.via or (zone if r.origin == "zone" else "(defaults)")
+            if in_force := amended_body.get((r.layer, where)):
+                where = f"{where}@{in_force}"
             extra = caps_for(r.layer, where).get(name, ())
             # An unmeasured footnote only tightens placement; it cannot open a
             # use the code forbids, so it must not unsettle that prohibition.

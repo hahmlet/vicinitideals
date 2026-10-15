@@ -581,8 +581,21 @@ def _packages() -> list[str]:
     )
 
 
-def run_key(*, step_deg: float, inputs: Mapping[str, Path | None], package: Path | None = None) -> dict[str, Any]:
-    """Everything a lot's answer depends on besides its own row."""
+def run_key(
+    *,
+    step_deg: float,
+    inputs: Mapping[str, Path | None],
+    package: Path | None = None,
+    law: Sequence[str] = (),
+) -> dict[str, Any]:
+    """Everything a lot's answer depends on besides its own row.
+
+    ``law`` is the adopted amendments the run applies
+    (:func:`flats.rules.loader.amendments_in_force`). The code and the rule
+    files do not change on the day an amendment takes effect, so without it
+    the first run under the new law would replay the answers of the last run
+    under the old one.
+    """
     if package is None:
         import flats
 
@@ -594,6 +607,7 @@ def run_key(*, step_deg: float, inputs: Mapping[str, Path | None], package: Path
         "packages": hashlib.sha256("\n".join(_packages()).encode("utf-8")).hexdigest(),
         "step_deg": float(step_deg),
         "inputs": {name: _input_digest(path) for name, path in sorted(inputs.items())},
+        "law": sorted(law),
     }
 
 

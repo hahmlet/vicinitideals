@@ -23,6 +23,7 @@ costs an acquisition target nobody hears about.
 from __future__ import annotations
 
 from dataclasses import dataclass, field as _dc_field
+from datetime import date
 from pathlib import Path
 from typing import Iterable
 
@@ -109,14 +110,18 @@ def load_trusted(
     invalidated: Iterable[str] | None = None,
     strict: bool = True,
     require_quote: bool = True,
+    on: date | None = None,
 ) -> Trusted:
     """Load the hierarchy with trust applied. The pipeline calls this, not ``load_rules``.
 
     ``invalidated`` is the set of document paths a drift check found changed
     upstream; local tampering is detected here without a network. Both demote
     the values that cite them.
+
+    ``on`` is the date whose law to load (:func:`flats.rules.loader.law_on`
+    for a screen); omitted, the codified text as written.
     """
-    layers = load_rules(root, strict=strict)
+    layers = load_rules(root, strict=strict, on=on)
     problems: tuple[str, ...] = ()
     if not strict:
         problems = tuple(getattr(load_rules, "last_problems", ()) or ())

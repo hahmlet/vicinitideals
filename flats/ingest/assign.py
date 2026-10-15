@@ -312,12 +312,24 @@ def use_gate_for(rules: Any, relief: Any) -> Callable[[str, str], UseGate | None
     return gate
 
 
-def load_use_gate() -> Callable[[str, str], UseGate | None]:
-    """The use gate over the corpus as the bridge loads it (trust applied)."""
+def load_use_gate(bridge: Path | None = None) -> Callable[[str, str], UseGate | None]:
+    """The use gate over the corpus as the bridge loads it (trust applied),
+    under the law the bridge run applied -- its ``meta.json`` ``law_on`` --
+    or today's when it names none. An adopted amendment that opens or shuts
+    a zone moves this gate on its effective date, as it moves the bridge,
+    and a bridge run the day before is assigned under the day before's law."""
+    from datetime import date
+
     from flats.encode.load import load_trusted
+    from flats.rules.loader import law_on
     from flats.score import relief as relief_mod
 
-    return use_gate_for(load_trusted(strict=False).rules, relief_mod.load_policy())
+    on = None
+    if bridge is not None and (bridge / "meta.json").is_file():
+        pinned = json.loads((bridge / "meta.json").read_text(encoding="utf-8")).get("law_on")
+        on = date.fromisoformat(pinned) if pinned else None
+    rules = load_trusted(strict=False, on=on or law_on()).rules
+    return use_gate_for(rules, relief_mod.load_policy())
 
 
 def prohibited_row(lot: dict[str, Any], design: str, answer: UseGate) -> dict[str, Any]:
@@ -728,7 +740,7 @@ def main(argv: list[str] | None = None) -> int:
         quadfit_dir=args.quadfit_dir,
         snapshot_date=args.snapshot_date,
         log=lambda m: print(m, flush=True),
-        use_gate=load_use_gate(),
+        use_gate=load_use_gate(args.bridge),
         institutional=args.institutional,
     )
     print()

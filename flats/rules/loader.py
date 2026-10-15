@@ -22,9 +22,11 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
 from collections.abc import Mapping
 from dataclasses import dataclass
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -62,6 +64,7 @@ from flats.rules.model import (
     WORD_OUTCOMES,
     LAYER_META,
     ZONE_META,
+    Amendment,
     CodeDocument,
     Incorporation,
     Layer,
@@ -2324,6 +2327,168 @@ def _parse_set_aside(
     return tuple(out)
 
 
+def _parse_zone(
+    zname: str,
+    zraw: Mapping[str, Any],
+    layer_cite: Mapping[str, Any] | None,
+    where: str,
+    problems: list[str],
+    wanted: list[Wanted],
+) -> Zone:
+    """One zone block: its values, its notes, and what it borrows."""
+    zone_cite = {**(layer_cite or {}), **(zraw.get("cite_default") or {})}
+    value_keys = {k: v for k, v in zraw.items() if k not in ZONE_META}
+    values = _parse_values(value_keys, zone_cite, where, problems, wanted, zname)
+    return Zone(
+        zone=zname,
+        values=values,
+        notes=zraw.get("notes"),
+        clauses=tuple(zraw.get("clauses") or ()),
+        section=_parse_sections(zraw.get("section")),
+        like=_parse_like(zraw.get("like"), zone_cite, where, problems),
+    )
+
+
+#: The keys of one ``amended:`` entry besides its provenance.
+_AMENDMENT_KEYS = frozenset({"id", "label", "adopted", "effective", "effect", "zone"})
+
+
+def _parse_amended(
+    raw: Any,
+    zname: str,
+    layer_cite: Mapping[str, Any] | None,
+    where: str,
+    problems: list[str],
+) -> tuple[Amendment, ...]:
+    """A zone's ``amended:`` list: adopted changes that take effect on a date.
+
+    Each entry's ``zone:`` is a whole zone block, parsed now whatever the date,
+    so a mistake in a change that takes effect next month is a load problem
+    today rather than a surprise on the morning it arrives. The entry's own
+    citation -- the adopting exhibit -- is the default for the block it holds.
+    """
+    if raw is None:
+        return ()
+    if not isinstance(raw, list):
+        problems.append(f"{where}.amended: expected a list")
+        return ()
+    out: list[Amendment] = []
+    for n, item in enumerate(raw):
+        here = f"{where}.amended[{n}]"
+        if not isinstance(item, dict):
+            problems.append(f"{here}: expected a mapping")
+            continue
+        unknown = set(item) - _AMENDMENT_KEYS - set(_PROV_KEYS)
+        if unknown:
+            problems.append(f"{here}: unknown key(s) {sorted(unknown)}")
+            continue
+        body = item.get("zone")
+        if not isinstance(body, dict):
+            problems.append(f"{here}.zone: expected the zone block as it reads once in force")
+            continue
+        if "amended" in body:
+            problems.append(f"{here}.zone: an amendment's block cannot carry amendments")
+            continue
+        prov_src = {**(layer_cite or {}), **{k: item[k] for k in _PROV_KEYS if k in item}}
+        if not prov_src.get("quote"):
+            # The date is the whole of what makes this law, and a date nobody
+            # can point at is a guess about when the law changes.
+            problems.append(f"{here}: quote the adopting text that states the change")
+            continue
+        # A queued read inside a block that is not in force yet would sit in
+        # the reading queue under the zone's name as though it were today's law.
+        queued: list[Wanted] = []
+        block_cite = {k: v for k, v in prov_src.items() if k != "quote"}
+        try:
+            zone = _parse_zone(zname, body, block_cite, f"{here}.zone", problems, queued)
+            if queued:
+                problems.append(
+                    f"{here}.zone: every value in an amendment must be quoted "
+                    f"({', '.join(sorted(w.field for w in queued))} are not)"
+                )
+                continue
+            out.append(
+                Amendment(
+                    id=str(item.get("id") or ""),
+                    label=str(item.get("label") or ""),
+                    adopted=item.get("adopted"),
+                    effective=item.get("effective"),
+                    prov=Provenance(**_prov_args(prov_src)),
+                    effect=str(item.get("effect") or ""),
+                    zone=zone,
+                )
+            )
+        except Exception as exc:
+            problems.append(f"{here}: {_terse(exc)}")
+    ids = [a.id for a in out]
+    if len(set(ids)) != len(ids):
+        problems.append(f"{where}.amended: ids must be unique, got {ids}")
+    return tuple(sorted(out, key=lambda a: (a.effective, a.id)))
+
+
+#: Set to an ISO date to load the law in force on that day instead of today.
+LAW_ON_ENV = "FLATS_LAW_ON"
+
+
+def law_on(today: date | None = None) -> date:
+    """The date whose law a screen applies: ``FLATS_LAW_ON`` when set, else today.
+
+    Today in Oregon, not on the machine's clock: an ordinance effective on
+    November 1 is in force from midnight Pacific, and a container keeping UTC
+    would otherwise start applying it at five in the afternoon on October 31.
+    """
+    pinned = os.environ.get(LAW_ON_ENV, "").strip()
+    if pinned:
+        return date.fromisoformat(pinned)
+    if today is not None:
+        return today
+    try:
+        from zoneinfo import ZoneInfo
+
+        return datetime.now(ZoneInfo("America/Los_Angeles")).date()
+    except Exception:  # noqa: BLE001 -- no tz database: the local clock is the best left
+        return date.today()
+
+
+def law_in_force(layers: Mapping[str, Layer], on: date) -> dict[str, Layer]:
+    """``layers`` with every amendment in force on ``on`` put in its zone's place.
+
+    The latest amendment in force wins; the replaced block keeps the whole
+    ``amended`` list (so a page can still say what changed and when) and
+    names the one it is in ``in_force``. A layer with nothing in force is
+    returned as it was.
+    """
+    out: dict[str, Layer] = {}
+    for layer_id, layer in layers.items():
+        zones = dict(layer.zones)
+        changed = False
+        for code, zone in layer.zones.items():
+            live = [a for a in zone.amended if a.in_force(on)]
+            if not live:
+                continue
+            latest = live[-1]
+            zones[code] = latest.zone.model_copy(
+                update={"amended": zone.amended, "in_force": latest.id}
+            )
+            changed = True
+        out[layer_id] = layer.model_copy(update={"zones": zones}) if changed else layer
+    return out
+
+
+def amendments_in_force(layers: Mapping[str, Layer]) -> list[str]:
+    """``layer:zone:id`` for every amendment the loaded corpus applies.
+
+    What a run key needs: two runs on different dates screen the same lots
+    differently exactly when this list differs, and not otherwise.
+    """
+    return sorted(
+        f"{layer_id}:{code}:{zone.in_force}"
+        for layer_id, layer in layers.items()
+        for code, zone in layer.zones.items()
+        if zone.in_force
+    )
+
+
 def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
     try:
         raw = yaml.load(path.read_text(encoding="utf-8"), Loader=_LOADER) or {}
@@ -2359,19 +2524,10 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
         if not isinstance(zraw, dict):
             problems.append(f"{where}.zones.{zname}: expected a mapping")
             continue
-        zone_cite = {**(layer_cite or {}), **(zraw.get("cite_default") or {})}
-        value_keys = {k: v for k, v in zraw.items() if k not in ZONE_META}
-        values = _parse_values(
-            value_keys, zone_cite, f"{where}.zones.{zname}", problems, wanted, str(zname)
-        )
-        zones[str(zname)] = Zone(
-            zone=str(zname),
-            values=values,
-            notes=zraw.get("notes"),
-            clauses=tuple(zraw.get("clauses") or ()),
-            section=_parse_sections(zraw.get("section")),
-            like=_parse_like(zraw.get("like"), zone_cite, f"{where}.zones.{zname}", problems),
-        )
+        here = f"{where}.zones.{zname}"
+        zone = _parse_zone(str(zname), zraw, layer_cite, here, problems, wanted)
+        amended = _parse_amended(zraw.get("amended"), str(zname), layer_cite, here, problems)
+        zones[str(zname)] = zone.model_copy(update={"amended": amended}) if amended else zone
 
     try:
         return Layer(
@@ -2407,12 +2563,21 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
         return None
 
 
-def load_rules(root: Path | None = None, strict: bool = True) -> dict[str, Layer]:
+def load_rules(
+    root: Path | None = None, strict: bool = True, *, on: date | None = None
+) -> dict[str, Layer]:
     """Load every jurisdiction file under ``root`` keyed by layer id.
 
     ``strict`` raises :class:`RuleLoadError` on any problem. Pass ``False`` only
     from tooling that means to report problems rather than act on the rules —
     the pipeline itself must never run on a partially-valid rule set.
+
+    ``on`` loads the law in force on that date (:func:`law_in_force`): every
+    zone with an adopted change effective by then reads as changed. Omitted,
+    the corpus is the codified text as written, which is what every encoding
+    tool, ledger and digest works on -- they describe what was read, and it
+    must not move under them with the calendar. The screens pass
+    :func:`law_on`.
     """
     root = root or CONFIG_ROOT
     problems: list[str] = []
@@ -2432,4 +2597,4 @@ def load_rules(root: Path | None = None, strict: bool = True) -> dict[str, Layer
     # Always reassigned, including to empty — a stale list from an earlier
     # non-strict call would report problems the current rule set does not have.
     load_rules.last_problems = problems  # type: ignore[attr-defined]
-    return layers
+    return law_in_force(layers, on) if on is not None else layers

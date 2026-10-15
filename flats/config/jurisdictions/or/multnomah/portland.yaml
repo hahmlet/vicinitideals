@@ -4998,6 +4998,63 @@ zones:
       0.5 to 1 is the tightest FAR in the corpus and it is what makes this zone bind. There is no minimum lot size at all, but four units of a 56 by 36 ft pod over two floors is roughly 4,000 sq ft of floor area, which at 0.5 asks for roughly 8,000 sq ft of site -- a lot minimum arriving by the back door. Coverage is 50 percent, landscaped area 25 percent.
 
       NOT ENCODED, on purpose: Maps 150-1 through 150-5 supersede the Table 150-2 setback and height rows where they apply and this screen does not read them; and note [1] treats an entire CI zone as one site for Colleges and Medical Centers, measuring setbacks from the zone perimeter, which is a different applicant than this one.'
+    # RICAP 11, adopted 2026-08-06 as Ordinance 192213 and in force from
+    # 2026-11-01 (exhibit page 12). Until then the block above is the law and
+    # CI1 screens as it always has; from the first run on or after that date
+    # the loader puts the block below in its place (flats.rules.loader.
+    # law_in_force) with no edit here. When Title 33 is reprinted with the
+    # change, re-read 33.150 for the block above and take this entry off.
+    #
+    # The exhibit is stored whole at or/multnomah/portland/amended/ricap11.txt (198
+    # pages, with its page map; the printed "Page N" footer and the PDF page
+    # agree throughout). It is NOT declared under `code:`, for the reason the
+    # state's HB 2138 text is not: it is an amending act, not a chapter, and
+    # every chapter ledger -- footnotes, designations, cross-references, word
+    # cards -- would read its strike-and-underline copies of a dozen chapters
+    # as Portland's code. Strike/underline does not survive extraction, so
+    # "NY" in Table 150-1 is the N struck and the Y added.
+    amended:
+      - id: ricap11
+        label: RICAP 11 (Ordinance 192213)
+        adopted: 2026-08-06
+        effective: 2026-11-01
+        cite: RICAP 11 As-Adopted Report (Ordinance 192213 Exhibit B), Section I, p. 12
+        url: https://efiles.portlandoregon.gov/record/18006154/file/document
+        retrieved: '2026-10-15'
+        quote: "or/multnomah/portland/amended/ricap11.txt#L344-L346,L348-L349"
+        effect: >-
+          Homes become an allowed use in CI1 (Household Living, Table 150-1), built to the
+          RM1 zone's development and parking standards (new 33.150.200 and 33.266.100.B).
+        zone:
+          cite_default:
+            cite: RICAP 11 As-Adopted Report (Ordinance 192213 Exhibit B), MP18
+            url: https://efiles.portlandoregon.gov/record/18006154/file/document
+            retrieved: '2026-10-15'
+          # New 33.150.200 (exhibit p. 79): "Household Living and Group Living
+          # uses in the CI1 zone are subject to the development standards that
+          # apply in the RM1 zone." New 33.266.100.B (p. 95) does the same for
+          # the parking chapter. Every number therefore comes from RM1 and
+          # keeps RM1's own citation; this zone states only its use.
+          like:
+            zone: RM1
+            wins: local
+            cite: RICAP 11 MP18 -- new 33.150.200 Residential Uses in the CI1 Zone (p. 79); new 33.266.100.B Residential uses in the CI1 zone (p. 95)
+            quote: "or/multnomah/portland/amended/ricap11.txt#L2052-L2054,L2383-L2386"
+          quadplex_allowed:
+            # Table 150-1 as amended (p. 77): Household Living, CI1 column, the
+            # N struck and a Y added -- the extracted text runs them together
+            # as "NY". A bare Y, no bracketed limitation. The commentary on
+            # pp. 76 and 78 says the same in words: "from prohibited to
+            # allowed". A four-unit building is four Household Living
+            # occupancies under 33.920.110.A, as the 33.920 note above says.
+            value: true
+            cite: RICAP 11 MP18 -- Table 150-1 as amended, Household Living, CI1 (p. 77)
+            quote: "or/multnomah/portland/amended/ricap11.txt#L1987,L1989,L1991"
+          notes: 'Campus Institutional 1 as RICAP 11 leaves it: homes allowed, on the RM1 zone''s standards. Imported whole through `like: RM1` -- minimum lot 4,000 sq ft and 33 ft wide, setbacks 10/5/5, height 35 ft, FAR 1 to 1, coverage 50 percent, landscaping 30 percent, minimum density, outdoor area per unit, the garage-entrance band and the 1.35-per-unit parking maximum -- with RM1''s variants and RM1''s citations. None of CI1''s own Table 150-2 figures (15 ft setbacks, 75 ft height, 0.5 FAR, 25 percent landscaping) applies to a home any more.
+
+            One CI1 sentence survives beside the import and is NOT taken: 33.150.202 (renumbered from 33.150.200, p. 79) still says there is no required minimum lot size for development in the campus zones, while RM1''s 4,000 sq ft / 33 ft minimum is one of the 33.120 development standards the new 33.150.200 imports. The two do not say which wins. RM1''s minimum is kept because it is the reading that cannot turn a lot GREEN; a lot under 4,000 sq ft in CI1 is refused on it. Most CI1 land is campus-sized, so this binds few lots.
+
+            Left behind with the codified block: Maps 150-1 to 150-5 and the Table 150-2 note [3] cap. Neither reaches a home on RM1 standards, and the cap belongs to the codified block and does not follow this one (flats.rules.resolver).'
   CI2:
     cite_default:
       cite: PCC 33.150 — Table 150-1 (33.150.100 Primary Uses), 33.150.200 Lot Size, Table 150-2 (Summary of Development Standards in Campus Institutional Zones), 33.150.215 Setbacks, 33.150.220 Building Coverage, 33.150.240 Landscaped Areas

@@ -42,7 +42,9 @@ def _path(path: Sequence[str]) -> str:
 def current_caps() -> dict[tuple[str, str], ZoneCap]:
     """Every (layer, zone) that states a density ceiling, read the way the Lots
     page reads it (trusted rules, the screen's own resolver)."""
-    layers = load_trusted(strict=False).layers
+    from flats.rules.loader import law_on
+
+    layers = load_trusted(strict=False, on=law_on()).layers
     return zone_caps(RuleSet(layers), layers)
 
 

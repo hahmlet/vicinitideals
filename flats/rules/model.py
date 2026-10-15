@@ -604,7 +604,7 @@ class Ruling(str):
 _GEOID = re.compile(r"^\d{5,7}-")
 
 #: Meta keys permitted alongside field names inside a zone block.
-ZONE_META = frozenset({"zone", "cite_default", "notes", "clauses", "like", "section"})
+ZONE_META = frozenset({"zone", "cite_default", "notes", "clauses", "like", "section", "amended"})
 #: Meta keys permitted at the top level of a jurisdiction/layer file.
 LAYER_META = frozenset(
     {
@@ -2478,6 +2478,18 @@ class Zone(BaseModel):
     #: would attribute one zone's setback to another, so an encoder says it
     #: once and a reviewer can check the claim in one glance.
     section: tuple[str, ...] = ()
+    #: Adopted changes to this zone that take effect on a date. Every one is
+    #: kept whatever the date, so a page can say what is coming and what has
+    #: arrived. See :class:`Amendment`.
+    amended: tuple[Amendment, ...] = ()
+    #: The id of the amendment whose text this block *is*, when the corpus
+    #: was loaded for a date on or after it took effect; None for the text as
+    #: the codified chapter prints it.
+    in_force: str | None = None
+
+    def pending(self, on: date) -> tuple[Amendment, ...]:
+        """The adopted changes not yet in force on ``on``."""
+        return tuple(a for a in self.amended if not a.in_force(on))
 
     @property
     def trusted(self) -> bool:
@@ -2501,6 +2513,56 @@ class Zone(BaseModel):
         if self.like is not None and not self.like.trusted:
             out.append(LIKE)
         return tuple(out)
+
+
+class Amendment(BaseModel):
+    """An adopted change to a zone that takes effect on a later date.
+
+    A council adopts an ordinance on one day and names the day it takes
+    effect, and the codified chapter catches up some time after that. The
+    ordinance governs from its effective date whether or not the chapter has
+    been reprinted, so the law in force on a run date is not the chapter we
+    hold. Portland's RICAP 11 is the case this was written for: adopted
+    2026-08-06, in force 2026-11-01, opening CI1 to Household Living under
+    the RM1 standards, with Title 33 still printing the N.
+
+    The encoding is the zone as it will read: a whole replacement block,
+    parsed and checked like any other zone the day it is written, which the
+    loader puts in place of the codified block when the corpus is loaded for
+    a date on or after ``effective`` (:func:`flats.rules.loader.load_rules`).
+    Nothing expires and nothing is edited on the day; the date does it. When
+    the chapter is reprinted with the change in it, the codified block is
+    re-read and the amendment comes off.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    #: Short and stable: it names the amendment in run keys and run records.
+    id: str = Field(min_length=1, pattern=r"^[a-z0-9][a-z0-9_.-]*$")
+    #: How a person would name it -- "RICAP 11 (Ordinance 192213)".
+    label: str = Field(min_length=3)
+    adopted: date
+    effective: date
+    #: The adopting text: the exhibit, the page, and the lines that say it.
+    prov: Provenance
+    #: What it does to this zone, in words, for the lot page.
+    effect: str = Field(min_length=3)
+    #: The zone as it reads once in force.
+    zone: Zone
+
+    def in_force(self, on: date) -> bool:
+        return on >= self.effective
+
+    @model_validator(mode="after")
+    def _effective_follows_adoption(self) -> Amendment:
+        if self.effective < self.adopted:
+            raise ValueError("an amendment cannot take effect before it was adopted")
+        if self.zone.amended:
+            raise ValueError("an amendment's zone block cannot carry amendments of its own")
+        return self
+
+
+Zone.model_rebuild()
 
 
 class CodeDocument(BaseModel):

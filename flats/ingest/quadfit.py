@@ -3996,18 +3996,27 @@ def _init_worker(
     roads: Path | None = None,
     dem: Path | None = None,
     curbs: Path | None = None,
+    law_on: str | None = None,
 ) -> None:
     """Load the corpus, catalog, policies, corridor maps, the street
     centrelines the fire route is measured to (with the curbs and widths
     of ``curbs``, a snapshot directory) and the elevation models the slope
-    is read off, once per process."""
+    is read off, once per process.
+
+    ``law_on`` is the ISO date whose law the run applies, fixed once when
+    the run starts (:func:`run`) so a run that crosses midnight on the day
+    an amendment takes effect does not screen half its lots under each."""
+    from datetime import date
+
     from flats.designs.model import load_catalog
     from flats.encode.load import load_trusted
     from flats.fit.fire import load_truck_roads
     from flats.geom.curbs import load as load_street_edges
+    from flats.rules.loader import law_on as today_law
     from flats.score import relief as relief_mod, slack as slack_mod
 
-    _WORKER["rules"] = load_trusted(strict=False).rules
+    on = date.fromisoformat(law_on) if law_on else today_law()
+    _WORKER["rules"] = load_trusted(strict=False, on=on).rules
     _WORKER["designs"] = list(load_catalog())
     _WORKER["policy"] = slack_mod.load_policy()
     _WORKER["relief"] = relief_mod.load_policy()
@@ -4391,8 +4400,17 @@ def run(
     marked = pdx.with_overlays(rows, sources)
     log(f"bridge: Portland's main street overlay or a protected historic resource on {marked:,} lots")
     from flats.encode.load import load_trusted
+    from flats.rules.loader import amendments_in_force, law_on
 
-    split = with_split_zones(rows, s4.parent, load_trusted(strict=False).rules.layers)
+    # The law in force on the day the run starts, for every lot it screens:
+    # an adopted amendment applies from its effective date with no edit
+    # (Amendment), and the answers a cache kept under other law are not
+    # replayed under this one (batch.run_key).
+    on = law_on()
+    corpus = load_trusted(strict=False, on=on).rules.layers
+    law = amendments_in_force(corpus)
+    log(f"bridge: the law in force on {on.isoformat()}" + (f", with {', '.join(law)}" if law else ""))
+    split = with_split_zones(rows, s4.parent, corpus)
     if split:
         log(f"bridge: the other districts of {split:,} split-zoned lots read off the zoning maps")
     # Costliest lots first, started as free memory allows, and the answers a
@@ -4406,6 +4424,7 @@ def run(
             batch.run_key(
                 step_deg=step_deg,
                 inputs={"sources": sources, "roads": roads, "dem": dem, "curbs": curbs},
+                law=law,
             ),
         )
     # The workers screen with flats.ingest.quadfit's _work_chunk, so they are
@@ -4420,7 +4439,7 @@ def run(
         processes=processes,
         chunk_size=chunk_size,
         init=screened._init_worker,
-        initargs=(step_deg, sources, roads, dem, curbs),
+        initargs=(step_deg, sources, roads, dem, curbs, on.isoformat()),
         cache=answers,
         step_deg=step_deg,
         log=log,
@@ -4447,6 +4466,8 @@ def run(
         "curbs": str(curbs) if curbs is not None else None,
         "institutional": str(institutional),
         "institutional_skipped": skipped,
+        "law_on": on.isoformat(),
+        "law_in_force": law,
         "batch": done.meta(),
         "finished_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
