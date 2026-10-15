@@ -2803,8 +2803,8 @@ read when the weekly full re-screen lands.
    yellow->red. Check lots 2S132CD12600, 2S132AC01500, 2S116AA14200, 31E01DA00229 red. RULED
    2026-10-14: Oregon City keeps the WIDEST row per class -- Table 16.12.016 is keyed to the
    street's TSP class (measured) AND the plan designation on both sides of the street, the wider
-   governing; the land across the street is not measured for this, so the residential column
-   (27/42.5/50/63) cannot be chosen yet (item 82 offers reading it from s4's across-street rays).
+   governing. Superseded by item 82 (built 2026-10-14): the zones on both sides now stand in for
+   the designation, the widest row kept only where that cannot be read.
    WEEKLY: scripts/flats_weekly_chain.py preflight now REFUSES a snapshot without
    street_class_washington/sherwood/oregon_city/milwaukie or rlis_streets (acquired/present and the
    file on disk; dedication_keys()), runbook docs/ops/flats-county-refresh.md updated. OPEN: segment
@@ -2862,14 +2862,21 @@ read when the weekly full re-screen lands.
    area), register the map as street_class_tigard (+ weekly preflight via dedication_keys), add
    Tigard's class -> half-width table with citations in or/washington/tigard, bound Tigard and read
    every loss. Item 64 round 2 saw no Tigard lot wrong from this, so the size is unknown.
-82. [scan: YES (greens only gain where both sides read residential)] **Oregon City: read the zone
-   across the street for the dedication width (offered 2026-10-14).** Table 16.12.016 keys the
-   right-of-way to the street's TSP class AND the plan designation on both sides (the wider wins).
-   Item 77 keeps the widest row per class (local 62, collector 88, minor arterial 118, major 126 ft)
-   because the land across the street is not read for it. s4 already casts five rays across every
-   street line (street_across_json, flats.geom.neighbour.street_lines_clear); where every ray and
-   the lot itself land in a residential zone (OC's R-zones; needs a zone -> plan-designation list,
-   cited) the residential row applies: half-widths local 27 not 31, collector 42.5 not 44, minor
-   arterial 50 not 59 (major 63 either way). Any ray unread or non-residential keeps the widest.
-   Decision pending: whether the zone may stand in for the plan designation (they normally match;
-   the comprehensive plan map is not held).
+82. [scan: YES -- greens only gain] **Oregon City: the zone across the street stands in for the plan
+   designation (RULED + BUILT 2026-10-14, branch flats/oc-road-zone-standin 5c4051cc, awaiting
+   merge; bound read, NOT spliced).** Steph: use the measured zone on each side as the stand-in for
+   Table 16.12.016's plan designation; flag it low-risk, severity 2, so a GREEN lot stays GREEN
+   (OC-ROAD-ZONE-STANDIN); keep the widest row where the land across is unread or its zone maps to
+   no clear designation. Zone -> designation is Table 17.06.030 (R-10..R-2 residential; C, MUD,
+   WFDD, NC, HC, MUC-1, MUC-2, MUE the "mixed use, commercial or public" row; CI, GI industrial; I
+   left out -- public/quasi-public OR park, 17.39.010, and the table has no park row). All 12 rows
+   held in row_to_centerline_by_designation; widest kept for an unread class, any unresolved ray,
+   another jurisdiction across, or an unmapped zone. BOUND vs run 74 (9,101 OC lots whose strip
+   the stand-in narrows; 2,434 OC lots unchanged): run 74 green 1,829 -> 1,392 green / 49 yellow /
+   388 red (main's widest row alone: 1,158 / 43 / 628); yellow 452 -> 14 / 287 / 151; red 6,820
+   stay red. Against main: 291 better (226 red->green, 49 red->yellow, 16 yellow->green; every red
+   bind was fit / fire hose / steep ground; 274 return to their run 74 colour, 15 part way, 2 go
+   past it with SLOPE-GRADE gone -- placement), 9 worse, all read: 7 green->yellow on SLOPE-GRADE
+   and 1 on ZONE-SPLIT (the deeper envelope let the widest-slack placement land on steeper ground /
+   over a zone line), 1 green->red 32E06DB00600 (hose 144 -> 152 ft on the moved plan). Placement artefacts, not the stand-in: the strip never
+   widens. Every scoped lot carries the flag; 1,406 are green with it.
