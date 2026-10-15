@@ -310,6 +310,24 @@ it on. What is different:
 - **Transit**: T2 with `--reuse` measures only the new county's lots.
 - **The gate**: as any refresh -- clean, the agent promotes; warned, Steph (§3).
 
+### 4f. Code-change watch (every weekly, from the coordinator's PC)
+
+Cities must notify DLCD of proposed and adopted code amendments (ORS
+197.610-197.625). An ordinance governs from its effective date whether or not
+the city has codified it, and the published code can lag by months: Portland
+RICAP 11 (adopted 2026-08-06, effective 2026-11-01) let housing into CI1 while
+our stored PCC still said no (FOLLOWUPS 86). Each weekly:
+
+1. `python scripts/flats_dlcd_watch.py` (Playwright; last 21 days by default)
+   writes `data/flats/dlcd/<today>/new.md` -- every notice from our
+   jurisdictions not yet in `flats/config/dlcd_read.yaml`.
+2. An Opus agent reads every notice in `new.md` (not a keyword filter: the
+   RICAP 11 summary never mentions CI1 housing), fetches the ordinance from the
+   city where the summary is not enough, and records one ledger entry per
+   notice: `no_effect`, `watch` (proposed, re-check at adoption) or `encode`
+   (with the FOLLOWUPS item that encodes it, effective date included).
+3. Commit the ledger with the weekly bookkeeping.
+
 ## 5. What Steph reads
 
 The candidate's card on `/flats/refresh`. Four questions, top to bottom:
