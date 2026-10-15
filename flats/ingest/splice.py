@@ -113,6 +113,48 @@ def _only_added(base_file: Path, partial_file: Path, scope: set[str], added_colu
     return None
 
 
+def _reading(meta: dict[str, Any]) -> Path | None:
+    """The institutional reading a run's ``meta.json`` names, when the file is there."""
+    from flats.ingest.institutional import INSTITUTIONAL
+
+    path = Path(meta["institutional"]) if meta.get("institutional") else None
+    if path is None:
+        return None
+    return path if (path.is_file() or (path / INSTITUTIONAL).is_file()) else None
+
+
+def _skip(reading: Path | None) -> set[str]:
+    from flats.ingest.institutional import skip_tlids
+
+    return skip_tlids(reading) if reading is not None else set()
+
+
+def _merge_readings(base: Path | None, partial: Path | None, touched: set[str], out: Path) -> Path | None:
+    """The reading the spliced run answers RED from: the base's, with the
+    partial's newer word on every lot it read.
+
+    A lot the partial run read is decided by the partial's reading (a
+    screened lot the base called institutional but the partial did not is
+    not red now; one the partial left out of the scan is). Every other lot
+    keeps the base's. Without this, an added institutional lot has no bridge
+    rows AND no red answer, and silently vanishes from the loaded run.
+    """
+    import pandas as pd
+
+    from flats.ingest.institutional import INSTITUTIONAL, read
+
+    if partial is None or (base is not None and base.resolve() == partial.resolve()):
+        return base
+    new = read(partial)
+    old = read(base) if base is not None else None
+    if old is not None:
+        old = old[~old["TLID"].isin(set(new["TLID"]) | touched)]
+        new = pd.concat([old, new], ignore_index=True)
+    path = out / INSTITUTIONAL
+    new.to_parquet(path, index=False)
+    return path
+
+
 def splice(base: Path, partial: Path, out: Path, *, change: str, added_columns: tuple[str, ...] = ()) -> dict[str, Any]:
     """Write ``out`` = ``base`` with every lot ``partial`` screened replaced; returns its meta.
 
@@ -137,11 +179,17 @@ def splice(base: Path, partial: Path, out: Path, *, change: str, added_columns: 
     if set(new["design"]) - set(old["design"]):
         raise SystemExit(f"partial run screened designs the base lacks: {sorted(set(new['design']) - set(old['design']))}")
     touched = set(new["TLID"])
+    # Institutional land is left out of the bridge's scan and answered RED by
+    # assign from the reading meta.json names (Steph 2026-10-06). An added lot
+    # the partial's reading names is therefore accounted for, not missing: a
+    # full run holds it the same way -- no bridge rows, RED in assign.
+    reading = _reading(pm)
+    left_out = set(_skip(reading))
 
     grown: dict[str, str] = {}
     for key in ("s4", "s5o"):
         if Path(bm[key]).resolve() != Path(pm[key]).resolve():
-            why = _only_added(Path(bm[key]), Path(pm[key]), touched, added_columns if key == "s5o" else ())
+            why = _only_added(Path(bm[key]), Path(pm[key]), touched | left_out, added_columns if key == "s5o" else ())
             if why:
                 raise SystemExit(f"{key} differs: base {bm[key]} vs partial {pm[key]} ({why})")
             grown[key] = pm[key]
@@ -151,6 +199,7 @@ def splice(base: Path, partial: Path, out: Path, *, change: str, added_columns: 
 
     out.mkdir(parents=True, exist_ok=True)
     both.to_parquet(out / "lots.parquet", index=False)
+    merged = _merge_readings(_reading(bm), reading, touched, out)
     lineage = bm.get("lineage") or {"full": _full_of(base, bm), "splices": []}
     entry = {
         "change": change,
@@ -160,6 +209,7 @@ def splice(base: Path, partial: Path, out: Path, *, change: str, added_columns: 
         "tlids": pm.get("tlids") or [],
         "lots": len(touched),
         "new_lots": len(touched - set(old["TLID"])),
+        **({"institutional_added": len(left_out - set(old["TLID"]) - touched)} if left_out else {}),
         "finished_at": pm.get("finished_at"),
         **({"measured": grown} if grown else {}),
         **({"added_columns": list(added_columns)} if added_columns else {}),
@@ -169,6 +219,7 @@ def splice(base: Path, partial: Path, out: Path, *, change: str, added_columns: 
         **grown,
         "lots": int(both["TLID"].nunique()),
         "rows": len(both),
+        **({"institutional": str(merged)} if merged is not None else {}),
         "seconds": pm.get("seconds"),
         "spliced_from": str(base.resolve()),
         "lineage": {"full": lineage["full"], "splices": [*lineage["splices"], entry]},

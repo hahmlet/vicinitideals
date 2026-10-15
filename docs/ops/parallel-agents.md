@@ -167,3 +167,40 @@ explicit path.
     final, right before merge, and read that bound's gains one by one
     (rule 11). The sample is for finding bugs fast. Only the full bound is
     the proof.
+
+## Waiting on 137 without polling
+
+An agent that wakes every few minutes to ask "is it done yet?" burns tokens for
+nothing. Register the wait once and end the turn; one script (run by the
+coordinator) does the checking for everyone at zero token cost.
+
+**Register.** In the SAME `ssh_exec` that queues the job, write a one-line file
+into `/root/watch/` (the watcher creates the directory; `mkdir -p` is harmless):
+
+```
+nohup flock -o /root/heavy.lock <command> > /root/<lane>_<what>.log 2>&1 &
+echo '<who>|<done-marker-path>|<failed-glob>' > /root/watch/<lane>_<what>.want
+```
+
+e.g. `vicinitideals-e0|/root/r2r_work/done.ALL|/root/r2r_work/FAILED.*`. The job
+must itself `touch` the done marker (and a `FAILED.*` file on failure) as its
+last step. The failed glob may not contain spaces.
+
+**Then end the turn.** No timers, no `sleep`, no scheduled wake-ups. The
+coordinator is woken by a line like
+`READY vicinitideals-e0 done /root/r2r_work/done.ALL 2026-10-14T21:00:05Z`
+and relays it (or resumes the lane). A `.want` fires once: it is renamed to
+`.fired` on 137, so the same wait never reports twice. A wait that never fires
+stays as a `.want`; delete it by hand if the job was abandoned.
+
+**Run the watcher** (coordinator, under the Monitor tool, one per machine):
+
+```
+uv run python scripts/agent_watch.py --interval 600
+```
+
+It makes one `ssh_exec` call per interval over the proxmox MCP's HTTP endpoint
+(url and headers read from `~/.claude.json`, never printed), prints only
+`READY ...` lines plus a `HEARTBEAT <utc>` line at most every 6 hours, and
+retries quietly after any network or MCP error. `--once` checks a single time
+and exits; use it to test a registration.

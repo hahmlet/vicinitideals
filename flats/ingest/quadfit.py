@@ -4339,6 +4339,24 @@ def run(
     return out / "lots.parquet"
 
 
+def mixed_scope(jurisdictions: Iterable[str], zones: Iterable[str], tlids: Iterable[str]) -> str | None:
+    """Why a scope names lots AND a whole city or zone; None when it does not.
+
+    :func:`scope_mask` ORs its selectors, so ``--tlid-file lots.txt
+    --jurisdiction Gresham`` screens every lot of Gresham plus the list, not
+    the list's lots in Gresham -- one run lost an hour to it (2026-10-14).
+    The command refuses the mix rather than guess which was meant; a list of
+    lots in one city is just the list.
+    """
+    if list(tlids) and (list(jurisdictions) or list(zones)):
+        return (
+            "--tlid/--tlid-file cannot be combined with --jurisdiction/--zone: the selectors are OR-ed, "
+            "so the run would screen those whole cities or zones as well as the listed lots. "
+            "Pass the TLID list alone (filter it to the city first), or the city/zone alone."
+        )
+    return None
+
+
 def _read_tlids(path: Path) -> list[str]:
     return [t.strip() for t in path.read_text(encoding="utf-8").splitlines() if t.strip()]
 
@@ -4392,6 +4410,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     ap.add_argument("--no-cache", action="store_true", help="screen every lot afresh and keep no answers")
     args = ap.parse_args(argv)
+    args.tlid = [*args.tlid, *(_read_tlids(args.tlid_file) if args.tlid_file else [])]
+    args.tlid_file = None
+    if why := mixed_scope(args.jurisdiction, args.zone, args.tlid):
+        ap.error(why)
     # A run that dies resumes when it is launched again, by default: every
     # chunk it finished is in the cache (FOLLOWUPS 48, Steph 2026-10-07:
     # "Don't want to lose time to avoidable problems"). Beside --out, runs
@@ -4408,7 +4430,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         seed=args.seed,
         jurisdictions=args.jurisdiction,
         zones=args.zone,
-        tlids=[*args.tlid, *(_read_tlids(args.tlid_file) if args.tlid_file else [])],
+        tlids=args.tlid,
         step_deg=args.step_deg,
         chunk_size=args.chunk_size,
         sources=args.sources,
@@ -4440,6 +4462,7 @@ __all__ = [
     "envelope_for",
     "compare",
     "iter_rows",
+    "mixed_scope",
     "scope_mask",
     "lot_edges",
     "lot_from_row",

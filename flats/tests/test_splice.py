@@ -205,3 +205,61 @@ def test_a_declared_column_does_not_excuse_a_changed_old_one(tmp_path: Path) -> 
 
     with pytest.raises(SystemExit, match="changed 'area_sqft'"):
         splice(base, part, tmp_path / "out", change="x", added_columns=("ovl_x_site",))
+
+
+def _reading(path: Path, tlids: list[str]) -> str:
+    """An institutional reading (flats.ingest.institutional) naming ``tlids`` whole."""
+    pd.DataFrame(
+        {
+            "county": "multnomah", "TLID": tlids, "category": "school", "share": 1.0,
+            "source": "osm", "name": "x", "whole_tlid": True,
+        }
+    ).to_parquet(path, index=False)
+    return str(path)
+
+
+def test_an_added_lot_the_institutional_reading_names_is_red_not_missing(tmp_path: Path) -> None:
+    """The as-if re-run kept a zone and with it a school lot. The bridge leaves
+    institutional lots out of the scan, so the lot has no rows -- and the splice used
+    to refuse ('outside the partial run's scope'). A full run answers it RED through
+    assign's reading; so must the splice, and the reading must travel with it."""
+    s4a = _measured(tmp_path / "s4a.parquet", {"W1": 1.0, "W2": 2.0})
+    s4b = _measured(tmp_path / "s4b.parquet", {"W1": 1.0, "W2": 2.0, "T1": 3.0, "G1": 4.0})
+    old = _reading(tmp_path / "old.parquet", ["W2"])
+    new = _reading(tmp_path / "new.parquet", ["G1"])
+    base = bridge(tmp_path / "full", {"W1": "red", "W2": "red"}, s4=s4a, institutional=old)
+    # Scope: T1 and G1; G1 is institutional so only T1 was screened.
+    part = bridge(tmp_path / "p", {"T1": "yellow"}, s4=s4b, tlids=["T1", "G1"], institutional=new)
+
+    meta = splice(base, part, tmp_path / "out", change="as-if")
+
+    got = pd.read_parquet(tmp_path / "out" / "lots.parquet")
+    assert "G1" not in set(got["TLID"])  # no bridge rows, as in a full run
+    from flats.ingest.institutional import skip_tlids
+
+    assert skip_tlids(Path(meta["institutional"])) == {"W2", "G1"}  # RED in assign, base's kept
+    assert meta["lineage"]["splices"][-1]["institutional_added"] == 1
+
+
+def test_an_added_lot_nothing_accounts_for_still_refuses(tmp_path: Path) -> None:
+    s4a = _measured(tmp_path / "s4a.parquet", {"W1": 1.0})
+    s4b = _measured(tmp_path / "s4b.parquet", {"W1": 1.0, "T1": 3.0, "G1": 4.0})
+    new = _reading(tmp_path / "new.parquet", ["W2"])  # names some other lot
+    base = bridge(tmp_path / "full", {"W1": "red"}, s4=s4a)
+    part = bridge(tmp_path / "p", {"T1": "yellow"}, s4=s4b, tlids=["T1", "G1"], institutional=new)
+
+    with pytest.raises(SystemExit, match="outside the partial run's scope"):
+        splice(base, part, tmp_path / "out", change="x")
+
+
+def test_the_bridge_refuses_a_lot_list_mixed_with_a_whole_city_or_zone(capsys) -> None:
+    """scope_mask ORs its selectors: --tlid-file + --jurisdiction screened whole cities."""
+    from flats.ingest.quadfit import main, mixed_scope
+
+    assert mixed_scope([], [], ["T1"]) is None
+    assert mixed_scope(["Gresham"], ["Wood Village:TC"], []) is None
+    assert "OR-ed" in mixed_scope(["Gresham"], [], ["T1"])
+    assert "OR-ed" in mixed_scope([], ["Wood Village:TC"], ["T1"])
+    with pytest.raises(SystemExit) as stop:
+        main(["--jurisdiction", "Gresham", "--tlid", "T1", "--out", "unused"])
+    assert stop.value.code == 2 and "cannot be combined" in capsys.readouterr().err
