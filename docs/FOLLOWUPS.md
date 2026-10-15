@@ -2826,20 +2826,19 @@ read when the weekly full re-screen lands.
    file on disk; dedication_keys()), runbook docs/ops/flats-county-refresh.md updated. OPEN: segment
    qualifiers in the tables applied to the whole street; lot area not reduced by the strip (only the
    envelope); an unmeasured public line gives up the whole 40-63 ft.
-78. [scan: YES once the maps are held] **Portland overlay zones and plan districts are not held
-   (found 2026-10-14 by item 64 round 2, NEW kind).** 1S1E22BA  -02300 (CM2, 6805 S Macadam) sits
-   in the Centers Main Street "m" overlay: 33.415.310.A sets a minimum FAR of 0.5 in the Inner
-   Pattern Area (0.25 elsewhere); the fixed pod gives 4,032 sf / 8,907 sf = 0.45 -> RED. Upper
-   bound: 3,690 Portland commercial-zone greens are over 8,064 sf (1,531 over 16,128 sf); how many
-   are in the overlay is unknown. Also unheld, no lot moved in the sample: Glendoveer 33.530.040
-   (30/10/15 ft setbacks), Macadam 33.550.220 (wall-plane setbacks), d overlay, conservation /
-   historic districts, and 33.430 environmental overlays (round 1). PROPOSAL: fetch the City's
-   overlay, plan-district and pattern-area polygons (portlandmaps Public/Zoning, BPS
-   Zoning_Code_Layers) and chapters 33.415/33.420/33.445/33.5xx into the store; add min FAR as a
-   check. DECISION FOR STEPH: 1N1E22CB  -01200 carries a 1910 house that is a CONTRIBUTING
-   resource in the Mississippi Conservation District -- removing it needs demolition review and
-   closes the by-right design-standards path. Treat a protected building like any existing
-   building (green), or red?
+78. [scan: YES -- bound read, rides the weekly] **Portland false GREENs: main street minimum floor
+   area and protected historic buildings are RED (MERGED 2026-10-15, branch flats/portland-overlays
+   4ed70036).** The "m" overlay minimum FAR (33.415; half in Inner, a quarter in Eastern/Western) is
+   measured on the part of the lot inside the overlay (PCC 33.700.070.F), crediting only the floor
+   area of the drawn pod that sits on that part (no drawing = nothing credited); >90% covered = the
+   whole lot. Landmarks and contributing buildings in Historic, Conservation and National Register
+   districts are RED when at least half the building sits on the lot. Bound vs main: 1,628
+   green->red, 198 yellow->red, 1 green->yellow (lots read one by one, none wrong); the
+   partly-covered re-run then moved 8 red->green, 2 green->red, 1 red->yellow. Weekly must acquire
+   overlay_pdx_main_street, pdx_pattern_areas, pdx_historic_resources, pdx_landmark_footprints (the
+   bridge refuses a snapshot without them). Still open: Glendoveer, Macadam, the d overlay, 33.430
+   environmental; the ground-floor active-use rule from 2029-01-01; the 800 sf accessory-building
+   exemption, which the data can't separate.
 79. [scan: BUILT on flats/round2-rulings-r3, rides the weekly ~2026-10-19] **Washington County lots whose only middle-housing
    path is a Type II review show GREEN (found 2026-10-14 by item 64 round 2).** The county's
    Type I path ends at a lot size in every zone: R-5 16,500 sf buildable and R-6 13,100 sf, then
