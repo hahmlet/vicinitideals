@@ -12,10 +12,13 @@ is none. A lot no pattern area answers takes the Inner 0.5, the worst case.
 A lot only partly in the overlay is measured on that part: PCC 33.700.070.F,
 "When a site is in more than one zone, the development standards of each zone
 apply to the portion of the site in that zone" (``CITES["split_site"]``), and
-the minimum FAR is one of 33.415's development regulations. The pod puts at
-most its whole floor area on the part, so it misses where that floor area is
-under the minimum times the part's area. A part over
-``1 - MAIN_STREET_SHARE`` of the lot is the whole lot (map noise).
+the minimum FAR is one of 33.415's development regulations. Only the floor
+area standing on that part counts toward it: the pod's floor area times the
+share of the drawn building's footprint inside the overlay, in the placement
+the screen chose. A pod drawn wholly off the overlay leaves the part at an FAR
+of 0, and a plan with no drawing credits nothing -- never the whole pod
+against a part it may not stand on. A part over ``1 - MAIN_STREET_SHARE`` of
+the lot is the whole lot (map noise).
 
 **Protected historic resources (PCC 33.445).** Steph ruled 2026-10-14: a lot
 carrying a protected historic building is RED -- a Historic, Conservation or
@@ -178,6 +181,9 @@ class Reading:
     #: The share of the lot in the "m" overlay (33.700.070.F measures the
     #: minimum FAR on that part).
     main_street_share: float = 1.0
+    #: The part of the lot in the overlay (hex WKB, EPSG:2913), kept only
+    #: where the lot is partly in it: the drawn building is measured on it.
+    main_street_part_wkb: str | None = None
 
     @property
     def main_street_part(self) -> float:
@@ -209,6 +215,7 @@ def encode(r: Reading) -> str:
             "pdx_protected_resource": list(r.protected),
             "pdx_nr_district_resource": list(r.nr_district),
             "pdx_main_street_share": r.main_street_share,
+            "pdx_main_street_part": r.main_street_part_wkb,
         },
         separators=(",", ":"),
     )
@@ -225,6 +232,7 @@ def decode(raw: str | None) -> Reading | None:
         protected=tuple(doc.get("pdx_protected_resource") or ()),
         nr_district=tuple(doc.get("pdx_nr_district_resource") or ()),
         main_street_share=float(doc.get("pdx_main_street_share", 1.0)),
+        main_street_part_wkb=doc.get("pdx_main_street_part"),
     )
 
 
@@ -351,7 +359,8 @@ def read(lot: Any, maps: Maps) -> Reading | None:
     lot = lot if lot.is_valid else lot.buffer(0)
     area = lot.area
 
-    inside = sum(lot.intersection(maps.main_street[i]).area for i in maps.trees["m"].query(lot))
+    pieces = [lot.intersection(maps.main_street[i]) for i in maps.trees["m"].query(lot)]
+    inside = sum(g.area for g in pieces)
     shares: dict[str, float] = {}
     for i in maps.trees["p"].query(lot):
         g, label = maps.patterns[int(i)]
@@ -369,8 +378,15 @@ def read(lot: Any, maps: Maps) -> Reading | None:
         target = protected if kind == "protected" else nr
         if words not in target:
             target.append(words)
+    share = min(1.0, inside / area)
+    part_wkb = None
+    if MAIN_STREET_SHARE <= share < 1.0 - MAIN_STREET_SHARE:
+        import shapely
+
+        part_wkb = shapely.to_wkb(shapely.union_all(pieces), hex=True)
     return Reading(
-        main_street_share=round(min(1.0, inside / area), 4),
+        main_street_share=round(share, 4),
+        main_street_part_wkb=part_wkb,
         main_street=inside / area >= MAIN_STREET_SHARE,
         pattern_areas=patterns,
         protected=tuple(protected),
@@ -404,9 +420,38 @@ def with_overlays(rows: Iterable[dict[str, Any]], sources: Path | None) -> int:
 # --- the check ---------------------------------------------------------------
 
 
-def binds_for(reading: Reading | None, floor_sqft: float, lot_sqft: float) -> tuple[flag_plan.Bind, ...]:
+def credited(reading: Reading, floor_sqft: float, building: Any | None) -> float:
+    """The floor area that counts toward the overlay's minimum: all of it on a
+    lot wholly in the overlay; on a lot partly in it, the share of the drawn
+    building's footprint standing on the part in the overlay, and nothing
+    without a drawing or the part's shape (33.700.070.F)."""
+    if reading.main_street_part >= 1.0:
+        return floor_sqft
+    if building is None or building.is_empty or building.area <= 0 or not reading.main_street_part_wkb:
+        return 0.0
+    import shapely
+
+    part = shapely.from_wkb(reading.main_street_part_wkb)
+    return floor_sqft * min(1.0, building.intersection(part).area / building.area)
+
+
+def building_of(drawing: Mapping[str, Any] | None) -> Any | None:
+    """The building a stored drawing stands (EPSG:2913), or None."""
+    ring = (drawing or {}).get("building")
+    if not ring or len(ring) < 4:
+        return None
+    from shapely.geometry import Polygon
+
+    g = Polygon(ring)
+    return g if g.is_valid else g.buffer(0)
+
+
+def binds_for(
+    reading: Reading | None, floor_sqft: float, lot_sqft: float, building: Any | None = None
+) -> tuple[flag_plan.Bind, ...]:
     """The binds the reading puts on one design: a protected resource, and a
-    floor area under the overlay's minimum."""
+    floor area under the overlay's minimum. ``building`` is the drawn
+    building, read only on a lot partly in the overlay (:func:`credited`)."""
     if reading is None:
         return ()
     out: list[flag_plan.Bind] = []
@@ -433,15 +478,17 @@ def binds_for(reading: Reading | None, floor_sqft: float, lot_sqft: float) -> tu
     part = reading.main_street_part
     measured = lot_sqft * part
     if need is not None and measured > 0:
-        far = floor_sqft / measured
+        counted = credited(reading, floor_sqft, building)
+        far = counted / measured
         if far < need - 1e-9:
             inner = need >= MIN_FAR["Inner"]
             cite = CITES["min_far_inner" if inner else "min_far_outer"][0]
             area = ", ".join(reading.pattern_areas) or "no pattern area mapped, taken as Inner"
             on = (
-                f"{lot_sqft:,.0f} sf of lot"
+                f"{floor_sqft:,.0f} sf of floor on {lot_sqft:,.0f} sf of lot"
                 if part >= 1.0
-                else f"the {measured:,.0f} sf of the {lot_sqft:,.0f} sf lot in the overlay "
+                else f"{counted:,.0f} of the pod's {floor_sqft:,.0f} sf of floor standing on the "
+                f"{measured:,.0f} sf of the {lot_sqft:,.0f} sf lot in the overlay "
                 f"({CITES['split_site'][0]}: each zone's standards on its portion of the site)"
             )
             out.append(
@@ -450,8 +497,7 @@ def binds_for(reading: Reading | None, floor_sqft: float, lot_sqft: float) -> tu
                     round(far, 4),
                     need,
                     round(need - far, 4),
-                    source=f"{cite}: Centers Main Street overlay ({area} pattern area), "
-                    f"{floor_sqft:,.0f} sf of floor on {on}",
+                    source=f"{cite}: Centers Main Street overlay ({area} pattern area), {on}",
                 )
             )
     return tuple(out)
@@ -464,7 +510,9 @@ def checked(s: Any, reading: Reading | None) -> Any:
     unchanged."""
     if reading is None:
         return s
-    binds = binds_for(reading, s.design.ground_sqft * s.design.stories, s.lot.facts.lot_sqft)
+    binds = binds_for(
+        reading, s.design.ground_sqft * s.design.stories, s.lot.facts.lot_sqft, building_of(s.drawing)
+    )
     if not binds:
         return s
     from flats.score.screen import Triage
@@ -497,6 +545,8 @@ __all__ = [
     "Maps",
     "Reading",
     "binds_for",
+    "building_of",
+    "credited",
     "checked",
     "decode",
     "encode",

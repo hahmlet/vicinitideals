@@ -160,21 +160,34 @@ def test_the_same_lot_in_the_eastern_pattern_area_clears_a_quarter(tmp_path) -> 
 def test_a_lot_partly_in_the_overlay_is_measured_on_that_part(maps) -> None:
     # PCC 33.700.070.F: each zone's standards apply to the portion of the
     # site in that zone. A 150 x 120 ft lot reaching ~49 ft over the
-    # overlay's west line on Macadam: 4,032 sf on the whole 18,000 sf is
-    # 0.22, under 0.5, but the part in the overlay is ~5,900 sf, and 4,032 sf
-    # on it clears the 0.5.
+    # overlay's west line on Macadam: ~5,900 sf of it is in the overlay.
     lot = shapely.box(7644818, 666680, 7644968, 666800)
     got = pdx.read(lot, maps)
     assert got.main_street and 0.3 < got.main_street_share < 0.36
-    assert got.main_street_part == got.main_street_share
-    assert pdx.binds_for(got, 4032, lot.area) == ()
-    # Reach ~99 ft over it and the part is ~11,900 sf: the same pod misses.
-    wider = shapely.box(7644818, 666680, 7645018, 666800)
-    got = pdx.read(wider, maps)
-    (bind,) = pdx.binds_for(got, 4032, wider.area)
-    assert bind.threshold == 0.5
-    assert bind.observed == pytest.approx(4032 / (wider.area * got.main_street_share), abs=1e-3)
+    assert got.main_street_part == got.main_street_share and got.main_street_part_wkb
+    part = lot.area * got.main_street_share
+    # A pod drawn wholly on the overlay's part: its 4,032 sf on ~5,900 sf
+    # clears the 0.5.
+    on = shapely.box(7644925, 666700, 7644961, 666756)
+    assert pdx.credited(got, 4032, on) == pytest.approx(4032)
+    assert pdx.binds_for(got, 4032, lot.area, on) == ()
+    # Drawn off it, the part keeps an FAR of 0: never the whole pod credited
+    # against ground it does not stand on.
+    off = shapely.box(7644825, 666700, 7644861, 666756)
+    (bind,) = pdx.binds_for(got, 4032, lot.area, off)
+    assert bind.observed == 0 and bind.threshold == 0.5
     assert "PCC 33.700.070.F" in bind.source and "in the overlay" in bind.source
+    # Half on it: half the floor counts, 2,016 sf on ~5,900 sf, under 0.5.
+    half = shapely.box(7644900, 666700, 7644936, 666756)
+    share = half.intersection(shapely.from_wkb(got.main_street_part_wkb)).area / half.area
+    (bind,) = pdx.binds_for(got, 4032, lot.area, half)
+    assert bind.observed == pytest.approx(4032 * share / part, abs=1e-3)
+    # No drawing to tell where the pod stands: nothing is credited.
+    (bind,) = pdx.binds_for(got, 4032, lot.area, None)
+    assert bind.observed == 0
+    assert pdx.building_of(None) is None and pdx.building_of({"building": []}) is None
+    ring = [list(c) for c in on.exterior.coords]
+    assert pdx.building_of({"building": ring}).equals(on)
 
 
 def test_a_lot_nearly_all_in_the_overlay_is_the_whole_lot() -> None:
@@ -186,7 +199,10 @@ def test_a_lot_nearly_all_in_the_overlay_is_the_whole_lot() -> None:
     assert "33.700" not in bind.source
     # A row written before the share was read is the whole lot.
     assert pdx.decode('{"pdx_main_street_overlay": true}').main_street_share == 1.0
-    assert pdx.decode(pdx.encode(pdx.Reading(True, ("Inner",), main_street_share=0.4))).main_street_share == 0.4
+    back = pdx.decode(pdx.encode(pdx.Reading(True, ("Inner",), main_street_share=0.4, main_street_part_wkb="00")))
+    assert back.main_street_share == 0.4 and back.main_street_part_wkb == "00"
+    # Wholly in the overlay, the whole pod counts wherever it is drawn.
+    assert pdx.credited(near, 4032, None) == 4032
 
 
 def test_a_lot_the_overlay_only_grazes_is_not_in_it(maps) -> None:
