@@ -115,14 +115,17 @@ def test_rchdr_floors_its_rear_and_side_and_the_regional_center_borrows_it(rules
         assert got.get("setback_front_ft") == 15, zone  # note 8, not the cell's 5
 
 
-def test_the_review_ruling_is_not_this_branchs(rules) -> None:
-    """The use is permitted in every one of these districts and each stands
-    RED BY RULING for design review, as its siblings do; the review tiers
-    are another branch's (e0) to set."""
+def test_the_review_rule_makes_every_one_of_them_yellow(rules) -> None:
+    """The use is permitted in every one of these districts, and design
+    review there weighs judgement words beside its measurable standards, so
+    each is admitted and flagged for the review (Steph 2026-10-14: "otherwise
+    clear and measurable, but there is a 'may add conditions', yellow"). It
+    was RED BY RULING for design review until then."""
     for zone in ("HDR", "SHD", "RCHDR", "RTL", "CC", "C3", "OC", "RCC", "RCO"):
         got = rules.resolve(LAYER, zone)
-        assert got.get("quadplex_allowed") is False, zone
-        assert "1102.01" in got.values["quadplex_allowed"].prov.cite, zone
+        assert got.get("quadplex_allowed") is True, zone
+        assert got.get("review_discretion") == "judgement", zone
+        assert "1102.01" in got.values["review_discretion"].prov.cite, zone
 
 
 def test_vth_stays_held_on_the_column_read_alone(rules) -> None:

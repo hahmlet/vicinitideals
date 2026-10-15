@@ -25,13 +25,11 @@ pytestmark = pytest.mark.unit
 
 LAYER = "or/clackamas/_unincorporated"
 REVIEWED = ["HDR", "MR1", "MR2", "PMD", "VA", "SCMU"]
-#: HDR's setbacks are the 1005.02(L) solar plane, which needs the north lot
-#: line's bearing (FOLLOWUPS 69, the lot-line-bearing lane): admitted by the
-#: use, and grey until those are encoded. Nothing is invented for it here.
 #: SCMU's front building line turns on the street type of each frontage on
-#: Map 1005-1 (1005.09), which no lot carries, so it is grey for the same
-#: reason.
-UNENCODED = {"HDR", "SCMU"}
+#: Map 1005-1 (1005.09), which no lot carries: admitted by the use, and grey
+#: until that is read. Nothing is invented for it here. (HDR was grey for its
+#: 1005.02(L) solar plane until the lot-line-bearing lane encoded it.)
+UNENCODED = {"SCMU"}
 
 
 @pytest.mark.parametrize("zone", REVIEWED)

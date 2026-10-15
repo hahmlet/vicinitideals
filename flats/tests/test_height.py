@@ -435,7 +435,12 @@ def test_every_derived_setback_reproduces_the_height_it_was_baked_to() -> None:
     held = derived()
     assert held, "no height-derived setbacks found -- this test proves nothing"
     for value in held:
-        assert value.at(CATALOGUE_FT) == pytest.approx(value.encoded_ft), (
+        # The loader keeps a derived distance to a thousandth of a foot
+        # (1005.02(L)'s 15 degrees off a 26 ft pod: 6.96668 is held 6.967), so
+        # the recomputed figure agrees to within half of one. Clackamas HDR
+        # brought the first angle that does not land on a thousandth into
+        # this test when the review rule admitted it (2026-10-14).
+        assert value.at(CATALOGUE_FT) == pytest.approx(value.encoded_ft, abs=5e-4), (
             f"{value.layer} {value.zone} {value.field}: the file holds "
             f"{value.encoded_ft} ft, recomputing at {CATALOGUE_FT} ft gives "
             f"{value.at(CATALOGUE_FT)}"
