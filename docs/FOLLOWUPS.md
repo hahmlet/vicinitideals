@@ -2933,7 +2933,10 @@ read when the weekly full re-screen lands.
    statute and its exceptions and list which RED-by-ruling zones (Canby, PMU1-3, Happy Valley,
    ...) it could lift; nothing is encoded on it now.
 86. [scan: NO for (A)/(B); YES for (C1) once an ordinance is entered] **Agents could not recall
-   a property ruling (Steph 2026-10-15, offered, waiting on Steph's go).** An agent on another
+   a property ruling (Steph 2026-10-15, GO for A/B/C1/C2 + item 85 the same day).** (A) MERGED
+   2026-10-15: `flats_find_lot` / `flats_lot_report` / `flats_rulings` JSON routes = MCP tools,
+   CLAUDE.md rule. (B) register being written (branch flats/rulings-register); (C1) RICAP 11 on
+   flats/ricap11; (C2) + 85 research running. An agent on another
    surface answered Portland CI1 from our stored code (housing not allowed) and had no record of an
    earlier conversation; Steph had found Portland RICAP 11 (adopted 2026-08-06, effective
    2026-11-01: Household and Group Living ALLOWED in CI1 under RM1 rules) in the City Council

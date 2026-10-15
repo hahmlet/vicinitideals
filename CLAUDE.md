@@ -29,6 +29,14 @@ they do not share code. Know which one you are working on before you edit.
 > `flats.*` Postgres schema with a different data model, and the Archive section
 > of [docs/DATA_MODEL.md](docs/DATA_MODEL.md) does not describe it.
 
+> **A question about a property starts at the lot, not the code.** Call the
+> VicinitiDeals MCP tools `flats_find_lot` (address or TLID) then
+> `flats_lot_report` (or `GET /api/flats/lookup`, `/api/flats/lot/{county}/{tlid}`)
+> before reading any zoning text. The colour, its reasons, and the `rulings` it
+> returns (from [flats/config/rulings.yaml](flats/config/rulings.yaml), keyed by
+> place) outrank your own reading of the code. A ruling Steph makes is added to
+> that register the same day, scoped to the place it governs.
+
 **Live URL**: `https://viciniti.deals` (Cloudflare DNS, Let's Encrypt wildcard
 cert on NGINX Proxy Manager, LXC 109)
 
