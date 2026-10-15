@@ -117,6 +117,7 @@ from flats.geom.neighbour import (
     NEIGHBOUR_FACTS,
     lines_from_quadfit,
     observed_neighbours,
+    street_line_zones,
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
@@ -782,6 +783,25 @@ def _across_clear(
     return street_lines_clear(across, rule, str(row.get("jurisdiction")), _normaliser(layers))
 
 
+def _across_zones(
+    row: Mapping[str, Any], n_edges: int, layers: Mapping[str, Layer] | None
+) -> tuple[tuple[str, ...] | None, ...]:
+    """Per s4 edge: the zones across the street, where every ray across
+    found one of the lot's own jurisdiction its layer can spell
+    (:func:`flats.geom.neighbour.street_line_zones`); None elsewhere, and on
+    every edge without the corpus, without s4's ``street_across_json``, or
+    where the record does not match the edges. Read by Oregon City's
+    right-of-way stand-in (:meth:`flats.geom.dedication.Rule.standin`)."""
+    none: tuple[tuple[str, ...] | None, ...] = (None,) * n_edges
+    raw = row.get("street_across_json")
+    if layers is None or not raw:
+        return none
+    across = json.loads(raw)
+    if not isinstance(across, list) or len(across) != n_edges:
+        return none
+    return street_line_zones(across, str(row.get("jurisdiction")), _normaliser(layers))
+
+
 def _neighbour_facts(row: Mapping[str, Any], layers: Mapping[str, Layer]) -> dict[str, bool]:
     """The three neighbour-zoning facts for one s4 row, or nothing.
 
@@ -971,6 +991,7 @@ def lot_edges(
     cover = _cover(row, raw) or [None] * len(raw)
     off = off_corridor_lines(raw, _layer_id(row), corridors) if corridors else (False,) * len(raw)
     clear = _across_clear(row, len(raw), layers)
+    facing = _across_zones(row, len(raw), layers)
     # Each street line's class rank off the city's TSP map
     # (:func:`with_local_street`); none where no map serves the lot.
     ranks = json.loads(row.get("street_ranks_json") or "[]")
@@ -986,8 +1007,8 @@ def lot_edges(
     if len(kinds) != len(raw):
         kinds = [None] * len(raw)
     edges: list[Edge] = []
-    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line, rank, kind in zip(
-        raw, cover, off, clear, ranks, kinds, strict=True
+    for (x1, y1, x2, y2, letter), stretch, off_line, clear_line, rank, kind, faces in zip(
+        raw, cover, off, clear, ranks, kinds, facing, strict=True
     ):
         x1, y1, x2, y2 = float(x1), float(y1), float(x2), float(y2)
         road = widths.get(dedication.key(x1, y1, x2, y2)) if letter == STREET_CLASS else None
@@ -1013,6 +1034,7 @@ def lot_edges(
                 road_private=False if road is None else not bool(road[5]),
                 road_names=None if road is None or road[6] is None else tuple(str(n) for n in road[6]),
                 road_classes=() if road is None else tuple(sorted((road[7] or {}).items())),
+                across_zones=faces if letter == STREET_CLASS else None,
                 public_road=letter == STREET_CLASS and kind == "street",
             )
         )
@@ -1257,7 +1279,7 @@ def part_rear_alley(lot: QuadfitLot) -> bool:
     )
 
 
-def dedicated(edges: LotEdges, rules: ZoneResolution) -> LotEdges:
+def dedicated(edges: LotEdges, rules: ZoneResolution, zone: str | None = None) -> LotEdges:
     """``edges`` with each street line carrying the strip its lot gives up
     there (:attr:`Edge.dedication_ft`), where the lot's code states a
     distance to centre line (:func:`flats.geom.dedication.rule_of`):
@@ -1269,7 +1291,13 @@ def dedicated(edges: LotEdges, rules: ZoneResolution) -> LotEdges:
     name where the code lists streets -- less the measured half-width, never
     below zero; an unmeasured line gives up the whole distance and an unread
     class or name takes the deepest the zone states. A line on a private
-    road gives up nothing."""
+    road gives up nothing.
+
+    Where the code keys the distance to the plan designation of the land on
+    both sides too (Oregon City Table 16.12.016), the lot's ``zone`` and the
+    zones across the street stand in for it (:meth:`dedication.Rule.
+    standin`, Steph 2026-10-14) and the narrower answer is taken; the lot
+    is flagged for it (:func:`road_standin_checked`)."""
     rule = dedication.rule_of(rules)
     if rule is None:
         return edges
@@ -1278,9 +1306,77 @@ def dedicated(edges: LotEdges, rules: ZoneResolution) -> LotEdges:
         if e.alley or e.cls not in (EdgeClass.front, EdgeClass.street_side) or e.road_private:
             out.append(e)
             continue
-        need = rule.required(e.road_names, dict(e.road_classes))
+        need = _line_need(rule, e, zone)[0]
         out.append(dataclasses.replace(e, dedication_ft=dedication.depth_ft(need, e.half_width_ft)))
     return dataclasses.replace(edges, edges=tuple(out))
+
+
+def _line_need(rule: dedication.Rule, e: Edge, zone: str | None) -> tuple[float, float]:
+    """The distance one street line must reach, and the distance it would
+    without the zone stand-in (the same where none applies)."""
+    widest = rule.required(e.road_names, dict(e.road_classes))
+    alt = rule.standin(dict(e.road_classes), zone, e.across_zones)
+    return (alt if alt is not None and alt < widest else widest), widest
+
+
+def road_standin(
+    edges: LotEdges | None, rules: ZoneResolution, zone: str | None
+) -> tuple[float, float] | None:
+    """The strip the zone stand-in saved on the line it saved most on, as
+    ``(strip taken, strip at the widest row)`` in feet, or None where it
+    narrowed no strip -- no stand-in, or a street already wide enough for
+    the widest row."""
+    rule = dedication.rule_of(rules)
+    if rule is None or edges is None or not rule.by_designation:
+        return None
+    best: tuple[float, float] | None = None
+    for e in edges.edges:
+        if e.alley or e.cls not in (EdgeClass.front, EdgeClass.street_side) or e.road_private:
+            continue
+        need, widest = _line_need(rule, e, zone)
+        got = (dedication.depth_ft(need, e.half_width_ft), dedication.depth_ft(widest, e.half_width_ft))
+        if got[0] < got[1] and (best is None or got[1] - got[0] > best[1] - best[0]):
+            best = got
+    return best
+
+
+#: Oregon City's right-of-way read with the zones on both sides standing in
+#: for the plan designation (FOLLOWUPS 82). Severity 2 in the registry: below
+#: the yellow line, so a lot otherwise GREEN stays GREEN with the flag beside
+#: it (Steph 2026-10-14).
+ROAD_ZONE_STANDIN = "OC-ROAD-ZONE-STANDIN"
+ROAD_ZONE_STANDIN_REASON = "OC_ROAD_ZONE_STANDIN"
+
+
+def road_standin_checked(s: Screened, lot: QuadfitLot) -> Screened:
+    """``s`` with OC-ROAD-ZONE-STANDIN raised where its envelope gave up a
+    narrower right-of-way strip because the zones on both sides of a street
+    stood in for the plan designation Table 16.12.016 reads (Steph
+    2026-10-14, FOLLOWUPS 82: "FLAG the lot as low-risk"). A record beside
+    the colour: the triage and the reasons are not touched, and the flag's
+    severity is below the yellow line, so the colour does not move. Only an
+    envelope FLATS cut carries the strip; quadfit's fallback raises nothing.
+    The bounds are the strip taken and the strip the widest row would take,
+    feet, on the line where the two differ most."""
+    if s.envelope is None or s.envelope.source != "flats":
+        return s
+    got = road_standin(lot.edges, s.rules, lot.zone)
+    if got is None:
+        return s
+    flag = flag_plan.Flag(
+        ROAD_ZONE_STANDIN,
+        flag_plan.LOT,
+        ROAD_ZONE_STANDIN_REASON,
+        bounds=(round(got[0], 2), round(got[1], 2)),
+        source="Table 16.12.016 read with each side's zone standing in for its plan designation",
+    )
+
+    def add(x: Screening) -> Screening:
+        if any(f.code == ROAD_ZONE_STANDIN for f in x.flags):
+            return x
+        return dataclasses.replace(x, flags=(*x.flags, flag))
+
+    return dataclasses.replace(s, screening=add(s.screening), signed=add(s.signed))
 
 
 def envelope_for(
@@ -1339,7 +1435,7 @@ def envelope_for(
     quadfit = Envelope(fallback, lot.facts.envelope_rear_ft, "quadfit", ground=on_lot)
     if lot.lot_geom is None or lot.edges is None or lot.edges.tier is Tier.landlocked:
         return quadfit
-    edges = dedicated(lot.edges, rules)
+    edges = dedicated(lot.edges, rules, lot.zone)
     split = rear_off_alley(lot.edges)
     part = alleyed is not None and part_rear_alley(lot)
     setbacks = setbacks_for(rules, plain if split else None, alleyed if part else None)
@@ -2879,6 +2975,7 @@ def _screen_lot_once(
             roads=roads, bound=bound, terrain=terrain,
         )
         won = split_zone_checked(won, lot)
+        won = road_standin_checked(won, lot)
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
 

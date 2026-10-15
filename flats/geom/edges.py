@@ -163,6 +163,15 @@ class Edge:
     #: street -- dedicates (the worst case). Distinct from ``public_road``,
     #: which relieves a bearing yard and so defaults the other way.
     road_private: bool = False
+    #: The zones across this street line, spelled the way the lot's own
+    #: layer screens them, where every ray across found a zone of the lot's
+    #: own jurisdiction (s4 ``street_across_json``; :func:`flats.ingest.
+    #: quadfit._across_zones`). None -- the default -- where any ray found
+    #: none, split, stopped short or crossed into another jurisdiction:
+    #: nothing is known about the land across. Read only by Oregon City's
+    #: stand-in for the plan designation across the street
+    #: (:meth:`flats.geom.dedication.Rule.standin`).
+    across_zones: tuple[str, ...] | None = None
     #: The strip this street line gives up to the right-of-way, in feet:
     #: added to the line's setback (:meth:`flats.geom.envelope.Setbacks.for_edge`).
     dedication_ft: float = 0.0

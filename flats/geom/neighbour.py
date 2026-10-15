@@ -235,11 +235,48 @@ def street_lines_clear(
     return tuple(out)
 
 
+def street_line_zones(
+    across: Sequence[Mapping[str, object] | None],
+    jurisdiction: str,
+    normalise: Callable[[str, str], str | None],
+) -> tuple[tuple[str, ...] | None, ...]:
+    """Per s4 edge, in order: the zones across the street, spelled the way
+    their layer screens them, or None where nothing is known of the land
+    across.
+
+    The same five rays and the same bar as :func:`street_lines_clear`: every
+    ray resolved (no split-zone or unzoned lot, nothing out of reach, nothing
+    nearer than a street's width), every zone found in the lot's own
+    jurisdiction, every code one its layer can spell. Anything short of that
+    is None, so a reader of the answer keeps its worst case there."""
+    out: list[tuple[str, ...] | None] = []
+    for edge in across:
+        if edge is None:
+            out.append(None)
+            continue
+        unresolved = sum(int(edge.get(k, 0) or 0) for k in ("split", "none", "near"))
+        zones = list(edge.get("z") or ())  # type: ignore[call-overload]
+        if unresolved or not zones:
+            out.append(None)
+            continue
+        codes: list[str] = []
+        for pair in zones:
+            juris, raw = str(pair[0]), pair[1]
+            code = normalise(juris, str(raw)) if raw is not None else None
+            if juris != jurisdiction or code is None:
+                codes = []
+                break
+            codes.append(code)
+        out.append(tuple(sorted(set(codes))) if codes else None)
+    return tuple(out)
+
+
 __all__ = [
     "EVERY_LINE",
     "Line",
     "NEIGHBOUR_FACTS",
     "lines_from_quadfit",
     "observed_neighbours",
+    "street_line_zones",
     "street_lines_clear",
 ]

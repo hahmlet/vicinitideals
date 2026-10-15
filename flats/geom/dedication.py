@@ -56,12 +56,20 @@ name is unread takes the deepest distance the zone states
 (:meth:`Rule.deepest`). A street that is not public (RLIS TYPE 1700 / 1800,
 a private road or drive) takes nothing.
 
+**The land on both sides.** Oregon City's table keys the row to the plan
+designation of the land beside the street too, the wider where the two sides
+differ. Nothing maps the designation; the lot's zone and the zones the rays
+across the street found stand in for it (:meth:`Rule.standin`,
+:data:`DESIGNATIONS`; Steph 2026-10-14, FOLLOWUPS 82), and a line where any
+of that is unread keeps the widest row.
+
 The distances are the rules' (``row_to_centerline_*``); this module holds
 only how a class rank or a street name picks one.
 """
 
 from __future__ import annotations
 
+import dataclasses
 import re
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Iterable, Mapping, Sequence
@@ -115,8 +123,40 @@ CLASS_BY_FIELD = "row_to_centerline_class_by"
 #: (Oregon City Table 16.12.016): half of each is the distance.
 WIDTH_FIELD = "row_to_centerline_stated_as_width"
 
+#: The distance by the street's class AND the plan designation of the land
+#: beside it (Oregon City Table 16.12.016), rows ``[class / designation,
+#: feet]`` (:func:`_designation_rows`). Read only through the stand-in
+#: (:meth:`Rule.standin`); the class fields hold each class's widest row.
+DESIGNATION_FIELD = "row_to_centerline_by_designation"
+
 #: Every field this module reads.
-FIELDS: tuple[str, ...] = (*CLASS_FIELDS.values(), NAMED_FIELD, OTHER_FIELD, CLASS_BY_FIELD, WIDTH_FIELD)
+FIELDS: tuple[str, ...] = (
+    *CLASS_FIELDS.values(), NAMED_FIELD, OTHER_FIELD, CLASS_BY_FIELD, WIDTH_FIELD, DESIGNATION_FIELD,
+)
+
+#: ``row_to_centerline_class_by`` -> each zone the city maps, spelled as its
+#: layer screens it, -> the designation row of ``row_to_centerline_by_
+#: designation`` the zone's land is read as (Steph 2026-10-14, FOLLOWUPS 82:
+#: "use the measured zone across the street as a stand-in for the land-use
+#: designation on that side"). A zone left out maps to no row, and a line
+#: facing it keeps the widest.
+#:
+#: Oregon City: Table 17.06.030, "CITY LAND USE CLASSIFICATIONS", gives each
+#: plan classification its zones (17.zoning.txt#L3988-L4007): low, medium and
+#: high density residential R-10, R-8, R-6, R-5, R-3.5, R-2; general
+#: commercial C; mixed-use downtown MUD, WFDD; mixed-use corridor NC, HC,
+#: MUC-1, MUC-2; mixed-use employment MUE (all on 16.12.016's "Mixed Use,
+#: Commercial or Public/Quasi Public" row); industrial CI, GI. Its I zone is
+#: Public/Quasi-Public in the table but 17.39.010 calls it "consistent with
+#: the public/quasi-public and park designations", and the street table has
+#: no park row: I is left out.
+DESIGNATIONS: dict[str, dict[str, str]] = {
+    "oregon_city": {
+        **dict.fromkeys(("R-10", "R-8", "R-6", "R-5", "R-3.5", "R-2"), "residential"),
+        **dict.fromkeys(("C", "MUD", "WFDD", "NC", "HC", "MUC-1", "MUC-2", "MUE"), "commercial"),
+        **dict.fromkeys(("CI", "GI"), "industrial"),
+    },
+}
 
 #: ``row_to_centerline_class_by`` -> the registry dataset whose map ranks it.
 CLASS_BY_MAP: dict[str, str] = {
@@ -380,6 +420,9 @@ class Rule:
     class_by: str | None
     named: tuple[tuple[str, float], ...]
     other: float | None
+    #: class -> designation -> distance (``row_to_centerline_by_designation``),
+    #: halved like ``classes`` where the code states widths.
+    by_designation: Mapping[str, Mapping[str, float]] = dataclasses.field(default_factory=dict)
 
     def deepest(self) -> float:
         """The deepest distance the zone states: what an unread line takes."""
@@ -417,6 +460,38 @@ class Rule:
             got.append(self._by_class(classes) if self.classes else (self.other or 0.0))
         return max(got)
 
+    def standin(
+        self,
+        classes: Mapping[str, str | None],
+        own_zone: str | None,
+        across: Sequence[str] | None,
+    ) -> float | None:
+        """The distance one street line must reach with the land on each side
+        read from its ZONE, or None where that cannot be read.
+
+        Oregon City's Table 16.12.016 row turns on "the comprehensive plan
+        designation of the adjacent properties", the wider row where the two
+        sides differ (16.12.streets.txt#L327-L332). Nothing maps the plan
+        designation; Steph ruled 2026-10-14 (FOLLOWUPS 82) that the measured
+        zone stands in for it -- the lot's own, and every zone the rays across
+        the street found (``across``) -- through Table 17.06.030
+        (:data:`DESIGNATIONS`). The answer is the widest row among the sides.
+        None -- and so the widest row of the class (:meth:`required`) --
+        where the class is unread or has no designation rows, where nothing is
+        known of the land across, and where any side's zone maps to no row.
+        A code that lists streets by name has no stand-in."""
+        if not self.by_designation or self.named or own_zone is None or not across:
+            return None
+        bucket = classes.get(CLASS_BY_MAP.get(self.class_by or "", ""))
+        rows = self.by_designation.get(bucket) if bucket is not None else None
+        if not rows:
+            return None
+        names = DESIGNATIONS.get(self.class_by or "", {})
+        sides = [names.get(z) for z in (own_zone, *across)]
+        if any(d is None or d not in rows for d in sides):
+            return None
+        return max(rows[d] for d in sides if d is not None)
+
     def _listed(self) -> list[tuple[str, float]]:
         best: dict[str, float] = {}
         for n, ft in self.named:
@@ -440,7 +515,38 @@ def rule_of(rules: "ZoneResolution") -> Rule | None:
     if not classes and not named and other is None:
         return None
     by = rules.get(CLASS_BY_FIELD)
-    return Rule(classes=classes, class_by=by if isinstance(by, str) else None, named=tuple(named), other=other)
+    rows = _designation_rows(rules.get(DESIGNATION_FIELD))
+    if rules.get(WIDTH_FIELD) is True:
+        rows = {c: {d: n / 2.0 for d, n in got.items()} for c, got in rows.items()}
+    return Rule(
+        classes=classes,
+        class_by=by if isinstance(by, str) else None,
+        named=tuple(named),
+        other=other,
+        by_designation=rows,
+    )
+
+
+def _designation_rows(table: object) -> dict[str, dict[str, float]]:
+    """``row_to_centerline_by_designation`` as class -> designation -> feet.
+    A row is ``[class / designation, feet]``, the class spelled as the code
+    prints it (``minor arterial``) and keyed as :data:`CLASS_FIELDS` keys it;
+    a row whose class is not one of those, or that does not split in two, is
+    not read."""
+    out: dict[str, dict[str, float]] = {}
+    if not isinstance(table, (list, tuple)):
+        return out
+    for entry in table:
+        if not isinstance(entry, (list, tuple)) or len(entry) != 2:
+            continue
+        ft = _number(entry[1])
+        parts = [p.strip().lower() for p in str(entry[0]).split("/")]
+        if ft is None or len(parts) != 2:
+            continue
+        cls = parts[0].replace(" ", "_")
+        if cls in CLASS_FIELDS and parts[1]:
+            out.setdefault(cls, {})[parts[1]] = ft
+    return out
 
 
 def depth_ft(required: float, half_width: float | None) -> float:
@@ -456,6 +562,8 @@ __all__ = [
     "CLASS_BY_FIELD",
     "CLASS_BY_MAP",
     "CLASS_FIELDS",
+    "DESIGNATIONS",
+    "DESIGNATION_FIELD",
     "FIELDS",
     "LAYERS",
     "MIN_MEASURED",

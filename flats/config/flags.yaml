@@ -1203,6 +1203,23 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [UTILITY_EASEMENT_ASSUMED]
+  OC-ROAD-ZONE-STANDIN:
+    description: "Oregon City's road strip was read with the zones on both sides of the street standing in for the plan designations its table asks for, and came out narrower than the widest row (Steph 2026-10-14, FOLLOWUPS 82)"
+    kind: parametric
+    risk: unlikely
+    # Steph 2026-10-14: "FLAG the lot as low-risk", severity 2 -- below the
+    # yellow line, so a lot otherwise GREEN stays GREEN with the flag beside it.
+    severity: 2
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot]
+    path: "The city's comprehensive plan map for both sides of the street (OCMC Table 16.12.016)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [OC_ROAD_ZONE_STANDIN]
   FACT-WILLAMETTE-GREENWAY-ZONE:
     description: "Whether any part of the lot is in Milwaukie's Willamette Greenway Zone (MMC 19.401)"
     kind: categorical

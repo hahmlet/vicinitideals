@@ -4,7 +4,8 @@ from the street's centre line (flats/geom/dedication.py).
 Washington County CDC 302-2.14 C(1) and its twins (25 / 30 / 37 / 45 ft by
 county class), Sherwood 16.106.030 D (26 / 32 / 32 / 37 / 61 ft by city
 class), King City 16.80.060 A (33 / 30 ft on named streets, 25 elsewhere),
-Oregon City Table 16.12.016 (half the widest right-of-way of the class) and
+Oregon City Table 16.12.016 (half the widest right-of-way of the class, or of
+the row the zones on both sides stand in for, FOLLOWUPS 82) and
 Milwaukie Table 19.501.2.A (25 / 30 / 40 ft on named streets). These tests pin
 each city's distance, what is assumed when nothing can be read, that the
 strip comes off the envelope like a setback, and that every layer one of these
@@ -24,7 +25,14 @@ from flats.geom import dedication
 from flats.geom.corridor import Lines
 from flats.geom.edges import EdgeClass
 from flats.geom.street_class import CLASS_MAPS, ClassMap
-from flats.ingest.quadfit import dedicated, envelope_for, lot_from_row
+from flats.ingest.quadfit import (
+    ROAD_ZONE_STANDIN,
+    dedicated,
+    envelope_for,
+    lot_from_row,
+    road_standin,
+    screen_lot,
+)
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
 
@@ -296,6 +304,224 @@ def test_oregon_city_holds_the_printed_widths(rules) -> None:
 def test_an_oregon_city_street_already_wide_enough_gives_up_nothing(rules) -> None:
     assert strip(rules, OREGON_CITY, "R-6", 31.0, classes={"street_class_oregon_city": "local"}) == 0.0
     assert strip(rules, OREGON_CITY, "R-6", 27.0, classes={"street_class_oregon_city": "local"}) == 4.0
+
+
+# --- Oregon City: the zone across the street stands in (FOLLOWUPS 82) ------
+#
+# Table 16.12.016 keys the right-of-way to the class AND to "the comprehensive
+# plan designation of the adjacent properties", the wider where the two sides
+# differ. Steph 2026-10-14: the measured zone on each side stands in for its
+# designation (Table 17.06.030), the lot is flagged OC-ROAD-ZONE-STANDIN at
+# severity 2, and the widest row stays wherever the land across is unread or
+# its zone maps to no clear designation. 22E32CB08800, an R-6 lot on a local
+# street with MUC-1 across, is where these lots sit.
+OC_X, OC_Y = 7_663_270.0, 620_550.0
+
+
+def oc_row(
+    across: list[list[str]] | None,
+    half: float | None = 25.0,
+    bucket: str | None = "local",
+    zone: str = "R-6",
+    w: float = 100.0,
+    d: float = 200.0,
+    unresolved: str | None = None,
+) -> dict[str, object]:
+    """An Oregon City lot ``w`` by ``d``, its street along the south line;
+    ``across`` is the rays' ``[jurisdiction, zone]`` pairs for that line."""
+    edges = [
+        [OC_X, OC_Y, OC_X + w, OC_Y, "F"],
+        [OC_X + w, OC_Y, OC_X + w, OC_Y + d, "S"],
+        [OC_X + w, OC_Y + d, OC_X, OC_Y + d, "R"],
+        [OC_X, OC_Y + d, OC_X, OC_Y, "S"],
+    ]
+    rays: dict[str, object] | None = None
+    if across is not None:
+        rays = {"z": across, "split": 0, "none": 0, "near": 0}
+        if unresolved:
+            rays[unresolved] = 1
+    return {
+        "TLID": "22E32CB08800",
+        "jurisdiction": "oregon_city",
+        "zone": zone,
+        "tier": "A",
+        "area_sqft": w * d,
+        "frontage_ft": w,
+        "lot_width_ft": w,
+        "lot_depth_ft": d,
+        "edges_json": json.dumps(edges),
+        "front_bearings_json": "[0.0]",
+        "fronts_cul_de_sac": False,
+        "split_zone": False,
+        "ovl_oregon_city_nrod_sqft": 0.0,
+        "ovl_fema_sfha": False,
+        "ovl_fema_floodway": False,
+        "sewer_main_dist_ft": 12.0,
+        "in_sewer_district": None,
+        "wkb": shapely.to_wkb(shapely.box(OC_X + 5, OC_Y + 10, OC_X + w - 5, OC_Y + d - 15)),
+        "lot_wkb": shapely.to_wkb(shapely.box(OC_X, OC_Y, OC_X + w, OC_Y + d)),
+        "road_widths_json": json.dumps(
+            [[*dedication.key(*edges[0][:4]), half, True, ["MAIN ST"], {"street_class_oregon_city": bucket}]]
+        ),
+        "street_across_json": json.dumps([rays, None, None, None]),
+    }
+
+
+def oc_lot(layers, across, **kw):
+    return lot_from_row(oc_row(across, **kw), layers)
+
+
+def oc_strip(rules, layers, across, zone: str = "R-6", **kw) -> float:
+    lot = oc_lot(layers, across, zone=zone, **kw)
+    out = dedicated(lot.edges, rules.resolve(OREGON_CITY, lot.zone), lot.zone)
+    (front,) = [e for e in out.edges if e.cls is EdgeClass.front]
+    return front.dedication_ft
+
+
+def city(*zones: str) -> list[list[str]]:
+    return [["oregon_city", z] for z in zones]
+
+
+def test_oregon_city_holds_every_row_of_the_table(rules) -> None:
+    rule = dedication.rule_of(rules.resolve(OREGON_CITY, "R-6"))
+    # Half of each printed width: the table states the whole street section.
+    assert {c: dict(r) for c, r in rule.by_designation.items()} == {
+        "major_arterial": {"commercial": 58.0, "industrial": 60.0, "residential": 63.0},
+        "minor_arterial": {"commercial": 58.0, "industrial": 59.0, "residential": 50.0},
+        "collector": {"commercial": 43.0, "industrial": 44.0, "residential": 42.5},
+        "local": {"commercial": 31.0, "industrial": 30.0, "residential": 27.0},
+    }
+    # The class fields keep each class's widest row.
+    assert {c: max(r.values()) for c, r in rule.by_designation.items()} == {
+        c: rule.classes[c] for c in rule.by_designation
+    }
+
+
+def test_every_oregon_city_zone_in_table_17_06_030_has_one_designation(layers) -> None:
+    got = dedication.DESIGNATIONS["oregon_city"]
+    assert {z for z, d in got.items() if d == "residential"} == {"R-10", "R-8", "R-6", "R-5", "R-3.5", "R-2"}
+    assert {z for z, d in got.items() if d == "industrial"} == {"CI", "GI"}
+    assert {z for z, d in got.items() if d == "commercial"} == {
+        "C", "MUD", "WFDD", "NC", "HC", "MUC-1", "MUC-2", "MUE",
+    }
+    # Public/quasi-public OR park (17.39.010), and the street table has no
+    # park row: the I zone maps to nothing and keeps the widest.
+    assert "I" not in got
+    # Every mapped zone is one the city's layer screens.
+    assert set(got) <= set(layers[OREGON_CITY].zones)
+
+
+def test_residential_on_both_sides_takes_the_residential_row(rules, layers) -> None:
+    # Local: 54 ft right-of-way, 27 to the centre line; the street is 25 ft
+    # to its centre line, so 2 ft comes off, not the widest row's 6.
+    assert oc_strip(rules, layers, city("R-8")) == pytest.approx(2.0)
+    assert oc_strip(rules, layers, city("R-10", "R-3.5")) == pytest.approx(2.0)
+    assert oc_strip(rules, layers, city("R-8"), bucket="collector", half=40.0) == pytest.approx(2.5)
+    assert oc_strip(rules, layers, city("R-8"), bucket="minor_arterial", half=40.0) == pytest.approx(10.0)
+    # Residential IS the widest major arterial row: nothing changes.
+    assert oc_strip(rules, layers, city("R-8"), bucket="major_arterial", half=40.0) == pytest.approx(23.0)
+
+
+def test_the_wider_side_governs(rules, layers) -> None:
+    # MUC-1 across a local street: the commercial row, 62 ft, is the widest.
+    assert oc_strip(rules, layers, city("MUC-1")) == pytest.approx(6.0)
+    # A collector: commercial 86 beats residential 85, both short of 88.
+    assert oc_strip(rules, layers, city("MUC-1"), bucket="collector", half=40.0) == pytest.approx(3.0)
+    # The lot's own zone is a side too: a commercial lot facing houses.
+    assert oc_strip(rules, layers, city("R-6"), zone="C") == pytest.approx(6.0)
+    # One commercial ray among residential ones takes the commercial row.
+    assert oc_strip(rules, layers, city("R-6", "MUC-1")) == pytest.approx(6.0)
+    # Industrial across a local street: 60 ft.
+    assert oc_strip(rules, layers, city("GI")) == pytest.approx(5.0)
+
+
+@pytest.mark.parametrize(
+    ("across", "unresolved", "why"),
+    [
+        (None, None, "no rays across"),
+        ([], None, "the rays found nothing"),
+        (city("R-6"), "near", "a ray stopped nearer than a street's width"),
+        (city("R-6"), "split", "a ray found a split-zone lot"),
+        (city("R-6"), "none", "a ray found no zoning"),
+        ([["clackamas_unincorporated", "R-10"]], None, "the land across is the county's"),
+        ([["oregon_city", "R-6"], ["clackamas_unincorporated", "R-10"]], None, "part of it is the county's"),
+        (city("I"), None, "public/quasi-public or park"),
+        (city("R-6", "I"), None, "one of the rays maps to no row"),
+        (city("County"), None, "a zone with no plan classification"),
+    ],
+)
+def test_the_widest_row_stays_where_the_land_across_is_not_read(rules, layers, across, unresolved, why) -> None:
+    assert oc_strip(rules, layers, across, unresolved=unresolved) == pytest.approx(6.0), why
+
+
+def test_the_widest_row_stays_where_the_class_or_own_zone_is_not_read(rules, layers) -> None:
+    # Unranked: the deepest of the table, whatever the land beside it.
+    assert oc_strip(rules, layers, city("R-6"), bucket=None, half=40.0) == pytest.approx(23.0)
+    # The lot's own I zone maps to no row.
+    assert oc_strip(rules, layers, city("R-6"), zone="I") == pytest.approx(6.0)
+
+
+def test_without_the_corpus_nothing_is_read_across(rules) -> None:
+    lot = lot_from_row(oc_row(city("R-6")))
+    assert all(e.across_zones is None for e in lot.edges.edges)
+    out = dedicated(lot.edges, rules.resolve(OREGON_CITY, "R-6"), "R-6")
+    assert [e.dedication_ft for e in out.edges if e.cls is EdgeClass.front] == [pytest.approx(6.0)]
+
+
+def test_a_code_without_designation_rows_has_no_stand_in(rules, layers) -> None:
+    # Sherwood keys its distances to the class alone.
+    lot = oc_lot(layers, city("R-6"))
+    assert road_standin(lot.edges, rules.resolve(SHERWOOD, "MDRL"), "R-6") is None
+
+
+def test_the_stand_in_reports_the_strip_it_saved(rules, layers) -> None:
+    got = rules.resolve(OREGON_CITY, "R-6")
+    assert road_standin(oc_lot(layers, city("R-8")).edges, got, "R-6") == pytest.approx((2.0, 6.0))
+    # Nothing saved: the widest row stood, or the street is already wide.
+    assert road_standin(oc_lot(layers, city("MUC-1")).edges, got, "R-6") is None
+    assert road_standin(oc_lot(layers, city("R-8"), half=31.0).edges, got, "R-6") is None
+
+
+@pytest.fixture(scope="module")
+def corpus():
+    from flats.encode.load import load_trusted
+
+    return load_trusted(strict=False).rules
+
+
+def oc_screened(corpus, across):
+    from flats.designs.model import load_catalog
+    from flats.score import relief, slack
+
+    (s,) = screen_lot(
+        oc_lot(corpus.layers, across),
+        [load_catalog().latest("pod56x36")],
+        rules=corpus,
+        policy=slack.load_policy(),
+        relief=relief.load_policy(),
+        step_deg=30.0,
+    )
+    return s
+
+
+def test_an_otherwise_green_lot_stays_green_with_the_flag_beside_it(corpus) -> None:
+    """Steph 2026-10-14: the stand-in flag must leave the lot GREEN."""
+    from flats.score import flags as flag_plan
+
+    widest = oc_screened(corpus, None)
+    standin = oc_screened(corpus, city("R-8"))
+    # The same lot read at the widest row: green, and no stand-in.
+    assert widest.signed.colour is flag_plan.Colour.green
+    assert ROAD_ZONE_STANDIN not in {f.code for f in widest.signed.flags}
+    # Read with the zones standing in: still green, the flag beside it, with
+    # the strip taken and the strip the widest row would take.
+    assert standin.signed.colour is flag_plan.Colour.green
+    (flag,) = [f for f in standin.signed.flags if f.code == ROAD_ZONE_STANDIN]
+    assert flag.bounds == pytest.approx((2.0, 6.0))
+    assert flag_plan.severity_of(flag) == 2 < flag_plan.colour_rules().yellow_at_severity
+    assert standin.screening.triage is widest.screening.triage
+    # The envelope it was fitted on got back the 4 ft the stand-in saved.
+    assert standin.envelope.sqft > widest.envelope.sqft
 
 
 # --- Milwaukie (Table 19.501.2.A) -----------------------------------------

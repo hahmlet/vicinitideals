@@ -162,6 +162,7 @@ _LABELS: dict[str, str] = {
     "row_to_centerline_other_ft": "right-of-way to centerline, other streets",
     "row_to_centerline_class_by": "street classes for right-of-way, whose plan",
     "row_to_centerline_stated_as_width": "right-of-way stated as whole width",
+    "row_to_centerline_by_designation": "right-of-way by class and plan designation",
     "setback_north_ft": "setback from a lot line to the north (by bearing)",
     "setback_east_west_ft": "setback from a lot line to the east or west (by bearing)",
     "setback_north_street_credit_ft": "street credit toward the north setback",
@@ -343,6 +344,22 @@ _F: tuple[FieldDef, ...] = (
         "of it is the distance (flats/geom/dedication.py), so the number on file "
         "is the number on the page.",
         None,
+    ),
+    FieldDef(
+        "row_to_centerline_by_designation",
+        "street_table",
+        "The right-of-way by street class AND by the comprehensive plan "
+        "designation of the land beside the street, where the code keys it to "
+        "both: Oregon City Table 16.12.016 (local 62 / 60 / 54 ft for mixed use "
+        "or commercial / industrial / residential). Held as a list of [class / "
+        "designation, feet], the class as the code prints it; the "
+        "row_to_centerline_*_ft class fields keep each class's WIDEST row, "
+        "which a line takes unless the zones on both sides of it stand in for "
+        "the designations (Steph 2026-10-14, FOLLOWUPS 82; flats/geom/"
+        "dedication.py DESIGNATIONS). Halved like the class fields where "
+        "row_to_centerline_stated_as_width. The distance is reached before "
+        + _ROW_TO_CENTERLINE,
+        False,
     ),
     FieldDef(
         "row_to_centerline_class_by",
@@ -1448,6 +1465,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "row_to_centerline_other_ft",
         "row_to_centerline_class_by",
         "row_to_centerline_stated_as_width",
+        "row_to_centerline_by_designation",
         # Distances set by which way a lot line faces rather than by its
         # class. One code in the corpus writes them (Clackamas ZDO
         # 1005.02(L), in HDR, SHD and RCHDR), and a zone silent about them

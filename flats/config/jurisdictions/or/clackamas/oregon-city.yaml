@@ -436,17 +436,22 @@ defaults:
   # its table give the right-of-way by TSP class and "the comprehensive plan
   # designation of the adjacent property", and "If the comprehensive plan
   # designation for lands on either side of the street differs, the wider
-  # right-of-way standard shall apply" (#L291-L301,L327-L332). The land
-  # across the street is not read, so each class holds its WIDEST row: 126
-  # feet major arterial (residential), 118 minor arterial (industrial), 88
-  # collector (industrial), 62 local (mixed use/commercial/public). Read
-  # residential-both-sides it would be 126 / 100 / 85 / 54. Ruled
-  # 2026-10-14 (coordinator, on "never a false green"): the row is keyed to
-  # the street's class, which the TSP map gives, AND to the plan
-  # designation of the land on BOTH sides, the wider governing; the land
-  # across the street is not measured for this, so the widest row stays.
-  # A residential lot on a major arterial already takes its own row (126 is
-  # the widest). The table states the whole width, so
+  # right-of-way standard shall apply" (#L291-L301,L327-L332). Each class
+  # field holds its WIDEST row: 126 feet major arterial (residential), 118
+  # minor arterial (industrial), 88 collector (industrial), 62 local (mixed
+  # use/commercial/public). Every row is held too, in
+  # row_to_centerline_by_designation. Nothing maps the plan designation, so
+  # Steph ruled 2026-10-14 (FOLLOWUPS 82): the measured ZONE stands in for
+  # it -- the lot's own and the zones the rays across the street find --
+  # through Table 17.06.030, which gives each plan classification its zones
+  # (17.zoning.txt#L3988-L4007; flats/geom/dedication.py DESIGNATIONS). The
+  # wider row of the two sides is taken, and where it is narrower than the
+  # widest the lot carries OC-ROAD-ZONE-STANDIN (severity 2: a GREEN lot
+  # stays GREEN). Read residential-both-sides it is 126 / 100 / 85 / 54. The
+  # widest row stays where the class is unread, where any ray across finds
+  # no zone, a split, another jurisdiction, or a zone with no clear
+  # designation (the I zone is public/quasi-public OR park, 17.39.010, and
+  # the street table has no park row). The table states the whole width, so
   # half of it is the distance from the centre line
   # (row_to_centerline_stated_as_width). The city's TSP map ranks the class
   # (street_class_oregon_city); its Expressway and Freeway have no row here,
@@ -483,6 +488,24 @@ defaults:
     url: https://api.municode.com/PublicationPdfDownload/1377
     retrieved: '2026-09-08'
     quote: "or/clackamas/oregon-city/16.12.streets.txt#L330-L332,L402"
+  row_to_centerline_by_designation:
+    value:
+      - [major arterial / commercial, 116]
+      - [major arterial / industrial, 120]
+      - [major arterial / residential, 126]
+      - [minor arterial / commercial, 116]
+      - [minor arterial / industrial, 118]
+      - [minor arterial / residential, 100]
+      - [collector / commercial, 86]
+      - [collector / industrial, 88]
+      - [collector / residential, 85]
+      - [local / commercial, 62]
+      - [local / industrial, 60]
+      - [local / residential, 54]
+    cite: Oregon City OCMC Table 16.12.016, right-of-way width by road classification and the comprehensive plan designation of the adjacent properties (commercial = the Mixed Use, Commercial or Public/Quasi Public row)
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-09-08'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L327-L332,L338,L342-L343,L346,L350-L351,L398,L402-L403,L406,L410-L411"
   row_to_centerline_local_ft:
     value: 62
     cite: Oregon City OCMC Table 16.12.016, local, mixed use/commercial/public, 62 ft right-of-way (the widest row; the wider standard applies where the two sides differ)

@@ -1443,6 +1443,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
                 "row_to_centerline_other_ft (right-of-way to centre line; the paper fit has no street lines)",
                 "row_to_centerline_class_by (right-of-way to centre line; the paper fit has no street lines)",
                 "row_to_centerline_stated_as_width (right-of-way to centre line; the paper fit has no street lines)",
+                "row_to_centerline_by_designation (right-of-way to centre line; the paper fit has no street lines)",
             ),
         )
         if best is None or _worse(best, candidate):
