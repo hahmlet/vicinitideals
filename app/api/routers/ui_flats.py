@@ -2746,6 +2746,8 @@ _CHECK_WORDS = {
     "roll_red": "the county's tax roll marks it as public land, a tract or common parcel, or a parcel worth $0",
     "pod_footprint_area": "the lot is smaller than the building's footprint",
     "pod_width": "the lot is too narrow: no 20 ft circle fits inside it, and the building is wider than that",
+    "pdx_min_far": "too little building for the lot: Portland's main street overlay asks for more floor area than the four homes give",
+    "pdx_protected_resource": "a protected historic building stands on the lot: removing it needs the city's demolition review",
 }
 
 #: What the verdict the screen actually gave means. Today it is "unknown" on
@@ -2784,6 +2786,8 @@ _REASON_WORDS = {
     "PARKING_STRIP_UNCONFIRMED": "fits only without the planted strip the city keeps between parking and the lot lines; whether a townhome project owes that strip is still open",
     "FIRE_HOSE_START": "the fire hose reaches if measured from the curb, not from 10 ft out from it; where the street's width is not measured, from the curb of the narrowest street a fire truck may use",
     "CORNER_READ_AS_BEND": "the lot's street lines are all one street that bends, and the city's code does not say whether that makes a corner lot, so it was screened the stricter way: one front on one street",
+    "PDX_MAIN_STREET_MIN_FAR": "Portland's Centers Main Street overlay (the \"m\" on the zoning map) sets a minimum floor area: half the lot's area in the inner neighbourhoods, a quarter in the eastern and western -- on a lot this big the four homes are too little building, so it is red",
+    "PDX_PROTECTED_RESOURCE": "a protected historic building stands on the lot -- a city or National Register landmark, or a contributing building in a historic or conservation district -- and removing it needs the city's demolition review, a hearing nobody can count on, so it is red",
     "CURVE_ON_THE_LINE": "the street's curve measured within a degree of the angle the city's corner rule turns on, closer than the map can be trusted, so it was read as one street that bends, not a corner",
     # The county copy's own reasons (flats.ingest.normalize gates and the
     # assign stage): why a lot on the map was never screened.

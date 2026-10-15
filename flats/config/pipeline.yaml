@@ -534,6 +534,64 @@ datasets:
       read by the street each abuts), which carries the 20 ft maximum front
       setback the same map allows in place of 10 (33.130.215.C.1).
 
+  # --- Portland overlays the bridge reads per lot (flats/geom/pdx_overlays.py,
+  # FOLLOWUPS 78) -------------------------------------------------------------
+
+  overlay_pdx_main_street:
+    kind: arcgis
+    label: Portland Centers Main Street overlay zone ("m")
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/0
+    fields: [ZONE, OVRLY]
+    where: "OVRLY LIKE '%m%'"
+    serves: [or/multnomah/portland, or/multnomah/_unincorporated]
+    notes: >-
+      The zoning polygons whose overlay letters (OVRLY, comma separated, e.g.
+      "d,m") include "m" -- the reader keeps only those with an "m" token.
+      33.415.310 sets a minimum FAR on every site in it (0.5 Inner, 0.25
+      Eastern and Western pattern area).
+
+  pdx_pattern_areas:
+    kind: arcgis
+    label: Portland pattern areas (Map 415-1)
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/BPS_Zoning_Code_Layers/MapServer/69
+    fields: [TYPE, MapLabel]
+    serves: [or/multnomah/portland, or/multnomah/_unincorporated]
+    notes: >-
+      MapLabel Inner, Eastern, Western, River, Central City. Picks the
+      33.415.310 minimum FAR: A for Inner, B for Eastern and Western.
+
+  pdx_historic_resources:
+    kind: arcgis
+    label: Portland Historic, Conservation & National Register District Status
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/11
+    fields: [Status, DistStatus, DistName, Type, Address, YearBuilt, STATE_ID]
+    serves: [or/multnomah/portland, or/multnomah/_unincorporated]
+    notes: >-
+      One polygon per resource in a district (about 11,300), drawn on the
+      city's taxlots: Status (overriding) Contributing, Non-contributing,
+      Removed, or a landmark kind. A contributing resource in a Historic or
+      Conservation District, and any landmark, is a protected resource
+      (33.445.200.E / 210.E, Steph 2026-10-14: RED).
+
+  pdx_landmark_footprints:
+    kind: arcgis
+    label: Portland Historic, National Register and Conservation Landmark footprints
+    provides: overlay
+    url: https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/19
+    fields: [LANDMARKID, HISTNAME, ADDRESS, TYPE, designation_new]
+    parts:
+      - url: https://www.portlandmaps.com/arcgis/rest/services/Public/Zoning/MapServer/18
+        fields: [LANDMARKID, HISTNAME, ADDRESS, TYPE, designation_new]
+    serves: [or/multnomah/portland, or/multnomah/_unincorporated]
+    notes: >-
+      Layer 19 the Historic and National Register Landmarks (about 760
+      building footprints), layer 18 the Conservation Landmarks (12). Every
+      landmark's demolition needs demolition review (33.445.100.E, 110.E,
+      120.E): a lot holding one is RED.
+
   # --- street functional class (flats/geom/street_class.py) -----------------
 
   street_class_milwaukie:

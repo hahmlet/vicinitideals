@@ -122,6 +122,7 @@ from flats.geom.neighbour import (
     street_lines_clear,
 )
 from flats.geom.park import PARK_FACTS, observed_parks
+from flats.geom import pdx_overlays as pdx
 from flats.geom import split_zone as split_zones
 from flats.geom.sidewalk import (
     depth_for,
@@ -923,6 +924,10 @@ class QuadfitLot:
     #: in more than one (:mod:`flats.geom.split_zone`,
     #: :func:`with_split_zones`); empty on a lot in one.
     split: split_zones.Split = split_zones.Split()
+    #: What Portland's Centers Main Street overlay, pattern areas and
+    #: historic resources say about the lot (:mod:`flats.geom.pdx_overlays`,
+    #: FOLLOWUPS 78); None where nothing read it.
+    pdx_overlays: pdx.Reading | None = None
 
 
 def carved_rear_ft(row: Mapping[str, Any], observed: Mapping[str, bool]) -> float | None:
@@ -1783,6 +1788,7 @@ def lot_from_row(
         second_better=how == "better" and second is not None,
         sidewalk_easement_ft=_finite(row.get("sidewalk_easement_ft")),
         split=split_zones.decode(row.get(split_zones.ROW_KEY)),
+        pdx_overlays=pdx.decode(row.get(pdx.ROW_KEY)),
     )
 
 
@@ -2991,6 +2997,7 @@ def _screen_lot_once(
         )
         won = split_zone_checked(won, lot)
         won = road_standin_checked(won, lot)
+        won = pdx.checked(won, lot.pdx_overlays)
         out.append(_rank_unknown(won) if ask_rank else won)
     return out
 
@@ -4320,6 +4327,11 @@ def run(
             f"no {', '.join(lacking)} for where the fire truck stands in {curbs}: "
             "run acquire, or pass --curbs a snapshot that holds them"
         )
+    if lacking := pdx.missing(sources):
+        raise FileNotFoundError(
+            f"no {', '.join(lacking)} for Portland's main street overlay and historic resources in "
+            f"{sources}: run acquire (FOLLOWUPS 78)"
+        )
     institutional = _institutional_source(institutional, sources)
     out.mkdir(parents=True, exist_ok=True)
     parts_dir = out / "parts"
@@ -4349,6 +4361,8 @@ def run(
     eased = with_sidewalk_easement(rows, sources)
     if eased:
         log(f"bridge: worst-case sidewalk easement taken on {eased:,} lots")
+    marked = pdx.with_overlays(rows, sources)
+    log(f"bridge: Portland's main street overlay or a protected historic resource on {marked:,} lots")
     from flats.encode.load import load_trusted
 
     split = with_split_zones(rows, s4.parent, load_trusted(strict=False).rules.layers)
