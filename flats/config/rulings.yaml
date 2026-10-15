@@ -1,0 +1,1441 @@
+# The rulings register: every decision Steph (the owner) has made that changes
+# how a lot is judged, with where it came from and where it is built.
+#
+# HUMAN-OWNED. An agent records a ruling here only when it cites a real
+# source -- Steph's words in a dated doc, a jurisdiction file, a config file
+# or a commit. A ruling that replaces an earlier one does not delete it: the
+# earlier entry stays and names its successor in `superseded_by`.
+#
+# Shape (validated exactly by the loader; unknown keys are errors, and
+# flats/tests/test_rulings_register.py checks the file):
+#   id            unique slug, date first
+#   kind          ruling | adopted_change
+#   date          the day the decision was made
+#   effective     adopted_change only
+#   scope         county / city / zones / tlids; empty = statewide
+#   question      what was asked
+#   ruling        Steph's words where they exist
+#   effect        what the screen does because of it
+#   source        where the ruling is written down
+#   encoded_in    optional: the files that build it
+#   superseded_by optional: the id of the ruling that replaced it
+#
+# City slugs and zone codes are spelled exactly as the jurisdiction files
+# under flats/config/jurisdictions/or/<county>/<city>.yaml spell them.
+
+# ---------------------------------------------------------------------------
+# Statewide
+# ---------------------------------------------------------------------------
+
+- id: 2026-08-26-parking-rules-when-none-required
+  kind: ruling
+  date: 2026-08-26
+  scope: {}
+  question: >-
+    Where a city requires no parking stalls (Fairview's minimum is zero), does
+    the screen still read the city's parking rules?
+  ruling: >-
+    "I understand that parking isn't required, but we want to know what we
+    would have to do if we do parking (which we will)."
+  effect: >-
+    A code that requires zero stalls is not the end of the reading: its aisle
+    width, parking placement, driveway approach and court landscaping rules
+    are still read and applied to the pod's parking.
+  source: Steph 2026-08-26 (memory feedback_required_vs_regulated.md)
+
+- id: 2026-08-31-unstated-aisle-can-be-green
+  kind: ruling
+  date: 2026-08-31
+  scope: {}
+  question: >-
+    Where a city writes no aisle width down anywhere, may a lot whose parking
+    court is drawn to the national minimum aisle be GREEN, or must it wait
+    for review?
+  ruling: >-
+    An assumption can be GREEN: a standard the city never wrote cannot be
+    clear and objective (ORS 197A.400), so the city has no lawful basis to
+    refuse a court drawn to the national minimum.
+  effect: >-
+    A court resting on the assumed aisle is screened like any other; the
+    assumption rides along as a provenance column (geometry_assumed), not a
+    verdict. A real miss on the assumed court is still red.
+  source: Steph's call 2026-08-31, commit f5129f49 (memory project_flats_parking.md)
+  encoded_in: [Lot Analysis/quadfit/config/footprints.yaml]
+
+- id: 2026-09-03-coarse-elevation-may-grade-green
+  kind: ruling
+  date: 2026-09-03
+  scope: {}
+  question: May the coarser elevation map grade a lot green where the fine map is missing?
+  ruling: "Yes."
+  effect: >-
+    The coarse elevation map may answer the slope check; a slope_source
+    column records which map answered on every lot.
+  source: docs/HUMAN_TODO.md item 2, "DECIDED YES, BUILT AND RUN 2026-09-03"
+
+- id: 2026-09-08-charge-parking-aisle
+  kind: ruling
+  date: 2026-09-08
+  scope: {}
+  question: Does the fit charge the lot for the ground the parked cars and their aisle stand on?
+  ruling: '"we need to incorporate parking aisle width"'
+  effect: >-
+    The rear parking court (stall depth plus aisle) is charged as lot depth
+    in the fit and the screen, from the zone's stated stall and aisle where
+    it has them, else the design's assumption.
+  source: Steph 2026-09-08 (memory project_flats_parking.md)
+  encoded_in: [flats/score/paper.py]
+
+- id: 2026-09-10-height-is-a-variable
+  kind: ruling
+  date: 2026-09-10
+  scope: {}
+  question: Is the pod's 26 ft height a fact to confirm?
+  ruling: >-
+    "That is variable at this stage. Eventually it will be set at one height,
+    but part of the purpose of this exercise is to find our bounding
+    variables. ... This should be a machine solvable problem."
+  effect: >-
+    Height is answered as a curve (lots won or lost at each height across the
+    design range), not asked as a yes/no question.
+  source: Steph 2026-09-10 (memory project_flats_height_dial.md)
+  encoded_in: [flats/encode/height.py]
+
+- id: 2026-09-18-four-stalls-enough
+  kind: ruling
+  date: 2026-09-18
+  scope: {}
+  question: Should the screen insist on room for six cars (1.5 a home) or four (one a home)?
+  ruling: '"Same as the county map. 4 is enough to sell."'
+  effect: >-
+    Four stalls is the floor and sets the colour; six is the target and
+    eight the preferred; the count the lot seats is reported beside the
+    colour, never inside it. A city cap below four is a refusal.
+  source: Steph 2026-09-18, docs/HUMAN_TODO.md item 18 (memory feedback_flats_stall_bands.md)
+  encoded_in: [flats/config/pods/pod56x36.yaml]
+
+- id: 2026-09-19-orientation-choice-order
+  kind: ruling
+  date: 2026-09-19
+  scope: {}
+  question: >-
+    On a corner lot where the city leaves the choice of front to the owner
+    and both ways park, which way is taken?
+  ruling: >-
+    "In order of priority 1) which orientation turns the lot green 2) if both
+    green, which gets us to preferred parking amount 3) if both preferred
+    parking amount OR both reach minimum parking amount, the side that has
+    the least exposure to street. ... 'We can fit more parking' isn't
+    necessarily a good thing."
+  effect: >-
+    Owner-choice cities screen each street as the front and keep green
+    first, then the preferred parking band, then the least street exposure.
+    More parking is not a goal.
+  source: Steph 2026-09-19, docs/HUMAN_TODO.md item 21 (memory feedback_flats_stall_bands.md)
+  encoded_in: [flats/geom/corner.py]
+
+- id: 2026-09-20-read-every-zone-code-once
+  kind: ruling
+  date: 2026-09-20
+  scope: {}
+  question: What happens to the zone codes on the county map that the screen does not encode?
+  ruling: >-
+    Every zone code on the county map is read once, its reason written down,
+    and never shown again; the only thing worth flagging is a code appearing
+    for the first time.
+  effect: >-
+    Each jurisdiction file carries a zone_rulings block naming every
+    unencoded code and its reason.
+  source: docs/HUMAN_TODO.md item 22 ("You ruled on 2026-09-20 ...")
+
+- id: 2026-09-22-new-zone-code-warns
+  kind: ruling
+  date: 2026-09-22
+  scope: {}
+  question: >-
+    When a city invents a zone code never seen before, does the whole county
+    copy wait, or only those lots?
+  ruling: Option A, the new code warns but does not block.
+  effect: >-
+    A never-seen code is warn-only on a refresh; only those lots sit at
+    UNKNOWN (ZONE_NOT_ENCODED) while the rest of the county goes live.
+  source: docs/HUMAN_TODO.md item 22, "DECIDED 2026-09-22" (memory feedback_flats_data_source.md)
+
+- id: 2026-09-25-tight-fit-green
+  kind: ruling
+  date: 2026-09-25
+  scope: {}
+  question: What colour is a pod that fits, or misses, by less than half a foot?
+  ruling: >-
+    "plus or minus 6 in it goes into the green category. Every acquisition is
+    going to have a survey anyways. However, some sort of flag"
+  effect: >-
+    A fit within the 0.5 ft tolerance either way is GREEN with the FIT-TIGHT
+    flag (below the yellow line).
+  source: Steph 2026-09-25 (flats/config/slack.yaml; memory project_quadfit_alley_access.md)
+  encoded_in: [flats/config/slack.yaml, flats/config/flags.yaml, flats/score/screen.py]
+
+- id: 2026-09-28-partial-alley
+  kind: ruling
+  date: 2026-09-28
+  scope: {}
+  question: >-
+    When an alley runs along only part of a lot line, does the alley's setback
+    allowance and back-out lane apply to the whole line?
+  ruling: >-
+    "careful reading agreed. And we can use the portion the alley abuts for
+    our travel lane only if the lane is actually long enough to accomodate"
+  effect: >-
+    The alley setback applies only to the stretch the alley covers; the rest
+    of the line keeps the ordinary setback. A partial alley counts as the
+    court's travel lane only when the covered run is long enough.
+  source: Steph 2026-09-28 (memory feedback_partial_alley_ruling.md), commit 59533da1
+
+- id: 2026-09-29-stated-number-governs
+  kind: ruling
+  date: 2026-09-29
+  scope: {}
+  question: >-
+    When a code states a figure that looks odd (Hillsboro MU-C's 45 ft
+    minimum height), does it govern?
+  ruling: >-
+    "Assume it's real and if we don't have an express exception, it
+    governs." Where the code does state an exception (Hillsboro SCC-SC
+    beyond 800 ft of a light-rail station), the exception counts.
+  effect: >-
+    A stated number is applied as written; an express exception in the code
+    is measured and applied. Cities are not asked whether a figure is a
+    misprint.
+  source: Steph 2026-09-29, docs/HUMAN_TODO.md item 25C (memory feedback_flats_reading_rules_2026_09_29.md)
+
+- id: 2026-09-29-no-minimum-stated-sets-none
+  kind: ruling
+  date: 2026-09-29
+  scope: {}
+  question: >-
+    When a table prints no side or rear yard (Washington County's Transit
+    Oriented Middle Housing table), is there a minimum?
+  ruling: '"Table literally says None": a table that states no minimum sets none.'
+  effect: A dimension a table does not state is not charged.
+  source: >-
+    Steph 2026-09-29, docs/HUMAN_TODO.md item 25C;
+    flats/config/jurisdictions/or/washington/_unincorporated.yaml (TO zones)
+  encoded_in: [flats/config/jurisdictions/or/washington/_unincorporated.yaml]
+
+- id: 2026-09-29-definitions-literal
+  kind: ruling
+  date: 2026-09-29
+  scope: {}
+  question: >-
+    Is the four-unit pod "multi-dwelling" where a code (Washington County CDC
+    106-143) starts multi-dwelling at five units?
+  ruling: Four units are not five.
+  effect: >-
+    Definitions are applied literally: the pod is not multi-dwelling where
+    the code starts that at five, so multi-dwelling-only zones do not admit
+    it.
+  source: >-
+    Steph 2026-09-29, docs/HUMAN_TODO.md item 25C;
+    flats/config/jurisdictions/or/washington/_unincorporated.yaml (R-25+ NB)
+  encoded_in: [flats/config/jurisdictions/or/washington/_unincorporated.yaml]
+
+- id: 2026-09-29-post-2027-world
+  kind: ruling
+  date: 2026-09-29
+  scope: {}
+  question: Should the screen apply the middle-housing law as it stands now, or as HB 2138 makes it from 2027?
+  ruling: >-
+    "Behave as if this has already happened because we won't realistically
+    be buying lots until after that point" ("design the system for a
+    post-2027 world").
+  effect: >-
+    The state layer is built to HB 2138 and Division 46 as adopted, applied
+    across the corpus wherever it reaches.
+  source: >-
+    Steph 2026-09-29, docs/HUMAN_TODO.md item 25D;
+    flats/config/jurisdictions/or/_state.yaml (FOLLOWUPS 21)
+  encoded_in: [flats/config/jurisdictions/or/_state.yaml]
+
+- id: 2026-09-29-front-design-rules-held
+  kind: ruling
+  date: 2026-09-29
+  scope: {}
+  question: What happens to rules about how the front of the building looks?
+  ruling: >-
+    Record and encode them all, systematically, well enough to hand to an
+    architect. The pod's design does not exist yet, so districts with those
+    rules stay held back until it does.
+  effect: Districts with front-design rules were held back from a plain yes.
+  source: docs/HUMAN_TODO.md item 25B (answered 2026-09-29)
+  superseded_by: 2026-10-14-unchecked-design-details
+
+- id: 2026-09-30-through-lots
+  kind: ruling
+  date: 2026-09-30
+  scope: {}
+  question: On a through lot, which street does the parking come off?
+  ruling: >-
+    "If the city doesn't govern which street parking should be on, and we
+    truly don't care either way, then pick one. If the city does govern, use
+    that one. If it can't fit, then we're red/yellow. If the city doesn't
+    govern and one fits and the other doesn't, use the one that fits."
+  effect: >-
+    A city rule naming the access street governs (conservatively where its
+    fact is unmeasured); a free choice keeps whichever end fits.
+  source: Steph 2026-09-30 (memory feedback_access_rulings_2026_09_30.md)
+
+- id: 2026-09-30-private-roads
+  kind: ruling
+  date: 2026-09-30
+  scope: {}
+  question: Is a private road a street?
+  ruling: >-
+    "Treat private roads as streets for purpose of where parking should be.
+    But we shouldn't use it for governing setbacks etc unless that's how the
+    city handles it."
+  effect: >-
+    A private road is a way in for parking everywhere; it sets setbacks only
+    where the city's code counts it.
+  source: Steph 2026-09-30 (memory feedback_access_rulings_2026_09_30.md), commit dbc2cc40
+
+- id: 2026-09-30-state-middle-housing-path
+  kind: ruling
+  date: 2026-09-30
+  scope: {}
+  question: >-
+    Where a residential zone allows a detached house but refuses a quadplex,
+    does the state middle-housing law open it, and in which places?
+  ruling: >-
+    Option A (Steph: "the 'larger cities' is important"). Inside Metro every
+    city over 1,000 people; outside Metro 25,000+ for every type and
+    2,500-25,000 duplexes only; county land only where "urban
+    unincorporated".
+  effect: >-
+    A state_middle_housing relief path opens those zones in the places the
+    size cutoff reaches; a path that turns on an unmeasured fact is UNKNOWN,
+    not RED.
+  source: docs/FOLLOWUPS.md item 21(b), "DECIDED A 2026-09-30"
+  encoded_in: [flats/config/jurisdictions/or/_state.yaml]
+
+- id: 2026-09-30-transit-show-not-screen
+  kind: ruling
+  date: 2026-09-30
+  scope: {}
+  question: >-
+    Near frequent transit the state parking reform allows fewer stalls;
+    should the screen accept a fewer-than-four-stall pod there?
+  ruling: '"Show it, don''t screen it."'
+  effect: >-
+    The lot page shows transit distances and the reform's reach; the pod
+    keeps four stalls and the screen never reads the reach.
+  source: Steph 2026-09-30 (memory feedback_transit_distance.md)
+
+- id: 2026-10-01-fire-access-150ft-red
+  kind: ruling
+  date: 2026-10-01
+  scope: {}
+  question: >-
+    What colour is a lot whose building lies past 150 ft of hose route from a
+    fire road (OFC 503.1.1)?
+  ruling: '"Red". No sprinkler relief is assumed.'
+  effect: >-
+    A lot past the 150 ft hose route is RED; Portland's 250 ft sprinklered
+    figure is not used.
+  source: >-
+    Steph 2026-10-01, FOLLOWUPS 28 (memory project_flats_fire_access.md;
+    flats/config/jurisdictions/or/_state.yaml)
+  encoded_in: [flats/config/jurisdictions/or/_state.yaml, flats/fit/fire.py]
+
+- id: 2026-10-01-gravel-roads-not-fire-roads
+  kind: ruling
+  date: 2026-10-01
+  scope: {}
+  question: Does a gravel or unimproved road (RLIS type 2000) count as a fire truck road?
+  ruling: Gravel and unimproved roads are not truck roads.
+  effect: The hose route is not measured from a gravel or unimproved road.
+  source: Steph answered 2026-10-01 (memory project_flats_fire_access.md)
+  encoded_in: [flats/fit/fire.py]
+
+- id: 2026-10-01-pod-ground-floor-12ft
+  kind: ruling
+  date: 2026-10-01
+  scope: {}
+  question: Is the pod's ground floor at least 12 ft (Tigard TMU's first-storey minimum)?
+  ruling: '"Yes, 12 ft or more."'
+  effect: >-
+    The pod design carries ground_story_ft 12; a zone's ground-storey
+    minimum of 12 ft or less is met.
+  source: Steph 2026-10-01 (flats/config/pods/pod56x36.yaml, pod80x25.yaml)
+  encoded_in: [flats/config/pods/pod56x36.yaml, flats/config/pods/pod80x25.yaml]
+
+- id: 2026-10-02-no-variances
+  kind: ruling
+  date: 2026-10-02
+  scope: {}
+  question: Is a lot that needs a variance shown as a possibility (yellow) or a miss (red)?
+  ruling: >-
+    "We aren't accepting variances at all at this time. We need to log
+    these, but for now, items requiring variance go red. Later we can review
+    variances."
+  effect: >-
+    Any confirmed miss is RED; the way round it the code offers is logged on
+    the bind for a later review.
+  source: Steph 2026-10-02 (flats/config/colour.yaml; memory feedback_flats_flag_plan_rulings.md)
+  encoded_in: [flats/config/colour.yaml]
+
+- id: 2026-10-02-flag-below-three-stays-green
+  kind: ruling
+  date: 2026-10-02
+  scope: {}
+  question: Does a low-risk flag move a lot off green?
+  ruling: '"items with risk < 3 (or whatever we decide) are still green"'
+  effect: >-
+    yellow_at_severity is 3: a flag below it rides along on a GREEN lot.
+  source: Steph 2026-10-02 (flats/config/colour.yaml)
+  encoded_in: [flats/config/colour.yaml, flats/config/flags.yaml]
+
+- id: 2026-10-02-colour-as-if-signed
+  kind: ruling
+  date: 2026-10-02
+  scope: {}
+  question: Is the colour shown before or after the readings are signed?
+  ruling: The colour shown stays "as if signed".
+  effect: The map shows each lot's colour as though its readings were signed.
+  source: Steph 2026-10-02, FOLLOWUPS 37 (memory feedback_flats_flag_plan_rulings.md)
+
+- id: 2026-10-02-near-miss-one-foot-red
+  kind: ruling
+  date: 2026-10-02
+  scope: {}
+  question: What colour is a pod that misses the fit by a small amount?
+  ruling: >-
+    "everything 1-20' goes to red ... Let's put them all to red except short
+    by under 1'". Asked on 2026-10-03 whether exactly one foot counts:
+    "Exactly 1 foot is red".
+  effect: >-
+    A fit short by 1 ft or more is RED; short by under 1 ft is YELLOW
+    (near_miss fit_ft 1.0, strict comparison). Inside half a foot the fit is
+    already GREEN with FIT-TIGHT.
+  source: Steph 2026-10-02 and 2026-10-03 (flats/config/colour.yaml)
+  encoded_in: [flats/config/colour.yaml]
+
+- id: 2026-10-02-minimum-density-a-flag
+  kind: ruling
+  date: 2026-10-02
+  scope: {}
+  question: What happens when a lot is big enough that the city wants more than four homes on it?
+  ruling: '"a flag, maybe a 2" -- minimum density missed is a flag, never a bind.'
+  effect: >-
+    The DENSITY-MIN flag is proposed at severity 2, below the yellow line.
+  source: Steph 2026-10-02 (flats/config/flags.yaml DENSITY-MIN; memory feedback_flats_flag_plan_rulings.md)
+  encoded_in: [flats/config/flags.yaml]
+
+- id: 2026-10-02-existing-lot-dedicates-nothing
+  kind: ruling
+  date: 2026-10-02
+  scope: {}
+  question: >-
+    Where a density or lot-size rule is read per net acre, what does an
+    existing lot deduct?
+  ruling: Option A -- an existing lot dedicates nothing.
+  effect: >-
+    Net area is the lot less the constrained land the code lists; no road
+    or tract dedication is deducted from an existing lot.
+  source: Steph 2026-10-02, FOLLOWUPS 30 (memory project_flats_net_area.md), commit 995f0007
+
+- id: 2026-10-02-corner-access-side-street
+  kind: ruling
+  date: 2026-10-02
+  scope: {}
+  question: On a corner lot, which street does the parking come in from?
+  ruling: >-
+    "it's actually safer to say that when there are multiple streets, it's
+    the side line, not the front. Cities typically require the housing to
+    face the busier street, so they want the parking entrance on another
+    side."
+  effect: >-
+    Where a code says lowest_class, the parking entrance is the side street
+    and no front-street lane is planned when a side street exists.
+  source: Steph 2026-10-02 (memory feedback_corner_side_street_access.md)
+  superseded_by: 2026-10-05-corner-access-quieter-front
+
+- id: 2026-10-02-three-point-turn
+  kind: ruling
+  date: 2026-10-02
+  scope: {}
+  question: May a car leaving the parking court use a three-point turn?
+  ruling: '"THREE POINT is acceptable for now"'
+  effect: >-
+    A stall is usable nose-in with a three-point turn out, or backed in and
+    driven out.
+  source: Steph 2026-10-02, FOLLOWUPS 36 (memory project_flats_parking_queue_36.md)
+  encoded_in: [flats/config/court_turns.json]
+
+- id: 2026-10-03-dead-end-last-resort
+  kind: ruling
+  date: 2026-10-03
+  scope: {}
+  question: Which fix to a court cars cannot turn in is tried first?
+  ruling: '"the 13 foot dead end should be almost a last-resort"'
+  effect: >-
+    The menu of court fixes is ordered least paving first, with the dead-end
+    extension near the end.
+  source: Steph 2026-10-03, FOLLOWUPS 36 (memory project_flats_parking_queue_36.md), commit 1723db45
+  encoded_in: [flats/config/court_turns.json]
+
+- id: 2026-10-04-planted-strips-yellow
+  kind: ruling
+  date: 2026-10-04
+  scope: {}
+  question: >-
+    A planted strip between the parking and the lot line may not survive the
+    state's rule against stricter-than-house standards; how is a lot treated
+    that fits only without the strip?
+  ruling: '"Let''s have strips be a flag for yellow at this time"'
+  effect: >-
+    A plan that binds only on the strip is re-screened without it and, if it
+    then binds nothing, is YELLOW with PARKING-STRIP-UNCONFIRMED (severity 5).
+  source: Steph 2026-10-04 (memory project_flats_parking_queue_36.md), commit 1d3c89cb
+
+- id: 2026-10-04-slope-grade-bands
+  kind: ruling
+  date: 2026-10-04
+  scope: {}
+  question: How steep may the ground under the building and its parking be?
+  ruling: >-
+    Pad grade 5% or less is green; 5% to 15% is a closer look; over 15% is
+    red.
+  effect: >-
+    site_grade_pct: up to 5% GREEN, 5-15% the SLOPE-GRADE flag (severity 4,
+    YELLOW), over 15% RED.
+  source: Steph 2026-10-04 (flats/config/slope.yaml; memory project_flats_slope.md)
+  encoded_in: [flats/config/slope.yaml]
+
+- id: 2026-10-04-steep-ground-before-placement
+  kind: ruling
+  date: 2026-10-04
+  scope: {}
+  question: Is steep ground judged after the pod is placed, or before?
+  ruling: '"slope-based lot elimination should happen before pod placement"'
+  effect: >-
+    Ground over 15% comes off the envelope and court ground before the fit;
+    a fit lost to it is steep_ground, RED, with no zoning relief.
+  source: Steph 2026-10-04 (flats/config/slope.yaml)
+  encoded_in: [flats/config/slope.yaml]
+
+- id: 2026-10-04-ignore-short-banks
+  kind: ruling
+  date: 2026-10-04
+  scope: {}
+  question: Does a short steep bank (a raised front yard, a terrace) count as steep ground?
+  ruling: '"Ignore banks under 4 ft"'
+  effect: A steep patch falling under 4 ft top to bottom inside the lot is regraded, not lost.
+  source: Steph 2026-10-04 (flats/config/slope.yaml)
+  encoded_in: [flats/config/slope.yaml]
+
+- id: 2026-10-05-fire-hose-from-curb
+  kind: ruling
+  date: 2026-10-05
+  scope: {}
+  question: Where does the 150 ft fire hose route start from?
+  ruling: >-
+    "Let's go with stricter" -- 10 ft out from the near curb, "with a flag to
+    check later".
+  effect: >-
+    The hose is measured from 10 ft out from the near curb; a plan red on
+    the hose alone that would clear from the curb itself carries
+    FIRE-HOSE-START (severity 1, stays red).
+  source: Steph 2026-10-05, FOLLOWUPS 29 (memory project_flats_fire_curb.md; flats/config/pipeline.yaml)
+  encoded_in: [flats/config/pipeline.yaml, flats/config/flags.yaml]
+
+- id: 2026-10-05-unmeasured-street-narrow
+  kind: ruling
+  date: 2026-10-05
+  scope: {}
+  question: Where a street's width is not measured, how wide is it taken to be for the fire hose?
+  ruling: '"Assume narrow"'
+  effect: >-
+    A street with no measured width is the narrowest a fire truck may use
+    (20 ft, OFC 503.2.1).
+  source: Steph 2026-10-05 (memory project_flats_fire_curb.md; flats/config/pipeline.yaml)
+  encoded_in: [flats/config/pipeline.yaml]
+
+- id: 2026-10-05-corner-access-quieter-front
+  kind: ruling
+  date: 2026-10-05
+  scope: {}
+  question: >-
+    Now that street class is measured, what if a corner lot's named front is
+    the quieter street?
+  ruling: >-
+    On a corner lot whose named front ranks strictly below every side
+    street, access comes off that quieter front; the side-street rule is the
+    fallback when class is unknown or tied.
+  effect: >-
+    measured_access sets corner_access_street to front (why front_quieter)
+    on such lots; otherwise the side street serves.
+  source: Steph 2026-10-05, FOLLOWUPS 41(i) (memory project_flats_street_class.md), commits b03dcd88, 972caa17
+
+- id: 2026-10-06-institutional-land-red
+  kind: ruling
+  date: 2026-10-06
+  scope: {}
+  question: Are institutional lots (schools, hospitals, parks, infrastructure) screened?
+  ruling: >-
+    "Lots with institutional uses; hospitals, schools, municipal, parks,
+    water treatment/heavy infrastructure should just be flagged red and
+    flagged out of scans for any reason." Added airports, marinas, transit
+    hubs, rail, public pools and plazas, waste treatment, malls and shopping
+    centres. "Churches and charities should still be checked because
+    churches do divest of land for charitable purposes."
+  effect: >-
+    Institutional land is RED with a named reason and never measured, on
+    every scan; churches and charities stay screened.
+  source: Steph 2026-10-06, FOLLOWUPS 47 (flats/config/institutional.yaml; memory feedback_institutional_land.md)
+  encoded_in: [flats/config/institutional.yaml, flats/geom/institutional.py]
+
+- id: 2026-10-06-church-school-is-school
+  kind: ruling
+  date: 2026-10-06
+  scope: {}
+  question: Is a school run by a church a church (screened) or a school (red)?
+  ruling: A church's school is a school.
+  effect: Church-run schools are RED like any school; the church itself stays screened.
+  source: Steph 2026-10-06 (flats/config/institutional.yaml)
+  encoded_in: [flats/config/institutional.yaml]
+
+- id: 2026-10-06-hca-allowance-declined
+  kind: ruling
+  date: 2026-10-06
+  scope: {}
+  question: Should the screen credit the habitat area's disturbance allowance?
+  ruling: '"Leave it"'
+  effect: No disturbance allowance is credited inside a habitat conservation area.
+  source: Steph 2026-10-06, docs/FOLLOWUPS.md item 42
+
+- id: 2026-10-07-coarse-steep-yellow
+  kind: ruling
+  date: 2026-10-07
+  scope: {}
+  question: >-
+    What colour is a lot whose steep ground shows only on the coarse 10 m
+    elevation map?
+  ruling: '"yellow with flag. 7 severity"'
+  effect: >-
+    Steep ground read from the coarse map alone is never RED: the lot is
+    YELLOW with SLOPE-STEEP-COARSE (severity 7).
+  source: Steph 2026-10-07, FOLLOWUPS 49(h) (flats/config/slope.yaml), commit 2dacbe1c
+  encoded_in: [flats/config/slope.yaml, flats/config/flags.yaml]
+
+- id: 2026-10-08-by-right-only
+  kind: ruling
+  date: 2026-10-08
+  scope: {}
+  question: Is a zone where the pod needs a design review or conditional use open to us?
+  ruling: >-
+    "We don't accept reviews, we only accept by-right." A zone whose only
+    path is a discretionary review is RED.
+  effect: >-
+    Zones gated by a Type II or III review, a master plan or a conditional
+    use were refused (Canby and Sandy in every zone, Hillsboro's 17
+    review-gated zones on 2026-10-10), with their standards kept.
+  source: Steph 2026-10-08 (memory feedback_by_right_only.md)
+  superseded_by: 2026-10-14-review-tiers
+
+- id: 2026-10-09-tracts-and-zero-value-red
+  kind: ruling
+  date: 2026-10-09
+  scope: {}
+  question: Are HOA tracts, common areas, open space, golf courses and $0 parcels screened?
+  ruling: '"All red"'
+  effect: >-
+    Those lots are RED and never scanned, like institutional land; churches
+    and charities stay checked.
+  source: Steph 2026-10-09, FOLLOWUPS 59 (flats/config/roll_red.yaml)
+  encoded_in: [flats/config/roll_red.yaml, flats/geom/roll.py]
+
+- id: 2026-10-09-zero-value-with-address-screened
+  kind: ruling
+  date: 2026-10-09
+  scope: {}
+  question: Is a $0 parcel that has a real street address red?
+  ruling: >-
+    A $0 parcel with a real street address is screened normally, no red and
+    no flag: new lots the county has not valued yet look exactly like this.
+  effect: Only $0 parcels with no address fall in the no_address red tier.
+  source: Steph 2026-10-09 (flats/config/roll_red.yaml)
+  encoded_in: [flats/config/roll_red.yaml]
+
+- id: 2026-10-09-zero-value-near-new-houses-screened
+  kind: ruling
+  date: 2026-10-09
+  scope: {}
+  question: Is a $0 parcel with no address red when new houses stand around it?
+  ruling: >-
+    It stays screened when new houses stand around it: a lot platted this
+    year looks exactly like this.
+  effect: >-
+    A no-address $0 lot is spared from red when at least 3 lots on its tax
+    map page within 500 ft were built since 2021.
+  source: Steph 2026-10-09 (flats/config/roll_red.yaml keep_checked_when_block_built)
+  encoded_in: [flats/config/roll_red.yaml]
+
+- id: 2026-10-09-unranked-corner-yellow
+  kind: ruling
+  date: 2026-10-09
+  scope: {}
+  question: >-
+    When a corner lot's parking works off only one street and a street has
+    no class, is the lot green, yellow or red?
+  ruling: '"yellow, then measure"'
+  effect: >-
+    The lot keeps the measured plan's answer and carries
+    ACCESS-STREET-RANK-UNKNOWN (severity 6, YELLOW); a miss on the measured
+    plan itself stays red.
+  source: Steph 2026-10-09 (flats/config/flags.yaml; memory feedback_unranked_corner_yellow.md), commit c98be01d
+  encoded_in: [flats/config/flags.yaml, flats/ingest/quadfit.py]
+
+- id: 2026-10-09-quiet-street-both-agree
+  kind: ruling
+  date: 2026-10-09
+  scope: {}
+  question: When is a street ranked quiet (residential or local)?
+  ruling: '"yes, when both agree"'
+  effect: >-
+    A street is quiet only when Metro's street file and OpenStreetMap both
+    say residential or local; any disagreement leaves it unranked (yellow).
+  source: Steph 2026-10-09, FOLLOWUPS 60 (memory feedback_unranked_corner_yellow.md; flats/config/pipeline.yaml)
+  encoded_in: [flats/config/pipeline.yaml]
+
+- id: 2026-10-09-bend-is-one-street
+  kind: ruling
+  date: 2026-10-09
+  scope: {}
+  question: Is a lot on a bending street a corner lot?
+  ruling: >-
+    "one street, not a corner" -- where a city's code is silent, one street
+    name on one unbroken run is a bend; cities with a written corner test
+    follow their words.
+  effect: >-
+    Such a lot is screened as one front on one street, with the
+    ONE-STREET-BEND flag.
+  source: Steph 2026-10-09, FOLLOWUPS 63 (flats/config/flags.yaml; memory feedback_unranked_corner_yellow.md)
+  encoded_in: [flats/config/flags.yaml]
+
+- id: 2026-10-10-price-per-home-label
+  kind: ruling
+  date: 2026-10-10
+  scope: {}
+  question: Should land price per home screen lots out?
+  ruling: >-
+    A label, never a screen: price per home is shown and filtered on the
+    Lots page (starting at $30,000 a home); it does not change a lot's
+    colour.
+  effect: Colour is unchanged; the Lots page carries a price-per-home label and filter.
+  source: Steph 2026-10-10, FOLLOWUPS 66 (flats/config/price.yaml)
+  encoded_in: [flats/config/price.yaml]
+
+- id: 2026-10-14-existing-buildings-stay-green
+  kind: ruling
+  date: 2026-10-14
+  scope: {}
+  question: >-
+    Do lots with occupied buildings on them (28 Tigard lots with apartment
+    complexes) stay GREEN?
+  ruling: '"yes" to keeping them green.'
+  effect: >-
+    FLATS ignores existing buildings; an existing-building green is a policy
+    class, not a wrong answer. The already-ruled exceptions (institutional
+    land, tracts, $0 parcels) stay RED.
+  source: Steph 2026-10-14 (memory feedback_existing_buildings_stay_green.md)
+
+- id: 2026-10-14-review-tiers
+  kind: ruling
+  date: 2026-10-14
+  scope: {}
+  question: How is a zone treated where the pod is allowed only after a review?
+  ruling: >-
+    A review that checks only clear, measurable standards is GREEN; one whose
+    standards are measurable but whose decider "may add conditions" (or whose
+    criteria also weigh judgement words) is YELLOW with a flag naming the
+    review; essentially all one-off judgement (e.g. Canby's Type III
+    "compatible ... design character") is RED. A measured standard the pod
+    fails is RED regardless.
+  effect: >-
+    The review_discretion field (conditions | judgement) raises
+    REVIEW-CONDITIONS (severity 5, YELLOW). Zones refused under the
+    by-right-only ruling were re-read: Sandy, Hillsboro's 17 review-gated
+    zones, Washington County's Type II gates and Clackamas MR1, MR2, HDR,
+    PMD and VA became YELLOW; Canby and Clackamas PMU stayed RED.
+  source: Steph 2026-10-14, FOLLOWUPS 79 (memory feedback_rulings_2026_10_14.md), commit 3504f7fe
+  encoded_in: [flats/config/flags.yaml]
+
+- id: 2026-10-14-unchecked-design-details
+  kind: ruling
+  date: 2026-10-14
+  scope: {}
+  question: Do design details the screen does not check (glazing ratio, eave depth, porch area) block green?
+  ruling: >-
+    Measurable design details we do not check do not block green -- the pod
+    can be adapted to them.
+  effect: An unchecked measurable design standard does not hold a lot off GREEN.
+  source: Steph 2026-10-14 (memory feedback_rulings_2026_10_14.md)
+
+- id: 2026-10-14-split-zones
+  kind: ruling
+  date: 2026-10-14
+  scope: {}
+  question: >-
+    What colour is a lot in two zoning districts whose building, lane or
+    court stands on the other district's ground?
+  ruling: '"first check if the city has a rule on this. If no, I would say yellow."'
+  effect: >-
+    A city rule on split lots is applied; where the city has none, the lot
+    is YELLOW with ZONE-SPLIT naming the district.
+  source: Steph 2026-10-14, FOLLOWUPS 76(b) (flats/config/split_zone.yaml)
+  encoded_in: [flats/config/split_zone.yaml, flats/geom/split_zone.py]
+
+- id: 2026-10-14-road-dedication
+  kind: ruling
+  date: 2026-10-14
+  scope: {}
+  question: >-
+    Where a code measures setbacks from a future street width or a street
+    centre line, is the strip taken off the buildable area?
+  ruling: >-
+    "YES" -- take the strip off the buildable area in Washington County
+    unincorporated (FOLLOWUPS 67) and in the cities (FOLLOWUPS 77); an
+    unranked street is taken at its worst case.
+  effect: The dedication or centre-line strip comes off the buildable area before the fit.
+  source: Steph 2026-10-14 (memory feedback_rulings_2026_10_14.md)
+  encoded_in: [flats/geom/dedication.py]
+
+- id: 2026-10-14-protected-historic-red
+  kind: ruling
+  date: 2026-10-14
+  scope: {}
+  question: >-
+    What colour is a lot holding a protected historic building (e.g. a
+    contributing resource in a Portland conservation district)?
+  ruling: RED.
+  effect: >-
+    A lot holding a protected historic resource is RED. Built so far from
+    Portland's historic resource map (Portland and Multnomah
+    unincorporated).
+  source: Steph 2026-10-14 (memory feedback_rulings_2026_10_14.md; flats/config/pipeline.yaml)
+  encoded_in: [flats/config/pipeline.yaml]
+
+- id: 2026-10-14-frontage-cap-any-street
+  kind: ruling
+  date: 2026-10-14
+  scope: {}
+  question: Does a cap on how much of a street frontage parking may take apply to side and rear streets too?
+  ruling: >-
+    "I read this as 'any' street frontage. So front, back, side streets if
+    they exist." A court with no street beside it is not capped.
+  effect: >-
+    parking_area_frontage_any_street holds the cap on every street line the
+    lot has, read against one street line at a time.
+  source: Steph 2026-10-14, FOLLOWUPS 80(a) (memory feedback_rulings_2026_10_14.md), commits 3504f7fe, 667f57e9
+
+# ---------------------------------------------------------------------------
+# County and city
+# ---------------------------------------------------------------------------
+
+- id: 2026-07-24-lake-oswego-excluded
+  kind: ruling
+  date: 2026-07-24
+  scope:
+    county: clackamas
+    city: lake-oswego
+  question: Is Lake Oswego screened?
+  ruling: >-
+    "Excluded by owner decision 2026-07-24: zoning permits quadplexes, but
+    the Multnomah slice is the Mountain Park PUD -- pre-HB-2001 HOA covenants
+    + design review + litigation risk make by-right practically
+    unbankable."
+  effect: >-
+    eligible false: the zoning join is skipped and no Lake Oswego lot is
+    screened. The stated reason concerns the Multnomah slice only
+    (docs/HUMAN_TODO.md item 16).
+  source: Lot Analysis/quadfit/config/rules.yaml (memory project_flats_lake_oswego_switched_off.md)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/lake-oswego.yaml]
+
+- id: 2026-09-13-portland-alley-is-aisle
+  kind: ruling
+  date: 2026-09-13
+  scope:
+    county: multnomah
+    city: portland
+  question: On an alley-fed plan, does the alley count as the parking aisle?
+  ruling: '"Alley is lane"'
+  effect: >-
+    The alley is the aisle, cars back straight out (20 ft of maneuvering,
+    PCC 33.266.130.F.1.b(2)), and the alley width is trusted.
+  source: >-
+    Steph 2026-09-13 (flats/config/jurisdictions/or/multnomah/portland.yaml;
+    memory project_quadfit_alley_access.md), commit 1e0c6c81
+  encoded_in: [flats/config/jurisdictions/or/multnomah/portland.yaml]
+
+- id: 2026-09-26-portland-corner-front-guidance
+  kind: ruling
+  date: 2026-09-26
+  scope:
+    county: multnomah
+    city: portland
+  question: On a corner lot in Portland, which street is the front?
+  ruling: >-
+    "Some cities allow developer choice, others have strict standards. So
+    we need to abide if Portland has guidance on which is front and which is
+    side."
+  effect: Portland's corner lots front the shorter lot line, as its code says.
+  source: Steph 2026-09-26 (memory project_flats_corner_front.md), commit ca52f76a
+  encoded_in: [flats/geom/corner.py]
+
+- id: 2026-09-30-portland-aisle-20ft
+  kind: ruling
+  date: 2026-09-30
+  scope:
+    county: multnomah
+    city: portland
+  question: Portland's code states no aisle for a fourplex; which width is drawn?
+  ruling: '"Use 20 for Portland."'
+  effect: >-
+    The court is drawn with a 20 ft aisle (PCC Table 266-4 at 90 degrees),
+    one way and two way, in place of the 24 ft national floor.
+  source: Steph 2026-09-30, HUMAN_TODO 3, FOLLOWUPS 22 (flats/config/jurisdictions/or/multnomah/portland.yaml)
+  encoded_in: [flats/config/jurisdictions/or/multnomah/portland.yaml]
+
+- id: 2026-09-30-portland-maintained-street
+  kind: ruling
+  date: 2026-09-30
+  scope:
+    county: multnomah
+    city: portland
+  question: >-
+    Portland prohibits a fourplex on a lot without frontage on a maintained
+    street; with no map of maintained streets, how are lots treated?
+  ruling: >-
+    "assume every lot qualifies. The only lots that wouldn't would be
+    islanded private streets which is silly. All private streets we care
+    about are connected to maintained streets."
+  effect: Every Portland lot is treated as fronting a maintained street; the rule is not encoded.
+  source: Steph 2026-09-30, docs/HUMAN_TODO.md item 17
+
+- id: 2026-10-04-portland-constrained-sites-red
+  kind: ruling
+  date: 2026-10-04
+  scope:
+    county: multnomah
+    city: portland
+  question: >-
+    A lot in Portland's Constrained Sites overlay (map letter z) loses the
+    fourplex allowance; is it red, or yellow for the attached-house route?
+  ruling: '"Red, way in noted"'
+  effect: >-
+    A mapped lot is RED; the attached-house route after a land division is
+    logged, not taken. The same Portland code is applied in Multnomah
+    County's unincorporated pockets.
+  source: Steph 2026-10-04, FOLLOWUPS 42(a) (docs/FOLLOWUPS.md item 42), commit e55c22ee
+  encoded_in:
+    - flats/config/jurisdictions/or/multnomah/portland.yaml
+    - flats/config/jurisdictions/or/multnomah/_unincorporated.yaml
+
+- id: 2026-09-30-clackamas-floodplain-district-assumed-absent
+  kind: ruling
+  date: 2026-09-30
+  scope:
+    county: clackamas
+    city: _unincorporated
+  question: >-
+    The county prohibits middle housing in its Floodplain Management
+    District, a map we do not hold; how are lots treated?
+  ruling: >-
+    "assume every lot qualifies." Every unincorporated Clackamas lot is
+    treated as outside the Floodplain Management District.
+  effect: The prohibition is not encoded; fetching the district map stays queued as the check.
+  source: Steph 2026-09-30, docs/HUMAN_TODO.md item 17
+
+- id: 2026-10-09-clackamas-design-review-zones-red
+  kind: ruling
+  date: 2026-10-09
+  scope:
+    county: clackamas
+    city: _unincorporated
+    zones: [MR1, MR2, HDR]
+  question: >-
+    Under the by-right-only ruling, are the county districts that need ZDO
+    1102.01(A) design review open?
+  ruling: Clackamas MR-1, MR-2 and HDR are RED BY RULING (ZDO 1102.01(A) design review).
+  effect: >-
+    163 green MR-1/MR-2 lots went red. An agent extended the same sentence
+    to PMD and VA.
+  source: Steph 2026-10-09, docs/FOLLOWUPS.md item 52
+  superseded_by: 2026-10-14-review-tiers
+
+- id: 2026-09-18-milwaukie-one-stall-per-home
+  kind: ruling
+  date: 2026-09-18
+  scope:
+    county: clackamas
+    city: milwaukie
+  question: >-
+    Milwaukie caps a quadplex at one stall per home (four in all); is that
+    marketable?
+  ruling: '"4 is enough to sell" -- one stall per home sells.'
+  effect: Milwaukie's greens stand, with "four of four" written beside the colour.
+  source: Steph 2026-09-18, docs/HUMAN_TODO.md item 5
+
+- id: 2026-10-09-milwaukie-dmu-optional-review
+  kind: ruling
+  date: 2026-10-09
+  scope:
+    county: clackamas
+    city: milwaukie
+    zones: [DMU]
+  question: >-
+    Milwaukie DMU's design review can be avoided by electing clear and
+    objective standards; is the zone open under the by-right rule?
+  ruling: Milwaukie DMU ALLOWED (design review optional via clear and objective standards).
+  effect: An optional review is by-right; DMU is screened on its standards.
+  source: Steph 2026-10-09, docs/FOLLOWUPS.md item 52 (memory feedback_by_right_only.md)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/milwaukie.yaml]
+
+- id: 2026-10-09-gladstone-portland-avenue-yellow
+  kind: ruling
+  date: 2026-10-09
+  scope:
+    county: clackamas
+    city: gladstone
+    zones: [C2]
+  question: >-
+    A C2 lot along Portland Avenue needs an avenue-facing entrance and 25%
+    ground-floor glass; nothing says whether the pod has them. What colour?
+  ruling: YELLOW until known -- no assumption about the pod.
+  effect: >-
+    C2 lots within 60 ft of the Portland Avenue centreline are YELLOW under
+    FACT-ALONG-PORTLAND-AVENUE.
+  source: Steph 2026-10-09, docs/FOLLOWUPS.md item 52 (flats/config/jurisdictions/or/clackamas/gladstone.yaml)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/gladstone.yaml, flats/config/flags.yaml]
+
+- id: 2026-10-08-estacada-staff-review-by-right
+  kind: ruling
+  date: 2026-10-08
+  scope:
+    county: clackamas
+    city: estacada
+    zones: [C-2, CMU, R-3]
+  question: Is Estacada's EMC 16.132.015 planning-staff review a discretionary review?
+  ruling: The 16.132.015 planning-staff review is by-right.
+  effect: The zones are screened on their standards; the staff check does not refuse them.
+  source: docs/FOLLOWUPS.md ("only the 16.132.015 planning-staff review, which Steph ruled by-right"); memory feedback_by_right_only.md
+
+- id: 2026-10-08-estacada-ncr-named-streets
+  kind: ruling
+  date: 2026-10-08
+  scope:
+    county: clackamas
+    city: estacada
+    zones: [NCR]
+  question: >-
+    NCR allows a fourplex only within 200 ft of Eagle Creek Rd, Hinman Rd or
+    a major collector; where is the 200 ft measured from?
+  ruling: Measure that distance with the named streets as the origin.
+  effect: >-
+    near_named_street_200ft is measured from the named streets; the
+    major-collector half is unmeasured, so such a lot screens RED.
+  source: Steph 2026-10-08 (flats/config/jurisdictions/or/clackamas/estacada.yaml)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/estacada.yaml]
+
+- id: 2026-10-08-canby-no-state-fourplex-backstop
+  kind: ruling
+  date: 2026-10-08
+  scope:
+    county: clackamas
+    city: canby
+  question: Does the state middle-housing rule force Canby to allow fourplexes?
+  ruling: >-
+    Canby is a Medium City outside Metro, so the state rule forces only
+    duplexes there; there is no state backstop for fourplexes or townhome
+    rows (Steph confirmed this reading 2026-10-08).
+  effect: Canby is screened on its own code with no state middle-housing relief for the pod.
+  source: Steph 2026-10-08 (memory feedback_by_right_only.md)
+
+- id: 2026-10-08-sandy-no-state-fourplex-backstop
+  kind: ruling
+  date: 2026-10-08
+  scope:
+    county: clackamas
+    city: sandy
+  question: Does the state middle-housing rule force Sandy to allow fourplexes?
+  ruling: >-
+    Sandy is a Medium City outside Metro, so the state rule forces only
+    duplexes there; there is no state backstop for fourplexes or townhome
+    rows (Steph confirmed this reading 2026-10-08).
+  effect: Sandy is screened on its own code with no state middle-housing relief for the pod.
+  source: Steph 2026-10-08 (memory feedback_by_right_only.md)
+
+- id: 2026-09-13-wilsonville-alley-readings
+  kind: ruling
+  date: 2026-09-13
+  scope:
+    county: clackamas
+    city: wilsonville
+  question: >-
+    Wilsonville 4.113(.14)(D)(4)(c)(i) sends access to a paved alley; does
+    it reach a lot with one street and an alley, and an unpaved alley?
+  ruling: >-
+    Both readings taken the strict way, approved by Steph: the alley is the
+    second frontage, and a lot on an unpaved alley is sent to the alley
+    anyway.
+  effect: A Wilsonville lot that abuts an alley takes its access from the alley.
+  source: Steph 2026-09-13 (flats/config/jurisdictions/or/clackamas/wilsonville.yaml)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/wilsonville.yaml]
+
+- id: 2026-10-02-wilsonville-pdi-rsia-project-site
+  kind: ruling
+  date: 2026-10-02
+  scope:
+    county: clackamas
+    city: wilsonville
+    zones: [PDI-RSIA]
+  question: Is PDI-RSIA's ten percent residential share measured across the lot or the project site?
+  ruling: >-
+    "call it project site" -- and the refusal stands regardless ("regardless,
+    this lot doesn't work for us").
+  effect: PDI-RSIA stays refused.
+  source: Steph 2026-10-02 (flats/config/jurisdictions/or/clackamas/wilsonville.yaml)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/wilsonville.yaml]
+
+- id: 2026-09-13-west-linn-alley-access
+  kind: ruling
+  date: 2026-09-13
+  scope:
+    county: clackamas
+    city: west-linn
+  question: West Linn forbids street access to a lot that has an alley; is that taken as written?
+  ruling: Taken as written, the strict way, at Steph's approval -- a lot with an alley is sent to it.
+  effect: parking_alley_access_required holds on a West Linn lot that abuts an alley.
+  source: Steph 2026-09-13 (flats/config/jurisdictions/or/clackamas/west-linn.yaml)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/west-linn.yaml]
+
+- id: 2026-10-06-west-linn-fish-bearing-streams
+  kind: ruling
+  date: 2026-10-06
+  scope:
+    county: clackamas
+    city: west-linn
+  question: Should West Linn's fish-bearing stream buffer be widened (ODFW 65 vs 100 ft)?
+  ruling: '"ignore"'
+  effect: No wider fish-bearing stream buffer is applied.
+  source: Steph 2026-10-06, docs/FOLLOWUPS.md item 42
+
+- id: 2026-10-02-tualatin-townhouse-lot-size
+  kind: ruling
+  date: 2026-10-02
+  scope:
+    county: clackamas
+    city: tualatin
+    zones: [RH/HR]
+  question: Table 44-3 prints no townhouse lot size; what minimum lot do townhouses take?
+  ruling: >-
+    Townhouses take the "All Other Permitted Uses" row -- one number for the
+    pod on one lot and on unit lots.
+  effect: min_lot_sqft 10,000 for the pod in RH/HR, with no unit-lot variant.
+  source: Steph 2026-10-02 (flats/config/jurisdictions/or/clackamas/tualatin.yaml)
+  encoded_in: [flats/config/jurisdictions/or/clackamas/tualatin.yaml]
+
+- id: 2026-09-29-hillsboro-story-math
+  kind: ruling
+  date: 2026-09-29
+  scope:
+    county: washington
+    city: hillsboro
+  question: How tall is a height limit stated in stories (Hillsboro "2 1/2 stories")?
+  ruling: >-
+    Height math is literal: at Hillsboro's ten-foot story, "2 1/2 stories" is
+    25 ft ("Yes, that math holds").
+  effect: Story limits are converted at 10 ft a story.
+  source: >-
+    Steph 2026-09-29, docs/HUMAN_TODO.md item 25C
+    (flats/config/jurisdictions/or/washington/hillsboro.yaml;
+    memory feedback_flats_reading_rules_2026_09_29.md)
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml]
+
+- id: 2026-10-09-hillsboro-anx-yellow
+  kind: ruling
+  date: 2026-10-09
+  scope:
+    county: washington
+    city: hillsboro
+    zones: [ANX]
+  question: How are lots on Hillsboro's ANX map code treated?
+  ruling: Hillsboro ANX stays yellow.
+  effect: ANX lots stay YELLOW.
+  source: Steph 2026-10-09, docs/FOLLOWUPS.md item 52 (memory feedback_by_right_only.md)
+  encoded_in: [flats/config/jurisdictions/or/washington/hillsboro.yaml]
+
+- id: 2026-09-29-beaverton-upaa-not-a-hold
+  kind: ruling
+  date: 2026-09-29
+  scope:
+    county: washington
+    city: beaverton
+  question: >-
+    Beaverton's urban planning area agreement (§V.D) can hold part-built
+    annexed developments to county standards; does it hold every lot?
+  ruling: >-
+    The BDC governs: the clause is discretionary, it reaches only
+    developments part-built when the city took them over, and we build new
+    projects.
+  effect: >-
+    The county qualification is removed from every Beaverton standard; the
+    clause is recorded as a known unknown.
+  source: Steph 2026-09-29, docs/HUMAN_TODO.md item 25C (flats/config/jurisdictions/or/washington/beaverton.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/beaverton.yaml]
+
+- id: 2026-10-01-beaverton-utility-easement
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: beaverton
+  question: >-
+    Beaverton says no building may encroach into a public utility easement,
+    whose width no map holds; how is it screened?
+  ruling: >-
+    Fits with a 10 ft yard on every street line: answered; only at 5 ft:
+    yellow; not even at 5 ft: red. Side and rear lines take no easement
+    yard.
+  effect: The street-line easement yard is screened at 10 ft (green) and 5 ft (yellow).
+  source: Steph 2026-10-01, FOLLOWUPS 17(e) (flats/config/easements.yaml)
+  encoded_in: [flats/config/easements.yaml]
+
+- id: 2026-10-02-beaverton-common-driveway
+  kind: ruling
+  date: 2026-10-02
+  scope:
+    county: washington
+    city: beaverton
+  question: >-
+    Beaverton's net developable area deducts common driveways and
+    constrained land; does that reach the pod's own drive and land no one
+    set aside in a tract?
+  ruling: >-
+    The pod's own drive (lane and aisle, not the stalls) is a "common
+    driveway", and the constrained lands come off whether or not anyone set
+    them aside in a tract ("very few will have done that").
+  effect: The drive and FEMA's floodplain are deducted from net developable area.
+  source: Steph 2026-10-02 (flats/config/jurisdictions/or/washington/beaverton.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/beaverton.yaml]
+
+- id: 2026-10-05-oregon-city-utility-easement
+  kind: ruling
+  date: 2026-10-05
+  scope:
+    county: clackamas
+    city: oregon-city
+  question: >-
+    Oregon City says public utility easements may supersede the minimum
+    setback; does Beaverton's easement rule apply?
+  ruling: Oregon City takes the same rule as Beaverton.
+  effect: The street-line easement yard is screened at 10 ft (green) and 5 ft (yellow).
+  source: Steph 2026-10-05, FOLLOWUPS 43 (flats/config/easements.yaml)
+  encoded_in: [flats/config/easements.yaml]
+
+- id: 2026-10-14-oregon-city-road-zone-standin
+  kind: ruling
+  date: 2026-10-14
+  scope:
+    county: clackamas
+    city: oregon-city
+  question: >-
+    Oregon City keys road width to the land-use designation on both sides of
+    the street, which we do not hold; how is the strip read?
+  ruling: >-
+    Use the measured zone across the street as a stand-in for the plan
+    designation, and "FLAG the lot as low-risk".
+  effect: >-
+    Where the stand-in decides the width, the lot carries
+    OC-ROAD-ZONE-STANDIN at severity 2 (a green lot stays green).
+  source: Steph 2026-10-14, FOLLOWUPS 82 (flats/config/flags.yaml; flats/config/jurisdictions/or/clackamas/oregon-city.yaml), commit 5c4051cc
+  encoded_in: [flats/config/jurisdictions/or/clackamas/oregon-city.yaml, flats/config/flags.yaml]
+
+- id: 2026-10-01-cornelius-fourplex-not-multi-family
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: cornelius
+  question: Cornelius does not define "multi-family"; is the fourplex multi-family?
+  ruling: The fourplex is NOT multi-family in Cornelius.
+  effect: A-2 holds the figures that are not the multi-family ones.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/cornelius.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/cornelius.yaml]
+
+- id: 2026-10-01-cornelius-parking-out-of-yards
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: cornelius
+  question: Cornelius keeps required parking out of required yards; is the side and rear yard charged?
+  ruling: '"Yes, charge them."'
+  effect: parking_required_yard_prohibited holds the stalls and aisle out of every required yard.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/cornelius.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/cornelius.yaml]
+
+- id: 2026-10-01-cornelius-stall-9ft
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: cornelius
+  question: Is a Cornelius stall 8.5 ft (the definition) or 9 ft (the parking chapter)?
+  ruling: Keep 9.
+  effect: The stall is held at 9 ft wide, 20 ft long.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/cornelius.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/cornelius.yaml]
+
+- id: 2026-10-01-cornelius-corner-front-narrowest
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: cornelius
+  question: >-
+    Which street is the front of a Cornelius corner lot? The only rule is the
+    solar-access definition's "the front lot line is that with the narrowest
+    frontage".
+  ruling: Keep it.
+  effect: front_lot_line_corner is the shortest frontage.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/cornelius.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/cornelius.yaml]
+
+- id: 2026-10-01-cornelius-solar-shade-warning
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: cornelius
+    zones: [R-7, R-10]
+  question: >-
+    Cornelius caps height by the shade cast north (18.160), which nothing
+    measures; how is it screened?
+  ruling: '"Green with a warning"'
+  effect: >-
+    Every R-7 and R-10 lot carries solar_shade_limit, a warning on the lot
+    page that never moves the colour.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/cornelius.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/cornelius.yaml]
+
+- id: 2026-10-01-cornelius-no-covered-parking
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: cornelius
+  question: Cornelius requires one covered stall a home; does the pod have covered parking?
+  ruling: The pod has no covered parking.
+  effect: >-
+    Where the requirement holds (the townhouse path) the lot fails on it;
+    the state spares the one-lot quadplex.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/cornelius.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/cornelius.yaml]
+
+- id: 2026-10-01-cornelius-cc-refused
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: cornelius
+    zones: [CC]
+  question: Is Cornelius CC open to the pod?
+  ruling: CC stays refused away from Adair and Baseline.
+  effect: CC is refused.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/cornelius.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/cornelius.yaml]
+
+- id: 2026-10-01-cornelius-gmu-townhouse-only
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: cornelius
+    zones: [GMU]
+  question: Does Cornelius GMU take four homes on one lot?
+  ruling: >-
+    Four homes on one lot stays NO -- the fourplex is not multi-family; the
+    townhouse path is open.
+  effect: GMU is screened on the townhouse path only, behind an untraced subdistrict figure.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/cornelius.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/cornelius.yaml]
+
+- id: 2026-10-01-cornelius-one-home-line-cancelled
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: cornelius
+    zones: [R-7]
+  question: >-
+    18.20.040(B) prohibits more than one dwelling on a lot except an ADU or
+    duplex; does it refuse the pod?
+  ruling: Cancelled by state law.
+  effect: The one-home line does not refuse the pod.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/cornelius.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/cornelius.yaml]
+
+- id: 2026-10-01-tigard-townhome-split-lots
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: tigard
+  question: Does Tigard's maximum lot size bound the whole site or each rowhouse lot?
+  ruling: >-
+    "Read Tigard's definition of 'townhome'. If it's split lots, then that's
+    our answer."
+  effect: >-
+    A rowhouse is a townhouse on its own lot, so the maximum lot size bounds
+    each rowhouse lot.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/tigard.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/tigard.yaml]
+
+- id: 2026-10-01-tigard-mu-empty-cell-no-limit
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: tigard
+    zones: [MUC]
+  question: Tigard's tables leave MUC's rowhouse cells blank; is there a limit?
+  ruling: '"Empty means no limit."'
+  effect: MUC's blank lot size, width, setback and height cells set no limit.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/tigard.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/tigard.yaml]
+
+- id: 2026-10-01-tigard-triangle-one-lane-drive
+  kind: ruling
+  date: 2026-10-01
+  scope:
+    county: washington
+    city: tigard
+    zones: [TMU]
+  question: In the Tigard Triangle, may the court be reached by a single 10 ft drive?
+  ruling: In the Triangle a 10 ft one-lane drive works -- cars taking turns.
+  effect: driveway_one_lane_ft 10 -- the lane beside the building is drawn at 10 ft, not 12.
+  source: Steph 2026-10-01 (flats/config/jurisdictions/or/washington/tigard.yaml)
+  encoded_in: [flats/config/jurisdictions/or/washington/tigard.yaml]
+
+- id: 2026-09-08-fairview-open-space
+  kind: ruling
+  date: 2026-09-08
+  scope:
+    county: multnomah
+    city: fairview
+  question: Does Fairview's 10 percent open space rule for multiple-unit developments reach the pod?
+  ruling: The pod will accommodate 10 percent.
+  effect: The conservative reading is held; it costs nothing.
+  source: Steph 2026-09-08 (flats/config/jurisdictions/or/multnomah/fairview.yaml)
+  encoded_in: [flats/config/jurisdictions/or/multnomah/fairview.yaml]
