@@ -9,6 +9,13 @@ past 8,064 sf of lot in the Inner area, or 16,128 sf in the Eastern and
 Western, the pod is too little building and the lot is RED. The code names no
 minimum for the River and Central City pattern areas, and states none: silence
 is none. A lot no pattern area answers takes the Inner 0.5, the worst case.
+A lot only partly in the overlay is measured on that part: PCC 33.700.070.F,
+"When a site is in more than one zone, the development standards of each zone
+apply to the portion of the site in that zone" (``CITES["split_site"]``), and
+the minimum FAR is one of 33.415's development regulations. The pod puts at
+most its whole floor area on the part, so it misses where that floor area is
+under the minimum times the part's area. A part over
+``1 - MAIN_STREET_SHARE`` of the lot is the whole lot (map noise).
 
 **Protected historic resources (PCC 33.445).** Steph ruled 2026-10-14: a lot
 carrying a protected historic building is RED -- a Historic, Conservation or
@@ -132,6 +139,12 @@ CITES: Mapping[str, tuple[str, str, str]] = {
         "or/multnomah/portland/33.445.txt#L1743-L1744",
         "If the review body approves demolition of the resource",
     ),
+    "split_site": (
+        "PCC 33.700.070.F",
+        "or/multnomah/portland/33.700.txt#L385-L386",
+        "When a site is in more than one zone, the development standards of each zone apply to "
+        "the portion of the site in that zone",
+    ),
     "historic landmark": (
         "PCC 33.445.100.E.1",
         "or/multnomah/portland/33.445.txt#L360-L362",
@@ -160,8 +173,18 @@ class Reading:
     pattern_areas: tuple[str, ...] = ()
     #: Protected resources on the lot, each said in a line.
     protected: tuple[str, ...] = ()
-    #: Contributing resources in a National Register District (held, not red).
+    #: Contributing resources in a National Register District.
     nr_district: tuple[str, ...] = ()
+    #: The share of the lot in the "m" overlay (33.700.070.F measures the
+    #: minimum FAR on that part).
+    main_street_share: float = 1.0
+
+    @property
+    def main_street_part(self) -> float:
+        """The share of the lot the minimum FAR is measured on: the part in
+        the overlay, or the whole lot past ``1 - MAIN_STREET_SHARE``."""
+        share = max(0.0, min(1.0, self.main_street_share))
+        return 1.0 if share >= 1.0 - MAIN_STREET_SHARE else share
 
     @property
     def min_far(self) -> float | None:
@@ -185,6 +208,7 @@ def encode(r: Reading) -> str:
             "pdx_pattern_area": list(r.pattern_areas),
             "pdx_protected_resource": list(r.protected),
             "pdx_nr_district_resource": list(r.nr_district),
+            "pdx_main_street_share": r.main_street_share,
         },
         separators=(",", ":"),
     )
@@ -200,6 +224,7 @@ def decode(raw: str | None) -> Reading | None:
         pattern_areas=tuple(doc.get("pdx_pattern_area") or ()),
         protected=tuple(doc.get("pdx_protected_resource") or ()),
         nr_district=tuple(doc.get("pdx_nr_district_resource") or ()),
+        main_street_share=float(doc.get("pdx_main_street_share", 1.0)),
     )
 
 
@@ -345,6 +370,7 @@ def read(lot: Any, maps: Maps) -> Reading | None:
         if words not in target:
             target.append(words)
     return Reading(
+        main_street_share=round(min(1.0, inside / area), 4),
         main_street=inside / area >= MAIN_STREET_SHARE,
         pattern_areas=patterns,
         protected=tuple(protected),
@@ -404,12 +430,20 @@ def binds_for(reading: Reading | None, floor_sqft: float, lot_sqft: float) -> tu
             )
         )
     need = reading.min_far
-    if need is not None and lot_sqft > 0:
-        far = floor_sqft / lot_sqft
+    part = reading.main_street_part
+    measured = lot_sqft * part
+    if need is not None and measured > 0:
+        far = floor_sqft / measured
         if far < need - 1e-9:
             inner = need >= MIN_FAR["Inner"]
             cite = CITES["min_far_inner" if inner else "min_far_outer"][0]
             area = ", ".join(reading.pattern_areas) or "no pattern area mapped, taken as Inner"
+            on = (
+                f"{lot_sqft:,.0f} sf of lot"
+                if part >= 1.0
+                else f"the {measured:,.0f} sf of the {lot_sqft:,.0f} sf lot in the overlay "
+                f"({CITES['split_site'][0]}: each zone's standards on its portion of the site)"
+            )
             out.append(
                 flag_plan.Bind(
                     MIN_FAR_CHECK,
@@ -417,7 +451,7 @@ def binds_for(reading: Reading | None, floor_sqft: float, lot_sqft: float) -> tu
                     need,
                     round(need - far, 4),
                     source=f"{cite}: Centers Main Street overlay ({area} pattern area), "
-                    f"{floor_sqft:,.0f} sf of floor on {lot_sqft:,.0f} sf of lot",
+                    f"{floor_sqft:,.0f} sf of floor on {on}",
                 )
             )
     return tuple(out)

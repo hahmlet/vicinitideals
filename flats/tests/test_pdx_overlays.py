@@ -157,6 +157,38 @@ def test_the_same_lot_in_the_eastern_pattern_area_clears_a_quarter(tmp_path) -> 
     assert bind.threshold == 0.25 and bind.source.startswith("PCC 33.415.310.B")
 
 
+def test_a_lot_partly_in_the_overlay_is_measured_on_that_part(maps) -> None:
+    # PCC 33.700.070.F: each zone's standards apply to the portion of the
+    # site in that zone. A 150 x 120 ft lot reaching ~49 ft over the
+    # overlay's west line on Macadam: 4,032 sf on the whole 18,000 sf is
+    # 0.22, under 0.5, but the part in the overlay is ~5,900 sf, and 4,032 sf
+    # on it clears the 0.5.
+    lot = shapely.box(7644818, 666680, 7644968, 666800)
+    got = pdx.read(lot, maps)
+    assert got.main_street and 0.3 < got.main_street_share < 0.36
+    assert got.main_street_part == got.main_street_share
+    assert pdx.binds_for(got, 4032, lot.area) == ()
+    # Reach ~99 ft over it and the part is ~11,900 sf: the same pod misses.
+    wider = shapely.box(7644818, 666680, 7645018, 666800)
+    got = pdx.read(wider, maps)
+    (bind,) = pdx.binds_for(got, 4032, wider.area)
+    assert bind.threshold == 0.5
+    assert bind.observed == pytest.approx(4032 / (wider.area * got.main_street_share), abs=1e-3)
+    assert "PCC 33.700.070.F" in bind.source and "in the overlay" in bind.source
+
+
+def test_a_lot_nearly_all_in_the_overlay_is_the_whole_lot() -> None:
+    # Past 90 % the rest is the zoning map and the taxlot disagreeing.
+    near = pdx.Reading(True, ("Inner",), main_street_share=0.93)
+    assert near.main_street_part == 1.0
+    (bind,) = pdx.binds_for(near, 4032, 8907)
+    assert bind.observed == pytest.approx(4032 / 8907, abs=1e-4)
+    assert "33.700" not in bind.source
+    # A row written before the share was read is the whole lot.
+    assert pdx.decode('{"pdx_main_street_overlay": true}').main_street_share == 1.0
+    assert pdx.decode(pdx.encode(pdx.Reading(True, ("Inner",), main_street_share=0.4))).main_street_share == 0.4
+
+
 def test_a_lot_the_overlay_only_grazes_is_not_in_it(maps) -> None:
     # The Missouri lot sits under an R5 "d" polygon only; a strip of the
     # Macadam overlay drawn 5 ft into a lot is map noise.
