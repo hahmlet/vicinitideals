@@ -85,6 +85,30 @@ code:
 - id: "tdc.18.840.sublot-plats"
   url: https://ecode360.com/print/TI5024?guid=43709217
   title: Chapter 18.840 Sublot Plats
+- id: "tdc.18.910.improvement-standards"
+  url: https://ecode360.com/print/TI5024?guid=43709279
+  title: Chapter 18.910 Improvement Standards
+# The 2040 Transportation System Plan ("Tigard on the Move", Fehr & Peers,
+# January 2022), from the State Library of Oregon's depository copy:
+# tigard-or.gov answers a script 403 (Akamai), and the depository holds the
+# adopted plan as published. Two slices of the one PDF: 4.7, the motor
+# vehicle plan (its classes, Table 5, and where the cross-sections are
+# kept), and 8.1, the code changes it asks of Title 18. Read 2026-10-15 for
+# 18.210.030.A.1's ultimate right-of-way (FOLLOWUPS 81).
+- id: "tsp.2040.4.7.motor-vehicle"
+  url: https://digitalcollections.library.oregon.gov/assets/downloadwiz/371571
+  title: 2040 Transportation System Plan, 4.7 Motor Vehicle Plan
+  start: "Motor Vehicle Plan"
+  nth: 2
+  end: "TDM and TSMO Plan"
+  allow_thin: true
+- id: "tsp.2040.8.1.code-changes"
+  url: https://digitalcollections.library.oregon.gov/assets/downloadwiz/371571
+  title: 2040 Transportation System Plan, 8.1 Programmatic and Code Changes
+  start: "Programmatic and Code"
+  nth: 2
+  end: "Other Key Policy Shifts"
+  allow_thin: true
 - id: "tdc.18.920.access"
   url: https://ecode360.com/print/TI5024?guid=43709491
   title: Chapter 18.920 Access, Egress, and Circulation
