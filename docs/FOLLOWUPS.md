@@ -2926,25 +2926,40 @@ read when the weekly full re-screen lands.
    lane's). Next: bound the five cities + Sherwood and the side-court cities' corner/through lots,
    read every move, report to Steph. Watch: OC corner side courts (43 ft > 40), Beaverton side
    courts may gain, Sandy/Fairview through lots lose, small corners stay yellow (court not drawn).
-85. [scan: YES if Steph says yes] **ORS 197A.400(1)(a) "clear and objective" for housing (question
-   for Steph, 2026-10-14).** State law requires clear and objective standards for housing; where a
-   city's conditional-use or design-review path for the pod rests on judgement words, the state
-   rule may let the pod through on the stated standards alone. If Steph wants it weighed, read the
-   statute and its exceptions and list which RED-by-ruling zones (Canby, PMU1-3, Happy Valley,
-   ...) it could lift; nothing is encoded on it now.
-86. [scan: NO for (A)/(B); YES for (C1) once an ordinance is entered] **Agents could not recall
-   a property ruling (Steph 2026-10-15, GO for A/B/C1/C2 + item 85 the same day).** (A) MERGED
-   2026-10-15: `flats_find_lot` / `flats_lot_report` / `flats_rulings` JSON routes = MCP tools,
-   CLAUDE.md rule. (B) register being written (branch flats/rulings-register); (C1) RICAP 11 on
-   flats/ricap11; (C2) + 85 research running. An agent on another
-   surface answered Portland CI1 from our stored code (housing not allowed) and had no record of an
-   earlier conversation; Steph had found Portland RICAP 11 (adopted 2026-08-06, effective
-   2026-11-01: Household and Group Living ALLOWED in CI1 under RM1 rules) in the City Council
-   materials package (Exhibit B pp. 74-79), not the published code. claude-mem search was failing
-   (500) at the time. Offered: (A) a property lookup agents run first -- address/TLID -> the lot
-   page's colour, reasons, citations, flags and any ruling; (B) a rulings register keyed by place
-   (city/zone/lot), written when a ruling is made; (C1) adopted-not-yet-codified ordinances
-   entered by hand with their effective date, citing the adopted exhibit (an ordinance governs from
-   its effective date whether or not the city has codified it; Steph doubts Portland codifies RICAP
-   11 by Nov 1) -- CI1 first; (C2) check whether DLCD's notices of proposed/adopted amendments
-   (ORS 197.610) can be searched, as one statewide watch instead of 20+ council minutes.
+85. [scan: YES if Steph rules] **ORS 197A.400 "clear and objective" for housing -- RESEARCHED
+   2026-10-15, question with Steph.** Inside a UGB a city may apply only clear and objective
+   standards to housing; a discretionary path is legal only beside a clear one. East Park v. Salem
+   (LUBA 2022) threw out "compatible / minimal impact" conditional-use criteria and ordered
+   approval; HB 4037 (2026 Or Laws ch 108, in force 2026-07-01) adds no required hearing, applicant
+   alone appeals. Not lifted: use not listed at all (Happy Valley MUC/RCMU/CCC, Wilsonville PDC,
+   Milwaukie MUTSA, Oregon City MUE "similar use"), farm zones (Mult EFU), measured fails (Fairview
+   TCC, Wood Village NC), the statute's own exceptions (Portland central city + Gateway, historic
+   districts), no clear standards to judge by (Happy Valley MURM/PMU -> grey not green). Could lift
+   (red today, run 74, upper bound -- many also fail fit): Canby R-1.5/R-2/C-R 1,593; Estacada
+   R-2/R-3/C-1/R-C 492; Mult uninc CBD/OC/LR5/LR7 490; Cornelius C-2/CC/CMU 178; Gladstone C3/C1
+   126; Fairview VMU/VA/VC 69; Milwaukie NMU/SMU 56; Clackamas PMU1-3 17; Durham MDR 3 (~3,000).
+   Also argues the yellow "may add conditions" tier toward green. Asked Steph: red -> yellow with
+   a flag ("state law voids the judgement test; city may refuse first, appeal likely")? Research
+   notes: scratchpad state_law/ (session 0351d0eb).
+86. [scan: YES for (C1) once entered] **Agents could not recall a property ruling (Steph
+   2026-10-15, GO for A/B/C1/C2 the same day).** (A) MERGED 2026-10-15: `flats_find_lot` /
+   `flats_lot_report` / `flats_rulings` JSON routes = VicinitiDeals MCP tools, CLAUDE.md rule.
+   (B) MERGED 2026-10-15: flats/config/rulings.yaml, 98 entries (58 statewide, 25 city, 14 zone, 1
+   uninc), test_rulings_register.py. Left out as unattributed/ambiguous: FEMA fringe yellow, landslide
+   list, Tigard MUR stricter column (tigard.yaml L972), Portland total-turn, Hillsboro SCR side,
+   Milwaukie 22 ft aisle -- add when Steph rules. RULE: every new Steph ruling gets a register entry
+   in the same commit that encodes it. (C1) RICAP 11 on flats/ricap11 (Opus, phase 1). (C2)
+   RESEARCHED: DLCD PAPA adopted/proposed notice reports
+   (db.lcd.state.or.us/papa_website_reports/PublicNoticeAdoptedAmendments.aspx) filter by city +
+   date and export CSV; browser-only (needs automation); no effective date, no ordinance text;
+   RICAP 11 notice arrived 19 days after adoption and its summary never mentions CI1 housing, so
+   every notice from our cities needs a read, not a keyword filter. Offered to Steph: a weekly watch
+   that lists new notices for our cities for an agent read.
+87. [scan: YES -- greens only lose] **Protected historic buildings outside Portland (found
+   2026-10-15 by the register audit).** Steph's 2026-10-14 ruling (protected historic building on
+   the lot = RED) is built only from Portland's historic resource map (Portland + Multnomah uninc).
+   Other cities' landmarks and districts (e.g. Oregon City McLoughlin, West Linn Willamette, Milwaukie,
+   Lake Oswego when re-enabled) are not screened -> possible false GREEN. Next: find a statewide
+   source (Oregon SHPO Historic Sites Database / National Register GIS; ORS 197.772 + OAR
+   660-023-0200 decide which listings are "protected"), else per-city maps; apply the standing rule
+   (no re-ask), bound, read losses. Standing rule, no question for Steph.
