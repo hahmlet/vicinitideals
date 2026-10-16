@@ -959,9 +959,7 @@ read when the weekly full re-screen lands.
    Valley, Lake Oswego, Clackamas ZDO, Fairview, Wood Village, ~1,100
    numbers) have no printed page -- draw them from the stored HTML snapshot
    instead; (b) nothing reads the problems list yet -- wire a "differs" into
-   the signing disputes so the number reopens there; (c) Gresham
-   4.1400.pleasant-valley's page map no longer matches its source -- re-fetch
-   then re-map.
+   the signing disputes so the number reopens there.
 24. [scan: YES] **Oregon City 16.12.035.F -- one driveway approach per two townhouses
    (Steph 2026-09-30, from the page check).** "Townhouses shall have one
    driveway approach for every two dwelling units (round up ...)". Not
