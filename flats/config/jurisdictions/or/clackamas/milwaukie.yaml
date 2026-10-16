@@ -761,6 +761,9 @@ code:
   # eCode360 (code MI4969); /print/<code>?guid=<node> returns server-rendered
   # HTML. guid 43860500 is Chapter 19.300 Base Zones — both residential zones
   # (19.301 R-MD, 19.302 R-HD) in one document.
+  - id: "19.100.introductory-provisions"
+    url: https://ecode360.com/print/MI4969?guid=43860128
+    title: "MMC Chapter 19.100 - Introductory Provisions"
   - id: "19.200.definitions"
     url: https://ecode360.com/print/MI4969?guid=43860165
     title: "Chapter 19.200 - Definitions and Measurements"

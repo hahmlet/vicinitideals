@@ -1,0 +1,206 @@
+Close
+Print
+Resize:
+
+City of Milwaukie, OR
+
+[print date]
+
+Title 19. Zoning
+
+Chapter 19.100. INTRODUCTORY PROVISIONS
+
+§ 19.101. Title
+
+This title shall be known and may be cited as the Zoning Ordinance of the City of Milwaukie, Oregon. This title and any amendments to it shall be adopted by ordinance. Amendments to this title shall be subject to the provisions of Section 19.902.
+
+(Ord. 2025 § 2, 2011)
+
+§ 19.102. Purpose
+
+This title implements the Comprehensive Plan, which provides the policy framework within which land use and development review is conducted in the city. Amendments to the Comprehensive Plan shall be subject to the provisions of Section 19.902.
+
+The purpose of this title is to provide for the public health, safety, and general welfare of the citizens of the City through orderly community development including, but not limited to, consideration for concentration of population; economic development; sustainability; limitation of dangerous, offensive, or unwholesome trades or industries; maintenance of adequate light and air; and regulation of traffic.
+
+(Ord. 2025 § 2, 2011)
+
+§ 19.103. Applicability
+
+This title applies to all land, uses, and development within the corporate limits of the City of Milwaukie. It does not apply to temporary events as defined and provided for in Chapter 11.04.
+
+(Ord. 2025 § 2, 2011)
+
+§ 19.104. Interpretation
+
+The Planning Director shall have the authority and responsibility for interpreting all terms, provisions, and requirements of this title. Unless specifically defined in Section 19.201, words or phrases used in this title are intended to be interpreted with the meaning they have in common usage. Requests for interpretations may be made as described and provided for in Section 19.903.
+
+(Ord. 2025 § 2, 2011)
+
+§ 19.105. Severability
+
+The provisions of this title are severable. If any section, sentence, clause, or phrase of this title is adjudged by a court of competent jurisdiction to be invalid, the decision shall not affect the validity of the remaining portions of this title.
+
+(Ord. 2025 § 2, 2011)
+
+§ 19.106. Compliance
+
+Development may occur, a lot may be used, and a structure or part of a structure may be constructed, reconstructed, altered, occupied, or used only as this title permits. Where this title imposes greater restrictions than those imposed or required by other rules, regulations, or ordinances, the provisions of this title shall control. Where comparable provisions of this title are in conflict, the provisions that are the most restrictive shall control.
+
+(Ord. 2025 § 2, 2011)
+
+§ 19.106.1. Land Use Approvals.
+
+Uses or development that are regulated by Titles 14, 17, and 19 of the Milwaukie Municipal Code shall submit and obtain approval of all required land use applications prior to establishment or construction. Table 19.901 contains a complete list of the City's land use applications and the locations of the provisions that govern their submittal, review, and approval. Chapter 19.1000 contains the City's land use review procedures.
+
+§ 19.106.2. Permit Approvals.
+
+Uses or development that are regulated by Titles 14, 17, and 19 of the Milwaukie Municipal Code shall submit and obtain approval of all required development permits prior to establishment or construction.
+
+A.
+
+The Planning Director shall review applications for development and sign permits for compliance with applicable code provisions.
+
+B.
+
+The Planning Director may approve or deny applications for development and sign permits based on consistency with applicable code provisions.
+
+C.
+
+All development authorized by approved development and sign permits shall be in substantial conformance with plans approved by the Planning Director.
+
+D.
+
+Buildings for which permits have been issued shall not be occupied without prior occupancy approval in accordance with this subsection.
+
+E.
+
+Final occupancy approvals shall not be issued until completion of final zoning inspections and issuance of notice of completion by the Planning Director. Approval criteria for issuance of notice of completion includes all of the following:
+
+1.
+
+A written statement from the applicant that all improvements have been constructed in accordance with approved plans, except as modified and approved by appropriate approval authorities.
+
+2.
+
+Completion of zoning inspection by the Planning Director and confirmation that the project is in substantial conformance with approved plans.
+
+3.
+
+Payment of the final zoning inspection fee, as adopted by the City Council.
+
+F.
+
+The Planning Director shall complete the final zoning inspection within 5 working days from receipt of the applicant's request for final zoning inspection.
+
+§ 19.106.3. Violations.
+
+A.
+
+A person violating a provision of this title shall, upon conviction, be punished by imprisonment for not more than 30 days, or by a fine of not more than $200, or both. A violation of this title shall be considered a separate offense for each day the violation continues. If the violation was of a provision that was repealed or amended, the violation shall remain a violation to the extent that it does not conform to the provisions of this title.
+
+B.
+
+In case a building or land is located, constructed, maintained, repaired, altered, or used in violation of this title, the building or land in violation shall constitute a nuisance, and the City may, as an alternative to other remedies that are legally available for enforcing this title, institute injunction, mandamus, abatement, or other appropriate proceedings to prevent, enjoin temporarily or permanently, abate, or remove the unlawful location, construction, maintenance, repair, alteration, or use.
+
+§ 19.107. Zoning
+
+(Ord. 2025 § 2, 2011; Ord. 2036 § 3, 2011; Ord. 2106 § 2 (Exh. F), 2015; Ord. 2110 § 2 (Exh. G), 2015; Ord. 2112 § 2 (Exh. B), 2015; Ord. 2163 § 2, 2018; Ord. 2218 § 2 (Exh. B), 2022; Ord. 2224 § 2, 2022; Ord. 2229 § 2, 2023; Ord. 2245, 8/6/2024)
+
+§ 19.107.1. Zone Classifications.
+
+For the purposes of this title, the following base zones and overlay zones are established in the City per Table 19.107.1:
+
+Table 19.107.1 Classification of Zones  Table 19.107.1 Classification of Zones
+Zone Description                        Abbreviated Description
+Base Zones                              Base Zones
+Residential                             R-MD
+Residential                             R-HD
+Downtown Mixed Use                      DMU
+Open Space                              OS
+General Commercial                      C-G
+Community Shopping Commercial           C-CS
+Manufacturing                           M
+Business Industrial                     BI
+Planned Development                     PD
+Tacoma Station Area Mixed Use           MUTSA
+General Mixed Use                       GMU
+North Milwaukie Employment              NME
+Neighborhood Mixed Use                  NMU
+Small Mixed Use                         SMU
+Overlay Zones                           Overlay Zones
+Willamette Greenway                     WG
+Historic Preservation                   HP
+Flex Space                              FS
+Aircraft Landing Facility               L-F
+
+§ 19.107.2. Zoning Map.
+
+The zones described in Subsection 19.107.1 above are displayed on a zoning map entitled "Zoning Map of Milwaukie, Oregon." The Zoning Map shall be dated with the effective date of the ordinance that adopted the Zoning Map and the effective date of the ordinance that most recently amended the map. A certified copy of the map and map amendments, shall be maintained in the offices of the City Planning Department.
+
+§ 19.107.3. Zoning Map Amendments.
+
+Zoning Map amendments are subject to the provisions of Section 19.902. The procedures for processing a Zoning Map amendment application are located in Chapter 19.1000.
+
+§ 19.107.4. Zone Boundary Determinations.
+
+The exact location of a zone boundary shall be determined by the Planning Director where there is uncertainty, contradiction, or conflict as to the intended location of any zone boundary due to the scale, lack of detail, or illegibility of the Zoning Map. The determination shall be in accordance with the following guidelines:
+
+A.
+
+Street Lines
+
+Where zone boundaries are shown as approximately following the centerline of a right-of-way, such centerlines shall be construed to be the zone boundaries.
+
+B.
+
+Lot Lines
+
+Where zone boundaries are shown as approximately following lot lines, such lot lines shall be construed to be the zone boundaries.
+
+C.
+
+Water Courses
+
+Where zone boundaries are shown as approximately following the centerline of Water courses, such lines shall be construed to be the zone boundaries unless such boundaries are otherwise fixed by dimensions described elsewhere in this title.
+
+If a property owner disagrees with the Planning Director's initial determination, a formal determination request may be made as described and provided for in Section 19.903.
+
+§ 19.107.5. Zoning of Lots with Multiple Zones.
+
+If a zone boundary for a base zone in Chapter 19.300, as shown on the Zoning Map, divides a lot between 2 or more base zones, the entire lot shall be deemed to be in the base zone in which the greater area of the lot lies, provided that this adjustment involves a distance not to exceed 20 ft from the mapped base zone boundary. If an adjustment exceeds 20 ft, the regulations for the base zones shall apply to the lot as depicted on the Zoning Map.
+
+§ 19.107.6. Zoning of Annexed Areas.
+
+Land annexed to the City shall be assigned a land use and zoning designation that is consistent with the land use designations established by the Comprehensive Plan and the zones established by this title at the time of annexation. Annexations shall be adopted by ordinance pursuant to Chapter 19.1100.
+
+§ 19.107.7. Zoning of Public Right-of-Way.
+
+The zones applied to the public rights-of-way within the City boundaries as shown on the Zoning Map do not directly regulate the improvements or structures that are allowed in these rights-of-way. Improvements and structures in public rights-of-way are regulated by other rules, regulations, and ordinances maintained by the City and other road authorities, such as Chapter 19.700, Public Works Standards, and the Transportation System Plan.
+
+§ 19.108. Special Areas
+
+(Ord. 2036 § 3, 2011)
+
+§ 19.108.1. Special Area Classifications.
+
+For the purposes of this title, the following special areas are established in the City per Table 19.108.1:
+
+Table 19.108.1 Classification of Special Areas  Table 19.108.1 Classification of Special Areas
+Special Area Description                        Abbreviated Description
+Natural Resources                               NR
+
+§ 19.108.2. Special Area Maps.
+
+The special areas described in Subsection 19.108.1 are not displayed on the City's Zon-ing Map. They are shown on specific administrative maps.
+
+Natural resources are displayed on the Natural Resource (NR) Administrative Map, which is adopted by reference. Provisions for administering the NR Administrative Map are established in Subsection 19.402.15.
+
+§ 19.108.3. Classification of Annexed Areas.
+
+Land annexed to the City shall be assigned a special area designation consistent with the special area designations established by this title at the time of annexation. Annexations shall be adopted by ordinance pursuant to Chapter 19.1100.
+
+Land annexed to the City shall be assigned a natural resource designation as applicable in accordance with the provisions established in Subsection 19.402.15.
+
+§ 19.108.4. Classification of Public Rights-of-Way.
+
+The special area designations applied to the public rights-of-way within the City boundaries, as shown on any specific administrative map, do not directly regulate the improvements or structures that are allowed in these rights-of-way. Improvements and structures in public rights-of-way are regulated by other rules, regulations, and ordinances maintained by the City and other road authorities, such as Chapter 19.700 Public Facility improvements, the Public Works Standards, and the Transportation System Plan.
