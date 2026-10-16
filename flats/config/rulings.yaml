@@ -613,6 +613,37 @@
   effect: No disturbance allowance is credited inside a habitat conservation area.
   source: Steph 2026-10-06, docs/FOLLOWUPS.md item 42
 
+- id: 2026-10-06-fema-fringe-stays-yellow
+  kind: ruling
+  date: 2026-10-06
+  scope: {}
+  question: Should the screen treat the FEMA flood fringe as anything stronger than YELLOW?
+  ruling: '"we aren''t customizing for flood zones"'
+  effect: A lot in the FEMA flood fringe stays YELLOW; no flood-specific carve or RED is added.
+  source: Steph, docs/FOLLOWUPS.md item 42 (the item gives no day for this ruling; dated with its 2026-10-06 round)
+
+- id: 2026-10-05-landslide-slopes-declined
+  kind: ruling
+  date: 2026-10-05
+  scope: {}
+  question: >-
+    Should slopes that count only "within a landslide hazard area" (Beaverton
+    BDC 90, Wood Village 720.030, West Linn NHMP Maps 16/17) be read from
+    DOGAMI SLIDO or traced city maps?
+  ruling: >-
+    Declined: Steph agreed to leave it (FOLLOWUPS item 38 records "DECLINED").
+  effect: Landslide-area slopes stay assumed absent; no landslide layer is built.
+  source: Steph 2026-10-05, docs/FOLLOWUPS.md item 38
+
+- id: 2026-10-06-maybe-list-declined
+  kind: ruling
+  date: 2026-10-06
+  scope: {}
+  question: Should the "maybe list" (probable wetlands, hydric soils) be screened?
+  ruling: Declined (FOLLOWUPS item 42 records "RULED, never re-offer").
+  effect: Probable wetlands and hydric soils are not screened or carved.
+  source: Steph 2026-10-06, docs/FOLLOWUPS.md item 42
+
 - id: 2026-10-07-coarse-steep-yellow
   kind: ruling
   date: 2026-10-07
