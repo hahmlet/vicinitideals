@@ -103,6 +103,15 @@ def test_the_refusals_hold_the_use_row_only(cornelius: Layer) -> None:
         if zone == "GMU":
             continue  # the townhouse path, below
         assert set(held.values) == {"quadplex_allowed"}, zone
+        if zone == "CMU":
+            # Ground-floor dwellings are a conditional use (18.60.030(B)); ORS
+            # 197A.400 reduces the hearing to clear and objective standards
+            # inside a UGB (2026-10-15), and no dimension is encoded, so the
+            # lot reads UNKNOWN rather than green.
+            (door,) = held.values["quadplex_allowed"].variants
+            assert tuple(door.when) == ("conditional_use",)
+            assert "ORS 197A.400" in door.prov.cite
+            continue
         assert held.values["quadplex_allowed"].variants == (), zone
 
 

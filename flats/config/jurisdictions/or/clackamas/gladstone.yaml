@@ -1398,7 +1398,13 @@ zones:
       # (5)", a conditional use under Chapter 17.70.
       value: false
       quote: "or/clackamas/gladstone/17.20.c-3.txt#L69-L75,L93,L99"
+      variants:
+        - value: true
+          when: [conditional_use]
+          cite: "GMC 17.20.040(3), dwellings a conditional use subject to the MR standards of 17.14.050(1)-(5); ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/clackamas/gladstone/17.20.c-3.txt#L99"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): a dwelling here is a conditional use (Chapter 17.70) on criteria state law reduces to the clear and objective standards inside a UGB, so a `conditional_use` variant carries the true and the lot is judged on the standards below, flagged CLEAR-OBJECTIVE (green, below the yellow line). Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, Chapter 17.70, are not stored, and the only conditional-use criteria this code stores, 17.22.040 for the Office Park zone, are all judgement -- "minimal adverse impact", "compatible with the character and scale" (or/clackamas/gladstone/17.22.op.txt#L163-L171); held red until 17.70 is read. The 2026-10-08 ruling read: a dwelling here is a conditional use
       (17.20.040(3), a Chapter 17.70 hearing), and a conditional use is not
       by-right, so this zone is refused. The standards below are kept so the
@@ -1428,6 +1434,11 @@ zones:
       # conditional use under Chapter 17.70.
       value: false
       quote: "or/clackamas/gladstone/17.24.li.txt#L39,L57,L81,L85"
+      variants:
+        - value: true
+          when: [conditional_use]
+          cite: "GMC 17.24.040(2), dwellings a conditional use subject to the MR standards of 17.14.050(1)-(5); ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/clackamas/gladstone/17.24.li.txt#L85"
     setback_side_ft:
       # LI asks no side yard "except when a side lot line abuts a residential
       # zoning district, in which case the minimum side setback shall be 20
@@ -1439,6 +1450,7 @@ zones:
       value: 20
       quote: "or/clackamas/gladstone/17.24.li.txt#L145"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): a dwelling here is a conditional use (Chapter 17.70) on criteria state law reduces to the clear and objective standards inside a UGB, so a `conditional_use` variant carries the true and the lot is judged on the standards below, flagged CLEAR-OBJECTIVE (green, below the yellow line). Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, Chapter 17.70, are not stored, and the only conditional-use criteria this code stores, 17.22.040 for the Office Park zone, are all judgement -- "minimal adverse impact", "compatible with the character and scale" (or/clackamas/gladstone/17.22.op.txt#L163-L171); held red until 17.70 is read. The 2026-10-08 ruling read: a dwelling here is a conditional use
       (17.24.040(2), a Chapter 17.70 hearing), and a conditional use is not
       by-right, so this zone is refused. The standards below are kept so the
@@ -1464,6 +1476,11 @@ zones:
       # through (4)" is a conditional use under Chapter 17.70.
       value: false
       quote: "or/clackamas/gladstone/17.16.c-1.txt#L41-L45,L73"
+      variants:
+        - value: true
+          when: [conditional_use]
+          cite: "GMC 17.16.040(6), dwellings a conditional use subject to the R-7.2 standards of 17.10.050(1)-(4); ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/clackamas/gladstone/17.16.c-1.txt#L73"
     setback_side_ft:
       # "No minimum side setback requirement except when a side lot line abuts
       # a residential zoning district, in which case ... 15 feet." The
@@ -1471,6 +1488,7 @@ zones:
       value: 15
       quote: "or/clackamas/gladstone/17.16.c-1.txt#L113"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): a dwelling here is a conditional use (Chapter 17.70) on criteria state law reduces to the clear and objective standards inside a UGB, so a `conditional_use` variant carries the true and the lot is judged on the standards below, flagged CLEAR-OBJECTIVE (green, below the yellow line). Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, Chapter 17.70, are not stored, and the only conditional-use criteria this code stores, 17.22.040 for the Office Park zone, are all judgement -- "minimal adverse impact", "compatible with the character and scale" (or/clackamas/gladstone/17.22.op.txt#L163-L171); held red until 17.70 is read. The 2026-10-08 ruling read: a dwelling here is a conditional use
       (17.16.040(6), a Chapter 17.70 hearing), and a conditional use is not
       by-right, so this zone is refused. The standards below are kept so the

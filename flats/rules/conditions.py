@@ -937,6 +937,21 @@ _C: tuple[ConditionDef, ...] = (
         tier=Tier.discretionary,
     ),
     ConditionDef(
+        "judgement_review",
+        "relief",
+        "Approval of a use the zone PERMITS, through a review decided on "
+        "judgement words -- \"compatible\", \"design character\", \"intent\" "
+        "-- rather than on measurable standards. Canby's Type III site and "
+        "design review (CMC 16.49.030, 16.49.040) is the case: the fourplex "
+        "is listed outright and the hearing can still refuse it on fit with "
+        "the neighbourhood. Kept apart from `conditional_use` because the use "
+        "is not conditional; the approval is. Where ORS 197A.400 reaches the "
+        "lot, both reduce to the clear and objective standards (Steph "
+        "2026-10-15, FOLLOWUPS 85; flats.score.screen.CLEAR_OBJECTIVE_RELIEF).",
+        evidence="the zone's site and design review chapter and its criteria",
+        tier=Tier.discretionary,
+    ),
+    ConditionDef(
         "review_use",
         "relief",
         "Permission for a use a code lists as a REVIEW use -- a third "

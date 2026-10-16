@@ -2483,10 +2483,15 @@ zones:
     quadplex_allowed:
       value: false
       quote: "or/multnomah/fairview/19.135.txt#L15,L17-L18,L20-L21"
+      variants:
+        - value: true
+          when: [unit_lots, conditional_use]
+          cite: "FMC 19.135.010 row c, attached single-unit dwellings a conditional use in the VMU zone; ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/multnomah/fairview/19.135.txt#L15,L17-L18,L20-L21"
       #
-      # Door closed by ruling, not by the table:
+      # Closed by the 2026-10-08 ruling, reopened 2026-10-15 by ORS 197A.400:
       # Attached single-unit dwellings are a conditional use (19.135.010 row c); multi-unit
-      # dwellings are a separate row. Was `[unit_lots, conditional_use]`.
+      # dwellings are a separate row.
     # 19.135.030 states density, coverage and height for this zone and states
     # no lot size. Read and empty.
     min_lot_sqft:
@@ -2528,6 +2533,7 @@ zones:
       value: 5
       quote: "or/multnomah/fairview/19.135.txt#L52,L54-L56,L82-L84,L102-L104"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): the conditional use (19.135.010 row c) is a hearing on criteria not stored (19.440), which state law reduces to the clear and objective standards inside a UGB, so the `[unit_lots, conditional_use]` variant is back and the lot is judged on the standards below, flagged CLEAR-OBJECTIVE (green, below the yellow line). Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.440, are not stored, and the stored text shows the review may add conditions (19.163, "the city may require additional landscaping through the conditional use permit process"); held red until 19.440 is read. The 2026-10-08 ruling read: the only way to four attached homes here is a conditional use,
       approved at a hearing; a review is not by-right, so this zone is refused. The
       `conditional_use` variant was removed with the ruling and can go back if the ruling
@@ -2639,10 +2645,14 @@ zones:
     quadplex_allowed:
       value: false
       quote: "or/multnomah/fairview/19.125.txt#L21,L23,L25-L27,L29-L31,L63,L65,L67-L69"
+      variants:
+        - value: true
+          when: [unit_lots, conditional_use]
+          cite: "FMC 19.125.030 (A), townhouses a conditional use after Planning Commission approval; ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/multnomah/fairview/19.125.txt#L63,L65,L67-L69"
       #
-      # Door closed by ruling, not by the table:
-      # Townhouses are a conditional use after Planning Commission approval (19.125.030(A)). Was
-      # `[unit_lots, conditional_use]`.
+      # Closed by the 2026-10-08 ruling, reopened 2026-10-15 by ORS 197A.400:
+      # Townhouses are a conditional use after Planning Commission approval (19.125.030(A)).
     min_lot_sqft:
       exempt: true
       quote: "or/multnomah/fairview/19.125.txt#L73,L75-L77,L79-L81,L83-L85,L87-L89"
@@ -2721,6 +2731,7 @@ zones:
       retrieved: '2026-08-26'
       quote: "or/multnomah/fairview/19.145.txt#L63,L65"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): the conditional use (19.125.030(A)) is a hearing on criteria not stored (19.440), which state law reduces to the clear and objective standards inside a UGB, so the `[unit_lots, conditional_use]` variant is back and the lot is judged on the standards below, flagged CLEAR-OBJECTIVE (green, below the yellow line). Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.440, are not stored, and the stored text shows the review may add conditions (19.163, "the city may require additional landscaping through the conditional use permit process"); held red until 19.440 is read. The 2026-10-08 ruling read: the only way to four attached homes here is a conditional use,
       approved at a hearing; a review is not by-right, so this zone is refused. The
       `conditional_use` variant was removed with the ruling and can go back if the ruling

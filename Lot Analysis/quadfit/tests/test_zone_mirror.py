@@ -106,6 +106,23 @@ KNOWN_PERMISSION_SPLITS: frozenset[str] = frozenset({
     # Hinman Rd (the near_named_street_200ft variant).
     "estacada/NCR",
     "wilsonville/RN",
+    # 2026-10-15 (Steph, FOLLOWUPS 85): ORS 197A.400 reduces a conditional use
+    # or a judgement review to the clear and objective standards inside a UGB,
+    # so the zones whose only bar was that hearing are measured again; FLATS
+    # opens them per lot (inside a UGB) and flags CLEAR-OBJECTIVE.
+    "canby/R-1.5",
+    "canby/R-2",
+    "canby/C-R",
+    "estacada/R-2",
+    "estacada/C-1",
+    "cornelius/CMU",
+    "milwaukie/NMU",
+    "milwaukie/SMU",
+    "gladstone/C1",
+    "gladstone/C3",
+    "gladstone/LI",
+    "fairview/VMU",
+    "fairview/VA",
 })
 
 #: Washington County rows written FROM the corpus (port_from_flats.py,

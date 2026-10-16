@@ -520,6 +520,23 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_REVIEW_CONDITIONS]
+  CLEAR-OBJECTIVE:
+    description: "State law voids the judgement test; the city may refuse at first and an appeal may be needed. The pod's path here was a conditional use, a review decided on judgement words, or a review that may add conditions -- the fact says which (`conditional_use`, `judgement_review`, `conditions`, `judgement`, or Washington County's `buildable_area` / `standard_plat`). ORS 197A.400 lets a city or county apply only clear and objective standards to housing inside an urban growth boundary (East Park v. Salem, LUBA 2022), so the lot is judged on its measured standards alone, and any condition the review adds must itself be clear and objective. Steph 2026-10-15 (FOLLOWUPS 85): GREEN with this flag. Not raised outside a UGB, in the statute's own exceptions (Portland's central city and Gateway, historic areas), for a use the code does not list, or where a measured standard is missed."
+    kind: categorical
+    risk: unlikely
+    # Steph 2026-10-15: "the flag sits below the yellow line" -- severity 2,
+    # so a lot otherwise GREEN stays GREEN with the flag beside it.
+    severity: 2
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot, design, fact]
+    path: "Apply on the clear and objective standards, citing ORS 197A.400; if the city refuses on a judgement criterion, appeal to LUBA (East Park v. Salem)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLEAR_OBJECTIVE]
 
   # --- a path round a bind, once the rule set accepts it -----------------
   APPROVAL-NEEDED:

@@ -1334,7 +1334,13 @@ zones:
       value: false
       cite: Cornelius CMC 18.60.020 (I) (dwellings above the ground floor) and 18.60.030 (B) (ground-floor dwellings conditional)
       quote: "or/washington/cornelius/cmc.18.60.cmu.txt#L23,L59,L97,L105"
+      variants:
+        - value: true
+          when: [conditional_use]
+          cite: "Cornelius CMC 18.60.030 (B), ground-floor residential dwelling units a conditional use (Chapter 18.105); ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/washington/cornelius/cmc.18.60.cmu.txt#L95,L97,L105"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): ground-floor dwellings are a conditional use (18.60.030(B), Chapter 18.105) state law reduces to the clear and objective standards inside a UGB, so a `conditional_use` variant carries the true; no dimensional standard is encoded for this zone yet, so its lots read UNKNOWN, not green. Before that:
       DRAFT. Refuses: dwellings above the ground floor; ground-floor
       dwellings only as a conditional use (regulated affordable units
       excepted).

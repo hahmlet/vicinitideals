@@ -173,6 +173,21 @@ CLOSER_LOOK_SPLIT_ZONE = "CLOSER_LOOK_SPLIT_ZONE"
 #: otherwise clear and measurable, but there is a 'may add conditions',
 #: yellow." Never RED, never GREEN.
 CLOSER_LOOK_REVIEW_CONDITIONS = "CLOSER_LOOK_REVIEW_CONDITIONS"
+#: The pod's path here is a conditional use, a review decided on judgement
+#: words, or a review that may add conditions -- and ORS 197A.400 reaches the
+#: lot: a city may apply only clear and objective standards to housing inside
+#: an urban growth boundary (East Park v. Salem, LUBA 2022). Steph 2026-10-15
+#: (FOLLOWUPS 85): GREEN WITH A FLAG, below the yellow line -- the lot is
+#: judged on its measured standards alone; the city may refuse at first and an
+#: appeal may be needed (:func:`clear_objective_reaches`, CLEAR-OBJECTIVE).
+CLEAR_OBJECTIVE = "CLEAR_OBJECTIVE"
+#: The approvals ORS 197A.400 reduces to the clear and objective standards
+#: where it reaches: a conditional use, and a review of a permitted use
+#: decided on judgement words (Canby's Type III site and design review). Not
+#: the variance or adjustment of a missed standard -- a measured miss stays
+#: RED -- nor a planned development, a county review use or a state-law path,
+#: each of which is its own procedure with its own standards.
+CLEAR_OBJECTIVE_RELIEF: frozenset[str] = frozenset({"conditional_use", "judgement_review"})
 #: The plan's fit, missed on the ground left once the steep ground is taken
 #: off and met without that (:attr:`LotFacts.steep_blocks`): the slope
 #: eliminates the lot, not the pod's placement (Steph 2026-10-04). The fit
@@ -463,6 +478,13 @@ class LotFacts:
     #: within a degree of its ceiling and the lot was read as a bend
     #: (:func:`flats.ingest.quadfit.curve_on_the_line`). Set by the bridge.
     curve_on_the_line: tuple[float, float] | None = None
+    #: Inside an urban growth boundary: True, False, or None where nothing
+    #: said. Set by the bridge -- an incorporated city's lot is inside its
+    #: own city's boundary (Goal 14 draws every UGB round its city), and an
+    #: unincorporated lot is read against Metro's (quadfit s2; s3 drops one
+    #: outside it). Only True lets ORS 197A.400 reach the lot
+    #: (:func:`clear_objective_reaches`); None is the conservative silence.
+    inside_ugb: bool | None = None
     #: The ground on this lot steeper than Steph's slope ruling allows
     #: building or parking on (``flats/config/slope.yaml``,
     #: :meth:`flats.fit.slope.Terrain.steep`), square feet, and the
@@ -1458,10 +1480,14 @@ def _outdoor_shape(
 
 
 def _use_path(
-    rules: ZoneResolution, config: Configuration | None, policy: ReliefOutcome
-) -> tuple[ReliefOutcome, bool]:
-    """The cheapest way past a use prohibition, and whether one turns on a
-    fact nobody measured.
+    rules: ZoneResolution,
+    config: Configuration | None,
+    policy: ReliefOutcome,
+    cleared: frozenset[str] = frozenset(),
+) -> tuple[ReliefOutcome, bool, tuple[str, str] | None]:
+    """The cheapest way past a use prohibition, whether one turns on a fact
+    nobody measured, and -- where a statute clears the approval a path asks
+    for -- ``(approval, cite)`` of the path that then needs no application.
 
     Two sources. The relief policy (``policy``, :meth:`ReliefPolicy.for_use`)
     and the zone's own encoding: an exception to ``quadplex_allowed`` that
@@ -1471,6 +1497,11 @@ def _use_path(
     names holds; one resting on a site fact in ``config.unknown`` makes the
     lot a question rather than a RED. A variant that needs an election or a
     design this run did not make opens nothing.
+
+    ``cleared`` names the approvals a statute reduces to the clear and
+    objective standards on this lot (:data:`CLEAR_OBJECTIVE_RELIEF` where
+    :func:`clear_objective_reaches`): a path asking for nothing else, with
+    every other condition it names held, is no application at all.
     """
     held = set(rules.conditions)
     unknown = set(config.unknown) if config is not None else set()
@@ -1485,12 +1516,32 @@ def _use_path(
         if rest:
             pending = pending or rest <= unknown
             continue
+        if asks and set(asks) <= cleared:
+            return best, False, ("+".join(sorted(asks)), cite)
         tier = max((CONDITIONS[c].tier for c in asks), key=lambda t: t.rank)
         if best.available and best.tier.rank <= tier.rank:
             continue
         # Read: the path is quoted from the code or statute that grants it.
         best = ReliefOutcome(best.check, tier, "+".join(sorted(asks)), cite, confirmed=True)
-    return best, pending and not best.available
+    return best, pending and not best.available, None
+
+
+def clear_objective_reaches(rules: ZoneResolution, lot: LotFacts) -> bool:
+    """Whether ORS 197A.400 holds the city to clear and objective standards
+    for the pod on this lot (Steph 2026-10-15, FOLLOWUPS 85).
+
+    The statute reaches housing inside an urban growth boundary
+    (197A.400(1)(c)(A)) unless an exception in (2) covers the area: the rules
+    say so (``clear_objective_housing``, true on the state layer, false on a
+    layer an exception covers), and the lot must be known to lie inside a UGB
+    (:attr:`LotFacts.inside_ugb`). Where it reaches, a conditional use or a
+    judgement review (:data:`CLEAR_OBJECTIVE_RELIEF`) and a review that may
+    add conditions (:func:`review_with_conditions`) are judged on the
+    measured standards alone: GREEN with CLEAR-OBJECTIVE. A measured standard
+    the pod misses is still RED, a use the code does not list is still RED,
+    and a zone with no clear standards to judge by is still unknown.
+    """
+    return lot.inside_ugb is True and rules.get("clear_objective_housing") is True
 
 
 def _unconfirmed(outcomes: Sequence[ReliefOutcome]) -> tuple[str, ...]:
@@ -2063,9 +2114,20 @@ def screen(
     use_blocked = allowed is False and rules.trusted
     use_path: ReliefOutcome | None = None
     use_pending = False
+    reach = clear_objective_reaches(rules, lot)
+    #: ``(approval, cite)`` where ORS 197A.400 opened the use (Steph 2026-10-15).
+    cleared_use: tuple[str, str] | None = None
     if use_blocked:
-        use_path, use_pending = _use_path(rules, config, paths.for_use(where))
-        outcomes.append(use_path)
+        use_path, use_pending, cleared_use = _use_path(
+            rules, config, paths.for_use(where), CLEAR_OBJECTIVE_RELIEF if reach else frozenset()
+        )
+        if cleared_use is not None:
+            # The only approval the path asks for is one the statute holds to
+            # the clear standards: no application, the checks decide.
+            use_blocked, use_path, use_pending = False, None, False
+        else:
+            outcomes.append(use_path)
+    review = review_with_conditions(rules, lot, design)
 
     hardest = _hardest_ask(outcomes)
     common: dict[str, Any] = {
@@ -2109,6 +2171,9 @@ def screen(
         unmeasured,
         outcomes,
         use_path if use_blocked else None,
+        review=review,
+        reach=reach,
+        cleared_use=cleared_use,
         tight=common["tight_fit"],
         fit_slack_ft=common["fit_slack_ft"],
         optimistic=optimistic,
@@ -2184,7 +2249,9 @@ def screen(
         closer = (*closer, CLOSER_LOOK_RESOURCE)
     if lot.steep_unconfirmed:
         closer = (*closer, CLOSER_LOOK_STEEP_COARSE)
-    if review_with_conditions(rules, lot, design) is not None:
+    if review is not None and not reach:
+        # Where ORS 197A.400 reaches, a condition the review adds must itself
+        # be clear and objective (Steph 2026-10-15): flagged, not yellow.
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
 
     if any(not o.available for o in walls):
@@ -2355,6 +2422,9 @@ def _account(
     outcomes: Sequence[ReliefOutcome],
     use_path: ReliefOutcome | None,
     *,
+    review: str | None = None,
+    reach: bool = False,
+    cleared_use: tuple[str, str] | None = None,
     tight: bool,
     fit_slack_ft: float | None,
     optimistic: Sequence[str],
@@ -2456,8 +2526,13 @@ def _account(
         flag("RESOURCE-PERMIT", CLOSER_LOOK_RESOURCE, fact=key, source="mapped")
     if lot.steep_unconfirmed:
         flag("SLOPE-STEEP-COARSE", CLOSER_LOOK_STEEP_COARSE, source=lot.steep_source or "")
-    if (why := review_with_conditions(rules, lot, design)) is not None:
-        flag("REVIEW-CONDITIONS", CLOSER_LOOK_REVIEW_CONDITIONS, fact=why, source=_cite(rules, REVIEW_FIELDS[why]))
+    if review is not None:
+        # ORS 197A.400 reaching the lot turns the review's yellow into a
+        # record below the yellow line (Steph 2026-10-15).
+        code, by = ("CLEAR-OBJECTIVE", CLEAR_OBJECTIVE) if reach else ("REVIEW-CONDITIONS", CLOSER_LOOK_REVIEW_CONDITIONS)
+        flag(code, by, fact=review, source=_cite(rules, REVIEW_FIELDS[review]))
+    if cleared_use is not None:
+        flag("CLEAR-OBJECTIVE", CLEAR_OBJECTIVE, fact=cleared_use[0], source=cleared_use[1])
     # Fitted clear of an easement assumed along every street line (Steph
     # 2026-10-01): a plat showing a wider one, or one on a side or rear
     # line, would move the building. A record, below the yellow line.

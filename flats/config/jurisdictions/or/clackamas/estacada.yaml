@@ -365,6 +365,10 @@ zones:
           when: [unit_lots]
           cite: Estacada EMC 16.24.020 (E), commonwall dwellings permitted outright
           quote: "or/clackamas/estacada/emc.16.zones.txt#L588"
+        - value: true
+          when: [conditional_use]
+          cite: "Estacada EMC 16.24.030 (1), a use conditional in the R-2 zone is conditional in R-3 (16.20.030 (2), four dwelling units); ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L444,L604,L606"
     min_lot_sqft:
       per_dwelling: 2500
       cite: Estacada EMC 16.24.040 (A)(1), duplex, triplex or fourplex 2,500 square feet per dwelling unit
@@ -422,6 +426,7 @@ zones:
           cite: Estacada EMC 16.24.040 (E)(2)(c), commonwall dwellings with four units shall have a minimum side setback of ten feet for the sides that are not attached
           quote: "or/clackamas/estacada/emc.16.zones.txt#L664"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): the one-lot fourplex is the R-2 conditional use carried in by 16.24.030(1); state law reduces that hearing to the clear and objective standards inside a UGB, so a `conditional_use` variant now opens the one-lot plan as well as the townhouse lots. Before that:
       DRAFT. Commonwall dwellings are outright in any number; a fourplex on
       one lot is conditional here, so the pod is allowed as four townhouse
       lots only. 2,500 square feet a lot; front, street side and rear 15;
@@ -447,7 +452,13 @@ zones:
       value: false
       cite: Estacada EMC 16.20.020 and 16.20.030 (B), triplex and commonwall up to three units are outright; middle housing with four dwelling units is a conditional use
       quote: "or/clackamas/estacada/emc.16.zones.txt#L426,L428,L444"
+      variants:
+        - value: true
+          when: [conditional_use]
+          cite: "Estacada EMC 16.20.030 (2), middle housing types with four dwelling units a conditional use; ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L440,L444"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): the four-unit conditional use (16.20.030(2)) is a hearing state law reduces to the clear and objective standards inside a UGB, so a `conditional_use` variant carries the true; no dimensional standard is encoded for this zone yet, so its lots read UNKNOWN, not green. Before that:
       DRAFT. Refuses: four units is a conditional use (a hearing the screen
       does not treat as a clear and objective path).
   NCR:
@@ -551,7 +562,13 @@ zones:
       value: false
       cite: Estacada EMC 16.28.030, multi-family dwelling, triplex or fourplex is a conditional use
       quote: "or/clackamas/estacada/emc.16.zones.txt#L1455"
+      variants:
+        - value: true
+          when: [conditional_use]
+          cite: "Estacada EMC 16.28.030 (15), multi-family dwelling, triplex or fourplex a conditional use; ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
+          quote: "or/clackamas/estacada/emc.16.zones.txt#L1455"
     notes: >-
+      OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): the fourplex conditional use (16.28.030(15)) is a hearing state law reduces to the clear and objective standards inside a UGB, so a `conditional_use` variant carries the true; no dimensional standard is encoded for this zone yet, so its lots read UNKNOWN, not green. Before that:
       DRAFT. Refuses: the fourplex is a conditional use here.
   MMU:
     cite_default:

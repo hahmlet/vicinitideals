@@ -9,7 +9,10 @@ Now:
   outright (17.18.020(11), (12)); a five-foot MAXIMUM front setback.
 * C-3, LI, C-1 -- a dwelling is a conditional use and nothing else reaches a
   market-rate quadplex, so RED BY RULING (Steph, 2026-10-08, by right only):
-  `quadplex_allowed` false, no variant, the standards kept so it can reverse.
+  `quadplex_allowed` false, the standards kept so it could reverse -- and it
+  did on 2026-10-15: ORS 197A.400 reduces the hearing to the clear and
+  objective standards inside a UGB, so a `conditional_use` variant carries
+  the true and the screen clears it there (GREEN with a flag).
 """
 
 from __future__ import annotations
@@ -62,29 +65,34 @@ def test_mr_and_c2_are_outright(layer, rules) -> None:
 
 
 @pytest.mark.parametrize("zone", RED)
-def test_the_conditional_use_zones_are_red_by_ruling(layer, rules, zone) -> None:
+def test_the_conditional_use_zones_open_by_the_statute(layer, rules, zone) -> None:
     field = layer.zones[zone].values["quadplex_allowed"]
     assert field.value is False
-    assert field.variants == ()
-    assert "RED, RE-CHECKED 2026-10-14 under Steph's review rule" in (layer.zones[zone].notes or "")
-    # No lever lifts it: not the conditional-use path, not the unit-lot path.
-    for levers in ((), *((*POD, lv) for lv in LEVERS), (*POD, *LEVERS)):
+    (door,) = field.variants
+    assert tuple(door.when) == ("conditional_use",)
+    assert "ORS 197A.400" in door.prov.cite
+    notes = layer.zones[zone].notes or ""
+    assert notes.startswith("OPENED 2026-10-15 BY ORS 197A.400")
+    assert "RED, RE-CHECKED 2026-10-14 under Steph's review rule" in notes
+    # Only the conditional-use path lifts it; the unit-lot path alone does not.
+    for levers in ((), *((*POD, lv) for lv in LEVERS if lv != "conditional_use")):
         got = rules.resolve(G, zone, levers)
         assert got.values["quadplex_allowed"].value is False, (zone, levers)
-    # The standards stay, so the ruling can be reversed.
+    opened = rules.resolve(G, zone, (*POD, "conditional_use"))
+    assert opened.values["quadplex_allowed"].value is True
     assert rules.resolve(G, zone, POD).missing_required == ()
 
 
 @pytest.mark.parametrize("zone", RED)
-def test_the_use_gate_refuses_the_red_zones(rules, zone) -> None:
+def test_the_use_gate_leaves_the_opened_zones_to_the_screen(rules, zone) -> None:
+    # A zone that encodes its own relief path is the screen's to answer: inside
+    # a UGB it clears the hearing, outside it does not.
     class _Relief:
         def for_use(self, layer_id):
             return type("O", (), {"available": False})()
 
     gate = az.use_gate_for(rules, _Relief())
-    answer = gate(G, zone)
-    assert answer is not None
-    assert answer[1:] == ("RULE_UNVERIFIED", "red", "USE_PROHIBITED") or answer[-2:] == ("red", "USE_PROHIBITED")
+    assert gate(G, zone) is None
     for z in ("MR", "C2"):
         assert gate(G, z) is None
 

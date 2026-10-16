@@ -1779,6 +1779,22 @@ code:
     start: "11.50.010 Purpose."
     end: "Upcoming and recent changes"
 defaults:
+  # ORS 197A.400(2)(a): the clear and objective rule does not reach "an area
+  # identified in a formally adopted central city plan, or a regional center
+  # as defined by Metro, in a city with a population of 500,000 or greater"
+  # -- Portland's Central City and Gateway. No map of either is held, so the
+  # rule is held as not reaching any Portland lot: the conservative reading,
+  # and an inert one today, since no Portland zone (nor the Portland code
+  # applied in Multnomah County's pockets) opens the pod through a
+  # conditional use or a judgement review (Steph 2026-10-15, FOLLOWUPS 85).
+  # Trace the two areas before encoding such a path here.
+  clear_objective_housing:
+    value: false
+    cite: "ORS 197A.400(2)(a), central city plan and Metro regional center in a city of 500,000 or more"
+    url: "https://www.oregonlegislature.gov/bills_laws/ors/ors197A.html"
+    retrieved: 2026-10-15
+    status: draft
+    quote: "or/ors.197a.400.txt#L25,L27"
   # Portland requires no off-street parking anywhere in the city. The chapter
   # is the evidence: it runs from 33.266.100 straight to 33.266.115 Maximum
   # Allowed Parking Spaces with no minimum section between them, and

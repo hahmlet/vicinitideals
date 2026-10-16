@@ -2770,6 +2770,7 @@ _REASON_WORDS = {
     "CLOSER_LOOK_STEEP_COARSE": "closer look: the coarse elevation map shows ground too steep to build on where the building and its parking would go — the lot was screened as though it were buildable until the detailed lidar map or a survey checks it",
     "CLOSER_LOOK_SPLIT_ZONE": "closer look: the lot lies in more than one zoning district and the building or its parking stands across the line; the city's code has no rule that puts the whole lot in one, and the standards were read from the district that covers most of it",
     "CLOSER_LOOK_REVIEW_CONDITIONS": "closer look: the city's review of this building may add conditions or weigh judgement beyond its measured standards — ask the planner before counting on the plan as drawn",
+    "CLEAR_OBJECTIVE": "state law voids the judgement test: inside an urban growth boundary the city may apply only clear and objective standards to housing (ORS 197A.400), so this lot is judged on its measured standards alone — the city may refuse at first and an appeal may be needed",
     "CLOSER_LOOK_RESOURCE": "closer look: part of the lot is a mapped stream, wetland, habitat or flood area where the city allows building only with a permit — a report, replanting or a raised floor to price",
     "FACT_UNOBSERVED": "a fact about the site nothing has measured decides which number applies",
     "FACT_ASSUMED": "a fact about the site was assumed rather than measured",
