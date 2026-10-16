@@ -223,6 +223,29 @@ def _known_documents() -> frozenset[str]:
     return frozenset(_store().documents())
 
 
+_LAYER_KIND_WORDS = {
+    "state": "statewide rules",
+    "county": "countywide rules",
+    "city": "citywide rules",
+    "unincorporated": "unincorporated-area rules",
+}
+_REVIEW_STATUS_WORDS = {
+    "draft": "not yet reviewed",
+    "encoded": "awaiting confirmation",
+    "verified": "confirmed",
+    "stale": "source changed since review",
+    "disputed": "rejected by a reviewer",
+}
+_DESIGN_STATUS_WORDS = {
+    "active": "available for new screening",
+    "archived": "kept for older results",
+}
+
+
+def _display_words(value: str, words: Mapping[str, str]) -> str:
+    return words.get(value, value.replace("_", " ").lower())
+
+
 def _blocks(layer: Layer) -> list[tuple[str, dict[str, Value], str | None]]:
     out: list[tuple[str, dict[str, Value], str | None]] = [
         (_DEFAULTS, layer.defaults, None)
@@ -268,6 +291,7 @@ def _value_rows(layer: Layer) -> list[dict[str, Any]]:
                         "when": "+".join(when),
                         "when_label": ", ".join(when),
                         "status": number.status.value,
+                        "status_words": _display_words(number.status.value, _REVIEW_STATUS_WORDS),
                         "trusted": number.status is Status.verified,
                         "reviewer": number.reviewer,
                         "quote": number.prov.quote,
@@ -306,6 +330,7 @@ def _layer_summary(layer: Layer) -> dict[str, Any]:
         "id": layer.layer,
         "label": layer.label,
         "kind": layer.kind,
+        "kind_words": _display_words(layer.kind, _LAYER_KIND_WORDS),
         "eligible": layer.eligible,
         "zones": len(layer.zones),
         # Not "values". Jinja resolves an attribute before a key, so a dict
@@ -496,6 +521,7 @@ def _design_card(design: Design, plat: str) -> dict[str, Any]:
         "key": design.key,
         "label": design.label,
         "status": design.status.value,
+        "status_words": _display_words(design.status.value, _DESIGN_STATUS_WORDS),
         "width": design.footprint.width_ft,
         "depth": design.footprint.depth_ft,
         "ground": design.ground_sqft,
@@ -1656,6 +1682,7 @@ def _chain(layer_id: str, zone: str, field: str) -> dict[str, Any]:
                 "layer": layer.layer,
                 "label": layer.label,
                 "kind": layer.kind,
+                "kind_words": _display_words(layer.kind, _LAYER_KIND_WORDS),
                 "origin": origin,
                 "won": won,
                 "silent": number is None,
@@ -1669,6 +1696,9 @@ def _chain(layer_id: str, zone: str, field: str) -> dict[str, Any]:
         "zone": zone,
         "field": field,
         "answer": resolved,
+        "answer_status_words": (
+            _display_words(resolved.status.value, _REVIEW_STATUS_WORDS) if resolved else ""
+        ),
         "steps": steps,
         "verdict": resolution.verdict.value,
         # Taken off the encoded exceptions rather than off the resolution's
@@ -3601,6 +3631,7 @@ def _lots_ctx(
         "runs": [_run_card(r) for r in runs],
         "run": _run_card(run) if run is not None else None,
         "cities": cities,
+        "design_labels": {item.key: item.label for item in _designs()},
         "jurisdiction": jurisdiction,
         "zone": zone,
         "colour": colour if colour in _COLOURS else "",

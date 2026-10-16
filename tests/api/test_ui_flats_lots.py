@@ -19,6 +19,8 @@ from __future__ import annotations
 
 import re
 from datetime import date, datetime, timedelta, timezone
+from html import unescape
+from html.parser import HTMLParser
 
 import pytest
 from httpx import AsyncClient
@@ -1065,6 +1067,63 @@ async def test_no_lot_page_prints_a_python_object(client: AsyncClient, session: 
         assert page.status_code == 200
         assert "built-in method" not in page.text
         assert "object at 0x" not in page.text
+
+
+class _TextNodes(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.text: list[str] = []
+
+    def handle_data(self, data: str) -> None:
+        self.text.append(data)
+
+
+async def test_secondary_flats_pages_print_no_python_objects(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session)
+
+    urls = (
+        "/flats/gaps",
+        "/flats/why/or/multnomah/gresham?zone=LDR-5&field=setback_front_ft",
+        "/flats/plans",
+        "/flats/plans/pod56x36@2",
+        "/flats/refresh",
+        "/flats/feedback",
+        "/flats/flags",
+        "/flats/flags/questions",
+        "/flats/flags/queue",
+        "/flats/flags/report",
+        "/flats",
+        "/flats/or/multnomah/gresham",
+    )
+    for url in urls:
+        page = await client.get(url)
+        assert page.status_code == 200, url
+        assert "{'" not in page.text, url
+        assert "[<" not in page.text, url
+        assert "Decimal(" not in page.text, url
+        text_nodes = _TextNodes()
+        text_nodes.feed(page.text)
+        none_nodes = [node.strip() for node in text_nodes.text if node.strip() == "None"]
+        assert not none_nodes, f"{url}: {none_nodes}"
+
+
+async def test_lot_design_filter_shows_the_catalog_label(
+    client: AsyncClient, session: AsyncSession
+):
+    from app.api.routers.ui_flats import _catalog
+
+    await _login(client, session)
+    await _seed(session)
+
+    page = await client.get("/flats/lots")
+    label = _catalog().get("pod56x36@2").label
+    option = re.search(r'<option value="pod56x36@2"[^>]*>(.*?)</option>', page.text)
+
+    assert option is not None
+    assert unescape(option.group(1)) == label
 
 
 async def test_the_lot_page_shows_a_persons_decision_and_the_look_again_mark(
