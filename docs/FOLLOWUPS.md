@@ -2489,8 +2489,11 @@ read when the weekly full re-screen lands.
    density cap; 843 / 11,199 / 29,282 without. 8,727 greens lose pods to the cap. 62 greens
    have no county value (green+yellow 4,959, mostly Washington County unincorporated 2,728).
    Open: (a) filter is opt-in, not on by default -- Steph to say if it should start ON;
-   (b) cap reads units/acre and the townhouse-lot minimum only, on gross area; max_units and
-   net-area density not applied; (c) ~10 greens carry county values under $1 a sq ft (price
+   (b) BUILT 2026-10-16: stored cap inputs now include max_units and whether density is
+   measured on net area; density uses top-level facts.net_area_sqft when present, clamped to
+   gross area, and otherwise retains the gross-area basis. The new columns are filled by
+   migration 0144 and a repeat run of scripts/flats_backfill_lot_prices.py; colours are
+   unchanged; (c) ~10 greens carry county values under $1 a sq ft (price
    per home of $17-$950) -- shown as-is; (d) a "value looks too low" mark -- Steph to decide.
    LIVE 2026-10-10 (merge d1d8c03f): migration 0143 ran, backfill done (snapshot 3: 400,032 rows,
    390,554 priced; snapshot 4: 590,282 / 566,553; 148 zone caps), ANALYZE run. Production

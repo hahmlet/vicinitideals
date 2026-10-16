@@ -3342,6 +3342,7 @@ def _price_label(lot: FlatsLot, colour: int, cfg: price_calc.PriceSettings, as_o
     """The lot's price per home and how it was reached, for the page."""
     facts = lot.facts or {}
     cap = _zone_caps().get((_pocket_of(facts) or lot.jurisdiction, lot.zone or ""))
+    net_area = price_calc.as_decimal(facts.get("net_area_sqft"))
     got = price_calc.price_per_home(
         lot.area_sqft, facts, cfg, cap=cap, keep_one=colour <= 1, county_as_of=as_of
     )
@@ -3369,7 +3370,11 @@ def _price_label(lot: FlatsLot, colour: int, cfg: price_calc.PriceSettings, as_o
         "pod_sqft": float(cfg.pod_sqft),
         "road_pct": float(cfg.road_share_pct),
         "density_du_per_acre": float(cap.du_per_acre) if cap and cap.du_per_acre is not None else None,
+        "density_on_net_area": bool(
+            cap and cap.density_on_net_area and net_area is not None and net_area >= 0
+        ),
         "unit_lot_sqft": float(cap.unit_lot_sqft) if cap and cap.unit_lot_sqft is not None else None,
+        "max_units": float(cap.max_units) if cap and cap.max_units is not None else None,
     }
 
 

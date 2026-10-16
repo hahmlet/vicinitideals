@@ -74,6 +74,36 @@ def test_the_smallest_townhouse_lot_also_caps_and_the_tighter_limit_wins():
     assert p.price_per_home(90_000, ROLL, CFG, cap=both).capped_by == "density"
 
 
+def test_a_max_units_cap_only_reduces_the_pod_count():
+    cap = p.ZoneCap(max_units=Decimal(8))
+    got = p.price_per_home(90_000, ROLL, CFG, cap=cap)
+    assert (got.pods, got.homes, got.capped_by) == (2, 8, "max units")
+    loose = p.price_per_home(90_000, ROLL, CFG, cap=p.ZoneCap(max_units=Decimal(100)))
+    assert (loose.pods, loose.capped_by) == (15, None)
+
+
+def test_net_density_uses_a_lot_net_area_only_when_present_and_never_exceeds_gross():
+    cap = p.ZoneCap(du_per_acre=Decimal(10), density_on_net_area=True)
+    with_net = p.price_per_home(
+        90_000, {**ROLL, "net_area_sqft": 17_424}, CFG, cap=cap
+    )
+    assert (with_net.pods, with_net.capped_by) == (1, "density")
+
+    # A missing figure keeps today's gross-area behaviour.
+    without_net = p.price_per_home(90_000, ROLL, CFG, cap=cap)
+    assert (without_net.pods, without_net.capped_by) == (5, "density")
+
+    # A malformed or larger-than-gross net figure cannot relax the cap.
+    malformed = p.price_per_home(90_000, {**ROLL, "net_area_sqft": "unknown"}, CFG, cap=cap)
+    oversized = p.price_per_home(
+        90_000, {**ROLL, "net_area_sqft": 180_000}, CFG, cap=cap
+    )
+    zero_area = p.price_per_home(90_000, {**ROLL, "net_area_sqft": 0}, CFG, cap=cap)
+    assert malformed.pods == without_net.pods
+    assert oversized.pods == without_net.pods
+    assert zero_area.pods == 0
+
+
 def test_a_cap_never_takes_a_green_lot_below_one_pod():
     cap = p.ZoneCap(du_per_acre=Decimal(1))
     assert p.price_per_home(9_000, ROLL, CFG, cap=cap).pods == 0
@@ -127,6 +157,8 @@ def test_the_real_rules_state_caps_for_a_known_zone():
     assert len(caps) > 50
     assert caps[("or/clackamas/happy-valley", "R5")].du_per_acre == Decimal(25)
     assert caps[("or/clackamas/estacada", caps_zone("or/clackamas/estacada", caps))].unit_lot_sqft is not None
+    assert any(cap.max_units is not None for cap in caps.values())
+    assert any(cap.density_on_net_area for cap in caps.values())
 
 
 def caps_zone(layer: str, caps: dict) -> str:
