@@ -74,7 +74,14 @@ from app.services import flats_refresh as refresh_service
 from app.services.flats_refresh import refresh_notices
 from flats.encode import legible
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
-from flats.encode.attribution import claimed_sections, section_at
+from flats.encode.attribution import (
+    HEADER_OR_XREF,
+    HEADING_OTHER_FILE,
+    HEADING_SAME_FILE,
+    UNLOCATED,
+    claimed_sections,
+    section_at,
+)
 from flats.encode.find import passages
 from flats.encode.gaps import digest as gaps_digest
 from flats.encode.gaps import read_ledger
@@ -156,6 +163,14 @@ _SAID = {
 #: What each gap cause means, said to somebody who is not going to run a
 #: command about it. The encoder's phrasing names modules and flags; a reviewer
 #: deciding where to spend an afternoon needs the shape of the work.
+_MISATTRIBUTION_KINDS = {
+    HEADING_SAME_FILE: "Printed under another heading in the same file",
+    HEADING_OTHER_FILE: "Printed under a heading in another file",
+    UNLOCATED: "Text found, section could not be located",
+    HEADER_OR_XREF: "Running header or cross-reference",
+}
+_REAL_KINDS = (HEADING_SAME_FILE, HEADING_OTHER_FILE, UNLOCATED)
+
 _CAUSE_WORDS = {
     "unofficial": "cites somebody's restatement of the code, not the code",
     "contested": "the file and the document state different numbers",
@@ -1345,6 +1360,19 @@ async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
         for layer_id, one in sorted(ledger["layers"].items())
         for item in one.get("misattributed", ())
     ]
+    for item in wrong:
+        item["kind_label"] = _MISATTRIBUTION_KINDS.get(item.get("kind"), "Unclassified")
+    wrong_real = sorted(
+        (w for w in wrong if w.get("kind") != HEADER_OR_XREF),
+        key=lambda w: (
+            _REAL_KINDS.index(w["kind"]) if w.get("kind") in _REAL_KINDS else len(_REAL_KINDS)
+        ),
+    )
+    wrong_harmless = [w for w in wrong if w.get("kind") == HEADER_OR_XREF]
+    kind_counts = [
+        (_MISATTRIBUTION_KINDS[k], sum(1 for w in wrong if w.get("kind") == k))
+        for k in (*_REAL_KINDS, HEADER_OR_XREF)
+    ]
     return templates.TemplateResponse(
         request,
         "flats_gaps.html",
@@ -1356,6 +1384,9 @@ async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
             "causes": _CAUSE_WORDS,
             "coverage": _coverage(),
             "misattributed": wrong,
+            "misattributed_real": wrong_real,
+            "misattributed_harmless": wrong_harmless,
+            "misattributed_kind_counts": kind_counts,
         },
     )
 

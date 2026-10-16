@@ -1489,6 +1489,53 @@ async def test_the_wrong_section_citations_are_a_list_not_only_a_banner(
     assert "4.113" in page.text
 
 
+async def test_the_gaps_page_sorts_citation_kinds_and_folds_the_harmless(
+    client: AsyncClient, session: AsyncSession, monkeypatch
+):
+    from app.api.routers import ui_flats as ui
+    from flats.encode.attribution import (
+        HEADER_OR_XREF,
+        HEADING_OTHER_FILE,
+        HEADING_SAME_FILE,
+        UNLOCATED,
+    )
+
+    await _login(client, session)
+
+    def item(zone: str, kind: str) -> dict[str, str]:
+        return {"zone": zone, "field": "f", "claimed": "1.1", "found": "2.2", "kind": kind}
+
+    monkeypatch.setattr(
+        ui,
+        "_gaps",
+        lambda: {
+            "current": True,
+            "layers": {
+                "or/x/y": {
+                    "label": "Yville",
+                    "counts": {},
+                    "gaps": [],
+                    "misattributed": [
+                        item("ZHDR", HEADER_OR_XREF),
+                        item("ZUNL", UNLOCATED),
+                        item("ZOTH", HEADING_OTHER_FILE),
+                        item("ZSAME", HEADING_SAME_FILE),
+                    ],
+                }
+            },
+        },
+    )
+
+    text = (await client.get("/flats/gaps")).text
+
+    assert text.index("ZSAME") < text.index("ZOTH") < text.index("ZUNL")
+    assert text.index("ZUNL") < text.index("<details")
+    assert text.index("<details") < text.index("ZHDR")
+    assert "probably harmless (running header or cross-reference)" in text
+    assert "<th>Kind</th>" in text
+    assert "3 values quote text" in text
+
+
 async def test_a_card_offers_the_page_itself(client: AsyncClient, session: AsyncSession):
     """Extraction flattens a table; the sheet is where the columns still are.
 
