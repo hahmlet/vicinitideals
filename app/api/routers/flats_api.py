@@ -82,6 +82,7 @@ def _design(result: dict[str, Any]) -> dict[str, Any]:
         "colour_reasons", "ruled", "binds", "flags", "colour_today", "why", "failing", "unchecked",
         "binding", "slack_ft", "fits", "tight", "warnings", "fire_route_ft", "slope",
         "stalls_charged", "stalls_seated", "band", "ask", "unknown_facts", "assumed_facts",
+        "forms",
     )
     out = {k: result[k] for k in keep}
     out["binding_constraint"] = result["binding"][0] if result["binding"] else None

@@ -62,6 +62,15 @@
         {% endfor %}
       </select>
     </label>
+    <label style="display:flex;flex-direction:column;gap:2px;font-size:12px" class="muted"
+           title="Which way the four homes work out green: one apartment building on the one lot, or four townhouses each on its own lot (a land division).">Works as
+      <select name="form" id="form-filter">
+        <option value="" {% if not form %}selected{% endif %}>Any</option>
+        {% for choice in form_choices %}
+          <option value="{{ choice }}" {% if choice == form %}selected{% endif %}>{{ {"both": "Both", "townhomes": "Townhomes only (4 lots)", "apartment": "Apartment only (1 lot)", "neither": "Neither"}[choice] }}</option>
+        {% endfor %}
+      </select>
+    </label>
     <label style="display:flex;flex-direction:column;gap:2px;font-size:12px" class="muted">Address or lot number
       <input type="text" name="q" value="{{ q }}" placeholder="2833 SE 71ST or 1S2E08BA" style="width:220px">
     </label>
@@ -87,12 +96,12 @@
     </label>
     <input type="hidden" name="colour" value="{{ colour }}">
     <button class="btn btn-sm btn-primary" type="submit">Show</button>
-    {% if jurisdiction or zone or q or colour or design or tight or price_on or cheapest_first %}
+    {% if jurisdiction or zone or q or colour or design or tight or form or price_on or cheapest_first %}
       <a class="btn btn-sm btn-secondary" href="/flats/lots?run={{ run.id }}">Clear</a>
     {% endif %}
   </form>
 
-  {% set base_query = "run=" ~ run.id ~ "&jurisdiction=" ~ (jurisdiction|urlencode) ~ "&zone=" ~ (zone|urlencode) ~ "&design=" ~ (design|urlencode) ~ "&q=" ~ (q|urlencode) ~ ("&ppu=1" if price_on else "") ~ "&ppu_max=" ~ price_ceiling ~ "&pod=" ~ price_pod ~ "&road=" ~ price_road ~ ("&sort=ppu" if cheapest_first else "") ~ ("&tight=1" if tight else "") %}
+  {% set base_query = "run=" ~ run.id ~ "&jurisdiction=" ~ (jurisdiction|urlencode) ~ "&zone=" ~ (zone|urlencode) ~ "&design=" ~ (design|urlencode) ~ "&q=" ~ (q|urlencode) ~ ("&ppu=1" if price_on else "") ~ "&ppu_max=" ~ price_ceiling ~ "&pod=" ~ price_pod ~ "&road=" ~ price_road ~ ("&sort=ppu" if cheapest_first else "") ~ ("&tight=1" if tight else "") ~ ("&form=" ~ form if form else "") %}
 
   {% if too_slow %}
   <div class="alert alert-warning" id="lots-too-slow">This view took too long to work out. Narrow it with a city, a zone or a colour and try again.</div>

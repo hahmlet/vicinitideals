@@ -105,6 +105,13 @@
     <div class="card" id="design-{{ r.design|replace('@', '-') }}" style="flex:1;min-width:320px;padding:14px">
       <h3 style="margin:0 0 6px">{{ r.design }}</h3>
 
+      {% if r.forms %}
+      <div class="lot-forms" id="forms-{{ r.design|replace('@', '-') }}" data-works-as="{{ r.forms.works_as }}" style="margin-bottom:8px;font-size:13px">
+        <strong>{{ r.forms.text }}</strong>
+        <div class="muted" style="font-size:12px">Apartment building on the one lot: {{ r.forms.apartment }} · four townhouses on four lots: {{ r.forms.townhomes }}{% if r.forms.kept == 'townhomes' %} · the colour below is the townhouse form's{% endif %}</div>
+      </div>
+      {% endif %}
+
       <div style="margin-bottom:8px">
         <span class="muted">Verdict</span>
         <span class="badge {{ badges.get(r.verdict, 'badge-gray') }}">{{ r.verdict }}</span>

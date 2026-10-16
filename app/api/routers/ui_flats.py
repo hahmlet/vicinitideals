@@ -48,7 +48,7 @@ from urllib.parse import quote
 
 from fastapi import APIRouter, Form, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
-from sqlalchemy import case, func, or_, select, text
+from sqlalchemy import and_, case, func, not_, or_, select, text
 from sqlalchemy.exc import DBAPIError
 from starlette.concurrency import run_in_threadpool
 
@@ -2982,7 +2982,54 @@ def _why(colour: str, ruled: bool, binds: list[dict[str, Any]], flags: list[dict
     return None
 
 
-def _bind_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
+#: The pod's two forms, as the lot page names them (Steph 2026-10-15).
+_FORM_NAMES = {"apartment": "apartment (1 lot)", "townhomes": "townhomes (4 lots)"}
+#: What the Lots filter offers, in the order it offers them.
+_FORM_CHOICES = ("both", "townhomes", "apartment", "neither")
+
+
+def _form_fails(name: str, form: Mapping[str, Any]) -> str:
+    """Why one form does not work, in a sentence: what it misses where it is
+    red, what is still open where it is yellow."""
+    colour = str(form.get("colour") or "unknown")
+    binds, flags = _bind_rows(form), _flag_rows(form)
+    if colour == "red" and binds:
+        words = list(dict.fromkeys(b["words"] for b in binds))
+        return f"the {name} form fails because " + "; ".join(words)
+    if colour == "yellow":
+        why = _why(colour, True, binds, flags, None)
+        return f"the {name} form is a closer look" + (f" ({why})" if why else "")
+    return f"the {name} form is {colour}"
+
+
+def _forms_words(forms: Mapping[str, Any] | None) -> dict[str, Any] | None:
+    """Which of the pod's two forms works on this lot, in plain words -- one
+    apartment building on the one lot, or four townhouses on four unit lots
+    (Steph 2026-10-15: "I need to know which of the two works on every lot
+    (or if both/neither)"). A form works when it comes out GREEN. None for a
+    run screened before both forms were, or a design with one form."""
+    if not forms or forms.get("works_as") not in _FORM_CHOICES:
+        return None
+    works = str(forms["works_as"])
+    if works == "both":
+        text = f"Works as: {_FORM_NAMES['townhomes']} and {_FORM_NAMES['apartment']}"
+    elif works in _FORM_NAMES:
+        other = "apartment" if works == "townhomes" else "townhomes"
+        text = f"Works as: {works} only -- {_form_fails(other, forms.get(other) or {})}"
+    else:
+        text = "Works as: neither -- " + "; ".join(
+            _form_fails(name, forms.get(name) or {}) for name in ("apartment", "townhomes")
+        )
+    return {
+        "works_as": works,
+        "text": text,
+        "kept": forms.get("kept"),
+        "apartment": str((forms.get("apartment") or {}).get("colour") or "unknown"),
+        "townhomes": str((forms.get("townhomes") or {}).get("colour") or "unknown"),
+    }
+
+
+def _bind_rows(checks: Mapping[str, Any]) -> list[dict[str, Any]]:
     """The standards this design misses, each with the way round it the code
     offers -- logged, never counted on (Steph 2026-10-02: no variances)."""
     out = []
@@ -3005,7 +3052,7 @@ def _bind_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
     return out
 
 
-def _flag_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
+def _flag_rows(checks: Mapping[str, Any]) -> list[dict[str, Any]]:
     """The open questions on this design, most severe first, each marked
     with whether it is big enough to hold the colour at yellow under the
     colour rule in force."""
@@ -3141,6 +3188,28 @@ def _best(run_id: int, design: str | None, lot_ids: Sequence[int] | None = None)
     return stmt.group_by(result.lot_id).subquery("best")
 
 
+def _works_as(run_id: int, design: str | None, form: str) -> Any:
+    """The lots of a run on which the pod works as ``form`` (one of
+    ``_FORM_CHOICES``), across its designs or the one asked for: a form
+    works on the lot where any design comes out GREEN in it. Only rows the
+    screen recorded both forms on are read -- a run screened before both
+    were, or a lot nothing measured, matches no choice."""
+    result = FlatsLotResult
+    forms = result.checks["forms"]
+    apartment = func.bool_or(forms["apartment"]["colour"].astext == "green")
+    townhomes = func.bool_or(forms["townhomes"]["colour"].astext == "green")
+    stmt = select(result.lot_id).where(result.run_id == run_id, result.checks.has_key("forms"))
+    if design:
+        stmt = stmt.where(result.design_key == design)
+    want = {
+        "both": and_(apartment, townhomes),
+        "apartment": and_(apartment, not_(townhomes)),
+        "townhomes": and_(not_(apartment), townhomes),
+        "neither": and_(not_(apartment), not_(townhomes)),
+    }[form]
+    return stmt.group_by(result.lot_id).having(want)
+
+
 def _lot_conditions(jurisdiction: str, zone: str, q: str) -> list[Any]:
     lot = FlatsLot
     conditions: list[Any] = []
@@ -3271,6 +3340,9 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         "ask": checks.get("ask"),
         "unknown_facts": list(leaning.get("unknown") or []),
         "assumed_facts": list(leaning.get("assumed") or []),
+        # Which of the pod's two forms works here (Steph 2026-10-15); None
+        # for a run screened before both were.
+        "forms": _forms_words(checks.get("forms")) if screened else None,
     }
 
 
@@ -3517,6 +3589,7 @@ def _lots_ctx(
     page: int = 1,
     price: Mapping[str, Any] | None = None,
     cheapest_first: bool = False,
+    form: str = "",
 ) -> dict[str, Any]:
     cities = sorted(
         ((layer_id, layer.label) for layer_id, layer in _layers().items()), key=lambda kv: kv[1]
@@ -3531,6 +3604,9 @@ def _lots_ctx(
         "design": design,
         "q": q,
         "tight": tight,
+        # Which of the pod's two forms works (Steph 2026-10-15).
+        "form": form if form in _FORM_CHOICES else "",
+        "form_choices": _FORM_CHOICES,
         "page": page,
         "price_on": bool(price and price["on"]),
         "price_ceiling": f"{price['ceiling_value']:.0f}" if price else "30000",
@@ -3786,6 +3862,7 @@ async def flats_lots(
     pod: str = Query(""),
     road: str = Query(""),
     sort: str = Query(""),
+    form: str = Query(""),
     run: int | None = Query(None),
     page: int = Query(1, ge=1),
 ) -> HTMLResponse:
@@ -3800,7 +3877,7 @@ async def flats_lots(
         **_base_ctx(user, dedup_count, "flats_lots", conflicts_count=conflicts_count),
         **_lots_ctx(
             runs, chosen, jurisdiction=jurisdiction, zone=zone, colour=colour, design=design, q=q,
-            tight=tight_only, page=page, price=price, cheapest_first=cheapest,
+            tight=tight_only, page=page, price=price, cheapest_first=cheapest, form=form,
         ),
         "refresh": await _refresh(session),
         "counts": {"verdict": {}, "if_signed": {}, "lots": 0},
@@ -3825,6 +3902,8 @@ async def flats_lots(
         if picked:
             flagged = flagged.where(FlatsLotResult.design_key == picked)
         conditions.append(FlatsLot.id.in_(flagged))
+    if form in _FORM_CHOICES:
+        conditions.append(FlatsLot.id.in_(_works_as(chosen.id, picked, form)))
     if await _ruled_run(session, chosen.id):
         ctx["colour_words"] = _RULE_COLOUR_WORDS
         ctx["ruled"] = True

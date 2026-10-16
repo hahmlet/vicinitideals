@@ -293,3 +293,30 @@ def test_a_gresham_lot_page_says_how_deep_a_sidewalk_easement_was_assumed(
     if row.count() == 0:
         pytest.skip("this run was screened before the sidewalk depth was carried")
     expect(row).to_contain_text(" ft")
+
+
+def test_the_works_as_filter_narrows_the_list_and_the_lot_page_says_it_in_words(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """Steph 2026-10-15: "I need to know which of the two works on every lot
+    (or if both/neither)." A "Works as" choice on the list -- both, townhomes
+    only, apartment only, neither -- and, on the lot page, a sentence per
+    design that names the form that works and why the other does not. A run
+    screened before both forms were matches no choice, and skips."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/lots")
+
+    if page.get_by_text("No completed run has been loaded").count():
+        pytest.skip("no run loaded on this instance")
+    page.get_by_label("Works as").select_option("townhomes")
+    page.get_by_role("button", name="Show").click()
+    expect(page.get_by_label("Works as")).to_have_value("townhomes")
+    if page.get_by_text("No lots match.").count():
+        pytest.skip("no lot in this run works as townhomes only")
+
+    page.locator("#lot-table tbody tr td a").first.click()
+    expect(page.locator("#lot-verdict")).to_be_visible()
+    said = page.locator(".lot-forms[data-works-as='townhomes']").first
+    expect(said).to_be_visible()
+    expect(said).to_contain_text("Works as: townhomes only")
+    expect(said).to_contain_text("the apartment form")

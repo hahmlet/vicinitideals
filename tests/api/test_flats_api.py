@@ -133,6 +133,32 @@ async def test_the_report_says_what_the_lot_page_says(client: AsyncClient, sessi
         assert isinstance(report[key], list)
 
 
+async def test_the_report_passes_forms_through_per_design(
+    client: AsyncClient, session: AsyncSession
+):
+    from sqlalchemy import select
+
+    from app.models.flats import FlatsLotResult
+
+    await _login(client, session)
+    run = await _seed(session)
+    forms = {"works_as": "apartment", "kept": "apartment",
+             "apartment": {"colour": "green"}, "townhomes": {"colour": "red", "binds": [], "flags": []}}
+    rows = (await session.execute(
+        select(FlatsLotResult).where(FlatsLotResult.run_id == run.id, FlatsLotResult.design_key == DESIGNS[1])
+    )).scalars().all()
+    for row in rows:
+        row.checks = {**row.checks, "forms": forms}
+    await session.commit()
+
+    report = (await client.get("/api/flats/lot/multnomah/1S2E08BA%20%20-09500")).json()
+
+    by_design = {d["design"]: d for d in report["designs"]}
+    assert by_design[DESIGNS[1]]["forms"]["works_as"] == "apartment"
+    assert by_design[DESIGNS[1]]["forms"]["townhomes"] == "red"
+    assert by_design[DESIGNS[0]].get("forms") in (None, {})
+
+
 async def test_the_report_carries_decisions_and_the_rulings_that_speak_to_it(
     client: AsyncClient, session: AsyncSession, register
 ):
