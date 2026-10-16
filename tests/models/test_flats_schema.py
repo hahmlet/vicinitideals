@@ -128,6 +128,9 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # The page check (0138): a reviewer's answer about one number, asked
         # of the printed page rather than the text copy.
         "page_checks",
+        # The whole-document read-through (0144): one row per document a
+        # person read end to end, with the comments they left.
+        "document_readthroughs",
         # The flag plan's approvals (0139): a person setting a flag type's
         # risk and severity, or the colour rule set, until the drain writes
         # it into flags.yaml / colour.yaml.
