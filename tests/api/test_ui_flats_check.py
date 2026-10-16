@@ -780,3 +780,37 @@ async def test_printed_numbers_queue_before_web_numbers_and_keep_their_card(clie
     assert "data-web-code" not in response.text
     assert "check-box-value" in response.text
     assert f"/flats/sheet/{_first_row()['document']}?page=1" in response.text
+
+async def test_walking_every_web_number_reads_each_stored_text_once(monkeypatch):
+    """The queue walk once read a file per web number (~1,500 reads); it must
+    cost one read per distinct document. Counts reads, not seconds."""
+    from types import SimpleNamespace
+
+    from flats.provenance.store import ProvenanceStore
+
+    reads: list[str] = []
+    real = ProvenanceStore.load
+
+    def counting(self, document, *a, **kw):
+        reads.append(document)
+        return real(self, document, *a, **kw)
+
+    monkeypatch.setattr(ProvenanceStore, "load", counting)
+    for cached in (check._web_lines, check._web_marks):
+        cached.cache_clear()
+
+    web_documents: set[str] = set()
+    for layer in check._layers().values():
+        rows = [r for r in check._rows(layer, set()) if r["web"]]
+        web_documents |= {r["document"] for r in rows}
+        answers = {
+            (layer.layer, r["zone"], r["field"], r["when"], "value"): SimpleNamespace(
+                fingerprint=r["mark"], answer="matches", id=0
+            )
+            for r in rows
+        }
+        reads.clear()
+        for _ in check._questions(layer, rows, answers):
+            pass
+        assert len(reads) <= len({r["document"] for r in rows}), "a web text was read per number"
+    assert web_documents, "fixture assumption: some numbers are in web-published codes"

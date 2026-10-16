@@ -301,6 +301,16 @@ def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
 _NOT_NOTES = frozenset({"letter", "lone"})
 
 
+@lru_cache(maxsize=512)
+def _web_lines(document: str) -> tuple[str, ...]:
+    """A web code's stored text, split into lines once per process.
+
+    The store is baked in, like the page maps: reading and hashing the file per
+    number made a queue walk cost one file read per web number.
+    """
+    return tuple(sheet.lines_of(_store(), document))
+
+
 @lru_cache(maxsize=4096)
 def _web_marks(quote: str) -> tuple[str, ...]:
     """The footnote markers printed on a web number's cited lines, in order.
@@ -309,7 +319,7 @@ def _web_marks(quote: str) -> tuple[str, ...]:
     are read from the stored text with the census's own reading.
     """
     document = quote.partition("#L")[0]
-    text = sheet.lines_of(_store(), document)
+    text = _web_lines(document)
     out: list[str] = []
     for first, last in _ranges(quote):
         for m in footnotes._markers(text[first - 1 : last], ()):
