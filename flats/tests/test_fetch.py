@@ -280,7 +280,7 @@ def test_a_page_of_site_furniture_is_not_stored(bench: dict, capsys) -> None:
     # footer with one number in it. A signature over that looks like diligence.
     chrome = (
         "<html><body>"
-        + "".join(f"<p>Menu item and some navigation text here</p>" for _ in range(60))
+        + "".join("<p>Menu item and some navigation text here</p>" for _ in range(60))
         + "<p>Contact us for information</p></body></html>"
     )
 

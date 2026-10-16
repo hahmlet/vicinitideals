@@ -33,7 +33,7 @@ TEXT = (
     "The minimum side building setback is 5 feet.\n"
 )
 
-CODE = f'code:\n  - id: "33.110"\n    url: https://www.portland.gov/code/33.110.pdf\n'
+CODE = 'code:\n  - id: "33.110"\n    url: https://www.portland.gov/code/33.110.pdf\n'
 CITE = (
     "cite_default:\n"
     '  cite: "PCC 33.110.220"\n'

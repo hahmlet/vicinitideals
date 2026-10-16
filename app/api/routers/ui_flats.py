@@ -55,7 +55,6 @@ from sqlalchemy.exc import DBAPIError
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
-from app.config import settings
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import (
     FlatsCrossrefRuling,

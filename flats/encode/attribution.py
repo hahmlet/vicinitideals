@@ -22,7 +22,6 @@ whole point of provenance is that a machine does not get to make it.
 from __future__ import annotations
 
 import re
-import sys
 from dataclasses import dataclass, replace
 from typing import Iterable, Sequence
 

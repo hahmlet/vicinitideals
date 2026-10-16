@@ -59,7 +59,7 @@ from typing import Iterable, Sequence
 from flats.designs.model import Design, load_catalog
 from flats.rules.ledger import read_coverage
 from flats.rules.loader import load_rules
-from flats.rules.resolver import Resolved, RuleSet, ZoneResolution
+from flats.rules.resolver import RuleSet, ZoneResolution
 from flats.score.paper import paper_fit
 
 #: The design range the height decision is actually being made inside: two

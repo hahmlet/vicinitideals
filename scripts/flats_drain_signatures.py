@@ -63,7 +63,6 @@ from flats.encode.dispute import Dispute  # noqa: E402
 from flats.encode.dispute import LOG_PATH as DISPUTE_PATH  # noqa: E402
 from flats.encode.verify import (  # noqa: E402
     LOG_PATH,
-    VerificationLog,
     fingerprint,
     sign,
     variant_for,
