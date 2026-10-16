@@ -839,10 +839,13 @@ defaults:
         cite: OCMC 17.16.040.A, outdoor on-site parking and maneuvering areas on a townhouse lot
         quote: "or/clackamas/oregon-city/17.zoning.txt#L5323-L5331"
   #
-  # NOT ENCODED: 17.16.060.E, which puts parking behind the facade in
-  # mixed-use and commercial zones unless the site is on a local street, is
-  # not a corner lot, and has a topographic constraint -- three site facts,
-  # two of them registered and none of them measured. (or/clackamas/oregon-city/17.zoning.txt#L5417-L5432)
+  # 17.16.060.E, which puts parking behind the facade in mixed-use and
+  # commercial zones unless the site is on a local street, is not a corner
+  # lot, AND has a topographic constraint, is encoded zone by zone as
+  # `parking_front_prohibited: true` (MUC-1, MUC-2, MUD, C, WFDD). The
+  # escape needs all three and the third is unmeasured, so it is never
+  # claimed. D's width caps, which open "In residential zones", are exempt
+  # in those five. (or/clackamas/oregon-city/17.zoning.txt#L5417-L5437)
   #
   # NOT ENCODED: driveway spacing. Table 16.12.035.A asks 175 feet from a
   # street corner and between driveways on an arterial, 100 on a collector and
@@ -1763,6 +1766,33 @@ zones:
       value: true
       cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+    # 17.16.060.D's two width caps open "In residential zones" (FOLLOWUPS 84
+    # phase 3; the stated words govern) and do not reach this district, which
+    # 17.06.030 files under "Commercial and Mixed Use"; E is this district's
+    # parking sentence instead. E says WHERE the parking stands -- "behind
+    # the building facade that is closest to the street, below buildings, or
+    # on one or both sides of buildings" -- and states no width or share of
+    # frontage, so the two caps are exempt here and the location rule above
+    # is the whole of it. E's "on one or both sides" is also why a court
+    # beside the building is not banned (`parking_side_prohibited`), on the
+    # one-lot branch; the townhouse branch keeps 17.16.040.B.1.
+    parking_area_max_width_ft:
+      exempt: true
+      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
+    parking_area_max_frontage_pct:
+      exempt: true
+      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
+    parking_side_prohibited:
+      exempt: true
+      cite: OCMC 17.16.060.E, parking in mixed-use and commercial zones may stand on one or both sides of buildings
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5430"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
     notes: >-
       NOT ENCODED, and both are the same paragraph. 17.29.050.E caps the front
       yard at five feet and 17.29.050.H asks a minimum net density of 17.4
@@ -1862,6 +1892,25 @@ zones:
       value: true
       cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+    # 17.16.060.D's width caps open "In residential zones"; E governs here
+    # and states none (see MUC-1).
+    parking_area_max_width_ft:
+      exempt: true
+      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
+    parking_area_max_frontage_pct:
+      exempt: true
+      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
+    parking_side_prohibited:
+      exempt: true
+      cite: OCMC 17.16.060.E, parking in mixed-use and commercial zones may stand on one or both sides of buildings
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5430"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
     notes: >-
       NOT ENCODED: the minimum floor area ratio of 0.25 at 17.29.060.B, and it
       is refused on scope rather than for want of a field. 17.29.070.A states
@@ -1978,6 +2027,25 @@ zones:
       value: true
       cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+    # 17.16.060.D's width caps open "In residential zones"; E governs here
+    # and states none (see MUC-1).
+    parking_area_max_width_ft:
+      exempt: true
+      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
+    parking_area_max_frontage_pct:
+      exempt: true
+      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
+    parking_side_prohibited:
+      exempt: true
+      cite: OCMC 17.16.060.E, parking in mixed-use and commercial zones may stand on one or both sides of buildings
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5430"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
     notes: >-
       NOT ENCODED: the maximum front setback, twenty feet outside the design
       district and ten within it. 17.34.060.K and 17.34.070.K both exempt
@@ -2065,6 +2133,25 @@ zones:
       value: true
       cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+    # 17.16.060.D's width caps open "In residential zones"; E governs here
+    # and states none (see MUC-1).
+    parking_area_max_width_ft:
+      exempt: true
+      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
+    parking_area_max_frontage_pct:
+      exempt: true
+      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
+    parking_side_prohibited:
+      exempt: true
+      cite: OCMC 17.16.060.E, parking in mixed-use and commercial zones may stand on one or both sides of buildings
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5430"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
     notes: >-
       The general commercial district states the tightest version of this
       chapter's standard shape: a five-foot maximum front setback with no
@@ -2146,6 +2233,25 @@ zones:
       value: true
       cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+    # 17.16.060.D's width caps open "In residential zones"; E governs here
+    # and states none (see MUC-1).
+    parking_area_max_width_ft:
+      exempt: true
+      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
+    parking_area_max_frontage_pct:
+      exempt: true
+      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
+    parking_side_prohibited:
+      exempt: true
+      cite: OCMC 17.16.060.E, parking in mixed-use and commercial zones may stand on one or both sides of buildings
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5430"
+      variants:
+        - value: true
+          when: [unit_lots]
+          cite: OCMC 17.16.040.B.1, no off-street parking in the front yard or side yard
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L5348-L5349"
     notes: >-
       NOT ENCODED, and this is the one place in Oregon City where the missing
       field would bite. 17.35.060.B sets a MINIMUM floor area ratio of 1.0 and

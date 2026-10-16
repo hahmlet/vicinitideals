@@ -411,7 +411,18 @@
       "min_lot_sqft": [
         "protected_water_feature"
       ],
+      "parking_area_max_frontage_pct": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
+      "parking_area_max_width_ft": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
       "parking_front_prohibited": [
+        "protected_water_feature"
+      ],
+      "parking_side_prohibited": [
         "protected_water_feature"
       ],
       "quadplex_allowed": [
@@ -467,7 +478,18 @@
       "min_lot_sqft": [
         "protected_water_feature"
       ],
+      "parking_area_max_frontage_pct": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
+      "parking_area_max_width_ft": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
       "parking_front_prohibited": [
+        "protected_water_feature"
+      ],
+      "parking_side_prohibited": [
         "protected_water_feature"
       ],
       "quadplex_allowed": [
@@ -502,7 +524,18 @@
       "min_lot_sqft": [
         "protected_water_feature"
       ],
+      "parking_area_max_frontage_pct": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
+      "parking_area_max_width_ft": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
       "parking_front_prohibited": [
+        "protected_water_feature"
+      ],
+      "parking_side_prohibited": [
         "protected_water_feature"
       ],
       "quadplex_allowed": [
@@ -540,7 +573,18 @@
       "min_lot_sqft": [
         "protected_water_feature"
       ],
+      "parking_area_max_frontage_pct": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
+      "parking_area_max_width_ft": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
       "parking_front_prohibited": [
+        "protected_water_feature"
+      ],
+      "parking_side_prohibited": [
         "protected_water_feature"
       ],
       "quadplex_allowed": [
@@ -814,7 +858,18 @@
       "min_lot_sqft": [
         "protected_water_feature"
       ],
+      "parking_area_max_frontage_pct": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
+      "parking_area_max_width_ft": [
+        "protected_water_feature",
+        "utility_easement"
+      ],
       "parking_front_prohibited": [
+        "protected_water_feature"
+      ],
+      "parking_side_prohibited": [
         "protected_water_feature"
       ],
       "quadplex_allowed": [

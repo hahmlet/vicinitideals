@@ -126,11 +126,27 @@ def test_oregon_city_caps_the_front_yard_not_every_street(corpus: RuleSet) -> No
 
 
 def test_oregon_city_carries_the_forty_feet_limb(corpus: RuleSet) -> None:
-    for zone in ("R-10", "R-5", "R-2", "MUC-1"):
+    for zone in ("R-10", "R-5", "R-2"):
         got = corpus.resolve("or/clackamas/oregon-city", zone).values
         assert got["parking_area_max_width_ft"].value == 40, zone
     text = quoted(got["parking_area_max_width_ft"].prov.quote)
     assert "whichever is less" in text
+
+
+@pytest.mark.parametrize("zone", ["MUC-1", "MUC-2", "MUD", "C", "WFDD"])
+def test_oregon_city_mixed_use_takes_e_not_d(corpus: RuleSet, zone: str) -> None:
+    # D opens "In residential zones"; the mixed-use and commercial districts
+    # (17.06.030) take E: parking behind the street facade, below, or beside
+    # the building -- a location rule with no width or share. Its escape
+    # needs a topographic constraint nothing measures, so the ban binds.
+    got = corpus.resolve("or/clackamas/oregon-city", zone)
+    assert {"parking_area_max_width_ft", "parking_area_max_frontage_pct"} <= set(got.exempted)
+    assert got.get("parking_area_max_width_ft") is None
+    assert got.get("parking_area_max_frontage_pct") is None
+    ban = got.values["parking_front_prohibited"]
+    assert ban.value is True
+    assert "In mixed-use and commercial zones" in quoted(ban.prov.quote)
+    assert "parking_side_prohibited" in got.exempted
 
 
 def test_troutdale_lets_the_court_stand_in_front_inside_half_the_frontage(corpus: RuleSet) -> None:
