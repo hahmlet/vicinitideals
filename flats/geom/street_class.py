@@ -70,6 +70,7 @@ stays unranked and the lot yellow.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from dataclasses import field as dataclass_field
 from pathlib import Path
@@ -138,7 +139,15 @@ class ClassSpec:
     #: code asks (:mod:`flats.geom.dedication`): its ranks feed no driveway
     #: rule and it answers no ``local_street``.
     access: bool = True
+    #: The field holding each line's street name, for a map whose lines are
+    #: matched to Metro's by NAME (:func:`_beside_named`); None (the PREFIX /
+    #: STREETNAME / FTYPE layers) matches by where the line runs.
+    name_field: str | None = None
 
+
+#: The rank of a street a city's TSP map calls private (Tigard's PRIVATE):
+#: below every public class, so a public line read beside it outranks it.
+PRIVATE_RANK = -1
 
 #: Registry dataset -> how its classes read.
 CLASS_MAPS: dict[str, ClassSpec] = {
@@ -296,12 +305,23 @@ CLASS_MAPS: dict[str, ClassSpec] = {
     # Collector (and its Major / Minor Collector lines on Cascade Ave, Locust
     # St and Oak St), Arterial with the Special Transportation Area stretch of
     # Hall Blvd (an arterial the TSP's Figure 11 draws apart), Principal
-    # Arterial (99W, Barbur Blvd), Freeway. PRIVATE ranks with the local
-    # streets: no TSP class sets its width, and the local row is the most it
-    # could be asked. "Other" / "OTHER" (streets the city does not class,
-    # most outside it) and a blank rank nothing: the deepest distance. Read
-    # for the dedication only (``access``); no Tigard driveway rule reads a
-    # class.
+    # Arterial (99W, Barbur Blvd), Freeway. "Other" / "OTHER" (streets the
+    # city does not class, most outside it) and a blank rank nothing: the
+    # deepest distance. Read for the dedication only (``access``); no Tigard
+    # driveway rule reads a class.
+    #
+    # PRIVATE (:data:`PRIVATE_RANK`): a private street is not a "street" for
+    # the chapter's widths (18.910.020.E: "the term 'streets' shall mean
+    # 'public streets'"; its design is "established by the City Engineer",
+    # 18.910.030.T.1), and the TSP shows it no ultimate right-of-way. A line
+    # gives up nothing only where both maps say private: Metro types the
+    # street a private road or drive AND no public classed city line runs
+    # along it (:func:`flats.geom.dedication.measure`). Where Metro calls it
+    # public, the line takes the Local row, the wider of the two readings.
+    #
+    # The layer names its streets in FULL_NAME ("GALLO AVE", no direction),
+    # so its lines are matched to Metro's by name (``name_field``;
+    # FOLLOWUPS 81: matched by position alone, 91 lots read no class).
     "street_class_tigard": ClassSpec(
         field="CITY_TSP",
         local=frozenset(),
@@ -309,7 +329,7 @@ CLASS_MAPS: dict[str, ClassSpec] = {
         rank={
             "LOCAL": 0,
             "Local": 0,
-            "PRIVATE": 0,
+            "PRIVATE": -1,
             "NEIGHBORHOOD": 1,
             "COLLECTOR": 2,
             "MAJOR COLLECTOR": 2,
@@ -320,6 +340,7 @@ CLASS_MAPS: dict[str, ClassSpec] = {
             "FREEWAY": 5,
         },
         access=False,
+        name_field="FULL_NAME",
     ),
 }
 
@@ -348,6 +369,9 @@ class ClassMap:
     key: str = ""
     #: :attr:`ClassSpec.access`.
     access: bool = True
+    #: True where the TSP lines carry a street name (:attr:`ClassSpec.name_field`)
+    #: and are matched to Metro's by it (:func:`_beside_named`).
+    by_name: bool = False
 
     def covers(self, layer_id: str | None) -> bool:
         return bool(layer_id) and any(layer_id == s or layer_id.startswith(f"{s}/") for s in self.serves)
@@ -366,6 +390,37 @@ def class_kind(value: object, spec: ClassSpec) -> str:
 def class_rank(value: object, spec: ClassSpec) -> int | None:
     """One TSP class value's rank, or None where the spec ranks it not."""
     return spec.rank.get(str(value or "").strip())
+
+
+#: How a code or a map spells a street type, and how Metro's file does.
+_TYPES: dict[str, str] = {
+    "AVENUE": "AVE",
+    "BOULEVARD": "BLVD",
+    "COURT": "CT",
+    "DRIVE": "DR",
+    "HIGHWAY": "HWY",
+    "LANE": "LN",
+    "PARKWAY": "PKWY",
+    "PLACE": "PL",
+    "ROAD": "RD",
+    "STREET": "ST",
+    "TERRACE": "TER",
+}
+_DIRECTIONS = frozenset({"N", "S", "E", "W", "NE", "NW", "SE", "SW"})
+
+
+def street_key(label: object) -> str:
+    """A street's name as a code, a city's map and Metro's file can be
+    compared on: upper case, directions dropped, the street type abbreviated,
+    anything in brackets (a code's "(55th Ave. to Stanley Ave.)") left out.
+    ``""`` for no name."""
+    text = re.sub(r"\([^)]*\)", " ", str(label or "")).upper().replace(".", " ")
+    words = [_TYPES.get(w, w) for w in text.split()]
+    while words and words[0] in _DIRECTIONS:
+        words = words[1:]
+    while words and words[-1] in _DIRECTIONS:
+        words = words[:-1]
+    return " ".join(words)
 
 
 def _street_label(props: dict[str, Any]) -> str:
@@ -396,6 +451,7 @@ def build(
     osm_classes: Sequence[str] = (),
     key: str = "",
     access: bool = True,
+    by_name: bool = False,
 ) -> ClassMap:
     """A class map from its parts (what :func:`load_class_maps` reads, and
     what a test draws). ``ranks`` defaults to none; ``osm`` is
@@ -418,6 +474,7 @@ def build(
         osm_classes=tuple(osm_classes[i] for i in osm_ix),
         key=key,
         access=access,
+        by_name=by_name,
     )
 
 
@@ -480,7 +537,7 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
                 ds.serves,
                 geoms,
                 [class_kind(p.get(spec.field), spec) for p in props],
-                [_street_label(p) for p in props],
+                [street_key(p.get(spec.name_field)) if spec.name_field else _street_label(p) for p in props],
                 roads,
                 labels,
                 types,
@@ -490,6 +547,7 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
                 osm_classes,
                 key,
                 spec.access,
+                spec.name_field is not None,
             )
         )
     return tuple(out)
@@ -498,6 +556,8 @@ def load_class_maps(sources: Path, pipeline: Any | None = None) -> tuple[ClassMa
 def _beside(point: Any, own: float, cmap: ClassMap) -> tuple[int | None, list[int]]:
     """The RLIS street a lot line abuts at ``point`` (None where none runs
     beside it) and the TSP lines on that street abreast of the point."""
+    if cmap.by_name:
+        return _beside_named(point, own, cmap)
     s = _fronted(point, own, cmap.streets)
     if s is None:
         return None, []
@@ -511,6 +571,67 @@ def _beside(point: Any, own: float, cmap: ClassMap) -> tuple[int | None, list[in
         if (name and name == cmap.lines.names[i]) or line.distance(foot) <= COINCIDE_FT:
             found.append(i)
     return s, found
+
+
+def _beside_named(point: Any, own: float, cmap: ClassMap) -> tuple[int | None, list[int]]:
+    """:func:`_beside` on a map whose lines carry street names.
+
+    The street is Metro's centreline the lot line abuts at ``point``. A TSP
+    line is on it where the two carry the same name (:func:`street_key`), the
+    TSP line passes within :data:`~flats.geom.corridor.FRONT_REACH_FT` of the
+    centreline's foot, and it runs beside the point (abreast, parallel): the
+    name decides and the position confirms, so a city line drawn a little
+    apart from Metro's still reads, while a stretch of the same street that
+    starts past the point (a class changing round the corner) does not.
+    Position alone decides only where neither carries a name (abreast,
+    within :data:`~flats.geom.corridor.COINCIDE_FT`); where the names
+    differ, :func:`_named_edge_rank` falls back to position for a street no
+    same-named line reads."""
+    s = _fronted(point, own, cmap.streets)
+    if s is None:
+        return None, []
+    street = cmap.streets.lines[s]
+    foot = street.interpolate(street.project(point))
+    name = street_key(cmap.streets.names[s])
+    found: list[int] = []
+    for i in cmap.lines.near(foot, FRONT_REACH_FT):
+        line = cmap.lines.lines[i]
+        tsp = street_key(cmap.lines.names[i])
+        if name or tsp:
+            if name == tsp and _abreast(line, point, own, CORRIDOR_REACH_FT):
+                found.append(i)
+        elif _coincides(line, point, foot, own):
+            found.append(i)
+    return s, found
+
+
+def _coincides(line: Any, point: Any, foot: Any, own: float) -> bool:
+    """A TSP line on Metro's street by position alone: abreast of the lot
+    line's ``point`` and within :data:`~flats.geom.corridor.COINCIDE_FT` of
+    the centreline's ``foot`` -- the reading every map that carries no names
+    takes (:func:`_beside`)."""
+    return line.distance(foot) <= COINCIDE_FT and _abreast(line, point, own, CORRIDOR_REACH_FT)
+
+
+def _coincident_rank(at: Sequence[tuple[Any, int]], own: float, cmap: ClassMap) -> int | None | str:
+    """The busiest rank of the TSP lines on Metro's street by position at the
+    sample points ``at`` (``(point, street)``), whatever their names: the
+    fallback for a street whose name the city spells differently (Metro's
+    "SW JAMES ST" is the city's "JAMES CT"; its "SW ATLANTA ST" the city's
+    "HAINES ST"), the reading main gave it. ``"unread"`` where an unranked
+    line is among them, None where no point reads one."""
+    ranks: list[int] = []
+    for p, s in at:
+        street = cmap.streets.lines[s]
+        foot = street.interpolate(street.project(p))
+        for i in cmap.lines.near(foot, COINCIDE_FT):
+            if not _coincides(cmap.lines.lines[i], p, foot, own):
+                continue
+            rank = cmap.ranks[i]
+            if rank is None:
+                return "unread"
+            ranks.append(rank)
+    return max(ranks) if ranks else None
 
 
 def _kind_at(point: Any, own: float, cmap: ClassMap) -> str:
@@ -551,8 +672,18 @@ def _rank_at(point: Any, own: float, cmap: ClassMap) -> int | None:
     On a map of the classified streets only (:attr:`ClassMap.unlisted`), a
     street with no TSP line abreast ranks as the undrawn class only where
     Metro types it local AND OpenStreetMap calls it residential (Steph
-    2026-10-09: "yes, when both agree"); otherwise it stays unread."""
+    2026-10-09: "yes, when both agree"); otherwise it stays unread.
+
+    On a map matched by name (:attr:`ClassMap.by_name`) lines of two classes
+    on one street (a class changing at a corner) give the busier one, the
+    wider right-of-way; any unranked line there (a Freeway, an "Other")
+    leaves the point unread."""
     s, lines = _beside(point, own, cmap)
+    if cmap.by_name:
+        named = [cmap.ranks[i] for i in lines]
+        if not named or None in named:
+            return None
+        return max(named)  # type: ignore[type-var]
     if not lines and s is not None and cmap.unlisted is not None:
         if cmap.types[s] in RLIS_LOCAL and _osm_agrees(point, own, s, cmap):
             return cmap.unlisted
@@ -576,13 +707,70 @@ def _samples(edge: Sequence[float]) -> tuple[list[Any], float] | None:
 
 def edge_rank(edge: Sequence[float], cmap: ClassMap) -> int | None:
     """One street lot line's class rank, where every sample point reads the
-    same one; None otherwise."""
+    same one; None otherwise. A map matched by name reads the line as
+    :func:`_named_edge_rank` does."""
     got = _samples(edge)
     if got is None:
         return None
     points, own = got
+    if cmap.by_name:
+        return _named_edge_rank(edge, points, own, cmap)
     ranks = {_rank_at(p, own, cmap) for p in points}
     return ranks.pop() if len(ranks) == 1 else None
+
+
+def _named_edge_rank(edge: Sequence[float], points: Sequence[Any], own: float, cmap: ClassMap) -> int | None:
+    """One street lot line's rank on a map matched by name.
+
+    Each sample point names the street beside it (Metro's centreline) and
+    reads the TSP lines carrying that name (:func:`_beside_named`). A point
+    with no street beside it, or no TSP line of that name near, is passed
+    over: one missed point does not leave the line unread. Every street the
+    line is on must be read somewhere -- at one of its points; where none
+    read it, off the TSP lines of its name within
+    :data:`~flats.geom.corridor.FRONT_REACH_FT` of the lot line; where the
+    city has no line of that name there, by position at its points
+    (:func:`_coincident_rank`) -- else the line is unread. The line takes the
+    busiest rank read for any of its streets: two classes on one line give
+    the wider right-of-way. Unread too where no point has a street beside
+    it, or any unranked TSP line (a Freeway, an "Other") is among those
+    read."""
+    from shapely.geometry import LineString
+
+    streets: dict[str, list[int]] = {}
+    at: dict[str, list[tuple[Any, int]]] = {}
+    for p in points:
+        s, lines = _beside_named(p, own, cmap)
+        if s is None:
+            continue
+        name = street_key(cmap.streets.names[s])
+        got = streets.setdefault(name, [])
+        at.setdefault(name, []).append((p, s))
+        for i in lines:
+            rank = cmap.ranks[i]
+            if rank is None:
+                return None
+            got.append(rank)
+    if not streets:
+        return None
+    segment = LineString([(float(edge[0]), float(edge[1])), (float(edge[2]), float(edge[3]))])
+    best: int | None = None
+    for name, ranks in streets.items():
+        if not ranks and name:
+            for i in cmap.lines.near(segment, FRONT_REACH_FT):
+                if street_key(cmap.lines.names[i]) != name:
+                    continue
+                rank = cmap.ranks[i]
+                if rank is None:
+                    return None
+                ranks.append(rank)
+        if not ranks:
+            got = _coincident_rank(at[name], own, cmap)
+            if got is None or got == "unread":
+                return None
+            ranks.append(got)  # type: ignore[arg-type]
+        best = max(ranks) if best is None else max(best, *ranks)
+    return best
 
 
 def street_ranks(
@@ -763,6 +951,7 @@ __all__ = [
     "CLASS_MAPS",
     "FRONT_ACCESS",
     "LOCAL_STREET",
+    "PRIVATE_RANK",
     "RLIS_LOCAL",
     "ClassMap",
     "ClassSpec",
@@ -775,6 +964,7 @@ __all__ = [
     "load_class_maps",
     "measured_access",
     "observed_local_street",
+    "street_key",
     "street_ranks",
     "unknown_access",
 ]

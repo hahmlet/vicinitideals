@@ -190,13 +190,15 @@ def test_the_map_ranks_each_street_line() -> None:
 
 
 def test_every_ranking_map_starts_local_at_zero_and_ranks_no_proposal() -> None:
-    from flats.geom.street_class import class_rank
+    from flats.geom.street_class import PRIVATE_RANK, class_rank
     from flats.ingest.sources import load_pipeline
 
     datasets = load_pipeline().datasets
     for key, spec in CLASS_MAPS.items():
         assert key in datasets and datasets[key].serves, key
-        lowest = min([*spec.rank.values(), *([] if spec.unlisted is None else [spec.unlisted])])
+        # A private street (Tigard's PRIVATE) sits below the public classes.
+        public = [r for r in spec.rank.values() if r != PRIVATE_RANK]
+        lowest = min([*public, *([] if spec.unlisted is None else [spec.unlisted])])
         assert lowest == 0, key
         assert not any("Proposed" in v for v in spec.rank), key
     beaverton = CLASS_MAPS["street_class_beaverton"]
