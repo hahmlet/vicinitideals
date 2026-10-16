@@ -166,7 +166,6 @@ from flats.score import margins as margin_record
 from flats.score.relief import ReliefPolicy
 from flats.score.room import Room, room_for
 from flats.score.paper import (
-    _yard,
     court_across,
     court_depth,
     front_lot_line_rule,

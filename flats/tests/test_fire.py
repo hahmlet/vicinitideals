@@ -501,7 +501,6 @@ def test_a_fit_that_fell_short_is_not_measured(corpus, policies) -> None:
 def test_a_plan_red_both_ways_is_not_measured(corpus, policies) -> None:
     lot = lot_from_row(bridge_row(), corpus.layers)
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
-    import dataclasses
 
     red = _coloured(s, Triage.red)
     got = fire_checked(red, lot, None, policy=policies[0], relief=policies[1])

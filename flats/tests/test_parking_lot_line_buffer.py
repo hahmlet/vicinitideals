@@ -18,7 +18,6 @@ import yaml
 
 from flats.designs.model import Design
 from flats.rules.fields import OPTIONAL_FIELDS, field
-from flats.rules.loader import load_rules
 from flats.score.paper import Alley, behind_wall_ft, court_across, court_depth, side_column
 from flats.score.screen import _court_beyond_rear, _court_over
 
