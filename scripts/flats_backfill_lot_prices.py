@@ -9,7 +9,7 @@ and each snapshot is one transaction, so a failure leaves the table as it was.
     python scripts/flats_backfill_lot_prices.py --snapshot 3 --snapshot 4 --dry-run
     python scripts/flats_backfill_lot_prices.py --snapshot 3 --snapshot 4
 
-Run it after migration 0144 to fill the new cap and net-area columns. Safe to
+Run it after migration 0145 to fill the new cap and net-area columns. Safe to
 run again.
 """
 

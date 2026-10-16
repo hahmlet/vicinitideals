@@ -224,7 +224,7 @@ app/
 alembic/versions/      # Alembic migrations — check the directory for the current head
 tests/
   engines/             # Unit tests: cashflow, draw_schedule, underwriting, waterfall
-  api/, models/, exporters/, scrapers/, tasks/, contract/
+  api/, models/, exporters/, scrapers/, tasks/, contract/, services/, scripts/
   e2e/                 # Playwright E2E tests
   conftest.py          # Shared fixtures: per-run Postgres test DB, seed helpers
 scripts/               # Ops/CLI utilities (post-deploy smoke, audits, backfills)
@@ -237,12 +237,31 @@ flats/                 # FLATS — parcel screening. Imports nothing from app/en
     resolver.py        # state -> county -> city resolution, with `preempts` override
     ledger.py          # Coverage ledger (missing zones) + clause ledger (missing rules)
   normalize/condo.py   # Condo / air-parcel detector — recall-biased three verdicts
+  ingest/              # County data into the screen: acquire (dated, checksummed source copies), normalize (every lot, pre-measure),
+                       # assign (one answer per lot), splice (partial re-screen), delta (what lots did between copies),
+                       # quadfit (bridge read), lot_prices, probe/checks/status (county-copy health and promotion gate),
+                       # transit, overpass, institutional, flatter, batch, sources (data-source registry)
+  geom/                # Lot geometry: name the edges, cut the buildable envelope (edges, envelope, corner, alley, street_*, ...)
+  fit/                 # Geometric fitment: can the pod's rectangle sit in the buildable area; no zoning judgement
+  score/               # Slack, tolerance and the GREEN/YELLOW/RED/UNKNOWN verdict; flags, margins, room, relief, price per home
+  provenance/          # Verbatim source text behind every encoded number, and the drift watch on it (store, staleness, repoint, sheet)
+  designs/model.py     # The design catalog — the buildings FLATS screens lots for
+  tax/                 # Property-tax impact snapshot: Measure 5/50 arithmetic (oregon), county rates, three scenarios (impact)
+  io/                  # Placeholder package (empty)
+  watch/dlcd.py        # Weekly DLCD plan-amendment notice fetch, parse and list
+  rulings.py           # Rulings register: decisions about how a lot is read, and adopted-but-not-in-force code changes
   encode/              # port_quadfit.py (one-shot import), backlog.py (work queue)
                        # words.py — the word-review queue: what a city's own
                        # definitions mean for the numbers we measured in them.
                        # Worked *before* signing, not after.
+    sweep/             # Read a code document blind and ask what FLATS has no name for (chunk, ask, audit, journal)
   config/jurisdictions/or/<county>/<city>.yaml   # The encoded rules
-  tests/               # Runs in the CI light gate; no DB fixtures
+  tests/               # flats/tests: runs in the CI light gate; no DB fixtures (also tests/services, tests/scripts for FLATS glue)
+  scripts/flats_*.py   # CLI: backfill_lot_prices, dlcd_watch, drain_* (crossref/flag_decisions/reading/signatures/word rulings),
+                       # flags, load_bridge, page_check_reopen/reply, probe, promote, snapshot, stage_quadfit_raw, tax_snapshot, weekly_chain
+  app/services/flats_*.py  # flats_flags (flag history), flats_price (price per home as SQL), flats_refresh (county-copy ledger)
+  app/tasks/flats_*.py     # flats_flags (nightly flag history), flats_probe (monthly county-source check)
+  app/api/routers/     # flats_api.py (property lookup JSON for agents); ui_flats.py (rule review), ui_flats_check.py, ui_flats_flags.py
 Lot Analysis/
   FLATS_PLAN.md        # FLATS architecture, encoding standard, build order
   quadfit/             # FLATS' predecessor pipeline (s0-s7). Being replaced.
