@@ -482,8 +482,13 @@ Type B units are required, so 1106.3 never fires. **Zero accessible spaces.**
 - **The residential code, if the permit goes that way.** A group of three or
   more attached units, each running foundation to roof, with a yard on at least
   two sides, is a *townhouse*, and townhouses up to three storeys are built
-  under the **Oregon Residential Specialty Code (ORSC, 2023 edition; a 2026
-  edition is expected 2026-10-01)**. The ORSC is based on the International
+  under the **Oregon Residential Specialty Code (ORSC; the 2026 edition,
+  based on the 2024 IRC, took effect 2026-10-01 with a six-month phase-in
+  during which the 2023 edition may still be used, mandatory 2027-04-01 --
+  BCD notice of permanent rule,
+  https://www.oregon.gov/bcd/laws-rules/Documents/20261001-2026orsc-adoption-pr.pdf,
+  read 2026-10-16; the 2026 ORSC text itself was not
+  read, ICC's reader returned 403)**. The ORSC is based on the International
   Residential Code, which **has no accessibility chapter at all**. This is a
   second, fully independent route to the same answer — but it depends on how
   the building is designed and permitted, so the OSSC chain above is the one to
