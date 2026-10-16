@@ -1,5 +1,5 @@
 {
-  "digest": "48fc951404eb233ec94fa2e2673fb9a8f2bc06870c10442440a927b96ab90854",
+  "digest": "9830048b2668796a8106b53825a361d0e8869dab3286075faf62fb71d2eaecbf",
   "layers": {
     "or": {
       "misattributed": [],
@@ -111,6 +111,70 @@
     "or/clackamas/oregon-city": {
       "misattributed": [
         {
+          "zone": "C",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "C",
+          "field": "parking_area_max_width_ft",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC-1",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC-1",
+          "field": "parking_area_max_width_ft",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC-2",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC-2",
+          "field": "parking_area_max_width_ft",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUD",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUD",
+          "field": "parking_area_max_width_ft",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
           "zone": "R-10",
           "field": "min_density_du_per_acre",
           "claimed": "17.08.020 17.08.040 17.16.060",
@@ -148,6 +212,22 @@
           "claimed": "17.08.020 17.08.040 17.16.060",
           "found": "17.08.050",
           "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "WFDD",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "WFDD",
+          "field": "parking_area_max_width_ft",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
           "kind": "heading_same_file"
         }
       ],

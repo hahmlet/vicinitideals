@@ -2878,8 +2878,11 @@ read when the weekly full re-screen lands.
    green still seats 6+ except 34E17D 00700 (5, room for more): a fix with no colour change.
    (e) Noticed: flats.flag_instances was last refreshed at run 70 (no row seen after it), so it
    still shows JURISDICTION-OFF on Tigard lots; run 74's own results carry the right flags.
-81. [scan: YES -- bound pending] **Tigard road widths: DONE in code (branch flats/tigard-road-widths,
-   merged to main 2026-10-15), bound pending.** Tigard measures setbacks from the future street edge.
+81. [scan: YES -- greens only gain] **Tigard road widths: MERGED 2026-10-15; class-name fix
+   (flats/tigard-class-names 91df7c6a) MERGED 2026-10-16, bound read, rides the next weekly.**
+   Bound vs main: 21 lots gain, none lose (RES-B 7 red->green, 7 red->yellow, 1 yellow->green;
+   RES-C 3 red->yellow; RES-D 1 red->green; MUR, MU-CBD 1 red->yellow each) -- the class map
+   now reads those streets as local. 2S101DC03502 yellow where run 74 had green. Tigard measures setbacks from the future street edge.
    Widths come from the code's own street table (TDC 18.910.1) keyed to the city's TSP class map
    (street_class_tigard, now in the weekly preflight); each class takes the top of its printed range,
    half from the centre line: Local 27, Neighborhood Route 29, Collector 48, Arterial 64 ft (Principal
@@ -2922,8 +2925,12 @@ read when the weekly full re-screen lands.
    "2016-037 PARTITION PLAT, LOT 1"; metes and bounds otherwise). PUD named in the text on only
    58 lots; no case-type index found, so standard vs PUD is not separable from it. Next: read the
    CDC gate -- does a PUD plat change the answer? If not, measure "made by a plat" and go.
-84. [scan: YES -- bound pending] **Frontage caps read as caps on every street (MERGED 2026-10-15,
-   branch flats/frontage-caps 667f57e9).** Oregon City 17.16.060.D.1 (40 ft or 50% of the frontage,
+84. [scan: YES -- greens only gain] **Frontage caps read as caps on every street (MERGED 2026-10-15,
+   branch flats/frontage-caps 667f57e9; phase 3 flats/frontage-fragments d8c6da14 MERGED 2026-10-16,
+   bound read, rides the next weekly: 556 gains, Oregon City 349 red->green / 153 red->yellow /
+   2 yellow->green, Beaverton 10 / 32, Clackamas 3 / 1, Troutdale 1 / 2, Sherwood 2 red->yellow,
+   Wilsonville 1 red->yellow; OC D caps residential zones only, E governs mixed-use/commercial;
+   a rounded corner is split between its streets).** Oregon City 17.16.060.D.1 (40 ft or 50% of the frontage,
    whichever is less -- new check `parking_frontage_width`, worst street), Fairview 19.30.040(E)(2)
    50%, Troutdale 8.120.C.4.d 50% (front parking was blank = banned; now allowed except the
    townhouse path 8.130.C.4.b.i), Sandy 17.90.160 F 50% of any abutting public street, Beaverton
