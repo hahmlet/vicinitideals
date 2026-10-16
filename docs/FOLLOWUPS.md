@@ -3003,3 +3003,14 @@ read when the weekly full re-screen lands.
       heading is only in another stored file; (d) unlocated 19 (the classifier's counts;
       headline 123 = b+c+d). Hillsboro 123, Tigard 107, Beaverton 83 (was 80).
    Next: read (b)+(c) by hand (judgement), fix cites; then teach the check to ignore (a).
+91. [scan: no] **Copilot cleanup batch 10 -- BLOCKED 2026-10-16: Copilot monthly quota exceeded
+   (HTTP 402), resets 2026-11-01; Steph to choose: wait, buy more, or let Claude build.** Four
+   briefs written (session 0351d0eb scratchpad cp_night10/*.txt), worktrees + branches left as-is
+   (flats/nul-note-posts, e2e-waits, test-hygiene, flags-cache-geometry; e2e-waits has a partial
+   uncommitted edit). (a) NUL byte in the note of an otherwise valid /ui/flats/sign (and passage,
+   reading, words, triage, check) POST -- likely 500, strip NUL before storing. (b) E2E waits that
+   pass without checking: test_flats_reading filter-survives (wait_for_htmx swallows), test_flats_price
+   ppu reload race (assert URL), test_flats_page_check cited-page flake (poll the scroll). (c) Test
+   hygiene: test_permit.py:147 `or True`; five blind pytest.raises(Exception); test_missed temp-file
+   leak; dead _MAX_WRAP; four unused loop variables. (d) Cache flags.yaml parse (64 ms/request,
+   key on mtime) and dedupe _outline/_plan geometry behind a golden test.
