@@ -4686,7 +4686,7 @@ async def flats_book_view(
     request: Request,
     session: DBSession,
     ref: str = Query(...),
-    page: int = Query(1),
+    page: int = Query(1, ge=1, le=100000),
 ) -> HTMLResponse:
     """The embedded viewer for one citation, swapped in when a reviewer asks.
 

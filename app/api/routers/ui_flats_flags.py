@@ -418,7 +418,11 @@ async def flats_flag_question_answer(
     if not _owner(user):
         return HTMLResponse("only the owner answers these", status_code=403)
     try:
-        await flag_store.answer(session, question_id, text_=answer, by=user.name, user_id=user.id)
+        if not 0 < question_id < 2**63:
+            raise flag_store.FlagWriteError(f"no question {question_id}")
+        await flag_store.answer(
+            session, question_id, text_=answer.replace("\x00", ""), by=user.name, user_id=user.id
+        )
     except flag_store.FlagWriteError as exc:
         await session.rollback()
         return RedirectResponse(f"/flats/flags/questions?error={quote(str(exc)[:200])}", status_code=303)
