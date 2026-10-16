@@ -50,6 +50,7 @@ from app.api.routers.ui_flats import (
 )
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import FlatsDocumentReadthrough, FlatsPageCheck, FlatsRuleSignature
+from flats.encode import footnotes
 from flats.provenance import books, pages as page_map, sheet
 from flats.rules import conditions
 from flats.rules.fields import FIELDS
@@ -295,6 +296,28 @@ def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
     )
 
 
+#: Marker kinds read off stored text that name a note. A bare letter is a use
+#: code ("P" permitted, "C" conditional) far more often than a note.
+_NOT_NOTES = frozenset({"letter", "lone"})
+
+
+@lru_cache(maxsize=4096)
+def _web_marks(quote: str) -> tuple[str, ...]:
+    """The footnote markers printed on a web number's cited lines, in order.
+
+    A web code has no page geometry to find superscripts by, so the markers
+    are read from the stored text with the census's own reading.
+    """
+    document = quote.partition("#L")[0]
+    text = sheet.lines_of(_store(), document)
+    out: list[str] = []
+    for first, last in _ranges(quote):
+        for m in footnotes._markers(text[first - 1 : last], ()):
+            if m.kind not in _NOT_NOTES and m.mark not in out:
+                out.append(m.mark)
+    return tuple(out)
+
+
 @dataclass
 class _Ask:
     row: dict[str, Any]
@@ -318,11 +341,10 @@ def _questions(
             continue
         if said.answer in _STOPS:
             continue
-        if row["web"]:
-            continue  # no printed page, so no printed footnotes to ask about
-        for marker in _placed(row).markers:
-            if _standing(answers.get((*key, f"note:{marker.mark}")), row) is None:
-                yield _Ask(row, f"note:{marker.mark}")
+        marks = _web_marks(row["quote"]) if row["web"] else [m.mark for m in _placed(row).markers]
+        for mark in marks:
+            if _standing(answers.get((*key, f"note:{mark}")), row) is None:
+                yield _Ask(row, f"note:{mark}")
 
 
 def _next(
@@ -342,7 +364,7 @@ def _focus(
 ) -> _Ask | None:
     for row in rows:
         if (row["zone"], row["field"], row["when"]) == (zone, field, when):
-            if row["web"] and question != "value":
+            if row["web"] and question != "value" and question.partition(":")[2] not in _web_marks(row["quote"]):
                 return None
             return _Ask(row, question)
     return None
@@ -375,19 +397,28 @@ def _trail(raw: str) -> list[list[str]]:
 
 
 def _flags_on(
-    answers: dict[tuple, FlatsPageCheck], layer_id: str, document: str, pages: set[int]
+    answers: dict[tuple, FlatsPageCheck],
+    layer_id: str,
+    document: str,
+    pages: set[int],
+    web: tuple[str, str, str] | None = None,
 ) -> list[dict[str, Any]]:
     """What has been flagged on the pages this card shows, oldest first.
 
     A flag is its own finding: a second one adds to the list, it does not
     replace the first, and the card shows them so the reviewer can see that.
+    A web card has no page, so it shows the flags made on that same number.
     """
     out, replies = [], _replies(answers)
     for r in answers.values():
         if (
             r.layer == layer_id
             and r.answer == FLAG
-            and r.page in pages
+            and (
+                r.page in pages
+                if web is None
+                else r.page is None and r.placed == "web" and (r.zone, r.field, r.when_key) == web
+            )
             and (r.quote or "").partition("#L")[0] == document
         ):
             reply = replies.get(r.id)
@@ -815,17 +846,21 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         return card
 
     mark = ask.question.partition(":")[2]
-    marker = next((m for m in placed.markers if m.mark == mark), None)
     card["answers"] = list(NOTE_ANSWERS.items())
     card["mark"] = mark
+    at, body = _note_text(document, mark, row["line"])
+    card["note_text"] = body
+    card["variants"] = _variants(layer, row["zone"], row["field"])
+    if web:
+        # The cited text is already on the card; there is no page to box.
+        card["mark_on"] = "web"
+        return card
+    marker = next((m for m in placed.markers if m.mark == mark), None)
     card["mark_on"] = marker.on if marker else "number"
     page = placed.marker_page or (placed.pages[0] if placed.pages else 1)
     boxes = [b for b in placed.boxes.get(page, []) if b[1] == "value"]
     if marker:
         boxes.append((marker.box.pad(0.004), "marker"))
-    at, body = _note_text(document, mark, row["line"])
-    card["note_text"] = body
-    card["variants"] = _variants(layer, row["zone"], row["field"])
     note_page = None
     if at is not None and (index := _page_index(document)) is not None:
         where = index.at(at)
@@ -908,6 +943,7 @@ async def _card_ctx(
             layer.layer,
             ask.row["document"],
             {sh["page"] for sh in card["sheets"] if not sh["context"]},
+            (ask.row["zone"], ask.row["field"], ask.row["when"]) if card["web"] else None,
         )
     return {
         "layer": {"id": layer.layer, "label": _layer_label(layer)},
@@ -1234,6 +1270,7 @@ async def flats_check_answer(
     note: str = Form(""),
     comment: str = Form(""),
     flag_page: int = Form(0),
+    flag_web: str = Form(""),
     action: str = Form("answer"),
     skipped: int = Form(0),
     trail: str = Form("[]"),
@@ -1310,14 +1347,15 @@ async def flats_check_answer(
     # with "Flag it" it is what the page has that the rules don't; under any
     # other answer it is a note.
     if action == "flag":
-        question, answer, says = f"page:{flag_page}", FLAG, comment or says
+        question = "page:web" if flag_web else f"page:{flag_page}"
+        answer, says = FLAG, comment or says
     elif comment and answer == "differs":
         says = says or comment
     elif comment:
         note = note or comment
     flag_page = question.partition(":")[2] if question.startswith("page:") else ""
     if flag_page:
-        if answer != FLAG or not flag_page.isdigit():
+        if answer != FLAG or not (flag_page.isdigit() or flag_page == "web"):
             return await card(skipped=skipped, focus=tuple(here), error="pick one of the answers")
         if not says.strip():
             return await card(skipped=skipped, focus=tuple(here), error="say what on the page is missing from the rules")
@@ -1337,8 +1375,12 @@ async def flats_check_answer(
     }
     document = row["quote"].partition("#L")[0]
     web = bool(document) and _checkable(document) == "html"
-    if web and (flag_page or question != "value"):
-        return await card(skipped=skipped, focus=tuple(here), error="a web code has only its number to answer")
+    if web and flag_page not in ("", "web"):
+        return await card(skipped=skipped, focus=tuple(here), error="a web code has no printed page to flag")
+    if flag_page == "web" and not web:
+        return await card(skipped=skipped, focus=tuple(here), error="pick one of the answers")
+    if web and question.startswith("note:") and question.partition(":")[2] not in _web_marks(row["quote"]):
+        return await card(skipped=skipped, focus=tuple(here), error="that footnote is not printed on this number")
     if web:
         # No page and no box: the text copy's own hash stands in for the book's.
         page, placed_how, book = None, "web", _store().load(document).sha256

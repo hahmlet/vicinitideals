@@ -669,7 +669,8 @@ async def test_a_web_code_card_shows_the_stored_text_not_a_page(client, session,
     assert "check-web-cited" in response.text
     assert "check-web-num" in response.text
     assert "/flats/sheet/" not in response.text
-    assert "data-flag" not in response.text
+    assert "data-flag" in response.text
+    assert "name=\"flag_web\"" in response.text
     assert "data-answer=\"matches\"" in response.text
 
 
@@ -701,15 +702,70 @@ async def test_a_web_code_answer_is_stored_in_the_same_table_with_no_page(client
     assert "web code, no printed page" in text.text
 
 
-async def test_a_web_code_has_no_footnote_or_flag_questions(client, session, _no_pages):
+async def test_a_web_code_footnote_not_printed_on_the_number_is_refused(client, session, _no_pages):
     await _login(client, session)
     row = _web_row()
     form = {"layer_id": WEB_LAYER, "zone": row["zone"], "field": row["field"], "when": row["when"]}
 
-    response = await client.post("/ui/flats/check", data={**form, "question": "note:5", "answer": "no_change"})
+    response = await client.post("/ui/flats/check", data={**form, "question": "note:99", "answer": "no_change"})
 
-    assert "has only its number to answer" in response.text
+    assert "not printed on this number" in response.text
     assert (await session.execute(select(FlatsPageCheck))).first() is None
+
+
+async def test_a_web_code_flag_is_stored_like_a_page_flag_with_no_page(client, session, _no_pages):
+    await _login(client, session)
+    row = _web_row()
+    form = {"layer_id": WEB_LAYER, "zone": row["zone"], "field": row["field"], "when": row["when"]}
+
+    response = await client.post(
+        "/ui/flats/check",
+        data={**form, "question": "value", "action": "flag", "flag_web": "1", "comment": "a setback nobody encoded"},
+    )
+
+    assert "flag saved" in response.text
+    assert "a setback nobody encoded" in response.text
+    assert 'name="question" value="value"' in response.text
+    saved = (await session.execute(select(FlatsPageCheck))).scalars().one()
+    assert (saved.question, saved.answer, saved.page, saved.placed) == ("page:web", "unmarked", None, "web")
+    assert len(saved.book_sha256) == 64
+    text = await client.get("/flats/check/problems.txt")
+    assert "web code, no printed page" in text.text
+    assert "the page says: a setback nobody encoded" in text.text
+
+
+async def test_a_flag_on_a_printed_card_cannot_name_the_web(client, session):
+    await _login(client, session)
+    row = _first_row()
+
+    response = await client.post(
+        "/ui/flats/check",
+        data=_form(row, action="flag", flag_web="1", comment="nope"),
+    )
+
+    assert "pick one of the answers" in response.text
+    assert (await session.execute(select(FlatsPageCheck))).first() is None
+
+
+async def test_a_web_code_footnote_is_asked_after_the_number_and_answered_with_no_page(
+    client, session, _no_pages, monkeypatch
+):
+    await _login(client, session)
+    row = check._rows(check._layers()[WEB_LAYER], set())[0]
+    monkeypatch.setattr(check, "_web_marks", lambda quote: ("2",))
+    form = {"layer_id": WEB_LAYER, "zone": row["zone"], "field": row["field"], "when": row["when"]}
+
+    after = await client.post("/ui/flats/check", data={**form, "question": "value", "answer": "matches"})
+
+    assert "Note <strong>2</strong> is printed in the cited text of this number" in after.text
+    assert "data-flag" in after.text
+    assert "data-web-code" in after.text
+    await client.post("/ui/flats/check", data={**form, "question": "note:2", "answer": "have_it"})
+    saved = (await session.execute(select(FlatsPageCheck).order_by(FlatsPageCheck.id))).scalars().all()
+    assert [(s.question, s.answer, s.page, s.placed) for s in saved] == [
+        ("value", "matches", None, "web"),
+        ("note:2", "have_it", None, "web"),
+    ]
 
 
 async def test_printed_numbers_queue_before_web_numbers_and_keep_their_card(client, session):

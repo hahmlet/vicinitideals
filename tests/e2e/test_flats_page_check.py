@@ -178,3 +178,4 @@ def test_a_web_code_card_shows_stored_text_labelled_as_having_no_printed_page(
     expect(card.locator(".check-web-cited").first).to_be_visible()
     expect(page.locator("#check-card .check-sheet")).to_have_count(0)
     expect(page.locator("[data-answer]").first).to_be_visible()
+    expect(page.locator("#check-card [data-flag]")).to_be_visible()
