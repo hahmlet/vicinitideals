@@ -577,14 +577,16 @@ def _beside_named(point: Any, own: float, cmap: ClassMap) -> tuple[int | None, l
     """:func:`_beside` on a map whose lines carry street names.
 
     The street is Metro's centreline the lot line abuts at ``point``. A TSP
-    line is on it where the two carry the same name (:func:`street_key`) and
-    the TSP line passes within :data:`~flats.geom.corridor.FRONT_REACH_FT` of
-    the centreline's foot: the name decides and the position confirms, so a
-    city line drawn a little apart from Metro's, or ending a few feet short
-    of the point, still reads. Position alone decides only where neither
-    carries a name (abreast, within :data:`~flats.geom.corridor.COINCIDE_FT`);
-    a named street never takes the class of a differently named line, nor of
-    an unnamed one."""
+    line is on it where the two carry the same name (:func:`street_key`), the
+    TSP line passes within :data:`~flats.geom.corridor.FRONT_REACH_FT` of the
+    centreline's foot, and it runs beside the point (abreast, parallel): the
+    name decides and the position confirms, so a city line drawn a little
+    apart from Metro's still reads, while a stretch of the same street that
+    starts past the point (a class changing round the corner) does not.
+    Position alone decides only where neither carries a name (abreast,
+    within :data:`~flats.geom.corridor.COINCIDE_FT`); where the names
+    differ, :func:`_named_edge_rank` falls back to position for a street no
+    same-named line reads."""
     s = _fronted(point, own, cmap.streets)
     if s is None:
         return None, []
@@ -596,11 +598,40 @@ def _beside_named(point: Any, own: float, cmap: ClassMap) -> tuple[int | None, l
         line = cmap.lines.lines[i]
         tsp = street_key(cmap.lines.names[i])
         if name or tsp:
-            if name == tsp:
+            if name == tsp and _abreast(line, point, own, CORRIDOR_REACH_FT):
                 found.append(i)
-        elif line.distance(foot) <= COINCIDE_FT and _abreast(line, point, own, CORRIDOR_REACH_FT):
+        elif _coincides(line, point, foot, own):
             found.append(i)
     return s, found
+
+
+def _coincides(line: Any, point: Any, foot: Any, own: float) -> bool:
+    """A TSP line on Metro's street by position alone: abreast of the lot
+    line's ``point`` and within :data:`~flats.geom.corridor.COINCIDE_FT` of
+    the centreline's ``foot`` -- the reading every map that carries no names
+    takes (:func:`_beside`)."""
+    return line.distance(foot) <= COINCIDE_FT and _abreast(line, point, own, CORRIDOR_REACH_FT)
+
+
+def _coincident_rank(at: Sequence[tuple[Any, int]], own: float, cmap: ClassMap) -> int | None | str:
+    """The busiest rank of the TSP lines on Metro's street by position at the
+    sample points ``at`` (``(point, street)``), whatever their names: the
+    fallback for a street whose name the city spells differently (Metro's
+    "SW JAMES ST" is the city's "JAMES CT"; its "SW ATLANTA ST" the city's
+    "HAINES ST"), the reading main gave it. ``"unread"`` where an unranked
+    line is among them, None where no point reads one."""
+    ranks: list[int] = []
+    for p, s in at:
+        street = cmap.streets.lines[s]
+        foot = street.interpolate(street.project(p))
+        for i in cmap.lines.near(foot, COINCIDE_FT):
+            if not _coincides(cmap.lines.lines[i], p, foot, own):
+                continue
+            rank = cmap.ranks[i]
+            if rank is None:
+                return "unread"
+            ranks.append(rank)
+    return max(ranks) if ranks else None
 
 
 def _kind_at(point: Any, own: float, cmap: ClassMap) -> str:
@@ -695,21 +726,26 @@ def _named_edge_rank(edge: Sequence[float], points: Sequence[Any], own: float, c
     reads the TSP lines carrying that name (:func:`_beside_named`). A point
     with no street beside it, or no TSP line of that name near, is passed
     over: one missed point does not leave the line unread. Every street the
-    line is on must be read somewhere -- at one of its points, or, where none
+    line is on must be read somewhere -- at one of its points; where none
     read it, off the TSP lines of its name within
-    :data:`~flats.geom.corridor.FRONT_REACH_FT` of the lot line -- else the
-    line is unread. The line takes the busiest rank read for any of its
-    streets: two classes on one line give the wider right-of-way. Unread
-    too where no point has a street beside it, a street has no name, or any
-    unranked TSP line (a Freeway, an "Other") is among those read."""
+    :data:`~flats.geom.corridor.FRONT_REACH_FT` of the lot line; where the
+    city has no line of that name there, by position at its points
+    (:func:`_coincident_rank`) -- else the line is unread. The line takes the
+    busiest rank read for any of its streets: two classes on one line give
+    the wider right-of-way. Unread too where no point has a street beside
+    it, or any unranked TSP line (a Freeway, an "Other") is among those
+    read."""
     from shapely.geometry import LineString
 
     streets: dict[str, list[int]] = {}
+    at: dict[str, list[tuple[Any, int]]] = {}
     for p in points:
         s, lines = _beside_named(p, own, cmap)
         if s is None:
             continue
-        got = streets.setdefault(street_key(cmap.streets.names[s]), [])
+        name = street_key(cmap.streets.names[s])
+        got = streets.setdefault(name, [])
+        at.setdefault(name, []).append((p, s))
         for i in lines:
             rank = cmap.ranks[i]
             if rank is None:
@@ -720,9 +756,7 @@ def _named_edge_rank(edge: Sequence[float], points: Sequence[Any], own: float, c
     segment = LineString([(float(edge[0]), float(edge[1])), (float(edge[2]), float(edge[3]))])
     best: int | None = None
     for name, ranks in streets.items():
-        if not ranks:
-            if not name:
-                return None
+        if not ranks and name:
             for i in cmap.lines.near(segment, FRONT_REACH_FT):
                 if street_key(cmap.lines.names[i]) != name:
                     continue
@@ -730,8 +764,11 @@ def _named_edge_rank(edge: Sequence[float], points: Sequence[Any], own: float, c
                 if rank is None:
                     return None
                 ranks.append(rank)
-            if not ranks:
+        if not ranks:
+            got = _coincident_rank(at[name], own, cmap)
+            if got is None or got == "unread":
                 return None
+            ranks.append(got)  # type: ignore[arg-type]
         best = max(ranks) if best is None else max(best, *ranks)
     return best
 

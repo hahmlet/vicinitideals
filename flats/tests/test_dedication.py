@@ -730,12 +730,20 @@ def test_tigard_matches_its_tsp_line_by_name_not_by_whichever_line_is_nearest() 
     # position match allows -- and a differently named line right on top.
     named = _tigard_map([_tsp(60), _tsp(22)], [1, 3], ["107TH AVE", "WALNUT ST"])
     assert tigard_rank(named) == 1
-    # Only the other street's line there: no match, unread.
-    other = _tigard_map([_tsp(22)], [3], ["WALNUT ST"])
-    assert tigard_rank(other) is None
-    # A line the city left unnamed is not matched to a named street either.
-    unnamed = _tigard_map([_tsp(22)], [0], [""])
-    assert tigard_rank(unnamed) is None
+
+
+def test_a_street_the_city_names_differently_reads_by_position() -> None:
+    # Metro's "SW JAMES ST" is the city's "JAMES CT", drawn on top of it: no
+    # line of Metro's name there, so position decides, as on main.
+    james = _tigard_map([_tsp(22)], [0], ["JAMES CT"], street_names=("SW JAMES ST",))
+    assert tigard_rank(james) == 0
+    # An unnamed city line on top reads the same way.
+    assert tigard_rank(_tigard_map([_tsp(22)], [1], [""], street_names=("SW JAMES ST",))) == 1
+    # Position stays strict: a differently named line 39 ft off is not it.
+    apart = _tigard_map([_tsp(60)], [0], ["JAMES CT"], street_names=("SW JAMES ST",))
+    assert tigard_rank(apart) is None
+    # An unranked line on top by position: unread.
+    assert tigard_rank(_tigard_map([_tsp(22)], [None], ["HAINES ST"], street_names=("SW ATLANTA ST",))) is None
 
 
 def test_tigard_matches_by_position_only_where_neither_map_names_the_street() -> None:
@@ -747,10 +755,10 @@ def test_tigard_matches_by_position_only_where_neither_map_names_the_street() ->
 
 
 def test_one_missed_sample_point_does_not_leave_a_tigard_line_unread() -> None:
-    # The city's line starts 70 ft along: the first two sample points have
-    # no 107th Ave line within 60 ft of Metro's, the other seven do. Until
-    # FOLLOWUPS 81 every point had to read, and the line took the deepest.
-    late = _tigard_map([_tsp(21, x0=70.0)], [0], ["107TH AVE"])
+    # The city's line starts 22 ft along: the first four sample points have
+    # no 107th Ave line beside them, the other five do. Until FOLLOWUPS 81
+    # every point had to read, and the line took the deepest.
+    late = _tigard_map([_tsp(21, x0=22.0)], [0], ["107TH AVE"])
     assert tigard_rank(late) == 0
     # A sample point with no Metro street beside it is passed over too.
     stub = LineString([(TX + 12, TY - 21), (TX + 500, TY - 21)])
@@ -787,6 +795,21 @@ def test_an_unranked_tsp_line_on_the_street_leaves_the_tigard_line_unread() -> N
     assert tigard_rank(mixed) is None
 
 
+def test_a_stretch_of_the_street_past_the_lot_is_not_read_for_it() -> None:
+    # 107th Ave is Local beside the lot and turns Collector 10 ft past its
+    # end (Pine St / 69th Ave at the corner): within 60 ft of the sample
+    # points' feet, but beside none of them. The lot takes the Local row.
+    corner = _tigard_map([_tsp(21, x1=60.0), _tsp(21, x0=60.0)], [0, 2], ["107TH AVE", "107TH AVE"])
+    assert tigard_rank(corner) == 0
+
+
+def test_an_unranked_stretch_past_the_lot_does_not_leave_it_unread() -> None:
+    # An "Other" piece of 70th Ave beginning past the lot's end, 55 ft from
+    # the nearest foot: not beside the line, so the Local reading stands.
+    end = _tigard_map([_tsp(21, x1=60.0), _tsp(21, x0=60.0)], [0, None], ["107TH AVE", "107TH AVE"])
+    assert tigard_rank(end) == 0
+
+
 def _private_lot(city):
     """A lot line on SW Angus Ct, which Metro types a private road (1700)."""
     county = _cmap([T_STREET], ["SW ANGUS CT"], (1700,), ranks=(0,))
@@ -812,6 +835,45 @@ def test_a_tigard_private_street_gives_up_nothing_only_where_both_maps_say_so(ru
     # A public street meeting the lot line end-on is not along it.
     across = LineString([(TX + 80, TY - 500), (TX + 80, TY + 500)])
     assert _private_lot(_angus([_tsp(21), across], [PRIVATE_RANK, 2], ["ANGUS CT", "HALL BLVD"]))[5] is False
+
+
+def test_a_private_drive_does_not_take_the_arterial_at_its_mouth() -> None:
+    # A mall entrance Metro types private, the city drawing no line for it,
+    # meets Hall Blvd 10 ft past the lot line's end: the arterial is within
+    # 60 ft of the points but runs across the drive, not beside it.
+    mouth = LineString([(TX + 55, TY - 500), (TX + 55, TY + 500)])
+    got = _private_lot(_angus([mouth], [3], ["HALL BLVD"]))
+    assert got[5] is False and got[7]["street_class_tigard"] is None
+
+
+def test_a_corner_cut_between_a_private_drive_and_an_arterial_measures_to_the_arterial() -> None:
+    # The lot's corner cut-off where a private drive (5 ft out) meets Hall
+    # Blvd (23 ft out at the cut's last sample point): beside neither, it may
+    # be on both. The city classes Hall Blvd an Arterial, so the arterial's
+    # row -- measured to Hall Blvd's line, not to the drive's 5 ft.
+    drive = LineString([(TX - 500, TY - 5), (TX + 66, TY - 5)])
+    hall = LineString([(TX + 71, TY - 500), (TX + 71, TY + 500)])
+    county = _cmap([drive, hall], ["WASHINGTON SQUARE TARGET ENTR", "SW HALL BLVD"], (1700, 1500), ranks=(0, 3))
+    city = _tigard_map(
+        [hall], [3], ["HALL BLVD"], streets=(drive, hall), street_names=("WASHINGTON SQUARE TARGET ENTR", "SW HALL BLVD"),
+        types=(1700, 1500),
+    )
+    cut = [TX + 30, TY, TX + 50, TY + 20, "F"]
+    (got,) = dedication.measure([cut], TIGARD, [county, city])
+    assert got[5] is True and got[7]["street_class_tigard"] == "arterial"
+    assert got[4] == pytest.approx(23.0)
+
+
+def test_a_private_drive_the_city_calls_public_measures_to_the_citys_line() -> None:
+    # The city's public line runs beside the lot 55 ft out -- a street behind
+    # a private frontage drive, not the drive: the half-width is to the
+    # city's line, not to the drive's centre line 21 ft out.
+    got = _private_lot(_angus([_tsp(55)], [1], ["ROSS ST"]))
+    assert got[5] is True and got[4] == pytest.approx(55.0)
+    # The city's line drawn on the drive itself (24 ft, 3 ft from Metro's):
+    # the same road, so the nearer centre line, Metro's at 21 ft.
+    got = _private_lot(_angus([_tsp(24)], [0], ["ANGUS CT"]))
+    assert got[5] is True and got[4] == pytest.approx(21.0)
 
 
 def test_a_street_metro_calls_private_and_tigard_public_takes_the_citys_row() -> None:
