@@ -103,6 +103,7 @@ from flats.geom.corridor import load_maps as load_corridor_maps
 from flats.geom.corner import (
     front_bearings as corner_fronts,
     is_corner,
+    line_length,
     name_front,
     through_lot,
     through_plans,
@@ -2229,7 +2230,9 @@ def _screen_on(
             # The zone caps the parking on every street frontage: measure
             # this plan's share (and run in feet) on the drawn plan and
             # screen again on it.
-            share = parking_frontage(here, streets, design, got, fit, fitters[key], env)
+            share = parking_frontage(
+                here, streets, design, got, fit, fitters[key], env, front=front
+            )
             if share is not None:
                 facts = dataclasses.replace(
                     facts,
@@ -3696,6 +3699,19 @@ def street_line_min_ft(edges: LotEdges | None) -> float | None:
     return min(sum(e.length_ft for e in chain) for chain in chains)
 
 
+def _code_front(streets: LotEdges, got: ZoneResolution) -> float | None:
+    """The street a corner lot fronts by the code's own words where the
+    screen named none (a lot s4 did not tier a corner, or one on an alley):
+    the narrowest frontage under ``front_lot_line_corner: shortest``
+    (Oregon City 17.04.490), as :func:`flats.geom.corner.front_bearings`
+    picks it. None -- every street read -- where the lot has one street
+    direction or the code leaves the front to a choice."""
+    bearings = tuple(float(b) for b in streets.front_bearings[:2])
+    if not two_streets(bearings) or front_lot_line_rule(got) != "shortest":
+        return None
+    return min(bearings, key=lambda b: line_length(streets, b))
+
+
 def parking_frontage(
     here: QuadfitLot,
     streets: LotEdges | None,
@@ -3704,6 +3720,8 @@ def parking_frontage(
     fit: Fit,
     fitter: Fitter,
     env: Envelope,
+    *,
+    front: float | None = None,
 ) -> tuple[float, float] | None:
     """The parking's share of the worst street frontage this plan has, in
     percent, and the longest run of one street it faces, in feet
@@ -3718,6 +3736,12 @@ def parking_frontage(
     beside the building is held to the cap on the way in
     (:func:`flats.score.paper.side_court`); a column along a side alley is
     not measured. None where there is no lot polygon or no drawing.
+
+    Where the zone caps parking "in the front yard" and names one front
+    (``parking_area_frontage_front_yard``; Oregon City 17.16.060.D), only the
+    streets along the named ``front`` are read: a corner lot's side street
+    is the corner side yard (17.04.1530), not the front yard. A through lot
+    with no named front keeps both ends, each a front yard (17.08.045.B).
     """
     if here.lot_geom is None or streets is None or fit.beside or fit.column:
         return None
@@ -3731,7 +3755,15 @@ def parking_frontage(
     drawn = _court_drawn(here, design, got, fit, fitter, env, street)
     if drawn is None or not drawn.rows:
         return None
-    return parking_share(here.lot_geom, streets, drawn.rows, drawn.building)
+    front_deg = None
+    if (
+        got.get("parking_area_frontage_front_yard") is True
+        and got.get("parking_area_frontage_any_street") is not True
+    ):
+        front_deg = front if front is not None else _code_front(streets, got)
+    return parking_share(
+        here.lot_geom, streets, drawn.rows, drawn.building, front_deg=front_deg
+    )
 
 
 def _largest_left(
