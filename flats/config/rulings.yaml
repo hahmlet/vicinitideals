@@ -1490,3 +1490,78 @@
     https://efiles.portlandoregon.gov/record/18006154/file/document pp. 12, 77, 79, 95;
     found by Steph in the council materials 2026-10-15
   encoded_in: [flats/config/jurisdictions/or/multnomah/portland.yaml]
+
+- id: 2026-09-08-pod-has-no-garage
+  kind: ruling
+  date: 2026-09-08
+  scope: {}
+  question: >-
+    Both pod designs park in a rear court with no garage; do garage setback
+    standards (West Linn's driveway length, Fairview's 20 ft garage setback)
+    bind the screen?
+  ruling: >-
+    No garage -- the pod has none, so garage standards do not reach it
+    (paraphrase: HUMAN_TODO records it as "You ruled: no garage" and gives no
+    quotation).
+  effect: >-
+    The 66 garage setback numbers are retired and nothing is owed on them;
+    the exclusion is written down where the screen states what it does not
+    charge a lot for. A test fails if a design appears that parks under the
+    building.
+  source: docs/HUMAN_TODO.md, "The one ruling that closes sixty-six numbers -- ANSWERED 2026-09-08"
+
+- id: 2026-09-30-oregon-city-two-approaches-requirement
+  kind: ruling
+  date: 2026-09-30
+  scope:
+    county: clackamas
+    city: oregon-city
+  question: >-
+    OCMC 16.12.035.F gives townhouses one driveway approach for every two
+    dwelling units; read as a requirement it asks two approaches for the
+    four-unit pod on unit lots, read as a cap it never binds. Which?
+  ruling: >-
+    A requirement -- two separate approaches for the pod (paraphrase; the item
+    adds "I don't think we're counting for anything more than 1").
+  effect: >-
+    The city rule is read as a requirement of two approaches for the pod.
+    Where state law preempts it, see 2026-10-10-oregon-city-encode-approach-rule-with-override.
+  source: Steph 2026-09-30 (page-check flag #1), docs/FOLLOWUPS.md item 24
+
+- id: 2026-10-10-oregon-city-encode-approach-rule-with-override
+  kind: ruling
+  date: 2026-10-10
+  scope:
+    county: clackamas
+    city: oregon-city
+  question: >-
+    State law (OAR 660-046-0225(1)(c) and the stored Large Cities Model Code)
+    appears to override the one-approach-per-two-townhouses rule; encode it?
+  ruling: >-
+    Encode the city rule anyway, with the state override on top, so a
+    pre-emption filing by Oregon City or a change in state law flips it back
+    by deleting one override (paraphrase; FOLLOWUPS records it unquoted).
+  effect: >-
+    The city's value (2 units per approach, cited to 16.12.035.F) is held with
+    a state preemption entry above it; the instruction expected zero colour
+    moves, to be proven by an Oregon City bound. Not on main when this entry
+    was written, so no encoded_in is claimed.
+  source: Steph 2026-10-10, docs/FOLLOWUPS.md item 24
+
+- id: 2026-10-14-split-zone-near-miss-real-shortfall
+  kind: ruling
+  date: 2026-10-14
+  scope: {}
+  question: >-
+    Where no window as wide as building plus lane exists, the fit reported a
+    -43 ft floor and went red; should it report the real width shortfall so
+    the one-foot near-miss rule applies?
+  ruling: >-
+    Yes (paraphrase; FOLLOWUPS records only "Steph ruled yes" beside the
+    build).
+  effect: >-
+    The fit reports the real width shortfall (Fit.width_short_ft): short by 1
+    ft or more stays RED, under 1 ft is YELLOW (FIT-TIGHT). Bound: 50 design
+    rows red -> yellow, nothing else changes colour.
+  source: docs/FOLLOWUPS.md item 76 (the item gives no day for the ruling; dated with its BUILT 2026-10-14 note)
+  encoded_in: [flats/fit/rectangle.py]
