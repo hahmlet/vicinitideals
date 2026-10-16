@@ -44,6 +44,7 @@ from app.api.routers.ui_flats import (
     _layers,
     _mark,
     _number,
+    _page_index,
     _ranges,
     _store,
     _value_rows,
@@ -122,15 +123,6 @@ _SIGNED = "verified"
 
 
 # --- which numbers can be checked -------------------------------------------
-
-
-@lru_cache(maxsize=512)
-def _page_index(document: str) -> Any:
-    """The document's page map, read once per process -- the store is baked in."""
-    try:
-        return page_map.read(_store(), document)
-    except Exception:  # noqa: BLE001 — a bad sidecar reads as no map
-        return None
 
 
 @lru_cache(maxsize=512)
