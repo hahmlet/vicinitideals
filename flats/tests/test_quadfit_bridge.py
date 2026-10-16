@@ -1875,3 +1875,20 @@ def test_a_miss_only_off_the_unranked_street_is_a_closer_look_not_a_miss(corpus,
     # Both ways fine, or the street ranked (one reading): nothing to ask.
     assert _pick_access([("side", (ok, None)), ("front", (ok, None))])[2] is False
     assert _pick_access([("side", (ok, None))]) == ("side", (ok, None), False)
+
+
+def test_the_stage_files_carry_the_ugb_answer(tmp_path: Path) -> None:
+    """ORS 197A.400 reaches an unincorporated lot only inside a UGB, and the
+    bridge reads that from s4. The first bound (2026-10-15) found every
+    Washington County lot still yellow: s4 held ``inside_ugb`` but the bridge
+    never read it, so each unincorporated lot came through as None."""
+    assert "inside_ugb" in S4_COLUMNS
+    s4, s5o = _stage_files(
+        tmp_path,
+        [
+            row(TLID="1S1W01AA  -00100", jurisdiction="washington_unincorporated", inside_ugb=True),
+            row(TLID="1S1W01AA  -00200", jurisdiction="washington_unincorporated", inside_ugb=False),
+        ],
+    )
+    got = {r["TLID"]: lot_from_row(r).facts.inside_ugb for r in iter_rows(s4, s5o)}
+    assert got == {"1S1W01AA  -00100": True, "1S1W01AA  -00200": False}

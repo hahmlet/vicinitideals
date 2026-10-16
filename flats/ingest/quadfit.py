@@ -280,6 +280,9 @@ S4_COLUMNS: tuple[str, ...] = (
     "fronts_cul_de_sac",
     "split_zone",
     "has_z_overlay",
+    # ORS 197A.400 reaches an unincorporated lot only inside a UGB
+    # (:func:`inside_ugb_of`); without the column every such lot reads None.
+    "inside_ugb",
     "neighbour_zones_json",
     "park_across_json",
     "alley_width_ft",
