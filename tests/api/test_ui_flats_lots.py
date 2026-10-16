@@ -31,10 +31,11 @@ from app.models.flats import (
     FlatsLot,
     FlatsLotResult,
     FlatsProbe,
+    FlatsReviewDecision,
     FlatsRun,
     FlatsSnapshot,
 )
-from app.api.routers.ui_flats import _alley_coverage_rows
+from app.api.routers.ui_flats import _alley_coverage_rows, _said_reason
 from tests.conftest import seed_org, set_client_auth
 
 pytestmark = pytest.mark.asyncio
@@ -243,6 +244,51 @@ async def _login(client: AsyncClient, session: AsyncSession):
     await session.commit()
     set_client_auth(client, user.id)
     return user
+
+
+async def test_lot_page_says_condo_reasons_and_decision_checks_in_words(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session)
+    lot = (
+        await session.execute(select(FlatsLot).where(FlatsLot.tlid == "1S2E08BA  -09500"))
+    ).scalar_one()
+    lot.condo_verdict = "suspect"
+    lot.condo_reason = "SUSPECT_CONDO_COMMON_AREA"
+    lot.facts = {
+        **lot.facts,
+        "condo": {"verdict": "suspect", "reason": lot.condo_reason},
+    }
+    session.add(
+        FlatsReviewDecision(
+            county=lot.county,
+            tlid=lot.tlid,
+            check_code="min_lot_width_ft",
+            verdict="green",
+            reason="The survey confirms the lot clears the width requirement.",
+        )
+    )
+    await session.commit()
+
+    page = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+
+    assert page.status_code == 200
+    assert "likely condominium common-element land; real land that is encumbered" in page.text
+    assert "lot narrower than the minimum" in page.text
+    assert "min_lot_width_ft" not in page.text
+    assert "SUSPECT_CONDO_COMMON_AREA" not in page.text
+    assert "the building and its parking do not fit" in page.text
+    assert "fit_ft" not in page.text
+    for code, words in (
+        ("SUSPECT_CONDO_UNKNOWN_AREA", "condominium interest; parcel area is not known"),
+        ("SUSPECT_CONDO_COMMON_AREA", "likely condominium common-element land"),
+        ("SUSPECT_STACKED_UNIT", "likely a condominium unit in a larger building"),
+        ("CONDO_AIR_PARCEL", "condominium air parcel, not land"),
+    ):
+        assert words in _said_reason(code)
+        assert code not in _said_reason(code)
+    assert _said_reason("SUSPECT_NEW_CONDO_CASE") == "suspect new condo case"
 
 
 async def test_partial_alley_wording_names_the_line_and_covered_share():
@@ -622,7 +668,7 @@ async def test_the_lot_page_puts_the_verdict_first_and_the_colour_beside_it(
     pod80 = page.text.split('id="design-pod80x25-2"', 1)[1].split('class="card"', 1)[0]
     assert "yellow" in pod80
     assert "4 cars charged, 4 seated" in pod80
-    assert "fit_ft" in pod80
+    assert "the building and its parking do not fit" in pod80
     assert "the exception it would ask for has not been read" in pod80
     pod56 = page.text.split('id="design-pod56x36-2"', 1)[1].split('id="design-pod80x25-2"', 1)[0]
     assert "green" in pod56
@@ -691,7 +737,7 @@ async def test_the_county_map_colour_sits_beside_ours_not_in_its_place(
     assert page.status_code == 200
     head = page.text.split('id="lot-verdict"', 1)[1].split('class="card"', 1)[0]
     assert "County map says" in head
-    assert "siteplan_no_layout" in head
+    assert "siteplan no layout" in head
     # Ours is yellow; the county map's red is shown as the county map's,
     # after ours, and does not change ours.
     assert head.index("If signed as read") < head.index("County map says")
@@ -1287,7 +1333,7 @@ async def test_the_lot_page_lists_the_open_questions_and_which_hold_it_at_yellow
     assert "severity 0" in through
     # Most severe first.
     assert flags.index("FACT-CORNER-LOT") < flags.index("FACT-THROUGH-LOT")
-    assert "or/multnomah/portland · corner_lot" in corner
+    assert "or/multnomah/portland · corner lot" in corner
     # Yellow and nothing changed in the rule since: no recolour warning.
     assert 'id="colour-today-' not in page.text
 

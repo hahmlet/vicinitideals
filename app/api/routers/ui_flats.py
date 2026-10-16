@@ -2797,6 +2797,10 @@ _VERDICT_WORDS = {
 _REASON_WORDS = {
     "RULE_UNVERIFIED": "a rule this rests on has not been signed",
     "RELIEF_UNCONFIRMED": "the exception it would ask for has not been read",
+    "SUSPECT_CONDO_UNKNOWN_AREA": "condominium interest; parcel area is not known",
+    "SUSPECT_CONDO_COMMON_AREA": "likely condominium common-element land; real land that is encumbered",
+    "SUSPECT_STACKED_UNIT": "likely a condominium unit in a larger building, not a lot the building sits on",
+    "CONDO_AIR_PARCEL": "condominium air parcel, not land",
     "CLOSER_LOOK_MIN_DENSITY": "closer look: the lot is big enough that the city wants more homes on it than four",
     "CLOSER_LOOK_SLOPE": "closer look: the ground under the building and its parking slopes between 5% and 15% — a stepped foundation or retaining walls to price",
     "CLOSER_LOOK_STEEP_COARSE": "closer look: the coarse elevation map shows ground too steep to build on where the building and its parking would go — the lot was screened as though it were buildable until the detailed lidar map or a survey checks it",
@@ -2894,12 +2898,14 @@ def _slope_words(slope: Mapping[str, Any] | None) -> dict[str, Any] | None:
     return {
         "grade_pct": grade,
         "grade_band": None if grade is None else ruling.band(float(grade), source),
-        "grade_map": _SLOPE_MAP_WORDS.get(source, source),
+        "grade_map": _SLOPE_MAP_WORDS.get(source, source.replace("_", " ")),
         "green_max": ruling.grade_green_max_pct,
         "red_over": ruling.grade_red_over_pct,
         "steep_over": ruling.steep_over_pct,
         "steep_sqft": slope.get("steep_sqft"),
-        "steep_map": _SLOPE_MAP_WORDS.get(slope.get("steep_source") or "", ""),
+        "steep_map": _SLOPE_MAP_WORDS.get(
+            slope.get("steep_source") or "", (slope.get("steep_source") or "").replace("_", " ")
+        ),
         "steep_blocks": bool(slope.get("steep_blocks")),
         "steep_unconfirmed": bool(slope.get("steep_unconfirmed")),
     }
@@ -2911,6 +2917,16 @@ def _said_reason(code: str) -> str:
     if code.startswith("quadfit:"):
         return f"the county map's measurement skipped it: {code[8:].replace('_', ' ')}"
     return code.replace("_", " ").lower()
+
+
+def _check_words(check: str) -> str:
+    """A check name in words, falling back to its lowercase spaced name."""
+    return _CHECK_WORDS.get(check, check.replace("_", " ")).lower()
+
+
+def _key_words(key: str) -> str:
+    """A compound flag key with its machine-style parts said as words."""
+    return " · ".join(_check_words(part) for part in key.split(flag_plan.SEP) if part)
 
 
 def _city_label(jurisdiction: str) -> str:
@@ -3023,7 +3039,7 @@ def _bind_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
         out.append(
             {
                 "check": check,
-                "words": _CHECK_WORDS.get(check, check.replace("_", " ")),
+                "words": _check_words(check),
                 "observed": b.get("observed"),
                 "threshold": b.get("threshold"),
                 "shortfall": b.get("shortfall"),
@@ -3062,7 +3078,7 @@ def _flag_rows(checks: dict[str, Any]) -> list[dict[str, Any]]:
             {
                 "code": code,
                 "what": what,
-                "key": str(f.get("key") or "").replace(flag_plan.SEP, " · "),
+                "key": _key_words(str(f.get("key") or "")),
                 "severity": severity,
                 "counts": line is not None and severity is not None and severity >= line,
                 "bounds": f.get("bounds"),
@@ -3098,7 +3114,7 @@ async def _flag_history(session: DBSession, county: str, tlid: str) -> list[dict
                 "id": row.id,
                 "code": row.code,
                 "what": kind.description if kind is not None else row.code.replace("-", " ").lower(),
-                "key": row.key.replace(flag_plan.SEP, " · "),
+                "key": _key_words(row.key),
                 "design": row.design_key,
                 "open": row.status == "open",
                 "severity": row.severity,
@@ -3265,10 +3281,13 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         "flags": flags,
         "colour_today": _colour_today(checks),
         "head": checks.get("head"),
+        "head_words": _check_words(str(checks.get("head") or "")),
         "why": _why(colour, ruled, binds, flags, checks.get("head")),
         "failing": list(checks.get("failing") or []),
         "unchecked": list(checks.get("unchecked") or []),
+        "unchecked_words": [_check_words(str(check)) for check in checks.get("unchecked") or []],
         "binding": list(row.binding or []),
+        "binding_words": [_check_words(str(check)) for check in row.binding or []],
         "slack_ft": float(row.slack_ft) if row.slack_ft is not None else None,
         "fits": checks.get("fits") if screened else None,
         "fit": fit,
@@ -3300,8 +3319,15 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         "stalls_seated": stalls.get("seated"),
         "band": stalls.get("band"),
         "ask": checks.get("ask"),
+        "ask_words": str(checks.get("ask") or "").replace("_", " "),
         "unknown_facts": list(leaning.get("unknown") or []),
+        "unknown_facts_words": [
+            _check_words(str(fact)) for fact in leaning.get("unknown") or []
+        ],
         "assumed_facts": list(leaning.get("assumed") or []),
+        "assumed_facts_words": [
+            _check_words(str(fact)) for fact in leaning.get("assumed") or []
+        ],
     }
 
 
@@ -3340,7 +3366,7 @@ def _net_land(lot: FlatsLot) -> list[dict[str, Any]]:
                 "fields": [],
                 "less": [net_area_shown.get(k, k.replace("_", " ")) for k in net.less],
                 "may_less": [net_area_shown.get(k, k.replace("_", " ")) for k in net.may_less],
-                "assumed_none": list(net.assumed_none),
+                "assumed_none": [_check_words(str(name)) for name in net.assumed_none],
             },
         )
         field = FIELDS.get(name)
@@ -4082,7 +4108,7 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
             " / ".join(
                 f"{float(slope[k]):.0f}%" for k in ("mean_pct", "p85_pct", "max_pct") if slope.get(k) is not None
             )
-            + (f" ({slope['source']})" if slope.get("source") else ""),
+            + (f" ({str(slope['source']).replace('_', ' ')})" if slope.get("source") else ""),
         ),
         ("Public sewer", yes(observed.get("public_sewer"))),
         ("In a sewer district", yes(sewer.get("in_district"))),
@@ -4096,7 +4122,13 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
         ("Nearest frequent bus or rail line", ft(transit.get("frequent_route_ft"))),
         ("Nearest transit stop", ft(transit.get("transit_stop_ft"))),
         # The assessor's roll, adopted from the county copy on every refresh.
-        ("Condo", f"{condo['verdict']}" + (f" ({condo['reason']})" if condo.get("reason") else "") if condo.get("verdict") and condo["verdict"] != "land" else ""),
+        (
+            "Condo",
+            f"{condo['verdict']}"
+            + (f" ({_said_reason(str(condo['reason']))})" if condo.get("reason") else "")
+            if condo.get("verdict") and condo["verdict"] != "land"
+            else "",
+        ),
         ("Assessed value", money(roll.get("assessed_value"))),
         ("Real market value (land / building / total)", " / ".join(money(roll.get(k)) or "-" for k in ("land_value", "building_value", "total_value")) if any(roll.get(k) is not None for k in ("land_value", "building_value", "total_value")) else ""),
         ("Year built", str(roll["year_built"]) if roll.get("year_built") else ""),
@@ -4147,7 +4179,7 @@ async def _lot_decisions(session: DBSession, county: str, tlid: str) -> list[dic
             {
                 "id": d.id,
                 "design": d.design_key or "either design",
-                "check": d.check_code,
+                "check": _check_words(d.check_code),
                 "verdict": d.verdict,
                 "badge": _BADGE.get(d.verdict, "badge-gray"),
                 "reason": d.reason,
@@ -4281,6 +4313,15 @@ async def _lot_view(
     return lot, geojson, lat, lon, card
 
 
+def _quadfit_words(quadfit: Mapping[str, Any]) -> dict[str, Any]:
+    """Keep the county result intact while saying its codes on the lot page."""
+    out = dict(quadfit)
+    for key in ("binding_constraint", "policy_exclusion", "layout_method"):
+        if out.get(key):
+            out[key] = _check_words(str(out[key]))
+    return out
+
+
 @router.get("/flats/lots/{county}/{tlid:path}", response_class=HTMLResponse)
 async def flats_lot(
     request: Request,
@@ -4326,7 +4367,7 @@ async def flats_lot(
             "flag_history": await _flag_history(session, county, tlid),
             "facts": _fact_rows(facts),
             "net_land": _net_land(lot),
-            "quadfit": facts.get("quadfit") or {},
+            "quadfit": _quadfit_words(facts.get("quadfit") or {}),
             "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",
             "outline": _outline(geojson),
             "lat": lat,

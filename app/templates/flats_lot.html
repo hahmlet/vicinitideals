@@ -167,9 +167,9 @@
           <tr><td class="col-muted">Parking</td>
               <td>{% if r.stalls_charged is not none %}{{ r.stalls_charged }} cars charged{% endif %}{% if r.stalls_seated is not none %}, {{ r.stalls_seated }} seated{% endif %}{% if r.band %} <span class="muted">({{ r.band }})</span>{% endif %}</td></tr>
           <tr><td class="col-muted">Tightest check</td>
-              <td>{% if r.head %}<strong>{{ r.head }}</strong>{% else %}none failing{% endif %}{% if r.slack_ft is not none %} <span class="muted">· {{ "{:,.1f}".format(r.slack_ft) }} ft to spare</span>{% endif %}</td></tr>
+              <td>{% if r.head %}<strong>{{ r.head_words }}</strong>{% else %}none failing{% endif %}{% if r.slack_ft is not none %} <span class="muted">· {{ "{:,.1f}".format(r.slack_ft) }} ft to spare</span>{% endif %}</td></tr>
           {% if r.binding %}
-          <tr><td class="col-muted">Failing checks</td><td>{{ r.binding|join(", ") }}</td></tr>
+          <tr><td class="col-muted">Failing checks</td><td>{{ r.binding_words|join(", ") }}</td></tr>
           {% endif %}
           {% if r.fit %}
           <tr><td class="col-muted">Fit</td>
@@ -206,16 +206,16 @@
               <td>{% for w in r.warnings %}<div class="screen-warning"><span class="badge badge-orange">warning</span> {{ w }}</div>{% endfor %}</td></tr>
           {% endif %}
           {% if r.ask %}
-          <tr><td class="col-muted">Path</td><td>{{ r.ask|replace('_', ' ') }}</td></tr>
+          <tr><td class="col-muted">Path</td><td>{{ r.ask_words }}</td></tr>
           {% endif %}
           {% if r.unknown_facts %}
-          <tr><td class="col-muted">Facts nobody measured</td><td>{{ r.unknown_facts|join(", ") }}</td></tr>
+          <tr><td class="col-muted">Facts nobody measured</td><td>{{ r.unknown_facts_words|join(", ") }}</td></tr>
           {% endif %}
           {% if r.assumed_facts %}
-          <tr><td class="col-muted">Facts assumed</td><td>{{ r.assumed_facts|join(", ") }}</td></tr>
+          <tr><td class="col-muted">Facts assumed</td><td>{{ r.assumed_facts_words|join(", ") }}</td></tr>
           {% endif %}
           {% if r.unchecked %}
-          <tr><td class="col-muted">Not checked here</td><td class="muted">{{ r.unchecked|join(", ") }}</td></tr>
+          <tr><td class="col-muted">Not checked here</td><td class="muted">{{ r.unchecked_words|join(", ") }}</td></tr>
           {% endif %}
         </tbody>
       </table>
