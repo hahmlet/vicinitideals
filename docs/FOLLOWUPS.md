@@ -2990,8 +2990,9 @@ read when the weekly full re-screen lands.
    street class per lot line exists since FOLLOWUPS 41), bound, read the losses.
 90. [scan: NO (citations move, answers must not)] **409 cites name a section the cited lines
    do not sit in (found 2026-10-16, docs/ops/quote-mismatch-2026-10-16.md).** Not quote
-   failures: gaps.py:462 / attribution.check. (a) 286 the named section is printed inside the
-   lines (running header / cross-reference -- likely harmless); (b) 113 the heading sits
-   elsewhere in the same file (cite may point at the wrong lines); (c) 10 Wood Village, the
-   heading is only in another stored file. Hillsboro 123, Tigard 107, Beaverton 83 (was 80).
+   failures: gaps.py:462 / attribution.check. (a) header_or_xref 286: the named section is printed inside the
+   lines (running header / cross-reference -- likely harmless); (b) heading_same_file 88 the heading sits
+   elsewhere in the same file (cite may point at the wrong lines);    (c) heading_other_file 16 the
+      heading is only in another stored file; (d) unlocated 19 (the classifier's counts;
+      headline 123 = b+c+d). Hillsboro 123, Tigard 107, Beaverton 83 (was 80).
    Next: read (b)+(c) by hand (judgement), fix cites; then teach the check to ignore (a).

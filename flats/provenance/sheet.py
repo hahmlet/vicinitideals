@@ -844,15 +844,6 @@ def note_line(text: Sequence[str], mark: str, after: int, *, reach: int = 600) -
     return None
 
 
-#: The start of any numbered note: "5.", "(5)", "12)".
-_NOTE_START = re.compile(r"^\s*\(?\d{1,2}[.)]\s")
-
-
-def starts_note(line: str) -> bool:
-    """Whether a stored line opens a numbered note -- where the one before ends."""
-    return bool(_NOTE_START.match(line))
-
-
 def lines_of(store: ProvenanceStore, document: str) -> list[str]:
     try:
         return store.load(document).text.split("\n")
