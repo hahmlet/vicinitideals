@@ -43,6 +43,7 @@ import json
 import math
 import re
 from datetime import date, datetime, timezone
+from decimal import Decimal
 from functools import lru_cache
 from typing import Any, Mapping, Sequence
 from urllib.parse import quote
@@ -3172,8 +3173,14 @@ def _best(run_id: int, design: str | None, lot_ids: Sequence[int] | None = None)
     return stmt.group_by(result.lot_id).subquery("best")
 
 
+def _no_nul(value: str) -> str:
+    """The text without NUL bytes, which Postgres cannot store or compare."""
+    return value.replace("\x00", "")
+
+
 def _lot_conditions(jurisdiction: str, zone: str, q: str) -> list[Any]:
     lot = FlatsLot
+    jurisdiction, zone, q = _no_nul(jurisdiction), _no_nul(zone), _no_nul(q)
     conditions: list[Any] = []
     if jurisdiction:
         conditions.append(lot.jurisdiction == jurisdiction)
@@ -3348,6 +3355,9 @@ def _net_land(lot: FlatsLot) -> list[dict[str, Any]]:
     return list(out.values())
 
 
+_MAX_CEILING = Decimal(10) ** 12
+
+
 def _price_params(on: str, ceiling: str, pod: str, road: str) -> dict[str, Any]:
     """The price-per-home settings a request carries: the county defaults with
     any override, and the filter's ceiling (applied only when ``on`` is "1")."""
@@ -3355,6 +3365,8 @@ def _price_params(on: str, ceiling: str, pod: str, road: str) -> dict[str, Any]:
     amount = price_calc.as_decimal(ceiling)
     if amount is None or amount <= 0:
         amount = cfg.default_per_home_max
+    # A ceiling past what the database's numeric type can compare against overflows it.
+    amount = min(amount, _MAX_CEILING)
     return {"cfg": cfg, "on": on == "1", "ceiling_value": amount, "ceiling": amount if on == "1" else None}
 
 
@@ -3823,8 +3835,9 @@ async def flats_lots(
     road: str = Query(""),
     sort: str = Query(""),
     run: int | None = Query(None),
-    page: int = Query(1, ge=1),
+    page: int = Query(1, ge=1, le=100000),
 ) -> HTMLResponse:
+    jurisdiction, zone, q = _no_nul(jurisdiction), _no_nul(zone), _no_nul(q)
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     runs = await _runs(session)
@@ -4245,6 +4258,7 @@ async def _lot_view(
 ) -> tuple[FlatsLot, str | None, float | None, float | None, dict[str, Any]] | None:
     """The lot as the chosen run read it, with its card; None when the lot is
     unknown. The lot page and the JSON lookup both read it here."""
+    county, tlid = _no_nul(county), _no_nul(tlid)
     # The lot as the chosen run read it: a run's results point at the lot
     # rows of the county copy it screened, so the row is looked up in that
     # copy. A run that names no copy falls back to the newest row for the id.
@@ -4291,6 +4305,7 @@ async def flats_lot(
     pod: str = Query(""),
     road: str = Query(""),
 ) -> HTMLResponse:
+    county, tlid = _no_nul(county), _no_nul(tlid)
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     runs = await _runs(session)

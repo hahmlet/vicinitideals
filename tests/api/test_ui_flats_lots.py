@@ -273,6 +273,62 @@ async def test_partial_alley_wording_names_the_line_and_covered_share():
     assert _alley_coverage_rows({"alley_coverage": [{"line": "rear", "covered_ft": 88.7, "line_ft": 88.7}]}) == []
 
 
+async def _add_lots(session: AsyncSession, run: FlatsRun, count: int) -> None:
+    """More lots on the seeded run, one result each, so the list has a second page."""
+    for i in range(count):
+        lot = FlatsLot(
+            tlid=f"2S2E00AA  -{i:05d}", county="multnomah", jurisdiction="or/multnomah/portland",
+            zone_raw="R5", zone="R5", site_address=f"{i} SE EXTRA ST", area_sqft=5000,
+            geom=_box(7_700_000 + i * 100, 680_000, 50, 100), centroid="SRID=4326;POINT(-122.5 45.5)",
+            condo_verdict="land", facts={"source": "quadfit"},
+            first_seen_run_id=run.id, updated_run_id=run.id, snapshot_id=run.snapshot_id,
+        )
+        session.add(lot)
+        await session.flush()
+        checks = _checks("yellow", head="fit_ft")
+        session.add(
+            FlatsLotResult(
+                lot_id=lot.id, design_key=DESIGNS[0], run_id=run.id, tier="unknown",
+                slack_ft=checks["fit"]["slack_ft"], binding=checks["failing"], checks=checks,
+            )
+        )
+    await session.commit()
+
+
+def _tlids(html: str) -> set[str]:
+    return set(re.findall(r"/flats/lots/multnomah/([^\"'?]+)", html))
+
+
+async def test_the_lots_list_page_zero_is_refused(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    await _seed(session)
+
+    assert (await client.get("/flats/lots?page=0")).status_code == 422
+
+
+async def test_a_lots_page_past_the_end_is_empty_not_an_error(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    await _seed(session)
+
+    page = await client.get("/flats/lots?page=99")
+
+    assert page.status_code == 200
+    assert not _tlids(page.text)
+
+
+async def test_the_second_lots_page_holds_other_rows_than_the_first(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    run = await _seed(session)
+    await _add_lots(session, run, 60)
+
+    first = await client.get("/flats/lots?page=1")
+    second = await client.get("/flats/lots?page=2")
+
+    assert first.status_code == second.status_code == 200
+    one, two = _tlids(first.text), _tlids(second.text)
+    assert one and two and not one & two
+
+
 async def test_a_partial_alley_is_explained_without_changing_the_lot_result(
     client: AsyncClient, session: AsyncSession
 ):

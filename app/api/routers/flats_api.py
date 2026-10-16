@@ -145,6 +145,7 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
     `pending_changes` are adopted code changes not yet in force. Get the county
     and tlid from flats_find_lot; a TLID contains spaces, pass it exactly.
     Answers from the live run (`run`); 404 when the lot is unknown."""
+    county, tlid = lots._no_nul(county), lots._no_nul(tlid)
     run = lots._default_run(await lots._runs(session))
     view = await lots._lot_view(session, county, tlid, run, plans=False)
     if view is None:
