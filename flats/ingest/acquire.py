@@ -296,11 +296,6 @@ def _field_names(meta: dict[str, Any]) -> list[str]:
     return [f["name"] for f in meta.get("fields", []) if isinstance(f, dict) and "name" in f]
 
 
-def _arcgis_fields(client: httpx.Client, ds: Dataset) -> list[str]:
-    """The layer's own field names, from its metadata document."""
-    return _field_names(_arcgis_meta(client, ds))
-
-
 def _arcgis_ids(client: httpx.Client, ds: Dataset) -> tuple[str, list[int]]:
     params = {"where": ds.where or "1=1", "returnIdsOnly": "true", "f": "json"}
     if ds.bbox_4326 is not None:

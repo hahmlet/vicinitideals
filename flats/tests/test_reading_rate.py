@@ -62,7 +62,8 @@ def test_a_card_nobody_answered_is_not_a_card_that_agreed() -> None:
     the direction that flatters it, on cards nobody read.
     """
     run = next(r for r in readings() if r.stem == "second_reading_2026_09_07")
-    dealt = sum(1 for _ in csv.DictReader((READINGS / f"{run.stem}.csv").open(encoding="utf-8")))
+    with (READINGS / f"{run.stem}.csv").open(encoding="utf-8") as fh:
+        dealt = sum(1 for _ in csv.DictReader(fh))
 
     assert dealt == 1902
     assert run.read == 1848, "54 unanswered cards must leave the denominator"
