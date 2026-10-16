@@ -2,11 +2,12 @@
 
 The arithmetic is :mod:`flats.score.price`'s, written a second time as one SQL
 expression over ``flats.lot_prices`` -- plain numbers stored per lot (price,
-area, the zone's two density limits) -- so a filter can run over the whole
-county copy (about 1.2 million lots) without reading the wide lot row or its
-JSON. The pod size and road share stay adjustable because they are applied
-here, to the stored numbers. ``tests/api/test_ui_flats_price.py`` holds this
-and the Python version to the same answer on edge lots; change them together.
+area, optional net area, and the zone's unit and density caps) -- so a filter
+can run over the whole county copy (about 1.2 million lots) without reading the
+wide lot row or its JSON. The pod size and road share stay adjustable because
+they are applied here, to the stored numbers. ``tests/api/test_ui_flats_price.py``
+holds this and the Python version to the same answer on edge lots; change them
+together.
 
 A lot with no ``lot_prices`` row reads as "no price" and unknown area.
 """
@@ -36,9 +37,17 @@ def pods_column(cfg: PriceSettings, colour_rank: ColumnElement[Any]) -> ColumnEl
     usable = case((area / pod >= cfg.road_from_pods, area * (1 - road)), else_=area)
     raw = func.floor(usable / pod)
     # LEAST ignores NULL, so a zone with only one limit is held by that one.
+    density_area = case(
+        (
+            and_(price.cap_du_per_acre_net.is_(True), price.net_area_sqft >= 0),
+            func.least(cast(price.net_area_sqft, _NUM), area),
+        ),
+        else_=area,
+    )
     homes_cap = func.least(
-        cast(price.cap_du_per_acre, _NUM) * area / literal(Decimal(SQFT_PER_ACRE), _NUM),
+        cast(price.cap_du_per_acre, _NUM) * density_area / literal(Decimal(SQFT_PER_ACRE), _NUM),
         area / cast(price.cap_unit_lot_sqft, _NUM),
+        cast(price.cap_max_units, _NUM),
     )
     capped = case(
         (homes_cap.is_(None), raw),

@@ -404,7 +404,8 @@ class FlatsLotPrice(Base):
 
     Filled by ``flats.ingest.lot_prices`` (the loader, and the backfill script
     for a copy loaded earlier). A lot with no row, or a row with no ``amount``,
-    reads as "no price". Pods and price per home are arithmetic on these columns
+    reads as "no price". Area, optional net area and rule caps are stored as
+    plain numbers; pods and price per home are arithmetic on these columns
     (``app.services.flats_price``), so the pod size and road share stay adjustable.
     """
 
@@ -426,9 +427,15 @@ class FlatsLotPrice(Base):
     as_of: Mapped[str | None] = mapped_column(String(160), nullable=True)
     #: Copy of ``lots.area_sqft`` so the page never joins the wide lot row.
     area_sqft: Mapped[float | None] = mapped_column(Numeric(14, 2), nullable=True)
-    #: The zone's density limits; NULL where the zone states none.
+    #: The zone's unit and density limits; NULL where the zone states none.
     cap_du_per_acre: Mapped[float | None] = mapped_column(Numeric(10, 2), nullable=True)
     cap_unit_lot_sqft: Mapped[float | None] = mapped_column(Numeric(12, 2), nullable=True)
+    cap_max_units: Mapped[float | None] = mapped_column(Numeric(10, 2), nullable=True)
+    cap_du_per_acre_net: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    #: Optional top-level ``facts.net_area_sqft``; filter/sort never parse lot JSON.
+    net_area_sqft: Mapped[float | None] = mapped_column(Numeric(14, 2), nullable=True)
 
 
 class FlatsLotResult(Base):

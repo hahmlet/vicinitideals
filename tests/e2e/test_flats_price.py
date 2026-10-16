@@ -106,3 +106,23 @@ def test_a_priced_lot_opens_to_a_label_with_its_source_and_as_of(
     expect(page.locator("#lot-price-asof")).to_contain_text("RLIS")
     # The colour the lot has is still on the page, beside the verdict.
     expect(page.locator("#lot-verdict")).to_contain_text("green")
+
+
+def test_a_bound_max_units_cap_is_explained_without_changing_the_colour(
+    logged_in_page: Page, base_url: str
+) -> None:
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/lots?colour=green&sort=ppu")
+    _skip_if_empty(page)
+    links = page.locator("#lot-table tbody tr td a")
+    hrefs = [links.nth(i).get_attribute("href") for i in range(min(links.count(), 30))]
+    for href in hrefs:
+        if not href:
+            continue
+        page.goto(f"{base_url}{href}")
+        details = page.locator("#lot-price-how")
+        if "maximum-unit cap" in details.inner_text():
+            expect(details).to_contain_text("held down by the zone's maximum-unit cap")
+            expect(page.locator("#lot-verdict")).to_contain_text("green")
+            return
+    pytest.skip("no green lot on the current Lots page is bound by max_units")

@@ -12,8 +12,10 @@ flexes with the market, so the page shows it and lets a person filter on it.
 Roads take ``road_share_pct`` of the lot when it is big enough for
 ``road_from_pods`` or more pods; smaller lots take none. A lot that is green or
 yellow today holds at least one pod. Pods are capped by the zone's encoded
-density where one is stated (units per acre, or a minimum area per townhouse
-lot), read through the same resolver the screen uses.
+maximum unit count, density (gross or net homes per acre), or minimum area per
+townhouse lot, read through the same resolver the screen uses. A net-area
+density uses ``facts.net_area_sqft`` only when that figure is present; otherwise
+it retains the gross-area calculation.
 
 Anything above one pod is an ESTIMATE: new roads or a land division may need a
 review, which is against the by-right rule.
@@ -147,22 +149,27 @@ def quote_for(
     return None
 
 
-# --- the zone's density ceiling --------------------------------------------------
+# --- the zone's unit and density ceilings ----------------------------------------
 
 
 @dataclass(frozen=True)
 class ZoneCap:
     """What the zone's encoded rules say about how many homes a lot may hold.
-    Either may be absent; both absent means no cap is stated."""
+    Each may be absent; absent limits mean no cap is stated."""
 
     du_per_acre: Decimal | None = None
     #: Smallest townhouse lot the zone allows (a unit-lots variant), sqft.
     unit_lot_sqft: Decimal | None = None
+    max_units: Decimal | None = None
+    density_on_net_area: bool = False
 
-    def density_homes(self, area_sqft: Decimal) -> Decimal | None:
+    def density_homes(self, area_sqft: Decimal, net_area_sqft: Decimal | None = None) -> Decimal | None:
         if self.du_per_acre is None:
             return None
-        return self.du_per_acre * area_sqft / Decimal(SQFT_PER_ACRE)
+        density_area = area_sqft
+        if self.density_on_net_area and net_area_sqft is not None and net_area_sqft >= 0:
+            density_area = min(area_sqft, net_area_sqft)
+        return self.du_per_acre * density_area / Decimal(SQFT_PER_ACRE)
 
     def unit_lot_homes(self, area_sqft: Decimal) -> Decimal | None:
         if self.unit_lot_sqft is None:
@@ -184,14 +191,23 @@ def zone_caps(ruleset: Any, layers: Mapping[str, Any]) -> dict[tuple[str, str], 
                 continue
             density = got.values.get("max_density_du_per_acre")
             du = as_decimal(density.value) if density is not None else None
+            density_on_net = density is not None and density.measured_on == "net_developable_area"
             minimum = got.values.get("min_lot_sqft")
             unit_lot = None
             if minimum is not None and not minimum.whole_project and "unit_lots" in (minimum.when or ()):
                 unit_lot = as_decimal(minimum.value)
+            maximum = got.values.get("max_units")
+            max_units = as_decimal(maximum.value) if maximum is not None else None
             du = du if du is not None and du > 0 else None
             unit_lot = unit_lot if unit_lot is not None and unit_lot > 0 else None
-            if du is not None or unit_lot is not None:
-                out[(layer_id, zone)] = ZoneCap(du, unit_lot)
+            max_units = max_units if max_units is not None and max_units >= 0 else None
+            if du is not None or unit_lot is not None or max_units is not None:
+                out[(layer_id, zone)] = ZoneCap(
+                    du_per_acre=du,
+                    unit_lot_sqft=unit_lot,
+                    max_units=max_units,
+                    density_on_net_area=density_on_net,
+                )
     return out
 
 
@@ -208,7 +224,7 @@ class PodPrice:
     #: Above one pod: new roads or a land division may need a review.
     estimate: bool
     roads_taken: bool
-    #: ``"density"`` / ``"unit lot"`` when the zone's cap held the count down.
+    #: The zone's tightest binding cap, when it held the count down.
     capped_by: str | None
 
 
@@ -217,6 +233,7 @@ def pods_on(
     cfg: PriceSettings,
     *,
     cap: ZoneCap | None = None,
+    net_area_sqft: Any = None,
     keep_one: bool = False,
 ) -> tuple[int, bool, str | None]:
     """(pods, roads taken, what capped it). ``keep_one``: the lot is green or
@@ -229,14 +246,20 @@ def pods_on(
     pods = math.floor(usable / cfg.pod_sqft)
     capped_by = None
     if cap is not None:
-        by_density = cap.density_homes(area)
+        net_area = as_decimal(net_area_sqft)
+        by_density = cap.density_homes(area, net_area)
         by_lot = cap.unit_lot_homes(area)
-        limits = [h for h in (by_density, by_lot) if h is not None]
+        limits = [(h, name) for h, name in (
+            (by_density, "density"),
+            (by_lot, "unit lot"),
+            (cap.max_units, "max units"),
+        ) if h is not None]
         if limits:
-            pods_cap = math.floor(min(limits) / cfg.homes_per_pod)
+            home_limit, limit_name = min(limits, key=lambda item: item[0])
+            pods_cap = math.floor(home_limit / cfg.homes_per_pod)
             if pods_cap < pods:
                 pods = pods_cap
-                capped_by = "density" if by_density is not None and by_density <= min(limits) else "unit lot"
+                capped_by = limit_name
     if keep_one:
         pods = max(pods, 1)
     return pods, roads, capped_by
@@ -252,7 +275,13 @@ def price_per_home(
     county_as_of: str = "",
     sources: Sequence[PriceSource] = PRICE_SOURCES,
 ) -> PodPrice:
-    pods, roads, capped_by = pods_on(area_sqft, cfg, cap=cap, keep_one=keep_one)
+    pods, roads, capped_by = pods_on(
+        area_sqft,
+        cfg,
+        cap=cap,
+        net_area_sqft=(facts or {}).get("net_area_sqft"),
+        keep_one=keep_one,
+    )
     homes = pods * cfg.homes_per_pod
     quote = quote_for(facts, county_as_of=county_as_of, sources=sources)
     per_home = quote.amount / homes if quote is not None and homes > 0 else None
