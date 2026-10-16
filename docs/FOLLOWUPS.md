@@ -2767,7 +2767,7 @@ read when the weekly full re-screen lands.
    Estacada 34E17  02000 (the lot that raised this): pod80x25@2 now yellow ZONE-SPLIT; pod56x36@2
    stays green (its building does not reach the other district), so the lot's best design is still
    green. REMAINING: nothing is live until the weekly re-screen (or a splice, if Steph wants it
-   sooner); Milwaukie's rule is cited by URL and should be stored with the code text.
+   sooner); Milwaukie's MMC 19.107.5 text is now stored and the quote is pinned to line 170.
    (c) Estacada 34E20AC00200 / 00201 (1015 NW Wade St): owner NOT in our data (the RLIS
    roll carries no owner name). The roll says: commercial vacant/improved class 201, COM,
    2017-09 transfer for $0, 00201 built 1965 with $657k of buildings and assessed value
