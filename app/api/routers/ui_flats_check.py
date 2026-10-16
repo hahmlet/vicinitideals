@@ -813,26 +813,57 @@ def _states(token: str, value: Any) -> bool:
     return abs(number - value) < 1e-9 or (percent and abs(number / 100 - value) < 1e-9)
 
 
-def _web_text(row: dict[str, Any]) -> list[dict[str, Any]]:
-    """The stored text around the cited lines, with the number's words marked.
+def _web_text(row: dict[str, Any], note_mark: str = "") -> list[dict[str, Any]]:
+    """The stored text around the cited lines, with the number or note marked.
 
     A web code has no page to draw, so the card shows the text we hold, the
-    cited lines lit and the words that state the number tinted.
+    cited lines lit and the words that state the number or footnote tinted.
     """
     lines, _error = _cited_lines(row["quote"])
     out = []
     for line in lines:
-        parts = re.split(r"(\s+)", line["shown"])
+        shown = line["shown"]
+        if not note_mark:
+            parts = [
+                {"text": p, "hit": line["quoted"] and bool(p.strip()) and _states(p, row["value"])}
+                for p in re.split(r"(\s+)", shown)
+                if p
+            ]
+        else:
+            leading = len(shown) - len(shown.lstrip())
+            marker_spans = []
+            if line["quoted"]:
+                marker_spans = sorted(
+                    (leading + marker.start, leading + marker.end)
+                    for marker in footnotes._markers([shown], ())
+                    if marker.kind not in _NOT_NOTES and marker.mark == note_mark
+                )
+            parts = []
+            cursor = 0
+            for token in re.finditer(r"\S+", shown):
+                if token.start() > cursor:
+                    parts.append({"text": shown[cursor : token.start()], "hit": False, "marker": False})
+                token_start, token_end = token.span()
+                hit = line["quoted"] and _states(token.group(), row["value"])
+                cursor = token_start
+                for start, end in marker_spans:
+                    if start < token_start or end > token_end:
+                        continue
+                    if start > cursor:
+                        parts.append({"text": shown[cursor:start], "hit": hit, "marker": False})
+                    parts.append({"text": shown[start:end], "hit": False, "marker": True})
+                    cursor = end
+                if cursor < token_end:
+                    parts.append({"text": shown[cursor:token_end], "hit": hit, "marker": False})
+                cursor = token_end
+            if cursor < len(shown):
+                parts.append({"text": shown[cursor:], "hit": False, "marker": False})
         out.append(
             {
                 "n": line["n"],
                 "cited": line["quoted"],
                 "grid": line["grid"],
-                "parts": [
-                    {"text": p, "hit": line["quoted"] and bool(p.strip()) and _states(p, row["value"])}
-                    for p in parts
-                    if p
-                ],
+                "parts": parts,
             }
         )
     return out
@@ -868,7 +899,9 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         "placed": "web" if web else placed.status,
         "placed_words": "" if web else sheet.PLACED.get(placed.status, ""),
         "web": web,
-        "web_text": _web_text(row) if web else [],
+        "web_text": _web_text(row, ask.question.partition(":")[2] if web and ask.question.startswith("note:") else "")
+        if web
+        else [],
         "sheets": [],
         "answers": list(VALUE_ANSWERS.items()),
     }

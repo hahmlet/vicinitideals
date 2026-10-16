@@ -683,6 +683,17 @@ def _web_row() -> dict:
     raise AssertionError("no Lake Oswego number is stated in its cited lines")
 
 
+def _web_footnote_row() -> tuple[dict, str]:
+    """A Lake Oswego number whose cited lines carry a readable footnote."""
+    layer = check._layers()[WEB_LAYER]
+    for row in check._rows(layer, set()):
+        if row["web"]:
+            marks = check._web_marks(row["quote"])
+            if marks:
+                return row, marks[0]
+    raise AssertionError("no Lake Oswego number has a cited footnote")
+
+
 @pytest.fixture
 def _no_pages(monkeypatch):
     def refuse(row):
@@ -802,6 +813,20 @@ async def test_a_web_code_footnote_is_asked_after_the_number_and_answered_with_n
         ("value", "matches", None, "web"),
         ("note:2", "have_it", None, "web"),
     ]
+
+
+async def test_a_web_footnote_card_highlights_its_marker(client, session, _no_pages):
+    await _login(client, session)
+    row, mark = _web_footnote_row()
+    form = {"layer_id": WEB_LAYER, "zone": row["zone"], "field": row["field"], "when": row["when"]}
+
+    response = await client.post(
+        "/ui/flats/check",
+        data={**form, "question": f"note:{mark}", "answer": "invalid"},
+    )
+
+    assert f"Note <strong>{mark}</strong> is printed in the cited text of this number" in response.text
+    assert f'<span class="check-web-mark">{mark}</span>' in response.text
 
 
 async def test_printed_numbers_queue_before_web_numbers_and_keep_their_card(client, session):

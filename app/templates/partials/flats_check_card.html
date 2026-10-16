@@ -92,7 +92,7 @@
       </div>
       <div class="check-web">
         {% for line in card.web_text %}
-        <div class="check-web-line{% if line.cited %} check-web-cited{% endif %}" data-line="{{ line.n }}"><span class="check-web-n">{{ line.n }}</span><span class="check-web-t{% if line.grid %} check-web-grid{% endif %}">{% for p in line.parts %}{% if p.hit %}<span class="check-web-num">{{ p.text }}</span>{% else %}{{ p.text }}{% endif %}{% endfor %}</span></div>
+        <div class="check-web-line{% if line.cited %} check-web-cited{% endif %}" data-line="{{ line.n }}"><span class="check-web-n">{{ line.n }}</span><span class="check-web-t{% if line.grid %} check-web-grid{% endif %}">{% for p in line.parts %}{% if p.marker %}<span class="check-web-mark">{{ p.text }}</span>{% elif p.hit %}<span class="check-web-num">{{ p.text }}</span>{% else %}{{ p.text }}{% endif %}{% endfor %}</span></div>
         {% endfor %}
       </div>
     </div>
