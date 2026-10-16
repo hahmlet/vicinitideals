@@ -102,6 +102,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from flats.designs.model import Design, load_catalog  # noqa: E402
 from flats.encode.port_quadfit import COUNTY, layer_id_for  # noqa: E402
+from flats.geom.alley import ALLEY_CLASS, _lines, cover_stretches, decode_cover  # noqa: E402
 from flats.ingest import lot_prices  # noqa: E402
 from flats.ingest.checks import blocking, snapshot_checks, warnings  # noqa: E402
 from flats.rules.loader import CONFIG_ROOT as RULES_ROOT  # noqa: E402
@@ -138,8 +139,10 @@ S4_WANTED = (
     "frontage_ft",
     "lot_width_ft",
     "lot_depth_ft",
+    "edges_json",
     "front_bearings_json",
     "alley_width_ft",
+    "alley_cover_json",
     "fronts_cul_de_sac",
     "split_zone",
     "inside_ugb",
@@ -235,6 +238,60 @@ def screen_version(root: Path = REPO_ROOT) -> str:
         h.update(path.read_bytes().replace(b"\r\n", b"\n"))  # one version across a Windows and a Linux checkout
         h.update(b"\0")
     return h.hexdigest()
+
+
+def alley_coverage(s4: dict[str, Any]) -> list[dict[str, Any]]:
+    """Measured partial alley runs per rear or side line, for the lot page."""
+    raw_edges = _clean(s4.get("edges_json"))
+    raw_bearings = _clean(s4.get("front_bearings_json"))
+    if not raw_edges or not raw_bearings:
+        return []
+    try:
+        edges = json.loads(raw_edges) if isinstance(raw_edges, str) else raw_edges
+        bearings = json.loads(raw_bearings) if isinstance(raw_bearings, str) else raw_bearings
+    except (TypeError, ValueError):
+        return []
+    if not isinstance(edges, list) or not isinstance(bearings, list) or not bearings:
+        return []
+    cover = decode_cover(s4.get("alley_cover_json"), len(edges))
+    if cover is None:
+        return []
+
+    out: list[dict[str, Any]] = []
+    for name in ("rear", "side"):
+        lines = [
+            line for line in _lines(edges, bearings, name)
+            if any(edges[index][4] == ALLEY_CLASS for index in line)
+        ]
+        for number, line in enumerate(lines, start=1):
+            line_ft = sum(
+                math.hypot(float(edges[index][2]) - float(edges[index][0]),
+                           float(edges[index][3]) - float(edges[index][1]))
+                for index in line
+            )
+            covered_ft = sum(
+                end - start
+                for index in line
+                if edges[index][4] == ALLEY_CLASS and isinstance(cover[index], str)
+                for start, end in cover_stretches(
+                    math.hypot(float(edges[index][2]) - float(edges[index][0]),
+                               float(edges[index][3]) - float(edges[index][1])),
+                    cover[index],
+                )
+            )
+            if line_ft <= 0 or covered_ft <= 0 or covered_ft >= line_ft - 1e-6:
+                continue
+            out.append(
+                {
+                    "line": name,
+                    "line_number": number,
+                    "line_count": len(lines),
+                    "covered_ft": round(covered_ft, 2),
+                    "line_ft": round(line_ft, 2),
+                    "share": round(covered_ft / line_ft, 4),
+                }
+            )
+    return out
 
 
 def _clean(value: Any) -> Any:
@@ -348,6 +405,7 @@ def lot_facts(s4: dict[str, Any], s5o: dict[str, Any], observed: dict[str, Any],
             "lot_depth_ft": _num(s4.get("lot_depth_ft")),
             "front_bearings_deg": bearings,
             "alley_width_ft": _num(s4.get("alley_width_ft")),
+            "alley_coverage": alley_coverage(s4),
             "fronts_cul_de_sac": s4.get("fronts_cul_de_sac"),
             "split_zone": s4.get("split_zone"),
             "zone_frac": _num(s4.get("zone_frac")),

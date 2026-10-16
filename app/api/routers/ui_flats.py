@@ -40,6 +40,7 @@ Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
 from __future__ import annotations
 
 import json
+import math
 import re
 from datetime import date, datetime, timezone
 from functools import lru_cache
@@ -3943,6 +3944,41 @@ def _plan(geojson: str | None, drawing: dict[str, Any] | None) -> dict[str, Any]
     }
 
 
+def _alley_coverage_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
+    """Describe measured partial alley coverage as lot-page fact rows."""
+    entries = facts.get("alley_coverage")
+    if not isinstance(entries, list):
+        return []
+    rows: list[tuple[str, str]] = []
+    for entry in entries:
+        if not isinstance(entry, dict) or not isinstance(entry.get("line"), str):
+            continue
+        if entry["line"] not in {"rear", "side"}:
+            continue
+        try:
+            covered = float(entry["covered_ft"])
+            line = float(entry["line_ft"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if not math.isfinite(covered) or not math.isfinite(line) or line <= 0 or not 0 < covered < line:
+            continue
+        count = entry.get("line_count")
+        number = entry.get("line_number")
+        line_name = entry["line"].title()
+        if isinstance(count, int) and count > 1 and isinstance(number, int) and number > 0:
+            line_name += f" line {number}"
+        else:
+            line_name += " line"
+        rows.append(
+            (
+                f"{line_name} alley cover",
+                f"{covered:,.1f} ft of {line:,.1f} ft ({covered / line:.0%}); "
+                "only the covered stretch counts as alley.",
+            )
+        )
+    return rows
+
+
 def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
     """The facts the screen read, as label / value pairs a person can scan.
     Only what is present is listed; a missing fact is left out rather than
@@ -3989,6 +4025,7 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
         ("Alley at the rear", yes(observed.get("alley_at_rear"))),
         ("Alley at the side", yes(observed.get("alley_at_side"))),
         ("Alley width", ft(facts.get("alley_width_ft"))),
+        *_alley_coverage_rows(facts),
         ("On a cul-de-sac bulb", yes(facts.get("fronts_cul_de_sac"))),
         # Gresham measures its street setbacks from a sidewalk easement where
         # there is one, and nothing maps them: the screen takes the deepest
