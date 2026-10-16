@@ -176,6 +176,7 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
         "decisions": await lots._lot_decisions(session, lot.county, lot.tlid),
         "flag_history": await lots._flag_history(session, lot.county, lot.tlid),
         "key_facts": [{"label": label, "value": value} for label, value in lots._fact_rows(facts)],
+        "alley_coverage": facts.get("alley_coverage") or [],
         "net_land": lots._net_land(lot),
         "rulings": [e.as_dict() for e in entries],
         # Adopted amendments carried on the zone itself, with whether the run shown applied them.

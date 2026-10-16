@@ -136,9 +136,10 @@ read when the weekly full re-screen lands.
    covered stretch is the travel lane only if long enough: BUILT 288f0daa
    (covered run with buildable ground behind it >= stalls x stall width;
    probe 53 partial rear lines, 30 long enough, 23 not). Left: the fit
-   compares length only, it does not place the court against the stretch;
-   the lot page could say when an alley stops short. (d) Gresham's 200 alley lots fail lot
-   area/frontage regardless.
+   compares length only, it does not place the court against the stretch.
+   BUILT: the lot page says which rear or side line the alley covers, the
+   covered feet and share, and that only the covered stretch counts as alley.
+   (d) Gresham's 200 alley lots fail lot area/frontage regardless.
 4. [scan: YES] **Four places the screen and the county map disagree, found by the
    bridge's sample run (2026-09-17) and left alone on purpose.** Named so
    the comparison stays readable, each its own change: (a) the court's

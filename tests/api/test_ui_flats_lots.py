@@ -34,6 +34,7 @@ from app.models.flats import (
     FlatsRun,
     FlatsSnapshot,
 )
+from app.api.routers.ui_flats import _alley_coverage_rows
 from tests.conftest import seed_org, set_client_auth
 
 pytestmark = pytest.mark.asyncio
@@ -242,6 +243,59 @@ async def _login(client: AsyncClient, session: AsyncSession):
     await session.commit()
     set_client_auth(client, user.id)
     return user
+
+
+async def test_partial_alley_wording_names_the_line_and_covered_share():
+    rows = _alley_coverage_rows(
+        {
+            "alley_coverage": [
+                {
+                    "line": "rear",
+                    "line_number": 1,
+                    "line_count": 1,
+                    "covered_ft": 46.8,
+                    "line_ft": 88.7,
+                },
+                {
+                    "line": "side",
+                    "line_number": 2,
+                    "line_count": 2,
+                    "covered_ft": 24.5,
+                    "line_ft": 50,
+                },
+            ]
+        }
+    )
+    assert rows == [
+        ("Rear line alley cover", "46.8 ft of 88.7 ft (53%); only the covered stretch counts as alley."),
+        ("Side line 2 alley cover", "24.5 ft of 50.0 ft (49%); only the covered stretch counts as alley."),
+    ]
+    assert _alley_coverage_rows({"alley_coverage": [{"line": "rear", "covered_ft": 88.7, "line_ft": 88.7}]}) == []
+
+
+async def test_a_partial_alley_is_explained_without_changing_the_lot_result(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session)
+    lot = (
+        await session.execute(select(FlatsLot).where(FlatsLot.tlid == "1N1E29DD  -05600"))
+    ).scalar_one()
+    facts = dict(lot.facts)
+    facts["alley_coverage"] = [
+        {"line": "rear", "line_number": 1, "line_count": 1, "covered_ft": 46.8, "line_ft": 88.7, "share": 0.5276}
+    ]
+    lot.facts = facts
+    await session.commit()
+
+    page = await client.get(f"/flats/lots/multnomah/{lot.tlid}")
+
+    assert page.status_code == 200
+    facts_html = page.text.split('id="lot-facts"', 1)[1]
+    assert "Rear line alley cover" in facts_html
+    assert "46.8 ft of 88.7 ft (53%); only the covered stretch counts as alley." in facts_html
+    assert "Verdict today" in page.text and "If signed as read" in page.text
+    assert "yellow" in page.text
 
 
 # --- the list ------------------------------------------------------------
