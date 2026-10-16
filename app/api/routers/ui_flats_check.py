@@ -23,15 +23,17 @@ Registered ahead of ``ui_flats``: that router ends in a catch-all
 from __future__ import annotations
 
 import json
+import math
 import re
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from functools import lru_cache
 from typing import Any
+from urllib.parse import quote
 
 from fastapi import APIRouter, Form, Query, Request
-from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse
+from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse, RedirectResponse
 from sqlalchemy import select, update
 from starlette.concurrency import run_in_threadpool
 
@@ -47,7 +49,7 @@ from app.api.routers.ui_flats import (
     _value_rows,
 )
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
-from app.models.flats import FlatsPageCheck, FlatsRuleSignature
+from app.models.flats import FlatsDocumentReadthrough, FlatsPageCheck, FlatsRuleSignature
 from flats.provenance import books, pages as page_map, sheet
 from flats.rules import conditions
 from flats.rules.fields import FIELDS
@@ -579,6 +581,81 @@ def _sheet_view(
     }
 
 
+def _readthrough_documents() -> list[dict[str, Any]]:
+    """Every stored printed document with a page map, including uncited books."""
+    out = []
+    for document in sorted(_known_documents()):
+        index = _page_index(document)
+        if index is None or not index.pages:
+            continue
+        out.append(
+            {
+                "document": document,
+                "name": document.rsplit("/", 1)[-1],
+                "page_count": len(index.pages),
+            }
+        )
+    return out
+
+
+def _readthrough_pages(document: str, index: Any) -> list[dict[str, Any]]:
+    """Every mapped page, with its printed label, nearby heading and rule tints."""
+    lines = sheet.lines_of(_store(), document)
+    out = []
+    for position, printed in enumerate(index.pages):
+        end = index.pages[position + 1].line - 1 if position + 1 < len(index.pages) else len(lines)
+        section = lines[max(printed.line - 1, 0) : max(end, printed.line)]
+        headings = [line.strip() for line in section if line.strip()][:2]
+        page = _sheet_view(document, printed.n, [])
+        page["heading"] = " · ".join(headings)[:240]
+        out.append(page)
+    return out
+
+
+def _readthrough_comments(raw: str, valid_pages: set[int]) -> list[dict[str, Any]] | None:
+    """Validate a draft payload before storing reviewer-authored comments."""
+    try:
+        parsed = json.loads(raw)
+    except (TypeError, json.JSONDecodeError):
+        return None
+    if not isinstance(parsed, list) or len(parsed) > 200:
+        return None
+    comments = []
+    for item in parsed:
+        if not isinstance(item, dict):
+            return None
+        page, text = item.get("page"), item.get("text")
+        if (
+            not isinstance(page, int)
+            or isinstance(page, bool)
+            or page not in valid_pages
+            or not isinstance(text, str)
+            or not text.strip()
+            or len(text) > 4000
+        ):
+            return None
+        clean: dict[str, Any] = {"page": page, "text": text.strip()}
+        box = item.get("box")
+        if box is not None:
+            if (
+                not isinstance(box, list)
+                or len(box) != 4
+                or any(
+                    isinstance(value, bool)
+                    or not isinstance(value, (int, float))
+                    or not math.isfinite(value)
+                    or not 0 <= value <= 1
+                    for value in box
+                )
+                or box[0] >= box[2]
+                or box[1] >= box[3]
+            ):
+                return None
+            clean["box"] = [round(float(value), 4) for value in box]
+        comments.append(clean)
+    return comments
+
+
 def _with_neighbours(document: str, sheets: list[dict[str, Any]], mark: str) -> list[dict[str, Any]]:
     """The cited pages with the page before and the page after them.
 
@@ -818,6 +895,115 @@ async def flats_sheet(
         image,
         media_type="image/png",
         headers={"Cache-Control": "private, max-age=86400"},
+    )
+
+
+@router.get("/flats/check/readthrough", response_class=HTMLResponse)
+async def flats_readthrough_index(request: Request, session: DBSession) -> HTMLResponse:
+    """Choose a printed document and see its most recent human read-through."""
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    documents = await run_in_threadpool(_readthrough_documents)
+    records = (
+        await session.execute(
+            select(FlatsDocumentReadthrough).order_by(
+                FlatsDocumentReadthrough.submitted_at,
+                FlatsDocumentReadthrough.id,
+            )
+        )
+    ).scalars()
+    latest: dict[str, FlatsDocumentReadthrough] = {}
+    for record in records:
+        latest[record.document] = record
+    for item in documents:
+        record = latest.get(item["document"])
+        item["read"] = record
+    return templates.TemplateResponse(
+        request,
+        "flats_readthrough_index.html",
+        {
+            **_base_ctx(user, dedup_count, "flats_check", conflicts_count=conflicts_count),
+            "documents": documents,
+        },
+    )
+
+
+@router.get("/flats/check/readthrough/{document:path}", response_class=HTMLResponse)
+async def flats_readthrough(
+    request: Request,
+    session: DBSession,
+    document: str,
+    submitted: bool = Query(False),
+) -> HTMLResponse:
+    """Read every mapped page of one document in order."""
+    user = await _get_user(session, request)
+    if document not in _known_documents():
+        return HTMLResponse("no page map for this document", status_code=404)
+    index = _page_index(document)
+    if index is None or not index.pages:
+        return HTMLResponse("no page map for this document", status_code=404)
+    dedup_count, conflicts_count = await _get_counts(session)
+    pages = await run_in_threadpool(_readthrough_pages, document, index)
+    latest = (
+        await session.execute(
+            select(FlatsDocumentReadthrough)
+            .where(FlatsDocumentReadthrough.document == document)
+            .order_by(
+                FlatsDocumentReadthrough.submitted_at.desc(),
+                FlatsDocumentReadthrough.id.desc(),
+            )
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+    return templates.TemplateResponse(
+        request,
+        "flats_readthrough.html",
+        {
+            **_base_ctx(user, dedup_count, "flats_check", conflicts_count=conflicts_count),
+            "document": document,
+            "book_sha256": index.source_sha256 or "",
+            "pages": pages,
+            "last_read": latest,
+            "submitted": submitted,
+        },
+    )
+
+
+@router.post("/ui/flats/readthrough", response_class=HTMLResponse)
+async def flats_readthrough_submit(
+    request: Request,
+    session: DBSession,
+    document: str = Form(...),
+    comments_json: str = Form("[]"),
+    read_confirmed: str = Form(""),
+) -> HTMLResponse:
+    """Append one completed document read and its browser-drafted comments."""
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("sign in first", status_code=401)
+    if read_confirmed != "yes" or document not in _known_documents():
+        return HTMLResponse("confirm that you read the document", status_code=400)
+    index = _page_index(document)
+    if index is None or not index.pages:
+        return HTMLResponse("no page map for this document", status_code=404)
+    comments = _readthrough_comments(comments_json, {page.n for page in index.pages})
+    if comments is None:
+        return HTMLResponse("the comments could not be read; review the draft and try again", status_code=400)
+    session.add(
+        FlatsDocumentReadthrough(
+            document=document,
+            book_sha256=index.source_sha256 or "",
+            page_count=len(index.pages),
+            comments=comments,
+            comment_count=len(comments),
+            reviewer=(user.email or str(user.id))[:80],
+            reviewer_user_id=user.id,
+        )
+    )
+    await session.commit()
+    return RedirectResponse(
+        f"/flats/check/readthrough/{quote(document, safe='/')}?submitted=1",
+        status_code=303,
     )
 
 

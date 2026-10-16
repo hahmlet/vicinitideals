@@ -795,6 +795,30 @@ class FlatsPageCheck(Base):
     bundled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
+class FlatsDocumentReadthrough(Base):
+    """One completed, append-only human read-through of a printed document."""
+
+    __tablename__ = "document_readthroughs"
+    __table_args__ = (
+        Index("ix_flats_document_readthroughs_document_submitted", "document", "submitted_at"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    document: Mapped[str] = mapped_column(String(500), nullable=False)
+    book_sha256: Mapped[str] = mapped_column(String(64), nullable=False, server_default="")
+    page_count: Mapped[int] = mapped_column(Integer, nullable=False)
+    comments: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, nullable=False, server_default="[]")
+    comment_count: Mapped[int] = mapped_column(Integer, nullable=False, server_default="0")
+    reviewer: Mapped[str] = mapped_column(String(80), nullable=False)
+    reviewer_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
+    )
+    submitted_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+
 class FlatsCrossrefRuling(Base):
     """A reviewer's decision about a chapter the store cannot open.
 

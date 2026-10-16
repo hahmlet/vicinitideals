@@ -1027,16 +1027,13 @@ read when the weekly full re-screen lands.
    local frontage, never more than two). Once item 24 makes the pod draw two
    approaches, all of these start to bind together: per-approach width,
    spacing between them, offset from lot lines, count per frontage.
-26. [scan: NO] **Page check: whole-document read-through (Steph 2026-10-01).**
-   Finding an untinted rule is a different task from checking a tinted
-   number; the existing card flow stays as it is for the second (Steph: no
-   fly-through changes). Build a read-through: every page of a document in
-   one scroll with headings visible for context, encoded rules tinted, arrow
-   keys between pages, a comment box that knows which page is on screen
-   (and/or drag a box on the page to mark what is missing), held as a draft
-   and submitted once at the end of the document; a per-document "read by a
-   human" record so the corpus gets covered over time. Until it exists, keep
-   "Flag something missing" on the card.
+26. [scan: YES] **Page check: whole-document read-through -- SHIPPED 2026-10-16.**
+   `/flats/check/readthrough` lists every printed document with its latest
+   human, time and comment count. The separate reader shows all mapped pages
+   with headings and the card view's encoded-rule tint, arrow-key navigation,
+   page-aware browser-drafted comments and optional drag marks; one append-only
+   submission records the reader and notes at the end. The number-card flow
+   is unchanged.
 27. [scan: YES for (a) if the answer changes the rule; NO for (b)] **Steph's Oregon City page check (2026-10-01): what is left.** All of
    her answers triaged; card and reader fixes shipped (set-aside tint,
    other numbers held, yes/no cards say where they were read, smaller-face

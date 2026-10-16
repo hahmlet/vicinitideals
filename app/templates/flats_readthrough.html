@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+{% block title %}Read-through · {{ document }} — Viciniti Deals{% endblock %}
+
+{% block content %}
+<style>
+  .check-box-encoded { background: rgba(22, 163, 74, 0.12); border-bottom: 2px solid rgba(22, 163, 74, 0.55); cursor: help; }
+  .check-box-encoded:hover { background: rgba(22, 163, 74, 0.28); }
+  .check-box-set-aside { background: rgba(100, 116, 139, 0.16); border-bottom: 2px dashed rgba(71, 85, 105, 0.6); cursor: help; }
+  .check-box-set-aside:hover { background: rgba(100, 116, 139, 0.30); }
+  .readthrough-grid { display:grid; grid-template-columns:minmax(0, 1fr) 340px; gap:18px; align-items:start; }
+  .readthrough-pages { max-width:1000px; }
+  .readthrough-panel { position:sticky; top:12px; max-height:calc(100vh - 24px); overflow-y:auto; padding:12px;
+    border:1px solid var(--line, #e5e7eb); border-radius:4px; background:var(--card-bg, #fff); }
+  .readthrough-page { margin:0 0 22px; scroll-margin-top:12px; }
+  .readthrough-page h3 { margin:0; font-size:15px; }
+  .readthrough-page-heading { margin:3px 0 8px; white-space:normal; }
+  .readthrough-image { position:relative; width:100%; line-height:0; }
+  .readthrough-image img { display:block; width:100%; height:auto; }
+  .readthrough-overlay { position:absolute; z-index:2; pointer-events:none; }
+  .readthrough-comment-box { background:rgba(220,38,38,.12); outline:2px solid #dc2626; outline-offset:-1px; }
+  .readthrough-draft-box { background:rgba(220,38,38,.08); border:2px dashed #dc2626; box-sizing:border-box; }
+  .readthrough-drag-layer { position:absolute; inset:0; z-index:3; cursor:crosshair; touch-action:pan-y; }
+  .readthrough-legend { font-size:12px; margin:8px 0; }
+  .readthrough-legend span { display:inline-block; width:14px; height:10px; margin-right:5px; vertical-align:middle; }
+  @media (max-width:1000px) {
+    .readthrough-grid { grid-template-columns:minmax(0, 1fr); }
+    .readthrough-panel { position:static; max-height:none; order:-1; }
+  }
+</style>
+
+<div class="topbar"></div>
+<div class="content">
+<div style="max-width:1400px;margin:0 auto">
+  <div class="toolbar" style="margin-bottom:10px">
+    <div>
+      <h2 style="margin:0">Whole-document read-through</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats/check/readthrough">All documents</a> ·
+        <a href="/flats/check">Number cards</a> · {{ document }}
+      </div>
+    </div>
+  </div>
+
+  {% if submitted %}
+  <div class="card" data-submitted style="margin-bottom:12px;padding:10px;border-left:3px solid #16a34a">
+    Read-through submitted. This browser's draft has been cleared.
+  </div>
+  {% endif %}
+  {% if last_read %}
+  <p class="muted" style="font-size:12px">Last read by {{ last_read.reviewer }} on {{ last_read.submitted_at.strftime("%Y-%m-%d %H:%M UTC") }} · {{ last_read.comment_count }} comment{{ "" if last_read.comment_count == 1 else "s" }}</p>
+  {% endif %}
+
+  <form id="readthrough-form" method="post" action="/ui/flats/readthrough"
+        data-storage-key="flats-readthrough:{{ document }}:{{ book_sha256 }}">
+    <input type="hidden" name="document" value="{{ document }}">
+    <input type="hidden" id="comments-json" name="comments_json" value="[]">
+    <div class="readthrough-grid">
+      <div class="readthrough-pages" id="readthrough-pages">
+        <div class="readthrough-legend muted">
+          <span style="background:rgba(22,163,74,.16);border-bottom:2px solid rgba(22,163,74,.55)"></span>Encoded
+          <span style="margin-left:12px;background:rgba(100,116,139,.2);border-bottom:2px dashed #475569"></span>Read and set aside
+          <span style="margin-left:12px;background:rgba(220,38,38,.12);outline:2px solid #dc2626"></span>Your marks
+        </div>
+        {% for page in pages %}
+        <section class="readthrough-page" data-read-page="{{ page.page }}" id="page-{{ page.page }}">
+          <h3>{{ page.cite }}</h3>
+          {% if page.heading %}<div class="readthrough-page-heading muted">{{ page.heading }}</div>{% endif %}
+          <div class="readthrough-image" data-mark-page="{{ page.page }}">
+            <img src="{{ page.src }}" alt="{{ page.cite }}" loading="lazy">
+            {% for e in page.set_aside %}
+            <div class="readthrough-overlay check-box-set-aside" style="{{ e.css }}" title="{{ e.title }}"></div>
+            {% endfor %}
+            {% for e in page.encoded %}
+            <div class="readthrough-overlay check-box-encoded" style="{{ e.css }}" title="{{ e.title }}"></div>
+            {% endfor %}
+            <div class="readthrough-drag-layer" aria-label="Drag to mark a region on this page"></div>
+          </div>
+        </section>
+        {% endfor %}
+      </div>
+
+      <aside class="readthrough-panel">
+        <h3 style="margin:0 0 8px;font-size:15px">Document notes</h3>
+        <div class="muted" style="font-size:12px;margin-bottom:8px">
+          Page on screen: <strong id="current-page" aria-live="polite">{{ pages[0].cite if pages else "" }}</strong>
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:10px">
+          <button type="button" id="previous-page" class="btn btn-secondary btn-sm">↑ Previous</button>
+          <button type="button" id="next-page" class="btn btn-secondary btn-sm">↓ Next</button>
+        </div>
+        <label for="comment-text" style="font-size:12px;font-weight:600">Comment on the page in view</label>
+        <textarea id="comment-text" maxlength="4000" rows="4" style="width:100%;margin-top:4px"
+                  placeholder="What is missing or needs attention?"></textarea>
+        <div id="selection-status" class="muted" style="font-size:11px;min-height:16px;margin:4px 0"></div>
+        <button type="button" id="add-comment" class="btn btn-secondary btn-sm">Add comment</button>
+        <h4 style="font-size:13px;margin:16px 0 6px">Draft comments <span id="comment-count">(0)</span></h4>
+        <div id="draft-comments" aria-live="polite" class="muted" style="font-size:12px"></div>
+        <p class="muted" style="font-size:11px;margin:8px 0 0">Drafts are saved in this browser until submitted.</p>
+      </aside>
+    </div>
+
+    <div style="max-width:900px;margin:18px auto;padding:14px;border:1px solid var(--line,#e5e7eb);border-radius:4px">
+      <h3 style="margin:0 0 8px;font-size:15px">Finish this read-through</h3>
+      <label style="display:block;margin-bottom:10px">
+        <input type="checkbox" name="read_confirmed" value="yes" required>
+        I read the whole document.
+      </label>
+      <button type="submit" class="btn btn-primary">Submit read-through</button>
+      <span class="muted" style="font-size:12px;margin-left:8px">One submission records you, the date, and the comment count.</span>
+    </div>
+  </form>
+</div>
+</div>
+
+<script>
+(() => {
+  const form = document.getElementById("readthrough-form");
+  const key = form.dataset.storageKey;
+  const pages = [...document.querySelectorAll("[data-read-page]")];
+  const currentLabel = document.getElementById("current-page");
+  const composer = document.getElementById("comment-text");
+  const commentsInput = document.getElementById("comments-json");
+  const commentsList = document.getElementById("draft-comments");
+  const commentCount = document.getElementById("comment-count");
+  const selectionStatus = document.getElementById("selection-status");
+  let comments = [];
+  let currentPage = pages.length ? Number(pages[0].dataset.readPage) : 1;
+  let selection = null;
+  let dragging = null;
+  const justSubmitted = new URLSearchParams(location.search).get("submitted") === "1";
+  const pageNumbers = new Set(pages.map((page) => Number(page.dataset.readPage)));
+  const validBox = (box) => Array.isArray(box) && box.length === 4 &&
+    box.every((value) => typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= 1) &&
+    box[0] < box[2] && box[1] < box[3];
+
+  if (justSubmitted) {
+    localStorage.removeItem(key);
+  } else {
+    try {
+      const saved = JSON.parse(localStorage.getItem(key) || "{}");
+      if (Array.isArray(saved.comments)) {
+        comments = saved.comments.filter((comment) => comment &&
+          Number.isInteger(comment.page) && pageNumbers.has(comment.page) &&
+          typeof comment.text === "string" && comment.text.trim().length > 0 &&
+          comment.text.length <= 4000 && (comment.box === undefined || validBox(comment.box)));
+      }
+      if (typeof saved.composer === "string") composer.value = saved.composer;
+    } catch (_) {
+      localStorage.removeItem(key);
+    }
+  }
+
+  const toCss = (box) => ({
+    left: `${box[0] * 100}%`, top: `${box[1] * 100}%`,
+    width: `${(box[2] - box[0]) * 100}%`, height: `${(box[3] - box[1]) * 100}%`
+  });
+  function saveDraft() {
+    commentsInput.value = JSON.stringify(comments);
+    if (justSubmitted) return;
+    localStorage.setItem(key, JSON.stringify({comments, composer: composer.value}));
+  }
+  function drawMarks() {
+    document.querySelectorAll(".readthrough-user-mark").forEach((node) => node.remove());
+    comments.forEach((comment) => {
+      if (!comment.box) return;
+      const image = document.querySelector(`[data-mark-page="${comment.page}"]`);
+      if (!image) return;
+      const mark = document.createElement("div");
+      mark.className = "readthrough-overlay readthrough-comment-box readthrough-user-mark";
+      Object.assign(mark.style, toCss(comment.box));
+      mark.title = comment.text;
+      image.appendChild(mark);
+    });
+    document.querySelectorAll(".readthrough-draft-box").forEach((node) => node.remove());
+    if (selection && selection.page === currentPage) {
+      const image = document.querySelector(`[data-mark-page="${selection.page}"]`);
+      const mark = document.createElement("div");
+      mark.className = "readthrough-overlay readthrough-draft-box";
+      Object.assign(mark.style, toCss(selection.box));
+      image.appendChild(mark);
+    }
+    commentsList.replaceChildren();
+    if (!comments.length) {
+      commentsList.textContent = "No comments yet.";
+    }
+    comments.forEach((comment, index) => {
+      const row = document.createElement("div");
+      row.style.cssText = "padding:6px 0;border-top:1px solid var(--line,#e5e7eb)";
+      const text = document.createElement("div");
+      text.textContent = `Page ${comment.page}${comment.box ? " · marked region" : ""}: ${comment.text}`;
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "btn btn-secondary btn-sm";
+      remove.textContent = "Remove";
+      remove.addEventListener("click", () => { comments.splice(index, 1); saveDraft(); drawMarks(); });
+      row.append(text, remove);
+      commentsList.appendChild(row);
+    });
+    commentCount.textContent = `(${comments.length})`;
+    saveDraft();
+  }
+  function setCurrent(page) {
+    currentPage = page;
+    const section = document.getElementById(`page-${page}`);
+    currentLabel.textContent = section ? section.querySelector("h3").textContent : `PDF page ${page}`;
+    drawMarks();
+  }
+  function movePage(delta) {
+    const index = pages.findIndex((page) => Number(page.dataset.readPage) === currentPage);
+    const next = pages[Math.max(0, Math.min(pages.length - 1, index + delta))];
+    if (next) {
+      next.scrollIntoView({behavior: "smooth", block: "start"});
+      setCurrent(Number(next.dataset.readPage));
+    }
+  }
+  const observer = new IntersectionObserver((entries) => {
+    const visible = entries.filter((entry) => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visible) setCurrent(Number(visible.target.dataset.readPage));
+  }, {rootMargin: "-40% 0px -40% 0px", threshold: [0, 0.2, 0.5]});
+  pages.forEach((page) => observer.observe(page));
+  document.getElementById("previous-page").addEventListener("click", () => movePage(-1));
+  document.getElementById("next-page").addEventListener("click", () => movePage(1));
+  document.addEventListener("keydown", (event) => {
+    if (["INPUT", "TEXTAREA", "SELECT"].includes(event.target.tagName) || event.target.isContentEditable) return;
+    if (event.key === "ArrowDown") { event.preventDefault(); movePage(1); }
+    if (event.key === "ArrowUp") { event.preventDefault(); movePage(-1); }
+  });
+  composer.addEventListener("input", saveDraft);
+  document.querySelectorAll(".readthrough-drag-layer").forEach((layer) => {
+    const page = Number(layer.closest("[data-mark-page]").dataset.markPage);
+    layer.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "touch") return;
+      const rect = layer.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = (event.clientY - rect.top) / rect.height;
+      dragging = {page, x, y, rect};
+      layer.setPointerCapture(event.pointerId);
+    });
+    layer.addEventListener("pointermove", (event) => {
+      if (!dragging || dragging.page !== page) return;
+      const x = Math.max(0, Math.min(1, (event.clientX - dragging.rect.left) / dragging.rect.width));
+      const y = Math.max(0, Math.min(1, (event.clientY - dragging.rect.top) / dragging.rect.height));
+      const box = [Math.min(dragging.x, x), Math.min(dragging.y, y), Math.max(dragging.x, x), Math.max(dragging.y, y)];
+      selection = {page, box};
+      selectionStatus.textContent = `Marked region on page ${page}; add a comment to keep it.`;
+      drawMarks();
+    });
+    layer.addEventListener("pointerup", () => {
+      if (selection && selection.page === page &&
+          (selection.box[2] - selection.box[0] < 0.005 || selection.box[3] - selection.box[1] < 0.005)) {
+        selection = null;
+        selectionStatus.textContent = "";
+        drawMarks();
+      }
+      dragging = null;
+    });
+    layer.addEventListener("pointercancel", () => { dragging = null; });
+  });
+  document.getElementById("add-comment").addEventListener("click", () => {
+    const text = composer.value.trim();
+    if (!text) { composer.focus(); return; }
+    comments.push({page: currentPage, text, ...(selection && selection.page === currentPage ? {box: selection.box} : {})});
+    composer.value = "";
+    selection = null;
+    selectionStatus.textContent = "";
+    saveDraft();
+    drawMarks();
+    composer.focus();
+  });
+  form.addEventListener("submit", saveDraft);
+  setCurrent(currentPage);
+  drawMarks();
+})();
+</script>
+{% endblock %}
