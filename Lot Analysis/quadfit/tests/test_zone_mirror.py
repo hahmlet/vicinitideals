@@ -157,6 +157,12 @@ PORTED_FROM_A_VARIANT: frozenset[str] = frozenset({
     "tualatin/MUC",
     "milwaukie/GMU",
     "milwaukie/DMU",
+    # 2026-10-15 (Steph: "'Townhomes' will have separate lots"): zones that take the pod
+    # only as four townhouses on four unit lots; ported so the pod is measured.
+    "fairview/VTH",
+    "clackamas_unincorporated/R2.5",
+    "troutdale/HDR",
+    "troutdale/MU-1",
 })
 
 

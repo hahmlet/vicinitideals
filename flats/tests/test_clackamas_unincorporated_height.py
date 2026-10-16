@@ -123,16 +123,15 @@ def test_the_eight_districts_print_the_same_sentence_so_position_names_the_colum
     assert ours[0] == "All other buildings, including accessory dwelling units: 35 feet"
     # Eight columns in the header, in the order the cells follow.
     assert lines[1170:1178] == ["R-2.5", "R-5", "R-7", "R-8.5", "R-10", "R-15", "R-20", "R-30"]
-    # And the first pair is still skipped, for a better reason than when this
-    # was written. It used to be skipped because FLATS held no R-2.5 at all,
-    # which made the skip a gap rather than a decision. R-2.5 was encoded on
-    # 2026-09-08 and Table 315-1 refuses the quadplex in it outright, so the
-    # district has a height cell and no building to measure against it. A
-    # height on a zone that refuses the use would be a number nothing reads.
+    # The first pair was skipped while Table 315-1 refused the quadplex in
+    # R-2.5 outright: a height on a zone that refuses the use is a number
+    # nothing reads. Since 2026-10-15 R-2.5 opens as four townhouses on their
+    # own lots (Steph: "'Townhomes' will have separate lots"), so the pair is
+    # read, and it reads the same 35 feet as every other column.
     zones = load_rules()[CLACKAMAS].zones
     assert "R2.5" in zones
     assert zones["R2.5"].values["quadplex_allowed"].value is False
-    assert "max_height_ft" not in zones["R2.5"].values
+    assert zones["R2.5"].values["max_height_ft"].value == 35
 
 
 def test_the_low_density_height_row_carries_no_footnote_marker(lines: list[str]) -> None:

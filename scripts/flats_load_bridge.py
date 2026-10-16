@@ -554,6 +554,13 @@ def result_checks(row: dict[str, Any]) -> dict[str, Any]:
     margins = _clean(row.get("margins"))
     if isinstance(margins, str) and margins:
         checks["margins"] = json.loads(margins)
+    # Both forms of the pod -- one apartment building on one lot, four
+    # townhouses on four unit lots -- each with its colour and what holds it
+    # there, and which works (Steph 2026-10-15). Absent from a bridge run
+    # written before the bridge screened both, and on a synthetic row.
+    forms = _clean(row.get("forms"))
+    if isinstance(forms, str) and forms:
+        checks["forms"] = json.loads(forms)
     return checks
 
 

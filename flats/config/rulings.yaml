@@ -892,6 +892,52 @@
     lot has, read against one street line at a time.
   source: Steph 2026-10-14, FOLLOWUPS 80(a) (memory feedback_rulings_2026_10_14.md), commits 3504f7fe, 667f57e9
 
+- id: 2026-10-15-townhomes-separate-lots
+  kind: ruling
+  date: 2026-10-15
+  scope: {}
+  question: >-
+    Fairview VMU (FMC 19.135.010 row c, "attached single-unit dwellings") and
+    VA (FMC 19.125.030(A), "townhouses") allow four attached homes only with
+    each home on its own lot, and the screen did not assume a land division,
+    so those lots stayed red. May the screen assume the pod is divided into
+    four unit lots?
+  ruling: >-
+    "'Townhomes' will have separate lots. If we build a 4 unit apartment
+    building, they would not." And the same day: "I need to know which of
+    the two works on every lot (or if both/neither)."
+  effect: >-
+    Each pod is screened in both forms on every lot: as one apartment
+    building on the one lot (as before), and as four townhouses on four unit
+    lots (screened once more only where the zone states anything different
+    for unit lots; elsewhere the townhouse answer is the apartment one). A use the code grants only to townhouses /
+    attached single-unit dwellings on their own lots is then no blocker, but
+    each unit lot must meet the zone's townhouse standards: unit-lot area,
+    width and frontage four times over along the street, the depth once, the
+    townhouse setbacks; in a zone that takes the pod only as townhouses its
+    own lot standards are read per unit lot (never the parent-lot reading),
+    and an unread unit-lot standard is never green. The lot takes the better
+    colour; where only the townhouse form clears it, it carries LAND-DIVISION
+    ("needs a land division into 4 unit lots", severity 2, below the yellow
+    line). Both answers are recorded beside the colour (a form works when it
+    is GREEN: both, apartment, townhomes or neither, with each failing
+    form's colour and what holds it) in the result's checks (checks.forms).
+    Zones opened by the ruling (townhouses permitted, a quadplex not):
+    Fairview VTH, Clackamas County R-2.5, Troutdale HDR and MU-1 (ported
+    into quadfit's rules.yaml so s3 admits their lots).
+  source: Steph 2026-10-15, to the FLATS coordinator (asked from the clear-objective bound, FOLLOWUPS 85)
+  encoded_in:
+    - flats/ingest/quadfit.py
+    - flats/ingest/assign.py
+    - flats/score/paper.py
+    - flats/score/screen.py
+    - flats/config/flags.yaml
+    - flats/config/jurisdictions/or/multnomah/fairview.yaml
+    - flats/config/jurisdictions/or/clackamas/_unincorporated.yaml
+    - flats/config/jurisdictions/or/multnomah/troutdale.yaml
+    - scripts/flats_load_bridge.py
+    - "Lot Analysis/quadfit/config/rules.yaml"
+
 # ---------------------------------------------------------------------------
 # County and city
 # ---------------------------------------------------------------------------

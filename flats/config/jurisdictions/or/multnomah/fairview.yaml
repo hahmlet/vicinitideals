@@ -2884,6 +2884,61 @@ zones:
       # allows no new detached ones, so the state mandate does not attach.
       value: false
       quote: "or/multnomah/fairview/19.120.txt#L21-L55"
+      variants:
+        # Townhouses are row B of the same closed list, permitted outright,
+        # and 19.13 defines a townhouse as a unit "located on an individual
+        # lot or parcel". Four unit lots make the pod four townhouses, which
+        # is what this zone is for (19.120.010, "primarily for attached
+        # dwellings"). Opened 2026-10-15 under Steph's ruling that townhomes
+        # have separate lots (rulings.yaml 2026-10-15-townhomes-separate-lots).
+        - value: true
+          when: [unit_lots]
+          cite: "FMC 19.120.020(B), townhouses permitted in the VTH zone; FMC 19.13 \"Townhouse\", each unit on an individual lot (Steph 2026-10-15, townhomes have separate lots)"
+          quote: "or/multnomah/fairview/19.120.txt#L21,L23,L29-L31"
+    # 19.120.040 states every lot standard in this zone, and since the only
+    # door for the pod is four townhouse lots, each is a standard for ONE unit
+    # lot: the screen reads area, width and frontage four times over on the
+    # parent lot and depth once (flats/score/paper.py lot_standard).
+    min_lot_sqft:
+      # (A) also caps a VTH lot at 4,000 square feet, 5,500 on a corner. No
+      # field holds a maximum lot area, and on a big parent the cap governs
+      # what else the division must make rather than whether four unit lots
+      # fit, so it is read and NOT ENCODED.
+      value: 2000
+      cite: FMC 19.120.040(A) (Village Townhouse, density / lot area)
+      quote: "or/multnomah/fairview/19.120.txt#L89,L91,L93"
+    min_lot_width_ft:
+      value: 20
+      cite: FMC 19.120.040(B) (Village Townhouse, lot dimensions)
+      quote: "or/multnomah/fairview/19.120.txt#L89,L95,L97"
+    min_lot_depth_ft:
+      value: 70
+      cite: FMC 19.120.040(B) (Village Townhouse, lot dimensions)
+      quote: "or/multnomah/fairview/19.120.txt#L89,L95,L97"
+    max_coverage_pct:
+      value: 70
+      cite: FMC 19.120.040(C) (Village Townhouse, lot coverage)
+      quote: "or/multnomah/fairview/19.120.txt#L89,L99,L101"
+    # (E) is a menu, like VA's: the front facade sits "either 10 or 15 feet"
+    # from the right-of-way. Ten is the least it may be and fifteen the most.
+    setback_front_ft:
+      value: 10
+      cite: FMC 19.120.040(E) (Village Townhouse, setbacks)
+      quote: "or/multnomah/fairview/19.120.txt#L89,L107,L109"
+    setback_front_max_ft:
+      value: 15
+      cite: FMC 19.120.040(E) (Village Townhouse, setbacks)
+      quote: "or/multnomah/fairview/19.120.txt#L89,L107,L109"
+    # "Sides of units may have a setback of zero feet from property line on
+    # both sides of the lot" -- a stated zero, not a silence.
+    setback_side_ft:
+      value: 0
+      cite: FMC 19.120.040(E) (Village Townhouse, setbacks)
+      quote: "or/multnomah/fairview/19.120.txt#L89,L107,L109"
+    setback_rear_ft:
+      value: 15
+      cite: FMC 19.120.040(E) (Village Townhouse, setbacks)
+      quote: "or/multnomah/fairview/19.120.txt#L89,L107,L109"
       # 19.145.070 is one sentence covering two zones -- "In all VTH and VA
       # zones, a minimum of 25 percent of site area shall be landscaped" -- and
       # only VA had it. The village article carries its own landscaping regime
@@ -2895,8 +2950,21 @@ zones:
       url: https://ecode360.com/50511096
       retrieved: '2026-08-26'
       quote: "or/multnomah/fairview/19.145.txt#L63,L65"
-    notes: 'quadfit confidence: verified | Townhouse/duplex zone; new detached SFD not allowed — OAR mandate
-      does not attach.'
+    notes: >-
+      quadfit confidence: verified | Townhouse/duplex zone; new detached SFD not allowed -- OAR mandate
+      does not attach.
+
+
+      OPENED 2026-10-15 AS TOWNHOUSES (Steph: "'Townhomes' will have separate
+      lots"). On one lot the pod is a quadplex and VTH does not list one; on
+      four unit lots it is four townhouses, permitted outright, and the lot
+      screens on 19.120.040 above with a LAND-DIVISION flag. Read and NOT
+      ENCODED: 19.120.040(F)(1) bars attached garages with front access on a
+      lot reached from an alley or rear parking lot (the pod has no attached
+      garage); 19.145.090 sends access to the alley where one abuts, and
+      19.145.040 refuses flat roofs and 19.145.020 asks for street-facing
+      entries and porches -- the same building-shaped standards VA's notes
+      leave out, for the same reason.
   R/CSP:
     section: ["19.108"]
     cite_default:

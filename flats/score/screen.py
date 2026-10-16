@@ -887,9 +887,9 @@ def _checks(
     # per child lot, so four of them side by side is what the parent has to
     # hold; comparing the parent against one of them is the false GREEN that
     # asks a 1,500 sq ft floor of a four-unit project. Nothing in the shipped
-    # catalog takes the split path today, so this moves no verdict -- it stops
-    # the screen and the paper fit from answering the question differently the
-    # day something does.
+    # catalog takes the split path; the bridge screens each pod's townhouse
+    # twin beside it (Steph 2026-10-15, :func:`flats.ingest.quadfit.
+    # townhouse_checked`), and this is where that twin's unit lots are read.
     per_unit = design.plat is Plat.unit_lots
     min_lot, lot_answered = lot_standard(
         rules, "min_lot_sqft", per_unit=per_unit, lots=design.units
@@ -904,7 +904,17 @@ def _checks(
         # measured is precisely the false RED this project exists to avoid.
         unchecked.append("min_frontage_ft")
     else:
-        check("min_frontage_ft", lot.frontage_ft, rules.get("min_frontage_ft"), is_maximum=False)
+        # Through the same helper as the area and the width: on four unit
+        # lots a townhouse frontage (Happy Valley's 20 ft, Table 16.22.030-2)
+        # is four frontages along the parent's street line, and comparing the
+        # parent against one of them is the same false GREEN.
+        min_front, front_answered = lot_standard(
+            rules, "min_frontage_ft", per_unit=per_unit, lots=design.units
+        )
+        if front_answered:
+            check("min_frontage_ft", lot.frontage_ft, min_front, is_maximum=False)
+        else:
+            unchecked.append("min_frontage_ft")
     # The driveway's share of the street frontage (Sherwood 16.14.030 A.2,
     # "Total width of all driveways shall not exceed 50 percent of the street
     # frontage"). The pod has one drive, so its width at the street against

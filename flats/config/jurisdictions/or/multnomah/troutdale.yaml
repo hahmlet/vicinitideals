@@ -926,16 +926,187 @@ defaults:
 
 zones:
   MU-1:
-    section: ["3.210", "3.220"]
+    section: ["3.210", "3.220", "3.230", "3.235", "3.140", "8.130"]
     cite_default:
-      cite: Troutdale Development Code 3.220, Land Use Table for Mixed-Use Zoning Districts (Municode, through Ord. 899)
+      cite: Troutdale Development Code 3.220, 3.230.B (residential uses) and 3.235 (detailed
+        dimensional standards) (Municode, through Ord. 899)
       url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L573,L582,L585,L590"
+      variants:
+        # Table 3.220, Townhouse row: P P P, this is the first column. 1.020
+        # puts each townhouse "on an individual lot or parcel", and 8.130.A
+        # holds a townhouse project to "only clear and objective standards".
+        # Opened 2026-10-15 under Steph's ruling that townhomes have separate
+        # lots (rulings.yaml 2026-10-15-townhomes-separate-lots).
+        - value: true
+          when: [unit_lots]
+          cite: "TDC 3.220, Townhouse row (P in MU-1); TDC 1.020 \"Dwelling, Townhouse\", each unit on an individual lot (Steph 2026-10-15, townhomes have separate lots)"
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L573,L582,L585,L591"
+    # The townhouse door's standards: 3.230.B, residential uses, MU-1 column,
+    # read the way MU-2 reads it (the paired setback numbers belong to MU-1
+    # and MU-2; MU-3 takes its setbacks from 3.230.A). 8.130.B.1.a points
+    # townhouses at the 3.130.C table, which has no mixed-use column, and
+    # 8.130.B.1.c voids base-zone lot-dimension standards for townhouses;
+    # with no townhouse column to read instead, the district's own residential
+    # numbers are held -- the stricter reading -- each a standard for ONE
+    # unit lot.
+    min_lot_sqft:
+      # "see 3.235.A", which defers to width and depth: no figure, as MU-2.
+      exempt: true
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684-L685,L724-L725"
+    min_lot_width_ft:
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L686"
+    min_lot_depth_ft:
+      value: 70
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L687,L727-L729"
+      variants:
+        - value: 90
+          when: [abuts_alley, access_easement]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L687,L730-L731"
+        - exempt: true
+          when: [inside_mapped_use_area]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L687,L732-L734"
+    min_frontage_ft:
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L688"
+    setback_front_ft:
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L689-L694"
+      variants:
+        - value: 10
+          when: [abuts_alley]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L689-L690,L696-L697"
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: TDC 9.095(D), parking set back from a street lot line by the required building setback
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/9.parking.txt#L524,L529,L540"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L689-L692"
+    setback_side_ft:
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L699,L738-L745"
+      variants:
+        - value: 5
+          when: [abuts_side_yard]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L699,L739-L741"
+        - value: 7.5
+          when: [abuts_side_yard, multi_story]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L699,L739,L742-L744"
+        - value: 5
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L699,L737-L738"
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L700"
+        - value: 0
+          when: [attached_wall, abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L700"
+        - value: 0
+          when: [attached_wall, abuts_side_yard]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L700"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L749,L759-L761"
+      variants:
+        - value: 20
+          when: [multi_story]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L759-L760,L762"
+        - value: 5
+          when: [alley_at_rear]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L759,L765-L767"
+        - value: 5
+          when: [multi_story, alley_at_rear]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L759,L765-L767"
+        - value: 10
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L750-L751"
+        - value: 10
+          when: [multi_story, abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L750-L751"
+    setback_street_side_ft:
+      value: 0
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L701-L702,L715-L716"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L707"
+    # 3.140.B.3.c: "In all other zoning districts where townhouses are
+    # permitted, the maximum density for a townhouse project shall not exceed
+    # twenty-five (25) units per net acre" -- MU-1 is one (3.230.B, "Density
+    # standards see 3.140").
+    max_density_du_per_acre:
+      value: 25
+      cite: TDC 3.140.B.3.c (a townhouse project, 25 units per net acre) and 3.230.B (MU-1 density standards, see 3.140)
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L506,L512,L517-L518,L710"
+      measured_on:
+        fact: net_developable_area
+        cite: TDC 1.020 "Net Area"
+        quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+        less: []
+        may_less: [floodplain, troutdale_veco]
+        assumed_none:
+          - "proposed public streets"
+          - "land dedicated or conveyed to the City"
+    # 3.140.A: "Minimum density standards shall apply to all residential
+    # development" at "eighty percent (80%) or more of the maximum number of
+    # dwelling units per net acre". On one lot the pod's maximum is waived
+    # (B.4) and the floor has no operand; as a townhouse project the maximum
+    # is the 25 of B.3.c (MU-1 is one of "all other zoning districts"). Eighty
+    # percent of it is 20, a figure the chapter prints nowhere, so the floor
+    # carried is the printed 25 -- the tightest reading, as Gladstone's
+    # "80 percent of the maximum" is carried at its printed cap. A floor left
+    # out screens a big lot GREEN that the city would ask for more homes on;
+    # one carried 5 units/acre high screens a few lots between about 6,970 and
+    # 8,710 sq ft net YELLOW that the code would pass (Steph 2026-10-02: a
+    # missed minimum is a closer look, not a wall).
+    min_density_du_per_acre:
+      exempt: true
+      cite: TDC 3.140.A (minimum density, 80 percent of the maximum per net acre) and 3.140.B.4 (no maximum for a quadplex)
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L493,L495,L500-L504,L519-L522"
+      measured_on:
+        fact: net_developable_area
+        cite: TDC 1.020 "Net Area"
+        quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+        less: []
+        may_less: [floodplain, troutdale_veco]
+        assumed_none:
+          - "proposed public streets"
+          - "land dedicated or conveyed to the City"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: "TDC 3.140.A.2 (80 percent of the maximum per net acre) read at 3.140.B.3.c's printed maximum of 25 per net acre for a townhouse project (tightest reading)"
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L493,L495,L500-L504,L512,L517-L518"
+    # 8.130.B.2.b: "The minimum number of required off-street parking spaces
+    # for a townhouse project is one (1) space per unit." The townhouse door
+    # is the only one into this zone, so this replaces the quadplex bands in
+    # `defaults:`, which drop to one, two and three spaces on small lots.
+    parking_min_per_unit:
+      value: 1
+      cite: TDC 8.130.B.2.b, townhouse project, one space per unit
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-10-15'
+      quote: "or/multnomah/troutdale/8.development-standards.txt#L691,L735,L737-L738"
     notes: >-
-      3.220's Quadplex row reads N in MU-1 and P in MU-2 and MU-3, so the one of the three mixed-use districts that refuses this building is the one named first. Townhouse is P in all three, and the split-plat path is not read as an escape here for the reason it is not read as one anywhere in this corpus without the code saying so: 8.130 states townhouse standards, not that a quadplex divided onto four lots stops being a quadplex. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
+      3.220's Quadplex row reads N in MU-1 and P in MU-2 and MU-3, so the one of the three mixed-use districts that refuses this building is the one named first. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
+
+
+      OPENED 2026-10-15 AS TOWNHOUSES (Steph: "'Townhomes' will have separate
+      lots"). Townhouse is P in all three mixed-use districts; on four unit
+      lots the pod is four townhouses and screens on 3.230.B's MU-1 column
+      with a LAND-DIVISION flag, at no more than 25 units per net acre and a
+      floor carried at that printed 25 (3.140; 80 percent of it is printed nowhere), one parking space per unit (8.130.B.2.b). Before
+      the ruling this note read the split plat as no escape, because 8.130
+      states townhouse standards and not that a quadplex divided onto four
+      lots stops being one; the ruling settles that the four homes are
+      townhouses from the start. Read and NOT ENCODED: the 8.130.C design
+      standards (building, not lot), and 3.235.C.6's setback-for-height trade.
   CC:
     section: ["3.310", "3.320"]
     cite_default:
@@ -1890,18 +2061,118 @@ zones:
       # conditional, N not permitted -- so the letter is readable on its own.
       value: false
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L213,L215,L222,L224-L226,L232"
-    notes: 'quadfit confidence: verified | Multifamily/townhouse zone — no detached SFD, no quadplex;
+      variants:
+        # The Townhouse row of the same table reads P in all six columns, and
+        # 1.020 puts each townhouse "on an individual lot or parcel". 8.130.A
+        # sends townhouses through "the same approval process as that for
+        # detached single-family dwellings" and townhouse projects through
+        # "only clear and objective standards". Opened 2026-10-15 under
+        # Steph's ruling that townhomes have separate lots (rulings.yaml
+        # 2026-10-15-townhomes-separate-lots).
+        - value: true
+          when: [unit_lots]
+          cite: "TDC 3.120, Townhouse row (P in HDR); TDC 1.020 \"Dwelling, Townhouse\", each unit on an individual lot (Steph 2026-10-15, townhomes have separate lots)"
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L213,L215,L222,L224-L226,L233"
+    notes: >-
+      quadfit confidence: verified | Multifamily/townhouse zone -- no detached SFD, no quadplex;
       OAR mandate does not attach. Inside the Town Center overlay quadplex IS permitted, but the GIS zonecode
-      does not distinguish HDR-TC — treated as excluded (conservative; 369 lots).'
+      does not distinguish HDR-TC -- treated as excluded (conservative; 369 lots).
+
+
+      OPENED 2026-10-15 AS TOWNHOUSES (Steph: "'Townhomes' will have separate
+      lots"). The Townhouse row is P in HDR; on four unit lots the pod screens
+      on the 3.130.C townhouse column with a LAND-DIVISION flag, at no more
+      than 25 units per net acre with the floor carried at that printed 25
+      (3.140; 80 percent of it is printed nowhere), one parking space per unit (8.130.B.2.b). Read and NOT ENCODED: the 8.130.C design
+      standards (entry orientation, two facade features, 15 percent windows),
+      which describe the building, not the lot.
     max_height_ft:
       value: 35
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L365"
+    # The figures below that are not on a `unit_lots` variant were ported from
+    # 3.130.E (multi-family). The townhouse door reads 3.130.C, the townhouse
+    # table, HDR column (the fifth of six; the two (TC) columns are the fourth
+    # and sixth): lot size, width and depth "none", frontage "see note 1",
+    # front 10, side 5, building side 0, street side "10 or 18, see note 3",
+    # rear "10 or 0, see note 4", height 35.
     min_frontage_ft:
       value: 20
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L409"
+      variants:
+        # Note 1: "Minimum lot frontage is 15 feet if driveway, garage, or
+        # off-street parking area is in front yard." The pod's parking is in
+        # front on most lots, so the fifteen is held per unit lot.
+        - value: 15
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L341,L343-L344,L348,L367-L368"
+    min_lot_sqft:
+      exempt: true
+      cite: TDC 3.130.C, townhouse dwellings, Minimum lot size "none" (HDR)
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L341,L343-L345"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L427"
+      variants:
+        # The HDR townhouse cell is a bare 10. Note 2's twenty-foot driveway
+        # front is printed against the MDR (TC) cell only.
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L341,L343-L344,L349-L350"
+    # "10 or 18, see note 3": eighteen only "if driveway access is taken from
+    # street side yard", a choice made when the pod is placed (MU-2 reads the
+    # same note the same way).
+    setback_street_side_ft:
+      value: 10
+      cite: TDC 3.130.C, townhouse dwellings, Street side yard (HDR)
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L341,L343-L344,L354-L355,L370"
+    setback_rear_ft:
+      value: 10
+      cite: TDC 3.130.C, townhouse dwellings, Rear yard (HDR), note 4
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L360-L363,L371"
+      variants:
+        - value: 0
+          when: [alley_at_rear]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L360-L363,L371"
+    # 3.140.A: "Minimum density standards shall apply to all residential
+    # development" at "eighty percent (80%) or more of the maximum number of
+    # dwelling units per net acre". On one lot the pod's maximum is waived
+    # (B.4) and the floor has no operand; as a townhouse project the maximum
+    # is the 25 of B.3.c (HDR is one of "all other zoning districts"). Eighty
+    # percent of it is 20, a figure the chapter prints nowhere, so the floor
+    # carried is the printed 25 -- the tightest reading, as Gladstone's
+    # "80 percent of the maximum" is carried at its printed cap. A floor left
+    # out screens a big lot GREEN that the city would ask for more homes on;
+    # one carried 5 units/acre high screens a few lots between about 6,970 and
+    # 8,710 sq ft net YELLOW that the code would pass (Steph 2026-10-02: a
+    # missed minimum is a closer look, not a wall).
+    min_density_du_per_acre:
+      exempt: true
+      cite: TDC 3.140.A (minimum density, 80 percent of the maximum per net acre) and 3.140.B.4 (no maximum for a quadplex)
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L493,L495,L500-L504,L519-L522"
+      measured_on:
+        fact: net_developable_area
+        cite: TDC 1.020 "Net Area"
+        quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+        less: []
+        may_less: [floodplain, troutdale_veco]
+        assumed_none:
+          - "proposed public streets"
+          - "land dedicated or conveyed to the City"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: "TDC 3.140.A.2 (80 percent of the maximum per net acre) read at 3.140.B.3.c's printed maximum of 25 per net acre for a townhouse project (tightest reading)"
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L493,L495,L500-L504,L512,L517-L518"
+    # 8.130.B.2.b: "The minimum number of required off-street parking spaces
+    # for a townhouse project is one (1) space per unit." The townhouse door
+    # is the only one into this zone, so this replaces the quadplex bands in
+    # `defaults:`, which drop to one, two and three spaces on small lots.
+    parking_min_per_unit:
+      value: 1
+      cite: TDC 8.130.B.2.b, townhouse project, one space per unit
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-10-15'
+      quote: "or/multnomah/troutdale/8.development-standards.txt#L691,L735,L737-L738"
     # 9.095(D), stated as equal to the building setback -- see the note in
     # `defaults:`. `same_as` resolves against the front setback above it, and
     # the only figure the sentence carries is an industrial floor that does

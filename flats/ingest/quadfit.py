@@ -68,7 +68,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from flats.designs.model import Design
+from flats.designs.model import Design, Plat
 from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
@@ -2091,6 +2091,11 @@ class Screened:
     #: Why :func:`fire_checked` found no hose route for this plan
     #: (:func:`_fire_why`); a diagnostic column, never read by the colour.
     fire_why: str | None = None
+    #: How the pod fares as each of its two forms -- one apartment building
+    #: on one lot, four townhouses on four unit lots -- and which of them
+    #: works (:func:`forms_record`, Steph 2026-10-15). None for a design
+    #: that has only one form.
+    forms: dict[str, Any] | None = None
 
 
 def _room(s: Screened, fitter: Fitter) -> Room | None:
@@ -2655,7 +2660,204 @@ def _bounded(
     )
 
 
+#: The pod screened as four townhouses, each home on its own lot, where only
+#: that form clears the lot (Steph 2026-10-15). Severity 2 in the registry:
+#: below the yellow line, so a lot GREEN as townhouses stays GREEN with the
+#: flag beside it.
+LAND_DIVISION = "LAND-DIVISION"
+LAND_DIVISION_REASON = "TOWNHOUSE_PLAT"
+
+
+def townhouse(design: Design) -> Design:
+    """``design`` as four townhouses on four unit lots: the same building,
+    platted the other way (:class:`flats.designs.model.Plat`). Its key is
+    the pod's own, so the row it answers stays the pod's row."""
+    return design.model_copy(update={"plat": Plat.unit_lots})
+
+
+def _plat_matters(lot: QuadfitLot, s: Screened, rules: RuleSet) -> bool:
+    """Whether the townhouse form could answer this lot differently from
+    ``s``, the apartment form's answer: the zone states a number, a gap or
+    an exemption for unit lots that it does not state for one lot, or names
+    unit lots in a path round its use table (Fairview VMU's conditional
+    use). Where neither, the twin would be the same screen twice. Nor where
+    the use table shuts both forms out alike and ``s`` is red on it: no
+    yard or lot size the townhouse rows state can open a door the table
+    keeps shut (a farm zone whose parking rules differ for townhouses)."""
+    layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
+    one = configure(lot.facts, s.design, observed=lot.observed)
+    two = configure(lot.facts, townhouse(s.design), observed=lot.observed)
+    a = rules.resolve(layer_id, lot.zone, one.conditions, lot=one.measures)
+    b = rules.resolve(layer_id, lot.zone, two.conditions, lot=two.measures)
+    use_a, use_b = a.values.get("quadplex_allowed"), b.values.get("quadplex_allowed")
+    if use_b is not None and any("unit_lots" in when for when, _, _ in use_b.relief):
+        return True
+    if _same_numbers(a, b):
+        return False
+    shut_alike = (
+        use_a is not None
+        and use_b is not None
+        and use_a.value is False
+        and use_b.value is False
+        and use_a.relief == use_b.relief
+    )
+    return not (shut_alike and any(x.check == "use" for x in s.signed.binds))
+
+
+def land_division_flagged(s: Screened) -> Screened:
+    """``s``, the townhouse form's answer, with LAND-DIVISION beside it: the
+    lot clears only once it is divided into four unit lots. A record beside
+    the colour -- the triage and the reasons are the twin's own."""
+    flag = flag_plan.Flag(
+        LAND_DIVISION,
+        flag_plan.LOT,
+        LAND_DIVISION_REASON,
+        source="needs a land division into 4 unit lots (townhouses, each home on its own lot)",
+    )
+
+    def add(x: Screening) -> Screening:
+        if any(f.code == LAND_DIVISION for f in x.flags):
+            return x
+        return dataclasses.replace(x, flags=(*x.flags, flag))
+
+    return dataclasses.replace(s, screening=add(s.screening), signed=add(s.signed))
+
+
+#: The two forms, as the lot page and the Lots filter name them.
+APARTMENT = "apartment"
+TOWNHOMES = "townhomes"
+
+
+def form_record(s: Screened, *, screened: bool = True) -> dict[str, Any]:
+    """One form's answer: its colour and, where it is not GREEN, what holds
+    it there -- the standards it misses and the questions still open, in
+    the flag plan's own records. ``screened`` False where the form was not
+    screened on its own because the zone says nothing different for it
+    (:func:`_plat_matters`) and its answer is the other form's."""
+    out: dict[str, Any] = {"colour": s.signed.colour.value}
+    if s.signed.colour is not flag_plan.Colour.green:
+        out["binds"] = [b.as_json() for b in s.signed.binds]
+        out["flags"] = [f.as_json() for f in s.signed.flags if f.code != LAND_DIVISION]
+    if not screened:
+        out["screened"] = False
+    return out
+
+
+def works_as(apartment: bool, townhomes: bool) -> str:
+    """Which forms work, as one word: ``both``, ``apartment``,
+    ``townhomes`` or ``neither``."""
+    if apartment and townhomes:
+        return "both"
+    if apartment:
+        return APARTMENT
+    if townhomes:
+        return TOWNHOMES
+    return "neither"
+
+
+def forms_record(
+    apartment: Screened, townhomes: Screened, *, kept: str, screened: bool = True
+) -> dict[str, Any]:
+    """Both forms' answers on one lot x design, and which works. A form
+    works when it comes out GREEN; the lot wears the better of the two
+    (``kept``)."""
+    green = flag_plan.Colour.green
+    return {
+        "works_as": works_as(apartment.signed.colour is green, townhomes.signed.colour is green),
+        "kept": kept,
+        APARTMENT: form_record(apartment),
+        TOWNHOMES: form_record(townhomes, screened=screened),
+    }
+
+
+def townhouse_checked(
+    lot: QuadfitLot,
+    got: list[Screened],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """``got`` with each pod also screened as four townhouses, and both
+    answers recorded (Steph 2026-10-15: "'Townhomes' will have separate
+    lots. If we build a 4 unit apartment building, they would not." and
+    "I need to know which of the two works on every lot (or if
+    both/neither).").
+
+    The pod is one building either way; what changes is the plat. As an
+    apartment building it sits on the one lot it is screened on, as today.
+    As townhouses the lot is divided into four unit lots, and the zone's
+    townhouse standards govern each of them -- its unit-lot area, width and
+    frontage four times over along the street, its townhouse setbacks, and
+    a use the code grants only to "attached single-unit dwellings" or
+    townhouses on their own lots (:func:`flats.score.paper.lot_standard`,
+    :func:`flats.score.paper.townhouse_only`).
+
+    Both forms are screened on every lot, GREEN or not, so the record can
+    say which works (:func:`forms_record`). A lot passes if either form
+    does: the townhouse answer replaces the apartment one only where its
+    colour is strictly better, and then carries LAND-DIVISION (severity 2,
+    below the yellow line). A tie keeps the apartment answer and raises
+    nothing. A zone that says nothing different for unit lots
+    (:func:`_plat_matters`) is not screened twice: the townhouse form's
+    answer is the apartment form's, and the record says so.
+    """
+    out = list(got)
+    todo: list[int] = []
+    for i, s in enumerate(got):
+        if s.design.plat is not Plat.one_lot:
+            continue
+        if _plat_matters(lot, s, rules):
+            todo.append(i)
+        else:
+            out[i] = dataclasses.replace(s, forms=forms_record(s, s, kept=APARTMENT, screened=False))
+    if not todo:
+        return out
+    twins = _screen_plat(
+        lot, [townhouse(got[i].design) for i in todo], rules=rules, policy=policy,
+        relief=relief, step_deg=step_deg, roads=roads, terrain=terrain,
+    )
+    for i, twin in zip(todo, twins):
+        one = got[i]
+        if _COLOUR[twin.signed.colour] < _COLOUR[one.signed.colour]:
+            out[i] = dataclasses.replace(
+                land_division_flagged(twin), forms=forms_record(one, twin, kept=TOWNHOMES)
+            )
+        else:
+            out[i] = dataclasses.replace(one, forms=forms_record(one, twin, kept=APARTMENT))
+    return out
+
+
 def screen_lot(
+    lot: QuadfitLot,
+    designs: Sequence[Design],
+    *,
+    rules: RuleSet,
+    policy: SlackPolicy,
+    relief: ReliefPolicy,
+    step_deg: float = DEFAULT_STEP_DEG,
+    roads: Any = None,
+    terrain: Any = None,
+) -> list[Screened]:
+    """Screen one lot against every design, each as an apartment building
+    on the one lot and as four townhouses on four unit lots, the better
+    kept and both recorded (:func:`townhouse_checked`). Both forms go
+    through :func:`_screen_plat`, which measures from the sidewalk
+    easement line where the lot has one."""
+    got = _screen_plat(
+        lot, designs, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+    return townhouse_checked(
+        lot, got, rules=rules, policy=policy, relief=relief, step_deg=step_deg,
+        roads=roads, terrain=terrain,
+    )
+
+
+def _screen_plat(
     lot: QuadfitLot,
     designs: Sequence[Design],
     *,
@@ -4004,6 +4206,9 @@ def row_for(s: Screened) -> dict[str, Any]:
         # The sidewalk easement the street setbacks were measured from, at
         # its worst (FOLLOWUPS 41(iii)); None where no code asks.
         "sidewalk_easement_ft": s.lot.sidewalk_easement_ft,
+        # Both forms' answers and which works (Steph 2026-10-15); None for
+        # a design with one form.
+        "forms": json.dumps(s.forms, separators=(",", ":")) if s.forms is not None else None,
     }
 
 

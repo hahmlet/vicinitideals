@@ -537,6 +537,23 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLEAR_OBJECTIVE]
+  LAND-DIVISION:
+    description: "Needs a land division into 4 unit lots. The pod clears this lot only as four townhouses, each home on its own lot; as one apartment building on the one lot it does not. The lot was screened against the zone's townhouse standards for each unit lot (area, width and frontage four times over along the street, the townhouse setbacks), so the colour stands once the division is approved. Steph 2026-10-15: \"'Townhomes' will have separate lots. If we build a 4 unit apartment building, they would not.\""
+    kind: categorical
+    risk: unlikely
+    # Steph 2026-10-15: a low flag, severity below 3, so a lot GREEN as
+    # townhouses stays GREEN with the flag beside it.
+    severity: 2
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot]
+    path: "Apply for the land division (a subdivision, or a middle housing land division where the city offers one) creating four unit lots, with or before the building permit"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [TOWNHOUSE_PLAT]
 
   # --- a path round a bind, once the rule set accepts it -----------------
   APPROVAL-NEEDED:

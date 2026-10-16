@@ -989,6 +989,8 @@ siteplan:
         LDR-2: 10
         MDR: 10
         HDR: 20
+        # 2026-10-15, with the townhouse ruling's port: MU-1's front is 15 (TDC 3.235).
+        MU-1: 15
         MU-2: 15
         MU-3: 20
       front_lot_line_corner: owner

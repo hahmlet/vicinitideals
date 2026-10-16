@@ -31,7 +31,10 @@ pytestmark = pytest.mark.unit
 
 TROUTDALE = "or/multnomah/troutdale"
 #: The seven added here, each settled by one cell and owning nothing else.
-REFUSED = ("MU-1", "CC", "GC", "IP", "LI", "GI", "OS")
+#: MU-1 left this list on 2026-10-15: its Quadplex row still reads N, but
+#: its Townhouse row reads P and the pod on four unit lots is four townhouses
+#: (Steph: "'Townhomes' will have separate lots").
+REFUSED = ("CC", "GC", "IP", "LI", "GI", "OS")
 #: Every zone the layer now carries. The four residential ones came from the
 #: quadfit port; HDR was already a refusal, on a different table.
 ALL_ZONES = (
@@ -62,7 +65,7 @@ def test_the_layer_carries_thirteen_zones_and_names_them(troutdale: Layer) -> No
 def test_a_settled_refusal_owns_the_use_flag_and_nothing_else(
     troutdale: Layer,
 ) -> None:
-    """Seven zones, seven values.
+    """Six zones, six values.
 
     Encoding a lot size for a district that refuses the building would be
     reading a table nobody has to satisfy, and it would make the zone look
@@ -81,11 +84,17 @@ def test_one_of_three_mixed_use_columns_refuses_and_two_permit(
     """Table 3.220 reads `Quadplex N P P` across MU-1, MU-2, MU-3.
 
     A screen that assumed the mixed-use family moved together would be wrong
-    in both directions at once. MU-1 is the settled RED encoded here; the two
-    beside it permit the building and carry a full set of standards.
+    in both directions at once. MU-1 refuses the building on one lot; the two
+    beside it permit it and carry a full set of standards. Since 2026-10-15
+    MU-1 opens only as four townhouses on their own lots -- the Townhouse row
+    is P -- so its one door is the `unit_lots` variant, and it carries the
+    standards that door is screened against.
     """
-    assert troutdale.zones["MU-1"].values["quadplex_allowed"].value is False
-    assert set(troutdale.zones["MU-1"].values) == {"quadplex_allowed"}
+    held = troutdale.zones["MU-1"]
+    assert held.values["quadplex_allowed"].value is False
+    assert [v.when for v in held.values["quadplex_allowed"].variants] == [("unit_lots",)]
+    assert held.values["quadplex_allowed"].variants[0].value is True
+    assert len(held.values) > 5
     for open_column in ("MU-2", "MU-3"):
         held = troutdale.zones[open_column]
         assert held.values["quadplex_allowed"].value is True, open_column

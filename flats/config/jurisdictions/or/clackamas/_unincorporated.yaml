@@ -2158,7 +2158,68 @@ zones:
       # note to read and nothing to relieve it.
       value: false
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+      variants:
+        # The Townhouses row of the same table reads a bare P in the R-2.5
+        # column -- no note 8, no note 9 -- and the ZDO 202 definition puts a
+        # townhouse "on a separate lot of record". Four unit lots make the pod
+        # four townhouses. Opened 2026-10-15 under Steph's ruling that
+        # townhomes have separate lots (rulings.yaml
+        # 2026-10-15-townhomes-separate-lots).
+        - value: true
+          when: [unit_lots]
+          cite: "Clackamas ZDO Table 315-1, Townhouses row, R-2.5 column (P); ZDO 202 \"Townhouse\", a separate lot of record (Steph 2026-10-15, townhomes have separate lots)"
+          quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L331-L342"
+    # Table 315-2, the R-2.5 column (its first), read for the townhouse door
+    # above: each figure is a standard for ONE unit lot, and the screen reads
+    # area and width four times over on the parent lot (paper.lot_standard).
+    #
+    # The area row prints a pair, "2,500/2,000 square feet": district land
+    # area over minimum lot size. 1012.04(A) says the DLA is "in general ...
+    # the minimum lot area required per dwelling unit" and exempts middle
+    # housing from it only in the R-5 to R-30 and VR districts, and 1012.02(G)
+    # waives the townhouse minimum lot only there too; R-2.5 is on neither
+    # list. So four townhouses here want 4 x 2,500 of site, which is more than
+    # 4 x 2,000 of lots, and the larger is held. 1012.05 measures the DLA on
+    # net site area (less new roads); the screen measures the lot's gross area,
+    # which on a lot that dedicates nothing is the same thing.
+    min_lot_sqft:
+      value: 2500
+      cite: "Clackamas ZDO Table 315-2, DLA/Minimum Lot Size row, R-2.5 column; ZDO 1012.04(A), 1012.05"
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1168,L1170-L1171,L1179-L1180"
+    max_height_ft:
+      value: 35
+      cite: Clackamas ZDO Table 315-2, Maximum Building Height row, R-2.5 column
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1197,L1199"
+    max_coverage_pct:
+      value: 50
+      cite: Clackamas ZDO Table 315-2, Maximum Lot Coverage row, R-2.5 column
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1188-L1189"
+    setback_front_ft:
+      value: 15
+      cite: Clackamas ZDO Table 315-2, Minimum Front Setback row, R-2.5 column
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1214-L1215"
+    setback_garage_entrance_ft:
+      value: 20
+      cite: Clackamas ZDO Table 315-2, Minimum Front Setback row, R-2.5 column
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1214-L1215"
+    # Five feet on the parent lot's outer sides. Section 845's zero at the
+    # common wall is reached through note 9 of Table 315-1, which the R-2.5
+    # townhouse cell does not carry; the screen never draws the interior unit
+    # lines, so the shared walls cost nothing either way.
+    setback_side_ft:
+      value: 5
+      cite: Clackamas ZDO Table 315-2, Minimum Side Setback row, R-2.5 column
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1232-L1233"
+    setback_rear_ft:
+      value: 20
+      cite: Clackamas ZDO Table 315-2, Minimum Rear Setback row, R-2.5 column
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1223-L1224"
     notes: >-
+      OPENED 2026-10-15 AS TOWNHOUSES (Steph: "'Townhomes' will have separate
+      lots"). On one lot the pod is a quadplex and the X below refuses it; on
+      four unit lots it is four townhouses, permitted outright, screened on
+      Table 315-2's R-2.5 column with a LAND-DIVISION flag. Not stated for
+      R-2.5: a lot width, a frontage, a cap on units in a row. Before that:
       Encoded 2026-09-08. Nothing else is encoded here and nothing else needs
       to be: the use is refused, so no dimension can change the answer. 77
       lots.

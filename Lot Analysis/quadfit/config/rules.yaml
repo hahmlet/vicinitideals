@@ -1009,12 +1009,33 @@ jurisdictions:
         source_url: "https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI"
         confidence: verified
         notes: "ADOPTED min lot 5,000 sf / width 50 (2022 hearing-draft PDF says 4,000/40 — superseded). Town Center frontage 16 ft not split out."
-      - zone: HDR
-        quadplex_allowed: false
-        source: "Troutdale Development Code 3.120 (Quadplex = N in HDR)"
+      # ported 2026-10-15 by port_from_flats.zone_row: HDR, MU-1 open as four townhouses on four unit lots (Steph 2026-10-15: "'Townhomes' will have separate lots"); ported so the pod is measured. The minimums here are one unit lot's -- FLATS reads them four times over and keeps the verdict.
+      - zone: "HDR"
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_frontage_ft: 20
+        min_density_du_per_acre: 25
+        source: "Troutdale Development Code 3.120 (Quadplex = N in HDR), 3.130 (dimensional standards)"
         source_url: "https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI"
-        confidence: verified
-        notes: "Multifamily/townhouse zone — no detached SFD, no quadplex; OAR mandate does not attach. Inside the Town Center overlay quadplex IS permitted, but the GIS zonecode does not distinguish HDR-TC — treated as excluded (conservative; 369 lots)."
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/troutdale HDR) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
+      - zone: "MU-1"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 15
+        setback_rear_ft: 20
+        setback_street_side_ft: 0
+        min_frontage_ft: 15
+        min_lot_width_ft: 15
+        min_lot_depth_ft: 90
+        min_density_du_per_acre: 25
+        source: "Troutdale Development Code 3.220, 3.230.B (residential uses) and 3.235 (detailed dimensional standards) (Municode, through Ord. 899)"
+        source_url: "https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/troutdale MU-1) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       # UPAR-10 (1 lot): unincorporated UPA parcel, annexation required first —
       # left absent (falls out as zone_not_in_rules).
       # ---- ported from the FLATS corpus 2026-09-02 -------------------------
@@ -1214,12 +1235,20 @@ jurisdictions:
         source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19115.html"
         confidence: needs_verification
         notes: "Code sides: 4 ft one / 5 ft opposite, and the nine feet 19.115.040(E)(1)(d) asks for is the COMMON LINE setback -- the distance between two buildings on abutting lots -- not the two yards of this lot added up. It was modelled as a uniform 4.5 to preserve width; that puts the wider side six inches inside the code's own five-foot minimum, so this field now carries 5, which clears both stated minimums and the common-line test against any neighbour. Front is 'either 10 or 15 ft'. Quadplex use flows in via amended 19.30.020 linkage (the needs_verification part). Village design standards apply."
-      - zone: VTH
-        quadplex_allowed: false
+      # ported 2026-10-15 by port_from_flats.zone_row: VTH open as four townhouses on four unit lots (Steph 2026-10-15: "'Townhomes' will have separate lots"); ported so the pod is measured. The minimums here are one unit lot's -- FLATS reads them four times over and keeps the verdict.
+      - zone: "VTH"
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 0
+        setback_rear_ft: 15
+        min_lot_sqft: 2000
+        max_coverage_pct: 70
+        min_lot_width_ft: 20
+        min_lot_depth_ft: 70
         source: "FMC 19.120 Village Townhouse Residential"
-        source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19120.html"
-        confidence: verified
-        notes: "Townhouse/duplex zone; new detached SFD not allowed — OAR mandate does not attach."
+        source_url: "https://ecode360.com/50510941"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/multnomah/fairview VTH) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: R/MH
         quadplex_allowed: false
         source: "FMC 19.30 Manufactured Home Park district standards"
@@ -1845,6 +1874,18 @@ jurisdictions:
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: verified
         notes: "Adopted ZDO 315 Table 315-2. Base SFD min lot 30,000 sf; waived for middle-housing land division (Section 845). Only 1 polygon in the layer."
+      # ported 2026-10-15 by port_from_flats.zone_row: R2.5 open as four townhouses on four unit lots (Steph 2026-10-15: "'Townhomes' will have separate lots"); ported so the pod is measured. The minimums here are one unit lot's -- FLATS reads them four times over and keeps the verdict.
+      - zone: "R2.5"
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 5
+        setback_rear_ft: 20
+        min_lot_sqft: 2500
+        max_coverage_pct: 50
+        source: "Clackamas ZDO Section 315 Table 315-1, Quadplexes row, R-2.5 column"
+        source_url: "https://www.clackamas.us/planning/zdo315"
+        confidence: "needs_verification"
+        notes: "Ported from the FLATS corpus (or/clackamas/_unincorporated R2.5) by port_from_flats.py: larger limb of every setback and minimum, smaller of coverage."
       - zone: VR57
         quadplex_allowed: true
         setback_front_ft: 10

@@ -189,6 +189,55 @@ def _pair(side: float | None, total: float | None) -> float | None:
     return total if doubled is None else max(total, doubled)
 
 
+#: How a standard stated for ONE unit lot reads on the parent, where the
+#: four unit lots stand side by side along the street, each running from the
+#: front lot line to the rear: four of the area, the width and the frontage;
+#: the depth once, since every unit lot is as deep as the parent; and a
+#: depth-to-width ceiling a quarter as high, since each unit lot is a quarter
+#: as wide for the same depth. Anything not named here is not a lot standard
+#: and does not reach this helper.
+_ON_THE_PARENT: dict[str, str] = {
+    "min_lot_sqft": "times",
+    "min_lot_width_ft": "times",
+    "min_average_lot_width_ft": "times",
+    "min_frontage_ft": "times",
+    "min_lot_depth_ft": "same",
+    "max_lot_depth_ratio": "divided",
+}
+
+
+def _on_the_parent(name: str, value: float, lots: int) -> float:
+    how = _ON_THE_PARENT.get(name, "times")
+    if how == "same":
+        return value
+    if how == "divided":
+        return value / lots
+    return value * lots
+
+
+def townhouse_only(rules: "ZoneResolution") -> bool:
+    """Whether this zone takes the pod only as townhouses, each home on its
+    own lot: the permission itself rests on ``unit_lots`` -- a variant that
+    opens ``quadplex_allowed`` on that fact (Tualatin RH, Sandy R-1), or a
+    relief path that names it (Fairview VMU's conditional use, 19.135.010
+    row c).
+
+    Steph 2026-10-15: "'Townhomes' will have separate lots." Where the
+    building is permitted only as townhouses, the lot being divided does not
+    hold middle housing on one parcel to begin with, so ORS 92.031's
+    parent-lot reading is not the path, and the zone's own lot standards are
+    the standards of each unit lot.
+    """
+    got = rules.values.get("quadplex_allowed")
+    if got is None:
+        return False
+    if got.value is True and "unit_lots" in tuple(getattr(got, "when", ()) or ()):
+        return True
+    return got.value is not True and any(
+        "unit_lots" in when for when, value, _ in getattr(got, "relief", ()) if value is True
+    )
+
+
 def lot_standard(
     rules: "ZoneResolution", name: str, *, per_unit: bool, lots: int
 ) -> tuple[float | None, bool]:
@@ -213,8 +262,15 @@ def lot_standard(
     Where a jurisdiction is outside that regime, or states its own townhouse
     lot standards for a conventional subdivision, it encodes them by carrying
     the ``unit_lots`` condition on a variant, and those *are* per-lot: four of
-    them side by side. Where neither is true this returns nothing and reports
+    them side by side (:data:`_ON_THE_PARENT` says what "side by side" does to
+    each standard). Where neither is true this returns nothing and reports
     the standard as one we do not have, which is honest and is an encoding task.
+
+    And where the zone takes the building ONLY as townhouses
+    (:func:`townhouse_only`, Steph 2026-10-15), the parent-lot reading is not
+    the path: the zone's own number is every unit lot's, side by side. The
+    conservative reading -- a city that meant the figure for the whole
+    project is asked four times it, never a quarter.
     """
     got = rules.values.get(name)
     value = getattr(got, "value", None)
@@ -227,7 +283,9 @@ def lot_standard(
             # Stated per dwelling and already multiplied out to the building
             # by the loader: four child lots' worth is the number itself.
             return float(value), True
-        return float(value) * lots, True
+        return _on_the_parent(name, float(value), lots), True
+    if townhouse_only(rules):
+        return _on_the_parent(name, float(value), lots), True
     if rules.get("land_division_parent_standards") is True:
         return float(value), True
     return None, False

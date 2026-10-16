@@ -300,7 +300,10 @@ def test_the_outdoor_square_is_measured_beside_the_court_beside(corpus, monkeypa
     lot = lot_from_row(real_row(), corpus.layers)
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policy, relief=rel, step_deg=1.0)
     assert s.fit.beside is True
-    ((beside, square, a, k),) = seen
+    # The apartment form's plan is measured first; Portland R5 states its
+    # own numbers for unit lots, so the townhouse form is screened after it
+    # (Steph 2026-10-15) and measures its own.
+    beside, square, a, k = seen[0]
     assert beside is True and square == pytest.approx(21.0, abs=0.5)
     shape = next(c for c in s.screening.checks if c.check == "open_space_shape")
     assert shape.observed == pytest.approx(square)
