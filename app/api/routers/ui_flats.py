@@ -668,12 +668,15 @@ def _from_a_table(lines: Sequence[dict[str, Any]]) -> bool:
     return bool(cited) and hits * 2 >= len(cited)
 
 
-@lru_cache(maxsize=128)
+@lru_cache(maxsize=512)
 def _page_index(document: str) -> Any:
-    """A document's page map, if it has one and it still fits the stored text."""
+    """A document's page map, if it has one and it still fits the stored text.
+
+    Read once per process -- the store is baked in. Shared with ui_flats_check.
+    """
     try:
         return page_map.read(_store(), document)
-    except (ProvenanceError, OSError):
+    except Exception:  # noqa: BLE001 — a bad sidecar reads as no map
         return None
 
 
