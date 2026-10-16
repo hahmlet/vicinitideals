@@ -54,7 +54,7 @@ from __future__ import annotations
 
 import re
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Sequence
 
@@ -832,6 +832,9 @@ class Marker:
     mark: str
     kind: str
     text: str
+    #: Character offsets into ``text``, for highlighting the printed marker.
+    start: int = field(default=0, compare=False, repr=False)
+    end: int = field(default=0, compare=False, repr=False)
 
     @property
     def quote(self) -> str:
@@ -1651,29 +1654,36 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
             continue
         seen: set[str] = set()
 
-        def add(mark: str, kind: str) -> None:
+        def add(mark: str, kind: str, start: int, end: int) -> None:
             if mark in seen:
                 return
             seen.add(mark)
-            out.append(Marker(doc="", line=i + 1, mark=mark, kind=kind, text=stripped))
+            out.append(Marker(doc="", line=i + 1, start=start, end=end, mark=mark, kind=kind, text=stripped))
+
+        def add_parts(group: str, kind: str, start: int) -> None:
+            for part in re.finditer(r"[^,]+", group):
+                mark = part.group().strip()
+                if mark:
+                    leading = len(part.group()) - len(part.group().lstrip())
+                    trailing = len(part.group()) - len(part.group().rstrip())
+                    add(mark, kind, start + part.start() + leading, start + part.end() - trailing)
 
         # Brackets identify themselves and are read anywhere on the line. The
         # rest are read per cell, because every one of them is a rule about
         # what a cell *ends* with.
         for m in BRACKET_MARKER.finditer(stripped):
-            for part in m.group("n").split(","):
-                add(part.strip(), "bracket")
+            add_parts(m.group("n"), "bracket", m.start("n"))
         for m in SEE_NOTE.finditer(stripped):
-            add(m.group("n"), "phrase")
+            add(m.group("n"), "phrase", m.start("n"), m.end("n"))
 
         # A letter is read per token rather than per cell, because the run a
         # header states -- "Setbacks K, L, M" -- and the letters a data row
         # welds to its values sit at opposite ends of the layout.
-        for token in stripped.split():
+        for token_match in re.finditer(r"\S+", stripped):
+            token = token_match.group()
             got = LETTER_CELL.match(token) or LETTER_GLUED.match(token)
             if got is not None:
-                for part in got.group("n").split(","):
-                    add(part, "letter")
+                add_parts(got.group("n"), "letter", token_match.start() + got.start("n"))
         planted = {
             (m.start("n") if m.group("n") else m.start("m"))
             for m in LANDSCAPE_LEVEL.finditer(stripped)
@@ -1691,7 +1701,6 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
             for m in marked_cells:
                 # "P7,8" is one cell carrying two notes, and reading only the
                 # first leaves the second a body nobody points at.
-                parts = [part.strip() for part in m.group("n").split(",")]
                 # A line that is nothing but "P1" is a permission with a note
                 # on it in one table and the identifier of row P1 in another --
                 # Fairview numbers its menu of design options P1 through P8
@@ -1700,13 +1709,13 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
                 # `census` keeps it only where a note answers it. Reading those
                 # as certain markers invented 43 orphans in two documents that
                 # have no notes at all.
+                parts = [part.strip() for part in m.group("n").split(",")]
                 kind = "lone" if lone and len(parts) == 1 else "cell"
-                for part in parts:
-                    add(part, kind)
+                add_parts(m.group("n"), kind, m.start("n"))
 
         if LONE_PAREN_CELL.match(stripped):
-            for mark in PAREN_MARK.findall(stripped):
-                add(mark, "cell")
+            for m in PAREN_MARK.finditer(stripped):
+                add(m.group(1), "cell", m.start(1), m.end(1))
 
         # A label carries markers too -- "Residential density (maximum)1" --
         # and in an HTML extraction it has no column gap to be found by, since
@@ -1715,10 +1724,33 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
         # its own narrowness: the digits must follow a lowercase letter or a
         # closing parenthesis with nothing between. "Table 16.22.020-2" and
         # "MUR-M3" end in digits and match neither.
-        cited = PAREN_SUBSECTION.sub("", PAREN_CITATION.sub("", stripped))
-        cells = [cited, *(GAP.split(cited) if GAP.search(raw) else [])]
-        for cell in cells:
+        cited = stripped
+        positions = list(range(len(stripped)))
+        for pattern in (PAREN_CITATION, PAREN_SUBSECTION):
+            kept_text = []
+            kept_positions = []
+            cursor = 0
+            for match in pattern.finditer(cited):
+                kept_text.append(cited[cursor : match.start()])
+                kept_positions.extend(positions[cursor : match.start()])
+                cursor = match.end()
+            kept_text.append(cited[cursor:])
+            kept_positions.extend(positions[cursor:])
+            cited = "".join(kept_text)
+            positions = kept_positions
+        cells = []
+        if GAP.search(raw):
+            cursor = 0
+            for gap in GAP.finditer(cited):
+                cells.append((cited[cursor : gap.start()], positions[cursor : gap.start()]))
+                cursor = gap.end()
+            cells.append((cited[cursor:], positions[cursor:]))
+        else:
+            cells.append((cited, positions))
+        for cell, cell_positions in cells:
+            leading = len(cell) - len(cell.lstrip())
             cell = cell.strip()
+            cell_positions = cell_positions[leading : leading + len(cell)]
             for kind, pattern in (
                 ("glued", GLUED_MARKER),
                 ("paren", PAREN_MARKER),
@@ -1728,14 +1760,35 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
                 found = pattern.search(cell)
                 if found is None:
                     continue
-                for part in found.group("n").split(","):
-                    add(part.strip(), kind)
+                add_parts(
+                    found.group("n"),
+                    kind,
+                    cell_positions[found.start("n")],
+                )
 
         # The same label rule where the row was printed single-spaced, so
         # there is no column gap to split the label off by. See
         # `ROW_LABEL_WELD`.
-        for mark in _row_label_marks(stripped):
-            add(mark, "label")
+        words = list(re.finditer(r"\S+", stripped))
+        for cut in range(1, len(words) - ROW_CELL_MIN + 1):
+            rest = [word.group() for word in words[cut:]]
+            if len(rest) < ROW_CELL_MIN or not all(ROW_CELL.match(word) for word in rest):
+                continue
+            prefix_words = words[:cut]
+            prefix_parts = []
+            offsets = []
+            for word in prefix_words:
+                if prefix_parts:
+                    prefix_parts.append(" ")
+                    offsets.append(word.start() - 1)
+                prefix_parts.append(word.group())
+                offsets.extend(range(word.start(), word.end()))
+            prefix = "".join(prefix_parts)
+            weld = ROW_LABEL_WELD.match(prefix)
+            if weld is None:
+                continue
+            add_parts(weld.group("n"), "label", offsets[weld.start("n")])
+            break
     return out
 
 
@@ -1745,7 +1798,7 @@ def census(text: str, *, layer: str = "", doc: str = "") -> Census:
     blocks = _blocks(lines) + _declared(lines, doc)
     inside = tuple(span for b in blocks for span in b.covered)
     markers = [
-        Marker(doc=doc, line=m.line, mark=m.mark, kind=m.kind, text=m.text)
+        Marker(doc=doc, line=m.line, start=m.start, end=m.end, mark=m.mark, kind=m.kind, text=m.text)
         for m in _markers(lines, inside)
     ]
     blocks = tuple(
@@ -1765,7 +1818,7 @@ def census(text: str, *, layer: str = "", doc: str = "") -> Census:
     # Provisional markers stand only where a note answers them. Done here
     # rather than in `_markers` because it is the blocks that decide it.
     markers = [
-        Marker(doc=m.doc, line=m.line, mark=m.mark, kind="cell", text=m.text)
+        Marker(doc=m.doc, line=m.line, start=m.start, end=m.end, mark=m.mark, kind="cell", text=m.text)
         if m.kind == "lone"
         else m
         for m in markers
