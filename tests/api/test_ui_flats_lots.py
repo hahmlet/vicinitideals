@@ -19,6 +19,8 @@ from __future__ import annotations
 
 import re
 from datetime import date, datetime, timedelta, timezone
+from html import unescape
+from html.parser import HTMLParser
 
 import pytest
 from httpx import AsyncClient
@@ -35,7 +37,7 @@ from app.models.flats import (
     FlatsRun,
     FlatsSnapshot,
 )
-from app.api.routers.ui_flats import _alley_coverage_rows, _said_reason
+from app.api.routers.ui_flats import _LOTS_PAGE, _alley_coverage_rows, _lots_ctx, _said_reason
 from tests.conftest import seed_org, set_client_auth
 
 pytestmark = pytest.mark.asyncio
@@ -362,6 +364,25 @@ async def test_a_lots_page_past_the_end_is_empty_not_an_error(client: AsyncClien
     assert not _tlids(page.text)
 
 
+async def test_a_lots_page_at_the_maximum_is_empty_not_an_error(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session)
+
+    page = await client.get("/flats/lots?page=100000")
+
+    assert page.status_code == 200
+    assert not _tlids(page.text)
+
+
+async def test_lots_context_carries_requested_page_and_page_size():
+    ctx = _lots_ctx([], None, page=23)
+
+    assert ctx["page"] == 23
+    assert ctx["per_page"] == _LOTS_PAGE
+
+
 async def test_the_second_lots_page_holds_other_rows_than_the_first(client: AsyncClient, session: AsyncSession):
     await _login(client, session)
     run = await _seed(session)
@@ -373,6 +394,27 @@ async def test_the_second_lots_page_holds_other_rows_than_the_first(client: Asyn
     assert first.status_code == second.status_code == 200
     one, two = _tlids(first.text), _tlids(second.text)
     assert one and two and not one & two
+
+
+async def test_the_pager_keeps_active_lot_filters(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    run = await _seed(session)
+    await _add_lots(session, run, 60)
+
+    page = await client.get(
+        "/flats/lots?jurisdiction=or%2Fmultnomah%2Fportland&zone=R5"
+        "&design=pod56x36%402&colour=yellow"
+    )
+
+    assert page.status_code == 200
+    next_link = re.search(r'href="([^"]+)"[^>]*>Next</a>', page.text)
+    assert next_link is not None
+    href = next_link.group(1).replace("&amp;", "&")
+    assert "jurisdiction=or%2Fmultnomah%2Fportland" in href
+    assert "zone=R5" in href
+    assert "design=pod56x36%402" in href
+    assert "colour=yellow" in href
+    assert "page=2" in href
 
 
 async def test_a_partial_alley_is_explained_without_changing_the_lot_result(
@@ -1065,6 +1107,63 @@ async def test_no_lot_page_prints_a_python_object(client: AsyncClient, session: 
         assert page.status_code == 200
         assert "built-in method" not in page.text
         assert "object at 0x" not in page.text
+
+
+class _TextNodes(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.text: list[str] = []
+
+    def handle_data(self, data: str) -> None:
+        self.text.append(data)
+
+
+async def test_secondary_flats_pages_print_no_python_objects(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session)
+
+    urls = (
+        "/flats/gaps",
+        "/flats/why/or/multnomah/gresham?zone=LDR-5&field=setback_front_ft",
+        "/flats/plans",
+        "/flats/plans/pod56x36@2",
+        "/flats/refresh",
+        "/flats/feedback",
+        "/flats/flags",
+        "/flats/flags/questions",
+        "/flats/flags/queue",
+        "/flats/flags/report",
+        "/flats",
+        "/flats/or/multnomah/gresham",
+    )
+    for url in urls:
+        page = await client.get(url)
+        assert page.status_code == 200, url
+        assert "{'" not in page.text, url
+        assert "[<" not in page.text, url
+        assert "Decimal(" not in page.text, url
+        text_nodes = _TextNodes()
+        text_nodes.feed(page.text)
+        none_nodes = [node.strip() for node in text_nodes.text if node.strip() == "None"]
+        assert not none_nodes, f"{url}: {none_nodes}"
+
+
+async def test_lot_design_filter_shows_the_catalog_label(
+    client: AsyncClient, session: AsyncSession
+):
+    from app.api.routers.ui_flats import _catalog
+
+    await _login(client, session)
+    await _seed(session)
+
+    page = await client.get("/flats/lots")
+    label = _catalog().get("pod56x36@2").label
+    option = re.search(r'<option value="pod56x36@2"[^>]*>(.*?)</option>', page.text)
+
+    assert option is not None
+    assert unescape(option.group(1)) == label
 
 
 async def test_the_lot_page_shows_a_persons_decision_and_the_look_again_mark(

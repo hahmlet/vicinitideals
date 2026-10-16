@@ -187,7 +187,8 @@ def test_a_section_heading_has_to_belong_to_its_document() -> None:
 
 def test_the_ledger_round_trips(tmp_path: Path, milwaukie: list[Uncited]) -> None:
     path = write(milwaukie, tmp_path / "uncited.csv")
-    back = list(csv.DictReader(path.open(encoding="utf-8")))
+    with path.open(encoding="utf-8") as fh:
+        back = list(csv.DictReader(fh))
 
     assert len(back) == len(milwaukie)
     assert {r["bucket"] for r in back} == {"unread", "unfielded"}
