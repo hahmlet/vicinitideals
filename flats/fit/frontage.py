@@ -138,9 +138,10 @@ def _streets_of_run(
        (:data:`flats.geom.corner.THROUGH_MIN_FT`, the jog the through-lot
        test allows). Where the line comes back the other way, the lot wraps
        round a block end and the middle is a street of its own.
-    4. What still has no direction joins the stretch beside it nearer its own
-       direction: the rounded corner goes to one of the two streets it
-       joins, whole.
+    4. What still has no direction is a rounded corner. Between stretches
+       of the two streets it is cut where its turn crosses from one
+       street's direction to the other's, each street taking the chords
+       nearer it; beside one street only, it joins that street whole.
     """
     if len(bearings) < 2:
         return [list(run)]
@@ -202,9 +203,30 @@ def _streets_of_run(
         before = next((groups[p] for p in range(j - 1, -1, -1) if groups[p][0] is not None), None)
         after = next((groups[p] for p in range(j + 1, len(groups)) if groups[p][0] is not None), None)
         near = [h for h in (before, after) if h is not None]
-        host = min(near, key=lambda h: lean(g, h[0]))  # type: ignore[arg-type]
-        target = next(o for o in out if o[1][0] == host[1][0])
-        target[1].extend(g)
+        if len(near) == 2 and near[0][0] != near[1][0]:
+            # A rounded corner between the two streets: its chords turn from
+            # one street's direction to the other's, so it is cut where the
+            # turn crosses over -- the chords nearer the first street go to
+            # it, the rest to the second. Given whole to either street, an
+            # arc of 80 ft made the other street 80 ft shorter than it is
+            # (Beaverton 1S121BA00807, 84 ft read as 43).
+            ka, kb = near[0][0], near[1][0]
+
+            def cost(c: int) -> float:
+                return sum(
+                    ring[i].length_ft * bearing_delta(ring[i].bearing_deg, bearings[ka if p < c else kb])  # type: ignore[index]
+                    for p, i in enumerate(g)
+                )
+
+            cut = min(range(len(g) + 1), key=cost)
+            pieces = [(near[0], g[:cut]), (near[1], g[cut:])]
+        else:
+            host = min(near, key=lambda h: lean(g, h[0]))  # type: ignore[arg-type]
+            pieces = [(host, g)]
+        for host, piece in pieces:
+            if piece:
+                target = next(o for o in out if o[1][0] == host[1][0])
+                target[1].extend(piece)
     # Keep each street's lines in the ring's order.
     order = {i: p for p, i in enumerate(run)}
     return [sorted(g, key=order.__getitem__) for _, g in out]

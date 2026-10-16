@@ -441,6 +441,27 @@ def test_a_corner_lots_two_streets_stay_two() -> None:
     assert got[0] >= 70.0 and got[1] >= 110.0
 
 
+def test_a_wide_rounded_corner_is_shared_between_its_two_streets() -> None:
+    # Beaverton 1S121BA00807: the corner rounds in four chords, none along
+    # either street, about 80 ft of line. Given whole to the front, the side
+    # street read 43 ft instead of 84 and its parking share went over 50
+    # percent -- a false red (and, on the lot turned the other way, a false
+    # green). Each street takes the chords nearer its own direction.
+    import math
+
+    pts = [(0.0, 0.0), (60.0, 0.0)]
+    for a in (25.0, 38.0, 55.0, 68.0):
+        x, y = pts[-1]
+        pts.append((x + 20 * math.cos(math.radians(a)), y + 20 * math.sin(math.radians(a))))
+    x, y = pts[-1]
+    pts.append((x, y + 60.0))
+    lines = [(*pts[i], *pts[i + 1], F) for i in range(len(pts) - 1)]
+    x_end, y_end = pts[-1]
+    lines += [(x_end, y_end, 0.0, y_end, R), (0.0, y_end, 0.0, 0.0, S)]
+    got = _lengths(_edges(lines, [0.0, 90.0]))
+    assert got == pytest.approx([100.0, 100.0], abs=0.2)
+
+
 def test_a_lot_round_a_block_end_keeps_three_streets() -> None:
     # Streets on three sides: the line turns and comes BACK along the first
     # direction, so the far side is a street of its own, not a step.
