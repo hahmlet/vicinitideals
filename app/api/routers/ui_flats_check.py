@@ -493,11 +493,31 @@ def _by_document() -> dict[str, list[dict[str, Any]]]:
 def _set_aside_by_document() -> dict[str, list[dict[str, str]]]:
     """Every passage read and left out on purpose, grouped by document.
 
+    The whole corpus; a card only needs one document and asks
+    :func:`_set_aside_in`, which is the same answer without surveying every
+    layer's reading queue.
+    """
+    return _set_aside_items(None)
+
+
+@lru_cache(maxsize=512)
+def _set_aside_in(document: str) -> tuple[dict[str, str], ...]:
+    """One document's set-aside passages -- identical to its entry in the whole."""
+    return tuple(_set_aside_items(document).get(document, []))
+
+
+def _set_aside_items(only: str | None) -> dict[str, list[dict[str, str]]]:
+    """Passages read and left out on purpose, for one document or all of them.
+
     Four kinds of decision, one tint: a located refusal (``set_aside:``), a
     footnote ruled dismissed, a section the reading queues closed as not
     reaching us, and a standard held as exempt. A reviewer does not need the
     reason to tell "weighed and refused" from "never read", and the second is
     the one the page check is for.
+
+    The reading queue is the slow part (it scans every document a layer owns),
+    and a layer's cards only ever cite documents in that layer's own
+    directory, so a single document needs only its own layer's queue.
     """
     from flats.encode import dispositions, worklist
 
@@ -505,7 +525,7 @@ def _set_aside_by_document() -> dict[str, list[dict[str, str]]]:
 
     def add(quote: str, why: str) -> None:
         document = quote.partition("#L")[0]
-        if document and _ranges(quote):
+        if document and (only is None or document == only) and _ranges(quote):
             out[document].append({"quote": quote, "why": why})
 
     for layer_id, layer in _layers().items():
@@ -514,6 +534,8 @@ def _set_aside_by_document() -> dict[str, list[dict[str, str]]]:
         for row in _value_rows(layer):
             if row["quote"] and _exempt(layer, row):
                 add(row["quote"], f"{_label(row['field'])} -- does not reach this building")
+        if only is not None and only.rpartition("/")[0] != layer_id:
+            continue
         try:
             for card in worklist.cards(layer, _store()):
                 if card.ruling is not None and card.ruling.closed and card.lines:
@@ -533,6 +555,23 @@ def _set_aside_by_document() -> dict[str, list[dict[str, str]]]:
             i for i in items if (i["quote"], i["why"]) not in seen and not seen.add((i["quote"], i["why"]))
         ]
     return out
+
+
+def warm() -> None:
+    """Fill the per-process caches the first card would otherwise pay for.
+
+    Run from a thread at app startup; a failure only means the first card is
+    as slow as it was.
+    """
+    from flats.encode import dispositions
+
+    try:
+        _layers()
+        _known_documents()
+        dispositions.rulings()
+        _by_document()
+    except Exception:  # noqa: BLE001 — warming is best effort
+        pass
 
 
 def _on_page(index: Any, quote: str, page: int) -> bool:
@@ -589,7 +628,7 @@ def _set_aside_on(document: str, page: int) -> tuple[tuple[sheet.Box, str], ...]
     if index is None:
         return ()
     spots: dict[tuple, dict[str, Any]] = {}
-    for item in _set_aside_by_document().get(document, []):
+    for item in _set_aside_in(document):
         if not _on_page(index, item["quote"], page):
             continue
         try:

@@ -638,6 +638,17 @@ def create_app() -> FastAPI:
     from app.api.routers.ui_flats_check import router as ui_flats_check_router
     app.include_router(ui_flats_check_router)
 
+    # Warm the page check's caches off the event loop so the first card is not
+    # a 7 s cold start; startup and the health check do not wait for it.
+    def _warm_flats_check() -> None:
+        import threading
+
+        from app.api.routers.ui_flats_check import warm
+
+        threading.Thread(target=warm, name="flats-check-warm", daemon=True).start()
+
+    app.router.add_event_handler("startup", _warm_flats_check)
+
     # FLATS unknowns — approve each kind of flag's numbers and the colour rule.
     # Ahead of ui_flats for the same catch-all reason.
     from app.api.routers.ui_flats_flags import router as ui_flats_flags_router

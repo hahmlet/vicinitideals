@@ -562,6 +562,42 @@ def test_what_was_set_aside_includes_the_located_refusals():
         assert {"quote": item.quote, "why": item.why} in held
 
 
+def test_one_documents_set_aside_matches_the_whole_corpus_answer():
+    """The per-document path must give exactly what the all-layer one does."""
+    whole = check._set_aside_by_document()
+    by_layer: dict[str, str] = {}
+    for document in sorted(whole):
+        by_layer.setdefault(document.rpartition("/")[0], document)
+    sample = list(by_layer.values())[:6]
+    assert sample
+
+    for document in sample:
+        assert list(check._set_aside_in(document)) == whole[document]
+    assert check._set_aside_in("or/nowhere/none.txt") == ()
+
+
+def test_a_cards_set_aside_surveys_one_layers_reading_queue_not_all(monkeypatch):
+    from flats.encode import worklist
+
+    document = next(iter(check._set_aside_by_document()))
+    calls: list[str] = []
+    real = worklist.cards
+
+    def counting(layer, *args, **kwargs):
+        calls.append(layer.layer)
+        return real(layer, *args, **kwargs)
+
+    monkeypatch.setattr(worklist, "cards", counting)
+    check._set_aside_in.cache_clear()
+    try:
+        check._set_aside_in(document)
+        check._set_aside_in(document)
+    finally:
+        check._set_aside_in.cache_clear()
+
+    assert calls == [document.rpartition("/")[0]]
+
+
 async def test_an_exempt_standard_is_asked_as_not_applying(client, session, monkeypatch):
     await _login(client, session)
     monkeypatch.setattr(check, "_exempt", lambda layer, row: True)
