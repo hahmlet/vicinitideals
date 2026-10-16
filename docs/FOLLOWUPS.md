@@ -955,10 +955,13 @@ read when the weekly full re-screen lands.
    per footnote on it; "no" answers form the problems list
    (`/flats/check/problems.txt`, stamps `bundled_at`). Page maps now cover
    190 PDF documents; 1,742 of 2,129 numbers get a box (362 get their line
-   highlighted, 25 nothing). Still open: (a) web-published codes (Happy
-   Valley, Lake Oswego, Clackamas ZDO, Fairview, Wood Village, ~1,100
-   numbers) have no printed page -- draw them from the stored HTML snapshot
-   instead; (b) nothing reads the problems list yet -- wire a "differs" into
+   highlighted, 25 nothing). Still open: (a) DONE 2026-10-16 on flats/check-web-codes:
+   web-published codes (1,569 numbers: Cornelius, Fairview, Gladstone, Happy
+   Valley, Lake Oswego, Milwaukie, Tigard, West Linn, Wood Village, Clackamas
+   ZDO, two state texts) show the stored text, no HTML snapshot is kept, cited
+   lines lit and the number tinted, labelled "web code -- no printed page";
+   answers go to the same table with page NULL and placed = "web" (no migration;
+   no source-kind column exists); (b) nothing reads the problems list yet -- wire a "differs" into
    the signing disputes so the number reopens there.
 24. [scan: YES] **Oregon City 16.12.035.F -- one driveway approach per two townhouses
    (Steph 2026-09-30, from the page check).** "Townhouses shall have one

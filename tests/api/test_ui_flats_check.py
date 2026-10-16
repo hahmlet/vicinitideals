@@ -632,3 +632,95 @@ async def test_a_reopened_no_is_asked_again_with_what_was_said_before(client, se
     # Off the problems list until answered again; the history keeps the "No".
     assert f"{LAYER} | {no['zone']} | {no['field']}" not in (await client.get("/flats/check/problems.txt")).text
     assert await reopen.reopen(session, LAYER) == [], "a reopened question is not reopened twice"
+
+
+WEB_LAYER = "or/clackamas/lake-oswego"
+
+
+def _web_row() -> dict:
+    """A Lake Oswego number whose cited lines state it in words we can tint."""
+    layer = check._layers()[WEB_LAYER]
+    for row in check._rows(layer, set()):
+        assert row["web"], "fixture assumption: Lake Oswego is published only as web pages"
+        if any(p["hit"] for line in check._web_text(row) for p in line["parts"]):
+            return row
+    raise AssertionError("no Lake Oswego number is stated in its cited lines")
+
+
+@pytest.fixture
+def _no_pages(monkeypatch):
+    def refuse(row):
+        raise AssertionError("a web code has no page to place a box on")
+
+    monkeypatch.setattr(check, "_placed", refuse)
+
+
+async def test_a_web_code_card_shows_the_stored_text_not_a_page(client, session, _no_pages):
+    await _login(client, session)
+    row = _web_row()
+
+    response = await client.get(
+        f"/flats/check/{WEB_LAYER}", params={"zone": row["zone"], "field": row["field"], "when": row["when"]}
+    )
+
+    assert response.status_code == 200
+    assert "data-web-code" in response.text
+    assert "web code &mdash; no printed page" in response.text
+    assert "check-web-cited" in response.text
+    assert "check-web-num" in response.text
+    assert "/flats/sheet/" not in response.text
+    assert "data-flag" not in response.text
+    assert "data-answer=\"matches\"" in response.text
+
+
+async def test_a_web_code_answer_is_stored_in_the_same_table_with_no_page(client, session, _no_pages):
+    user = await _login(client, session)
+    row = _web_row()
+
+    response = await client.post(
+        "/ui/flats/check",
+        data={
+            "layer_id": WEB_LAYER,
+            "zone": row["zone"],
+            "field": row["field"],
+            "when": row["when"],
+            "question": "value",
+            "answer": "differs",
+            "says": "something else",
+        },
+    )
+
+    assert response.status_code == 200
+    saved = (await session.execute(select(FlatsPageCheck))).scalars().one()
+    assert (saved.page, saved.placed) == (None, "web")
+    assert saved.fingerprint == row["mark"]
+    assert saved.quote == row["quote"]
+    assert saved.reviewer_user_id == user.id
+    assert len(saved.book_sha256) == 64
+    text = await client.get("/flats/check/problems.txt")
+    assert "web code, no printed page" in text.text
+
+
+async def test_a_web_code_has_no_footnote_or_flag_questions(client, session, _no_pages):
+    await _login(client, session)
+    row = _web_row()
+    form = {"layer_id": WEB_LAYER, "zone": row["zone"], "field": row["field"], "when": row["when"]}
+
+    response = await client.post("/ui/flats/check", data={**form, "question": "note:5", "answer": "no_change"})
+
+    assert "has only its number to answer" in response.text
+    assert (await session.execute(select(FlatsPageCheck))).first() is None
+
+
+async def test_printed_numbers_queue_before_web_numbers_and_keep_their_card(client, session):
+    await _login(client, session)
+    rows = check._rows(check._layers()["or/clackamas/happy-valley"], set())
+    flags = [r["web"] for r in rows]
+    assert flags == sorted(flags), "printed numbers come first"
+    assert not flags[0] and flags[-1], "fixture assumption: Happy Valley has both kinds"
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert "data-web-code" not in response.text
+    assert "check-box-value" in response.text
+    assert f"/flats/sheet/{_first_row()['document']}?page=1" in response.text

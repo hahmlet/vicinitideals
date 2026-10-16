@@ -277,14 +277,22 @@ def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
     out = []
     for row in _value_rows(layer):
         document = (row["quote"] or "").partition("#L")[0]
-        if _checkable(document):
+        why = _checkable(document)
+        if why and why != "html":
             continue
         spans = _ranges(row["quote"])
         row["document"] = document
         row["line"] = spans[0][0] if spans else 0
         row["signed"] = (layer.layer, row["zone"], row["field"], row["when"]) in signed
+        # A web code has no printed page: its card shows the stored text.
+        row["web"] = why == "html"
         out.append(row)
-    return sorted(out, key=lambda r: (not r["signed"], r["document"], r["line"], r["zone"], r["field"]))
+    # Web numbers queue after every printed one, so the printed run is
+    # exactly the order it was before they joined.
+    return sorted(
+        out,
+        key=lambda r: (r["web"], not r["signed"], r["document"], r["line"], r["zone"], r["field"]),
+    )
 
 
 @dataclass
@@ -310,6 +318,8 @@ def _questions(
             continue
         if said.answer in _STOPS:
             continue
+        if row["web"]:
+            continue  # no printed page, so no printed footnotes to ask about
         for marker in _placed(row).markers:
             if _standing(answers.get((*key, f"note:{marker.mark}")), row) is None:
                 yield _Ask(row, f"note:{marker.mark}")
@@ -332,6 +342,8 @@ def _focus(
 ) -> _Ask | None:
     for row in rows:
         if (row["zone"], row["field"], row["when"]) == (zone, field, when):
+            if row["web"] and question != "value":
+                return None
             return _Ask(row, question)
     return None
 
@@ -710,11 +722,48 @@ def _variants(layer: Layer, zone: str, field: str) -> list[dict[str, str]]:
     return out
 
 
+def _states(token: str, value: Any) -> bool:
+    """Whether a word of stored text states this number (same reading as the page boxes)."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return False
+    read = sheet.numeral(token)
+    if read is None:
+        return False
+    number, percent = read
+    return abs(number - value) < 1e-9 or (percent and abs(number / 100 - value) < 1e-9)
+
+
+def _web_text(row: dict[str, Any]) -> list[dict[str, Any]]:
+    """The stored text around the cited lines, with the number's words marked.
+
+    A web code has no page to draw, so the card shows the text we hold, the
+    cited lines lit and the words that state the number tinted.
+    """
+    lines, _error = _cited_lines(row["quote"])
+    out = []
+    for line in lines:
+        parts = re.split(r"(\s+)", line["shown"])
+        out.append(
+            {
+                "n": line["n"],
+                "cited": line["quoted"],
+                "grid": line["grid"],
+                "parts": [
+                    {"text": p, "hit": line["quoted"] and bool(p.strip()) and _states(p, row["value"])}
+                    for p in parts
+                    if p
+                ],
+            }
+        )
+    return out
+
+
 def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
     """Everything one card shows."""
     row = ask.row
     document = row["document"]
-    placed = _placed(row)
+    web = row["web"]
+    placed = None if web else _placed(row)
     card: dict[str, Any] = {
         "layer_id": layer.layer,
         "layer_label": _layer_label(layer),
@@ -736,8 +785,10 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         "quote": row["quote"],
         "url": row["url"],
         "question": ask.question,
-        "placed": placed.status,
-        "placed_words": sheet.PLACED.get(placed.status, ""),
+        "placed": "web" if web else placed.status,
+        "placed_words": "" if web else sheet.PLACED.get(placed.status, ""),
+        "web": web,
+        "web_text": _web_text(row) if web else [],
         "sheets": [],
         "answers": list(VALUE_ANSWERS.items()),
     }
@@ -756,6 +807,8 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         card["yes_no"] = isinstance(row["value"], bool)
         card["because"] = row["cite"] if card["yes_no"] else ""
         card["exempt"] = _exempt(layer, row)
+        if web:
+            return card
         for page, boxes in _own_boxes(placed):
             card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))
         card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
@@ -1023,10 +1076,10 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
         for layer_id, layer in sorted(layers.items()):
             rows = _rows(layer, signed)
             counts = _counts(layer, rows, answers)
-            elsewhere = {"no_map": 0, "html": 0}
+            elsewhere = {"no_map": 0, "html": sum(r["web"] for r in rows)}
             for row in _value_rows(layer):
                 why = _checkable((row["quote"] or "").partition("#L")[0])
-                if why:
+                if why == "no_map":
                     elsewhere[why] += 1
             if not rows and not any(elsewhere.values()):
                 continue
@@ -1117,10 +1170,11 @@ async def flats_check_problems(
         if number is None or answer.fingerprint != _mark(layer_id, zone, field, when, number):
             continue
         lines, _error = _cited_lines(answer.quote)
+        where = "web code, no printed page" if answer.placed == "web" else f"PDF page {answer.page}"
         out += [
             f"== {layer_id} | {zone} | {field}{' when ' + when if when else ''} = {answer.value!r}",
             f"   question: {question}   answer: {answer.answer}   by {answer.reviewer} {answer.decided_at:%Y-%m-%d}",
-            f"   page: PDF page {answer.page}   box: {answer.placed}   cite: {answer.quote}",
+            f"   page: {where}   box: {answer.placed}   cite: {answer.quote}",
         ]
         if answer.says:
             out.append(f"   the page says: {answer.says}")
@@ -1281,14 +1335,23 @@ async def flats_check_answer(
         "value": number.value,
         "quote": number.prov.quote or "",
     }
-    placed = await run_in_threadpool(_placed, row)
     document = row["quote"].partition("#L")[0]
-    if flag_page:
-        page = int(flag_page)
-    elif question == "value":
-        page = placed.first
+    web = bool(document) and _checkable(document) == "html"
+    if web and (flag_page or question != "value"):
+        return await card(skipped=skipped, focus=tuple(here), error="a web code has only its number to answer")
+    if web:
+        # No page and no box: the text copy's own hash stands in for the book's.
+        page, placed_how, book = None, "web", _store().load(document).sha256
     else:
-        page = placed.marker_page or placed.first
+        placed = await run_in_threadpool(_placed, row)
+        placed_how = placed.status
+        book = books.expected(_store(), document) if document else ""
+        if flag_page:
+            page = int(flag_page)
+        elif question == "value":
+            page = placed.first
+        else:
+            page = placed.marker_page or placed.first
     session.add(
         FlatsPageCheck(
             layer=layer.layer,
@@ -1303,8 +1366,8 @@ async def flats_check_answer(
             note=note.strip()[:2000],
             quote=row["quote"],
             page=page,
-            placed=placed.status,
-            book_sha256=books.expected(_store(), document) if document else "",
+            placed=placed_how,
+            book_sha256=book,
             reviewer=(user.email or str(user.id))[:80],
             reviewer_user_id=user.id,
         )
