@@ -1,8 +1,9 @@
 # Follow-ups offered but not yet done
 
 Agent-maintained queue. Written when options are offered, pruned when they are
-done or declined. Newest at the bottom; "do the next thing" means item 1 -- EXCEPT item 48 (scan
-resilience), which Steph put AHEAD of the rest on 2026-10-07.
+done or declined. Newest at the bottom; "do the next thing" means item 1.
+Items stay in number order. Numbers are never reused or changed: a moved item
+leaves a one-line pointer at its old place (27b).
 Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
 Each item carries `[scan: ...]`: YES = the work changes lot answers, so a
@@ -12,221 +13,117 @@ read when the weekly full re-screen lands.
 
 1. [scan: NO] **The county map copy: loose ends after the first promotion (HUMAN_TODO
    20).** The September copy (snapshot 3, run 10: 400,032 lots = 288,031
-   measured + 112,001 unmeasured with a reason) was PROMOTED 2026-09-20
-   11:29 UTC by the agent on the standing word -- gate clean on all nine
-   rows after the 100 zone codes were ruled (637c6dca); drift 2 -> 10
-   unchanged at 178 / 0 unexplained (the 18,681 use-gate REDs sit on lots
-   run 2 never held); prune had nothing to do (snapshot 1 is the one kept
-   whole); Lots default run 10, footer 2026-09-18, probe row 3 ok. Loose
-   ends the September map found, queued not fixed: Happy Valley's layer
-   carries both `MURM2` and `MURm2` (one lot; the source's casing, kept,
-   both aliased to MURM);
-   condo records: DONE e7217598, live in run 42 (assign 2026-09-30:
-   0 measured lots excluded, was ~2,001);
-   Terrain (DEM tiles) stays `deferred` until the slope stage exists; no
-   writer for lot decisions in `app/` yet (they are inserted by hand or by
-   a future review page); a decision on a lot whose verdict moved in a
-   re-screen of the same copy (`promote --run`) is not marked "look again"
-   -- only ground and zone changes are flagged, so a re-screen's moves are
-   read in its drift report and nowhere on the lot page; the 142 Multnomah `_unincorporated` RR lots behind a
-   `planned_development` lever are a relief-policy question -- HUMAN_TODO 23
-   (2026-09-25). No lot decisions exist yet (0 rows 2026-09-25), so the
-   "look again" flag has nothing to mark until a review page writes some.
+   measured + 112,001 unmeasured with a reason) was PROMOTED 2026-09-20.
+   Done since and dropped here: condo records (e7217598, run 42); Happy
+   Valley `MURM2`/`MURm2` both aliased to MURM; terrain (`dem_3dep` is
+   acquired and the slope stage exists). Still open:
+   - No writer for lot decisions in `app/` yet (they are inserted by hand
+     or by a future review page). No lot decisions exist yet (0 rows
+     2026-09-25), so the "look again" flag has nothing to mark until a
+     review page writes some.
+   - A decision on a lot whose verdict moved in a re-screen of the same
+     copy (`promote --run`) is not marked "look again" -- only ground and
+     zone changes are flagged, so a re-screen's moves are read in its
+     drift report and nowhere on the lot page.
+   - The 142 Multnomah `_unincorporated` RR lots behind a
+     `planned_development` lever are a relief-policy question --
+     HUMAN_TODO 23 (2026-09-25).
 2. [scan: YES] **Neighbour zoning per lot line -- loose ends after the measurement
-   (4b25df09 + the carve fix cfc8c033; re-screened as run 12 and PROMOTED
-   2026-09-22 10:30 UTC on the standing word -- the first §4b run: gate
-   clean on eight rows, drift 10 -> 12 = 289 of 576,062 answers moved,
-   0 unexplained, every one the carve fix read both ways: +10/+15 ft of
-   fit on tier-C lots cut uniformly at the front number (Portland
-   R5/R7/R10/R20/RM1/R2.5, Multnomah R10/R20, Wilsonville V: 283
-   yellow->unknown -- the pod fits now and the lot's unreadable width
-   shows instead of the relief it no longer needs) and -5 ft on Wood
-   Village LR 7.5 / LR 12 where quadfit cut 15 against a resolved 20 (3
-   green->yellow, 1 green->unknown, 2 unknown->yellow); the neighbour
-   fact itself moved no verdict, as the bound said; county if_signed
-   green 64,565 / yellow 475,357 / unknown 34,754 / red 1,386 rows).**
-   s4 reads the zone across every non-street line; FLATS answers
+   (4b25df09 + the carve fix cfc8c033; run 12 PROMOTED 2026-09-22; Wood
+   Village TC 28850154 and the whole-block answer 86b06340 in run 16;
+   the nine `AHEAD_OF_QUADFIT` zones 0504ef84 in run 14).** s4 reads the
+   zone across every non-street line; FLATS answers
    `abuts_nonresidential_zone` in Portland / Troutdale / Fairview and
    `abuts_residential_zone` in Oregon City (ANY line tightens, EVERY line
-   relaxes; anything unresolved stays UNKNOWN). Still owed, most lots
-   first: (a) `abuts_lower_density_zone` is declared in Clackamas
-   `_unincorporated` only (2026-09-22: ZDO Table 315-4 note 14 became the
-   10-ft variant on MR1/MR2 `setback_side_ft`, the cap lifted, the ten
-   315.01 districts are the true side; read on the MR1/MR2 lots since run
-   14, see (b)). An observed fact lifts a
-   caps.json cap and the base number would certify with the footnote's
-   other number never encoded
-   (`test_no_declared_condition_caps_a_value_on_that_layer`), so the two
-   cities still capped stay undeclared: Oregon City R-2 (twelve fields;
-   the note narrowed to `zones: [R-2]` 2026-09-22 -- R-3.5/R-5
-   `min_density` had been caught by region scope only) is a dead end until
+   relaxes; anything unresolved stays UNKNOWN). Still owed, most lots first:
+   (a) `abuts_lower_density_zone` is declared in Clackamas `_unincorporated`
+   only (ZDO Table 315-4 note 14 = the 10-ft variant on MR1/MR2
+   `setback_side_ft`). An observed fact lifts a caps.json cap and the base
+   number would certify with the footnote's other number never encoded
+   (`test_no_declared_condition_caps_a_value_on_that_layer`), so the city
+   still capped stays undeclared: Oregon City R-2 (twelve fields; the note
+   narrowed to `zones: [R-2]` 2026-09-22) is a dead end until
    `utility_easement` is read, because every OC R zone is capped on THAT
    fact on every field too (no easement layer in RLIS -- a measurement
-   question, not an encoding one). Wood Village TC ENCODED 2026-09-23 (28850154): note (3) = side 15
-   on `abuts_residential_zone`, note (2) = a VARIANT-level `step_back`
-   (27 ft side+rear for the 26-ft pod on `abuts_lower_density_zone`; the
-   across-the-street half is inert -- the ROW counts toward the distance),
-   both facts declared, TC cap gone, quadfit TC side 27 (larger limb);
-   Re-screened with 86b06340 below as run 16 and PROMOTED 2026-09-24 on
-   the standing word (gate clean, no warnings; drift 14 -> 16: 22 of
-   579,176 answers moved, all rules, 0 unexplained -- every one a Wood
-   Village TC lot whose neighbour fact is now read: 21 unknown->green,
-   1 unknown->yellow; the rest of TC moved slack inside yellow).
-   (b) DONE 2026-09-23 -- the nine `AHEAD_OF_QUADFIT`
-   zones ported (0504ef84, larger neighbour limb, `needs_verification`),
-   re-screened as run 14 and PROMOTED 18:43 UTC on the standing word
-   (gate clean on eight rows; 0 of 576,062 earlier answers moved; the
-   1,557 new lots answer for the first time: MR1/MR2 338 green-if-signed
-   rows, the note-14 fact read; Oregon City commercial 0 green -- see 12).
-   (c) 1,938 lots in the turning zones still
-   lean on the fact: 813 a blank point across a line (park / ROW /
-   fabric gap), 802 no non-street line at all -- ANSWERED 86b06340 where s4 traced
-   the lot and it is not irregular (a whole block: EVERY-line True,
-   ANY-line False; 1,565 lots county-wide, ~370 of them Portland
-   commercial; the tier-C and untraced ones stay unanswered), 272 a split-zone
-   neighbour, 46 both, 5 a neighbour in another city. The
-   blank-point class: `abuts_park` BUILT a89a3b9b from RLIS ORCA (per-city
-   `parks:` block; Troutdale MU-3's 10 ft park row encoded, OS now
-   non-residential; only Troutdale conditions on a park in the corpus).
-   Live in run 42 (s4 2026-09-30 carries `park_across_json`; ORCA sits
-   in quadfit raw/ but was never acquired into snapshot 2026-09-18 -- do
-   that at the next county refresh). (d) Portland CI1/CI2: 33.150
-   gives a CI lot 10 ft against OS, so the shared Portland list is wrong
-   for CI home lots -- safe only while CI stays capped on
-   `site_specific_limitation` (guard test); a per-zone list and the
-   across-the-street reading (33.910) when that cap lifts. (e) Troutdale's
-   5 ft side against HDR is unread -- SIZED 2026-09-23: at most 13 MU
-   lots see an HDR neighbour, the unread half only relaxes (7.5/15 ->
-   5), and reading it needs a fourth neighbour fact ("every line
-   non-residential OR HDR"); recommend leaving it unless those lots
-   come up.
-3. [scan: YES for the court placement; NO for the lot-page note] **Alley leftovers (rear alley caad6f3f run 24; side alleys + the
-   6-inch tight-fit rule 82d4c7de, run 26 PROMOTED 2026-09-26 on the
-   standing word: 730 answers moved, 0 unexplained -- 669 unknown->green
-   and 52 yellow->green if signed, 9 yellow->unknown where the fit was the
-   only miss and an unmeasured fact is left; 3,848 lots carry the "tight
-   fit" flag, 744 park in a column along a side alley).** Left: (a) 36 of
-   run 24's 4,803 quadfit cannot draw (knife-edge or a slanted alley),
-   read and accepted. (b) Of the 55 side-alley lots gained, quadfit draws
-   no pod on 23 -- 15 because quadfit keeps the pod across the front while
-   FLATS turns it (a wide shallow lot, court at the alley end), 3 an
-   irregular block, the rest overlays; read, accepted; if Steph wants the
-   drawing to agree, quadfit's s6s needs the turned pod. (c) FIXED 8bf9a451, live in run 42 (s4 2026-09-30 carries
-   `alley_cover_json`): s4 fires a ray every 5 ft along each
-   alley line; the court uses a side alley only where it runs the whole
-   side line (`flats.geom.alley.side_alley_along`). Expect 12 Portland
-   lots (24 rows, <=3 green-if-signed) to go street-fed. Same over-read,
-   FIXED 59533da1 (live in run 42): the alley is the
-   court's aisle only where it runs the whole rear line (a stub still
-   reaches the court); rear alley waivers/numbers only on a whole-line
-   alley; the side-alley number is cut per stretch in `buildable`. Probe:
-   ~64 rear-alley lots stop short, ~8 green->yellow expected (4-15), 0-5
-   side moves. Left: quadfit s6s still reads the alley as the aisle on
-   3-of-5 (FIXED 10f193ea, rides the next s6s run); Gresham's
-   rear-with-alley number on a second rear line FIXED 09171698 (14 rows /
-   7 lots shrink, 0 colour moves); a rear alley along PART of its line:
-   BUILT c089acea -- the covered stretch takes the alley's rear, the rest
-   the ordinary rear, cut per stretch as side lines are; both cuts are
-   screened and the better kept (the court is charged against the smaller
-   strip). Probe on 09-29 s4: 53 part-covered rear lines (52 Portland, 1
-   Gresham), 48 cuttable; 0 colour moves, 4 lots gain room (+0.5 to +32
-   ft), nothing worse -- rides the next re-screen; whether a
-   line an alley runs PART of is "a lot line abutting an alley": RULED by
-   Steph 2026-09-28 -- careful reading (covered stretch only), and the
-   covered stretch is the travel lane only if long enough: BUILT 288f0daa
-   (covered run with buildable ground behind it >= stalls x stall width;
-   probe 53 partial rear lines, 30 long enough, 23 not). Left: the fit
-   compares length only, it does not place the court against the stretch.
-   BUILT: the lot page says which rear or side line the alley covers, the
-   covered feet and share, and that only the covered stretch counts as alley.
+   question, not an encoding one). Unchecked: whether item 43's PUE
+   street-yard rule (a9106379, Oregon City since 2026-10-05) changes this.
+   (c) 1,938 lots in the turning zones still lean on the fact: 813 a blank
+   point across a line (park / ROW / fabric gap), 802 no non-street line
+   at all (ANSWERED 86b06340 where s4 traced the lot and it is not
+   irregular: 1,565 lots; the tier-C and untraced ones stay unanswered),
+   272 a split-zone neighbour, 46 both, 5 a neighbour in another city.
+   `abuts_park` BUILT a89a3b9b from RLIS ORCA (live in run 42; only
+   Troutdale conditions on a park in the corpus). ORCA was never acquired
+   into snapshot 2026-09-18 -- acquire it at the next county refresh
+   (`rlis_orca` is registered in pipeline.yaml).
+   (d) Portland CI1/CI2: 33.150 gives a CI lot 10 ft against OS, so the
+   shared Portland list is wrong for CI home lots -- safe only while CI
+   stays capped on `site_specific_limitation` (guard test); a per-zone list
+   and the across-the-street reading (33.910) when that cap lifts. Note:
+   RICAP 11 opens CI1 on 2026-11-01 (item 86) -- check this guard then.
+   (e) Troutdale's 5 ft side against HDR is unread -- SIZED 2026-09-23: at
+   most 13 MU lots see an HDR neighbour, the unread half only relaxes
+   (7.5/15 -> 5), and reading it needs a fourth neighbour fact ("every line
+   non-residential OR HDR"); recommend leaving it unless those lots come up.
+3. [scan: YES for the court placement; NO for the lot-page note] **Alley leftovers** (rear alley caad6f3f run 24; side alleys + the
+   6-inch tight-fit rule 82d4c7de, run 26; whole-line fixes 8bf9a451 and
+   59533da1 live in run 42; the partial-alley cut 288f0daa on main).
+   RULED by Steph 2026-09-28 (register `2026-09-28-partial-alley`): a line
+   an alley runs PART of is read carefully -- covered stretch only -- and
+   the covered stretch is the travel lane only if long enough (covered run
+   with buildable ground behind it >= stalls x stall width; probe 53
+   partial rear lines, 30 long enough, 23 not). Left:
+   (a) 36 of run 24's 4,803 quadfit cannot draw (knife-edge or a slanted
+   alley), read and accepted.
+   (b) Of the 55 side-alley lots gained, quadfit draws no pod on 23 -- 15
+   because quadfit keeps the pod across the front while FLATS turns it (a
+   wide shallow lot, court at the alley end), 3 an irregular block, the
+   rest overlays; read, accepted; if Steph wants the drawing to agree,
+   quadfit's s6s needs the turned pod.
+   (c) quadfit s6s still reads the alley as the aisle on 3-of-5 (FIXED
+   10f193ea, rides the next s6s run). The partial-alley fit compares length
+   only; it does not place the court against the covered stretch.
    (d) Gresham's 200 alley lots fail lot area/frontage regardless.
 4. [scan: YES] **Four places the screen and the county map disagree, found by the
-   bridge's sample run (2026-09-17) and left alone on purpose.** Named so
-   the comparison stays readable, each its own change: (a) the court's
-   shape -- **side court BUILT 3e8e3bab/1b7b5567 (deployed 15ffab9e,
-   rides the next full run)**: a court BESIDE the building with its aisle
-   straight in from the street, tried only when the row behind fails;
-   bound 3,551 lots: 0 losses, 152 yellow->green if signed (Portland 137),
-   228 yellow->unknown (no variance now, an unmeasured fact left). Still
-   open: an L/T-shaped search for the other 339 quadfit-fits lots; two-row
-   stall count. FIXED cef95109: the beside court must come within 3 ft of
-   the envelope's front (full run 0930 had 61 greens with the court up to
-   151 ft back on L-shaped and flag lots, e.g. 1N1E13DC -00600, Gresham
-   1S3E10AD -05300). LIVE: run 42 PROMOTED 2026-09-30 (full 0930 + reach
-   + private-drive splices; drift 39 -> 42 7,679 moved / 0 unexplained;
-   yellow->green 2,374 from the beside court). Original note: `court_across` draws one row of stalls across the lot behind
-   the building (six at 9 ft = 54 ft), quadfit's s6s lays the stalls in the
-   largest rectangle behind the building whichever way round fits, so a
-   63-ft-wide Portland R5 lot seats eight along its depth where the 54-ft
-   row does not fit across it -- 18 of the 63 quadfit greens the screen
-   calls yellow (all on `fit_ft`) seat six-plus that way; (b) the alley is
-   the aisle (Steph 2026-09-13) on the county map and nowhere in
-   `flats/score/` -- 33 of the 63 park on the alley in quadfit; (c)
-   quadfit's policy gates are not site facts: `z_overlay_constrained_site`
+   bridge's sample run (2026-09-17) and left alone on purpose.** Each its
+   own change. Done and dropped here: the side court (15ffab9e, run 42,
+   2,374 yellow->green; the 3 ft front rule cef95109); (b) alley as aisle
+   (caad6f3f, item 3); (e) corner fronts (ca52f76a, run 28) with its
+   leftovers (i) `lowest_class` (now read off street ranks, item 41) and
+   (vi) b440fc67, plus the Gresham through-lot corner f171c994; private
+   drives (Steph RULED 2026-09-30, register + memory
+   feedback_access_rulings_2026_09_30.md, built dbc2cc40, run 42). Open:
+   (a) the court's shape: an L/T-shaped search for the other 339
+   quadfit-fits lots; two-row stall count. `court_across` draws one row of
+   stalls across the lot (six at 9 ft = 54 ft); quadfit's s6s uses the
+   largest rectangle behind the building either way round, so a 63-ft-wide
+   Portland R5 lot seats eight along its depth. County run 2026-09-18
+   (`/root/bridge_county2`): 517 quadfit-green / FLATS-yellow lots off
+   their own lane, 268 of them seating eight with the row along the lot.
+   The other direction: on the 13,196 lots both call green FLATS seats
+   FEWER than quadfit on 3,881 (one row across where s6s found two) and
+   MORE on 160 (`target` where quadfit's tier is `minimum` 100, `preferred`
+   where `target` 58) -- find what the screen's row counts that s6s's
+   rectangle does not before changing either. The stall count was decided
+   2026-09-18 (HUMAN_TODO 18) and is out of this item.
+   (c) quadfit's policy gates are not site facts: `z_overlay_constrained_site`
    (PCC 33.418), the overlay kill layers, `existing_*` current use and the
    sewer gate (`no_public_sewer` is a hard gate there; here `public_sewer`
    is observed but no Clackamas standard turns on it) -- 84 of the 178
-   screen-GREEN / quadfit-red lots in the sample; (d) the sweep -- the
-   screen tries 180 angles, s6 fits at the front bearings only, and 94 of
-   those 178 are quadfit `siteplan_no_layout` lots the sweep found a fit on;
-   **(e) DONE ca52f76a, run 28 PROMOTED 2026-09-27** (4th splice, 66,443
-   corner lots with bearings >= 45 deg apart; 4,854 answers yellow->green,
-   2,755 yellow->unknown (the fit now passes; the same unobserved fact the
-   lot already leaned on decides it), 1 green->yellow; drift 7,610 / 0
-   unexplained, matching the bound). `front_lot_line_corner` is followed:
-   shortest line fronts (both within 1 ft), owner/entrance tries both and
-   keeps the better, `both`/unread keeps every street a front; the other
-   street is `street_side`, the interior line beside the front a `side`;
-   `corner_access_street` any/side drops the lane. Leftovers: (i)
-   `lowest_class` keeps the lane -- nothing measures street class;
-   (ii) corner lots with an alley are left unnamed (the alley's name is
-   resolved against either frontage); (iii) the court's end is assumed to
-   reach the side street, as for a side alley; (iv) Wilsonville V: 25
-   answers lose slack because the long interior lines are now SIDE lines
-   (7.5 ft) not rear (5 ft) -- correct by the code, never changed a
-   colour; (v) three Clackamas-unincorporated unnamed lots moved on input
-   vintage (s4 2026-09-24 vs the base's), replayed identical on main and
-   the branch; (vi) DONE b440fc67 -- `corner_lot` asks the corner-front 45 deg
-   question through `flats.geom.corner.two_streets` (one street direction
-   False, two >= 45 deg apart True, 20-45 deg left unasked); rides the next
-   re-screen, expect some green->yellow in Gresham, Wood Village LR,
-   Wilsonville, Multnomah MR4/LR5. Open: Gresham's corner is two or more
-   streets at any angle incl. through lots -- a through lot with parallel
-   streets still answers False (possible false GREEN on Gresham's
-   tightening corner variants) -- FIXED f171c994: where the layer
-   defines corner by `frontage_count` (Gresham 3.0100#L1304) a through lot
-   (`flats.geom.corner.through_lot`) is a corner; expect tens of
-   green->yellow in Gresham MDR-12/24, VLDR-SW, OFR on the next run. Open:
-   Wilsonville 4.001(157)(2) / MCC 39.2000 pathway corners (HUMAN_TODO
-   24); Private drives DONE 876267ad/a731c661 (rides the next full s4->s7
-   run: new s4 column `sans_drive_json`): per-city `private_drives:`
-   rulings (10 count a private road as a street; Gresham, Tualatin do
-   not), a drive over the lot or across another lot screened both ways,
-   worse kept. Bound (09-28 data): of 2,526 drive greens 1,594 stay,
-   358 -> yellow, 574 -> unknown (565 have no real street without the
-   drive), 0 gained. RULED by Steph 2026-09-30, BUILT dbc2cc40 (live in
-   run 42): a private road is a way in for the parking
-   everywhere (`QuadfitLot.access`), the yards follow the city --
-   Gresham/Tualatin ordinary line, Fairview (two definitions) both ways
-   worse kept, Clackamas ZDO 202 exc. 2 `access_choice` (both, better
-   kept; drive-only lots read with the drive as front). Drives on other
-   land give no way in. RLIS road types 1700/1800 read from the data.
-   (FLATS's own envelope: DONE, item 12.) (`steep_slope` struck
-   2026-09-27: no standard in the corpus is conditioned on it, so its
-   False assumption leans on no lot; the hillside rules ride the overlay
-   layers.) County-scale
-   sizes from the four-stall county run (2026-09-18, `/root/bridge_county2`),
-   on the 4,024 quadfit-green / FLATS-yellow lots (all `fit_ft`): (b) 3,507
-   on the alley (2,976 seating four there), (a) 517 off their own lane, 268
-   of them seating eight with the row along the lot; (c) + (d) are 21,660
-   GREEN-where-red. Also under (a), the other direction: on the 13,196 lots
-   both call green FLATS seats FEWER than quadfit on 3,881 (one row across
-   where s6s found two) and MORE on 160 (`target` where quadfit's tier is
-   `minimum` 100, `preferred` where `target` 58) -- find what the screen's
-   row counts that s6s's rectangle does not before changing either. The
-   stall count was decided 2026-09-18 (HUMAN_TODO 18) and is out of this
-   item.
-   **(b) DONE caad6f3f** (`parking_alley_backout_ft`; leftovers item 3).
+   screen-GREEN / quadfit-red lots in the sample.
+   (d) the sweep -- the screen tries 180 angles, s6 fits at the front
+   bearings only; 94 of those 178 are quadfit `siteplan_no_layout` lots the
+   sweep found a fit on. (c) + (d) county-scale: 21,660 GREEN-where-red.
+   (e) leftovers still open: (ii) corner lots with an alley are left
+   unnamed (the alley's name is resolved against either frontage); (iii)
+   the court's end is assumed to reach the side street, as for a side
+   alley; (iv) Wilsonville V: 25 answers lose slack because the long
+   interior lines are now SIDE lines (7.5 ft) not rear (5 ft) -- correct by
+   the code, never changed a colour; (v) three Clackamas-unincorporated
+   unnamed lots moved on input vintage, replayed identical. Wilsonville
+   4.001(157)(2) / MCC 39.2000 pathway corners: HUMAN_TODO 24.
+   (`steep_slope` struck 2026-09-27: no standard in the corpus is
+   conditioned on it; the hillside rules ride the overlay layers.)
 5. [scan: YES, small sample (drawings move, colours must not)] **Draw what the screen fitted -- DONE (666c6837, full run 31 PROMOTED
    2026-09-27; new splice base 137 /root/bridge_draw_full, 0 splices).**
    Leftovers: the drawing keeps the verdict's angle, so on a wide shallow
@@ -234,7 +131,8 @@ read when the weekly full re-screen lands.
    a row behind the building.
 6. [scan: YES] **Where parking may SIT, and which street is "the front".** Offered
    2026-09-19 when Steph asked why the court is always behind. **Steph's
-   ruling 2026-09-19:** trying each street as the front applies ONLY where
+   ruling 2026-09-19** (register `2026-09-19-orientation-choice-order`):
+   trying each street as the front applies ONLY where
    the lot has more than one street AND the code leaves the choice to us;
    HUMAN_TODO 21 DECIDED: (1) the orientation that turns the lot green,
    (2) if both, the one that reaches the `preferred` band, (3) if both
@@ -245,354 +143,94 @@ read when the weekly full re-screen lands.
    goal** ("sufficient, but minimal parking so we can fit a 2nd pod"), so
    s6s's "keep the orientation with the MOST stalls" rule goes. And read
    every city for multi-street rules even where the front is clear.
-   **Slice A DONE (this commit):** three per-line fields encoded in all 14
-   layers from the corpus and mirrored into `footprints.yaml` /
-   `DrivewayRules` -- `front_lot_line_corner` (shortest: Portland 33.910,
-   Oregon City 17.04.490, Wilsonville 4.001, West Linn 02, Multnomah 39.2000,
-   Wood Village 720.030; owner: Gladstone, Happy Valley, Milwaukie, Gresham
-   3.0100 (deeper-street condition), Troutdale; entrance: Tualatin,
-   Fairview; both: Clackamas ZDO 202), `corner_access_street` (side for a
-   unit-lot townhouse in Gresham / OC / Milwaukie / Wilsonville / Fairview /
-   Troutdale; lowest_class: Clackamas 845.02, Milwaukie 12.16, OC 16.12.035,
-   West Linn 48.025, Wilsonville PWS, Fairview 19.162; any elsewhere) and
-   `parking_side_prohibited` (true only on the unit-lot branch of Gresham /
-   OC / Milwaukie / Wilsonville / Troutdale; exempt on the one-lot fourplex
-   everywhere; Fairview 19.30(D)(2)(a) is a setback, not a ban, since its
-   side yard is the setback strip). Read by no screen yet (`SILENTLY_UNREAD`).
-   **Measured 2026-09-19 on the September tree** (`measure_corner_front.py`,
-   each street tried as the front, `/root/corner_front_measure.parquet`
-   on 137): 59,620 corner lots of 222,955 evaluated; both fronts park
-   7,491 / today's only 2,224 / the OTHER only 4,149 / neither 45,756.
-   Today's front is the LONGER street on 58,019 (97 %) -- so in the six
-   `shortest` cities (44,275 corner lots: Portland 38,455, West Linn 2,052,
-   OC 2,004, Wilsonville 867, Multnomah 759, Wood Village 138) the drawing
-   faces the wrong street by the code; Portland alone parks 3,189 lots
-   only from the shorter street and 1,260 only from the longer. In the
-   owner/entrance/both cities 705 lots park only with the other front
-   (Clackamas 336, Gresham 164, HV 86, Milwaukie 59, Troutdale 25, Fairview
-   21, Gladstone 12, Tualatin 2). Where both park, 7,294 of 7,491 seat 8
-   and 8; same band 7,387; the court is less exposed with today's front on
-   4,161, with the other on 1,360, tie 1,866; the court touches no street
-   on 852 today / 406 other. What stops the other front: court_too_shallow
-   2,300, no_side_lane 1,426, too_few_stalls 395. **Slice B BUILT (this
-   commit, `s6s_siteplan.py`)**: `_candidate_fronts` faces the shortest
-   street where the code fixes it (both when equal), each street where the
-   owner/entrance chooses, the longest where unread; the flip reads one
-   street; `townhome_rear_court_side_street` brings the lane in from the
-   side street across its strip (`_alley_mouths` + `_lane_to_alley` on the
-   side-street edges, `_street_setback_for` = s5's F cut) where
-   `corner_access_street` is any / lowest_class / side; `_plan_rank`
-   chooses green > band > least court exposure (`court_street_ft`) > own
-   aisle > least pavement -- never most stalls, so within a band a lot may
-   show fewer stalls and the same colour; new columns front_bearing_deg /
-   fronts_tried / court_street_ft; 56 siteplan tests. **BOUND on 137
-   2026-09-19** (s6s -> s7 on the September tree; three runs, two fixes
-   found by reading the LOST lots one by one): run 1 (9522942d) faced
-   738 lots the wrong way because "shortest street" was read as the
-   shorter SUM of a street's front edges -- streets at both ends summed
-   past the side, a jogged frontage's 30 ft step "won" -- fixed fcea6d57
-   (`_extent_along`: the lot LINE, corner to corner); run 2 still lost
-   200, 117 of them lots whose two "streets" are 20-45 degrees apart --
-   one street that bends, which s4's 20-degree clustering splits (15,530
-   of 86,775 two-bearing lots) -- fixed 364c360e (`CORNER_MIN_DEG` 45:
-   one street, every front edge, drawn as before; an acute corner such as
-   Sandy Blvd forgoes its second front until s4 holds the street's name
-   per edge, (c) below). **Run 3 (364c360e), the bound:** only corner
-   lots moved, no interior lot changed colour (22 interior lots show
-   fewer stalls in the same band -- `_plan_rank`, by design);
-   site_plan_ok +7,984 / -83; verdicts green 20,119 -> 23,477 (red->green
-   3,368, green->red 10), review 13,495 -> 15,798 (red->review 2,338,
-   review->red 35), red 256,418 -> 250,757; 12,203 lots drawn to two
-   fronts, 12,986 face the street s4 did not list first, 14,778 take the
-   lane in from the side street (Portland 11,416); greens gained by city:
-   Portland 2,801, Gresham 211, Troutdale 98, Oregon City 91, Milwaukie
-   66, West Linn 53, Clackamas 28, Wood Village 14, Wilsonville 5,
-   Multnomah 1. The 83 losses (Portland 65, Multnomah 6, OC 5, WL 5,
-   Clackamas 1, Wilsonville 1; court_too_shallow 48, no_side_lane 31) are
-   the code's front -- a real corner whose shorter street is too shallow
-   to park behind -- or a flip the old drawing had wrong (12E29AB00200
-   parked in its FRONT yard). Diff `/root/corner_diff.py`, moves
-   `corner_moves.csv`, parquets `s6s_lots.{before_corner,corner_v1,
-   corner_v2}.parquet` on 137. **LOADED 2026-09-19 as the county copy's
-   candidate, run 10 replacing run 8** (run 8 retired in one transaction,
-   its bundle kept as `bridge/2026-09-18.run8`; re-export from the same
-   assign dir with `--code-version`/`--rules-version` of run 8, 6044713f,
-   so the 288,031 FLATS verdicts read as unchanged -- only quadfit's
-   badge, stalls and method on the lot page moved). Still awaits Steph's
-   read (HUMAN_TODO 20: trips `new_zones` by design).
-   Then (iii) a named side-court arrangement and (iv) through lots,
-   which turn out to be one slice. **Measured 2026-09-19 evening**
-   (`data/quadfit_2026-09-18/through_lots.csv` on 137): 6,118 lots have
-   ONE bearing and front edges at both ends more than 40 ft apart; 1,327
-   draw ok today (green 487 / review 479 / red 361), 4,791 fail
-   (court_too_shallow 2,602 -- both ends carry the front setback, which
-   the codes require: Portland 33.910 "a through lot has two front lot
-   lines", Wood Village 720.030, Gresham "each street frontage shall be
-   considered a front yard"; no_side_lane 871; no_court 176; 1,136 never
-   evaluated). Two halves. (iv-a) **Portland and Milwaukie ban the
-   drawing we make today**: the rear court sits between the building and
-   the SECOND street, and 33.266.120.C.1.a prohibits vehicle area "between
-   the primary structure and the street" unless "entirely behind the
-   front and side street building lines" (both ends are fronts), Milwaukie
-   19.505.3.D.4.a "not directly between the facade of a primary building
-   and an abutting street right-of-way" -- 826 through lots draw ok there
-   today (green 325 / review 201 / red 300), a false-GREEN direction; a
-   lane from the second street cannot cure it, only a court BESIDE the
-   building (iii) or a refusal, so (iii) comes first and is bound on
-   these 826 (expect greens lost, then some recovered by the side court
-   where the lot is wide: today's ok through lots are 90 ft wide at the
-   median). (iv-b) the other twelve cities state no ban, so the court
-   behind the building is lawful in the second front yard and the lane
-   may come in straight from the second street across its setback strip
-   (`townhome_rear_court_side_street`'s construction on the far end's F
-   edges; access rule Tualatin 36.400(b), West Linn 48.030(B)(5),
-   Fairview 19.162.020(5), Clackamas 845.03(A)(3) = lowest class, drawn
-   as `any` per (c); alley-fed cities keep the alley): at most the 380
-   no_side_lane lots outside Portland/Milwaukie (Gresham 85, Clackamas
-   83, WL 51, Multnomah 38, HV 31, OC 25, Wilsonville 24, Troutdale 13)
-   plus a few no_court. **(iii)+(iv) BUILT (this commit, `s6s_siteplan.py`,
-   65 siteplan tests):** `_through_ends` splits one street cluster's
-   edges into two ends where the widest gap across the bearing is >= 40
-   ft (and half the lot's extent, with the corners), and each end is
-   tried as the front under every corner word; `front_ban` (Portland,
-   Milwaukie) refuses EVERY rear court on a through lot, alley-fed
-   included, and offers `townhome_side_court` (`_side_court`: the largest
-   rectangle beside the building, stalls against the side lot line, aisle
-   along the wall -- `max(aisle_two, lane)` wide, West Linn's 24 ft lane
-   into its 23 ft aisle -- no farther back than the rear wall, the front
-   lane straight into the aisle) or `townhome_side_court_alley`; in a ban
-   city the side court is never drawn on a side whose strip holds another
-   street's cells (33.266.120.C.1.a "behind the front AND side street
-   building lines"); elsewhere `townhome_rear_court_rear_street` brings
-   the lane in from the far end where the access word is any /
-   lowest_class (the `any` cites are silence about WHICH street, read as
-   silence about the far end too -- say so if a city's through-lot rule
-   turns up). `_plan_rank` bins exposure to 5 ft (raster corner cells) and
-   ranks own-aisle rear court > side court > alley-aisle on a tie. **And
-   the rear court is TRIMMED to the rows it parks** (`_court_places`): it
-   was the whole free rectangle behind the pod -- second row at the back
-   of the lot, aisle paved across the lot's width, side along the side
-   street for the room's depth -- which is the opposite of "sufficient
-   but minimal" and made the side court win any lot wide enough to hold
-   one; now one or two rows (both tried) at any corner of the room, a
-   court that can slide off a street's strip offered at zero exposure
-   with a lane to that street; the one-row court turns its aisle toward
-   the lane. On a synthetic grid of 312 lots: no colour moved, 194
-   drawings did (68 interior lots pave less and open more, 36 corner side
-   courts / whole-room courts became hidden rear courts, 11 Gresham
-   through lots took the far-street lane, 44 alley courts shrank); s6s
-   ~3 % slower. `parking_area_sqft` / `open_space_sqft` move on every
-   rear-court lot. **BOUND 2026-09-20 on the September parquet in FOUR
-   runs (~14 min each, every one read lot by lot against run 10) and
-   LOADED 2026-09-20 into run 10 in place (same 400,032 lots from the
-   same assign dir, so the loader's upsert refreshed the candidate rather
-   than retiring it; drift 2 -> 10 unchanged at 178 / 0 unexplained; the
-   gate still `new_zones` only, Steph reads).** v1 (net +3,149 site
-   plans) hid two lane bugs in
-   its losses: the trimmed court at the room's four corners missed a
-   mouth that meets a 3-acre room mid-side (`_court_places` takes the
-   whole room's lane), and the front lane had to be free from the
-   BUILDING's front row, which no column beside the pod is on a lot whose
-   front bends (`_front_runs`: from each column's own edge on the strip).
-   v2 (net +7,141) hid a bug in that fix -- the strip was sought at the
-   FRONT setback's reach where a corner lot's edge is cut to the
-   street-side one (161 lots; now `street_reach`) -- plus two honest
-   classes the OLD drawing had paved without looking: flag-lot poles and
-   partial frontages. v3 took the pole as the lane where it is at least
-   the lane's width (resumed at the body's top); v4 keyed that on the
-   strip's WIDTH, since a 16-ft pole between 5-ft side setbacks keeps a
-   6-ft sliver that is no more a lane than no sliver (127 v3 losses
-   cured, 104 Portland; 0 new). **Final (v4 vs run 10):** site plans
-   gained 7,880 / lost 1,860; green 23,477 -> 25,127, review 15,798 ->
-   18,571, red 250,757 -> 246,334 (6,357 moved: red->green 2,084,
-   red->review 3,306, green->red 434, review->red 533 -- Portland's 414 +
-   444 are the through-lot ban); through lots ok 4,243 -> 4,028 (Portland
-   2,994 -> 1,939: 1,780 side courts, 1,502 refused by the ban; Milwaukie
-   66 -> 55; every other city UP on the far-street lane, e.g. Clackamas
-   373 -> 586, Gresham 267 -> 451); corner lots ok 14,512 -> 16,229;
-   one-street 35,358 -> 39,876; on lots ok both ways the pavement median
-   fell 3456 / 3156 / 2802 -> 2160 sq ft (through / corner / one-street)
-   and the court's street exposure fell on 12,145 corner + 2,437 through
-   lots. Methods after: rear court 36,468, side court 6,579 (+18 off an
-   alley), rear court from the side street 10,627, from the far street
-   1,474, alley 1,622, alley-aisle 5,126. Lost by reason: `no_court` on
-   1,252 through lots (the ban, by design), `no_side_lane` 429 (330
-   one-front, 99 through), `court_too_shallow` 160 (through lots whose
-   trimmed court no longer reaches), `too_few_stalls` 15, `no_alley_lane`
-   4. The 429 `no_side_lane`, read via `/root/lane_diag3.py` on 137: 151
-   have no envelope cell on the street strip at all (about 120 poles and
-   stubs narrower than the lane -- the old drawing took a 5-ft pole --
-   and about 30 wide fronts whose envelope stands off the street reach:
-   tier-C round buffer, overlay carve-outs, (m)); 278 have a strip at
-   least the lane wide but no clear column that meets a court (stubs,
-   notches, bent fronts, (k)). All were ground the old drawing paved
-   without checking. Read on the gained side: the 123 pole lots v3/v4
-   restored are 106 true poles (the lot's ground at the street is the
-   street piece) and 17 lots whose street piece is shorter than the neck;
-   on 92 of them the drawn lane stands off the pole's span (median 23 ft,
-   six wide tracts 240-400 ft) -- the same lots with the same undrawn jog
-   run 10 had, queued as (n). **Divergence noted, not changed:**
-   `_front_setback` in s6s main falls back to 10 ft when the effective
-   front setback is None OR ZERO (Portland CM2/CM3 lots run with a 10-ft
-   pod setback and a 0-ft street strip, `fsb=10.0 ... ssb=0.0` in the
-   trace) -- report/queue as (o). Queued from this slice: (f) the rear
-   court keeps a tie with the side court; Steph's "room for a 2nd pod"
-   could read the other way (prefer the side court so the rear yard is
-   free) -- the ties are NOT counted: only the winning offer is in the
-   output, so counting needs both offers written out; (g) the two-row
-   court's lane lands on its near row's end where a stall is drawn
-   (one-row courts turn the aisle to the lane; two-row need the landing
-   carved out of the row or the lane run to the aisle band); (h) the
-   alley-aisle court (`townhome_rear_court_alley_aisle`) still scores the
-   whole room's exposure -- trim it to its stall row + back-out depth;
-   (i) DONE 67402fea (rides the next full run) -- `front_lot_line_through`
-   per city; bound 17 Clackamas-uninc green-if-signed -> yellow, Gresham
-   862 / Fairview 84 envelopes shrink, Milwaukie 8 grow; RULED by Steph
-   2026-09-30 as built (city governs -> follow it, unmeasured -> worst:
-   Gresham/Clackamas access control, Tualatin/Fairview lowest-class
-   access; free choice -> the end that fits); street class per edge would
-   loosen them;
-   (j) COUNTED, not built: in a ban city the side court is drawn on ONE
-   side of a through-lot pod -- a court on both sides would help 8 lots;
-   (k) DONE 4a3cc09c -- s6s reserves a lane's
-   width on the street strip before placing the pod beside it (court
-   searched near the lane, straight lane charged as pavement; runs only
-   after every front failed "no side lane", never on alley lots). Replay
-   on 137 (09-29 data): +890 plans of 20,949 no-side-lane lots, 0 lost, 0
-   other moves; rides the next s6s->s7->bridge run. Left: bent fronts whose
-   body swings off the strip (Gresham 1N3E30CB -12300, ~238 of the 286
-   targeted) need an angled/jog lane;
-   (l) BUILT 5cb2bd75 -- the street strip is cut flat at a free end and
-   keeps its square extension only where another street edge carries on
-   (bend, corner clip, front meeting side street); the alley strip is
-   unchanged (whether an alley that stops mid-lot needs the same is open).
-   547e0578: a chain of street edges is one strip, its free end cut
-   along the lane, not the last clip piece (the first cut refused 14
-   clipped-corner lots wrongly). The 09-28 s1->s7 lost 50 lanes: 14 back,
-   ~17 run past the frontage's end (correct), 5 side-street, 2 now short
-   of stalls; the 7 read: 94fed5e3 gives the strip's free end half a
-   grid cell of slack (2 slanted-line lots) and retries the side court
-   up to 6 times when the biggest rectangle has no lane (1S1E03CB-80000);
-   replay of the 88 moved lots: 36 lost -> 31 (29 no lane, 2 few stalls),
-   0 regressions (137 /root/strip_chains/v2/replay2.csv). 32E07DC03600:
-   the curved line past the lane may be a street s4 does not label --
-   worth a look; (m) COUNTED 2026-09-29 on 09-18 data: 32 wide
-   fronts with no envelope cell in street reach = 7 overlay carve-outs, 6
-   round tier-C insets, 3 tier B with no strip, 16 with a strip in both
-   envelopes (an older s6s refused them -- re-check on the current run);
-   (n) BUILT 91840447 (lane out of the pole, pod
-   beside it, charged from the street; local trial 65 lost / 51 redrawn /
-   884 same -- read the 15 cul-de-sac/angled "not a pole" losses on the
-   county run) -- was: the pole's lane jog: in the pole case the lane is taken at
-   any column of the body's top while `_placement` puts the pod first-fit
-   at the top-left, so a pole at the left leaves the lane to the pod's
-   right with an undrawn, uncharged run along the body's top (92 of 123
-   restored pole lots; six wide tracts with a short street piece where
-   the envelope's strip, not the lot's ground, called it a pole) -- key
-   the pole rule on the lot's ground at the street (`lot_xy` suffices)
-   and place the pod beside the pole's lane (block the lane's corridor
-   before placement), then bound: some 77-100 ft Portland bodies lose the
-   56-wide pod to the 36-wide; (o) BUILT 38932a24 -- a zero front
-   setback is the code's answer (Portland Table 130-2 "none", Oregon City
-   17.35.060.E), never an unknown; the 10 ft fallback never moved the pod,
-   it only forgave Portland's 10 ft parking setback for side courts in its
-   eight zero-setback zones; now 0 (a missing number also 0, the strict
-   end). Same bound as (l).
-   Queued behind it, each to bound first: (a) struck 2026-09-27 -- s4's
-   width/depth come from `lotdims.dimensions` + `pick`, which already takes
-   the narrowest front where the city fixes it and the pair that conforms
-   where the applicant chooses (2026-09-11), not `cluster_bearings`; (b)
-   Portland 33.266.120.C.1.b: on a corner lot the court must sit behind the
-   side-street building line and pave at most 20 % of the side-street
-   setback -- the drawn lane is consistent by construction (court inside
-   the envelope, a 12-ft lane is ~12 % of the strip), so only "behind the
-   building line" is unread; (c) `lowest_class` needs a street classification per edge (s4
-   holds none; drawn as `any` and said so at runtime); (d) Fairview
-   19.30.050(D)(2)(a) side-yard parking setback -> redirect ledger; (e)
-   Gresham 3.0100: the front is fixed where the minimum lot depth is met
-   in one direction only (needs depth both ways = (a)).
-
-7. [scan: YES] **Green and outdoor space: charge the SHAPE, not just the amount.** (a)
-   DONE 2026-09-28 (open-space commit): the screen's open space /
-   landscaping checks now read lot - building - pavement (`paper.paved`:
-   court, alley back-out, lane/side-street drive/alley-side aisle, counted
-   as s6s counts it), `open_space_min_sqft` is read (Portland x18,
-   Milwaukie, Multnomah LR7), `OPTIMISTIC_CHECKS` is empty; unknown
-   pavement fails what the upper bound proves and otherwise holds the lot
-   UNKNOWN (FACT_UNOBSERVED). Paper-lot census: moves possible only in
-   Gresham CC/MC (15 % open space), Oregon City C/MUC-1 (15/20 %
-   landscaping), Fairview VA (25 %; its paper minimum 3,102 sq ft looks
-   odd), GREEN->YELLOW, on lots within a few hundred sq ft of the smallest
-   fitting lot. The lane is priced at its shortest legal length. (b) DONE 7bd2d1e4..674208b6 (in full run 0930): Portland 33.110.240's
-   12x12 square (10x10 R2.5) measured on the lot's own ground -- lot less
-   building, court, lane, paving, front setback, overlay carves; a
-   side-fed court paves its whole band; a court beside the building is
-   measured where it stands (674208b6). LIVE in run 42: 3,056 Portland
-   lots fail on the square alone (green->yellow); whether to chase the
-   near misses is HUMAN_TODO 27. Milwaukie's 96 sq ft / 5 ft patio
-   encoded (no Milwaukie lot green). Bound on 7,029 Portland R lots: 569
-   green -> yellow (mostly pod80 end-on on 50 ft lots), 0 unknown, 0 other
-   moves. Open: a side-street court standing as a long side strip stays
-   unmeasured. (c) settled -- the amounts are charged since 91f40638;
-   left for the county map only: landscaping share on the county map (Happy Valley 20 %,
-   Portland RM 15-30 %, Oregon City R-2 15 %, Fairview 20-25 %, Wilsonville
-   15 %) -- s6s holds no landscaping reserve. (d) what the leftover is FOR
-   (sheds, ADUs, a second pod) is product direction, belongs with item 6's
-   "least ground under pavement". Ruled NOT owed: Troutdale 8.120.B.1.b
-   (balcony), Oregon City 17.62.057 (multi-family), Wilsonville Villebois
-   25 % (communal), Gladstone / Tualatin / West Linn / Clackamas county
-   state none.
-
-8. [scan: NO new code, check after the weekly run; YES if (b) is taken up] **Pockets + corridors -- leftovers (PROMOTED run 33 2026-09-27, drift
-   vs 31: 4,140 moved unknown -> green 4,112 / yellow 28 if signed, all
-   rules, 0 unexplained; pocket lots 210 -> 25 still ZONE_POCKET, 174 now
-   screened under their `of` layer, red at the use gate).** (a) DONE in code
-   e7217598 -- s3 follows FLATS's pocket rulings (Clackamas R-MD ->
-   Milwaukie, Happy Valley VR57 -> county, UPAR-10 -> Troutdale LDR-1); s5o
-   carves them with both jurisdictions' overlays; export keeps them in
-   their home jurisdiction. Rides the next s3->s7 run: expect NOT_MEASURED
-   -9 (check by the pocket_of TLIDs; drift skips pocket lots); (b) 25 lots stay ZONE_POCKET:
-   Troutdale NSA GGC/GSO and Oregon City `County` read against a map that
-   answers no code the of-layer holds; (c) DONE 1ff23bdb -- Map 130-1's
-   maximum is 20 ft instead of 10 (33.130.215.C.1), a RELAXATION, hung on
-   `civic_corridor_setback_all_streets` (every street line on a stretch);
-   0 moves, no screen reads a maximum (HUMAN_TODO 12); (d) DONE fa693288 -- the Map 130-1
-   10 ft minimum is per LINE in the envelope: optional field
-   `setback_street_off_corridor_ft` (the "Street Lot Line: none" row, six
-   commercial zones); a street line read surely OFF every stretch
-   (`flats.geom.corridor.off_corridor`) is cut at it, every other keeps 10;
-   paper fit / driveway charge keep 10. Next re-screen: 520 corridor lots,
-   297 with a line read off; moves only toward green/yellow -- read the
-   gains. (d) re-screened in run 39 (promoted 2026-09-29). (e) DONE c9083b88 --
-   33.130.215.B.1.b: CM2/CM3/CE/CX street lines take 5 ft, 0 only where
-   s4's new `street_across_json` reads every ray across as non-residential
-   and the line is off the corridor (`setback_street_across_nonresidential_ft`);
-   quadfit CE/CM2/CM3/CX front 0 -> 5. Bound ~60 lots green/unknown ->
-   yellow, 0 loosened. NEEDS the next full s4->s7 run (new s4 column).
+   Through lots RULED 2026-09-30 (register `2026-09-30-through-lots`,
+   built 67402fea as (i)): city governs -> follow it, unmeasured -> worst
+   (Gresham/Clackamas access control, Tualatin/Fairview lowest-class
+   access); free choice -> the end that fits.
+   BUILT and live (s6s_siteplan.py): Slice A per-line fields, Slice B
+   corner fronts (bound 364c360e), through lots + side court + trimmed rear
+   court (bound v4 vs run 10, loaded 2026-09-20), (k) 4a3cc09c, (l)
+   5cb2bd75/547e0578/94fed5e3, (n) 91840447, (o) 38932a24 (a zero front
+   setback is the code's answer -- Portland Table 130-2 "none", Oregon
+   City 17.35.060.E -- never an unknown). Bound files on 137:
+   `/root/corner_diff.py`, `corner_moves.csv`, `/root/lane_diag3.py`,
+   `/root/strip_chains/v2/replay2.csv`. Still open:
+   (f) the rear court keeps a tie with the side court; Steph's "room for a
+   2nd pod" could read the other way (prefer the side court so the rear
+   yard is free) -- the ties are NOT counted: only the winning offer is in
+   the output, so counting needs both offers written out.
+   (g) the two-row court's lane lands on its near row's end where a stall
+   is drawn (one-row courts turn the aisle to the lane; two-row need the
+   landing carved out of the row or the lane run to the aisle band).
+   (h) the alley-aisle court (`townhome_rear_court_alley_aisle`) still
+   scores the whole room's exposure -- trim it to its stall row + back-out
+   depth.
+   (j) COUNTED, not built: in a ban city (Portland 33.266.120.C.1.a,
+   Milwaukie 19.505.3.D.4.a) the side court is drawn on ONE side of a
+   through-lot pod -- a court on both sides would help 8 lots.
+   (k) left: bent fronts whose body swings off the strip (Gresham
+   1N3E30CB -12300, ~238 of the 286 targeted) need an angled/jog lane.
+   (l) left: whether an alley that stops mid-lot needs the flat-cut strip
+   is open; 32E07DC03600: the curved line past the lane may be a street s4
+   does not label -- worth a look.
+   (m) COUNTED 2026-09-29 on 09-18 data: 32 wide fronts with no envelope
+   cell in street reach = 7 overlay carve-outs, 6 round tier-C insets, 3
+   tier B with no strip, 16 with a strip in both envelopes (an older s6s
+   refused them -- re-check on the current run).
+   (n) left: read the 15 cul-de-sac/angled "not a pole" losses on the
+   county run (local trial 65 lost / 51 redrawn / 884 same).
+   Queued behind it, each to bound first: (b) Portland 33.266.120.C.1.b:
+   on a corner lot the court must sit behind the side-street building line
+   and pave at most 20 % of the side-street setback -- the drawn lane is
+   consistent by construction, so only "behind the building line" is
+   unread; (d) Fairview 19.30.050(D)(2)(a) side-yard parking setback ->
+   redirect ledger; (e) Gresham 3.0100: the front is fixed where the
+   minimum lot depth is met in one direction only (needs depth both ways).
+   ((a) struck 2026-09-27; (c) `lowest_class` now reads street class, item
+   41.)
+7. [scan: YES] **Green and outdoor space: charge the SHAPE, not just the amount.**
+   Done and live: (a) open space / landscaping read lot - building -
+   pavement (2026-09-28, `paper.paved`; `OPTIMISTIC_CHECKS` is empty);
+   (b) Portland 33.110.240's 12x12 square (10x10 R2.5) on the lot's own
+   ground, 7bd2d1e4..674208b6, run 42: 3,056 Portland lots fail on the
+   square alone (green->yellow); Milwaukie's 96 sq ft / 5 ft patio
+   encoded. Open:
+   - Whether to chase the Portland square's near misses is HUMAN_TODO 27.
+   - A side-street court standing as a long side strip stays unmeasured.
+   - Fairview VA's paper minimum (25 %; 3,102 sq ft) looks odd.
+   - (c) for the county map only: landscaping share (Happy Valley 20 %,
+     Portland RM 15-30 %, Oregon City R-2 15 %, Fairview 20-25 %,
+     Wilsonville 15 %) -- s6s holds no landscaping reserve.
+   - (d) what the leftover is FOR (sheds, ADUs, a second pod) is product
+     direction, belongs with item 6's "least ground under pavement".
+   Ruled NOT owed: Troutdale 8.120.B.1.b (balcony), Oregon City 17.62.057
+   (multi-family), Wilsonville Villebois 25 % (communal), Gladstone /
+   Tualatin / West Linn / Clackamas county state none.
+8. [scan: NO new code, check after the weekly run; YES if (b) is taken up] **Pockets + corridors -- leftovers (PROMOTED run 33 2026-09-27; pocket
+   lots 210 -> 25 still ZONE_POCKET).** All code is on main and in the
+   weekly runs since run 65; the two checks below are not recorded as done.
+   (a) e7217598 -- s3 follows FLATS's pocket rulings (Clackamas R-MD ->
+   Milwaukie, Happy Valley VR57 -> county, UPAR-10 -> Troutdale LDR-1).
+   Check: NOT_MEASURED -9 (check by the pocket_of TLIDs; drift skips
+   pocket lots).
+   (b) OPEN: 25 lots stay ZONE_POCKET: Troutdale NSA GGC/GSO and Oregon
+   City `County` read against a map that answers no code the of-layer
+   holds.
+   (e) c9083b88 -- 33.130.215.B.1.b: CM2/CM3/CE/CX street lines take 5 ft,
+   0 only where s4's `street_across_json` reads every ray across as
+   non-residential and the line is off the corridor; quadfit CE/CM2/CM3/CX
+   front 0 -> 5. Check: bound said ~60 lots green/unknown -> yellow, 0
+   loosened.
+   Done: (c) 1ff23bdb Map 130-1 maximum 20 ft (no screen reads a maximum,
+   HUMAN_TODO 12); (d) fa693288 per-line corridor minimum, run 39.
 10. [scan: YES for (a), one lot; NO for (b)] **Two loose ends from the ruling pass.** (a) DONE 4b725b6a -- alias
    rulings can `observes:` a site fact; FLX->VC observes
-   `inside_mapped_use_area`; the bridge applies aliases. Moves 0: the one
-   FLX lot (1N3E33AB-00500) is dropped by quadfit s3 (zone_not_in_rules);
-   to make it count, add a VC/FLX rule to quadfit's rules.yaml. (b) THR is
-   one lot (1N2E36DA-02200, the Gresham IGA-162nd pocket) whose code no
-   published document defines -- not Gresham 4.0100, not MCC 39; ruled
-   `to_read` and worth one question to Gresham planning if it ever
-   matters; nothing else owed.
-12. [scan: NO -- nothing open; the weekly run carries f0418b49] **FLATS's own envelope -- loose ends (merged b5303d01, PROMOTED run 18
-   2026-09-25).** Run 18 drift 879 moved / 0 unexplained: the old quadfit
-   court credit was false on all-front lots and orientation-blind (now
-   charged), Wood Village LR rear resolves to 20, Gresham MDR-24 corner
-   street side 20. Found reading the losses: an 18-acre Oregon City C lot
-   (32E05D 01204, 01211) blew the fit's cell cap and fit nothing -- fixed
-   f0418b49 (coarser grid), rides the next batch. Left: (a -- settled
-   2026-09-27: Table 8A's R-10 row is 20/20, R-7/R-5 are 15; FLATS holds
-   the binding R-10 row and quadfit the loosest on purpose, per its own
-   note; FLATS's own envelope charges 20 and RN is RED on use anyway) (b) DONE 09171698 -- a rear line off the alley keeps the ordinary rear, the alley line takes the waiver (the bridge resolves the lot twice); probe on 09-29 s4: 2,710 Portland rows move from quadfit's envelope to FLATS's, area identical on 2,708, 0 colour moves; (c)
-   RULED b1d46053 -- Portland's commercial/employment/industrial chapters
-   state no alley setback; under 33.910 an alley line is a non-street line
-   and 33.130.215.B.2 sets it by the abutted zone; max(side, rear) already
-   equals that number. 0 moves; plan districts not searched. (`checks.envelope` was dropped by assign's column list -- fixed
-   a883f439, present from the next run.)
+   `inside_mapped_use_area`. Left: the one FLX lot (1N3E33AB-00500) is
+   dropped by quadfit s3 (zone_not_in_rules); to make it count, add a
+   VC/FLX rule to quadfit's rules.yaml. (b) THR is one lot (1N2E36DA-02200,
+   the Gresham IGA-162nd pocket) whose code no published document defines
+   -- not Gresham 4.0100, not MCC 39; ruled `to_read` and worth one
+   question to Gresham planning if it ever matters; nothing else owed.
 13. [scan: NO -- lands with the November county data refresh] **Tax code area in the RLIS ingest.** The Gresham tax-impact snapshot
    (`scripts/flats_tax_snapshot.py`, migration 0136) needs each lot's tax
    code area (RLIS `TAXCODE`), which acquire drops because it is not a
@@ -626,15 +264,62 @@ read when the weekly full re-screen lands.
     so a change made only to the P7 roll-up leaves the portfolio pages
     stale; keep P7 units split Studio/1BR/2BR. Deliver as rev13 via Excel COM.
 16. [scan: NO] **Partial re-screen -- SHIPPED 50a0ecc2 2026-09-25 (runbook §4c).**
-   Bridge `--zone "<city>:<zone>"` / `--tlid`; `python -m flats.ingest.splice
-   splice|audit`. First use: the two Oregon City farm lots (f0418b49) in
-   2 minutes, run 20, drift 4 moved / 0 unexplained, promoted. The NEXT
-   splice's `--base` is `/root/bridge_pc_full` on 137 (full run 33,
-   2026-09-27; 0 splices since). Full re-screen due
-   after 5 partials or 30 days (2026-10-27); run `splice audit` against it
-   before promoting -- out-of-scope moves are accepted known unknowns.
-   (Showing the audit on /flats/refresh: Steph 2026-09-25 "an enhancement
-   for later" -- not queued.)
+   Nothing left to build. Kept for one remark: showing the `splice audit`
+   on /flats/refresh -- Steph 2026-09-25 "an enhancement for later" -- not
+   queued.
+17. [scan: YES] **Washington County: drafts reviewed; publish, then the county map.**
+   Steph 2026-09-29 (evening) answered HUMAN_TODO 25: A NO second cloud
+   round -- Tigard, Cornelius and the 11 community plans are done LOCALLY
+   (usage reset, 'go hard on data processing'); B design rules are catalogued
+   and encoded (item 20); C the 19 city questions printed for Steph to send;
+   D HB 2138 read (enrolled text): North Plains owes duplexes only, Banks and
+   Gaston nothing -- they stay out.
+   DONE and live: (a) the layers published 0e45ffd5; (b) b53873cf rulings
+   2026-09-30 (handoff §6); (b2) transit distance ceb6693d, run 48 (Steph:
+   "build it for all"; "SHOW IT, DON'T SCREEN IT" -- register
+   `2026-09-30-transit-show-not-screen`; the pod keeps 4 stalls; OAR
+   660-012-0440 stays NOT ENCODED); (d) the county map ef08aebc, snapshot 4
+   run 51, Tualatin CC drawn area; (e) the PUE question became item 43's
+   rule (a9106379, Steph 2026-10-01: a 10 ft yard on every STREET line ->
+   green, 5 ft -> yellow, else red; register
+   `2026-10-01-beaverton-utility-easement`); net area became item 30
+   (Steph's option A 2026-10-02); (f) Tigard and Cornelius drafted,
+   merged and switched on in run 73 (item 51); the Cornelius/Tigard rulings
+   of 2026-10-01 are in the register (`2026-10-01-cornelius-*`,
+   `2026-10-01-tigard-*`, `2026-10-01-pod-ground-floor-12ft`) and in
+   tigard.yaml's comments (MUR stricter column). The split-path
+   `per_dwelling` double count is FIXED in the reader. Still open:
+   - Left for the cities (HUMAN_TODO 25C): Sherwood PD plans + Old Town
+     zones, King City NMU patch, Durham MDR.
+   - Not in the transit layers: SMART, CAT, SAM, SCTD (reads as far from
+     transit -- conservative for relief). MU-VTC Center Cores have no
+     drawn boundary, so 3 stories stays held on every MU-VTC lot.
+   - (c) FOREST GROVE (7,756 lots): REFUSED 2026-09-30 -- a Cloudflare
+     Turnstile on every chapter (not to be bypassed). Asked Steph to save
+     the six articles as PDFs (HUMAN_TODO 28); store them from the files,
+     then rulebook 1-14.
+   - Tualatin (Washington side): STEPH RULED 2026-10-02: PDI-RSIA 10% is
+     per project site but the refusal stands ("this lot doesn't work for
+     us"); RH/HR townhouse lot = the 10,000 sq ft fallback; RH/RH-HR/MUC
+     stay unit-lot townhouses only (Quadplex is its own TDC 31.060 type,
+     absent from their tables; Comp Plan Policy 3.2.1 is policy, not
+     permission). Open: the CO refusal may miss the Ch. 58 townhouse path
+     (58.400, Table 58-4, Block 1); RML lots now exist on the Washington
+     side.
+   - Tigard: TRACE the sub-area image maps (18.650.A/18.660.A/18.670.A,
+     ~590 acres MUR/MUC/MU-CBD) LATER (Steph 2026-10-01) -- until then
+     those lots stay review.
+   - The county's 11 community plans (Aloha, Bethany, Cedar Mill, ...) as
+     neighbourhood variants in the county layer -- not confirmed done.
+   - Still to measure: Hillsboro `flag_lot` assumed on 48,650 answers (the
+     same assumption holds 12,668 in Clackamas); the bigger
+     next-to-a-named-zone setback (Hillsboro SCR-DNC, Beaverton downtown);
+     Hillsboro's corner coverage bonus + two corner setbacks
+     (test_corner_variants: measure before deferring again).
+   - (g) JAN 1 2027 (HB 2138 sec. 4): every Metro city must re-conform its
+     middle-housing code (cottage clusters by 2028); a city that misses it
+     gets the state model code directly. Run the drift check on every
+     layer in early 2027 -- expect amendments across the board.
 18. [scan: NO] **`GET /api/projects` is not scoped to the caller's organisation.** Any
    signed-in user sees every org's opportunities, filtered only by their
    own hidden list (found by the /api/ auth fix 2026-09-28, which closed
@@ -659,163 +344,6 @@ read when the weekly full re-screen lands.
    (d) look like export bugs; (b) and (c) are presentation choices for
    Steph. Exporter = app/exporters/investor_export.py (not the engine).
 
-17. [scan: YES] **Washington County: drafts reviewed; publish, then the county map.**
-   Steph 2026-09-29 (evening) answered HUMAN_TODO 25: A NO second cloud
-   round -- Tigard, Cornelius and the 11 community plans are done LOCALLY
-   (usage reset, 'go hard on data processing'); B design rules are catalogued
-   and encoded (item 20); C the 19 city questions printed for Steph to send;
-   D HB 2138 read (enrolled text): North Plains owes duplexes only, Banks and
-   Gaston nothing -- they stay out. Agent work, in order:
-   (a) PUBLISHED 2026-09-29: 0e45ffd5 on main, deployed (smoke PASS), CI
-   green (light + full gate); flats 3,861 + quadfit 347 passed locally.
-   886 numbers re-read blind, none wrong (handoff "Local review"). The
-   worktree ../vicinitideals-worktrees/washington-draft stays for (b).
-   (b) DONE b53873cf 2026-09-30 (handoff §6 "Rulings, 2026-09-30"):
-   private_drives street:true in all six layers; Sherwood driveway share
-   (driveway_max_frontage_pct); Durham walk (driveway_walkway_ft) and rear
-   15; King City impervious cap (max_impervious_pct); city questions 6-19
-   settled by the reading rules. Left for the cities (HUMAN_TODO 25C):
-   Sherwood PD plans + Old Town zones, King City NMU patch, Durham MDR.
-   (b2) TRANSIT DISTANCE BUILT ceb6693d 2026-09-30 (Steph: "build it for
-   all", measure once, re-measure only when stops change): every lot gets
-   its distance to a rail stop, a MAX station, any stop and a Frequent
-   Service line (flats/geom/transit.py, flats/ingest/transit.py, runbook
-   §4d); the probe flags new_release when TriMet edits a layer. Banded on
-   it: Hillsboro SCC-SC min height + SCC-SC/SCR-DNC/SCR-V densities,
-   Beaverton SC 400 ft density. (1) DONE 2026-09-30: measured on 137
-   (data/flats/transit/2026-09-30, version 6d3a528e4091692b, 400,032 lots)
-   and re-exported as run 48 (0 moves, PROMOTED) -- every lot page shows
-   it; every later bridge run passes --transit (Washington lots too once
-   (d) lands -- without it those station zones screen unknown); (2) COUNTED 2026-09-30 in PostGIS on 114
-   (run 44, best design per lot, station points, no slack): 213,006 of
-   400,032 lots lie within 3/4 mi of rail or 1/2 mi of a TriMet frequent
-   line (35,518 green / 156,257 yellow / 9,410 red / 11,821 unknown;
-   Portland 170,645 of 194,056). Steph 2026-09-30: "SHOW IT, DON'T SCREEN
-   IT" -- the lot page shows the distances and the reform's reach
-   (facts.transit, export --transit / meta); the pod keeps 4 stalls. The
-   state reform (OAR 660-012-0440) stays NOT ENCODED in or/_state.yaml.
-   (3) CLOSED 2026-09-30: the
-   MU-VTC Center Cores have no drawn boundary (Figure 12.65.930-A only
-   "illustrates"; the city's open data holds 2020 gallery symbols, not the
-   cores), so 3 stories stays held on every MU-VTC lot (hillsboro.yaml). Not in the layers: SMART, CAT,
-   SAM, SCTD (reads as far from transit -- conservative for relief).
-   (c) FOREST GROVE (7,756 lots): REFUSED 2026-09-30 -- curl gets only the
-   script shell; a local headless browser got the contents page once, then
-   a Cloudflare Turnstile on every chapter (not to be bypassed); the
-   scrapling MCP's proxy is down. Asked Steph to save the six articles as
-   PDFs (HUMAN_TODO 28); store them from the files, then rulebook 1-14.
-   (d) STARTED 2026-09-30 (Steph: "start it"), worktree
-   ../vicinitideals-worktrees/washington-map, branch flats/washington-map.
-   COUNTY MAP on 137: COUNTY W into s0 KEEP_COUNTIES; zoning from the
-   county's LUD layer + city layers (King City layer 4 = Kingston Terrace);
-   overlays incl. Clean Water Services; send Tualatin/Portland/Wilsonville/
-   Lake Oswego/Rivergrove's Washington lots to their existing layers (by
-   JURIS_CITY, never SITECITY); regenerate the coverage ledger and empty
-   OWED_A_COUNTY; bridge, drift, promote.
-   MERGED ef08aebc + deployed; snapshot 4 (2026-10-01) loaded as CANDIDATE
-   RUN 51 (590,282 lots; Washington 190,250: best-pod if-signed green
-   18,891 / yellow 100,888 / red 8,644 / unknown 61,827). Drift vs run 49:
-   2 moved (sewer district), 0 unexplained. Gate WARNED (count_drift,
-   lots_drift = the new county) -> ASKED Steph to promote. Unruled codes
-   (warn only): Tualatin's Washington side BCE CC CN CR IN MBP MP MUC RH
-   RH/HR (~420 lots) and Wilsonville PDI-RSIA/PFC (17) -- RULED 2026-10-01
-   (8 refusal blocks; RH, RH/HR, MUC, CC to_read). STEPH RULED 2026-10-02:
-   PDI-RSIA 10% is per project site but the refusal stands ("this lot
-   doesn't work for us"); RH/HR townhouse lot = the 10,000 sq ft fallback;
-   RH/RH-HR/MUC stay unit-lot townhouses only (Quadplex is its own TDC
-   31.060 type, absent from their tables; Comp Plan Policy 3.2.1 is policy,
-   not permission). CC ENCODED 2026-10-02: Map 10-3 traced onto TualGIS
-   taxlots (flats/config/areas/.../residential-sub-district.geojson, new
-   `drawn_areas` layer block + flats/geom/drawn.py); 155 CC lots, 91 inside
-   (quadplex permitted, 16-25 du/ac), 64 outside (refused), 0 cut. LANDS AT
-   THE NEXT FULL RE-SCREEN (no partial). Still open: Tualatin CO refusal may
-   miss the Ch. 58 townhouse path (58.400, Table 58-4, Block 1); RML lots now exist on the Washington side. 08 splices LR10/FU10/sewer + fire reach on
-   /root/bridge_2026-10-01_wash AFTER promotion (message it then).
-   (e) AFTER THE FIRST SCREEN, count what these cost. FIRST COUNTS (run 51):
-   Beaverton has 0 green -- `utility_easement` unmeasured holds ~32,100
-   answers (BDC 20.05 note 7 / 20.22 note 7 "In no case shall a building
-   encroach into a Public Utility Easement"; footnotes beaverton.yaml caps
-   MR/RMA/RMB/RMC/CM-MR/CM-RM). ~6,650 Beaverton lots fail nothing else;
-   Oregon City's same note holds ~3,700 more. Steph 2026-10-01 pointed at
-   Survey Explorer's Dedication layer (gispub.co.washington.or.us/server/
-   rest/services/LUT_ETS/Survey_Explorer/MapServer/15): 8,412 recorded
-   dedication deeds 1978-2026 as MARKER points (28,541), no width, no
-   type field -- mostly street right-of-way deeds; plat PUEs are NOT in it
-   (plats are layer 4 polygons + scanned TIFFs). Steph's test "no point
-   within ~3 ft of a lot line of an otherwise-green lot = clear": of 6,481
-   such Beaverton lots, 476 touched, 6,005 clear (10 ft 517; 25 ft 657;
-   inside the lot 384). Script /root/e1.py on 137, points cached
-   /root/wash_dedications.json. Steph then DROPPED the dedication data:
-   rule = building fits with a 10 ft yard on every STREET line (Steph:
-   "just the side on a street") -> green; fits at 5 ft but not 10 ->
-   yellow; not even at 5 -> red. What-if on 137 (/root/pue_driver.py,
-   PUE_FT floors the street yards; /root/pue_chain.sh, E10 then E5 on
-   what E10 lost). RESULT 2026-10-01 (what-if only, nothing built): the
-   6,481 were NOT otherwise green -- the cap masked a second hold, net
-   area (`measured_on: net_developable_area`, nothing surveys it). At 10
-   ft: 6,305 fit (one design lost on ~2,800, the other fits), 176 red on
-   fire reach (still red at 5 ft; route median 216 ft), 0 needed 5 ft.
-   Net-area holds on the 6,305: max FAR (RMA 1.6 / RMB 1.2 / RMC 0.9) is
-   passed even after losing 30% of the lot on ALL 6,305 (50% on 4,918);
-   min density (17/10/7 per net acre) settled on 5,395, unsettled on 910
-   big lots (RMA 299, RMB 321, RMC 290). ASKED Steph: (1) treat FAR as
-   passed when it survives a 1/3 deduction? (2) the 910: red or closer
-   look? If both yes: ~5,395 green / 910 per (2) / 176 red.
-   Hillsboro 25 green -- `flag_lot` assumed on 48,650 answers (the
-   same assumption holds 12,668 in Clackamas). Also: Beaverton/King City
-   minimum density on big lots (fail vs closer look: bring Steph the
-   number); the bigger next-to-a-named-zone setback (Hillsboro SCR-DNC,
-   Beaverton downtown); Hillsboro's corner coverage bonus + two corner
-   setbacks (test_corner_variants: measure before deferring again).
-   (f) LOCAL, no cloud (25A answered no): store Tigard
-   (ecode360.com/43691505) and Cornelius (ecode360.com/CO4396), draft both
-   layers here with the same blind re-read; read the county's 11 community
-   plans (Aloha, Bethany, Cedar Mill, ...) into the county layer as
-   neighbourhood variants. Worktree per city, confirm with Steph first.
-   STARTED 2026-10-01 (Steph: "both, in parallel"): worktrees
-   ../vicinitideals-worktrees/flats-tigard (flats/tigard-draft) and
-   flats-cornelius (flats/cornelius-draft), rules + documents + blind
-   re-read only; map wiring after flats/washington-map merges. eCode360
-   serves the real page to a browser User-Agent (no challenge solved).
-   Both drafts DONE 2026-10-01 (Cornelius 1681a829: 12 zones, 4 admit;
-   Tigard d5f53149: 13 zones, 9 admit; both full suites green, blind
-   re-read 0 wrong). Steph 2026-10-01: Cornelius R-7 one-home line is
-   superseded (keep); charge parking out of side/rear yards + Tigard's
-   5 ft screen (being built on flats/cornelius-draft); Tigard's per-home
-   lot cap follows Tigard's townhome definition (if unit lots, no parent
-   cap); TRACE the Tigard sub-area image maps (18.650.A/18.660.A/18.670.A,
-   ~590 acres MUR/MUC/MU-CBD) LATER -- until then those lots stay review.
-   Remaining questions: handoff §6 Tigard + Cornelius. Merge both after
-   flats/washington-map lands, then wire Tigard/Cornelius into the map
-   (JURIS_CITY -> layer, Metro ZONE; Cornelius R-10 parcel by hand).
-   Rulings round 2 (all Steph 2026-10-01, applied on the two branches):
-   Tigard Triangle ground floor >= 12 ft (pod fact), MUR stricter column,
-   MUC blank cells = no limit, Triangle 10 ft one-lane drive OK; Cornelius
-   fourplex NOT multi-family, 9 ft stall, CR standalone only near
-   Adair/Baseline, sun shading = flag every R-7/R-10 lot, GMU townhome
-   path REVIEW (subdistrict figure traced later), corner front = narrower
-   side, pod has NO covered parking. Both drafts finished the round
-   (Cornelius 5bf6e848, Tigard 266053fa, suites green, not pushed). The
-   Adair/Baseline standalone-fourplex rule is CC, not CR as asked (the
-   substance ruled stands). OPEN: sun shading as built makes every R-7/R-10
-   lot (about half of Cornelius) never-GREEN "needs a closer look", not the
-   note-only flag Steph was told. Steph 2026-10-01: GREEN WITH A WARNING
-   (lot-page shading flag, verdict not held); being reworked on the branch. Merge Cornelius first (it adds
-   parking_required_yard_prohibited / behind_wall_ft), then Tigard
-   reuses it for its 5 ft planted parking strip (RES-A/B/C).
-   The split-path double count the Tigard draft found in Hillsboro
-   (R-8.5 asked 24,000 sq ft, should be 6,000) was every `per_dwelling`
-   variant on `unit_lots` (24 in the corpus, Gladstone/Happy Valley/West
-   Linn too): FIXED in the reader (Effective/Resolved.whole_project), not
-   the files; nothing screens the split path yet, so no verdict moved.
-   MERGED with flats/washington-map on flats/tigard-draft 2026-10-01
-   (layers 27, zones 455): TIGARD and CORNELIUS now route by JURIS_CITY to
-   their layers; the next Washington re-screen shows whether every lot
-   finds its zone (Cornelius R-10 by hand still owed).
-   (g) JAN 1 2027 (HB 2138 sec. 4): every Metro city must re-conform its
-   middle-housing code (cottage clusters by 2028); a city that misses it
-   gets the state model code directly. Run the drift check on every layer
-   in early 2027 -- expect amendments across the board.
 20. [scan: NO -- a catalog; nothing screens it yet] **Design-standards catalog (Steph 2026-09-29, HUMAN_TODO 25B).** Record
    and encode every rule about how the building LOOKS -- front windows
    share, entry facing the street, garage placement and width, siding and
@@ -832,13 +360,13 @@ read when the weekly full re-screen lands.
    baseline to see what that removes. Plan first; ask Steph before a worktree.
 21. [scan: YES for (a)-(c); NO for (d)-(e)] **Post-2027 world (Steph 2026-09-29: "design the system for a post-2027
    world... retroactively apply that throughout our corpus").** Sources
-   STORED 2026-09-30 (declared in `_state.yaml`, cited by nothing yet):
+   STORED 2026-09-30 (declared in `_state.yaml`):
    `or/hb.2138.2025.txt` (enrolled); `or/oar.660-046.adopted-2026-08.txt`
    (Division 46 AS ADOPTED 2026-08-27, DLCD's copy; OARD's filed text LCDD
    11-2026 is WRONG, correction hearing 2026-10-22 -- re-fetch after);
    `or/oar.660-047.draft-v5.txt` (Oregon Homes draft v5, 2026-09-22; re-fetch
-   after LCDC's October meeting). Worktree, confirm with Steph first. In order:
-   (a) STATE LAYER TO ADOPTED DIV 46: quadplex min lot <= the zone's
+   after LCDC's October meeting). Worktree, confirm with Steph first.
+   (a) OPEN -- STATE LAYER TO ADOPTED DIV 46: quadplex min lot <= the zone's
    detached-house min lot (0220(2)(a)(B)), townhouse likewise (0220(3)(a)) --
    needs a per-zone detached-house minimum lot field read from every zone
    table and a preemption shape "cap at another field's value"; "zoned for
@@ -846,77 +374,33 @@ read when the weekly full re-screen lands.
    has flagged NOT ENCODED since August; 0205(3) percentage option deleted --
    check whether any corpus city used it. Height floor (2)(d) unchanged; see
    the 2026-09-29 note in _state.yaml (SCR-OTC 20 ft not lifted).
-   (b) OUT-OF-COMPLIANCE ZONES: residential zones that allow a detached house
-   but refuse a quadplex (King City's older zones first). AUDITED for
-   Multnomah + Clackamas 2026-09-30 (read-only; `quadplex_allowed: false`
-   is the use gate, flats/score/screen.py ~L1320): 14 clear hits --
-   Portland RF; Multnomah uninc RF, LR5, LR7, LR10, UF20; Gresham LDR/GB;
-   Wilsonville RN (Frog Pond) and FDAHR; Happy Valley FU10; Clackamas
-   uninc FU10 (693 lots), RRFF5 (2,082), RA2 (491), RA1 (329). Traps:
-   Clackamas FU10's note leans on an "interim zoning" exemption
-   (0010(2)(c)) that the ADOPTED text no longer has; RRFF5/RA1/RA2 hinge
-   on ORS 197A.015 "urban unincorporated lands" (not stored); Gresham
-   LDR/GB may take a Goal 7 hazard carve-out; Wilsonville RN may take the
-   master-planned-community clause 0205(2)(b). Ambiguous 9: Clackamas FF10;
-   Multnomah MUA20, RR, OR, GGR2 (mostly outside the UGB); Fairview VTH;
-   Portland RMP; Milwaukie R-MD (unit-lot + flag variant); Wilsonville
-   FDAHV. Happy Valley's child-lot refusals look allowed by the state rule.
-   DECIDED A 2026-09-30 (Steph: "the 'larger cities' is important"). Size
-   cutoff: inside Metro every city over 1,000 people (all ours but Johnson
-   City, Rivergrove, Maywood Park); outside Metro 25,000+ for every type,
-   2,500-25,000 duplexes only; county land only where "urban
-   unincorporated" (ORS 197A.015(12): UGB, urban zoning, sewer district,
-   water provider, not a holding zone). BUILT (relief `state_middle_housing`,
-   discretionary, never GREEN; the use gate now reads a zone's OWN relief
-   exceptions -- which also opens LR7's conditional use, Multnomah OR/RR
-   planned development and LR5's corner/flag conditional use; a path that
-   turns on an unmeasured fact is UNKNOWN, not RED). OPENED 5: Portland RF
-   (min lot 52,000 = the house's, Table 610-2), Multnomah uninc RF, LR5,
-   LR10, Happy Valley FU10. REFUSED 8: Multnomah UF20 + Clackamas FU10
-   (holding zones, (12)(e)); RRFF5/RA1/RA2 (rural, (12)(b)); Gresham LDR/GB
-   (Goal 7 hazard, 0010(3)(c)); Wilsonville RN + FDAHR (pre-2021 master
-   plan, 0205(2)(b)(B)). LEFT: Multnomah county lots need
-   `in_sewer_district` measured (only Clackamas has it) -- UNKNOWN till
-   then; LR10 + Happy Valley FU10 dimensions not encoded (the state caps
-   them at the house's; notes list LR10's); Wilsonville RN as townhouses
-   CHECKED 2026-10-01: shut (two attached, three on a corner, during
-   Frog Pond West's initial development; every RN lot is West -- East/South
-   are not in the city's zoning yet; RN zone note). RUN 46 PROMOTED
-   2026-09-30 (9096f164, scope 137 /root/mh_scope.txt, splice base now
-   /root/bridge_spliced_mh0930): drift 44 -> 46 316 moved / 0 unexplained,
-   all LR7 red->yellow if signed (its conditional use, read at last). The
-   opened zones' own lots moved red-if-signed -> "not measured": quadfit's
-   s3 filter drops a zone it thinks refuses the pod, so Portland RF (634),
-   Multnomah RF (225), LR10 (15) and Happy Valley FU10 (12) have no
-   measurement to screen. MEASURED 2026-10-01, RUN 49 PROMOTED (d5e42388
-   rules.yaml opens Portland RF + county RF + LR5 at needs_verification;
-   cd746111 lets a splice take measurement files that only ADD its own
-   lots): quadfit tree 137 data/quadfit_2026-09-30mh, bound 0 lost / 0
-   changed / 851 gained (Portland RF 626, county RF 224, LR5 1); splice
-   base now 137 /root/bridge_spliced_mhq0930; drift 48->49 0 moved. Portland
-   RF: 1,252 answers yellow-if-signed (use by the state path; under 52,000
-   sq ft the lot size miss rides the ASSUMED variance, RELIEF_UNCONFIRMED,
-   as every unread adjustment chapter does), 16 too narrow. County RF/LR5
-   stay unknown until `in_sewer_district` is measured in Multnomah. LR10 +
-   Happy Valley FU10 still unmeasured (no dimensions encoded). A FULL
-   re-screen is now due (5 splices since full0930). 2026-10-01 CODED, NOT
-   YET SCREENED: LR10 (MCC 39.4878; min lot = the house's 10,000) and Happy
-   Valley FU10 (Table 16.22.010-2, 10 acres) dimensions in the corpus and
-   quadfit rules/footprints; the bridge now answers `in_sewer_district` on
-   unincorporated Multnomah (`DISTRICT_ONLY`, from the district layer quadfit
-   already reads). The county assessor's tax districts list only
-   Dunthorpe-Riverdale and Clean Water Services as sewer districts in the
-   county, and no RF/LR5/LR10 lot is inside either -- so those lots go
-   UNKNOWN -> refused (red) on the next screen: not "urban unincorporated"
-   under ORS 197A.015(12)(c). SCREEN PLAN (agreed with the washington-map
-   session 2026-10-01): its three-county candidate (137 /root/chain_wash.sh,
-   snapshot 2026-10-01, bridge ETA ~13:00-14:00 UTC) is the full re-screen
-   Steph asked for; Steph promotes it by hand (lots_drift warns); then a §4c
-   partial on that copy -- quadfit s3-s7 in a COPY tree
-   data/quadfit_2026-10-01_mh, scope = new LR10/FU10 lots + every
-   unincorporated Multnomah lot, splice onto /root/bridge_2026-10-01_wash. From 2027-01-01 the
-   Div 46 model code applies directly (0040(4), "completely replaces"): audit
-   the corpus, switch them to allowed under the city's middle-housing
+   (b) OUT-OF-COMPLIANCE ZONES -- BUILT (relief `state_middle_housing`,
+   discretionary, never GREEN), runs 46 and 49. DECIDED A 2026-09-30
+   (Steph: "the 'larger cities' is important"; register
+   `2026-09-30-state-middle-housing-path`). Size cutoff: inside Metro every
+   city over 1,000 people (all ours but Johnson City, Rivergrove, Maywood
+   Park); outside Metro 25,000+ for every type, 2,500-25,000 duplexes only;
+   county land only where "urban unincorporated" (ORS 197A.015(12): UGB,
+   urban zoning, sewer district, water provider, not a holding zone).
+   OPENED 5: Portland RF, Multnomah uninc RF, LR5, LR10, Happy Valley FU10.
+   REFUSED 8: Multnomah UF20 + Clackamas FU10 (holding zones, (12)(e));
+   RRFF5/RA1/RA2 (rural, (12)(b)); Gresham LDR/GB (Goal 7 hazard,
+   0010(3)(c)); Wilsonville RN + FDAHR (pre-2021 master plan,
+   0205(2)(b)(B)); Wilsonville RN as townhouses CHECKED shut. Ambiguous 9,
+   unruled: Clackamas FF10; Multnomah MUA20, RR, OR, GGR2 (mostly outside
+   the UGB); Fairview VTH; Portland RMP; Milwaukie R-MD (unit-lot + flag
+   variant); Wilsonville FDAHV. Happy Valley's child-lot refusals look
+   allowed by the state rule. Traps from the audit: Clackamas FU10's note
+   leaned on an "interim zoning" exemption (0010(2)(c)) that the ADOPTED
+   text no longer has; ORS 197A.015 is not stored. CHECK on the weekly run (not recorded
+   done): LR10 (MCC 39.4878) and Happy Valley FU10 dimensions were coded
+   2026-10-01, and `in_sewer_district` is answered on unincorporated
+   Multnomah (`DISTRICT_ONLY`); only Dunthorpe-Riverdale and Clean Water
+   Services are sewer districts there and no RF/LR5/LR10 lot is inside
+   either -- so those lots should read refused (red): not "urban
+   unincorporated" under ORS 197A.015(12)(c). From 2027-01-01 the Div 46
+   model code applies directly (0040(4), "completely replaces"): audit the
+   corpus, switch them to allowed under the city's middle-housing
    standards or the model code (2020 Exhibit B: front/rear setbacks > 10 ft
    invalid, height < 35 ft / 3 stories invalid, coverage limits invalid).
    (c) OREGON HOMES PATH (HB 2258, OAR 660-047, DRAFT until LCDC's October
@@ -936,14 +420,11 @@ read when the weekly full re-screen lands.
    prefabricated middle housing; RAC 1 on 2026-10-07, adoption ~2027-12-02)
    -- item 20's catalog is the baseline; January 2027 drift run (17g).
 22. [scan: YES if Steph adopts Milwaukie's 22 ft aisle] **Portland aisle 20 ft -- DONE (bacea669 + quadfit mirror 0df02fcc;
-   run 44 PROMOTED 2026-09-30, splice base 137 /root/bridge_spliced_aisle0930).**
-   Drift 42 -> 44: 7,633 moved, all rules, 0 unexplained -- Portland
-   yellow->green 7,358 (7,001 on the fit alone), yellow->unknown 273
-   (Portland 231, West Linn 42: the fit now passes, an unmeasured fact
-   decides), green->yellow 2 (1S1E06AD -02100 pod80, 1S1E13DC -04000
-   pod56): replayed -- the narrower court is drawn 0.1 / 0.7 ft past the
-   beside-court reach tolerance (`BESIDE_REACH_TOL_FT` 3 ft, cef95109) and
-   falls back to the row behind; knife-edge, conservative, accepted.
+   run 44 PROMOTED 2026-09-30; register `2026-09-30-portland-aisle-20ft`).**
+   Portland yellow->green 7,358. Two green->yellow (1S1E06AD -02100 pod80,
+   1S1E13DC -04000 pod56) replayed: the narrower court is drawn 0.1 / 0.7
+   ft past the beside-court reach tolerance (`BESIDE_REACH_TOL_FT` 3 ft,
+   cef95109) -- knife-edge, conservative, accepted.
    **Milwaukie, pending Steph:** the ecode360 link Steph sent
    (guid 43863200) is 19.606.1, Table 19.606.1 -- 90 deg: 9 x 18 stall, 22 ft
    aisle -- which we already hold; 19.606's purpose sentence excepts middle
@@ -953,68 +434,44 @@ read when the weekly full re-screen lands.
 23. [scan: NO] **Page check -- SHIPPED 2026-09-30 (a203e9f1).** `/flats/check`: the
    printed page with a box on the number, signed numbers first, then one card
    per footnote on it; "no" answers form the problems list
-   (`/flats/check/problems.txt`, stamps `bundled_at`). Page maps now cover
-   190 PDF documents; 1,742 of 2,129 numbers get a box (362 get their line
-   highlighted, 25 nothing). Still open: (a) DONE 2026-10-16 on flats/check-web-codes:
-   web-published codes (1,569 numbers: Cornelius, Fairview, Gladstone, Happy
-   Valley, Lake Oswego, Milwaukie, Tigard, West Linn, Wood Village, Clackamas
-   ZDO, two state texts) show the stored text, no HTML snapshot is kept, cited
-   lines lit and the number tinted, labelled "web code -- no printed page";
-   answers go to the same table with page NULL and placed = "web" (no migration;
-   no source-kind column exists); (b) nothing reads the problems list yet -- wire a "differs" into
-   the signing disputes so the number reopens there.
+   (`/flats/check/problems.txt`, stamps `bundled_at`). (a) DONE -- web
+   codes show the stored text with the number tinted (3267d23a on main;
+   answers go to the same table with page NULL and placed = "web").
+   Still open: (b) nothing reads the problems list yet -- wire a "differs"
+   into the signing disputes so the number reopens there.
 24. [scan: YES] **Oregon City 16.12.035.F -- one driveway approach per two townhouses
    (Steph 2026-09-30, from the page check).** "Townhouses shall have one
-   driveway approach for every two dwelling units (round up ...)". Not
-   encoded and not among the file's NOT ENCODED notes (E.1, the middle
-   housing "may be allowed one per two units", is). Read as a requirement it
-   asks two approaches for the four-unit pod on unit lots, where the plan
-   draws one shared drive; read as a cap it never binds. RULED by Steph
-   2026-09-30 (page-check flag #1): a REQUIREMENT -- two separate approaches
-   for the pod; "I don't think we're counting for anything more than 1".
-   Next: a field for approaches required per N townhouses + the site plan
-   drawing (and charging frontage for) a second approach; check which other
-   cities state the same rule before building it for one.
-   BUILT 2026-10-10 on flats/oc-two-approaches (aa1dff63 + ac827c09, needs a rebase), NOT
-   MERGED: optional driveway_units_per_approach = 2, Oregon City only; a lot needing two is
-   YELLOW (DRIVEWAY-SECOND-APPROACH, sev 5) until item 25 can prove a second approach fits.
-   BOUND (OC 11,944 lots): 2,197 greens -> yellow (nearly every OC green), 0 gained, no red
-   moves. OFFERED TO STEPH 2026-10-10: merge before the weekly (OC greens go yellow until
-   item 25) or hold; and whether to start item 25 (a major build, on hold by Steph).
-   STEPH 2026-10-10: (A), then asked whether state law overrides the rule. MERGE HELD. Coordinator
-   reading (stored text): OAR 660-046-0020(4) counts DRIVEWAYS as a design standard;
-   660-046-0225(1)(c): a Large City (OC is in Metro) may apply only Model Code standards, less
-   restrictive ones, or the SAME as detached houses, and "design standards may not scale by the
-   number of dwelling units"; 660-046-0220(2)(e)(E) and (3)(f)(C): the SAME access standards as
-   detached houses (OC 16.12.035.D.1: a house on one local frontage gets exactly one driveway).
-   OC's own 17.16.040.B.3 (rear-parked townhouses, no corner lot) says "consolidate access for all
-   lots into a single driveway"; B.2 corner lot: a single driveway on the side. So F likely cannot
-   demand a second approach for the pod. NOT YET READ: the Large Cities Model Code itself
-   (660-046-0010(4)(b), not in the store) -- if it states a per-unit approach ratio, OC may apply
-   it. AGENT INSTRUCTIONS GIVEN 2026-10-10 ("driveway-state-law"): fetch the Model Code, settle it,
-   sweep every encoded city for any driveway/curb-cut per-unit ratio, report before encoding.
-   RULED 2026-10-10 (driveway-state-law, branch flats/driveway-state-law): (i) STATE LAW
-   OVERRIDES F. Large Cities Model Code (Exhibit B, stored) has NO per-unit minimum: townhouse
-   "maximum of one (1) driveway approach ... for every townhouse", no corner lot "consolidate
-   access for all lots into a single driveway". 0225(1)(c) + 0220(3)(f)(C) bar F as requirement
-   or cap. HB 2138 s.22 strengthens, not weakens. No 0235 alternative-standards filing found
-   for OC Ord. 22-1001 (reopen if one turns up). Recorded as NOT ENCODED/overridden in
-   oregon-city.yaml; no colour moves (the pod keeps one approach). Sweep: no other encoded city
-   states a per-unit approach MINIMUM; Hillsboro/Tigard cap "one per two units" (never binds a
-   one-approach pod). DURHAM 7.12.9 pairing = an option for front drives, the pod uses Option 2 (rear
-   court): nothing to encode. CORNELIUS (R-7/R-10/A-2/CR/GMU) "not more than two lots may be served by
-   one shared driveway" is NOT state-overridden (it binds detached lots too) and would need a 2nd
-   approach on the unit-lots plat; not encoded (no field, item 25 held); run 70 Cornelius = 0 green,
-   so no colour moves. REOPEN when Cornelius is signed or item 25 is built. Do NOT merge flats/oc-two-approaches; Steph to confirm, then delete it. Item 25
-   no longer needs a second approach for item 24.
-   AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-two-approaches"; reach first,
-   bound + read every move, lands at the weekly; stop and ask if it needs
-   item 25's approach geometry).
-   STEPH 2026-10-10: ENCODE the city rule anyway, with the state override on top, so a
-   pre-emption filing by OC or a change in state law flips it back by deleting one override.
-   AGENT INSTRUCTIONS GIVEN 2026-10-10 ("oc-driveway-preempt"): reuse the field/flag/screen code
-   from flats/oc-two-approaches, OC value 2 cited to F, a _state.yaml preempts entry cited to
-   OAR 660-046-0225(1)(c) + the stored Model Code; expected moves ZERO, proven by an OC bound.
+   driveway approach for every two dwelling units (round up ...)". RULED by
+   Steph 2026-09-30 (page-check flag #1; register
+   `2026-09-30-oregon-city-two-approaches-requirement`): a REQUIREMENT --
+   two separate approaches for the pod; "I don't think we're counting for
+   anything more than 1". STEPH 2026-10-10 then asked whether state law
+   overrides the rule. RULED 2026-10-10 (driveway-state-law): (i) STATE LAW
+   OVERRIDES F. Large Cities Model Code (Exhibit B, stored) has NO per-unit
+   minimum: townhouse "maximum of one (1) driveway approach ... for every
+   townhouse", no corner lot "consolidate access for all lots into a single
+   driveway". OAR 660-046-0225(1)(c) ("design standards may not scale by the
+   number of dwelling units") + 0220(3)(f)(C) bar F as requirement or cap.
+   0220(2)(e)(E) and (3)(f)(C) also require the SAME access standards as
+   detached houses (OC 16.12.035.D.1: a house on one local frontage gets
+   exactly one driveway), and OC's own 17.16.040.B.3/B.2 consolidate access
+   into a single driveway. HB 2138 s.22 strengthens, not weakens. No 0235 alternative-standards
+   filing found for OC Ord. 22-1001 (reopen if one turns up). Sweep: no
+   other encoded city states a per-unit approach MINIMUM; Hillsboro/Tigard
+   cap "one per two units" (never binds a one-approach pod); Durham 7.12.9
+   pairing is an option the pod does not use. STEPH 2026-10-10: ENCODE the
+   city rule anyway, with the state override on top, so a pre-emption
+   filing by OC or a change in state law flips it back by deleting one
+   override (register `2026-10-10-oregon-city-encode-approach-rule-with-override`).
+   STATUS 2026-10-16: BUILT on flats/oc-driveway-preempt (0c1acab7, f08c5766,
+   3fface67; worktree .claude/worktrees/bridge-cse_01AscZHMyQcrv55zaVAUrca4),
+   OC bound read: ZERO colour moves, as expected. NOT MERGED -- merge it.
+   Do NOT merge flats/oc-two-approaches (the old requirement build: 2,197
+   OC greens -> yellow); Steph to confirm, then delete it.
+   CORNELIUS (R-7/R-10/A-2/CR/GMU) "not more than two lots may be served by
+   one shared driveway" is NOT state-overridden (it binds detached lots too)
+   and would need a 2nd approach on the unit-lots plat; not encoded (no
+   field, item 25 held). REOPEN when Cornelius is signed or item 25 is built.
 25. [scan: YES, when built (on hold)] **Driveway approach geometry, ahead of a second approach (Steph
    2026-09-30, flag only -- do not build yet).** What is measured today: the
    drive lane's width (`driveway_min_width_one_way_ft` / `_two_way_ft`, read
@@ -1026,16 +483,12 @@ read when the weekly full re-screen lands.
    from the corner (Oregon City Table 16.12.035.A, refused as NOT ENCODED),
    the 5 ft offset from the property line (OC note 2, a known live gap), and
    any "combine approaches"/one-per-frontage limits (OC 16.12.035.D: one per
-   local frontage, never more than two). Once item 24 makes the pod draw two
+   local frontage, never more than two). If the pod ever draws two
    approaches, all of these start to bind together: per-approach width,
-   spacing between them, offset from lot lines, count per frontage.
-26. [scan: YES] **Page check: whole-document read-through -- SHIPPED 2026-10-16.**
-   `/flats/check/readthrough` lists every printed document with its latest
-   human, time and comment count. The separate reader shows all mapped pages
-   with headings and the card view's encoded-rule tint, arrow-key navigation,
-   page-aware browser-drafted comments and optional drag marks; one append-only
-   submission records the reader and notes at the end. The number-card flow
-   is unchanged.
+   spacing between them, offset from lot lines, count per frontage. Since
+   2026-10-10 Oregon City's second approach is overridden by state law
+   (item 24), so the remaining trigger is Cornelius's two-lots-per-shared-
+   driveway limit (item 24).
 27. [scan: YES for (a) if the answer changes the rule; NO for (b)] **Steph's Oregon City page check (2026-10-01): what is left.** All of
    her answers triaged; card and reader fixes shipped (set-aside tint,
    other numbers held, yes/no cards say where they were read, smaller-face
@@ -1047,147 +500,65 @@ read when the weekly full re-screen lands.
    topography) held as binding; ask Steph whether the "differs" was the
    escape. (b) Other cities' prose refusals still need locating into
    `set_aside:` so their pages tint grey.
-27. [scan: YES (parked)] **Parking layout generator (Steph 2026-10-01: "more parking flexibility
-   opens up more lots"; don't invent shapes).** PARKED by Steph 2026-10-04
-   ("leave the free form generator for now"). SCOPING, nothing built.
-   Steph's frame: NOT a menu of shapes -- feed the city's parameters (stall
-   sizes per angle, aisle widths, number of drives -- Oregon City wants one
-   approach per two townhouses = 2 for the pod -- backing rules, setbacks)
-   and let it find ANY valid layout, odd angles and leftover shapes
-   included ("yes, SOME solution works"; TestFit does this commercially).
-   Cheap pre-defined shapes may run first as a lite screen, the generator
-   only where they fail. Pool (run 49): ~108k lots fail ONLY on the court
-   behind (Portland 78k) + ~32k ambiguous. Corpus: no field holds parallel/
-   angled stalls or backing-into-street limits yet (Happy Valley 16.43.030.I
-   exemption and Sherwood 9x20 unencoded). Steph sent 8 references (MDPI
-   2075-5309/13/11/2898, arXiv 2407.01333, Grasshopper parking solvers,
-   IAAC, nvdomidi/ProceduralGenerator) -- digested: none solves it, none
-   checks a turning path; lessons: access first, lot-edge angles first, an
-   independent validator, score against real approved site plans.
-   PROPOSED time box: simple shapes (1-2 sessions) + generator prototype on
-   137 (<= 2 sessions, 5,000 failing lots); continue only if it adds lots
-   beyond the shapes, zero false fits in hand review, <= ~3 s a lot.
-   HUMAN VERIFICATION (Steph): an annotated image per layout -- every
-   distance dimensioned and tagged, a table of required vs measured with the
-   citation behind each number; physical numbers no code states (design
-   car, turning radii, inside-corner offset, end-stall width, dead-end
-   extension, driveway spacing) from official/industry standards in a cited
-   registry (research running); a review queue like the page check; zero
-   false fits before any promotion. RESTRICTIONS ARE HARD LIMITS (Steph):
-   moving the building never licenses a drive or court the code forbids
-   (side-street-only entrance, front/side parking bans, frontage caps). GAP
-   that matters now: `lowest_class` corner lots (Clackamas, Milwaukie,
-   Oregon City, West Linn, Wilsonville, Fairview) -- no street's functional
-   class is measured (6(c)), so today's lane may sit on the busier street;
-   measure it per edge from RLIS street TYPE in s4 and re-check today's
-   greens there. Awaiting Steph's go.
+27b. Moved to 92 (Parking layout generator, the second item numbered 27).
 29. [scan: YES for (C) when widths arrive; (A)/(B) checked after the weekly run] **Fire reach: measure where the truck really stands (Steph 2026-10-01,
    "later improvement"; RULED 2026-10-05).** Item 28 (the 150 ft hose,
-   OFC 503.1.1) is LIVE since run 59. RULING 2026-10-05 (no national
-   standard; one Southern California template says "10 feet from the edge
-   of the curb"): Steph "Let's go with stricter" -- the hose starts 10 ft
-   out from the NEAR curb, capped at the street's middle; "with a flag to
-   check later" -- FIRE-HOSE-START (severity 1, the plan stays red) where
-   the hose is the one bind and the route clears measured from the curb.
-   (A) SHIPPED d8880db1 2026-10-05, deployed (NOT in a promoted run yet --
-   it lands with the next re-screen). flats/geom/curbs.py reads PBOT
-   Curbs + PaveWidth, Multnomah RoadWidth, Wilsonville Width; a drawn curb
-   loosens only where a recorded width agrees within 4 ft. Bound: 25 lots
-   worse on the map (Portland 23, Wilsonville 2; every one a street under
-   40 ft), 3 better (wide main roads with an agreeing drawn curb); 0 worse
-   / 1 better over the other 4,579 lots it could touch.
-   (B) Steph 2026-10-05 "Assume narrow": a street with no measured width is
-   the narrowest a truck may use (20 ft, OFC 503.2.1) until measured -- the
-   hose starts at its middle; FIRE-HOSE-START says a width may lift it.
-   SHIPPED 57313463 2026-10-05 (Steph "Yes, ship it now"), deployed; lands
-   with the next re-screen. The bridge now REFUSES a --curbs/--sources snapshot missing
-   any of curbs_portland, pave_width_portland, road_width_multnomah,
+   OFC 503.1.1) is LIVE since run 59. RULING 2026-10-05 (register
+   `2026-10-05-fire-hose-from-curb`; no national standard; one Southern
+   California template says "10 feet from the edge of the curb"): Steph
+   "Let's go with stricter" -- the hose starts 10 ft out from the NEAR
+   curb, capped at the street's middle; "with a flag to check later" --
+   FIRE-HOSE-START (severity 1, the plan stays red) where the hose is the
+   one bind and the route clears measured from the curb.
+   (A) SHIPPED d8880db1 2026-10-05: flats/geom/curbs.py reads PBOT Curbs +
+   PaveWidth, Multnomah RoadWidth, Wilsonville Width; a drawn curb loosens
+   only where a recorded width agrees within 4 ft.
+   (B) Steph 2026-10-05 "Assume narrow" (register
+   `2026-10-05-unmeasured-street-narrow`): a street with no measured width
+   is the narrowest a truck may use (20 ft, OFC 503.2.1) until measured --
+   the hose starts at its middle; FIRE-HOSE-START says a width may lift it.
+   SHIPPED 57313463 (Steph "Yes, ship it now").
+   CHECK after the weekly (not recorded done): the bound's county estimate
+   was ~360 worse (sample range ~270-500), ~150 of them green today
+   (~100-250); every bound loss was read (181 routes 140-150 now 150-160).
+   TRAP: the bridge REFUSES a --curbs/--sources snapshot missing any of
+   curbs_portland, pave_width_portland, road_width_multnomah,
    width_wilsonville: the weekly run must acquire them (or pass --curbs
    /root/fire-curb_sources/2026-10-05), and so must any lane's bound.
-   BOUND 2026-10-05 (before d8880db1 / after a7b51185, same curbs): the
-   4,312 lots whose run-63 route is 125-160 ft: map colour 170 worse
-   (green->red 79, green->yellow 7, yellow->red 84), 2 better; 3,000 random
-   of the other 47,836: 12 worse (2 / 2 / 8), 0 better. County estimate
-   ~360 worse (sample range ~270-500), ~150 of them green today (~100-250);
-   Washington uninc 65, Beaverton 23, Clackamas uninc 16, Oregon City 14,
-   West Linn 14 of the 182 found. Every loss read: 181 routes 140-150 now
-   150-160; 1 Hillsboro lot is the worse of two readings (doubtful private
-   drive). 176 of 182 carry FIRE-HOSE-START; 4 without still reach (moved
-   onto a slope warning), 2 Gladstone redraws report steep ground / fit
-   instead of the hose (red either way). Both gains read: the hose miss
-   moved the building on the same lot onto ground under 5% -- the slope
-   warning was where the default drawing stood, not the lot (slope lane:
-   the placement does not search for flatter ground). Scripts
-   /root/fire-curb_probe/{pick_b,lotview_b,losses_b}.py.
    (C) Ask Washington County, Clackamas County and West Linn for their
    pavement widths -- DEFERRED, Steph: "follow up with them later". Also
    published but unused: Oregon City Edge of Pavement (CAD, undated),
    Hillsboro Roadway polygons (mixed with parking lots). Not reachable
    from here: Beaverton, Gresham. Scripts /root/fire-curb_probe/; detail
-   in memory project_flats_fire_curb. Not tied to the 10-08 re-screen.
-
+   in memory project_flats_fire_curb.
 30. [scan: NO new code, check after the weekly run] **Net land area review (Steph 2026-10-01: "not unique to Beaverton ...
    we need to do a review of net land areas and what to do about it").**
-   129 numeric values in 10 layers carry `measured_on: net_developable_area`
-   (HV, Milwaukie, OC, West Linn, Fairview, Gresham, Troutdale, Beaverton,
-   Cornelius, Hillsboro); nothing measures net area, so the check settles
-   one way from gross and holds the lot otherwise. Run 51 best-pod lots with
-   a net check unsettled: Beaverton 20,341, West Linn 9,511, Hillsboro
-   2,969, Gresham 2,339, Oregon City 1,105, Fairview 174, Happy Valley 97
-   (~36,500; net area is the ONLY hold on just 165 -- other holds mask it).
-   Ceilings (max density/FAR) mostly have wide margins (Beaverton 14,818 of
-   17,589 survive losing 1/3); near-cap lots in OC/Hillsboro/HV do not.
-   Floors (min density, big lots): ~6,600 pass only if >10% is deducted.
-   What each city subtracts (agent read, 2026-10-01): existing ROW is
-   already outside a tax lot; new street dedication/tracts/parks/private
-   streets arise in land divisions (not measurable); floodplain measured
+   SHIPPED d8d4a439 (run 61) + the 2026-10-04 additions (183 values) +
+   slopes 995f0007. Steph 2026-10-02: **A** (register
+   `2026-10-02-existing-lot-dedicates-nothing`: an ordinary existing lot =
+   no new dedication/tract, net = gross minus what we measure per the
+   city's own list), and "lots that fail for the only reason of min
+   density need to go not red. Some sort of yellow or 'closer look'"
+   (interim, until 31; later "a flag, maybe a 2", register
+   `2026-10-02-minimum-density-a-flag`). Beaverton rulings ANSWERED
+   2026-10-02 (register `2026-10-02-beaverton-common-driveway`): the pod's
+   lane + aisle ARE a "common driveway" (stalls stay in), and constrained
+   land comes off whether or not set aside in a tract ("very few will have
+   done that") -- certain deductions in Beaverton and Cornelius 18.195
+   (Metro wetland/habitat stand-ins stay `may_less` as regional proxies).
+   CHECK after the weekly (not recorded done): run 63 had 2,077 lots in the
+   2026-10-04 net-floor zones (King City KT, Wood Village LR/MR, Washington
+   Co. TO:R24-40/TO:R40-80/NMU/CCMU/CBD), 419 failing the floor on the
+   whole lot -- they land at the full re-screen.
+   Still unmeasured (kept as `may_less` / `assumed_none`): floodplain area
    (only yes/no reaches FLATS; quadfit has ovl_<key>_sqft areas, not
-   bridged); resource overlays carved in Gresham/OC/WL/Troutdale, area held
-   in quadfit for HV/Milwaukie/Hillsboro/Beaverton (Metro proxy), NOTHING
-   for Cornelius; slopes: lidar held, no "area over 25%" computed; no
-   landslide layer. Gresham 3.0100 has two lists; its max density outside
-   the LDR group is gross by the code's own words (settle now). Fairview
-   subtracts street ROW only (= gross on an existing lot).
-   Possible encoding gaps: Tigard MU-CBD 25/50 du/ac may be net (18.40
-   "net development area") -- false-GREEN risk, read first; King City KT
-   min densities "per net acre" unmarked, Wood Village defines "Land area,
-   net" (720.030 L224-234) though the yaml says undefined, Washington Co.
-   min density may exclude constrained land -- all three false-RED only.
-   Beaverton rulings owed: is the pod's own drive aisle a "common driveway";
-   do wetlands count only when set aside in a tract/easement.
-   OFFERED Steph: (A) ordinary existing lot = no new dedication/tract, net =
-   gross minus what we measure per the city's own list (floodplain,
-   overlays, slopes) -- settles nearly all, big lots under a floor go red;
-   (B) margin rule (settle when the lot could lose 1/3) -- ceilings settle,
-   near-cap and floor lots stay held; (C) leave held. Steph 2026-10-02:
-   **A**, and "lots that fail for the only reason of min density need to
-   go not red. Some sort of yellow or 'closer look'" (interim, until 31).
-   SHIPPED d8d4a439 (deployed 2026-10-02): all 170 net-area values carry
-   `less` / `may_less` / `assumed_none`; net area is a range (overlaps
-   unknown), settled when both ends agree; min density alone = yellow
-   CLOSER_LOOK_MIN_DENSITY. RUN 61 PROMOTED 2026-10-02 (131,039 lots
-   at 6d9f7197, spliced on bridge_spliced_2026-10-02_draw; drift 59->61
-   5,765 moved / 0 unexplained: 5,733 unknown->yellow as FAR + min
-   density settle -- Beaverton FAR 32,240 rows, West Linn FAR 11,700 --
-   29,626 rows now carry the closer look; 23 green->unknown + 6 ->red
-   are FIRE, lots no fire partial had re-bridged, reported to the fire
-   session).
-   Beaverton rulings ANSWERED (Steph 2026-10-02): the pod's lane + aisle
-   ARE a "common driveway" (neither code defines one; stalls stay in), and
-   constrained land comes off whether or not set aside in a tract ("very
-   few will have done that") -- both now certain deductions in Beaverton
-   and Cornelius 18.195 (Metro wetland/habitat stand-ins stay `may_less`
-   as regional proxies). Tigard read: MU-CBD's 25/50 per acre is not
-   stated net in 18.650 (no false GREEN); Tigard FAR is net but no FAR is
-   encoded. 2026-10-04: King City KT (4), Wood Village LR/MR (4) and
-   Washington Co. TO:R24-40/TO:R40-80/NMU/CCMU/CBD floors now net (183
-   values); Wood Village floodplain certain, the rest `may_less`; NB floors
-   and county maxima stay gross by 300-2.8's words. Run 63: 2,077 lots in
-   those zones, 419 failing the floor on the whole lot -- lands at the next
-   FULL re-screen. Lot page names each net-land list + what was assumed
-   absent (rules read at view time). (e) slopes: SHIPPED 2026-10-04 with
-   item 38(b) -- lidar measures each city's slope item; only the
-   landslide-area slopes stay assumed absent (see 38).
+   bridged); resource overlay area held in quadfit for HV / Milwaukie /
+   Hillsboro / Beaverton (Metro proxy), NOTHING for Cornelius; landslide-
+   area slopes (declined, register `2026-10-05-landslide-slopes-declined`). Gresham 3.0100 has two lists; its max density
+   outside the LDR group is gross by the code's own words. Tigard read:
+   MU-CBD's 25/50 per acre is not stated net in 18.650 (no false GREEN);
+   Tigard FAR is net but no FAR is encoded. NB floors and county maxima
+   stay gross by 300-2.8's words.
 31. [scan: YES (not started)] **Split a big lot to meet a minimum density (Steph 2026-10-02: "create
    a task for later ... immensely complicated ... large guesstimates on
    roads, utilities, etc. maybe never done").** A lot too big for 4 homes
@@ -1212,198 +583,80 @@ read when the weekly full re-screen lands.
    instead was DECLINED by Steph 2026-10-04 -- do not re-offer.
 33. [scan: YES for (c) and any speed-up (must prove identical answers)] **Parking court leftovers (fix ca26e048 LIVE as run 63, 2026-10-02:
    drift 61->63 green->yellow 3,459, unknown->yellow 4,453, 0 unexplained).**
-   Still open ((a), the court beside the building, fixed f7ba7038):
+   Still open ((a), the court beside the building, fixed f7ba7038; (d) the
+   scanline raster ce65b86b DONE, 2.2-2.6x faster):
    (b) lots outside the 15,940 scoped whose court stands in a side or front
-   yard INSIDE the lot are corrected only by the next full re-screen;
+   yard INSIDE the lot are corrected only by the next full re-screen
+   (weekly run 65 onward -- not recorded as checked);
    (c) s5o-envelope lots use the whole lot (less carve) as the court's
-   ground; (d) DONE ce65b86b 2026-10-04: scanline raster + longest-run depth
-   (`flats/fit/raster.py`) -- bridge 2.2-2.6x faster, answers identical on
-   every column (bound on 137: 2,000 Multnomah + 2,000 Washington lots +
-   60 mixed; random-shape harness 0 cells gained). Next levers if needed:
-   `has_window` in the court searches, `ground_for`.
+   ground. Next speed levers if needed: `has_window` in the court
+   searches, `ground_for`.
 36. [scan: YES] **Parking tool queue (Steph 2026-10-02: "do them in the reverse order
-   you listed them").** (5) partly, (4) and (3) LIVE as code f7ba7038; the
-   re-screen rides the weekly full run (~10-08) -- read the moves on
-   corner lots with `lowest_class` and in Tualatin, Gladstone, Multnomah
-   uninc and Hillsboro. Left of (5): strips not yet encoded -- Wood Village
-   350.065(C) and Oregon City 17.52.060.C (one-lot projects only), Happy
-   Valley 16.43.030.E.3 and Troutdale 9.095(A) (the neighbour district's
-   setback; needs per-line neighbour zoning), Tigard 18.280.040.D.4 (width
-   in unstored 18.420); unread chapters ZDO 1009, West Linn CDC 54,
-   Washington CDC 407-6, Sherwood 16.92, King City 16.124, Tigard 18.420,
-   Troutdale Ch. 11; Fairview 19.163.030(E) 5% of the parking area.
-   QUESTION for Steph: OAR 660-046-0220(2)(e)(E) makes large cities apply
-   single-family parking standards to middle housing -- it may cancel the
-   strips single-family homes are not held to (Multnomah, Gladstone,
-   Hillsboro, Wood Village, Oregon City); encoded strict meanwhile.
-   RULED Steph 2026-10-04: "Let's have strips be a flag for yellow at this
-   time" -- DONE 1d3c89cb: a plan that misses only by the strip (court-shaped
-   checks, fire route, steep ground, within 3 strip widths) and clears with
-   it read as unstated is YELLOW with flag PARKING-STRIP-UNCONFIRMED.
-   Bound 2026-10-04 (21,700 lots): Gladstone 32 red->yellow, Tualatin 50,
-   Multnomah uninc 7, Hillsboro 4; 0 lots worse. Rides the weekly full
-   re-screen. The OAR question still decides whether the flag can clear.
-   STRIP IMPACT measured 2026-10-04 (bound on 137, strips on vs off, best
-   pod as if signed): Gladstone 384 -> 445 green of 3,217 (+61), Multnomah
-   uninc 885 -> 898 of 2,213 (+14 gained, 1 lost), Hillsboro 2 -> 5 of a
-   4,000 sample (~+20 of 27,402). Steph: "planter strips aren't parking,
-   they're landscaping" -- the OAR question stands. The few lots that got
-   WORSE with more ground are item 39 (fire route), not strips.
-   (2) turning path LIVE as code 1723db45 (2026-10-04, Steph "ship it"):
-   every stall must be usable by the AASHTO P car (three-point turn ok);
-   ledger `flats/config/court_turns.json` holds a menu of fixes per court
-   shape (deeper aisle, wider stalls, mixed, dead end last), least paving
-   first. The re-screen rides the weekly full run (~10-08) -- expect ~3%
-   of Portland greens on narrow end-on lots to go yellow (bound: 18 of
-   561), and read the moves. A new court shape in the corpus needs
-   `python -m flats.score.turns` (test_turns fails until it is solved).
-   (1) the free-form generator (item 27) -- PARKED by Steph 2026-10-04
+   you listed them").** (5) partly, (4) and (3) LIVE as code f7ba7038;
+   (2) turning path LIVE as 1723db45 (Steph "ship it"; register
+   `2026-10-02-three-point-turn`: every stall usable by the AASHTO P car,
+   three-point turn ok; ledger `flats/config/court_turns.json`). TRAP: a new
+   court shape in the corpus needs `python -m flats.score.turns`
+   (test_turns fails until it is solved).
+   CHECK after the weekly (not recorded done): read the moves on corner lots
+   with `lowest_class` and in Tualatin, Gladstone, Multnomah uninc and
+   Hillsboro; turning path expected ~3% of Portland greens on narrow
+   end-on lots to go yellow (bound: 18 of 561).
+   Strips: RULED Steph 2026-10-04 (register `2026-10-04-planted-strips-yellow`):
+   "Let's have strips be a flag for yellow at this time" -- DONE 1d3c89cb:
+   a plan that misses only by the strip and clears with it read as
+   unstated is YELLOW with flag PARKING-STRIP-UNCONFIRMED. STRIP IMPACT
+   (bound 2026-10-04, strips on vs off): Gladstone 384 -> 445 green of
+   3,217 (+61), Multnomah uninc 885 -> 898 of 2,213, Hillsboro ~+20 of
+   27,402. Steph: "planter strips aren't parking, they're landscaping".
+   QUESTION for Steph, still open: OAR 660-046-0220(2)(e)(E) makes large
+   cities apply single-family parking standards to middle housing -- it
+   may cancel the strips single-family homes are not held to (Multnomah,
+   Gladstone, Hillsboro, Wood Village, Oregon City); encoded strict
+   meanwhile. The OAR question decides whether the flag can clear.
+   Left of (5): strips not yet encoded -- Wood Village 350.065(C) and Oregon
+   City 17.52.060.C (one-lot projects only), Happy Valley 16.43.030.E.3 and
+   Troutdale 9.095(A) (the neighbour district's setback; needs per-line
+   neighbour zoning), Tigard 18.280.040.D.4 (width in unstored 18.420);
+   unread chapters ZDO 1009, West Linn CDC 54, Washington CDC 407-6,
+   Sherwood 16.92, King City 16.124, Tigard 18.420, Troutdale Ch. 11;
+   Fairview 19.163.030(E) 5% of the parking area.
+   (1) the free-form generator (item 92) -- PARKED by Steph 2026-10-04
    ("leave the free form generator for now").
 37. [scan: YES for (iii); NO for (f)] **Flag system plan ("FLATS Flag System Plan.md", Steph 2026-10-02) --
-   slice 1 + approval page DEPLOYED 2026-10-03 (Steph: "Deploy"), merge
-   34963899 on main; no lot colour moves until the next bridge run writes
-   the new columns (planned with the ~10-08 full re-screen, item (c)).** Steph's answers: (1) no variances, a miss with a path
-   is RED, path logged on the bind; (2) a flag below the line (severity < 3)
-   keeps the lot green; (3) min density = low flag (severity 2 -> green);
-   (4) colour stays "as if signed". Slice 1: flats/score/flags.py (Flag,
-   Bind, colour, write gate), flags.yaml (68 types, all pending), colour.yaml
-   (pending); screen/bridge/assign write colour+flags+binds beside the old
-   triage; loader stores them in lot_results.checks; the map still shows
-   if_signed. Expected shift (run 63 base): most of 330k yellow -> red
-   (653k of 675k yellow rows rest on RELIEF_UNCONFIRMED); use gates with a
-   conditional-use path (~1,900 rows) also go red. REMAINING vs Steph's
-   plan checklist (offered 2026-10-02, order recommended): (a) trial count
-   DONE 2026-10-03 on 137 (/root/bridge_flags_trial, 10,000 lots seed 23,
-   branch code in /root/code/flags-trial, compare script
-   /root/flags_trial_compare.py): best pod per lot green 1,594 -> 1,783,
-   yellow 7,952 -> 675, unknown 345 -> 0 (unknowns become yellow), red 109
-   -> 7,542; yellow->red 7,427 (fit short 20+ ft dominates); yellow->green
-   189 (min density only); unknown->red 6 (prohibited use); no green moved;
-   no crash; the run-63 SQL prediction agreed on 99.76% of rows. Steph
-   RULED 2026-10-03 "Exactly 1 foot is red": the fit moves in half-foot
-   steps and 6 in short is already green-with-flag, so the near-miss band
-   holds no lot today; the ~1,900 lots short by exactly 1 ft go red. Also: an
-   ambiguous rule set binds nothing, so ~0.07% of rows stay yellow despite
-   a 50+ ft fit miss (Wilsonville R, Hillsboro SCR-V) -- by design. (b) APPROVAL PAGE BUILT 2026-10-03 9faf1664 on the branch: /flats/flags "Unknowns" (owner-only approve, waiting kinds on top), flats.flag_decisions (0139), scripts/flats_drain_flag_decisions.py (only writer of status: approved); LIVE 2026-10-03, E2E tests/e2e/test_flats_flags.py 3/3 green on prod; drain on 114 needs --registry-out/--colour-out on /app/data. Still open in (b): per-lot flag instances with open/cleared history in the DB + review queue. Was: DB tables (flag type / instance with open-cleared
-   history + review note / bind) + one write path + approval page where
-   Steph sets the 68 types' numbers (agent can only propose) + review
-   queue; (c) map + lot page show the new colour with its reasons; ship on
-   the weekly full re-screen (~10-08) = the plan's snapshot + rerun +
-   reconcile, leftovers = audit list; (d) nightly consistency check, counts
-   per type/key by colour, work queue (priority then yield), design
-   sensitivity report (needs binds to name the pod dimension + the pass
-   threshold + pod version -- not stored yet); (e) severity 0 for flags
-   cleared at the worst bound; (f) Phase 4 pod spec, deferred by the plan.
-   Steph 2026-10-03: "measurement" (the code works it out from maps) is THE
-   PREFERRED resolution type -- the other three (inquiry, document, per-lot
-   review) are "the failure mode"; flag tables live in the app DB from the
-   start ("flags and warnings are equivalent data points just like a min
-   setback is"); NO DEADLINE for a pending flag type (pending types top the
-   approval page + the count is mentioned at session start). Plan gaps: flag history
-   across county refreshes; bulk writes through the loader.
-   Live run 63 breakdown of 329,484 yellow lots (best pod): 318,290 break a
-   rule as read; fit short >20 ft 220,618 / 5-20 66,903 / 1-5 19,925 / <1
-   1,887; fits but misses another rule 8,957; 129,219 also carry unknowns;
-   11,194 yellow with no miss. Steph RULED: short by 1 ft or more -> red
-   (pull back later for targeted variances / no-parking ideas); under 1 ft
-   -> yellow (near_miss in colour.yaml, built on the branch). Unknown facts
-   on yellow lots: mostly mappable (local_street 28k, north_of_marine_drive
-   20k, through_lot 20k, water 10k, historic 8k) vs needs a title report
-   (utility_easement 28k, sidewalk_easement 20k) -- offered as next work.
-   Steph 2026-10-04: "Start number 2 [measure] first, then 1 [map + lot
-   page], then continue". ALL BUILT + DEPLOYED 2026-10-04 (6eb14ffe on
-   main): (2) measured through_lot, OC NROD water, West Linn WHD, Gresham
-   north of Marine Dr + held_open guard -- bound 10k seed 23: 75 rows
-   yellow->green (all West Linn outside WHD), nothing lost, no reds; (1)
-   lot page shows rule colour + misses + open questions (9ed00826, 0140);
-   (e) severity 0 at the worst bound (85712ad6, `_bounded`): partial bound
-   15/4,000 rows yellow->green (local_street, flag_lot, abuts_*_zone); most
-   fact flags sit on footnotes with no stated direction so cannot drop --
-   extending = encode each capped footnote's direction; (b-rest) flag
-   history flats.flag_instances + question queue /flats/flags/questions
-   (0141, nightly sync 10:30 UTC, scripts/flats_flags.py sync|ask|check);
-   (d) /flats/flags/queue (priority, then lots it turns green alone) +
-   nightly check + pod width report /flats/flags/report (0142) -- FIT
-   ONLY. NOTHING SHOWS until a run screened under the colour rule is in
-   use (the ~10-08 re-screen); after promoting it run `scripts/flats_flags.py
-   sync` then `check` on 114. Item-3 bound DONE: 20k rows,
-   74 yellow->green, all severity-0 fact flags, no reds, no fit change;
-   timing 2,000 lots same load: 1,873 s without vs 2,029 s with (+8%);
-   cbc47269 (True-first + seen-standards dedupe) identical output, LIVE.
-   The ~10-08 re-screen must run from main >= cbc47269. (ii) DONE 2026-10-05 79dff142+7dc34722 (check-margins
-   lane): the bridge keeps {check: [observed, threshold, room]} for every
-   PASSING check (lot_results.checks->'margins'); /flats/flags/report charges
-   a wider pod on coverage/FAR/paving/open space too, tries the pod taller and
-   lower, and shows "room to spare on green lots" per limit. Bound on 137 (10k
-   lots seed 23, old vs new): 0 colours moved, every column identical. The ~10-08
-   re-screen carries it only if run from main >= 7dc34722; nothing shows
-   until that run is in use. ROOM EACH WAY DONE 2026-10-05
-   794b5f3d+f3408efa (Steph: "we need all dimensions ... oddly shaped
-   lots?"): on every green/yellow lot whose fit passes outright the bridge
-   searches the real lot shape, in the plan the screen took, for how much
-   WIDER, DEEPER and BIGGER BOTH WAYS the pod could be (checks.fit.room,
-   capped 40 ft; tight-fit and non-fitting lots carry none, by design). The
-   report tries the pod wider / deeper / both ways each from that room and
-   counts "tight shapes" (both ways a foot+ less than either way alone).
-   Bound on 137 (10k lots seed 23): every old column identical, 0 colours
-   moved; room on 2,828 rows (1,848 of 1,850 greens); 638 a half foot+ tight; 1,218 s ->
-   1,280 s (+5%). The ~10-08 re-screen carries it only from main >=
-   f3408efa (137's weekly checkout was still 0bf7c8e2 at 12:05 UTC 10-05).
-   OPEN: (iii) Gresham
-   note 5 "end of a Minor Access Street" held on `local_street` (wrong
-   fact) -- re-point + measure dead ends; worth little while
-   sidewalk_easement holds the same Gresham lots; (f) Phase 4 pod spec.
-38. [scan: NO new code, check after the weekly run] **Slope (Steph 2026-10-04: "work on slope ... on most small lots steep
-   slope would be disqualified due to build costs rather than net land").**
-   TODAY: quadfit s5o measures per-lot mean/p85/max slope % (3DEP 1 m lidar,
-   10 m DEM east of ~-122.48: Gresham/Troutdale/Fairview/Wood Village/east
-   Portland) and the bridge loads it onto `facts.slope`; the lot page prints
-   it. FLATS's verdict reads none of it (quadfit's old 10/20% p85 tiers held
-   lots for review; FLATS dropped that). `steep_slope` struck 2026-09-27 (no
-   rule uses it); slack.yaml slope_pct 2.0 tolerance unused. Hillside
-   overlays act only as carves (Gresham HGRO, Troutdale VECO) or a flag (HV
-   steep slopes). Run 63: of ~68,000 best-green lots, ~15,400 have p85 >20%
-   and ~10,800 >25% -- but 1 m pixel slope reads micro-relief (flat SE
-   Portland lots mean ~6% on 1 m vs ~3% on 10 m), so the statistic overstates
-   build grade. PLAN: (a) build-cost grade = fall across where the fit DREW
-   the building + court, from a smoothed lidar surface (plane fit), per
-   design; (b) net-land slope = lot area steeper than each city's threshold
-   (15/20/25%) measured over a code-like run, plus DOGAMI SLIDO landslide
-   areas where a list says "within a landslide hazard area"; (c) coarse-DEM
-   lots over a cutoff go yellow, never red. RULED (Steph 2026-10-04): pad
-   grade <=5% green, 5-15% closer look, >15% red; AND "slope-based lot
-   elimination should happen before pod placement ... measure how much of
-   the lot is sloped like that and subtract it and see if there's even
-   enough land for the pod. If no, don't check pod placement." and "Ignore
-   banks under 4 ft" (a patch falling <4 ft top to bottom is regraded, not
-   lost; ignoring steep ground in setbacks was tried at Steph's question
-   and brought back 1 of 101, so not adopted). SHIPPED (code only; nothing
-   live moves until a re-screen): flats/fit/slope.py + flats/config/
-   slope.yaml; ground >15% over a 5 m run comes off the envelope + court
-   ground before the fit, a fit lost to it is `steep_ground` (RED, no
-   relief), the drawn building + court is graded (SLOPE-GRADE sev 4 =
-   yellow, >15% on 1 m RED); coarse 10 m never RED. SAMPLE (2,000 lots,
-   seed 31, wash data): ~25% of greens go RED on steep ground (mostly real
-   hillsides, median lot grade 12%), ~7% yellow; the 4 ft bank rule
-   brought back 10 flat lots (pad <=5%). Bridge time +48% overall, ~2x on
-   lots with steep ground. LANDED: run 65 (weekly, promoted 2026-10-07);
-   49(e)/(f)/(h) fixes in run 67; the E2E slope test passes on production
-   (2026-10-08). (b) SHIPPED
-   2026-10-04 (code only): the bridge counts the lot area at >=20/25/35%
-   on 1 m lidar and hands it to the net-acre list as `slope_20/25/35`
-   (never on 10 m). Read per sentence: Hillsboro 12.01.500(6), Milwaukie
-   19.200, Cornelius R-7/A-2 = `less slope_25`; Oregon City 17.04.810(3)
-   `less slope_35` + `may_less slope_25` (director may lower it); West
-   Linn Type I/II "as shown on the RLIS layer" = `may_less slope_25`
-   (lidar stands in); Washington Co. 300-3.1(D) "may be excluded" =
-   `may_less slope_20`. SAMPLE (3,000 lots, seed 7): zero colour moves,
-   min-density failing rows 100 -> 96, bridge +9.5%. OPEN (offered to
-   Steph 2026-10-04, low payoff): slopes that count only "within a
-   landslide hazard area" -- Beaverton BDC 90 (Comp Plan Fig 8.6.1) and
-   Wood Village 720.030, both the applicant's option -- plus West Linn's
-   landslide areas on NHMP Maps 16/17. Needs DOGAMI SLIDO or the city
-   maps traced; today assumed absent. Steph 2026-10-05 DECLINED (agreed
-   to leave it) -- do not re-offer.
+   slices 1-(e) BUILT and LIVE** (34963899 slice 1 + approval page;
+   6eb14ffe measure + lot page; 85712ad6 severity 0; flags tables
+   0139-0142; cbc47269; check margins 7dc34722; room each way f3408efa).
+   Steph's answers (register `2026-10-02-no-variances`,
+   `-flag-below-three-stays-green`, `-minimum-density-a-flag`,
+   `-colour-as-if-signed`, `-near-miss-one-foot-red`; memory
+   feedback_flats_flag_plan_rulings.md): (1) no variances, a miss with a
+   path is RED, path logged on the bind; (2) a flag below the line
+   (severity < 3) keeps the lot green; (3) min density = low flag
+   (severity 2 -> green); (4) colour stays "as if signed". Steph RULED
+   2026-10-03 "Exactly 1 foot is red": short by 1 ft or more -> red (pull
+   back later for targeted variances / no-parking ideas); under 1 ft ->
+   yellow. Steph 2026-10-03: "measurement" is THE PREFERRED resolution type
+   -- the other three (inquiry, document, per-lot review) are "the failure
+   mode"; flag tables live in the app DB ("flags and warnings are
+   equivalent data points just like a min setback is"); NO DEADLINE for a
+   pending flag type (pending types top the approval page + the count is
+   mentioned at session start). Steph 2026-10-04: "Start number 2
+   [measure] first, then 1 [map + lot page], then continue"; room each way
+   (Steph: "we need all dimensions ... oddly shaped lots?").
+   TRAPS: drain on 114 needs --registry-out/--colour-out on /app/data;
+   after promoting a run screened under the colour rule run
+   `scripts/flats_flags.py sync` then `check` on 114 (nightly sync 10:30
+   UTC). An ambiguous rule set binds nothing, so ~0.07% of rows stay yellow
+   despite a 50+ ft fit miss (Wilsonville R, Hillsboro SCR-V) -- by design.
+   OPEN: (iii) Gresham note 5 "end of a Minor Access Street" held on
+   `local_street` (wrong fact) -- re-point + measure dead ends; worth little
+   while sidewalk_easement holds the same Gresham lots. (e) extending
+   severity 0 = encode each capped footnote's direction (most fact flags
+   sit on footnotes with no stated direction). Unknown facts needing a
+   title report: utility_easement 28k, sidewalk_easement 20k (run 63
+   yellow lots). Plan gaps: flag history across county refreshes; bulk
+   writes through the loader. (f) Phase 4 pod spec, deferred by the plan.
 40. [scan: YES, if started] **Easements from maps (Steph 2026-10-04 asked the odds of reading an
    assessor/easement map onto the lot).** Holds: utility_easement ~28k and
    sidewalk_easement ~20k yellow answers (Beaverton 0 green: BDC 20.05/20.22
@@ -1421,14 +674,15 @@ read when the weekly full re-screen lands.
    plat images; severity of "plat read, deed easements unchecked" is ruled
    AFTER the pilot, not before.
 41. [scan: YES] **Street class per lot line -- (a)+(b) SHIPPED 6b924963 2026-10-05;
-   (i)-(iii) SHIPPED 2026-10-06 b03dcd88/92c5f1d9/972caa17, deployed.** Live:
-   Gresham note 5 caps on measured `at_street_end` (False-only);
+   (i)-(iii) SHIPPED 2026-10-06 b03dcd88/92c5f1d9/972caa17, deployed.**
+   Live: Gresham note 5 caps on measured `at_street_end` (False-only);
    `local_street` from Milwaukie's TSP map (True needs Metro to agree) and
    Wilsonville's (False only: Villebois "Collector Avenues" are the master
-   plan's Figure 7). Bound: every number identical, 0 colours, if-signed
-   37 Milwaukie lots up. WEEKLY RUN (~10-08): acquire `--keys
-   street_class_*` (all of them) into the snapshot or the facts stay
-   unasked (safe, no gain). Rulings, in build order:
+   plan's Figure 7). TRAP for every full re-screen: it needs ALL 7
+   `street_class_*` keys (washington added) + rlis_streets acquired into
+   the snapshot, or the facts stay unasked (safe, no gain). Rulings, in
+   build order (memory project_flats_street_class.md; register
+   `2026-10-05-corner-access-quieter-front`):
    (i) corner lots on a quiet AND a busy street: the building FACES THE
    BUSY STREET so the quiet one is the side and the drive comes off it
    (both the 10-02 side-street ruling and `lowest_class` hold) -- ~224
@@ -1441,124 +695,78 @@ read when the weekly full re-screen lands.
    (iii) Gresham sidewalk easement (note 1: setback measured from the
    easement line): MEASURE where the sidewalk runs against the lot line;
    where it cannot be measured, FALL BACK to a stated worst-case easement
-   depth (pessimistic), never to "none".
-   Built:
-   (i) `measured_access`; (ii) rank maps for Oregon City, West Linn,
-   Fairview, Beaverton (+ Milwaukie/Wilsonville ranked); (iii) nothing
-   measures the walk (RLIS 2851 is presence only, +/-10 ft; Gresham
-   publishes no layer) so every street line takes the worst case: 7 ft on
-   a Metro-local street, 20 ft elsewhere (PWS 6.05.01/6.06.02), and the cap
-   lifts. Bound /root/street-class_bound_{base,new}5 (every mixed-rank
-   corner in the 6 cities, 5,228, less 244 Beaverton ROW strips + 4,000
-   random Gresham): corners -- 32 greens lost (West Linn 16, Milwaukie 9,
-   Wilsonville 7), ~120 yellow->red, 2 gains (slope read at the moved
-   building); Gresham sample -- 247 greens gained, ~262 yellow->red,
-   x6.45 county-wide ~1,600 up / ~1,700 down. Every gain read: cap lift,
-   item 44's ranking (a fitting front now beats a variance-yellow miss),
-   or flatter ground under the moved building. Reaches the map with the
-   ~10-08 full re-screen, which needs ALL 7 `street_class_*` keys
-   (washington added) + rlis_streets.
-   Leftovers 2026-10-06: WashCo uninc re-read -- 501-8.5 B(2)-(4) bars a
-   4-plex from collector/arterial/neighbourhood-route access, so
-   `lowest_class` KEPT and ranked off the county TSP map (FClass2; local
-   streets undrawn, so an undrawn street ranks 0 only where Metro calls it
-   local). Bound /root/street-class_bound_{base,new}6 (the 1,717 corners
-   whose drive moves to the quieter front): 248 greens lost (237 red: the
-   drive off the front does not fit, or steep ground), 94 yellow->red, 6
-   up (slope/fire route read at the moved building); 410 local fronts
-   checked for a missed parallel TSP line: none. Lot page shows the
-   assumed sidewalk easement (after the next promoted run). Tualatin
-   through lots PARKED: 351 lots, ~30 green if signed; an exact answer
-   needs a court entered off the back street + a Tualatin class map.
-   Beaverton ROW strips: dropped in normalize since 77c99822; only bounds
-   on the 10-01 stage files meet them. Still open: Wilsonville note P via
-   easement layer 150 (low value while access_easement caps RN).
-42. [scan: NO new code, check after the weekly run] **Water, wetland and flood ground at slope's fidelity -- DONE; reaches
-   the map with the weekly runs from ~10-08 (all WARNED promotions, Steph
-   promotes).** Steph asked 2026-10-04 "are we treating wetland/flood zones
-   with as much fidelity as we now treat slopes?". Shipped: (a) Portland z
-   RED e55c22ee (PCC 33.418.040.B; Steph RULED "red, way in noted", ~17,900
-   lots); (b)/(c) every quadfit `flag` overlay + FEMA fringe a YELLOW
-   closer look 25d26ce6/2c5b461b (8,873 greens), Milwaukie greenway RED
-   (126); (d) DSL state wetland maps everywhere 1c6da420 (+33 yellow);
-   phase 2 no-build carves 587b02d1 (824 yellow->red, read); residue
-   5b4ba52e + 799ef7a9 2026-10-06, deployed: Portland ezone p/c/v resource
-   areas carved (PCC 33.430; the 25 ft transition area inside p+c stays
-   buildable); Wood Village carves only streams, wetland buffers and real
-   HCAs (WVDC 430.170.A -- its "NO HCA" and flood-only polygons were an
-   over-carve) and flags WQR/HCA; Hillsboro reads its own significant
-   natural resource map (CDC 12.27: site or impact area = flag, the
-   no-build core carved) instead of Metro's habitat map. Bounds on 137,
-   colour per lot: Portland/Wood Village 1,821 lots -- 25 Portland
-   yellow->red, Wood Village 3 red->green + 5 red->yellow (over-carve gone,
-   read) and 1 green->yellow (WQR flag); Hillsboro 5,145 lots -- 28
-   yellow->green, every one read (on Metro's habitat map only, off
-   Hillsboro's map, envelope and every other flag unchanged), 7 yellow->red
-   (4 no fit, 2 steep, 1 hose), 1 red->yellow, 0 greens lost. The weekly
-   run that carries phase 2 and the residue must re-run quadfit s5o on this
-   code (every bound patched a copy) and acquire `overlay_hillsboro_snro`
-   (pipeline.yaml registers it). RULED, never re-offer: FEMA fringe stays
-   YELLOW ("we aren't customizing for flood zones"); landslide slopes, the
-   "maybe list" (probable wetlands, hydric soils), the HCA disturbance
-   allowance (Steph 2026-10-06 "Leave it") and West Linn fish-bearing
-   streams (ODFW 65 vs 100 ft, Steph 2026-10-06 "ignore") all DECLINED.
-   Left as they were, read: Clackamas WQRA, Happy Valley, Tualatin;
-   washington_habitat stays a flag for WashCo uninc, Beaverton, Sherwood,
-   King City, Durham (each needs a map or a determination the city holds).
-   Known under-carve: Portland's city-limit transition-area exception
-   (33.430.050.A) is not drawn.
+   depth (pessimistic), never to "none". Built: nothing measures the walk
+   (RLIS 2851 is presence only, +/-10 ft; Gresham publishes no layer) so
+   every street line takes the worst case: 7 ft on a Metro-local street,
+   20 ft elsewhere (PWS 6.05.01/6.06.02), and the cap lifts.
+   WashCo uninc 2026-10-06: 501-8.5 B(2)-(4) bars a 4-plex from
+   collector/arterial/neighbourhood-route access, so `lowest_class` KEPT
+   and ranked off the county TSP map (FClass2; an undrawn street ranks 0
+   only where Metro calls it local). Bounds /root/street-class_bound_
+   {base,new}5 and 6 on 137, every gain read.
+   Still open: Tualatin through lots PARKED (351 lots, ~30 green if signed;
+   an exact answer needs a court entered off the back street + a Tualatin
+   class map); Wilsonville note P via easement layer 150 (low value while
+   access_easement caps RN). Beaverton ROW strips are dropped in normalize
+   since 77c99822; only bounds on the 10-01 stage files meet them.
+42. [scan: NO new code, check after the weekly run] **Water, wetland and flood ground at slope's fidelity -- DONE and live.**
+   Steph asked 2026-10-04 "are we treating wetland/flood zones with as much
+   fidelity as we now treat slopes?". Shipped: Portland z RED e55c22ee
+   (PCC 33.418.040.B; Steph RULED "red, way in noted", register
+   `2026-10-04-portland-constrained-sites-red`); quadfit `flag` overlays +
+   FEMA fringe a YELLOW closer look 25d26ce6/2c5b461b; Milwaukie greenway
+   RED; DSL wetlands 1c6da420; no-build carves 587b02d1; residue
+   5b4ba52e + 799ef7a9 (Portland ezone p/c/v carved, PCC 33.430 -- the 25 ft
+   transition area inside p+c stays buildable; Wood Village WVDC 430.170.A;
+   Hillsboro CDC 12.27 own map). TRAP for the weekly: it must re-run quadfit
+   s5o on this code and acquire `overlay_hillsboro_snro` (pipeline.yaml
+   registers it). RULED, never re-offer (register
+   `2026-10-06-fema-fringe-stays-yellow`, `-hca-allowance-declined`,
+   `-maybe-list-declined`, `-west-linn-fish-bearing-streams`,
+   `2026-10-05-landslide-slopes-declined`): FEMA fringe stays YELLOW ("we
+   aren't customizing for flood zones"); landslide slopes, the "maybe list"
+   (probable wetlands, hydric soils), the HCA disturbance allowance (Steph
+   2026-10-06 "Leave it") and West Linn fish-bearing streams (ODFW 65 vs
+   100 ft, Steph 2026-10-06 "ignore") all DECLINED. Still open:
+   - washington_habitat stays a flag for WashCo uninc, Beaverton, Sherwood,
+     King City, Durham (each needs a map or a determination the city holds).
+   - Known under-carve: Portland's city-limit transition-area exception
+     (33.430.050.A) is not drawn.
+   - Left as they were, read: Clackamas WQRA, Happy Valley, Tualatin.
 44. [scan: NO new code, check after the weekly run] **A lot's readings are ranked on the colour the map shows, and
    43's hose edge -- SHIPPED 51577bb8 2026-10-07; NOT in run 65 (the early
    10-07 weekly started first); Steph 2026-10-07: wait for the next weekly
    run.** `_front_rank`, `_worse`, `_better` (flats/ingest/quadfit.py)
-   compare `signed.colour` first, the triage only on a tie; the triage had
-   ranked a missed fit (yellow, its variance path) above a fit waiting on
-   an open fact. Hose edge (item 43's last loose end): a utility-easement
-   yard that fails a check the code's own yards passed falls to the 5 ft
-   yard, question open (`_lost`). Bound on 137 over every corner, through,
-   part-alley and two-reading lot + 2,012 control (39,743 lots, 3f514c9e vs
-   3cbe113c, /root/rank-colour/diff.out, moves_ABR.csv; every move read, 7
-   replayed with probe2.py): control identical; owner-choice corners 436
-   lots better (32 red -> green, 404 red -> yellow), none worse; through
-   lots kept at the worse end 99 lots yellow -> red, no false GREEN;
-   two-reading lots kept at the worse: 34 lots (39 rows) were false GREENs
-   (13 rows now red, 26 yellow), 72 lots yellow -> red; hose edge exactly
-   the 4 known rows on 3 Oregon City lots red -> yellow (593 hose-red rows
-   at 10 ft stay red); every new green graded. Run 65 still shows 30 of
-   those lots / 34 rows green (item 49(b)). Item 43's easement rule itself
-   checked on run 65 2026-10-07 and closed: lots green Beaverton 3,202
-   (2,833 answered at 10 ft + 369 in CS/GC/RC/SC/TC zones the PUE sentence
-   does not reach -- whole-corpus grep: only BDC 20.05 and 20.22 say it),
-   Oregon City 2,166, vs the bound's 3,043 / 2,230. After the next weekly
-   run: spot-check a few of the 34 lots on the map, then remove this item.
-   137 cleanup DONE 2026-10-07 (bound dirs gone, both trees removed);
-   /root/rank-colour/{diff.out,moves_ABR.csv,probe2.py} kept until the
+   compare `signed.colour` first, the triage only on a tie. Hose edge: a
+   utility-easement yard that fails a check the code's own yards passed
+   falls to the 5 ft yard, question open (`_lost`). Bound (39,743 lots,
+   3f514c9e vs 3cbe113c, every move read): control identical; owner-choice
+   corners 436 lots better, none worse; through lots kept at the worse end
+   99 lots yellow -> red; two-reading lots kept at the worse: 34 lots (39
+   rows) were false GREENs (13 rows now red, 26 yellow), 72 lots yellow ->
+   red; hose edge exactly the 4 known rows on 3 Oregon City lots red ->
+   yellow. Run 65 still showed 30 of those lots / 34 rows green.
+   STILL PENDING: after the next weekly run (run 73 or later), spot-check a
+   few of the 34 lots on the map, then remove this item. Keep
+   /root/rank-colour/{diff.out,moves_ABR.csv,probe2.py} on 137 until the
    spot-check.
 46. [scan: YES (a proof run: every answer must come out identical)] **Scans (bounds) on 137 are the lanes' bottleneck (Steph 2026-10-06:
    ~1 h coding, then 5-6 h waiting for one scan at a time; four lanes
    queue on `heavy.lock`).** (a)-(c) SHIPPED 24a61695 2026-10-08
-   (deployed, smoke passed): `flats/ingest/batch.py` -- costliest lots
-   first; chunks start on live free memory with a 3 GB reserve; each
-   chunk runs its hungriest lot first and, in flight, holds memory only
-   for the lots it has left; a dead worker costs one lot (retried alone)
-   instead of hanging the Pool; `--cache` answer cache; sample while
-   iterating (parallel-agents rule 12). Proof 4 on 137 (2026-10-08,
-   scope_A 9,936 lots vs `/root/rank-colour_bound_base_A`, base 3,640 s):
-   SAME on every run -- cold 16 procs 3,227 s, booked 16 procs 3,057 s,
-   booked 14 procs 3,074 s, warm 66 s; no worker died; least
-   MemAvailable 3.6 GB. 137 is now CPU-bound (lot-seconds 37k -> 43k
-   with 16 busy), so the simulator's ~2,000 s was not reachable and more
-   than 14 processes buys nothing. Proofs 1-3 caught a `python -m`
-   worker-setup bug and an OOM kill, both fixed. (d) rented compute --
-   PARKED by Steph 2026-10-08 ("won't do for now"; keep the research,
-   don't delete it). 2026-10-09 RE-ASKED (Steph moving to Max 20x
-   and 7-9 parallel agents; the Proxmox host is maxed -- 137 already has
-   16 of the i5-14600KF's 20 threads, so no free home capacity): est.
+   (`flats/ingest/batch.py`: costliest lots first, memory-booked chunks, a
+   dead worker costs one lot, `--cache`; proof 4 SAME on every run). 137 is
+   now CPU-bound, so more than 14 processes buys nothing. (e) fewer lanes:
+   not pursued. (g) GPU: Steph 2026-10-07 dropped it ("forget those two
+   questions").
+   (d) rented compute -- PARKED by Steph 2026-10-08 ("won't do for now";
+   keep the research, don't delete it). 2026-10-09 RE-ASKED (Steph moving to
+   Max 20x and 7-9 parallel agents; the Proxmox host is maxed -- 137 already
+   has 16 of the i5-14600KF's 20 threads, so no free home capacity): est.
    at 7-9 agents ~3,000-4,000 vCPU-h/month beyond 137 = ~$250-350/month.
    Steph: NOT YET, MEASURE FIRST -- run a week at 7-9 agents, log how long
-   checks wait on heavy.lock per day, decide with that number. Steph 2026-10-06 PREFERS
-   CLOUDFLARE (a commercial version would run there): Cloudflare
-   Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
+   checks wait on heavy.lock per day, decide with that number. Steph
+   2026-10-06 PREFERS CLOUDFLARE (a commercial version would run there):
+   Cloudflare Containers (GA 2026-04-13), many small boxes of at most 4 vCPU /
    12 GiB / 20 GB each, up to 1,500 vCPU per account at once; CPU billed
    only while busy ($0.072/vCPU-h), memory while running
    ($0.009/GiB-h), so ~$0.40 per busy 4-vCPU box-hour; inputs via an
@@ -1574,383 +782,110 @@ read when the weekly full re-screen lands.
    Workers Paid plan, an API token (Containers, Workers, R2) in a file
    outside the repo, a monthly budget alert. Fallback considered:
    Hetzner CCX63 in Hillsboro OR (48 vCPU / 192 GB, ~$1.64/h, billed
-   until DELETED; one big machine, least build). (e) fewer lanes: not
-   pursued. LEFT: (f) skip big PRIVATE lots by size -- Steph 2026-10-06
-   DEFERRED: "see what the institutional changes remove" (item 47), then
-   decide. Measured on quadfit_2026-10-01_wash (418,021 lots screened):
-   861 lots >= 10 ac (660 10-20, 167 20-44, 34 >= 44; biggest 194.8 ac
-   1S1080000504) = ~11% of the cost proxy; 47's signals (Washington PUB
-   or PROP_CODE 9xx: 90; Multnomah ASSESSVAL 0 with TOTALVAL > 0: 109)
-   leave ~660, mostly private (vacant, MFR, COM, farm, SFR acreage;
-   Clackamas's 181 unsorted). Re-measure with the first full run's
-   `timings.parquet` after 47 lands. (g) GPU: Steph 2026-10-07 dropped
-   it ("forget those two questions").
-49. [scan: YES for (b)-(f), (h), (i)] **The 2026-10-07 weekly (run 65 on snapshot 4, PROMOTED 2026-10-07
-   ~14:45 UTC by Steph from the County copy page; prune-runs retired run 59,
-   kept 61/63/65; VACUUM FULL of lot_results NOT run -- permission denied,
-   24 GB free, owed at the next load): what the one-by-one read found.**
-   Run 65 = bundle `data/flats/bridge/2026-10-07_weekly` on 114, assign
-   `/root/assign_2026-10-07_weekly` on 137 (code 62b2259d, bridge 7 h 53 min
-   at 12 procs). Gate clean (8 rows ok); drift 63 -> 65: 133,872 of 827,770
-   answers moved, all `rules`, 0 unexplained (report
-   `data/flats/reports/2026-10-07/drift_run65.md`). Best pod per lot,
-   if_signed: green 68,044 -> 41,361, red 30,061 -> 72,172. Read by three
-   agents (scripts + tables on 137 in `/root/weekly_read/{gains,losses,
-   slope_water}/`, compare `/root/cmp1007/`): slope is behind most losses
-   (fit, fire, Portland density/coverage/landscaped moves are slope under a
-   different `head`); court turning 1723db45 ~2,600 lots; Portland z
-   e55c22ee 16,538 lots (red on `colour`, yellow on if_signed via the
-   attached-house relief); gains = 43 easement (Beaverton 2,542, Oregon City
-   2,012 -- the bound's 3,043/2,230 were colour counts, reconciled), 41
-   Gresham 1,470, West Linn historic district 483, corner side-street fits;
-   35 CLOSED (every green row carries a fire result); 34 Washington ROW
-   verified (7,817 neighbour-zone changes, no new failure); 47 verified
-   (`institutional_were_scanned` 0). OWED, false GREEN first:
-   (a)+(d)+item 45 DONE 81c3b77b + 84e702de (deployed 2026-10-07; land
-   at the next splice or weekly, NOT in run 65): a plan green on the map
-   is fire-checked; a tight fit is drawn fitting (half a foot short,
-   `drawing.tight`, lot page says "give or take half a foot") so its
-   route and pad grade are measured. Bound on 137 over 9,860 tight /
-   map-green lots (`/root/weekly_fixes/`, base f2aa1bf3): lots yellow->
-   green 529 (every one tight, route <= 150 ft, grade < 5%), green->
-   yellow 43 (38 Portland lots fronting an unimproved road, unnamed drive
-   or the Tilikum approach -- no truck road, correct; 5 tight fits on a
-   5-15% pad -- the item-45 false greens), yellow->red 60 (hose > 150 ft),
-   unknown->measured 657 on if_signed. Every gain and loss read.
-   (b) 51577bb8 (item 44) not in run 65: 30 lots / 34 rows map-green
-   (`item44_false_greens_in_weekly.csv`).
-   (c) DONE c98be01d (deployed 2026-10-09; lands at the next splice): the
-   hole was bigger than ~12 lots. A corner lot whose code sends the driveway
-   to the lowest-class street, with a street line that has no class, was
-   screened as if the side street served, unchecked. Now the driveway is
-   tried off BOTH streets and the worse answer kept; each plan's access
-   line is recorded (bridge-only column `access_json`: rule, street charged,
-   why, the ranks read). Steph 2026-10-09: unranked corner = yellow ("yellow,
-   then measure"): where only the unranked street's reading misses, the lot
-   keeps the measured plan's answer and carries ACCESS-STREET-RANK-UNKNOWN
-   (severity 6, closer look); a miss on the measured plan itself stays red.
-   Bound over 1,465 lots vs run 67 (every moved lot read): 852 rows
-   green -> yellow with the new flag (Washington Co. uninc 636, Beaverton
-   87, Oregon City 58, West Linn 37, Wilsonville 31, Milwaukie 4), 10 rows
-   already yellow gain the flag, 0 green -> red. The named lots are inside
-   those counts. Also in the same code (read lot by lot): paved type-2000
-   streets count as fire-truck roads (Portland: 348 rows yellow -> green,
-   22 red -> green, hose routes 70-150 ft; private park drives and alleys
-   stay yellow), 28 other rows green -> yellow (Milwaukie 20 lose a
-   proven-harmless flag; Portland 4, Oregon City 3, Beaverton 2), 7 Portland
-   yellow -> red (hose > 150 ft). The lots to splice are listed in
-   `/root/fo/scope_yellow.txt` on 137 (1,465, one per line -- Portland and
-   Gresham TLIDs hold spaces, never split on whitespace). NEW ITEM 60 ranks
-   the streets.
-   (e)+(f)+(h) DONE 2dacbe1c (deployed 2026-10-08; lands at the (i) splice,
-   NOT in run 65): steep is read on the lot's own ground (a neighbour's bank
-   or raised road no longer spills in; a bank's height is walked across the
-   lot's own steep cells), coarse-10 m-only steep is YELLOW + SLOPE-STEEP-
-   COARSE sev 7, steep takes the blame when it is most of a fit miss. Bound
-   on 137 (/root/sf, base 1dcd278c vs final, 93,908 lots): 2,525 moves --
-   red->green 537, red->yellow 861 + 838 (h), yellow->green 84; green->red
-   29, green->yellow 122 (pad now on 5-15% ground: SLOPE-GRADE), yellow->red
-   54; control 0. Every class read; no false GREEN. ~40 new reds sit on a
-   4-4.5 ft bank: Steph 2026-10-08 KEPT the 4 ft line. 3 losses are the
-   placer landing elsewhere on a bigger envelope (open_space_shape / fire).
-   Water flag on overlay slivers (48 lots < 10 sq ft, 194 < 100 sq ft):
-   left yellow by item 50 (codes reach 25-100 ft past the drawn line).
-   (g) DONE a7243f4f (live 2026-10-07): the lots list says why a design is
-   red (every standard missed, worst first) or yellow (the open questions
-   at the line), not `head`; the bridge report adds `dominant`. The
-   if_signed-vs-map disagreements are the legacy `if_signed` column only --
-   the app shows the map colour everywhere; the 16 STREET_UNCONFIRMED
-   y->unknown rows traced: their missed standard went away, leaving the
-   unconfirmed street alone (map: yellow, ACCESS-STREET-UNCONFIRMED).
-   (i) DONE 2026-10-08 -- RUN 67 PROMOTED (agent, clean gate, ~00:40 UTC
-   10-09). Splice of 162,717 lots on run 65 (SHA f16f1fd6: 81c3b77b +
-   84e702de, 51577bb8, 2dacbe1c; 2cfd13d6 in assign): bridge 6 h 06 min,
-   bundle `data/flats/bridge/2026-10-08_49i`, drift
-   `data/flats/reports/2026-10-08/drift_run67.md` -- 32,753 answers moved,
-   all `rules`, 0 unexplained; gate 8 rows ok. Best pod per lot (map
-   colour): green 49,091 -> 50,071, yellow 162,370 -> 153,799, red
-   376,354 -> 383,945. Lots moved 13,869: 10,024 outside the scope =
-   item 52's too-small/too-narrow yellow->red; inside 3,845, of which
-   3,757 the same move a lane's bound predicted for that lot (slope
-   movers3, weekly_fixes b_ca283cfa vs f2aa1bf3, rank moves_ABR). 88 read
-   one by one (lists `/root/weekly137/` on 114): all two fixes meeting --
-   steep ground coming off lets the building sit nearer the street, so the
-   hose route drops under 150 ft (S lots), or the new reading ranking picks
-   a tight fit that 81c3b77b now measures (R lots); 14 new greens, every
-   one with a route <= 150 ft and no steep under the building. 017f63cf
-   (50) did NOT land (s5o not re-run) -> the weekly. prune-runs retired run
-   61 (kept 63/65/67); plain VACUUM ANALYZE run, VACUUM FULL still owed
-   (24 GB free). flats_flags sync run 67 (926,292 opened) + check passed.
-   (j) DONE 2026-10-09 -- RUN 69 PROMOTED (agent, clean gate, ~17:55 UTC).
-   ONE splice on run 67 carrying three lanes: 57 flatter placement
-   (34b42b4f), 58/49(c) one-question (c98be01d unranked corner = yellow,
-   Portland type-2000 fire, Rockwood), 52b zone gaps (e91f05a8/30500bd4;
-   s4/s5o = /root/zg/Qn = weekly + 1,256 added lots, assign on /root/zg/Nn +
-   Qn). Code 97a1bef2, scope 20,336 lots (/root/s49j/scope.txt), bridge
-   1 h 38 min at 14 procs; bundle `data/flats/bridge/2026-10-09_49j`
-   (re-exported with --quadfit-results = the weekly lots_results.csv: Qn
-   holds none, so the first export left quadfit's columns empty -- TRAP for
-   any assign on a quadfit dir without lots_results.csv). Drift
-   `data/flats/reports/2026-10-09/drift_run69.md`: 3,671 answers, all
-   `rules`, 0 unexplained; gate 8 rows ok. Map colour, best pod: green
-   50,071 -> 50,008, yellow 153,799 -> 151,010, red 383,945 -> 386,797.
-   7,947 design rows moved; every row matched its lane's own bound
-   (/root/s57/expected.csv, /root/fo/expected.csv, /root/zg/assign_new)
-   except 10 lane interactions read one by one and replayed by the 57
-   agent (6 Portland lots green: placement drops SLOPE-GRADE AND type-2000
-   roads measure the hose route, 103-149 ft; Gresham 1N3E32BB-05100 green:
-   civic-corridor flag gone; Beaverton 1N132CC05200 green->yellow: new
-   drive on an unranked street) and 3 Clackamas MR1 lots red by ruling.
-   Lists /root/s49j/moves_{s57,fo,zg}.csv on 137. prune-runs retired run 63
-   (kept 65/67/69); plain VACUUM ANALYZE run, VACUUM FULL still owed (23 GB
-   free). flats_flags sync (33,279 opened, 34,215 cleared) + check passed.
-   Splice base for the next partial: /root/bridge_spliced_2026-10-09_49j,
-   assign quadfit dir /root/zg/Qn, normalized /root/zg/Nn.
-   (k) LAUNCH CHECKLIST, next weekly (~2026-10-14; audited 2026-10-09,
-   chain gates c2650098 on flats/weekly-gates). BEFORE launch, on 137:
-   - Acquire the three zoning layers into the weekly's snapshot (absent
-     from 2026-10-07; the preflight refuses without them): `cd
-     /root/code/vicinitideals && PYTHONIOENCODING=utf-8 .venv/bin/python
-     -m flats.ingest.acquire --snapshot <date> --keys zoning_canby
-     zoning_sandy zoning_estacada` (scratch fetch 2026-10-09: 49 / 128 /
-     38 features). A full acquire at a new date fetches them anyway.
-   - Once item 60 merges, the same line with `--keys osm_roads`
-     (Geofabrik Oregon ZIP, 0.45 GB; 255,488 roads in the scratch fetch).
-     The preflight then demands it, but that branch's bridge does NOT
-     refuse without the file -- streets just stay unranked (yellow).
-   - `--preflight-only` first; it must name no problem.
-   - Launch line (runbook §4) with `--transit-reuse
-     data/flats/transit/2026-10-07_weekly/distances.parquet` (Tigard,
-     Cornelius and Estacada lots are measured fresh).
-   - Run the WHOLE chain: quadfit must re-run (the 10-07 s5o lacks the
-     ten `ovl_*_site` columns of item 50; the chain now stops `--from
-     bridge` on it with "REFUSED before bridge").
-   AT LOAD (114): VACUUM FULL of lot_results (owed since run 65).
-   AFTER THE RUN, before promotion:
-   - 51: Tigard + Cornelius colour counts vs 51's bound; Cornelius R-10
-     lot 1N335CD01200 screens (not JURISDICTION_OFF).
-   - 47: assign's report shows `institutional_were_scanned` 0 -> remove 47.
-   - 50: the 42 green -> yellow movers (West Linn 19, Gresham 15, Tualatin
-     6, Troutdale 2) carry RESOURCE-PERMIT on a `*_site` key; compare with
-     `/root/tw/` on 137.
-   - 53: Estacada lots screen (no 1 m tiles: coarse steep = yellow sev 7).
-   - 48: remove once this weekly is promoted.
-   - 50: the twins are already on the map since run 70 (below); the weekly
-     only re-measures them natively -- expect ~0 new RESOURCE-PERMIT moves.
-   (l) RUN 70 PROMOTED 2026-10-10 ~04:47 UTC (agent, gate clean): ONE joint
-   splice on run 69 carrying 59 (county roll, assign-only), 60+63 (quiet
-   street = Metro AND OSM; a one-street bend is not a corner; curve clauses),
-   52 slice 1 (Gladstone Portland Ave) and 50 (ovl_*_site twins copied into
-   /root/js/Qn s5o). Screen code 7f354aa4, splice 7f68b122 (a splice may add
-   a DECLARED column: `--added-columns`, recorded in the lineage). Scope
-   47,135 lots (/root/js/scope.txt), bridge 52 min at 14 procs, tag
-   2026-10-10_49k. TRAP FOUND: the 60+63 lane's scope files were built with
-   `.read().split()`, which cuts spaced Multnomah TLIDs in two; the bridge
-   drops the pieces silently (scope rebuilt line by line). Moves, best design
-   per lot (4,242 lots, 0 outside the scope): 59 = 3,117 (112 green + 3,005
-   yellow -> red), exactly its bound; Gladstone 23 green -> yellow (51
-   flagged), exactly its bound; 50 = 43 green -> yellow (RESOURCE-PERMIT);
-   60+63 = 1,051: 228 green -> red and 446 yellow -> red (every one
-   CORNER_READ_AS_BEND), 367 yellow -> green (354 rank now known, 10 slope,
-   4 Gresham civic-corridor clears from c98be01d whose scope missed them),
-   7 green -> yellow, 3 red -> yellow. 1,032 of the 1,051 match the lane's
-   last bounds lot for lot, 0 disagree; the 19 its broken scope never saw
-   (Troutdale 14, Fairview 1, Gresham 4) were read one by one: one street
-   name on every street edge (cul-de-sac bulbs / curves), cities silent ->
-   the ruled bend reading. Map green 50,008 -> 49,960, yellow 151,010 ->
-   147,262. Drift 69 -> 70: 2,067 answers moved, 0 unexplained. prune
-   retired 65 (kept 67/69/70); VACUUM FULL DONE (lot_results 8 GB, 26 GB
-   free). NEXT SPLICE BASE: /root/bridge_spliced_2026-10-10_49k with s4/s5o
-   /root/js/Qn (twins) and assign inputs /root/js/Qn + /root/zg/Nn;
-   bridge `--sources /root/js/snap_osm` (moved from /root/fo). 137 CLEANED
-   2026-10-10 (Steph asked): every other scratch dir and worktree under
-   /root is gone (names in /root/cleanup_2026-10-10/deleted.txt), so
-   /root/fo, /root/tr, /root/wk*, /root/s57, /root/s49j paths quoted in
-   older items no longer exist; 58 -> 36 GB used.
-50. [scan: YES (greens only turn yellow; nothing gains)] **DONE 017f63cf (deployed 2026-10-07): an older
-   no-build water area keeps the lot a closer look once the pod clears it.**
-   City codes read: Gresham GDC 5.0703(A)(1)/5.0706(A)/5.0705(A)(3),
-   Troutdale TDC 4.311(A), Fairview FMC 19.106.070(A), West Linn WLCDC
-   32.060/32.020(B), Tualatin TDC 72.040(3)(c) all owe paperwork on a site
-   holding the area -> 10 `*_site` flag twins in overlays.yaml (same layer,
-   buffer, clip as the carve) + PERMITS words/cite. Gresham hillside,
-   Oregon City NROD, Tualatin WPD no-build and FEMA floodway reach only
-   inside the area -> `resource_overlays.CLEARED` (stay green, cite kept);
-   test_resource_overlays holds every carve flagged-or-cleared. Bound on
-   137 (`/root/tw/`, 327 run-65 lots not red): 42 green -> yellow (West
-   Linn 19, Gresham 15, Tualatin 6, Troutdale 2), 285 yellow unchanged,
-   nothing else moved; every mover carries RESOURCE-PERMIT on a `*_site`
-   key. Lands at the next weekly (s5o must re-run to write the
-   `ovl_*_site` columns); a splice on run 65's s5o reads them as nothing
-   unless it copies `ovl_<carve>` into `ovl_<carve>_site` first (recipe
-   `/root/tw/prep.py`). 49(f) slivers: left yellow (codes reach 25-100 ft
-   past the drawn line).
-51. [DONE 2026-10-14, run 73 LIVE] **Tigard and Cornelius switched on.** Run 73 (best
+   until DELETED; one big machine, least build).
+   (f) skip big PRIVATE lots by size -- Steph 2026-10-06 DEFERRED: "see what
+   the institutional changes remove" (item 47), then decide. Item 47 has
+   landed (ca06c2ff; scans skip institutional land c1a96d81), so this is
+   now ready to re-measure with a full
+   run's `timings.parquet` and bring to Steph. Measured before 47 on
+   quadfit_2026-10-01_wash (418,021 lots screened): 861 lots >= 10 ac (660
+   10-20, 167 20-44, 34 >= 44; biggest 194.8 ac 1S1080000504) = ~11% of the
+   cost proxy; 47's signals (Washington PUB or PROP_CODE 9xx: 90; Multnomah
+   ASSESSVAL 0 with TOTALVAL > 0: 109) leave ~660, mostly private (vacant,
+   MFR, COM, farm, SFR acreage; Clackamas's 181 unsorted).
+51. [DONE 2026-10-14, run 73 LIVE; one check after the weekly] **Tigard and Cornelius switched on.** Run 73 (best
    design per lot): Tigard 829 green / 785 yellow / 17,137 red of 18,751 (the bound said
    840 / 777 / 15,544); Cornelius 0 green / 434 yellow / 3,811 red (the bound said 381
-   green: the DEM-less scan and the solar-shade flag keep R-7 / R-10 off green, see 75).
-   829 Tigard greens read 2026-10-14 (30-lot sample + the 39 non-house greens with over
-   $500k of buildings): the sample is ordinary RES-B houses; the odd ones are existing
-   apartment complexes (28 lots, prop code 701, $0.6M-$19.6M of buildings: RES-D 15, RES-E
-   7, TMU 5, RES-B 1), churches kept checked by ruling (911/913), one 981 charity at 11895
-   SW 91st Ave ($13.2M of buildings), and occupied TMU commercial. CORNELIUS R-10 lot
-   1N335CD01200 FIXED on flats/run74-loose-ends (2026-10-14, rides the next weekly, no
-   splice): the lot is not read by the bridge at all -- Metro's layer prints 0.00003% of it
-   as county AF-5 (zone_frac 2.5e-7), so quadfit s2 gave it AF-5 and s3 dropped it
-   `zone_not_in_rules`; only FLATS normalize applied the `lot_zones` hand assignment.
-   s3_filter.lot_zone_rewrites now applies it (home_zone_raw keeps AF-5; test in
-   test_structural_filter.py). It is the ONLY lot in the corpus with a `lot_zones` entry,
-   so one lot shares the cause. The apartment-complex greens are a
-   Steph RULED 2026-10-14: occupied apartment complexes STAY GREEN (the map answers "does the pod fit", not "is it for sale").
-52. [scan: lands at 49(i)'s splice or the next weekly; no re-screen, no promotion]
-   **Lots dropped before a fit (run 65): 11,427 yellow NOT_MEASURED +
-   2,203 yellow GEOM-UNREADABLE.** Bucketed 2026-10-07: 6,951 had no 20 ft
-   circle in the outline (quadfit s3 too_narrow_20ft), 2,737 were under 1,000
-   sq ft (sliver_area), 1,598 sit in a zone quadfit's rules lack
-   (zone_not_in_rules), 140 Multnomah uninc RR (its rules say no fourplex),
-   1 no zone (Washington uninc R-24). SHIPPED (2cfd13d6): the first two
-   (9,688) plus any lot under 98% of a pod footprint are now RED by
-   arithmetic (POD_CANNOT_FIT, bind pod_footprint_area / pod_width); a lot
-   arithmetic does not settle stays NOT_MEASURED. BOUND on 137 (old
-   2026-10-07 weekly assign vs new, 1,175,630 rows each): 10,028 lots / 20,052
-   rows moved, ALL yellow -> red, all previously NOT_MEASURED, zero other
-   differences, no green gained or lost (9,688 + 340 small zone_not_in_rules
-   lots; 4 of those sit between the two pod footprints and are red on
-   pod56x36 only). Read: 8,568 area proofs (max outline area 1,974 sq ft,
-   under the 1,976 line), 1,460 width proofs (max inscribed radius 10.0000 ft
-   by independent shapely; the pod needs 12.5), 25 multi-part lots where the
-   stored area and outline differ -- proofs hold either way. GEOM-UNREADABLE is not
-   broken outlines (0 invalid, 0 multi-part, 1,544 with holes): it is the
-   complex-shape cap (convexity < 0.80, > 10 edges, pole-like), measured at
-   a uniform inset; make_valid / buffer-0 do not apply; only 357 yellow lots
-   are held yellow by that flag alone -- left as is. ZONES READ 2026-10-09 (branch flats/zone-gaps, bound on 137 over
-   6,017 lots, 48 greens gained, 163 greens lost, every one read; LIVE in
-   run 69, promoted 2026-10-09, spliced with 57 and 58/49(c), see 49(j)):
-   (a) ZONE_TO_READ and (c) 52b zones are encoded and ported so the pod is
-   measured: Gladstone C2/MR, Tualatin CC/RMH/RH/RH-HR/MUC, Milwaukie
-   GMU/DMU, West Linn MU, Gresham DCC/DTM, Fairview TCC/VC, Oregon City
-   MUE/GI/HC/CI/I/NC, Portland CI1, Wood Village NC, Happy Valley
-   MURM/MURX, Multnomah uninc RR/OR/EFU. Gains: Gladstone C2 34, MR 10,
-   West Linn MU 3, Tualatin CC 1; the rest measure red. Steph 2026-10-09
-   RULED: Milwaukie DMU ALLOWED (design review optional via clear and
-   objective standards); Clackamas MR-1, MR-2, HDR RED BY RULING
-   (ZDO 1102.01(A) design review) -- the same sentence also makes PMD and
-   VA red (agent extended it; tell Steph); 163 green MR-1/MR-2 lots go red;
-   Hillsboro ANX stays yellow. SHD/RCHDR/VTH stay unencodable (setbacks by
-   compass bearing, ZDO 1005.02(L)) -> item 61.
-   STILL OPEN from 52: Gladstone C2 Portland Avenue entrance + 25% window
-   rules; Tualatin RH/HR 45 ft minimum height scope, Central Tualatin
-   Overlay block lot sizes (Map 10-3), Basalt Creek Parkway 50 ft yard,
-   100 ft wetland yard, building separation, MUC 57.400 / Figure 57-1
-   height check; Milwaukie Figure 19.304-2, the neighbours block (20 ft
-   abuts-residential yards), 19.505.5.E.1, DMU 50 ft parking ban; Fairview
-   TCC Halsey storefront map (44 lots), VC stays because of the FLX alias;
-   SCMU front setback and densities; Happy Valley / Gladstone leftovers;
-   add ZDO Section 1102 to the provenance store. The weekly run must fetch
-   canby/estacada/sandy zoning (the bound needed empty placeholders). The
-   splice cannot retire lots a re-run drops from s3 (assign keeps a
-   measured lot's old row): a bound/splice scope must list those lots
-   explicitly, as the 805 MR1/MR2/PMD/VA lots were here.
-   LEFTOVERS TRIAGED 2026-10-09 (run 69): only Gladstone C2 Portland Avenue
-   reaches greens (23 of 34 C2 greens abut the avenue). STEPH RULED
-   2026-10-09: YELLOW until known -- avenue-facing entrance + 25% ground-floor
-   glass (GMC 17.18.050(3)(b)+(c)) is a fact about the building the catalog
-   does not hold; no assumption about the pod. Everything else touches 0
-   greens: ZDO 1102 into the store, Milwaukie neighbours block, then recorded
-   refusals / measured-zero; Tualatin block tracing + RH-HR min height
-   deferred (0 lots). Assigned to the "Remaining zone codes" agent.
-   Slice 1 DONE ef4b272f: Gladstone C2 within 60 ft of the Portland Ave
-   centreline is held YELLOW under FACT-ALONG-PORTLAND-AVENUE (GMC
-   17.18.050(3)(b)+(c)); bound 23 lots green->yellow, 51 lots flagged, 0
-   other moves (/root/wk52/b_after). LIVE in run 70 (49(l)): 23 + 51 exact.
-   52 STILL OPEN leftovers: DONE 2026-10-09 (slices 1-4: b9ced2fe, 9eb9f618).
-   Gladstone C2 Portland Ave yellow; ZDO 1102 stored and cited (prefab
-   exemption = single-family only, ZDO 202); Milwaukie neighbours block
-   (R-MD/R-HD true; DMU/GMU street yards held on across-street; bound 0
-   colour moves, 14 abutting lots take the 20 ft yard, all already red;
-   13 abut R-HD only -- the letter of 19.504.4 names R-MD, R-HD read as the
-   tighter side). OFFERED, not done: read faces_residential_zone_across_street
-   per street line outside Portland so those street yards can be released
-   (0 lots today, all DMU/GMU red). Tualatin Basalt Creek 50 ft yard
-   measured-zero (2,234 ft to the built parkway; re-measure when the
-   extension is mapped or on annexation); Central Tualatin Overlay blocks
-   and RH-HR min height DEFERRED (0 lots, all red). "Happy Valley /
-   Gladstone leftovers" had no list behind it: every refusal there
-   loosens or does not reach a 4-unit lot.
-53. [scan: Estacada + Canby/Sandy DONE in run 73; Sandy REVERSED on flats/round2-rulings-r3, rides the weekly ~2026-10-19; (b)-(f) below still open] **Canby and Sandy are RED in every zone (Steph's by-right-only ruling,
-   REVIEW TIERS (Steph 2026-10-14, r3): Sandy R-1/R-2/R-3 come back YELLOW -- the 17.90.40 B
-   design review applies stated standards but may add conditions (REVIEW-CONDITIONS). Bound on
-   run 74's inputs (as-if quadfit, the zones were never measured): 0 green / 108 yellow / 1,853
-   red of 1,961 (R-1 779 red, 719 on fit; R-2 69 y / 510 r and R-3 39 y / 564 r, mostly the
-   landscaped-area minimum). Canby re-checked and stays RED: the 16.49.030 Type III review is a
-   one-off judgement (zone notes quote it).
-   RUN 73 (2026-10-14, LIVE): Estacada 14 green / 7 yellow / 2,860 red of 2,881 (best
-   design). All 14 greens read by hand: the 5 NCR greens have their building 42-64 ft
-   (farthest corner 80-104 ft) from Eagle Creek Rd, inside the 200 ft band (distances
-   measured on the 10-12 s1 streets); the 6 CMU and 3 C-2 greens are not band-bound. Every
-   Estacada green is RULE_UNVERIFIED as-if-signed (draft). Doubts, none changed: 34E17
-   02000 (30941 SE River Mill Rd) is a split-zone lot, 47% NCR, and its band could not be
-   checked against the zone line; 34E20AB01200 (30905 SE Eagle Creek Rd) is an occupied
-   apartment complex ($3.9M of buildings) and 34E20AB00800 next to it is vacant multifamily
-   land; 34E20AC00200/00201 (1015 NW Wade St, beside the library) are two COM lots whose
-   owner the roll does not give; `inside_ugb` is false on all 14 (the UGB layer is not
-   read).
-   2026-10-08); Estacada is encoded; Molalla is blocked on HUMAN_TODO 29
-   (Steph's PDFs); Forest Grove stays blocked on HUMAN_TODO 28.** Canby's only
-   path to the pod is a Type III site and design review, Sandy's is a Type II
-   design review: neither is by-right, so `quadplex_allowed` is false in
-   Canby R-1.5, R-2, C-R and Sandy R-1, R-2, R-3 (standards kept, each zone
-   note opens "RED BY RULING" so the ruling can be reversed). Estacada admits
-   C-2, CMU, R-3 (townhouse lots only) and NCR (only within 200 ft of Eagle
-   Creek Rd or Hinman Rd, measured by the new `near_named_street_200ft` fact
-   in `flats/geom/named_street.py`); no design review in those zone chapters,
-   only the 16.132.015 planning-staff review, which Steph ruled by-right.
-   Everything is `draft`. Checks Steph asked for (2026-10-08): wetlands
-   overlay = the NWI layer already applied; historic overlay = inventoried
-   buildings only; 33% geotechnical = already stricter in slope.yaml (15%).
-   (a) BOUND RE-RAN 2026-10-09 on 137 at 5f4c2e9f (the dwelling-in-band fix;
-   tree quadfit_2026-10-07_fg53e, bridge /root/bridge_fg53e). Estacada: 261 lots
-   admitted, 260 bridged (the 261st, 34E20AC00403 at 825 NW Wade St, is an
-   institutional lot left out of the scan). Best design per lot: C-2 3 green/27
-   red, CMU 6 green/4 yellow, NCR 7 green/4 yellow/139 red, R-3 70 red. Every
-   non-red NCR building now sits 134 ft or less from Eagle Creek Rd / Hinman Rd
-   (was 335 ft on 34E17 00901, now 37-64 ft); the C-2/CMU distances are not a rule
-   there. The s4 compare against the 10-07 weekly shows 805 lost (Clackamas
-   MR-1/MR-2/PMD/VA, red by main's design-review ruling) and 22,724 gained (Tigard
-   17,230, Cornelius 3,891, Gresham 479, Tualatin 416, Estacada 261, Gladstone 224,
-   Milwaukie 150, Fairview 48, West Linn 25): all main's zone-gaps lane, none from
-   this branch. bound_cols.py then crashed on the column compare, so
-   "existing lots unchanged" was NOT proven this time; the first bound (1d7209b0)
-   proved 0 lost / 261 gained. Nothing is spliced or promoted; Estacada reaches
-   the map at the next weekly (or a splice Steph's coordinator schedules, built
-   on /root/zg/Qn).
-   DECISION (coordinator, 2026-10-09): NO splice. Estacada lands at the next weekly;
-   the weekly runbook must acquire Estacada zoning (its zoning dataset is not in the
-   snapshot yet and Qn holds none of its lots). Existing-lots-unchanged proof, by
-   reading not by bound: the new reach-off logic is gated on BAND_ZONES, which holds
-   only (estacada, NCR), and every other row gets None; near_named_street_200ft is
-   consumed in one place in all of flats/config (estacada.yaml, NCR quadplex_allowed).
-   No other zone or city carries either, so no other lot can move.
-   (b) Molalla: 7 of 11 chapters (5.1 came down; 2.3, 2.4, 3.2, 4.4 still 429, retried every
-   10 minutes) -- layer files are parked outside the repo again unless all 11
-   land (copy in /tmp/fg53/molalla_parked + the new 5.1); gate already read:
-   admits R-2, R-3, R-5, refuses R-1, C-1, C-2, M-1, M-2, PSP; ALSO check
-   whether those zones need design review -- by-right only); (c) NCR "major
-   collector" half of EMC 16.25.020 is unmeasured (no street-class map for
-   Estacada; Currin Rd looks like one) -- lots near it screen RED; add the
-   name to STREETS in named_street.py once Steph confirms (HUMAN_TODO 30 q5);
-   (d) Airport Safety overlay (16.54) zone map, side-line PUE (the code only
-   says the city MAY require 10 ft), parking facing Eagle Creek Rd and the
-   Currin Creek 70 ft strip: Steph's answers pending in HUMAN_TODO 30 q1-4;
-   (e) minimum density 8.712 du/ac in C-2, R-3, NCR on the unit-lot path
-   (the quote check wants a printed operand; needs a form that holds half of
-   a per-dwelling area); (f) the Canby/Sandy doubts (design review, 20 ft
-   yards, 13 du/ac, overlays) are MOOT while the by-right ruling holds;
-   Estacada's R-3 townhouse-only reading and the MMU Council-master-plan
-   refusal were re-read 2026-10-08 against the text and stand; the Downtown
-   zone (D) could be encoded with the named-street tool (fourplex outright
-   if it does not face Broadway/Main/OR 224, north of OR 224, 16 du/ac) --
-   waiting on Steph's yes/no.
+   green: the DEM-less scan and the solar-shade flag kept R-7 / R-10 off green -- the
+   elevation was restored in run 74, so re-count Cornelius greens on the weekly).
+   829 Tigard greens read 2026-10-14: the sample is ordinary RES-B houses; the odd ones are
+   existing apartment complexes (28 lots, prop code 701, $0.6M-$19.6M of buildings),
+   churches kept checked by ruling (911/913), one 981 charity at 11895 SW 91st Ave ($13.2M of
+   buildings), and occupied TMU commercial. Steph RULED 2026-10-14 (register
+   `2026-10-14-existing-buildings-stay-green`): occupied apartment complexes STAY GREEN (the
+   map answers "does the pod fit", not "is it for sale").
+   CORNELIUS R-10 lot 1N335CD01200 FIXED (5d3c1831 on main, rides the next weekly, no
+   splice): Metro's layer prints 0.00003% of it as county AF-5, so quadfit s3 dropped it
+   `zone_not_in_rules`; s3_filter.lot_zone_rewrites now applies the `lot_zones` hand
+   assignment. It is the ONLY lot in the corpus with a `lot_zones` entry. CHECK on the
+   weekly that the lot is screened.
+   Unsure: the register (`2026-10-01-cornelius-solar-shade-warning`) makes solar shading
+   green WITH A WARNING, yet run 73's note above names the shade flag among the reasons R-7 /
+   R-10 stayed off green -- check which is true when re-counting.
+52. [scan: NO for the leftovers below unless one is built]
+   **Lots dropped before a fit (run 65) -- SHIPPED 2cfd13d6 (POD_CANNOT_FIT red by
+   arithmetic: 10,028 lots yellow -> red, all previously NOT_MEASURED); zone codes read
+   2026-10-09, LIVE in runs 69/70 (ef4b272f, b9ced2fe, 9eb9f618).** GEOM-UNREADABLE is not
+   broken outlines: it is the complex-shape cap (convexity < 0.80, > 10 edges, pole-like);
+   only 357 yellow lots are held yellow by that flag alone -- left as is.
+   Steph 2026-10-09 RULED (register `2026-10-09-milwaukie-dmu-optional-review`,
+   `-clackamas-design-review-zones-red`, `-hillsboro-anx-yellow`,
+   `-gladstone-portland-avenue-yellow`): Milwaukie DMU ALLOWED (design review optional via
+   clear and objective standards); Clackamas MR-1, MR-2, HDR RED BY RULING (ZDO 1102.01(A)
+   design review) -- the same sentence also makes PMD and VA red (agent extended it; "tell
+   Steph" -- no record that Steph was told); 163 green MR-1/MR-2 lots went red; Hillsboro
+   ANX stays yellow; Gladstone C2 Portland Avenue: YELLOW until known -- avenue-facing
+   entrance + 25% ground-floor glass (GMC 17.18.050(3)(b)+(c)) is a fact about the building
+   the catalog does not hold; no assumption about the pod. SHD/RCHDR/VTH stay unencodable
+   (setbacks by compass bearing, ZDO 1005.02(L)) -> item 61. Note: the 2026-10-15 clear-
+   objective ruling (item 85) may reach these design-review reds.
+   TRAP: the splice cannot retire lots a re-run drops from s3 (assign keeps a measured lot's
+   old row): a bound/splice scope must list those lots explicitly, as the 805
+   MR1/MR2/PMD/VA lots were here.
+   Still open (each touches 0 greens today):
+   - OFFERED, not done: read faces_residential_zone_across_street per street line outside
+     Portland so the Milwaukie DMU/GMU street yards can be released (0 lots today, all red).
+   - Tualatin Basalt Creek 50 ft yard measured-zero (2,234 ft to the built parkway;
+     re-measure when the extension is mapped or on annexation); Central Tualatin Overlay
+     blocks (Map 10-3) and RH-HR 45 ft min height DEFERRED (0 lots, all red); 100 ft wetland
+     yard, building separation, MUC 57.400 / Figure 57-1 height check.
+   - Milwaukie Figure 19.304-2, 19.505.5.E.1, DMU 50 ft parking ban.
+   - Fairview TCC Halsey storefront map (44 lots); VC stays because of the FLX alias; SCMU
+     front setback and densities.
+53. [scan: Estacada + Canby/Sandy DONE in run 73; Sandy REVERSED by r3 (83a7683d on main), rides the weekly ~2026-10-19; (b)-(f) below still open] **Canby, Sandy, Estacada, Molalla.**
+   Steph's by-right-only ruling (2026-10-08) made Canby and Sandy RED in every zone
+   (register `2026-10-08-by-right-only`, `2026-10-08-canby-no-state-fourplex-backstop`,
+   `2026-10-08-sandy-no-state-fourplex-backstop`; each zone note
+   opens "RED BY RULING" so the ruling can be reversed). REVIEW TIERS (Steph 2026-10-14, r3;
+   register `2026-10-14-review-tiers`): Sandy R-1/R-2/R-3 come back YELLOW -- the 17.90.40 B
+   design review applies stated standards but may add conditions (REVIEW-CONDITIONS). Bound
+   on run 74's inputs: 0 green / 108 yellow / 1,853 red of 1,961 (R-1 779 red, 719 on fit;
+   R-2 69 y / 510 r and R-3 39 y / 564 r, mostly the landscaped-area minimum). Canby
+   re-checked and stays RED: the 16.49.030 Type III review is a one-off judgement (zone notes
+   quote it). Steph 2026-10-15 (item 85, not merged yet): judgement-only red and the "may add
+   conditions" tier both become GREEN with a flag inside a UGB -- the clear-objective bound
+   shows newly admitted Canby 108 green / 35 yellow and Estacada R-3 10 red -> 6 green / 4
+   yellow, so Sandy's yellows move again when 85 merges.
+   Estacada (run 73 LIVE): 14 green / 7 yellow / 2,860 red of 2,881; admits C-2, CMU, R-3
+   (townhouse lots only) and NCR (only within 200 ft of Eagle Creek Rd or Hinman Rd,
+   `near_named_street_200ft`, flats/geom/named_street.py); the 16.132.015 planning-staff
+   review Steph ruled by-right (register `2026-10-08-estacada-staff-review-by-right`). All 14
+   greens read by hand; doubts, none changed: 34E17 02000 (30941 SE River Mill Rd) is a
+   split-zone lot, 47% NCR, its band not checked against the zone line; 34E20AB01200 (30905
+   SE Eagle Creek Rd) is an occupied apartment complex ($3.9M of buildings); 34E20AC00200/00201
+   (1015 NW Wade St) are two COM lots whose owner the roll does not give; `inside_ugb` was
+   false on all 14 (the UGB layer was not read -- fixed f003fd49 on flats/clear-objective).
+   Checks Steph asked for (2026-10-08): wetlands overlay = the NWI layer already applied;
+   historic overlay = inventoried buildings only; 33% geotechnical = already stricter in
+   slope.yaml (15%). Still open:
+   (b) Molalla (HUMAN_TODO 29, Steph's PDFs): 7 of 11 chapters (2.3, 2.4, 3.2, 4.4 still 429)
+   -- layer files parked outside the repo unless all 11 land (copy in /tmp/fg53/molalla_parked
+   + the new 5.1); gate already read: admits R-2, R-3, R-5, refuses R-1, C-1, C-2, M-1, M-2,
+   PSP; ALSO check whether those zones need design review.
+   (c) NCR "major collector" half of EMC 16.25.020 is unmeasured (no street-class map for
+   Estacada; Currin Rd looks like one) -- lots near it screen RED; add the name to STREETS in
+   named_street.py once Steph confirms (HUMAN_TODO 30 q5).
+   (d) Airport Safety overlay (16.54) zone map, side-line PUE (the code only says the city MAY
+   require 10 ft), parking facing Eagle Creek Rd and the Currin Creek 70 ft strip: Steph's
+   answers pending in HUMAN_TODO 30 q1-4.
+   (e) minimum density 8.712 du/ac in C-2, R-3, NCR on the unit-lot path (the quote check
+   wants a printed operand; needs a form that holds half of a per-dwelling area).
+   (f) the Canby/Sandy doubts (design review, 20 ft yards, 13 du/ac, overlays) were MOOT
+   while the by-right ruling held -- re-read them once item 85 lands; Estacada's R-3
+   townhouse-only reading and the MMU Council-master-plan refusal were re-read 2026-10-08
+   and stand; the Downtown zone (D) could be encoded with the named-street tool (fourplex
+   outright if it does not face Broadway/Main/OR 224, north of OR 224, 16 du/ac) -- waiting
+   on Steph's yes/no. Forest Grove stays blocked on HUMAN_TODO 28.
 54. [scan: NO (warn-only: changes no rule and no answer; the fixes it leads to land at the next weekly)] **Code-change
    reader on the Claude API credit ($100/month). Steph 2026-10-07 picked this one and
    DECLINED the other two offered (a second reader beside signing; moving the finance-side
@@ -2042,215 +977,43 @@ read when the weekly full re-screen lands.
    before encoding". Once the state is scouted the leftover goes to re-scouting changed
    cards, then a reading list + doubts list (the item-53 kind) for the top-ranked places.
 58. [scan: YES] **Yellows held by one measurable question (offered 2026-10-08;
-   first pass DONE c98be01d 2026-10-09; LIVE in run 69).** Run 67 best-pod yellows held by a
-   single flag: FACT-AT-STREET-END 633, ACCESS-STREET-UNCONFIRMED 359,
-   MEASURE-FIRE-ROUTE 334, FACT-CIVIC-CORRIDOR 141, PARKING-STRIP-UNCONFIRMED
-   97. MEASURED: MEASURE-FIRE-ROUTE (paved type-2000 streets now count as
-   truck roads: Portland 348 rows yellow -> green; see 49(c)) and
-   FACT-CIVIC-CORRIDOR for Rockwood (Gresham's Rockwood Design District
-   drawn from the city's own layer, `rockwood_design_district`; 290 rows /
-   ~148 lots yellow -> green: CMU 197, MDR-24 60, MDR-12 29, OFR 4; SC/SC-RJ
-   and CMF stay yellow; scope `/root/fo/scope_rockwood.txt`, inside
-   scope_yellow.txt). CANNOT BE MEASURED from data we hold, left yellow:
-   - FACT-AT-STREET-END (Gresham, 789 per-design lots): Table 4.0131 note 5
-     numbers are not encoded and the street-class layer cannot separate
-     Minor Access Streets.
-   - ACCESS-STREET-UNCONFIRMED (441): the only road line is a private drive
-     or lies across someone else's land; no map says whether the lot abuts it.
-   - PARKING-STRIP-UNCONFIRMED (213): OAR 660-046-0220(2)(e)(E) is an open
-     reading of law, not a fact on the ground (Steph ruled yellow flag
-     2026-10-04).
-   - FACT-CIVIC-CORRIDOR (the rest): Gresham's own corridor map is the
-     source, and Glisan / 162nd are not on it.
-   Counts above are per design; the best-pod counts differ.
-59. [scan: YES] **Tracts, zero-value parcels and public county codes show GREEN (found 2026-10-08
-   reading item 51's gains; the leak already exists in every city).** The
-   institutional rule works by map overlap only; no county property code or
-   value check backs it. Missed: land-and-building-value-zero tracts (e.g.
-   Tigard 2S111CD01100 = Summerfield Golf Course, 100% overlap, not in any
-   institutional map; 2S107DA12900, 2S101AC90000, 2S111DA24400; Cornelius
-   1N334DC90000) and public-looking codes 960 (parks/open space), 910, 940,
-   980, 990. Live run 67: 153 zero-value greens + 159 9xx-coded greens of
-   49,091. Churches/charities (911, 981) STAY CHECKED by Steph's ruling
-   (item 47); a golf course is not an institutional category, so ask Steph:
-   is a tract / common-area / golf course RED? Then add a tract + zero-value
-   (+ public-code) rule, bound over run 67, read every moved lot. Also
-   1S133AD02200 (code 911) overlaps Westgate Christian School at 17% only.
-   STEPH RULED 2026-10-09: ALL RED -- HOA tracts, common areas, open space,
-   golf courses and zero-value parcels are RED and never scanned, like
-   schools and parks; churches and charities stay checked (item 47).
-   Assigned to the zone-gaps agent: rule + bound + read every moved lot.
-   CODE LIVE bfc7dee9 (2026-10-09; rules 48aed13d on c787f79f). THE MAP WAITS
-   on the joint splice with 60+63 (ONE splice on
-   /root/bridge_spliced_2026-10-09_49j). Four tiers, first hit answers
-   (flats/config/roll_red.yaml, flats/geom/roll.py): public land (Washington
-   only, codes x20/x30/x40/x50/x60/x70/x90; the x1 variants stay screened),
-   tract (zero value + tract-style parcel number), open space (zero value +
-   8xx or 0x5), no address (zero value + blank / NO SITUS / LEVY CODE). A bare
-   no-address lot is SPARED (stays screened) when 3 or more OTHER lots built
-   in 2021+ (county YEARBUILT) are on the same tax map page (parcel number
-   less its last 5 characters) AND within 500 ft edge to edge; no year, no
-   geometry = red. Bound (assign alone, run 69 -> assign_v4 on 137
-   /root/tr/assign_v4): 3,117 lots turn red = 112 green + 3,005 yellow
-   (Clackamas 19/1,030, Multnomah 35/251, Washington 58/1,724) -- LIVE in run
-   70 (49(l)), 3,117 of 3,117 exactly; 635 spared
-   (190 x1 codes + 445 near new houses; 163 more went back to red under the
-   500 ft line). 4 spared greens read: all leftovers beside new
-   subdivisions. SPLICE NOTE: assign needs no new file; the roll columns are
-   already in the normalized lots table (PROP_CODE, LANDVAL, BLDGVAL,
-   TOTALVAL, ASSESSVAL, site_address, YEARBUILT, wkb). Re-run
-   `python -m flats.ingest.assign --normalized /root/zg/Nn --bridge
-   <bridge> --quadfit-dir /root/zg/Qn --snapshot-date 2026-10-01` from a
-   checkout at bfc7dee9 or later; lots that turn red need no re-screen, the
-   spared ones already hold run 69 rows. The weekly chain is unchanged: the
-   institutional step reads the same lots table.
-   TIERS (agent count, run 69 green/yellow): (1) WashCo public codes
-   92x/94x-97x/99x per OAR 150-308-0310; (2) $0 + tract-style number;
-   (3) $0 + recreation/open-space code; (4) $0 + no street address --
-   all RED. (5) $0 WITH a real street address (~1,100 lots, ~55 green;
-   sample = new splits not yet valued): STEPH RULED 2026-10-09 "screen
-   them normally" -- no red, no flag. Multnomah exempt-by-value (10,041)
-   untouched: cannot tell a park from a church.
-   BOUND (assign-only over run 69, 02041372): 3,752 lots -> red (152 green,
-   3,600 yellow), nothing else moved. STEPH RULED 2026-10-09 on the two
-   risks: (i) WashCo "x1" public codes (921/941/943/951/961/971/991/993,
-   190 lots, real buildings + values, housing-authority/nonprofit) STAY
-   CHECKED -- only bare-land x0 codes go red; (ii) $0 + no-address lots in
-   blocks with 3+ neighbours built 2021 or later (~173 yellow + some green)
-   STAY CHECKED as possibly new lots. Cemeteries (93x) red; student
-   housing (90x) checked. Re-bound after the change, then ship.
-60. [scan: YES] **Rank the unranked corner streets (opened 2026-10-09 from
-   49(c); Steph: "yellow, then measure").** In the current bound 634 lots
-   have a corner street with no class (60 street names, 69 street lines;
-   an earlier check counted 351 lots with no rank on either side). Metro's
-   street file has no street at all beside 615 of the 634 lots (1,502 of
-   1,517 unranked street lines have none beside them) and the county map
-   draws classified roads only, so an absence of a classified road is not a
-   reading. Today each such corner lot is yellow (ACCESS-STREET-RANK-UNKNOWN,
-   852 rows). Measure it from a real second source: (1) OpenStreetMap
-   `highway=` category (the coordinator measured the county: 18,867 drivable
-   ways, residential 11,644 / tertiary 2,718 / secondary 1,789 / primary
-   1,457 / trunk 565 / unclassified 409 / living_street 133; lanes= on 1% of
-   residential and 54-83% of busy roads, width= almost never, no traffic
-   volume) -- match each unranked street line to an OSM way (name, then
-   nearest parallel centreline within 60 ft), rank by category. A `service`
-   way is never a ranked street: an edge with only a service way beside it
-   stays unresolved. Known disagreement to leave unresolved under any rule:
-   Farmington Rd (county Neighborhood Route, rank 1, vs OSM primary).
-   (2) the county's own road centreline layer; (3) the street gap in the
-   taxlot fabric. Steph's call: does OSM count as the second source for the
-   two-source rule? FALLBACK only, needs Steph's yes: "no Metro line and no
-   classified road within 300 ft = local" (relaxes the two-source rule). Then
-   bound over the 852 rows (`/root/fo/scope_yellow.txt`), read every lot that
-   turns green.
-   OSM position pass + dig into the empty edges (2026-10-09, read-only,
-   scripts `/root/fo/osm_match4.py`, `osm_dig.py`; not wired into the screen).
-   Matching each unranked street edge to the nearest OSM way within 60 ft
-   that runs alongside it (within 25 degrees) gives, over the 634 lots: 151
-   lots with EVERY unranked edge on a residential-or-above way; 13 lots with
-   an arterial or collector edge; 23 with an edge that has only a service
-   way; 466 with an edge that has no OSM way (874 edges); 15 with an edge
-   reading mixed classes. THE 874 EMPTY EDGES ARE REAL STREETS: 855 are
-   street edges (RLIS minor residential, TYPE 1500, within 50 ft) and 19 are
-   private drives (TYPE 1700/1800, on 10 lots); 867 of 874 have an OSM way
-   within 60 ft (848 residential, 5 secondary, 2 tertiary, 19 service) at
-   the same distance as the RLIS line. They failed only the alongside test:
-   532 are under 25 ft long (241 under 10 ft), short side edges or chords of
-   a bend that run toward the street, not along it. Across them: 729 right-
-   of-way, 80 gap in the fabric, 65 another lot. Without the alongside test,
-   448 of the 466 lots have residential-or-above OSM on every empty edge (an
-   upper bound: their other edges' service/mixed readings are not applied);
-   Kinnaman Rd, West Union Rd, Oleson Rd and NW 143rd Ave touch 6 of the
-   lots with secondary/tertiary. BIGGER FINDING, NOT VERIFIED: only 556 of
-   the 634 yellow lots have two street edges of 25 ft or more; 68 have one
-   and 10 have none, so ~78 may not be real corners (cul-de-sac or curved
-   fronts whose short chords counted as a second street) and their yellow
-   may be wrong. Read those 78 before any ranking rule is wired.
-   READ OF THE ~78 + THE "615 vs 855" CONTRADICTION (2026-10-09, read-only;
-   nothing in shipped code changed; scripts `/root/fo/rank_why.py`,
-   `rank_fix.py`, `corner_read.py`, `county_corner.py`, what-ifs `bound8.sh`
-   `bound9.sh`). (a) THE CONTRADICTION: same cause, not the same test.
-   "615 lots have NO Metro street beside the lot line" is true OF THE RANK
-   MAP, not of Metro's file: `load_class_maps` (flats/geom/street_class.py,
-   `if not g.intersects(zone): continue`) keeps only Metro streets within
-   210 ft (150 corridor + 60 front reach) of a classified road. Washington
-   County's map lists classified roads only, so every local street farther
-   than that is cut out BEFORE the rank lookup, and the lookup finds nothing
-   beside the lot. The "855 of 874 are Metro streets within 50 ft" count
-   reads the full file. Of 2,145 unranked edges, 1,440 have no map street
-   within 60 ft (the clip); ~626 more fail the alongside/bearing test
-   (`corridor._fronted` -> `_abreast`, mostly short side edges and chords).
-   (b) A METRO-ONLY FIX EXISTS, NO OSM: skip the clip when the map has
-   `unlisted` set (one line; the design already says "a street the county
-   map leaves out is local where Metro agrees"). What-if over the 1,465
-   scope lots (`bound_noclip`): 0 changes to any already-ranked edge (0 of
-   2,675 on the 634 lots; 0 of 5,838 on a 2,500-lot WashCo sample), 1,541
-   of 2,145 unranked edges (72%) rank local, 449 rows / 445 lots go
-   yellow -> green, nothing goes red, nothing green changes, `fits` and
-   slack identical on every row. ~604 edges stay unranked (the short-chord
-   and non-alongside ones). It is the already-shipped two-source design
-   (county map + Metro type), so it is a bug fix, not a widened gate --
-   but ASK Steph/coordinator to confirm that reading before it ships; it
-   would lift 445 of the 634 yellows on its own. (c) THE ~78 NOT-CORNERS:
-   read from the edge list, street names and nearest dead end (not from a
-   picture). 14 are true corners (two named streets on separate runs, six
-   with a second frontage under 25 ft); 64 are ONE street read as two:
-   27 cul-de-sac/bulb fronts (20 `fronts_cul_de_sac` measured, 7 with a
-   dead end beside and the flag unset), 5 only short chords (no edge >=25
-   ft), 22 curved single fronts (turn 33-131 degrees), 10 a straight front
-   plus a sliver edge of 15 ft or less. No flag pole among them (a flag
-   lot is tier irregular, not corner). Washington County's CDC defines no
-   corner lot (definitions block, "CORNER LOT: SILENT"), so no legal
-   definition makes a bend a corner there.
-   See item 63 for the step that makes it, the county-wide count and the fix.
-   STEPH RULED 2026-10-09 ("yes, when both agree"): a street line counts
-   as QUIET only when Metro's unclipped file AND OpenStreetMap both call it
-   residential/local. A busier OSM class (Kinnaman, West Union, Oleson,
-   NW 143rd) or any disagreement (Farmington) stays unranked = yellow;
-   `service` never counts. OSM becomes an acquired dataset (Geofabrik
-   Oregon extract) in the weekly snapshot; bound + report moves first.
-   OSM RELEASE NAME DONE 2026-10-10 (merged flats/osm-release-name): the
-   manifest names the dated Geofabrik file a run read; the probe compares it
-   as an `ok` finding (daily files are expected, no Metro banner).
+   first pass DONE c98be01d 2026-10-09; LIVE in run 69).** MEASURED: MEASURE-FIRE-ROUTE
+   (paved type-2000 streets count as truck roads: Portland 348 rows yellow -> green) and
+   FACT-CIVIC-CORRIDOR for Rockwood (`rockwood_design_district`, the city's own layer; 290
+   rows / ~148 lots yellow -> green; SC/SC-RJ and CMF stay yellow). CANNOT BE MEASURED from
+   data we hold, left yellow (counts per design):
+   - FACT-AT-STREET-END (Gresham, 789): Table 4.0131 note 5 numbers are not encoded and the
+     street-class layer cannot separate Minor Access Streets (see 37(iii)).
+   - ACCESS-STREET-UNCONFIRMED (441): the only road line is a private drive or lies across
+     someone else's land; no map says whether the lot abuts it.
+   - PARKING-STRIP-UNCONFIRMED (213): OAR 660-046-0220(2)(e)(E) is an open reading of law,
+     not a fact on the ground (Steph ruled yellow flag 2026-10-04; the question is in 36).
+   - FACT-CIVIC-CORRIDOR (the rest): Gresham's own corridor map is the source, and Glisan /
+     162nd are not on it.
+   Open: a new source for any of these four would release them; nothing else queued.
 61. [scan: rides the weekly ~2026-10-19] **Lot-line bearing + Clackamas ZDO
-   1005.02(L) -- BUILT on flats/lot-line-bearing (ef27d90e), bound done
-   2026-10-14, waiting on merge (this branch first, then e0's round2-rulings
-   rebases onto it).** Built: three per-line bearing fields (OPTIONAL;
-   unmeasured = full distances), flats/geom/bearing.py cuts the exact
-   ground (north 26 x tan60 = 45.033 ft, east/west 26 x tan15 = 6.967 ft,
-   south none; diagonals and curves segment by segment; grid AND true north;
-   a public-road line owes N-15 and no east/west); zone blocks for SHD,
-   RCHDR and the six borrowers (RTL, CC, C3, OC from HDR; RCC, RCO from
-   RCHDR), each quadplex_allowed false citing 1102 like HDR, the use table's
-   own answer kept in notes for e0's flip. VTH stays unencodable (HUMAN_TODO
-   15, the dropped-cell column read).
-   BOUND on run 74 (all on 137): this branch alone moves 866 lots, all
-   Clackamas uninc, all ZONE-UNENCODABLE yellow -> red by the 1102 block
-   (C3 438, CC 128, RCC 101, OC 81, RTL 59, RCO 33, RCHDR 25, SHD 1; the
-   other 21 of the 887 were already roll/institutional red); 0 moves
-   anywhere else; a 1,974-lot control is identical on every column.
-   Bundle-ready: /root/bundle_2026-10-14_llb (assign /root/assign_2026-10-14_llb
-   over run 74's own bridge). It NEEDS a fresh normalize: the unencodable
-   gate is written there, so a bridge-only splice of this branch moves nothing.
-   AS IF PERMITTED (e0's flip, rehearsed): quadfit s3-s7 re-run on the
-   1,683 lots with the quadfit rows flipped, 1,061 bridged (26 institutional
-   left out), splice OK: 234 green / 145 yellow / rest red. Green by zone:
-   C3 104, CC 35, HDR 29, OC 19, RCC 16, RTL 15, RCHDR 12, RCO 4; median lot
-   30,000 sqft, 203 with > 20 ft of fit room. Every non-red drawing replayed
-   against (L) independently on the real taxlot ring: all clear. About half
-   the red lots fail a fit whose depth carries the bearing yard.
-   e0's flip needs the quadfit rules.yaml rows flipped too (quadfit s3
-   drops quadplex-false zones, so they are never measured), then a quadfit
-   s3-s5o pass; a SPLICED flip must drop the bridge's institutional lots
-   from the added set (a full weekly is fine).
-   Accepted limits: flat ground; street width counted as 0 (N-15 only);
-   ~3 ft court over-charge on south-facing rears; RCHDR floors always
-   charged; (L)(1)(b)/(c) not taken; unmeasured street kind = no relief.
-   e0's FLIP BUILT 2026-10-14 on flats/round2-rulings-r3 (b48bec70): HDR, SHD, RCHDR, RTL, CC,
-   C3, OC, RCC, RCO are YELLOW (REVIEW-CONDITIONS, Steph's review tiers) and their quadfit
-   rules.yaml rows are flipped. NOT in r3's bound (that ran before the flip); the rehearsal above
-   (234 green / 145 yellow of 1,061 bridged; the flag makes each green yellow) is the estimate.
-   It reaches the map only through the weekly's fresh normalize + quadfit pass.
+   1005.02(L) -- MERGED to main (67b8f9b6, ef27d90e), and e0's flip with r3 (83a7683d;
+   b48bec70 rebased as ef48b1f7); reaches the map at the weekly.** Built: three per-line
+   bearing fields (OPTIONAL; unmeasured = full distances), flats/geom/bearing.py cuts the
+   exact ground (north 26 x tan60 = 45.033 ft, east/west 26 x tan15 = 6.967 ft, south none;
+   grid AND true north; a public-road line owes N-15 and no east/west); zone blocks for SHD,
+   RCHDR and the six borrowers (RTL, CC, C3, OC from HDR; RCC, RCO from RCHDR). The flip:
+   HDR, SHD, RCHDR, RTL, CC, C3, OC, RCC, RCO are YELLOW (REVIEW-CONDITIONS, Steph's review
+   tiers 2026-10-14) and their quadfit rules.yaml rows are flipped. VTH stays unencodable
+   (HUMAN_TODO 15, the dropped-cell column read).
+   Expected (rehearsal, not a bound of the flip): of 1,061 bridged, 234 green / 145 yellow /
+   rest red before the flag; the flag makes each green yellow. Green by zone: C3 104, CC 35,
+   HDR 29, OC 19, RCC 16, RTL 15, RCHDR 12, RCO 4. Every non-red drawing replayed against (L)
+   on the real taxlot ring: all clear. Steph 2026-10-15 (item 85, not merged): the "may add
+   conditions" tier becomes GREEN with a flag inside a UGB, so these move again when 85 merges.
+   TRAPS: it NEEDS a fresh normalize (the unencodable gate is written there, so a bridge-only
+   splice moves nothing) + a quadfit s3-s5o pass (s3 drops quadplex-false zones); a SPLICED
+   flip must drop the bridge's institutional lots from the added set (a full weekly is fine).
+   CHECK after the weekly: Clackamas uninc C3/CC/RCC/OC/RTL/RCO/RCHDR/SHD/HDR moves against the
+   rehearsal.
+   Accepted limits: flat ground; street width counted as 0 (N-15 only); ~3 ft court
+   over-charge on south-facing rears; RCHDR floors always charged; (L)(1)(b)/(c) not taken;
+   unmeasured street kind = no relief.
 62. [scan: YES] **Roof shape: teach the screen gable vs flat (offered 2026-10-09
    after Steph asked what a gable costs in height; nothing signed).** The
    design holds ONE height (26 ft) compared straight to every cap, so it
@@ -2272,95 +1035,6 @@ read when the weekly full re-screen lands.
    loses Hillsboro's 2-1/2-storey zones (~23,500); >30 loses Portland
    R5/R7/R10/R20 (~148,700 total); >35 loses ~371,600. Wait for a drawing
    with real eave/ridge figures before building.
-63. [scan: YES, after Steph rules] **One street bending is read as a corner
-   (found 2026-10-09 reading the ~78 of item 60; a CORRECTNESS bug, not only
-   a yellow-flag one).** A lot on ONE street whose frontage turns 45 degrees or
-   more (cul-de-sac bulb, knuckle, curved front, or a straight front with a
-   short sliver edge) is screened as a corner lot. THE STEP: s4 `classify_lot`
-   (Lot Analysis/quadfit/s4_edges.py, `street_threshold_ft` 50) calls an edge a
-   street when its midpoint is within 50 ft of ANY non-alley centreline -- no
-   name, length or bearing test -- then `cluster_bearings`
-   (flats/geom/edges.py:193, 20 degrees) makes `Tier.corner` at edges.py:333
-   when the edges form two clusters. The only guard is `corner.two_streets`
-   (corner.py:92: bearings at least 45 degrees apart), which a bulb or sharp
-   curve passes. `is_corner` (corner.py:259) then names a front by
-   `front_lot_line_corner` (WashCo: `shortest`), renames the other street
-   edges street-side, turns an interior line from rear to side, and the
-   access step asks for a rank on each "street" (the 634 yellows). Both the
-   envelope and the access reading change.
-   REACH (run 69 colours, best design, tier corner AND two streets >=45
-   degrees: 21,199 green/yellow lots, 15,137 green + 6,062 yellow): 2,311
-   have every street edge on ONE street name (1,078 green, 1,233 yellow;
-   2,266 of them one unbroken run; only 232 carry `fronts_cul_de_sac`);
-   760 of those have at most one street edge of 25 ft or more (349 green,
-   411 yellow). By city (2,311): WashCo 703, Portland 494, Beaverton 271,
-   Clackamas uninc. 247, Gresham 104, Oregon City 100, West Linn 82,
-   Tualatin 65, Wilsonville 51, Happy Valley 50. Portland, Gresham, Oregon
-   City and Beaverton WRITE their corner test (Portland: a curve <=120
-   degrees is two streets), so for them a bend can legally be a corner and
-   the count is a ceiling; WashCo, Clackamas uninc. and others are silent.
-   DIRECTION: it runs the lenient way. What-if (`bound9.sh`, 762 lots = the
-   760 + the ~64 not-corners of item 60) treating them as "one street that
-   bends" -- the screen's own rule for a turn under 45 degrees (front left
-   unnamed, every street edge takes the stricter of front and street side):
-   envelopes never grow and 796 of 1,524 rows shrink; 293 of 762 lots change
-   colour -- 67 green -> red, 1 green -> yellow, 222 yellow -> red, 3 yellow
-   -> green (no rank needed any more). That is the STRICT end; the truth is
-   between it and today, so some of today's greens on these lots are
-   probably false greens. FIX PLAN, nothing built: (1) where a city's
-   definition is written, route the corner question through
-   `definitions.decide` for a curve, as Portland/Gresham already do; (2)
-   where it is silent, a corner needs two different street names or two
-   unbroken runs; one name on one run is a bend and gets the unnamed
-   reading; (3) stop the sliver: a street edge under ~15 ft that runs
-   toward the street is not a second frontage. Step (2) turns the 67 greens
-   red -- STEPH DECIDES: bend rule (strict, 67 greens lost), or keep the
-   corner reading and flag it. Ship with item 60's unclipped-streets fix
-   (rank edges local where Metro agrees), which clears most of the yellows
-   on the same lots. Reads: `/root/fo/corner_sus.pkl` (78),
-   `county_corner.pkl` (21,199), `onebend_changes.csv`.
-   STEPH RULED 2026-10-09: ONE STREET, NOT A CORNER -- where the city's
-   code is silent, one street name on one unbroken run is a bend and takes
-   the unnamed reading (steps 2 + 3), accepting ~67 greens -> red; cities
-   that write a corner test (Portland, Gresham, Oregon City, Beaverton)
-   follow their own words (step 1). Bound + read every moved lot first.
-   BUILT 2026-10-09 (branch flats/items-60-63; bound read lot by lot; NOT merged,
-   NOT spliced). Where the city's code is silent, a one-street bend takes the
-   unnamed reading unless the front is broken: `read_as_bend` = two+ bearings,
-   one street name, one UNBROKEN run (flats/geom/frontage_curve.py), and the
-   city's own corner words (if any) say "not a corner". Curve clauses are ONE
-   angle across the whole frontage: Beaverton BDC 90 = chord angle at the
-   foremost point, strict < 135; Gresham 3.0100 = inside curve, total turn
-   >= 60 (tangent <= 120); Portland PCC 33.910 + Wood Village WVDC 720.030 =
-   tangent <= 120. PORTLAND/WOOD VILLAGE AMBIGUITY: "angles that are 120
-   degrees or less" read as TOTAL turn (ruled); the per-bend reading is a
-   one-line config change and keeps 44 lots as corners (noted in both layers).
-   Oregon City has no curve clause, so a one-street bend is never a corner.
-   SLIVER RULE: a street edge < 15 ft turning >= SLIVER_TURN_DEG off the
-   longest is ignored ONLY inside a stretch that also holds a real front edge;
-   an isolated short piece is a second front (a through lot), so the run is
-   broken. +-1 DEGREE BAND (BAND_DEG): digitising error is 0.5-2 deg (0.5 ft
-   slip) to 1-4 deg (1 ft), so a lot within 1 deg of a ceiling (Beaverton 135,
-   Portland/Wood Village 120, Gresham 60/120) takes the bend reading and
-   carries flag CURVE-ON-THE-LINE (sev 1) with bounds (measured, ceiling).
-   Band re-bound (80 lots, 160 rows): 4 colour moves -- Beaverton 134.4 /
-   134.9 / 134.95 deg: green -> red 1, yellow -> red 2 (each also CORNER-READ-
-   AS-BEND); Portland 119.48 deg: yellow -> green 1; flags on all as expected.
-   FINAL NUMBERS (best design per lot, vs main or item-60-only): WashCo uninc.
-   green -> red 84, green -> yellow 2, yellow -> red 225, yellow -> green 5,
-   red -> yellow 1; item-60 gains 374 yellow -> green, all WashCo uninc., 66 of
-   them FIT-TIGHT; Clackamas uninc. green -> red 25, yellow -> green 2, yellow
-   -> red 36; Portland green -> red 59, green -> yellow 3, yellow -> green 2,
-   red -> yellow 1, yellow -> red 13; Beaverton green -> red 4, yellow -> red
-   20; Gresham green -> red 4, yellow -> red 20; Tualatin green -> red 22,
-   green -> yellow 1, yellow -> red 19; West Linn 14/33; Oregon City 19/1/28;
-   others small. Scopes (137): /root/fo/scope_curve.txt (6,809), scope_unb_diff
-   .txt (312), scope_band.txt (80). LIVE in run 70 (49(l)); the counts above
-   came from a scope that dropped spaced Multnomah TLIDs -- the splice's
-   numbers replace them: green -> red 228 (Portland 59, WashCo uninc. 65,
-   Clackamas uninc. 25, Tualatin 20, Oregon City 19, West Linn 13, Troutdale
-   10, Beaverton 5, Gresham 4, Durham 4, others 4), yellow -> red 446, yellow
-   -> green 367. STILL TO DO: the weekly acquire must include `osm_roads`.
 64. [scan: NO (a reading exercise; fixes it finds get their own items)] **Measure the
    false-GREEN rate, so "are we converging?" has a number (offered 2026-10-09 when Steph
    asked whether the work ever ends).** Draw a random sample of ~100 GREEN lots from the
@@ -2371,47 +1045,26 @@ read when the weekly full re-screen lands.
    place. Stopping signal to propose to Steph: a week whose fixes move < ~0.5% of greens
    and find no new kind of problem -> switch from hunting to maintenance (code-change
    watch, item 54) + onboarding new territory. Steph to decide whether to run it.
-   ROUND 2 AGENT INSTRUCTIONS GIVEN 2026-10-14 ("false-green-sample-r2", on run 74).
-   AGENT INSTRUCTIONS GIVEN 2026-10-10 ("false-green-sample", first round on run 70).
-   POLICY QUESTION FOR STEPH (raised 2026-10-10 by the sample): FLATS ignores
-   existing buildings by design, so a 6.66-acre Portland CE lot carrying an
-   operating 75,050 sq ft commercial building (1S2E02BB  -01100) is GREEN with
-   the pod in a corner (quadfit had it red, existing_commercial). Unless it is a
-   shopping centre (item 47, red), it is not a false GREEN under today's rules.
-   The sample counts such greens separately; (Steph 2026-10-14 on the Tigard apartment greens: existing
-   buildings STAY GREEN) ask Steph whether a lot whose
-   pod sits on a working building's parking or yard should stay green.
-   ROUND 1 DONE 2026-10-10 (branch flats/false-green-sample, data/flats/false_green/2026-10-10/:
-   SUMMARY.md, false_green_round1.csv, seed fgs-2026-10-10-seed1, query work/draw.sql). 102 greens
-   from run 70 (49,960), 19 cities: 97 RIGHT, 4 WRONG, 1 CAN'T TELL. Weighted false-GREEN rate
-   3.4% (about 1,700 lots), 95% range about 1%-10%; 4.8% if the can't-tell is wrong. Portland 0
-   of 38; the 4 sit in WashCo unincorporated (2 of 11) and Hillsboro (2 of 3). Kinds: NEW x2 =
-   right-of-way dedication to the centre line not taken out of the fit (item 67); KNOWN x2 =
-   item 53 (by-right: Development Review) in a new city, Hillsboro, owned by the lane
-   flats/hillsboro-review-red (reach 152 of 427 Hillsboro greens). Existing-building POLICY
-   class counted apart: 17 of 102 greens carry one (11 non-house); run 70 about 3,000 greens
-   (6%) carry a 5,000+ sq ft non-house building, about 900 (1.8%) a 20,000+ one; none counted
-   wrong (item 66). CAN'T TELL: 1N2E21AD  -06200, Portland RM1, 50 x 200 ft, red if on Map 120-2
-   (item 68). Not read: the 59 PUB greens (maybe item 59's public-code rule). Stopping signal not
-   met (new kinds found). Round 2: after items 67 and the Hillsboro fix ship, redraw with a new
-   seed and weight the same way (scripts: work/consolidate.py).
-   ROUND 2 DONE 2026-10-14 (branch flats/false-green-sample-r2, data/flats/false_green/2026-10-14/:
-   SUMMARY.md, false_green_round2.csv, seed fgs-2026-10-14-seed2, work/draw.sql). 108 greens from
-   run 74 (50,956), 22 places, Tigard/Cornelius/Estacada/Hillsboro/WashCo oversampled and weighted
-   back: 97 RIGHT, 7 WRONG, 4 CAN'T TELL. Weighted 5.5% (about 2,800 lots), 95% range 1.7%-14.6%
-   (exact binomial on the effective sample size, ~67; round 1 recomputed the same way: 3.4%,
-   0.3%-9.6%); 8.0% if every can't-tell is wrong. BOTH ROUNDS POOLED (207 lots, 9 wrong): 3.9%,
-   1.5%-8.9% -- the number to quote; no change between rounds. New cities Tigard/Cornelius/Estacada
-   (18 read): 0 wrong. Wrongs: road land to the centre line x5 (KNOWN-67: WashCo 1 same place;
-   Sherwood 2, King City 1, Oregon City 1 new places -> item 77); WashCo transit-district Type II-
-   only path x1 (KNOWN-53 new place -> item 79); Portland Main Street overlay minimum FAR x1 (NEW
-   -> item 78). Can't tell: Portland Map 120-3 (item 68), Wilsonville x2 and Wood Village TC x1
-   (item 80 rulings). POLICY class: 13 of 108 carry an existing building (one, a protected 1910
-   house in a Portland conservation district, needs Steph -> item 78). PER-FIX LOG run 70 -> 74:
-   hunting fixes moved 156 greens = 0.31% (Hillsboro DR 152, unranked street 3, West Linn resource
-   1, all known kinds); gains 1,152 from new territory (Tigard 829, Cornelius 308, Estacada 14,
-   Portland 1). STOPPING SIGNAL NOT MET: moves < 0.5% but one new kind and two known kinds in five
-   new places; item 67 alone will move ~3% of greens. Round 3 after 67 ships and 77-79 are decided.
+   ROUND 1 DONE 2026-10-10 (flats/false-green-sample, data/flats/false_green/2026-10-10/,
+   seed fgs-2026-10-10-seed1): 102 greens from run 70, 97 RIGHT / 4 WRONG / 1 CAN'T TELL.
+   ROUND 2 DONE 2026-10-14 (flats/false-green-sample-r2, data/flats/false_green/2026-10-14/,
+   seed fgs-2026-10-14-seed2, work/draw.sql, work/consolidate.py): 108 greens from run 74,
+   97 RIGHT / 7 WRONG / 4 CAN'T TELL; weighted 5.5% (95% range 1.7%-14.6%). BOTH ROUNDS
+   POOLED (207 lots, 9 wrong): 3.9%, 1.5%-8.9% -- the number to quote; no change between
+   rounds. Wrongs: road land to the centre line x5 (items 67/77), WashCo transit-district
+   Type II-only path x1 (item 79), Portland Main Street overlay minimum FAR x1 (item 78).
+   Can't tell: Portland Map 120-2/120-3 (item 68), Wilsonville x2 and Wood Village TC x1
+   (item 80). PER-FIX LOG run 70 -> 74: hunting fixes moved 156 greens = 0.31%; gains 1,152
+   from new territory. STOPPING SIGNAL NOT MET: moves < 0.5% but one new kind and two known
+   kinds in five new places; item 67 alone will move ~3% of greens.
+   NEXT: round 3 after the weekly that carries 67/77 (both merged) and once 78-80 are
+   decided; new seed, weight the same way. Not read yet: the 59 PUB greens.
+   POLICY class (counted apart, never "wrong"): FLATS ignores existing buildings by design --
+   e.g. 1S2E02BB  -01100, a 6.66-acre Portland CE lot with a 75,050 sq ft commercial building,
+   GREEN with the pod in a corner. Steph RULED 2026-10-14 (register
+   `2026-10-14-existing-buildings-stay-green`) that occupied buildings STAY GREEN; the
+   2026-10-10 question "should a lot whose pod sits on a working building's parking or yard
+   stay green?" reads as answered by it -- confirm with Steph only if a case differs.
 65. [scan: YES (a proof run: every answer must come out identical to 137's)] **The Windows PC
    as an idle-time scan helper (Steph 2026-10-09 asked; offered, not started).** Scans are
    CPU-bound (item 46: >14 processes buy nothing on 137; memory only sets how many run at
@@ -2428,151 +1081,69 @@ read when the weekly full re-screen lands.
    /root/lockwatch.log, every 5 min since 2026-10-10).
 66. [scan: NO for (A); YES for (B)] **A price check beside the fit (Steph 2026-10-10: "Do we
    not have a financial screen? If there's a large commercial use ... redevelopment wouldn't
-   support").** No: FLATS answers legal + physical fit only and ignores existing buildings by
-   design; nothing compares what a lot would cost with what a 4-home pod can pay for land.
-   The county's land, building and total values and the last sale price are already in the
-   normalized lot table for every lot (RLIS LANDVAL/BLDGVAL/TOTALVAL/SALEPRICE). Run 70 greens
-   (49,960): county total value > $1M 7,994, > $2M 3,324, > $3M 2,123; building worth more than
-   the land AND total > $1M 5,143; ~3,000 carry a 5,000+ sq ft non-house building, ~900 a
-   20,000+ one (item 64's sample: 1S2E02BB  -01100, a closed 75,050 sq ft big box, $5.8M sale
-   2020). Offered: (A) SHOW, don't screen -- a likely-price figure and an "over budget" label
-   on every lot + a Lots-page filter, colour unchanged; (B) SCREEN -- over budget = YELLOW
-   (never red: an owner may sell part of a big lot). Either needs Steph's land budget per pod
-   (dollars a 4-home project can pay for land, maybe by city). Kept OUT of the fit colour by
-   default so "can it be placed" stays honest. Steph to choose (A)/(B) and give the budget.
-   STEPH RULED 2026-10-10: (A) -- colour unchanged, a PRICE PER UNIT label + a filter set at
-   $30k/unit ($120k a pod), adjustable ("land price is passed to the buyer, so it flexes with
-   the market"; look at everything). Units = pods the lot could hold x 4, NOT one pod: a big
-   lot pays for (lot area - roads to serve the pods) / (pod + its parking), with parking
-   possibly pooled to save buffers and planters (pods stay independent). Rough cut measured
-   on run 70 greens (county total value; 4,500 sq ft a pod incl. parking + yard share; 25% to
-   roads on lots of 3+ pods): one-pod basis 126 lots <= $30k/unit; capacity basis 771 <= $30k,
-   4,911 <= $60k, 13,651 <= $100k; 1S2E02BB  -01100 (the closed big box) ~48 pods, ~$26k/unit.
-   Coordinator's proposed guards (Steph to confirm): pods capped by the zone's density limit;
-   multi-pod counts labelled ESTIMATE (new roads / a land division may need a review, against
-   the by-right rule); county market value by default, last sale shown beside it; the two
-   defaults (4,500 sq ft a pod, 25% roads) adjustable. True layouts stay item 31 / parked 27.
-   STEPH CONFIRMED 2026-10-10: the defaults and the guards. Price is rough until a PAID price
-   feed arrives (vendor TBD, ~2 months): build so a second price source slots in ahead of the
-   county value with no rework (each price carries its source + date). No scan needed: the
-   county values are already loaded per lot (scripts/flats_load_bridge.py ASSESSOR; lot page
-   ui_flats.py ~3804). BUILT 2026-10-10 on branch flats/price-per-unit: "Price per home"
-   column + opt-in filter (default $30,000, adjustable, with sq ft per pod and roads % boxes
-   and a cheapest-first sort) on the Lots page; a price block on the lot page (pods, homes,
-   ESTIMATE, county value, source + as-of, last sale shown but not used). Colour never moves.
-   Settings: flats/config/price.yaml. Price sources are an ordered list in
-   flats/score/price.py PRICE_SOURCES -- a paid feed goes IN FRONT with one entry.
-   FIRST DEPLOY (34e1a771) HUNG PRODUCTION AND WAS REVERTED (4670491e): the filter worked the
-   price out of each lot's JSON, per row, against the wide lot table. REBUILT 2026-10-10 on
-   stored columns: table flats.lot_prices (migration 0143), one narrow row per lot: price,
-   source name, as-of, a copy of the area, the zone's two density limits (flats/ingest/
-   lot_prices.py). Pods and price per home are plain arithmetic on those columns
-   (app/services/flats_price.py; parity test tests/api/test_ui_flats_price.py), so pod size
-   and roads % stay adjustable. Filled by the bridge loader (scripts/flats_load_bridge.py,
-   only the lots a bundle writes) and by scripts/flats_backfill_lot_prices.py (a whole
-   snapshot: run it for the live copy, and again after a rule change moves a zone's density
-   limit). Page queries now run with work_mem 128MB and a 25 s statement_timeout inside a
-   savepoint; past the clock the page says "took too long" instead of hanging. The counts skip
-   the wide lot table unless a city/zone/search is set; cheapest-first takes its 50 ids off the
-   narrow tables, then fetches those lots.
-   DEPLOY ORDER: (1) deploy (runs migration 0143, table starts empty: every lot reads "no
-   price", nothing hidden); (2) `uv run python scripts/flats_backfill_lot_prices.py --snapshot
-   3 --snapshot 4` on the app box (add --dry-run first); (3) re-time green+filter+sort and
-   run tests/e2e/test_flats_price.py against viciniti.deals. The row label on the page is
-   still worked out from the lot's facts, so until step 2 a label can show a price the filter
-   does not know.
-   TIMINGS (read-only, production, run 70, snapshot 4): upper bounds only, the table cannot
-   be made read-only-safe. Best-colour aggregate 4.9 s at the default 4MB work_mem (sort
-   spilling 1.4 GB), 1.6 s at 128MB. Stand-in for the stored table (a CTE built from the
-   JSONB): filtered count 7.6-16 s, filtered+sorted 50 rows 10.6 s; 15 s of that is the cold
-   read of the wide lot table, which the stored table removes. RE-MEASURE after step 2.
-   Run 70 greens (49,960), per home: <= $30k 716 / $60k 9,115 / $100k 23,441 with the zone
-   density cap; 843 / 11,199 / 29,282 without. 8,727 greens lose pods to the cap. 62 greens
-   have no county value (green+yellow 4,959, mostly Washington County unincorporated 2,728).
+   support") -- (A) LIVE 2026-10-10 (merge d1d8c03f).** STEPH RULED 2026-10-10 (register
+   `2026-10-10-price-per-home-label`): (A) -- colour unchanged, a PRICE PER UNIT label + a
+   filter set at $30k/unit ($120k a pod), adjustable ("land price is passed to the buyer, so
+   it flexes with the market"; look at everything). Units = pods the lot could hold x 4, NOT
+   one pod: a big lot pays for (lot area - roads to serve the pods) / (pod + its parking),
+   with parking possibly pooled to save buffers and planters (pods stay independent). STEPH
+   CONFIRMED 2026-10-10 the defaults (4,500 sq ft a pod incl. parking + yard share; 25% to
+   roads on lots of 3+ pods) and the guards: pods capped by the zone's density limit;
+   multi-pod counts labelled ESTIMATE (new roads / a land division may need a review);
+   county market value by default, last sale shown beside it; the two defaults adjustable.
+   Price is rough until a PAID price feed arrives (vendor TBD, ~2 months): a paid feed goes IN
+   FRONT in flats/score/price.py PRICE_SOURCES with one entry (each price carries its source +
+   date). True layouts stay item 31 / parked 92.
+   Built: table flats.lot_prices (migration 0143), app/services/flats_price.py, settings
+   flats/config/price.yaml, filled by scripts/flats_load_bridge.py and
+   scripts/flats_backfill_lot_prices.py (run it for the live copy, and again after a rule
+   change moves a zone's density limit). TRAP: the first deploy (34e1a771) HUNG PRODUCTION
+   and was reverted (4670491e) -- it worked the price out of each lot's JSON per row against
+   the wide lot table; keep the page on the stored narrow columns (work_mem 128MB, 25 s
+   statement_timeout inside a savepoint).
+   (b) BUILT 2026-10-16 (77d466a0 on main): stored cap inputs now include max_units and
+   whether density is measured on net area; the columns come from migration 0145 (renumbered
+   from 0144 by 4e668a34) and a repeat run of scripts/flats_backfill_lot_prices.py -- that
+   backfill re-run on production is not recorded as done; colours are unchanged.
    Open: (a) filter is opt-in, not on by default -- Steph to say if it should start ON;
-   (b) BUILT 2026-10-16: stored cap inputs now include max_units and whether density is
-   measured on net area; density uses top-level facts.net_area_sqft when present, clamped to
-   gross area, and otherwise retains the gross-area basis. The new columns are filled by
-   migration 0144 and a repeat run of scripts/flats_backfill_lot_prices.py; colours are
-   unchanged; (c) ~10 greens carry county values under $1 a sq ft (price
-   per home of $17-$950) -- shown as-is; (d) a "value looks too low" mark -- Steph to decide.
-   LIVE 2026-10-10 (merge d1d8c03f): migration 0143 ran, backfill done (snapshot 3: 400,032 rows,
-   390,554 priced; snapshot 4: 590,282 / 566,553; 148 zone caps), ANALYZE run. Production
-   timings (e2e user): plain 4.7 s, green 6.4 s, green+sort 6.5 s, green+filter 7.5 s,
-   green+filter+sort 7.3 s; no query left running; tests/e2e/test_flats_price.py 3 passed on
-   viciniti.deals. Only (a) and (d) wait on Steph.
-67. [scan: YES, after the weekly re-screen; BUILT on flats/road-dedication-ship (d3b6db52, merged with main 3edeef7c), bounded, not merged to main]
+   (c) ~10 greens carry county values under $1 a sq ft (price per home of $17-$950) -- shown
+   as-is; (d) a "value looks too low" mark -- Steph to decide. Only (a) and (d) wait on Steph.
+67. [scan: YES, read after the weekly re-screen; MERGED to main (d3b6db52, a212b7f5, cities 7cbc3346 = item 77), rides the weekly ~2026-10-19]
    **Washington County makes the owner hand over road land first (CDC 302-2.14 C(1), 303-306,
-   307-2.13, 375, 390).** BUILT 2026-10-11: 25/30/37/45 ft to centre line (local / neighbourhood
-   route / collector / arterial), measured per street lot line from Metro's centreline (a stub
-   with no street beside it reads the nearest centreline, OSM included, which can only be nearer);
-   the shortfall comes off the envelope like a setback; unmeasured = whole distance; unranked class
-   = 45 ft; private roads (RLIS 1700/1800) take nothing. Cities untouched. BOUND (snap_osm, 63,513
-   lots, best design per lot): 7,728 greens -> 6,139 stay, 1,491 red, 98 yellow (20.6% lost); 811
-   yellow -> red; 36 yellow -> green (only the slope flag lost); reds 2 -> yellow. That is far more
-   than the 206/180 estimated above: about 42% of losses ride on the 45-ft unranked-class guess,
-   about 58% are real shortfalls, 717 of the 1,589 were already within 1 ft of failing.
-   OPTION C CHECKED 2026-10-11 AND NOT ADOPTED: the county says nothing that makes an unmapped
-   street local. Its Transportation System Plan (Effective Sept 24, 2026; washingtoncountyor.gov
-   /lut/planning/transportation-system-plan, PDF p. 8 and 33-35) says only that it "designates
-   major transportation system elements" and addresses local streets through connectivity maps,
-   that "New Local Streets that are not in this plan may be established via the land development
-   process", and that "other neighborhood routes may be designated through the development review
-   process" -- so a street left off the map can be a neighbourhood route (30 ft) as easily as a
-   local one. Road Design Standards 130.010 only points back to the Plan. Our "unranked" is also
-   not "off the county map": it is the residue Metro and OpenStreetMap do not both call
-   residential (street_class.py, item 60). Not stored in provenance (no reading adopted).
-   NARROWER READING (30 ft, not 45, for a street absent from the county's classified layer)
-   CHECKED 2026-10-11 AND NOT ADOPTED. (1) The TSP has no sentence saying collectors and
-   arterials exist only by designation; the support is inference (Strategy 5.1.1; a change to
-   the Functional Classification Map needs a legislative plan amendment, PDF p. 109; only
-   Neighborhood Routes and Local Streets carry the "may be established via the land development
-   process" sentence), and Commercial/Industrial Streets, a collector variant, are applied "through
-   the development review process". (2) FAILS: the layer (street_class_washington, MapServer layer
-   4) is not a complete list of collector-class streets. Against Metro RLIS it matches type 1200
-   at 100% but type 1400 at 89.9% (missing Bankston ~2,294 ft, Grabhorn ~207 ft, Glencoe ~50 ft)
-   and type 1450 at 97% (missing Roy ~1,609 ft); the same MapServer's layer 8 "Special Area
-   Streets" holds Special Area Commercial Streets (collector variant, 37 ft) that layer 4 covers
-   only 6-9%, and Special Area Local Streets only 4-8% (Special Area Collectors 100%). A street
-   absent from layer 4 can be a 37 ft street. A 30 ft ceiling would need layer 8 added as a
-   dataset (registry, snapshot, weekly acquire) plus "stays 45" exceptions near RLIS 1400/1450,
-   OSM tertiary-or-higher and layer-8 collector/commercial lines; not built. Option A stands.
-   SHIP BRANCH 2026-10-14: flats/road-dedication-ship (merge d27821a4 onto main 6e5734a8; cities
-   7cbc3346 = item 77; corner/curve-piece fix a212b7f5). BOUND vs run 74's own rows
-   (/root/bridge_spliced_2026-10-14_demw; proven a valid base: 6e5734a8 re-run on 1,000 random
-   scope lots = 2,000 rows identical in every column), 86,299 lots, best design per lot, WITH the
-   fix: WashCo uninc green->red 1,395, green->yellow 91, yellow->red 685, yellow->green 34, red->
-   yellow 2 (first bound without the fix 1,490/98/761/36/2). All gains read: placement-search
-   artefacts (slope flag lost on a flatter placement, 1N128AA00300 a shorter hose route,
-   1N130BD06100 a 1-ft grid step), none a dedication error. Deepest strip of the 3,693 moved lots
-   (all cities): stated class 2,223 (median 7.8 ft), two-street corner piece 890 (median 22.6),
-   street read nowhere on the lot 317 (median 25.2), unmeasured 182 (45-63), Milwaukie named 81.
-   THE FIX (a212b7f5): a short piece whose own class reading fails (corner cut-off, curve) and
-   whose ONE street is read with a class on another line of the same lot takes that class (or a
-   busier one its own points read); no name, two names, or a name read nowhere else on the lot
-   stay worst case (coordinator ruling 2026-10-14). Gave back 126 greens + 92 yellows.
-   RULED 2026-10-14 (coordinator, on "never a false green" / "unranked = worst case"): (a) an
-   unranked street keeps the worst case; (a2) a corner piece on two streets BOTH read with a class
-   on the lot takes the deeper of the two (d3b6db52, test at real coordinates); a piece with any
-   street unread stays worst case. RE-BOUND d3b6db52 vs a212b7f5 vs run 74 on the 1,789 run-74
-   green/yellow lots whose piece class changes (WashCo uninc 1,027, Beaverton/Hillsboro county
-   pockets 484 -- unchanged, OC 262, Sherwood 16): vs a212b7f5 216+83 WashCo, 83+10 OC, 1+7
-   Sherwood red lots back to green/yellow; 406 of 411 colour gains land exactly on their run-74
-   colour; 3 losses are a212b7f5 placement artefacts returning to their run-74 yellow; 4 slack
-   drops of 0.5 ft (placement noise). Ten lots end GREENER than run 74 (6 WashCo, 3 OC, 1 Sherwood:
-   1S114DA00701 1S112CC03400 22E28CA00702 1N225AB20000 1S103DB01800 22E32CC03100 1S110BB07900
-   2S132DA05500 1N128DA02000 22E27BC01900), all read: run 74 yellow only for SLOPE-GRADE on the
-   placement it chose; the narrower envelope moves the building onto flatter ground the run-74
-   envelope also held (placement-search artefact, item 57's kind, not a dedication answer).
-   FINAL vs run 74 on the 3,693 moved lots (best design per lot), green->red / green->yellow /
-   yellow->red / yellow->green: WashCo uninc 1,178 / 83 / 603 / 31 (+2 red->yellow), Oregon City
-   713 / 56 / 228 / 19, Sherwood 20 / 0 / 30 / 2, Milwaukie 17 / 18 / 57 / 6, King City 0/0/3/0;
-   total 1,928 / 157 / 921 / 58. Greens in scope 10,402 -> about 8,375.
-   OPEN: (b)
-   lots whose tax lot includes the roadway (lot line under ~12 ft from centre line) understate the
-   road and are left at worst case (63 lost, 73 kept green); (c) Sherwood SDC 16.106.030 D is
-   encoded in item 77; (d) the Fitter cache-key bug in
-   quadfit `_screen_on` (seen on 1N128CD05600) is its own item 74, not fixed here.
+   307-2.13, 375, 390).** 25/30/37/45 ft to centre line (local / neighbourhood route /
+   collector / arterial), measured per street lot line from Metro's centreline (a stub with no
+   street beside it reads the nearest centreline, OSM included, which can only be nearer); the
+   shortfall comes off the envelope like a setback; unmeasured = whole distance; unranked class
+   = 45 ft; private roads (RLIS 1700/1800) take nothing. Steph RULED 2026-10-14 "YES" (register
+   `2026-10-14-road-dedication`; an unranked street is taken at its worst case).
+   Coordinator rulings 2026-10-14 (on "never a false green" / "unranked = worst case"): (a) an
+   unranked street keeps the worst case; (a2) a corner piece on two streets BOTH read with a
+   class on the lot takes the deeper of the two (d3b6db52, test at real coordinates); a piece
+   with any street unread stays worst case; a212b7f5: a short piece whose own class reading
+   fails (corner cut-off, curve) and whose ONE street is read with a class on another line of
+   the same lot takes that class; no name, two names, or a name read nowhere else stay worst case.
+   NOT ADOPTED 2026-10-11, with reasons: OPTION C (unmapped street = local): the county TSP
+   (Effective Sept 24, 2026, PDF p. 8 and 33-35) says "New Local Streets that are not in this
+   plan may be established via the land development process" and "other neighborhood routes may
+   be designated through the development review process" -- so an unmapped street can be a
+   neighbourhood route (30 ft) as easily as a local one. NARROWER READING (30 ft for a street
+   absent from the county's classified layer): FAILS -- layer 4 (street_class_washington) is not
+   a complete list of collector-class streets (vs RLIS type 1400 89.9%: missing Bankston ~2,294
+   ft, Grabhorn ~207 ft, Glencoe ~50 ft; type 1450 97%: missing Roy ~1,609 ft); layer 8 "Special
+   Area Streets" holds Special Area Commercial Streets (37 ft) that layer 4 covers only 6-9%. A
+   30 ft ceiling would need layer 8 as a dataset plus "stays 45" exceptions; not built.
+   Option A stands.
+   EXPECTED at the weekly (FINAL bound vs run 74 on the 3,693 moved lots, best design per lot,
+   green->red / green->yellow / yellow->red / yellow->green): WashCo uninc 1,178 / 83 / 603 / 31
+   (+2 red->yellow), Oregon City 713 / 56 / 228 / 19, Sherwood 20 / 0 / 30 / 2, Milwaukie 17 /
+   18 / 57 / 6, King City 0/0/3/0; total 1,928 / 157 / 921 / 58. Greens in scope 10,402 -> about
+   8,375. Ten lots end GREENER than run 74 by a placement-search artefact (item 57's kind), all
+   read: 1S114DA00701 1S112CC03400 22E28CA00702 1N225AB20000 1S103DB01800 22E32CC03100
+   1S110BB07900 2S132DA05500 1N128DA02000 22E27BC01900. Bound base
+   /root/bridge_spliced_2026-10-14_demw (proven valid).
+   OPEN: (b) lots whose tax lot includes the roadway (lot line under ~12 ft from centre line)
+   understate the road and are left at worst case (63 lost, 73 kept green). (The Fitter
+   cache-key bug, item 74, is fixed 8bda9817.)
 68. [scan: YES, after Steph or the agent supplies the maps] **Portland Maps 120-2 and 120-3 are not
    held (found 2026-10-10 by item 64's sample, 1 can't-tell).** 33.120.206 bars new homes on a site
    deeper than 160 ft with under 90 ft of frontage, but only on the sites shown on Map 120-2
@@ -2583,42 +1154,29 @@ read when the weekly full re-screen lands.
    1N2E21AD  -06200 (RM1, 50 x 200 ft). PROPOSAL: fetch the two maps from the City's open-data
    portal as polygons (or get them from Steph), then add a frontage check and the rear setback with
    a corner exemption. Until then, consider marking these 902 yellow.
-69. [SUPERSEDED 2026-10-14 by the review tiers, r3 rides the weekly ~2026-10-19] **Hillsboro zones that need Development Review are
-   RED BY RULING (17 zones, 84f215f8).** Landed at run 73: 152 green -> red and 212 yellow
-   -> red against run 70; 275 SCR-MD greens stay (run 73 Hillsboro: 275 green / 21 yellow /
-   30,453 red). Open for Steph only if a Type II review on clear and objective criteria
-   should count as by-right (then all 17 zones come back). Prune this line at the next
-   housekeeping.
-   REVIEW TIERS (Steph 2026-10-14, r3): the 17 zones come back YELLOW -- 12.80.040 I "may impose
-   conditions" (REVIEW-CONDITIONS). Bound (as-if quadfit, run 74 inputs): 3,385 lots brought into
-   measurement, 0 green / 354 yellow / 3,031 red (SCR-V 133 y / 956 r, MR-2 101 / 879, SCR-HD
-   51 / 63, MR-3 23 / 254; MU-VTC 0 / 166 on its 3-storey minimum; the UC zones red on minimum
-   density). SCR-MD's Zoning Review ("subject to conditions of approval") stays green.
+69. [SUPERSEDED 2026-10-14 by the review tiers; r3 merged (83a7683d), rides the weekly ~2026-10-19] **Hillsboro zones that need Development Review
+   (17 zones).** RED BY RULING (84f215f8) landed at run 73: 152 green -> red and 212 yellow ->
+   red against run 70. REVIEW TIERS (Steph 2026-10-14, r3; register `2026-10-14-review-tiers`):
+   the 17 zones come back YELLOW -- 12.80.040 I "may impose conditions" (REVIEW-CONDITIONS).
+   Bound (as-if quadfit, run 74 inputs): 3,385 lots brought into measurement, 0 green / 354
+   yellow / 3,031 red (SCR-V 133 y / 956 r, MR-2 101 / 879, SCR-HD 51 / 63, MR-3 23 / 254;
+   MU-VTC 0 / 166 on its 3-storey minimum; the UC zones red on minimum density). SCR-MD's
+   Zoning Review ("subject to conditions of approval") stays green. Steph 2026-10-15 (item 85,
+   not merged): the "may add conditions" tier becomes GREEN with a flag inside a UGB, so these
+   354 move again when 85 merges. Remove after the weekly is read and 85 has landed.
 71. [scan: NO unless it finds a siting rule] **Building-code editions (Steph 2026-10-10: "ORSC 2026
    came into effect 10/1/2026 -- is our app built on that or the previous version?").** The screen
-   reads NO building code for pass/fail: it is zoning + fire access (OFC 2022, _state.yaml) +
-   the OSSC 2025 accessibility chain (HUMAN_TODO ~L465, ENCODING_RULEBOOK 2026-09-03). ORSC appears
-   only as the 2023 edition in that note ("2026 edition expected 2026-10-01") and as a dismissed
-   fire-flow cross-reference (_state.yaml "302.5"). Offered: an edition check -- confirm the ORSC
-   2026 base (IRC 2024?) and its Oregon amendments for anything that changes WHERE the pod may sit
-   (exterior-wall distance to a lot line R302.1, townhouse definition/limits, R302.2), confirm the
-   fire code edition in force (is OFC 2022 still current?), update the notes; a siting change gets
-   its own item.
+   reads NO building code for pass/fail: it is zoning + fire access (_state.yaml) + the OSSC 2025
+   accessibility chain (HUMAN_TODO ~L465, ENCODING_RULEBOOK 2026-09-03).
    EDITIONS CHECKED 2026-10-16 (1686bbd3, notes only): ORSC 2026 = IRC 2024, in force
    2026-10-01, mandatory 2027-04-01; OFC 2025 (IFC 2024) in force 2025-10-01, the 2022 OFC
    lapsed 2026-03-31. OPEN: (a) `fire_access_max_ft` (150 ft) still cites the 2022 OFC --
    re-cite to 2025 OFC 503.1.1 once its text is read; (b) BCD 26orsc-matrix lists R302.1
    (separation when townhouses share a lot) and R302.3 ("townhouse" = 2+ units) changes --
-   read the adopted 2026 text (ICC reader 403 to the agent) before calling them inert.
-72. [scan: NO] **Oregon Explorer statewide zoning viewer (Steph 2026-10-10 link,
-   oregon-explorer.apps.geocortex.com ...app=6244abbf93e54b88a13a17b6cb6b9b37).** Not opened: the
-   browser tool was offline and the app item is not public on ArcGIS Online. The DLCD statewide
-   zoning layer reachable as data (services8 .../Zoning/FeatureServer, item 72416393747c...) holds
-   per polygon: local zone code + name, a statewide standard class (orZCode/orZDesc), a link to the
-   code (codeRef), an effective date and the owner -- NO setbacks/heights/lot sizes. Use: a
-   zoning map for cities beyond the 3 counties (all-Oregon market), the codeRef link to fetch each
-   code, effDate as a change watch (item 54). Not a replacement for reading the codes. Waiting on
-   Steph to say what the viewer shows (or reconnect Chrome).
+   read the adopted 2026 text (ICC reader 403 to the agent) before calling them inert. A siting
+   change gets its own item.
+72. [scan: NO] **Oregon Explorer statewide map (Steph 2026-10-10 link,
+   oregon-explorer.apps.geocortex.com ...app=6244abbf93e54b88a13a17b6cb6b9b37) -- PARKED.**
    STEPH 2026-10-10: the viewer is the building code's site-design map, NOT zoning: ground snow
    load, basic design wind speed, seismic design category, weathering, frost line depth, decay,
    air freezing index, radon mitigation for new dwellings (the ORSC Table R301.2 climatic and
@@ -2627,196 +1185,93 @@ read when the weekly full re-screen lands.
    the viewer, measure each lot, show the values on the lot page (show, don't screen); (b) once
    Steph gives the pod's rated snow load / wind speed / seismic category / frost depth, flag lots
    that exceed them (re-engineering = a cost, YELLOW at most, never RED by itself). Confirm the
-   map matches the ORSC 2026 edition (item 71). Steph to say whether to build; (b) needs the
-   manufacturer's ratings.
+   map matches the ORSC 2026 edition (item 71).
    STEPH 2026-10-10: PARKED for later -- "eventually we will need to encode and design for this
    list" (all eight criteria). Do not start without Steph; raise it again when the pod design
    ratings exist or the market moves beyond the metro.
+   Separately noted: the DLCD statewide zoning layer (services8 .../Zoning/FeatureServer, item
+   72416393747c...) holds per polygon the local zone code + name, a statewide class
+   (orZCode/orZDesc), a code link (codeRef), an effective date and the owner -- NO setbacks /
+   heights / lot sizes. Use: a zoning map for cities beyond the 3 counties, codeRef to fetch each
+   code, effDate as a change watch (item 54). Not a replacement for reading the codes.
 73. [scan: NO (citations move, answers must not)] **The code library as a public, structured repository
-   (Steph 2026-10-10, thinking only -- "Don't begin work").** Today: 397 text files, 23 MB, 25
-   jurisdictions under flats/provenance/docs, each with .meta.json (url, retrieved, sha256,
-   extractor) and .pages.json; rules cite them 6,668 times by LINE (`file.txt#L1066-L1068`) and 641
-   times by anchor; every cite also carries a human section string ("OCMC 16.12.035.F").
-   Proposal offered: (1) STRUCTURE first -- rebuild each code as a tree of sections addressed
-   by its own numbering (16.12.035.F), line WITHIN the section as the sub-address, tables by
-   row/column; translate every citation mechanically (match the quoted text, refuse any that does
-   not match; flats/provenance/repoint.py is the starting point); pilot one city. (2) HOSTING
-   second -- its own GitHub repo, our apps read it as a dependency; git history doubles as the
-   code-change watch (item 54). Open for Steph: public or private; publisher terms (Municode
-   etc.) before going public; keep rulings/encoding private either way.
+   (Steph 2026-10-10, thinking only -- "Don't begin work"). Not started.** Today: 397 text files,
+   23 MB, 25 jurisdictions under flats/provenance/docs, each with .meta.json (url, retrieved,
+   sha256, extractor) and .pages.json; rules cite them 6,668 times by LINE
+   (`file.txt#L1066-L1068`) and 641 times by anchor; every cite also carries a human section
+   string ("OCMC 16.12.035.F").
+   Proposal: (1) STRUCTURE first -- rebuild each code as a tree of sections addressed by its own
+   numbering (16.12.035.F), line WITHIN the section as the sub-address, tables by row/column;
+   translate every citation mechanically (match the quoted text, refuse any that does not match;
+   flats/provenance/repoint.py is the starting point); pilot one city. (2) HOSTING second -- its
+   own GitHub repo, our apps read it as a dependency; git history doubles as the code-change
+   watch (item 54). Keep rulings/encoding private either way.
    STEPH 2026-10-10: PUBLIC. Publisher terms not a concern ("we cite the code, not their
    interpretation"). Readability cleanup is part of it: collapse extra spaces, rejoin words split
    by the PDF reader ("dri v ewa y s"), strip running page headers/footers left mid-sentence
    ("Oregon City Supp. No. 46 266.4"), join hyphenated line breaks; NEVER auto-change a character
    inside a number (1/l, 0/O) -- flag it; keep the raw download beside the clean text as proof.
+   LICENCE: Steph withholds zero rights to the municipal-code portion -> CC0 1.0 (public-domain
+   dedication, with its fallback licence where dedication is not recognised) on the text,
+   structure and metadata, plus an "unofficial copy, not legal advice, check the city" notice.
+   Tooling code licensed separately, Steph to pick.
    ORDER (coordinator recommendation, put to Steph): restructure + clean FIRST, human signing
    AFTER. Signatures are hashed over value + citation, so a new citation withdraws them; only 18
    rule signatures (5 verified, 13 unclear, none drained) and 244 page checks exist, carried over
    where the words match, re-queued where not. The map shows as-if-signed colours, so pausing
-   signing costs the map nothing. Still not started.
-   STEPH 2026-10-10: do NOT start before Tuesday 2026-10-13 (weekly usage). LICENCE: Steph
-   withholds zero rights to the municipal-code portion -> CC0 1.0 (public-domain dedication,
-   with its fallback licence where dedication is not recognised) on the text, structure and
-   metadata, plus an "unofficial copy, not legal advice, check the city" notice. Tooling code
-   licensed separately, Steph to pick. PRIORITY (recommended): after the weekly scan settles,
-   ahead of new cities and the signing push; false-GREEN fixes carry on beside it; freeze edits
-   to the code text and citations while each city is being converted.
-75. [scan: YES, a splice of Cornelius + west Washington County] **The 2026-10-12 weekly (run 73,
-   PROMOTED by Steph 2026-10-14 over the `lots_drift` gate, +4.1% measured lots = Tigard/Cornelius/
-   Estacada switched on; runs 67 and 72 pruned) ran on the July 1 m elevation, not the Washington
-   one.** `data/quadfit_demw` (the tree with the Washington 1 m tiles) was deleted in the
-   2026-10-10 cleanup; the chain's default `--dem-from data/quadfit/raw` holds Portland-metro
-   tiles only (x50-x55). Effect, all toward caution: every measured Cornelius lot carries
-   MEASURE-SITE-GRADE (469 lots), so FOLLOWUPS 51's 381 Cornelius greens show yellow; 54
-   Hillsboro + 11 WashCo uninc lots carry it too; 2 WashCo R-9 lots (1N336BD01200,
-   1N336BD00200) and 1N3240001300 went red -> yellow because steep ground they had is no
-   longer seen. **FIXED 2026-10-14, LIVE as run 74 (promoted by Steph 2026-10-14: 308 yellow->green,
-   13 yellow->red, all Cornelius/west WashCo; 0 moves elsewhere)**: `data/quadfit_demw` rebuilt (34 tiles, 8 new x48/x49: Forest Grove, Cornelius,
-   west Hillsboro, Banks, Gaston). No quadfit re-run: FLATS reads slope only through the
-   bridge's own `--dem` (s5o's slope columns feed nothing, and a splice refuses changed s5o
-   columns). Scope = every lot touching a new tile, 4,180 (Cornelius 3,891, Hillsboro 276,
-   WashCo 13; holds all 534 flagged lots), bridged at 286eb696 against demw (152 s), spliced
-   onto run 73's bridge: `/root/bridge_spliced_2026-10-14_demw` (partial
-   `/root/bridge_demw_2026-10-14_partial`, `fu75_moves.csv` + `fu75_scope.txt` inside),
-   `/root/assign_2026-10-14_demw`, `/root/bundle_2026-10-14_demw` (same code/rules/screen
-   versions as run 73). Bound vs run 73: 321 moves, 0 outside scope, MEASURE-SITE-GRADE 534 ->
-   0. Cornelius yellow 431 -> green 308 / red +10 / yellow 113 (left: street rank, solar
-   shade, resource permit -- none elevation). Gains read one by one: 286 lost only the grade
-   flag (pad grade 0.1-4.9%), 22 also had net area measured and now carry the sev-2
-   DENSITY-MIN flag. 13 to red, each read: steep ground blocks placement (6, incl.
-   1N336BD01200 / 1N336BD00200) or the pod moves off steep ground and the hose route passes
-   150 ft (7, incl. 1N3240001300 at 262 ft). Hillsboro: flags cleared, no colour moved.
-   Guard 1fa8a611 on `flats/washco-elevation-restore`: the chain's preflight refuses tiles
-   that leave a measured lot on no model (checks the newest s4; the bridge's gate re-checks
-   the run's own; on the real run-73 s4 the July tree names 4,109 lots, demw 0, 2 s), and
-   `--dem-from` defaults to demw; runbook says never clean `data/quadfit_demw`.
-   Run 73 map vs run 70: green 49,960 -> 50,648, yellow 147,262 -> 113,253, red 390,593 ->
-   423,914. Moves: Tigard 829 green / 16,160 red (51's bound 840 / 15,544+824); Canby 5,901 and
-   Sandy 4,443 all red (ruling); Estacada 14 green / 2,798 red; Hillsboro 152 green + 212
-   yellow -> red (69, exact); Cornelius 3,659 red, 0 green (above); 9 others read one by one
-   (3 WashCo street rank unknown, 1 West Linn RESOURCE-PERMIT, 1 Portland CX severity-0 flag,
-   the 3 elevation lots, 1 Happy Valley fire route 150.6 -> 150.0 ft, yellow). Drift 70 -> 73:
-   96 answers, all rules, 0 unexplained. Run 72 (same scan before 286eb696) is superseded:
-   the use gate missed Sandy R-1 / Hillsboro SCR-OTC / MU-VTC (1,104 lots yellow, not red).
-   Checklist 49(k): institutional_were_scanned 0 -> 47 can go; 48 goes on promotion.
-76. [scan: none to look; a fix may need a splice] **Tigard pod80x25 red at exactly -43 ft.**
-   weekly-closeout (2026-10-14) saw dozens of Tigard RES-B lots where the pod80x25 design
-   shows red at exactly -43 ft -- one shared value across different lots looks like a
-   sentinel or a fixed reference length, not a measurement. Red is the safe direction, but
-   a sentinel can hide a lot that fits (false RED) or mask a bug elsewhere. Find which check
-   emits it (run 73, `flats.lot_results` checks for Tigard pod80x25), say whether -43 is real.
-   READ 2026-10-14 (run74-loose-ends, run 74):
-   (a) -43 is NOT a sentinel and NOT a measurement of how far off a lot is: it is the floor
-   fit_ft reports when no window as wide as building + lane (80 + 20 = 100 ft) exists at any
-   street bearing (axis_required Tigard RES-B etc.: only street bearings tried, flip
-   forbidden): best_depth 0 minus (25 ft building + 18 ft court behind the rear) = -43.
-   pod56x36 floors at -36 the same way. Same value in 20+ cities (run 74 pod80x25@2, -43:
-   Tigard 6,340, Portland 684, WashCo uninc 632, Clackamas uninc 291, Gresham 259,
-   Tualatin 111, ...). Checked against independent exact geometry (shapely sweep-erode,
-   calibrated on 45 known fits, 45/45 agree) over 257 + 785 floored designs: all true
-   no-fits except raster near-misses -- 3 of 785 (0.4%) fit at width-0.5 ft, 5 (0.6%) at
-   width-1 ft. So no false-RED bug at scale and NO code change; the near-misses are lots
-   whose window is under a half-foot short of 100 ft, shown as -43 (red) instead of a small
-   miss in the 0.5 ft tight band.
-   BUILT 2026-10-14 (agent sznm, branch flats/split-zone-near-miss, 72f96818, NOT merged, NOT
-   spliced -- rides the weekly re-screen ~2026-10-19): Steph ruled yes. When best_depth is 0
-   the fit now reports the real width shortfall (`Fit.width_short_ft`, flats/fit/rectangle.py;
-   screen.py fit_ft check) so the standing 1-ft rule applies: >= 1 ft red, < 1 ft yellow
-   (FIT-TIGHT), exactly 1 ft red. Raster grid is 0.5 ft so the smallest reported miss is 0.5.
-   BOUND on 137 vs run-74 inputs (168,000 lots; base == run 74 EXACTLY on the 2,036-row
-   control): 50 design rows red -> yellow (Tigard 47: RES-B 43, RES-D 2, MUR, RES-C; Gresham 2
-   DRL-2; Happy Valley 1 R7), nothing else changes colour. Four more floored designs now read
-   -0.5 but stay red on other checks (Gresham DTM/DCC/CMF: lot area 4,999.8 vs 5,000, use,
-   frontage). SIDE EFFECT, colour-neutral, all on RED lots: the fit slack shown on a red
-   lot is now the real shortfall (-37/-48/-56/-80 ft ...) instead of the -43/-54 floor, and
-   because `fit_for` now prefers the nearer miss between two tries, ~1,100 red rows gain or
-   lose an informational flag (Milwaukie MEASURE-OUTDOOR-SHAPE +542, Beaverton net-area
-   swaps, steep-coarse +-). If the lot page should keep the old numbers for red lots, that
-   is a separate decision.
-   (b) Estacada 34E17  02000 (30941 SE River Mill Rd) is split-zoned: NCR 46.9% / CMU 40.6%
-   / HC 12.5% of the lot, screened as NCR (plurality). The drawn pod's BUILDING is 24.9% in
-   NCR and 75.1% in CMU (court 100% NCR, envelope 54.8% NCR) -- so the green is a FALSE GREEN
-   in the sense asked: the pod does not lie wholly inside NCR. Split-zoned lots are handled
-   the same way everywhere: ONE zone per lot (majority/plurality zone, zone_frac < 0.9 sets
-   split_zone), the whole lot read under it, and no flag is emitted (flags [] on this lot);
-   only Lake Oswego has a footnote on it and the `split_zone` condition is a never-measured
-   site fact. Run 74 pod80x25@2: 4,744 split-zoned results (226 green / 919 yellow / 3,599
-   red). Crude check of the 226 greens (drawn building vs the polygons carrying the lot's
-   own zone code, quadfit zoning layers): 145 wholly inside, 37 partly outside (Portland 29,
-   Clackamas uninc 3, WashCo uninc 3, Estacada 1, Beaverton 1), 44 unresolved (Portland 40,
-   WashCo uninc 2, Gresham 1, Cornelius 1: layer code spelling differs from the lot's
-   zone_raw, so the test found no polygon).
-   BUILT 2026-10-14 (same branch). Steph's ruling: "first check if the city has a rule on
-   this. If no, I would say yellow." Each city's code was read; the answer lives in
-   flats/config/split_zone.yaml with the cite and quote (a test checks quote against the
-   stored text) and flats/geom/split_zone.py. The district across the line is read off the
-   zoning maps (the 44 spelling mismatches now resolve: 0 unresolved). Rule found -> applied
-   (the whole lot is the larger district when the line need move <= 20 ft, Beaverton BDC
-   10.35.2.C and Milwaukie MMC 19.107.5 inclusive; Cornelius CMC 18.05(D)(3), Hillsboro CDC
-   12.01(C)(1) and Canby CMC 16.08.030 "less than" 20 ft; Sandy SDC 17.04.80.B.6 majority
-   with no distance; Portland and Multnomah-unincorporated PCC 33.110 each district for its
-   own part -> yellow where the plan reaches the other). No rule found -> a green whose
-   building, lane or court stands on another district's ground goes YELLOW, ZONE-SPLIT
-   (severity 4, CLOSER_LOOK_SPLIT_ZONE), naming the district; an undrawn plan or an
-   unresolved district is the worst case. What was searched in the 17 silent layers is
-   written in the yaml so nobody searches again (Gresham 4.1117/4.1214 are plan-district
-   only; Washington-uninc has 20 ft majority rules for Bonny Slope West / North Bethany
-   only; Tualatin has only a parking dual-zone rule). Milwaukie's rule is cited by URL
-   (not stored). A red lot keeps the flag and stays red.
-   BOUND (2,545 split-zoned lots, 5,090 design rows; base == run 74 exactly): 262 design rows /
-   134 lots green -> yellow, all carrying ZONE-SPLIT, nothing else changes colour. By city
-   (lots, best design): Portland 94, Washington-uninc 20, Clackamas-uninc 12, Troutdale 3,
-   Gresham 2, Beaverton 1, Cornelius 1, Wood Village 1. 137 split-zoned lots stay green as their best design. 154 lots turn out to
-   have only one district after spelling is normalised. ZONE-SPLIT is also on 3,134 red and
-   561 yellow rows (informational). Found and fixed in the bound: the re-screens the
-   worst-case bound runs raised ZONE-SPLIT too and blocked another flag's severity-0 relief
-   (1 Portland lot yellow with no split flag) -- 72f96818, test in test_worst_bound.py.
-   Estacada 34E17  02000 (the lot that raised this): pod80x25@2 now yellow ZONE-SPLIT; pod56x36@2
-   stays green (its building does not reach the other district), so the lot's best design is still
-   green. REMAINING: nothing is live until the weekly re-screen (or a splice, if Steph wants it
-   sooner); Milwaukie's MMC 19.107.5 text is now stored and the quote is pinned to line 170.
-   (c) Estacada 34E20AC00200 / 00201 (1015 NW Wade St): owner NOT in our data (the RLIS
-   roll carries no owner name). The roll says: commercial vacant/improved class 201, COM,
-   2017-09 transfer for $0, 00201 built 1965 with $657k of buildings and assessed value
-   $555k (00200: land only, assessed $156k). Clackamas rolls hold no 9xx exempt codes and
-   mark exempt land only by assessed value 0; both lots are assessed > 0, so the roll says
-   TAXED, and the public-land rule correctly did not fire. The library is 825 NW Wade and
-   the city community room 915 NW Wade, not these lots. Human lookup needed (Clackamas
-   assessor, tax lot 34E20AC00201): if the owner is the city or a district, it is a miss
-   the roll cannot see.
-77. [scan: YES, after the weekly re-screen; BUILT on flats/road-dedication-ship 7cbc3346 + d3b6db52, bounded, not merged to main] **Road land to the
+   signing costs the map nothing. PRIORITY (recommended): after the weekly scan settles, ahead of
+   new cities and the signing push; false-GREEN fixes carry on beside it; freeze edits to the code
+   text and citations while each city is being converted. (Steph's "not before Tuesday
+   2026-10-13" has passed; still needs Steph's go to start.)
+76. [scan: rides the weekly ~2026-10-19; MERGED to main (5e29be82, 72f96818)] **Tigard pod80x25 red at exactly -43 ft, and split-zoned lots.**
+   (a) -43 is NOT a sentinel: it is the floor fit_ft reports when no window as wide as building +
+   lane (80 + 20 = 100 ft) exists at any street bearing: best_depth 0 minus (25 ft building + 18 ft
+   court) = -43 (pod56x36 floors at -36). Checked against exact geometry: all true no-fits except
+   raster near-misses (3 of 785 fit at width-0.5 ft). Steph ruled yes (register
+   `2026-10-14-split-zone-near-miss-real-shortfall`): the fit now reports the real width shortfall
+   (`Fit.width_short_ft`, flats/fit/rectangle.py) so the 1-ft rule applies (>= 1 ft red, < 1 ft
+   yellow FIT-TIGHT). Bound: 50 design rows red -> yellow (Tigard 47, Gresham 2 DRL-2, Happy Valley
+   1 R7). SIDE EFFECT, colour-neutral, on RED lots: the slack shown is now the real shortfall
+   (-37/-48/-56/-80 ft ...) instead of the -43/-54 floor, and ~1,100 red rows gain or lose an
+   informational flag (Milwaukie MEASURE-OUTDOOR-SHAPE +542, Beaverton net-area swaps). If the
+   lot page should keep the old numbers for red lots, that is a separate decision (not asked).
+   (b) Split zones. Steph's ruling (register `2026-10-14-split-zones`): "first check if the city
+   has a rule on this. If no, I would say yellow." Built: flats/config/split_zone.yaml (cite +
+   quote per city, tested against the stored text; what was searched in the 17 silent layers is
+   written there so nobody searches again) and flats/geom/split_zone.py. Rule found -> applied
+   (Beaverton BDC 10.35.2.C and Milwaukie MMC 19.107.5 <= 20 ft inclusive; Cornelius CMC
+   18.05(D)(3), Hillsboro CDC 12.01(C)(1), Canby CMC 16.08.030 "less than" 20 ft; Sandy SDC
+   17.04.80.B.6 majority; Portland and Multnomah PCC 33.110 each district for its own part). No
+   rule -> a green whose building, lane or court stands on another district's ground goes YELLOW,
+   ZONE-SPLIT (severity 4); an undrawn plan or unresolved district is the worst case. Bound: 134
+   lots green -> yellow (Portland 94, Washington-uninc 20, Clackamas-uninc 12, ...), nothing else.
+   CHECK after the weekly: these two bounds' moves. Estacada 34E17 02000: pod80x25@2 yellow,
+   pod56x36@2 stays green.
+   (c) OPEN, human lookup: Estacada 34E20AC00200 / 00201 (1015 NW Wade St) -- owner NOT in our
+   data (RLIS roll carries no owner name); roll says COM class 201, taxed (assessed > 0), so the
+   public-land rule correctly did not fire. Look up tax lot 34E20AC00201 at the Clackamas
+   assessor: if the owner is the city or a district, it is a miss the roll cannot see.
+77. [scan: YES, read after the weekly re-screen; MERGED to main (7cbc3346 + d3b6db52, with item 67), rides the weekly ~2026-10-19] **Road land to the
    centre line in the cities, not just unincorporated Washington County (found 2026-10-14 by
-   item 64 round 2: 4 of the 7 wrong lots).** Item 67 (built, not merged) takes the county's
-   strip off the fit for WashCo unincorporated only. Same kind, not encoded: Sherwood 16.106.020 A
-   + 16.106.040 D (added setback to 26/32/37/61 ft from the centre line by class; wrong lots
-   2S132CD12600, 2S132AC01500 -- 2 of 2 Sherwood greens read); King City 16.80.060 A (and the
-   county 304-2.14 C in its county-zoned pocket; 2S116AA14200); Oregon City 16.12.011.B + Table
-   16.12.016 (middle housing dedicates to the TSP width; 31E01DA00229 on South End Rd loses ~20 ft
-   and drops under 10,000 sf). Seen unencoded, no lot moved: Tigard 18.210.030.A.1 (setbacks from
-   the future street edge), Milwaukie Table 19.501.2.A (street yards from the centre line),
-   Beaverton (dedication at the decision-maker's call, no width stated). Sample weight about 1.7%
-   of all greens outside WashCo. PROPOSAL (nothing built): reuse 67's centre-line distance per
-   street line, add each city's class -> distance table and its own form (dedication vs added
-   setback); class comes from each city's TSP map (Sherwood Figure 17 not stored; Oregon City has a
-   TSP layer). Unranked class = worst case, as in 67. Bound per city, read every loss.
-   BUILT 2026-10-14 (flats/road-dedication-ship): Sherwood 26/32/32/37/61 by its TSP class map
-   (street_class_sherwood; a street the consultant map lacks = 61); King City by named streets,
-   99W borrowing Sherwood's 61, county pockets on the county rule; Oregon City half the widest
-   Table 16.12.016 right-of-way 31/44/59/63 by street_class_oregon_city; Milwaukie its 29 named
-   rows of Table 19.501.2.A. Tigard NOT ENCODED (TSP widths not held: a remaining false-GREEN gap);
-   Beaverton a refusal note (no width stated; item 81 holds the Tigard gap). FINAL BOUND (d3b6db52,
-   two-street corner rule; per-city table in item 67): Oregon City green->red 713, green->yellow 56,
-   yellow->red 228, yellow->green 19; Sherwood 20/0/30/2; Milwaukie 17/18/57/6; King City 3
-   yellow->red. Check lots 2S132CD12600, 2S132AC01500, 2S116AA14200, 31E01DA00229 red. RULED
-   2026-10-14: Oregon City keeps the WIDEST row per class -- Table 16.12.016 is keyed to the
-   street's TSP class (measured) AND the plan designation on both sides of the street, the wider
-   governing. Superseded by item 82 (built 2026-10-14): the zones on both sides now stand in for
-   the designation, the widest row kept only where that cannot be read.
-   WEEKLY: scripts/flats_weekly_chain.py preflight now REFUSES a snapshot without
-   street_class_washington/sherwood/oregon_city/milwaukie or rlis_streets (acquired/present and the
-   file on disk; dedication_keys()), runbook docs/ops/flats-county-refresh.md updated. OPEN: segment
-   qualifiers in the tables applied to the whole street; lot area not reduced by the strip (only the
-   envelope); an unmeasured public line gives up the whole 40-63 ft.
+   item 64 round 2: 4 of the 7 wrong lots).** Steph RULED 2026-10-14 "YES" (register
+   `2026-10-14-road-dedication`). Built: Sherwood 16.106.020 A + 16.106.040 D, 26/32/32/37/61 by
+   its TSP class map (street_class_sherwood; a street the consultant map lacks = 61); King City
+   16.80.060 A by named streets, 99W borrowing Sherwood's 61, county pockets on the county rule;
+   Oregon City 16.12.011.B, half the widest Table 16.12.016 right-of-way 31/44/59/63 by
+   street_class_oregon_city (RULED 2026-10-14 widest row per class; superseded by item 82: the
+   zones on both sides stand in for the designation, the widest row kept only where that cannot
+   be read); Milwaukie its 29 named rows of Table 19.501.2.A. Beaverton a refusal note
+   (dedication at the decision-maker's call, no width stated).
+   CHECK after the weekly: lots 2S132CD12600, 2S132AC01500, 2S116AA14200, 31E01DA00229 read red;
+   expected moves are in item 67's table (Oregon City 713 / 56 / 228 / 19; Sherwood 20/0/30/2;
+   Milwaukie 17/18/57/6; King City 3 yellow->red).
+   TRAP: scripts/flats_weekly_chain.py preflight REFUSES a snapshot without
+   street_class_washington/sherwood/oregon_city/milwaukie or rlis_streets (dedication_keys());
+   runbook docs/ops/flats-county-refresh.md.
+   OPEN: Tigard NOT ENCODED (18.210.030.A.1 setbacks from the future street edge; TSP widths not
+   held -- a remaining false-GREEN gap, item 81); segment qualifiers in the tables applied to the
+   whole street; lot area not reduced by the strip (only the envelope); an unmeasured public line
+   gives up the whole 40-63 ft.
 78. [scan: YES -- bound read, rides the weekly] **Portland false GREENs: main street minimum floor
    area and protected historic buildings are RED (MERGED 2026-10-15, branch flats/portland-overlays
    4ed70036).** The "m" overlay minimum FAR (33.415; half in Inner, a quarter in Eastern/Western) is
@@ -2830,46 +1285,37 @@ read when the weekly full re-screen lands.
    bridge refuses a snapshot without them). Still open: Glendoveer, Macadam, the d overlay, 33.430
    environmental; the ground-floor active-use rule from 2029-01-01; the 800 sf accessory-building
    exemption, which the data can't separate.
-79. [scan: BUILT on flats/round2-rulings-r3, rides the weekly ~2026-10-19] **Washington County lots whose only middle-housing
-   path is a Type II review show GREEN (found 2026-10-14 by item 64 round 2).** The county's
+79. [scan: r3 MERGED to main (83a7683d), rides the weekly ~2026-10-19] **Washington County lots whose only middle-housing
+   path is a Type II review showed GREEN (found 2026-10-14 by item 64 round 2).** The county's
    Type I path ends at a lot size in every zone: R-5 16,500 sf buildable and R-6 13,100 sf, then
    only if four homes meet the zone's minimum density; R-9/R-15/R-24/R-25+ and the transit
    districts 10,000 sf (same density escape), AND only on a lot created by a standard subdivision
-   or partition plat (302-2.14 .. 307-2.13, 375-7 30.c). Our file allows Type II on purpose and
-   records it as a doubt (_unincorporated.yaml ~566-571, ~1538-1544). Wrong lot 1S103DA00200
-   (TO:R18-24, 21,377 sf). Reach by lot size alone: 405 of 7,708 WashCo greens (R-24 158, R-15 86,
-   R-9 45, R-5 39, R-6 34, R-25+ 21, transit 22); lots not from a standard plat add more (no plat
-   fact held, so "unmeasured = worst case" would redden every R-9+ lot -- needs a plat source
-   first). DECISION FOR STEPH, the same question item 69 left open: does a Type II review on clear
-   and objective criteria count as by-right? If no, encode the gates (buildable area = lot less
-   unbuildable land) and bound.
-   RULED (Steph 2026-10-14, review tiers): the Type II path may add conditions = YELLOW
-   (REVIEW-CONDITIONS). Built: past the buildable-area line and under the density escape, or off
-   a standard plat (unmeasured = worst, so every R-9+ lot), the lot is yellow. Bound: 1,190
-   WashCo greens -> yellow, none red (R-9 599, R-15 216, R-24 199, CCMU 42, R-5 39, R-6 34, NMU
-   26, R-25+ 23, TO:R9-12 11, R-15 NB 1); by gate standard_plat 731, buildable_area 391, the
-   zone's own conditions 68. The 731 could be measured instead: item 83.
-80. [scan: (a)(b) RULED + BUILT on flats/round2-rulings-r3, ride the weekly ~2026-10-19; (c)-(e) open] **Readings for Steph from item 64 round 2.**
+   or partition plat (302-2.14 .. 307-2.13, 375-7 30.c). Wrong lot 1S103DA00200 (TO:R18-24,
+   21,377 sf).
+   RULED (Steph 2026-10-14, review tiers; register `2026-10-14-review-tiers`): the Type II path
+   may add conditions = YELLOW (REVIEW-CONDITIONS). Built: past the buildable-area line and under
+   the density escape, or off a standard plat (unmeasured = worst, so every R-9+ lot), the lot is
+   yellow. Bound: 1,190 WashCo greens -> yellow, none red (R-9 599, R-15 216, R-24 199, CCMU 42,
+   R-5 39, R-6 34, NMU 26, R-25+ 23, TO:R9-12 11, R-15 NB 1); by gate standard_plat 731,
+   buildable_area 391, the zone's own conditions 68. The 731 could be measured instead: item 83.
+   Steph 2026-10-15 (item 85, not merged): the "may add conditions" tier becomes GREEN with a flag
+   inside a UGB -- the clear-objective lane expects WashCo Type II ~60k lots yellow -> green, so
+   these move again when 85 merges.
+80. [scan: (a)(b) RULED + BUILT, r3 MERGED to main (83a7683d), ride the weekly ~2026-10-19; (c)-(e) open] **Readings for Steph from item 64 round 2.**
    (a) "Parking may cover at most half of a street frontage" caps (Wilsonville 4.113(.14)D.3,
-   Hillsboro 12.50.715 C.1, Clackamas ZDO 845.02(D), Beaverton): the screen applies them only to
-   parking beside the building. Does a rear court behind the building, or one facing a second
-   street, count? Decides 31W15DC05351 and 31W22DC01400 (Wilsonville, red if it counts).
-   RULED (Steph 2026-10-14): ANY street frontage. Built (flats/fit/frontage.py, measured on the
-   drawn plan): a court behind the building on a one-street lot counts nothing, so both
-   Wilsonville lots STAY GREEN. Bound: 241 lots go red on the cap, every one a corner or through
-   lot (Clackamas 105, Beaverton 103, Wilsonville 23, Hillsboro SCR-MD 10); 190 lots the review
-   tiers brought in also fail it (6 on the cap alone). Reading the losses found two ways one
-   street was read as two (a street bending under the 45-degree corner angle; a jog in one
-   frontage): fixed, 38 lots back to their run 74 colour. Side moves, all read: 15 green ->
-   yellow where the next plan carries a flag (ACCESS-STREET-RANK-UNKNOWN / SLOPE-GRADE /
-   PARKING-STRIP-UNCONFIRMED); 3 red where the other design fails steep ground; 1 gain,
-   1S113BA07700 (Beaverton RMC yellow -> green: base's preferred plan was yellow on SLOPE-GRADE,
-   the cap pushed it to a green plan off the other front -- QUESTION for Steph: should a yellow
-   preferred plan hide a green one?).
-   (b) Hillsboro SCR-MD/SCR-HD 5 ft MAXIMUM side setback (12.22 tables): "one wall within 5 ft"
-   (12.50.130.C.3.a; every lot passes) or "both side walls" (nearly every SCR-MD/HD green red)?
-   RULED (coordinator 2026-10-14): one wall within 5 ft; moved no lot in the bound (the
-   research leaned "both walls", moderate confidence -- recorded in hillsboro.yaml).
+   Hillsboro 12.50.715 C.1, Clackamas ZDO 845.02(D), Beaverton). RULED (Steph 2026-10-14; register
+   `2026-10-14-frontage-cap-any-street`): ANY street frontage. Built (flats/fit/frontage.py,
+   measured on the drawn plan): a court behind the building on a one-street lot counts nothing, so
+   31W15DC05351 and 31W22DC01400 (Wilsonville) STAY GREEN. Bound: 241 lots go red on the cap,
+   every one a corner or through lot (Clackamas 105, Beaverton 103, Wilsonville 23, Hillsboro
+   SCR-MD 10); two ways one street was read as two (a bend under the 45-degree corner angle; a jog
+   in one frontage) fixed, 38 lots back. QUESTION for Steph, open: 1S113BA07700 (Beaverton RMC
+   yellow -> green: base's preferred plan was yellow on SLOPE-GRADE, the cap pushed it to a green
+   plan off the other front) -- should a yellow preferred plan hide a green one?
+   (b) Hillsboro SCR-MD/SCR-HD 5 ft MAXIMUM side setback (12.22 tables): RULED (coordinator
+   2026-10-14): "one wall within 5 ft" (12.50.130.C.3.a); moved no lot in the bound (the research
+   leaned "both walls", moderate confidence -- recorded in hillsboro.yaml; not yet in the register,
+   see 86(B)).
    (c) Wood Village TC: building goes through a "Town Center Development Plan" (the old Master
    Plan); its approval type is in 235.400/235.490, not stored, and the site answers 403 to every
    fetch. A human copy of those sections decides 10 TC greens (1N3E34B   -00807 can't tell).
@@ -2880,35 +1326,35 @@ read when the weekly full re-screen lands.
    still shows JURISDICTION-OFF on Tigard lots; run 74's own results carry the right flags.
 81. [scan: YES -- greens only gain] **Tigard road widths: MERGED 2026-10-15; class-name fix
    (flats/tigard-class-names 91df7c6a) MERGED 2026-10-16, bound read, rides the next weekly.**
-   Bound vs main: 21 lots gain, none lose (RES-B 7 red->green, 7 red->yellow, 1 yellow->green;
-   RES-C 3 red->yellow; RES-D 1 red->green; MUR, MU-CBD 1 red->yellow each) -- the class map
-   now reads those streets as local. 2S101DC03502 yellow where run 74 had green. Tigard measures setbacks from the future street edge.
-   Widths come from the code's own street table (TDC 18.910.1) keyed to the city's TSP class map
-   (street_class_tigard, now in the weekly preflight); each class takes the top of its printed range,
-   half from the centre line: Local 27, Neighborhood Route 29, Collector 48, Arterial 64 ft (Principal
-   Arterial and the Hall Blvd stretch included); River Terrace Blvd 55. Downtown (MU-CBD) local and
-   neighbourhood streets held at 37 ft (downtown street map not stored). Freeway, unclassed and unread
-   lines take 64; a line with no centre line nearby gives up the whole 64. The class map has no street
-   names: matched by position (~1.5% unmatched overall, none on collectors/arterials). Arterial lots
-   likely lose greens. Next: bound Tigard on 137 vs run 74, read every loss, report moves to Steph.
+   Tigard measures setbacks from the future street edge (18.210.030.A.1). Widths come from the
+   code's own street table (TDC 18.910.1) keyed to the city's TSP class map (street_class_tigard,
+   now in the weekly preflight); each class takes the top of its printed range, half from the
+   centre line: Local 27, Neighborhood Route 29, Collector 48, Arterial 64 ft (Principal Arterial
+   and the Hall Blvd stretch included); River Terrace Blvd 55. Downtown (MU-CBD) local and
+   neighbourhood streets held at 37 ft (downtown street map not stored). Freeway, unclassed and
+   unread lines take 64; a line with no centre line nearby gives up the whole 64. The class map
+   has no street names: matched by position (~1.5% unmatched overall, none on collectors/
+   arterials). The Tigard bound (main ea5aa925 vs bc70dc46) was read and four wrong-red causes
+   fixed in 91df7c6a. Its bound vs main: 21 lots gain, none lose (RES-B 7 red->green, 7
+   red->yellow, 1 yellow->green; RES-C 3 red->yellow; RES-D 1 red->green; MUR, MU-CBD 1
+   red->yellow each). 2S101DC03502 yellow where run 74 had green.
+   CHECK after the weekly: Tigard moves (arterial lots likely lose greens vs run 74); report
+   them to Steph.
 82. [scan: YES -- greens only gain] **Oregon City: the zone across the street stands in for the plan
    designation (RULED + BUILT 2026-10-14, MERGED 16d07f44 2026-10-15; bound read, rides
-   the next weekly).** Steph: use the measured zone on each side as the stand-in for
-   Table 16.12.016's plan designation; flag it low-risk, severity 2, so a GREEN lot stays GREEN
-   (OC-ROAD-ZONE-STANDIN); keep the widest row where the land across is unread or its zone maps to
-   no clear designation. Zone -> designation is Table 17.06.030 (R-10..R-2 residential; C, MUD,
-   WFDD, NC, HC, MUC-1, MUC-2, MUE the "mixed use, commercial or public" row; CI, GI industrial; I
-   left out -- public/quasi-public OR park, 17.39.010, and the table has no park row). All 12 rows
-   held in row_to_centerline_by_designation; widest kept for an unread class, any unresolved ray,
-   another jurisdiction across, or an unmapped zone. BOUND vs run 74 (9,101 OC lots whose strip
-   the stand-in narrows; 2,434 OC lots unchanged): run 74 green 1,829 -> 1,392 green / 49 yellow /
-   388 red (main's widest row alone: 1,158 / 43 / 628); yellow 452 -> 14 / 287 / 151; red 6,820
-   stay red. Against main: 291 better (226 red->green, 49 red->yellow, 16 yellow->green; every red
-   bind was fit / fire hose / steep ground; 274 return to their run 74 colour, 15 part way, 2 go
-   past it with SLOPE-GRADE gone -- placement), 9 worse, all read: 7 green->yellow on SLOPE-GRADE
-   and 1 on ZONE-SPLIT (the deeper envelope let the widest-slack placement land on steeper ground /
-   over a zone line), 1 green->red 32E06DB00600 (hose 144 -> 152 ft on the moved plan). Placement artefacts, not the stand-in: the strip never
-   widens. Every scoped lot carries the flag; 1,406 are green with it.
+   the next weekly).** Steph (register `2026-10-14-oregon-city-road-zone-standin`): use the
+   measured zone on each side as the stand-in for Table 16.12.016's plan designation; flag it
+   low-risk, severity 2, so a GREEN lot stays GREEN (OC-ROAD-ZONE-STANDIN); keep the widest row
+   where the land across is unread or its zone maps to no clear designation. Zone -> designation
+   is Table 17.06.030 (R-10..R-2 residential; C, MUD, WFDD, NC, HC, MUC-1, MUC-2, MUE the "mixed
+   use, commercial or public" row; CI, GI industrial; I left out -- public/quasi-public OR park,
+   17.39.010, and the table has no park row). All 12 rows held in
+   row_to_centerline_by_designation; widest kept for an unread class, any unresolved ray, another
+   jurisdiction across, or an unmapped zone. BOUND vs run 74 (9,101 OC lots whose strip the
+   stand-in narrows): run 74 green 1,829 -> 1,392 green / 49 yellow / 388 red (main's widest row
+   alone: 1,158 / 43 / 628). Against main: 291 better, 9 worse, all read -- placement artefacts
+   (SLOPE-GRADE, ZONE-SPLIT, 1 green->red 32E06DB00600 hose 144 -> 152 ft on the moved plan), not
+   the stand-in: the strip never widens. CHECK after the weekly: OC counts land near the bound's.
 83. [scan: YES (yellows only go green)] **Measure Washington County's "standard plat" gate instead
    of flagging it (offered 2026-10-14, item 79).** 731 R-9/R-15/... lots are yellow only because
    nothing says whether the lot was made by a standard subdivision or partition plat (302-2.14 ..
@@ -2930,52 +1376,70 @@ read when the weekly full re-screen lands.
    bound read, rides the next weekly: 556 gains, Oregon City 349 red->green / 153 red->yellow /
    2 yellow->green, Beaverton 10 / 32, Clackamas 3 / 1, Troutdale 1 / 2, Sherwood 2 red->yellow,
    Wilsonville 1 red->yellow; OC D caps residential zones only, E governs mixed-use/commercial;
-   a rounded corner is split between its streets).** Oregon City 17.16.060.D.1 (40 ft or 50% of the frontage,
-   whichever is less -- new check `parking_frontage_width`, worst street), Fairview 19.30.040(E)(2)
-   50%, Troutdale 8.120.C.4.d 50% (front parking was blank = banned; now allowed except the
-   townhouse path 8.130.C.4.b.i), Sandy 17.90.160 F 50% of any abutting public street, Beaverton
-   60.05.15.6.C 35% of any street lot line read as a DRIVEWAY cap (parking is held 20 ft back by
-   60.05.20.6.A.1) in all 12 blocks. Every % cap is now per street line (the side court and
-   Sherwood's driveway cap summed frontages before -- lenient, fixed; unknown street = shortest
-   line). Fairview VC's conditional-use path still open (1 lot, 1N3E33AB-00500; the zone-gaps
-   lane's). Next: bound the five cities + Sherwood and the side-court cities' corner/through lots,
-   read every move, report to Steph. Watch: OC corner side courts (43 ft > 40), Beaverton side
-   courts may gain, Sandy/Fairview through lots lose, small corners stay yellow (court not drawn).
-85. [scan: YES if Steph rules] **ORS 197A.400 "clear and objective" for housing -- RESEARCHED
-   2026-10-15, question with Steph.** Inside a UGB a city may apply only clear and objective
-   standards to housing; a discretionary path is legal only beside a clear one. East Park v. Salem
-   (LUBA 2022) threw out "compatible / minimal impact" conditional-use criteria and ordered
-   approval; HB 4037 (2026 Or Laws ch 108, in force 2026-07-01) adds no required hearing, applicant
-   alone appeals. Not lifted: use not listed at all (Happy Valley MUC/RCMU/CCC, Wilsonville PDC,
-   Milwaukie MUTSA, Oregon City MUE "similar use"), farm zones (Mult EFU), measured fails (Fairview
-   TCC, Wood Village NC), the statute's own exceptions (Portland central city + Gateway, historic
-   districts), no clear standards to judge by (Happy Valley MURM/PMU -> grey not green). Could lift
-   (red today, run 74, upper bound -- many also fail fit): Canby R-1.5/R-2/C-R 1,593; Estacada
-   R-2/R-3/C-1/R-C 492; Mult uninc CBD/OC/LR5/LR7 490; Cornelius C-2/CC/CMU 178; Gladstone C3/C1
-   126; Fairview VMU/VA/VC 69; Milwaukie NMU/SMU 56; Clackamas PMU1-3 17; Durham MDR 3 (~3,000).
-   Also argues the yellow "may add conditions" tier toward green. Asked Steph: red -> yellow with
-   a flag ("state law voids the judgement test; city may refuse first, appeal likely")? Research
-   notes: scratchpad state_law/ (session 0351d0eb).
+   a rounded corner is split between its streets).** Oregon City 17.16.060.D.1 (40 ft or 50% of the
+   frontage, whichever is less -- check `parking_frontage_width`, worst street), Fairview
+   19.30.040(E)(2) 50%, Troutdale 8.120.C.4.d 50% (front parking was blank = banned; now allowed
+   except the townhouse path 8.130.C.4.b.i), Sandy 17.90.160 F 50% of any abutting public street,
+   Beaverton 60.05.15.6.C 35% of any street lot line read as a DRIVEWAY cap (parking is held 20 ft
+   back by 60.05.20.6.A.1) in all 12 blocks. Every % cap is now per street line (unknown street =
+   shortest line). Still open: Fairview VC's conditional-use path (1 lot, 1N3E33AB-00500; see
+   item 10). CHECK after the weekly: OC corner side courts (43 ft > 40), Beaverton side courts may
+   gain, Sandy/Fairview through lots lose, small corners stay yellow (court not drawn).
+85. [scan: YES -- bound 1 read, re-bound queued] **ORS 197A.400 "clear and objective" for housing -- RULED by Steph
+   2026-10-15; BUILT on flats/clear-objective, NOT merged.** Inside a UGB a city may apply only
+   clear and objective standards to housing; a discretionary path is legal only beside a clear one.
+   East Park v. Salem (LUBA 2022) threw out "compatible / minimal impact" conditional-use criteria
+   and ordered approval; HB 4037 (2026 Or Laws ch 108, in force 2026-07-01) adds no required
+   hearing, applicant alone appeals.
+   STEPH RULED 2026-10-15 (memory feedback_rulings_2026_10_15.md; NOT yet in the register -- the
+   entry lands with the branch): where a lot is red ONLY because a city's approval path is a
+   judgement call (conditional use with judgement criteria, one-off discretionary review), the
+   screen judges the lot on the measurable standards alone -- GREEN WITH A FLAG (severity < 3):
+   the city may refuse at first and an appeal may be needed. The yellow "may add conditions"
+   review tier is ALSO green with a flag (Steph "1"): added conditions must themselves be clear
+   and objective, so a measurable review never ranks below a judgement-only one. This reaches
+   items 53 (Sandy, Canby, Estacada), 61, 69 and 79. NOT covered: a use the city doesn't list at
+   all (Happy Valley MUC/RCMU/CCC, Wilsonville PDC, Milwaukie MUTSA, Oregon City MUE "similar
+   use"); land outside a UGB (farm zones, Mult EFU); the statute's exceptions (Portland central
+   city + Gateway, historic resources); measured fails (Fairview TCC, Wood Village NC); zones with
+   no clear standards (Happy Valley MURM/PMU) stay grey. Standing answers given to the lane:
+   Milwaukie greenway CU -> green + flag (the statute has no greenway exception); historic areas
+   stay excluded (statute exception + the 2026-10-14 RED ruling, item 87).
+   Branch: c20ea3a1 (judgement-only path GREEN with a CLEAR-OBJECTIVE flag, severity 2), ec383a3b
+   (Fairview VA quote), f003fd49 (uninc UGB was not loaded -- `inside_ugb` fix, found by bound 1);
+   worktree ../vicinitideals-worktrees/clear-objective. Re-bound co2 queued on 137
+   (/root/watch/co2.want, /root/co2_*). Moves so far: Estacada R-3 10 red -> 6 green / 4 yellow;
+   Milwaukie R-HD/R-MD 13 red -> 3 green / 10 yellow; newly admitted Canby 108 green / 35 yellow,
+   Gladstone C3 40 green + 31 yellow, Milwaukie NMU 14 green / 9 yellow, Estacada 57 yellow,
+   Cornelius 14 yellow. WashCo Type II ~60k lots yellow -> green expected -- report real counts.
+   AT MERGE apply its count edits: test_port_from_flats L77 16->25, test_port L445 198->205,
+   test_crossrefs silent += "or/ors.197a.400.txt", test_zone_mirror L580 16->27 + UNEXPRESSIBLE
+   landscaped 54->59, front-max 91->93, density 55->58, max_units 13->14; regenerate gaps; add the
+   register entry. Research notes: scratchpad state_law/ (session 0351d0eb).
 86. [scan: YES for (C1) once entered] **Agents could not recall a property ruling (Steph
-   2026-10-15, GO for A/B/C1/C2 the same day).** (A) MERGED 2026-10-15: `flats_find_lot` /
-   `flats_lot_report` / `flats_rulings` JSON routes = VicinitiDeals MCP tools, CLAUDE.md rule.
-   (B) MERGED 2026-10-15: flats/config/rulings.yaml, 98 entries (58 statewide, 25 city, 14 zone, 1
-   uninc), test_rulings_register.py. Left out as unattributed/ambiguous: FEMA fringe yellow, landslide
-   list, Tigard MUR stricter column (tigard.yaml L972), Portland total-turn, Hillsboro SCR side,
-   Milwaukie 22 ft aisle -- add when Steph rules. RULE: every new Steph ruling gets a register entry
-   in the same commit that encodes it. (C1) RICAP 11 MERGED 2026-10-15: adopted changes carry adopted/effective dates on the zone (rules
-   loader `law_on`, run-key `law`), CI1 opens 2026-11-01 under RM1 standards (est. 60-95 of 143 CI1
-   lots leave red at the first run after Nov 1 -- READ that run's CI1 moves); RICAP 11 MP5 back-out
-   parking, TA9 rooftop rear setback not encoded (check later). (C2) GO
-   (Steph 2026-10-15) and BUILT: scripts/flats_dlcd_watch.py + flats/watch/dlcd.py, ledger
-   flats/config/dlcd_read.yaml, runbook docs/ops/flats-county-refresh.md 4f. BACKLOG to read: 76
-   adopted + 92 proposed notices from our cities since 2026-01-01 (incl. RICAP 11, DLCD 001-26) --
-   READ 2026-10-15 (ledger flats/config/dlcd_read.yaml): 6 encode, 16 watch, 146 no effect;
-   encode items -> 88, 89. WATCH: Portland design-review suspension to 2029 (yellow->green
-   possible), Happy Valley code update (PC 2026-11-10), Sandy middle housing (2026-10-26/11-16),
-   Canby UGB + Wilsonville annexation (new land), Oregon City geohazard clear path, Portland
-   state-law compliance + central-city projects. RICAP 11 MP5 (back-out pads <=2 stalls) and MP4
-   (aisle) noted under C1.
+   2026-10-15, GO for A/B/C1/C2 the same day). A, B, C1, C2 MERGED; the DLCD backlog is READ.**
+   DONE: (A) `flats_find_lot` / `flats_lot_report` / `flats_rulings` JSON routes = VicinitiDeals
+   MCP tools, CLAUDE.md rule. (B) flats/config/rulings.yaml (93094b35; additions 3a06a3e8,
+   16d3d94a), test_rulings_register.py. RULE: every new Steph ruling gets a register entry in the
+   same commit that encodes it. (C1) RICAP 11 (56efd334): adopted changes carry adopted/effective
+   dates on the zone (rules loader `law_on`, run-key `law`). (C2) DLCD watch (38528135):
+   scripts/flats_dlcd_watch.py + flats/watch/dlcd.py, ledger flats/config/dlcd_read.yaml, runbook
+   docs/ops/flats-county-refresh.md 4f; Steph 2026-10-15: run it EVERY WEEKLY (coordinator runs
+   it from this PC; an Opus agent reads every new notice). Backlog of 76 adopted + 92 proposed
+   notices READ 2026-10-15 (96cc32ba): 6 encode, 16 watch, 146 no effect; encode items -> 88, 89.
+   STILL OPEN:
+   - (C1) CI1 opens 2026-11-01 under RM1 standards (est. 60-95 of 143 CI1 lots leave red at the
+     first run after Nov 1) -- READ that run's CI1 moves; check item 2(d)'s CI cap guard then.
+   - RICAP 11 MP5 (back-out pads <= 2 stalls), MP4 (aisle) and TA9 rooftop rear setback are not
+     encoded (check later).
+   - (B) left out of the register as unattributed/ambiguous: FEMA fringe yellow, landslide list,
+     Tigard MUR stricter column (tigard.yaml L972), Portland total-turn, Hillsboro SCR side,
+     Milwaukie 22 ft aisle -- add when Steph rules (FEMA fringe and landslide have since got
+     entries: `2026-10-06-fema-fringe-stays-yellow`, `2026-10-05-landslide-slopes-declined`).
+   - WATCH list: Portland design-review suspension to 2029 (yellow->green possible), Happy Valley
+     code update (PC 2026-11-10), Sandy middle housing (2026-10-26/11-16), Canby UGB + Wilsonville
+     annexation (new land), Oregon City geohazard clear path, Portland state-law compliance +
+     central-city projects.
 87. [scan: YES -- greens only lose] **Protected historic buildings outside Portland (found
    2026-10-15 by the register audit).** Steph's 2026-10-14 ruling (protected historic building on
    the lot = RED) is built only from Portland's historic resource map (Portland + Multnomah uninc).
@@ -2984,17 +1448,21 @@ read when the weekly full re-screen lands.
    source (Oregon SHPO Historic Sites Database / National Register GIS; ORS 197.772 + OAR
    660-023-0200 decide which listings are "protected"), else per-city maps; apply the standing rule
    (no re-ask), bound, read losses. Standing rule, no question for Steph.
-88. [scan: YES -- greens only lose] **Gladstone Ord. 1545 (in force 2026-08-13): R-7.2 minimum
+88. [scan: YES -- greens only lose; BUILT on flats/dlcd-encode 5262c782, bound queued, NOT merged] **Gladstone Ord. 1545 (in force 2026-08-13): R-7.2 minimum
    lot for duplex..quadplex 3,600 -> 7,200 sq ft** (DLCD watch, 2026-10-15). Stored code predates
    it; the R10 placeholder copies the same number. R-7.2 lots 3,600-7,199 sq ft screen green and
-   should be red. Source: council packet https://www.ci.gladstone.or.us/media/30151. Store the
-   ordinance (adopted-change mechanism, effective already past), encode, bound, read the losses.
-89. [scan: YES -- greens only lose] **Happy Valley 16.44 driveway access never fetched** (found via
+   should be red. Source: council packet https://www.ci.gladstone.or.us/media/30151. Built with
+   the adopted-change mechanism on flats/dlcd-encode (worktree ../vicinitideals-worktrees/
+   dlcd-encode); bound queued on 137 (/root/watch/de.want, /root/de_*). Next: read the losses,
+   merge. AT MERGE: test_refusals L372 comments 286->289, regenerate gaps, remove items 88/89,
+   and add new items for (i) a Happy Valley street-class map (corner lots stay yellow without it)
+   and (ii) porting Gladstone to quadfit's rules.yaml (3600 -> 7200, side 7.5 -> 5).
+89. [scan: YES -- greens only lose; BUILT on flats/dlcd-encode 5262c782 with item 88, bound queued, NOT merged] **Happy Valley 16.44 driveway access never fetched** (found via
    Ord. 603, DLCD watch 2026-10-15). A lot with more than one street frontage takes its driveway
    from the lowest-class street; driveway at most half the frontage (12-35 ft). In force since
    2022; our rules let the drive use any street -> possible false GREEN. Source
-   https://ecode360.com/43526523. Fetch + store 16.44, encode (corner_access_street: lowest_class;
-   street class per lot line exists since FOLLOWUPS 41), bound, read the losses.
+   https://ecode360.com/43526523. Fetched, stored and encoded on flats/dlcd-encode
+   (corner_access_street: lowest_class); merge steps are in item 88.
 90. [scan: NO (citations move, answers must not)] **409 cites name a section the cited lines
    do not sit in (found 2026-10-16, docs/ops/quote-mismatch-2026-10-16.md).** Not quote
    failures: gaps.py:462 / attribution.check. (a) header_or_xref 286: the named section is printed inside the
@@ -3003,14 +1471,59 @@ read when the weekly full re-screen lands.
       heading is only in another stored file; (d) unlocated 19 (the classifier's counts;
       headline 123 = b+c+d). Hillsboro 123, Tigard 107, Beaverton 83 (was 80).
    Next: read (b)+(c) by hand (judgement), fix cites; then teach the check to ignore (a).
-91. [scan: no] **Copilot cleanup batch 10 -- BLOCKED 2026-10-16: Copilot monthly quota exceeded
-   (HTTP 402), resets 2026-11-01; Steph to choose: wait, buy more, or let Claude build.** Four
-   briefs written (session 0351d0eb scratchpad cp_night10/*.txt), worktrees + branches left as-is
-   (flats/nul-note-posts, e2e-waits, test-hygiene, flags-cache-geometry; e2e-waits has a partial
-   uncommitted edit). (a) NUL byte in the note of an otherwise valid /ui/flats/sign (and passage,
-   reading, words, triage, check) POST -- likely 500, strip NUL before storing. (b) E2E waits that
-   pass without checking: test_flats_reading filter-survives (wait_for_htmx swallows), test_flats_price
-   ppu reload race (assert URL), test_flats_page_check cited-page flake (poll the scroll). (c) Test
-   hygiene: test_permit.py:147 `or True`; five blind pytest.raises(Exception); test_missed temp-file
-   leak; dead _MAX_WRAP; four unused loop variables. (d) Cache flags.yaml parse (64 ms/request,
-   key on mtime) and dedupe _outline/_plan geometry behind a golden test.
+91. [scan: no] **Copilot cleanup batch 10 -- QUEUED for 2026-11-01.** Copilot's monthly quota ran
+   out 2026-10-16 (HTTP 402) and resets 2026-11-01. Steph RULED 2026-10-16 (memory
+   feedback_copilot_monthly_burn.md): on the 1st of each month, start Copilot on its tier of work
+   right away and run it until the quota is gone; don't buy more credit and don't offer it; when
+   the quota is gone the queue waits for the 1st -- Claude does not take it over. Fire briefs in
+   parallel batches of 4; a 402 means stop, not retry. Before firing (reference_copilot_cli.md):
+   Steph checks the real balance on github.com/settings/billing, pin a cheaper model instead of
+   auto, stop at ~70% of the allowance.
+   Four briefs written (session 0351d0eb scratchpad cp_night10/*.txt), worktrees + branches left
+   as-is (flats/nul-note-posts, e2e-waits, test-hygiene, flags-cache-geometry; local only, at
+   main's tip; e2e-waits has a partial uncommitted edit). (a) NUL byte in the note of an otherwise
+   valid /ui/flats/sign (and passage, reading, words, triage, check) POST -- likely 500, strip NUL
+   before storing. (b) E2E waits that pass without checking: test_flats_reading filter-survives
+   (wait_for_htmx swallows), test_flats_price ppu reload race (assert URL), test_flats_page_check
+   cited-page flake (poll the scroll). (c) Test hygiene: test_permit.py:147 `or True`; five blind
+   pytest.raises(Exception); test_missed temp-file leak; dead _MAX_WRAP; four unused loop
+   variables. (d) Cache flags.yaml parse (64 ms/request, key on mtime) and dedupe _outline/_plan
+   geometry behind a golden test.
+92. [scan: YES (parked)] **Parking layout generator -- was the second item 27, renumbered 92 on 2026-10-16 (commits 7d603344, cba189dc, d20eb8c3, 38239df5, 8121773e, 06e2a856 and memory call it "FOLLOWUPS 27") (Steph 2026-10-01: "more parking flexibility
+   opens up more lots"; don't invent shapes).** PARKED by Steph 2026-10-04
+   ("leave the free form generator for now"). SCOPING, nothing built.
+   Steph's frame: NOT a menu of shapes -- feed the city's parameters (stall
+   sizes per angle, aisle widths, number of drives -- Oregon City wants one
+   approach per two townhouses = 2 for the pod -- backing rules, setbacks)
+   and let it find ANY valid layout, odd angles and leftover shapes
+   included ("yes, SOME solution works"; TestFit does this commercially).
+   Cheap pre-defined shapes may run first as a lite screen, the generator
+   only where they fail. Pool (run 49): ~108k lots fail ONLY on the court
+   behind (Portland 78k) + ~32k ambiguous. Corpus: no field holds parallel/
+   angled stalls or backing-into-street limits yet (Happy Valley 16.43.030.I
+   exemption and Sherwood 9x20 unencoded). Steph sent 8 references (MDPI
+   2075-5309/13/11/2898, arXiv 2407.01333, Grasshopper parking solvers,
+   IAAC, nvdomidi/ProceduralGenerator) -- digested: none solves it, none
+   checks a turning path; lessons: access first, lot-edge angles first, an
+   independent validator, score against real approved site plans.
+   PROPOSED time box: simple shapes (1-2 sessions) + generator prototype on
+   137 (<= 2 sessions, 5,000 failing lots); continue only if it adds lots
+   beyond the shapes, zero false fits in hand review, <= ~3 s a lot.
+   HUMAN VERIFICATION (Steph): an annotated image per layout -- every
+   distance dimensioned and tagged, a table of required vs measured with the
+   citation behind each number; physical numbers no code states (design
+   car, turning radii, inside-corner offset, end-stall width, dead-end
+   extension, driveway spacing) from official/industry standards in a cited
+   registry (research running); a review queue like the page check; zero
+   false fits before any promotion. RESTRICTIONS ARE HARD LIMITS (Steph):
+   moving the building never licenses a drive or court the code forbids
+   (side-street-only entrance, front/side parking bans, frontage caps). GAP
+   that matters now: `lowest_class` corner lots (Clackamas, Milwaukie,
+   Oregon City, West Linn, Wilsonville, Fairview) -- no street's functional
+   class is measured (6(c)), so today's lane may sit on the busier street;
+   measure it per edge from RLIS street TYPE in s4 and re-check today's
+   greens there. Awaiting Steph's go.
+   UPDATE 2026-10-16: street class per lot line is now measured (item 41, 972caa17), so the
+   `lowest_class` gap above is closed; the re-check of today's greens there rides item 36's
+   weekly read. Oregon City's "one approach per two townhouses" is overridden by state law
+   (item 24, 2026-10-10), so the pod needs one approach there.
