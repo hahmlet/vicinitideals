@@ -1170,7 +1170,7 @@ read when the weekly full re-screen lands.
      162nd are not on it.
    Open: a new source for any of these four would release them; nothing else queued.
 27. [Claude] [Steph: (a)] [scan: YES for (a) if the answer changes the rule; NO for (b)] **Steph's Oregon City page check (2026-10-01): what is left.** All of
-   her answers triaged; card and reader fixes shipped (set-aside tint,
+   Steph's answers triaged; card and reader fixes shipped (set-aside tint,
    other numbers held, yes/no cards say where they were read, smaller-face
    columns no longer read as footnotes, centred headings claim their column
    -- 129 boxes narrowed to one column across OC/Gresham/Portland --, notes
@@ -1477,7 +1477,7 @@ read when the weekly full re-screen lands.
    ~85-90% right, old hand-drawn scans ~60-70%. A plat cannot prove ABSENCE
    (easements granted later by separate deed are not on it). HYPOTHETICAL
    (Steph 2026-10-04: "I don't know that I'll do it"); do not start unless
-   Steph sends maps. If he does: pilot 5-10 maps (modern plat, old plat, tax
+   Steph sends maps. If Steph does: pilot 5-10 maps (modern plat, old plat, tax
    map; one with a title report to grade against), first check whether
    Beaverton/Hillsboro/Washington Co. publish an easement GIS layer or bulk
    plat images; severity of "plat read, deed easements unchecked" is ruled
@@ -1550,7 +1550,7 @@ read when the weekly full re-screen lands.
    parallel batches of 4; a 402 means stop, not retry. Before firing (reference_copilot_cli.md):
    Steph checks the real balance on github.com/settings/billing, pin a cheaper model instead of
    auto, stop at ~70% of the allowance.
-   Four briefs written (session 0351d0eb scratchpad cp_night10/*.txt), worktrees + branches left
+   Four briefs written (docs/copilot/briefs/, runner docs/copilot/run_batch.sh), worktrees + branches left
    as-is (flats/nul-note-posts, e2e-waits, test-hygiene, flags-cache-geometry; local only, at
    main's tip; e2e-waits has a partial uncommitted edit). (a) NUL byte in the note of an otherwise
    valid /ui/flats/sign (and passage, reading, words, triage, check) POST -- likely 500, strip NUL
@@ -1576,7 +1576,7 @@ read when the weekly full re-screen lands.
    disputes. Test: in tests/api/test_ui_flats_check.py, answer "differs" on a number and
    assert the number shows as disputed; answer "yes" and assert it does not. If the dispute
    log has no place for a page-check answer, stop and report rather than invent one.
-16. [Copilot] [scan: NO] **Partial re-screen -- SHIPPED 50a0ecc2 2026-09-25 (runbook §4c).**
+16. [Copilot] [PARKED: Steph called it "for later" -- ask before firing] [scan: NO] **Partial re-screen -- SHIPPED 50a0ecc2 2026-09-25 (runbook §4c).**
    Nothing left to build. Kept for one remark: showing the `splice audit`
    on /flats/refresh -- Steph 2026-09-25 "an enhancement for later" -- not
    queued.
