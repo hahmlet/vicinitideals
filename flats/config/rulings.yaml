@@ -1565,3 +1565,24 @@
     rows red -> yellow, nothing else changes colour.
   source: docs/FOLLOWUPS.md item 76 (the item gives no day for the ruling; dated with its BUILT 2026-10-14 note)
   encoded_in: [flats/fit/rectangle.py]
+
+- id: 2026-10-16-design-review-default-red
+  kind: ruling
+  date: 2026-10-16
+  scope:
+    county: clackamas
+    city: _unincorporated
+    zones: [MR1, MR2, HDR, PMD, VA]
+  question: >-
+    The 2026-10-09 ruling made MR-1, MR-2 and HDR red for ZDO 1102.01(A)
+    design review, and an agent extended the same sentence to PMD and VA
+    without telling Steph. Should PMD and VA be treated like the other three?
+  ruling: >-
+    A design review is RED unless a state or county law preempts it; where
+    the review checks only clear and measurable standards, the 2026-10-14
+    review tiers apply ("this is where the 'design review' was 'clear and
+    measurable' that's fine, yellow it is").
+  effect: >-
+    No change: all five districts stay YELLOW under the review tiers, as they
+    have been since 2026-10-14.
+  source: Steph 2026-10-16, docs/FOLLOWUPS.md item 52
