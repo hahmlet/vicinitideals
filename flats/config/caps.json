@@ -573,6 +573,9 @@
       "min_density_du_per_acre": [
         "utility_easement"
       ],
+      "min_lot_depth_ft": [
+        "utility_easement"
+      ],
       "min_lot_sqft": [
         "utility_easement"
       ],
@@ -734,6 +737,9 @@
       "min_density_du_per_acre": [
         "utility_easement"
       ],
+      "min_lot_depth_ft": [
+        "utility_easement"
+      ],
       "min_lot_sqft": [
         "utility_easement"
       ],
@@ -767,6 +773,9 @@
         "utility_easement"
       ],
       "min_density_du_per_acre": [
+        "utility_easement"
+      ],
+      "min_lot_depth_ft": [
         "utility_easement"
       ],
       "min_lot_sqft": [

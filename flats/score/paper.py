@@ -278,17 +278,87 @@ def lot_standard(
         return None, True
     if not per_unit:
         return float(value), True
-    if "unit_lots" in tuple(getattr(got, "when", ()) or ()):
-        if getattr(got, "whole_project", False):
-            # Stated per dwelling and already multiplied out to the building
-            # by the loader: four child lots' worth is the number itself.
-            return float(value), True
-        return _on_the_parent(name, float(value), lots), True
-    if townhouse_only(rules):
-        return _on_the_parent(name, float(value), lots), True
+    each = home_lot_standard(rules, name, lots=lots)
+    if each is not None:
+        return _on_the_parent(name, each, lots), True
     if rules.get("land_division_parent_standards") is True:
         return float(value), True
     return None, False
+
+
+def _per_home_lot(name: str, value: float, lots: int) -> float:
+    """The inverse of :func:`_on_the_parent`: a whole project's figure, as one
+    of its ``lots`` home lots holds it."""
+    how = _ON_THE_PARENT.get(name, "times")
+    if how == "same":
+        return value
+    if how == "divided":
+        return value * lots
+    return value / lots
+
+
+def home_lot_standard(rules: "ZoneResolution", name: str, *, lots: int) -> float | None:
+    """A lot standard as ONE home lot of the townhouse form must meet it, where
+    the zone states it for townhouse lots; None where it does not -- no number,
+    or a number the parent lot meets on the four lots' behalf (ORS 92.031's
+    reading, :func:`lot_standard`).
+
+    It is stated for townhouse lots in two ways: on a ``unit_lots`` variant
+    (the zone's townhouse row), or as the zone's own number where the zone
+    takes the building only as townhouses (:func:`townhouse_only`). A variant
+    the loader multiplied out to the building (``whole_project``: "1,500 sq ft
+    per dwelling") is divided back to one lot.
+    """
+    got = rules.values.get(name)
+    value = getattr(got, "value", None)
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return None
+    if "unit_lots" in tuple(getattr(got, "when", ()) or ()):
+        if getattr(got, "whole_project", False):
+            return _per_home_lot(name, float(value), lots)
+        return float(value)
+    if townhouse_only(rules):
+        return float(value)
+    return None
+
+
+def townhouse_lots(rules: "ZoneResolution") -> bool:
+    """Whether the townhouse form's lots are conventional townhouse lots --
+    the zone states its own standards for them, on a ``unit_lots`` variant of
+    a lot standard (a number or an exemption), or takes the building only as
+    townhouses (:func:`townhouse_only`) -- rather than the children of a
+    middle housing land division, which inherit no standards and reach the
+    street by easement (ORS 92.031(3)(c)(B), "Pedestrian access from each
+    dwelling unit to a private or public road").
+
+    A townhouse lot fronts a street: every lot standard such a row prints --
+    a frontage, a width at the front lot line -- is measured along one. So
+    each home lot runs from the street back, side by side with the next, and
+    the row of homes faces the street (:func:`faces_the_street`).
+    """
+    if townhouse_only(rules):
+        return True
+    return any(
+        "unit_lots" in tuple(getattr(rules.values.get(name), "when", ()) or ())
+        for name in _ON_THE_PARENT
+    )
+
+
+def faces_the_street(rules: "ZoneResolution", design: Design) -> bool:
+    """Whether the building must keep its long side to the street: the code
+    says so (``orientation_constraint: axis_required``), or the design is
+    platted as townhouse lots (:func:`townhouse_lots`), each of which has to
+    front the street with its own width. Turned end-on, three of the four
+    homes would sit on lots behind the first with no street line at all.
+
+    Steph 2026-10-15, "'Townhomes' will have separate lots"; the bound of
+    b1bd20ff found 78 lots GREEN as townhouses only end-on.
+    """
+    if rules.get("orientation_constraint") == "axis_required":
+        return True
+    return design.plat is Plat.unit_lots and townhouse_lots(rules)
+
+
 
 
 #: Parking configurations that put a row of stalls and its drive aisle behind
@@ -1306,7 +1376,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     min_ground = _number(rules, "min_ground_story_ft")
     # A code that makes the building face the street has taken one of the
     # two orientations away, and the cheaper lot may have been that one.
-    axis = rules.get("orientation_constraint") == "axis_required"
+    axis = faces_the_street(rules, design)
 
     # What the two side yards take off the width together. Where the code
     # states a combined figure it governs, and a per-side floor can only make

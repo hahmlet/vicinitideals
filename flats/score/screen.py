@@ -59,7 +59,7 @@ import dataclasses
 import enum
 import math
 from dataclasses import dataclass, field as _dc_field
-from typing import Any, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 
 from flats.designs.model import Design, Orientation, ParkingConfig, Plat
 from flats.fit.rectangle import Fit, Fitter
@@ -82,6 +82,8 @@ from flats.score.paper import (
     court_depth,
     drive_at_street,
     drive_in_front_yard,
+    faces_the_street,
+    home_lot_standard,
     lot_standard,
     paved,
     side_column,
@@ -269,6 +271,17 @@ UNPAVED = "parking_pavement"
 #: the ground outside that window was never measured (:func:`_outdoor_shape`).
 UNSHAPED = "outdoor_area_shape"
 
+#: The townhouse form's home lots, checked one at a time (:func:`_home_lots`).
+#: The middle lots are exactly one home wide, so these are design facts held
+#: against the zone's townhouse-lot standards rather than measurements of the
+#: parcel: a 14 ft home cannot stand on a lot the code wants 15 ft wide,
+#: however big the parcel it is cut from.
+HOME_LOT_AREA = "home_lot_area_sqft"
+HOME_LOT_WIDTH = "home_lot_width_ft"
+HOME_LOT_AVERAGE_WIDTH = "home_lot_average_width_ft"
+HOME_LOT_FRONTAGE = "home_lot_frontage_ft"
+HOME_LOT_DEPTH_RATIO = "home_lot_depth_ratio"
+
 #: Which rule field each check reads. A check with no value goes unrun, but only
 #: an unrun check backed by a *required* field means the encoding is incomplete
 #: — many zones genuinely impose no FAR, and treating that silence as a gap
@@ -285,6 +298,12 @@ CHECK_FIELD: dict[str, str] = {
     "min_average_lot_width_ft": "min_average_lot_width_ft",
     "min_lot_depth_ft": "min_lot_depth_ft",
     "max_lot_depth_ratio": "max_lot_depth_ratio",
+    # The townhouse form's home lots, one at a time (:func:`_home_lots`).
+    HOME_LOT_AREA: "min_lot_sqft",
+    HOME_LOT_WIDTH: "min_lot_width_ft",
+    HOME_LOT_AVERAGE_WIDTH: "min_average_lot_width_ft",
+    HOME_LOT_FRONTAGE: "min_frontage_ft",
+    HOME_LOT_DEPTH_RATIO: "max_lot_depth_ratio",
     "coverage_pct": "max_coverage_pct",
     "impervious_pct": "max_impervious_pct",
     "far": "max_far",
@@ -911,6 +930,7 @@ def _checks(
         min_front, front_answered = lot_standard(
             rules, "min_frontage_ft", per_unit=per_unit, lots=design.units
         )
+        min_front = _row_of_home_lots(rules, design, "min_frontage_ft", min_front)
         if front_answered:
             check("min_frontage_ft", lot.frontage_ft, min_front, is_maximum=False)
         else:
@@ -998,6 +1018,7 @@ def _checks(
     min_width, width_answered = lot_standard(
         rules, "min_lot_width_ft", per_unit=per_unit, lots=design.units
     )
+    min_width = _row_of_home_lots(rules, design, "min_lot_width_ft", min_width)
     if lot.lot_width_ft is not None and width_answered:
         check("min_lot_width_ft", lot.lot_width_ft, min_width, is_maximum=False)
     else:
@@ -1012,6 +1033,7 @@ def _checks(
     min_avg, avg_answered = lot_standard(
         rules, "min_average_lot_width_ft", per_unit=per_unit, lots=design.units
     )
+    min_avg = _row_of_home_lots(rules, design, "min_average_lot_width_ft", min_avg)
     if lot.avg_lot_width_ft is not None and avg_answered:
         check("min_average_lot_width_ft", lot.avg_lot_width_ft, min_avg, is_maximum=False)
     else:
@@ -1047,6 +1069,8 @@ def _checks(
         )
     else:
         unchecked.append("max_lot_depth_ratio")
+    if per_unit:
+        _home_lots(rules, lot, design, check, unchecked)
 
     # The pavement this plan lays: what the leftover checks below take off
     # the lot. Its driveway alone -- no stalls -- is what a code that
@@ -1913,6 +1937,85 @@ def _searched_narrower_than(
     return searched + 1e-9 < asked
 
 
+def _side_yard(rules: ZoneResolution) -> float:
+    """The side yard an end home lot carries on its outer line: the zone's
+    side setback, or half a combined figure where only that is stated. None
+    stated is no yard here -- the envelope search charges the setbacks it
+    finds, and this adds nothing it did not."""
+    side = rules.get("setback_side_ft")
+    total = rules.get("setback_side_total_ft")
+    got = [float(x) for x in (side, None if total is None else total / 2) if isinstance(x, (int, float))]
+    return max(got, default=0.0)
+
+
+def _row_of_home_lots(
+    rules: ZoneResolution, design: Design, name: str, parent: float | None
+) -> float | None:
+    """What a width standard asks of the parcel when the townhouse form cuts it
+    into home lots side by side along the street: the middle lots one home wide
+    each, and the two end lots each a home and the side yard on its outer line
+    -- or the standard, where that is wider. Never less than ``parent``, the
+    four-lots-abreast reading :func:`lot_standard` gives. Where the standard is
+    not one the zone states for townhouse lots, ``parent`` unchanged."""
+    if parent is None or design.plat is not Plat.unit_lots:
+        return parent
+    each = home_lot_standard(rules, name, lots=design.units)
+    if each is None:
+        return parent
+    home = design.unit_width_ft
+    end = max(each, home + _side_yard(rules))
+    return max(parent, (design.units - 2) * home + 2 * end)
+
+
+def _home_lots(
+    rules: ZoneResolution,
+    lot: LotFacts,
+    design: Design,
+    check: Callable[..., None],
+    unchecked: list[str],
+) -> None:
+    """The townhouse form's middle home lots against the zone's townhouse-lot
+    standards, one lot at a time (Steph 2026-10-15: "'Townhomes' will have
+    separate lots").
+
+    A middle home lot is exactly one home wide (14 ft under the 56 ft pod, 20
+    ft under the 80 ft one), its lot lines on the party walls, and runs from
+    the street to the rear lot line: its width and its frontage are the
+    home's width, its area that width times the parcel's depth. The parcel
+    being larger does not widen it. The end lots, which carry the side yards,
+    are what :func:`_row_of_home_lots` asks of the parcel's own width.
+
+    Only standards the zone states for townhouse lots
+    (:func:`flats.score.paper.home_lot_standard`); a middle housing land
+    division's children inherit none (ORS 92.031(2)(b)), and nothing is
+    checked for them here."""
+    lots = design.units
+    home = design.unit_width_ft
+    for name, field in (
+        (HOME_LOT_WIDTH, "min_lot_width_ft"),
+        (HOME_LOT_AVERAGE_WIDTH, "min_average_lot_width_ft"),
+        (HOME_LOT_FRONTAGE, "min_frontage_ft"),
+    ):
+        each = home_lot_standard(rules, field, lots=lots)
+        if each is not None:
+            check(name, home, each, is_maximum=False)
+    area = home_lot_standard(rules, "min_lot_sqft", lots=lots)
+    if area is not None:
+        deep = lot.lot_depth_ft
+        if deep is None and lot.lot_width_ft:
+            deep = lot.lot_sqft / lot.lot_width_ft
+        if deep is None:
+            unchecked.append(HOME_LOT_AREA)
+        else:
+            check(HOME_LOT_AREA, home * deep, area, is_maximum=False)
+    ratio = home_lot_standard(rules, "max_lot_depth_ratio", lots=lots)
+    if ratio is not None:
+        if lot.lot_depth_ft is None:
+            unchecked.append(HOME_LOT_DEPTH_RATIO)
+        else:
+            check(HOME_LOT_DEPTH_RATIO, lot.lot_depth_ft / home, ratio, is_maximum=True)
+
+
 def fit_for(
     fitter: Fitter,
     design: Design,
@@ -1976,7 +2079,7 @@ def fit_for(
     (:data:`COURT_SHAPED`).
     """
     across = court_across(design, rules, alley, corner=corner)
-    axis_required = rules.get("orientation_constraint") == "axis_required"
+    axis_required = faces_the_street(rules, design)
     fit: Fit | None = None
     best_room = -math.inf
     for option in menu if menu is not None else (across.fixes or (across.fix,)):

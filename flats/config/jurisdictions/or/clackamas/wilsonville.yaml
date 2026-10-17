@@ -1479,6 +1479,41 @@ zones:
       cite: Wilsonville Development Code 4.122 (R Zone) + 4.113(.02) setbacks; Ord. 841 (middle housing)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.122REZO
       retrieved: '2026-07-28'
+    max_density_du_per_acre:
+      # Table 1 note b: "Middle housing units, except townhouses, are not
+      # included in calculating maximum density beyond 1 unit per lot or
+      # parcel" -- the pod on one lot is one unit to the table, and the state
+      # layer exempts a quadplex outright (OAR 660-046-0220(2)(b)). On four
+      # unit lots it is four townhouses, and note c holds them to "the less
+      # of: (1) four times the maximum net density listed in Table 1; or (2)
+      # net density of 25 units per acre". The R zone's row is set by the Comprehensive Plan Map's
+      # density range district, which no layer here reads, so the lowest row
+      # (2-3, a maximum of 3) is carried: four times it is 12, the tightest
+      # ceiling any R lot can be held to. Unread is conservative.
+      exempt: true
+      cite: WC 4.122(.02) Table 1 note b (middle housing other than townhouses, one unit per lot)
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4385,L4388,L4394-L4395"
+      # "Net density" (note c). The code defines no net acre for density;
+      # its one list is "net developable area" in 4.127's R-5 open space rule
+      # (no SROZ land, streets and private drives, alleys, paths). Read
+      # here as Steph's option A of 2026-10-02: an existing lot dedicates
+      # nothing, no SROZ map is laid over the lot, and the pod's own drive
+      # is taken off on the reading that borrows that list (may_less).
+      measured_on:
+        fact: net_developable_area
+        cite: WC 4.122(.02) Table 1 note c ("four times the maximum net density")
+        quote: "or/clackamas/wilsonville/4.planning.txt#L4396-L4397"
+        less: []
+        may_less: [drive_aisle]
+        assumed_none:
+          - "SROZ-regulated lands (no Wilsonville SROZ map is laid over the lot)"
+          - "land for non-residential uses, streets, alleys and pedestrian connections"
+      variants:
+        - value: 3
+          times: 4
+          when: [unit_lots]
+          cite: WC 4.122(.02) Table 1 (the 2-3 row, a maximum of 3) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4385,L4388-L4389,L4396-L4397"
     quadplex_allowed:
       # 4.122(.04)B permits "Middle Housing"; 4.001(181) is where that term is
       # defined as the class containing quadplexes. The quote reads both, so
@@ -1742,6 +1777,38 @@ zones:
       cite: Wilsonville Development Code 4.124 (PDR Zones) Table 2 + 4.113(.02); Ord. 841
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
+    max_density_du_per_acre:
+      # Table 1 note b: "Middle housing units, except townhouses, are not
+      # included in calculating maximum density beyond 1 unit per lot or
+      # parcel" -- the pod on one lot is one unit to the table, and the state
+      # layer exempts a quadplex outright (OAR 660-046-0220(2)(b)). On four
+      # unit lots it is four townhouses, and note c holds them to "the less
+      # of: (1) four times the maximum net density listed in Table 1; or (2)
+      # net density of 25 units per acre". Four times PDR-1's 1 is 4, under the 25.
+      exempt: true
+      cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      # "Net density" (note c). The code defines no net acre for density;
+      # its one list is "net developable area" in 4.127's R-5 open space rule
+      # (no SROZ land, streets and private drives, alleys, paths). Read
+      # here as Steph's option A of 2026-10-02: an existing lot dedicates
+      # nothing, no SROZ map is laid over the lot, and the pod's own drive
+      # is taken off on the reading that borrows that list (may_less).
+      measured_on:
+        fact: net_developable_area
+        cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
+        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        less: []
+        may_less: [drive_aisle]
+        assumed_none:
+          - "SROZ-regulated lands (no Wilsonville SROZ map is laid over the lot)"
+          - "land for non-residential uses, streets, alleys and pedestrian connections"
+      variants:
+        - value: 1
+          times: 4
+          when: [unit_lots]
+          cite: WC 4.124(.05) Table 1 (the PDR-1 row, a maximum of 1) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4657,L4670-L4671"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
@@ -1851,6 +1918,38 @@ zones:
       cite: Wilsonville Development Code 4.124 Table 2 + 4.113(.02)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
+    max_density_du_per_acre:
+      # Table 1 note b: "Middle housing units, except townhouses, are not
+      # included in calculating maximum density beyond 1 unit per lot or
+      # parcel" -- the pod on one lot is one unit to the table, and the state
+      # layer exempts a quadplex outright (OAR 660-046-0220(2)(b)). On four
+      # unit lots it is four townhouses, and note c holds them to "the less
+      # of: (1) four times the maximum net density listed in Table 1; or (2)
+      # net density of 25 units per acre". Four times PDR-2's 3 is 12, under the 25.
+      exempt: true
+      cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      # "Net density" (note c). The code defines no net acre for density;
+      # its one list is "net developable area" in 4.127's R-5 open space rule
+      # (no SROZ land, streets and private drives, alleys, paths). Read
+      # here as Steph's option A of 2026-10-02: an existing lot dedicates
+      # nothing, no SROZ map is laid over the lot, and the pod's own drive
+      # is taken off on the reading that borrows that list (may_less).
+      measured_on:
+        fact: net_developable_area
+        cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
+        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        less: []
+        may_less: [drive_aisle]
+        assumed_none:
+          - "SROZ-regulated lands (no Wilsonville SROZ map is laid over the lot)"
+          - "land for non-residential uses, streets, alleys and pedestrian connections"
+      variants:
+        - value: 3
+          times: 4
+          when: [unit_lots]
+          cite: WC 4.124(.05) Table 1 (the PDR-2 row, a maximum of 3) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4658,L4670-L4671"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
@@ -1960,6 +2059,38 @@ zones:
       cite: Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
+    max_density_du_per_acre:
+      # Table 1 note b: "Middle housing units, except townhouses, are not
+      # included in calculating maximum density beyond 1 unit per lot or
+      # parcel" -- the pod on one lot is one unit to the table, and the state
+      # layer exempts a quadplex outright (OAR 660-046-0220(2)(b)). On four
+      # unit lots it is four townhouses, and note c holds them to "the less
+      # of: (1) four times the maximum net density listed in Table 1; or (2)
+      # net density of 25 units per acre". Four times PDR-3's 5 is 20, under the 25.
+      exempt: true
+      cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      # "Net density" (note c). The code defines no net acre for density;
+      # its one list is "net developable area" in 4.127's R-5 open space rule
+      # (no SROZ land, streets and private drives, alleys, paths). Read
+      # here as Steph's option A of 2026-10-02: an existing lot dedicates
+      # nothing, no SROZ map is laid over the lot, and the pod's own drive
+      # is taken off on the reading that borrows that list (may_less).
+      measured_on:
+        fact: net_developable_area
+        cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
+        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        less: []
+        may_less: [drive_aisle]
+        assumed_none:
+          - "SROZ-regulated lands (no Wilsonville SROZ map is laid over the lot)"
+          - "land for non-residential uses, streets, alleys and pedestrian connections"
+      variants:
+        - value: 5
+          times: 4
+          when: [unit_lots]
+          cite: WC 4.124(.05) Table 1 (the PDR-3 row, a maximum of 5) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4659,L4670-L4671"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
@@ -2080,6 +2211,37 @@ zones:
       cite: Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
+    max_density_du_per_acre:
+      # Table 1 note b: "Middle housing units, except townhouses, are not
+      # included in calculating maximum density beyond 1 unit per lot or
+      # parcel" -- the pod on one lot is one unit to the table, and the state
+      # layer exempts a quadplex outright (OAR 660-046-0220(2)(b)). On four
+      # unit lots it is four townhouses, and note c holds them to "the less
+      # of: (1) four times the maximum net density listed in Table 1; or (2)
+      # net density of 25 units per acre". Four times PDR-4's 7.5 is 30, so the printed 25 governs.
+      exempt: true
+      cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      # "Net density" (note c). The code defines no net acre for density;
+      # its one list is "net developable area" in 4.127's R-5 open space rule
+      # (no SROZ land, streets and private drives, alleys, paths). Read
+      # here as Steph's option A of 2026-10-02: an existing lot dedicates
+      # nothing, no SROZ map is laid over the lot, and the pod's own drive
+      # is taken off on the reading that borrows that list (may_less).
+      measured_on:
+        fact: net_developable_area
+        cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
+        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        less: []
+        may_less: [drive_aisle]
+        assumed_none:
+          - "SROZ-regulated lands (no Wilsonville SROZ map is laid over the lot)"
+          - "land for non-residential uses, streets, alleys and pedestrian connections"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: WC 4.124(.05) Table 1 (the PDR-4 row, a maximum of 7.5) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4660,L4670-L4671"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
@@ -2200,6 +2362,37 @@ zones:
       cite: Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
+    max_density_du_per_acre:
+      # Table 1 note b: "Middle housing units, except townhouses, are not
+      # included in calculating maximum density beyond 1 unit per lot or
+      # parcel" -- the pod on one lot is one unit to the table, and the state
+      # layer exempts a quadplex outright (OAR 660-046-0220(2)(b)). On four
+      # unit lots it is four townhouses, and note c holds them to "the less
+      # of: (1) four times the maximum net density listed in Table 1; or (2)
+      # net density of 25 units per acre". Four times PDR-5's 12 is 48, so the printed 25 governs.
+      exempt: true
+      cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      # "Net density" (note c). The code defines no net acre for density;
+      # its one list is "net developable area" in 4.127's R-5 open space rule
+      # (no SROZ land, streets and private drives, alleys, paths). Read
+      # here as Steph's option A of 2026-10-02: an existing lot dedicates
+      # nothing, no SROZ map is laid over the lot, and the pod's own drive
+      # is taken off on the reading that borrows that list (may_less).
+      measured_on:
+        fact: net_developable_area
+        cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
+        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        less: []
+        may_less: [drive_aisle]
+        assumed_none:
+          - "SROZ-regulated lands (no Wilsonville SROZ map is laid over the lot)"
+          - "land for non-residential uses, streets, alleys and pedestrian connections"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: WC 4.124(.05) Table 1 (the PDR-5 row, a maximum of 12) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4661,L4670-L4671"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned
@@ -2309,6 +2502,37 @@ zones:
       cite: Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
+    max_density_du_per_acre:
+      # Table 1 note b: "Middle housing units, except townhouses, are not
+      # included in calculating maximum density beyond 1 unit per lot or
+      # parcel" -- the pod on one lot is one unit to the table, and the state
+      # layer exempts a quadplex outright (OAR 660-046-0220(2)(b)). On four
+      # unit lots it is four townhouses, and note c holds them to "the less
+      # of: (1) four times the maximum net density listed in Table 1; or (2)
+      # net density of 25 units per acre". Four times PDR-6's 20 is 80, so the printed 25 governs.
+      exempt: true
+      cite: WC 4.124(.05) Table 1 note b (middle housing other than townhouses, one unit per lot)
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4668-L4669"
+      # "Net density" (note c). The code defines no net acre for density;
+      # its one list is "net developable area" in 4.127's R-5 open space rule
+      # (no SROZ land, streets and private drives, alleys, paths). Read
+      # here as Steph's option A of 2026-10-02: an existing lot dedicates
+      # nothing, no SROZ map is laid over the lot, and the pod's own drive
+      # is taken off on the reading that borrows that list (may_less).
+      measured_on:
+        fact: net_developable_area
+        cite: WC 4.124(.05) Table 1 note c ("four times the maximum net density")
+        quote: "or/clackamas/wilsonville/4.planning.txt#L4670-L4671"
+        less: []
+        may_less: [drive_aisle]
+        assumed_none:
+          - "SROZ-regulated lands (no Wilsonville SROZ map is laid over the lot)"
+          - "land for non-residential uses, streets, alleys and pedestrian connections"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          cite: WC 4.124(.05) Table 1 (the PDR-6 row, a maximum of 20) and note c (townhouses, four times the Table 1 maximum or 25 net, whichever is less)
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4646,L4654,L4662,L4670-L4671"
     quadplex_allowed:
       # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
       # townhouses". 4.124 is headed "Standards Applying to all Planned

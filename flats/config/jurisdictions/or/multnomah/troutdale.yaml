@@ -1604,6 +1604,20 @@ zones:
         assumed_none:
           - "proposed public streets"
           - "land dedicated or conveyed to the City"
+      variants:
+        # 3.140.B.3.a: in LDR-1 "townhouse projects are allowed four (4) times
+        # the allowed density for detached single-family dwellings". The
+        # chapter prints that density only as the detached house's minimum lot,
+        # 10,000 sq ft in this column of 3.130.A -- one house per 10,000 sq ft
+        # -- so the file states the 10,000 and the multiple and the loader works
+        # out the rate. Measured on the net area, as 3.140 states every density.
+        # The bound of b1bd20ff found the townhouse form GREEN on LDR-1 lots
+        # under 10,000 sq ft with no ceiling at all.
+        - sqft_per_unit: 10000
+          times: 4
+          when: [unit_lots]
+          cite: TDC 3.140.B.3.a (townhouse projects, four (4) times the detached single-family density) and 3.130.A (single-family detached minimum lot, 10,000 sq ft in LDR-1)
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L284-L286,L506,L512-L514"
     section: ["3.111", "3.120", "3.130", "8.120"]
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
@@ -1750,6 +1764,20 @@ zones:
         assumed_none:
           - "proposed public streets"
           - "land dedicated or conveyed to the City"
+      variants:
+        # 3.140.B.3.a: in LDR-2 "townhouse projects are allowed four (4) times
+        # the allowed density for detached single-family dwellings". The
+        # chapter prints that density only as the detached house's minimum lot,
+        # 7,000 sq ft in this column of 3.130.A -- one house per 7,000 sq ft
+        # -- so the file states the 7,000 and the multiple and the loader works
+        # out the rate. Measured on the net area, as 3.140 states every density.
+        # The bound of b1bd20ff found the townhouse form GREEN on LDR-1 lots
+        # under 10,000 sq ft with no ceiling at all.
+        - sqft_per_unit: 7000
+          times: 4
+          when: [unit_lots]
+          cite: TDC 3.140.B.3.a (townhouse projects, four (4) times the detached single-family density) and 3.130.A (single-family detached minimum lot, 7,000 sq ft in LDR-2)
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L284-L286,L506,L512-L514"
     section: ["3.112", "3.120", "3.130", "8.120"]
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
@@ -1896,6 +1924,20 @@ zones:
         assumed_none:
           - "proposed public streets"
           - "land dedicated or conveyed to the City"
+      variants:
+        # 3.140.B.3.b: in MDR "townhouse projects are allowed three (3) times
+        # the allowed density for detached single-family dwellings". The
+        # chapter prints that density only as the detached house's minimum lot,
+        # 5,000 sq ft in this column of 3.130.A -- one house per 5,000 sq ft
+        # -- so the file states the 5,000 and the multiple and the loader works
+        # out the rate. Measured on the net area, as 3.140 states every density.
+        # The bound of b1bd20ff found the townhouse form GREEN on LDR-1 lots
+        # under 10,000 sq ft with no ceiling at all.
+        - sqft_per_unit: 5000
+          times: 3
+          when: [unit_lots]
+          cite: TDC 3.140.B.3.b (townhouse projects, three (3) times the detached single-family density) and 3.130.A (single-family detached minimum lot, 5,000 sq ft in MDR)
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L284-L286,L506,L512,L515-L516"
     section: ["3.113", "3.120", "3.130", "8.120"]
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
@@ -2044,9 +2086,9 @@ zones:
           - "land dedicated or conveyed to the City"
       variants:
         # 3.140.B.3.c. LDR-1 and LDR-2 get four times the detached density and
-        # MDR three times it (3.140.B.3.a and .b); both are multiples of a
-        # figure this layer does not encode, so neither is written down. HDR is
-        # "all other zoning districts", and 25 is printed.
+        # MDR three times it (3.140.B.3.a and .b), each stated there as a
+        # multiple of the detached house's minimum lot. HDR is "all other
+        # zoning districts", and 25 is printed.
         - value: 25
           when: [unit_lots]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L506,L517-L518"

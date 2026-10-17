@@ -163,6 +163,7 @@ _FIGURES = (
     "spaces_total",
     "acres",
     "acres_per_dwelling",
+    "times",
     "per_height_ft",
     "from_top_degrees",
     "floor_ft",

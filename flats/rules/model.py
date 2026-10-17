@@ -1045,6 +1045,16 @@ class Variant(BaseModel):
     #: `reduce_pct`: the file states the figure a reader will find, and the
     #: arithmetic is done where it can be checked.
     acres_per_dwelling: float | None = None
+    #: The area per dwelling unit the code prints, where a condition decides
+    #: that a density is stated that way -- the variant twin of the base
+    #: value's own ``sqft_per_unit``.
+    sqft_per_unit: float | None = None
+    #: A multiple of the figure beside it that the code prints and never
+    #: works out: TDC 3.140.B.3.a allows townhouse projects "four (4) times
+    #: the allowed density for detached single-family dwellings", which is
+    #: one per 10,000 sq ft in LDR-1 (3.130.A). The file states the 10,000
+    #: and the four; 17.424 units per acre is in no ordinance anywhere.
+    times: float | None = None
     #: The acreage the code prints, where a condition decides which acreage
     #: applies. MCC 39.4375(A) asks twenty acres of a Rural Residential parcel
     #: within a mile of the Urban Growth Boundary and five of one beyond it,

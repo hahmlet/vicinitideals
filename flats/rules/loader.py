@@ -888,6 +888,7 @@ def _parse_variants(
                 "acres",
                 "per_dwelling",
                 "acres_per_dwelling",
+                "sqft_per_unit",
                 "spaces_total",
                 "pct_of_lot_width",
             }
@@ -993,6 +994,34 @@ def _parse_variants(
             # minimum lot area per dwelling unit. One acre in OR, four
             # dwellings, four acres -- a figure neither article prints.
             value = _per_dwelling(_in_acres(float(acres_each)))
+        sqft_each = body.pop("sqft_per_unit", None)
+        if sqft_each is not None:
+            if value is not None:
+                problems.append(
+                    f"{at}: a variant states a density or an area per dwelling, not both"
+                )
+                continue
+            if not isinstance(sqft_each, (int, float)) or isinstance(sqft_each, bool):
+                problems.append(f"{at}: 'sqft_per_unit' expects a number")
+                continue
+            if sqft_each <= 0:
+                problems.append(f"{at}: sqft_per_unit {sqft_each} is not an area")
+                continue
+            value = _as_density(float(sqft_each))
+        times = body.pop("times", None)
+        if times is not None:
+            if not isinstance(value, (int, float)) or isinstance(value, bool):
+                problems.append(
+                    f"{at}: 'times' multiplies the figure the variant prints, "
+                    f"and there is no figure here to multiply"
+                )
+                continue
+            if not isinstance(times, (int, float)) or isinstance(times, bool) or times <= 0:
+                problems.append(f"{at}: 'times' expects a positive number")
+                continue
+            # TDC 3.140.B.3.a: "four (4) times the allowed density for
+            # detached single-family dwellings". The product is printed nowhere.
+            value = round(float(value) * float(times), 3)
         spaces_total = body.pop("spaces_total", None)
         if spaces_total is not None:
             if value is not None:
@@ -1125,6 +1154,8 @@ def _parse_variants(
                     acres_per_dwelling=(
                         None if acres_each is None else float(acres_each)
                     ),
+                    sqft_per_unit=None if sqft_each is None else float(sqft_each),
+                    times=None if times is None else float(times),
                     spaces_total=(
                         None if spaces_total is None else float(spaces_total)
                     ),

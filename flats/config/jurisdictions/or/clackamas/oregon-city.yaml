@@ -923,6 +923,21 @@ zones:
     min_lot_width_ft:
       value: 65
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
+      variants:
+        # Table 17.08.040, "Except townhouse 20 feet" in all three columns:
+        # the width of each townhouse lot (read 2026-10-17 for the townhouse
+        # lots ruling of 2026-10-15; it had been left out).
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4131-L4132,L4134"
+    min_lot_depth_ft:
+      # Table 17.08.040, Minimum lot depth: "All" and "Except townhouse".
+      value: 80
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4131,L4135-L4136"
+      variants:
+        - value: 75
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4131,L4135,L4137"
     max_coverage_pct:
       value: 40
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4126"
@@ -1015,6 +1030,21 @@ zones:
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
+      variants:
+        # Table 17.08.040, "Except townhouse 20 feet" in all three columns:
+        # the width of each townhouse lot (read 2026-10-17 for the townhouse
+        # lots ruling of 2026-10-15; it had been left out).
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4131-L4132,L4134"
+    min_lot_depth_ft:
+      # Table 17.08.040, Minimum lot depth: "All" and "Except townhouse".
+      value: 75
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4131,L4135-L4136"
+      variants:
+        - value: 75
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4131,L4135,L4137"
     max_coverage_pct:
       value: 40
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4126"
@@ -1100,6 +1130,21 @@ zones:
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
+      variants:
+        # Table 17.08.040, "Except townhouse 20 feet" in all three columns:
+        # the width of each townhouse lot (read 2026-10-17 for the townhouse
+        # lots ruling of 2026-10-15; it had been left out).
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4131-L4132,L4134"
+    min_lot_depth_ft:
+      # Table 17.08.040, Minimum lot depth: "All" and "Except townhouse".
+      value: 70
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4131,L4135-L4136"
+      variants:
+        - value: 70
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4131,L4135,L4137"
     max_coverage_pct:
       value: 40
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4126"

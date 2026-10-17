@@ -310,6 +310,12 @@ def _printed_variant(variant: object) -> object:
         if getattr(variant, "per_dwelling", None) is not None
         else variant.acres_per_dwelling
         if getattr(variant, "acres_per_dwelling", None) is not None
+        else variant.sqft_per_unit
+        if getattr(variant, "sqft_per_unit", None) is not None
+        # A multiple is checked against the figure it multiplies: Wilsonville
+        # Table 1 prints 3, and "four times" it, never 12.
+        else round(variant.value / variant.times, 3)
+        if getattr(variant, "times", None) and isinstance(variant.value, (int, float))
         else variant.spaces_total
         if getattr(variant, "spaces_total", None) is not None
         # A share of the lot's width is checked against the share, which is

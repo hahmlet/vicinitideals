@@ -135,19 +135,20 @@ def test_troutdale_exempts_the_pod_from_density_entirely(rules: RuleSet) -> None
         assert "min_density_du_per_acre" not in held.values, zone
 
 
-def test_the_townhouse_multiple_is_encoded_only_where_it_is_printed(
+def test_the_townhouse_multiple_is_written_as_the_code_states_it(
     rules: RuleSet,
 ) -> None:
     """3.140.B.3 gives LDR-1 and LDR-2 four times the detached density and MDR
-    three times it — multiples of a figure this layer does not encode, so
-    neither is written down. HDR falls to "all other districts", where 25 is
-    printed."""
+    three times it. The detached density is one house per 10,000, 7,000 and
+    5,000 sq ft (3.130.A), so the file states the area and the multiple and
+    the loader does the arithmetic. HDR falls to "all other districts", where
+    25 is printed."""
     hdr = rules.resolve(TROUTDALE, "HDR", ("unit_lots",))
 
     assert hdr.values["max_density_du_per_acre"].value == 25
-    for zone in ("LDR-1", "LDR-2", "MDR"):
+    for zone, rate in (("LDR-1", 17.424), ("LDR-2", 24.892), ("MDR", 26.136)):
         split = rules.resolve(TROUTDALE, zone, ("unit_lots",))
-        assert "max_density_du_per_acre" in split.exempted, zone
+        assert split.values["max_density_du_per_acre"].value == rate, zone
 
 
 PORTLAND_MD = "or/multnomah/portland"

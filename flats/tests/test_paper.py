@@ -243,9 +243,15 @@ def test_a_two_storey_pod_fails_a_limit_it_exceeds(tmp_path: Path) -> None:
 def test_four_lots_need_four_of_the_codes_townhouse_minimum(tmp_path: Path) -> None:
     # The zone says 9,000 for a fourplex and 2,000 for a townhouse lot. Split,
     # the project needs four of the 2,000s; whole, it needs the 9,000.
+    # The townhouse row makes the four lots townhouse lots, each fronting the
+    # street, so the row of homes keeps its long side to the street and the
+    # cheaper end-on envelope is not on offer: 78 x 103 = 8,034 binds above
+    # the four 2,000s (Steph 2026-10-15; the bound of b1bd20ff).
     banded = {"min_lot_sqft": (9000, 2000)}
 
-    assert fit(tmp_path, design=SPLIT, **banded).min_area_sqft == 8000
+    split = fit(tmp_path, design=SPLIT, **banded)
+    assert split.min_area_sqft == 8034
+    assert split.orientation == "width_facing"
     assert fit(tmp_path, **banded).min_area_sqft == 9000
 
 
@@ -340,7 +346,10 @@ def test_a_citys_own_townhouse_row_still_wins(tmp_path: Path) -> None:
         land_division_parent_standards=True,
     )
 
-    assert got.min_area_sqft == 8000
+    # Four of the 2,000s, under the street-facing envelope (8,034): see
+    # test_four_lots_need_four_of_the_codes_townhouse_minimum.
+    assert got.min_area_sqft == 8034
+    assert got.orientation == "width_facing"
 
 
 def test_without_the_statute_the_split_path_still_admits_it_does_not_know(

@@ -390,6 +390,14 @@ class Design(BaseModel):
         return frozenset(facts)
 
     @property
+    def unit_width_ft(self) -> float:
+        """One home's width along the street: the catalog's pods are a row of
+        units side by side along the footprint's width ("Pod 56 x 36 -- 4 x
+        14 ft units", "Pod 80 x 25 -- 4 x 20 ft units"), so a home lot of the
+        townhouse form is this wide between its party walls."""
+        return self.footprint.width_ft / self.units
+
+    @property
     def stalls_required(self) -> float:
         """The least stalls this design is built with: the floor, on every unit.
 

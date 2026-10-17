@@ -1940,6 +1940,20 @@ zones:
           when: [unit_lots]
           cite: Washington County CDC 375 Table A, Townhouses and Rowhouses that are not Middle Housing (II)
           quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L686,L703-L704,L888"
+    review_discretion:
+      # The townhouse row is the pod's only door here (four units on one lot
+      # are not listed), and it is Type II: 375-4.2 holds a Type II use to
+      # Table A, Section 430, the district's standards and Section 431's
+      # minimum design standards (a design checklist, which does not block
+      # green, Steph 2026-10-14), and then
+      # "Approval may be further conditioned by the Review Authority pursuant
+      # to Section 207-5". Clear and measurable with "may add conditions" is
+      # the yellow tier of Steph's 2026-10-14 rule, as the county's other
+      # Type II gates are. A use that skips Section 431's minimums goes to
+      # Type III; the pod is screened as one that follows them.
+      value: conditions
+      cite: 'Washington County CDC 375-4.2, Type II uses; Table A, Townhouses and Rowhouses that are not Middle Housing (II) in TO:R24-40; "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L94-L101,L679-L688,L703-L704,L888"
     max_height_ft:
       value: 60
       cite: Washington County CDC 375 Table B(2), Maximum Building Height, TO:R24-40
@@ -1995,6 +2009,20 @@ zones:
           when: [unit_lots]
           cite: Washington County CDC 375 Table A, Townhouses and Rowhouses that are not Middle Housing (II)
           quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L679-L688,L703-L704,L888"
+    review_discretion:
+      # The townhouse row is the pod's only door here (four units on one lot
+      # are not listed), and it is Type II: 375-4.2 holds a Type II use to
+      # Table A, Section 430, the district's standards and Section 431's
+      # minimum design standards (a design checklist, which does not block
+      # green, Steph 2026-10-14), and then
+      # "Approval may be further conditioned by the Review Authority pursuant
+      # to Section 207-5". Clear and measurable with "may add conditions" is
+      # the yellow tier of Steph's 2026-10-14 rule, as the county's other
+      # Type II gates are. A use that skips Section 431's minimums goes to
+      # Type III; the pod is screened as one that follows them.
+      value: conditions
+      cite: 'Washington County CDC 375-4.2, Type II uses; Table A, Townhouses and Rowhouses that are not Middle Housing (II) in TO:R40-80; "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L94-L101,L679-L688,L703-L704,L888"
     max_height_ft:
       value: 80
       cite: Washington County CDC 375 Table B(2), Maximum Building Height, TO:R40-80
@@ -2050,6 +2078,20 @@ zones:
           when: [unit_lots]
           cite: Washington County CDC 375 Table A, Townhouses and Rowhouses that are not Middle Housing (II), and 375-7 (15)
           quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L281-L284,L681,L703-L704,L888"
+    review_discretion:
+      # The townhouse row is the pod's only door here (four units on one lot
+      # are not listed), and it is Type II: 375-4.2 holds a Type II use to
+      # Table A, Section 430, the district's standards and Section 431's
+      # minimum design standards (a design checklist, which does not block
+      # green, Steph 2026-10-14), and then
+      # "Approval may be further conditioned by the Review Authority pursuant
+      # to Section 207-5". Clear and measurable with "may add conditions" is
+      # the yellow tier of Steph's 2026-10-14 rule, as the county's other
+      # Type II gates are. A use that skips Section 431's minimums goes to
+      # Type III; the pod is screened as one that follows them.
+      value: conditions
+      cite: 'Washington County CDC 375-4.2, Type II uses; Table A, Townhouses and Rowhouses that are not Middle Housing (II) in TO:BUS; "Approval may be further conditioned by the Review Authority pursuant to Section 207-5" (Steph 2026-10-14: a review on measurable standards whose decider may add conditions is YELLOW, FOLLOWUPS 79)'
+      quote: "or/washington/_unincorporated/cdc.375.transit-oriented.txt#L94-L101,L681,L703-L704,L888"
     max_height_ft:
       # (B): "Except where a community plan specifies a higher maximum
       # height" -- a lenient reading behind a plan nobody has read.

@@ -169,6 +169,7 @@ from flats.score.paper import (
     _yard,
     court_across,
     court_depth,
+    faces_the_street,
     front_lot_line_rule,
     front_lot_line_through_rule,
     lot_line_buffer_ft,
@@ -3083,9 +3084,11 @@ def _screen_lot_once(
         got = rules.resolve(layer_id, lot.zone, config.conditions, lot=config.measures)
         resolved.append((design, config, got))
 
-    axis_required = any(
-        got.get("orientation_constraint") == "axis_required" for _, _, got in resolved
-    )
+    # Where the code makes the building face the street, or the pod is
+    # platted as townhouse lots that each have to front one
+    # (:func:`flats.score.paper.faces_the_street`), the search runs only at
+    # the street's own bearings.
+    axis_required = any(faces_the_street(got, design) for design, _, got in resolved)
     angles = angles_for(
         lot.front_bearings,
         axis_required=axis_required and bool(lot.front_bearings),

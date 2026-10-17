@@ -1126,3 +1126,45 @@ def test_a_base_states_a_number_or_states_that_it_is_exempt(tmp_path: Path) -> N
 
     with pytest.raises(RuleLoadError, match="not both"):
         load_rules(tmp_path, strict=True)
+
+
+def test_a_multiple_the_code_states_is_written_as_one(tmp_path: Path) -> None:
+    """TDC 3.140.B.3.a: townhouse projects are allowed "four (4) times the
+    allowed density for detached single-family dwellings", one house per
+    10,000 sq ft. The file states the 10,000 and the four; 17.424 units per
+    acre is printed nowhere, and the arithmetic happens here. The same for a
+    figure printed as a number (Wilsonville's Table 1: 3, four times)."""
+    loaded = load_rules(
+        _somewhere(
+            tmp_path,
+            "        - sqft_per_unit: 10000\n"
+            "          times: 4\n"
+            "          when: [adjustment]\n"
+            "          quote: 'or/multnomah/somewhere/19.30.txt#L354'\n"
+            "        - value: 3\n"
+            "          times: 4\n"
+            "          when: [unit_lots]\n"
+            "          quote: 'or/multnomah/somewhere/19.30.txt#L354'\n",
+        ),
+        strict=True,
+    )
+    held = loaded["or/multnomah/somewhere"].zones["R-6"].values["min_lot_sqft"]
+
+    density = held.under({"adjustment"})
+    assert density.value == 17.424
+    printed = held.under({"unit_lots"})
+    assert printed.value == 12.0
+
+
+def test_a_multiple_needs_a_figure_to_multiply(tmp_path: Path) -> None:
+    with pytest.raises(RuleLoadError, match="no figure here to multiply"):
+        load_rules(
+            _somewhere(
+                tmp_path,
+                "        - exempt: true\n"
+                "          times: 4\n"
+                "          when: [adjustment]\n"
+                "          quote: 'or/multnomah/somewhere/19.30.txt#L354'\n",
+            ),
+            strict=True,
+        )
