@@ -524,6 +524,26 @@ read when the weekly full re-screen lands.
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
+93. [Claude] [scan: YES -- bound read before merge] **Which form works on each lot: townhomes on
+   4 separate lots vs one 4-unit building (branch flats/townhouse-lots; logic 9dee5e3b, UI
+   b1bd20ff).** Steph 2026-10-15: townhomes = separate lots; either form passes; unit-lot
+   standards apply; low flag "needs land division". Bound 1 (b1bd20ff, 137 /root/th_r1/): zero
+   losses, but the lot-by-lot read found 132 of 192 new greens FALSE (2026-10-17): (1) middle
+   home lots are one home wide (14 ft / 20 ft) -- per-home-lot width/area never checked (79 lots:
+   Troutdale 49, Gresham 14, Sandy 7, Wood Village 5 ...); (2) pod turned end-on, so three home
+   lots have no street frontage (78: Tualatin RMH 29, WashCo TO 14, Troutdale 20 ...); (3)
+   Troutdale LDR-1 TDC 3.140.B.3.a townhouse density (4x single-family) not encoded (13).
+   Fixing on the branch, then re-bound (/root/watch/th2.want) and read every green again
+   (/root/th_green_read.csv is round 1's per-lot table). Also open: WashCo Type II townhouse
+   review vs the 10-14 tiers; Oregon City R-10 townhouse width; 26 large Part C reds red on fit
+   alone. Canby R-1 (townhouses only via a planned development) stays red here -- the
+   clear-objective merge (item 85, ORS 197A.400 ruling 2026-10-15) decides it. At merge, the
+   count edits: test_port 198->207, test_alley ->57, test_exemptions stated 422 / numeric 86,
+   test_refusals comments 287 / notes 157, test_crossrefs silent += "or/ors.197a.400.txt",
+   quadfit placeholders 16->25 and 16->27, UNEXPRESSIBLE min_landscaped_pct 59, max_units 14,
+   setback_garage_entrance_ft 118, max_density 59, front_max 94 (re-check after main moved);
+   regenerate gaps; report counts by city and form to Steph.
+
 85. [Claude] [scan: YES -- bound 1 read, re-bound queued] **ORS 197A.400 "clear and objective" for housing -- RULED by Steph
    2026-10-15; BUILT on flats/clear-objective, NOT merged.** Inside a UGB a city may apply only
    clear and objective standards to housing; a discretionary path is legal only beside a clear one.
