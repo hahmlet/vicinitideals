@@ -98,6 +98,11 @@ cold: what, where, why, and any decision still pending. Remove an item when it
 is done (git records the work) or the user declines it. Read it at the start of
 every session before proposing work; "do the next thing" means the top of the
 list. Keep it under a screen — it is a queue, not a log.
+Tag every new item at birth: `[Copilot]` only for build work a test can prove
+that needs no Steph decision, no judgement reading and nothing waiting on it;
+everything else `[Claude]` (plus `[Steph]` if it waits on him). Copilot items go
+in the bottom section, written as cold-start briefs (files, change, what must not
+change, the test); on the 1st of each month that queue is fired until the quota is gone.
 
 ### End-of-session checklist
 
