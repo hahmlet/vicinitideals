@@ -524,25 +524,37 @@ read when the weekly full re-screen lands.
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-93. [Claude] [scan: YES -- bound read before merge] **Which form works on each lot: townhomes on
-   4 separate lots vs one 4-unit building (branch flats/townhouse-lots; logic 9dee5e3b, UI
-   b1bd20ff).** Steph 2026-10-15: townhomes = separate lots; either form passes; unit-lot
-   standards apply; low flag "needs land division". Bound 1 (b1bd20ff, 137 /root/th_r1/): zero
-   losses, but the lot-by-lot read found 132 of 192 new greens FALSE (2026-10-17): (1) middle
-   home lots are one home wide (14 ft / 20 ft) -- per-home-lot width/area never checked (79 lots:
-   Troutdale 49, Gresham 14, Sandy 7, Wood Village 5 ...); (2) pod turned end-on, so three home
-   lots have no street frontage (78: Tualatin RMH 29, WashCo TO 14, Troutdale 20 ...); (3)
-   Troutdale LDR-1 TDC 3.140.B.3.a townhouse density (4x single-family) not encoded (13).
-   Fixing on the branch, then re-bound (/root/watch/th2.want) and read every green again
-   (/root/th_green_read.csv is round 1's per-lot table). Also open: WashCo Type II townhouse
-   review vs the 10-14 tiers; Oregon City R-10 townhouse width; 26 large Part C reds red on fit
-   alone. Canby R-1 (townhouses only via a planned development) stays red here -- the
-   clear-objective merge (item 85, ORS 197A.400 ruling 2026-10-15) decides it. At merge, the
-   count edits: test_port 198->207, test_alley ->57, test_exemptions stated 422 / numeric 86,
-   test_refusals comments 287 / notes 157, test_crossrefs silent += "or/ors.197a.400.txt",
-   quadfit placeholders 16->25 and 16->27, UNEXPRESSIBLE min_landscaped_pct 59, max_units 14,
-   setback_garage_entrance_ft 118, max_density 59, front_max 94 (re-check after main moved);
-   regenerate gaps; report counts by city and form to Steph.
+93. [Claude] [scan: YES -- READY, merge after the weekly] **Which form works on each lot: townhomes on
+   4 separate lots vs one 4-unit building (branch flats/townhouse-lots, head b5c0cbf4; logic
+   9dee5e3b, UI b1bd20ff, fix b5c0cbf4).** Steph 2026-10-15: townhomes = separate lots; either form
+   passes; unit-lot standards apply; low flag "needs land division". The branch ALSO carries
+   flats/clear-objective (merged in at 3edabd3e), so merging it merges item 85 too -- read the co2
+   bound (item 85) first. Steph was told 2026-10-17 these lanes merge AFTER the ~10-19 weekly.
+   Round 1 (b1bd20ff, 137 /root/th_r1/): 132 of 192 new greens FALSE -- per-home-lot width/area
+   unchecked (79), pod end-on to the street so home lots had no frontage (78), Troutdale LDR-1
+   TDC 3.140.B.3.a townhouse density unencoded (13). Fixed in b5c0cbf4.
+   Round 2 (b5c0cbf4, /root/th_*, done 2026-10-17 20:16Z): READY -- 81 greens, every one the
+   townhouse form with the row facing the street, all 81 read one by one. Part A 50: WashCo
+   TO:BUS 16, TO:R24-40 11; Tualatin MUC 8, RMH 7, RH 3; Wilsonville PDR4 2; Gresham OFR,
+   Milwaukie R-HD, West Linn R-4.5 1 each. Part B 16: Fairview VMU 7, VA 3; Sandy R-1 6. Part C
+   15 (green once signed): Troutdale HDR 14, MU-1 1. Vs round 1: 77 stayed green, 115 left (97
+   carried a round-1 cause; 10 to yellow -- home-lot area unmeasurable on corner lots with no lot
+   depth; rest correct reds: OC/Wood Village lot size, Wilsonville density, Sandy slope), 4 new,
+   read clean. Remaining errors are false REDS only -- see item 94. Answers: the 26 large Part C
+   fit-only reds are real (12 no frontage; the rest Troutdale vegetated corridors / floodway,
+   slivers, or too narrow for the 80-ft row + drive); WashCo TO encoded at the 'conditions' tier
+   -> green + CLEAR-OBJECTIVE flag; Oregon City R-10 townhouse lots 20 ft wide; no code text
+   clearly allows townhouse lots without street frontage; Canby R-1 stays red here (the
+   clear-objective merge decides it).
+   AT MERGE, the count edits (re-check each after main moved): this branch's own -- test_exemptions
+   numeric: the branch counts 93 where its base expects 85 (+8, item 85's +1 included); main is
+   now 100, so expect ~108 -- recompute, don't copy; quadfit UNEXPRESSIBLE review_discretion
+   37 -> 40; caps.json is regenerated on the branch; plus item 85's edits (test_port 198->207,
+   test_alley ->57, test_exemptions stated (+4 on the base), test_refusals comments 287 / notes 157,
+   test_crossrefs silent += "or/ors.197a.400.txt", quadfit placeholders 16->25 and 16->27,
+   UNEXPRESSIBLE min_landscaped_pct 59, max_units 14, setback_garage_entrance_ft 118, max_density
+   59, front_max 94); regenerate gaps; report counts by city and form to Steph; add the Fairview
+   VMU/VA 4-lot-split item (~66 lots) noted in the active-lanes memory.
 
 85. [Claude] [scan: YES -- bound 1 read, re-bound queued] **ORS 197A.400 "clear and objective" for housing -- RULED by Steph
    2026-10-15; BUILT on flats/clear-objective, NOT merged.** Inside a UGB a city may apply only
@@ -625,6 +637,15 @@ read when the weekly full re-screen lands.
    field, item 25 held). REOPEN when Cornelius is signed or item 25 is built.
 
 ### 1c. The rest, most urgent first (dated items first)
+
+94. [Claude] [scan: YES -- false reds only] [after 93 merges] **Townhouse row held to the street's
+   angle -- up to ~105 false reds (found by the round-2 read of item 93, 2026-10-17).** The
+   townhouse form sets the row of four home lots parallel to the street line. On a lot whose side
+   lines meet the street at a slant (example 1S126DD01800), a row set square to the SIDE lines
+   would still give every home lot its street frontage and fit. Fix: also try the row square to
+   the side lot lines (and keep the frontage + per-home-lot width/area checks of b5c0cbf4 on the
+   tilted row); then bound and read every gain. Never loosens a check, so no false-green risk
+   beyond the usual read.
 
 86. [Claude] [Steph: (B) unattributed rulings] [scan: YES for (C1) once entered] **Agents could not recall a property ruling (Steph
    2026-10-15, GO for A/B/C1/C2 the same day). A, B, C1, C2 MERGED; the DLCD backlog is READ.**
