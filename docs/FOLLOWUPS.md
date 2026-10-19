@@ -522,74 +522,52 @@ read when the weekly full re-screen lands.
    2026-10-10 question "should a lot whose pod sits on a working building's parking or yard
    stay green?" reads as answered by it -- confirm with Steph only if a case differs.
 
+95. [Claude] [scan: YES, read after the weekly re-screen; MERGED to main 2026-10-19 (items 85 + 93, merge 0e097bc8)]
+   **Townhomes on their own lots + ORS 197A.400 "clear and objective" ride this weekly.**
+   Rulings: Steph 2026-10-15 townhomes = separate lots (register
+   `2026-10-15-townhomes-separate-lots`) and judgement-only / "may add conditions" review inside a
+   UGB = GREEN with the CLEAR-OBJECTIVE flag (`2026-10-15-clear-objective-green-flag`; the
+   2026-10-16 Clackamas design-review entry now notes the state-law exception).
+   EXPECTED at the weekly, from the bounds (all read lot by lot):
+   (a) townhouse form, round 2 (b5c0cbf4, 137 /root/th_*): 81 greens, every one the townhouse form
+   with the row facing the street -- WashCo TO:BUS 16, TO:R24-40 11; Tualatin MUC 8, RMH 7, RH 3;
+   Wilsonville PDR4 2; Gresham OFR, Milwaukie R-HD, West Linn R-4.5 1 each; Fairview VMU 7, VA 3;
+   Sandy R-1 6; Troutdale HDR 14, MU-1 1 (green once signed). Round 1's 132 false greens fixed
+   (home-lot width/area, row end-on to the street, Troutdale LDR-1 3.140.B.3.a density).
+   (b) clear-objective, cities (bound co): Estacada R-3 10 red -> 6 green / 4 yellow; Milwaukie
+   R-HD/R-MD 13 red -> 3 green / 10 yellow; newly admitted Canby 108 green / 35 yellow, Gladstone
+   C3 40 green + 31 yellow, Milwaukie NMU 14 green / 9 yellow, Estacada 57 yellow, Cornelius 14
+   yellow.
+   (c) clear-objective, unincorporated (re-bound co2 after the `inside_ugb` fix f003fd49, read
+   2026-10-19): WashCo 335 yellow -> green (R-24 128, R-9 55, CCMU 42, R-15 37, NMU 26, R-25+ 22,
+   TO:R9-12 10, TO:R18-24 10 ...); Clackamas 385 yellow -> green (MR1 161, C3 99, CC 31, HDR 27,
+   OC 19, RTL 15, RCC 15, RCHDR 11, RCO 4, MR2 3); Multnomah LR7 1 red -> yellow. Every move is
+   REVIEW-CONDITIONS -> CLEAR-OBJECTIVE and nothing else, except 22 where reaching green let the
+   placement search pick flatter ground or a placement wholly in one zone (slope / split-zone flag
+   gone with the yellow; 11 of them by switching to pod80x25).
+   WashCo Type II (~60k lots expected by the lane) is NOT in these numbers -- read the weekly's
+   WashCo yellow -> green total against it and report the real count.
+   Still open from the lanes: Canby R-1 (townhouses only via a planned development) red; the
+   statute's exceptions (Portland central city + Gateway, historic) excluded; zones the code does
+   not list at all stay red (Happy Valley MUC/RCMU/CCC, Wilsonville PDC, Milwaukie MUTSA, Oregon
+   City MUE); item 94 (row held to the street's angle, false reds only).
+
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-93. [Claude] [scan: YES -- READY, merge after the weekly] **Which form works on each lot: townhomes on
-   4 separate lots vs one 4-unit building (branch flats/townhouse-lots, head b5c0cbf4; logic
-   9dee5e3b, UI b1bd20ff, fix b5c0cbf4).** Steph 2026-10-15: townhomes = separate lots; either form
-   passes; unit-lot standards apply; low flag "needs land division". The branch ALSO carries
-   flats/clear-objective (merged in at 3edabd3e), so merging it merges item 85 too -- read the co2
-   bound (item 85) first. Steph was told 2026-10-17 these lanes merge AFTER the ~10-19 weekly.
-   Round 1 (b1bd20ff, 137 /root/th_r1/): 132 of 192 new greens FALSE -- per-home-lot width/area
-   unchecked (79), pod end-on to the street so home lots had no frontage (78), Troutdale LDR-1
-   TDC 3.140.B.3.a townhouse density unencoded (13). Fixed in b5c0cbf4.
-   Round 2 (b5c0cbf4, /root/th_*, done 2026-10-17 20:16Z): READY -- 81 greens, every one the
-   townhouse form with the row facing the street, all 81 read one by one. Part A 50: WashCo
-   TO:BUS 16, TO:R24-40 11; Tualatin MUC 8, RMH 7, RH 3; Wilsonville PDR4 2; Gresham OFR,
-   Milwaukie R-HD, West Linn R-4.5 1 each. Part B 16: Fairview VMU 7, VA 3; Sandy R-1 6. Part C
-   15 (green once signed): Troutdale HDR 14, MU-1 1. Vs round 1: 77 stayed green, 115 left (97
-   carried a round-1 cause; 10 to yellow -- home-lot area unmeasurable on corner lots with no lot
-   depth; rest correct reds: OC/Wood Village lot size, Wilsonville density, Sandy slope), 4 new,
-   read clean. Remaining errors are false REDS only -- see item 94. Answers: the 26 large Part C
-   fit-only reds are real (12 no frontage; the rest Troutdale vegetated corridors / floodway,
-   slivers, or too narrow for the 80-ft row + drive); WashCo TO encoded at the 'conditions' tier
-   -> green + CLEAR-OBJECTIVE flag; Oregon City R-10 townhouse lots 20 ft wide; no code text
-   clearly allows townhouse lots without street frontage; Canby R-1 stays red here (the
-   clear-objective merge decides it).
-   AT MERGE, the count edits (re-check each after main moved): this branch's own -- test_exemptions
-   numeric: the branch counts 93 where its base expects 85 (+8, item 85's +1 included); main is
-   now 100, so expect ~108 -- recompute, don't copy; quadfit UNEXPRESSIBLE review_discretion
-   37 -> 40; caps.json is regenerated on the branch; plus item 85's edits (test_port 198->207,
-   test_alley ->57, test_exemptions stated (+4 on the base), test_refusals comments 287 / notes 157,
-   test_crossrefs silent += "or/ors.197a.400.txt", quadfit placeholders 16->25 and 16->27,
-   UNEXPRESSIBLE min_landscaped_pct 59, max_units 14, setback_garage_entrance_ft 118, max_density
-   59, front_max 94); regenerate gaps; report counts by city and form to Steph; add the Fairview
-   VMU/VA 4-lot-split item (~66 lots) noted in the active-lanes memory.
-
-85. [Claude] [scan: YES -- bound 1 read, re-bound queued] **ORS 197A.400 "clear and objective" for housing -- RULED by Steph
-   2026-10-15; BUILT on flats/clear-objective, NOT merged.** Inside a UGB a city may apply only
-   clear and objective standards to housing; a discretionary path is legal only beside a clear one.
-   East Park v. Salem (LUBA 2022) threw out "compatible / minimal impact" conditional-use criteria
-   and ordered approval; HB 4037 (2026 Or Laws ch 108, in force 2026-07-01) adds no required
-   hearing, applicant alone appeals.
-   STEPH RULED 2026-10-15 (memory feedback_rulings_2026_10_15.md; NOT yet in the register -- the
-   entry lands with the branch): where a lot is red ONLY because a city's approval path is a
-   judgement call (conditional use with judgement criteria, one-off discretionary review), the
-   screen judges the lot on the measurable standards alone -- GREEN WITH A FLAG (severity < 3):
-   the city may refuse at first and an appeal may be needed. The yellow "may add conditions"
-   review tier is ALSO green with a flag (Steph "1"): added conditions must themselves be clear
-   and objective, so a measurable review never ranks below a judgement-only one. This reaches
-   items 53 (Sandy, Canby, Estacada), 61, 69 and 79. NOT covered: a use the city doesn't list at
-   all (Happy Valley MUC/RCMU/CCC, Wilsonville PDC, Milwaukie MUTSA, Oregon City MUE "similar
-   use"); land outside a UGB (farm zones, Mult EFU); the statute's exceptions (Portland central
-   city + Gateway, historic resources); measured fails (Fairview TCC, Wood Village NC); zones with
-   no clear standards (Happy Valley MURM/PMU) stay grey. Standing answers given to the lane:
-   Milwaukie greenway CU -> green + flag (the statute has no greenway exception); historic areas
-   stay excluded (statute exception + the 2026-10-14 RED ruling, item 87).
-   Branch: c20ea3a1 (judgement-only path GREEN with a CLEAR-OBJECTIVE flag, severity 2), ec383a3b
-   (Fairview VA quote), f003fd49 (uninc UGB was not loaded -- `inside_ugb` fix, found by bound 1);
-   worktree ../vicinitideals-worktrees/clear-objective. Re-bound co2 queued on 137
-   (/root/watch/co2.want, /root/co2_*). Moves so far: Estacada R-3 10 red -> 6 green / 4 yellow;
-   Milwaukie R-HD/R-MD 13 red -> 3 green / 10 yellow; newly admitted Canby 108 green / 35 yellow,
-   Gladstone C3 40 green + 31 yellow, Milwaukie NMU 14 green / 9 yellow, Estacada 57 yellow,
-   Cornelius 14 yellow. WashCo Type II ~60k lots yellow -> green expected -- report real counts.
-   AT MERGE apply its count edits: test_port_from_flats L77 16->25, test_port L445 198->205,
-   test_crossrefs silent += "or/ors.197a.400.txt", test_zone_mirror L580 16->27 + UNEXPRESSIBLE
-   landscaped 54->59, front-max 91->93, density 55->58, max_units 13->14; regenerate gaps; add the
-   register entry. Research notes: scratchpad state_law/ (session 0351d0eb).
 88. [Claude] [scan: YES -- greens only lose; BUILT on flats/dlcd-encode 5262c782, bound queued, NOT merged] **Gladstone Ord. 1545 (in force 2026-08-13): R-7.2 minimum
    lot for duplex..quadplex 3,600 -> 7,200 sq ft** (DLCD watch, 2026-10-15). Stored code predates
-   it; the R10 placeholder copies the same number. R-7.2 lots 3,600-7,199 sq ft screen green and
+   it; the R10 placeholder copies the same number.
+   BOUND READ 2026-10-19 (137 /root/de_moves.csv, base 96cc32ba vs 5262c782): NOT READY.
+   Gladstone R-7.2: 0 losses (no lot of 3,600-7,199 sq ft was green) and 50 GAINS (20 red ->
+   green, 18 red -> yellow, 12 yellow -> green) from Ord. 1545's side setback 7.5 -> 5 ft (stored
+   text p. 9-6 checked; every gain >= 7,957 sq ft) -- correct. Happy Valley: 53 yellow -> red on
+   `driveway_frontage_share`, nearly all FALSE: the check holds the 20 ft drive to half of the
+   lot's SHORTEST street line (`cap_frontage_ft`), so a lot with 300-3,900 ft of frontage fails on
+   a 30-34 ft corner piece (28 corner lots, 25 others with a short fragment). On a corner lot the
+   16.44 lowest-class street is unranked (ACCESS-STREET-RANK-UNKNOWN), so which line the drive
+   takes is unknown -- the 2026-10-09 rule makes that YELLOW, not red. Fix before merging: hold
+   the drive to the line it can use (fail only when NO street line takes it; unknown which ->
+   yellow), rebase on main (d8c6da14's corner-arc split may change the fragments), re-bound. R-7.2 lots 3,600-7,199 sq ft screen green and
    should be red. Source: council packet https://www.ci.gladstone.or.us/media/30151. Built with
    the adopted-change mechanism on flats/dlcd-encode (worktree ../vicinitideals-worktrees/
    dlcd-encode); bound queued on 137 (/root/watch/de.want, /root/de_*). Next: read the losses,
