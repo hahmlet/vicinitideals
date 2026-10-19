@@ -1269,28 +1269,14 @@ read when the weekly full re-screen lands.
      `planned_development` lever are a relief-policy question --
      HUMAN_TODO 23 (2026-09-25).
 
-96. [Claude] [Steph: (e)+(f)] [scan: NO (wording and labels only)] **FLATS tab audit 2026-10-19 (Steph asked:
-   redundant / out of date / unclear; no redesign).** Read live with the E2E login. Wording fixes, no
-   behaviour change: (a) Fetch triage says state law is "one fetch covers all seventeen
-   jurisdictions" (app/templates/flats_triage.html:25) -- there are 30. (b) Not encoded, "What the
-   holes cost": 507,936 of 507,936 lots "blocked by encoding", because an unsigned number counts as a
-   block -- says nothing useful while nobody signs; its total also differs from Lots (587,815) and
-   counts 27 jurisdictions, not 30; the Tigard row (18,953 lots, "unzoned in parcel data") says
-   "nothing at all is encoded" though Tigard has 218 standards; the Lake Oswego row (14,276) should
-   say switched off by Steph (eligible:false), not "no encoding". (c) Lots + County copy banner: GI in
-   Cornelius (1 lot) and R-15 in Tigard (2 lots) unruled since the 2026-10-01 copy; the 09-22 rule says
-   written down within the week -- rule them. (d) Hand-off: 13 "unanswered" Gresham CMF / DRL-1
-   footnote questions from 2026-08-17, probably settled by footnotes-at-zero (2026-08-22); check each
-   against today's rules, answer, mark handed on. (g) Tab name vs page title differ (Rules & signing
-   = "Zoning rules"; Not encoded = "What is not encoded"; County copy = "The county map copy"), and
-   each page's row of cross-links lists a different subset of the other queues. (h) County copy lists
-   every retired run (54..74) on the card; show the live and waiting runs, fold the rest. (i) Page
-   check carries a "Read a whole document" link that belongs to Reading.
-   STEPH QUESTIONS: (e) sign-off counters all read zero (Rules "Verified 0", Plans "on reviewed
-   numbers 0", Lots "verdict today" 95% unknown) because no sign-offs have been done (item 54 note)
-   -- hide them until signing starts, or keep them as a reminder? (f) Unknowns shows all 90 kinds and
-   the colour rule as "waiting for approval", yet Steph's rulings are made in chat and kept in
-   flats/config/rulings.yaml -- make the page say those rulings are in force, or keep approval here?
+96. [Claude] [scan: NO] **Hand-off: 13 open Gresham questions from 2026-08-17 (rest of the 10-19 tab
+   audit DONE f7512199; Steph: chat rulings in force, leave the sign-off counters).** /flats/feedback
+   holds 13 "unanswered" verdicts on Gresham CMF and DRL-1 (min_frontage_ft, min_lot_sqft, the four
+   setbacks, setback_front_max_ft, min_lot_depth_ft ...), each asking whether a footnote (CMF notes 1,
+   3a, 6, 7, 8, 11; DRL-1 corner-lot frontage 40 ft, townhouse 16/20 ft, interior-only depth) is
+   applied. Steph's note numbers do not match the encoding's (CMF frontage cites note 17), so read
+   Table 4.0430 / the DRL-1 table with the yaml (gresham.yaml CMF ~L5124, DRL-1 ~L4441), answer each
+   in a plain line, encode any footnote that is missing (bound it), then Steph marks them handed on.
 
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
 
