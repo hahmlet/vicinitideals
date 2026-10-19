@@ -18,6 +18,9 @@ class _Today(date):
 
 def test_future_since_is_an_argparse_error_before_output_creation(tmp_path, monkeypatch, capsys):
     out = tmp_path / "not-created"
+    # Pin today: with the real clock, 2026-10-17 stopped being "the future" on that
+    # date and the command went on to fetch from DLCD (CI red from 2026-10-17).
+    monkeypatch.setattr(flats_dlcd_watch, "date", _Today)
     monkeypatch.setattr(sys, "argv", ["flats_dlcd_watch.py", "--since", "2026-10-17", "--out", str(out)])
 
     with pytest.raises(SystemExit) as exited:
