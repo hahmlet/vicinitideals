@@ -208,6 +208,29 @@ def test_a_zone_code_nobody_ruled_on_is_amber_and_names_the_code_the_city_and_th
     assert assess(current=snap(), latest=cand, candidates=[cand], probes=[probe()], today=TODAY) == []
 
 
+def test_a_code_ruled_on_since_the_copy_was_screened_stops_reading_as_not_ruled() -> None:
+    """Tab audit 2026-10-19: Cornelius GI and Tigard R-15 were ruled on
+    2026-10-14 and the banner still said "not been ruled on yet" five days
+    later. A ruled code is not waiting on anybody; its lots move at the next
+    re-screen, and the banner says that instead."""
+    current = snap(new_zones={"or/washington/cornelius": {"GI": 1}, "or/washington/tigard": {"R-15": 2, "Q": 3}})
+
+    def ruled(layer: str, code: str) -> bool:
+        return (layer, code) in {("or/washington/cornelius", "GI"), ("or/washington/tigard", "R-15")}
+
+    out = assess(current=current, latest=current, candidates=[], probes=[probe()], today=TODAY, ruled=ruled)
+    assert sorted(codes(out)) == [("amber", "ruled_since"), ("amber", "unruled_zones")]
+    since = next(n for n in out if n.code == "ruled_since").text
+    waiting = next(n for n in out if n.code == "unruled_zones").text
+    assert "GI in Cornelius (1 lot)" in since and "R-15 in Tigard (2 lots)" in since
+    assert "next re-screen" in since
+    assert "Q in Tigard (3 lots)" in waiting and "GI" not in waiting
+
+    # Without a rules lookup nothing is presumed ruled.
+    out = assess(current=current, latest=current, candidates=[], probes=[probe()], today=TODAY)
+    assert codes(out) == [("amber", "unruled_zones")]
+
+
 def test_city_name_says_the_place_the_way_a_person_does() -> None:
     assert city_name("or/multnomah/wood-village") == "Wood Village"
     assert city_name("or/clackamas/_unincorporated") == "unincorporated Clackamas"

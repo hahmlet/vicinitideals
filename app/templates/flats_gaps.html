@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}What is not encoded — Viciniti Deals{% endblock %}
+{% block title %}Not encoded — Viciniti Deals{% endblock %}
 
 {% block content %}
 <div class="topbar">
@@ -8,9 +8,11 @@
 <div class="content">
   <div class="toolbar">
     <div>
-      <h2 style="margin:0">What is not encoded</h2>
+      <h2 style="margin:0">Not encoded</h2>
       <div class="muted" style="font-size:12px">
-        <a href="/flats">All jurisdictions</a> · <a href="/flats/feedback">Hand-off</a>
+        <a href="/flats">All jurisdictions</a> · <a href="/flats/words">Words</a>
+        · <a href="/flats/reading">Reading</a> · <a href="/flats/triage">Fetch triage</a>
+        · <a href="/flats/feedback">Hand-off</a>
         · <a href="#citations">Citations naming the wrong section</a>
       </div>
     </div>
@@ -43,11 +45,14 @@
     afternoon — every zone the parcel data has actually seen, ranked by how many lots
     it blocks. A jurisdiction with four gaps over eleven lots is finished for any
     purpose that matters; one unencoded zone can be sitting on fourteen thousand.
+    Counted from the lot list the encoding work uses, not the county copy the Lots
+    page screens, so its totals differ from that page.
   </p>
 
   <div class="toolbar" style="gap:24px">
     <div><span class="muted">Lots counted</span> <strong>{{ "{:,}".format(coverage.lots) }}</strong></div>
-    <div><span class="muted">Blocked by encoding</span> <strong>{{ "{:,}".format(coverage.blocked) }}</strong></div>
+    <div><span class="muted">Missing a rule</span> <strong>{{ "{:,}".format(coverage.real) }}</strong></div>
+    <div title="encoded, but no person has signed the numbers yet"><span class="muted">Waiting only on sign-off</span> <strong>{{ "{:,}".format(coverage.blocked - coverage.real) }}</strong></div>
     <div><span class="muted">Jurisdictions counted</span> <strong>{{ coverage.layers | length }}</strong></div>
   </div>
 

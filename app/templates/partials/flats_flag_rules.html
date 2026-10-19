@@ -6,7 +6,7 @@
 <div id="flag-rules" class="flag-rules flag-{{ rules.state }}" data-state="{{ rules.state }}">
   <div class="flag-head">
     <strong>The colour rule</strong>
-    {% if rules.state == "proposed" %}<span class="badge badge-yellow">Waiting for approval</span>
+    {% if rules.state == "proposed" %}<span class="badge badge-gray">In force as proposed</span>
     {% elif rules.state == "waiting" %}<span class="badge badge-blue">Approved · in force at the next write-in</span>
     {% else %}<span class="badge badge-green">Approved</span>{% endif %}
     {% if rules.approved_by %}<span class="muted" style="font-size:11px"> approved by {{ rules.approved_by }}{% if rules.approved_on %}, {{ rules.approved_on }}{% endif %}</span>{% endif %}

@@ -53,7 +53,7 @@ async def test_the_page_shows_both_copies_and_the_whole_gate(client: AsyncClient
 
     assert page.status_code == 200
     body = page.text
-    assert "County copy" in body and "The county map copy" in body
+    assert '<h2 style="margin:0">County copy</h2>' in body
     # Newest first: the candidate's card comes before the copy in use.
     assert body.index(f'id="snapshot-{w["sept"].id}"') < body.index(f'id="snapshot-{w["july"].id}"')
 

@@ -29,7 +29,7 @@ def test_the_menu_reaches_the_page_and_the_copy_in_use_is_named(logged_in_page: 
     page.get_by_role("link", name="County copy").click()
     page.wait_for_url(f"{base_url}/flats/refresh")
 
-    expect(page.get_by_role("heading", name="The county map copy")).to_be_visible()
+    expect(page.get_by_role("heading", name="County copy", exact=True)).to_be_visible()
     if page.get_by_text("No county map copy has been registered.").count():
         pytest.skip("no county copy registered on this instance")
     # Exactly one copy is in use, and its card says so.

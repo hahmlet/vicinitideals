@@ -27,6 +27,8 @@ refresh will fail; amber means something is waiting or unchecked. The rules:
   no longer holds a refresh back: the county goes live and only that code's
   lots sit, shown as a new zone under evaluation. The banner is what keeps it
   visible, so it names the code, the city and how many lots wait on it.
+* amber ``ruled_since`` -- a code that was unruled when the copy was screened
+  and that today's rules hold; its lots move at the next re-screen.
 * amber ``new_release`` -- the probe saw a new RLIS archive on the portal and
   no snapshot has been taken since.
 * amber ``waiting``  -- a candidate has sat unreviewed for more than
@@ -41,7 +43,7 @@ from __future__ import annotations
 
 import datetime as dt
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Callable
 
 from flats.ingest.probe import CHANGED
 
@@ -106,12 +108,14 @@ def city_name(layer_id: str) -> str:
     return last.replace("-", " ").title()
 
 
-def unruled(snapshot: Snapshot | None) -> list[tuple[str, str, int]]:
-    """``(city, code, lots)`` for every zone code on this copy nobody has ruled on."""
-    rows: list[tuple[str, str, int]] = []
+def unruled(snapshot: Snapshot | None, *, with_layer: bool = False) -> list[tuple]:
+    """``(city, code, lots)`` for every zone code on this copy nobody had ruled on
+    when it was screened; ``with_layer`` puts the layer id in front."""
+    rows: list[tuple] = []
     for layer_id, by_code in sorted(((snapshot.new_zones if snapshot else None) or {}).items()):
         for code, lots in sorted((by_code or {}).items()):
-            rows.append((city_name(layer_id), str(code), int(lots or 0)))
+            row = (city_name(layer_id), str(code), int(lots or 0))
+            rows.append((layer_id, *row) if with_layer else row)
     return rows
 
 
@@ -122,6 +126,7 @@ def assess(
     candidates: list[Snapshot],
     probes: list[Probe],
     today: dt.date,
+    ruled: Callable[[str, str], bool] | None = None,
 ) -> list[Notice]:
     """The notices the banner shows, red first.
 
@@ -247,7 +252,26 @@ def assess(
     # A zone code nobody has ruled on no longer holds a refresh back (Steph,
     # 2026-09-22): the county goes live and those lots sit. The banner is
     # what keeps them from sitting unseen, so it names every one of them.
-    waiting_codes = unruled(current)
+    # ``ruled`` asks today's rules whether a code on the copy has been ruled on
+    # since the copy was screened. Such a code is not waiting on anybody: its
+    # lots move at the next re-screen, and "not been ruled on yet" for weeks
+    # after the ruling was written reads as a job nobody did (tab audit
+    # 2026-10-19: Cornelius GI and Tigard R-15, ruled 2026-10-14).
+    listed = unruled(current, with_layer=True)
+    waiting_codes = [(city, code, lots) for layer_id, city, code, lots in listed if ruled is None or not ruled(layer_id, code)]
+    since = [(city, code, lots) for layer_id, city, code, lots in listed if ruled is not None and ruled(layer_id, code)]
+    if since:
+        shown = ", ".join(f"{code} in {city} ({lots:,} lot{'' if lots == 1 else 's'})" for city, code, lots in since[:4])
+        if len(since) > 4:
+            shown += f" and {len(since) - 4} more"
+        amber.append(
+            Notice(
+                "amber",
+                "ruled_since",
+                f"Ruled on since this copy was screened: {shown}. Those lots still show as a new zone "
+                "under evaluation and take their colour at the next re-screen.",
+            )
+        )
     if waiting_codes:
         shown = ", ".join(f"{code} in {city} ({lots:,} lot{'' if lots == 1 else 's'})" for city, code, lots in waiting_codes[:4])
         if len(waiting_codes) > 4:

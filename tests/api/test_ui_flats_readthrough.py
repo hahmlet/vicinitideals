@@ -50,7 +50,7 @@ async def test_readthrough_lists_mapped_documents_and_every_page(client, session
 
     index = await client.get("/flats/check/readthrough")
     book = await client.get(f"/flats/check/readthrough/{DOCUMENT}")
-    cards = await client.get("/flats/check")
+    cards = await client.get("/flats/reading")
 
     assert index.status_code == 200
     assert DOCUMENT in index.text

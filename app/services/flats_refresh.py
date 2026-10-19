@@ -55,6 +55,7 @@ from __future__ import annotations
 import datetime as dt
 import time
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import Any, Callable
 
 import httpx
@@ -322,6 +323,29 @@ def _as_rule_probe(row: FlatsProbe) -> rules.Probe:
     )
 
 
+@lru_cache(maxsize=1)
+def _rule_layers() -> dict[str, Any]:
+    """Today's rule files, parsed once per process (they are baked into the image)."""
+    from flats.rules.loader import load_rules
+
+    try:
+        return load_rules(strict=False)
+    except Exception:  # noqa: BLE001 -- a banner must not fail the page; unruled stays unruled
+        return {}
+
+
+def _ruled_now(layer_id: str, code: str) -> bool:
+    """Whether today's rules hold this map code: as a zone, an alias of one, or a
+    ``pocket`` / ``unencodable`` ruling. ``to_read`` is a promise, not a ruling."""
+    layer = _rule_layers().get(layer_id)
+    if layer is None:
+        return False
+    if layer.holds(code) is not None:
+        return True
+    ruling = layer.zone_rulings.get(code)
+    return ruling is not None and ruling.outcome in ("pocket", "unencodable")
+
+
 async def refresh_notices(session: AsyncSession, *, today: dt.date | None = None) -> RefreshNotices:
     """The banner for the Lots pages, computed from rows and nothing else."""
     today = today or dt.datetime.now(dt.UTC).date()
@@ -344,6 +368,7 @@ async def refresh_notices(session: AsyncSession, *, today: dt.date | None = None
         candidates=candidates,
         probes=rule_probes,
         today=today,
+        ruled=_ruled_now,
     )
     return RefreshNotices(
         notices=notices,

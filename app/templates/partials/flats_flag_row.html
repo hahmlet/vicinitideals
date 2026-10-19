@@ -7,7 +7,7 @@
   <div class="flag-head">
     <div>
       <strong>{{ row.description }}</strong>
-      {% if row.state == "proposed" %}<span class="badge badge-yellow">Waiting for approval</span>
+      {% if row.state == "proposed" %}<span class="badge badge-gray">In force as proposed</span>
       {% elif row.state == "waiting" %}<span class="badge badge-blue">Approved · in force at the next write-in</span>
       {% else %}<span class="badge badge-green">Approved</span>{% endif %}
     </div>

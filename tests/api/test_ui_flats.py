@@ -73,7 +73,7 @@ async def test_the_index_lists_every_jurisdiction(client: AsyncClient, session: 
     # built against; if the loader silently returned nothing, this is what
     # would go missing.
     assert "Portland" in response.text
-    assert "Zoning rules" in response.text
+    assert '<h2 style="margin:0">Rules &amp; signing</h2>' in response.text
     assert "citywide rules" in response.text
 
 
@@ -1265,7 +1265,7 @@ async def test_the_holes_have_a_page_of_their_own(
     page = await client.get("/flats/gaps")
 
     assert page.status_code == 200
-    assert "What is not encoded" in page.text
+    assert '<h2 style="margin:0">Not encoded</h2>' in page.text
 
 
 async def test_a_gap_is_named_by_what_would_unstick_it(
@@ -1398,6 +1398,32 @@ async def test_the_holes_are_ranked_by_what_they_cost(
             untrusted_fields="setback_front_ft",
             blocking=11,
         ),
+        # Tab audit 2026-10-19: an encoded city the lot list gave no zone, and
+        # a city Steph switched off, each said "nothing is encoded" before.
+        CoverageRow(
+            jurisdiction="UNMAPPED/tigard",
+            zone="(unzoned in parcel data)",
+            lots=9,
+            acres=0.0,
+            status="jurisdiction_missing",
+            verified_fields=0,
+            total_fields=0,
+            missing_required="",
+            untrusted_fields="",
+            blocking=9,
+        ),
+        CoverageRow(
+            jurisdiction="or/clackamas/lake-oswego",
+            zone="(unzoned in parcel data)",
+            lots=8,
+            acres=0.0,
+            status="zone_missing",
+            verified_fields=0,
+            total_fields=0,
+            missing_required="",
+            untrusted_fields="",
+            blocking=8,
+        ),
     ]
     ui._coverage.cache_clear()
     monkeypatch.setattr(ui, "read_coverage", lambda: rows)
@@ -1410,6 +1436,11 @@ async def test_the_holes_are_ranked_by_what_they_cost(
         # The zone nothing has encoded costs 40,500 lots and the one missing a
         # confirmation costs 11. Ranked by gap count they are one apiece.
         assert page.text.index("RM1") < page.text.index("LDR-5")
+        # A real gap outranks a row that only waits on sign-off, however small.
+        assert page.text.index("UNMAPPED/tigard") < page.text.index("LDR-5")
+        assert "the city is encoded, but the lot list this counts from gives these lots no zone" in page.text
+        assert "switched off by Steph" in page.text
+        assert "Missing a rule" in page.text and "Waiting only on sign-off" in page.text
     finally:
         ui._coverage.cache_clear()
 
@@ -1833,7 +1864,7 @@ async def test_the_book_url_is_not_swallowed_by_the_jurisdiction_page(
     assert response.status_code == 404
     assert "no such stored document" in response.text
     assert "No rule layer called" not in response.text
-    assert "Zoning rules" not in response.text
+    assert '<h2 style="margin:0">Rules &amp; signing</h2>' not in response.text
 
 
 async def test_a_citation_to_a_sentence_highlights_all_of_it(

@@ -49,7 +49,7 @@
   {% include "partials/flats_refresh_banner.html" %}
   <div class="toolbar">
     <div>
-      <h2 style="margin:0">The county map copy</h2>
+      <h2 style="margin:0">County copy</h2>
       <p class="muted" style="margin:4px 0 0">
         Every dated download of the county map the screen has read, which one is in use, and
         what stands between a refreshed copy and the site showing it. Nothing here updates on
@@ -91,10 +91,16 @@
     </div>
     {% if s.runs %}
       <div class="muted" style="font-size:12px;margin:4px 0 8px">
-        {% for r in s.runs %}
+        {% for r in s.runs if r.status != "retired" %}
           run {{ r.id }} ({{ r.status }}{% if r.rules_version %}, rules {{ r.rules_version[:8] }}{% endif %}{% if r.code_version %}, code {{ r.code_version[:8] }}{% endif %})
           {% if r.status in ("complete", "candidate") %}<a href="/flats/lots?run={{ r.id }}">lots</a>{% endif %}{% if not loop.last %} · {% endif %}
         {% endfor %}
+        {% set retired = s.runs | selectattr("status", "equalto", "retired") | list %}
+        {% if retired %}
+          <details style="display:inline"><summary style="display:inline;cursor:pointer">{{ retired | length }} retired run{{ "" if retired | length == 1 else "s" }}</summary>
+            {% for r in retired %}run {{ r.id }}{% if r.rules_version %} (rules {{ r.rules_version[:8] }}{% if r.code_version %}, code {{ r.code_version[:8] }}{% endif %}){% endif %}{% if not loop.last %} · {% endif %}{% endfor %}
+          </details>
+        {% endif %}
       </div>
     {% endif %}
     {% if s.notes %}<pre class="muted" style="font-size:12px;white-space:pre-wrap;margin:0 0 8px">{{ s.notes }}</pre>{% endif %}

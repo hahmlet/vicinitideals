@@ -1316,7 +1316,16 @@ def _coverage() -> dict[str, Any]:
     return {
         "measured": True,
         "layers": sorted(by_layer.values(), key=lambda one: -one["blocked"]),
-        "worst": [_blocker(row) for row in rows if row.blocking][:15],
+        # A real gap (a zone, a value or a jurisdiction missing, or a changed
+        # document) before a row that only waits on a person's sign-off: with no
+        # sign-offs taken every lot "blocks", and ranked by lots alone the table
+        # led with Portland R5, which is encoded (tab audit 2026-10-19).
+        "worst": [
+            _blocker(row)
+            for row in sorted(
+                (row for row in rows if row.blocking), key=lambda row: (not _real_gap(row), -row.blocking)
+            )
+        ][:15],
         # Encoded, but no lot has ever been counted against it. Silence about
         # these would read as "nothing blocked here", which is the exact
         # mistake the coverage ledger exists to prevent.
@@ -1340,14 +1349,29 @@ def _coverage() -> dict[str, Any]:
         ),
         "lots": sum(row.lots for row in rows),
         "blocked": sum(row.blocking for row in rows),
+        "real": sum(row.blocking for row in rows if _real_gap(row)),
     }
+
+
+def _real_gap(row: CoverageRow) -> bool:
+    """Whether something is missing, as against encoded and only unsigned."""
+    return row.status in ("zone_missing", "jurisdiction_missing", "stale") or bool(row.missing_required)
 
 
 def _blocker(row: CoverageRow) -> dict[str, Any]:
     """One coverage row, said in the words a reviewer would use."""
     missing = [one for one in row.missing_required.split(";") if one]
     untrusted = [one for one in row.untrusted_fields.split(";") if one]
-    if row.status == "jurisdiction_missing":
+    layers = _layers()
+    layer = layers.get(row.jurisdiction)
+    city = row.jurisdiction.removeprefix("UNMAPPED/")
+    if layer is not None and layer.eligible is False:
+        why = "switched off by Steph — this city is not screened"
+    elif row.status == "jurisdiction_missing" and any(name.endswith("/" + city) for name in layers):
+        # The lot list gave these lots a city but no zone; the city itself is
+        # encoded (Tigard, Cornelius), so "nothing is encoded" would be false.
+        why = "the city is encoded, but the lot list this counts from gives these lots no zone"
+    elif row.status == "jurisdiction_missing":
         why = "nothing at all is encoded for this jurisdiction"
     elif row.status == "zone_missing":
         why = "this zone has no encoding — the jurisdiction has others"
