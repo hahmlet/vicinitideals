@@ -1278,6 +1278,15 @@ read when the weekly full re-screen lands.
    Table 4.0430 / the DRL-1 table with the yaml (gresham.yaml CMF ~L5124, DRL-1 ~L4441), answer each
    in a plain line, encode any footnote that is missing (bound it), then Steph marks them handed on.
 
+97. [Copilot-able once worded] [scan: NO] **Page check card shows a converted number, not the page's
+   words (Steph 2026-10-19, Durham SDR).** The card asked "4.356 units per acre" for min density;
+   the page prints "10,000 square feet per dwelling" (durham.yaml `sqft_per_unit: 10000`; 43,560 /
+   10,000 = 4.356). Steph could not match it to the page. Where a value is stored in a derived form
+   (sqft_per_unit and the other value forms), the card question should state it as printed, with
+   the converted figure in brackets: "10,000 sq ft per home (= 4.356 units per acre)". Files:
+   app/api/routers/ui_flats_check.py (card question), its template; test: an API test on a
+   sqft_per_unit card. Must not change any stored value or a signature hash.
+
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
 
 14. [scan: NO] **Tax impact beyond Gresham.** `flats/config/tax/or/multnomah/2025-26.yaml`
