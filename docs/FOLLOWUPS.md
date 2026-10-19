@@ -38,7 +38,12 @@ read when the weekly full re-screen lands.
 
 ### 1a. The weekly re-screen (~2026-10-19): traps to honour before it, moves to read after it
 
-   READY TO LAUNCH (checked 2026-10-19): 137's checkout is at a69f4ca3 (items 85 + 93 merged) and
+   LAUNCHED 2026-10-19 16:07Z (Steph "execute scan"): tag 2026-10-19_weekly, log 137
+   /root/weekly_chain_1019.log, state /root/weekly_2026-10-19_weekly, status copied to 114
+   /root/weekly137/status.txt; ~9-10 h (quadfit ~78 min, bridge ~7 h). Re-launch after a crash:
+   `setsid -f /root/launch_weekly_1019.sh` (finished steps are skipped). Then load the candidate,
+   read the moves (items 95, 67, 77, 78, 61, 69 ...), and only then promote.
+   Was READY TO LAUNCH (checked 2026-10-19): 137's checkout is at a69f4ca3 (items 85 + 93 merged) and
    `flats_weekly_chain.py --snapshot 2026-10-07 --sha a69f4ca3 --preflight-only` passes. The six
    datasets it was missing (overlay_pdx_main_street, pdx_historic_resources,
    pdx_landmark_footprints, pdx_pattern_areas, street_class_sherwood, street_class_tigard) were
