@@ -369,7 +369,11 @@ pytestmark = pytest.mark.unit
 # right-of-way refusals are replaced by the rule (16.106.030 D, 16.80.060 A); Tigard
 # 18.210.030.A.1 (TSP widths not held) and Beaverton 60.55.10.5 (no width stated) are
 # recorded as NOT ENCODED, and Sherwood's 16.106.020 B street improvements likewise.
-EXPECTED = {"notes": 154, "comments": 285, "tests": 18}
+# 154 -> 157 notes and 285 -> 286 comments on 2026-10-19, the townhouse-lots merge
+# (FOLLOWUPS 93 + 85): notes arrive on Troutdale HDR and MU-1 (the 8.130.C townhouse
+# design standards, read and NOT ENCODED), Fairview VTH and Milwaukie SMU, and leave
+# Milwaukie NMU (now encoded); one Fairview comment arrives.
+EXPECTED = {"notes": 157, "comments": 286, "tests": 18}
 # 286 -> 285 comments on 2026-10-16 (FOLLOWUPS 84 phase 3): Oregon City 17.16.060.E,
 # parking behind the facade in mixed-use and commercial zones, is now encoded.
 # 153 -> 154 notes on 2026-10-15 (FOLLOWUPS 78): storing PCC 33.700 for

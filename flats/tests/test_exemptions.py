@@ -146,7 +146,11 @@ pytestmark = pytest.mark.unit
 # 411 -> 415 stated on 2026-10-08 (zone gaps, FOLLOWUPS 52a): four more statements of no
 # limit arrived with the zones encoded that day (Tualatin MUC's lot size among them); each
 # cites its row.
-EXPECTED = {"stated": 418, "numeric": 100, "marker": 0, "dash": 2, "silent": 2}
+# 418 -> 422 stated and 100 -> 108 numeric on 2026-10-19, the townhouse-lots merge
+# (FOLLOWUPS 93, carrying the ORS 197A.400 lane, item 85): the unit-lot rows of
+# Troutdale, Wilsonville, Fairview and the zones the clear-objective lane admits state
+# their no-limit cells; each cites its row.
+EXPECTED = {"stated": 422, "numeric": 108, "marker": 0, "dash": 2, "silent": 2}
 # 85 -> 100 numeric on 2026-10-16 (FOLLOWUPS 84 phase 3): Oregon City 17.16.060.D's width
 # caps open "In residential zones", so the mixed-use and commercial zones hold them exempt
 # (15 values); 17.16.060.E governs those zones instead.

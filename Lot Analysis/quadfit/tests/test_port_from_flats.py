@@ -74,4 +74,6 @@ def test_each_row_takes_the_strict_limb_and_names_its_placeholders(layers) -> No
                     assert row[yard] == yards[yard]
                     placeholders += 1
     assert checked > 100, checked
-    assert placeholders == 16, "the six Washington rows with an unread yard, three or two yards each"
+    # 16 -> 25 on 2026-10-19: the rows the ORS 197A.400 lane admits (FOLLOWUPS 85)
+    # carry their unread yards as placeholders the same way.
+    assert placeholders == 25, "the six Washington rows and the clear-objective rows with an unread yard"

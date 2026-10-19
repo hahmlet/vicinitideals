@@ -422,7 +422,10 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
     # cloud session. Table 18.280.1 note [2]: "There is no rear setback
     # requirement when the rear property line abuts an alley" -- the rear
     # line's own fact, as the note says.
-    assert keyed_to_line == 28 + 19 + 1 + 6
+    # + 3 on 2026-10-19 (FOLLOWUPS 93, townhomes on their own lots): Troutdale
+    # HDR (1) and MU-1 (2) townhouse rows that take a rear-alley yard, keyed to
+    # the rear line like the rest.
+    assert keyed_to_line == 28 + 19 + 1 + 6 + 3
 
 
 def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:

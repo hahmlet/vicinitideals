@@ -696,6 +696,8 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         # An ordinance's adopted exhibit, cited by page, not a codified chapter.
         "or/multnomah/portland/amended/ricap11.txt",
         "or/washington/beaverton/wc.beaverton-upaa.txt",
+        # ORS 197A.400, the state's clear-and-objective statute (FOLLOWUPS 85).
+        "or/ors.197a.400.txt",
     }
     assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 

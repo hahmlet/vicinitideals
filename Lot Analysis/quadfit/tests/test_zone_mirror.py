@@ -583,7 +583,8 @@ def test_nothing_in_the_screen_is_unquoted() -> None:
         if m:
             placeholders |= {f"{juris}/{z['zone']}.{f.strip()}" for f in m.group(1).split(",")}
     assert {u.split("=")[0] for u in uncited} == placeholders, uncited
-    assert len(placeholders) == 16
+    # 16 -> 27 on 2026-10-19: the zones the ORS 197A.400 lane admits (FOLLOWUPS 85).
+    assert len(placeholders) == 27
     assert agree > 460, agree
 
 
@@ -1014,16 +1015,19 @@ def test_a_conditioned_port_carries_its_larger_limb() -> None:
 #: Then the same day the (a) zones (FOLLOWUPS 52a): Gladstone C2/MR, Tualatin RMH/RH/RH-HR/MUC,
 #: Milwaukie GMU/DMU and West Linn MU add front-max, stories, density, landscaping and
 #: building-height standards, and the first two parking-lot rules this pipeline cannot hold.
+#: Grew 2026-10-19 by the townhouse-lots merge (FOLLOWUPS 93, carrying 85): the zones
+#: the ORS 197A.400 lane admits and the townhouse unit-lot rows add front-max, density,
+#: landscaping, garage-entrance, unit-count and review-tier standards.
 UNEXPRESSIBLE: dict[str, int] = {
-    "setback_garage_entrance_ft": 116,
-    "min_landscaped_pct": 54,
-    "setback_front_max_ft": 91,
-    "max_density_du_per_acre": 55,
+    "setback_garage_entrance_ft": 118,
+    "min_landscaped_pct": 59,
+    "setback_front_max_ft": 94,
+    "max_density_du_per_acre": 59,
     "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,
     "max_lot_depth_ratio": 4,
-    "max_units": 13,
+    "max_units": 14,
     "max_height_stories": 21,
     "setback_side_total_ft": 3,
     "min_building_height_ft": 16,
@@ -1070,7 +1074,7 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: the parking cap read on every street frontage, measured on FLATS's
     #: drawn plan. 28 -> 37 the same day: Clackamas HDR and the eight 1102
     #: blocks (SHD, RCHDR, RTL, CC, C3, OC, RCC, RCO) admitted by the same rule.
-    "review_discretion": 37,
+    "review_discretion": 40,
     "type_i_max_buildable_sqft": 11,
     "type_i_density_escape_du_per_acre": 8,
     "type_i_standard_plat_required": 8,

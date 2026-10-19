@@ -442,7 +442,10 @@ def test_every_quadfit_zone_arrives(dry: dict) -> None:
     # are in COUNTY but not ported: their
     # rows were written FROM the corpus, and porting them back would overwrite
     # it with its own summary.
-    assert dry["stats"]["zones"] == 198
+    #
+    # 207 on 2026-10-19 (FOLLOWUPS 85): the ORS 197A.400 lane admits nine zones
+    # (Canby, Gladstone C3, Milwaukie NMU, Estacada, Cornelius ...).
+    assert dry["stats"]["zones"] == 207
     assert dry["stats"]["layers"] == 21
     assert len(COUNTY) == 29
     assert {j for j, c in COUNTY.items() if c in FLATS_FIRST} == {
