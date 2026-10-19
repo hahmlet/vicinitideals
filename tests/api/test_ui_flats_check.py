@@ -78,6 +78,10 @@ async def test_the_index_is_not_swallowed_by_the_layer_route(client, session):
     assert response.status_code == 200
     assert "Page check" in response.text
     assert "Gresham" in response.text
+    # Steph 2026-10-19: sortable headers and a left-to-check column, to find
+    # the small cities that can be finished in one sitting.
+    assert 'data-col="left"' in response.text and "Left to check" in response.text
+    assert 'data-col="numbers"' in response.text
 
 
 async def test_a_card_shows_the_page_with_the_box_and_asks_one_question(client, session):

@@ -90,12 +90,14 @@
     <table class="data-table">
       <thead>
         <tr>
-          <th>Jurisdiction</th>
-          <th class="col-right">With a printed page</th>
-          <th class="col-right">Checked</th>
-          <th class="col-right">Problems</th>
-          <th class="col-right" title="published as web pages, not printed books">Web-published</th>
-          <th class="col-right" title="a printed book we have not mapped to pages yet">No page yet</th>
+          {# data-col: base.html sorts on a header click (Steph 2026-10-19: find the small ones). #}
+          <th data-col="jurisdiction">Jurisdiction</th>
+          <th class="col-right" data-col="numbers">With a printed page</th>
+          <th class="col-right" data-col="checked">Checked</th>
+          <th class="col-right" data-col="left" title="printed-page numbers nobody has checked yet">Left to check</th>
+          <th class="col-right" data-col="problems">Problems</th>
+          <th class="col-right" data-col="html" title="published as web pages, not printed books">Web-published</th>
+          <th class="col-right" data-col="no_map" title="a printed book we have not mapped to pages yet">No page yet</th>
           <th></th>
         </tr>
       </thead>
@@ -105,6 +107,7 @@
           <td>{{ t.label }}<div class="muted" style="font-size:11px">{{ t.id }}</div></td>
           <td class="col-right">{{ t.numbers }}</td>
           <td class="col-right">{{ t.checked }}</td>
+          <td class="col-right">{{ t.left }}</td>
           <td class="col-right">{{ t.problems or "" }}</td>
           <td class="col-right">{{ t.html or "" }}</td>
           <td class="col-right">{{ t.no_map or "" }}</td>

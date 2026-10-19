@@ -179,3 +179,22 @@ def test_a_web_code_card_shows_stored_text_labelled_as_having_no_printed_page(
     expect(page.locator("#check-card .check-sheet")).to_have_count(0)
     expect(page.locator("[data-answer]").first).to_be_visible()
     expect(page.locator("#check-card [data-flag]")).to_be_visible()
+
+
+def test_the_jurisdiction_table_sorts_by_what_is_left_to_check(logged_in_page: Page, base_url: str) -> None:
+    """Steph 2026-10-19: click a header to find the small cities that can be
+    finished in one sitting. One click sorts smallest first, a second largest."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check")
+    header = page.locator("th[data-col='left']")
+    expect(header).to_be_visible()
+
+    def left() -> list[int]:
+        # Fourth column: Jurisdiction, With a printed page, Checked, Left to check.
+        cells = page.locator("table:has(th[data-col='left']) tbody tr td:nth-child(4)").all_inner_texts()
+        return [int(c.replace(",", "").strip() or 0) for c in cells]
+
+    header.click()
+    assert left() == sorted(left())
+    header.click()
+    assert left() == sorted(left(), reverse=True)
