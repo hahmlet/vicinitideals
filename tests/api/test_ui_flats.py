@@ -74,6 +74,7 @@ async def test_the_index_lists_every_jurisdiction(client: AsyncClient, session: 
     # would go missing.
     assert "Portland" in response.text
     assert "Zoning rules" in response.text
+    assert "citywide rules" in response.text
 
 
 async def test_a_layer_page_shows_a_standard_and_its_citation(
@@ -86,6 +87,8 @@ async def test_a_layer_page_shows_a_standard_and_its_citation(
     assert response.status_code == 200
     assert "LDR-5" in response.text
     assert "setback_front_ft" in response.text
+    assert "citywide rules" in response.text
+    assert "not yet reviewed" in response.text
     # The quote is the whole point of the page: a number with no line behind it
     # is the thing this system exists to stop shipping.
     assert "4.0100.residential.txt#L400" in response.text
@@ -1118,6 +1121,31 @@ async def test_the_chain_page_shows_every_layer_and_the_page_it_cites(
     assert "p. [4.0100]-" in page.text, "the page as the codifier prints it"
     assert "#page=" in page.text, "and a link that opens the document there"
     assert "Oregon" in page.text, "the state layer is listed even where it is silent"
+    assert "citywide rules" in page.text
+    assert "not yet reviewed — read off the source" in page.text
+
+
+async def test_archived_design_status_is_spoken_on_both_plan_pages(
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
+):
+    from app.api.routers import ui_flats as ui
+    from flats.designs.model import DesignCatalog, DesignStatus
+
+    await _login(client, session)
+    designs = [
+        design.model_copy(update={"status": DesignStatus.archived})
+        if design.key == "pod56x36@2"
+        else design
+        for design in ui._catalog()
+    ]
+    monkeypatch.setattr(ui, "_catalog", lambda: DesignCatalog(designs))
+
+    plans = await client.get("/flats/plans")
+    plan = await client.get("/flats/plans/pod56x36@2")
+
+    assert "kept for older results" in plans.text
+    assert "kept for older results" in plan.text
+    assert 'href="/flats/plans/pod56x36@2?plat=one_lot"' in plans.text
 
 
 async def test_the_chain_page_prints_an_exception_with_its_own_citation(
@@ -1487,6 +1515,53 @@ async def test_the_wrong_section_citations_are_a_list_not_only_a_banner(
     assert "Text is in" in page.text
     assert "4.123" in page.text
     assert "4.113" in page.text
+
+
+async def test_the_gaps_page_sorts_citation_kinds_and_folds_the_harmless(
+    client: AsyncClient, session: AsyncSession, monkeypatch
+):
+    from app.api.routers import ui_flats as ui
+    from flats.encode.attribution import (
+        HEADER_OR_XREF,
+        HEADING_OTHER_FILE,
+        HEADING_SAME_FILE,
+        UNLOCATED,
+    )
+
+    await _login(client, session)
+
+    def item(zone: str, kind: str) -> dict[str, str]:
+        return {"zone": zone, "field": "f", "claimed": "1.1", "found": "2.2", "kind": kind}
+
+    monkeypatch.setattr(
+        ui,
+        "_gaps",
+        lambda: {
+            "current": True,
+            "layers": {
+                "or/x/y": {
+                    "label": "Yville",
+                    "counts": {},
+                    "gaps": [],
+                    "misattributed": [
+                        item("ZHDR", HEADER_OR_XREF),
+                        item("ZUNL", UNLOCATED),
+                        item("ZOTH", HEADING_OTHER_FILE),
+                        item("ZSAME", HEADING_SAME_FILE),
+                    ],
+                }
+            },
+        },
+    )
+
+    text = (await client.get("/flats/gaps")).text
+
+    assert text.index("ZSAME") < text.index("ZOTH") < text.index("ZUNL")
+    assert text.index("ZUNL") < text.index("<details")
+    assert text.index("<details") < text.index("ZHDR")
+    assert "probably harmless (running header or cross-reference)" in text
+    assert "<th>Kind</th>" in text
+    assert "3 values quote text" in text
 
 
 async def test_a_card_offers_the_page_itself(client: AsyncClient, session: AsyncSession):

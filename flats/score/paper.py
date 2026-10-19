@@ -33,7 +33,7 @@ import math
 from dataclasses import dataclass, field as _dc_field
 from typing import TYPE_CHECKING
 
-from flats.designs.model import Design, Orientation, ParkingConfig, Plat
+from flats.designs.model import Design, ParkingConfig, Plat
 from flats.score.turns import AS_DRAWN, Fix, Shape, Unsearched, fixes
 
 if TYPE_CHECKING:  # pragma: no cover - typing only

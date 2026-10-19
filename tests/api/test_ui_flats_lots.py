@@ -19,6 +19,8 @@ from __future__ import annotations
 
 import re
 from datetime import date, datetime, timedelta, timezone
+from html import unescape
+from html.parser import HTMLParser
 
 import pytest
 from httpx import AsyncClient
@@ -31,9 +33,11 @@ from app.models.flats import (
     FlatsLot,
     FlatsLotResult,
     FlatsProbe,
+    FlatsReviewDecision,
     FlatsRun,
     FlatsSnapshot,
 )
+from app.api.routers.ui_flats import _LOTS_PAGE, _alley_coverage_rows, _lots_ctx, _said_reason
 from tests.conftest import seed_org, set_client_auth
 
 pytestmark = pytest.mark.asyncio
@@ -242,6 +246,200 @@ async def _login(client: AsyncClient, session: AsyncSession):
     await session.commit()
     set_client_auth(client, user.id)
     return user
+
+
+async def test_lot_page_says_condo_reasons_and_decision_checks_in_words(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session)
+    lot = (
+        await session.execute(select(FlatsLot).where(FlatsLot.tlid == "1S2E08BA  -09500"))
+    ).scalar_one()
+    lot.condo_verdict = "suspect"
+    lot.condo_reason = "SUSPECT_CONDO_COMMON_AREA"
+    lot.facts = {
+        **lot.facts,
+        "condo": {"verdict": "suspect", "reason": lot.condo_reason},
+    }
+    session.add(
+        FlatsReviewDecision(
+            county=lot.county,
+            tlid=lot.tlid,
+            check_code="min_lot_width_ft",
+            verdict="green",
+            reason="The survey confirms the lot clears the width requirement.",
+        )
+    )
+    await session.commit()
+
+    page = await client.get("/flats/lots/multnomah/1S2E08BA%20%20-09500")
+
+    assert page.status_code == 200
+    assert "likely condominium common-element land; real land that is encumbered" in page.text
+    assert "lot narrower than the minimum" in page.text
+    assert "min_lot_width_ft" not in page.text
+    assert "SUSPECT_CONDO_COMMON_AREA" not in page.text
+    assert "the building and its parking do not fit" in page.text
+    assert "fit_ft" not in page.text
+    for code, words in (
+        ("SUSPECT_CONDO_UNKNOWN_AREA", "condominium interest; parcel area is not known"),
+        ("SUSPECT_CONDO_COMMON_AREA", "likely condominium common-element land"),
+        ("SUSPECT_STACKED_UNIT", "likely a condominium unit in a larger building"),
+        ("CONDO_AIR_PARCEL", "condominium air parcel, not land"),
+    ):
+        assert words in _said_reason(code)
+        assert code not in _said_reason(code)
+    assert _said_reason("SUSPECT_NEW_CONDO_CASE") == "suspect new condo case"
+
+
+async def test_partial_alley_wording_names_the_line_and_covered_share():
+    rows = _alley_coverage_rows(
+        {
+            "alley_coverage": [
+                {
+                    "line": "rear",
+                    "line_number": 1,
+                    "line_count": 1,
+                    "covered_ft": 46.8,
+                    "line_ft": 88.7,
+                },
+                {
+                    "line": "side",
+                    "line_number": 2,
+                    "line_count": 2,
+                    "covered_ft": 24.5,
+                    "line_ft": 50,
+                },
+            ]
+        }
+    )
+    assert rows == [
+        ("Rear line alley cover", "46.8 ft of 88.7 ft (53%); only the covered stretch counts as alley."),
+        ("Side line 2 alley cover", "24.5 ft of 50.0 ft (49%); only the covered stretch counts as alley."),
+    ]
+    assert _alley_coverage_rows({"alley_coverage": [{"line": "rear", "covered_ft": 88.7, "line_ft": 88.7}]}) == []
+
+
+async def _add_lots(session: AsyncSession, run: FlatsRun, count: int) -> None:
+    """More lots on the seeded run, one result each, so the list has a second page."""
+    for i in range(count):
+        lot = FlatsLot(
+            tlid=f"2S2E00AA  -{i:05d}", county="multnomah", jurisdiction="or/multnomah/portland",
+            zone_raw="R5", zone="R5", site_address=f"{i} SE EXTRA ST", area_sqft=5000,
+            geom=_box(7_700_000 + i * 100, 680_000, 50, 100), centroid="SRID=4326;POINT(-122.5 45.5)",
+            condo_verdict="land", facts={"source": "quadfit"},
+            first_seen_run_id=run.id, updated_run_id=run.id, snapshot_id=run.snapshot_id,
+        )
+        session.add(lot)
+        await session.flush()
+        checks = _checks("yellow", head="fit_ft")
+        session.add(
+            FlatsLotResult(
+                lot_id=lot.id, design_key=DESIGNS[0], run_id=run.id, tier="unknown",
+                slack_ft=checks["fit"]["slack_ft"], binding=checks["failing"], checks=checks,
+            )
+        )
+    await session.commit()
+
+
+def _tlids(html: str) -> set[str]:
+    return set(re.findall(r"/flats/lots/multnomah/([^\"'?]+)", html))
+
+
+async def test_the_lots_list_page_zero_is_refused(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    await _seed(session)
+
+    assert (await client.get("/flats/lots?page=0")).status_code == 422
+
+
+async def test_a_lots_page_past_the_end_is_empty_not_an_error(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    await _seed(session)
+
+    page = await client.get("/flats/lots?page=99")
+
+    assert page.status_code == 200
+    assert not _tlids(page.text)
+
+
+async def test_a_lots_page_at_the_maximum_is_empty_not_an_error(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session)
+
+    page = await client.get("/flats/lots?page=100000")
+
+    assert page.status_code == 200
+    assert not _tlids(page.text)
+
+
+async def test_lots_context_carries_requested_page_and_page_size():
+    ctx = _lots_ctx([], None, page=23)
+
+    assert ctx["page"] == 23
+    assert ctx["per_page"] == _LOTS_PAGE
+
+
+async def test_the_second_lots_page_holds_other_rows_than_the_first(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    run = await _seed(session)
+    await _add_lots(session, run, 60)
+
+    first = await client.get("/flats/lots?page=1")
+    second = await client.get("/flats/lots?page=2")
+
+    assert first.status_code == second.status_code == 200
+    one, two = _tlids(first.text), _tlids(second.text)
+    assert one and two and not one & two
+
+
+async def test_the_pager_keeps_active_lot_filters(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+    run = await _seed(session)
+    await _add_lots(session, run, 60)
+
+    page = await client.get(
+        "/flats/lots?jurisdiction=or%2Fmultnomah%2Fportland&zone=R5"
+        "&design=pod56x36%402&colour=yellow"
+    )
+
+    assert page.status_code == 200
+    next_link = re.search(r'href="([^"]+)"[^>]*>Next</a>', page.text)
+    assert next_link is not None
+    href = next_link.group(1).replace("&amp;", "&")
+    assert "jurisdiction=or%2Fmultnomah%2Fportland" in href
+    assert "zone=R5" in href
+    assert "design=pod56x36%402" in href
+    assert "colour=yellow" in href
+    assert "page=2" in href
+
+
+async def test_a_partial_alley_is_explained_without_changing_the_lot_result(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session)
+    lot = (
+        await session.execute(select(FlatsLot).where(FlatsLot.tlid == "1N1E29DD  -05600"))
+    ).scalar_one()
+    facts = dict(lot.facts)
+    facts["alley_coverage"] = [
+        {"line": "rear", "line_number": 1, "line_count": 1, "covered_ft": 46.8, "line_ft": 88.7, "share": 0.5276}
+    ]
+    lot.facts = facts
+    await session.commit()
+
+    page = await client.get(f"/flats/lots/multnomah/{lot.tlid}")
+
+    assert page.status_code == 200
+    facts_html = page.text.split('id="lot-facts"', 1)[1]
+    assert "Rear line alley cover" in facts_html
+    assert "46.8 ft of 88.7 ft (53%); only the covered stretch counts as alley." in facts_html
+    assert "Verdict today" in page.text and "If signed as read" in page.text
+    assert "yellow" in page.text
 
 
 # --- the list ------------------------------------------------------------
@@ -568,7 +766,7 @@ async def test_the_lot_page_puts_the_verdict_first_and_the_colour_beside_it(
     pod80 = page.text.split('id="design-pod80x25-2"', 1)[1].split('class="card"', 1)[0]
     assert "yellow" in pod80
     assert "4 cars charged, 4 seated" in pod80
-    assert "fit_ft" in pod80
+    assert "the building and its parking do not fit" in pod80
     assert "the exception it would ask for has not been read" in pod80
     pod56 = page.text.split('id="design-pod56x36-2"', 1)[1].split('id="design-pod80x25-2"', 1)[0]
     assert "green" in pod56
@@ -637,7 +835,7 @@ async def test_the_county_map_colour_sits_beside_ours_not_in_its_place(
     assert page.status_code == 200
     head = page.text.split('id="lot-verdict"', 1)[1].split('class="card"', 1)[0]
     assert "County map says" in head
-    assert "siteplan_no_layout" in head
+    assert "siteplan no layout" in head
     # Ours is yellow; the county map's red is shown as the county map's,
     # after ours, and does not change ours.
     assert head.index("If signed as read") < head.index("County map says")
@@ -909,6 +1107,63 @@ async def test_no_lot_page_prints_a_python_object(client: AsyncClient, session: 
         assert page.status_code == 200
         assert "built-in method" not in page.text
         assert "object at 0x" not in page.text
+
+
+class _TextNodes(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.text: list[str] = []
+
+    def handle_data(self, data: str) -> None:
+        self.text.append(data)
+
+
+async def test_secondary_flats_pages_print_no_python_objects(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session)
+
+    urls = (
+        "/flats/gaps",
+        "/flats/why/or/multnomah/gresham?zone=LDR-5&field=setback_front_ft",
+        "/flats/plans",
+        "/flats/plans/pod56x36@2",
+        "/flats/refresh",
+        "/flats/feedback",
+        "/flats/flags",
+        "/flats/flags/questions",
+        "/flats/flags/queue",
+        "/flats/flags/report",
+        "/flats",
+        "/flats/or/multnomah/gresham",
+    )
+    for url in urls:
+        page = await client.get(url)
+        assert page.status_code == 200, url
+        assert "{'" not in page.text, url
+        assert "[<" not in page.text, url
+        assert "Decimal(" not in page.text, url
+        text_nodes = _TextNodes()
+        text_nodes.feed(page.text)
+        none_nodes = [node.strip() for node in text_nodes.text if node.strip() == "None"]
+        assert not none_nodes, f"{url}: {none_nodes}"
+
+
+async def test_lot_design_filter_shows_the_catalog_label(
+    client: AsyncClient, session: AsyncSession
+):
+    from app.api.routers.ui_flats import _catalog
+
+    await _login(client, session)
+    await _seed(session)
+
+    page = await client.get("/flats/lots")
+    label = _catalog().get("pod56x36@2").label
+    option = re.search(r'<option value="pod56x36@2"[^>]*>(.*?)</option>', page.text)
+
+    assert option is not None
+    assert unescape(option.group(1)) == label
 
 
 async def test_the_lot_page_shows_a_persons_decision_and_the_look_again_mark(
@@ -1233,7 +1488,7 @@ async def test_the_lot_page_lists_the_open_questions_and_which_hold_it_at_yellow
     assert "severity 0" in through
     # Most severe first.
     assert flags.index("FACT-CORNER-LOT") < flags.index("FACT-THROUGH-LOT")
-    assert "or/multnomah/portland · corner_lot" in corner
+    assert "or/multnomah/portland · corner lot" in corner
     # Yellow and nothing changed in the rule since: no recolour warning.
     assert 'id="colour-today-' not in page.text
 

@@ -83,6 +83,20 @@
       </div>
     </div>
     {% endfor %}
+    {% if card.web %}
+    <div class="card" style="padding:0;margin:0 0 12px;overflow:hidden" data-web-code>
+      <div class="toolbar" style="margin:0;padding:6px 8px;font-size:11px">
+        <strong style="margin-right:6px">web code &mdash; no printed page</strong>
+        <span class="muted">our stored text of {{ card.section or "the cited section" }}, the cited lines lit</span>
+        <span style="margin-left:auto">{% if card.url %}<a href="{{ card.url }}" target="_blank" rel="noopener">at the source</a>{% endif %}</span>
+      </div>
+      <div class="check-web">
+        {% for line in card.web_text %}
+        <div class="check-web-line{% if line.cited %} check-web-cited{% endif %}" data-line="{{ line.n }}"><span class="check-web-n">{{ line.n }}</span><span class="check-web-t{% if line.grid %} check-web-grid{% endif %}">{% for p in line.parts %}{% if p.marker %}<span class="check-web-mark">{{ p.text }}</span>{% elif p.hit %}<span class="check-web-num">{{ p.text }}</span>{% else %}{{ p.text }}{% endif %}{% endfor %}</span></div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
   </div>
 
   <aside class="check-panel">
@@ -123,8 +137,8 @@
       </p>
     {% else %}
       <p style="font-size:15px;margin:0 0 4px">
-        Note <strong>{{ card.mark }}</strong> is printed on this
-        {% if card.mark_on == "number" %}number{% elif card.mark_on == "row" %}row{% else %}column{% endif %}.
+        Note <strong>{{ card.mark }}</strong> is printed {% if card.mark_on == "web" %}in the cited text of this number{% else %}on this
+        {% if card.mark_on == "number" %}number{% elif card.mark_on == "row" %}row{% else %}column{% endif %}{% endif %}.
         Does it change <strong>{{ card.field_label }}</strong> ({{ card.value }}){% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}?
       </p>
     {% endif %}
@@ -163,7 +177,7 @@
       <input type="hidden" name="question" value="{{ card.question }}">
       <input type="hidden" name="skipped" value="{{ skipped }}">
       <input type="hidden" name="flag_page" value="{{ flag_page }}">
-      <input type="hidden" name="trail" value="{{ trail }}">
+      {% if card.web %}<input type="hidden" name="flag_web" value="1">{% endif %}      <input type="hidden" name="trail" value="{{ trail }}">
       <input type="hidden" name="ahead" value="{{ ahead }}">
       <div style="display:flex;flex-direction:column;gap:6px">
         {% for key, words in card.answers %}
@@ -175,9 +189,9 @@
       <textarea name="comment" rows="2" placeholder="Comment (optional) — what the page says instead, or anything else"
                 style="width:100%;box-sizing:border-box;font-size:12px;padding:5px;margin-top:8px">{{ card.before_comment }}</textarea>
       <div style="display:flex;gap:6px;justify-content:space-between;margin-top:6px">
-        {% if flag_page %}
+        {% if flag_page or card.web %}
         <button type="submit" name="action" value="flag" class="btn btn-secondary btn-sm" data-flag
-                title="Something untinted on this page that matters and isn't in the rules. Say what in the comment.">Flag something missing</button>
+                title="Something untinted {% if card.web %}in this text{% else %}on this page{% endif %} that matters and isn't in the rules. Say what in the comment.">Flag something missing</button>
         {% endif %}
         <button type="submit" name="action" value="skip" class="btn btn-secondary btn-sm" style="margin-left:auto">Skip</button>
       </div>
@@ -189,6 +203,12 @@
       {% endif %}
     </form>
 
+    {% if card.web %}
+    <div class="check-legend">
+      <div><span class="swatch" style="outline:2px solid #dc2626"></span> the words that state the number this card asks about</div>
+      <div><span class="swatch" style="background:rgba(250,204,21,0.45)"></span> the lines it was cited from</div>
+    </div>
+    {% else %}
     <div class="check-legend">
       <div><span class="swatch" style="outline:2px solid #dc2626"></span> the number this card asks about</div>
       <div><span class="swatch" style="background:rgba(250,204,21,0.45)"></span> the line it was read from, where the number is in words</div>
@@ -196,7 +216,9 @@
       <div><span class="swatch" style="background:rgba(100,116,139,0.20);border-bottom:2px dashed rgba(71,85,105,0.7)"></span> read and set aside on purpose</div>
       <div><span class="swatch" style="border:1px solid #d1d5db"></span> no tint: nobody has weighed it — flag it if it matters</div>
     </div>
+    {% endif %}
 
+    {% if not card.web %}
     <details style="font-size:12px;margin:12px 0 0">
       <summary class="muted" style="cursor:pointer"
                hx-get="/ui/flats/quote?ref={{ card.quote | urlencode }}" hx-target="#check-textcopy" hx-trigger="click once">
@@ -204,6 +226,7 @@
       </summary>
       <div id="check-textcopy" style="margin-top:6px"></div>
     </details>
+    {% endif %}
   </aside>
 </div>
 {% if card.sheets and card.sheets[0].context %}

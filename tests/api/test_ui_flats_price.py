@@ -12,6 +12,7 @@ a hang.
 from __future__ import annotations
 
 from decimal import Decimal
+from html import unescape
 
 import pytest
 from httpx import AsyncClient
@@ -33,13 +34,19 @@ B = "1N1E29DD  -05600"  # Portland R2.5, 5,000 sf, yellow
 C = "11E25AB  -00300"  # Milwaukie R-7, 7,200 sf, unknown
 
 
-async def _price(session: AsyncSession, tlid: str, assessor: dict | None) -> None:
+async def _price(
+    session: AsyncSession, tlid: str, assessor: dict | None, *, net_area_sqft: int | None = None
+) -> None:
     lot = (await session.execute(select(FlatsLot).where(FlatsLot.tlid == tlid))).scalar_one()
     facts = dict(lot.facts or {})
     if assessor is None:
         facts.pop("assessor", None)
     else:
         facts["assessor"] = assessor
+    if net_area_sqft is None:
+        facts.pop("net_area_sqft", None)
+    else:
+        facts["net_area_sqft"] = net_area_sqft
     lot.facts = facts
     await session.commit()
 
@@ -144,12 +151,45 @@ async def test_the_lot_page_shows_the_label_its_source_and_as_of_and_the_last_sa
     assert "No county value on file" in none.text
 
 
+async def test_the_lot_page_explains_a_max_units_cap_without_changing_its_colour(
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
+):
+    await _login(client, session)
+    await _seed(session)
+    await _price(session, A, {"total_value": 360_000})
+    lot = (await session.execute(select(FlatsLot).where(FlatsLot.tlid == A))).scalar_one()
+    lot.area_sqft = 90_000
+    await session.commit()
+    url = "/flats/lots/multnomah/1S2E08BA%20%20-09500"
+    before = await client.get(url)
+    before_verdict = before.text.split('id="lot-verdict"', 1)[1].split('id="lot-price"', 1)[0]
+    monkeypatch.setattr(
+        ui_flats,
+        "_zone_caps",
+        lambda: {("or/multnomah/portland", "R5"): price_calc.ZoneCap(max_units=Decimal(8))},
+    )
+
+    page = await client.get(url)
+    assert page.status_code == 200
+    assert "2 pods = 8 homes" in page.text
+    assert "held down by the zone's maximum-unit cap (8 homes)" in unescape(page.text)
+    after_verdict = page.text.split('id="lot-verdict"', 1)[1].split('id="lot-price"', 1)[0]
+    assert after_verdict == before_verdict
+
+
 async def test_the_stored_row_carries_the_price_its_source_as_of_area_and_the_zone_caps(session: AsyncSession):
     await _seed(session)
-    await _price(session, A, {"total_value": 600_000})
+    await _price(session, A, {"total_value": 600_000}, net_area_sqft=8_000)
     await _price(session, B, {"total_value": "not a number"})
     await _price(session, C, None)
-    caps = {("or/multnomah/portland", "R5"): price_calc.ZoneCap(du_per_acre=Decimal(10), unit_lot_sqft=Decimal(3000))}
+    caps = {
+        ("or/multnomah/portland", "R5"): price_calc.ZoneCap(
+            du_per_acre=Decimal(10),
+            unit_lot_sqft=Decimal(3000),
+            max_units=Decimal(8),
+            density_on_net_area=True,
+        )
+    }
 
     written = await _refresh(session, caps)
 
@@ -163,15 +203,73 @@ async def test_the_stored_row_carries_the_price_its_source_as_of_area_and_the_zo
     a = rows[A]
     assert a.amount == Decimal("600000.00") and a.source == "County real market value"
     assert "county copy of" in a.as_of and a.area_sqft == Decimal("13973.00")
-    assert (a.cap_du_per_acre, a.cap_unit_lot_sqft) == (Decimal("10.00"), Decimal("3000.00"))
+    assert (a.cap_du_per_acre, a.cap_unit_lot_sqft, a.cap_max_units) == (
+        Decimal("10.00"),
+        Decimal("3000.00"),
+        Decimal("8.00"),
+    )
+    assert a.cap_du_per_acre_net is True and a.net_area_sqft == Decimal("8000.00")
     # A value that is not a number, and a lot with no roll at all, are "no price" -- never a zero.
     assert rows[B].amount is None and rows[B].source is None and rows[B].as_of is None
     assert rows[C].amount is None
     # A zone that states no limit has no cap.
     assert rows[B].cap_du_per_acre is None and rows[B].cap_unit_lot_sqft is None
+    assert rows[B].cap_max_units is None and rows[B].cap_du_per_acre_net is False
     # Running it again is an update, not a second row.
     assert await _refresh(session, caps) == written
     assert len((await session.execute(select(FlatsLotPrice))).all()) == written
+    await session.rollback()
+
+
+async def test_sql_and_python_apply_the_max_units_cap_and_optional_net_density_area(
+    session: AsyncSession,
+):
+    await _seed(session)
+    await _price(session, A, {"total_value": 360_000})
+    await _price(session, B, {"total_value": 360_000}, net_area_sqft=17_424)
+    caps = {
+        ("or/multnomah/portland", "R5"): price_calc.ZoneCap(max_units=Decimal(8)),
+        ("or/multnomah/portland", "R2.5"): price_calc.ZoneCap(
+            du_per_acre=Decimal(10), density_on_net_area=True
+        ),
+    }
+    lots = (await session.execute(select(FlatsLot).where(FlatsLot.tlid.in_((A, B))))).scalars().all()
+    for lot in lots:
+        lot.area_sqft = 90_000
+    await session.flush()
+    await _refresh(session, caps)
+
+    cfg = price_calc.settings()
+    for lot in lots:
+        cap = caps[("or/multnomah/portland", lot.zone or "")]
+        sql_pods = flats_price.pods_column(cfg, literal(2))
+        got = (
+            await session.execute(
+                select(sql_pods).select_from(FlatsLotPrice).where(FlatsLotPrice.lot_id == lot.id)
+            )
+        ).scalar_one()
+        want = price_calc.price_per_home(90_000, lot.facts, cfg, cap=cap).pods
+        assert int(got) == want
+        if lot.tlid == A:
+            assert want == 2
+        else:
+            assert want == 1
+
+    # Without a stored net-area figure, the net-area density keeps its former
+    # gross-area basis: 10 homes/acre on 90,000 sf allows five whole pods.
+    await _price(session, B, {"total_value": 360_000})
+    await _refresh(session, caps)
+    lot_b = next(lot for lot in lots if lot.tlid == B)
+    sql_pods = flats_price.pods_column(cfg, literal(2))
+    got = (
+        await session.execute(
+            select(sql_pods).select_from(FlatsLotPrice).where(FlatsLotPrice.lot_id == lot_b.id)
+        )
+    ).scalar_one()
+    want = price_calc.price_per_home(
+        90_000, lot_b.facts, cfg, cap=caps[("or/multnomah/portland", "R2.5")]
+    ).pods
+    assert int(got) == want == 5
     await session.rollback()
 
 
@@ -218,10 +316,9 @@ async def test_the_page_limits_are_set_for_the_request_and_a_timeout_gives_a_too
 
 
 async def test_sql_and_python_agree_on_pods_and_price_on_edge_lots(session: AsyncSession):
-    """The filter runs the SQL form over the stored columns; the labels run the
-    Python form over the facts. Edge areas: the road threshold, an exact pod, a
-    sliver, a missing area, a capped zone, and each colour class (green and
-    yellow keep one pod)."""
+    """The filter runs the SQL form over stored columns; labels use Python.
+    Edge areas include the road threshold, exact pod, sliver, missing area,
+    capped zones, and every colour class (green and yellow keep one pod)."""
     await _seed(session)
     caps = {
         ("or/multnomah/portland", "R5"): price_calc.ZoneCap(du_per_acre=Decimal(10)),

@@ -404,7 +404,8 @@ class FlatsLotPrice(Base):
 
     Filled by ``flats.ingest.lot_prices`` (the loader, and the backfill script
     for a copy loaded earlier). A lot with no row, or a row with no ``amount``,
-    reads as "no price". Pods and price per home are arithmetic on these columns
+    reads as "no price". Area, optional net area and rule caps are stored as
+    plain numbers; pods and price per home are arithmetic on these columns
     (``app.services.flats_price``), so the pod size and road share stay adjustable.
     """
 
@@ -426,9 +427,15 @@ class FlatsLotPrice(Base):
     as_of: Mapped[str | None] = mapped_column(String(160), nullable=True)
     #: Copy of ``lots.area_sqft`` so the page never joins the wide lot row.
     area_sqft: Mapped[float | None] = mapped_column(Numeric(14, 2), nullable=True)
-    #: The zone's density limits; NULL where the zone states none.
+    #: The zone's unit and density limits; NULL where the zone states none.
     cap_du_per_acre: Mapped[float | None] = mapped_column(Numeric(10, 2), nullable=True)
     cap_unit_lot_sqft: Mapped[float | None] = mapped_column(Numeric(12, 2), nullable=True)
+    cap_max_units: Mapped[float | None] = mapped_column(Numeric(10, 2), nullable=True)
+    cap_du_per_acre_net: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
+    #: Optional top-level ``facts.net_area_sqft``; filter/sort never parse lot JSON.
+    net_area_sqft: Mapped[float | None] = mapped_column(Numeric(14, 2), nullable=True)
 
 
 class FlatsLotResult(Base):
@@ -793,6 +800,30 @@ class FlatsPageCheck(Base):
     )
     #: When a problem this answer raised was handed on to be fixed.
     bundled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class FlatsDocumentReadthrough(Base):
+    """One completed, append-only human read-through of a printed document."""
+
+    __tablename__ = "document_readthroughs"
+    __table_args__ = (
+        Index("ix_flats_document_readthroughs_document_submitted", "document", "submitted_at"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    document: Mapped[str] = mapped_column(String(500), nullable=False)
+    book_sha256: Mapped[str] = mapped_column(String(64), nullable=False, server_default="")
+    page_count: Mapped[int] = mapped_column(Integer, nullable=False)
+    comments: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, nullable=False, server_default="[]")
+    comment_count: Mapped[int] = mapped_column(Integer, nullable=False, server_default="0")
+    reviewer: Mapped[str] = mapped_column(String(80), nullable=False)
+    reviewer_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
+    )
+    submitted_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
 
 
 class FlatsCrossrefRuling(Base):

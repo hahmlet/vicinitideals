@@ -6,18 +6,45 @@ the OpenAPI schema (which is what makes them MCP tools).
 """
 from __future__ import annotations
 
+import json
+
 import pytest
 from httpx import AsyncClient
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.main import app
+from app.models.flats import FlatsLot
 from flats import rulings
+from scripts.flats_load_bridge import alley_coverage, lot_facts
 from tests.api.test_ui_flats_lots import DESIGNS, _login, _seed
 
 pytestmark = pytest.mark.asyncio
 
 TLID_A = "1S2E08BA  -09500"
 TLID_C = "11E25AB  -00300"
+
+
+async def test_bridge_carries_partial_rear_and_side_alley_coverage():
+    edges = [
+        [0, 0, 100, 0, "F"],
+        [100, 0, 100, 50, "A"],
+        [100, 50, 0, 50, "A"],
+        [0, 50, 0, 0, "A"],
+    ]
+    s4 = {
+        "edges_json": json.dumps(edges),
+        "front_bearings_json": "[90]",
+        "alley_cover_json": json.dumps(
+            [None, "1" * 6 + "0" * 4, "1" * 8 + "0" * 2, "0" * 4 + "1" * 6]
+        ),
+    }
+    got = alley_coverage(s4)
+    assert [entry["line"] for entry in got] == ["rear", "rear", "side"]
+    assert [entry["line_number"] for entry in got[:2]] == [1, 2]
+    assert got[0]["line_ft"] == 50 and got[0]["share"] < 1
+    assert got[0]["line_count"] == 2 and got[2]["line_count"] == 1
+    assert lot_facts(s4, {}, {}, {})["alley_coverage"] == got
 
 REGISTER = """
 - id: statewide-note
@@ -157,6 +184,30 @@ async def test_the_report_passes_forms_through_per_design(
     assert by_design[DESIGNS[1]]["forms"]["works_as"] == "apartment"
     assert by_design[DESIGNS[1]]["forms"]["townhomes"] == "red"
     assert by_design[DESIGNS[0]].get("forms") in (None, {})
+
+
+async def test_the_report_passes_through_partial_alley_coverage(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _seed(session)
+    lot = (
+        await session.execute(select(FlatsLot).where(FlatsLot.tlid == "1N1E29DD  -05600"))
+    ).scalar_one()
+    facts = dict(lot.facts)
+    coverage = [
+        {"line": "rear", "line_number": 1, "line_count": 1, "covered_ft": 46.8, "line_ft": 88.7, "share": 0.5276}
+    ]
+    facts["alley_coverage"] = coverage
+    lot.facts = facts
+    await session.commit()
+
+    report = (await client.get(f"/api/flats/lot/multnomah/{lot.tlid}")).json()
+
+    assert report["alley_coverage"] == coverage
+    assert {
+        fact["label"]: fact["value"] for fact in report["key_facts"]
+    }["Rear line alley cover"] == "46.8 ft of 88.7 ft (53%); only the covered stretch counts as alley."
 
 
 async def test_the_report_carries_decisions_and_the_rulings_that_speak_to_it(

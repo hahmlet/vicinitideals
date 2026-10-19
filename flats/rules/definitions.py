@@ -45,7 +45,7 @@ from __future__ import annotations
 
 import enum
 from dataclasses import dataclass
-from typing import Iterable, Literal, Mapping, Sequence
+from typing import Literal, Mapping, Sequence
 
 #: Two lot lines closer than this in direction are one straight run, not a
 #: corner. A platted lot line drifts a degree or two off true; a street that

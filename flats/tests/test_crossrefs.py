@@ -400,7 +400,8 @@ def test_the_ledger_round_trips(tmp_path: Path, layers: dict[str, Layer]) -> Non
     rows = dangling(layers[TUALATIN])
     path = write(rows, tmp_path / "crossrefs.csv")
 
-    back = list(csv.DictReader(path.open(encoding="utf-8")))
+    with path.open(encoding="utf-8") as fh:
+        back = list(csv.DictReader(fh))
     assert len(back) == len(rows)
     assert {r["ref"] for r in back} == {r.ref for r in rows}
     assert any(int(r["binding"]) for r in back)
@@ -467,7 +468,8 @@ def test_the_ruling_is_carried_into_the_ledger(
     tmp_path: Path, layers: dict[str, Layer]
 ) -> None:
     rows = dangling(layers[GLADSTONE])
-    back = list(csv.DictReader(write(rows, tmp_path / "crossrefs.csv").open(encoding="utf-8")))
+    with write(rows, tmp_path / "crossrefs.csv").open(encoding="utf-8") as fh:
+        back = list(csv.DictReader(fh))
 
     ruled = next(r for r in back if r["ref"] == "17.62.070")
     assert "mobile home park" in ruled["ruling"]
@@ -597,7 +599,8 @@ def test_the_fields_are_carried_into_the_ledger(
     tmp_path: Path, layers: dict[str, Layer]
 ) -> None:
     rows = dangling(layers[GRESHAM])
-    back = list(csv.DictReader(write(rows, tmp_path / "crossrefs.csv").open(encoding="utf-8")))
+    with write(rows, tmp_path / "crossrefs.csv").open(encoding="utf-8") as fh:
+        back = list(csv.DictReader(fh))
 
     row = next(r for r in back if r["ref"] == "7.0221")
     assert row["fields"] == "setback_rear_ft"

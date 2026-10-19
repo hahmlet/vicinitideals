@@ -13,6 +13,8 @@
         Signing compares each number with our text copy of the code. This compares it
         with the printed page, where a number taken from the wrong row or column shows.
       </p>
+      <p style="margin:8px 0 0"><a href="/flats/check/readthrough"><strong>Read a whole document</strong></a>
+        <span class="muted"> — look for rules we have not encoded yet</span></p>
     </div>
   </div>
 
@@ -20,7 +22,7 @@
     <div><span class="muted">Numbers with a printed page</span> <strong>{{ "{:,}".format(totals.numbers) }}</strong></div>
     <div><span class="muted">Checked</span> <strong>{{ "{:,}".format(totals.checked) }}</strong></div>
     <div><span class="muted">Problems open</span> <strong>{{ problems | length }}</strong></div>
-    <div title="published as web pages, not printed books"><span class="muted">Web-published</span> <strong>{{ "{:,}".format(totals.html) }}</strong></div>
+    <div title="of these, the ones in web-published codes: shown as our stored text, no printed page"><span class="muted">Web-published</span> <strong>{{ "{:,}".format(totals.html) }}</strong></div>
     <div title="a printed book we have not mapped to pages yet"><span class="muted">No page yet</span> <strong>{{ "{:,}".format(totals.no_map) }}</strong></div>
   </div>
 

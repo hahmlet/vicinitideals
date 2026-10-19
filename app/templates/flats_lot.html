@@ -49,7 +49,7 @@
       {% if pr.estimate %}<span class="badge badge-orange" id="lot-price-estimate" title="More than one pod: new roads or a land division may need a review, which is against the by-right rule.">ESTIMATE</span>{% endif %}
       <span class="muted" style="font-size:12px" id="lot-price-how">
         {% if pr.homes %}{{ pr.pods }} pod{{ "s" if pr.pods != 1 }} = {{ pr.homes }} homes{% if pr.roads %} (after {{ "%g"|format(pr.road_pct) }}% for roads){% endif %}
-        at {{ "{:,.0f}".format(pr.pod_sqft) }} sf a pod{% if pr.capped_by == "density" %}; held down by the zone's density limit ({{ "%g"|format(pr.density_du_per_acre) }} homes an acre){% elif pr.capped_by == "unit lot" %}; held down by the zone's smallest townhouse lot ({{ "{:,.0f}".format(pr.unit_lot_sqft) }} sf){% endif %}.
+        at {{ "{:,.0f}".format(pr.pod_sqft) }} sf a pod{% if pr.capped_by == "density" %}; held down by the zone's density limit ({{ "%g"|format(pr.density_du_per_acre) }} homes{% if pr.density_on_net_area %} per net acre{% else %} an acre{% endif %}){% elif pr.capped_by == "unit lot" %}; held down by the zone's smallest townhouse lot ({{ "{:,.0f}".format(pr.unit_lot_sqft) }} sf){% elif pr.capped_by == "max units" %}; held down by the zone's maximum-unit cap ({{ "%g"|format(pr.max_units) }} homes){% endif %}.
         {% else %}No pod fits.{% endif %}
         {% if pr.source %}Price ${{ "{:,.0f}".format(pr.amount) }} from <span id="lot-price-source">{{ pr.source }}</span> ({{ pr.basis }}), as of <span id="lot-price-asof">{{ pr.as_of or "unknown" }}</span>.
         {% if pr.sale_price or pr.sale_date %}Last sale {% if pr.sale_price %}${{ "{:,.0f}".format(pr.sale_price) }}{% endif %}{% if pr.sale_date %} on {{ pr.sale_date }}{% endif %} (shown, not used).{% endif %}
@@ -174,9 +174,9 @@
           <tr><td class="col-muted">Parking</td>
               <td>{% if r.stalls_charged is not none %}{{ r.stalls_charged }} cars charged{% endif %}{% if r.stalls_seated is not none %}, {{ r.stalls_seated }} seated{% endif %}{% if r.band %} <span class="muted">({{ r.band }})</span>{% endif %}</td></tr>
           <tr><td class="col-muted">Tightest check</td>
-              <td>{% if r.head %}<strong>{{ r.head }}</strong>{% else %}none failing{% endif %}{% if r.slack_ft is not none %} <span class="muted">· {{ "{:,.1f}".format(r.slack_ft) }} ft to spare</span>{% endif %}</td></tr>
+              <td>{% if r.head %}<strong>{{ r.head_words }}</strong>{% else %}none failing{% endif %}{% if r.slack_ft is not none %} <span class="muted">· {{ "{:,.1f}".format(r.slack_ft) }} ft to spare</span>{% endif %}</td></tr>
           {% if r.binding %}
-          <tr><td class="col-muted">Failing checks</td><td>{{ r.binding|join(", ") }}</td></tr>
+          <tr><td class="col-muted">Failing checks</td><td>{{ r.binding_words|join(", ") }}</td></tr>
           {% endif %}
           {% if r.fit %}
           <tr><td class="col-muted">Fit</td>
@@ -213,16 +213,16 @@
               <td>{% for w in r.warnings %}<div class="screen-warning"><span class="badge badge-orange">warning</span> {{ w }}</div>{% endfor %}</td></tr>
           {% endif %}
           {% if r.ask %}
-          <tr><td class="col-muted">Path</td><td>{{ r.ask|replace('_', ' ') }}</td></tr>
+          <tr><td class="col-muted">Path</td><td>{{ r.ask_words }}</td></tr>
           {% endif %}
           {% if r.unknown_facts %}
-          <tr><td class="col-muted">Facts nobody measured</td><td>{{ r.unknown_facts|join(", ") }}</td></tr>
+          <tr><td class="col-muted">Facts nobody measured</td><td>{{ r.unknown_facts_words|join(", ") }}</td></tr>
           {% endif %}
           {% if r.assumed_facts %}
-          <tr><td class="col-muted">Facts assumed</td><td>{{ r.assumed_facts|join(", ") }}</td></tr>
+          <tr><td class="col-muted">Facts assumed</td><td>{{ r.assumed_facts_words|join(", ") }}</td></tr>
           {% endif %}
           {% if r.unchecked %}
-          <tr><td class="col-muted">Not checked here</td><td class="muted">{{ r.unchecked|join(", ") }}</td></tr>
+          <tr><td class="col-muted">Not checked here</td><td class="muted">{{ r.unchecked_words|join(", ") }}</td></tr>
           {% endif %}
         </tbody>
       </table>

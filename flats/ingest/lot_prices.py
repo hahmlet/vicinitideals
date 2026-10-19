@@ -8,7 +8,9 @@ slow inputs are worked out once, here, and stored one narrow row per lot:
 * the price (the first positive source in :data:`flats.score.price.PRICE_SOURCES`),
   with the name of the source and its as-of date;
 * the lot's area, copied beside it so the page never has to read the wide lot row;
-* the zone's two density limits (homes per acre, smallest townhouse lot).
+* the zone's density limits, including a per-lot maximum and whether the
+  homes-per-acre limit is measured on net area; and
+* an optional top-level ``facts.net_area_sqft`` value from the lot.
 
 Pods, homes and price per home then stay plain arithmetic on these numbers, so
 the pod size and the road share remain adjustable per request.
@@ -40,8 +42,8 @@ def _path(path: Sequence[str]) -> str:
 
 
 def current_caps() -> dict[tuple[str, str], ZoneCap]:
-    """Every (layer, zone) that states a density ceiling, read the way the Lots
-    page reads it (trusted rules, the screen's own resolver)."""
+    """Every (layer, zone) with an encoded unit or density cap, read through
+    the screen's trusted rules and resolver."""
     from flats.rules.loader import law_on
 
     layers = load_trusted(strict=False, on=law_on()).layers
@@ -73,8 +75,12 @@ def fill_sql(sources: Sequence[PriceSource] = PRICE_SOURCES, *, only_run: bool =
     scope = "AND l.updated_run_id = $3::bigint" if only_run else ""
     return f"""
         INSERT INTO flats.lot_prices
-            (lot_id, snapshot_id, amount, source, as_of, area_sqft, cap_du_per_acre, cap_unit_lot_sqft)
-        SELECT l.id, l.snapshot_id, {amount}, {source}, {as_of}, l.area_sqft, c.du_per_acre, c.unit_lot_sqft
+            (lot_id, snapshot_id, amount, source, as_of, area_sqft, net_area_sqft,
+             cap_du_per_acre, cap_unit_lot_sqft, cap_max_units, cap_du_per_acre_net)
+        SELECT l.id, l.snapshot_id, {amount}, {source}, {as_of}, l.area_sqft,
+               CASE WHEN (l.facts ->> 'net_area_sqft') ~ {_quote(_NUMBER)}
+                    THEN (l.facts ->> 'net_area_sqft')::numeric END,
+               c.du_per_acre, c.unit_lot_sqft, c.max_units, COALESCE(c.du_per_acre_net, false)
         FROM flats.lots l
         CROSS JOIN LATERAL (SELECT {lateral}) a
         LEFT JOIN tmp_zone_caps c
@@ -90,8 +96,11 @@ def fill_sql(sources: Sequence[PriceSource] = PRICE_SOURCES, *, only_run: bool =
             source = EXCLUDED.source,
             as_of = EXCLUDED.as_of,
             area_sqft = EXCLUDED.area_sqft,
+            net_area_sqft = EXCLUDED.net_area_sqft,
             cap_du_per_acre = EXCLUDED.cap_du_per_acre,
-            cap_unit_lot_sqft = EXCLUDED.cap_unit_lot_sqft
+            cap_unit_lot_sqft = EXCLUDED.cap_unit_lot_sqft,
+            cap_max_units = EXCLUDED.cap_max_units,
+            cap_du_per_acre_net = EXCLUDED.cap_du_per_acre_net
     """
 
 
@@ -114,12 +123,16 @@ async def refresh(
     as_of = county_as_of(snap["rlis_release"], snap["snapshot_date"])
     await conn.execute("DROP TABLE IF EXISTS pg_temp.tmp_zone_caps")
     await conn.execute(
-        "CREATE TEMP TABLE tmp_zone_caps (layer text, zone text, du_per_acre numeric, unit_lot_sqft numeric) "
+        "CREATE TEMP TABLE tmp_zone_caps (layer text, zone text, du_per_acre numeric, unit_lot_sqft numeric, "
+        "max_units numeric, du_per_acre_net boolean) "
         "ON COMMIT DROP"
     )
     await conn.executemany(
-        "INSERT INTO tmp_zone_caps VALUES ($1, $2, $3, $4)",
-        [(layer, zone, cap.du_per_acre, cap.unit_lot_sqft) for (layer, zone), cap in caps.items()],
+        "INSERT INTO tmp_zone_caps VALUES ($1, $2, $3, $4, $5, $6)",
+        [
+            (layer, zone, cap.du_per_acre, cap.unit_lot_sqft, cap.max_units, cap.density_on_net_area)
+            for (layer, zone), cap in caps.items()
+        ],
     )
     sql = fill_sql(sources, only_run=run_id is not None)
     args: list[Any] = [snapshot_id, as_of] + ([run_id] if run_id is not None else [])

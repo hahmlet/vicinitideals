@@ -242,3 +242,15 @@ def test_every_review_screen_is_one_click_from_anywhere(
     page.locator(".sidebar").get_by_role("link", name="Words").first.click()
     page.wait_for_load_state("domcontentloaded")
     assert page.url.rstrip("/").endswith("/flats/words")
+
+
+def test_the_gaps_page_shows_citation_kinds(logged_in_page: Page, base_url: str) -> None:
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/gaps")
+
+    if page.locator("#citations").count() == 0:
+        pytest.skip("no misattributed citations in the ledger")
+
+    expect(page.locator("#citation-kinds")).to_be_visible()
+    if page.locator("#citations-harmless").count():
+        expect(page.locator("#citations-harmless summary")).to_contain_text("probably harmless")

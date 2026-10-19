@@ -40,7 +40,7 @@
         #}
         <span class="badge badge-yellow">a reviewer read this and rejected it</span>
       {% else %}
-        <span class="badge">{{ chain.answer.status }} — read off the source, not yet confirmed by a person</span>
+        <span class="badge">{{ chain.answer_status_words }} — read off the source, not yet confirmed by a person</span>
       {% endif %}
       {% if chain.answer.ambiguous %}
         <span class="badge badge-red">two exceptions tie — not an answer</span>
@@ -83,7 +83,7 @@
         {% for step in chain.steps %}
         <tr{% if step.won %} style="background:var(--ok-bg,#f0fdf4)"{% endif %}>
           <td>{{ step.label }}</td>
-          <td class="muted" style="font-size:11px">{{ step.kind }}{% if step.origin == "defaults" %} · layer default{% endif %}</td>
+          <td class="muted" style="font-size:11px">{{ step.kind_words }}{% if step.origin == "defaults" %} · layer default{% endif %}</td>
           <td class="col-right">{{ step.base.value if step.base else "—" }}</td>
           <td style="font-size:12px">
             {% if step.silent %}says nothing about this standard

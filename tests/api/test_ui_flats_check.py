@@ -562,6 +562,42 @@ def test_what_was_set_aside_includes_the_located_refusals():
         assert {"quote": item.quote, "why": item.why} in held
 
 
+def test_one_documents_set_aside_matches_the_whole_corpus_answer():
+    """The per-document path must give exactly what the all-layer one does."""
+    whole = check._set_aside_by_document()
+    by_layer: dict[str, str] = {}
+    for document in sorted(whole):
+        by_layer.setdefault(document.rpartition("/")[0], document)
+    sample = list(by_layer.values())[:6]
+    assert sample
+
+    for document in sample:
+        assert list(check._set_aside_in(document)) == whole[document]
+    assert check._set_aside_in("or/nowhere/none.txt") == ()
+
+
+def test_a_cards_set_aside_surveys_one_layers_reading_queue_not_all(monkeypatch):
+    from flats.encode import worklist
+
+    document = next(iter(check._set_aside_by_document()))
+    calls: list[str] = []
+    real = worklist.cards
+
+    def counting(layer, *args, **kwargs):
+        calls.append(layer.layer)
+        return real(layer, *args, **kwargs)
+
+    monkeypatch.setattr(worklist, "cards", counting)
+    check._set_aside_in.cache_clear()
+    try:
+        check._set_aside_in(document)
+        check._set_aside_in(document)
+    finally:
+        check._set_aside_in.cache_clear()
+
+    assert calls == [document.rpartition("/")[0]]
+
+
 async def test_an_exempt_standard_is_asked_as_not_applying(client, session, monkeypatch):
     await _login(client, session)
     monkeypatch.setattr(check, "_exempt", lambda layer, row: True)
@@ -632,3 +668,210 @@ async def test_a_reopened_no_is_asked_again_with_what_was_said_before(client, se
     # Off the problems list until answered again; the history keeps the "No".
     assert f"{LAYER} | {no['zone']} | {no['field']}" not in (await client.get("/flats/check/problems.txt")).text
     assert await reopen.reopen(session, LAYER) == [], "a reopened question is not reopened twice"
+
+
+WEB_LAYER = "or/clackamas/lake-oswego"
+
+
+def _web_row() -> dict:
+    """A Lake Oswego number whose cited lines state it in words we can tint."""
+    layer = check._layers()[WEB_LAYER]
+    for row in check._rows(layer, set()):
+        assert row["web"], "fixture assumption: Lake Oswego is published only as web pages"
+        if any(p["hit"] for line in check._web_text(row) for p in line["parts"]):
+            return row
+    raise AssertionError("no Lake Oswego number is stated in its cited lines")
+
+
+def _web_footnote_row() -> tuple[dict, str]:
+    """A Lake Oswego number whose cited lines carry a readable footnote."""
+    layer = check._layers()[WEB_LAYER]
+    for row in check._rows(layer, set()):
+        if row["web"]:
+            marks = check._web_marks(row["quote"])
+            if marks:
+                return row, marks[0]
+    raise AssertionError("no Lake Oswego number has a cited footnote")
+
+
+@pytest.fixture
+def _no_pages(monkeypatch):
+    def refuse(row):
+        raise AssertionError("a web code has no page to place a box on")
+
+    monkeypatch.setattr(check, "_placed", refuse)
+
+
+async def test_a_web_code_card_shows_the_stored_text_not_a_page(client, session, _no_pages):
+    await _login(client, session)
+    row = _web_row()
+
+    response = await client.get(
+        f"/flats/check/{WEB_LAYER}", params={"zone": row["zone"], "field": row["field"], "when": row["when"]}
+    )
+
+    assert response.status_code == 200
+    assert "data-web-code" in response.text
+    assert "web code &mdash; no printed page" in response.text
+    assert "check-web-cited" in response.text
+    assert "check-web-num" in response.text
+    assert "/flats/sheet/" not in response.text
+    assert "data-flag" in response.text
+    assert "name=\"flag_web\"" in response.text
+    assert "data-answer=\"matches\"" in response.text
+
+
+async def test_a_web_code_answer_is_stored_in_the_same_table_with_no_page(client, session, _no_pages):
+    user = await _login(client, session)
+    row = _web_row()
+
+    response = await client.post(
+        "/ui/flats/check",
+        data={
+            "layer_id": WEB_LAYER,
+            "zone": row["zone"],
+            "field": row["field"],
+            "when": row["when"],
+            "question": "value",
+            "answer": "differs",
+            "says": "something else",
+        },
+    )
+
+    assert response.status_code == 200
+    saved = (await session.execute(select(FlatsPageCheck))).scalars().one()
+    assert (saved.page, saved.placed) == (None, "web")
+    assert saved.fingerprint == row["mark"]
+    assert saved.quote == row["quote"]
+    assert saved.reviewer_user_id == user.id
+    assert len(saved.book_sha256) == 64
+    text = await client.get("/flats/check/problems.txt")
+    assert "web code, no printed page" in text.text
+
+
+async def test_a_web_code_footnote_not_printed_on_the_number_is_refused(client, session, _no_pages):
+    await _login(client, session)
+    row = _web_row()
+    form = {"layer_id": WEB_LAYER, "zone": row["zone"], "field": row["field"], "when": row["when"]}
+
+    response = await client.post("/ui/flats/check", data={**form, "question": "note:99", "answer": "no_change"})
+
+    assert "not printed on this number" in response.text
+    assert (await session.execute(select(FlatsPageCheck))).first() is None
+
+
+async def test_a_web_code_flag_is_stored_like_a_page_flag_with_no_page(client, session, _no_pages):
+    await _login(client, session)
+    row = _web_row()
+    form = {"layer_id": WEB_LAYER, "zone": row["zone"], "field": row["field"], "when": row["when"]}
+
+    response = await client.post(
+        "/ui/flats/check",
+        data={**form, "question": "value", "action": "flag", "flag_web": "1", "comment": "a setback nobody encoded"},
+    )
+
+    assert "flag saved" in response.text
+    assert "a setback nobody encoded" in response.text
+    assert 'name="question" value="value"' in response.text
+    saved = (await session.execute(select(FlatsPageCheck))).scalars().one()
+    assert (saved.question, saved.answer, saved.page, saved.placed) == ("page:web", "unmarked", None, "web")
+    assert len(saved.book_sha256) == 64
+    text = await client.get("/flats/check/problems.txt")
+    assert "web code, no printed page" in text.text
+    assert "the page says: a setback nobody encoded" in text.text
+
+
+async def test_a_flag_on_a_printed_card_cannot_name_the_web(client, session):
+    await _login(client, session)
+    row = _first_row()
+
+    response = await client.post(
+        "/ui/flats/check",
+        data=_form(row, action="flag", flag_web="1", comment="nope"),
+    )
+
+    assert "pick one of the answers" in response.text
+    assert (await session.execute(select(FlatsPageCheck))).first() is None
+
+
+async def test_a_web_code_footnote_is_asked_after_the_number_and_answered_with_no_page(
+    client, session, _no_pages, monkeypatch
+):
+    await _login(client, session)
+    row = check._rows(check._layers()[WEB_LAYER], set())[0]
+    monkeypatch.setattr(check, "_web_marks", lambda quote: ("2",))
+    form = {"layer_id": WEB_LAYER, "zone": row["zone"], "field": row["field"], "when": row["when"]}
+
+    after = await client.post("/ui/flats/check", data={**form, "question": "value", "answer": "matches"})
+
+    assert "Note <strong>2</strong> is printed in the cited text of this number" in after.text
+    assert "data-flag" in after.text
+    assert "data-web-code" in after.text
+    await client.post("/ui/flats/check", data={**form, "question": "note:2", "answer": "have_it"})
+    saved = (await session.execute(select(FlatsPageCheck).order_by(FlatsPageCheck.id))).scalars().all()
+    assert [(s.question, s.answer, s.page, s.placed) for s in saved] == [
+        ("value", "matches", None, "web"),
+        ("note:2", "have_it", None, "web"),
+    ]
+
+
+async def test_a_web_footnote_card_highlights_its_marker(client, session, _no_pages):
+    await _login(client, session)
+    row, mark = _web_footnote_row()
+    form = {"layer_id": WEB_LAYER, "zone": row["zone"], "field": row["field"], "when": row["when"]}
+
+    response = await client.post(
+        "/ui/flats/check",
+        data={**form, "question": f"note:{mark}", "answer": "invalid"},
+    )
+
+    assert f"Note <strong>{mark}</strong> is printed in the cited text of this number" in response.text
+    assert f'<span class="check-web-mark">{mark}</span>' in response.text
+
+
+async def test_printed_numbers_queue_before_web_numbers_and_keep_their_card(client, session):
+    await _login(client, session)
+    rows = check._rows(check._layers()["or/clackamas/happy-valley"], set())
+    flags = [r["web"] for r in rows]
+    assert flags == sorted(flags), "printed numbers come first"
+    assert not flags[0] and flags[-1], "fixture assumption: Happy Valley has both kinds"
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert "data-web-code" not in response.text
+    assert "check-box-value" in response.text
+    assert f"/flats/sheet/{_first_row()['document']}?page=1" in response.text
+
+async def test_walking_every_web_number_reads_each_stored_text_once(monkeypatch):
+    """The queue walk once read a file per web number (~1,500 reads); it must
+    cost one read per distinct document. Counts reads, not seconds."""
+    from types import SimpleNamespace
+
+    from flats.provenance.store import ProvenanceStore
+
+    reads: list[str] = []
+    real = ProvenanceStore.load
+
+    def counting(self, document, *a, **kw):
+        reads.append(document)
+        return real(self, document, *a, **kw)
+
+    monkeypatch.setattr(ProvenanceStore, "load", counting)
+    for cached in (check._web_lines, check._web_marks):
+        cached.cache_clear()
+
+    web_documents: set[str] = set()
+    for layer in check._layers().values():
+        rows = [r for r in check._rows(layer, set()) if r["web"]]
+        web_documents |= {r["document"] for r in rows}
+        answers = {
+            (layer.layer, r["zone"], r["field"], r["when"], "value"): SimpleNamespace(
+                fingerprint=r["mark"], answer="matches", id=0
+            )
+            for r in rows
+        }
+        reads.clear()
+        for _ in check._questions(layer, rows, answers):
+            pass
+        assert len(reads) <= len({r["document"] for r in rows}), "a web text was read per number"
+    assert web_documents, "fixture assumption: some numbers are in web-published codes"

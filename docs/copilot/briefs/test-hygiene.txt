@@ -1,0 +1,5 @@
+Test and dead-code hygiene; no behaviour change:
+(1) flats/tests/test_permit.py:147 `assert "MDR-12" in wrote or True` is vacuous. Change to `assert "MDR-12" not in wrote` after confirming (run it) that apply() on that fixture writes ['LDR-5'] only.
+(2) Blind pytest.raises(Exception) (ruff B017) in flats/tests/test_designs.py ~L261, test_legible.py ~L145, test_variants.py ~L817, ~L822, ~L1069: use the specific class (pydantic ValidationError, dataclasses.FrozenInstanceError, ValueError...) actually raised, with match= where there is a stable message. Do not touch the code under test.
+(3) flats/tests/test_missed.py ~L337 NamedTemporaryFile(delete=False) is never removed: write into tmp_path instead.
+(4) Delete the dead constant _MAX_WRAP in flats/encode/columns.py (~L222; grep the whole repo first). Unused loop variables (ruff B007): `question` at app/api/routers/ui_flats_check.py ~L1202, `j` at flats/fit/frontage.py ~L195, `layer` at flats/provenance/fetch.py ~L1283 and flats/provenance/pages.py ~L367 -- rename to _ or drop the unpacking. Behaviour must not change.

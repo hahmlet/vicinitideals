@@ -40,8 +40,10 @@ Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
 from __future__ import annotations
 
 import json
+import math
 import re
 from datetime import date, datetime, timezone
+from decimal import Decimal
 from functools import lru_cache
 from typing import Any, Mapping, Sequence
 from urllib.parse import quote
@@ -53,7 +55,6 @@ from sqlalchemy.exc import DBAPIError
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
-from app.config import settings
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import (
     FlatsCrossrefRuling,
@@ -73,7 +74,14 @@ from app.services import flats_refresh as refresh_service
 from app.services.flats_refresh import refresh_notices
 from flats.encode import legible
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
-from flats.encode.attribution import claimed_sections, section_at
+from flats.encode.attribution import (
+    HEADER_OR_XREF,
+    HEADING_OTHER_FILE,
+    HEADING_SAME_FILE,
+    UNLOCATED,
+    claimed_sections,
+    section_at,
+)
 from flats.encode.find import passages
 from flats.encode.gaps import digest as gaps_digest
 from flats.encode.gaps import read_ledger
@@ -155,6 +163,14 @@ _SAID = {
 #: What each gap cause means, said to somebody who is not going to run a
 #: command about it. The encoder's phrasing names modules and flags; a reviewer
 #: deciding where to spend an afternoon needs the shape of the work.
+_MISATTRIBUTION_KINDS = {
+    HEADING_SAME_FILE: "Printed under another heading in the same file",
+    HEADING_OTHER_FILE: "Printed under a heading in another file",
+    UNLOCATED: "Text found, section could not be located",
+    HEADER_OR_XREF: "Running header or cross-reference",
+}
+_REAL_KINDS = (HEADING_SAME_FILE, HEADING_OTHER_FILE, UNLOCATED)
+
 _CAUSE_WORDS = {
     "unofficial": "cites somebody's restatement of the code, not the code",
     "contested": "the file and the document state different numbers",
@@ -207,6 +223,29 @@ def _known_documents() -> frozenset[str]:
     return frozenset(_store().documents())
 
 
+_LAYER_KIND_WORDS = {
+    "state": "statewide rules",
+    "county": "countywide rules",
+    "city": "citywide rules",
+    "unincorporated": "unincorporated-area rules",
+}
+_REVIEW_STATUS_WORDS = {
+    "draft": "not yet reviewed",
+    "encoded": "awaiting confirmation",
+    "verified": "confirmed",
+    "stale": "source changed since review",
+    "disputed": "rejected by a reviewer",
+}
+_DESIGN_STATUS_WORDS = {
+    "active": "available for new screening",
+    "archived": "kept for older results",
+}
+
+
+def _display_words(value: str, words: Mapping[str, str]) -> str:
+    return words.get(value, value.replace("_", " ").lower())
+
+
 def _blocks(layer: Layer) -> list[tuple[str, dict[str, Value], str | None]]:
     out: list[tuple[str, dict[str, Value], str | None]] = [
         (_DEFAULTS, layer.defaults, None)
@@ -252,6 +291,7 @@ def _value_rows(layer: Layer) -> list[dict[str, Any]]:
                         "when": "+".join(when),
                         "when_label": ", ".join(when),
                         "status": number.status.value,
+                        "status_words": _display_words(number.status.value, _REVIEW_STATUS_WORDS),
                         "trusted": number.status is Status.verified,
                         "reviewer": number.reviewer,
                         "quote": number.prov.quote,
@@ -290,6 +330,7 @@ def _layer_summary(layer: Layer) -> dict[str, Any]:
         "id": layer.layer,
         "label": layer.label,
         "kind": layer.kind,
+        "kind_words": _display_words(layer.kind, _LAYER_KIND_WORDS),
         "eligible": layer.eligible,
         "zones": len(layer.zones),
         # Not "values". Jinja resolves an attribute before a key, so a dict
@@ -480,6 +521,7 @@ def _design_card(design: Design, plat: str) -> dict[str, Any]:
         "key": design.key,
         "label": design.label,
         "status": design.status.value,
+        "status_words": _display_words(design.status.value, _DESIGN_STATUS_WORDS),
         "width": design.footprint.width_ft,
         "depth": design.footprint.depth_ft,
         "ground": design.ground_sqft,
@@ -652,12 +694,15 @@ def _from_a_table(lines: Sequence[dict[str, Any]]) -> bool:
     return bool(cited) and hits * 2 >= len(cited)
 
 
-@lru_cache(maxsize=128)
+@lru_cache(maxsize=512)
 def _page_index(document: str) -> Any:
-    """A document's page map, if it has one and it still fits the stored text."""
+    """A document's page map, if it has one and it still fits the stored text.
+
+    Read once per process -- the store is baked in. Shared with ui_flats_check.
+    """
     try:
         return page_map.read(_store(), document)
-    except (ProvenanceError, OSError):
+    except Exception:  # noqa: BLE001 — a bad sidecar reads as no map
         return None
 
 
@@ -1344,6 +1389,19 @@ async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
         for layer_id, one in sorted(ledger["layers"].items())
         for item in one.get("misattributed", ())
     ]
+    for item in wrong:
+        item["kind_label"] = _MISATTRIBUTION_KINDS.get(item.get("kind"), "Unclassified")
+    wrong_real = sorted(
+        (w for w in wrong if w.get("kind") != HEADER_OR_XREF),
+        key=lambda w: (
+            _REAL_KINDS.index(w["kind"]) if w.get("kind") in _REAL_KINDS else len(_REAL_KINDS)
+        ),
+    )
+    wrong_harmless = [w for w in wrong if w.get("kind") == HEADER_OR_XREF]
+    kind_counts = [
+        (_MISATTRIBUTION_KINDS[k], sum(1 for w in wrong if w.get("kind") == k))
+        for k in (*_REAL_KINDS, HEADER_OR_XREF)
+    ]
     return templates.TemplateResponse(
         request,
         "flats_gaps.html",
@@ -1355,6 +1413,9 @@ async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
             "causes": _CAUSE_WORDS,
             "coverage": _coverage(),
             "misattributed": wrong,
+            "misattributed_real": wrong_real,
+            "misattributed_harmless": wrong_harmless,
+            "misattributed_kind_counts": kind_counts,
         },
     )
 
@@ -1621,6 +1682,7 @@ def _chain(layer_id: str, zone: str, field: str) -> dict[str, Any]:
                 "layer": layer.layer,
                 "label": layer.label,
                 "kind": layer.kind,
+                "kind_words": _display_words(layer.kind, _LAYER_KIND_WORDS),
                 "origin": origin,
                 "won": won,
                 "silent": number is None,
@@ -1634,6 +1696,9 @@ def _chain(layer_id: str, zone: str, field: str) -> dict[str, Any]:
         "zone": zone,
         "field": field,
         "answer": resolved,
+        "answer_status_words": (
+            _display_words(resolved.status.value, _REVIEW_STATUS_WORDS) if resolved else ""
+        ),
         "steps": steps,
         "verdict": resolution.verdict.value,
         # Taken off the encoded exceptions rather than off the resolution's
@@ -2765,6 +2830,10 @@ _VERDICT_WORDS = {
 _REASON_WORDS = {
     "RULE_UNVERIFIED": "a rule this rests on has not been signed",
     "RELIEF_UNCONFIRMED": "the exception it would ask for has not been read",
+    "SUSPECT_CONDO_UNKNOWN_AREA": "condominium interest; parcel area is not known",
+    "SUSPECT_CONDO_COMMON_AREA": "likely condominium common-element land; real land that is encumbered",
+    "SUSPECT_STACKED_UNIT": "likely a condominium unit in a larger building, not a lot the building sits on",
+    "CONDO_AIR_PARCEL": "condominium air parcel, not land",
     "CLOSER_LOOK_MIN_DENSITY": "closer look: the lot is big enough that the city wants more homes on it than four",
     "CLOSER_LOOK_SLOPE": "closer look: the ground under the building and its parking slopes between 5% and 15% — a stepped foundation or retaining walls to price",
     "CLOSER_LOOK_STEEP_COARSE": "closer look: the coarse elevation map shows ground too steep to build on where the building and its parking would go — the lot was screened as though it were buildable until the detailed lidar map or a survey checks it",
@@ -2863,12 +2932,14 @@ def _slope_words(slope: Mapping[str, Any] | None) -> dict[str, Any] | None:
     return {
         "grade_pct": grade,
         "grade_band": None if grade is None else ruling.band(float(grade), source),
-        "grade_map": _SLOPE_MAP_WORDS.get(source, source),
+        "grade_map": _SLOPE_MAP_WORDS.get(source, source.replace("_", " ")),
         "green_max": ruling.grade_green_max_pct,
         "red_over": ruling.grade_red_over_pct,
         "steep_over": ruling.steep_over_pct,
         "steep_sqft": slope.get("steep_sqft"),
-        "steep_map": _SLOPE_MAP_WORDS.get(slope.get("steep_source") or "", ""),
+        "steep_map": _SLOPE_MAP_WORDS.get(
+            slope.get("steep_source") or "", (slope.get("steep_source") or "").replace("_", " ")
+        ),
         "steep_blocks": bool(slope.get("steep_blocks")),
         "steep_unconfirmed": bool(slope.get("steep_unconfirmed")),
     }
@@ -2880,6 +2951,16 @@ def _said_reason(code: str) -> str:
     if code.startswith("quadfit:"):
         return f"the county map's measurement skipped it: {code[8:].replace('_', ' ')}"
     return code.replace("_", " ").lower()
+
+
+def _check_words(check: str) -> str:
+    """A check name in words, falling back to its lowercase spaced name."""
+    return _CHECK_WORDS.get(check, check.replace("_", " ")).lower()
+
+
+def _key_words(key: str) -> str:
+    """A compound flag key with its machine-style parts said as words."""
+    return " · ".join(_check_words(part) for part in key.split(flag_plan.SEP) if part)
 
 
 def _city_label(jurisdiction: str) -> str:
@@ -3039,7 +3120,7 @@ def _bind_rows(checks: Mapping[str, Any]) -> list[dict[str, Any]]:
         out.append(
             {
                 "check": check,
-                "words": _CHECK_WORDS.get(check, check.replace("_", " ")),
+                "words": _check_words(check),
                 "observed": b.get("observed"),
                 "threshold": b.get("threshold"),
                 "shortfall": b.get("shortfall"),
@@ -3078,7 +3159,7 @@ def _flag_rows(checks: Mapping[str, Any]) -> list[dict[str, Any]]:
             {
                 "code": code,
                 "what": what,
-                "key": str(f.get("key") or "").replace(flag_plan.SEP, " · "),
+                "key": _key_words(str(f.get("key") or "")),
                 "severity": severity,
                 "counts": line is not None and severity is not None and severity >= line,
                 "bounds": f.get("bounds"),
@@ -3114,7 +3195,7 @@ async def _flag_history(session: DBSession, county: str, tlid: str) -> list[dict
                 "id": row.id,
                 "code": row.code,
                 "what": kind.description if kind is not None else row.code.replace("-", " ").lower(),
-                "key": row.key.replace(flag_plan.SEP, " · "),
+                "key": _key_words(row.key),
                 "design": row.design_key,
                 "open": row.status == "open",
                 "severity": row.severity,
@@ -3210,8 +3291,14 @@ def _works_as(run_id: int, design: str | None, form: str) -> Any:
     return stmt.group_by(result.lot_id).having(want)
 
 
+def _no_nul(value: str) -> str:
+    """The text without NUL bytes, which Postgres cannot store or compare."""
+    return value.replace("\x00", "")
+
+
 def _lot_conditions(jurisdiction: str, zone: str, q: str) -> list[Any]:
     lot = FlatsLot
+    jurisdiction, zone, q = _no_nul(jurisdiction), _no_nul(zone), _no_nul(q)
     conditions: list[Any] = []
     if jurisdiction:
         conditions.append(lot.jurisdiction == jurisdiction)
@@ -3303,10 +3390,13 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         "flags": flags,
         "colour_today": _colour_today(checks),
         "head": checks.get("head"),
+        "head_words": _check_words(str(checks.get("head") or "")),
         "why": _why(colour, ruled, binds, flags, checks.get("head")),
         "failing": list(checks.get("failing") or []),
         "unchecked": list(checks.get("unchecked") or []),
+        "unchecked_words": [_check_words(str(check)) for check in checks.get("unchecked") or []],
         "binding": list(row.binding or []),
+        "binding_words": [_check_words(str(check)) for check in row.binding or []],
         "slack_ft": float(row.slack_ft) if row.slack_ft is not None else None,
         "fits": checks.get("fits") if screened else None,
         "fit": fit,
@@ -3338,11 +3428,18 @@ def _result_card(row: FlatsLotResult) -> dict[str, Any]:
         "stalls_seated": stalls.get("seated"),
         "band": stalls.get("band"),
         "ask": checks.get("ask"),
+        "ask_words": str(checks.get("ask") or "").replace("_", " "),
         "unknown_facts": list(leaning.get("unknown") or []),
+        "unknown_facts_words": [
+            _check_words(str(fact)) for fact in leaning.get("unknown") or []
+        ],
         "assumed_facts": list(leaning.get("assumed") or []),
         # Which of the pod's two forms works here (Steph 2026-10-15); None
         # for a run screened before both were.
         "forms": _forms_words(checks.get("forms")) if screened else None,
+        "assumed_facts_words": [
+            _check_words(str(fact)) for fact in leaning.get("assumed") or []
+        ],
     }
 
 
@@ -3381,12 +3478,15 @@ def _net_land(lot: FlatsLot) -> list[dict[str, Any]]:
                 "fields": [],
                 "less": [net_area_shown.get(k, k.replace("_", " ")) for k in net.less],
                 "may_less": [net_area_shown.get(k, k.replace("_", " ")) for k in net.may_less],
-                "assumed_none": list(net.assumed_none),
+                "assumed_none": [_check_words(str(name)) for name in net.assumed_none],
             },
         )
         field = FIELDS.get(name)
         entry["fields"].append(field.shown if field is not None else name.replace("_", " "))
     return list(out.values())
+
+
+_MAX_CEILING = Decimal(10) ** 12
 
 
 def _price_params(on: str, ceiling: str, pod: str, road: str) -> dict[str, Any]:
@@ -3396,6 +3496,8 @@ def _price_params(on: str, ceiling: str, pod: str, road: str) -> dict[str, Any]:
     amount = price_calc.as_decimal(ceiling)
     if amount is None or amount <= 0:
         amount = cfg.default_per_home_max
+    # A ceiling past what the database's numeric type can compare against overflows it.
+    amount = min(amount, _MAX_CEILING)
     return {"cfg": cfg, "on": on == "1", "ceiling_value": amount, "ceiling": amount if on == "1" else None}
 
 
@@ -3414,6 +3516,7 @@ def _price_label(lot: FlatsLot, colour: int, cfg: price_calc.PriceSettings, as_o
     """The lot's price per home and how it was reached, for the page."""
     facts = lot.facts or {}
     cap = _zone_caps().get((_pocket_of(facts) or lot.jurisdiction, lot.zone or ""))
+    net_area = price_calc.as_decimal(facts.get("net_area_sqft"))
     got = price_calc.price_per_home(
         lot.area_sqft, facts, cfg, cap=cap, keep_one=colour <= 1, county_as_of=as_of
     )
@@ -3441,7 +3544,11 @@ def _price_label(lot: FlatsLot, colour: int, cfg: price_calc.PriceSettings, as_o
         "pod_sqft": float(cfg.pod_sqft),
         "road_pct": float(cfg.road_share_pct),
         "density_du_per_acre": float(cap.du_per_acre) if cap and cap.du_per_acre is not None else None,
+        "density_on_net_area": bool(
+            cap and cap.density_on_net_area and net_area is not None and net_area >= 0
+        ),
         "unit_lot_sqft": float(cap.unit_lot_sqft) if cap and cap.unit_lot_sqft is not None else None,
+        "max_units": float(cap.max_units) if cap and cap.max_units is not None else None,
     }
 
 
@@ -3598,6 +3705,7 @@ def _lots_ctx(
         "runs": [_run_card(r) for r in runs],
         "run": _run_card(run) if run is not None else None,
         "cities": cities,
+        "design_labels": {item.key: item.label for item in _designs()},
         "jurisdiction": jurisdiction,
         "zone": zone,
         "colour": colour if colour in _COLOURS else "",
@@ -3864,8 +3972,9 @@ async def flats_lots(
     sort: str = Query(""),
     form: str = Query(""),
     run: int | None = Query(None),
-    page: int = Query(1, ge=1),
+    page: int = Query(1, ge=1, le=100000),
 ) -> HTMLResponse:
+    jurisdiction, zone, q = _no_nul(jurisdiction), _no_nul(zone), _no_nul(q)
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     runs = await _runs(session)
@@ -4023,6 +4132,41 @@ def _plan(geojson: str | None, drawing: dict[str, Any] | None) -> dict[str, Any]
     }
 
 
+def _alley_coverage_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
+    """Describe measured partial alley coverage as lot-page fact rows."""
+    entries = facts.get("alley_coverage")
+    if not isinstance(entries, list):
+        return []
+    rows: list[tuple[str, str]] = []
+    for entry in entries:
+        if not isinstance(entry, dict) or not isinstance(entry.get("line"), str):
+            continue
+        if entry["line"] not in {"rear", "side"}:
+            continue
+        try:
+            covered = float(entry["covered_ft"])
+            line = float(entry["line_ft"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if not math.isfinite(covered) or not math.isfinite(line) or line <= 0 or not 0 < covered < line:
+            continue
+        count = entry.get("line_count")
+        number = entry.get("line_number")
+        line_name = entry["line"].title()
+        if isinstance(count, int) and count > 1 and isinstance(number, int) and number > 0:
+            line_name += f" line {number}"
+        else:
+            line_name += " line"
+        rows.append(
+            (
+                f"{line_name} alley cover",
+                f"{covered:,.1f} ft of {line:,.1f} ft ({covered / line:.0%}); "
+                "only the covered stretch counts as alley.",
+            )
+        )
+    return rows
+
+
 def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
     """The facts the screen read, as label / value pairs a person can scan.
     Only what is present is listed; a missing fact is left out rather than
@@ -4069,6 +4213,7 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
         ("Alley at the rear", yes(observed.get("alley_at_rear"))),
         ("Alley at the side", yes(observed.get("alley_at_side"))),
         ("Alley width", ft(facts.get("alley_width_ft"))),
+        *_alley_coverage_rows(facts),
         ("On a cul-de-sac bulb", yes(facts.get("fronts_cul_de_sac"))),
         # Gresham measures its street setbacks from a sidewalk easement where
         # there is one, and nothing maps them: the screen takes the deepest
@@ -4089,7 +4234,7 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
             " / ".join(
                 f"{float(slope[k]):.0f}%" for k in ("mean_pct", "p85_pct", "max_pct") if slope.get(k) is not None
             )
-            + (f" ({slope['source']})" if slope.get("source") else ""),
+            + (f" ({str(slope['source']).replace('_', ' ')})" if slope.get("source") else ""),
         ),
         ("Public sewer", yes(observed.get("public_sewer"))),
         ("In a sewer district", yes(sewer.get("in_district"))),
@@ -4103,7 +4248,13 @@ def _fact_rows(facts: dict[str, Any]) -> list[tuple[str, str]]:
         ("Nearest frequent bus or rail line", ft(transit.get("frequent_route_ft"))),
         ("Nearest transit stop", ft(transit.get("transit_stop_ft"))),
         # The assessor's roll, adopted from the county copy on every refresh.
-        ("Condo", f"{condo['verdict']}" + (f" ({condo['reason']})" if condo.get("reason") else "") if condo.get("verdict") and condo["verdict"] != "land" else ""),
+        (
+            "Condo",
+            f"{condo['verdict']}"
+            + (f" ({_said_reason(str(condo['reason']))})" if condo.get("reason") else "")
+            if condo.get("verdict") and condo["verdict"] != "land"
+            else "",
+        ),
         ("Assessed value", money(roll.get("assessed_value"))),
         ("Real market value (land / building / total)", " / ".join(money(roll.get(k)) or "-" for k in ("land_value", "building_value", "total_value")) if any(roll.get(k) is not None for k in ("land_value", "building_value", "total_value")) else ""),
         ("Year built", str(roll["year_built"]) if roll.get("year_built") else ""),
@@ -4154,7 +4305,7 @@ async def _lot_decisions(session: DBSession, county: str, tlid: str) -> list[dic
             {
                 "id": d.id,
                 "design": d.design_key or "either design",
-                "check": d.check_code,
+                "check": _check_words(d.check_code),
                 "verdict": d.verdict,
                 "badge": _BADGE.get(d.verdict, "badge-gray"),
                 "reason": d.reason,
@@ -4252,6 +4403,7 @@ async def _lot_view(
 ) -> tuple[FlatsLot, str | None, float | None, float | None, dict[str, Any]] | None:
     """The lot as the chosen run read it, with its card; None when the lot is
     unknown. The lot page and the JSON lookup both read it here."""
+    county, tlid = _no_nul(county), _no_nul(tlid)
     # The lot as the chosen run read it: a run's results point at the lot
     # rows of the county copy it screened, so the row is looked up in that
     # copy. A run that names no copy falls back to the newest row for the id.
@@ -4288,6 +4440,15 @@ async def _lot_view(
     return lot, geojson, lat, lon, card
 
 
+def _quadfit_words(quadfit: Mapping[str, Any]) -> dict[str, Any]:
+    """Keep the county result intact while saying its codes on the lot page."""
+    out = dict(quadfit)
+    for key in ("binding_constraint", "policy_exclusion", "layout_method"):
+        if out.get(key):
+            out[key] = _check_words(str(out[key]))
+    return out
+
+
 @router.get("/flats/lots/{county}/{tlid:path}", response_class=HTMLResponse)
 async def flats_lot(
     request: Request,
@@ -4298,6 +4459,7 @@ async def flats_lot(
     pod: str = Query(""),
     road: str = Query(""),
 ) -> HTMLResponse:
+    county, tlid = _no_nul(county), _no_nul(tlid)
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
     runs = await _runs(session)
@@ -4333,7 +4495,7 @@ async def flats_lot(
             "flag_history": await _flag_history(session, county, tlid),
             "facts": _fact_rows(facts),
             "net_land": _net_land(lot),
-            "quadfit": facts.get("quadfit") or {},
+            "quadfit": _quadfit_words(facts.get("quadfit") or {}),
             "quadfit_jurisdiction": facts.get("quadfit_jurisdiction") or "",
             "outline": _outline(geojson),
             "lat": lat,
@@ -4635,7 +4797,7 @@ async def flats_book_view(
     request: Request,
     session: DBSession,
     ref: str = Query(...),
-    page: int = Query(1),
+    page: int = Query(1, ge=1, le=100000),
 ) -> HTMLResponse:
     """The embedded viewer for one citation, swapped in when a reviewer asks.
 

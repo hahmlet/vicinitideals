@@ -10,7 +10,7 @@
     <div>
       <h2 style="margin:0">{{ layer.label }}</h2>
       <div class="muted" style="font-size:12px">
-        <a href="/flats">All jurisdictions</a> · {{ layer.id }} · {{ layer.kind }}
+        <a href="/flats">All jurisdictions</a> · {{ layer.id }} · {{ layer.kind_words }}
         {% if not layer.eligible %} · <strong>not screened</strong>{% endif %}
       </div>
     </div>
@@ -82,7 +82,7 @@
             {% else %}{{ row.field }}{% endif %}
           </td>
           <td class="muted" style="font-size:11px">{{ row.when_label or "always" }}</td>
-          <td class="col-right">{{ row.value }}</td>
+          <td class="col-right">{{ row.value if row.value is not none else "—" }}</td>
           <td>
             {% if row.trusted %}
               <span class="badge badge-green">verified</span>
@@ -91,7 +91,7 @@
               {# Somebody looked and said no. A plain badge would read as unread. #}
               <span class="badge badge-yellow">rejected</span>
             {% else %}
-              <span class="badge">{{ row.status }}</span>
+              <span class="badge">{{ row.status_words }}</span>
             {% endif %}
             {% if row.restated %}
               <div class="muted" style="font-size:11px">changed since it was reviewed</div>

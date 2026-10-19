@@ -122,6 +122,7 @@ _LABELS: dict[str, str] = {
     "parking_area_max_frontage_pct": "max. parking share of frontage",
     "parking_area_max_width_ft": "max. parking area width",
     "parking_area_frontage_any_street": "parking share capped on every street frontage",
+    "parking_area_frontage_front_yard": "parking share capped in the front yard(s)",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
@@ -954,6 +955,24 @@ _F: tuple[FieldDef, ...] = (
         "building (`driveway_max_frontage_pct` holds a driveway cap).",
     ),
     FieldDef(
+        "parking_area_frontage_front_yard",
+        "bool",
+        "True where `parking_area_max_frontage_pct` (and "
+        "`parking_area_max_width_ft` beside it) caps the parking IN THE FRONT "
+        "YARD, and the code's front yard is the yard off its front lot line "
+        "alone: held on each line the code names a front -- both ends of a "
+        "through lot where it asks a front yard on each street -- and NOT on "
+        "a corner lot's side street, whose yard the code names otherwise. "
+        "Oregon City 17.16.060.D caps \"off-street parking areas in the "
+        "front yard\"; 17.04.1515 runs the front yard off the front lot "
+        "line, 17.04.490 makes a corner lot's front lot line the one with the "
+        "narrowest frontage, and 17.04.1530 names the corner side yard apart "
+        "(FOLLOWUPS 84 phase 3). Steph's any-street ruling of 2026-10-14 "
+        "answered caps on a share of \"street frontage\"; the stated words "
+        "govern where a code says front yard. Measured on the drawn plan as "
+        "`parking_area_frontage_any_street` is, on the front lines only.",
+    ),
+    FieldDef(
         "parking_front_yard_max_pct",
         "percent",
         "Most of the ground between the front lot line and the front building "
@@ -1662,6 +1681,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_area_max_frontage_pct",
         "parking_area_max_width_ft",
         "parking_area_frontage_any_street",
+        "parking_area_frontage_front_yard",
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
         "parking_alley_access_required",

@@ -58,7 +58,7 @@
       <select name="design">
         <option value="" {% if not design %}selected{% endif %}>Either design</option>
         {% for key in designs %}
-          <option value="{{ key }}" {% if key == design %}selected{% endif %}>{{ key }}</option>
+          <option value="{{ key }}" {% if key == design %}selected{% endif %}>{{ design_labels.get(key, key) }}</option>
         {% endfor %}
       </select>
     </label>

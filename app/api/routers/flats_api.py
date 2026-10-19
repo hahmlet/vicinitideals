@@ -146,6 +146,7 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
     `pending_changes` are adopted code changes not yet in force. Get the county
     and tlid from flats_find_lot; a TLID contains spaces, pass it exactly.
     Answers from the live run (`run`); 404 when the lot is unknown."""
+    county, tlid = lots._no_nul(county), lots._no_nul(tlid)
     run = lots._default_run(await lots._runs(session))
     view = await lots._lot_view(session, county, tlid, run, plans=False)
     if view is None:
@@ -177,6 +178,7 @@ async def flats_lot_report(session: DBSession, county: str, tlid: str) -> dict[s
         "decisions": await lots._lot_decisions(session, lot.county, lot.tlid),
         "flag_history": await lots._flag_history(session, lot.county, lot.tlid),
         "key_facts": [{"label": label, "value": value} for label, value in lots._fact_rows(facts)],
+        "alley_coverage": facts.get("alley_coverage") or [],
         "net_land": lots._net_land(lot),
         "rulings": [e.as_dict() for e in entries],
         # Adopted amendments carried on the zone itself, with whether the run shown applied them.

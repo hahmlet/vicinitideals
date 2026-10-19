@@ -22,8 +22,7 @@ whole point of provenance is that a machine does not get to make it.
 from __future__ import annotations
 
 import re
-import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Iterable, Sequence
 
 from flats.provenance.store import ProvenanceError, ProvenanceStore
@@ -91,6 +90,115 @@ _HEADING = re.compile(
 #: prints its running header once a page, so this only has to clear one page.
 _LOOK_BACK = 90
 
+#: How a disagreement is classified. Report-only: nothing reads these but the
+#: gaps ledger and this module's own report, and no class changes whether a
+#: disagreement is counted.
+#: (a) the claimed section is printed inside the cited lines -- a running
+#: header or a cross-reference, so the section reader likely took the wrong
+#: marker. Probably harmless, but not provably so.
+HEADER_OR_XREF = "header_or_xref"
+#: (b) the claimed section has a heading elsewhere in the same document.
+HEADING_SAME_FILE = "heading_same_file"
+#: (c) the claimed section has a heading only in another stored document.
+HEADING_OTHER_FILE = "heading_other_file"
+#: Nowhere in the corpus does a heading carry the claimed section.
+UNLOCATED = "unlocated"
+KINDS = (HEADER_OR_XREF, HEADING_SAME_FILE, HEADING_OTHER_FILE, UNLOCATED)
+
+_NOISE = re.compile(r"[\s\-–—§'\"“”‘’]+")
+
+
+def _same_section(a: str, b: str) -> bool:
+    """Equal, or one is a dotted extension of the other (19.302 / 19.302.4)."""
+    return a == b or a.startswith(b + ".") or b.startswith(a + ".")
+
+
+def _heading_number(line: str) -> str:
+    found = _HEADING.match(line)
+    if not found:
+        return ""
+    return (
+        found.group("s")
+        or found.group("m")
+        or found.group("n")
+        or (f"{found.group('t')}.{found.group('u')}" if found.group("t") else "")
+    )
+
+
+def _headings(lines: Iterable[str]) -> set[str]:
+    return {n for line in lines if (n := _heading_number(line))}
+
+
+def _span_ranges(quote: str) -> tuple[tuple[int, int], ...]:
+    out: list[tuple[int, int]] = []
+    for piece in quote.partition("#")[2].split(","):
+        first, _, last = piece.strip().replace("L", "").partition("-")
+        if first.isdigit():
+            out.append((int(first), int(last) if last.isdigit() else int(first)))
+    return tuple(out)
+
+
+def _printed_in(text: str, claimed: str) -> bool:
+    """Whether a section number is printed in text, tolerating spaces, hyphens,
+    quotes and section marks inside it, and not as part of a longer number."""
+    needle = _NOISE.sub("", claimed)
+    pattern = r"(?<![\d.])" + _NOISE.pattern.replace("+", "*").join(map(re.escape, needle))
+    return re.search(pattern + r"(?!\d)", text) is not None
+
+
+class CorpusHeadings:
+    """Every heading number of every stored document, read once and lazily."""
+
+    def __init__(self, store: ProvenanceStore) -> None:
+        self._store = store
+        self._by_document: dict[str, set[str]] | None = None
+
+    def other_than(self, document: str) -> Iterable[set[str]]:
+        if self._by_document is None:
+            self._by_document = {}
+            for path in self._store.documents():
+                try:
+                    text = self._store.load(path).text
+                except (ProvenanceError, OSError):
+                    continue
+                self._by_document[path] = _headings(text.splitlines())
+        return (found for path, found in self._by_document.items() if path != document)
+
+
+def classify(
+    item: Attribution,
+    lines: Sequence[str],
+    corpus: CorpusHeadings,
+) -> str:
+    """Which kind of disagreement this is. "" where the item agrees."""
+    if item.agrees:
+        return ""
+    claims = item.claimed.split()
+    cited = "\n".join(
+        "\n".join(lines[first - 1 : last])
+        for first, last in _span_ranges(item.quote)
+    )
+    if any(_printed_in(cited, one) for one in claims):
+        return HEADER_OR_XREF
+    outside = set()
+    covered: set[int] = set()
+    for first, last in _span_ranges(item.quote):
+        covered.update(range(first - 1, last))
+    for n, line in enumerate(lines):
+        if n not in covered and (number := _heading_number(line)):
+            outside.add(number)
+    if any(_same_section(one, h) for one in claims for h in outside):
+        return HEADING_SAME_FILE
+    document = item.quote.partition("#L")[0]
+    if any(
+        _same_section(one, h)
+        for found in corpus.other_than(document)
+        for one in claims
+        for h in found
+    ):
+        return HEADING_OTHER_FILE
+    return UNLOCATED
+
 
 @dataclass(frozen=True, slots=True)
 class Attribution:
@@ -102,6 +210,12 @@ class Attribution:
     quote: str
     claimed: str
     found: str
+    kind: str = ""
+
+    @property
+    def probably_harmless(self) -> bool:
+        """Whether the claimed section is printed in the cited lines themselves."""
+        return self.kind == HEADER_OR_XREF
 
     @property
     def agrees(self) -> bool:
@@ -212,8 +326,17 @@ def _values(layer: Layer) -> Iterable[tuple[str, str, object]]:
                 yield code, f"{name} [{'+'.join(variant.key)}]", variant
 
 
-def check(layer: Layer, store: ProvenanceStore) -> list[Attribution]:
-    """Every value in a layer, with the section it claims and the one it is in."""
+def check(
+    layer: Layer,
+    store: ProvenanceStore,
+    corpus: CorpusHeadings | None = None,
+) -> list[Attribution]:
+    """Every value in a layer, with the section it claims and the one it is in.
+
+    Each disagreement carries a ``kind``; pass one ``corpus`` across layers to
+    read the stored documents only once.
+    """
+    corpus = corpus or CorpusHeadings(store)
     out: list[Attribution] = []
     cache: dict[str, list[str]] = {}
     for zone, field, value in _values(layer):
@@ -239,17 +362,25 @@ def check(layer: Layer, store: ProvenanceStore) -> list[Attribution]:
             section = section_at(lines, first)
             if section and section not in here:
                 here.append(section)
-        out.append(
-            Attribution(
-                layer=layer.layer,
-                zone=zone,
-                field=field,
-                quote=quote,
-                claimed=" ".join(claimed_sections(value.prov.cite or "")),
-                found=" ".join(here),
-            )
+        item = Attribution(
+            layer=layer.layer,
+            zone=zone,
+            field=field,
+            quote=quote,
+            claimed=" ".join(claimed_sections(value.prov.cite or "")),
+            found=" ".join(here),
         )
+        out.append(replace(item, kind=classify(item, lines, corpus)))
     return out
+
+
+def tally(items: Iterable[Attribution]) -> dict[str, int]:
+    """Disagreements per kind; every kind present, zero included."""
+    counts = dict.fromkeys(KINDS, 0)
+    for one in items:
+        if not one.agrees:
+            counts[one.kind] += 1
+    return counts
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -268,19 +399,25 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     store = ProvenanceStore()
-    checked = disagreeing = 0
+    corpus = CorpusHeadings(store)
+    checked = 0
+    disagreeing: list[Attribution] = []
     for layer_id, layer in sorted(load_rules(strict=False).items()):
         if args.layer and not layer_id.startswith(args.layer):
             continue
-        for item in check(layer, store):
+        for item in check(layer, store, corpus):
             checked += 1
             if item.agrees:
                 if args.verbose:
                     print(f"  ok  {item.line()}")
                 continue
-            disagreeing += 1
-            print(item.line())
-    print(f"\n{disagreeing} of {checked} value(s) cite a section their text is not in")
+            disagreeing.append(item)
+            print(f"[{item.kind}] {item.line()}")
+    counts = tally(disagreeing)
+    real = len(disagreeing) - counts[HEADER_OR_XREF]
+    print(f"\n{len(disagreeing)} of {checked} value(s) cite a section their text is not in")
+    print(f"  {real} to review (heading elsewhere or unlocated)")
+    print(f"  {counts[HEADER_OR_XREF]} probably harmless (section printed in the cited lines)")
     return 1 if disagreeing else 0
 
 

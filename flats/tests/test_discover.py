@@ -162,9 +162,15 @@ def test_leads_sort_ahead_of_dead_ends(monkeypatch) -> None:
         raise AssertionError(url)
 
     monkeypatch.setattr(mod, "fetch", fake)
+    # The registry has its own fetch; left live, it asked api.municode.com and
+    # the answer depended on the network (unreadable registry = "blocked").
+    monkeypatch.setattr(mc, "fetch", fake)
+    mc.clients.cache_clear()
 
     # An empty registry is a real answer: Municode does not publish this city.
-    assert [c.verdict for c in mod.discover("l", "Gresham")] == [
+    verdicts = [c.verdict for c in mod.discover("l", "Gresham")]
+    mc.clients.cache_clear()
+    assert verdicts == [
         "index",
         "blocked",
         "missing",

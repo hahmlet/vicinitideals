@@ -320,3 +320,23 @@ def test_the_works_as_filter_narrows_the_list_and_the_lot_page_says_it_in_words(
     expect(said).to_be_visible()
     expect(said).to_contain_text("Works as: townhomes only")
     expect(said).to_contain_text("the apartment form")
+
+
+#: 1S2E05AB -11900: the rear alley covers only part of its line (FOLLOWUPS 3).
+PARTIAL_ALLEY_LOT = "/flats/lots/multnomah/1S2E05AB%20%20-11900"
+
+
+def test_a_lot_page_says_when_a_rear_alley_stops_short(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """The covered stretch is the alley, not the full rear line."""
+    page = logged_in_page
+    page.goto(f"{base_url}{PARTIAL_ALLEY_LOT}")
+    if page.locator("#lot-verdict").count() == 0:
+        pytest.skip("the partial-alley lot is not in this run")
+    row = page.locator("#lot-facts tr", has_text="Rear line alley cover")
+    if row.count() == 0:
+        pytest.skip("this run has no measured partial rear-alley coverage for the lot")
+    expect(row).to_contain_text(" ft of ")
+    expect(row).to_contain_text("%")
+    expect(row).to_contain_text("only the covered stretch counts as alley")

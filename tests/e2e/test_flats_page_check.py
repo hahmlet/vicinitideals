@@ -159,3 +159,23 @@ def test_a_card_opens_on_the_cited_page_with_its_neighbours_around_it(
     )
     top = page.locator("[data-cited]").first.bounding_box()["y"]
     assert -5 <= top <= 120, f"the cited page starts at the top of the screen, not {top}px down"
+
+
+WEB_LAYER = "or/clackamas/lake-oswego"
+
+
+def test_a_web_code_card_shows_stored_text_labelled_as_having_no_printed_page(
+    logged_in_page: Page, base_url: str
+) -> None:
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{WEB_LAYER}")
+
+    card = page.locator("#check-card [data-web-code]")
+    if card.count() == 0:
+        pytest.skip("no web-code card available on this instance")
+
+    expect(card).to_contain_text("web code — no printed page")
+    expect(card.locator(".check-web-cited").first).to_be_visible()
+    expect(page.locator("#check-card .check-sheet")).to_have_count(0)
+    expect(page.locator("[data-answer]").first).to_be_visible()
+    expect(page.locator("#check-card [data-flag]")).to_be_visible()

@@ -6,7 +6,9 @@ take applies on ANY street the lot has. Wilsonville, Hillsboro, Clackamas
 
 * **Oregon City** 17.16.030 D.1: "shall not exceed a total of forty feet
   wide or fifty percent of the lot frontage, whichever is less". Both limbs:
-  the share and the feet (``parking_area_max_width_ft``), every street.
+  the share and the feet (``parking_area_max_width_ft``), in the front
+  yard only (phase 3: 17.04.490, 17.04.1515, 17.04.1530; a through lot has
+  a front yard on each street, 17.08.045.B).
 * **Fairview** FMC 19.30.040(E)(2): "50 percent of the property street
   frontage". Every street.
 * **Troutdale** TDC 8.120.C.4.d: "fifty percent (50%) of the street
@@ -85,7 +87,6 @@ def quoted(ref: str) -> str:
 @pytest.mark.parametrize(
     ("layer", "zone", "words"),
     [
-        ("or/clackamas/oregon-city", "R-5", "forty feet wide or fifty per"),
         ("or/multnomah/fairview", "R-6", "50 percent of the property street frontage"),
         ("or/multnomah/troutdale", "MDR", "fifty percent (50%) of the street frontage"),
         ("or/clackamas/sandy", "R-2", "50 percent of the frontage of any public street"),
@@ -102,12 +103,50 @@ def test_the_half_frontage_cap_is_read_on_any_street(
     assert words in quoted(got["parking_area_max_frontage_pct"].prov.quote)
 
 
+def test_oregon_city_caps_the_front_yard_not_every_street(corpus: RuleSet) -> None:
+    # 17.16.060.D caps "off-street parking areas in the front yard"; the
+    # front yard runs off the front lot line (17.04.1515), a corner lot's is
+    # the narrowest frontage (17.04.490), and the corner side yard is a yard
+    # of its own (17.04.1530). A through lot keeps a front yard on each
+    # street (17.08.045.B). The stated words govern (FOLLOWUPS 84 phase 3).
+    got = corpus.resolve("or/clackamas/oregon-city", "R-5").values
+    assert got["parking_area_max_frontage_pct"].value == 50
+    assert got["parking_area_frontage_any_street"].value is False
+    front_yard = got["parking_area_frontage_front_yard"]
+    assert front_yard.value is True
+    text = quoted(front_yard.prov.quote)
+    for words in (
+        "off-street parking areas in the front yard",
+        "the front lot line is that with the nar",
+        "from the front lot line to the main building",
+        "front yard on each street",
+        "forty feet wide or fifty per",
+    ):
+        assert words in text, words
+
+
 def test_oregon_city_carries_the_forty_feet_limb(corpus: RuleSet) -> None:
-    for zone in ("R-10", "R-5", "R-2", "MUC-1"):
+    for zone in ("R-10", "R-5", "R-2"):
         got = corpus.resolve("or/clackamas/oregon-city", zone).values
         assert got["parking_area_max_width_ft"].value == 40, zone
     text = quoted(got["parking_area_max_width_ft"].prov.quote)
     assert "whichever is less" in text
+
+
+@pytest.mark.parametrize("zone", ["MUC-1", "MUC-2", "MUD", "C", "WFDD"])
+def test_oregon_city_mixed_use_takes_e_not_d(corpus: RuleSet, zone: str) -> None:
+    # D opens "In residential zones"; the mixed-use and commercial districts
+    # (17.06.030) take E: parking behind the street facade, below, or beside
+    # the building -- a location rule with no width or share. Its escape
+    # needs a topographic constraint nothing measures, so the ban binds.
+    got = corpus.resolve("or/clackamas/oregon-city", zone)
+    assert {"parking_area_max_width_ft", "parking_area_max_frontage_pct"} <= set(got.exempted)
+    assert got.get("parking_area_max_width_ft") is None
+    assert got.get("parking_area_max_frontage_pct") is None
+    ban = got.values["parking_front_prohibited"]
+    assert ban.value is True
+    assert "In mixed-use and commercial zones" in quoted(ban.prov.quote)
+    assert "parking_side_prohibited" in got.exempted
 
 
 def test_troutdale_lets_the_court_stand_in_front_inside_half_the_frontage(corpus: RuleSet) -> None:
@@ -301,14 +340,139 @@ def _screen(corpus: RuleSet, jurisdiction: str, zone: str, at, w: float, d: floa
     return s
 
 
-def test_oregon_city_measures_the_feet_on_a_corner_lot(corpus: RuleSet) -> None:
+def test_oregon_city_leaves_a_corner_lots_side_street_court_alone(corpus: RuleSet) -> None:
+    # The court behind the building faces the side street: the corner side
+    # yard, not the front yard 17.16.060.D caps. The front street sees none.
     s = _screen(corpus, "oregon_city", "R-5", OREGON_CITY, 140.0, 160.0, "corner")
+    width = check(s.screening, "parking_frontage_width")
+    assert width is not None
+    assert width.threshold == 40.0
+    assert width.observed == 0.0
+    assert width.verdict is Verdict.passes
+    share = check(s.screening, "parking_frontage_share")
+    assert share is not None and share.verdict is Verdict.passes
+
+
+def test_oregon_city_measures_the_feet_on_a_through_lots_far_street(corpus: RuleSet) -> None:
+    # A through lot has a front yard on each street (17.08.045.B): the court
+    # behind the building faces the far street, and is held to forty feet.
+    s = _screen(corpus, "oregon_city", "R-5", OREGON_CITY, 140.0, 200.0, "through")
     run_ft = s.facts.parking_frontage_run_ft
     assert run_ft is not None and run_ft > 0.0
     width = check(s.screening, "parking_frontage_width")
     assert width is not None
     assert width.observed == pytest.approx(run_ft)
     assert width.threshold == 40.0
+
+
+def test_the_front_yard_reads_the_named_front_streets_only() -> None:
+    corner = _edges([(0, 0, 80, 0, F), (80, 0, 80, 120, F), (80, 120, 0, 120, R), (0, 120, 0, 0, S)], [0.0, 90.0])
+    row = box(36, 60, 76, 102)
+    every = street_runs(LOT, corner, row, BUILDING)
+    assert max(ft for _, ft in every) > 0.0
+    assert street_runs(LOT, corner, row, BUILDING, front_deg=0.0) == ((0.0, 0.0),)
+    assert parking_share(LOT, corner, [row], BUILDING, front_deg=0.0) == (0.0, 0.0)
+    # Named the other way, the side street IS the front and is read.
+    assert street_runs(LOT, corner, row, BUILDING, front_deg=90.0) == (every[1],)
+    through = _edges([(0, 0, 80, 0, F), (80, 0, 80, 120, S), (80, 120, 0, 120, F), (0, 120, 0, 0, S)], [0.0])
+    assert street_runs(LOT, through, ROW, BUILDING, front_deg=0.0) == street_runs(LOT, through, ROW, BUILDING)
+
+
+# --- one street, one line: pieces merged, never dropped (phase 3) ------------
+
+
+def _lengths(edges) -> list[float]:
+    from flats.fit.frontage import street_chains
+
+    return sorted(round(sum(e.length_ft for e in c), 1) for c in street_chains(edges))
+
+
+def test_a_rounded_corner_and_a_step_are_pieces_of_the_two_streets() -> None:
+    # A corner lot whose county line rounds the corner in three chords and
+    # steps 6 ft in along the side street. Cut at every turn, that was five
+    # "streets" -- the shortest 6 ft, against which a 12 ft drive is 200
+    # percent. It is two: the front and the side street, every foot of each.
+    lines = [
+        (0, 0, 90, 0, F),
+        (90, 0, 96, 1.6, F),  # chords of the rounded corner
+        (96, 1.6, 98.4, 4, F),
+        (98.4, 4, 100, 10, F),
+        (100, 10, 100, 70, F),
+        (100, 70, 106, 70, F),  # a 6 ft step out along the side street
+        (106, 70, 106, 140, F),
+        (106, 140, 0, 140, R),
+        (0, 140, 0, 0, S),
+    ]
+    edges = _edges(lines, [0.0, 90.0])
+    total = sum(e.length_ft for e in edges.edges if e.cls is F)
+    got = _lengths(edges)
+    assert len(got) == 2
+    assert sum(got) == pytest.approx(total, abs=0.2)
+    # The front street with the chords nearer it; the side street with the
+    # step and the chord that turns into it.
+    assert got == pytest.approx([99.6, 142.2], abs=0.2)
+
+
+def test_a_genuinely_short_street_line_still_binds() -> None:
+    # 30 ft on the front street, 140 on the side: the 30 ft line is a street
+    # of its own and stays 30 ft (Beaverton 1S126BC01400 is this lot).
+    edges = _edges([(0, 0, 30, 0, F), (30, 0, 30, 140, F), (30, 140, 0, 140, R), (0, 140, 0, 0, S)], [0.0, 90.0])
+    assert _lengths(edges) == [30.0, 140.0]
+    from flats.ingest.quadfit import street_line_min_ft
+
+    assert street_line_min_ft(edges) == pytest.approx(30.0)
+
+
+def test_a_corner_lots_two_streets_stay_two() -> None:
+    # A rounded corner joins two streets; it does not make them one.
+    lines = [
+        (0, 0, 70, 0, F),
+        (70, 0, 77, 3, F),
+        (77, 3, 80, 10, F),
+        (80, 10, 80, 120, F),
+        (80, 120, 0, 120, R),
+        (0, 120, 0, 0, S),
+    ]
+    edges = _edges(lines, [0.0, 90.0])
+    got = _lengths(edges)
+    # The rounded corner goes whole to one of the two streets it joins.
+    assert len(got) == 2
+    assert sum(got) == pytest.approx(sum(e.length_ft for e in edges.edges if e.cls is F), abs=0.2)
+    assert got[0] >= 70.0 and got[1] >= 110.0
+
+
+def test_a_wide_rounded_corner_is_shared_between_its_two_streets() -> None:
+    # Beaverton 1S121BA00807: the corner rounds in four chords, none along
+    # either street, about 80 ft of line. Given whole to the front, the side
+    # street read 43 ft instead of 84 and its parking share went over 50
+    # percent -- a false red (and, on the lot turned the other way, a false
+    # green). Each street takes the chords nearer its own direction.
+    import math
+
+    pts = [(0.0, 0.0), (60.0, 0.0)]
+    for a in (25.0, 38.0, 55.0, 68.0):
+        x, y = pts[-1]
+        pts.append((x + 20 * math.cos(math.radians(a)), y + 20 * math.sin(math.radians(a))))
+    x, y = pts[-1]
+    pts.append((x, y + 60.0))
+    lines = [(*pts[i], *pts[i + 1], F) for i in range(len(pts) - 1)]
+    x_end, y_end = pts[-1]
+    lines += [(x_end, y_end, 0.0, y_end, R), (0.0, y_end, 0.0, 0.0, S)]
+    got = _lengths(_edges(lines, [0.0, 90.0]))
+    assert got == pytest.approx([100.0, 100.0], abs=0.2)
+
+
+def test_a_lot_round_a_block_end_keeps_three_streets() -> None:
+    # Streets on three sides: the line turns and comes BACK along the first
+    # direction, so the far side is a street of its own, not a step.
+    lines = [
+        (0, 0, 0, 30, S),
+        (0, 30, 100, 30, F),
+        (100, 30, 100, 0, F),
+        (100, 0, 0, 0, F),
+    ]
+    got = _lengths(_edges(lines, [0.0, 90.0]))
+    assert got == [30.0, 100.0, 100.0]
 
 
 def test_sandy_holds_a_through_lots_far_street_to_half(corpus: RuleSet) -> None:

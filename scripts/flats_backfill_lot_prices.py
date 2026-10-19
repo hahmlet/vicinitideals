@@ -2,15 +2,15 @@
 
 The Lots page's price-per-home filter and sort read this table (FOLLOWUPS 66).
 The bridge loader fills it for every new bundle; this one-shot fills a copy that
-is already live, and refreshes it after a rules change moves a zone's density
-limit. It writes only ``flats.lot_prices`` -- no lot, result or run is touched --
+is already live, and refreshes it after a rules change moves a zone's cap. It
+writes only ``flats.lot_prices`` -- no lot, result or run is touched --
 and each snapshot is one transaction, so a failure leaves the table as it was.
 
-    uv run python scripts/flats_backfill_lot_prices.py --snapshot 3 --snapshot 4 --dry-run
-    uv run python scripts/flats_backfill_lot_prices.py --snapshot 3 --snapshot 4
+    python scripts/flats_backfill_lot_prices.py --snapshot 3 --snapshot 4 --dry-run
+    python scripts/flats_backfill_lot_prices.py --snapshot 3 --snapshot 4
 
-Run it after the deploy that created the table (migration 0143); until then the
-Lots page shows every lot as "no price". Safe to run again.
+Run it after migration 0145 to fill the new cap and net-area columns. Safe to
+run again.
 """
 
 from __future__ import annotations
@@ -47,7 +47,11 @@ async def backfill(db_url: str, snapshot_ids: list[int], *, dry_run: bool = Fals
                     written = await lot_prices.refresh(conn, snapshot_id, caps)
                     lots = await conn.fetchval("SELECT count(*) FROM flats.lots WHERE snapshot_id = $1", snapshot_id)
                     stored = await conn.fetchrow(
-                        "SELECT count(*)::int AS rows, count(amount)::int AS priced, count(cap_du_per_acre)::int AS capped "
+                        "SELECT count(*)::int AS rows, count(amount)::int AS priced, "
+                        "count(cap_du_per_acre)::int AS capped, "
+                        "count(cap_max_units)::int AS max_units_capped, "
+                        "count(*) FILTER (WHERE cap_du_per_acre_net)::int AS net_density_capped, "
+                        "count(net_area_sqft)::int AS with_net_area "
                         "FROM flats.lot_prices WHERE snapshot_id = $1",
                         snapshot_id,
                     )

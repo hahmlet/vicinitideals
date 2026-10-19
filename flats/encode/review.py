@@ -57,7 +57,7 @@ from flats.encode.verify import (
 from flats.provenance.sources import authority_for, host_of
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.loader import CONFIG_ROOT, load_rules
-from flats.rules.model import LIKE, Incorporation, Layer, Status, Value, Variant
+from flats.rules.model import LIKE, Incorporation, Layer, Status, Value
 
 #: Values in these states are what the queue is for.
 PENDING = (Status.draft, Status.encoded, Status.stale)

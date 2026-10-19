@@ -177,7 +177,8 @@ def test_csv_round_trips(tmp_path: Path) -> None:
     rows = build_coverage([ObservedZone(PORTLAND, "RM1", 14_426)], rules)
 
     out = write_coverage(rows, tmp_path / "out" / "coverage.csv")
-    read = list(csv.DictReader(out.open(encoding="utf-8")))
+    with out.open(encoding="utf-8") as fh:
+        read = list(csv.DictReader(fh))
 
     assert read[0]["zone"] == "RM1"
     assert read[0]["blocking"] == "14426"

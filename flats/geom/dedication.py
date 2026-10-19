@@ -59,7 +59,10 @@ other line of the lot, stays at the worst case.
 whole distance (the lot line on the centre line). A line whose class or
 name is unread takes the deepest distance the zone states
 (:meth:`Rule.deepest`). A street that is not public (RLIS TYPE 1700 / 1800,
-a private road or drive) takes nothing.
+a private road or drive) takes nothing: the codes widen public streets
+(Tigard's chapter: "the term 'streets' shall mean 'public streets'",
+18.910.020.E; a private street's design is "established by the City
+Engineer", 18.910.030.T.1).
 
 **The land on both sides.** Oregon City's table keys the row to the plan
 designation of the land beside the street too, the wider where the two sides
@@ -75,12 +78,27 @@ only how a class rank or a street name picks one.
 from __future__ import annotations
 
 import dataclasses
-import re
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Iterable, Mapping, Sequence
 
-from flats.geom.corridor import FRONT_REACH_FT, SAMPLES, STREET_CLASS, _fronted
-from flats.geom.street_class import ClassMap, _rank_at, _samples, edge_rank
+from flats.geom.corridor import (
+    COINCIDE_FT,
+    CORRIDOR_REACH_FT,
+    FRONT_REACH_FT,
+    SAMPLES,
+    STREET_CLASS,
+    _abreast,
+    _fronted,
+)
+from flats.geom.street_class import (
+    CLASS_MAPS,
+    PRIVATE_RANK,
+    ClassMap,
+    _rank_at,
+    _samples,
+    edge_rank,
+    street_key,
+)
 
 if TYPE_CHECKING:
     from flats.rules.resolver import ZoneResolution
@@ -201,8 +219,10 @@ BUCKETS: dict[str, dict[int, str]] = {
     },
     # Table 18.910.1 rows: Arterial, Collector, Neighborhood Route, Local.
     # The TSP's Principal Arterial (99W, Barbur Blvd) takes the Arterial row,
-    # the only one the table prints for it; a Freeway has no row (unread).
+    # the only one the table prints for it; a Freeway has no row (unread). A
+    # street the city calls PRIVATE and Metro public takes the Local row.
     "street_class_tigard": {
+        PRIVATE_RANK: "local",
         0: "local",
         1: "neighborhood_route",
         2: "collector",
@@ -232,35 +252,6 @@ PRIVATE_TYPES: frozenset[int] = frozenset({1700, 1800})
 #: Fewest sample points (of :data:`SAMPLES`) that must have a centreline
 #: beside them for a line to count as measured.
 MIN_MEASURED = SAMPLES // 2 + 1
-
-#: How a code spells a street type, and how Metro's file does.
-_TYPES: dict[str, str] = {
-    "AVENUE": "AVE",
-    "BOULEVARD": "BLVD",
-    "COURT": "CT",
-    "DRIVE": "DR",
-    "HIGHWAY": "HWY",
-    "LANE": "LN",
-    "PARKWAY": "PKWY",
-    "PLACE": "PL",
-    "ROAD": "RD",
-    "STREET": "ST",
-    "TERRACE": "TER",
-}
-_DIRECTIONS = frozenset({"N", "S", "E", "W", "NE", "NW", "SE", "SW"})
-
-
-def street_key(label: object) -> str:
-    """A street's name as both a code and Metro's file can be compared on:
-    upper case, directions dropped, the street type abbreviated, anything in
-    brackets (a code's "(55th Ave. to Stanley Ave.)") left out."""
-    text = re.sub(r"\([^)]*\)", " ", str(label or "")).upper().replace(".", " ")
-    words = [_TYPES.get(w, w) for w in text.split()]
-    while words and words[0] in _DIRECTIONS:
-        words = words[1:]
-    while words and words[-1] in _DIRECTIONS:
-        words = words[:-1]
-    return " ".join(words)
 
 
 def applies(layer_id: str | None) -> bool:
@@ -294,29 +285,41 @@ def half_width_ft(edge: Sequence[float], cmap: ClassMap) -> tuple[float | None, 
     return width, public
 
 
-def read_line(edge: Sequence[float], cmap: ClassMap) -> tuple[float | None, bool, tuple[str, ...] | None]:
+def read_line(
+    edge: Sequence[float], cmap: ClassMap, through_private: bool = False
+) -> tuple[float | None, bool, tuple[str, ...] | None]:
     """:func:`half_width_ft` and the names of the streets the line may be on
-    (:func:`street_key`), None where some point has no street within reach."""
+    (:func:`street_key`), None where some point has no street within reach.
+
+    ``through_private`` measures a line on a private road as on any street
+    (the public flag still says private), for a city map that calls the
+    street public (:func:`measure`)."""
     got = _samples(edge)
     if got is None:
         return None, True, None
     points, own = got
     widths: list[float] = []
     names: set[str] = set()
+    public = True
     for p in points:
         s = _fronted(p, own, cmap.streets)
         if s is None:
             continue
         if cmap.types[s] in PRIVATE_TYPES:
-            return None, False, None
+            if not through_private:
+                return None, False, None
+            public = False
         widths.append(float(cmap.streets.lines[s].distance(p)))
         names.add(street_key(cmap.streets.names[s]))
     if len(widths) >= MIN_MEASURED:
-        return min(widths), True, tuple(sorted(names))
-    return _nearest(points, cmap)
+        return min(widths), public, tuple(sorted(names))
+    width, near_public, near_names = _nearest(points, cmap, through_private)
+    return width, public and near_public, near_names
 
 
-def _nearest(points: Sequence[Any], cmap: ClassMap) -> tuple[float | None, bool, tuple[str, ...] | None]:
+def _nearest(
+    points: Sequence[Any], cmap: ClassMap, through_private: bool = False
+) -> tuple[float | None, bool, tuple[str, ...] | None]:
     """The reading for a line no centreline runs beside (a stub, a curve):
     the distance to the nearest centreline of any bearing within reach of
     EVERY sample point. It can only be shorter than the distance to the
@@ -326,13 +329,16 @@ def _nearest(points: Sequence[Any], cmap: ClassMap) -> tuple[float | None, bool,
     within reach."""
     widths: list[float] = []
     names: set[str] = set()
+    public = True
     for p in points:
         near = cmap.streets.near(p, FRONT_REACH_FT)
         if not near:
-            return None, True, None
+            return None, public, None
         s = min(near, key=lambda i: cmap.streets.lines[i].distance(p))
         if cmap.types[s] in PRIVATE_TYPES:
-            return None, False, None
+            if not through_private:
+                return None, False, None
+            public = False
         names.update(street_key(cmap.streets.names[i]) for i in near)
         d = float(cmap.streets.lines[s].distance(p))
         if cmap.osm is not None:
@@ -340,7 +346,7 @@ def _nearest(points: Sequence[Any], cmap: ClassMap) -> tuple[float | None, bool,
             # can only bring the reading in, never push it out.
             d = min([d, *(float(cmap.osm.lines[i].distance(p)) for i in cmap.osm.near(p, FRONT_REACH_FT))])
         widths.append(d)
-    return min(widths), True, tuple(sorted(names))
+    return min(widths), public, tuple(sorted(names))
 
 
 def _reads(cmap: ClassMap, layer_id: str | None) -> bool:
@@ -361,6 +367,19 @@ def measure(edges: Iterable[Sequence[Any]], layer_id: str | None, maps: Sequence
     lines = [e for e in edges if len(e) >= 5 and e[4] == STREET_CLASS]
     reads = [read_line(e, cmap) for e in lines]  # type: ignore[arg-type]
     ranks = {m.key: _lot_ranks(lines, [names for _, _, names in reads], m) for m in ranked}
+    # A city map naming its private streets: Metro's "private" alone gives up
+    # nothing only where that map agrees (:func:`_private_reading`).
+    named = {m.key: m for m in ranked if m.by_name}
+    for key in _name_matched(layer_id):
+        for i, (e, (_, public, _)) in enumerate(zip(lines, reads)):
+            if public:
+                continue
+            width, _, names = read_line(e, cmap, through_private=True)  # type: ignore[arg-type]
+            got, city_width = _private_reading(e, cmap, named.get(key))
+            if got == "private":
+                continue
+            reads[i] = (width if city_width is None else city_width, True, names)
+            ranks.setdefault(key, [None] * len(lines))[i] = None if got == "unread" else got  # type: ignore[assignment]
     out: list[list[Any]] = []
     for i, (e, (width, public, names)) in enumerate(zip(lines, reads)):
         classes: dict[str, str | None] = {}
@@ -377,6 +396,108 @@ def measure(edges: Iterable[Sequence[Any]], layer_id: str | None, maps: Sequence
             ]
         )
     return out
+
+
+def _name_matched(layer_id: str | None) -> list[str]:
+    """The maps read for ``layer_id`` that name their streets (Tigard's), loaded
+    or not: a private street there needs that map's agreement."""
+    return [
+        key
+        for key, places in READS.items()
+        if key in CLASS_MAPS
+        and CLASS_MAPS[key].name_field is not None
+        and bool(layer_id)
+        and any(layer_id == s or layer_id.startswith(f"{s}/") for s in places)
+    ]
+
+
+def _private_reading(
+    edge: Sequence[Any], streets: ClassMap, cmap: ClassMap | None
+) -> tuple[str | int, float | None]:
+    """What a city map that names its streets says of a lot line Metro puts
+    on a private road or drive, and the half-width to take if it calls the
+    street public.
+
+    Read at the sample points on the private road (every point, where none
+    has a centreline beside it): a city line runs along the line there where
+    it runs beside such a point -- abreast and parallel -- within
+    :data:`~flats.geom.corridor.CORRIDOR_REACH_FT` carrying the private
+    road's name, or within :data:`~flats.geom.corridor.FRONT_REACH_FT`
+    whatever its name. A public street the private drive meets end-on (an
+    arterial at a mall entrance) is not beside it. A corner piece beside no
+    centreline also takes a public street within reach that the city
+    classes, by name (it is on that street's corner).
+
+    ``"private"`` -- the line gives up nothing -- where no city line runs
+    along it, or every one that does is private. A public classed line along
+    it gives its rank (the busiest one): the city calls the street public,
+    its row applies, and the half-width is measured to that city line at the
+    private points (Metro's centreline at any public ones), not to the
+    private drive's. An unranked line (a Freeway, an "Other") or no map
+    loaded: ``"unread"``, the deepest distance (Steph's two-source rule,
+    2026-10-09: the permissive answer needs both maps)."""
+    if cmap is None:
+        return "unread", None
+    got = _samples(edge)  # type: ignore[arg-type]
+    if got is None:
+        return "unread", None
+    points, own = got
+    private: list[tuple[Any, str, int | None]] = []
+    public_widths: list[float] = []
+    for p in points:
+        s = _fronted(p, own, streets.streets)
+        if s is None:
+            continue
+        if streets.types[s] in PRIVATE_TYPES:
+            private.append((p, street_key(streets.streets.names[s]), s))
+        else:
+            public_widths.append(float(streets.streets.lines[s].distance(p)))
+    along: dict[int, list[tuple[Any, int | None]]] = {}
+    if not private:
+        # A corner cut-off or curve piece no centreline runs beside: it may be
+        # on any street within reach. A public one the city classes -- its
+        # line of the same name within reach of every point -- gives its row,
+        # measured to that line (the piece is on that street's corner).
+        private = [(p, "", None) for p in points]
+        public_names: set[str] = set()
+        for p in points:
+            public_names.update(
+                street_key(streets.streets.names[j])
+                for j in streets.streets.near(p, FRONT_REACH_FT)
+                if streets.types[j] not in PRIVATE_TYPES
+            )
+        public_names.discard("")
+        for i in cmap.lines.near(points[0], FRONT_REACH_FT):
+            line = cmap.lines.lines[i]
+            if street_key(cmap.lines.names[i]) in public_names and all(
+                line.distance(p) <= FRONT_REACH_FT for p in points
+            ):
+                along[i] = [(p, None) for p in points]
+    for p, name, s in private:
+        for i in cmap.lines.near(p, CORRIDOR_REACH_FT):
+            line = cmap.lines.lines[i]
+            named = bool(name) and street_key(cmap.lines.names[i]) == name
+            if _abreast(line, p, own, CORRIDOR_REACH_FT if named else FRONT_REACH_FT):
+                along.setdefault(i, []).append((p, s))
+    ranks = [cmap.ranks[i] for i in along]
+    if any(r is None for r in ranks):
+        return "unread", None
+    public = [i for i in along if cmap.ranks[i] != PRIVATE_RANK]
+    if not public:
+        return "private", None
+    widths = list(public_widths)
+    for i in public:
+        line = cmap.lines.lines[i]
+        for p, s in along[i]:
+            d = float(line.distance(p))
+            if s is not None:
+                # The city's line drawn on the private road itself (the same
+                # road, a few feet apart): the nearer of the two centrelines.
+                drive = streets.streets.lines[s]
+                if float(line.distance(drive.interpolate(drive.project(p)))) <= COINCIDE_FT:
+                    d = min(d, float(drive.distance(p)))
+            widths.append(d)
+    return max(cmap.ranks[i] for i in public), min(widths)  # type: ignore[type-var]
 
 
 def _lot_ranks(

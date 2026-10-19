@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 from datetime import date
+from pathlib import Path
 
 import pytest
 
@@ -169,6 +170,28 @@ def test_page_furniture_is_told_apart_from_a_standard(furniture, label):
     lines of a page are ever read this way.
     """
     assert P._label(["body text"] * 8 + [furniture]) == label
+
+
+def test_no_committed_page_map_is_stale():
+    """Every sidecar was built from the text that is stored now.
+
+    read() already refuses a stale map at runtime, which hides the failure: the
+    page check quietly loses its boxes. This is the loud version.
+    """
+    docs = Path(__file__).resolve().parents[1] / "provenance" / "docs"
+    maps = sorted(docs.rglob("*.pages.json"))
+    assert maps, "no page maps found - the path above is wrong"
+    stale = []
+    for sidecar in maps:
+        meta = sidecar.with_name(sidecar.name.removesuffix(".pages.json") + ".meta.json")
+        recorded = json.loads(sidecar.read_text(encoding="utf-8"))["sha256"]
+        stored = json.loads(meta.read_text(encoding="utf-8"))["sha256"]
+        if recorded != stored:
+            stale.append(sidecar.relative_to(docs).as_posix())
+    assert not stale, (
+        "page maps built from text that has since changed - re-run "
+        "`python -m flats.provenance.pages --only <layer>`: " + ", ".join(stale)
+    )
 
 
 def test_the_map_records_which_book_it_counted(monkeypatch, tmp_path):

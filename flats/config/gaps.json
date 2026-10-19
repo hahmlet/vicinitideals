@@ -1,5 +1,5 @@
 {
-  "digest": "48fc951404eb233ec94fa2e2673fb9a8f2bc06870c10442440a927b96ab90854",
+  "digest": "9830048b2668796a8106b53825a361d0e8869dab3286075faf62fb71d2eaecbf",
   "layers": {
     "or": {
       "misattributed": [],
@@ -26,14 +26,16 @@
           "field": "corner_access_street",
           "claimed": "16.116.020",
           "found": "16.116.010",
-          "quote": "or/clackamas/estacada/emc.16.116.txt#L31"
+          "quote": "or/clackamas/estacada/emc.16.116.txt#L31",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MMU",
           "field": "quadplex_allowed",
           "claimed": "16.33.020",
           "found": "16.33.020 16.33.060",
-          "quote": "or/clackamas/estacada/emc.16.zones.txt#L1736,L1929"
+          "quote": "or/clackamas/estacada/emc.16.zones.txt#L1736,L1929",
+          "kind": "heading_same_file"
         }
       ],
       "label": "Estacada",
@@ -47,21 +49,24 @@
           "field": "front_lot_line_through",
           "claimed": "17.06.290",
           "found": "17.06.290 17.06.310",
-          "quote": "or/clackamas/gladstone/17.06.definitions.txt#L881,L921"
+          "quote": "or/clackamas/gladstone/17.06.definitions.txt#L881,L921",
+          "kind": "heading_same_file"
         },
         {
           "zone": "C2",
           "field": "parking_front_prohibited",
           "claimed": "17.18.020 17.18.060",
           "found": "17.18.070",
-          "quote": "or/clackamas/gladstone/17.18.c-2.txt#L171"
+          "quote": "or/clackamas/gladstone/17.18.c-2.txt#L171",
+          "kind": "heading_same_file"
         },
         {
           "zone": "C2",
           "field": "parking_required_yard_prohibited",
           "claimed": "17.18.020 17.18.060",
           "found": "17.18.070",
-          "quote": "or/clackamas/gladstone/17.18.c-2.txt#L171"
+          "quote": "or/clackamas/gladstone/17.18.c-2.txt#L171",
+          "kind": "heading_same_file"
         }
       ],
       "label": "Gladstone",
@@ -106,39 +111,124 @@
     "or/clackamas/oregon-city": {
       "misattributed": [
         {
+          "zone": "C",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "C",
+          "field": "parking_area_max_width_ft",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC-1",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC-1",
+          "field": "parking_area_max_width_ft",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC-2",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUC-2",
+          "field": "parking_area_max_width_ft",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUD",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "MUD",
+          "field": "parking_area_max_width_ft",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
           "zone": "R-10",
           "field": "min_density_du_per_acre",
           "claimed": "17.08.020 17.08.040 17.16.060",
           "found": "17.08.050",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-3.5",
           "field": "min_density_du_per_acre",
           "claimed": "17.10.020 17.10.040 17.16.060",
           "found": "17.10.050",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378"
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-5",
           "field": "min_density_du_per_acre",
           "claimed": "17.10.020 17.10.040 17.16.060",
           "found": "17.10.050",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378"
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-6",
           "field": "min_density_du_per_acre",
           "claimed": "17.08.020 17.08.040 17.16.060",
           "found": "17.08.050",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-8",
           "field": "min_density_du_per_acre",
           "claimed": "17.08.020 17.08.040 17.16.060",
           "found": "17.08.050",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "WFDD",
+          "field": "parking_area_max_frontage_pct",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
+        },
+        {
+          "zone": "WFDD",
+          "field": "parking_area_max_width_ft",
+          "claimed": "17.16.060 17.16.060",
+          "found": "17.06.030 17.16.060",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
+          "kind": "heading_same_file"
         }
       ],
       "label": "Oregon City",
@@ -170,63 +260,72 @@
           "field": "parking_front_prohibited",
           "claimed": "59.020 59.030 59.070 59.070",
           "found": "0.30",
-          "quote": "or/clackamas/west-linn/59.mu.txt#L241"
+          "quote": "or/clackamas/west-linn/59.mu.txt#L241",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-10",
           "field": "max_far",
           "claimed": "11.030 11.070",
           "found": "11.070 0.45",
-          "quote": "or/clackamas/west-linn/11.r-10.txt#L170,L173-L174"
+          "quote": "or/clackamas/west-linn/11.r-10.txt#L170,L173-L174",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-2.1",
           "field": "max_far",
           "claimed": "16.030 16.070",
           "found": "16.070 0.45",
-          "quote": "or/clackamas/west-linn/16.r-2.1.txt#L226,L228"
+          "quote": "or/clackamas/west-linn/16.r-2.1.txt#L226,L228",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-20",
           "field": "max_far",
           "claimed": "09.030 09.070",
           "found": "09.070 0.45",
-          "quote": "or/clackamas/west-linn/09.r-20.txt#L177,L178"
+          "quote": "or/clackamas/west-linn/09.r-20.txt#L177,L178",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-3",
           "field": "max_far",
           "claimed": "15.030 15.070",
           "found": "15.070 0.45",
-          "quote": "or/clackamas/west-linn/15.r-3.txt#L205,L207"
+          "quote": "or/clackamas/west-linn/15.r-3.txt#L205,L207",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-4.5",
           "field": "max_far",
           "claimed": "14.030 14.070",
           "found": "14.070 0.45",
-          "quote": "or/clackamas/west-linn/14.r-4.5.txt#L211,L213"
+          "quote": "or/clackamas/west-linn/14.r-4.5.txt#L211,L213",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-40",
           "field": "max_far",
           "claimed": "08.030 08.070",
           "found": "08.070 0.45",
-          "quote": "or/clackamas/west-linn/08.r-40.txt#L175,L176"
+          "quote": "or/clackamas/west-linn/08.r-40.txt#L175,L176",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-5",
           "field": "max_far",
           "claimed": "13.030 13.070",
           "found": "13.070 0.45",
-          "quote": "or/clackamas/west-linn/13.r-5.txt#L186,L188"
+          "quote": "or/clackamas/west-linn/13.r-5.txt#L186,L188",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-7",
           "field": "max_far",
           "claimed": "12.030 12.070",
           "found": "12.070 0.45",
-          "quote": "or/clackamas/west-linn/12.r-7.txt#L172,L175-L176"
+          "quote": "or/clackamas/west-linn/12.r-7.txt#L172,L175-L176",
+          "kind": "heading_same_file"
         }
       ],
       "label": "West Linn",
@@ -246,7 +345,8 @@
           "field": "quadplex_allowed",
           "claimed": "39.4065 39.4060 39.4070",
           "found": "39.4060 39.4065 39.4075",
-          "quote": "or/multnomah/_unincorporated/39.cfu.txt#L85-L86,L92-L93,L115-L116,L130-L137,L386"
+          "quote": "or/multnomah/_unincorporated/39.cfu.txt#L85-L86,L92-L93,L115-L116,L130-L137,L386",
+          "kind": "header_or_xref"
         }
       ],
       "label": "Multnomah Unincorporated",
@@ -260,84 +360,96 @@
           "field": "orientation_constraint",
           "claimed": "19.30.020 19.30.030",
           "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
+          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-6",
           "field": "orientation_constraint",
           "claimed": "19.30.020 19.30.030",
           "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
+          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
+          "kind": "heading_same_file"
         },
         {
           "zone": "R-7.5",
           "field": "orientation_constraint",
           "claimed": "19.30.020 19.30.030",
           "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
+          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
+          "kind": "heading_same_file"
         },
         {
           "zone": "RM",
           "field": "orientation_constraint",
           "claimed": "19.30.010 19.30.020 19.30.030",
           "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
+          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
+          "kind": "heading_same_file"
         },
         {
           "zone": "TCC",
           "field": "min_lot_sqft",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.100",
-          "quote": "or/multnomah/fairview/19.65.txt#L972-L974,L976-L978"
+          "quote": "or/multnomah/fairview/19.65.txt#L972-L974,L976-L978",
+          "kind": "heading_same_file"
         },
         {
           "zone": "TCC",
           "field": "setback_front_ft",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L290-L292,L294-L296"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L290-L292,L294-L296",
+          "kind": "heading_same_file"
         },
         {
           "zone": "TCC",
           "field": "setback_front_max_ft",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L298-L300,L322-L324,L326-L328"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L298-L300,L322-L324,L326-L328",
+          "kind": "heading_same_file"
         },
         {
           "zone": "TCC",
           "field": "setback_rear_ft",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374",
+          "kind": "heading_same_file"
         },
         {
           "zone": "TCC",
           "field": "setback_rear_ft [abuts_nonresidential_zone]",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374",
+          "kind": "heading_same_file"
         },
         {
           "zone": "TCC",
           "field": "setback_rear_ft [abuts_nonresidential_zone+alley_at_rear]",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374",
+          "kind": "heading_same_file"
         },
         {
           "zone": "TCC",
           "field": "setback_side_ft",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L380-L382"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L380-L382",
+          "kind": "heading_same_file"
         },
         {
           "zone": "TCC",
           "field": "setback_side_ft [abuts_nonresidential_zone]",
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L380-L382"
+          "quote": "or/multnomah/fairview/19.65.txt#L284,L380-L382",
+          "kind": "heading_same_file"
         }
       ],
       "label": "Fairview",
@@ -370,14 +482,16 @@
           "field": "parking_alley_backout_ft",
           "claimed": "9.0825 9.0825",
           "found": "9.0802 9.0825",
-          "quote": "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343,L355-L357"
+          "quote": "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343,L355-L357",
+          "kind": "header_or_xref"
         },
         {
           "zone": "NC-PV",
           "field": "quadplex_allowed",
           "claimed": "4.1413 4.1415 4.1415 7.0420",
           "found": "4.1423",
-          "quote": "or/multnomah/gresham/4.1400.pleasant-valley.txt#L508-L509,L514"
+          "quote": "or/multnomah/gresham/4.1400.pleasant-valley.txt#L508-L509,L514",
+          "kind": "heading_same_file"
         }
       ],
       "label": "Gresham",
@@ -403,49 +517,56 @@
           "field": "max_density_du_per_acre",
           "claimed": "3.120 3.130",
           "found": "3.140",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522",
+          "kind": "heading_same_file"
         },
         {
           "zone": "HDR",
           "field": "max_density_du_per_acre [unit_lots]",
           "claimed": "3.120 3.130",
           "found": "3.140",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L517-L518"
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L517-L518",
+          "kind": "heading_same_file"
         },
         {
           "zone": "LDR-1",
           "field": "max_density_du_per_acre",
           "claimed": "3.120 3.130 3.130 8.120",
           "found": "3.140",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522",
+          "kind": "heading_same_file"
         },
         {
           "zone": "LDR-2",
           "field": "max_density_du_per_acre",
           "claimed": "3.120 3.130 3.130 8.120",
           "found": "3.140",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDR",
           "field": "max_density_du_per_acre",
           "claimed": "3.120 3.130 3.130 8.120",
           "found": "3.140",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MU-2",
           "field": "max_density_du_per_acre",
           "claimed": "3.220 3.230 3.235",
           "found": "3.140 3.230",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710"
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MU-3",
           "field": "max_density_du_per_acre",
           "claimed": "3.220 3.230 3.230 3.235",
           "found": "3.140 3.230",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710"
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710",
+          "kind": "heading_same_file"
         }
       ],
       "label": "Troutdale",
@@ -459,70 +580,80 @@
           "field": "max_height_ft",
           "claimed": "230.200 710.100",
           "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L70,L86"
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L70,L86",
+          "kind": "heading_other_file"
         },
         {
           "zone": "NC",
           "field": "min_landscaped_pct",
           "claimed": "230.200 710.100",
           "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L78,L88"
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L78,L88",
+          "kind": "heading_other_file"
         },
         {
           "zone": "NC",
           "field": "min_lot_depth_ft",
           "claimed": "230.200 710.100",
           "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L69,L84"
+          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L69,L84",
+          "kind": "heading_other_file"
         },
         {
           "zone": "NC",
           "field": "min_lot_sqft",
           "claimed": "230.200 710.100",
           "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L67,L84"
+          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L67,L84",
+          "kind": "heading_other_file"
         },
         {
           "zone": "NC",
           "field": "min_lot_width_ft",
           "claimed": "230.200 710.100",
           "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L68,L84"
+          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L68,L84",
+          "kind": "heading_other_file"
         },
         {
           "zone": "NC",
           "field": "setback_front_ft",
           "claimed": "230.200 710.100",
           "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L73"
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L73",
+          "kind": "heading_other_file"
         },
         {
           "zone": "NC",
           "field": "setback_front_max_ft",
           "claimed": "230.200 710.100",
           "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L73"
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L73",
+          "kind": "heading_other_file"
         },
         {
           "zone": "NC",
           "field": "setback_rear_ft",
           "claimed": "230.200 710.100",
           "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L75"
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L75",
+          "kind": "heading_other_file"
         },
         {
           "zone": "NC",
           "field": "setback_side_ft",
           "claimed": "230.200 710.100",
           "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L74"
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L74",
+          "kind": "heading_other_file"
         },
         {
           "zone": "TC",
           "field": "open_space_min_pct",
           "claimed": "235.200 235.300",
           "found": "235.465",
-          "quote": "or/multnomah/wood-village/235.465.txt#L56,L60"
+          "quote": "or/multnomah/wood-village/235.465.txt#L56,L60",
+          "kind": "heading_other_file"
         }
       ],
       "label": "Wood Village",
@@ -542,581 +673,664 @@
           "field": "max_far",
           "claimed": "20.10.16",
           "found": "20.10.15",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CC",
           "field": "max_height_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CC",
           "field": "setback_front_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CC",
           "field": "setback_front_max_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CC",
           "field": "setback_rear_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CC",
           "field": "setback_side_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CM-CS",
           "field": "max_far",
           "claimed": "20.22.15",
           "found": "18.511",
-          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297"
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297",
+          "kind": "unlocated"
         },
         {
           "zone": "CM-CS",
           "field": "max_height_ft",
           "claimed": "20.22.15",
           "found": "18.511",
-          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110",
+          "kind": "unlocated"
         },
         {
           "zone": "CM-CS",
           "field": "max_height_ft [abuts_residential_zone]",
           "claimed": "20.22.15",
           "found": "18.511",
-          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110,L274-L276"
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110,L274-L276",
+          "kind": "unlocated"
         },
         {
           "zone": "CM-HDR",
           "field": "max_far",
           "claimed": "20.22.15",
           "found": "18.511",
-          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297"
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297",
+          "kind": "unlocated"
         },
         {
           "zone": "CM-HDR",
           "field": "max_height_ft",
           "claimed": "20.22.15",
           "found": "18.511",
-          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110",
+          "kind": "unlocated"
         },
         {
           "zone": "CM-HDR",
           "field": "setback_front_max_ft",
           "claimed": "60.05.15",
           "found": "60.05.35",
-          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CM-MR",
           "field": "max_far",
           "claimed": "20.22.15",
           "found": "18.511",
-          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297"
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L115-L118,L296-L297",
+          "kind": "unlocated"
         },
         {
           "zone": "CM-MR",
           "field": "max_height_ft",
           "claimed": "20.22.15",
           "found": "18.511",
-          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110",
+          "kind": "unlocated"
         },
         {
           "zone": "CM-RM",
           "field": "max_far",
           "claimed": "20.22.15",
           "found": "18.511",
-          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L127-L136"
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L127-L136",
+          "kind": "unlocated"
         },
         {
           "zone": "CM-RM",
           "field": "max_height_ft",
           "claimed": "20.22.15",
           "found": "18.511",
-          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110"
+          "quote": "or/washington/beaverton/bdc.20.22.cooper-mountain.txt#L58-L64,L110",
+          "kind": "unlocated"
         },
         {
           "zone": "CS",
           "field": "max_far",
           "claimed": "20.10.16",
           "found": "20.10.15",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CS",
           "field": "max_height_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CS",
           "field": "setback_front_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CS",
           "field": "setback_front_max_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CS",
           "field": "setback_rear_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CS",
           "field": "setback_rear_ft [abuts_residential_zone]",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168",
+          "kind": "header_or_xref"
         },
         {
           "zone": "CS",
           "field": "setback_side_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55",
+          "kind": "header_or_xref"
         },
         {
           "zone": "GC",
           "field": "max_far",
           "claimed": "20.10.16",
           "found": "20.10.15",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L49,L186,L188,L195-L198",
+          "kind": "header_or_xref"
         },
         {
           "zone": "GC",
           "field": "max_height_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58-L61",
+          "kind": "header_or_xref"
         },
         {
           "zone": "GC",
           "field": "setback_front_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54",
+          "kind": "header_or_xref"
         },
         {
           "zone": "GC",
           "field": "setback_front_max_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L53,L158-L161",
+          "kind": "header_or_xref"
         },
         {
           "zone": "GC",
           "field": "setback_rear_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168",
+          "kind": "header_or_xref"
         },
         {
           "zone": "GC",
           "field": "setback_rear_ft [abuts_residential_zone]",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168",
+          "kind": "header_or_xref"
         },
         {
           "zone": "GC",
           "field": "setback_side_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55",
+          "kind": "header_or_xref"
         },
         {
           "zone": "NS",
           "field": "max_height_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L58",
+          "kind": "header_or_xref"
         },
         {
           "zone": "NS",
           "field": "min_lot_depth_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L52"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L52",
+          "kind": "header_or_xref"
         },
         {
           "zone": "NS",
           "field": "min_lot_width_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L51"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L51",
+          "kind": "header_or_xref"
         },
         {
           "zone": "NS",
           "field": "setback_front_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L54",
+          "kind": "header_or_xref"
         },
         {
           "zone": "NS",
           "field": "setback_front_max_ft",
           "claimed": "60.05.15",
           "found": "60.05.35",
-          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+          "kind": "header_or_xref"
         },
         {
           "zone": "NS",
           "field": "setback_rear_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168",
+          "kind": "header_or_xref"
         },
         {
           "zone": "NS",
           "field": "setback_rear_ft [abuts_residential_zone]",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L57,L166-L168",
+          "kind": "header_or_xref"
         },
         {
           "zone": "NS",
           "field": "setback_side_ft",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55,L162-L163"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55,L162-L163",
+          "kind": "header_or_xref"
         },
         {
           "zone": "NS",
           "field": "setback_side_ft [abuts_residential_zone]",
           "claimed": "20.10.15",
           "found": "20.10.15 20.10.16",
-          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55,L162-L165"
+          "quote": "or/washington/beaverton/bdc.20.10.commercial.txt#L38,L41-L42,L55,L162-L165",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RC-E",
           "field": "max_far",
           "claimed": "20.20.16",
           "found": "20.20.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RC-E",
           "field": "max_height_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RC-E",
           "field": "setback_front_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.35.10",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RC-E",
           "field": "setback_front_max_ft",
           "claimed": "60.05.15",
           "found": "60.05.35",
-          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RC-E",
           "field": "setback_rear_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RC-E",
           "field": "setback_side_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RMA",
           "field": "max_far",
           "claimed": "20.05.15",
           "found": "20.05.15 20.25.15",
-          "quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L172"
+          "quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L172",
+          "kind": "heading_same_file"
         },
         {
           "zone": "RMB",
           "field": "max_far",
           "claimed": "20.05.15",
           "found": "20.05.15 20.25.15",
-          "quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L165,L173-L178"
+          "quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L165,L173-L178",
+          "kind": "heading_same_file"
         },
         {
           "zone": "RMC",
           "field": "max_far",
           "claimed": "20.05.15",
           "found": "20.05.15 20.25.15",
-          "quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L165,L179-L184"
+          "quote": "or/washington/beaverton/bdc.20.05.residential.txt#L87-L88,L163-L165,L179-L184",
+          "kind": "heading_same_file"
         },
         {
           "zone": "SC-HDR",
           "field": "max_far",
           "claimed": "20.20.16",
           "found": "20.20.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-HDR",
           "field": "max_height_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-HDR",
           "field": "min_density_du_per_acre",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-HDR",
           "field": "min_density_du_per_acre [lrt_station_ft:>400+]",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-HDR",
           "field": "setback_front_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.35.10",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-HDR",
           "field": "setback_front_max_ft",
           "claimed": "60.05.15",
           "found": "60.05.35",
-          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-HDR",
           "field": "setback_rear_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-HDR",
           "field": "setback_side_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-MU",
           "field": "max_far",
           "claimed": "20.20.16",
           "found": "20.20.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-MU",
           "field": "max_height_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-MU",
           "field": "min_density_du_per_acre",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-MU",
           "field": "min_density_du_per_acre [lrt_station_ft:>400+]",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-MU",
           "field": "setback_front_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.35.10",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-MU",
           "field": "setback_front_max_ft",
           "claimed": "60.05.15",
           "found": "60.05.35",
-          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-MU",
           "field": "setback_rear_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-MU",
           "field": "setback_side_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-S",
           "field": "max_height_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-S",
           "field": "min_density_du_per_acre",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-S",
           "field": "min_density_du_per_acre [lrt_station_ft:>400+]",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L105,L199",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-S",
           "field": "setback_front_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.35.10",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-S",
           "field": "setback_front_max_ft",
           "claimed": "60.05.15",
           "found": "60.05.35",
-          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-S",
           "field": "setback_rear_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SC-S",
           "field": "setback_side_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-HDR",
           "field": "max_far",
           "claimed": "20.20.16",
           "found": "20.20.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-HDR",
           "field": "max_height_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-HDR",
           "field": "setback_front_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.35.10",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-HDR",
           "field": "setback_front_max_ft",
           "claimed": "60.05.15",
           "found": "60.05.35",
-          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-HDR",
           "field": "setback_rear_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-HDR",
           "field": "setback_side_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-MU",
           "field": "max_far",
           "claimed": "20.20.16",
           "found": "20.20.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L113-L127,L465,L468,L470",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-MU",
           "field": "max_height_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L187-L191",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-MU",
           "field": "setback_front_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.35.10",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L149-L151",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-MU",
           "field": "setback_front_max_ft",
           "claimed": "60.05.15",
           "found": "60.05.35",
-          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
+          "quote": "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-MU",
           "field": "setback_rear_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L179-L186",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TC-MU",
           "field": "setback_side_ft",
           "claimed": "20.20.15",
           "found": "20.20.15 60.05.15",
-          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178"
+          "quote": "or/washington/beaverton/bdc.20.20.multiple-use.txt#L90,L98-L101,L176-L178",
+          "kind": "header_or_xref"
         }
       ],
       "label": "Beaverton",
@@ -1142,861 +1356,984 @@
           "field": "parking_area_max_frontage_pct",
           "claimed": "12.50.715",
           "found": "12.50.715 12.50.710",
-          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173"
+          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173",
+          "kind": "header_or_xref"
         },
         {
           "zone": "(defaults)",
           "field": "parking_area_frontage_any_street",
           "claimed": "12.50.715",
           "found": "12.50.715 12.50.710",
-          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173"
+          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L163-L165,L170-L173",
+          "kind": "header_or_xref"
         },
         {
           "zone": "(defaults)",
           "field": "driveway_approach_max_width_ft",
           "claimed": "12.50.715",
           "found": "12.50.715 12.50.710",
-          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L179-L182"
+          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L179-L182",
+          "kind": "header_or_xref"
         },
         {
           "zone": "(defaults)",
           "field": "corner_access_street",
           "claimed": "12.50.715",
           "found": "12.50.715 12.50.710",
-          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L186-L188"
+          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L186-L188",
+          "kind": "header_or_xref"
         },
         {
           "zone": "(defaults)",
           "field": "parking_alley_access_required",
           "claimed": "12.50.715",
           "found": "12.50.715 12.50.710",
-          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L186-L190"
+          "quote": "or/washington/hillsboro/cdc.12.50.700-920.design.txt#L158,L170,L186-L190",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-1",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "max_coverage_pct",
           "claimed": "12.22.250",
           "found": "12.22.240",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L586,L589-L593"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L586,L589-L593",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "max_coverage_pct [unit_lots]",
           "claimed": "12.22.250",
           "found": "12.22.240",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L586,L589,L594"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L586,L589,L594",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "max_density_du_per_acre",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L545"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L545",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "max_height_ft",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L582-L583"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L582-L583",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "max_height_stories",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L582-L583"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L582-L583",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "min_density_du_per_acre",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L544"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L544",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "min_frontage_ft",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L547,L560"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L547,L560",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "min_lot_depth_ft",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L547,L559"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L547,L559",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "min_lot_width_ft",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L547,L557-L558"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L547,L557-L558",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "setback_front_ft",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L566-L568"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L566-L568",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "setback_garage_entrance_ft",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L566,L571"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L566,L571",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "setback_rear_ft",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L574-L576"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L574-L576",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-2",
           "field": "setback_side_ft",
           "claimed": "12.22.250",
           "found": "12.22.250 12.22.220",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L572-L573"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L533,L561,L572-L573",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "max_coverage_pct",
           "claimed": "12.22.350",
           "found": "12.22.340",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L818,L821-L825"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L818,L821-L825",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "max_coverage_pct [unit_lots]",
           "claimed": "12.22.350",
           "found": "12.22.340",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L818,L821,L826"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L818,L821,L826",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "max_density_du_per_acre",
           "claimed": "12.22.350",
           "found": "12.22.350 12.22.320",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L773"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L773",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "max_height_stories",
           "claimed": "12.22.350",
           "found": "12.22.350 12.21.320",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L809-L810"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L809-L810",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "min_density_du_per_acre",
           "claimed": "12.22.350",
           "found": "12.22.350 12.22.320",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L772"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L772",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "min_frontage_ft",
           "claimed": "12.22.350",
           "found": "12.22.350 12.22.320 12.21.320",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L775,L787"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L775,L787",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "min_lot_depth_ft",
           "claimed": "12.22.350",
           "found": "12.22.350 12.22.320 12.21.320",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L775,L786"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L775,L786",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "min_lot_width_ft",
           "claimed": "12.22.350",
           "found": "12.22.350 12.22.320 12.21.320",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L775,L785"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L775,L785",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "setback_front_ft",
           "claimed": "12.22.350",
           "found": "12.22.350 12.21.320",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788-L791"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788-L791",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "setback_garage_entrance_ft",
           "claimed": "12.22.350",
           "found": "12.22.350 12.21.320",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788-L789,L794"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788-L789,L794",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "setback_rear_ft",
           "claimed": "12.22.350",
           "found": "12.22.350 12.21.320",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788,L800-L803"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788,L800-L803",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MR-3",
           "field": "setback_side_ft",
           "claimed": "12.22.350",
           "found": "12.22.350 12.21.320",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788,L795-L796"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L761,L788,L795-L796",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-C",
           "field": "min_frontage_ft",
           "claimed": "12.24.260",
           "found": "12.24.260 0.75",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806,L810"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806,L810",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-C",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-C",
           "field": "min_lot_depth_ft",
           "claimed": "12.24.260",
           "found": "12.24.260 0.75",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806,L809"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806,L809",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-C",
           "field": "min_lot_width_ft",
           "claimed": "12.24.260",
           "found": "12.24.260 0.75",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806-L808"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806-L808",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-N",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-10",
           "field": "max_coverage_pct",
           "claimed": "12.21.150",
           "found": "12.21.150 12.01.500",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L344,L353"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L344,L353",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-10",
           "field": "max_coverage_pct [corner_lot]",
           "claimed": "12.21.150",
           "found": "12.21.150 12.01.500",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L344,L353-L354"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L344,L353-L354",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-10",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-10",
           "field": "setback_front_ft",
           "claimed": "12.21.150",
           "found": "12.21.150 12.21.120",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L288,L324,L337"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L288,L324,L337",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-10",
           "field": "setback_rear_ft",
           "claimed": "12.21.150",
           "found": "12.21.150 12.21.120",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L288,L324,L339"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L288,L324,L339",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-10",
           "field": "setback_side_ft",
           "claimed": "12.21.150",
           "found": "12.21.150 12.21.120",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L288,L324,L338"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L288,L324,L338",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-4.5",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-6",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-7",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "R-8.5",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCBP",
           "field": "quadplex_allowed",
           "claimed": "12.25.420",
           "found": "12.25.400",
-          "quote": "or/washington/hillsboro/cdc.12.25.industrial-zones.txt#L1301-L1302,L1305"
+          "quote": "or/washington/hillsboro/cdc.12.25.industrial-zones.txt#L1301-L1302,L1305",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCC-DT",
           "field": "max_coverage_pct",
           "claimed": "12.23.360",
           "found": "12.23.350",
-          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L874,L886"
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L874,L886",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCC-DT",
           "field": "min_lot_depth_ft",
           "claimed": "12.23.360",
           "found": "12.23.360 12.61.400",
-          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L835,L863,L866"
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L835,L863,L866",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCC-DT",
           "field": "min_lot_width_ft",
           "claimed": "12.23.360",
           "found": "12.23.360 12.61.400",
-          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L835,L863-L865"
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L835,L863-L865",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCC-DT",
           "field": "setback_rear_ft",
           "claimed": "12.23.360",
           "found": "12.23.350",
-          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L874,L877"
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L874,L877",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCC-DT",
           "field": "setback_side_ft",
           "claimed": "12.23.360",
           "found": "12.23.360 12.61.400",
-          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L835,L867,L871"
+          "quote": "or/washington/hillsboro/cdc.12.23.commercial-zones.txt#L835,L867,L871",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-DNC",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "max_density_du_per_acre",
           "claimed": "12.22.560",
           "found": "12.22.560 12.22.520",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1324,L1339"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1324,L1339",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "max_density_du_per_acre [abuts_lower_density_zone]",
           "claimed": "12.22.560",
           "found": "12.22.560 12.22.520",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1324,L1330-L1335"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1324,L1330-L1335",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "min_density_du_per_acre",
           "claimed": "12.22.560",
           "found": "12.22.560 12.22.520",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1324,L1330"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1324,L1330",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "min_frontage_ft",
           "claimed": "12.22.560",
           "found": "12.22.540 12.22.520",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1353,L1373,L1379-L1380"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1353,L1373,L1379-L1380",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "min_lot_depth_ft",
           "claimed": "12.22.560",
           "found": "12.22.540 12.22.520",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1353,L1372"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1353,L1372",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "min_lot_width_ft",
           "claimed": "12.22.560",
           "found": "12.22.540 12.22.520",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1353,L1361-L1366"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1353,L1361-L1366",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "setback_front_ft",
           "claimed": "12.22.560",
           "found": "12.22.540 12.22.520",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384-L1385,L1390-L1391"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384-L1385,L1390-L1391",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "setback_garage_entrance_ft",
           "claimed": "12.22.560",
           "found": "12.22.540 12.22.520",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384-L1385,L1394"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384-L1385,L1394",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "setback_rear_ft",
           "claimed": "12.22.560",
           "found": "12.22.540 12.22.520",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384,L1397-L1400"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384,L1397-L1400",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-HD",
           "field": "setback_side_ft",
           "claimed": "12.22.560",
           "found": "12.22.540 12.22.520",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384,L1395"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1342,L1384,L1395",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-LD",
           "field": "max_coverage_pct",
           "claimed": "12.21.650",
           "found": "12.21.640",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1599"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1599",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-LD",
           "field": "max_height_ft",
           "claimed": "12.21.650",
           "found": "12.21.640",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1592-L1593"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1592-L1593",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-LD",
           "field": "min_frontage_ft",
           "claimed": "12.21.650",
           "found": "12.21.640",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1542,L1555"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1542,L1555",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-LD",
           "field": "min_lot_depth_ft",
           "claimed": "12.21.650",
           "found": "12.21.640",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1542,L1554"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1542,L1554",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-LD",
           "field": "min_lot_width_ft",
           "claimed": "12.21.650",
           "found": "12.21.640",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1542,L1552-L1553"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1542,L1552-L1553",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-LD",
           "field": "setback_front_ft",
           "claimed": "12.21.650",
           "found": "12.21.640",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1564-L1566"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1564-L1566",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-LD",
           "field": "setback_front_max_ft",
           "claimed": "12.21.650",
           "found": "12.21.640",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1579-L1582"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1579-L1582",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-LD",
           "field": "setback_garage_entrance_ft",
           "claimed": "12.21.650",
           "found": "12.21.640",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1564,L1569"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1564,L1569",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-LD",
           "field": "setback_rear_ft",
           "claimed": "12.21.650",
           "found": "12.21.640",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1571-L1574"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1571-L1574",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-LD",
           "field": "setback_side_ft",
           "claimed": "12.21.650",
           "found": "12.21.640",
-          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1570"
+          "quote": "or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt#L1539,L1556,L1570",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "max_density_du_per_acre",
           "claimed": "12.22.460",
           "found": "12.22.440",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1045-L1046,L1048"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1045-L1046,L1048",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "max_density_du_per_acre [unit_lots]",
           "claimed": "12.22.460",
           "found": "12.22.440",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1047"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1047",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "min_density_du_per_acre",
           "claimed": "12.22.460",
           "found": "12.22.440",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1034"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1034",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "min_frontage_ft",
           "claimed": "12.22.460",
           "found": "12.22.440",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1057,L1075,L1084-L1085"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1057,L1075,L1084-L1085",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "min_lot_depth_ft",
           "claimed": "12.22.460",
           "found": "12.22.440",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1057,L1073"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1057,L1073",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "min_lot_sqft",
           "claimed": "12.22.460",
           "found": "12.40.210 12.22.460",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1018-L1021,L1025"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1018-L1021,L1025",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "min_lot_sqft [unit_lots]",
           "claimed": "12.22.460",
           "found": "12.40.210 12.22.460",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1018,L1021,L1026"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1018,L1021,L1026",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "min_lot_width_ft",
           "claimed": "12.22.460",
           "found": "12.22.440",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1057-L1059,L1064-L1065"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1057-L1059,L1064-L1065",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "setback_front_ft",
           "claimed": "12.22.460",
           "found": "12.22.440",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1092-L1093,L1098-L1099"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1092-L1093,L1098-L1099",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-MD",
           "field": "setback_garage_entrance_ft",
           "claimed": "12.22.460",
           "found": "12.22.440",
-          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1092-L1093,L1102"
+          "quote": "or/washington/hillsboro/cdc.12.22.multi-dwelling-zones.txt#L1030,L1092-L1093,L1102",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-V",
           "field": "max_density_du_per_acre",
           "claimed": "12.24.460",
           "found": "12.24.450",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1636-L1639"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1636-L1639",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-V",
           "field": "min_density_du_per_acre",
           "claimed": "12.24.460",
           "found": "12.24.450",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618-L1619,L1629-L1631"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618-L1619,L1629-L1631",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-V",
           "field": "min_density_du_per_acre [lrt_station_ft:1301-2600]",
           "claimed": "12.24.460",
           "found": "12.24.450",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1629,L1632-L1633"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1629,L1632-L1633",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-V",
           "field": "min_density_du_per_acre [lrt_station_ft:>2600+]",
           "claimed": "12.24.460",
           "found": "12.24.450",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1629,L1634-L1635"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1629,L1634-L1635",
+          "kind": "header_or_xref"
         },
         {
           "zone": "SCR-V",
           "field": "min_lot_width_ft",
           "claimed": "12.24.460",
           "found": "12.24.450",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1651-L1657"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1618,L1651-L1657",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "max_density_du_per_acre",
           "claimed": "12.24.760",
           "found": "12.40.110",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2519"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2519",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "min_density_du_per_acre",
           "claimed": "12.24.760",
           "found": "12.40.110",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2517-L2518"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2517-L2518",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "min_frontage_ft",
           "claimed": "12.24.760",
           "found": "12.40.110",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2523,L2527"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2523,L2527",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "min_lot_depth_ft",
           "claimed": "12.24.760",
           "found": "12.40.110",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2523,L2526"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2523,L2526",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "min_lot_sqft",
           "claimed": "12.24.760",
           "found": "12.40.110",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512-L2513,L2515"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512-L2513,L2515",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "min_lot_width_ft",
           "claimed": "12.24.760",
           "found": "12.40.110",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2523-L2525"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2523-L2525",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "setback_front_ft",
           "claimed": "12.24.760",
           "found": "12.40.110 12.24.760",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2528,L2532"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2528,L2532",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "setback_front_max_ft",
           "claimed": "12.24.760",
           "found": "12.40.110 12.24.760",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2550,L2554"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2550,L2554",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "setback_rear_ft",
           "claimed": "12.24.760",
           "found": "12.40.110 12.24.760",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2528,L2533"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2528,L2533",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-AC",
           "field": "setback_side_ft",
           "claimed": "12.24.760",
           "found": "12.40.110 12.24.760",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2528,L2533"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2512,L2528,L2533",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-MU",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "max_coverage_pct",
           "claimed": "12.24.860",
           "found": "12.24.850",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2844"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2844",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "max_density_du_per_acre",
           "claimed": "12.24.860",
           "found": "12.40.110 12.24.860",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2790"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2790",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "max_height_ft",
           "claimed": "12.24.860",
           "found": "12.24.850",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2840"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2840",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "min_building_height_ft",
           "claimed": "12.24.860",
           "found": "12.24.850",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2839"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830,L2839",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "min_density_du_per_acre",
           "claimed": "12.24.860",
           "found": "12.40.110 12.24.860",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2788-L2789"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2788-L2789",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "min_lot_depth_ft",
           "claimed": "12.24.860",
           "found": "12.40.110 12.24.860",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2794,L2797"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2794,L2797",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "min_lot_sqft",
           "claimed": "12.24.860",
           "found": "12.40.110",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783-L2784,L2786"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783-L2784,L2786",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "min_lot_width_ft",
           "claimed": "12.24.860",
           "found": "12.40.110 12.24.860",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2794-L2796"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2794-L2796",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "setback_front_ft",
           "claimed": "12.24.860",
           "found": "12.40.110 12.24.860",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2799,L2804"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2799,L2804",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "setback_front_max_ft",
           "claimed": "12.24.860",
           "found": "12.24.850",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830-L2831,L2833,L2837"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2830-L2831,L2833,L2837",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "setback_rear_ft",
           "claimed": "12.24.860",
           "found": "12.40.110 12.24.860",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2799,L2805-L2809"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2799,L2805-L2809",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-NC",
           "field": "setback_side_ft",
           "claimed": "12.24.860",
           "found": "12.40.110 12.24.860",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2799,L2805-L2809"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L2783,L2799,L2805-L2809",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-RM",
           "field": "max_coverage_pct",
           "claimed": "12.24.560",
           "found": "12.24.540 12.24.420",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2008"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2008",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-RM",
           "field": "max_height_ft",
           "claimed": "12.24.560",
           "found": "12.24.540 12.24.420",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2007"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2007",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-RM",
           "field": "min_building_height_ft",
           "claimed": "12.24.560",
           "found": "12.24.540 12.24.420",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2006"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2006",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-RM",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
-          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702"
+          "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-RM",
           "field": "setback_front_ft",
           "claimed": "12.24.560",
           "found": "12.24.540",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955-L1956,L1958,L1962-L1965"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955-L1956,L1958,L1962-L1965",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-RM",
           "field": "setback_front_max_ft",
           "claimed": "12.24.560",
           "found": "12.24.540 12.24.420",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2000,L2004"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L2000,L2004",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-RM",
           "field": "setback_garage_entrance_ft",
           "claimed": "12.24.560",
           "found": "12.24.540",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L1962,L1967-L1968"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L1962,L1967-L1968",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-RM",
           "field": "setback_rear_ft",
           "claimed": "12.24.560",
           "found": "12.24.540 12.24.420",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L1973-L1979"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L1973-L1979",
+          "kind": "header_or_xref"
         },
         {
           "zone": "UC-RM",
           "field": "setback_side_ft",
           "claimed": "12.24.560",
           "found": "12.24.540",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L1969"
+          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L1955,L1969",
+          "kind": "header_or_xref"
         }
       ],
       "label": "Hillsboro",
@@ -2010,7 +2347,8 @@
           "field": "parking_front_prohibited",
           "claimed": "16.114.130",
           "found": "16.114.120",
-          "quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2612,L2624-L2625"
+          "quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2612,L2624-L2625",
+          "kind": "heading_same_file"
         }
       ],
       "label": "King City",
@@ -2024,308 +2362,352 @@
           "field": "parking_min_per_unit",
           "claimed": "16.94.020",
           "found": "16.94.010 16.94.020",
-          "quote": "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L375-L398,L490,L502-L525,L560-L571"
+          "quote": "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L375-L398,L490,L502-L525,L560-L571",
+          "kind": "heading_same_file"
         },
         {
           "zone": "(defaults)",
           "field": "parking_max_per_unit",
           "claimed": "16.94.020",
           "found": "16.94.010 16.94.020",
-          "quote": "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L490,L502-L525,L560-L571"
+          "quote": "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L490,L502-L525,L560-L571",
+          "kind": "heading_same_file"
         },
         {
           "zone": "(defaults)",
           "field": "parking_front_prohibited",
           "claimed": "16.14.010 16.10.020",
           "found": "16.14.010 296.11",
-          "quote": "or/washington/sherwood/sdc.16.14.residential-design.txt#L9-L11,L33-L35,L285-L288"
+          "quote": "or/washington/sherwood/sdc.16.14.residential-design.txt#L9-L11,L33-L35,L285-L288",
+          "kind": "header_or_xref"
         },
         {
           "zone": "HDR",
           "field": "max_height_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L242-L244,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L242-L244,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "HDR",
           "field": "max_height_stories",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L242-L244,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L242-L244,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "HDR",
           "field": "min_frontage_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180",
+          "kind": "heading_same_file"
         },
         {
           "zone": "HDR",
           "field": "min_lot_depth_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194",
+          "kind": "heading_same_file"
         },
         {
           "zone": "HDR",
           "field": "min_lot_width_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191",
+          "kind": "heading_same_file"
         },
         {
           "zone": "HDR",
           "field": "setback_rear_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297",
+          "kind": "heading_same_file"
         },
         {
           "zone": "HDR",
           "field": "setback_street_side_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292",
+          "kind": "heading_same_file"
         },
         {
           "zone": "LDR",
           "field": "max_height_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L233-L235,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L233-L235,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "LDR",
           "field": "max_height_stories",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L233-L235,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L233-L235,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "LDR",
           "field": "min_frontage_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180",
+          "kind": "heading_same_file"
         },
         {
           "zone": "LDR",
           "field": "min_lot_depth_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194",
+          "kind": "heading_same_file"
         },
         {
           "zone": "LDR",
           "field": "min_lot_width_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191",
+          "kind": "heading_same_file"
         },
         {
           "zone": "LDR",
           "field": "setback_rear_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297",
+          "kind": "heading_same_file"
         },
         {
           "zone": "LDR",
           "field": "setback_street_side_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRH",
           "field": "max_height_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L239-L241,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L239-L241,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRH",
           "field": "min_frontage_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRH",
           "field": "min_lot_depth_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRH",
           "field": "min_lot_width_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRH",
           "field": "setback_rear_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRH",
           "field": "setback_street_side_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRL",
           "field": "max_height_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L236-L238,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L236-L238,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRL",
           "field": "max_height_stories",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L236-L238,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L236-L238,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRL",
           "field": "min_frontage_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRL",
           "field": "min_lot_depth_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRL",
           "field": "min_lot_width_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRL",
           "field": "setback_rear_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MDRL",
           "field": "setback_street_side_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR",
           "field": "max_height_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L227-L229,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L227-L229,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR",
           "field": "max_height_stories",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L227-L229,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L227-L229,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR",
           "field": "min_frontage_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR",
           "field": "min_lot_depth_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR",
           "field": "min_lot_width_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR",
           "field": "setback_rear_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR",
           "field": "setback_street_side_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR_PUD",
           "field": "max_height_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L230-L232,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L230-L232,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR_PUD",
           "field": "max_height_stories",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L230-L232,L448"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L195-L196,L230-L232,L448",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR_PUD",
           "field": "min_frontage_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L178-L180",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR_PUD",
           "field": "min_lot_depth_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L194",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR_PUD",
           "field": "min_lot_width_ft",
           "claimed": "16.12.030",
           "found": "16.12.010",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L132-L135,L185-L191",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR_PUD",
           "field": "setback_rear_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L297",
+          "kind": "heading_same_file"
         },
         {
           "zone": "VLDR_PUD",
           "field": "setback_street_side_ft",
           "claimed": "16.12.030",
           "found": "16.12.030 16.68",
-          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292"
+          "quote": "or/washington/sherwood/sdc.16.12.residential.txt#L253-L257,L287-L292",
+          "kind": "heading_same_file"
         }
       ],
       "label": "Sherwood",
@@ -2339,749 +2721,856 @@
           "field": "parking_min_per_unit",
           "claimed": "18.410.030 18.410.3",
           "found": "18.410.030 18.410.060",
-          "quote": "or/washington/tigard/tdc.18.410.parking.txt#L77-L81,L397-L401"
+          "quote": "or/washington/tigard/tdc.18.410.parking.txt#L77-L81,L397-L401",
+          "kind": "header_or_xref"
         },
         {
           "zone": "(defaults)",
           "field": "parking_max_per_unit",
           "claimed": "18.410.3 18.200 18.280",
           "found": "18.410.060",
-          "quote": "or/washington/tigard/tdc.18.410.parking.txt#L385-L401"
+          "quote": "or/washington/tigard/tdc.18.410.parking.txt#L385-L401",
+          "kind": "header_or_xref"
         },
         {
           "zone": "COM",
           "field": "quadplex_allowed",
           "claimed": "18.120.020 18.120.1 18.120.2",
           "found": "18.120.020 18.120.030 18.120.040",
-          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L37,L92-L94,L136,L489-L496"
+          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L37,L92-L94,L136,L489-L496",
+          "kind": "heading_same_file"
         },
         {
           "zone": "IND",
           "field": "quadplex_allowed",
           "claimed": "18.130.1",
           "found": "18.130.030",
-          "quote": "or/washington/tigard/tdc.18.130.industrial-zones.txt#L59,L66-L68"
+          "quote": "or/washington/tigard/tdc.18.130.industrial-zones.txt#L59,L66-L68",
+          "kind": "unlocated"
         },
         {
           "zone": "MU-CBD",
           "field": "max_density_du_per_acre",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L475,L477,L479,L484"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L475,L477,L479,L484",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "max_height_ft",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L468,L470,L479,L481"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L468,L470,L479,L481",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "max_impervious_pct",
           "claimed": "18.650.3 18.30",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L472"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L472",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "min_building_height_ft",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L468-L469"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L468-L469",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "min_density_du_per_acre",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L475-L476,L479,L483"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L475-L476,L479,L483",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "min_landscaped_pct",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L473"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L473",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "min_lot_sqft",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L458"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L458",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "min_lot_width_ft",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L459"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L459",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "quadplex_allowed",
           "claimed": "18.650.1 18.650.2 18.650.030 18.650.040",
           "found": "18.650.030 18.650.040 18.650.050 18.650.060",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L211,L259,L305-L308,L345,L431-L432,L439"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L211,L259,L305-L308,L345,L431-L432,L439",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "setback_front_ft",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460-L461"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460-L461",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "setback_front_max_ft",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L465-L466"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L465-L466",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "setback_rear_ft",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L464"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L464",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "setback_side_ft",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L463"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L463",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MU-CBD",
           "field": "setback_street_side_ft",
           "claimed": "18.650.3",
           "found": "18.650.070",
-          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L462"
+          "quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L462",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUC",
           "field": "max_height_ft",
           "claimed": "18.280.1 18.280.020 18.320.4 18.320.020",
           "found": "18.280.020 18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L74,L83"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L74,L83",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUC",
           "field": "min_lot_sqft",
           "claimed": "18.805.1",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93-L100"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93-L100",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUC",
           "field": "min_lot_width_ft",
           "claimed": "18.805.1",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185-L192"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185-L192",
+          "kind": "unlocated"
         },
         {
           "zone": "MUC",
           "field": "quadplex_allowed",
           "claimed": "18.120.1 18.120.2 18.280.020",
           "found": "18.120.020 18.120.030 18.120.040",
-          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L49,L92-L94,L489,L496"
+          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L49,L92-L94,L489,L496",
+          "kind": "heading_other_file"
         },
         {
           "zone": "MUC",
           "field": "setback_front_ft",
           "claimed": "18.280.1 18.280.020",
           "found": "18.280.020 18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L76"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L76",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUC",
           "field": "setback_rear_ft",
           "claimed": "18.280.1 18.280.020",
           "found": "18.280.020 18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L79"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L79",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUC",
           "field": "setback_side_ft",
           "claimed": "18.280.1 18.280.020",
           "found": "18.280.020 18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L78"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L78",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUC",
           "field": "setback_street_side_ft",
           "claimed": "18.280.1 18.280.020",
           "found": "18.280.020 18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L77"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L77",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUE",
           "field": "quadplex_allowed",
           "claimed": "18.120.020 18.120.1 18.120.030 18.120.2",
           "found": "18.120.020 18.120.030 18.120.040",
-          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L45,L92-L94,L284-L296,L489-L496"
+          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L45,L92-L94,L284-L296,L489-L496",
+          "kind": "heading_same_file"
         },
         {
           "zone": "MUR",
           "field": "max_height_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUR",
           "field": "max_impervious_pct",
           "claimed": "18.280.1 18.30",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUR",
           "field": "min_landscaped_pct",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUR",
           "field": "min_lot_sqft",
           "claimed": "18.805.1",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L100"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L100",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUR",
           "field": "min_lot_width_ft",
           "claimed": "18.805.1",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L192"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L192",
+          "kind": "unlocated"
         },
         {
           "zone": "MUR",
           "field": "quadplex_allowed",
           "claimed": "18.120.1 18.120.2",
           "found": "18.120.020 18.120.030 18.120.040",
-          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L53,L92-L94,L489,L496"
+          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L53,L92-L94,L489,L496",
+          "kind": "unlocated"
         },
         {
           "zone": "MUR",
           "field": "setback_front_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUR",
           "field": "setback_front_max_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUR",
           "field": "setback_rear_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUR",
           "field": "setback_rear_ft [alley_at_rear]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUR",
           "field": "setback_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUR",
           "field": "setback_side_ft [attached_wall]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+          "kind": "header_or_xref"
         },
         {
           "zone": "MUR",
           "field": "setback_street_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+          "kind": "header_or_xref"
         },
         {
           "zone": "PR",
           "field": "quadplex_allowed",
           "claimed": "18.140.1",
           "found": "18.140.040",
-          "quote": "or/washington/tigard/tdc.18.140.parks.txt#L81,L84-L86"
+          "quote": "or/washington/tigard/tdc.18.140.parks.txt#L81,L84-L86",
+          "kind": "unlocated"
         },
         {
           "zone": "RES-A",
           "field": "max_height_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-A",
           "field": "max_impervious_pct",
           "claimed": "18.280.1 18.30",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-A",
           "field": "min_landscaped_pct",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-A",
           "field": "min_lot_sqft",
           "claimed": "18.805.1 18.40.130 18.280.040",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-A",
           "field": "min_lot_width_ft",
           "claimed": "18.805.1",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L186"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L186",
+          "kind": "unlocated"
         },
         {
           "zone": "RES-A",
           "field": "quadplex_allowed",
           "claimed": "18.110.2 18.110.3 18.30",
           "found": "18.110.030 18.110.040",
-          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
+          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215",
+          "kind": "heading_other_file"
         },
         {
           "zone": "RES-A",
           "field": "setback_front_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-A",
           "field": "setback_front_max_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-A",
           "field": "setback_rear_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-A",
           "field": "setback_rear_ft [alley_at_rear]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-A",
           "field": "setback_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-A",
           "field": "setback_side_ft [attached_wall]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-A",
           "field": "setback_street_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "max_height_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "max_impervious_pct",
           "claimed": "18.280.1 18.30",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "min_landscaped_pct",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "min_lot_sqft",
           "claimed": "18.805.1 18.40.130 18.280.040",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "min_lot_width_ft",
           "claimed": "18.805.1",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L187"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L187",
+          "kind": "unlocated"
         },
         {
           "zone": "RES-B",
           "field": "quadplex_allowed",
           "claimed": "18.110.2 18.110.3 18.30",
           "found": "18.110.030 18.110.040",
-          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
+          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215",
+          "kind": "heading_other_file"
         },
         {
           "zone": "RES-B",
           "field": "setback_front_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "setback_front_max_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "setback_rear_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "setback_rear_ft [alley_at_rear]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "setback_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "setback_side_ft [attached_wall]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-B",
           "field": "setback_street_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "max_height_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "max_impervious_pct",
           "claimed": "18.280.1 18.30",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "min_landscaped_pct",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "min_lot_sqft",
           "claimed": "18.805.1 18.40.130 18.280.040",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "min_lot_width_ft",
           "claimed": "18.805.1",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L188"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L188",
+          "kind": "unlocated"
         },
         {
           "zone": "RES-C",
           "field": "quadplex_allowed",
           "claimed": "18.110.2 18.110.3 18.30",
           "found": "18.110.030 18.110.040",
-          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
+          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215",
+          "kind": "heading_other_file"
         },
         {
           "zone": "RES-C",
           "field": "setback_front_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "setback_front_max_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "setback_rear_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "setback_rear_ft [alley_at_rear]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "setback_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "setback_side_ft [attached_wall]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-C",
           "field": "setback_street_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "max_height_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "max_impervious_pct",
           "claimed": "18.280.1 18.30",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "min_landscaped_pct",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "min_lot_sqft",
           "claimed": "18.805.1 18.40.130 18.280.040",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "min_lot_width_ft",
           "claimed": "18.805.1",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L189"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L189",
+          "kind": "unlocated"
         },
         {
           "zone": "RES-D",
           "field": "quadplex_allowed",
           "claimed": "18.110.2 18.110.3 18.30",
           "found": "18.110.030 18.110.040",
-          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208"
+          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208",
+          "kind": "heading_other_file"
         },
         {
           "zone": "RES-D",
           "field": "setback_front_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "setback_front_max_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "setback_rear_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "setback_rear_ft [alley_at_rear]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "setback_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "setback_side_ft [attached_wall]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-D",
           "field": "setback_street_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "max_height_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "max_impervious_pct",
           "claimed": "18.280.1 18.30",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "min_landscaped_pct",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "min_lot_sqft",
           "claimed": "18.805.1",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L98"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L98",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "min_lot_width_ft",
           "claimed": "18.805.1",
           "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L190"
+          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L190",
+          "kind": "unlocated"
         },
         {
           "zone": "RES-E",
           "field": "quadplex_allowed",
           "claimed": "18.110.2 18.110.3 18.30",
           "found": "18.110.030 18.110.040",
-          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208"
+          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208",
+          "kind": "heading_other_file"
         },
         {
           "zone": "RES-E",
           "field": "setback_front_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "setback_front_max_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "setback_rear_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "setback_rear_ft [alley_at_rear]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "setback_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "setback_side_ft [attached_wall]",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+          "kind": "header_or_xref"
         },
         {
           "zone": "RES-E",
           "field": "setback_street_side_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
-          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77"
+          "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+          "kind": "header_or_xref"
         },
         {
           "zone": "TMU",
           "field": "quadplex_allowed",
           "claimed": "18.660.4 18.660.030",
           "found": "18.660.030 18.660.060",
-          "quote": "or/washington/tigard/tdc.18.660.triangle.txt#L132,L536-L539"
+          "quote": "or/washington/tigard/tdc.18.660.triangle.txt#L132,L536-L539",
+          "kind": "header_or_xref"
         }
       ],
       "label": "Tigard",

@@ -48,7 +48,6 @@ import yaml
 from flats.encode.corroborate import Verdict, check_layer
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.loader import CONFIG_ROOT, load_rules
-from flats.rules.model import ZONE_META
 
 
 @dataclass(frozen=True, slots=True)

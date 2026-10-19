@@ -60,7 +60,7 @@ rulings:
     rule: majority_within
     ft: 20
     inclusive: true
-    cite: "https://ecode360.com/43860128"
+    cite: "or/clackamas/milwaukie/19.100.introductory-provisions.txt#L170-L170"
     section: "MMC 19.107.5 Zoning of Lots with Multiple Zones"
     quote: "the entire lot shall be deemed to be in the base zone in which the greater area of the lot lies"
   or/clackamas/sandy:

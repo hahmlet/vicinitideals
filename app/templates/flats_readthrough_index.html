@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Whole-document read-through — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar"></div>
+<div class="content">
+<div style="max-width:1400px;margin:0 auto">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Whole-document read-through</h2>
+      <p class="muted" style="margin:4px 0 0;max-width:85ch">
+        Read every page in order. Green tint marks rules already encoded; read the rest for anything missing.
+        Notes stay in this browser until you submit the completed document.
+      </p>
+      <p style="margin:8px 0 0"><a href="/flats/check">Back to the number cards</a></p>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>Document</th><th class="col-right">Pages</th><th>Last read by a human</th><th class="col-right">Comments</th><th></th></tr></thead>
+      <tbody>
+        {% for item in documents %}
+        <tr data-document data-page-count="{{ item.page_count }}">
+          <td>{{ item.name }}<div class="muted" style="font-size:11px">{{ item.document }}</div></td>
+          <td class="col-right">{{ item.page_count }}</td>
+          {% if item.read %}
+          <td>{{ item.read.reviewer }}<div class="muted" style="font-size:11px">{{ item.read.submitted_at.strftime("%Y-%m-%d %H:%M UTC") }}</div></td>
+          <td class="col-right">{{ item.read.comment_count }}</td>
+          {% else %}
+          <td class="muted">Not read yet</td><td class="col-right">—</td>
+          {% endif %}
+          <td><a class="btn btn-secondary btn-sm" href="/flats/check/readthrough/{{ item.document | urlencode }}">Read document</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="muted">No printed documents with a page map are available.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+{% endblock %}

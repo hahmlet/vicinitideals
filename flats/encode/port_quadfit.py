@@ -360,9 +360,9 @@ def port(write: bool) -> dict[str, Any]:
             unported_all.extend(f"{jname}:{row['zone']}: {u}" for u in unported)
 
         notes = [
-            f"Ported from quadfit rules.yaml. Every value is `draft` — quadfit's "
-            f"verification was against a coarser standard (one citation per row) "
-            f"and does not carry over."
+            "Ported from quadfit rules.yaml. Every value is `draft` — quadfit's "
+            "verification was against a coarser standard (one citation per row) "
+            "and does not carry over."
         ]
         if jdata.get("orientation_constraint"):
             notes.append(

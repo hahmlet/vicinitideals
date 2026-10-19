@@ -1,0 +1,11 @@
+
+RULES (all mandatory):
+- Read CLAUDE.md first. This is the FLATS product. Never touch app/engines/, capital/deal models, or tests/engines/. Nothing under flats/ may import app.engines.
+- No rule value, number, zone answer or lot colour may change in this task. If doing the task correctly would change one, STOP and say so under QUESTIONS.
+- Python: PYTHON=/c/Users/Steph/Repos/vicinitideals/.venv/Scripts/python.exe (never "uv run"). Keep each file's existing line endings (some are CRLF).
+- Never commit .claude/settings.json or flats/config/gaps.json. Commit by explicit path. Do not push.
+- Before your final commit run and get green: $PYTHON -m ruff check app/ tests/ flats/ scripts/ ; $PYTHON scripts/check_flats_firewall.py --base origin/main ; $PYTHON -m flats.encode.gaps (report if it changes gaps.json -- do not commit gaps.json) ; $PYTHON -m pytest flats/tests -q -n auto -p no:cacheprovider (that is the whole command; there is no trailing "." argument). If a failure also happens on a clean origin/main checkout, it is not yours: still commit, and name it under QUESTIONS.
+- Quote only text that exists verbatim in the source you cite. Never invent a quote, number, date or URL.
+- Commit message ends with "Co-Authored-By: GitHub Copilot".
+- Final message under 200 words: what you did, files, test results, QUESTIONS, anything not done.
+- Other agents run tests/ against the SAME Postgres test database at the same time and TRUNCATE between tests. If a tests/ DB test fails with missing rows or a FK/unique error that makes no sense, re-run that file alone before concluding it is a real failure; say so in your report.

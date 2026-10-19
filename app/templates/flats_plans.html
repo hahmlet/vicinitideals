@@ -60,7 +60,7 @@
             <a href="/flats/plans/{{ d.key }}?plat={{ plat }}">{{ d.label }}</a>
             <div class="muted" style="font-size:11px">
               {{ d.key }} · {{ d.delivery }}
-              {% if d.status != 'active' %} · <strong>{{ d.status }}</strong>{% endif %}
+              {% if d.status != 'active' %} · <strong>{{ d.status_words }}</strong>{% endif %}
             </div>
           </td>
           <td class="col-right">{{ d.width }} × {{ d.depth }} ft</td>

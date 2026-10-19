@@ -14,6 +14,7 @@ beside it.
 
 from __future__ import annotations
 
+import contextlib
 import io
 import json
 import math
@@ -538,7 +539,44 @@ def _all_records(rows) -> pd.DataFrame:
     return pd.DataFrame.from_records([r for row in rows for r in _fake_records(row)])
 
 
-@pytest.mark.timeout(180)
+@pytest.fixture
+def one_spawner_at_a_time(tmp_path_factory):
+    """Let one xdist worker at a time start screening processes.
+
+    Each of these tests launches two or more processes that import pandas and
+    shapely. Run with ``-n auto`` beside the memory-hungry census tests, a
+    dozen at once starve for memory and CPU; a test that overruns its timeout
+    ends its whole xdist worker on Windows ("worker crashed"). The lock is an
+    OS file lock, so one held by a dead worker is released with it.
+    """
+    path = tmp_path_factory.getbasetemp().parent / "spawn.lock"
+    with open(path, "a+b") as handle:
+        handle.seek(0)
+        while True:
+            try:
+                if sys.platform == "win32":
+                    import msvcrt
+
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+                else:
+                    import fcntl
+
+                    fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except OSError:
+                time.sleep(0.5)
+        try:
+            yield
+        finally:
+            with contextlib.suppress(OSError):
+                handle.seek(0)
+                if sys.platform == "win32":
+                    import msvcrt
+
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+
+@pytest.mark.timeout(900)
+@pytest.mark.usefixtures("one_spawner_at_a_time")
 def test_a_worker_killed_mid_lot_costs_that_lot_alone(tmp_path) -> None:
     # T05 is the second lot of its chunk, after T01: T01 is kept, not
     # screened again, and T05 runs again on a fresh worker
@@ -554,7 +592,8 @@ def test_a_worker_killed_mid_lot_costs_that_lot_alone(tmp_path) -> None:
     assert sorted(timings["TLID"]) == sorted(r["TLID"] for r in rows)
 
 
-@pytest.mark.timeout(180)
+@pytest.mark.timeout(900)
+@pytest.mark.usefixtures("one_spawner_at_a_time")
 def test_a_lot_that_kills_its_worker_again_stops_the_run_and_a_relaunch_resumes(tmp_path) -> None:
     # The smallest lot runs last, so the chunks before it are kept when it
     # stops the run: there is always something to resume from.
@@ -567,7 +606,8 @@ def test_a_lot_that_kills_its_worker_again_stops_the_run_and_a_relaunch_resumes(
     _same(frame, _all_records(rows))
 
 
-@pytest.mark.timeout(180)
+@pytest.mark.timeout(900)
+@pytest.mark.usefixtures("one_spawner_at_a_time")
 def test_a_lot_that_fails_stops_the_run_naming_it(tmp_path) -> None:
     with pytest.raises(RuntimeError, match=r"lot T06 at 3\.0 acres failed in a worker(.|\n)*bad geometry"):
         _screen_in_processes(_rows(), tmp_path, deaths=0, tlid="T06", error="bad geometry")
@@ -578,7 +618,8 @@ def _note_oom_score(where: str) -> None:
     _dying_init(where, 0, "")
 
 
-@pytest.mark.timeout(180)
+@pytest.mark.timeout(900)
+@pytest.mark.usefixtures("one_spawner_at_a_time")
 @pytest.mark.skipif(not sys.platform.startswith("linux"), reason="oom_score_adj is Linux's")
 def test_workers_offer_themselves_to_the_oom_killer_before_the_parent(tmp_path) -> None:
     parts = tmp_path / "parts"
@@ -595,7 +636,8 @@ def test_workers_offer_themselves_to_the_oom_killer_before_the_parent(tmp_path) 
 # --- the command as LXC 137 runs it --------------------------------------------------
 
 
-@pytest.mark.timeout(300)
+@pytest.mark.timeout(1200)
+@pytest.mark.usefixtures("one_spawner_at_a_time")
 def test_the_command_screens_in_workers_set_up_by_the_module_that_screens(tmp_path) -> None:
     # `python -m flats.ingest.quadfit` runs the file as __main__, a second
     # copy of the module beside the flats.ingest.quadfit the workers screen
@@ -629,7 +671,7 @@ def test_the_command_screens_in_workers_set_up_by_the_module_that_screens(tmp_pa
              "--chunk-size", "1", "--step-deg", "30", "--dem", str(tmp_path / "raw"), "--curbs", str(snapshot),
              "--institutional", str(snapshot), *more],
             cwd=Path(__file__).resolve().parents[2], capture_output=True, text=True, encoding="utf-8",
-            env={**os.environ, "PYTHONIOENCODING": "utf-8"},
+            env={**os.environ, "PYTHONIOENCODING": "utf-8"}, timeout=600,
         )
         assert got.returncode == 0, got.stderr[-3000:]
         frame = pd.read_parquet(out / "lots.parquet")

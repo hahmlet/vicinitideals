@@ -154,6 +154,13 @@ code:
 # own reading of OFC 2022 for site plans, published by Clackamas Fire and
 # used by Gresham, TVF&R and the rest -- prints 503.1.1's distance as a
 # requirement, which is what `fire_access_max_ft` cites (FOLLOWUPS 28).
+# EDITION NOTE (read 2026-10-16): OFC 2022 is no longer the current code. OAR
+# 837-040-0010 adopts the 2025 OFC (2024 IFC) effective 2025-10-01; the 2022
+# OFC was valid for new-construction plan review only until 2026-03-31.
+# https://secure.sos.state.or.us/oard/viewSingleRule.action?ruleVrsnRsn=327787
+# https://www.oregon.gov/osfm/fire-service-partners/pages/oregon-fire-code.aspx
+# Whether 2025 OFC 503.1.1 still reads 150 ft is NOT verified (ICC's reader
+# returned 403); the cites below remain the 2022 guide until that is checked.
 - id: ofc.2022.applications-guide
   url: https://clackamasfire.com/wp-content/uploads/2023/08/Oregon-Fire-Code-Applications-Guide-2022.pdf
   title: Oregon Fire Code Applications Guide, based on the 2022 OFC (Clackamas Fire, revised 2023-06-21)

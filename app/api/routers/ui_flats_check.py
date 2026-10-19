@@ -23,15 +23,17 @@ Registered ahead of ``ui_flats``: that router ends in a catch-all
 from __future__ import annotations
 
 import json
+import math
 import re
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from functools import lru_cache
 from typing import Any
+from urllib.parse import quote
 
 from fastapi import APIRouter, Form, Query, Request
-from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse
+from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse, RedirectResponse
 from sqlalchemy import select, update
 from starlette.concurrency import run_in_threadpool
 
@@ -42,12 +44,14 @@ from app.api.routers.ui_flats import (
     _layers,
     _mark,
     _number,
+    _page_index,
     _ranges,
     _store,
     _value_rows,
 )
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
-from app.models.flats import FlatsPageCheck, FlatsRuleSignature
+from app.models.flats import FlatsDocumentReadthrough, FlatsPageCheck, FlatsRuleSignature
+from flats.encode import footnotes
 from flats.provenance import books, pages as page_map, sheet
 from flats.rules import conditions
 from flats.rules.fields import FIELDS
@@ -119,15 +123,6 @@ _SIGNED = "verified"
 
 
 # --- which numbers can be checked -------------------------------------------
-
-
-@lru_cache(maxsize=512)
-def _page_index(document: str) -> Any:
-    """The document's page map, read once per process -- the store is baked in."""
-    try:
-        return page_map.read(_store(), document)
-    except Exception:  # noqa: BLE001 — a bad sidecar reads as no map
-        return None
 
 
 @lru_cache(maxsize=512)
@@ -275,14 +270,54 @@ def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
     out = []
     for row in _value_rows(layer):
         document = (row["quote"] or "").partition("#L")[0]
-        if _checkable(document):
+        why = _checkable(document)
+        if why and why != "html":
             continue
         spans = _ranges(row["quote"])
         row["document"] = document
         row["line"] = spans[0][0] if spans else 0
         row["signed"] = (layer.layer, row["zone"], row["field"], row["when"]) in signed
+        # A web code has no printed page: its card shows the stored text.
+        row["web"] = why == "html"
         out.append(row)
-    return sorted(out, key=lambda r: (not r["signed"], r["document"], r["line"], r["zone"], r["field"]))
+    # Web numbers queue after every printed one, so the printed run is
+    # exactly the order it was before they joined.
+    return sorted(
+        out,
+        key=lambda r: (r["web"], not r["signed"], r["document"], r["line"], r["zone"], r["field"]),
+    )
+
+
+#: Marker kinds read off stored text that name a note. A bare letter is a use
+#: code ("P" permitted, "C" conditional) far more often than a note.
+_NOT_NOTES = frozenset({"letter", "lone"})
+
+
+@lru_cache(maxsize=512)
+def _web_lines(document: str) -> tuple[str, ...]:
+    """A web code's stored text, split into lines once per process.
+
+    The store is baked in, like the page maps: reading and hashing the file per
+    number made a queue walk cost one file read per web number.
+    """
+    return tuple(sheet.lines_of(_store(), document))
+
+
+@lru_cache(maxsize=4096)
+def _web_marks(quote: str) -> tuple[str, ...]:
+    """The footnote markers printed on a web number's cited lines, in order.
+
+    A web code has no page geometry to find superscripts by, so the markers
+    are read from the stored text with the census's own reading.
+    """
+    document = quote.partition("#L")[0]
+    text = _web_lines(document)
+    out: list[str] = []
+    for first, last in _ranges(quote):
+        for m in footnotes._markers(text[first - 1 : last], ()):
+            if m.kind not in _NOT_NOTES and m.mark not in out:
+                out.append(m.mark)
+    return tuple(out)
 
 
 @dataclass
@@ -308,9 +343,10 @@ def _questions(
             continue
         if said.answer in _STOPS:
             continue
-        for marker in _placed(row).markers:
-            if _standing(answers.get((*key, f"note:{marker.mark}")), row) is None:
-                yield _Ask(row, f"note:{marker.mark}")
+        marks = _web_marks(row["quote"]) if row["web"] else [m.mark for m in _placed(row).markers]
+        for mark in marks:
+            if _standing(answers.get((*key, f"note:{mark}")), row) is None:
+                yield _Ask(row, f"note:{mark}")
 
 
 def _next(
@@ -330,6 +366,8 @@ def _focus(
 ) -> _Ask | None:
     for row in rows:
         if (row["zone"], row["field"], row["when"]) == (zone, field, when):
+            if row["web"] and question != "value" and question.partition(":")[2] not in _web_marks(row["quote"]):
+                return None
             return _Ask(row, question)
     return None
 
@@ -361,19 +399,28 @@ def _trail(raw: str) -> list[list[str]]:
 
 
 def _flags_on(
-    answers: dict[tuple, FlatsPageCheck], layer_id: str, document: str, pages: set[int]
+    answers: dict[tuple, FlatsPageCheck],
+    layer_id: str,
+    document: str,
+    pages: set[int],
+    web: tuple[str, str, str] | None = None,
 ) -> list[dict[str, Any]]:
     """What has been flagged on the pages this card shows, oldest first.
 
     A flag is its own finding: a second one adds to the list, it does not
     replace the first, and the card shows them so the reviewer can see that.
+    A web card has no page, so it shows the flags made on that same number.
     """
     out, replies = [], _replies(answers)
     for r in answers.values():
         if (
             r.layer == layer_id
             and r.answer == FLAG
-            and r.page in pages
+            and (
+                r.page in pages
+                if web is None
+                else r.page is None and r.placed == "web" and (r.zone, r.field, r.when_key) == web
+            )
             and (r.quote or "").partition("#L")[0] == document
         ):
             reply = replies.get(r.id)
@@ -438,11 +485,31 @@ def _by_document() -> dict[str, list[dict[str, Any]]]:
 def _set_aside_by_document() -> dict[str, list[dict[str, str]]]:
     """Every passage read and left out on purpose, grouped by document.
 
+    The whole corpus; a card only needs one document and asks
+    :func:`_set_aside_in`, which is the same answer without surveying every
+    layer's reading queue.
+    """
+    return _set_aside_items(None)
+
+
+@lru_cache(maxsize=512)
+def _set_aside_in(document: str) -> tuple[dict[str, str], ...]:
+    """One document's set-aside passages -- identical to its entry in the whole."""
+    return tuple(_set_aside_items(document).get(document, []))
+
+
+def _set_aside_items(only: str | None) -> dict[str, list[dict[str, str]]]:
+    """Passages read and left out on purpose, for one document or all of them.
+
     Four kinds of decision, one tint: a located refusal (``set_aside:``), a
     footnote ruled dismissed, a section the reading queues closed as not
     reaching us, and a standard held as exempt. A reviewer does not need the
     reason to tell "weighed and refused" from "never read", and the second is
     the one the page check is for.
+
+    The reading queue is the slow part (it scans every document a layer owns),
+    and a layer's cards only ever cite documents in that layer's own
+    directory, so a single document needs only its own layer's queue.
     """
     from flats.encode import dispositions, worklist
 
@@ -450,7 +517,7 @@ def _set_aside_by_document() -> dict[str, list[dict[str, str]]]:
 
     def add(quote: str, why: str) -> None:
         document = quote.partition("#L")[0]
-        if document and _ranges(quote):
+        if document and (only is None or document == only) and _ranges(quote):
             out[document].append({"quote": quote, "why": why})
 
     for layer_id, layer in _layers().items():
@@ -459,6 +526,8 @@ def _set_aside_by_document() -> dict[str, list[dict[str, str]]]:
         for row in _value_rows(layer):
             if row["quote"] and _exempt(layer, row):
                 add(row["quote"], f"{_label(row['field'])} -- does not reach this building")
+        if only is not None and only.rpartition("/")[0] != layer_id:
+            continue
         try:
             for card in worklist.cards(layer, _store()):
                 if card.ruling is not None and card.ruling.closed and card.lines:
@@ -478,6 +547,23 @@ def _set_aside_by_document() -> dict[str, list[dict[str, str]]]:
             i for i in items if (i["quote"], i["why"]) not in seen and not seen.add((i["quote"], i["why"]))
         ]
     return out
+
+
+def warm() -> None:
+    """Fill the per-process caches the first card would otherwise pay for.
+
+    Run from a thread at app startup; a failure only means the first card is
+    as slow as it was.
+    """
+    from flats.encode import dispositions
+
+    try:
+        _layers()
+        _known_documents()
+        dispositions.rulings()
+        _by_document()
+    except Exception:  # noqa: BLE001 — warming is best effort
+        pass
 
 
 def _on_page(index: Any, quote: str, page: int) -> bool:
@@ -534,7 +620,7 @@ def _set_aside_on(document: str, page: int) -> tuple[tuple[sheet.Box, str], ...]
     if index is None:
         return ()
     spots: dict[tuple, dict[str, Any]] = {}
-    for item in _set_aside_by_document().get(document, []):
+    for item in _set_aside_in(document):
         if not _on_page(index, item["quote"], page):
             continue
         try:
@@ -577,6 +663,81 @@ def _sheet_view(
             for box, title in _set_aside_on(document, page)
         ],
     }
+
+
+def _readthrough_documents() -> list[dict[str, Any]]:
+    """Every stored printed document with a page map, including uncited books."""
+    out = []
+    for document in sorted(_known_documents()):
+        index = _page_index(document)
+        if index is None or not index.pages:
+            continue
+        out.append(
+            {
+                "document": document,
+                "name": document.rsplit("/", 1)[-1],
+                "page_count": len(index.pages),
+            }
+        )
+    return out
+
+
+def _readthrough_pages(document: str, index: Any) -> list[dict[str, Any]]:
+    """Every mapped page, with its printed label, nearby heading and rule tints."""
+    lines = sheet.lines_of(_store(), document)
+    out = []
+    for position, printed in enumerate(index.pages):
+        end = index.pages[position + 1].line - 1 if position + 1 < len(index.pages) else len(lines)
+        section = lines[max(printed.line - 1, 0) : max(end, printed.line)]
+        headings = [line.strip() for line in section if line.strip()][:2]
+        page = _sheet_view(document, printed.n, [])
+        page["heading"] = " · ".join(headings)[:240]
+        out.append(page)
+    return out
+
+
+def _readthrough_comments(raw: str, valid_pages: set[int]) -> list[dict[str, Any]] | None:
+    """Validate a draft payload before storing reviewer-authored comments."""
+    try:
+        parsed = json.loads(raw)
+    except (TypeError, json.JSONDecodeError):
+        return None
+    if not isinstance(parsed, list) or len(parsed) > 200:
+        return None
+    comments = []
+    for item in parsed:
+        if not isinstance(item, dict):
+            return None
+        page, text = item.get("page"), item.get("text")
+        if (
+            not isinstance(page, int)
+            or isinstance(page, bool)
+            or page not in valid_pages
+            or not isinstance(text, str)
+            or not text.strip()
+            or len(text) > 4000
+        ):
+            return None
+        clean: dict[str, Any] = {"page": page, "text": text.strip()}
+        box = item.get("box")
+        if box is not None:
+            if (
+                not isinstance(box, list)
+                or len(box) != 4
+                or any(
+                    isinstance(value, bool)
+                    or not isinstance(value, (int, float))
+                    or not math.isfinite(value)
+                    or not 0 <= value <= 1
+                    for value in box
+                )
+                or box[0] >= box[2]
+                or box[1] >= box[3]
+            ):
+                return None
+            clean["box"] = [round(float(value), 4) for value in box]
+        comments.append(clean)
+    return comments
 
 
 def _with_neighbours(document: str, sheets: list[dict[str, Any]], mark: str) -> list[dict[str, Any]]:
@@ -633,11 +794,79 @@ def _variants(layer: Layer, zone: str, field: str) -> list[dict[str, str]]:
     return out
 
 
+def _states(token: str, value: Any) -> bool:
+    """Whether a word of stored text states this number (same reading as the page boxes)."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return False
+    read = sheet.numeral(token)
+    if read is None:
+        return False
+    number, percent = read
+    return abs(number - value) < 1e-9 or (percent and abs(number / 100 - value) < 1e-9)
+
+
+def _web_text(row: dict[str, Any], note_mark: str = "") -> list[dict[str, Any]]:
+    """The stored text around the cited lines, with the number or note marked.
+
+    A web code has no page to draw, so the card shows the text we hold, the
+    cited lines lit and the words that state the number or footnote tinted.
+    """
+    lines, _error = _cited_lines(row["quote"])
+    out = []
+    for line in lines:
+        shown = line["shown"]
+        if not note_mark:
+            parts = [
+                {"text": p, "hit": line["quoted"] and bool(p.strip()) and _states(p, row["value"])}
+                for p in re.split(r"(\s+)", shown)
+                if p
+            ]
+        else:
+            leading = len(shown) - len(shown.lstrip())
+            marker_spans = []
+            if line["quoted"]:
+                marker_spans = sorted(
+                    (leading + marker.start, leading + marker.end)
+                    for marker in footnotes._markers([shown], ())
+                    if marker.kind not in _NOT_NOTES and marker.mark == note_mark
+                )
+            parts = []
+            cursor = 0
+            for token in re.finditer(r"\S+", shown):
+                if token.start() > cursor:
+                    parts.append({"text": shown[cursor : token.start()], "hit": False, "marker": False})
+                token_start, token_end = token.span()
+                hit = line["quoted"] and _states(token.group(), row["value"])
+                cursor = token_start
+                for start, end in marker_spans:
+                    if start < token_start or end > token_end:
+                        continue
+                    if start > cursor:
+                        parts.append({"text": shown[cursor:start], "hit": hit, "marker": False})
+                    parts.append({"text": shown[start:end], "hit": False, "marker": True})
+                    cursor = end
+                if cursor < token_end:
+                    parts.append({"text": shown[cursor:token_end], "hit": hit, "marker": False})
+                cursor = token_end
+            if cursor < len(shown):
+                parts.append({"text": shown[cursor:], "hit": False, "marker": False})
+        out.append(
+            {
+                "n": line["n"],
+                "cited": line["quoted"],
+                "grid": line["grid"],
+                "parts": parts,
+            }
+        )
+    return out
+
+
 def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
     """Everything one card shows."""
     row = ask.row
     document = row["document"]
-    placed = _placed(row)
+    web = row["web"]
+    placed = None if web else _placed(row)
     card: dict[str, Any] = {
         "layer_id": layer.layer,
         "layer_label": _layer_label(layer),
@@ -659,8 +888,12 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         "quote": row["quote"],
         "url": row["url"],
         "question": ask.question,
-        "placed": placed.status,
-        "placed_words": sheet.PLACED.get(placed.status, ""),
+        "placed": "web" if web else placed.status,
+        "placed_words": "" if web else sheet.PLACED.get(placed.status, ""),
+        "web": web,
+        "web_text": _web_text(row, ask.question.partition(":")[2] if web and ask.question.startswith("note:") else "")
+        if web
+        else [],
         "sheets": [],
         "answers": list(VALUE_ANSWERS.items()),
     }
@@ -679,23 +912,29 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         card["yes_no"] = isinstance(row["value"], bool)
         card["because"] = row["cite"] if card["yes_no"] else ""
         card["exempt"] = _exempt(layer, row)
+        if web:
+            return card
         for page, boxes in _own_boxes(placed):
             card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))
         card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
         return card
 
     mark = ask.question.partition(":")[2]
-    marker = next((m for m in placed.markers if m.mark == mark), None)
     card["answers"] = list(NOTE_ANSWERS.items())
     card["mark"] = mark
+    at, body = _note_text(document, mark, row["line"])
+    card["note_text"] = body
+    card["variants"] = _variants(layer, row["zone"], row["field"])
+    if web:
+        # The cited text is already on the card; there is no page to box.
+        card["mark_on"] = "web"
+        return card
+    marker = next((m for m in placed.markers if m.mark == mark), None)
     card["mark_on"] = marker.on if marker else "number"
     page = placed.marker_page or (placed.pages[0] if placed.pages else 1)
     boxes = [b for b in placed.boxes.get(page, []) if b[1] == "value"]
     if marker:
         boxes.append((marker.box.pad(0.004), "marker"))
-    at, body = _note_text(document, mark, row["line"])
-    card["note_text"] = body
-    card["variants"] = _variants(layer, row["zone"], row["field"])
     note_page = None
     if at is not None and (index := _page_index(document)) is not None:
         where = index.at(at)
@@ -778,6 +1017,7 @@ async def _card_ctx(
             layer.layer,
             ask.row["document"],
             {sh["page"] for sh in card["sheets"] if not sh["context"]},
+            (ask.row["zone"], ask.row["field"], ask.row["when"]) if card["web"] else None,
         )
     return {
         "layer": {"id": layer.layer, "label": _layer_label(layer)},
@@ -821,6 +1061,115 @@ async def flats_sheet(
     )
 
 
+@router.get("/flats/check/readthrough", response_class=HTMLResponse)
+async def flats_readthrough_index(request: Request, session: DBSession) -> HTMLResponse:
+    """Choose a printed document and see its most recent human read-through."""
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    documents = await run_in_threadpool(_readthrough_documents)
+    records = (
+        await session.execute(
+            select(FlatsDocumentReadthrough).order_by(
+                FlatsDocumentReadthrough.submitted_at,
+                FlatsDocumentReadthrough.id,
+            )
+        )
+    ).scalars()
+    latest: dict[str, FlatsDocumentReadthrough] = {}
+    for record in records:
+        latest[record.document] = record
+    for item in documents:
+        record = latest.get(item["document"])
+        item["read"] = record
+    return templates.TemplateResponse(
+        request,
+        "flats_readthrough_index.html",
+        {
+            **_base_ctx(user, dedup_count, "flats_check", conflicts_count=conflicts_count),
+            "documents": documents,
+        },
+    )
+
+
+@router.get("/flats/check/readthrough/{document:path}", response_class=HTMLResponse)
+async def flats_readthrough(
+    request: Request,
+    session: DBSession,
+    document: str,
+    submitted: bool = Query(False),
+) -> HTMLResponse:
+    """Read every mapped page of one document in order."""
+    user = await _get_user(session, request)
+    if document not in _known_documents():
+        return HTMLResponse("no page map for this document", status_code=404)
+    index = _page_index(document)
+    if index is None or not index.pages:
+        return HTMLResponse("no page map for this document", status_code=404)
+    dedup_count, conflicts_count = await _get_counts(session)
+    pages = await run_in_threadpool(_readthrough_pages, document, index)
+    latest = (
+        await session.execute(
+            select(FlatsDocumentReadthrough)
+            .where(FlatsDocumentReadthrough.document == document)
+            .order_by(
+                FlatsDocumentReadthrough.submitted_at.desc(),
+                FlatsDocumentReadthrough.id.desc(),
+            )
+            .limit(1)
+        )
+    ).scalar_one_or_none()
+    return templates.TemplateResponse(
+        request,
+        "flats_readthrough.html",
+        {
+            **_base_ctx(user, dedup_count, "flats_check", conflicts_count=conflicts_count),
+            "document": document,
+            "book_sha256": index.source_sha256 or "",
+            "pages": pages,
+            "last_read": latest,
+            "submitted": submitted,
+        },
+    )
+
+
+@router.post("/ui/flats/readthrough", response_class=HTMLResponse)
+async def flats_readthrough_submit(
+    request: Request,
+    session: DBSession,
+    document: str = Form(...),
+    comments_json: str = Form("[]"),
+    read_confirmed: str = Form(""),
+) -> HTMLResponse:
+    """Append one completed document read and its browser-drafted comments."""
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("sign in first", status_code=401)
+    if read_confirmed != "yes" or document not in _known_documents():
+        return HTMLResponse("confirm that you read the document", status_code=400)
+    index = _page_index(document)
+    if index is None or not index.pages:
+        return HTMLResponse("no page map for this document", status_code=404)
+    comments = _readthrough_comments(comments_json, {page.n for page in index.pages})
+    if comments is None:
+        return HTMLResponse("the comments could not be read; review the draft and try again", status_code=400)
+    session.add(
+        FlatsDocumentReadthrough(
+            document=document,
+            book_sha256=index.source_sha256 or "",
+            page_count=len(index.pages),
+            comments=comments,
+            comment_count=len(comments),
+            reviewer=(user.email or str(user.id))[:80],
+            reviewer_user_id=user.id,
+        )
+    )
+    await session.commit()
+    return RedirectResponse(
+        f"/flats/check/readthrough/{quote(document, safe='/')}?submitted=1",
+        status_code=303,
+    )
+
+
 @router.get("/flats/check", response_class=HTMLResponse)
 async def flats_check_index(request: Request, session: DBSession) -> HTMLResponse:
     """Every jurisdiction's page check at a glance, and the problems raised."""
@@ -837,10 +1186,10 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
         for layer_id, layer in sorted(layers.items()):
             rows = _rows(layer, signed)
             counts = _counts(layer, rows, answers)
-            elsewhere = {"no_map": 0, "html": 0}
+            elsewhere = {"no_map": 0, "html": sum(r["web"] for r in rows)}
             for row in _value_rows(layer):
                 why = _checkable((row["quote"] or "").partition("#L")[0])
-                if why:
+                if why == "no_map":
                     elsewhere[why] += 1
             if not rows and not any(elsewhere.values()):
                 continue
@@ -931,10 +1280,11 @@ async def flats_check_problems(
         if number is None or answer.fingerprint != _mark(layer_id, zone, field, when, number):
             continue
         lines, _error = _cited_lines(answer.quote)
+        where = "web code, no printed page" if answer.placed == "web" else f"PDF page {answer.page}"
         out += [
             f"== {layer_id} | {zone} | {field}{' when ' + when if when else ''} = {answer.value!r}",
             f"   question: {question}   answer: {answer.answer}   by {answer.reviewer} {answer.decided_at:%Y-%m-%d}",
-            f"   page: PDF page {answer.page}   box: {answer.placed}   cite: {answer.quote}",
+            f"   page: {where}   box: {answer.placed}   cite: {answer.quote}",
         ]
         if answer.says:
             out.append(f"   the page says: {answer.says}")
@@ -994,6 +1344,7 @@ async def flats_check_answer(
     note: str = Form(""),
     comment: str = Form(""),
     flag_page: int = Form(0),
+    flag_web: str = Form(""),
     action: str = Form("answer"),
     skipped: int = Form(0),
     trail: str = Form("[]"),
@@ -1070,14 +1421,15 @@ async def flats_check_answer(
     # with "Flag it" it is what the page has that the rules don't; under any
     # other answer it is a note.
     if action == "flag":
-        question, answer, says = f"page:{flag_page}", FLAG, comment or says
+        question = "page:web" if flag_web else f"page:{flag_page}"
+        answer, says = FLAG, comment or says
     elif comment and answer == "differs":
         says = says or comment
     elif comment:
         note = note or comment
     flag_page = question.partition(":")[2] if question.startswith("page:") else ""
     if flag_page:
-        if answer != FLAG or not flag_page.isdigit():
+        if answer != FLAG or not (flag_page.isdigit() or flag_page == "web"):
             return await card(skipped=skipped, focus=tuple(here), error="pick one of the answers")
         if not says.strip():
             return await card(skipped=skipped, focus=tuple(here), error="say what on the page is missing from the rules")
@@ -1095,14 +1447,27 @@ async def flats_check_answer(
         "value": number.value,
         "quote": number.prov.quote or "",
     }
-    placed = await run_in_threadpool(_placed, row)
     document = row["quote"].partition("#L")[0]
-    if flag_page:
-        page = int(flag_page)
-    elif question == "value":
-        page = placed.first
+    web = bool(document) and _checkable(document) == "html"
+    if web and flag_page not in ("", "web"):
+        return await card(skipped=skipped, focus=tuple(here), error="a web code has no printed page to flag")
+    if flag_page == "web" and not web:
+        return await card(skipped=skipped, focus=tuple(here), error="pick one of the answers")
+    if web and question.startswith("note:") and question.partition(":")[2] not in _web_marks(row["quote"]):
+        return await card(skipped=skipped, focus=tuple(here), error="that footnote is not printed on this number")
+    if web:
+        # No page and no box: the text copy's own hash stands in for the book's.
+        page, placed_how, book = None, "web", _store().load(document).sha256
     else:
-        page = placed.marker_page or placed.first
+        placed = await run_in_threadpool(_placed, row)
+        placed_how = placed.status
+        book = books.expected(_store(), document) if document else ""
+        if flag_page:
+            page = int(flag_page)
+        elif question == "value":
+            page = placed.first
+        else:
+            page = placed.marker_page or placed.first
     session.add(
         FlatsPageCheck(
             layer=layer.layer,
@@ -1117,8 +1482,8 @@ async def flats_check_answer(
             note=note.strip()[:2000],
             quote=row["quote"],
             page=page,
-            placed=placed.status,
-            book_sha256=books.expected(_store(), document) if document else "",
+            placed=placed_how,
+            book_sha256=book,
             reviewer=(user.email or str(user.id))[:80],
             reviewer_user_id=user.id,
         )
