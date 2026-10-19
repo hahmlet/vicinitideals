@@ -1045,8 +1045,14 @@ async def flats_sheet(
     way to draw on its page.
     """
     await _get_user(session, request)
-    if document not in _known_documents() or _page_index(document) is None:
+    index = _page_index(document) if document in _known_documents() else None
+    if index is None:
         return HTMLResponse("no page map for this document", status_code=404)
+    # A page the map does not hold is answered before the book is fetched: the
+    # fetch is a download, and CI's failed one turned a bad page number into a
+    # 409 (f7512199 full gate, 2026-10-19).
+    if index.pages and page > max(p.n for p in index.pages):
+        return HTMLResponse("that page cannot be drawn", status_code=404)
     try:
         book = await run_in_threadpool(books.ensure, _store(), document)
         image = await run_in_threadpool(sheet.render, book, page)
