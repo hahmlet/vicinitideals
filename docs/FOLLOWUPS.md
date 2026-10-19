@@ -38,6 +38,13 @@ read when the weekly full re-screen lands.
 
 ### 1a. The weekly re-screen (~2026-10-19): traps to honour before it, moves to read after it
 
+   READY TO LAUNCH (checked 2026-10-19): 137's checkout is at a69f4ca3 (items 85 + 93 merged) and
+   `flats_weekly_chain.py --snapshot 2026-10-07 --sha a69f4ca3 --preflight-only` passes. The six
+   datasets it was missing (overlay_pdx_main_street, pdx_historic_resources,
+   pdx_landmark_footprints, pdx_pattern_areas, street_class_sherwood, street_class_tigard) were
+   fetched into the 2026-10-07 snapshot that day. Launch line: docs/ops/flats-county-refresh.md
+   step 5-10, with --snapshot 2026-10-07 --sha a69f4ca3 (or later main).
+
 67. [Claude] [scan: YES, read after the weekly re-screen; MERGED to main (d3b6db52, a212b7f5, cities 7cbc3346 = item 77), rides the weekly ~2026-10-19]
    **Washington County makes the owner hand over road land first (CDC 302-2.14 C(1), 303-306,
    307-2.13, 375, 390).** 25/30/37/45 ft to centre line (local / neighbourhood route /
