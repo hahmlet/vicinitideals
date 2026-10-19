@@ -336,6 +336,8 @@ def snapshot_problems(
     if not datasets:
         return [f"{snapshot}: no manifest.json, or it lists nothing"]
     problems = check(manifest, snapshot, dem_from if dem_from.is_dir() else None)
+    # acquire's --keys takes the keys space-separated (nargs="*"); a comma-joined list is
+    # read as one unknown key and refused (2026-10-19).
     fetch = f"python -m flats.ingest.acquire --snapshot {snapshot.name} --root {snapshot.parent} --keys"
     pipeline = pipeline or load_pipeline()
     absent, stale = [], []
@@ -351,10 +353,10 @@ def snapshot_problems(
         elif (path := snapshot / str(entry.get("file") or "")).is_file() and path.stat().st_size != entry.get("bytes"):
             problems.append(f"{key}: the file changed size since it was fetched ({path})")
     if absent:
-        problems.append(f"{len(absent)} registered datasets are not in the snapshot: {fetch} {','.join(absent)}")
+        problems.append(f"{len(absent)} registered datasets are not in the snapshot: {fetch} {' '.join(absent)}")
     if stale and notes is not None:
         notes.append(f"{len(stale)} datasets were fetched under an older pipeline.yaml entry; for a new copy of "
-                     f"the ground: {fetch} {','.join(stale)} --force")
+                     f"the ground: {fetch} {' '.join(stale)} --force")
     for key in INSTITUTIONAL_KEYS:
         if datasets.get(key, {}).get("status") not in ("acquired", "present"):
             problems.append(f"{key}: institutional land needs it and the snapshot does not hold it")

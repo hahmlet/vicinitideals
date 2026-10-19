@@ -493,7 +493,7 @@ def test_the_preflight_names_what_the_snapshot_lacks(wc, tmp_path) -> None:
     notes: list[str] = []
     said = "\n".join(wc.snapshot_problems(snap, dem, pipeline, notes=notes))
     assert "2 registered datasets are not in the snapshot: python -m flats.ingest.acquire --snapshot 2026-10-07" in said
-    assert ",".join(gone) in said
+    assert f"--keys {' '.join(gone)}" in said
     # a dataset fetched under an older registry entry is noted, not refused:
     # a re-screen reads the ground the copy in use was measured from
     assert "older pipeline.yaml" not in said and len(notes) == 1
