@@ -50,7 +50,7 @@ read when the weekly full re-screen lands.
    fetched into the 2026-10-07 snapshot that day. Launch line: docs/ops/flats-county-refresh.md
    step 5-10, with --snapshot 2026-10-07 --sha a69f4ca3 (or later main).
 
-67. [Claude] [scan: YES, read after the weekly re-screen; MERGED to main (d3b6db52, a212b7f5, cities 7cbc3346 = item 77), rides the weekly ~2026-10-19]
+67. [Claude] [READ at run 78 2026-10-20: moves at the bound; only (b) open] [MERGED to main (d3b6db52, a212b7f5, cities 7cbc3346 = item 77), rides the weekly ~2026-10-19]
    **Washington County makes the owner hand over road land first (CDC 302-2.14 C(1), 303-306,
    307-2.13, 375, 390).** 25/30/37/45 ft to centre line (local / neighbourhood route /
    collector / arterial), measured per street lot line from Metro's centreline (a stub with no
@@ -86,7 +86,7 @@ read when the weekly full re-screen lands.
    OPEN: (b) lots whose tax lot includes the roadway (lot line under ~12 ft from centre line)
    understate the road and are left at worst case (63 lost, 73 kept green). (The Fitter
    cache-key bug, item 74, is fixed 8bda9817.)
-77. [Claude] [scan: YES, read after the weekly re-screen; MERGED to main (7cbc3346 + d3b6db52, with item 67), rides the weekly ~2026-10-19] **Road land to the
+77. [Claude] [READ at run 78 2026-10-20: the four CHECK lots red, moves at the bound; OPEN list below] [MERGED to main (7cbc3346 + d3b6db52, with item 67), rides the weekly ~2026-10-19] **Road land to the
    centre line in the cities, not just unincorporated Washington County (found 2026-10-14 by
    item 64 round 2: 4 of the 7 wrong lots).** Steph RULED 2026-10-14 "YES" (register
    `2026-10-14-road-dedication`). Built: Sherwood 16.106.020 A + 16.106.040 D, 26/32/32/37/61 by
@@ -107,7 +107,7 @@ read when the weekly full re-screen lands.
    held -- a remaining false-GREEN gap, item 81); segment qualifiers in the tables applied to the
    whole street; lot area not reduced by the strip (only the envelope); an unmeasured public line
    gives up the whole 40-63 ft.
-78. [Claude] [scan: YES -- bound read, rides the weekly] **Portland false GREENs: main street minimum floor
+78. [Claude] [READ at run 78 2026-10-20: 1,628 green->red exactly the bound; "Still open" list below] **Portland false GREENs: main street minimum floor
    area and protected historic buildings are RED (MERGED 2026-10-15, branch flats/portland-overlays
    4ed70036).** The "m" overlay minimum FAR (33.415; half in Inner, a quarter in Eastern/Western) is
    measured on the part of the lot inside the overlay (PCC 33.700.070.F), crediting only the floor
@@ -120,55 +120,6 @@ read when the weekly full re-screen lands.
    bridge refuses a snapshot without them). Still open: Glendoveer, Macadam, the d overlay, 33.430
    environmental; the ground-floor active-use rule from 2029-01-01; the 800 sf accessory-building
    exemption, which the data can't separate.
-61. [Claude] [scan: rides the weekly ~2026-10-19] **Lot-line bearing + Clackamas ZDO
-   1005.02(L) -- MERGED to main (67b8f9b6, ef27d90e), and e0's flip with r3 (83a7683d;
-   b48bec70 rebased as ef48b1f7); reaches the map at the weekly.** Built: three per-line
-   bearing fields (OPTIONAL; unmeasured = full distances), flats/geom/bearing.py cuts the
-   exact ground (north 26 x tan60 = 45.033 ft, east/west 26 x tan15 = 6.967 ft, south none;
-   grid AND true north; a public-road line owes N-15 and no east/west); zone blocks for SHD,
-   RCHDR and the six borrowers (RTL, CC, C3, OC from HDR; RCC, RCO from RCHDR). The flip:
-   HDR, SHD, RCHDR, RTL, CC, C3, OC, RCC, RCO are YELLOW (REVIEW-CONDITIONS, Steph's review
-   tiers 2026-10-14) and their quadfit rules.yaml rows are flipped. VTH stays unencodable
-   (HUMAN_TODO 15, the dropped-cell column read).
-   Expected (rehearsal, not a bound of the flip): of 1,061 bridged, 234 green / 145 yellow /
-   rest red before the flag; the flag makes each green yellow. Green by zone: C3 104, CC 35,
-   HDR 29, OC 19, RCC 16, RTL 15, RCHDR 12, RCO 4. Every non-red drawing replayed against (L)
-   on the real taxlot ring: all clear. Steph 2026-10-15 (item 85, not merged): the "may add
-   conditions" tier becomes GREEN with a flag inside a UGB, so these move again when 85 merges.
-   TRAPS: it NEEDS a fresh normalize (the unencodable gate is written there, so a bridge-only
-   splice moves nothing) + a quadfit s3-s5o pass (s3 drops quadplex-false zones); a SPLICED
-   flip must drop the bridge's institutional lots from the added set (a full weekly is fine).
-   CHECK after the weekly: Clackamas uninc C3/CC/RCC/OC/RTL/RCO/RCHDR/SHD/HDR moves against the
-   rehearsal.
-   Accepted limits: flat ground; street width counted as 0 (N-15 only); ~3 ft court
-   over-charge on south-facing rears; RCHDR floors always charged; (L)(1)(b)/(c) not taken;
-   unmeasured street kind = no relief.
-69. [Claude] [SUPERSEDED 2026-10-14 by the review tiers; r3 merged (83a7683d), rides the weekly ~2026-10-19] **Hillsboro zones that need Development Review
-   (17 zones).** RED BY RULING (84f215f8) landed at run 73: 152 green -> red and 212 yellow ->
-   red against run 70. REVIEW TIERS (Steph 2026-10-14, r3; register `2026-10-14-review-tiers`):
-   the 17 zones come back YELLOW -- 12.80.040 I "may impose conditions" (REVIEW-CONDITIONS).
-   Bound (as-if quadfit, run 74 inputs): 3,385 lots brought into measurement, 0 green / 354
-   yellow / 3,031 red (SCR-V 133 y / 956 r, MR-2 101 / 879, SCR-HD 51 / 63, MR-3 23 / 254;
-   MU-VTC 0 / 166 on its 3-storey minimum; the UC zones red on minimum density). SCR-MD's
-   Zoning Review ("subject to conditions of approval") stays green. Steph 2026-10-15 (item 85,
-   not merged): the "may add conditions" tier becomes GREEN with a flag inside a UGB, so these
-   354 move again when 85 merges. Remove after the weekly is read and 85 has landed.
-79. [Claude] [scan: r3 MERGED to main (83a7683d), rides the weekly ~2026-10-19] **Washington County lots whose only middle-housing
-   path is a Type II review showed GREEN (found 2026-10-14 by item 64 round 2).** The county's
-   Type I path ends at a lot size in every zone: R-5 16,500 sf buildable and R-6 13,100 sf, then
-   only if four homes meet the zone's minimum density; R-9/R-15/R-24/R-25+ and the transit
-   districts 10,000 sf (same density escape), AND only on a lot created by a standard subdivision
-   or partition plat (302-2.14 .. 307-2.13, 375-7 30.c). Wrong lot 1S103DA00200 (TO:R18-24,
-   21,377 sf).
-   RULED (Steph 2026-10-14, review tiers; register `2026-10-14-review-tiers`): the Type II path
-   may add conditions = YELLOW (REVIEW-CONDITIONS). Built: past the buildable-area line and under
-   the density escape, or off a standard plat (unmeasured = worst, so every R-9+ lot), the lot is
-   yellow. Bound: 1,190 WashCo greens -> yellow, none red (R-9 599, R-15 216, R-24 199, CCMU 42,
-   R-5 39, R-6 34, NMU 26, R-25+ 23, TO:R9-12 11, R-15 NB 1); by gate standard_plat 731,
-   buildable_area 391, the zone's own conditions 68. The 731 could be measured instead: item 83.
-   Steph 2026-10-15 (item 85, not merged): the "may add conditions" tier becomes GREEN with a flag
-   inside a UGB -- the clear-objective lane expects WashCo Type II ~60k lots yellow -> green, so
-   these move again when 85 merges.
 80. [Claude] [Steph: (a), (c)] [(d) Copilot-able] [scan: (a)(b) RULED + BUILT, r3 MERGED to main (83a7683d), ride the weekly ~2026-10-19; (c)-(e) open] **Readings for Steph from item 64 round 2.**
    (a) "Parking may cover at most half of a street frontage" caps (Wilsonville 4.113(.14)D.3,
    Hillsboro 12.50.715 C.1, Clackamas ZDO 845.02(D), Beaverton). RULED (Steph 2026-10-14; register
@@ -192,7 +143,7 @@ read when the weekly full re-screen lands.
    green still seats 6+ except 34E17D 00700 (5, room for more): a fix with no colour change.
    (e) Noticed: flats.flag_instances was last refreshed at run 70 (no row seen after it), so it
    still shows JURISDICTION-OFF on Tigard lots; run 74's own results carry the right flags.
-76. [Claude] [Steph: (c) assessor lookup] [scan: rides the weekly ~2026-10-19; MERGED to main (5e29be82, 72f96818)] **Tigard pod80x25 red at exactly -43 ft, and split-zoned lots.**
+76. [Claude] [Steph: (c) assessor lookup] [(a)(b) READ at run 78 2026-10-20, Estacada 34E17 02000 as expected; only (c) open; MERGED to main (5e29be82, 72f96818)] **Tigard pod80x25 red at exactly -43 ft, and split-zoned lots.**
    (a) -43 is NOT a sentinel: it is the floor fit_ft reports when no window as wide as building +
    lane (80 + 20 = 100 ft) exists at any street bearing: best_depth 0 minus (25 ft building + 18 ft
    court) = -43 (pod56x36 floors at -36). Checked against exact geometry: all true no-fits except
@@ -220,38 +171,7 @@ read when the weekly full re-screen lands.
    data (RLIS roll carries no owner name); roll says COM class 201, taxed (assessed > 0), so the
    public-land rule correctly did not fire. Look up tax lot 34E20AC00201 at the Clackamas
    assessor: if the owner is the city or a district, it is a miss the roll cannot see.
-81. [Claude] [scan: YES -- greens only gain] **Tigard road widths: MERGED 2026-10-15; class-name fix
-   (flats/tigard-class-names 91df7c6a) MERGED 2026-10-16, bound read, rides the next weekly.**
-   Tigard measures setbacks from the future street edge (18.210.030.A.1). Widths come from the
-   code's own street table (TDC 18.910.1) keyed to the city's TSP class map (street_class_tigard,
-   now in the weekly preflight); each class takes the top of its printed range, half from the
-   centre line: Local 27, Neighborhood Route 29, Collector 48, Arterial 64 ft (Principal Arterial
-   and the Hall Blvd stretch included); River Terrace Blvd 55. Downtown (MU-CBD) local and
-   neighbourhood streets held at 37 ft (downtown street map not stored). Freeway, unclassed and
-   unread lines take 64; a line with no centre line nearby gives up the whole 64. The class map
-   has no street names: matched by position (~1.5% unmatched overall, none on collectors/
-   arterials). The Tigard bound (main ea5aa925 vs bc70dc46) was read and four wrong-red causes
-   fixed in 91df7c6a. Its bound vs main: 21 lots gain, none lose (RES-B 7 red->green, 7
-   red->yellow, 1 yellow->green; RES-C 3 red->yellow; RES-D 1 red->green; MUR, MU-CBD 1
-   red->yellow each). 2S101DC03502 yellow where run 74 had green.
-   CHECK after the weekly: Tigard moves (arterial lots likely lose greens vs run 74); report
-   them to Steph.
-82. [Claude] [scan: YES -- greens only gain] **Oregon City: the zone across the street stands in for the plan
-   designation (RULED + BUILT 2026-10-14, MERGED 16d07f44 2026-10-15; bound read, rides
-   the next weekly).** Steph (register `2026-10-14-oregon-city-road-zone-standin`): use the
-   measured zone on each side as the stand-in for Table 16.12.016's plan designation; flag it
-   low-risk, severity 2, so a GREEN lot stays GREEN (OC-ROAD-ZONE-STANDIN); keep the widest row
-   where the land across is unread or its zone maps to no clear designation. Zone -> designation
-   is Table 17.06.030 (R-10..R-2 residential; C, MUD, WFDD, NC, HC, MUC-1, MUC-2, MUE the "mixed
-   use, commercial or public" row; CI, GI industrial; I left out -- public/quasi-public OR park,
-   17.39.010, and the table has no park row). All 12 rows held in
-   row_to_centerline_by_designation; widest kept for an unread class, any unresolved ray, another
-   jurisdiction across, or an unmapped zone. BOUND vs run 74 (9,101 OC lots whose strip the
-   stand-in narrows): run 74 green 1,829 -> 1,392 green / 49 yellow / 388 red (main's widest row
-   alone: 1,158 / 43 / 628). Against main: 291 better, 9 worse, all read -- placement artefacts
-   (SLOPE-GRADE, ZONE-SPLIT, 1 green->red 32E06DB00600 hose 144 -> 152 ft on the moved plan), not
-   the stand-in: the strip never widens. CHECK after the weekly: OC counts land near the bound's.
-84. [Claude] [scan: YES -- greens only gain] **Frontage caps read as caps on every street (MERGED 2026-10-15,
+84. [Claude] [READ at run 78 2026-10-20; only Fairview VC open] **Frontage caps read as caps on every street (MERGED 2026-10-15,
    branch flats/frontage-caps 667f57e9; phase 3 flats/frontage-fragments d8c6da14 MERGED 2026-10-16,
    bound read, rides the next weekly: 556 gains, Oregon City 349 red->green / 153 red->yellow /
    2 yellow->green, Beaverton 10 / 32, Clackamas 3 / 1, Troutdale 1 / 2, Sherwood 2 red->yellow,
@@ -534,7 +454,7 @@ read when the weekly full re-screen lands.
    2026-10-10 question "should a lot whose pod sits on a working building's parking or yard
    stay green?" reads as answered by it -- confirm with Steph only if a case differs.
 
-95. [Claude] [scan: YES, read after the weekly re-screen; MERGED to main 2026-10-19 (items 85 + 93, merge 0e097bc8)] **Weekly 2026-10-19 DONE 2026-10-20: run 76 promoted by Steph (lots_drift +2.4% approved); the 916 lot gains to green read by group and all traced to rulings or merged commits (ORS 197A.400 green+flag: Clackamas MR-1 161/HDR 27, Hillsboro MR-2/SCR-HD, Canby, Gladstone C3, Sandy; townhouse form; Clackamas commercial encoded by item 61; flatter placement on slope). One gap found and fixed: unincorporated Clackamas had no minimum density (5367d599: 1012.08 + Table 510-2) and floors with nothing to subtract went unchecked (81840884); splice of 5 cities -> run 78 promoted on the standing word, 0 map moves (a missed floor is a low-risk flag by Steph's 2026-10-02 ruling), 527 lots gain the DENSITY-MIN flag. Losses to red (3,609) follow items 67/77/78/82/84 and were not read lot by lot; the 770 Portland green->red with no named reason are unread.**
+95. [Claude] [DONE 2026-10-20 -- gains and losses read; remove at the next weekly] [MERGED to main 2026-10-19 (items 85 + 93, merge 0e097bc8)] **Weekly 2026-10-19 DONE 2026-10-20: run 76 promoted by Steph (lots_drift +2.4% approved); the 916 lot gains to green read by group and all traced to rulings or merged commits (ORS 197A.400 green+flag: Clackamas MR-1 161/HDR 27, Hillsboro MR-2/SCR-HD, Canby, Gladstone C3, Sandy; townhouse form; Clackamas commercial encoded by item 61; flatter placement on slope). One gap found and fixed: unincorporated Clackamas had no minimum density (5367d599: 1012.08 + Table 510-2) and floors with nothing to subtract went unchecked (81840884); splice of 5 cities -> run 78 promoted on the standing word, 0 map moves (a missed floor is a low-risk flag by Steph's 2026-10-02 ruling), 527 lots gain the DENSITY-MIN flag. LOSSES READ 2026-10-20 (run 74 -> 78, each group against its item's bound, samples read lot by lot): Portland 1,628 green->red = item 78's bound exactly (894 protected historic, 699 main-street minimum floor area, 35 both -- the "770 with no named reason" carry the reason in the bind); WashCo uninc 1,176 / 96 / 601 / 31 (g->r / g->y / y->r / y->g) vs item 67's 1,178 / 83 / 603 / 31; Oregon City 488 g->r vs item 82's 388 on the strip (+19 fire hose, +front-yard and D caps of item 84); Sherwood 21/0/31/2, Milwaukie 16/19/56/11, King City 1/0/5/0 at their bounds; Tigard 113 g->r + 141 y->r on the road widths (item 81, RES-B 154; reported to Steph); Clackamas uninc 604 y->r on item 61's north-face cut (RCC 67, OC 52, RTL 32, RCO 20, RCHDR 11) as rehearsed. Items 61, 69, 79, 81, 82 closed. WashCo Type II: 17,761 lots carry CLEAR-OBJECTIVE, 1,097 of them green (1,061 already green at run 74) -- the lane's ~60k yellow->green does not happen; the rest are red on the ground. LATENT, not live: PCC 33.415.300.B bars attached houses within 100 ft of a transit street in the "m" overlay; no Portland green rides the townhouse form today (0 LAND-DIVISION greens), so nothing is false-green -- if the townhouse form ever greens an "m" lot, it must read 300.B first.**
    **Townhomes on their own lots + ORS 197A.400 "clear and objective" ride this weekly.**
    Rulings: Steph 2026-10-15 townhomes = separate lots (register
    `2026-10-15-townhomes-separate-lots`) and judgement-only / "may add conditions" review inside a
