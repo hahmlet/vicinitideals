@@ -902,3 +902,18 @@ async def test_a_choice_word_is_asked_as_a_reading_not_as_printed_words(client, 
     assert "This is our reading, not words printed on the page" in card.text
     assert "no front lot line defined" in card.text
     assert "Does the page say <strong" not in card.text
+
+
+def test_the_queue_goes_by_row_one_data_point_at_a_time():
+    # Steph 2026-10-19: Gresham's cards flipped between min and max density.
+    # Within a document the queue finishes one standard before the next and
+    # never comes back to it.
+    rows = [r for r in check._rows(check._layers()[LAYER], set()) if not r["web"]]
+    seen: set[tuple[str, str]] = set()
+    previous = None
+    for r in rows:
+        here = (r["document"], r["field"])
+        if here != previous:
+            assert here not in seen, f"{here} comes back after leaving"
+            seen.add(here)
+        previous = here

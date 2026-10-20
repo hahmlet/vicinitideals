@@ -260,8 +260,11 @@ def _standing(answer: FlatsPageCheck | None, row: dict[str, Any]) -> FlatsPageCh
 # --- the queue --------------------------------------------------------------
 
 
+_FIELD_ORDER = {name: n for n, name in enumerate(FIELDS)}
+
+
 def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
-    """Every checkable number in a layer, signed ones first, then page order.
+    """Every checkable number in a layer, signed ones first, then by row.
 
     Signed first because those are the numbers the screen trusts: a signed
     number the page contradicts is a false answer on live lots, and an
@@ -280,11 +283,30 @@ def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
         # A web code has no printed page: its card shows the stored text.
         row["web"] = why == "html"
         out.append(row)
-    # Web numbers queue after every printed one, so the printed run is
-    # exactly the order it was before they joined.
+    # By row of the table (Steph 2026-10-19): within a document, one data
+    # point across every zone before the next, the data points in the order
+    # they first appear. Sorting on the cited line alone flipped Gresham's
+    # cards between min and max density, because a collapsed table's range
+    # citations interleave. Web numbers queue after every printed one.
+    first: dict[tuple, int] = {}
+    for r in out:
+        group = (r["web"], r["signed"], r["document"], r["field"])
+        first[group] = min(first.get(group, r["line"]), r["line"])
     return sorted(
         out,
-        key=lambda r: (r["web"], not r["signed"], r["document"], r["line"], r["zone"], r["field"]),
+        key=lambda r: (
+            r["web"],
+            not r["signed"],
+            r["document"],
+            first[(r["web"], r["signed"], r["document"], r["field"])],
+            # A collapsed table cites several rows from one line; the field
+            # list's own order (lot size, min density, max density, ...)
+            # breaks the tie the way the printed tables run.
+            _FIELD_ORDER.get(r["field"], len(_FIELD_ORDER)),
+            r["field"],
+            r["line"],
+            r["zone"],
+        ),
     )
 
 
