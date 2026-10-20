@@ -1301,6 +1301,14 @@ read when the weekly full re-screen lands.
    other unit count. When layout variants with other unit counts arrive, hold these as totals per
    building type. No colour moves today (every design is 4 units).
 
+100. [Claude] [Steph: go + row or column] [scan: NO] **Page check card order by data point (Steph
+   2026-10-19: Gresham flips min density / max density, has to reorient).** Today `_rows` in
+   app/api/routers/ui_flats_check.py sorts (web, unsigned, document, first cited line, zone, field),
+   and range citations on Gresham's collapsed tables interleave fields. Proposed: within a document,
+   group by field (ordered by where that field first appears), then line, then zone -- "by row" =
+   one data point across every zone. Order only; no answer is lost. Test: an API test that Gresham's
+   queue never returns to a field after leaving it.
+
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
 
 14. [scan: NO] **Tax impact beyond Gresham.** `flats/config/tax/or/multnomah/2025-26.yaml`
