@@ -62,7 +62,9 @@ def test_a_list_that_takes_nothing_needs_no_survey() -> None:
     list subtracts nothing measurable. Unincorporated Clackamas, 2026-10-20:
     run 77 left 1012.08's floor unchecked on a 255,703 sq ft MR-1 lot, and
     the lot stayed green."""
-    assert net_span(NetArea(), 8_000, None) == (8_000, 8_000)
+    assert net_span(NetArea(), 8_000, None, floor=True) == (8_000, 8_000)
+    # A ceiling keeps the gross bound: nothing off is the lenient reading.
+    assert net_span(NetArea(), 8_000, None) is None
 
 
 def test_one_certain_deduction_is_exact() -> None:

@@ -820,7 +820,7 @@ def _checks(
         span = (
             None
             if net is None
-            else net_span(net, lot.lot_sqft, lot.net_deductions, driveway)
+            else net_span(net, lot.lot_sqft, lot.net_deductions, driveway, floor=not is_maximum)
         )
         if span is not None:
             least, most = (on(area) for area in span)

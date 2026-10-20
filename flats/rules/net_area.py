@@ -185,17 +185,21 @@ def net_span(
     gross_sqft: float,
     measured: Mapping[str, float] | None,
     drive_aisle_sqft: float | None = None,
+    *,
+    floor: bool = False,
 ) -> tuple[float, float] | None:
     """The least and the most this lot's net area can be, in square feet.
 
     None where a deduction the list names was not measured on this lot: the
     caller falls back to the gross-area bound.
     """
-    # A list that subtracts nothing measurable (every deduction assumed
-    # absent, Steph's option A) needs no survey: net is the lot. Returning
-    # None here sent a floor the lot fails on its whole area to "unchecked",
-    # and the lot stayed green (Clackamas MR-1, 2026-10-20).
-    if not net.less and not net.may_less:
+    # For a FLOOR, a list that subtracts nothing measurable (every deduction
+    # assumed absent, Steph's option A) needs no survey: net is the lot, the
+    # strictest reading. Returning None here sent a floor the lot fails on
+    # its whole area to "unchecked", and the lot stayed green (Clackamas
+    # MR-1, 2026-10-20). A ceiling keeps the gross bound: assuming nothing
+    # off would be the lenient reading there.
+    if floor and not net.less and not net.may_less:
         return max(gross_sqft, _NO_LAND_SQFT), max(gross_sqft, _NO_LAND_SQFT)
     if measured is None:
         return None
