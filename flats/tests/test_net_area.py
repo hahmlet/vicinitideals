@@ -57,6 +57,14 @@ def test_a_list_that_takes_nothing_measurable_is_the_lot() -> None:
     assert net_span(NetArea(), 8_000, {}) == (8_000, 8_000)
 
 
+def test_a_list_that_takes_nothing_needs_no_survey() -> None:
+    """A lot nobody measured for deductions still has a net area when the
+    list subtracts nothing measurable. Unincorporated Clackamas, 2026-10-20:
+    run 77 left 1012.08's floor unchecked on a 255,703 sq ft MR-1 lot, and
+    the lot stayed green."""
+    assert net_span(NetArea(), 8_000, None) == (8_000, 8_000)
+
+
 def test_one_certain_deduction_is_exact() -> None:
     assert net_span(NetArea(less=(FLOODPLAIN,)), 8_000, {FLOODPLAIN: 2_000}) == (6_000, 6_000)
 

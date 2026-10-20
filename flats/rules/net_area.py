@@ -191,6 +191,12 @@ def net_span(
     None where a deduction the list names was not measured on this lot: the
     caller falls back to the gross-area bound.
     """
+    # A list that subtracts nothing measurable (every deduction assumed
+    # absent, Steph's option A) needs no survey: net is the lot. Returning
+    # None here sent a floor the lot fails on its whole area to "unchecked",
+    # and the lot stayed green (Clackamas MR-1, 2026-10-20).
+    if not net.less and not net.may_less:
+        return max(gross_sqft, _NO_LAND_SQFT), max(gross_sqft, _NO_LAND_SQFT)
     if measured is None:
         return None
     have = dict(measured)
