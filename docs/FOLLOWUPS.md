@@ -1588,6 +1588,24 @@ read when the weekly full re-screen lands.
    `lowest_class` gap above is closed; the re-check of today's greens there rides item 36's
    weekly read. Oregon City's "one approach per two townhouses" is overridden by state law
    (item 24, 2026-10-10), so the pod needs one approach there.
+98. [Claude] [Steph: go + a Cloudflare Workers AI API token] [scan: NO (finance side, no lot answer)]
+   **Pilot Cloudflare's Clairic extraction model (Workers AI `@cf/cloudflare/clairic`, preview,
+   blog 2026-10-19) on the Crexi broker description.** Offered 2026-10-20. Clairic takes text
+   (64K tokens, up to 4 images) plus typed fields, and returns each value with a confidence,
+   a null when the text doesn't give it, and character offsets for text answers. Input costs
+   $0.10/M tokens and output is free. It is a preview the provider may withdraw. Open weights
+   are promised but have no date. Pilot: Crexi `marketingDescription` (public text, now stored
+   flat in `description`) -> fill `parsed_description` (the column exists and is always NULL:
+   `app/tasks/scraper.py:1360`) with unit mix, rents, NOI, cap rate, year built and value-add
+   notes. Score it against a hand-read sample of ~50 listings before anything reads the column.
+   Keep the call behind a setting; a failure leaves the column NULL. Second candidate after the
+   pilot: `app/tasks/email_ingest.py` (flat fields today on qwen2.5:7b; the body is cut to
+   2,000 chars and HTML-only mail gives no text -- that HTML gap is worth fixing either way).
+   Steph's call: broker emails and OMs leave the network (OMs often sit under a
+   confidentiality agreement), and Steph declined moving finance reading off Ollama on
+   2026-10-07 (item 54). NOT for pro forma OpEx/unit mix: category mapping and roll-ups are
+   what Cloudflare says the model is weak at. NOT a FLATS rule source; at most a scored lens
+   for `flats/encode/sweep/` beside qwen2.5:7b's Fairview recall of 0.48-0.61.
 
 ## 3. Copilot queue -- low priority, not time-sensitive
 
