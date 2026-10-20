@@ -1287,6 +1287,20 @@ read when the weekly full re-screen lands.
    app/api/routers/ui_flats_check.py (card question), its template; test: an API test on a
    sqft_per_unit card. Must not change any stored value or a signature hash.
 
+98. [Claude] [scan: NO] **Page check shows the wrong footnote text (Steph 2026-10-19, Rivergrove
+   R10 min_lot_sqft, page 24, check id 255).** The note-2 card showed Section 5.050 (a)(2) as the
+   footnote; the real note 2 is printed at the foot of the page. `_note_text` in
+   app/api/routers/ui_flats_check.py takes the first "(2)"/"2." it finds near the cited line. Find
+   how many note cards pick body text over a page-foot note (rank: a marker line at the page foot
+   wins over a numbered clause), fix, re-show Rivergrove note 2. Steph answered "no change" twice on
+   the wrong text, so re-ask that card once fixed.
+99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a
+   per-unit ratio (Steph 2026-10-19, page check id 248).** or layer defaults hold
+   parking_min_per_unit 0.25 / 0.5 / 0.75 by lot size: right for a 4-unit pod (0.5 x 4 = 2 spaces),
+   but the rule is a TOTAL per lot (OAR 660-046), so it would mis-scale for a 2-unit pod or any
+   other unit count. When layout variants with other unit counts arrive, hold these as totals per
+   building type. No colour moves today (every design is 4 units).
+
 ### 1d. Finance (underwriting) -- [Claude]; kept word for word (15 waits on Steph's answers)
 
 14. [scan: NO] **Tax impact beyond Gresham.** `flats/config/tax/or/multnomah/2025-26.yaml`
