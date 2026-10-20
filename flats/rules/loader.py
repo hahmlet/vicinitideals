@@ -187,6 +187,10 @@ def _parse_values(
             exempt = bool(body.pop("exempt", False))
             per_dwelling = body.pop("per_dwelling", None)
             sqft_per_unit = body.pop("sqft_per_unit", None)
+            # Clackamas ZDO 1012.08(C): net acreage over the District Land
+            # Area, "multiply the result by 80 percent". The page prints the
+            # area and the percent and never the product.
+            of_pct = body.pop("percent_of_it", None)
             per_units = body.pop("per_units", None)
             spaces_total = body.pop("spaces_total", None)
             acres = body.pop("acres", None)
@@ -259,6 +263,20 @@ def _parse_values(
                 # "1 unit per 2,500 sq. ft. of site area" is 17.424 units per
                 # acre, and 17.424 is in no ordinance anywhere.
                 value = _as_density(float(sqft_per_unit))
+                if of_pct is not None:
+                    if not isinstance(of_pct, (int, float)) or isinstance(
+                        of_pct, bool
+                    ) or not 0 < of_pct <= 100:
+                        problems.append(
+                            f"{where}.{key}: percent_of_it {of_pct!r} is not a percent"
+                        )
+                        continue
+                    value = round(value * of_pct / 100, 3)
+            elif of_pct is not None:
+                problems.append(
+                    f"{where}.{key}: percent_of_it needs the sqft_per_unit it is a percent of"
+                )
+                continue
             if per_units is not None:
                 if value is not None or exempt:
                     problems.append(

@@ -739,9 +739,14 @@ def test_work_ordered_stays_in_the_queue(layers: dict[str, Layer]) -> None:
 
 
 def test_and_the_queue_prints_why_it_is_still_there(layers: dict[str, Layer]) -> None:
-    layer_id, row = _ordered(layers)[0]
-    printed = "\n".join(render(dangling(layers[layer_id])))
-    head = printed.split("closed —")[0]
+    # The top layer's first dozen rows need not carry a ruling (Clackamas,
+    # 2026-10-20, once its minimum density made more pointers binding), so
+    # the queue is asked of the first layer near the top that has one.
+    for layer_id, row in _ordered(layers)[:3]:
+        printed = "\n".join(render(dangling(layers[layer_id])))
+        head = printed.split("closed —")[0]
+        if "FETCH:" in head:
+            break
 
     assert "FETCH:" in head
     assert row.ref in head

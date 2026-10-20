@@ -246,8 +246,10 @@ readings:
       down: a net-area rule is arithmetic in service of a density standard, and no density
       standard survives in the quadplex zones of this county. Every zone here that permits a
       quadplex either states no maximum density or has it struck out by OAR 660-046-0220(2)(b),
-      which the state layer encodes as exempt and preempting always; and no zone in this layer
-      states a minimum density at all. Verified against the loaded corpus rather than assumed:
+      which the state layer encodes as exempt and preempting always. (Superseded 2026-10-20,
+      FOLLOWUPS 95: 1012.08's MINIMUM density reaches the design-review districts and Table
+      510-2's the commercial ones; it is encoded on the whole lot, every subtraction assumed
+      absent, which can only hold the floor higher.) Verified against the loaded corpus rather than assumed:
       thirteen quadplex-permitting zones, none with a density number of either kind left standing.
       Subtracting acreage from a denominator that feeds no numerator changes nothing.
     fingerprint: 06d414ac372fd07f
@@ -2305,6 +2307,39 @@ zones:
   # roughly 200 square feet of court, which is the difference between a pod
   # that fits and one that does not on a small lot.
   PMD:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 315-4 "Minimum Density: See Section 1012"; 1012.08(C): net
+      # acreage divided by the District Land Area (3,630 sq ft, PMD)
+      # times 80 percent = 9.6 homes per net acre.
+      sqft_per_unit: 3630
+      percent_of_it: 80
+      cite: Clackamas ZDO Table 315-4, District Land Area 3,630 square feet (PMD column), and 1012.08(C), 80 percent
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1549,L1556"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO Section 315 Table 315-4 (Planned Medium Density Residential)
       url: https://www.clackamas.us/planning/zdo315
@@ -2486,6 +2521,39 @@ zones:
       footnote file as another application path, the same treatment the R
       zones give the identical sentence in Table 315-2.
   MR1:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 315-4 "Minimum Density: See Section 1012"; 1012.08(C): net
+      # acreage divided by the District Land Area (3,630 sq ft, MR-1)
+      # times 80 percent = 9.6 homes per net acre.
+      sqft_per_unit: 3630
+      percent_of_it: 80
+      cite: Clackamas ZDO Table 315-4, District Land Area 3,630 square feet (MR-1 column), and 1012.08(C), 80 percent
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1550,L1556"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO Section 315 Table 315-4 (Medium Density Residential)
       url: https://www.clackamas.us/planning/zdo315
@@ -2673,6 +2741,39 @@ zones:
       side setback until 2026-09-22; it is now the variant at that field,
       answered per lot by the zone s4 read across each lot line.
   MR2:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 315-4 "Minimum Density: See Section 1012"; 1012.08(C): net
+      # acreage divided by the District Land Area (2,420 sq ft, MR-2)
+      # times 90 percent = 16.2 homes per net acre.
+      sqft_per_unit: 2420
+      percent_of_it: 90
+      cite: Clackamas ZDO Table 315-4, District Land Area 2,420 square feet (MR-2 column), and 1012.08(C), 90 percent
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1551,L1556"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO Section 315 Table 315-4 (Medium High Density Residential)
       url: https://www.clackamas.us/planning/zdo315
@@ -2819,6 +2920,39 @@ zones:
       (H)" -- read 2026-09-09 and now carried as `orientation_constraint:
       axis_required`) and minimum density ("See Section 1012").
   VA:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 315-4 "Minimum Density: See Section 1012"; 1012.08(C): net
+      # acreage divided by the District Land Area (1,500 sq ft, VA)
+      # times 50 percent = 14.52 homes per net acre.
+      sqft_per_unit: 1500
+      percent_of_it: 50
+      cite: Clackamas ZDO Table 315-4, District Land Area 1,500 square feet (VA column), and 1012.08(C), 50 percent
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1553,L1556"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO Section 315 Table 315-4 (Village Apartment)
       url: https://www.clackamas.us/planning/zdo315
@@ -2928,6 +3062,39 @@ zones:
       this is the one district of the four where the county's density standard
       would not have bound anyway) and minimum density ("See Section 1012").
   HDR:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 315-4 "Minimum Density: See Section 1012"; 1012.08(C): net
+      # acreage divided by the District Land Area (1,742 sq ft, HDR)
+      # times 90 percent = 22.5 homes per net acre.
+      sqft_per_unit: 1742
+      percent_of_it: 90
+      cite: Clackamas ZDO Table 315-4, District Land Area 1,742 square feet (HDR column), and 1012.08(C), 90 percent
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1552,L1556"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO Section 315 Table 315-4 (High Density Residential)
       url: https://www.clackamas.us/planning/zdo315
@@ -3059,6 +3226,39 @@ zones:
       to Section 904" (L170). Density (1,742 sq ft of district land area a
       unit) is not applied, OAR 660-046-0220(2)(b).
   SHD:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 315-4 "Minimum Density: See Section 1012"; 1012.08(C): net
+      # acreage divided by the District Land Area (726 sq ft, SHD)
+      # times 90 percent = 54 homes per net acre.
+      sqft_per_unit: 726
+      percent_of_it: 90
+      cite: Clackamas ZDO Table 315-4, District Land Area 726 square feet (SHD column), and 1012.08(C), 90 percent
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1548,L1554,L1556"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO Section 315 Table 315-4 (Special High Density Residential)
       url: https://www.clackamas.us/planning/zdo315
@@ -3105,6 +3305,35 @@ zones:
       Density (726 sq ft of district land area a unit) is not applied,
       OAR 660-046-0220(2)(b).
   RCHDR:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      value: 30
+      cite: Clackamas ZDO 1012.08(C), in the RCHDR District the minimum density is 30 dwelling units per net acre
+      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L216,L218,L240"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO Section 315 Table 315-4 (Regional Center High Density Residential)
       url: https://www.clackamas.us/planning/zdo315
@@ -3736,6 +3965,39 @@ zones:
       resources". A caretaker's dwelling is the one residence the district
       admits and it is accessory to a park.
   SCMU:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 510-2 "Minimum Residential Density", SCMU cell (the
+      # eleventh column is SCMU, between PMU and OA); note 15 keeps Table
+      # 510-2's density for a freestanding quadplex; note [24] measures it
+      # on 1012.08(A)-(B) net acreage.
+      value: 20
+      cite: Clackamas ZDO Table 510-2, Minimum Residential Density, SCMU cell; Table 510-1 note 15; Table 510-2 note 24
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1512,L1577"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO 510.05 and Tables 510-1 and 510-2 (Urban Commercial and Mixed-Use Districts); ZDO 1005.09 (Fuller Road Station Community Dimensional and Design Standards)
       url: https://www.clackamas.us/planning/zdo510
@@ -3966,6 +4228,39 @@ zones:
       column as PMU2 (PMU 2, 3, 4 and 5). Only the minimum lot size, 3 acres,
       differs.
   RTL:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 510-2 "Minimum Residential Density", RTL cell (the
+      # eleventh column is SCMU, between PMU and OA); note 15 keeps Table
+      # 510-2's density for a freestanding quadplex; note [24] measures it
+      # on 1012.08(A)-(B) net acreage.
+      value: 20
+      cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RTL cell; Table 510-1 note 15; Table 510-2 note 24
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1508,L1577"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO 510 Table 510-1 note 15 (Retail Commercial; a freestanding quadplex takes HDR's development and dimensional standards)
       url: https://www.clackamas.us/planning/zdo510
@@ -4003,6 +4298,39 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   CC:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 510-2 "Minimum Residential Density", CC cell (the
+      # eleventh column is SCMU, between PMU and OA); note 15 keeps Table
+      # 510-2's density for a freestanding quadplex; note [24] measures it
+      # on 1012.08(A)-(B) net acreage.
+      value: 20
+      cite: Clackamas ZDO Table 510-2, Minimum Residential Density, CC cell; Table 510-1 note 15; Table 510-2 note 24
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1509,L1577"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO 510 Table 510-1 note 15 (Corridor Commercial; a freestanding quadplex takes HDR's development and dimensional standards)
       url: https://www.clackamas.us/planning/zdo510
@@ -4040,6 +4368,39 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   C3:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 510-2 "Minimum Residential Density", C-3 cell (the
+      # eleventh column is SCMU, between PMU and OA); note 15 keeps Table
+      # 510-2's density for a freestanding quadplex; note [24] measures it
+      # on 1012.08(A)-(B) net acreage.
+      value: 20
+      cite: Clackamas ZDO Table 510-2, Minimum Residential Density, C-3 cell; Table 510-1 note 15; Table 510-2 note 24
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1510,L1577"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO 510 Table 510-1 note 15 (General Commercial; a freestanding quadplex takes HDR's development and dimensional standards)
       url: https://www.clackamas.us/planning/zdo510
@@ -4077,6 +4438,39 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   OC:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 510-2 "Minimum Residential Density", OC cell (the
+      # eleventh column is SCMU, between PMU and OA); note 15 keeps Table
+      # 510-2's density for a freestanding quadplex; note [24] measures it
+      # on 1012.08(A)-(B) net acreage.
+      value: 20
+      cite: Clackamas ZDO Table 510-2, Minimum Residential Density, OC cell; Table 510-1 note 15; Table 510-2 note 24
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1514,L1577"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO 510 Table 510-1 note 15 (Office Commercial; a freestanding quadplex takes HDR's development and dimensional standards)
       url: https://www.clackamas.us/planning/zdo510
@@ -4114,6 +4508,42 @@ zones:
       standards (like: HDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Table 510-2's residential density, which note 15 keeps, is not encoded: the minimum (20 dwelling units per net acre for residential development, zdo.510.txt#L1504) is measured on net acreage this layer does not define, and the maximum (60 a acre) is one OAR 660-046-0220(2)(b) forbids applying to a quadplex.
   RCC:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 510-2 "Minimum Residential Density", RCC cell (the
+      # eleventh column is SCMU, between PMU and OA); note 15 keeps Table
+      # 510-2's density for a freestanding quadplex; note [24] measures it
+      # on 1012.08(A)-(B) net acreage.
+      # The cell names freestanding multifamily dwellings and congregate
+      # housing, not quadplexes; held to it anyway until the county's
+      # definitions are read (conservative default).
+      value: 30
+      cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RCC cell; Table 510-1 note 15; Table 510-2 note 24
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1507,L1577"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO 510 Table 510-1 note 13 (Regional Center Commercial; a freestanding quadplex takes RCHDR's development and dimensional standards)
       url: https://www.clackamas.us/planning/zdo510
@@ -4151,6 +4581,42 @@ zones:
       standards (like: RCHDR): 1005.02(L)'s bearing separations, the
       15 ft front, 845.01's 7,000 sq ft. Note 13 keeps no Table 510-2 standard, so the minimum lot size that table prints for this district does not reach the building -- and Table 510-2 note 2 limits it to land divisions in any case (zdo.510.txt#L1533).
   RCO:
+    min_density_du_per_acre:
+      # 1012.01 reaches a quadplex through design review for dwellings, and
+      # 1102.01(A)(1) requires design review in this district (review_discretion
+      # cites it), so 1012.08's floor applies (FOLLOWUPS 95, run 76: the
+      # 2026-10-19 weekly turned these lots green with no floor read).
+      # Table 510-2 "Minimum Residential Density", RCO cell (the
+      # eleventh column is SCMU, between PMU and OA); note 15 keeps Table
+      # 510-2's density for a freestanding quadplex; note [24] measures it
+      # on 1012.08(A)-(B) net acreage.
+      # The cell names freestanding multifamily dwellings and congregate
+      # housing, not quadplexes; held to it anyway until the county's
+      # definitions are read (conservative default).
+      value: 30
+      cite: Clackamas ZDO Table 510-2, Minimum Residential Density, RCO cell; Table 510-1 note 15; Table 510-2 note 24
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L1504,L1515,L1577"
+      measured_on:
+        fact: net_developable_area
+        # 1012.08(B)'s eight subtractions (new roads and dedicated strips,
+        # slopes of 20 percent or more, mass movement hazards, floodplain,
+        # the Willamette greenway, protected HCAs, WQRAs, park dedications)
+        # are all assumed absent: the whole lot counts, so the floor is
+        # never lower than the county's. The rounding in 1012.08(D)
+        # (one-half or more rounds up) is not taken either; a pod short of
+        # the floor by less than half a home is held to it.
+        cite: Clackamas ZDO 1012.08(A) gross site area and 1012.08(B), net acreage
+        quote: "or/clackamas/_unincorporated/zdo.1012.txt#L220,L222,L224,L226,L228,L230,L232,L234,L236,L238"
+        less: []
+        assumed_none:
+          - "new roads and strips of land dedicated adjacent to existing road rights-of-way"
+          - "slopes equal to or greater than 20 percent"
+          - "mass movement hazards (Section 1003)"
+          - "Floodplain Management District (Section 703)"
+          - "Willamette River Greenway buffer (Section 705)"
+          - "Habitat Conservation Areas (Section 706)"
+          - "Water Quality Resource Areas (Section 709)"
+          - "land dedicated for park or open space use"
     cite_default:
       cite: Clackamas ZDO 510 Table 510-1 note 13 (Regional Center Office; a freestanding quadplex takes RCHDR's development and dimensional standards)
       url: https://www.clackamas.us/planning/zdo510

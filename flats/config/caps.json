@@ -7,6 +7,9 @@
       "min_building_separation_ft": [
         "site_specific_limitation"
       ],
+      "min_density_du_per_acre": [
+        "site_specific_limitation"
+      ],
       "setback_front_ft": [
         "site_specific_limitation"
       ],

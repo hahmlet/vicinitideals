@@ -504,3 +504,25 @@ def test_the_same_floor_reaches_the_portland_administered_pockets(
         load_rules()[MULTNOMAH].zones["R7"].values["min_units_at_trigger"].prov.quote
         == "or/multnomah/_unincorporated/33.110.txt#L421,L422"
     )
+
+
+def test_clackamas_design_review_districts_hold_1012_08s_minimum_density() -> None:
+    """The 2026-10-19 weekly turned 161 MR-1 lots and the commercial districts
+    green with no density floor read: 1012.01 reaches a quadplex through
+    design review for dwellings, and 1012.08 divides net acreage by the
+    District Land Area and takes 80 or 90 percent of it (50 in VA, a flat 30
+    in RCHDR). Table 510-2 prints 20 a net acre for the commercial districts
+    note 15 sends to HDR. The page prints the area and the percent, never the
+    product, so the product is computed from both."""
+    zones = load_rules()[CLACKAMAS].zones
+    expected = {
+        "PMD": 9.6, "MR1": 9.6, "MR2": 16.2, "HDR": 22.505, "VA": 14.52,
+        "SHD": 54.0, "RCHDR": 30, "RTL": 20, "CC": 20, "C3": 20, "SCMU": 20,
+        "OC": 20, "RCC": 30, "RCO": 30,
+    }
+    for zone, floor in expected.items():
+        held = zones[zone].values["min_density_du_per_acre"]
+        assert held.value == floor, zone
+        assert held.measured_on == "net_developable_area", zone
+        assert held.net_area.less == (), zone
+    assert zones["MR1"].values["min_density_du_per_acre"].sqft_per_unit == 3630
