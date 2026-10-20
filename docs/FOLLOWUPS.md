@@ -6,7 +6,7 @@ Human-action items live in [HUMAN_TODO.md](HUMAN_TODO.md), not here.
 
 Numbers are stable IDs, not an order: they are never reused or changed, and
 items sit out of number order across the sections. A new item takes the next
-unused number (93 onward) and goes in its section. A moved item leaves a
+unused number (102 onward) and goes in its section. A moved item leaves a
 one-line pointer (27b).
 
 Sections, by WHO does the next action:
@@ -486,32 +486,6 @@ read when the weekly full re-screen lands.
 
 ### 1b. Built lanes not merged yet (merge so they ride a weekly)
 
-88. [Claude] [scan: YES -- greens only lose; BUILT on flats/dlcd-encode 5262c782, bound queued, NOT merged] **Gladstone Ord. 1545 (in force 2026-08-13): R-7.2 minimum
-   lot for duplex..quadplex 3,600 -> 7,200 sq ft** (DLCD watch, 2026-10-15). Stored code predates
-   it; the R10 placeholder copies the same number.
-   BOUND READ 2026-10-19 (137 /root/de_moves.csv, base 96cc32ba vs 5262c782): NOT READY.
-   Gladstone R-7.2: 0 losses (no lot of 3,600-7,199 sq ft was green) and 50 GAINS (20 red ->
-   green, 18 red -> yellow, 12 yellow -> green) from Ord. 1545's side setback 7.5 -> 5 ft (stored
-   text p. 9-6 checked; every gain >= 7,957 sq ft) -- correct. Happy Valley: 53 yellow -> red on
-   `driveway_frontage_share`, nearly all FALSE: the check holds the 20 ft drive to half of the
-   lot's SHORTEST street line (`cap_frontage_ft`), so a lot with 300-3,900 ft of frontage fails on
-   a 30-34 ft corner piece (28 corner lots, 25 others with a short fragment). On a corner lot the
-   16.44 lowest-class street is unranked (ACCESS-STREET-RANK-UNKNOWN), so which line the drive
-   takes is unknown -- the 2026-10-09 rule makes that YELLOW, not red. Fix before merging: hold
-   the drive to the line it can use (fail only when NO street line takes it; unknown which ->
-   yellow), rebase on main (d8c6da14's corner-arc split may change the fragments), re-bound. R-7.2 lots 3,600-7,199 sq ft screen green and
-   should be red. Source: council packet https://www.ci.gladstone.or.us/media/30151. Built with
-   the adopted-change mechanism on flats/dlcd-encode (worktree ../vicinitideals-worktrees/
-   dlcd-encode); bound queued on 137 (/root/watch/de.want, /root/de_*). Next: read the losses,
-   merge. AT MERGE: test_refusals L372 comments 286->289, regenerate gaps, remove items 88/89,
-   and add new items for (i) a Happy Valley street-class map (corner lots stay yellow without it)
-   and (ii) porting Gladstone to quadfit's rules.yaml (3600 -> 7200, side 7.5 -> 5).
-89. [Claude] [scan: YES -- greens only lose; BUILT on flats/dlcd-encode 5262c782 with item 88, bound queued, NOT merged] **Happy Valley 16.44 driveway access never fetched** (found via
-   Ord. 603, DLCD watch 2026-10-15). A lot with more than one street frontage takes its driveway
-   from the lowest-class street; driveway at most half the frontage (12-35 ft). In force since
-   2022; our rules let the drive use any street -> possible false GREEN. Source
-   https://ecode360.com/43526523. Fetched, stored and encoded on flats/dlcd-encode
-   (corner_access_street: lowest_class); merge steps are in item 88.
 24. [Claude] [Steph: confirm deleting flats/oc-two-approaches] [scan: YES] **Oregon City 16.12.035.F -- one driveway approach per two townhouses
    (Steph 2026-09-30, from the page check).** "Townhouses shall have one
    driveway approach for every two dwelling units (round up ...)". RULED by
@@ -548,6 +522,15 @@ read when the weekly full re-screen lands.
 
 ### 1c. The rest, most urgent first (dated items first)
 
+100. [Claude] [scan: YES (yellows only go green)] **Driveway street: measure it instead of asking
+   (follow-on of 88/89, merged e63617b8 2026-10-20).** A driveway too wide for the frontage cap on
+   the lot's shortest street but fine on a longer one is now YELLOW (MEASURE-DRIVE-STREET), not
+   red -- the screen does not draw which street the drive uses. Expected at the next weekly: the
+   bound's 53 Happy Valley yellow->red come back yellow; ~28 Beaverton and 2 Sherwood reds go
+   yellow; Gladstone R-7.2 gains 50 (side yard 7.5 -> 5 ft, read). Two ways to turn these yellows
+   into answers: (a) measure the street line the drawn drive crosses (as `parking_frontage` does
+   for the court); (b) a Happy Valley street-class map, so 16.44's lowest-class corner rule can
+   pick the street (corner lots stay yellow on ACCESS-STREET-RANK-UNKNOWN until then).
 94. [Claude] [scan: YES -- false reds only] [after 93 merges] **Townhouse row held to the street's
    angle -- up to ~105 false reds (found by the round-2 read of item 93, 2026-10-17).** The
    townhouse form sets the row of four home lots parallel to the street line. On a lot whose side
@@ -1525,6 +1508,12 @@ read when the weekly full re-screen lands.
 
 ## 3. Copilot queue -- low priority, not time-sensitive
 
+101. [Copilot] [scan: NO (quadfit mirror only)] **Port Gladstone Ord. 1545 to quadfit's rules.yaml.**
+   Files: `Lot Analysis/quadfit/config/rules.yaml`, the Gladstone R7.2 row (~line 2743). Change:
+   `min_lot_sqft` 3600 -> 7200 and `setback_side_ft` 7.5 -> 5, and rewrite its `notes` to cite Ord.
+   1545 (in force 2026-08-13) as `flats/config/jurisdictions/or/clackamas/gladstone.yaml`'s
+   `amended:` entry does. Must not change: any other row; anything under `flats/`. Test:
+   `uv run pytest "Lot Analysis/quadfit/tests/test_zone_mirror.py" -q` green.
 91. [Copilot] [scan: no] **Copilot cleanup batch 10 -- QUEUED for 2026-11-01.** Copilot's monthly quota ran
    out 2026-10-16 (HTTP 402) and resets 2026-11-01. Steph RULED 2026-10-16 (memory
    feedback_copilot_monthly_burn.md): on the 1st of each month, start Copilot on its tier of work
