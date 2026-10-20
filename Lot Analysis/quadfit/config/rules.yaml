@@ -1939,6 +1939,7 @@ jurisdictions:
         setback_side_ft: 10  # note 14's larger limb; 7 where no lower-density district abuts -- see above
         setback_rear_ft: 20
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 9.6  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO Section 315 Table 315-4 (Medium Density Residential MR-1: front 15, garage 20, side 7 / 10 per note 14, rear 20, height none); quadplex ZDO 315 Table 315-1; min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -1949,6 +1950,7 @@ jurisdictions:
         setback_side_ft: 10  # note 14's larger limb, as MR1
         setback_rear_ft: 20
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 16.2  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO Section 315 Table 315-4 (Medium High Density Residential MR-2: front 15, side 7 / 10 per note 14, rear 20, height none); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -1959,6 +1961,7 @@ jurisdictions:
         setback_side_ft: 30
         setback_rear_ft: 30
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 9.6  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO Section 315 Table 315-4 (Planned Medium Density Residential: front 15, side 30, rear 30, height none); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -1969,6 +1972,7 @@ jurisdictions:
         setback_side_ft: 0  # Table 315-4 prints "None"; held in the corpus as exempt
         setback_rear_ft: 0  # the same
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 14.52  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO Section 315 Table 315-4 (Village Apartment: front 10, max front 18, side none, rear none, height 45); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -1979,6 +1983,7 @@ jurisdictions:
         setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
         setback_rear_ft: 45.033  # the same
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 22.505  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO Section 315 Table 315-4 (High Density Residential: front 15, rear and side See 1005.02(L), height none); ZDO 1005.02(L); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -1989,6 +1994,7 @@ jurisdictions:
         setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
         setback_rear_ft: 45.033  # the same
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 54  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO Section 315 Table 315-4 (Special High Density Residential: front 15, rear and side See 1005.02(L), height none); ZDO 1005.02(L); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -1999,6 +2005,7 @@ jurisdictions:
         setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
         setback_rear_ft: 45.033  # the same
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 30  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO Section 315 Table 315-4 (Regional Center High Density Residential: front 15 per note 8, rear See 1005.02(L) with 20 per note 13, side See 1005.02(L) with 15 per note 16, height none); ZDO 1005.02(L); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -2009,6 +2016,7 @@ jurisdictions:
         setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
         setback_rear_ft: 45.033  # the same
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 20  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO 510 Table 510-1 note 15 (Retail Commercial: a freestanding quadplex takes the HDR District's development and dimensional standards); ZDO Table 315-4 (HDR); ZDO 1005.02(L); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -2019,6 +2027,7 @@ jurisdictions:
         setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
         setback_rear_ft: 45.033  # the same
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 20  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO 510 Table 510-1 note 15 (Corridor Commercial: a freestanding quadplex takes the HDR District's development and dimensional standards); ZDO Table 315-4 (HDR); ZDO 1005.02(L); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -2029,6 +2038,7 @@ jurisdictions:
         setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
         setback_rear_ft: 45.033  # the same
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 20  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO 510 Table 510-1 note 15 (General Commercial: a freestanding quadplex takes the HDR District's development and dimensional standards); ZDO Table 315-4 (HDR); ZDO 1005.02(L); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -2039,6 +2049,7 @@ jurisdictions:
         setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
         setback_rear_ft: 45.033  # the same
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 20  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO 510 Table 510-1 note 15 (Office Commercial: a freestanding quadplex takes the HDR District's development and dimensional standards); ZDO Table 315-4 (HDR); ZDO 1005.02(L); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -2049,6 +2060,7 @@ jurisdictions:
         setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
         setback_rear_ft: 45.033  # the same
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 30  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO 510 Table 510-1 note 13 (Regional Center Commercial: a freestanding quadplex takes the RCHDR District's development and dimensional standards); ZDO Table 315-4 (RCHDR); ZDO 1005.02(L); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
@@ -2059,6 +2071,7 @@ jurisdictions:
         setback_side_ft: 45.033  # 1005.02(L) north separation on every line; see notes
         setback_rear_ft: 45.033  # the same
         min_lot_sqft: 7000  # ZDO 845.01(1)(b), the quadplex row; see the header
+        min_density_du_per_acre: 30  # ZDO 1012.08 / Table 510-2 floor, mirrored from FLATS 2026-10-20 (5367d599)
         source: "Clackamas ZDO 510 Table 510-1 note 13 (Regional Center Office: a freestanding quadplex takes the RCHDR District's development and dimensional standards); ZDO Table 315-4 (RCHDR); ZDO 1005.02(L); min lot ZDO 845.01"
         source_url: "https://www.clackamas.us/planning/zdo315"
         confidence: needs_verification
