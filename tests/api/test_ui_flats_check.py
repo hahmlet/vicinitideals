@@ -879,3 +879,20 @@ async def test_walking_every_web_number_reads_each_stored_text_once(monkeypatch)
             pass
         assert len(reads) <= len({r["document"] for r in rows}), "a web text was read per number"
     assert web_documents, "fixture assumption: some numbers are in web-published codes"
+
+
+async def test_a_choice_word_is_asked_as_a_reading_not_as_printed_words(client, session):
+    # Steph 2026-10-19, Durham: "front on a corner lot: both" and "driveway
+    # street: any" were asked as "does the page say both?" -- the page defines
+    # no corner front and names no street, so it read as an invented definition.
+    await _login(client, session)
+    layer_id = "or/washington/durham"
+    row = next(r for r in check._rows(check._layers()[layer_id], set()) if r["field"] == "front_lot_line_corner")
+    card = await client.get(
+        f"/flats/check/{layer_id}", params={"zone": row["zone"], "field": row["field"], "when": row["when"]}
+    )
+    assert card.status_code == 200
+    assert "every street line takes the front setback" in card.text
+    assert "This is our reading, not words printed on the page" in card.text
+    assert "no front lot line defined" in card.text
+    assert "Does the page say <strong" not in card.text

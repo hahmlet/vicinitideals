@@ -861,6 +861,18 @@ def _web_text(row: dict[str, Any], note_mark: str = "") -> list[dict[str, Any]]:
     return out
 
 
+#: A choice word said the way a person reads it on a page-check card.
+READING_WORDS: dict[tuple[str, str], str] = {
+    ("front_lot_line_corner", "shortest"): "the shortest street line is the front",
+    ("front_lot_line_corner", "owner"): "the owner picks which street line is the front",
+    ("front_lot_line_corner", "entrance"): "the street line the entrance faces is the front",
+    ("front_lot_line_corner", "both"): "every street line takes the front setback",
+    ("corner_access_street", "any"): "any street (no street is named)",
+    ("corner_access_street", "side"): "the side street",
+    ("corner_access_street", "lowest_class"): "the quieter street (lowest class)",
+}
+
+
 def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
     """Everything one card shows."""
     row = ask.row
@@ -910,7 +922,16 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         # shown was the general rule that an unlisted use is forbidden. The
         # card says what was read and where, not only the section.
         card["yes_no"] = isinstance(row["value"], bool)
-        card["because"] = row["cite"] if card["yes_no"] else ""
+        # A choice word ("both", "any") is a reading too, and usually a reading
+        # of what the code leaves unsaid: Steph answered "differs" to Durham's
+        # "front on a corner lot: both" and "driveway street: any" (2026-10-19),
+        # because the page defines no corner front and names no street. Asked
+        # as "does the page say both?" it read as a definition we invented.
+        known = FIELDS.get(row["field"])
+        card["reading"] = known is not None and known.kind == "enum" and isinstance(row["value"], str)
+        if card["reading"]:
+            card["value"] = READING_WORDS.get((row["field"], row["value"]), row["value"])
+        card["because"] = row["cite"] if card["yes_no"] or card["reading"] else ""
         card["exempt"] = _exempt(layer, row)
         if web:
             return card
