@@ -52,6 +52,12 @@ async def _login(client: AsyncClient, session: AsyncSession):
     return user
 
 
+def _asks(html: str) -> int:
+    """How many value questions a page asks: a printed number ("Does the page
+    say") or a choice word asked as our reading (``data-reading``)."""
+    return html.count("Does the page say") + html.count("data-reading>")
+
+
 def _first_row() -> dict:
     layer = check._layers()[LAYER]
     rows = check._rows(layer, set())
@@ -91,7 +97,7 @@ async def test_a_card_shows_the_page_with_the_box_and_asks_one_question(client, 
 
     assert response.status_code == 200
     assert "Page check · " in response.text
-    assert "Does the page say" in response.text
+    assert _asks(response.text) == 1
     assert "check-box-value" in response.text
     assert f"/flats/sheet/{_first_row()['document']}?page=1" in response.text
 
@@ -238,7 +244,7 @@ async def test_something_missing_from_the_page_can_be_flagged(client, session):
     assert (saved.question, saved.page, saved.answer) == ("page:839", 839, "unmarked")
     # A flag is not an answer to the card: the same question is still asked.
     assert 'name="question" value="value"' in response.text
-    assert "Does the page say" in before.text and "Does the page say" in response.text
+    assert _asks(before.text) == 1 and _asks(response.text) == 1
     text = await client.get("/flats/check/problems.txt")
     assert "the page says: F. one approach per two units" in text.text
 
@@ -295,7 +301,7 @@ async def test_the_card_asks_once_and_names_the_section_not_its_description(clie
 
     response = await client.get(f"/flats/check/{LAYER}")
 
-    assert response.text.count("Does the page say") == 1
+    assert _asks(response.text) == 1
     assert "Problems raised" not in response.text
     assert "Read the row and the column heading" not in response.text
     assert row["cite"].split(",")[0] in response.text
