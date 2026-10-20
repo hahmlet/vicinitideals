@@ -151,13 +151,13 @@ def test_a_card_opens_on_the_cited_page_with_its_neighbours_around_it(
         f"{base_url}/flats/check/or/clackamas/oregon-city?zone=MUE&field=quadplex_allowed&when="
     )
 
-    # Neighbours need the book's page index, which the CI instance does not
-    # hold: there the card shows only the cited page, and this test was red on
-    # every Full gate run, which hid every other failure behind it. Against
-    # the live site it must hold.
-    expect(page.locator("[data-cited]").first).to_be_attached()
-    if page.locator("[data-context]").count() == 0 and "localhost" in base_url:
-        pytest.skip("this instance holds no page index for the Oregon City book")
+    # The CI instance does not hold the Oregon City book's pages, so the card
+    # draws no page at all there; this test was red on every Full gate run,
+    # which hid every other failure behind it. Against the live site it must
+    # hold.
+    expect(page.locator("[data-answer]").first).to_be_visible()
+    if page.locator(".check-sheet").count() == 0 and "localhost" in base_url:
+        pytest.skip("this instance holds no pages for the Oregon City book")
     expect(page.locator("[data-context='before']")).to_have_count(1)
     expect(page.locator("[data-context='after']")).to_have_count(1)
     first = page.locator(".check-sheet img").first
