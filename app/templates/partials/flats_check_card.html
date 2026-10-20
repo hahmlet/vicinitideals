@@ -119,29 +119,29 @@
 
     {% if card.question == "value" and card.exempt %}
       <p style="font-size:15px;margin:0 0 4px">
-        We hold that <strong>{{ card.field_label }}</strong> does <strong>not apply to {{ card.when_for or "our building" }}</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_phrase and not card.when_for %}, {{ card.when_phrase }}{% endif %}. Is that right?
+        We hold that <strong>{{ card.field_label }}</strong> does <strong>not apply to {{ card.when_who or "our building" }}</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_where %} {{ card.when_where }}{% endif %}. Is that right?
       </p>
     {% elif card.question == "value" and card.no_rule %}
       <p style="font-size:15px;margin:0 0 4px">
         We hold that the page sets <strong>no rule</strong> for
-        <strong>{{ card.field_label }}</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_phrase %}, {{ card.when_phrase }}{% endif %}. Is that right?
+        <strong>{{ card.field_label }}</strong>{% if card.when_who %} for {{ card.when_who }}{% endif %}{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_where %} {{ card.when_where }}{% endif %}. Is that right?
       </p>
     {% elif card.question == "value" and card.reading %}
       <p style="font-size:15px;margin:0 0 4px">
-        We hold, for <strong>{{ card.field_label }}</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_phrase %}, {{ card.when_phrase }}{% endif %}:
+        We hold, for <strong>{{ card.field_label }}</strong>{% if card.when_who %} for {{ card.when_who }}{% endif %}{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_where %} {{ card.when_where }}{% endif %}:
         <strong style="font-size:17px">{{ card.value }}</strong>.
       </p>
       <p style="font-size:13px;margin:0 0 4px" data-reading>This is our reading, not words printed on the page &mdash; often a reading of what the code leaves unsaid. Does the page support it?</p>
       <p class="muted" style="font-size:12px;margin:0 0 4px" data-because>Read from: {{ card.because }}</p>
     {% elif card.question == "value" and card.yes_no %}
       <p style="font-size:15px;margin:0 0 4px">
-        We hold <strong>{{ card.field_label }}: <span style="font-size:17px">{{ card.value }}</span></strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_phrase %}, {{ card.when_phrase }}{% endif %}. Is that what the page says?
+        We hold <strong>{{ card.field_label }}: <span style="font-size:17px">{{ card.value }}</span></strong>{% if card.when_who %} for {{ card.when_who }}{% endif %}{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_where %} {{ card.when_where }}{% endif %}. Is that what the page says?
       </p>
       <p class="muted" style="font-size:12px;margin:0 0 4px" data-because>Read from: {{ card.because }}</p>
     {% elif card.question == "value" %}
       <p style="font-size:15px;margin:0 0 4px">
         Does the page say <strong style="font-size:17px">{{ card.value }}</strong>
-        for <strong>{{ card.field_label }}</strong>{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_phrase %}, {{ card.when_phrase }}{% endif %}?
+        for <strong>{{ card.field_label }}</strong>{% if card.when_who %} for {{ card.when_who }}{% endif %}{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_where %} {{ card.when_where }}{% endif %}?
       </p>
     {% else %}
       <p style="font-size:15px;margin:0 0 4px">

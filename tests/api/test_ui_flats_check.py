@@ -628,9 +628,55 @@ async def test_a_townhouse_number_is_said_as_for_townhouses(client, session, mon
 
     response = await client.get(f"/flats/check/{LAYER}")
 
-    assert "does <strong>not apply to townhouses</strong>" in response.text
-    assert check._when_phrase("unit_lots") == "for townhouses"
+    assert "does <strong>not apply to townhomes</strong>" in response.text
+    assert check._when_phrase("unit_lots") == "for townhomes"
     assert check._when_phrase("") == ""
+
+
+@pytest.mark.parametrize(
+    ("when", "who", "where"),
+    [
+        # Steph 2026-10-20: "min. frontage does not apply to townhomes in the
+        # LDR-5 zone on corner lots" -- not "abuts a street on two or more
+        # sides, which swaps an interior side setback for...".
+        ("corner_lot+unit_lots", "townhomes", "on corner lots"),
+        ("corner_lot", None, "on corner lots"),
+        ("lot_sqft:>10000+", None, "on lots over 10,000 sq ft"),
+        ("lot_sqft:<=10000", None, "on lots of 10,000 sq ft or less"),
+        ("lot_sqft:<=<3000", None, "on lots under 3,000 sq ft"),
+        ("lot_sqft:1500-2999", None, "on lots of 1,500–2,999 sq ft"),
+        ("lot_sqft:3000-<5000", None, "on lots of 3,000 to under 5,000 sq ft"),
+        ("lot_sqft:>7000-8000", None, "on lots over 7,000 up to 8,000 sq ft"),
+        ("lot_sqft:>12000-<20000", None, "on lots over 12,000 and under 20,000 sq ft"),
+        ("lot_width_ft:<=<100", None, "on lots under 100 ft wide"),
+        ("lot_width_ft:70+", None, "on lots 70 ft wide or more"),
+        ("lrt_station_ft:>400", None, "over 400 ft from a light-rail station"),
+        (
+            "corner_lot+lot_sqft:>10000++lot_width_ft:<=<100",
+            None,
+            "on corner lots, on lots over 10,000 sq ft and on lots under 100 ft wide",
+        ),
+    ],
+)
+def test_a_case_is_said_in_plain_words(when, who, where):
+    assert check._when_parts(when) == (who, where)
+
+
+def test_every_condition_a_card_can_name_reads_as_plain_words():
+    """No card says "in the case where abuts a street..." or carries the
+    definition's explanation ("which swaps ...") -- every case is a plain name,
+    a range, or the first clause of its definition with no "which"."""
+    seen = set()
+    for layer in check._layers().values():
+        for row in check._rows(layer, set()):
+            if row["when"]:
+                seen.add(row["when"])
+    for when in seen:
+        said = check._when_phrase(when)
+        assert said, when
+        assert "in the case where" not in said, (when, said)
+        assert ", which" not in said, (when, said)
+        assert ":" not in said and "_" not in said, (when, said)
 
 
 def test_the_answers_carry_the_key_that_presses_them():

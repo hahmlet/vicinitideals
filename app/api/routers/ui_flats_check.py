@@ -191,33 +191,147 @@ def _condition_words(when: str) -> list[str]:
     "the four units are being platted onto lots of their own".
     """
     out = []
-    for key in filter(None, when.split("+")):
+    for key in _keys(when):
         try:
             text = conditions.condition(key).describe
         except Exception:  # noqa: BLE001 — an unregistered key reads as itself
             out.append(key.replace("_", " "))
             continue
         first = re.split(r"(?<=[.;:])\s", text, maxsplit=1)[0].rstrip(".;:")
+        first = re.split(r",\s+which\b", first, maxsplit=1)[0]
         out.append(first[:1].lower() + first[1:])
     return out
 
 
-#: Conditions with a plain name of their own (Steph 2026-10-20: "I think we
-#: can just call this 'townhouse'" -- the four homes platted onto lots of
-#: their own): the card says who the number is for instead of spelling out
-#: the case.
-_FOR: dict[str, str] = {"unit_lots": "townhouses"}
+#: Who a number is for, by plain name (Steph 2026-10-20: "I think we can just
+#: call this 'townhouse'" -- the four homes platted onto lots of their own).
+#: The card says "does not apply to townhomes in the LDR-5 zone".
+_WHO: dict[str, str] = {
+    "unit_lots": "townhomes",
+    "attached_house_division": "attached houses",
+}
+
+#: Where a number applies, said the way a reviewer would say it (Steph
+#: 2026-10-20: "abuts a street on two or more sides" is "corner lots"). The
+#: definition's explanation -- "which swaps an interior side setback..." --
+#: is for us, not for the card. A condition missing here falls back to the
+#: first clause of its definition.
+_WHERE: dict[str, str] = {
+    "corner_lot": "on corner lots",
+    "attached_wall": "on the party-wall line",
+    "alley_at_rear": "where the alley is at the rear",
+    "alley_at_side": "where the alley is at the side",
+    "abuts_alley": "on lots with alley access",
+    "abuts_residential_zone": "next to a residential zone",
+    "abuts_lower_density_zone": "next to a lower-density residential zone",
+    "abuts_nonresidential_zone": "where every non-street line borders a non-residential zone",
+    "abuts_side_yard": "where the side line meets the neighbour's side yard",
+    "abuts_park": "next to a park",
+    "multi_story": "for buildings of two storeys or more",
+    "low_rise": "below the height where the code steps this up",
+    "fronts_cul_de_sac": "on cul-de-sac lots",
+    "flag_lot": "on flag lots",
+    "narrow_frontage": "on narrow-frontage lots",
+    "local_street": "on a local street",
+    "on_transit_street": "on a transit street",
+    "civic_corridor": "on a mapped corridor",
+    "civic_corridor_setback": "on a Civic Corridor",
+    "civic_corridor_setback_all_streets": "where every street line is on a Civic Corridor",
+    "inside_mapped_use_area": "inside an area the code maps within the zone",
+    "constrained_sites_overlay": "in the Constrained Sites overlay",
+    "willamette_greenway_zone": "in the Willamette Greenway zone",
+    "willamette_historic_district": "in the Willamette Historic District",
+    "middle_housing_child_lot": "on a lot from a middle housing land division",
+    "state_middle_housing": "under the state middle housing law",
+    "beyond_ugb_mile": "more than a mile from the urban growth boundary",
+    "in_sewer_district": "inside a sewer district",
+    "access_easement": "where an access easement crosses the lot",
+    "conditional_use": "with conditional use approval",
+    "adjustment": "with an adjustment",
+    "planned_development": "with a Planned Development approval",
+    "mixed_use": "with ground-floor non-residential space",
+}
+
+#: A lot-size band, said as a range: "on lots over 10,000 sq ft". Each
+#: measure is a frame and the unit the range is said in.
+_BANDS: dict[str, tuple[str, str]] = {
+    "lot_sqft": ("on lots {}", "sq ft"),
+    "lot_width_ft": ("on lots {}", "ft wide"),
+    "lot_depth_ft": ("on lots {}", "ft deep"),
+    "lrt_station_ft": ("{} from a light-rail station", "ft"),
+    "rail_stop_ft": ("{} from a rail stop", "ft"),
+    "transit_stop_ft": ("{} from a transit stop", "ft"),
+    "frequent_route_ft": ("{} from a frequent bus route", "ft"),
+}
+
+
+def _keys(when: str) -> list[str]:
+    """The conditions in a joined key. A band token can end in "+" ("10000+",
+    ten thousand and up), so a key starts only where a "+" meets a letter."""
+    return [k for k in re.split(r"\+(?=[a-z])", when) if k]
+
+
+def _band_phrase(key: str) -> str | None:
+    measure, _, spec = key.partition(":")
+    if measure not in _BANDS or not spec:
+        return None
+    frame, unit = _BANDS[measure]
+
+    def n(text: str) -> str:
+        v = float(text)
+        return f"{v:,.0f}" if v.is_integer() else f"{v:,}"
+
+    try:
+        if spec.startswith("<="):
+            high = spec[2:]
+            said = f"under {n(high[1:])} {unit}" if high.startswith("<") else f"{n(high)} {unit} or less"
+        elif spec.endswith("+"):
+            low = spec[:-1]
+            said = f"over {n(low[1:])} {unit}" if low.startswith(">") else f"{n(low)} {unit} or more"
+        elif "-" in spec:
+            low, high = spec.split("-", 1)
+            if low.startswith(">") or high.startswith("<"):
+                low_said = f"over {n(low[1:])}" if low.startswith(">") else n(low)
+                high_said = f"under {n(high[1:])}" if high.startswith("<") else n(high)
+                joiner = " and " if low.startswith(">") and high.startswith("<") else (
+                    " up to " if low.startswith(">") else " to "
+                )
+                said = f"{low_said}{joiner}{high_said} {unit}"
+            else:
+                said = f"{n(low)}–{n(high)} {unit}"
+        elif spec.startswith(">"):
+            said = f"over {n(spec[1:])} {unit}"
+        else:
+            return None
+    except ValueError:
+        return None
+    # "On lots of 5,000 sq ft or less", but "on lots over 10,000 sq ft" and
+    # "on lots under 100 ft wide".
+    if frame.startswith("on lots") and unit == "sq ft" and said[0].isdigit():
+        said = "of " + said
+    return frame.format(said)
+
+
+def _when_parts(when: str) -> tuple[str | None, str]:
+    """Who a number is for, and where it applies: ("townhomes", "on corner
+    lots"). Either can be empty; both empty is the zone's base number."""
+    who, where = [], []
+    for key in _keys(when):
+        if key in _WHO:
+            who.append(_WHO[key])
+        elif key in _WHERE:
+            where.append(_WHERE[key])
+        else:
+            where.append(_band_phrase(key) or "where " + _condition_words(key)[0])
+    said = where[0] if len(where) == 1 else ", ".join(where[:-1]) + " and " + where[-1] if where else ""
+    return (" and ".join(who) or None), said
 
 
 def _when_phrase(when: str) -> str:
-    """The case a number hangs on, as a card says it: "for townhouses" for a
-    condition with a plain name, "in the case where ..." for the rest, and
-    nothing for the zone's base number."""
-    if not when:
-        return ""
-    if when in _FOR:
-        return f"for {_FOR[when]}"
-    return "in the case where " + ", and ".join(_condition_words(when))
+    """The case a number hangs on, as a card's list of other numbers says it:
+    "for townhomes on corner lots"; nothing for the zone's base number."""
+    who, where = _when_parts(when)
+    return " ".join(filter(None, [f"for {who}" if who else "", where]))
 
 
 def _layer_label(layer: Layer) -> str:
@@ -931,8 +1045,8 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         "when": row["when"],
         "when_label": row["when_label"].replace("_", " "),
         "when_words": _condition_words(row["when"]),
-        "when_for": _FOR.get(row["when"]),
-        "when_phrase": _when_phrase(row["when"]),
+        "when_who": _when_parts(row["when"])[0],
+        "when_where": _when_parts(row["when"])[1],
         "value": _said(row["value"], row["field"]),
         "signed": row["signed"],
         "cite": row["cite"],

@@ -34,7 +34,8 @@
   .check-pages { max-width: 1000px; }
   /* The answers dock at the foot of the panel: the question above them grows
      and shrinks card to card, the buttons stay where the hand is (Steph
-     2026-10-20). The panel is the screen's height; only its top scrolls. */
+     2026-10-20). The panel ends at the foot of the screen -- the script
+     below sizes it to what is visible -- and only its top scrolls. */
   .check-panel { position: sticky; top: 12px; height: calc(100vh - 24px); display: flex; flex-direction: column;
                  border: 1px solid var(--line, #e5e7eb); border-radius: 4px; background: var(--card-bg, #fff); }
   .check-panel-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 12px; }
@@ -89,5 +90,20 @@
     e.preventDefault();
     button.click();
   });
+
+  // The panel starts below the page heading, so a screen-tall panel would
+  // push the comment box and Skip off the bottom until the page scrolled
+  // (Steph 2026-10-20). Size it to end 12px above the foot of the screen.
+  function fitPanel() {
+    var p = document.querySelector("#check-card .check-panel");
+    if (!p) return;
+    if (window.matchMedia("(max-width: 1000px)").matches) { p.style.height = ""; return; }
+    var top = Math.max(12, p.getBoundingClientRect().top);
+    p.style.height = Math.max(320, window.innerHeight - top - 12) + "px";
+  }
+  fitPanel();
+  window.addEventListener("resize", fitPanel);
+  window.addEventListener("scroll", fitPanel, { passive: true });
+  document.body.addEventListener("htmx:afterSettle", fitPanel);
 </script>
 {% endblock %}

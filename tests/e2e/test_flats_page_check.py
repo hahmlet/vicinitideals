@@ -236,6 +236,10 @@ def test_the_answers_stay_put_from_card_to_card(logged_in_page: Page, base_url: 
     page = logged_in_page
     page.set_viewport_size({"width": 1600, "height": 900})
     page.goto(f"{base_url}/flats/check/{LAYER}")
+    # The whole dock is on screen on arrival -- Skip is its last button, so
+    # the comment box and Flag above it are too.
+    skip = page.get_by_role("button", name="Skip").bounding_box()
+    assert skip and skip["y"] + skip["height"] <= 900, f"Skip is off the foot of the screen at {skip}"
     before = page.locator("#check-card [data-answer]").first.bounding_box()
     key = _card_key(page)
     skipped = page.locator("#check-card input[name='skipped']").first.input_value()
