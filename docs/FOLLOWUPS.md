@@ -534,7 +534,7 @@ read when the weekly full re-screen lands.
    2026-10-10 question "should a lot whose pod sits on a working building's parking or yard
    stay green?" reads as answered by it -- confirm with Steph only if a case differs.
 
-95. [Claude] [scan: YES, read after the weekly re-screen; MERGED to main 2026-10-19 (items 85 + 93, merge 0e097bc8)]
+95. [Claude] [scan: YES, read after the weekly re-screen; MERGED to main 2026-10-19 (items 85 + 93, merge 0e097bc8)] **Weekly 2026-10-19 LOADED as run 76 (candidate, snapshot 4) 2026-10-20; drift 74->76 written (data/flats/reports/2026-10-19_weekly/drift_run76.md): 0 unexplained, all 'rules'; gate blocks only lots_drift +2.4% (435,136 -> 445,536 measured) -> Steph. Map moves 7,637 lots (per-lot best colour; SQL /root/weekly137/mv76b.sql on 114): green->red 3,609 (WashCo uninc fit 1,130 = item 67 road strip; Portland min density 854 + 770 no reason named = item 78?; Oregon City fit 444 = 77/82/84), yellow->red 1,931, red->yellow 851, red->green 625, yellow->green 291, green->yellow 330. NEXT: read the GAINS to green first (Clackamas uninc 385 with no reason named, Hillsboro 146 min density, Canby 108), then the Portland 770, then promote run 76.**
    **Townhomes on their own lots + ORS 197A.400 "clear and objective" ride this weekly.**
    Rulings: Steph 2026-10-15 townhomes = separate lots (register
    `2026-10-15-townhomes-separate-lots`) and judgement-only / "may add conditions" review inside a
