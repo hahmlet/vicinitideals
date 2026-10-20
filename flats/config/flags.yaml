@@ -368,6 +368,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-DRIVE-STREET:
+    description: "The driveway is too wide for the frontage cap on the lot's shortest street and fits it on a longer one; which street the drive takes is not drawn"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Measure the street line the drawn driveway crosses (FOLLOWUPS 88)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-TOLERANCE:
     description: "A check misses or clears by less than its measurement tolerance"
     kind: parametric

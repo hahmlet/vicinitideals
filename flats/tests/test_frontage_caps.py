@@ -286,6 +286,57 @@ def test_the_driveway_share_is_of_one_street_line_not_the_sum(
         assert got.colour is not Colour.green
 
 
+@pytest.mark.parametrize(
+    ("shortest", "longest", "verdict"),
+    [
+        # Happy Valley, FOLLOWUPS 88: 300 ft of street and a 20 ft corner
+        # piece. Half of 20 ft refuses the 12 ft drive, half of 300 ft takes
+        # it, and which street it uses is not drawn: a question, not a red.
+        (20.0, 300.0, "question"),
+        # No street takes it: it fails, on the longest -- the least it misses by.
+        (10.0, 20.0, "fails"),
+        # The shortest takes it: every street does.
+        (60.0, 300.0, "passes"),
+    ],
+)
+def test_a_drive_the_shortest_street_refuses_is_held_to_the_streets_that_take_it(
+    shortest: float, longest: float, verdict: str
+) -> None:
+    from flats.score.screen import LotFacts
+
+    lot = LotFacts(
+        lot_sqft=20000,
+        frontage_ft=shortest + longest,
+        lot_width_ft=100,
+        corner=True,
+        street_line_min_ft=shortest,
+        street_line_max_ft=longest,
+    )
+    got = run(lot, rules(driveway_max_frontage_pct=50))
+    share = check(got, "driveway_frontage_share")
+    flagged = any(f.code == "MEASURE-DRIVE-STREET" for f in got.flags)
+    if verdict == "question":
+        assert share is None
+        assert "driveway_frontage_share" in got.unchecked
+        assert flagged
+        assert got.colour is Colour.yellow
+        return
+    assert not flagged
+    assert share is not None
+    assert (share.verdict is Verdict.passes) is (verdict == "passes")
+    want = longest if verdict == "fails" else shortest
+    assert share.threshold == pytest.approx(0.5 * want)
+
+
+def test_the_longest_street_line_is_measured_as_the_shortest_is() -> None:
+    from flats.ingest.quadfit import street_line_max_ft, street_line_min_ft
+
+    edges = _edges([(0, 0, 30, 0, F), (30, 0, 30, 140, F), (30, 140, 0, 140, R), (0, 140, 0, 0, S)], [0.0, 90.0])
+    assert street_line_min_ft(edges) == pytest.approx(30.0)
+    assert street_line_max_ft(edges) == pytest.approx(140.0)
+    assert street_line_max_ft(None) is None
+
+
 def test_the_court_beside_the_building_is_held_to_one_street_line() -> None:
     from flats.score.paper import side_court
     from flats.score.screen import LotFacts
@@ -493,13 +544,14 @@ def test_troutdale_measures_the_side_street_on_a_corner_lot(corpus: RuleSet) -> 
 
 def test_beaverton_holds_a_corner_lots_drive_to_its_short_street(corpus: RuleSet) -> None:
     # 30 ft on the front street, 140 ft on the side street: the summed
-    # frontage (170 ft) would allow a 59.5 ft drive; the 30 ft line allows
-    # 10.5 ft, and the pod's drive is wider than that.
+    # frontage (170 ft) would allow a 59.5 ft drive and must not pass it.
+    # The 30 ft line allows 10.5 ft, narrower than the pod's drive; the
+    # 140 ft line allows 49 ft. Which street the drive takes is not drawn,
+    # so since FOLLOWUPS 88 the cap is a question -- never green on the sum.
     s = _screen(corpus, "beaverton", "CM-HDR", BEAVERTON_AT, 30.0, 140.0, "corner")
     assert s.lot.facts.street_line_min_ft == pytest.approx(30.0)
-    share = check(s.screening, "driveway_frontage_share")
-    assert share is not None
-    assert share.threshold == pytest.approx(0.35 * 30.0)
-    assert 0.35 * 170.0 > share.observed > share.threshold
-    assert share.verdict is not Verdict.passes
+    assert s.lot.facts.street_line_max_ft == pytest.approx(140.0)
+    assert check(s.screening, "driveway_frontage_share") is None
+    assert "driveway_frontage_share" in s.screening.unchecked
+    assert any(f.code == "MEASURE-DRIVE-STREET" for f in s.screening.flags)
     assert s.screening.colour is not Colour.green

@@ -1765,6 +1765,7 @@ def lot_from_row(
         # The shortest street's line: what a cap on a share of "any street
         # lot line" is read against (FOLLOWUPS 84), not the summed frontage.
         street_line_min_ft=street_line_min_ft(edges),
+        street_line_max_ft=street_line_max_ft(edges),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
         street_unconfirmed=unconfirmed,
@@ -3924,6 +3925,17 @@ def street_line_min_ft(edges: LotEdges | None) -> float | None:
     if not chains:
         return None
     return min(sum(e.length_ft for e in chain) for chain in chains)
+
+
+def street_line_max_ft(edges: LotEdges | None) -> float | None:
+    """The longest of the lot's streets, in feet, as :func:`street_line_min_ft`
+    measures them. :attr:`flats.score.screen.LotFacts.street_line_max_ft`."""
+    if edges is None:
+        return None
+    chains = street_chains(edges)
+    if not chains:
+        return None
+    return max(sum(e.length_ft for e in chain) for chain in chains)
 
 
 def _code_front(streets: LotEdges, got: ZoneResolution) -> float | None:

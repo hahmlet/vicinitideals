@@ -373,7 +373,9 @@ pytestmark = pytest.mark.unit
 # (FOLLOWUPS 93 + 85): notes arrive on Troutdale HDR and MU-1 (the 8.130.C townhouse
 # design standards, read and NOT ENCODED), Fairview VTH and Milwaukie SMU, and leave
 # Milwaukie NMU (now encoded); one Fairview comment arrives.
-EXPECTED = {"notes": 157, "comments": 286, "tests": 18}
+EXPECTED = {"notes": 157, "comments": 289, "tests": 18}
+# 286 -> 289 comments on 2026-10-20 (FOLLOWUPS 88/89): Gladstone Ord. 1545 and
+# Happy Valley 16.44 carry their refusals in comments.
 # 286 -> 285 comments on 2026-10-16 (FOLLOWUPS 84 phase 3): Oregon City 17.16.060.E,
 # parking behind the facade in mixed-use and commercial zones, is now encoded.
 # 153 -> 154 notes on 2026-10-15 (FOLLOWUPS 78): storing PCC 33.700 for

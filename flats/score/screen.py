@@ -342,6 +342,13 @@ SITE_GRADE = "site_grade"
 #: Joins ``_checks``'s ``unmeasured``, so it reports as ``FACT_UNOBSERVED``.
 COURT_UNDRIVEN = "court_undriven"
 
+#: A driveway the share-of-frontage cap refuses on the lot's shortest street
+#: and allows on a longer one, where nothing here says which street it takes
+#: (FOLLOWUPS 88). Joins ``_checks``'s ``unmeasured``, so it reports as
+#: ``FACT_UNOBSERVED``: a question, never a red on a corner piece the drive
+#: need not cross, and never a pass.
+DRIVE_STREET = "drive_street"
+
 
 @dataclass(frozen=True, slots=True)
 class LotFacts:
@@ -468,6 +475,12 @@ class LotFacts:
     #: beside the building faces, the worst (shortest) is the one held to the
     #: cap (FOLLOWUPS 84). None where nothing measured the lot's streets.
     street_line_min_ft: float | None = None
+    #: The longest of the lot's streets, in feet, measured as
+    #: ``street_line_min_ft`` is. Where the driveway fails a share cap on the
+    #: shortest and clears it on the longest, the street it takes decides,
+    #: and the screen does not draw that: the cap is a question
+    #: (:data:`DRIVE_STREET`). None where nothing measured the streets.
+    street_line_max_ft: float | None = None
     #: Distances to transit, feet, as ``(measure, ft)`` pairs
     #: (:data:`flats.rules.model.TRANSIT_MEASURES`), measured once per
     #: transit release by :mod:`flats.ingest.transit` and read by the rules
@@ -953,12 +966,26 @@ def _checks(
         if lot.landlocked or (drive and line is None):
             unchecked.append("driveway_frontage_share")
         elif drive:
-            check(
-                "driveway_frontage_share",
-                drive,
-                share / 100.0 * line,
-                is_maximum=True,
-            )
+            # Held to the shortest street, a lot with 300 ft of frontage
+            # failed on a 30 ft corner piece (Happy Valley, FOLLOWUPS 88).
+            # Where a longer street takes the drive, which one it uses is
+            # not drawn: a question. Where none does, it fails on the
+            # longest -- the least it can miss by.
+            longest = lot.street_line_max_ft
+            if longest is not None and longest > line and drive > share / 100.0 * line:
+                if drive <= share / 100.0 * longest:
+                    unchecked.append("driveway_frontage_share")
+                    unmeasured.add(DRIVE_STREET)
+                    line = None
+                else:
+                    line = longest
+            if line is not None:
+                check(
+                    "driveway_frontage_share",
+                    drive,
+                    share / 100.0 * line,
+                    is_maximum=True,
+                )
     # The parking's share of EVERY street frontage (Steph 2026-10-14 on the
     # model code's half-the-frontage cap: "front, back, side streets if they
     # exist"). The court beside the building is held to it on the way in
@@ -2495,6 +2522,7 @@ _MEASURED_FLAG: dict[str, str] = {
     FIRE_ROUTE: "MEASURE-FIRE-ROUTE",
     SITE_GRADE: "MEASURE-SITE-GRADE",
     COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
+    DRIVE_STREET: "MEASURE-DRIVE-STREET",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on
