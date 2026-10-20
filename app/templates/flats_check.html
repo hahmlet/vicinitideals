@@ -32,14 +32,27 @@
   .check-wrap { max-width: 1400px; margin: 0 auto; }
   .check-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; align-items: start; }
   .check-pages { max-width: 1000px; }
-  .check-panel { position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow-y: auto;
-                 padding: 12px; border: 1px solid var(--line, #e5e7eb); border-radius: 4px; background: var(--card-bg, #fff); }
+  /* The answers dock at the foot of the panel: the question above them grows
+     and shrinks card to card, the buttons stay where the hand is (Steph
+     2026-10-20). The panel is the screen's height; only its top scrolls. */
+  .check-panel { position: sticky; top: 12px; height: calc(100vh - 24px); display: flex; flex-direction: column;
+                 border: 1px solid var(--line, #e5e7eb); border-radius: 4px; background: var(--card-bg, #fff); }
+  .check-panel-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 12px; }
+  .check-dock { flex: none; margin: 0; padding: 10px 12px 12px; border-top: 1px solid var(--line, #e5e7eb);
+                background: var(--card-bg, #fff); }
+  .check-key { display: inline-block; min-width: 1.4em; margin-right: 8px; padding: 0 4px; border-radius: 3px;
+               font: 600 11px/1.5 ui-monospace, monospace; text-align: center;
+               border: 1px solid currentColor; opacity: 0.75; }
   .check-legend { font-size: 11px; margin: 0 0 12px; display: grid; gap: 3px; }
   .check-legend .swatch { display: inline-block; width: 14px; height: 10px; margin-right: 6px; vertical-align: middle; }
   .check-flag { padding: 8px 0 0; border-top: 1px solid var(--line, #e5e7eb); }
   @media (max-width: 1000px) {
     .check-grid { grid-template-columns: minmax(0, 1fr); }
-    .check-panel { position: static; max-height: none; order: -1; }
+    .check-panel { position: static; height: auto; order: -1; }
+    .check-panel-body { overflow: visible; }
+    /* Narrow: the dock is pinned to the foot of the screen instead. */
+    .check-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; box-shadow: 0 -2px 8px rgba(0,0,0,0.12); }
+    .check-wrap { padding-bottom: 240px; }
   }
 </style>
 <div class="topbar"></div>
@@ -61,4 +74,20 @@
   {% include "partials/flats_check_card.html" %}
 </div>
 </div>
+<script>
+  // 1-4 press the answers in order (Steph 2026-10-20). Once for the page:
+  // the card is swapped in place, so the buttons are found at the keypress.
+  // Never while typing a comment, and never twice on one card.
+  document.addEventListener("keydown", function (e) {
+    if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+    var t = e.target;
+    if (t && (t.tagName === "TEXTAREA" || t.tagName === "INPUT" || t.tagName === "SELECT" || t.isContentEditable)) return;
+    var n = "1234".indexOf(e.key);
+    if (n < 0 || e.key.length !== 1) return;
+    var button = document.querySelectorAll("#check-card [data-answer]")[n];
+    if (!button || button.form.classList.contains("htmx-request")) return;
+    e.preventDefault();
+    button.click();
+  });
+</script>
 {% endblock %}

@@ -198,3 +198,55 @@ def test_the_jurisdiction_table_sorts_by_what_is_left_to_check(logged_in_page: P
     assert left() == sorted(left())
     header.click()
     assert left() == sorted(left(), reverse=True)
+
+
+def test_the_number_keys_press_the_answers_in_order(logged_in_page: Page, base_url: str) -> None:
+    """Steph 2026-10-20: 1-4 press the four answers. The post is caught and
+    dropped before it reaches the server -- nothing is recorded -- and a digit
+    typed into the comment box is a digit, not an answer."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}")
+    expect(page.locator("#check-card [data-answer]").first).to_be_visible()
+    second = page.locator("#check-card [data-answer]").nth(1).get_attribute("data-answer")
+    sent: list[str] = []
+
+    def drop(route) -> None:
+        sent.append(route.request.post_data or "")
+        route.abort()
+
+    page.route("**/ui/flats/check", drop)
+
+    page.locator("textarea[name='comment']").fill("")
+    page.locator("textarea[name='comment']").press("3")
+    expect(page.locator("textarea[name='comment']")).to_have_value("3")
+    assert sent == [], "a digit typed in the comment box answered the card"
+
+    page.locator("textarea[name='comment']").fill("")
+    page.locator("body").click(position={"x": 5, "y": 5})
+    page.keyboard.press("2")
+    page.wait_for_timeout(500)
+
+    assert len(sent) == 1, sent
+    assert f"answer={second}" in sent[0]
+
+
+def test_the_answers_stay_put_from_card_to_card(logged_in_page: Page, base_url: str) -> None:
+    """Steph 2026-10-20: the buttons moved with the length of the question.
+    They sit in a dock at the foot of the panel; a new card does not move them."""
+    page = logged_in_page
+    page.set_viewport_size({"width": 1600, "height": 900})
+    page.goto(f"{base_url}/flats/check/{LAYER}")
+    before = page.locator("#check-card [data-answer]").first.bounding_box()
+    key = _card_key(page)
+    skipped = page.locator("#check-card input[name='skipped']").first.input_value()
+
+    page.get_by_role("button", name="Skip").click()
+    wait_for_htmx(page)
+    # Assert on something the old card cannot show: the skip count moved on.
+    expect(page.locator("#check-card input[name='skipped']").first).to_have_value(str(int(skipped) + 1))
+    assert _card_key(page) != key
+
+    after = page.locator("#check-card [data-answer]").first.bounding_box()
+    assert before and after
+    assert abs(after["y"] - before["y"]) <= 1, f"the answers moved from {before['y']} to {after['y']}"
+    assert after["y"] + after["height"] <= 900, "the answers are on screen"

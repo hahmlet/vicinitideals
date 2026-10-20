@@ -202,6 +202,24 @@ def _condition_words(when: str) -> list[str]:
     return out
 
 
+#: Conditions with a plain name of their own (Steph 2026-10-20: "I think we
+#: can just call this 'townhouse'" -- the four homes platted onto lots of
+#: their own): the card says who the number is for instead of spelling out
+#: the case.
+_FOR: dict[str, str] = {"unit_lots": "townhouses"}
+
+
+def _when_phrase(when: str) -> str:
+    """The case a number hangs on, as a card says it: "for townhouses" for a
+    condition with a plain name, "in the case where ..." for the rest, and
+    nothing for the zone's base number."""
+    if not when:
+        return ""
+    if when in _FOR:
+        return f"for {_FOR[when]}"
+    return "in the case where " + ", and ".join(_condition_words(when))
+
+
 def _layer_label(layer: Layer) -> str:
     return layer.label or layer.layer.rsplit("/", 1)[-1]
 
@@ -807,7 +825,7 @@ def _variants(layer: Layer, zone: str, field: str) -> list[dict[str, str]]:
     out = [{"when": "normally", "value": _said(value.value, field), "key": ""}]
     out += [
         {
-            "when": "in the case where " + ", and ".join(_condition_words("+".join(v.key))),
+            "when": _when_phrase("+".join(v.key)),
             "value": _said(v.value, field),
             "key": "+".join(v.key),
         }
@@ -913,6 +931,8 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         "when": row["when"],
         "when_label": row["when_label"].replace("_", " "),
         "when_words": _condition_words(row["when"]),
+        "when_for": _FOR.get(row["when"]),
+        "when_phrase": _when_phrase(row["when"]),
         "value": _said(row["value"], row["field"]),
         "signed": row["signed"],
         "cite": row["cite"],

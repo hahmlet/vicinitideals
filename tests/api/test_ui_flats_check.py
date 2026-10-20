@@ -617,6 +617,33 @@ async def test_an_exempt_standard_is_asked_as_not_applying(client, session, monk
     assert "does <strong>not apply to our building</strong>" in response.text
 
 
+async def test_a_townhouse_number_is_said_as_for_townhouses(client, session, monkeypatch):
+    """Steph 2026-10-20: the four homes platted onto lots of their own are
+    "townhouses" on a card -- "min. lot area does not apply to townhouses in
+    the LDR-7 zone" -- not a sentence about platting."""
+    await _login(client, session)
+    row = next(r for r in check._rows(check._layers()[LAYER], set()) if r["when"] == "unit_lots")
+    monkeypatch.setattr(check, "_rows", lambda layer, answered: [row])
+    monkeypatch.setattr(check, "_exempt", lambda layer, row: True)
+
+    response = await client.get(f"/flats/check/{LAYER}")
+
+    assert "does <strong>not apply to townhouses</strong>" in response.text
+    assert check._when_phrase("unit_lots") == "for townhouses"
+    assert check._when_phrase("") == ""
+
+
+def test_the_answers_carry_the_key_that_presses_them():
+    """Steph 2026-10-20: 1-4 press the answers in order; each button says its key."""
+    from pathlib import Path
+
+    card = (Path(check.__file__).resolve().parents[2] / "templates" / "partials" / "flats_check_card.html").read_text(
+        encoding="utf-8"
+    )
+    assert '<kbd class="check-key">{{ loop.index }}</kbd>' in card
+    assert 'class="check-dock"' in card
+
+
 def test_the_card_names_the_other_numbers_held_for_the_same_standard():
     layer = check._layers()["or/clackamas/oregon-city"]
     zone, field = next(
@@ -629,7 +656,7 @@ def test_the_card_names_the_other_numbers_held_for_the_same_standard():
     held = check._variants(layer, zone, field)
 
     assert held[0]["when"] == "normally"
-    assert all(v["when"].startswith("in the case where ") for v in held[1:])
+    assert all(v["when"].startswith(("in the case where ", "for ")) for v in held[1:])
     assert "_" not in " ".join(v["when"] for v in held), "conditions in words, not keys"
 
 
