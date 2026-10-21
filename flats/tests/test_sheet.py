@@ -963,3 +963,67 @@ def test_a_sentence_naming_a_table_is_not_its_title():
     assert S._caption(line("Table", "4.0130", "Notes:")) == "notes"
     assert S._caption(line("Table", "4.1311", "summarizes", "the", "density")) == ""
     assert S._caption(line("Tables", "show")) == ""
+
+
+def test_a_column_headings_note_reaches_a_row_far_below_it(tmp_path: Path):
+    """Gresham Table 4.0130 runs a dozen rows and more under its zone
+    headings; a note on a heading reached only the rows within a few lines of
+    it. The table's heading band, from its title to its first row, is read
+    whatever the distance -- and a note printed in another cell of the
+    column is still that cell's."""
+    runs = [
+        (72, 740, 10, "Table 4.0130: Development Requirements"),
+        (220, 720, 9, "Detached"),
+        (300, 720, 9, "Attached"),
+        (338, 724, 5, "3"),
+        *[(72, 700 - 12 * k, 9, f"Standard {k}") for k in range(14)],
+        (72, 520, 9, "Maximum height"),
+        (220, 520, 9, "35 ft."),
+        (330, 520, 9, "35 ft."),
+        (72, 500, 9, "Lot coverage"),
+        (330, 500, 9, "40%"),
+        (348, 504, 5, "8"),
+        (72, 488, 9, "Rear setback"),
+        (220, 488, 9, "15 ft."),
+        (330, 488, 9, "15 ft."),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "Maximum height 35 ft. 35 ft.")
+
+    tr, ldr5 = S.hits(row, 35, sheet.aspect)[-1:], S.hits(row, 35, sheet.aspect)[:1]
+    assert {m.mark: m.on for m in S.markers(sheet, row, tr, "")}.get("3") == "column"
+    assert "3" not in [m.mark for m in S.markers(sheet, row, ldr5, "")]
+    rear = _line(sheet, "Rear setback 15 ft. 15 ft.")
+    marks = [m.mark for m in S.markers(sheet, rear, S.hits(rear, 15, sheet.aspect)[-1:], "")]
+    assert "3" in marks and "8" not in marks
+
+
+def _no_fetch(url: str) -> bytes:
+    raise AssertionError(f"the test reads the cached book only, not {url}")
+
+
+def test_gresham_aisle_width_note_reaches_the_ninety_degree_rows():
+    """Gresham Table 9.0825A heads its aisle columns "Width¹" fifteen lines
+    above the 90-degree rows the aisle widths are read from, and prints the 1
+    just past the right edge of the numbers under it. Note 1 sets the aisle
+    for emergency access at 20 and 24 feet; the cards never asked it."""
+    from flats.provenance import books
+    from flats.provenance.store import ProvenanceStore
+
+    store = ProvenanceStore()
+    document = "or/multnomah/gresham/9.0800.parking.txt"
+    try:
+        url = store.load(document).url
+    except Exception:
+        pytest.skip("Gresham's parking chapter is not stored")
+    if not books.cache_path(url).is_file():
+        pytest.skip("Gresham's parking book is not cached")
+    ranges = [(66, 70), (302, 302), (319, 327), (340, 343)]
+    for field, value in (("parking_aisle_two_way_ft", 24), ("parking_aisle_one_way_ft", 23)):
+        placed = S.locate(store, document, ranges, value, field=field, get=_no_fetch)
+        assert {m.mark: m.on for m in placed.markers} == {"1": "column"}, field
+    # The stall columns carry no note.
+    placed = S.locate(store, document, ranges, 8.5, field="parking_stall_width_ft", get=_no_fetch)
+    assert placed.markers == []
