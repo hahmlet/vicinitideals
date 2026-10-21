@@ -1070,6 +1070,15 @@ def test_a_number_held_from_a_note_shows_the_note():
     card = check._card(layer, check._Ask(row, "value"))
     assert any("11,000 square feet" in text for text in card["row_notes"])
 
+    # The whole note, past its cited first line.
+    row = next(
+        r
+        for r in check._rows(layer, set())
+        if (r["zone"], r["field"], r["when"]) == ("MDR-24", "min_frontage_ft", "corner_lot+unit_lots")
+    )
+    card = check._card(layer, check._Ask(row, "value"))
+    assert any(text.endswith("no alley or shared access.") for text in card["row_notes"]), card["row_notes"]
+
 
 def test_a_figure_printed_in_another_unit_is_asked_in_that_unit():
     """A density stored from "1,742 square feet per dwelling" is asked as

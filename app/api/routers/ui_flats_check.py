@@ -1086,8 +1086,17 @@ def _ruled_notes(layer: Layer, zone: str, field: str) -> list[str]:
     for ruling in dispositions.rulings().get(layer.layer, []):
         if ruling.state != "encoded" or f"{zone} {field}" not in ruling.encoded_as or not ruling.quote:
             continue
-        lines, _error = _cited_lines(ruling.quote)
-        words = " ".join(" ".join(line["shown"].split()) for line in lines if line["quoted"])
+        # The whole note, not only its cited first line: note 10's "... no
+        # alley or shared / access." ended mid-phrase on the card.
+        document, _, span = ruling.quote.partition("#L")
+        first = int(re.match(r"\d+", span).group()) if re.match(r"\d+", span) else 0
+        opening = sheet.lines_of(_store(), document)[first - 1] if first else ""
+        mark = re.match(r"\s*\(?(\d+|[A-Za-z])[.)]", opening)
+        at, body = _note_text(document, mark.group(1), first) if mark else (None, [])
+        if at != first:
+            lines, _error = _cited_lines(ruling.quote)
+            body = [line["shown"] for line in lines if line["quoted"]]
+        words = " ".join(" ".join(line.split()) for line in body)
         if words and words not in out:
             out.append(words)
     return out
