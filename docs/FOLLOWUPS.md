@@ -684,7 +684,7 @@ read when the weekly full re-screen lands.
    the stored text (43, hand-checked correct); Beaverton cells "18.511" / "see 20.25.15" read as
    headings; the cite reader takes "Table 18.805.1" as a section and cannot read "19.65.030 through
    19.65.060". Next: teach the check to ignore (a). Also: Gresham NC-PV quadplex_allowed cites Tables
-   4.1413/4.1415A/B but its quote is Table 4.1423 ("Quadplex NP") -- fix the cite.
+   4.1413/4.1415A/B but its quote is Table 4.1423 ("Quadplex NP") -- DONE 751bc5d5.
 83. [Claude] [scan: YES (yellows only go green)] **Measure Washington County's "standard plat" gate instead
    of flagging it (offered 2026-10-14, item 79).** 731 R-9/R-15/... lots are yellow only because
    nothing says whether the lot was made by a standard subdivision or partition plat (302-2.14 ..
@@ -1175,12 +1175,12 @@ read when the weekly full re-screen lands.
      `planned_development` lever are a relief-policy question --
      HUMAN_TODO 23 (2026-09-25).
 
-96. [Claude] [Steph: mark the 13 handed on] [scan: YES (corner depth, on flats/gresham-review)] **Hand-off: 13 open
+96. [Claude] [Steph: mark the 13 handed on] [scan: LIVE run 80 2026-10-21] **Hand-off: 13 open
    Gresham questions from 2026-08-17 -- ANSWERED 2026-10-21.** CMF (feedback 4-12): notes 1, 3a, 6, 7,
    8, 11 are all applied -- see the Table 4.0430 page (item 104). DRL-1 (13-18): corner frontage 40,
    townhouse 16/20 frontage and width, townhouse lot size none -- all held; depth 70 was held on corner
-   lots too, now exempt on corners in DRL-1/DRL-2/DCC/DTM (35e6f087 on flats/gresham-review, bound
-   with item 102). Left: Steph marks them handed on once the bound ships.
+   lots too, now exempt on corners in DRL-1/DRL-2/DCC/DTM (35e6f087, LIVE run 80). Left: Steph marks
+   them handed on.
 
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a
    per-unit ratio (Steph 2026-10-19, page check id 248).** or layer defaults hold
@@ -1235,14 +1235,12 @@ read when the weekly full re-screen lands.
    year-0 revenue entries describe what the code no longer writes. (a) and
    (d) look like export bugs; (b) and (c) are presentation choices for
    Steph. Exporter = app/exporters/investor_export.py (not the engine).
-102. [Claude] [Steph: Durham 273/282 say what differs] [scan: YES -- BUILT f437ebd1 on flats/gresham-front-line,
-   merged into flats/gresham-review d807c15c with item 96's depth fix; Gresham partial bound next] **Gresham
-   front lot line on corner and through lots (Steph page check 2026-10-20, ids 295-298).** Corner: tried
-   only facing a street that meets the zone's minimum depth (both if both or no depth rule; both if
-   neither, and the depth check decides) -- corners only stay or lose. Through: both ends are fronts
-   (Table 4.0131 note 2 says so) + a never-blocking flag -- throughs only stay or gain. Rulings
-   registered. Read LOST and GAINED lots one by one before merge. Durham 273/282 left alone: no
-   Durham ruling to read them against.
+102. [Claude] [Steph: Durham 273/282 say what differs] [scan: LIVE run 80 2026-10-21 (splice 1e2b45ae,
+   main 67611b26)] **Gresham front lot line on corner and through lots (Steph page check 2026-10-20, ids
+   295-298).** Corner: tried only facing a street that meets the zone's minimum depth -- no corner
+   colour moved. Through: both ends are fronts (Table 4.0131 note 2) + a never-blocking flag -- 7
+   answers red->yellow vs live (fire reach now from the nearer street; min density still holds them
+   yellow). Rulings registered. Durham 273/282 left alone: no Durham ruling to read them against.
 103. [Claude] [scan: YES for (d) only] **Page check: notes the cards still cannot ask (2026-10-20).** (a) DONE
    0387fc8a: a heading over several columns ("FRONT²" over Front Facade / Front Porch / Garage) now
    reaches each; 15 Table 4.0131 cards gained note 2, none lost a marker. (b) Tables whose headings
@@ -1256,16 +1254,18 @@ read when the weekly full re-screen lands.
    that is wanted. (f) DONE 67a8d0b5: reading down a wrapped cell
    stops at a numbered block ("2. Minimum Street Frontage: Corner lots"); MDR-24's interior 45 ft
    frontage stopped asking the corner cell's note 10 (Steph check 646). Sweep: that one card only.
-104. [Claude] [Steph: (a) two edge questions] [scan: YES (a), on flats/gresham-corridor] **Gresham Table 4.0430
+104. [Claude] [Steph: (a) two edge questions] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
    notes, read note by note (Steph 2026-10-20).** DONE: all 18 notes read, plain-English page
    https://claude.ai/artifact/BQaymC5Un4njJZaTH9LJDf; note 14 encoded as civic_corridor variants.
    (a) Steph 2026-10-20 "Yes, map it". Gresham has NO map (zoning layer GME/Planning/MapServer/4 is plain
    CMF; Ord. 1830 2022 names the streets only). 659 CMF lots (505 red, 154 yellow); seven CMF blocks
-   touch Glisan/162nd. BUILDING on flats/gresham-corridor: true = a street lot line on NE Glisan or NE
+   touch Glisan/162nd. LIVE run 80 (main 67611b26): true = a street lot line on NE Glisan or NE
    162nd north of Burnside (~59); false = CMF outside the seven blocks (~569); unknown = the ~31 behind
    the frontage in touching blocks (NE 183rd, deep lots, the NE Halsey strip). ASKED Steph 2026-10-21:
    do lots behind the frontage count; does the Halsey strip that touches 162nd only at its corner
-   count. ~9 lots move colour. (b) note 12's target 7.0512.B.6 requires 3 storeys at the
+   count. Vs live: 5 lots unknown->green (off the corridor, every one >1,247 ft from
+   Glisan/162nd), 10 answers unknown->yellow (on it: the corridor yards do not fit); the unknowns wait on
+   the two questions. (b) note 12's target 7.0512.B.6 requires 3 storeys at the
    181st/Burnside, 181st/Stark, Burnside/Stark gateways -- yellow, should be red once Rockwood is
    mapped; (c) note 6 townhouse lot width not held on its own (low risk); (d) row M buffering points
    to Section 9.0100, not stored; (e) row C width/depth ratio for a single-lot quadplex in SC, SC-RJ,
@@ -1320,6 +1320,10 @@ read when the weekly full re-screen lands.
    new cities and the signing push; false-GREEN fixes carry on beside it; freeze edits to the code
    text and citations while each city is being converted. (Steph's "not before Tuesday
    2026-10-13" has passed; still needs Steph's go to start.)
+   READING QUEUE (found 2026-10-21): 74 reading rulings are back open as "ruled against text that has
+   since changed" -- the 2026-09-27/28 re-fetches (Fairview to eCode360 46, Clackamas ZDO-293 12,
+   Portland pypdf 5, 11 others). Left for after this restructure, which moves every fingerprint again;
+   carry each ruling where its words match, re-queue the rest (`python -m flats.encode.worklist --audit`).
 54. [Steph] [scan: NO (warn-only: changes no rule and no answer; the fixes it leads to land at the next weekly)] **Code-change
    reader on the Claude API credit ($100/month). Steph 2026-10-07 picked this one and
    DECLINED the other two offered (a second reader beside signing; moving the finance-side
