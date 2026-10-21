@@ -1260,7 +1260,7 @@ read when the weekly full re-screen lands.
    (#id) shown too. Limit: a column-heading note more than ~8 lines above a row does not reach it. (f) DONE 67a8d0b5: reading down a wrapped cell
    stops at a numbered block ("2. Minimum Street Frontage: Corner lots"); MDR-24's interior 45 ft
    frontage stopped asking the corner cell's note 10 (Steph check 646). Sweep: that one card only.
-104. [Claude] [SPLICING onto run 80] [MERGED 0060aad3 2026-10-21, deployed] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
+104. [Claude] [left: (f), (g)] [LIVE run 81 2026-10-21 (main 0060aad3); Gresham green 1,834 -> 2,039] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
    notes, read note by note (Steph 2026-10-20).** DONE: all 18 notes read, plain-English page
    https://claude.ai/artifact/BQaymC5Un4njJZaTH9LJDf; note 14 encoded as civic_corridor variants.
    (a) Steph 2026-10-20 "Yes, map it". Gresham has NO map (zoning layer GME/Planning/MapServer/4 is plain
