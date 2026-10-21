@@ -152,7 +152,10 @@ pytestmark = pytest.mark.unit
 # their no-limit cells; each cites its row.
 # 422 -> 423 stated on 2026-10-20 (page check 386): Gresham TR townhouse lot depth, whose
 # cell prints "NA", was held as a zero; it is a standard that does not apply.
-EXPECTED = {"stated": 423, "numeric": 108, "marker": 0, "dash": 2, "silent": 2}
+# 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
+# prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
+# exempt a corner lot, cited on the width and depth rows that name interior and corner.
+EXPECTED = {"stated": 423, "numeric": 112, "marker": 0, "dash": 2, "silent": 2}
 # 85 -> 100 numeric on 2026-10-16 (FOLLOWUPS 84 phase 3): Oregon City 17.16.060.D's width
 # caps open "In residential zones", so the mixed-use and commercial zones hold them exempt
 # (15 values); 17.16.060.E governs those zones instead.
