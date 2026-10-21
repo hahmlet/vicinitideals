@@ -5244,6 +5244,24 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L148"
+      variants:
+        # Table 4.0420 note 2, second sentence: "Middle housing land
+        # divisions are not permitted in the CMF land use district outside
+        # these areas" -- the NE Glisan and NE 162nd corridors. The ruling
+        # that mapped the corridor (rulings.yaml
+        # 2026-10-20-gresham-cmf-corridor-mapped) reads it as the unit-lots
+        # path: off the corridor, "CMF's own numbers, no land division". So
+        # the townhouse form is shut in CMF unless civic_corridor is true,
+        # and a lot the corridor map cannot answer stays out of GREEN on it.
+        # Until 2026-10-21 nothing held this, and an off-corridor CMF lot
+        # could go GREEN as townhouses on note 6's ratio and lot-size
+        # exemptions alone (1N3E30CC-03700 in the 104 bound).
+        - value: false
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L217-L218"
+        - value: true
+          when: [unit_lots, civic_corridor]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L149,L217-L218"
     max_height_ft:
       # Table 4.0430 I, the CMF column: 45 feet, and note 18(ii) states the
       # same number for townhouses in as many words -- "Maximum Building

@@ -723,7 +723,9 @@ notes:
       blocks (flats/config/corridors.yaml) -- true with a street lot line on
       either or land touching either (a corner included), false otherwise
       (Steph 2026-10-21: "only lots actually touching the street count as
-      'along'. If it touches, it's along.").
+      'along'. If it touches, it's along."). The consequence is encoded since
+      2026-10-21 as CMF quadplex_allowed variants: false for unit_lots, true
+      for unit_lots on civic_corridor.
 
       Narrowed to CMF, which is what the note says twice: the first sentence
       is the L2 marker on the CMF column's own cells, and the second names the

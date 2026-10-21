@@ -122,3 +122,17 @@ def test_note_12_stays_dismissed_on_applicability() -> None:
     (note,) = entries
     assert note["state"] == "dismissed"
     assert "7.0502(B)" in note["reason"] and "All Development" in note["reason"]
+
+
+def test_cmf_townhouse_path_is_open_only_on_the_corridor() -> None:
+    # Table 4.0420 note 2: no middle housing land division in CMF off the
+    # NE Glisan / NE 162nd corridors. Without this, note 6's exemptions let
+    # an off-corridor CMF lot go GREEN as townhouses (the 104 bound).
+    use = load_rules()[GRESHAM].zones["CMF"].values["quadplex_allowed"]
+    assert use.under().value is True
+    assert use.under({"civic_corridor"}).value is True
+    assert use.under({"unit_lots"}).value is False
+    assert use.under({"unit_lots", "civic_corridor"}).value is True
+    text = (DOCS / "4.0400.corridor.txt").read_text(encoding="utf-8").splitlines()
+    note = " ".join(" ".join(text[i - 1].split()) for i in (217, 218))
+    assert "Middle housing land divisions are not permitted in the CMF land use district outside these areas" in note
