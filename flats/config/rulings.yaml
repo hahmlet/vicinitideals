@@ -1690,3 +1690,30 @@
     (2026-10-15-clear-objective-green-flag) -- the bound moved 161 MR-1, 3 MR-2
     and 27 HDR lots yellow -> green that way.
   source: Steph 2026-10-16, docs/FOLLOWUPS.md item 52
+
+- id: 2026-10-20-gresham-pod-drive-is-shared-access
+  kind: ruling
+  date: 2026-10-20
+  scope:
+    county: multnomah
+    city: gresham
+    zones: [MDR-24, RTC, SC, SC-RJ, CMF, CMU]
+  question: >-
+    Gresham's corner townhouse lot standards differ by access: 25 ft of
+    frontage (and, in MDR-24, of width) with an alley or a shared access, 32
+    ft of frontage and 42 ft of width with neither. The four homes always
+    reach their parking by one shared drive. Does that drive count as the
+    "shared access"?
+  ruling: >-
+    Yes. Steph flagged that "32 ft only applies if there is no alley/shared
+    access" (page check 427), and on being told the pod's one drive was read
+    as a shared access, so corner frontage and MDR-24 corner width become
+    25 ft: "I'm good with that ruling."
+  effect: >-
+    Corner townhouse frontage is 25 ft in MDR-24 and the five corridor zones,
+    and MDR-24 corner townhouse width is 25 ft, whether or not an alley is
+    observed. Rides the next weekly re-screen; its gains are read lot by lot.
+  source: Steph 2026-10-20 (page check ids 372, 427; chat), commit dc79bd29
+  encoded_in:
+    - flats/config/jurisdictions/or/multnomah/gresham.yaml
+    - flats/config/footnotes/or/multnomah/gresham.yaml
