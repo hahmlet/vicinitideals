@@ -3406,6 +3406,7 @@ zones:
       # and multi-family under limitations and refuses a quadplex outright, so
       # nothing else in the chapter is read for it.
       value: false
+      cite: Gresham Development Code Table 4.1423 (Pleasant Valley)
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L508-L509,L514"
     notes: >-
       Settled RED on the use table rather than unread. Table 4.1423 marks
