@@ -51,7 +51,7 @@ from app.api.routers.ui_flats import (
 )
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import FlatsDocumentReadthrough, FlatsPageCheck, FlatsRuleSignature
-from flats.encode import footnotes, readiness
+from flats.encode import dispositions, footnotes, readiness
 from flats.provenance import books, pages as page_map, sheet
 from flats.rules import conditions
 from flats.rules.fields import FIELDS
@@ -1080,6 +1080,19 @@ def _note_text(document: str, mark: str, after: int) -> tuple[int | None, list[s
     return at, body
 
 
+def _ruled_notes(layer: Layer, zone: str, field: str) -> list[str]:
+    """The words of every note ruled as encoded into this zone's standard."""
+    out = []
+    for ruling in dispositions.rulings().get(layer.layer, []):
+        if ruling.state != "encoded" or f"{zone} {field}" not in ruling.encoded_as or not ruling.quote:
+            continue
+        lines, _error = _cited_lines(ruling.quote)
+        words = " ".join(" ".join(line["shown"].split()) for line in lines if line["quoted"])
+        if words and words not in out:
+            out.append(words)
+    return out
+
+
 def _variants(layer: Layer, zone: str, field: str) -> list[dict[str, str]]:
     """Every number we hold for this standard in this zone: base and variants."""
     values = layer.defaults if zone.startswith("(") else layer.zones[zone].values
@@ -1263,15 +1276,7 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
             # A number held "on lots under 11,000 sq ft" comes from a note the
             # page may print overleaf; the card asked whether the note was
             # read right without showing the note (Steph 2026-10-20, MDR-24).
-            seen: set[str] = set()
-            card["row_notes"] = []
-            for m in placed.markers:
-                if m.mark in seen:
-                    continue
-                seen.add(m.mark)
-                body = _note_text(document, m.mark, row["line"])[1]
-                if body:
-                    card["row_notes"].append(" ".join(body))
+            card["row_notes"] = _ruled_notes(layer, row["zone"], row["field"])
         for page, boxes in _own_boxes(placed):
             card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))
         card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
