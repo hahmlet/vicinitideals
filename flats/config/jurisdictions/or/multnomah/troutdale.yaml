@@ -1184,6 +1184,7 @@ zones:
       # mixed-use table sends density to the same section the residential ones
       # do -- row "Density standards: see 3.140".
       exempt: true
+      cite: "TDC 3.230.B (MU-2 density standards, see 3.140) and 3.140.B.4 (maximum density standards do not apply to a quadplex)"
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710"
       measured_on:
         fact: net_developable_area
@@ -1398,6 +1399,7 @@ zones:
       # mixed-use table sends density to the same section the residential ones
       # do -- row "Density standards: see 3.140".
       exempt: true
+      cite: "TDC 3.230.B (MU-3 density standards, see 3.140) and 3.140.B.4 (maximum density standards do not apply to a quadplex)"
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710"
       measured_on:
         fact: net_developable_area
@@ -1587,6 +1589,7 @@ zones:
       # min_density_du_per_acre is encoded here for that reason -- not because
       # the chapter is silent, which it is not.
       exempt: true
+      cite: "TDC 3.140.B.4, maximum density standards do not apply to a quadplex"
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
       # The acre this rate is per is a net one.
       # 3.140 states density "on a dwelling units per net acre
@@ -1747,6 +1750,7 @@ zones:
       # min_density_du_per_acre is encoded here for that reason -- not because
       # the chapter is silent, which it is not.
       exempt: true
+      cite: "TDC 3.140.B.4, maximum density standards do not apply to a quadplex"
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
       # The acre this rate is per is a net one.
       # 3.140 states density "on a dwelling units per net acre
@@ -1907,6 +1911,7 @@ zones:
       # min_density_du_per_acre is encoded here for that reason -- not because
       # the chapter is silent, which it is not.
       exempt: true
+      cite: "TDC 3.140.B.4, maximum density standards do not apply to a quadplex"
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
       # The acre this rate is per is a net one.
       # 3.140 states density "on a dwelling units per net acre
@@ -2067,6 +2072,7 @@ zones:
       # min_density_du_per_acre is encoded here for that reason -- not because
       # the chapter is silent, which it is not.
       exempt: true
+      cite: "TDC 3.140.B.4 (maximum density standards do not apply to a quadplex) and 3.140.B.3.c (a townhouse project, 25 units per net acre)"
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
       # The acre this rate is per is a net one.
       # 3.140 states density "on a dwelling units per net acre

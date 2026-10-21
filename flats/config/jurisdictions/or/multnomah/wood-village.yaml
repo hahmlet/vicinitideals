@@ -983,12 +983,15 @@ zones:
     # rather than an empty cell.
     min_lot_sqft:
       exempt: true
+      cite: "WVDC 230.310.A (no minimum lot size or dimension) and Table 230-2 (Development Standards in Commercial Zones)"
       quote: "or/multnomah/wood-village/230.310.txt#L60,L64-L67,L84"
     min_lot_width_ft:
       exempt: true
+      cite: "WVDC 230.310.A (no minimum lot size or dimension) and Table 230-2 (Development Standards in Commercial Zones)"
       quote: "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L68,L84"
     min_lot_depth_ft:
       exempt: true
+      cite: "WVDC 230.310.A (no minimum lot size or dimension) and Table 230-2 (Development Standards in Commercial Zones)"
       quote: "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L69,L84"
     # "45 - 55 feet (see Figure 230-3)". The table prints a range and hands the
     # number to a map this system cannot read, so 45 is encoded -- the end of
@@ -997,6 +1000,7 @@ zones:
     # change any verdict here. See the zone notes.
     max_height_ft:
       value: 45
+      cite: "WVDC 230.310 Table 230-2 (Development Standards in Commercial Zones), Maximum Height, and note (2)"
       quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L70,L86"
     # 3 feet minimum and 10 feet maximum, one row. The maximum is the standard
     # that is actually hard to meet: 230.330.B.3.a asks 75 percent of the
@@ -1004,18 +1008,23 @@ zones:
     # lot line, which is a facade-length test the screen does not run.
     setback_front_ft:
       value: 3
+      cite: "WVDC 230.310 Table 230-2 (Development Standards in Commercial Zones), front setback"
       quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L73"
     setback_front_max_ft:
       value: 10
+      cite: "WVDC 230.310 Table 230-2 (Development Standards in Commercial Zones), front setback"
       quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L73"
     setback_side_ft:
       exempt: true
+      cite: "WVDC 230.310 Table 230-2 (Development Standards in Commercial Zones), side setback"
       quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L74"
     setback_rear_ft:
       exempt: true
+      cite: "WVDC 230.310 Table 230-2 (Development Standards in Commercial Zones), rear setback"
       quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L75"
     min_landscaped_pct:
       value: 5
+      cite: "WVDC 230.310 Table 230-2 (Development Standards in Commercial Zones), landscaping of site area, and note (3)"
       quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L78,L88"
     notes: >-
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: red on a measurable standard, not on the review: "Residential uses shall be permitted only when part of a mixed use development" (230.315.A.1, or/multnomah/wood-village/230.315.txt#L60-L62), and the pod is one use. The 2026-10-08 ruling read: the only way to a housing building here is a conditional use review,
@@ -1205,6 +1214,7 @@ zones:
     # spoken for; read the zone notes before treating a miss here as fatal.
     open_space_min_pct:
       value: 20
+      cite: "WVDC 235.465 (Open Space Requirement), a Development Plan within the Town Center shall contain a minimum of twenty (20) percent open space"
       quote: "or/multnomah/wood-village/235.465.txt#L56,L60"
     notes: >-
       Table 235-1 reads Y on the Household Living row, and 710.100 is what says

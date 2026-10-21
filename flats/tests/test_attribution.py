@@ -139,6 +139,25 @@ def test_a_row_of_a_table_is_not_a_heading():
     assert section_at(["17.16.070", "text"], 2) == "17.16.070"
 
 
+def test_a_fraction_in_a_table_cell_is_not_a_heading():
+    """West Linn prints each table cell on its own line, so the FAR cell
+    "0.45" sat at the margin with nothing after it and read as section 0.45
+    for every row below it: nine values reported as citing the wrong section.
+    No codifier numbers a section zero-point-anything.
+    """
+    west_linn = [
+        "11.070 DIMENSIONAL REQUIREMENTS, USES PERMITTED OUTRIGHT",
+        "Maximum floor area ratio",
+        "0.45",
+        "Duplex, triplex, and quadplex",
+        "0.60",
+    ]
+    assert section_at(west_linn, 4) == "11.070"
+    assert section_at(west_linn, 5) == "11.070"
+    # A chapter numbered with a leading zero is still a heading.
+    assert section_at(["09.070 DIMENSIONAL REQUIREMENTS", "text"], 2) == "09.070"
+
+
 def test_a_period_tells_a_spelled_out_heading_from_a_cross_reference_cell():
     """Milwaukie's use tables print a Standards column whose cells read
     "Section 19.905 Conditional Uses" and start at the margin, so the indent

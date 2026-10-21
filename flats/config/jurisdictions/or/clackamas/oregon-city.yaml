@@ -965,6 +965,7 @@ zones:
       # four it is. 17.65.070.D.4 puts it out of reach of an adjustment:
       # "minimum density for residential sites may not be reduced".
       value: 3.5
+      cite: "OCMC 17.08.050, Table 17.08.050 (density standards), minimum net density in the R-10 column"
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
       # 17.04.808 divides by NET developable area, which its own worked
       # example takes as eighty percent of the site -- twenty percent
@@ -1072,6 +1073,7 @@ zones:
       # four it is. 17.65.070.D.4 puts it out of reach of an adjustment:
       # "minimum density for residential sites may not be reduced".
       value: 4.4
+      cite: "OCMC 17.08.050, Table 17.08.050 (density standards), minimum net density in the R-8 column"
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
       # 17.04.808 divides by NET developable area, which its own worked
       # example takes as eighty percent of the site -- twenty percent
@@ -1172,6 +1174,7 @@ zones:
       # four it is. 17.65.070.D.4 puts it out of reach of an adjustment:
       # "minimum density for residential sites may not be reduced".
       value: 5.8
+      cite: "OCMC 17.08.050, Table 17.08.050 (density standards), minimum net density in the R-6 column"
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
       # 17.04.808 divides by NET developable area, which its own worked
       # example takes as eighty percent of the site -- twenty percent
@@ -1263,6 +1266,7 @@ zones:
       # four it is. 17.65.070.D.4 puts it out of reach of an adjustment:
       # "minimum density for residential sites may not be reduced".
       value: 7.0
+      cite: "OCMC 17.10.050, Table 17.10.050 (density standards), minimum net density in the R-5 column"
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378"
       # 17.04.808 divides by NET developable area, which its own worked
       # example takes as eighty percent of the site -- twenty percent
@@ -1583,6 +1587,7 @@ zones:
       # four it is. 17.65.070.D.4 puts it out of reach of an adjustment:
       # "minimum density for residential sites may not be reduced".
       value: 10
+      cite: "OCMC 17.10.050, Table 17.10.050 (density standards), minimum net density in the R-3.5 column"
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378"
       # 17.04.808 divides by NET developable area, which its own worked
       # example takes as eighty percent of the site -- twenty percent
@@ -1823,11 +1828,11 @@ zones:
     # one-lot branch; the townhouse branch keeps 17.16.040.B.1.
     parking_area_max_width_ft:
       exempt: true
-      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width
+      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width; Table 17.06.030 lists the zone as commercial or mixed use
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
     parking_area_max_frontage_pct:
       exempt: true
-      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share
+      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share; Table 17.06.030 lists the zone as commercial or mixed use
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
     parking_side_prohibited:
       exempt: true
@@ -1941,11 +1946,11 @@ zones:
     # and states none (see MUC-1).
     parking_area_max_width_ft:
       exempt: true
-      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width
+      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width; Table 17.06.030 lists the zone as commercial or mixed use
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
     parking_area_max_frontage_pct:
       exempt: true
-      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share
+      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share; Table 17.06.030 lists the zone as commercial or mixed use
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
     parking_side_prohibited:
       exempt: true
@@ -2076,11 +2081,11 @@ zones:
     # and states none (see MUC-1).
     parking_area_max_width_ft:
       exempt: true
-      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width
+      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width; Table 17.06.030 lists the zone as commercial or mixed use
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
     parking_area_max_frontage_pct:
       exempt: true
-      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share
+      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share; Table 17.06.030 lists the zone as commercial or mixed use
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
     parking_side_prohibited:
       exempt: true
@@ -2182,11 +2187,11 @@ zones:
     # and states none (see MUC-1).
     parking_area_max_width_ft:
       exempt: true
-      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width
+      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width; Table 17.06.030 lists the zone as commercial or mixed use
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
     parking_area_max_frontage_pct:
       exempt: true
-      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share
+      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share; Table 17.06.030 lists the zone as commercial or mixed use
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
     parking_side_prohibited:
       exempt: true
@@ -2282,11 +2287,11 @@ zones:
     # and states none (see MUC-1).
     parking_area_max_width_ft:
       exempt: true
-      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width
+      cite: OCMC 17.16.060.D, whose width caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no width; Table 17.06.030 lists the zone as commercial or mixed use
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
     parking_area_max_frontage_pct:
       exempt: true
-      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share
+      cite: OCMC 17.16.060.D, whose share-of-frontage caps apply in residential zones; 17.16.060.E governs parking in mixed-use and commercial zones and states no share; Table 17.06.030 lists the zone as commercial or mixed use
       quote: "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437"
     parking_side_prohibited:
       exempt: true

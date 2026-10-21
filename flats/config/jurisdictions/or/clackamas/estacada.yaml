@@ -144,13 +144,13 @@ defaults:
     url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
     retrieved: '2026-10-07'
     quote: "or/clackamas/estacada/emc.16.08.txt#L250"
-  # WHICH STREET THE DRIVEWAY USES. 16.116.020 (C): a lot on two or more
+  # WHICH STREET THE DRIVEWAY USES. 16.116.010 (D)(3): a lot on two or more
   # streets of different classes connects its access point to "the road of
   # the lesser classification", unless topography or natural features make
   # that impractical.
   corner_access_street:
     value: lowest_class
-    cite: Estacada EMC 16.116.020 (C), the access point shall connect with the road of the lesser classification
+    cite: "Estacada EMC 16.116.010 (D)(3), the access point shall connect with the road of the lesser classification"
     url: https://estacada.municipalcodeonline.com/book/print?type=ordinances&name=Title_16_DEVELOPMENT
     retrieved: '2026-10-07'
     quote: "or/clackamas/estacada/emc.16.116.txt#L31"
@@ -577,7 +577,7 @@ zones:
       retrieved: '2026-10-07'
     quadplex_allowed:
       value: false
-      cite: Estacada EMC 16.33.020 (A), before development a Facilities Plan and a City Council Master Development Plan must be approved (the CMU uses are then permitted)
+      cite: "Estacada EMC 16.33.020 (A), before development a Facilities Plan and a City Council Master Development Plan must be approved; 16.33.060 (A), the CMU uses are then permitted"
       quote: "or/clackamas/estacada/emc.16.zones.txt#L1736,L1929"
     notes: >-
       DRAFT. Refuses: every development needs a Council-approved master

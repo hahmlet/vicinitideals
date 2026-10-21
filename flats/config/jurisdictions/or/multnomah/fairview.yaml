@@ -1480,6 +1480,7 @@ zones:
       # a porch, so the 56-foot wall is not made to face the street and the
       # fit stage keeps both orientations.
       value: entrance_only
+      cite: "FMC 19.30.040.B, Entry Orientation, reached from note (5) on the Quadplex row of Table 19.30.020.A"
       quote: "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
     setback_front_ft:
       # Table 19.30.030.A row 8, and the table is not the whole rule. 19.30.030(D)
@@ -1699,6 +1700,7 @@ zones:
       # a porch, so the 56-foot wall is not made to face the street and the
       # fit stage keeps both orientations.
       value: entrance_only
+      cite: "FMC 19.30.040.B, Entry Orientation, reached from note (5) on the Quadplex row of Table 19.30.020.A"
       quote: "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
     setback_front_ft:
       # Row 8 of Table 19.30.030.A, qualified the same way R-6's is and for the
@@ -1899,6 +1901,7 @@ zones:
       # a porch, so the 56-foot wall is not made to face the street and the
       # fit stage keeps both orientations.
       value: entrance_only
+      cite: "FMC 19.30.040.B, Entry Orientation, reached from note (5) on the Quadplex row of Table 19.30.020.A"
       quote: "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
     setback_front_ft:
       # Row 8 of Table 19.30.030.A, qualified the same way R-6's is and for the
@@ -2112,6 +2115,7 @@ zones:
       # a porch, so the 56-foot wall is not made to face the street and the
       # fit stage keeps both orientations.
       value: entrance_only
+      cite: "FMC 19.30.040.B, Entry Orientation, reached from note (5) on the Quadplex row of Table 19.30.020.A"
       quote: "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
     setback_front_ft:
       # Row 8 of Table 19.30.030.A, qualified the same way R-6's is and for the
@@ -2365,6 +2369,7 @@ zones:
     # whole of the envelope. Read and empty, not unread.
     min_lot_sqft:
       exempt: true
+      cite: "FMC 19.65.100(A)(1), Residential Uses, Density: no minimum or maximum residential density standard"
       quote: "or/multnomah/fairview/19.65.txt#L972-L974,L976-L978"
     # 45 feet, and 19.65.070 will sell another 20 on top of it. The step-downs
     # in 19.65.060(B) reduce the limit on a PORTION of a site within 25 feet
@@ -2379,6 +2384,7 @@ zones:
     # here is the MAXIMUM.
     setback_front_ft:
       value: 0
+      cite: "FMC 19.65.040(A)(1), Front Setbacks, Minimum Setback: no minimum front setback required"
       quote: "or/multnomah/fairview/19.65.txt#L284,L290-L292,L294-L296"
     # Ten feet, and this is a real constraint on a fixed-dimension building:
     # at least 50 percent of the ground level street-facing facade must sit
@@ -2386,6 +2392,7 @@ zones:
     # back further than 10 feet fails the zone even though it fits the lot.
     setback_front_max_ft:
       value: 10
+      cite: "FMC 19.65.040(A)(2)(c)(i), Front Setbacks, Maximum Setback: 10 feet from a street lot line"
       quote: "or/multnomah/fairview/19.65.txt#L284,L298-L300,L322-L324,L326-L328"
     # Zero, except fifteen when the building abuts a residential district --
     # and which of those applies is the neighbour's zoning, which this system
@@ -2394,6 +2401,7 @@ zones:
     # behind it screens as buildable to its own line.
     setback_side_ft:
       value: 15
+      cite: "FMC 19.65.040(C), Side Setbacks: none, 15 feet abutting a residential district"
       quote: "or/multnomah/fairview/19.65.txt#L284,L380-L382"
       variants:
         - value: 0
@@ -2406,6 +2414,7 @@ zones:
     # facts they turn on are unmeasured or assumed absent.
     setback_rear_ft:
       value: 15
+      cite: "FMC 19.65.040(B)(1), Rear Setbacks, Minimum Setback: zero, eight feet for alley-access lots, 15 feet abutting a residential district"
       quote: "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374"
       variants:
         - value: 0

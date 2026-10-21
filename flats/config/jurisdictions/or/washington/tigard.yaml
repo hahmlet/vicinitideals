@@ -414,7 +414,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: true
-      cite: Tigard CDC Table 18.110.2, Residential Use A in RES-A and Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
+      cite: Tigard CDC 18.110.030 Table 18.110.2, Residential Use A in RES-A and 18.110.040 Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
       quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
     min_lot_sqft:
       per_dwelling: 1500
@@ -434,7 +434,7 @@ zones:
     # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       value: 25
-      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 25 ft in the RES-A column
+      cite: Tigard CDC 18.805.030, Table 18.805.1, Rowhouse minimum lot width 25 ft in the RES-A column
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L186"
     min_frontage_ft:
       value: 15
@@ -526,7 +526,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: true
-      cite: Tigard CDC Table 18.110.2, Residential Use A in RES-B and Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
+      cite: Tigard CDC 18.110.030 Table 18.110.2, Residential Use A in RES-B and 18.110.040 Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
       quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
     min_lot_sqft:
       per_dwelling: 1500
@@ -546,7 +546,7 @@ zones:
     # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       value: 25
-      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 25 ft in the RES-B column
+      cite: Tigard CDC 18.805.030, Table 18.805.1, Rowhouse minimum lot width 25 ft in the RES-B column
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L187"
     min_frontage_ft:
       value: 15
@@ -638,7 +638,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: true
-      cite: Tigard CDC Table 18.110.2, Residential Use A in RES-C and Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
+      cite: Tigard CDC 18.110.030 Table 18.110.2, Residential Use A in RES-C and 18.110.040 Table 18.110.3, Rowhouses L[2] (up to 5 units per grouping; the pod's grouping is 4); a rowhouse shares a common sidewall (18.30)
       quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215"
     min_lot_sqft:
       per_dwelling: 1250
@@ -658,7 +658,7 @@ zones:
     # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       value: 20
-      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 20 ft in the RES-C column
+      cite: Tigard CDC 18.805.030, Table 18.805.1, Rowhouse minimum lot width 20 ft in the RES-C column
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L188"
     min_frontage_ft:
       value: 15
@@ -750,7 +750,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: true
-      cite: Tigard CDC Table 18.110.2, Residential Use A in RES-D and Table 18.110.3, Rowhouses Y; a rowhouse shares a common sidewall (18.30)
+      cite: Tigard CDC 18.110.030 Table 18.110.2, Residential Use A in RES-D and 18.110.040 Table 18.110.3, Rowhouses Y; a rowhouse shares a common sidewall (18.30)
       quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208"
     min_lot_sqft:
       per_dwelling: 750
@@ -770,7 +770,7 @@ zones:
     # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       exempt: true
-      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width in the RES-D column (None)
+      cite: Tigard CDC 18.805.030, Table 18.805.1, Rowhouse minimum lot width in the RES-D column (None)
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L189"
     min_frontage_ft:
       value: 15
@@ -862,7 +862,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: true
-      cite: Tigard CDC Table 18.110.2, Residential Use A in RES-E and Table 18.110.3, Rowhouses Y; a rowhouse shares a common sidewall (18.30)
+      cite: Tigard CDC 18.110.030 Table 18.110.2, Residential Use A in RES-E and 18.110.040 Table 18.110.3, Rowhouses Y; a rowhouse shares a common sidewall (18.30)
       quote: "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208"
     min_lot_sqft:
       exempt: true
@@ -877,7 +877,7 @@ zones:
     # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       value: 20
-      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 20 ft in the RES-E column
+      cite: Tigard CDC 18.805.030, Table 18.805.1, Rowhouse minimum lot width 20 ft in the RES-E column
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L190"
     min_frontage_ft:
       value: 15
@@ -989,7 +989,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: true
-      cite: Tigard CDC Table 18.120.1, Residential Use A in MUR, and Table 18.120.2, Rowhouses Y in MUR
+      cite: Tigard CDC 18.120.020 (zone list), 18.120.030 Table 18.120.1, Residential Use A in MUR, and 18.120.040 Table 18.120.2, Rowhouses Y in MUR
       quote: "or/washington/tigard/tdc.18.120.commercial-zones.txt#L53,L92-L94,L489,L496"
       variants:
         - value: false
@@ -1009,7 +1009,7 @@ zones:
     # the four stand on: the 2026-10-01 ruling above `zones:`.
     min_lot_width_ft:
       value: 16
-      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width 16 ft in the MUR column
+      cite: Tigard CDC 18.805.030, Table 18.805.1, Rowhouse minimum lot width 16 ft in the MUR column
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L192"
     min_frontage_ft:
       value: 15
@@ -1131,7 +1131,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: true
-      cite: Tigard CDC Table 18.120.1, Residential Use A in MUC, Table 18.120.2, Rowhouses Y in MUC, and 18.280.020.A
+      cite: Tigard CDC 18.120.020 (zone list), 18.120.030 Table 18.120.1, Residential Use A in MUC, 18.120.040 Table 18.120.2, Rowhouses Y in MUC, and 18.280.020.A
       quote: "or/washington/tigard/tdc.18.120.commercial-zones.txt#L49,L92-L94,L489,L496"
       variants:
         - value: false
@@ -1144,7 +1144,7 @@ zones:
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93-L100"
     min_lot_width_ft:
       exempt: true
-      cite: Tigard CDC Table 18.805.1, Rowhouse minimum lot width, the MUC cell blank (seven figures under eight columns); Steph's ruling 2026-10-01 that an empty cell means no limit
+      cite: Tigard CDC 18.805.030, Table 18.805.1, Rowhouse minimum lot width, the MUC cell blank (seven figures under eight columns); Steph's ruling 2026-10-01 that an empty cell means no limit
       quote: "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185-L192"
     min_frontage_ft:
       value: 15
@@ -1484,7 +1484,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: false
-      cite: Tigard CDC 18.120.020 (residential uses limited to mixed-use developments), Table 18.120.1 (Residential Use R) and Table 18.120.2 (Rowhouses N, Quads N, Apartments N in COM)
+      cite: Tigard CDC 18.120.020 (residential uses limited to mixed-use developments), 18.120.030 Table 18.120.1 (Residential Use R) and 18.120.040 Table 18.120.2 (Rowhouses N, Quads N, Apartments N in COM)
       quote: "or/washington/tigard/tdc.18.120.commercial-zones.txt#L37,L92-L94,L136,L489-L496"
     notes: >-
       DRAFT. Refuses: residential only in a mixed-use development; Rowhouses N.
@@ -1495,7 +1495,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: false
-      cite: Tigard CDC 18.120.020 (residential uses only where employment is a primary use), Table 18.120.1 (Residential Use R), 18.120.030.F.1 and Table 18.120.2 (Rowhouses N in MUE)
+      cite: Tigard CDC 18.120.020 (residential uses only where employment is a primary use), Table 18.120.1 (Residential Use R), 18.120.030.F.1 and 18.120.040 Table 18.120.2 (Rowhouses N in MUE)
       quote: "or/washington/tigard/tdc.18.120.commercial-zones.txt#L45,L92-L94,L284-L296,L489-L496"
     notes: >-
       DRAFT. Refuses: residential only with employment; Rowhouses N.
@@ -1506,7 +1506,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: false
-      cite: Tigard CDC Table 18.130.1, Residential Use P (prohibited) in IND
+      cite: Tigard CDC 18.130.030, Table 18.130.1, Residential Use P (prohibited) in IND
       quote: "or/washington/tigard/tdc.18.130.industrial-zones.txt#L59,L66-L68"
     notes: >-
       DRAFT. Refuses: Residential Use prohibited.
@@ -1517,7 +1517,7 @@ zones:
       retrieved: '2026-09-30'
     quadplex_allowed:
       value: false
-      cite: Tigard CDC Table 18.140.1, Residential Use P (prohibited) in PR
+      cite: Tigard CDC 18.140.040, Table 18.140.1, Residential Use P (prohibited) in PR
       quote: "or/washington/tigard/tdc.18.140.parks.txt#L81,L84-L86"
     notes: >-
       DRAFT. Refuses: Residential Use prohibited.

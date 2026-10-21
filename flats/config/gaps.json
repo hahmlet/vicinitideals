@@ -20,55 +20,13 @@
       "gaps": []
     },
     "or/clackamas/estacada": {
-      "misattributed": [
-        {
-          "zone": "(defaults)",
-          "field": "corner_access_street",
-          "claimed": "16.116.020",
-          "found": "16.116.010",
-          "quote": "or/clackamas/estacada/emc.16.116.txt#L31",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "MMU",
-          "field": "quadplex_allowed",
-          "claimed": "16.33.020",
-          "found": "16.33.020 16.33.060",
-          "quote": "or/clackamas/estacada/emc.16.zones.txt#L1736,L1929",
-          "kind": "heading_same_file"
-        }
-      ],
+      "misattributed": [],
       "label": "Estacada",
       "counts": {},
       "gaps": []
     },
     "or/clackamas/gladstone": {
-      "misattributed": [
-        {
-          "zone": "(defaults)",
-          "field": "front_lot_line_through",
-          "claimed": "17.06.290",
-          "found": "17.06.290 17.06.310",
-          "quote": "or/clackamas/gladstone/17.06.definitions.txt#L881,L921",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "C2",
-          "field": "parking_front_prohibited",
-          "claimed": "17.18.020 17.18.060",
-          "found": "17.18.070",
-          "quote": "or/clackamas/gladstone/17.18.c-2.txt#L171",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "C2",
-          "field": "parking_required_yard_prohibited",
-          "claimed": "17.18.020 17.18.060",
-          "found": "17.18.070",
-          "quote": "or/clackamas/gladstone/17.18.c-2.txt#L171",
-          "kind": "heading_same_file"
-        }
-      ],
+      "misattributed": [],
       "label": "Gladstone",
       "counts": {},
       "gaps": []
@@ -109,128 +67,7 @@
       "gaps": []
     },
     "or/clackamas/oregon-city": {
-      "misattributed": [
-        {
-          "zone": "C",
-          "field": "parking_area_max_frontage_pct",
-          "claimed": "17.16.060 17.16.060",
-          "found": "17.06.030 17.16.060",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "C",
-          "field": "parking_area_max_width_ft",
-          "claimed": "17.16.060 17.16.060",
-          "found": "17.06.030 17.16.060",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "MUC-1",
-          "field": "parking_area_max_frontage_pct",
-          "claimed": "17.16.060 17.16.060",
-          "found": "17.06.030 17.16.060",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "MUC-1",
-          "field": "parking_area_max_width_ft",
-          "claimed": "17.16.060 17.16.060",
-          "found": "17.06.030 17.16.060",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "MUC-2",
-          "field": "parking_area_max_frontage_pct",
-          "claimed": "17.16.060 17.16.060",
-          "found": "17.06.030 17.16.060",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "MUC-2",
-          "field": "parking_area_max_width_ft",
-          "claimed": "17.16.060 17.16.060",
-          "found": "17.06.030 17.16.060",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "MUD",
-          "field": "parking_area_max_frontage_pct",
-          "claimed": "17.16.060 17.16.060",
-          "found": "17.06.030 17.16.060",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "MUD",
-          "field": "parking_area_max_width_ft",
-          "claimed": "17.16.060 17.16.060",
-          "found": "17.06.030 17.16.060",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-10",
-          "field": "min_density_du_per_acre",
-          "claimed": "17.08.020 17.08.040 17.16.060",
-          "found": "17.08.050",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-3.5",
-          "field": "min_density_du_per_acre",
-          "claimed": "17.10.020 17.10.040 17.16.060",
-          "found": "17.10.050",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-5",
-          "field": "min_density_du_per_acre",
-          "claimed": "17.10.020 17.10.040 17.16.060",
-          "found": "17.10.050",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-6",
-          "field": "min_density_du_per_acre",
-          "claimed": "17.08.020 17.08.040 17.16.060",
-          "found": "17.08.050",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-8",
-          "field": "min_density_du_per_acre",
-          "claimed": "17.08.020 17.08.040 17.16.060",
-          "found": "17.08.050",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "WFDD",
-          "field": "parking_area_max_frontage_pct",
-          "claimed": "17.16.060 17.16.060",
-          "found": "17.06.030 17.16.060",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "WFDD",
-          "field": "parking_area_max_width_ft",
-          "claimed": "17.16.060 17.16.060",
-          "found": "17.06.030 17.16.060",
-          "quote": "or/clackamas/oregon-city/17.zoning.txt#L3994-L4000,L5418-L5437",
-          "kind": "heading_same_file"
-        }
-      ],
+      "misattributed": [],
       "label": "Oregon City",
       "counts": {},
       "gaps": []
@@ -254,80 +91,7 @@
       "gaps": []
     },
     "or/clackamas/west-linn": {
-      "misattributed": [
-        {
-          "zone": "MU",
-          "field": "parking_front_prohibited",
-          "claimed": "59.020 59.030 59.070 59.070",
-          "found": "0.30",
-          "quote": "or/clackamas/west-linn/59.mu.txt#L241",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-10",
-          "field": "max_far",
-          "claimed": "11.030 11.070",
-          "found": "11.070 0.45",
-          "quote": "or/clackamas/west-linn/11.r-10.txt#L170,L173-L174",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-2.1",
-          "field": "max_far",
-          "claimed": "16.030 16.070",
-          "found": "16.070 0.45",
-          "quote": "or/clackamas/west-linn/16.r-2.1.txt#L226,L228",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-20",
-          "field": "max_far",
-          "claimed": "09.030 09.070",
-          "found": "09.070 0.45",
-          "quote": "or/clackamas/west-linn/09.r-20.txt#L177,L178",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-3",
-          "field": "max_far",
-          "claimed": "15.030 15.070",
-          "found": "15.070 0.45",
-          "quote": "or/clackamas/west-linn/15.r-3.txt#L205,L207",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-4.5",
-          "field": "max_far",
-          "claimed": "14.030 14.070",
-          "found": "14.070 0.45",
-          "quote": "or/clackamas/west-linn/14.r-4.5.txt#L211,L213",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-40",
-          "field": "max_far",
-          "claimed": "08.030 08.070",
-          "found": "08.070 0.45",
-          "quote": "or/clackamas/west-linn/08.r-40.txt#L175,L176",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-5",
-          "field": "max_far",
-          "claimed": "13.030 13.070",
-          "found": "13.070 0.45",
-          "quote": "or/clackamas/west-linn/13.r-5.txt#L186,L188",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-7",
-          "field": "max_far",
-          "claimed": "12.030 12.070",
-          "found": "12.070 0.45",
-          "quote": "or/clackamas/west-linn/12.r-7.txt#L172,L175-L176",
-          "kind": "heading_same_file"
-        }
-      ],
+      "misattributed": [],
       "label": "West Linn",
       "counts": {},
       "gaps": []
@@ -354,104 +118,7 @@
       "gaps": []
     },
     "or/multnomah/fairview": {
-      "misattributed": [
-        {
-          "zone": "R-10",
-          "field": "orientation_constraint",
-          "claimed": "19.30.020 19.30.030",
-          "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-6",
-          "field": "orientation_constraint",
-          "claimed": "19.30.020 19.30.030",
-          "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "R-7.5",
-          "field": "orientation_constraint",
-          "claimed": "19.30.020 19.30.030",
-          "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "RM",
-          "field": "orientation_constraint",
-          "claimed": "19.30.010 19.30.020 19.30.030",
-          "found": "19.30.040",
-          "quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "TCC",
-          "field": "min_lot_sqft",
-          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
-          "found": "19.65.100",
-          "quote": "or/multnomah/fairview/19.65.txt#L972-L974,L976-L978",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "TCC",
-          "field": "setback_front_ft",
-          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
-          "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L290-L292,L294-L296",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "TCC",
-          "field": "setback_front_max_ft",
-          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
-          "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L298-L300,L322-L324,L326-L328",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "TCC",
-          "field": "setback_rear_ft",
-          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
-          "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "TCC",
-          "field": "setback_rear_ft [abuts_nonresidential_zone]",
-          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
-          "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "TCC",
-          "field": "setback_rear_ft [abuts_nonresidential_zone+alley_at_rear]",
-          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
-          "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "TCC",
-          "field": "setback_side_ft",
-          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
-          "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L380-L382",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "TCC",
-          "field": "setback_side_ft [abuts_nonresidential_zone]",
-          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
-          "found": "19.65.040",
-          "quote": "or/multnomah/fairview/19.65.txt#L284,L380-L382",
-          "kind": "heading_same_file"
-        }
-      ],
+      "misattributed": [],
       "label": "Fairview",
       "counts": {
         "unmapped": 2
@@ -511,151 +178,13 @@
       "gaps": []
     },
     "or/multnomah/troutdale": {
-      "misattributed": [
-        {
-          "zone": "HDR",
-          "field": "max_density_du_per_acre",
-          "claimed": "3.120 3.130",
-          "found": "3.140",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "HDR",
-          "field": "max_density_du_per_acre [unit_lots]",
-          "claimed": "3.120 3.130",
-          "found": "3.140",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L517-L518",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "LDR-1",
-          "field": "max_density_du_per_acre",
-          "claimed": "3.120 3.130 3.130 8.120",
-          "found": "3.140",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "LDR-2",
-          "field": "max_density_du_per_acre",
-          "claimed": "3.120 3.130 3.130 8.120",
-          "found": "3.140",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "MDR",
-          "field": "max_density_du_per_acre",
-          "claimed": "3.120 3.130 3.130 8.120",
-          "found": "3.140",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "MU-2",
-          "field": "max_density_du_per_acre",
-          "claimed": "3.220 3.230 3.235",
-          "found": "3.140 3.230",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "MU-3",
-          "field": "max_density_du_per_acre",
-          "claimed": "3.220 3.230 3.230 3.235",
-          "found": "3.140 3.230",
-          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710",
-          "kind": "heading_same_file"
-        }
-      ],
+      "misattributed": [],
       "label": "Troutdale",
       "counts": {},
       "gaps": []
     },
     "or/multnomah/wood-village": {
-      "misattributed": [
-        {
-          "zone": "NC",
-          "field": "max_height_ft",
-          "claimed": "230.200 710.100",
-          "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L70,L86",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "NC",
-          "field": "min_landscaped_pct",
-          "claimed": "230.200 710.100",
-          "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L78,L88",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "NC",
-          "field": "min_lot_depth_ft",
-          "claimed": "230.200 710.100",
-          "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L69,L84",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "NC",
-          "field": "min_lot_sqft",
-          "claimed": "230.200 710.100",
-          "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L67,L84",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "NC",
-          "field": "min_lot_width_ft",
-          "claimed": "230.200 710.100",
-          "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L68,L84",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "NC",
-          "field": "setback_front_ft",
-          "claimed": "230.200 710.100",
-          "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L73",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "NC",
-          "field": "setback_front_max_ft",
-          "claimed": "230.200 710.100",
-          "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L73",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "NC",
-          "field": "setback_rear_ft",
-          "claimed": "230.200 710.100",
-          "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L75",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "NC",
-          "field": "setback_side_ft",
-          "claimed": "230.200 710.100",
-          "found": "230.310",
-          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L74",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "TC",
-          "field": "open_space_min_pct",
-          "claimed": "235.200 235.300",
-          "found": "235.465",
-          "quote": "or/multnomah/wood-village/235.465.txt#L56,L60",
-          "kind": "heading_other_file"
-        }
-      ],
+      "misattributed": [],
       "label": "Wood Village",
       "counts": {},
       "gaps": []
@@ -1601,34 +1130,10 @@
         },
         {
           "zone": "MU-C",
-          "field": "min_frontage_ft",
-          "claimed": "12.24.260",
-          "found": "12.24.260 0.75",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806,L810",
-          "kind": "header_or_xref"
-        },
-        {
-          "zone": "MU-C",
           "field": "min_frontage_ft [flag_lot]",
           "claimed": "12.40.160 12.40.160",
           "found": "12.40.150",
           "quote": "or/washington/hillsboro/cdc.12.40.special-uses.txt#L672-L676,L679-L684,L700-L702",
-          "kind": "header_or_xref"
-        },
-        {
-          "zone": "MU-C",
-          "field": "min_lot_depth_ft",
-          "claimed": "12.24.260",
-          "found": "12.24.260 0.75",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806,L809",
-          "kind": "header_or_xref"
-        },
-        {
-          "zone": "MU-C",
-          "field": "min_lot_width_ft",
-          "claimed": "12.24.260",
-          "found": "12.24.260 0.75",
-          "quote": "or/washington/hillsboro/cdc.12.24.mixed-use-urban-center-zones.txt#L778,L806-L808",
           "kind": "header_or_xref"
         },
         {
@@ -2733,22 +2238,6 @@
           "kind": "header_or_xref"
         },
         {
-          "zone": "COM",
-          "field": "quadplex_allowed",
-          "claimed": "18.120.020 18.120.1 18.120.2",
-          "found": "18.120.020 18.120.030 18.120.040",
-          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L37,L92-L94,L136,L489-L496",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "IND",
-          "field": "quadplex_allowed",
-          "claimed": "18.130.1",
-          "found": "18.130.030",
-          "quote": "or/washington/tigard/tdc.18.130.industrial-zones.txt#L59,L66-L68",
-          "kind": "unlocated"
-        },
-        {
           "zone": "MU-CBD",
           "field": "max_density_du_per_acre",
           "claimed": "18.650.3",
@@ -2878,22 +2367,6 @@
         },
         {
           "zone": "MUC",
-          "field": "min_lot_width_ft",
-          "claimed": "18.805.1",
-          "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185-L192",
-          "kind": "unlocated"
-        },
-        {
-          "zone": "MUC",
-          "field": "quadplex_allowed",
-          "claimed": "18.120.1 18.120.2 18.280.020",
-          "found": "18.120.020 18.120.030 18.120.040",
-          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L49,L92-L94,L489,L496",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "MUC",
           "field": "setback_front_ft",
           "claimed": "18.280.1 18.280.020",
           "found": "18.280.020 18.280.040",
@@ -2923,14 +2396,6 @@
           "found": "18.280.020 18.280.040",
           "quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L41,L73-L75,L77",
           "kind": "header_or_xref"
-        },
-        {
-          "zone": "MUE",
-          "field": "quadplex_allowed",
-          "claimed": "18.120.020 18.120.1 18.120.030 18.120.2",
-          "found": "18.120.020 18.120.030 18.120.040",
-          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L45,L92-L94,L284-L296,L489-L496",
-          "kind": "heading_same_file"
         },
         {
           "zone": "MUR",
@@ -2963,22 +2428,6 @@
           "found": "18.805.030",
           "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L100",
           "kind": "header_or_xref"
-        },
-        {
-          "zone": "MUR",
-          "field": "min_lot_width_ft",
-          "claimed": "18.805.1",
-          "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L192",
-          "kind": "unlocated"
-        },
-        {
-          "zone": "MUR",
-          "field": "quadplex_allowed",
-          "claimed": "18.120.1 18.120.2",
-          "found": "18.120.020 18.120.030 18.120.040",
-          "quote": "or/washington/tigard/tdc.18.120.commercial-zones.txt#L53,L92-L94,L489,L496",
-          "kind": "unlocated"
         },
         {
           "zone": "MUR",
@@ -3037,14 +2486,6 @@
           "kind": "header_or_xref"
         },
         {
-          "zone": "PR",
-          "field": "quadplex_allowed",
-          "claimed": "18.140.1",
-          "found": "18.140.040",
-          "quote": "or/washington/tigard/tdc.18.140.parks.txt#L81,L84-L86",
-          "kind": "unlocated"
-        },
-        {
           "zone": "RES-A",
           "field": "max_height_ft",
           "claimed": "18.280.1",
@@ -3075,22 +2516,6 @@
           "found": "18.805.030",
           "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94",
           "kind": "header_or_xref"
-        },
-        {
-          "zone": "RES-A",
-          "field": "min_lot_width_ft",
-          "claimed": "18.805.1",
-          "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L186",
-          "kind": "unlocated"
-        },
-        {
-          "zone": "RES-A",
-          "field": "quadplex_allowed",
-          "claimed": "18.110.2 18.110.3 18.30",
-          "found": "18.110.030 18.110.040",
-          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215",
-          "kind": "heading_other_file"
         },
         {
           "zone": "RES-A",
@@ -3182,22 +2607,6 @@
         },
         {
           "zone": "RES-B",
-          "field": "min_lot_width_ft",
-          "claimed": "18.805.1",
-          "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L187",
-          "kind": "unlocated"
-        },
-        {
-          "zone": "RES-B",
-          "field": "quadplex_allowed",
-          "claimed": "18.110.2 18.110.3 18.30",
-          "found": "18.110.030 18.110.040",
-          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "RES-B",
           "field": "setback_front_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
@@ -3283,22 +2692,6 @@
           "found": "18.805.030",
           "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96",
           "kind": "header_or_xref"
-        },
-        {
-          "zone": "RES-C",
-          "field": "min_lot_width_ft",
-          "claimed": "18.805.1",
-          "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L188",
-          "kind": "unlocated"
-        },
-        {
-          "zone": "RES-C",
-          "field": "quadplex_allowed",
-          "claimed": "18.110.2 18.110.3 18.30",
-          "found": "18.110.030 18.110.040",
-          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208,L215",
-          "kind": "heading_other_file"
         },
         {
           "zone": "RES-C",
@@ -3390,22 +2783,6 @@
         },
         {
           "zone": "RES-D",
-          "field": "min_lot_width_ft",
-          "claimed": "18.805.1",
-          "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L189",
-          "kind": "unlocated"
-        },
-        {
-          "zone": "RES-D",
-          "field": "quadplex_allowed",
-          "claimed": "18.110.2 18.110.3 18.30",
-          "found": "18.110.030 18.110.040",
-          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208",
-          "kind": "heading_other_file"
-        },
-        {
-          "zone": "RES-D",
           "field": "setback_front_ft",
           "claimed": "18.280.1",
           "found": "18.280.040",
@@ -3491,22 +2868,6 @@
           "found": "18.805.030",
           "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L98",
           "kind": "header_or_xref"
-        },
-        {
-          "zone": "RES-E",
-          "field": "min_lot_width_ft",
-          "claimed": "18.805.1",
-          "found": "18.805.030",
-          "quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L190",
-          "kind": "unlocated"
-        },
-        {
-          "zone": "RES-E",
-          "field": "quadplex_allowed",
-          "claimed": "18.110.2 18.110.3 18.30",
-          "found": "18.110.030 18.110.040",
-          "quote": "or/washington/tigard/tdc.18.110.residential-zones.txt#L74-L76,L201,L208",
-          "kind": "heading_other_file"
         },
         {
           "zone": "RES-E",
