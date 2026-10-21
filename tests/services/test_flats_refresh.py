@@ -772,7 +772,7 @@ async def test_a_move_with_no_cause_is_unexplained_and_blocks(session: AsyncSess
 
     assert doc["by_cause"] == {"data": 2, "surroundings": 0, "remeasured": 0, "rules": 0, "code": 0, "unexplained": 1}
     assert doc["examples"] == [
-        {"county": "multnomah", "tlid": KEPT, "design": DESIGNS[1], "tier": ["unknown", "unknown"], "colour": ["yellow", "red"]}
+        {"county": "multnomah", "tlid": KEPT, "design": DESIGNS[1], "tier": ["unknown", "unknown"], "colour": ["yellow", "red"], "shown": ["yellow", "red"]}
     ]
     session.expunge_all()
     sept = await session.get(FlatsSnapshot, w["sept"].id)
@@ -1059,3 +1059,49 @@ async def test_prune_runs_keeps_the_newest_runs_whole_and_retires_the_rest(sessi
     assert [r["run_id"] for r in await prune_runs(session, keep=1)] == [6, 4]
     await session.commit()
     assert (await run_in_use(session)).id == 8
+
+
+async def _show_colour(session: AsyncSession, run: FlatsRun, tlid: str, design: str, colour: str) -> None:
+    """Write the shown colour (``checks.colour``, what a flag sets) on one answer, leaving tier and if_signed alone."""
+    row = (
+        await session.execute(
+            select(FlatsLotResult)
+            .join(FlatsLot, FlatsLot.id == FlatsLotResult.lot_id)
+            .where(FlatsLotResult.run_id == run.id, FlatsLot.tlid == tlid, FlatsLotResult.design_key == design)
+        )
+    ).scalar_one()
+    row.checks = {**row.checks, "colour": colour}
+    session.add(row)
+    await session.commit()
+
+
+async def test_a_colour_only_move_a_flag_makes_is_counted_and_attributed(session: AsyncSession, tmp_path) -> None:
+    """A new flag turns a lot's shown colour without touching its tier or
+    its signed colour. Drift used to read only those two and report 0 moved;
+    it now counts the move, and puts it to the same causes as any other."""
+    w = await _world(session, tmp_path)
+    july = w["july"]
+    july.checks = _clean_checks()
+    session.add(july)
+    await session.commit()
+
+    # Same rules, same code: nothing explains a colour that moved on its own.
+    same = await _rescreen(session, july, 2, 5, code="aaaa", moves={})
+    await _show_colour(session, same, KEPT, DESIGNS[0], "yellow")
+    doc = await drift(session, from_run=2, to_run=5)
+    await session.commit()
+    assert (doc["compared"], doc["moved"]) == (8, 1)
+    assert doc["tier_moves"] == {} and doc["colour_moves"] == {}
+    assert doc["shown_colour_moves"] == {"green->yellow": 1}
+    assert doc["by_cause"]["unexplained"] == 1 and doc["unexplained"] == 1
+    assert doc["examples"][0]["tlid"] == KEPT and doc["examples"][0]["shown"][1] == "yellow"
+    md = drift_markdown(doc)
+    assert "## Shown-colour moves" in md and ", shown " in md
+    assert blocks(july, same) == ["verdict_drift"], "the gate is no looser: an unexplained colour move blocks"
+
+    # A different rules hash: the same colour move is the rules'.
+    rules = await _rescreen(session, july, 2, 6, code="aaaa", rules="r2", moves={})
+    await _show_colour(session, rules, KEPT, DESIGNS[0], "yellow")
+    doc = await drift(session, from_run=2, to_run=6)
+    assert doc["moved"] == 1 and doc["by_cause"]["rules"] == 1 and doc["unexplained"] == 0
+    assert blocks(july, rules) == []
