@@ -21,18 +21,21 @@ import pytest
 from flats.provenance import sheet as S
 
 
-def _pdf(runs: list[tuple[float, float, float, str]], *, rotate: int = 0) -> bytes:
+def _pdf(runs: list[tuple], *, rotate: int = 0) -> bytes:
     """A one-page US-letter PDF with text runs at (x, y, size, text), y up.
 
     On a page turned by ``rotate``, the text is set turned the other way, as
     a publisher does to print a landscape table on a portrait sheet: it reads
-    left to right once the page is displayed.
+    left to right once the page is displayed. A run with a fifth field set
+    true is printed a quarter turn on its own, reading up the page from
+    (x, y): a column heading set vertically.
     """
     ops = []
     turn = {0: "1 0 0 1", 90: "0 1 -1 0", 180: "-1 0 0 -1", 270: "0 -1 1 0"}[rotate]
-    for x, y, size, text in runs:
+    for x, y, size, text, *up in runs:
         escaped = text.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
-        ops.append(f"BT /F1 {size} Tf {turn} {x} {y} Tm ({escaped}) Tj ET")
+        matrix = "0 1 -1 0" if up and up[0] else turn
+        ops.append(f"BT /F1 {size} Tf {matrix} {x} {y} Tm ({escaped}) Tj ET")
     stream = "\n".join(ops).encode("latin-1")
     rotation = f" /Rotate {rotate}" if rotate else ""
     objects = [
@@ -796,3 +799,77 @@ def test_a_zone_named_where_the_row_label_wraps_gets_its_own_note(tmp_path: Path
     spans = S.hits(row, 15, sheet.aspect)
 
     assert [m.mark for m in S.markers(sheet, row, spans, "TLDR")] == ["9"]
+
+
+#: Gresham Table 4.1415B (Pleasant Valley) in miniature: the zones down the
+#: side, and every column heading printed turned, reading up the page. A
+#: turned heading's letters stack one above another, so read as upright
+#: lines they fell one or two to a line and no column could be named.
+TURNED = [
+    (72, 740, 9, "Table 4.1415B: Setbacks"),
+    (160, 650, 9, "Front Wall", True),
+    (210, 650, 9, "Front Porch", True),
+    (260, 650, 9, "Interior Side", True),
+    (310, 650, 9, "Street Side Wall", True),
+    (360, 650, 9, "Rear No Alley", True),
+    (410, 650, 9, "Rear With Alley", True),
+    (72, 630, 9, "A. Minimum Setbacks"),
+    (72, 615, 9, "Single Detached, Duplex, Triplex, Quadplex"),
+    (72, 600, 9, "MDR-PV"),
+    (150, 600, 9, "10 ft."),
+    (200, 600, 9, "8 ft."),
+    (250, 600, 9, "5 ft."),
+    (300, 600, 9, "10 ft."),
+    (350, 600, 9, "10 ft."),
+    (400, 600, 9, "10 ft."),
+    (72, 585, 9, "HDR-PV"),
+    (150, 585, 9, "5 ft."),
+    (200, 585, 9, "5 ft."),
+    (250, 585, 9, "5 ft."),
+    (300, 585, 9, "5 ft."),
+    (350, 585, 9, "15 ft."),
+    (400, 585, 9, "5 ft."),
+    (72, 560, 9, "1. The minimum garage setback may be 5 feet when the garage is flush with an adjacent wall."),
+]
+
+
+@pytest.fixture
+def turned(tmp_path: Path) -> S.Sheet:
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(TURNED))
+    return S.read(path, 1)
+
+
+def test_a_column_heading_printed_turned_still_names_its_column(turned):
+    """Pleasant Valley and Springwater print their setback headings turned,
+    so a card boxed every 10 ft. on the row and Steph could not tell which
+    one was asked (FOLLOWUPS 103(b))."""
+    cited = [(1, 1, "MDR-PV 10 ft. 8 ft. 5 ft. 10 ft. 10 ft. 10 ft.", "", "")]
+
+    def at(value, field, when=()):
+        return _boxed_x(S.place({1: turned}, cited, value, zone="MDR-PV", field=field, when=when))
+
+    # The heading is read up the page, as printed, not left in the lines as
+    # stray letters.
+    assert [w.text for w in turned.turned][-3:] == ["Rear", "With", "Alley"]
+    assert all(len(line.key) > 2 for line in turned.lines)
+    assert at(10, "setback_front_ft") == [150]
+    assert at(10, "setback_street_side_ft") == [300]
+    assert at(10, "setback_rear_ft") == [350]
+    assert at(10, "setback_rear_ft", ("alley_at_rear",)) == [400]
+    # No heading names the standard: every hit stays boxed, never a guess.
+    assert len(at(10, "max_height_ft")) == 4
+
+
+def test_a_row_split_over_two_stored_lines_boxes_only_its_own_column(turned):
+    """The text copy split Pleasant Valley's MDR-PV row in two, and the card
+    quoting both halves boxed the street-side and rear 10 ft. beside the
+    front one."""
+    cited = [
+        (1, 1, "MDR-PV 10 ft. 8 ft. 5 ft.", "", ""),
+        (2, 1, "10 ft. 10 ft. 10 ft.", "", ""),
+    ]
+    placed = S.place({1: turned}, cited, 10, zone="MDR-PV", field="setback_front_ft")
+
+    assert _boxed_x(placed) == [150]
+    assert placed.status == "column"
