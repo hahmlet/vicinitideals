@@ -640,8 +640,16 @@ notes:
       setback are looser, and those stay at CMF's numbers. The tighter ones are
       encoded as civic_corridor variants on CMF. The note's density (12 minimum;
       25 townhouses, 24 other middle housing maximum) is already met by CMF's 12
-      and 24. Which parcels are "along" the corridors is a map Gresham has and
-      we do not hold, so every CMF lot stays out of GREEN until it is mapped.
+      and 24. Which parcels are "along" the corridors: Gresham has no map of
+      them, the code names the streets. MAPPED 2026-10-20 (Steph: "Yes, map
+      it"; rulings.yaml 2026-10-20-gresham-cmf-corridor-mapped): the bridge
+      answers civic_corridor on CMF lots from the RLIS centrelines of NE
+      Glisan St and NE 162nd Ave (north of Burnside) and Gresham's CMF blocks
+      (flats/config/corridors.yaml) -- true with a street lot line on either,
+      false in a CMF block that reaches neither. A lot in a block that reaches
+      them with no line on them stays unanswered, and out of GREEN, until
+      Steph rules (behind_frontage). The note stays unmeasured so a lot the
+      data cannot answer keeps its hold.
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L489"
     digest: "344b30e7d6e4"
@@ -701,7 +709,13 @@ notes:
     reason: >-
       middle housing land divisions are not permitted in CMF outside the NE
       Glisan and NE 162nd Avenue corridors, so whether the unit-lots path
-      exists at all depends on a mapped corridor nothing locates.
+      exists at all depends on a corridor Gresham names and does not map.
+      MAPPED 2026-10-20 (Steph: "Yes, map it"; rulings.yaml
+      2026-10-20-gresham-cmf-corridor-mapped): civic_corridor is read off the
+      RLIS centrelines of NE Glisan St and NE 162nd Ave and Gresham's CMF
+      blocks (flats/config/corridors.yaml) -- true with a street lot line on
+      either, false in a CMF block that reaches neither, unanswered behind the
+      frontage of a block that does until that is ruled.
 
       Narrowed to CMF, which is what the note says twice: the first sentence
       is the L2 marker on the CMF column's own cells, and the second names the

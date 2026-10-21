@@ -1717,3 +1717,38 @@
   encoded_in:
     - flats/config/jurisdictions/or/multnomah/gresham.yaml
     - flats/config/footnotes/or/multnomah/gresham.yaml
+
+- id: 2026-10-20-gresham-cmf-corridor-mapped
+  kind: ruling
+  date: 2026-10-20
+  scope:
+    county: multnomah
+    city: gresham
+    zones: [CMF]
+  question: >-
+    Gresham's CMF rules change for "the areas of CMF along the NE Glisan
+    Street and NE 162nd Avenue corridors" (Table 4.0420 note 2: townhouse land
+    divisions in CMF only there; Table 4.0430 note 14: homes there follow
+    TLDR's tighter yards and 35 ft height). Gresham publishes no map of those
+    areas, so every CMF lot was held out of GREEN. Should the screen map the
+    corridor itself?
+  ruling: >-
+    "Yes, map it."
+  effect: >-
+    civic_corridor is answered on Gresham CMF lots from the RLIS centrelines
+    named NE Glisan St and NE 162nd Ave (162nd north of Burnside) and
+    Gresham's CMF zoning blocks: true for a lot with a street lot line on
+    either street (the TLDR variants apply and the unit-lots path is open);
+    false for a lot in no CMF block that reaches either (CMF's own numbers,
+    no land division). A lot in a block that reaches the corridor with no
+    street line on it (NE 183rd, behind the frontage, the NE Halsey strip)
+    stays unanswered and out of GREEN until Steph rules; that answer is one
+    switch, behind_frontage in flats/config/corridors.yaml. Missing data
+    leaves the fact unanswered. Rides the next re-screen once the snapshot
+    holds corridor_blocks_gresham beside rlis_streets.
+  source: Steph 2026-10-20 (chat), docs/FOLLOWUPS.md item 104(a)
+  encoded_in:
+    - flats/config/corridors.yaml
+    - flats/config/pipeline.yaml
+    - flats/geom/corridor.py
+    - flats/config/footnotes/or/multnomah/gresham.yaml

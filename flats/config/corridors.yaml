@@ -1,0 +1,33 @@
+# Corridors a code names by their streets rather than drawing on a map
+# (flats/geom/corridor.py, NamedCorridor). Portland's corridors are maps the
+# city publishes and live in pipeline.yaml (corridors_pdx,
+# corridor_setbacks_pdx); these are read off the street network by name.
+#
+# Per lot of `zones` on a layer `serves` names:
+#   true   a street lot line on one of `streets` (the street the line abuts,
+#          read from the RLIS centrelines -- the same test as Portland's);
+#   false  the lot lies in no block of the zone (contiguous zoning area, from
+#          the `blocks` dataset) that reaches a named street;
+#   behind_frontage  a lot in a block that reaches the corridor with no line on
+#          it. null = unanswered (the lot stays out of GREEN); flip to true or
+#          false when the question is ruled -- no code change.
+# Missing data (no street network, no blocks dataset in the snapshot, a named
+# street the network does not carry) leaves every lot unanswered.
+
+corridors:
+  gresham_cmf:
+    condition: civic_corridor
+    serves: [or/multnomah/gresham]
+    zones: [CMF]
+    # GDC Table 4.0420 note 2 (4.0400.corridor.txt#L217) and Table 4.0430
+    # note 14 (#L485): "the areas of CMF along the NE Glisan Street and NE
+    # 162nd Avenue corridors". RLIS spells 162nd north of Burnside "NE"; SE
+    # 162nd is not on the corridor. Steph 2026-10-20: "Yes, map it"
+    # (rulings.yaml 2026-10-20-gresham-cmf-corridor-mapped).
+    streets: [NE GLISAN ST, NE 162ND AVE]
+    blocks: corridor_blocks_gresham
+    zone_field: ZONE
+    # Lots in a CMF block that reaches Glisan or 162nd but with no street line
+    # on either (NE 183rd, lots behind the frontage, the NE Halsey strip that
+    # touches 162nd at its corner). With Steph, asked 2026-10-20.
+    behind_frontage: null
