@@ -872,6 +872,29 @@ _C: tuple[ConditionDef, ...] = (
         ),
         assume=None,
     ),
+    ConditionDef(
+        "no_existing_dwelling",
+        "site_fact",
+        "The lot holds no home today. Wilsonville's Village zone writes its "
+        "only quadplex standards -- Table V-1's single-family row with a "
+        "7,000 sq ft minimum -- in 4.125(.23), and (.23) opens \"For lots "
+        "previously developed with at least one residential unit\". A vacant "
+        "Villebois lot is built under the Village Zone permit process "
+        "instead (4.125(.18)(B): Specific Area Plan, Preliminary and Final "
+        "Development Plans before the Development Review Board, the Pattern "
+        "Book's unit types, Site Design Review), which states no quadplex "
+        "standard and whose approved plans nothing here holds. So True holds "
+        "the lot open; False -- a home on the roll -- lets (.23) answer it. "
+        "A lot whose home was pulled down reads True, which the code would "
+        "count as previously developed: the conservative way to be wrong.",
+        evidence=(
+            "the assessor roll on the s4 row (flats.geom.roll."
+            "no_existing_dwelling): BLDGVAL 0 with LANDUSE VAC or a vacant "
+            "property class is True; a building value on a residential land "
+            "use or class is False; anything else unanswered"
+        ),
+        assume=None,
+    ),
     # --- design facts: true of the building, not of the parcel ---------
     ConditionDef(
         "multi_story",

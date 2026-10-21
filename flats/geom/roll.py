@@ -200,3 +200,42 @@ def read(row: Mapping[str, Any], rules: RollRules, built: Mapping[tuple[str, str
                         continue
                 return hit(tier.key, f"{county} roll, value $0, no street address")
     return None
+
+
+#: The site fact the roll answers for Wilsonville's Village zone (FOLLOWUPS
+#: 110): the lot holds no home. 4.125(.23)'s quadplex standards are written
+#: "For lots previously developed with at least one residential unit".
+NO_DWELLING_FACT = "no_existing_dwelling"
+#: RLIS LANDUSE codes that say a home stands on the lot.
+RESIDENTIAL_LANDUSE = frozenset({"SFR", "MFR"})
+
+
+def no_existing_dwelling(row: Mapping[str, Any]) -> bool | None:
+    """Whether the roll says the lot holds no home: True, False, or None
+    where it does not settle it.
+
+    True: no building value (BLDGVAL exactly 0) AND the roll marks the land
+    vacant -- RLIS LANDUSE ``VAC`` or a vacant property class (OAR
+    150-308-0310, a class ending ``00``: 100 residential vacant, 700
+    multi-family vacant). False: a building value above 0 on a residential
+    land use (``SFR``, ``MFR``) or a residential class (1xx, 7xx), with no
+    vacant mark. Anything else is unanswered: a building value the roll
+    does not carry, a house on land the roll still calls vacant, a building
+    of value on commercial or tract land. The two answers are not
+    symmetric and need not be: False is the one that opens (.23)'s route to
+    GREEN, so it asks for both a building and a residential use; True and
+    unanswered both leave the lot an open question.
+    """
+    bldg = _number(row.get("BLDGVAL"))
+    if bldg is None:
+        return None
+    landuse = str(row.get("LANDUSE") or "").strip().upper()
+    code = _code(row)
+    classed = len(code) == 3 and code.isdigit()
+    vacant = landuse == "VAC" or (classed and code[1:] == "00")
+    residential = landuse in RESIDENTIAL_LANDUSE or (classed and code[0] in "17" and code[1:] != "00")
+    if bldg == 0 and vacant:
+        return True
+    if bldg > 0 and residential and not vacant:
+        return False
+    return None

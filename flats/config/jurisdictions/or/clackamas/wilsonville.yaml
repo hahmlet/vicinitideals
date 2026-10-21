@@ -2840,8 +2840,28 @@ zones:
       # (.02) Permitted Uses lists them by name at C, "Duplexes, Triplexes, and
       # Quadplexes", one line under Single Family Dwellings. Nothing has to be
       # argued about the noun here.
+      #
+      # QUALIFIED ON A HOME ALREADY STANDING, 2026-10-21 (FOLLOWUPS 110).
+      # Every number below comes through 4.125(.23), and (.23) opens "For
+      # lots previously developed with at least one residential unit". A
+      # vacant lot does not reach it. What reaches a vacant lot is (.18)(B):
+      # "All development within the Village zone shall be subject to" a
+      # Specific Area Plan, a Preliminary Development Plan and a Final
+      # Development Plan, each before the Development Review Board. The
+      # code states no quadplex standard on that path -- see the notes --
+      # so off the roll a vacant lot (no_existing_dwelling True) is held
+      # open by name, a lot with a home (False) keeps (.23)'s answer, and a
+      # lot the roll does not settle is held as unobserved.
       value: true
       quote: "or/clackamas/wilsonville/4.planning.txt#L4793-L4798"
+      qualified_by:
+        fact: no_existing_dwelling
+        cite: Wilsonville Development Code 4.125(.23), middle housing standards "For lots previously developed with at least one residential unit"; a vacant lot is developed through 4.125(.18)(B), SAP, PDP and FDP approval by the Development Review Board, consistent with the approved SAP and Pattern Book (.18)(K)(1)(c)-(d), with conditions the Board may impose (.18)(K)(5), and FDP review under 4.421
+        # (.18)(B)'s "All development within the Village zone shall be subject
+        # to" (L5801-L5805) is not quoted here: the routing ledger files those
+        # lines under 4.140, off L5794's "4.140(.02) through (.06)", and a
+        # quote there would close the 4.001 -> 4.140 row nobody has followed.
+        quote: "or/clackamas/wilsonville/4.planning.txt#L6318-L6320,L6332-L6333,L6439-L6441"
     min_lot_sqft:
       # THE ONLY NUMBER IN THIS ZONE WRITTEN FOR A QUADPLEX, and it is not in
       # Table V-1. Table V-1 has no middle-housing row at all -- its building
@@ -3055,7 +3075,41 @@ zones:
       and 5 feet behind the main façade), note 17 (dwellings without alley access at least 36 feet
       wide), note 18 (one driveway apron). The catalog pod parks on a surface court and has no garage,
       so none of the four reaches it. Note 17 is the only one that would bind a garageless building and
-      it is a floor the pod clears twice over at 56 feet.'
+      it is a floor the pod clears twice over at 56 feet.
+
+      A VACANT LOT IS NOT ON THE (.23) ROUTE, 2026-10-21 (FOLLOWUPS 110, read by Claude; not a Steph
+      ruling, so not in rulings.yaml). (.23) is headed "Redevelopment to Add Middle Housing Units" and
+      opens "For lots previously developed with at least one residential unit in the Village Zone, the
+      following standards apply for adding additional residential units" (L6439-L6441). Its own list
+      of what it covers -- "replacement of residential structures, adding new residential structures,
+      expanding existing residential structures, or adding units within a residential structure" --
+      presumes a home already there. Until 2026-10-21 every V lot was screened on it, and run 81 had
+      two vacant lots green on it (31W15AC02800, 31W15AC03623, roll LANDUSE VAC, $0 building).
+
+      What governs a vacant lot, read through the whole of 4.125: the quadplex is still a listed use
+      ((.02)C, L4798; row houses D, L4799), but Table V-1 has no row for it (note 21, L5050, points back to (.23)), the
+      Multi-Family row is closed to it by 4.001(96), and no other sentence in the document states a
+      lot size, width or yard for a quadplex in the Village. The path is (.18)(B): "All development
+      within the Village zone shall be subject to the following processes" -- SAP, PDP and FDP, each
+      before the Development Review Board (L5801-L5806). The PDP must be "consistent with the approved
+      Specific Area Plan" and "the approved Architectural Pattern Book" ((.18)(K)(1)(c)-(d),
+      L6318-L6320), the Board "may require modifications to the PDP, or otherwise impose such
+      conditions as it may deem necessary" ((.18)(K)(5), L6332-L6333), and the FDP goes to 4.421,
+      whose standards "shall not be regarded as inflexible requirements" (L17467). The approved FDP
+      "shall restrict the nature, location and design of all uses" ((.20), L6422-L6423), and
+      changing it other than in a minor way goes back through the same process. Row houses (four
+      attached townhouses on their own lots, 4.001(266)) do have a Table V-1 row, but which lots are
+      row-house lots, and how many units of each type, is the approved SAP and Pattern Book''s to say
+      ((.18)(D)(2)(c), L5889-L5892), and nothing here holds those plans.
+
+      Under the standing rules that is a judgement review (Steph 2026-10-14, three tiers) with no
+      clear quadplex standard to judge the lot by -- the case the 2026-10-15 ORS 197A.400 ruling
+      leaves grey, not green. Steph''s 2026-10-21 lot-of-record ruling makes the taxlot a legal lot;
+      it does not make it previously developed. So `quadplex_allowed` is qualified on
+      `no_existing_dwelling`, read off the assessor roll (flats.geom.roll.no_existing_dwelling): a
+      vacant lot is held open with FACT-NO-EXISTING-DWELLING (yellow at best), a lot with a home keeps
+      (.23)''s answer, and a lot the roll does not settle is held as unobserved. Nothing here is
+      stricter than the code for a built lot, and nothing a vacant lot fails becomes a pass.'
   TC:
     section: ["4.132", "4.001"]
     cite_default:
