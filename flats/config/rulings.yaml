@@ -1806,3 +1806,29 @@
     - flats/config/pipeline.yaml
     - flats/geom/corridor.py
     - flats/config/footnotes/or/multnomah/gresham.yaml
+
+- id: 2026-10-21-big-lot-density-one-pod
+  kind: ruling
+  date: 2026-10-21
+  scope: {}
+  question: >-
+    Gresham's corridor zones (RTC, SC, SC-RJ; Table 4.0430 row E) set a
+    minimum density of 18 units an acre for townhouses and 20 / 24 for
+    multi-family. A quadplex on ONE lot is held exempt from the floor
+    (Gresham's multi-family is five or more units). Does the floor reach the
+    single-lot quadplex? (Steph's page check ids 736/738/740, "differs".)
+  ruling: >-
+    "It's known that density minimums are not sufficiently addressed by our
+    software yet for large lots. We're only checking 1 pod even though we
+    know we will need to subdivide and plot multiple pods. There isn't
+    really an elegant solution to this at a mass scale (yet) because we need
+    to be able to plot street additions before we can plot multiple pods."
+  effect: >-
+    A known limit, not a misreading: the screen places one pod, and a lot
+    big enough for a minimum density to bite is flagged for a closer look
+    (CLOSER_LOOK_MIN_DENSITY) rather than screened as several pods. The
+    single-lot exemption stands; nothing changes until multi-pod plotting
+    with street additions exists (docs/FOLLOWUPS.md item 31). Do not re-ask
+    density-floor cards on big lots on these grounds.
+  source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 106
+  encoded_in: [flats/score/screen.py]
