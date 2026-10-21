@@ -2884,6 +2884,7 @@ _REASON_WORDS = {
     "PDX_MAIN_STREET_MIN_FAR": "Portland's Centers Main Street overlay (the \"m\" on the zoning map) sets a minimum floor area: half the lot's area in the inner neighbourhoods, a quarter in the eastern and western, counted on the part of the lot inside the overlay -- on a lot this big the four homes are too little building, so it is red",
     "PDX_PROTECTED_RESOURCE": "a protected historic building stands on the lot -- a city or National Register landmark, or a contributing building in a historic, conservation or National Register district -- and removing it needs the city's demolition review, a hearing nobody can count on, so it is red",
     "CURVE_ON_THE_LINE": "the street's curve measured within a degree of the angle the city's corner rule turns on, closer than the map can be trusted, so it was read as one street that bends, not a corner",
+    "THROUGH_FRONT_GUESSED": "the lot has a street on two opposite sides and the city leaves which one is the front to its planner, so it was screened with both streets as fronts -- the usual reading, but the planner could pick one",
     # The county copy's own reasons (flats.ingest.normalize gates and the
     # assign stage): why a lot on the map was never screened.
     "JURISDICTION_NOT_ENCODED": "the city this lot is in has no encoded rules",
