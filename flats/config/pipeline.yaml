@@ -534,6 +534,24 @@ datasets:
       read by the street each abuts), which carries the 20 ft maximum front
       setback the same map allows in place of 10 (33.130.215.C.1).
 
+  corridor_blocks_gresham:
+    kind: arcgis
+    label: Gresham CMF zoning blocks (the NE Glisan / NE 162nd corridor)
+    provides: overlay
+    url: https://gis.greshamoregon.gov/ext/rest/services/GME/Planning/MapServer/4
+    where: "ZONE = 'CMF'"
+    fields: [ZONE]
+    serves: [or/multnomah/gresham]
+    notes: >-
+      Gresham's own zoning layer (the one zoning_gresham fetches), CMF only.
+      Gresham maps no corridor: Tables 4.0420 note 2 and 4.0430 note 14 name
+      "the areas of CMF along the NE Glisan Street and NE 162nd Avenue
+      corridors". flats/config/corridors.yaml reads the corridor off the
+      rlis_streets centrelines by name and these polygons, unioned into
+      contiguous blocks, say which CMF lots are nowhere near it (civic_corridor
+      false). Needs rlis_streets in the same snapshot; without either, the
+      fact stays unasked.
+
   # --- Portland overlays the bridge reads per lot (flats/geom/pdx_overlays.py,
   # FOLLOWUPS 78) -------------------------------------------------------------
 

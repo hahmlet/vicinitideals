@@ -389,10 +389,21 @@ _C: tuple[ConditionDef, ...] = (
         "so the same zone screens two ways depending on a line on a map "
         "rather than on anything visible in the parcel record. Measured for "
         "Portland lots from the city's corridor layer (flats/geom/corridor.py: "
-        "any street lot line running along a corridor); elsewhere -- Gresham's "
-        "corridors are its own map, not held -- assumed unknown, which leaves "
-        "the tighter number binding.",
-        evidence="the jurisdiction corridor map -- Portland Map 120-1",
+        "any street lot line running along a corridor). Measured for Gresham "
+        "CMF lots since 2026-10-20 (Steph: \"Yes, map it\"): Gresham draws no "
+        "map of \"the areas of CMF along the NE Glisan Street and NE 162nd "
+        "Avenue corridors\" (Table 4.0420 note 2, Table 4.0430 note 14), so the "
+        "corridor is read off the street network by name "
+        "(flats/config/corridors.yaml) -- true for a street lot line on NE "
+        "Glisan or NE 162nd, false for a lot in no CMF block that reaches "
+        "either, and unanswered for a lot in a block that reaches them with no "
+        "line on them until that is ruled. Elsewhere, and wherever the data "
+        "is short, assumed unknown, which leaves the tighter number binding.",
+        evidence=(
+            "the jurisdiction corridor map -- Portland Map 120-1; for Gresham "
+            "CMF, the RLIS centrelines of NE Glisan St and NE 162nd Ave and "
+            "Gresham's CMF zoning blocks"
+        ),
         assume=None,
     ),
     ConditionDef(

@@ -5257,9 +5257,10 @@ zones:
       # Encoded on civic_corridor, the registered fact that already governs
       # two other CMF rows, rather than written across all 665 lots. Applying
       # a corridor standard to a district is the error the density ruling on
-      # this same note refused to make. The fact is assumed unknown, so every
-      # CMF lot reports the corridor as unobserved and none can be certified
-      # on the 45 either way.
+      # this same note refused to make. The fact is measured on CMF lots since
+      # 2026-10-20 (flats/config/corridors.yaml); a lot it cannot answer
+      # reports the corridor as unobserved and cannot be certified on the 45
+      # either way.
       #
       # Both numbers clear a 26 ft pod, so nothing about today's verdict turns
       # on which one binds. That is the reason to write the pair down while it
@@ -5286,9 +5287,10 @@ zones:
         # homes "shall conform with ... Tables 4.0130 and 4.0131 for the TLDR
         # district" -- and TLDR's setbacks are TIGHTER than CMF's. The
         # 2026-08-15 reading called them looser (Steph 2026-10-20 asked how
-        # 4.0430's notes were used; read note by note). civic_corridor is not
-        # measured in Gresham, so these never fire; the unknown fact keeps
-        # every CMF lot out of GREEN until the corridor is mapped.
+        # 4.0430's notes were used; read note by note). civic_corridor is
+        # measured on CMF lots since 2026-10-20 (flats/config/corridors.yaml:
+        # a street line on NE Glisan or NE 162nd); a lot it cannot answer
+        # stays out of GREEN.
         - value: 10
           when: [civic_corridor]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
@@ -5395,7 +5397,8 @@ zones:
       follow TLDR standards instead (Table 4.0430 n.14). CORRECTED 2026-10-20: TLDR is not looser -- its
       setbacks (10 front, 10 street side, 5 side, 15/8 rear) are tighter than the CMF ones, so they are encoded
       as civic_corridor variants; lot size, frontage and the 20 ft maximum front stay at the stricter
-      CMF numbers. The corridor is not mapped, so every CMF lot stays out of GREEN.'
+      CMF numbers. MAPPED 2026-10-20 from the street network by name (flats/config/corridors.yaml); a
+      CMF lot the map cannot answer stays out of GREEN.'
   SC:
     section: ["4.04", "7.042"]
     cite_default:

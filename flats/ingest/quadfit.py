@@ -95,7 +95,7 @@ from flats.geom.corridor import (
     CORRIDOR_FACTS,
     FRONT_REACH_FT,
     STREET_CLASS,
-    CorridorMap,
+    Corridor,
     observed_corridors,
     off_corridor_lines,
 )
@@ -375,7 +375,7 @@ def _finite(value: object) -> float | None:
 def observed_facts(
     row: Mapping[str, Any],
     layers: Mapping[str, Layer] | None = None,
-    corridors: Sequence[CorridorMap] = (),
+    corridors: Sequence[Corridor] = (),
 ) -> dict[str, bool]:
     """The site facts quadfit measured, in the registry's words.
 
@@ -485,6 +485,10 @@ def observed_facts(
       serves, and only with edges. ``civic_corridor_setback_all_streets``
       beside it -- EVERY street line on a Map 130-1 stretch by the street it
       abuts -- only where the snapshot also holds the street network.
+      Gresham's ``civic_corridor`` (CMF on NE Glisan and NE 162nd, named by
+      the code, not mapped) through the same call from the street network
+      and the CMF blocks (``flats/config/corridors.yaml``), on CMF lots only,
+      with the lot's shape (``lot_wkb``) for the block it lies in.
     * a fact the lot's own map code settles -- an alias ruling's
       ``observes`` (Fairview's ``FLX`` is the VC flex area, so
       ``inside_mapped_use_area``). True only, and only with ``layers``.
@@ -507,7 +511,11 @@ def observed_facts(
         elif len(bearings) < 2 or two_streets(bearings):
             out["corner_lot"] = len(bearings) >= 2
         if corridors:
-            out.update(observed_corridors(edges, _layer_id(row), corridors))
+            out.update(
+                observed_corridors(
+                    edges, _layer_id(row), corridors, zone=row.get("zone"), lot=row.get("lot_wkb")
+                )
+            )
     if layers is not None and row.get("neighbour_zones_json"):
         out.update(_neighbour_facts(row, layers))
     if layers is not None and edges:
@@ -971,7 +979,7 @@ _EDGE_CLASS: dict[str, EdgeClass] = {
 def lot_edges(
     row: Mapping[str, Any],
     geom: Any = None,
-    corridors: Sequence[CorridorMap] = (),
+    corridors: Sequence[Corridor] = (),
     layers: Mapping[str, Layer] | None = None,
 ) -> LotEdges | None:
     """s4's edge record as the envelope reads it, or None where s4 traced none.
@@ -1686,7 +1694,7 @@ def inside_ugb_of(row: Mapping[str, Any]) -> bool | None:
 def lot_from_row(
     row: Mapping[str, Any],
     layers: Mapping[str, Layer] | None = None,
-    corridors: Sequence[CorridorMap] = (),
+    corridors: Sequence[Corridor] = (),
 ) -> QuadfitLot:
     """Build the screen's inputs for one stage-file row.
 

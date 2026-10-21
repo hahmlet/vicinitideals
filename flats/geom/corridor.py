@@ -87,9 +87,34 @@ reader that has no edges (the paper fit, the lane charge) still takes 10.
 
 **Only where the map is.** A condition is answered only on lots of the
 layers the map serves (the registry's ``serves``); Gresham's
-``civic_corridor`` is Gresham's own corridors, which no map here holds, and
-answering it from Portland's map would lift Gresham's caps on nothing. A lot
-with no traced edges (quadfit tier ``D``) is left unasked as well.
+``civic_corridor`` is never answered from Portland's map. A lot with no
+traced edges (quadfit tier ``D``) is left unasked as well.
+
+**Corridors a code names by their streets** (:class:`NamedCorridor`,
+``flats/config/corridors.yaml``). Gresham draws no map of "the areas of CMF
+along the NE Glisan Street and NE 162nd Avenue corridors" (GDC Table 4.0420
+note 2, Table 4.0430 note 14); the code names the streets. So the corridor's
+lines are the RLIS centrelines carrying those names -- the same network the
+street a lot line abuts is read from, so the name test above is exact -- and
+"NE 162ND AVE" is 162nd north of Burnside by the address grid's own prefix
+(SE 162nd is a different name). Gresham's Street Classifications layer draws
+the same two streets but stops Glisan at 162nd, short of the two CMF lots
+west of it; RLIS does not. Per lot of the named zones (Steph 2026-10-20,
+"Yes, map it"):
+
+* True -- a street lot line on one of the named streets (the any-line
+  reading above, by the street the line abuts);
+* else False -- the lot lies in no block of the zone (contiguous zoning area,
+  from the city's zoning layer) that comes within :data:`BLOCK_REACH_FT` of
+  a named street: nothing of that district reaches the corridor;
+* else the config's ``behind_frontage`` -- a lot in a block that reaches the
+  corridor with no line on it (behind the frontage, on a side street, a
+  block that touches the corridor only at a corner). ``null`` until Steph
+  rules, which leaves it unanswered.
+
+Unanswered, too, whenever the data is short: no street network, no zoning
+blocks, a named street the network does not carry, or a lot with no shape or
+in no block of its zone.
 """
 
 from __future__ import annotations
@@ -97,8 +122,11 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
-from typing import Any, Iterable, Sequence
+from typing import Any, Iterable, Sequence, Union
+
+import yaml
 
 from flats.geom.edges import PARALLEL_TOL_DEG, bearing_deg, bearing_delta
 
@@ -166,6 +194,25 @@ STREETS_KEY = "rlis_streets"
 #: Only streets this near a corridor are kept in memory.
 _STREET_KEEP_FT = CORRIDOR_REACH_FT + FRONT_REACH_FT
 
+#: The corridors a code names by their streets (:class:`NamedCorridor`).
+NAMED_PATH = Path(__file__).resolve().parents[1] / "config" / "corridors.yaml"
+
+#: A zoning block within this of a named corridor street's centreline
+#: reaches the corridor. A block drawn to the lot lines sits half a
+#: right-of-way from the centreline; this is s4's street reach, with slack
+#: for the wide stretches. Larger is the safe side: a block it takes in only
+#: moves its lots from False to unanswered.
+BLOCK_REACH_FT = 75.0
+
+#: Zoning polygons closer than this to each other are one block: the map's
+#: own seams, not a street between them.
+BLOCK_JOIN_FT = 0.5
+
+#: A lot overlapping a block by less than this is the zoning line failing to
+#: meet the taxlot fabric (as in :mod:`flats.geom.split_zone`), not a lot in
+#: it. Square feet.
+BLOCK_PIECE_SQFT = 100.0
+
 #: The facts, in the order they are reported.
 CORRIDOR_FACTS: tuple[str, ...] = tuple(sorted({*CORRIDOR_MAPS.values(), *EVERY_STREET.values()}))
 
@@ -226,6 +273,139 @@ class CorridorMap:
         return cls(condition, tuple(serves), Lines.build(lines, names), streets)
 
 
+@dataclass(frozen=True)
+class NamedSpec:
+    """One entry of ``flats/config/corridors.yaml``: a corridor the code names
+    by its streets, and where the zoning blocks it is read against live."""
+
+    key: str
+    condition: str
+    serves: tuple[str, ...]
+    zones: frozenset[str]
+    streets: tuple[str, ...]
+    blocks: str
+    zone_field: str
+    #: The answer for a lot in a block that reaches the corridor with no
+    #: street line on it: True, False, or None (unanswered) until ruled.
+    behind_frontage: bool | None
+
+
+@lru_cache(maxsize=None)
+def named_specs(path: str = "") -> tuple[NamedSpec, ...]:
+    """The named corridors in ``path`` (default :data:`NAMED_PATH`)."""
+    file = Path(path) if path else NAMED_PATH
+    if not file.is_file():
+        return ()
+    raw = yaml.safe_load(file.read_text(encoding="utf-8")) or {}
+    out: list[NamedSpec] = []
+    for key, spec in (raw.get("corridors") or {}).items():
+        behind = spec.get("behind_frontage")
+        if behind is not None and not isinstance(behind, bool):
+            raise ValueError(f"{file}: {key}.behind_frontage must be true, false or null")
+        streets = tuple(street_name(n) for n in spec.get("streets") or ())
+        zones = frozenset(str(z) for z in spec.get("zones") or ())
+        if not streets or not zones:
+            raise ValueError(f"{file}: {key} must name its streets and its zones")
+        out.append(
+            NamedSpec(
+                key=str(key),
+                condition=str(spec["condition"]),
+                serves=tuple(str(x) for x in spec.get("serves") or ()),
+                zones=zones,
+                streets=streets,
+                blocks=str(spec["blocks"]),
+                zone_field=str(spec.get("zone_field") or "ZONE"),
+                behind_frontage=behind,
+            )
+        )
+    return tuple(out)
+
+
+def zone_blocks(polygons: Iterable[Any]) -> tuple[Any, ...]:
+    """Contiguous areas of a zone: its polygons unioned, seams under
+    :data:`BLOCK_JOIN_FT` closed, one polygon per block."""
+    import shapely
+
+    parts = [p.buffer(BLOCK_JOIN_FT) for p in polygons if p is not None and not p.is_empty]
+    if not parts:
+        return ()
+    merged = shapely.union_all(parts)
+    return tuple(getattr(merged, "geoms", (merged,)))
+
+
+@dataclass(frozen=True)
+class NamedCorridor:
+    """A corridor a code names by its streets, answered per lot of its zones.
+
+    ``cmap`` is an ordinary :class:`CorridorMap` whose lines are the street
+    network's own segments carrying the names; ``blocks`` are the zone's
+    contiguous areas and ``reaches`` which of them come within
+    :data:`BLOCK_REACH_FT` of a named street.
+    """
+
+    spec: NamedSpec
+    cmap: CorridorMap
+    blocks: tuple[Any, ...]
+    reaches: tuple[bool, ...]
+    tree: Any
+
+    @property
+    def condition(self) -> str:
+        return self.spec.condition
+
+    def covers(self, layer_id: str | None) -> bool:
+        return self.cmap.covers(layer_id)
+
+    @classmethod
+    def build(cls, spec: NamedSpec, streets: Lines, block_polygons: Iterable[Any]) -> NamedCorridor | None:
+        """``None`` when the data cannot answer: no blocks, or a named street
+        the network does not carry (a renamed street would otherwise read
+        every block as off the corridor)."""
+        from shapely.strtree import STRtree
+
+        idx = [i for i, n in enumerate(streets.names) if n in spec.streets]
+        if not idx or {streets.names[i] for i in idx} != set(spec.streets):
+            return None
+        blocks = zone_blocks(block_polygons)
+        if not blocks:
+            return None
+        corridor = Lines(
+            tuple(streets.lines[i] for i in idx),
+            tuple(streets.names[i] for i in idx),
+            STRtree([streets.lines[i] for i in idx]),
+        )
+        reaches = tuple(bool(corridor.near(b, BLOCK_REACH_FT)) for b in blocks)
+        cmap = CorridorMap(spec.condition, spec.serves, corridor, streets)
+        return cls(spec, cmap, blocks, reaches, STRtree(list(blocks)))
+
+    def answer(self, street_edges: Sequence[Sequence[object]], lot: Any) -> bool | None:
+        """The fact for one lot of the named zones: see the module docstring."""
+        if any(on_corridor(e, self.cmap) for e in street_edges):  # type: ignore[arg-type]
+            return True
+        if isinstance(lot, (bytes, bytearray, memoryview)):
+            import shapely
+
+            lot = shapely.from_wkb(bytes(lot))
+        if lot is None or lot.is_empty or lot.area <= 0:
+            return None
+        if not lot.is_valid:
+            lot = lot.buffer(0)
+        inside = [
+            int(i)
+            for i in self.tree.query(lot, predicate="intersects")
+            if self.blocks[int(i)].intersection(lot).area >= min(BLOCK_PIECE_SQFT, 0.5 * lot.area)
+        ]
+        if not inside:
+            return None
+        if any(self.reaches[i] for i in inside):
+            return self.spec.behind_frontage
+        return False
+
+
+#: What :func:`load_maps` returns and the bridge hands around.
+Corridor = Union[CorridorMap, NamedCorridor]
+
+
 def _dataset_path(sources: Path, manifest: dict[str, Any], key: str) -> Path:
     entry = (manifest.get("datasets") or {}).get(key) or {}
     return sources / str(entry.get("file") or f"{key}.geojson")
@@ -236,12 +416,17 @@ def _name_of(props: dict[str, Any]) -> str:
     return str(props.get("StreetName") or props.get("STREETNAME") or "")
 
 
-def load_maps(sources: Path, pipeline: Any | None = None) -> tuple[CorridorMap, ...]:
-    """Every corridor map the snapshot at ``sources`` holds, per the registry.
+def load_maps(
+    sources: Path, pipeline: Any | None = None, named: str = ""
+) -> tuple[Corridor, ...]:
+    """Every corridor map the snapshot at ``sources`` holds, per the registry,
+    then every named corridor (``named``, default :data:`NAMED_PATH`) whose
+    zoning blocks and street network the snapshot holds.
 
     A dataset missing from the snapshot is skipped: its condition stays
     unasked, as it was before the map was acquired. The snapshot's RLIS
-    streets near any corridor are loaded once and shared.
+    streets near any corridor are loaded once and shared; a named corridor
+    gets its own set, the streets near its blocks.
     """
     from shapely.geometry import shape
     from shapely.ops import unary_union
@@ -262,27 +447,54 @@ def load_maps(sources: Path, pipeline: Any | None = None) -> tuple[CorridorMap, 
         geoms = [shape(f["geometry"]) for f in feats]
         names = [_name_of(f.get("properties") or {}) for f in feats]
         found.append((condition, tuple(ds.serves), geoms, names))
-    if not found:
+    blocks: list[tuple[NamedSpec, list[Any]]] = []
+    for spec in named_specs(named):
+        path = _dataset_path(sources, manifest, spec.blocks)
+        if spec.blocks not in pipeline.datasets or not path.is_file():
+            continue
+        polys = [
+            shape(f["geometry"]).buffer(0)
+            for f in iter_features(path)
+            if f.get("geometry") and str((f.get("properties") or {}).get(spec.zone_field) or "") in spec.zones
+        ]
+        if polys:
+            blocks.append((spec, polys))
+    if not found and not blocks:
         return ()
-    streets: Lines | None = None
     path = _dataset_path(sources, manifest, STREETS_KEY)
+    zones: list[Any] = []
+    if found:
+        zones.append(unary_union([g for _, _, geoms, _ in found for g in geoms]).buffer(_STREET_KEEP_FT))
+    if blocks:
+        zones.append(unary_union([g for _, polys in blocks for g in polys]).buffer(_STREET_KEEP_FT))
+    import shapely
+
+    for zone in zones:
+        shapely.prepare(zone)
+    kept: list[list[Any]] = [[] for _ in zones]
+    labels: list[list[str]] = [[] for _ in zones]
     if path.is_file():
-        zone = unary_union([g for _, _, geoms, _ in found for g in geoms]).buffer(_STREET_KEEP_FT)
-        kept: list[Any] = []
-        labels: list[str] = []
         for f in iter_features(path):
             if not f.get("geometry"):
                 continue
             g = shape(f["geometry"])
-            if not g.intersects(zone):
-                continue
             p = f.get("properties") or {}
-            kept.append(g)
-            labels.append(" ".join(str(p.get(k) or "") for k in ("PREFIX", "STREETNAME", "FTYPE")))
-        streets = Lines.build(kept, labels)
-    return tuple(
-        CorridorMap.from_lines(c, serves, geoms, names, streets) for c, serves, geoms, names in found
-    )
+            label = " ".join(str(p.get(k) or "") for k in ("PREFIX", "STREETNAME", "FTYPE"))
+            for k, zone in enumerate(zones):
+                if g.intersects(zone):
+                    kept[k].append(g)
+                    labels[k].append(label)
+    nets = [Lines.build(g, n) if path.is_file() else None for g, n in zip(kept, labels)]
+    out: list[Corridor] = [
+        CorridorMap.from_lines(c, serves, geoms, names, nets[0]) for c, serves, geoms, names in found
+    ]
+    named_net = nets[-1] if blocks else None
+    if named_net is not None:
+        for spec, polys in blocks:
+            built = NamedCorridor.build(spec, named_net, polys)
+            if built is not None:
+                out.append(built)
+    return tuple(out)
 
 
 def _along(line: Any, point: Any) -> float:
@@ -404,7 +616,7 @@ def off_corridor(edge: Sequence[float], cmap: CorridorMap) -> bool:
 
 
 def off_corridor_lines(
-    edges: Iterable[Sequence[object]], layer_id: str | None, maps: Sequence[CorridorMap]
+    edges: Iterable[Sequence[object]], layer_id: str | None, maps: Sequence[Corridor]
 ) -> tuple[bool, ...]:
     """Per s4 edge, in order: a street line surely off EVERY tightening map
     (:data:`TIGHTENS`) that serves the lot's layer (:func:`off_corridor`).
@@ -414,7 +626,9 @@ def off_corridor_lines(
     that is not a street line.
     """
     edges = list(edges)
-    serving = [m for m in maps if m.condition in TIGHTENS and m.covers(layer_id)]
+    serving = [
+        m for m in maps if isinstance(m, CorridorMap) and m.condition in TIGHTENS and m.covers(layer_id)
+    ]
     if not serving:
         return tuple(False for _ in edges)
     return tuple(
@@ -453,7 +667,12 @@ def on_corridor(edge: Sequence[float], cmap: CorridorMap, *, strict: bool = Fals
 
 
 def observed_corridors(
-    edges: Iterable[Sequence[object]], layer_id: str | None, maps: Sequence[CorridorMap]
+    edges: Iterable[Sequence[object]],
+    layer_id: str | None,
+    maps: Sequence[Corridor],
+    *,
+    zone: object = None,
+    lot: Any = None,
 ) -> dict[str, bool]:
     """The corridor facts for one lot, as ``configure`` takes them.
 
@@ -463,6 +682,11 @@ def observed_corridors(
     else False. A map's :data:`EVERY_STREET` partner is answered beside it
     only with a street network and at least one street line: True when
     every street line is on the corridor by the strict reading, else False.
+
+    A :class:`NamedCorridor` answers only lots of its zones (``zone``, the
+    lot's map code), from its street lines and, failing those, the zoning
+    block the lot's shape (``lot``: geometry or WKB) lies in; where it cannot
+    say, the fact is left out.
     """
     edges = [e for e in edges]
     if not edges:
@@ -472,10 +696,16 @@ def observed_corridors(
     for cmap in maps:
         if not cmap.covers(layer_id):
             continue
+        if isinstance(cmap, NamedCorridor):
+            if zone is None or str(zone) not in cmap.spec.zones:
+                continue
+            got = cmap.answer(street, lot)
+            if got is not None:
+                out[cmap.condition] = out.get(cmap.condition, False) or got
+            continue
         hit = any(on_corridor(e, cmap) for e in street)  # type: ignore[arg-type]
         out[cmap.condition] = out.get(cmap.condition, False) or hit
         every = EVERY_STREET.get(cmap.condition)
         if every and street and cmap.streets is not None:
             out[every] = all(on_corridor(e, cmap, strict=True) for e in street)  # type: ignore[arg-type]
     return out
-
