@@ -969,6 +969,33 @@
     - scripts/flats_load_bridge.py
     - "Lot Analysis/quadfit/config/rules.yaml"
 
+- id: 2026-10-21-existing-taxlots-are-lots-of-record
+  kind: ruling
+  date: 2026-10-21
+  scope: {}
+  question: >-
+    Codes let an existing "lot of record" that misses a lot standard be
+    developed anyway (Gresham 4.0431.C: lot size, frontage and the width/depth
+    ratio, and then no minimum density; Gresham Table 4.0130 note 2: lot
+    size). Nothing in the data says which taxlots are lots of record, so the
+    relief was never taken. Should every existing taxlot count as one?
+  ruling: >-
+    "Let's assume that the lots from the gis and other data sources we have
+    are legal. Every lot we try to purchase will go thru a legal review."
+  effect: >-
+    Every existing taxlot is taken as a lot of record. Where a code states a
+    lot-of-record relief it is encoded as lot_of_record_relief and applied on
+    the one-lot path only: the unit-lots plat makes new lots, and they meet
+    the lot standards. Gresham first (corridor CMF, SC, SC-RJ, CMU:
+    lot_dimensions; residential LDR-5, LDR-7, TLDR, TR, MDR-12: lot_area); the
+    other cities wait for their own sweep (docs/FOLLOWUPS.md item 108).
+  source: Steph 2026-10-21 (chat, via the FLATS coordinator), docs/FOLLOWUPS.md item 108
+  encoded_in:
+    - flats/rules/fields.py
+    - flats/score/screen.py
+    - flats/config/jurisdictions/or/multnomah/gresham.yaml
+    - flats/config/footnotes/or/multnomah/gresham.yaml
+
 # ---------------------------------------------------------------------------
 # County and city
 # ---------------------------------------------------------------------------
@@ -1816,6 +1843,32 @@
     - flats/config/pipeline.yaml
     - flats/geom/corridor.py
     - flats/config/footnotes/or/multnomah/gresham.yaml
+
+- id: 2026-10-21-gresham-rockwood-setbacks
+  kind: ruling
+  date: 2026-10-21
+  scope:
+    county: multnomah
+    city: gresham
+    zones: [CC, CMF, CMU, MC, MDR-12, MDR-24, OFR, RTC, SC, SC-RJ]
+  question: >-
+    Table 4.0430 note 13 sends front setbacks inside the Rockwood Design
+    District to Section 7.0512.A.2, so every lot inside the district (all of
+    SC and SC-RJ, and the parts of the other listed zones it covers) was held
+    out of GREEN on rockwood_design_district. 7.0502(B) takes quadplexes out of
+    7.0501-7.0512, and A.2's "All Development" heading leaves townhouses out
+    (S1 sends them back to Table 4.0430 note 1). Does the pod take the
+    table's own setbacks?
+  ruling: >-
+    "Yes on Rockwood setback."
+  effect: >-
+    Note 13 is dismissed in the footnote ledger and the hold is lifted: both
+    forms of the pod are screened on Table 4.0430's setbacks (row G, note 1
+    for the unit-lots plat, the 20 ft maximum).
+  source: Steph 2026-10-21 (chat, via the FLATS coordinator), docs/FOLLOWUPS.md item 104
+  encoded_in:
+    - flats/config/footnotes/or/multnomah/gresham.yaml
+    - flats/config/caps.json
 
 - id: 2026-10-21-big-lot-density-one-pod
   kind: ruling

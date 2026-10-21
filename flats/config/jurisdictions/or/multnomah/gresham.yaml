@@ -45,14 +45,16 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   from Table 4.0430''s Residential sub-cell stand as this building''s street setbacks in SC and SC-RJ.
 
 
-  It reaches the split plat. 7.0502(A) lists Townhouses among the uses the section applies to, and
-  7.0512(A)(2)(S1) is where the numbers get harder: inside the Rockwood triangle the street setback
-  is set by which street the lot fronts -- 0 to 5 ft on Stark and 181st, 10 to 15 ft on Burnside,
-  Pine, Oak, Ash, 185th, 187th and the two future avenues -- and outside it by district, 5 ft minimum
-  and 20 ft maximum for Multi-Family and Townhouse Style in all three. A unit-lot design would owe a
-  street name and a triangle boundary before any of that can be screened, and neither is measured.
-  Not encoded as a `unit_lots` variant for that reason: an encoded number here would be a guess about
-  which of four bands a lot sits in.
+  Nor does it change the split plat''s setbacks. 7.0502(A) lists Townhouses among the uses the section
+  applies to, but 7.0512(A)(2)(S1) sits under "All Development", which 7.0512 defines as "All
+  developments, except townhouses" (7.0500 L214, L525), and S1 says of townhouses in as many words:
+  "INSIDE AND OUTSIDE THE TRIANGLE: Townhouse development shall follow the minimum building setback
+  requirements provided in Table 4.0430, Footnote 1. The maximum building setback for a townhouse
+  unit is 20 feet" (L577-L580) -- note 1''s yards and row G''s 20 ft, which this file holds. The
+  street-by-street bands inside the Rockwood triangle are for the other headings. So note 13''s
+  rockwood_design_district hold is lifted (Steph 2026-10-21, "Yes on Rockwood setback"; rulings.yaml
+  2026-10-21-gresham-rockwood-setbacks). Until then an earlier reading of S1 kept every SC and SC-RJ
+  lot out of GREEN.
 
 
   PARKING, read 2026-08-20 and encoded as a layer default of zero. GDC 9.0802(A): "Vehicle parking
@@ -2286,6 +2288,16 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    lot_of_record_relief:
+      # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
+      # Lot of Record which is less than the required minimum lot size may be
+      # developed for all uses permitted in the district when in compliance
+      # with the other requirements of the district." Every existing taxlot
+      # is a lot of record (Steph 2026-10-21, rulings.yaml
+      # 2026-10-21-existing-taxlots-are-lots-of-record). Lot size only: row A
+      # (minimum site size) and the density rows carry no such note.
+      value: lot_area
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375"
     min_lot_sqft:
       value: 5000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
@@ -2472,6 +2484,16 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    lot_of_record_relief:
+      # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
+      # Lot of Record which is less than the required minimum lot size may be
+      # developed for all uses permitted in the district when in compliance
+      # with the other requirements of the district." Every existing taxlot
+      # is a lot of record (Steph 2026-10-21, rulings.yaml
+      # 2026-10-21-existing-taxlots-are-lots-of-record). Lot size only: row A
+      # (minimum site size) and the density rows carry no such note.
+      value: lot_area
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375"
     min_lot_sqft:
       value: 7000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
@@ -2748,6 +2770,16 @@ zones:
         - exempt: true
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
+    lot_of_record_relief:
+      # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
+      # Lot of Record which is less than the required minimum lot size may be
+      # developed for all uses permitted in the district when in compliance
+      # with the other requirements of the district." Every existing taxlot
+      # is a lot of record (Steph 2026-10-21, rulings.yaml
+      # 2026-10-21-existing-taxlots-are-lots-of-record). Lot size only: row A
+      # (minimum site size) and the density rows carry no such note.
+      value: lot_area
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375"
     min_lot_sqft:
       # Table 4.0130, TLDR column, prints None in BOTH rows that could hold a
       # minimum: A, Minimum Site Size, "All other uses" (L239), and B, Minimum
@@ -2832,6 +2864,16 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    lot_of_record_relief:
+      # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
+      # Lot of Record which is less than the required minimum lot size may be
+      # developed for all uses permitted in the district when in compliance
+      # with the other requirements of the district." Every existing taxlot
+      # is a lot of record (Steph 2026-10-21, rulings.yaml
+      # 2026-10-21-existing-taxlots-are-lots-of-record). Lot size only: row A
+      # (minimum site size) and the density rows carry no such note.
+      value: lot_area
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375"
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
@@ -3877,6 +3919,16 @@ zones:
         - value: 8
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+    lot_of_record_relief:
+      # Table 4.0130 note 2, on row B (Minimum Lot Size): "Development of a
+      # Lot of Record which is less than the required minimum lot size may be
+      # developed for all uses permitted in the district when in compliance
+      # with the other requirements of the district." Every existing taxlot
+      # is a lot of record (Steph 2026-10-21, rulings.yaml
+      # 2026-10-21-existing-taxlots-are-lots-of-record). Lot size only: row A
+      # (minimum site size) and the density rows carry no such note.
+      value: lot_area
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L240,L374-L375"
     min_lot_sqft:
       value: 3600
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
@@ -3951,6 +4003,20 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+    orientation_constraint:
+      # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
+      # be occupied by buildings oriented to the abutting street", measured
+      # "between the minimum and maximum front setback". J.1 scopes it to
+      # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
+      # and 3.0100 puts this zone in the Corridor Design District: "those
+      # residential districts -- MDR-12, MDR-24 and OFR -- that are not
+      # included in another Design District" (3.0100.definitions.txt L834-L837).
+      # A lot that falls in another district instead is in Rockwood, Downtown
+      # or Civic, which J.1 names too, so every lot of this zone takes it.
+      # Added 2026-10-21; it was carried on the corridor and Downtown zones
+      # and missing here.
+      value: axis_required
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
     min_frontage_ft:
       value: 45
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
@@ -4145,11 +4211,12 @@ zones:
       measured against. Both tests still pass at 11,000: four units is 15.8 units per acre, under the
       24.2 maximum and over the 12.1 minimum.
 
-      NOT ENCODED, and it loosens: table note 2 lets a Lot of Record smaller than the required minimum
-      LOT size be developed anyway. It is written against section B (Minimum Lot Size), which in
-      MDR-24 reads None for all other uses and 3,600 for a duplex, rather than against the section A
-      site minimum encoded here. No condition names a lot of record, and a relief nobody can select is
-      better left out than assumed.'
+      NOT ENCODED HERE: table note 2 lets a Lot of Record smaller than the required minimum LOT size
+      be developed anyway. It is written against section B (Minimum Lot Size), which in MDR-24 reads
+      None for all other uses and 3,600 for a duplex, rather than against the section A site minimum
+      encoded here, so it relieves nothing in this column. Where row B binds (LDR-5, LDR-7, TR,
+      MDR-12, TLDR) it is encoded since 2026-10-21 as lot_of_record_relief lot_area (Steph:
+      existing taxlots are lots of record).'
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
@@ -4179,6 +4246,20 @@ zones:
         - value: 16
           when: [unit_lots, corner_lot, abuts_alley]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286-L287,L382"
+    orientation_constraint:
+      # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
+      # be occupied by buildings oriented to the abutting street", measured
+      # "between the minimum and maximum front setback". J.1 scopes it to
+      # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
+      # and 3.0100 puts this zone in the Corridor Design District: "those
+      # residential districts -- MDR-12, MDR-24 and OFR -- that are not
+      # included in another Design District" (3.0100.definitions.txt L834-L837).
+      # A lot that falls in another district instead is in Rockwood, Downtown
+      # or Civic, which J.1 names too, so every lot of this zone takes it.
+      # Added 2026-10-21; it was carried on the corridor and Downtown zones
+      # and missing here.
+      value: axis_required
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
     min_frontage_ft:
       value: 45
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
@@ -4282,6 +4363,20 @@ zones:
         - value: 100
           when: [corner_lot]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308"
+    orientation_constraint:
+      # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
+      # be occupied by buildings oriented to the abutting street", measured
+      # "between the minimum and maximum front setback". J.1 scopes it to
+      # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
+      # and 3.0100 puts this zone in the Corridor Design District: "those
+      # residential districts -- MDR-12, MDR-24 and OFR -- that are not
+      # included in another Design District" (3.0100.definitions.txt L834-L837).
+      # A lot that falls in another district instead is in Rockwood, Downtown
+      # or Civic, which J.1 names too, so every lot of this zone takes it.
+      # Added 2026-10-21; it was carried on the corridor and Downtown zones
+      # and missing here.
+      value: axis_required
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
     min_frontage_ft:
       # G reads NA in this column on both the interior and the corner line,
       # and None on the townhouse line. Read, and no frontage standard
@@ -5399,15 +5494,31 @@ zones:
         - value: 25
           when: [unit_lots, corner_lot, abuts_alley]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
+    lot_of_record_relief:
+      # 4.0431.C: "Existing lots of record which do not meet the minimum lot
+      # size or street frontage standard, or the minimum lot width/depth ratio
+      # standard, may be developed with permitted uses as listed in Table
+      # 4.0420. Development permitted under this subsection is exempt from the
+      # minimum residential density standard of Table 4.0430." Every existing
+      # taxlot is taken as a lot of record (Steph 2026-10-21, rulings.yaml
+      # 2026-10-21-existing-taxlots-are-lots-of-record), so rows A, B and C
+      # cannot block the one-lot quadplex, and a lot that misses one of them
+      # owes no density floor. The unit-lots plat makes new lots and still
+      # meets the rows (as note 6 and note 11 adjust them). 4.0431.B's
+      # "shall be satisfied" is for multi-family, five or more units in
+      # Gresham (3.0100 L939-L942), which the pod is not.
+      value: lot_dimensions
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L506-L509"
     max_lot_depth_ratio:
       # Row C, the residential half of the cell: "0.5 : 1 for residential;
       # none for commercial, institutional and mixed-use". 4.0431.A: the
       # ratio is "the lot width dimension by the lot depth dimension", so a
       # lot at least half as wide as it is deep -- at most twice as deep as
       # it is wide. 4.0431.C lets an existing lot of record that misses it be
-      # developed anyway (L506-L507); like residential note 2 (L374) that is
-      # a relief on a fact this screen does not hold -- whether a taxlot is a
-      # lot of record -- so it is not taken, and it can only cost a lot.
+      # developed anyway (L506-L507), and since 2026-10-21 every existing
+      # taxlot is taken as one (lot_of_record_relief above): on the one-lot
+      # path this row no longer blocks. The unit-lots plat makes new lots;
+      # note 6 lifts the ratio from them.
       # On the Glisan/162nd corridor note 14 sends homes to TLDR's tables,
       # which state no ratio; CMF's own lot standards stand there, as
       # min_lot_sqft and min_frontage_ft do.
@@ -5532,15 +5643,31 @@ zones:
         - value: 25
           when: [unit_lots, corner_lot, abuts_alley]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
+    lot_of_record_relief:
+      # 4.0431.C: "Existing lots of record which do not meet the minimum lot
+      # size or street frontage standard, or the minimum lot width/depth ratio
+      # standard, may be developed with permitted uses as listed in Table
+      # 4.0420. Development permitted under this subsection is exempt from the
+      # minimum residential density standard of Table 4.0430." Every existing
+      # taxlot is taken as a lot of record (Steph 2026-10-21, rulings.yaml
+      # 2026-10-21-existing-taxlots-are-lots-of-record), so rows A, B and C
+      # cannot block the one-lot quadplex, and a lot that misses one of them
+      # owes no density floor. The unit-lots plat makes new lots and still
+      # meets the rows (as note 6 and note 11 adjust them). 4.0431.B's
+      # "shall be satisfied" is for multi-family, five or more units in
+      # Gresham (3.0100 L939-L942), which the pod is not.
+      value: lot_dimensions
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L506-L509"
     max_lot_depth_ratio:
       # Row C, the residential half of the cell: "0.5 : 1 for residential;
       # none for commercial, institutional and mixed-use". 4.0431.A: the
       # ratio is "the lot width dimension by the lot depth dimension", so a
       # lot at least half as wide as it is deep -- at most twice as deep as
       # it is wide. 4.0431.C lets an existing lot of record that misses it be
-      # developed anyway (L506-L507); like residential note 2 (L374) that is
-      # a relief on a fact this screen does not hold -- whether a taxlot is a
-      # lot of record -- so it is not taken, and it can only cost a lot.
+      # developed anyway (L506-L507), and since 2026-10-21 every existing
+      # taxlot is taken as one (lot_of_record_relief above): on the one-lot
+      # path this row no longer blocks. The unit-lots plat makes new lots;
+      # note 6 lifts the ratio from them.
       width_to_depth: 0.5
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L295,L306-L310"
       variants:
@@ -5688,15 +5815,31 @@ zones:
         - value: 25
           when: [unit_lots, corner_lot, abuts_alley]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
+    lot_of_record_relief:
+      # 4.0431.C: "Existing lots of record which do not meet the minimum lot
+      # size or street frontage standard, or the minimum lot width/depth ratio
+      # standard, may be developed with permitted uses as listed in Table
+      # 4.0420. Development permitted under this subsection is exempt from the
+      # minimum residential density standard of Table 4.0430." Every existing
+      # taxlot is taken as a lot of record (Steph 2026-10-21, rulings.yaml
+      # 2026-10-21-existing-taxlots-are-lots-of-record), so rows A, B and C
+      # cannot block the one-lot quadplex, and a lot that misses one of them
+      # owes no density floor. The unit-lots plat makes new lots and still
+      # meets the rows (as note 6 and note 11 adjust them). 4.0431.B's
+      # "shall be satisfied" is for multi-family, five or more units in
+      # Gresham (3.0100 L939-L942), which the pod is not.
+      value: lot_dimensions
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L506-L509"
     max_lot_depth_ratio:
       # Row C, the residential half of the cell: "0.5 : 1 for residential;
       # none for commercial, institutional and mixed-use". 4.0431.A: the
       # ratio is "the lot width dimension by the lot depth dimension", so a
       # lot at least half as wide as it is deep -- at most twice as deep as
       # it is wide. 4.0431.C lets an existing lot of record that misses it be
-      # developed anyway (L506-L507); like residential note 2 (L374) that is
-      # a relief on a fact this screen does not hold -- whether a taxlot is a
-      # lot of record -- so it is not taken, and it can only cost a lot.
+      # developed anyway (L506-L507), and since 2026-10-21 every existing
+      # taxlot is taken as one (lot_of_record_relief above): on the one-lot
+      # path this row no longer blocks. The unit-lots plat makes new lots;
+      # note 6 lifts the ratio from them.
       width_to_depth: 0.5
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L295,L306-L310"
       variants:
@@ -5834,15 +5977,31 @@ zones:
         - value: 25
           when: [unit_lots, corner_lot, abuts_alley]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
+    lot_of_record_relief:
+      # 4.0431.C: "Existing lots of record which do not meet the minimum lot
+      # size or street frontage standard, or the minimum lot width/depth ratio
+      # standard, may be developed with permitted uses as listed in Table
+      # 4.0420. Development permitted under this subsection is exempt from the
+      # minimum residential density standard of Table 4.0430." Every existing
+      # taxlot is taken as a lot of record (Steph 2026-10-21, rulings.yaml
+      # 2026-10-21-existing-taxlots-are-lots-of-record), so rows A, B and C
+      # cannot block the one-lot quadplex, and a lot that misses one of them
+      # owes no density floor. The unit-lots plat makes new lots and still
+      # meets the rows (as note 6 and note 11 adjust them). 4.0431.B's
+      # "shall be satisfied" is for multi-family, five or more units in
+      # Gresham (3.0100 L939-L942), which the pod is not.
+      value: lot_dimensions
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L506-L509"
     max_lot_depth_ratio:
       # Row C, the residential half of the cell: "0.5 : 1 for residential;
       # none for commercial, institutional and mixed-use". 4.0431.A: the
       # ratio is "the lot width dimension by the lot depth dimension", so a
       # lot at least half as wide as it is deep -- at most twice as deep as
       # it is wide. 4.0431.C lets an existing lot of record that misses it be
-      # developed anyway (L506-L507); like residential note 2 (L374) that is
-      # a relief on a fact this screen does not hold -- whether a taxlot is a
-      # lot of record -- so it is not taken, and it can only cost a lot.
+      # developed anyway (L506-L507), and since 2026-10-21 every existing
+      # taxlot is taken as one (lot_of_record_relief above): on the one-lot
+      # path this row no longer blocks. The unit-lots plat makes new lots;
+      # note 6 lifts the ratio from them.
       width_to_depth: 0.5
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L295,L306-L310"
       variants:

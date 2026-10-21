@@ -938,70 +938,28 @@
     }
   },
   "or/multnomah/gresham": {
-    "CC": {
-      "max_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "max_height_ft": [
-        "rockwood_design_district"
-      ],
-      "min_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "min_frontage_ft": [
-        "rockwood_design_district"
-      ],
-      "min_lot_sqft": [
-        "rockwood_design_district"
-      ],
-      "parking_min_per_unit": [
-        "rockwood_design_district"
-      ],
-      "setback_front_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_front_max_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_rear_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_side_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_street_side_ft": [
-        "rockwood_design_district"
-      ]
-    },
     "CMF": {
       "max_density_du_per_acre": [
-        "civic_corridor",
-        "rockwood_design_district"
+        "civic_corridor"
       ],
       "max_height_ft": [
         "civic_corridor",
-        "north_of_marine_drive",
-        "rockwood_design_district"
+        "north_of_marine_drive"
       ],
       "max_lot_depth_ratio": [
-        "civic_corridor",
-        "rockwood_design_district"
+        "civic_corridor"
       ],
       "min_density_du_per_acre": [
-        "civic_corridor",
-        "rockwood_design_district"
+        "civic_corridor"
       ],
       "min_frontage_ft": [
-        "civic_corridor",
-        "rockwood_design_district"
+        "civic_corridor"
       ],
       "min_lot_sqft": [
-        "civic_corridor",
-        "rockwood_design_district"
+        "civic_corridor"
       ],
       "parking_min_per_unit": [
-        "civic_corridor",
-        "rockwood_design_district"
+        "civic_corridor"
       ],
       "quadplex_allowed": [
         "civic_corridor"
@@ -1009,75 +967,35 @@
       "setback_front_ft": [
         "at_street_end",
         "civic_corridor",
-        "rockwood_design_district",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_front_max_ft": [
-        "civic_corridor",
-        "rockwood_design_district"
+        "civic_corridor"
       ],
       "setback_rear_ft": [
         "at_street_end",
         "civic_corridor",
-        "rockwood_design_district",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_side_ft": [
         "at_street_end",
         "civic_corridor",
-        "rockwood_design_district",
         "sidewalk_easement",
         "through_lot"
       ],
       "setback_street_side_ft": [
         "at_street_end",
         "civic_corridor",
-        "rockwood_design_district",
         "sidewalk_easement",
         "through_lot"
-      ]
-    },
-    "CMU": {
-      "max_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "max_height_ft": [
-        "rockwood_design_district"
-      ],
-      "max_lot_depth_ratio": [
-        "rockwood_design_district"
-      ],
-      "min_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "min_frontage_ft": [
-        "rockwood_design_district"
-      ],
-      "min_lot_sqft": [
-        "rockwood_design_district"
-      ],
-      "parking_min_per_unit": [
-        "rockwood_design_district"
-      ],
-      "setback_front_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_front_max_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_rear_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_side_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_street_side_ft": [
-        "rockwood_design_district"
       ]
     },
     "LDR-5": {
+      "lot_of_record_relief": [
+        "north_of_marine_drive"
+      ],
       "max_density_du_per_acre": [
         "north_of_marine_drive"
       ],
@@ -1126,6 +1044,9 @@
       ]
     },
     "LDR-7": {
+      "lot_of_record_relief": [
+        "north_of_marine_drive"
+      ],
       "max_density_du_per_acre": [
         "north_of_marine_drive"
       ],
@@ -1173,42 +1094,10 @@
         "through_lot"
       ]
     },
-    "MC": {
-      "max_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "max_height_ft": [
-        "rockwood_design_district"
-      ],
-      "min_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "min_frontage_ft": [
-        "rockwood_design_district"
-      ],
-      "min_lot_sqft": [
-        "rockwood_design_district"
-      ],
-      "parking_min_per_unit": [
-        "rockwood_design_district"
-      ],
-      "setback_front_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_front_max_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_rear_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_side_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_street_side_ft": [
-        "rockwood_design_district"
-      ]
-    },
     "MDR-12": {
+      "lot_of_record_relief": [
+        "north_of_marine_drive"
+      ],
       "max_density_du_per_acre": [
         "north_of_marine_drive"
       ],
@@ -1231,9 +1120,6 @@
         "at_street_end",
         "sidewalk_easement",
         "through_lot"
-      ],
-      "setback_front_max_ft": [
-        "rockwood_design_district"
       ],
       "setback_garage_entrance_ft": [
         "at_street_end",
@@ -1279,9 +1165,6 @@
         "at_street_end",
         "sidewalk_easement",
         "through_lot"
-      ],
-      "setback_front_max_ft": [
-        "rockwood_design_district"
       ],
       "setback_garage_entrance_ft": [
         "at_street_end",
@@ -1334,9 +1217,6 @@
         "sidewalk_easement",
         "through_lot"
       ],
-      "setback_front_max_ft": [
-        "rockwood_design_district"
-      ],
       "setback_garage_entrance_ft": [
         "at_street_end",
         "sidewalk_easement",
@@ -1358,118 +1238,10 @@
         "through_lot"
       ]
     },
-    "RTC": {
-      "max_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "max_height_stories": [
-        "rockwood_design_district"
-      ],
-      "min_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "min_frontage_ft": [
-        "rockwood_design_district"
-      ],
-      "min_lot_sqft": [
-        "rockwood_design_district"
-      ],
-      "parking_min_per_unit": [
-        "rockwood_design_district"
-      ],
-      "setback_front_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_front_max_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_rear_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_side_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_street_side_ft": [
-        "rockwood_design_district"
-      ]
-    },
-    "SC": {
-      "max_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "max_height_stories": [
-        "rockwood_design_district"
-      ],
-      "max_lot_depth_ratio": [
-        "rockwood_design_district"
-      ],
-      "min_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "min_frontage_ft": [
-        "rockwood_design_district"
-      ],
-      "min_lot_sqft": [
-        "rockwood_design_district"
-      ],
-      "parking_min_per_unit": [
-        "rockwood_design_district"
-      ],
-      "setback_front_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_front_max_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_rear_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_side_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_street_side_ft": [
-        "rockwood_design_district"
-      ]
-    },
-    "SC-RJ": {
-      "max_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "max_height_stories": [
-        "rockwood_design_district"
-      ],
-      "max_lot_depth_ratio": [
-        "rockwood_design_district"
-      ],
-      "min_density_du_per_acre": [
-        "rockwood_design_district"
-      ],
-      "min_frontage_ft": [
-        "rockwood_design_district"
-      ],
-      "min_lot_sqft": [
-        "rockwood_design_district"
-      ],
-      "parking_min_per_unit": [
-        "rockwood_design_district"
-      ],
-      "setback_front_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_front_max_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_rear_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_side_ft": [
-        "rockwood_design_district"
-      ],
-      "setback_street_side_ft": [
-        "rockwood_design_district"
-      ]
-    },
     "TLDR": {
+      "lot_of_record_relief": [
+        "north_of_marine_drive"
+      ],
       "max_density_du_per_acre": [
         "north_of_marine_drive"
       ],
@@ -1515,6 +1287,9 @@
       ]
     },
     "TR": {
+      "lot_of_record_relief": [
+        "north_of_marine_drive"
+      ],
       "max_density_du_per_acre": [
         "north_of_marine_drive"
       ],

@@ -136,3 +136,17 @@ def test_cmf_townhouse_path_is_open_only_on_the_corridor() -> None:
     text = (DOCS / "4.0400.corridor.txt").read_text(encoding="utf-8").splitlines()
     note = " ".join(" ".join(text[i - 1].split()) for i in (217, 218))
     assert "Middle housing land divisions are not permitted in the CMF land use district outside these areas" in note
+
+
+@pytest.mark.parametrize("zone", ["MDR-12", "MDR-24", "OFR"])
+def test_the_corridor_design_district_residential_zones_face_the_street(zone: str) -> None:
+    """7.0420(J)(1)(a)'s 50 percent frontage occupation reaches plexes in the
+    Corridor Design District, and 3.0100 puts MDR-12, MDR-24 and OFR in it
+    (2026-10-21; it had been carried on the corridor zones only)."""
+    held = load_rules()[GRESHAM].zones[zone].values["orientation_constraint"]
+    assert held.value == "axis_required"
+    definitions = (DOCS / "3.0100.definitions.txt").read_text(encoding="utf-8").splitlines()
+    text = " ".join(definitions[833:837])
+    assert "Corridor Design District" in text
+    for named in ("MDR-12", "MDR-24", "OFR"):
+        assert named in text

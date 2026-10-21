@@ -182,11 +182,16 @@ notes:
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L374"
     digest: "be0e306681cb"
-    state: dismissed
+    state: encoded
+    encoded_as: >-
+      lot_of_record_relief lot_area on LDR-5, LDR-7, TLDR, TR and MDR-12
     reason: >-
-      note 2 lets an undersized lot of record be developed anyway; it can only
-      relax the minimum lot size this screen enforces, so ignoring it costs
-      lots we called too small and never the other way
+      note 2 lets an undersized lot of record be developed anyway. Dismissed
+      until 2026-10-21 because nothing said which taxlots are lots of record;
+      Steph ruled that day that every existing taxlot is taken as one
+      (rulings.yaml 2026-10-21-existing-taxlots-are-lots-of-record), so the
+      one-lot path is let off row B's minimum lot size. The unit-lots plat
+      makes new lots and is not
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L376"
     digest: "3aad28e9d598"
@@ -739,12 +744,21 @@ notes:
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L480"
     digest: "cbf12e6d1150"
-    state: unmeasured
-    fact: rockwood_design_district
+    state: dismissed
     reason: >-
-      inside the Rockwood Design District the front setbacks come from Section
-      7.0512.A.2 rather than from this table, and nothing decides whether a
-      parcel is inside it
+      inside the Rockwood Design District note 13 sends the street setbacks to
+      Section 7.0512.A.2, and that section does not reach the pod in either
+      form (Steph 2026-10-21, "Yes on Rockwood setback"; rulings.yaml
+      2026-10-21-gresham-rockwood-setbacks). 7.0502(B): "Section 7.0501-7.0512
+      do not apply to: Single detached dwellings, duplexes, triplexes, and
+      quadplexes" (7.0500 L44-L45), so the one-lot quadplex takes this table's
+      setbacks. A.2 S1 sits under "All Development", which 7.0512 defines as
+      "All developments, except townhouses" (L214, L525), and for townhouses
+      S1 itself says to "follow the minimum building setback requirements
+      provided in Table 4.0430, Footnote 1" with a 20 ft maximum (L577-L580)
+      -- the numbers note 1 and row G already hold. Held unmeasured until
+      2026-10-21 on rockwood_design_district, which kept every lot inside the
+      district out of GREEN
 
   # --- 4.1100, Downtown -----------------------------------------------
   #

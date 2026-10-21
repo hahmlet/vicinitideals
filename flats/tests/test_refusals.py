@@ -373,7 +373,10 @@ pytestmark = pytest.mark.unit
 # (FOLLOWUPS 93 + 85): notes arrive on Troutdale HDR and MU-1 (the 8.130.C townhouse
 # design standards, read and NOT ENCODED), Fairview VTH and Milwaukie SMU, and leave
 # Milwaukie NMU (now encoded); one Fairview comment arrives.
-EXPECTED = {"notes": 157, "comments": 289, "tests": 18}
+EXPECTED = {"notes": 156, "comments": 289, "tests": 18}
+# 157 -> 156 notes on 2026-10-21 (FOLLOWUPS 108): Gresham MDR-24's note no longer
+# refuses Table 4.0130 note 2, now encoded as lot_of_record_relief on the zones
+# whose row B it marks (Steph's lots-of-record ruling).
 # 286 -> 289 comments on 2026-10-20 (FOLLOWUPS 88/89): Gladstone Ord. 1545 and
 # Happy Valley 16.44 carry their refusals in comments.
 # 286 -> 285 comments on 2026-10-16 (FOLLOWUPS 84 phase 3): Oregon City 17.16.060.E,
