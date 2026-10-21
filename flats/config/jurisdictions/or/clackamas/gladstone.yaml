@@ -771,7 +771,7 @@ defaults:
   # rear setback above its front, so no other reading would be stricter.
   front_lot_line_through:
     value: both
-    cite: GMC 17.06.290, Front lot line, a lot line separating a lot from a street other than an alley
+    cite: "GMC 17.06.290, Front lot line, a lot line separating a lot from a street other than an alley; 17.06.310, Through lot, an interior lot having frontage on two streets other than alleys"
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1706.html
     retrieved: '2026-08-27'
     quote: "or/clackamas/gladstone/17.06.definitions.txt#L881,L921"
@@ -1536,9 +1536,11 @@ zones:
       # 17.18.070: "Off-street parking areas shall not be located between the
       # building and street or within required setbacks."
       value: true
+      cite: "Gladstone Municipal Code 17.18.070 (off-street parking standards), Community Commercial District: not between the building and street"
       quote: "or/clackamas/gladstone/17.18.c-2.txt#L171"
     parking_required_yard_prohibited:
       value: true
+      cite: "Gladstone Municipal Code 17.18.070 (off-street parking standards), Community Commercial District: not within required setbacks"
       quote: "or/clackamas/gladstone/17.18.c-2.txt#L171"
     notes: >-
       Encoded 2026-10-08, 147 lots (Portland Avenue). Outright by

@@ -77,11 +77,16 @@ _SECTION = re.compile(r"(?<![\d.])(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)(?![\d])"
 #: purpose statement two headings up. Only a three-part number followed by
 #: its title counts -- Oregon City's split table-of-contents lines ("17.
 #: 32.010" alone on a line) stay what they were.
+#: A bare number has one more guard: it cannot be a fraction. West Linn's
+#: dimensional tables print each cell on its own line, so the FAR cell "0.45"
+#: sat at the margin with nothing after it and read as a heading for every
+#: row below it -- nine FAR and parking values reported as sitting in section
+#: "0.45" or "0.30". No codifier numbers a section zero-point-anything.
 _HEADING = re.compile(
     r"^[ 	]{0,8}(?:"
     r"Section\s+(?P<s>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.\s*(?:[A-Z—-])"
     r"|(?:§|�)\s*(?P<m>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.?\s*(?:[A-Z§—-]|$)"
-    r"|(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—-]|$)"
+    r"|(?!0\.)(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—-]|$)"
     r"|(?P<t>\d{1,3})\. (?P<u>\d{2,4}\.\d{1,4})\s+[A-Z]"
     r")"
 )

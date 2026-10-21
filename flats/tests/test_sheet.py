@@ -733,6 +733,28 @@ def test_a_note_in_the_next_cell_in_words_is_that_cells(tmp_path: Path):
     assert "10" not in [m.mark for m in S.markers(sheet, row, S.hits(row, None, sheet.aspect)[:1], "MDR-12")]
 
 
+def test_a_note_under_the_next_numbered_block_is_not_the_cells(tmp_path: Path):
+    """Gresham Table 4.0130: MDR-24's interior frontage "45 ft." sits over
+    "2. Minimum Street Frontage: Corner lots" and the corner cell "Varies
+    depending on access¹⁰"; note 10 is the corner cell's (Steph check 646)."""
+    runs = [
+        (72, 700, 9, "All other uses"),
+        (300, 700, 9, "45 ft."),
+        (72, 689, 9, "2. Minimum Street Frontage: Corner lots"),
+        (72, 678, 9, "Townhouse"),
+        (300, 678, 9, "Varies"),
+        (300, 667, 9, "depending on"),
+        (300, 656, 9, "access"),
+        (330, 660, 5, "10"),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "All other uses 45 ft.")
+
+    assert "10" not in [m.mark for m in S.markers(sheet, row, S.hits(row, 45, sheet.aspect), "MDR-24")]
+
+
 def test_a_row_label_naming_several_zones_gives_each_its_own_note(tmp_path: Path):
     runs = [
         (72, 700, 9, "LDR-5"),

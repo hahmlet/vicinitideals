@@ -768,7 +768,7 @@ def _down_the_cell(sheet: Sheet, line: Line, span: tuple[int, int]) -> list[Mark
     line is wider than the number, and "residential⁸,¹¹" ends past it. It
     ends at a line that opens with a figure in the column (the next row's
     cell; a "none" inside the cell's own sentence does not), at the next
-    lettered row, or at a gap wider than a line.
+    lettered or numbered row, or at a gap wider than a line.
     """
     cells = _cells(line, [span])
     k = next(k for k, c in enumerate(cells) if c[0] == span)
@@ -786,7 +786,12 @@ def _down_the_cell(sheet: Sheet, line: Line, span: tuple[int, int]) -> list[Mark
     for printed in below[:8]:
         if printed.box.y0 - bottom > height * 1.5:
             break
-        if printed.words and _LETTERED.match(printed.words[0].text):
+        # "2. Minimum Street Frontage: Corner lots" opens the next block:
+        # MDR-24's interior 45 ft. was asked about the corner cell's note 10
+        # printed under it (Steph check 646, 2026-10-21).
+        if printed.words and (
+            _LETTERED.match(printed.words[0].text) or _NUMBERED.match(printed.words[0].text)
+        ):
             break
         over = sorted((w for w in printed.words if left <= w.box.x0 < right), key=lambda w: w.box.x0)
         opens = next((w for w in over if not w.sup), None)
@@ -798,6 +803,7 @@ def _down_the_cell(sheet: Sheet, line: Line, span: tuple[int, int]) -> list[Mark
 
 
 _LETTERED = re.compile(r"^[A-Z]\.(?:\d+\.)*(?:[a-z]\.)?$")
+_NUMBERED = re.compile(r"^\d+\.$")
 
 
 def _heads_its_row(line: Line, mark: Word) -> bool:

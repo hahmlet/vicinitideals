@@ -674,14 +674,17 @@ read when the weekly full re-screen lands.
    1N2E21AD  -06200 (RM1, 50 x 200 ft). PROPOSAL: fetch the two maps from the City's open-data
    portal as polygons (or get them from Steph), then add a frontage check and the rear setback with
    a corner exemption. Until then, consider marking these 902 yellow.
-90. [Claude] [(a)'s check change Copilot-able once (b)+(c) are read] [scan: NO (citations move, answers must not)] **409 cites name a section the cited lines
-   do not sit in (found 2026-10-16, docs/ops/quote-mismatch-2026-10-16.md).** Not quote
-   failures: gaps.py:462 / attribution.check. (a) header_or_xref 286: the named section is printed inside the
-   lines (running header / cross-reference -- likely harmless); (b) heading_same_file 88 the heading sits
-   elsewhere in the same file (cite may point at the wrong lines);    (c) heading_other_file 16 the
-      heading is only in another stored file; (d) unlocated 19 (the classifier's counts;
-      headline 123 = b+c+d). Hillsboro 123, Tigard 107, Beaverton 83 (was 80).
-   Next: read (b)+(c) by hand (judgement), fix cites; then teach the check to ignore (a).
+90. [Claude] [(a)'s check change Copilot-able] [scan: NO (citations move, answers must not)] **Cites that name a section
+   the cited lines do not sit in (found 2026-10-16, docs/ops/quote-mismatch-2026-10-16.md).** (b)+(c) DONE
+   8775562a 2026-10-21: 63 cites fixed in Estacada, Gladstone, Oregon City, Fairview, Troutdale, Wood
+   Village, Tigard -- the quoted lines were right, the cite named a neighbouring section; no value,
+   condition or quote moved. Counts now (a) header_or_xref 283, (b) 48, (c) 0, (d) unlocated 9. The 57
+   left are the CHECK's errors, not cites: lagging page headers beat a real heading (Sherwood 16.94, King
+   City 16.114.130 -- a fix added 89 false cases, reverted); Sherwood's 16.12.030 heading missing from
+   the stored text (43, hand-checked correct); Beaverton cells "18.511" / "see 20.25.15" read as
+   headings; the cite reader takes "Table 18.805.1" as a section and cannot read "19.65.030 through
+   19.65.060". Next: teach the check to ignore (a). Also: Gresham NC-PV quadplex_allowed cites Tables
+   4.1413/4.1415A/B but its quote is Table 4.1423 ("Quadplex NP") -- fix the cite.
 83. [Claude] [scan: YES (yellows only go green)] **Measure Washington County's "standard plat" gate instead
    of flagging it (offered 2026-10-14, item 79).** 731 R-9/R-15/... lots are yellow only because
    nothing says whether the lot was made by a standard subdivision or partition plat (302-2.14 ..
@@ -1172,14 +1175,12 @@ read when the weekly full re-screen lands.
      `planned_development` lever are a relief-policy question --
      HUMAN_TODO 23 (2026-09-25).
 
-96. [Claude] [scan: NO] **Hand-off: 13 open Gresham questions from 2026-08-17 (rest of the 10-19 tab
-   audit DONE f7512199; Steph: chat rulings in force, leave the sign-off counters).** /flats/feedback
-   holds 13 "unanswered" verdicts on Gresham CMF and DRL-1 (min_frontage_ft, min_lot_sqft, the four
-   setbacks, setback_front_max_ft, min_lot_depth_ft ...), each asking whether a footnote (CMF notes 1,
-   3a, 6, 7, 8, 11; DRL-1 corner-lot frontage 40 ft, townhouse 16/20 ft, interior-only depth) is
-   applied. Steph's note numbers do not match the encoding's (CMF frontage cites note 17), so read
-   Table 4.0430 / the DRL-1 table with the yaml (gresham.yaml CMF ~L5124, DRL-1 ~L4441), answer each
-   in a plain line, encode any footnote that is missing (bound it), then Steph marks them handed on.
+96. [Claude] [Steph: mark the 13 handed on] [scan: YES (corner depth, on flats/gresham-review)] **Hand-off: 13 open
+   Gresham questions from 2026-08-17 -- ANSWERED 2026-10-21.** CMF (feedback 4-12): notes 1, 3a, 6, 7,
+   8, 11 are all applied -- see the Table 4.0430 page (item 104). DRL-1 (13-18): corner frontage 40,
+   townhouse 16/20 frontage and width, townhouse lot size none -- all held; depth 70 was held on corner
+   lots too, now exempt on corners in DRL-1/DRL-2/DCC/DTM (35e6f087 on flats/gresham-review, bound
+   with item 102). Left: Steph marks them handed on once the bound ships.
 
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a
    per-unit ratio (Steph 2026-10-19, page check id 248).** or layer defaults hold
@@ -1234,36 +1235,47 @@ read when the weekly full re-screen lands.
    year-0 revenue entries describe what the code no longer writes. (a) and
    (d) look like export bugs; (b) and (c) are presentation choices for
    Steph. Exporter = app/exporters/investor_export.py (not the engine).
-102. [Claude] [scan: maybe (front-line choice moves corner/through lots)] **Gresham front lot line on corner and
-   through lots (Steph page check 2026-10-20, ids 295-298 "differs").** Steph's words: on a corner, the
-   front is "determined by the orientation necessary to achieve minimum required lot depth. IF BOTH,
-   then you choose" (295); on a through lot "the manager determines regardless of orientation ... make
-   our best guess ... follow standards from other cities/parts of Gresham ... this would be a green
-   flag" (297). Read Gresham's definition (page 36 of the definitions doc), encode corner = the side
-   that makes min depth (either if both), through = best-guess front + a flag, keep it green. Durham
-   273/282 (front_lot_line_corner, corner_access_street) also "differs" with no comment -- read them
-   with Steph's Durham rulings before touching.
-103. [Claude] [scan: YES for (d) only] **Page check: notes the cards still cannot ask (2026-10-20).** (a) A marker on a
-   heading that spans several columns -- Gresham Table 4.0131 "FRONT²" over Front Facade / Front
-   Porch / Garage (Steph check 538) -- is over none of the numbers, so no card asks note 2 (held as
-   through_lot, unmeasured). (b) Tables whose headings print rotated (Pleasant Valley, Springwater)
-   cannot be narrowed to one column, so those cards box every repeat of a number. (c) ~890 cards now
-   say "<zone> is not printed on this page"; most are true (chapter-wide parking/open-space pages) --
-   watch whether Steph finds the line noisy, and quiet it on pages that state a city-wide rule.
-   (d) RIDES THE WEEKLY: Gresham MDR-24 and corridor (RTC/SC/SC-RJ/CMF/CMU) corner townhouse
-   frontage 32 -> 25 and MDR-24 corner width 42 -> 25 (the plat's drive is a shared access; dc79bd29)
-   -- read those gains lot by lot at the next weekly.
-104. [Claude] [Steph] [scan: NO until the corridor is mapped] **Gresham Table 4.0430 notes, read note by
-   note (Steph 2026-10-20).** DONE: all 18 notes read, plain-English page
-   https://claude.ai/artifact/BQaymC5Un4njJZaTH9LJDf; note 14 re-ruled (TLDR setbacks are TIGHTER
-   than CMF's) and encoded as civic_corridor variants on CMF; ledger L431/L465/L492 corrected.
-   OPEN: (a) [Steph] map which CMF parcels are "along" NE Glisan / NE 162nd (Gresham's corridor
-   map) -- until then every CMF lot stays out of GREEN; (b) note 12's target 7.0512.B.6 requires 3
-   storeys at the 181st/Burnside, 181st/Stark, Burnside/Stark gateways (rockwood-design L3456-L3462)
-   -- those lots show yellow, should be red once Rockwood is mapped; (c) note 6 townhouse lot width
-   16/25 ft not held as its own rule (frontage covers ordinary lots; low risk); (d) row M buffering
-   points to Section 9.0100, not stored; (e) row C width/depth ratio for a single-lot quadplex in
-   SC, SC-RJ, CMU not encoded.
+102. [Claude] [Steph: Durham 273/282 say what differs] [scan: YES -- BUILT f437ebd1 on flats/gresham-front-line,
+   merged into flats/gresham-review d807c15c with item 96's depth fix; Gresham partial bound next] **Gresham
+   front lot line on corner and through lots (Steph page check 2026-10-20, ids 295-298).** Corner: tried
+   only facing a street that meets the zone's minimum depth (both if both or no depth rule; both if
+   neither, and the depth check decides) -- corners only stay or lose. Through: both ends are fronts
+   (Table 4.0131 note 2 says so) + a never-blocking flag -- throughs only stay or gain. Rulings
+   registered. Read LOST and GAINED lots one by one before merge. Durham 273/282 left alone: no
+   Durham ruling to read them against.
+103. [Claude] [scan: YES for (d) only] **Page check: notes the cards still cannot ask (2026-10-20).** (a) DONE
+   0387fc8a: a heading over several columns ("FRONT²" over Front Facade / Front Porch / Garage) now
+   reaches each; 15 Table 4.0131 cards gained note 2, none lost a marker. (b) Tables whose headings
+   print rotated (Pleasant Valley, Springwater) cannot be narrowed to one column, so those cards box
+   every repeat of a number. (c) ~890 cards now say "<zone> is not printed on this page"; most are true
+   (chapter-wide parking/open-space pages) -- watch whether Steph finds the line noisy. (d) RIDES THE
+   WEEKLY: Gresham MDR-24 and corridor corner townhouse frontage 32 -> 25 and MDR-24 corner width
+   42 -> 25 (dc79bd29) -- read those gains lot by lot at the next weekly. (e) A marker on the TABLE'S
+   TITLE ("Table 4.0131 - Minimum Setbacks in Residential Districts¹") reaches every cell and no card
+   asks it; asking it would add a note card to every setback in the table -- decide with Steph whether
+   that is wanted. (f) DONE 67a8d0b5: reading down a wrapped cell
+   stops at a numbered block ("2. Minimum Street Frontage: Corner lots"); MDR-24's interior 45 ft
+   frontage stopped asking the corner cell's note 10 (Steph check 646). Sweep: that one card only.
+104. [Claude] [Steph: (a) two edge questions] [scan: YES (a), on flats/gresham-corridor] **Gresham Table 4.0430
+   notes, read note by note (Steph 2026-10-20).** DONE: all 18 notes read, plain-English page
+   https://claude.ai/artifact/BQaymC5Un4njJZaTH9LJDf; note 14 encoded as civic_corridor variants.
+   (a) Steph 2026-10-20 "Yes, map it". Gresham has NO map (zoning layer GME/Planning/MapServer/4 is plain
+   CMF; Ord. 1830 2022 names the streets only). 659 CMF lots (505 red, 154 yellow); seven CMF blocks
+   touch Glisan/162nd. BUILDING on flats/gresham-corridor: true = a street lot line on NE Glisan or NE
+   162nd north of Burnside (~59); false = CMF outside the seven blocks (~569); unknown = the ~31 behind
+   the frontage in touching blocks (NE 183rd, deep lots, the NE Halsey strip). ASKED Steph 2026-10-21:
+   do lots behind the frontage count; does the Halsey strip that touches 162nd only at its corner
+   count. ~9 lots move colour. (b) note 12's target 7.0512.B.6 requires 3 storeys at the
+   181st/Burnside, 181st/Stark, Burnside/Stark gateways -- yellow, should be red once Rockwood is
+   mapped; (c) note 6 townhouse lot width not held on its own (low risk); (d) row M buffering points
+   to Section 9.0100, not stored; (e) row C width/depth ratio for a single-lot quadplex in SC, SC-RJ,
+   CMU not encoded.
+106. [Claude] [Steph: the answer] [scan: YES if the floor applies] **Gresham corridor minimum density for a
+   quadplex on one lot (Steph page check 2026-10-21 ids 736/738/740 "differs", no note).** Table 4.0430 row
+   E: RTC "18 units per acre for Townhouses; 20 units per acre for multi-family", SC/SC-RJ 18 / 24. Held
+   exempt for a quadplex on ONE lot because Gresham's Multi-Family is five or more units and "not middle
+   housing" (3.0100 L939-L942); townhouse plat keeps 18. ASKED Steph whether the floor reaches the
+   single-lot quadplex. If yes: hold the multi-family figure (20 / 24), which can only turn big lots red.
 105. [Claude] [AFTER 73's restructure + clean] [scan: YES (new standards bind)] **Follow every
    cross-reference one layer down (Steph 2026-10-20).** A footnote or standard that says "see Section
    X", "conform with Table Y for the Z district" or "may be approved per Section W" is not read until
