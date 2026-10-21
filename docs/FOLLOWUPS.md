@@ -1260,7 +1260,7 @@ read when the weekly full re-screen lands.
    (#id) shown too. Limit: a column-heading note more than ~8 lines above a row does not reach it. (f) DONE 67a8d0b5: reading down a wrapped cell
    stops at a numbered block ("2. Minimum Street Frontage: Corner lots"); MDR-24's interior 45 ft
    frontage stopped asking the corner cell's note 10 (Steph check 646). Sweep: that one card only.
-104. [Claude] [Steph: two questions below] [BUILT on flats/gresham-4430 c0c53f7f, not merged] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
+104. [Claude] [BUILDING (i)(ii) on flats/gresham-4430] [BUILT c0c53f7f, not merged] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
    notes, read note by note (Steph 2026-10-20).** DONE: all 18 notes read, plain-English page
    https://claude.ai/artifact/BQaymC5Un4njJZaTH9LJDf; note 14 encoded as civic_corridor variants.
    (a) Steph 2026-10-20 "Yes, map it". Gresham has NO map (zoning layer GME/Planning/MapServer/4 is plain
@@ -1282,10 +1282,21 @@ read when the weekly full re-screen lands.
    note 6); NEW FIX Table 4.0420 note 2 -- CMF land division only on the corridor. Bound: 40 ratio reds
    (9 green->red), 16 note-2 reds (4 green), 3 corridor greens. (b) Rockwood does NOT reach the pod:
    7.0502(B) exempts quadplexes, 7.0512 "All Development" excludes townhouses -- no gateway reds.
-   QUESTIONS for Steph (counts pending): (i) 4.0431.C lets an EXISTING lot of record that misses lot
+   STEPH 2026-10-21 ANSWERED both: (i) "assume that the lots from the gis and other data sources we
+   have are legal. Every lot we try to purchase will go thru a legal review" -> yes; (ii) yes. Were: (i) 4.0431.C lets an EXISTING lot of record that misses lot
    size, frontage or the ratio still be built on (and skips min density) -- treat every taxlot as a lot
    of record on the single-lot path? (ii) lift note 13's Rockwood setback hold, since 7.0502(B)/7.0512
-   take the pod out? Hold the merge until (i) is answered.
+   take the pod out? BUILDING both, then bound, merge, splice.
+108. [Claude] [after 104 lands] [scan: YES (reds/yellows only go toward green)] **Every taxlot is a legal
+   lot of record (Steph 2026-10-21, GLOBAL).** "Let's assume that the lots from the gis and other data
+   sources we have are legal. Every lot we try to purchase will go thru a legal review." Lot-of-record
+   reliefs were dismissed as conservative (e.g. Gresham residential note 2, Clackamas ZDO notes). Sweep
+   every layer's footnote ledgers + yamls for "lot of record" relief on the single-lot path; take each
+   (a new lot from a division still meets the table); bound per city; read gains one by one.
+109. [Claude] [Steph: approve the plan first -- major feature] **Design districts (Steph 2026-10-21: "we
+   do need to incorporate Rockwood (and other) design districts").** Rockwood itself does not reach the
+   pod (7.0502(B)); others may. Inventory running (every covered city: district, does it reach the pod,
+   screenable standards, boundary source); then a scoped plan for Steph.
 107. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Page check: footnotes asked as their own
    value card (Steph 2026-10-21).** LIVE 411f37ae (335097e6 + 4a1c6d4e). 76 stand-alone cards read wholly
    off one note now ride their table cell's note question ("we read it as ... is that what the note
