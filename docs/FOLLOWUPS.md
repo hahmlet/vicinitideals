@@ -1287,6 +1287,13 @@ read when the weekly full re-screen lands.
    size, frontage or the ratio still be built on (and skips min density) -- treat every taxlot as a lot
    of record on the single-lot path? (ii) lift note 13's Rockwood setback hold, since 7.0502(B)/7.0512
    take the pod out? BUILDING both, then bound, merge, splice.
+110. [Claude] [NEXT -- possible false GREEN] [scan: YES (greens may go yellow/red)] **Wilsonville Villebois
+   (V): the quadplex route is for lots that already have a home.** 4.125(.23) opens "For lots previously
+   developed with at least one residential unit" (4.planning.txt#L6439); FLATS applies its Table V-1 +
+   7,000 sf route to every V lot. Live run 80: 2 VACANT V lots green (31W15AC02800 51,730 sf,
+   31W15AC03623 16,064 sf; assessor VAC, no building value). Read what governs a vacant V lot (SAP/PDP/
+   FDP, three-tier rule), gate the route on an existing dwelling, bound Wilsonville. Found by the 109
+   design-district inventory.
 108. [Claude] [after 104 lands] [scan: YES (reds/yellows only go toward green)] **Every taxlot is a legal
    lot of record (Steph 2026-10-21, GLOBAL).** "Let's assume that the lots from the gis and other data
    sources we have are legal. Every lot we try to purchase will go thru a legal review." Lot-of-record
