@@ -4602,6 +4602,14 @@ zones:
     min_lot_depth_ft:
       value: 70
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
+      variants:
+        # "Depth, interior lot: 70 feet" and no corner row: the width rows
+        # name interior and corner lots each, the depth row only the interior
+        # (Steph 2026-08-17 feedback 14: "70 is correct, but only for an
+        # interior lot").
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L514-L516"
     orientation_constraint:
       # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
       # be occupied by buildings oriented to the abutting street", measured
@@ -4762,6 +4770,14 @@ zones:
     min_lot_depth_ft:
       value: 70
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
+      variants:
+        # "Depth, interior lot: 70 feet" and no corner row: the width rows
+        # name interior and corner lots each, the depth row only the interior
+        # (Steph 2026-08-17 feedback 14: "70 is correct, but only for an
+        # interior lot").
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L514-L516"
     orientation_constraint:
       # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
       # be occupied by buildings oriented to the abutting street", measured
@@ -4927,6 +4943,14 @@ zones:
     min_lot_depth_ft:
       value: 70
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
+      variants:
+        # "Depth, interior lot: 70 feet" and no corner row: the width rows
+        # name interior and corner lots each, the depth row only the interior
+        # (Steph 2026-08-17 feedback 14: "70 is correct, but only for an
+        # interior lot").
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L514-L516"
     orientation_constraint:
       # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
       # be occupied by buildings oriented to the abutting street", measured
@@ -5083,6 +5107,14 @@ zones:
     min_lot_depth_ft:
       value: 70
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
+      variants:
+        # "Depth, interior lot: 70 feet" and no corner row: the width rows
+        # name interior and corner lots each, the depth row only the interior
+        # (Steph 2026-08-17 feedback 14: "70 is correct, but only for an
+        # interior lot").
+        - exempt: true
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L514-L516"
     orientation_constraint:
       # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
       # be occupied by buildings oriented to the abutting street", measured

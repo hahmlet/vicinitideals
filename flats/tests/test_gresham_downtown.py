@@ -280,3 +280,15 @@ def test_the_new_citations_all_point_at_their_own_sentence(gresham: Layer) -> No
     ready = readiness_for(gresham, store=ProvenanceStore())
     assert ready.no_evidence == ()
     assert ready.misquoted == ()
+
+
+def test_the_depth_row_is_the_interior_lot_s(rules: RuleSet) -> None:
+    """Table 4.1130 prints "Depth, interior lot: 70 feet" and no corner depth,
+    where the width rows above it name both (Steph 2026-08-17: "70 is correct,
+    but only for an interior lot")."""
+    for zone in ("DRL-1", "DRL-2", *LIMITED):
+        interior = rules.resolve(GRESHAM, zone, (), {"lot_sqft": 5000.0})
+        corner = rules.resolve(GRESHAM, zone, ("corner_lot",), {"lot_sqft": 5000.0})
+        assert interior.values["min_lot_depth_ft"].value == 70, zone
+        assert "min_lot_depth_ft" not in corner.values, zone
+        assert "min_lot_depth_ft" in corner.exempted, zone
