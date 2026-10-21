@@ -322,6 +322,23 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CORNER_READ_AS_BEND]
+  THROUGH-FRONT-GUESSED:
+    description: "A through lot (a street along two opposite lines) whose code leaves the front to the planning manager (Gresham 3.0100, double frontage lots): screened with each street line a front, the reading the city's own rear-lot-line definition and yard table give and most other cities write. An access control strip along one street would make that line the rear. Steph 2026-10-20 (page check id 297): \"make our best guess ... This would be a green flag\""
+    kind: categorical
+    risk: unlikely
+    # Steph 2026-10-20: "a green flag" -- below the yellow line, so a lot
+    # otherwise GREEN stays GREEN with the flag beside it.
+    severity: 2
+    absorbs: null
+    resolution: external_inquiry
+    scope: per_lot
+    key: [lot]
+    path: "Ask the planning manager which street is the front, and whether either street carries an access control strip (FOLLOWUPS 102)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [THROUGH_FRONT_GUESSED]
   CURVE-ON-THE-LINE:
     description: "The lot's street curve measured within a degree of the angle its code's corner clause turns on (the bounds are the measured angle and the clause's ceiling); the digitising error is that size, so it is read as one street that bends, not a corner"
     kind: parametric

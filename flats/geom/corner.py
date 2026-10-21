@@ -21,6 +21,14 @@ and which is side."*
 * ``owner`` / ``entrance`` -- the applicant's choice (or the door's, which
   the applicant places): both streets are offered, and the screen keeps the
   better answer (Steph's ruling of 2026-09-19, HUMAN_TODO 21).
+* ``depth`` (Gresham 3.0100, Front Lot Line) -- the street that gives the
+  lot its minimum required depth is the front; where the depth is met both
+  ways the applicant chooses, as under ``owner``. Steph's page check of
+  2026-10-20 (id 295): "the front lot line is determined by the orientation
+  necessary to achieve minimum required lot depth. IF BOTH, then you
+  choose." A lot that meets the depth neither way is offered both streets,
+  as before: the minimum depth check is what answers that lot, and the
+  code sends a disputed front to the Manager.
 * ``both`` (unincorporated Clackamas ZDO 202) -- every street line IS a front
   line and takes the front setback, which is the envelope already cut. Nothing
   to name.
@@ -54,11 +62,18 @@ layers: ``both`` (Portland, Wood Village, Oregon City, Wilsonville, West Linn,
 Gladstone, Troutdale, unincorporated Multnomah) leaves the lot as cut;
 ``owner`` (Happy Valley, Milwaukie) names one end the front and the far one
 the rear, both tried, the better kept; ``both_unless_no_access`` (Clackamas
-ZDO 202, Gresham 3.0100: the end access is barred from is the rear) and
-unread (Tualatin; Fairview's residential districts) screen both fronts and
-each end as the rear and keep the WORSE (:func:`through_plans`). An alley
-edge is never a street end, and a lot that is both a corner and a through
-lot keeps its corner reading.
+ZDO 202: the end access is barred from is the rear) and unread (Tualatin;
+Fairview's residential districts) screen both fronts and each end as the
+rear and keep the WORSE (:func:`through_plans`). ``manager`` (Gresham
+3.0100: "For double frontage lots, the front lot line shall be determined
+by the Manager") is screened as ``both`` -- each street line a front, the
+reading Gresham's own Rear Lot Line definition and Table 4.0131 note 2 give
+and eight of the other cities write -- and the lot carries a flag below
+the yellow line (:func:`through_guessed`; Steph's page check of 2026-10-20,
+id 297: "make our best guess ... follow standards from other cities/parts
+of Gresham ... This would be a green flag"). An alley edge is never a
+street end, and a lot that is both a corner and a through lot keeps its
+corner reading.
 """
 
 from __future__ import annotations
@@ -87,6 +102,10 @@ EQUAL_LINE_FT = 1.0
 
 #: ``front_lot_line_corner`` values that leave the choice to the applicant.
 CHOICE = frozenset({"owner", "entrance"})
+#: ``front_lot_line_corner`` value that fronts the street giving the lot its
+#: minimum required depth, the applicant choosing where both do (Gresham
+#: 3.0100; Steph 2026-10-20, page check id 295).
+DEPTH = "depth"
 
 
 def two_streets(bearings: Sequence[float]) -> bool:
@@ -182,6 +201,10 @@ def through_lot(edges: Sequence[Sequence[object]], bearings: Sequence[float]) ->
 #: saying which (nothing measures street class or an access strip), or the
 #: code is unread. The worst of "both ends front" and "either end rear".
 THROUGH_WORST = frozenset({"both_unless_no_access", None})
+#: ``front_lot_line_through`` value where the code leaves a through lot's
+#: front to the planning manager (Gresham 3.0100). Screened as ``both``, the
+#: guess flagged (:func:`through_guessed`; Steph 2026-10-20, id 297).
+MANAGER = "manager"
 
 
 def through_ends(edges: LotEdges | None) -> tuple[tuple[int, ...], tuple[int, ...]] | None:
@@ -223,13 +246,14 @@ def through_plans(edges: LotEdges | None, rule: object) -> tuple[tuple[LotEdges,
     and takes the front setback, which is the envelope already cut.
     ``owner`` offers each end as the front with the other renamed rear, and
     the screen keeps the BETTER answer (Steph's ruling of 2026-09-19, as
-    on a corner). ``both_unless_no_access`` and unread offer the lot as it
+    on a corner). ``manager`` is ``both``, the guess flagged
+    (:func:`through_guessed`). ``both_unless_no_access`` and unread offer the lot as it
     is (both fronts) and each end renamed rear, and the screen keeps the
     WORSE answer: one of them is the truth and nothing says which, and
     where the rear setback exceeds the front the unnamed reading is the
     lenient one (Gresham LDR-5 10 ft front, 20 ft rear).
     """
-    if rule == "both":
+    if rule in ("both", MANAGER):
         return (), False
     ends = through_ends(edges)
     if ends is None:
@@ -242,6 +266,16 @@ def through_plans(edges: LotEdges | None, rule: object) -> tuple[tuple[LotEdges,
     if rule in THROUGH_WORST:
         return (edges, *named), True
     return (), False
+
+
+def through_guessed(edges: LotEdges | None, rule: object) -> bool:
+    """Whether this through lot's front is the screen's best guess at the
+    Manager's choice (``front_lot_line_through: manager``): the lot is cut
+    with each street line a front and flagged THROUGH-FRONT-GUESSED, below
+    the yellow line (Steph's page check of 2026-10-20, id 297: "This would
+    be a green flag"). False on a lot :func:`through_ends` does not name --
+    not a through lot, a corner, an irregular trace."""
+    return rule == MANAGER and through_ends(edges) is not None
 
 
 def rear_end(edges: LotEdges, far: Sequence[int]) -> LotEdges:
@@ -281,13 +315,30 @@ def line_length(edges: LotEdges, bearing: float) -> float:
     return max(proj) - min(proj) if proj else 0.0
 
 
-def front_bearings(edges: LotEdges | None, rule: object) -> tuple[float, ...]:
+def depth_from(edges: LotEdges, front: float) -> float:
+    """The lot's depth with the street at bearing ``front`` as its front:
+    its extent square to that street (Gresham 3.0100, Lot Depth: "the
+    perpendicular distance measured from the mid-point of the front lot
+    lines to the mid-point of the opposite, usually the rear, lot line" --
+    on the rectilinear lots a corner is named on, the same number)."""
+    return line_length(edges, float(front) + 90.0)
+
+
+def front_bearings(
+    edges: LotEdges | None, rule: object, *, min_depth_ft: float | None = None
+) -> tuple[float, ...]:
     """The street bearings this lot may be laid out to front, per the code.
 
     Empty where no front is to be named: not a corner, a street that bends,
     a lot on an alley, or a rule that names none (``both``, unread).
+
+    ``min_depth_ft`` is the zone's minimum lot depth, read only under
+    ``depth``: the streets from which the lot is at least that deep are
+    offered -- both where both are, where the zone states no depth, or
+    where neither is (the depth check answers that lot, and the code sends
+    a disputed front to the Manager).
     """
-    if not is_corner(edges) or rule not in CHOICE | {"shortest"}:
+    if not is_corner(edges) or rule not in CHOICE | {"shortest", DEPTH}:
         return ()
     assert edges is not None
     if any(e.alley for e in edges.edges):
@@ -295,6 +346,11 @@ def front_bearings(edges: LotEdges | None, rule: object) -> tuple[float, ...]:
     streets = tuple(float(b) for b in edges.front_bearings[:2])
     if rule in CHOICE:
         return streets
+    if rule == DEPTH:
+        if not min_depth_ft:
+            return streets
+        deep = tuple(b for b in streets if depth_from(edges, b) >= float(min_depth_ft))
+        return deep or streets
     lengths = [line_length(edges, b) for b in streets]
     shortest = min(lengths)
     return tuple(b for b, n in zip(streets, lengths) if n <= shortest + EQUAL_LINE_FT)

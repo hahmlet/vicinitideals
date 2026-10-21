@@ -1306,9 +1306,13 @@ _F: tuple[FieldDef, ...] = (
         "equal length. `owner`: the owner or applicant designates it (Gladstone "
         "17.06, Happy Valley 16.12, Milwaukie 19.200 \"the street on which the "
         "... development will face\", Troutdale 1.020 \"may face either "
-        "street\" unless the corner is one continuous curve, Gresham 3.0100 "
-        "where lot depth is met both ways, Lake Oswego 50.04 with the Manager "
-        "deciding a dispute). `entrance`: set by where the main entrance is "
+        "street\" unless the corner is one continuous curve, Lake Oswego 50.04 "
+        "with the Manager deciding a dispute). `depth`: the street line from "
+        "which the lot makes the zone's minimum lot depth is the front, the "
+        "applicant choosing where it is made both ways (Gresham 3.0100; "
+        "Steph's page check of 2026-10-20, id 295) -- a lot that makes it "
+        "neither way is offered both, its depth check answering it. "
+        "`entrance`: set by where the main entrance is "
         "(Fairview 19.13 front yard orientation; Tualatin 40-41, whose "
         "secondary frontage follows the front door) -- the owner's choice by "
         "another name, since the entrance goes where the plan puts it. "
@@ -1316,10 +1320,10 @@ _F: tuple[FieldDef, ...] = (
         "setback (unincorporated Clackamas ZDO 202) -- for placing the "
         "building, again the owner's choice. A site plan reads this to "
         "decide whether it may try each street as the front: only `shortest` "
-        "takes the choice away. Steph's ruling of 2026-09-19 (HUMAN_TODO 21) "
-        "says how to choose where the code leaves it to us.",
+        "and `depth` take the choice away. Steph's ruling of 2026-09-19 "
+        "(HUMAN_TODO 21) says how to choose where the code leaves it to us.",
         None,
-        choices=("shortest", "owner", "entrance", "both"),
+        choices=("shortest", "owner", "entrance", "both", "depth"),
     ),
     FieldDef(
         "front_lot_line_through",
@@ -1336,20 +1340,24 @@ _F: tuple[FieldDef, ...] = (
         "39.2000. `both_unless_no_access`: both, except that a street line "
         "vehicle access is barred from is the REAR line -- Clackamas ZDO 202 "
         "(\"abuts a collector, arterial, expressway ... that precludes motor "
-        "vehicle access\") and Gresham 3.0100 (an access control strip "
-        "required along one street). Nothing measures street class or an "
+        "vehicle access\"). Nothing measures street class or an "
         "access strip, so the screen takes whichever end is the worse to lose "
         "to a rear setback. `owner`: the applicant names one street line the "
         "front and the far one is the rear line, with the rear setback -- "
         "Happy Valley 16.12 (\"which lot line is to be the front lot line and "
         "which lot line is to be the rear\"), Milwaukie 19.201 (\"the street "
-        "on which the contemplated development will face\"). Unread (Tualatin, "
+        "on which the contemplated development will face\"). `manager`: the "
+        "planning manager names the front (Gresham 3.0100, double frontage "
+        "lots); screened as `both`, the reading the city's own Rear Lot Line "
+        "definition and Table 4.0131 note 2 give, with the guess flagged "
+        "THROUGH-FRONT-GUESSED below the yellow line (Steph's page check of "
+        "2026-10-20, id 297: \"This would be a green flag\"). Unread (Tualatin, "
         "Fairview's residential districts) is screened like "
         "`both_unless_no_access`: the worst of both fronts and either end "
         "rear, since a rear setback larger than the front makes \"both "
         "fronts\" the lenient reading. Read by :mod:`flats.geom.corner`.",
         None,
-        choices=("both", "both_unless_no_access", "owner"),
+        choices=("both", "both_unless_no_access", "owner", "manager"),
     ),
 )
 

@@ -470,6 +470,18 @@ def front_lot_line_through_rule(rules: "ZoneResolution") -> str | None:
     return got if isinstance(got, str) else None
 
 
+def front_min_depth_ft(rules: "ZoneResolution", design: Design) -> float | None:
+    """The minimum lot depth a corner lot's front is chosen to make, under
+    ``front_lot_line_corner: depth`` (Gresham 3.0100; Steph 2026-10-20): the
+    figure the screen's own ``min_lot_depth_ft`` check holds this design to
+    (:func:`lot_standard`, on the design's plat path). None where the zone
+    states none, and then every street is offered."""
+    depth, _ = lot_standard(
+        rules, "min_lot_depth_ft", per_unit=design.plat is Plat.unit_lots, lots=design.units
+    )
+    return depth
+
+
 def side_street_fed(rules: "ZoneResolution", alley: Alley | None, corner: bool) -> bool:
     """Whether this corner lot's court is reached straight off the side street.
 

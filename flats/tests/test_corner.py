@@ -17,6 +17,7 @@ import pytest
 
 from flats.designs.model import load_catalog
 from flats.geom.corner import (
+    depth_from,
     front_bearings,
     is_corner,
     line_length,
@@ -82,6 +83,30 @@ def test_two_lines_within_a_foot_leave_the_choice_to_the_applicant() -> None:
 def test_the_owners_choice_tries_both_streets() -> None:
     for rule in ("owner", "entrance"):
         assert set(front_bearings(corner_lot(), rule)) == {0.0, 90.0}
+
+
+def test_the_depth_rule_fronts_the_street_that_makes_the_minimum_depth() -> None:
+    # Gresham 3.0100 (Steph, page check 2026-10-20 id 295): "the front lot
+    # line is determined by the orientation necessary to achieve minimum
+    # required lot depth. IF BOTH, then you choose." The 50 x 100 lot is 100
+    # ft deep from the south street and 50 ft from the west one.
+    lot = corner_lot()
+    assert depth_from(lot, 0.0) == pytest.approx(100.0)
+    assert depth_from(lot, 90.0) == pytest.approx(50.0)
+    # LDR-5's 70 ft: only the south street makes it.
+    assert front_bearings(lot, "depth", min_depth_ft=70.0) == (0.0,)
+    # Met both ways: the applicant chooses, both tried.
+    assert set(front_bearings(lot, "depth", min_depth_ft=50.0)) == {0.0, 90.0}
+    # A zone with no depth standard leaves the choice too.
+    assert set(front_bearings(lot, "depth")) == {0.0, 90.0}
+    assert set(front_bearings(lot, "depth", min_depth_ft=0.0)) == {0.0, 90.0}
+    # Met neither way: both offered, as before -- the depth check answers
+    # that lot, and the code sends a disputed front to the Manager.
+    assert set(front_bearings(lot, "depth", min_depth_ft=120.0)) == {0.0, 90.0}
+    # Every other guard still holds: a lot on an alley is left unnamed.
+    assert front_bearings(corner_lot(north_alley=True), "depth", min_depth_ft=70.0) == ()
+    # The depth is only read under `depth`: the owner's choice ignores it.
+    assert set(front_bearings(lot, "owner", min_depth_ft=70.0)) == {0.0, 90.0}
 
 
 def test_nothing_is_named_where_the_code_or_the_lot_does_not_settle_it() -> None:

@@ -1249,6 +1249,8 @@ READING_WORDS: dict[tuple[str, str], str] = {
     ("front_lot_line_corner", "owner"): "the owner picks which street line is the front",
     ("front_lot_line_corner", "entrance"): "the street line the entrance faces is the front",
     ("front_lot_line_corner", "both"): "every street line takes the front setback",
+    ("front_lot_line_corner", "depth"): "the street line that gives the lot its minimum depth is the front; the owner picks if both do",
+    ("front_lot_line_through", "manager"): "the city's planning manager picks the front; we read both street lines as fronts, with a flag",
     ("front_lot_line_through", "both"): "both street lines take the front setback",
     ("front_lot_line_through", "both_unless_no_access"): "both street lines are fronts, except one cars are barred from, which is the rear",
     ("front_lot_line_through", "owner"): "the owner picks which street line is the front",

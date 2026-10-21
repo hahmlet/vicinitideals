@@ -2153,14 +2153,20 @@ defaults:
   # front lot line is determined by the orientation necessary to achieve
   # minimum required lot depth. If lot depth may be met in both directions,
   # then the applicant may determine which lot line is the front lot line",
-  # and a dispute goes to the Manager. `owner`, with the depth condition
-  # carried here rather than in the value: a drawing that tries both streets
-  # should try only the ones along which the lot meets its minimum depth.
-  # 7.0431(A)(3)(c) agrees from the entrance side -- a townhouse on a corner
-  # lot "may be oriented to either street".
+  # and a dispute goes to the Manager. `depth`: only the streets from which
+  # the lot makes the zone's minimum lot depth are tried as the front, both
+  # where both are (Steph's page check of 2026-10-20, id 295: "the front lot
+  # line is determined by the orientation necessary to achieve minimum
+  # required lot depth. IF BOTH, then you choose"). Until then this was
+  # `owner`, the depth condition written here but never applied. A lot that
+  # makes the depth neither way is offered both streets, as before: its
+  # depth check answers it, and the code sends that front to the Manager.
+  # The pod is a new building; the existing-building clause (the front door
+  # names the front) is not read. 7.0431(A)(3)(c) agrees from the entrance
+  # side -- a townhouse on a corner lot "may be oriented to either street".
   front_lot_line_corner:
-    value: owner
-    cite: GDC 3.0100, Front Lot Line, the applicant determines it on a corner lot where minimum lot depth is met both ways
+    value: depth
+    cite: GDC 3.0100, Front Lot Line, on a corner lot the front is the line that achieves minimum required lot depth; the applicant chooses where it is met both ways
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-3.0100.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/gresham/3.0100.definitions.txt#L1332-L1336"
@@ -2168,18 +2174,31 @@ defaults:
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
   #
-  # 3.0100, Rear Lot Line: "In the case of a double frontage lot, each street
-  # has a front lot line except when an access control strip has been required
-  # along one of the streets by a governmental agency, in which case the line
-  # separating the lot from this street becomes the rear property line."
-  # Table 4.0131 note 2 agrees for setbacks ("each street frontage shall be
-  # considered a front yard", 4.0100.residential.txt#L421-L422). The Manager
-  # names the front for other purposes. Nothing measures an access control
-  # strip, and the residential rows state a rear above the front (LDR-5 10 /
-  # 20), so the screen takes whichever end is the worse to lose.
+  # 3.0100, Front Lot Line: "For double frontage lots, the front lot line
+  # shall be determined by the Manager except when an access control strip
+  # has been required along one of the streets of a double frontage lot by a
+  # governmental agency. In that instance, the line separating the lot from
+  # this street shall become the rear property line." Rear Lot Line: "In the
+  # case of a double frontage lot, each street has a front lot line except
+  # when an access control strip has been required", and Table 4.0131 note 2
+  # agrees for setbacks ("each street frontage shall be considered a front
+  # yard", 4.0100.residential.txt#L421-L422).
+  #
+  # `manager`: the lot is screened as `both` -- each street line a front,
+  # the reading the Rear Lot Line definition and the yard table give and the
+  # one eight of the other cities write -- and every through lot here
+  # carries THROUGH-FRONT-GUESSED, below the yellow line. Steph's page check
+  # of 2026-10-20 (id 297): "the manager determines regardless of
+  # orientation fitting. Let's apply a logic to this to make our best guess.
+  # Double frontage on a thru lot should be uncommon and we'll follow
+  # standards from other cities/parts of Gresham to decide which is likely
+  # to be chosen. This would be a green flag." Until then this was
+  # `both_unless_no_access`, each end tried as the rear and the worse kept
+  # (LDR-5 10 ft front, 20 ft rear), since nothing measures an access
+  # control strip.
   front_lot_line_through:
-    value: both_unless_no_access
-    cite: GDC 3.0100, Front Lot Line and Rear Lot Line, each street of a double frontage lot has a front lot line except where an access control strip is required
+    value: manager
+    cite: GDC 3.0100, Front Lot Line and Rear Lot Line, the Manager determines a double frontage lot's front lot line and each street has a front lot line except where an access control strip is required
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-3.0100.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/gresham/3.0100.definitions.txt#L1337-L1340,L1347-L1350"

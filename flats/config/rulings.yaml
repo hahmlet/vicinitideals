@@ -1717,3 +1717,57 @@
   encoded_in:
     - flats/config/jurisdictions/or/multnomah/gresham.yaml
     - flats/config/footnotes/or/multnomah/gresham.yaml
+
+- id: 2026-10-20-gresham-corner-front-by-depth
+  kind: ruling
+  date: 2026-10-20
+  scope:
+    county: multnomah
+    city: gresham
+  question: >-
+    On a Gresham corner lot, which street is the front? The screen let the
+    owner pick either street, though GDC 3.0100 ties the front to the lot's
+    minimum depth.
+  ruling: >-
+    "It says that new buildings the front lot line is determined by the
+    orientation necessary to achieve minimum required lot depth. IF BOTH,
+    then you choose."
+  effect: >-
+    front_lot_line_corner is `depth`: a corner lot is tried facing only the
+    street(s) from which it is at least the zone's minimum lot depth, both
+    (the better answer kept) where both are, where the zone states no
+    depth, or where neither is (the depth check answers that lot). A lot
+    that makes the depth one way only can lose the street it used to face,
+    so answers can only hold or get worse.
+  source: Steph page check 2026-10-20 ids 295, 296
+  encoded_in:
+    - flats/config/jurisdictions/or/multnomah/gresham.yaml
+    - flats/geom/corner.py
+
+- id: 2026-10-20-gresham-through-front-best-guess
+  kind: ruling
+  date: 2026-10-20
+  scope:
+    county: multnomah
+    city: gresham
+  question: >-
+    GDC 3.0100 says the Manager determines a double frontage (through) lot's
+    front. The screen tried each end as the rear and kept the worse answer.
+    How should a Gresham through lot be screened?
+  ruling: >-
+    "It says that the manager determines regardless of orientation fitting.
+    Let's apply a logic to this to make our best guess. Double frontage on a
+    thru lot should be uncommon and we'll follow standards from other
+    cities/parts of Gresham to decide which is likely to be chosen. This
+    would be a green flag."
+  effect: >-
+    front_lot_line_through is `manager`: the lot is screened with each street
+    line a front (what Gresham's own Rear Lot Line definition and Table
+    4.0131 note 2 say, and what eight other cities write), and carries the
+    THROUGH-FRONT-GUESSED flag, severity 2, below the yellow line. Through
+    lots whose answer rested on the far end taken as the rear can move up.
+  source: Steph page check 2026-10-20 ids 297, 298
+  encoded_in:
+    - flats/config/jurisdictions/or/multnomah/gresham.yaml
+    - flats/geom/corner.py
+    - flats/config/flags.yaml
