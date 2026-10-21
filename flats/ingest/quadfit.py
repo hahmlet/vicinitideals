@@ -105,6 +105,7 @@ from flats.geom.corner import (
     is_corner,
     line_length,
     name_front,
+    through_guessed,
     through_lot,
     through_plans,
     two_streets,
@@ -172,6 +173,7 @@ from flats.score.paper import (
     faces_the_street,
     front_lot_line_rule,
     front_lot_line_through_rule,
+    front_min_depth_ft,
     lot_line_buffer_ft,
     side_column,
     side_court,
@@ -2919,7 +2921,9 @@ def _chose(lot: QuadfitLot, s: Screened) -> bool:
     cut two ways."""
     if lot.edges is None:
         return False
-    fronts = corner_fronts(lot.edges, front_lot_line_rule(s.rules))
+    fronts = corner_fronts(
+        lot.edges, front_lot_line_rule(s.rules), min_depth_ft=front_min_depth_ft(s.rules, s.design)
+    )
     if fronts and fronts != (None,):
         many = len(fronts) > 1
     else:
@@ -3114,15 +3118,23 @@ def _screen_lot_once(
         # keeps the better; `both_unless_no_access` and unread screen both
         # fronts and each end as the rear and keep the WORSE, since nothing
         # says which is true; `both` is the lot as cut.
+        #
+        # `depth` (Gresham 3.0100) offers only the streets from which the lot
+        # makes the zone's minimum depth, both where both do (Steph
+        # 2026-10-20). `manager` (Gresham's double frontage lot) is the lot
+        # as cut, each street a front, flagged as a guess (Steph 2026-10-20).
         fronts: tuple[float | None, ...] = corner_fronts(
-            lot.edges, front_lot_line_rule(got)
+            lot.edges, front_lot_line_rule(got), min_depth_ft=front_min_depth_ft(got, design)
         ) or (None,)
         plans: list[tuple[Any, LotEdges | None, float | None]] = []
         worst = False
+        guessed = False
         if fronts != (None,) and lot.edges is not None:
             plans = [(f, name_front(lot.edges, f), f) for f in fronts]
         else:
-            readings, worst = through_plans(lot.edges, front_lot_line_through_rule(got))
+            through_rule = front_lot_line_through_rule(got)
+            readings, worst = through_plans(lot.edges, through_rule)
+            guessed = through_guessed(lot.edges, through_rule)
             plans = [(("through", k), e, None) for k, e in enumerate(readings)]
             if not plans:
                 plans = [(None, lot.edges, None)]
@@ -3135,6 +3147,10 @@ def _screen_lot_once(
             here = lot
             if plan_edges is not lot.edges:
                 here = dataclasses.replace(lot, edges=plan_edges)
+            if guessed:
+                here = dataclasses.replace(
+                    here, facts=dataclasses.replace(here.facts, through_front_guessed=True)
+                )
             # A lowest-class driveway off a corner lot whose named front is
             # the quieter street comes off the front (Steph 2026-10-05).
             plan_got = measured_access(got, plan_edges, front)

@@ -18,11 +18,18 @@ import pytest
 import shapely
 
 from flats.encode.load import load_trusted
-from flats.geom.corner import THROUGH_WORST, rear_end, through_ends, through_plans
+from flats.geom.corner import (
+    THROUGH_WORST,
+    rear_end,
+    through_ends,
+    through_guessed,
+    through_plans,
+)
 from flats.geom.edges import EdgeClass, LotEdges, Tier
 from flats.geom.envelope import Setbacks, buildable
 from flats.ingest.quadfit import lot_from_row, screen_lot
 from flats.score import relief, slack
+from flats.score.flags import colour_rules, registry
 from flats.score.paper import front_lot_line_through_rule
 from flats.tests.test_corner import GRESHAM_BEARING, at_gresham
 from flats.tests.test_quadfit_bridge import X0, Y0, pod, row
@@ -128,7 +135,8 @@ def test_the_rule_is_read_as_the_code_states_it(corpus) -> None:
         "or/multnomah/troutdale": "both",
         "or/multnomah/_unincorporated": "both",
         "or/clackamas/_unincorporated": "both_unless_no_access",
-        "or/multnomah/gresham": "both_unless_no_access",
+        # The Manager names the front (3.0100); Steph 2026-10-20, id 297.
+        "or/multnomah/gresham": "manager",
         "or/clackamas/happy-valley": "owner",
         "or/clackamas/milwaukie": "owner",
         # Silent in the stored code: screened at the worst reading.
@@ -175,14 +183,41 @@ def test_happy_valley_names_one_end_the_rear_where_the_rear_is_the_larger(corpus
     assert depth_cut(s) == pytest.approx(25.0, abs=0.5)
 
 
-def test_gresham_takes_the_worse_end_as_the_rear(corpus, policies) -> None:
-    # GDC 3.0100: both fronts, unless an access control strip makes one the
-    # rear -- which nothing measures. LDR-5 is 10 ft front, 20 ft rear.
+def test_gresham_cuts_both_ends_as_fronts_and_flags_the_guess(corpus, policies) -> None:
+    # GDC 3.0100: the Manager names a double frontage lot's front. Steph's
+    # page check of 2026-10-20 (id 297): "make our best guess ... follow
+    # standards from other cities/parts of Gresham ... This would be a green
+    # flag." Each street a front, as Gresham's Rear Lot Line definition and
+    # Table 4.0131 note 2 say: LDR-5's 10 ft front at both ends, not the 20
+    # ft rear at one end the worse reading took until then.
     s = screened(corpus, policies, jurisdiction="gresham", zone="LDR-5")
-    assert front_lot_line_through_rule(s.rules) == "both_unless_no_access"
+    assert front_lot_line_through_rule(s.rules) == "manager"
     yards = s.envelope.setbacks
     assert yards.rear_ft > yards.front_ft
-    assert depth_cut(s) == pytest.approx(yards.front_ft + yards.rear_ft, abs=0.5)
+    assert [e.cls for e in s.lot.edges.edges].count(EdgeClass.front) == 2
+    assert depth_cut(s) == pytest.approx(2 * yards.front_ft, abs=0.5)
+    flags = {f.code: f for f in s.screening.flags}
+    assert "THROUGH-FRONT-GUESSED" in flags
+    # A flag below the yellow line: it never holds a green.
+    assert registry()["THROUGH-FRONT-GUESSED"].severity < colour_rules().yellow_at_severity
+
+
+def test_the_guess_is_flagged_only_on_a_through_lot_under_the_managers_rule() -> None:
+    raw, bearings = at_gresham((0, 0, "F"), (50, 0, "S"), (50, 120, "F"), (0, 120, "S"))
+    through = edges_of(raw, bearings)
+    assert through_plans(through, "manager") == ((), False)
+    assert through_guessed(through, "manager")
+    for rule in ("both", "owner", "both_unless_no_access", None):
+        assert not through_guessed(through, rule)
+    interior, _ = at_gresham((0, 0, "F"), (50, 0, "S"), (50, 120, "R"), (0, 120, "S"))
+    assert not through_guessed(edges_of(interior, bearings), "manager")
+    assert not through_guessed(None, "manager")
+
+
+def test_an_interior_gresham_lot_carries_no_through_flag(corpus, policies) -> None:
+    lot = lot_from_row(row(jurisdiction="gresham", zone="LDR-5"), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert "THROUGH-FRONT-GUESSED" not in {f.code for f in s.screening.flags}
 
 
 def test_an_unread_code_takes_the_worse_end_too(corpus, policies) -> None:

@@ -242,6 +242,13 @@ CORNER_READ_AS_BEND = "CORNER_READ_AS_BEND"
 #: digitising error is that size, so it is read as a bend and the flag names
 #: the measured angle and the ceiling (CURVE-ON-THE-LINE; FOLLOWUPS 63).
 CURVE_ON_THE_LINE = "CURVE_ON_THE_LINE"
+#: A through lot whose code leaves the front to the planning manager
+#: (Gresham 3.0100, double frontage lots), screened with each street line a
+#: front -- the reading the city's own Rear Lot Line definition gives and
+#: most cities write (THROUGH-FRONT-GUESSED; Steph's page check of
+#: 2026-10-20, id 297: "This would be a green flag"). The flag marks the
+#: guess; it never holds a green.
+THROUGH_FRONT_GUESSED = "THROUGH_FRONT_GUESSED"
 
 #: The code caps the building's height by the shade it casts on the lot to
 #: the north, and nothing here knows which line faces north or where the
@@ -510,6 +517,10 @@ class LotFacts:
     #: within a degree of its ceiling and the lot was read as a bend
     #: (:func:`flats.ingest.quadfit.curve_on_the_line`). Set by the bridge.
     curve_on_the_line: tuple[float, float] | None = None
+    #: A through lot whose code leaves the front to the planning manager,
+    #: screened with each street line a front (:data:`THROUGH_FRONT_GUESSED`,
+    #: :func:`flats.geom.corner.through_guessed`). Set by the bridge.
+    through_front_guessed: bool = False
     #: Inside an urban growth boundary: True, False, or None where nothing
     #: said. Set by the bridge -- an incorporated city's lot is inside its
     #: own city's boundary (Goal 14 draws every UGB round its city), and an
@@ -2645,6 +2656,8 @@ def _account(
     if lot.curve_on_the_line is not None:
         angle, ceiling = lot.curve_on_the_line
         flag("CURVE-ON-THE-LINE", CURVE_ON_THE_LINE, bounds=(min(angle, ceiling), max(angle, ceiling)))
+    if lot.through_front_guessed:
+        flag("THROUGH-FRONT-GUESSED", THROUGH_FRONT_GUESSED)
     # Red on the hose alone measured from 10 ft out from the curb, and
     # clear measured from the curb (Steph 2026-10-05: "stricter", "with a
     # flag to check later"). The bind stands; the flag says one answer
@@ -2767,6 +2780,7 @@ def backlog(results: Sequence[Screening]) -> dict[str, int]:
 __all__ = [
     "CORNER_READ_AS_BEND",
     "CURVE_ON_THE_LINE",
+    "THROUGH_FRONT_GUESSED",
     "CLOSER_LOOK_MIN_DENSITY",
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_SPLIT_ZONE",

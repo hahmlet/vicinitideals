@@ -1307,12 +1307,25 @@ def test_a_portland_corner_lot_fronts_its_shorter_street_and_parks_off_the_other
 
 
 def test_an_owners_choice_city_keeps_the_better_front(corpus, policies) -> None:
-    # Gresham 3.0100 leaves the front to the owner: both streets are tried
-    # and the answer kept is one of them.
-    lot = lot_from_row(corner_row(jurisdiction="gresham", zone="LDR-7"), corpus.layers)
+    # Happy Valley 16.12 leaves the front to the owner: both streets are
+    # tried and the answer kept is one of them.
+    lot = lot_from_row(corner_row(jurisdiction="happy_valley", zone="SFA"), corpus.layers)
     (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
     assert s.rules.get("front_lot_line_corner") == "owner"
     assert s.front_deg in (0.0, 90.0)
+
+
+def test_a_gresham_corner_lot_fronts_the_street_that_makes_its_minimum_depth(corpus, policies) -> None:
+    # GDC 3.0100 (Steph, page check 2026-10-20 id 295): the front is "the
+    # orientation necessary to achieve minimum required lot depth". LDR-7
+    # asks 70 ft: the 50 x 100 lot is 100 ft deep from the south street and
+    # only 50 from the west one, so the south street is the front -- where
+    # until then both were tried and the better kept.
+    lot = lot_from_row(corner_row(jurisdiction="gresham", zone="LDR-7"), corpus.layers)
+    (s,) = screen_lot(lot, [pod()], rules=corpus, policy=policies[0], relief=policies[1], step_deg=30.0)
+    assert s.rules.get("front_lot_line_corner") == "depth"
+    assert s.rules.get("min_lot_depth_ft") == 70
+    assert s.front_deg == 0.0
 
 
 def test_a_street_that_bends_is_not_a_corner(corpus, policies) -> None:
