@@ -5,12 +5,14 @@
 #
 # Per lot of `zones` on a layer `serves` names:
 #   true   a street lot line on one of `streets` (the street the line abuts,
-#          read from the RLIS centrelines -- the same test as Portland's);
+#          read from the RLIS centrelines -- the same test as Portland's), or
+#          the lot's land touches one of them, a corner included (within
+#          TOUCH_REACH_FT, 75 ft, of the centreline: half a right-of-way);
 #   false  the lot lies in no block of the zone (contiguous zoning area, from
 #          the `blocks` dataset) that reaches a named street;
-#   behind_frontage  a lot in a block that reaches the corridor with no line on
-#          it. null = unanswered (the lot stays out of GREEN); flip to true or
-#          false when the question is ruled -- no code change.
+#   behind_frontage  a lot in a block that reaches the corridor whose own land
+#          does not touch it. null = unanswered (the lot stays out of GREEN);
+#          true or false once ruled -- no code change.
 # Missing data (no street network, no blocks dataset in the snapshot, a named
 # street the network does not carry) leaves every lot unanswered.
 
@@ -27,7 +29,9 @@ corridors:
     streets: [NE GLISAN ST, NE 162ND AVE]
     blocks: corridor_blocks_gresham
     zone_field: ZONE
-    # Lots in a CMF block that reaches Glisan or 162nd but with no street line
-    # on either (NE 183rd, lots behind the frontage, the NE Halsey strip that
-    # touches 162nd at its corner). With Steph, asked 2026-10-20.
-    behind_frontage: null
+    # Lots in a CMF block that reaches Glisan or 162nd whose own land does not
+    # touch either (NE 183rd, lots behind the frontage, the NE Halsey strip
+    # east of its 162nd corner lot). Steph 2026-10-21: "only lots actually
+    # touching the street count as 'along'. If it touches, it's along."
+    # (rulings.yaml 2026-10-20-gresham-cmf-corridor-mapped).
+    behind_frontage: false

@@ -179,7 +179,7 @@ def _parse_values(
             {"value", "exempt", "per_dwelling", "sqft_per_unit", "per_units",
              "spaces_total", "acres", "acres_per_dwelling", "per_height_ft",
              "floor_ft", "same_as", "step_back", "qualified_by", "stories",
-             "from_top_degrees"}
+             "from_top_degrees", "width_to_depth"}
             & set(node)
         ):
             body = dict(node)
@@ -192,6 +192,7 @@ def _parse_values(
             # area and the percent and never the product.
             of_pct = body.pop("percent_of_it", None)
             per_units = body.pop("per_units", None)
+            width_to_depth = body.pop("width_to_depth", None)
             spaces_total = body.pop("spaces_total", None)
             acres = body.pop("acres", None)
             acres_each = body.pop("acres_per_dwelling", None)
@@ -297,6 +298,31 @@ def _parse_values(
                 # "1 per 2 units" is half a space per unit, and 0.5 is in no
                 # ordinance anywhere.
                 value = _per_units(float(per_units))
+            if width_to_depth is not None:
+                if key != "max_lot_depth_ratio":
+                    problems.append(
+                        f"{where}.{key}: 'width_to_depth' states a minimum lot "
+                        f"width/depth ratio, which only max_lot_depth_ratio holds"
+                    )
+                    continue
+                if value is not None or exempt or per_units is not None:
+                    problems.append(
+                        f"{where}.{key}: a value states a depth ratio or the "
+                        f"width/depth ratio it inverts, not both"
+                    )
+                    continue
+                if not isinstance(width_to_depth, (int, float)) or isinstance(
+                    width_to_depth, bool
+                ) or width_to_depth <= 0:
+                    problems.append(
+                        f"{where}.{key}: 'width_to_depth' expects a positive ratio"
+                    )
+                    continue
+                # Gresham Table 4.0430 row C: "Minimum Lot Width/ Depth Ratio
+                # 0.5 : 1", width divided by depth (4.0431.A). A lot at least
+                # half as wide as it is deep is one at most twice as deep as
+                # it is wide, and the 2 is printed nowhere.
+                value = _width_to_depth(float(width_to_depth))
             if spaces_total is not None:
                 # Ahead of the value check, because `per_units` above has
                 # already put its quotient in `value` and the conflict a
@@ -590,6 +616,7 @@ def _parse_values(
             per_dwelling = None
             sqft_per_unit = None
             per_units = None
+            width_to_depth = None
             spaces_total = None
             acres = None
             acres_each = None
@@ -670,6 +697,9 @@ def _parse_values(
                 per_dwelling=None if per_dwelling is None else float(per_dwelling),
                 sqft_per_unit=None if sqft_per_unit is None else float(sqft_per_unit),
                 per_units=None if per_units is None else float(per_units),
+                width_to_depth=(
+                    None if width_to_depth is None else float(width_to_depth)
+                ),
                 spaces_total=(
                     None if spaces_total is None else float(spaces_total)
                 ),
@@ -837,6 +867,15 @@ def _in_total(spaces: float) -> float:
     conversions multiply by, used here the other way round.
     """
     return round(spaces / DWELLINGS, 3)
+
+
+def _width_to_depth(ratio: float) -> float:
+    """A minimum lot width/depth ratio, said as a maximum depth over width.
+
+    "0.5 : 1" -- the width at least half the depth -- is a depth at most twice
+    the width. Rounded to three places, as the other derived forms are.
+    """
+    return round(1.0 / ratio, 3)
 
 
 def _per_units(shared_between: float) -> float:

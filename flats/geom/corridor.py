@@ -104,13 +104,32 @@ west of it; RLIS does not. Per lot of the named zones (Steph 2026-10-20,
 
 * True -- a street lot line on one of the named streets (the any-line
   reading above, by the street the line abuts);
+* else True -- the lot's land touches the corridor street: it comes within
+  :data:`TOUCH_REACH_FT` of a named centreline, which is how far a lot drawn
+  to its lot lines sits from the centreline when nothing but the
+  right-of-way lies between them. This is the lot that touches the street
+  only at a corner, or whose line on it the parallel test does not read as
+  a street line (Steph 2026-10-21: "only lots actually touching the street
+  count as 'along'. If it touches, it's along.");
 * else False -- the lot lies in no block of the zone (contiguous zoning area,
   from the city's zoning layer) that comes within :data:`BLOCK_REACH_FT` of
   a named street: nothing of that district reaches the corridor;
 * else the config's ``behind_frontage`` -- a lot in a block that reaches the
-  corridor with no line on it (behind the frontage, on a side street, a
-  block that touches the corridor only at a corner). ``null`` until Steph
-  rules, which leaves it unanswered.
+  corridor but whose own land does not touch it (behind the frontage, on a
+  side street, the NE Halsey strip whose block touches 162nd only through
+  its corner lot). ``false`` since Steph's 2026-10-21 ruling; ``null`` would
+  leave it unanswered.
+
+**How "touches" is measured.** By distance from the lot to the named
+centreline, not by an edge: a lot that meets the right-of-way only at a
+corner has no lot line parallel to the corridor, and s4 classes no street
+edge on a lot with no traced edges at all. On the 2026-10-19 weekly the
+Gresham CMF lots with a street line on the corridor sit 34-54 ft from its
+centreline (half of Glisan's or 162nd's right-of-way); of the 33 left behind
+the frontage, five sit 48-54 ft away with nothing but right-of-way (the
+county's ``-STR`` taxlots) between them and the street, and the nearest of
+the other 28 is 125 ft away with a whole lot in between. Any reach in that
+gap separates them; :data:`TOUCH_REACH_FT` is the block reach, 75 ft.
 
 Unanswered, too, whenever the data is short: no street network, no zoning
 blocks, a named street the network does not carry, or a lot with no shape or
@@ -204,6 +223,14 @@ NAMED_PATH = Path(__file__).resolve().parents[1] / "config" / "corridors.yaml"
 #: moves its lots from False to unanswered.
 BLOCK_REACH_FT = 75.0
 
+#: A lot whose land comes within this of a named corridor street's
+#: centreline touches the corridor (Steph 2026-10-21, "If it touches, it's
+#: along"). A lot drawn to its lot lines sits half a right-of-way from the
+#: centreline -- 34-54 ft on Glisan and NE 162nd -- and the first lot behind
+#: a frontage lot at least a lot's depth further: 125 ft is the nearest on the
+#: 2026-10-19 weekly. The block reach, for the same reason as the block.
+TOUCH_REACH_FT = BLOCK_REACH_FT
+
 #: Zoning polygons closer than this to each other are one block: the map's
 #: own seams, not a street between them.
 BLOCK_JOIN_FT = 0.5
@@ -285,8 +312,8 @@ class NamedSpec:
     streets: tuple[str, ...]
     blocks: str
     zone_field: str
-    #: The answer for a lot in a block that reaches the corridor with no
-    #: street line on it: True, False, or None (unanswered) until ruled.
+    #: The answer for a lot in a block that reaches the corridor whose own
+    #: land does not touch it: True, False, or None (unanswered).
     behind_frontage: bool | None
 
 
@@ -390,6 +417,8 @@ class NamedCorridor:
             return None
         if not lot.is_valid:
             lot = lot.buffer(0)
+        if self.cmap.corridor.near(lot, TOUCH_REACH_FT):
+            return True
         inside = [
             int(i)
             for i in self.tree.query(lot, predicate="intersects")

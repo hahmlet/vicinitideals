@@ -160,6 +160,7 @@ _FIGURES = (
     "per_dwelling",
     "sqft_per_unit",
     "per_units",
+    "width_to_depth",
     "spaces_total",
     "acres",
     "acres_per_dwelling",

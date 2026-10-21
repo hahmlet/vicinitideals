@@ -1410,6 +1410,12 @@ class Value(BaseModel):
     #: reader will find on the page. Same bargain as `sqft_per_unit`, in the
     #: unit a parking table answers in.
     per_units: float | None = None
+    #: The minimum lot width/depth ratio a code prints, where it caps a lot's
+    #: proportions that way round. Gresham Table 4.0430 row C asks "0.5 : 1"
+    #: (width over depth, 4.0431.A); `max_lot_depth_ratio` means depth over
+    #: width, so `value` carries the 2 that comes to and this carries the 0.5 a
+    #: reader will find. Same bargain as `per_units`.
+    width_to_depth: float | None = None
     #: The number of off-street spaces a code states FOR THE WHOLE BUILDING,
     #: where it counts spaces instead of stating a rate. OAR
     #: 660-046-0220(2)(e)(B) caps a quadplex at "two spaces in total" on a lot

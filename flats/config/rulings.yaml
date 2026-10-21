@@ -1794,13 +1794,23 @@
     Gresham's CMF zoning blocks: true for a lot with a street lot line on
     either street (the TLDR variants apply and the unit-lots path is open);
     false for a lot in no CMF block that reaches either (CMF's own numbers,
-    no land division). A lot in a block that reaches the corridor with no
-    street line on it (NE 183rd, behind the frontage, the NE Halsey strip)
-    stays unanswered and out of GREEN until Steph rules; that answer is one
-    switch, behind_frontage in flats/config/corridors.yaml. Missing data
-    leaves the fact unanswered. Rides the next re-screen once the snapshot
-    holds corridor_blocks_gresham beside rlis_streets.
-  source: Steph 2026-10-20 (chat), docs/FOLLOWUPS.md item 104(a)
+    no land division). Missing data leaves the fact unanswered. Rides the
+    next re-screen once the snapshot holds corridor_blocks_gresham beside
+    rlis_streets.
+    BEHIND THE FRONTAGE, ruled 2026-10-21. Asked: do lots in a block that
+    reaches the corridor but have no lot line on it count (NE 183rd, deep
+    lots behind the frontage, the NE Halsey strip whose block touches 162nd
+    only at its corner)? Steph: "only lots actually touching the street count
+    as 'along'. If it touches, it's along." So a lot whose land touches NE
+    Glisan or NE 162nd -- a corner touch included -- is true, measured as
+    within 75 ft of the street's centreline (half a right-of-way; frontage
+    lots sit 34-54 ft out, the nearest lot behind one 125 ft); every other
+    lot behind the frontage is false (behind_frontage: false). The Halsey
+    strip's own corner lot (1700 NE 162nd) already had a line on 162nd; the
+    strip's other lots are 499-1,305 ft from 162nd and read false.
+  source: >-
+    Steph 2026-10-20 (chat), docs/FOLLOWUPS.md item 104(a); behind the
+    frontage Steph 2026-10-21 (chat)
   encoded_in:
     - flats/config/corridors.yaml
     - flats/config/pipeline.yaml
