@@ -1055,3 +1055,18 @@ def test_a_number_read_off_another_zones_page_says_why_and_links_that_page():
     # A zone the page prints with its note mark run on ("LDR-54") is on it.
     tldr = check._card(layer, check._Ask(rows[("LDR-5", "setback_rear_ft", "")], "value"))
     assert "borrowed" not in tldr
+
+
+def test_a_figure_printed_in_another_unit_is_asked_in_that_unit():
+    """A density stored from "1,742 square feet per dwelling" is asked as
+    that, not as "1,742 units per acre" (2026-10-20); a figure with no unit
+    of its own to ask asks about the number held."""
+    layer = check._layers()["or/clackamas/_unincorporated"]
+    rows = {(r["zone"], r["field"], r["when"]): r for r in check._rows(layer, set())}
+    card = check._card(layer, check._Ask(rows[("HDR", "min_density_du_per_acre", "")], "value"))
+    assert card["printed"] == "1,742 sq ft per home"
+    assert check._printed_said(layer, rows[("PMU2", "min_lot_sqft", "")], 2) == "2 acres"
+
+    portland = check._layers()["or/multnomah/portland"]
+    ir = next(r for r in check._rows(portland, set()) if (r["zone"], r["field"], r["when"]) == ("IR", "setback_side_ft", ""))
+    assert "printed" not in check._card(portland, check._Ask(ir, "value"))

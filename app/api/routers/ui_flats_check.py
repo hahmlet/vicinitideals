@@ -223,13 +223,55 @@ def _printed(layer: Layer, row: dict[str, Any]) -> Any:
     return readiness._printed_variant(number) if row["when"] else readiness._printed(number)
 
 
-def _derived_why(layer: Layer, row: dict[str, Any]) -> str:
-    """Why the number held is not the printed one, in a reviewer's words; "" when it is."""
+def _derivation(layer: Layer, row: dict[str, Any]) -> tuple[str, str]:
+    """The form a derived number is stored in, and why it is not the printed one."""
     number = _number(layer, row["zone"], row["field"], row["when"])
     for attr, why in _DERIVED_VARIANT if row["when"] else _DERIVED:
         if getattr(number, attr, None) is not None:
-            return why
-    return ""
+            return attr, why
+    return "", ""
+
+
+def _derived_why(layer: Layer, row: dict[str, Any]) -> str:
+    """Why the number held is not the printed one, in a reviewer's words; "" when it is."""
+    return _derivation(layer, row)[1]
+
+
+#: The page's own figure, in the page's own unit, by the form it is stored in.
+#: "1,742 units per acre" for a page that prints 1,742 square feet per home is
+#: a question nobody can answer (2026-10-20). A form missing here is said in
+#: the standard's unit -- a setback before its step-back is still feet -- and
+#: a form mapped to None has no figure of its own worth asking about: the card
+#: asks about the number held, as it did before.
+_PRINTED_AS: dict[str, str | None] = {
+    "per_dwelling": "{n} sq ft per home",
+    "sqft_per_unit": "{n} sq ft per home",
+    "acres": "{n} acres",
+    "acres_per_dwelling": "{n} acres per home",
+    "stories": "{n} stories",
+    "spaces_total": "{n} spaces in all",
+    "per_units": "one space per {n} homes",
+    "from_top_degrees": "{n} degrees",
+    "reduce_pct": "{n}% less",
+    "pct_of_lot_width": "{n}% of the lot's width",
+    "times": None,
+    "per_height_ft": None,
+}
+
+
+def _printed_said(layer: Layer, row: dict[str, Any], printed: Any) -> str:
+    """The printed figure as the page says it; "" where the card should not ask it."""
+    attr, _why = _derivation(layer, row)
+    if not attr:
+        return ""
+    form = _PRINTED_AS.get(attr, "")
+    if form is None:
+        return ""
+    if not form:
+        return _said(printed, row["field"])
+    shown = f"{printed:,.0f}" if float(printed).is_integer() else f"{printed:,}"
+    said = form.format(n=shown)
+    return said.replace("1 acres", "1 acre") if shown == "1" else said
 
 
 @lru_cache(maxsize=4096)
@@ -1211,8 +1253,10 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         printed = row.get("printed", row["value"])
         if printed != row["value"] and isinstance(printed, (int, float)) and not isinstance(printed, bool):
             # Asked about what the page prints; told what we make of it.
-            card["printed"] = _said(printed, row["field"])
-            card["derived_why"] = _derived_why(layer, row)
+            said = _printed_said(layer, row, printed)
+            if said:
+                card["printed"] = said
+                card["derived_why"] = _derived_why(layer, row)
         if web:
             return card
         for page, boxes in _own_boxes(placed):
