@@ -1243,9 +1243,12 @@ read when the weekly full re-screen lands.
    yellow). Rulings registered. Durham 273/282 left alone: no Durham ruling to read them against.
 103. [Claude] [scan: YES for (d) only] **Page check: notes the cards still cannot ask (2026-10-20).** (a) DONE
    0387fc8a: a heading over several columns ("FRONT²" over Front Facade / Front Porch / Garage) now
-   reaches each; 15 Table 4.0131 cards gained note 2, none lost a marker. (b) Tables whose headings
-   print rotated (Pleasant Valley, Springwater) cannot be narrowed to one column, so those cards box
-   every repeat of a number. (c) ~890 cards now say "<zone> is not printed on this page"; most are true
+   reaches each; 15 Table 4.0131 cards gained note 2, none lost a marker. (b) DONE a40e4be8 (merge
+   e239cf80): headings printed sideways are read along their own direction; 27 Pleasant Valley p10 /
+   Springwater p9 cards now box one cell, no other card moved. It found VLDR-SW's townhouse garage
+   setback held 20 where the table prints 25 (fixed 55cbdef9, stricter only, rides the weekly). Left:
+   Pleasant Valley pp7-8 (max_far, THR-SW frontage) still box several cells -- headings upright there,
+   a different cause. (c) ~890 cards now say "<zone> is not printed on this page"; most are true
    (chapter-wide parking/open-space pages) -- watch whether Steph finds the line noisy. (d) RIDES THE
    WEEKLY: Gresham MDR-24 and corridor corner townhouse frontage 32 -> 25 and MDR-24 corner width
    42 -> 25 (dc79bd29) -- read those gains lot by lot at the next weekly. (e) A marker on the TABLE'S
