@@ -873,3 +873,93 @@ def test_a_row_split_over_two_stored_lines_boxes_only_its_own_column(turned):
 
     assert _boxed_x(placed) == [150]
     assert placed.status == "column"
+
+
+#: Gresham Table 4.0131 in miniature: note 1 on the table's title, note 2 on
+#: the "Front" column heading only, and the table's notes under it.
+TITLED = [
+    (72, 720, 10, "Table 4.0131 - Minimum Setbacks in Residential Districts"),
+    (392, 724, 6, "1"),
+    (200, 700, 9, "Front"),
+    (225, 704, 5, "2"),
+    (300, 700, 9, "Side"),
+    (400, 700, 9, "Rear"),
+    (72, 680, 9, "LDR-5"),
+    (218, 680, 9, "10 ft."),
+    (300, 680, 9, "5 ft."),
+    (400, 680, 9, "15 ft."),
+    *[(72, 668 - 12 * k, 9, f"Z{k}") for k in range(10)],
+    (72, 540, 9, "TR"),
+    (200, 540, 9, "11 ft."),
+    (300, 540, 9, "6 ft."),
+    (400, 540, 9, "16 ft."),
+    (72, 500, 10, "Table 4.0131 Notes:"),
+    (72, 485, 9, "1. Setbacks are measured from the property line."),
+    (72, 470, 9, "LDR-5 lots platted before 1990 may keep 12 ft. rear yards."),
+]
+
+
+@pytest.fixture
+def titled(tmp_path: Path) -> S.Sheet:
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(TITLED))
+    return S.read(path, 1)
+
+
+def test_a_note_on_the_tables_title_reaches_every_cell_and_a_columns_only_its_own(titled):
+    """Steph 2026-10-21 (FOLLOWUPS 103(e)): a note on the table's title is
+    asked of every number in the table; a note on a column heading only of
+    that column's."""
+
+    def marks(text, value):
+        row = _line(titled, text)
+        return {m.mark: m.on for m in S.markers(titled, row, S.hits(row, value, titled.aspect))}
+
+    # Ten rows down and far left of the ¹, the rear and side setbacks carry
+    # the title's note all the same.
+    assert marks("TR 11 ft. 6 ft. 16 ft.", 16) == {"1": "title"}
+    assert marks("TR 11 ft. 6 ft. 16 ft.", 6) == {"1": "title"}
+    assert marks("LDR-5 10 ft. 5 ft. 15 ft.", 15) == {"1": "title"}
+    # The column's note reaches its own column alone.
+    assert marks("LDR-5 10 ft. 5 ft. 15 ft.", 10) == {"2": "column", "1": "title"}
+    assert marks("LDR-5 10 ft. 5 ft. 15 ft.", 5) == {"1": "title"}
+    # Under the table's notes, a number is not in the table.
+    assert "1" not in marks("LDR-5 lots platted before 1990 may keep 12 ft. rear yards.", 12)
+
+
+def test_a_table_continued_from_the_page_before_carries_its_titles_note(titled, tmp_path: Path):
+    """The rows overleaf print no caption; the title is on the page before."""
+    path = tmp_path / "overleaf.pdf"
+    path.write_bytes(_pdf([(72, 700, 9, "MDR-12"), (200, 700, 9, "8 ft."), (300, 700, 9, "4 ft.")]))
+    from dataclasses import replace
+
+    overleaf = replace(S.read(path, 1), n=2)
+    cited = [(40, 2, "MDR-12 8 ft. 4 ft.", "", "")]
+    before = {1: _without_notes(titled)}
+
+    placed = S.place({2: overleaf}, cited, 4, earlier=before.get)
+
+    (title,) = [m for m in placed.markers if m.on == "title"]
+    assert (title.mark, title.page) == ("1", 1)
+    # Without the page before, nothing is guessed.
+    assert S.place({2: overleaf}, cited, 4).markers == []
+    # Past the table's notes, the page before's title no longer reaches.
+    assert S.place({2: overleaf}, cited, 4, earlier={1: titled}.get).markers == []
+
+
+def _without_notes(sheet: S.Sheet) -> S.Sheet:
+    from dataclasses import replace
+
+    return replace(sheet, lines=tuple(ln for ln in sheet.lines if ln.box.y0 < 0.35))
+
+
+def test_a_sentence_naming_a_table_is_not_its_title():
+    def line(*texts):
+        return S.Line(tuple(S.Word(t, S.Box(0.1 * k, 0.1, 0.1 * k + 0.05, 0.12)) for k, t in enumerate(texts)))
+
+    assert S._caption(line("Table", "4.0131", "-", "Minimum", "Setbacks")) == "title"
+    assert S._caption(line("TABLE", "4.1130", "CONTINUED")) == "title"
+    assert S._caption(line("Table", "4.1508", "(continued):", "Minimum", "Setbacks")) == "title"
+    assert S._caption(line("Table", "4.0130", "Notes:")) == "notes"
+    assert S._caption(line("Table", "4.1311", "summarizes", "the", "density")) == ""
+    assert S._caption(line("Tables", "show")) == ""

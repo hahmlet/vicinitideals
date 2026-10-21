@@ -104,6 +104,7 @@
     <div style="font-size:12px;margin:0 0 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
       {{ nav() }}
       <span class="muted">Checked</span> <strong>{{ counts.checked }}</strong> of {{ counts.numbers }}
+      {% if card.answer_id %}<span class="muted" data-answer-id title="the number of your last answer to this question">#{{ card.answer_id }}</span>{% endif %}
       {% if card.signed %}<span class="badge badge-green" style="margin-left:8px" title="signed against the text copy">signed</span>{% endif %}
       {% if card.before %}<span class="badge badge-yellow" style="margin-left:4px">your answer: {{ card.before }}</span>{% endif %}
     </div>
@@ -148,7 +149,7 @@
       {% endif %}
     {% else %}
       <p style="font-size:15px;margin:0 0 4px">
-        Note <strong>{{ card.mark }}</strong> is printed {% if card.mark_on == "web" %}in the cited text of this number{% else %}on this
+        Note <strong>{{ card.mark }}</strong> is printed {% if card.mark_on == "web" %}in the cited text of this number{% elif card.mark_on == "title" %}on the title of this number's table{% if card.mark_page %} (on the page the table starts){% endif %}, so it may reach every number in the table{% else %}on this
         {% if card.mark_on == "number" %}number{% elif card.mark_on == "row" %}row{% else %}column{% endif %}{% endif %}.
         Does it change <strong>{{ card.field_label }}</strong> ({{ card.value }}){% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}?
       </p>

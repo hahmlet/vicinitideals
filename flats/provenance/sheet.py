@@ -42,7 +42,7 @@ import threading
 from functools import lru_cache
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable, Sequence
+from typing import Any, Callable, Iterable, Sequence
 
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 
@@ -687,10 +687,13 @@ class Marker:
     """A footnote marker printed on the boxed number, its row or its column."""
 
     mark: str
-    #: "number", "row" or "column": where on the table the marker is printed,
-    #: which is what a reader needs to judge its reach.
+    #: "number", "row", "column" or "title": where on the table the marker is
+    #: printed, which is what a reader needs to judge its reach.
     on: str
     box: Box
+    #: The page the marker is printed on, where that is not the number's own:
+    #: a table running onto a second page carries its title's notes with it.
+    page: int | None = None
 
 
 def _marks(text: str) -> list[str]:
@@ -699,16 +702,22 @@ def _marks(text: str) -> list[str]:
 
 
 def markers(
-    sheet: Sheet, line: Line, spans: Sequence[tuple[int, int]], zone: str = ""
+    sheet: Sheet,
+    line: Line,
+    spans: Sequence[tuple[int, int]],
+    zone: str = "",
+    before: Callable[[int], Sheet | None] | None = None,
 ) -> list[Marker]:
     """The footnote markers that bear on the boxed words.
 
-    Three places, the three a reader checks: a marker printed straight after
+    Four places, the four a reader checks: a marker printed straight after
     the number (or further down its own cell, where the cell wraps); one on
-    the row's label (before the first number on the row); and one printed in
+    the row's label (before the first number on the row); one printed in
     the column heading above the number, found by looking up the page for
     superscripts sitting over the number's horizontal span, or on the zone's
-    own name where it heads the column.
+    own name where it heads the column; and one on the table's own title,
+    which reaches every cell of the table (:func:`_title_markers`; ``before``
+    reads the pages before this one, for a table continued from them).
     """
     out: list[Marker] = []
     words = line.words
@@ -754,6 +763,9 @@ def markers(
         box = span_box(line, span)
         recent = above[-8:]
         for at, printed in reversed(list(enumerate(recent))):
+            if _caption(printed):
+                # The title's notes are the whole table's, not a column's.
+                continue
             for word in printed.words:
                 if not (word.sup and word.box.x0 < box.x1 and word.box.x1 > box.x0):
                     continue
@@ -772,6 +784,7 @@ def markers(
                 ):
                     continue
                 out += [Marker(m, "column", word.box) for m in _marks(word.text)]
+    out += _title_markers(sheet, line, before)
     seen: set[str] = set()
     unique = []
     for marker in out:
@@ -779,6 +792,78 @@ def markers(
             seen.add(marker.mark)
             unique.append(marker)
     return unique
+
+
+#: How many pages back a table's title is looked for, where the table runs on
+#: from an earlier page with no caption repeated over the continuation.
+_TITLE_REACH = 3
+
+
+def _caption(line: Line) -> str:
+    """What a line opens: a table's title ("title"), its notes ("notes"), or "".
+
+    A caption opens "Table <number>": "Table 4.0131 - Minimum Setbacks in
+    Residential Districts¹", "TABLE 4.1130 CONTINUED". "Table 4.0130 Notes:"
+    heads the notes printed under the table, so it closes the table; a bare
+    "Notes:" does too. "Table 4.1311 summarizes the density ..." is a
+    sentence, not a caption: a word in lower case follows the number.
+    """
+    body = [w.text for w in line.words if not w.sup]
+    if not body:
+        return ""
+    first = body[0].strip(":").lower()
+    if first in {"notes", "footnotes"}:
+        return "notes"
+    if first != "table" or len(body) < 2 or not any(ch.isdigit() for ch in body[1]):
+        return ""
+    rest = [t.strip(":;-–—.,()") for t in body[2:]]
+    rest = [t for t in rest if t]
+    if rest and rest[0].lower() in {"notes", "footnotes"}:
+        return "notes"
+    if rest and rest[0][:1].islower() and rest[0].lower() != "continued":
+        return ""
+    return "title"
+
+
+def _title_markers(
+    sheet: Sheet, line: Line, before: Callable[[int], Sheet | None] | None = None
+) -> list[Marker]:
+    """A marker on the title of the table the number is printed in.
+
+    Gresham prints "Table 4.0131 - Minimum Setbacks in Residential
+    Districts¹": note 1 governs every setback in the table, and no card asked
+    it (Steph 2026-10-21, FOLLOWUPS 103(e): "I think we have to"). The title
+    is the nearest caption up the page; a table's notes heading met first
+    means the number sits under another table's notes, outside any table, and
+    no title's note reaches it. With neither on this page, the table is one
+    continued from the page before, and its caption is looked for there, a
+    few pages back at most.
+    """
+    above = [ln for ln in sheet.lines if ln.box.y1 <= line.box.y0]
+    page: Sheet | None = sheet
+    for back in range(_TITLE_REACH + 1):
+        if page is None:
+            return []
+        for printed in reversed(above):
+            kind = _caption(printed)
+            if kind == "notes":
+                return []
+            if kind == "title":
+                on = None if page is sheet else page.n
+                return [
+                    Marker(m, "title", w.box, page=on)
+                    for w in printed.words
+                    if w.sup
+                    for m in _marks(w.text)
+                ]
+        if before is None or back == _TITLE_REACH or sheet.n - back - 1 < 1:
+            return []
+        try:
+            page = before(sheet.n - back - 1)
+        except Exception:  # noqa: BLE001 — no page before is no title
+            return []
+        above = list(page.lines) if page is not None else []
+    return []
 
 
 def _label_below(sheet: Sheet, line: Line, edge: float) -> list[Word]:
@@ -1017,6 +1102,11 @@ def _group_markers(above: Sequence[Line], line: Line) -> list[Marker]:
         return []
     left = line.words[0].box.x0
     for printed in reversed(above[-12:]):
+        if _caption(printed):
+            # The table's title, not a group heading in it: its notes are
+            # the whole table's (:func:`_title_markers`), and a line above it
+            # is outside the table.
+            return []
         body = [w for w in printed.words if not w.sup]
         if not body or any(numeral(w.text) for w in body):
             continue
@@ -1297,12 +1387,15 @@ def place(
     zone: str = "",
     field: str = "",
     when: Sequence[str] = (),
+    earlier: Callable[[int], Sheet | None] | None = None,
 ) -> Placed:
     """Box a number on the pages its quote spans.
 
     ``found_on`` is (line number, page, stored text, the stored line before,
     the stored line after) for each cited line -- the page from the map, the
     text from the store, the neighbours to break a tie between repeated rows.
+    ``earlier`` reads a page not cited, for the title of a table continued
+    from it.
     """
     found: list[Found] = []
     columned = False
@@ -1338,7 +1431,13 @@ def place(
         total = sum(len(f.hits) for f in with_hits)
         placed.status = ("column" if columned else "boxed") if total == 1 else "several"
         first = with_hits[0]
-        placed.markers = markers(sheets[first.page], first.line, first.hits, zone)
+        placed.markers = markers(
+            sheets[first.page],
+            first.line,
+            first.hits,
+            zone,
+            before=lambda n: sheets.get(n) or (earlier(n) if earlier else None),
+        )
         placed.marker_page = first.page
     elif any(f.line for f in found):
         placed.status = "lines"
@@ -1597,4 +1696,4 @@ def locate(
             kept.append(entry)
     if not kept:
         return Placed(status="unfound")
-    return place(sheets, kept, value, zone=zone, field=field, when=when)
+    return place(sheets, kept, value, zone=zone, field=field, when=when, earlier=lambda n: read(book, n))
