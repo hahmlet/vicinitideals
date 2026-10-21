@@ -1296,13 +1296,14 @@ read when the weekly full re-screen lands.
    carry it) -- J.1 names plexes only; read 7.0431 before exempting townhouses (possible false REDs).
    (g) 1S3E14AA-08900 + two big yellows fail the 150 ft fire hose at 167 ft -- placement on very
    large lots looks poor (too strict, not a false GREEN).
-110. [Claude] [NEXT -- possible false GREEN] [scan: YES (greens may go yellow/red)] **Wilsonville Villebois
-   (V): the quadplex route is for lots that already have a home.** 4.125(.23) opens "For lots previously
-   developed with at least one residential unit" (4.planning.txt#L6439); FLATS applies its Table V-1 +
-   7,000 sf route to every V lot. Live run 80: 2 VACANT V lots green (31W15AC02800 51,730 sf,
-   31W15AC03623 16,064 sf; assessor VAC, no building value). Read what governs a vacant V lot (SAP/PDP/
-   FDP, three-tier rule), gate the route on an existing dwelling, bound Wilsonville. Found by the 109
-   design-district inventory.
+110. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Wilsonville Villebois vacant lots.** LIVE run
+   82 (main 936fd020): an empty V lot goes through (.18)(B) SAP/PDP/FDP review ("may require
+   modifications") -> yellow at best, flag FACT-NO-EXISTING-DWELLING; 31W15AC02800 + 31W15AC03623
+   green->yellow, 72 lots flagged. Built-lot greens (20) kept on (.23)'s own standards.
+111. [Claude] [scan: NO] **Drift misses colour moves made by flags.** Run 82's drift said "0 moved" while
+   two lots went green->yellow on a new flag (checks->>'colour'); the agent caught it in SQL. A promote
+   gate that cannot see a colour move can pass an unexplained one. Make `flats_promote.py drift` compare
+   COALESCE(checks->>'colour', checks->>'if_signed') too, attribute it, and test it.
 108. [Claude] [after 104 lands] [scan: YES (reds/yellows only go toward green)] **Every taxlot is a legal
    lot of record (Steph 2026-10-21, GLOBAL).** "Let's assume that the lots from the gis and other data
    sources we have are legal. Every lot we try to purchase will go thru a legal review." Lot-of-record
