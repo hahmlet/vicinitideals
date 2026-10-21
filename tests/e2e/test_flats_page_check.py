@@ -320,7 +320,11 @@ def test_an_answered_card_and_its_problem_row_show_the_answers_number(
     page = logged_in_page
     page.goto(f"{base_url}/flats/check")
 
-    rows = page.locator("tr:has([data-answer-id])").filter(has_not_text="flagged on PDF page")
+    # The open problems table; the Answered list sits folded in a <details>.
+    rows = page.locator("tr:has([data-answer-id]):visible").filter(has_not_text="flagged on PDF page")
+    if rows.count() == 0 and page.locator("[data-answered] summary").count():
+        page.locator("[data-answered] summary").click()
+        rows = page.locator("tr:has([data-answer-id]):visible").filter(has_not_text="flagged on PDF page")
     if rows.count() == 0:
         pytest.skip("no problem raised on a number to open")
     expect(rows.first.locator("[data-answer-id]")).to_have_text(re.compile(r"^#\d+$"))
