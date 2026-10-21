@@ -1086,6 +1086,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: driveway inside the ten-foot street strip, not a parking cap -- twelve
     #: blocks move off `parking_area_max_frontage_pct` (17 -> 5).
     "driveway_max_frontage_pct": 12,
+    #: Steph 2026-10-21 (FOLLOWUPS 104/108): every taxlot is a legal lot of
+    #: record, so a Gresham lot missing the size, frontage or width/depth row
+    #: may still take one building (4.0431.C, Table 4.0130 note 2). FLATS
+    #: lifts those rows per form; quadfit has no per-form lift.
+    "lot_of_record_relief": 10,
 }
 
 
