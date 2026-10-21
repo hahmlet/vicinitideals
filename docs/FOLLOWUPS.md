@@ -1253,6 +1253,15 @@ read when the weekly full re-screen lands.
    (d) RIDES THE WEEKLY: Gresham MDR-24 and corridor (RTC/SC/SC-RJ/CMF/CMU) corner townhouse
    frontage 32 -> 25 and MDR-24 corner width 42 -> 25 (the plat's drive is a shared access; dc79bd29)
    -- read those gains lot by lot at the next weekly.
+104. [Claude] [scan: YES if any corridor number changes] **Gresham Table 4.0430 notes, read note by note (Steph
+   2026-10-20: "really complicated with different rulings for different streets, different uses,
+   different zones. I can't parse how these footnotes are or are not being incorporated").** Known
+   so far: note 14's ledger entry (footnotes gresham.yaml, corridor.txt#L485) is dismissed as "TLDR is
+   looser than CMF", but TLDR's setbacks are tighter (front 10, street side 10, rear 15/8, garage 20
+   vs CMF 5/5/15/none). civic_corridor is unmeasured in Gresham, so encoding the corridor setbacks
+   makes the tighter one bind on every CMF lot; CMF has no green lots today (226 red, 1,092 unknown),
+   so no false green now. Next: the note-by-note ledger (audit agent), a plain-English page for
+   Steph, encode the fixes, read the moves at the weekly.
 
 ## 2. Waiting on Steph
 
