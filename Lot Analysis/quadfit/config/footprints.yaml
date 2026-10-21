@@ -644,7 +644,7 @@ siteplan:
       alley_access_required: true
       alley_is_aisle: true
       open_space_pct: 15
-      front_lot_line_corner: owner
+      front_lot_line_corner: depth
       corner_access_street: any
       cite: GDC 7.0420(B)(2)(b)(ii) approach width; PWS 6.03 approach minimum; 7.0420(B)(1) alley access; Figure 9.0825A note alley width as aisle; 7.0420(D)(1) private open space
     # Portland is the only city that bans front parking outright AND caps the

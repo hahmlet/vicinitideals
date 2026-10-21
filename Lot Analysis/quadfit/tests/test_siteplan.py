@@ -1589,7 +1589,7 @@ def test_candidate_fronts_follow_the_citys_definition():
     long_ = fe[1]
     got = s6s._candidate_fronts([90.0, 0.0], fe, "shortest")
     assert [(b, f, se) for b, f, se in got] == [(0.0, [short], [long_])]
-    for word in ("owner", "entrance", "both"):
+    for word in ("owner", "entrance", "both", "depth"):
         got = s6s._candidate_fronts([90.0, 0.0], fe, word)
         assert [b for b, _, _ in got] == [90.0, 0.0], word
         assert got[0][1] == [long_] and got[0][2] == [short], word

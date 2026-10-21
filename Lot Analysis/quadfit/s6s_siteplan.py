@@ -1068,9 +1068,12 @@ def _candidate_fronts(bearings: list[float], front_edges: list[list[float]],
       Gresham, Troutdale; Tualatin, Fairview; Clackamas ZDO 202: the
       choice is the applicant's (or follows the door, which the applicant
       places), so every street is tried and `layout_lot` chooses by Steph's
-      ruling of 2026-09-19. Gresham's definition fixes the front where the
-      minimum lot depth is met in one direction only, which nothing here
-      measures yet; it is tried both ways like the others (FOLLOWUPS 5).
+      ruling of 2026-09-19.
+    - `depth` -- Gresham 3.0100: the front is the street that leaves the
+      zone's minimum lot depth behind it, the applicant's choice where both
+      do. Nothing here measures depth, so every street is tried and the
+      FLATS screen's depth check (FOLLOWUPS 102) keeps only the fronts it
+      allows -- trying more fronts can only offer a fit FLATS then refuses.
     - unread (None) -- the longest street, as before this rule was read.
 
     An edge farther than the cluster tolerance from every bearing (a curved
@@ -1099,7 +1102,7 @@ def _candidate_fronts(bearings: list[float], front_edges: list[list[float]],
             return _extent_along(lot_xy, g[0]) if lot_xy else g[2]
         groups.sort(key=line_len)
         keep = [g for g in groups if line_len(g) <= line_len(groups[0]) + 1.0]
-    elif rule in ("owner", "entrance", "both"):
+    elif rule in ("owner", "entrance", "both", "depth"):
         keep = groups
     else:
         keep = groups[:1]
@@ -2314,6 +2317,8 @@ def main() -> None:
                  "owner": "the owner picks the front, so both streets are tried",
                  "entrance": "the entrance sets the front, so both streets are tried",
                  "both": "both streets are fronts, so both are tried",
+                 "depth": "the front is the street that leaves the minimum lot depth, "
+                          "which FLATS checks, so both are tried",
                  None: "front rule unread: the longer street is the front"}[fr]
         lane = {"any": "the lane may come from either street",
                 "side": "the lane comes from the SIDE street only",
