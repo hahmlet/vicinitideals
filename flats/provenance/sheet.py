@@ -755,19 +755,42 @@ def markers(
     above = [ln for ln in sheet.lines if ln.box.y1 <= line.box.y0]
     out += _group_markers(above, line)
     out += _zone_heading_markers(above, zone)
+    # The table's own heading band, however far above: Gresham Table 4.0130
+    # runs a dozen rows under "LDR-5 LDR-7 TR MDR-12 MDR-24", and a marker
+    # on a heading more than a few lines up reached no card.
+    band = _heading_band(above)
     for span in spans:
-        out += _spanning_markers(above, span_box(line, span))
+        out += _spanning_markers(above, span_box(line, span), band)
     for span in spans:
         out += _down_the_cell(sheet, line, span)
     for span in spans:
         box = span_box(line, span)
-        recent = above[-8:]
-        for at, printed in reversed(list(enumerate(recent))):
+        near = range(max(0, len(above) - 8), len(above))
+        band_at = set(band)
+        for at in sorted({*near, *band_at}, reverse=True):
+            printed = above[at]
             if _caption(printed):
                 # The title's notes are the whole table's, not a column's.
                 continue
-            for word in printed.words:
-                if not (word.sup and word.box.x0 < box.x1 and word.box.x1 > box.x0):
+            for k, word in enumerate(printed.words):
+                if not word.sup:
+                    continue
+                # Over the number, or straight after a heading word that is:
+                # Gresham Table 9.0825A prints "Width¹" with the 1 past the
+                # right edge of the "24.00" under it. Only in the heading band,
+                # which holds no cells: a cell's wrapped words run wide, and
+                # CMU's "mixed-use⁶" in row A reached row B's frontage.
+                owner = printed.words[k - 1] if k else None
+                over = word.box.x0 < box.x1 and word.box.x1 > box.x0
+                trails = (
+                    at in band_at
+                    and owner is not None
+                    and not owner.sup
+                    and owner.box.x0 < box.x1
+                    and owner.box.x1 > box.x0
+                    and word.box.x0 - owner.box.x1 < _SPAN_LEFT_OVER
+                )
+                if not (over or trails):
                     continue
                 # A superscript in another cell of this column is that cell's
                 # note, not the column's. Gresham Table 4.0130 prints "12.1
@@ -780,7 +803,7 @@ def markers(
                 # "C. Minimum Net Density³" runs across every column, under the
                 # lot sizes of row B.
                 if not _heads_its_row(printed, word) and any(
-                    _states_number_over(ln, box) for ln in recent[max(0, at - 2) : at + 1]
+                    _states_number_over(ln, box) for ln in above[max(0, at - 2) : at + 1]
                 ):
                     continue
                 out += [Marker(m, "column", word.box) for m in _marks(word.text)]
@@ -1048,7 +1071,33 @@ _SPAN_MISS = 0.04
 _SPAN_LEFT_OVER = 0.01
 
 
-def _spanning_markers(above: Sequence[Line], box: Box) -> list[Marker]:
+def _heading_band(above: Sequence[Line]) -> list[int]:
+    """The lines (indices into ``above``) heading the table the row sits in.
+
+    From the table's caption on this page down to its first data row: the
+    first line printing a figure. With no caption above the row on this page,
+    or a table's notes heading met first, there is no band to go by and the
+    scans keep to the lines just above the row.
+    """
+    start = None
+    for at in range(len(above) - 1, -1, -1):
+        kind = _caption(above[at])
+        if kind == "notes":
+            return []
+        if kind == "title":
+            start = at + 1
+            break
+    if start is None:
+        return []
+    band = []
+    for at in range(start, len(above)):
+        if any(not w.sup and numeral(w.text) and any(ch.isdigit() for ch in w.text) for w in above[at].words):
+            break
+        band.append(at)
+    return band
+
+
+def _spanning_markers(above: Sequence[Line], box: Box, band: Sequence[int] = ()) -> list[Marker]:
     """A marker on a heading printed over several columns at once.
 
     Gresham Table 4.0131 heads three columns -- Front Façade, Front Porch and
@@ -1057,12 +1106,13 @@ def _spanning_markers(above: Sequence[Line], box: Box) -> list[Marker]:
     asked note 2 (Steph check 538, FOLLOWUPS 103(a)). The heading is a line
     of a few wide-spaced words over a line of more column headings, neither
     stating a number; each heading owns the run of columns it is centred
-    over, and its marks reach every number under that run.
+    over, and its marks reach every number under that run. The pair is
+    looked for just above the row and in the table's heading ``band``.
     """
-    recent = above[-10:]
+    near = range(max(0, len(above) - 10), len(above) - 1)
     middle = _middle_x(box)
-    for at in range(len(recent) - 2, -1, -1):
-        head, under = recent[at], recent[at + 1]
+    for at in sorted({*near, *(k for k in band if k + 1 < len(above))}, reverse=True):
+        head, under = above[at], above[at + 1]
         # Digits: a heading may spell one ("Zero Lot Line").
         if any(
             not w.sup and numeral(w.text) and any(ch.isdigit() for ch in w.text)

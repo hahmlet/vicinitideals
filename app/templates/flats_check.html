@@ -83,7 +83,7 @@
     if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
     var t = e.target;
     if (t && (t.tagName === "TEXTAREA" || t.tagName === "INPUT" || t.tagName === "SELECT" || t.isContentEditable)) return;
-    var n = "1234".indexOf(e.key);
+    var n = "12345".indexOf(e.key);
     if (n < 0 || e.key.length !== 1) return;
     var button = document.querySelectorAll("#check-card [data-answer]")[n];
     if (!button || button.form.classList.contains("htmx-request")) return;

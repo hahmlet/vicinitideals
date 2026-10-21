@@ -331,3 +331,21 @@ def test_an_answered_card_and_its_problem_row_show_the_answers_number(
     rows.first.get_by_role("link", name="Open the card").click()
 
     expect(page.locator("#check-card [data-answer-id]")).to_have_text(re.compile(r"^#\d+$"))
+
+
+def test_a_number_read_off_a_footnote_is_asked_as_its_cells_note(logged_in_page: Page, base_url: str) -> None:
+    """Steph 2026-10-21: footnotes are asked as footnotes. CMU's townhouse lot
+    size is read off note 6; it is asked on CMU's minimum lot size card, as
+    note 6, with our reading of the note -- not as a card of its own."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}?zone=CMU&field=min_lot_sqft&when=&question=note:6")
+
+    expect(page.locator("#check-card [data-readings]")).to_contain_text("Note 6")
+    expect(page.locator("#check-card")).to_contain_text("Is that what the note says?")
+
+
+def test_a_value_card_offers_this_is_a_footnote(logged_in_page: Page, base_url: str) -> None:
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}?zone=LDR-5&field=setback_rear_ft&when=")
+
+    expect(page.locator('#check-card [data-answer="footnote"]')).to_have_text(re.compile("This is a footnote"))

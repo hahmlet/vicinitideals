@@ -65,6 +65,18 @@ VALUE_ANSWERS = {
     "differs": "No, the page says something else",
     "wrong_box": "The box is on the wrong spot",
     "unclear": "Can't tell from this page",
+    # Steph 2026-10-21: a footnote asked as though it were a table cell.
+    # Files the card to be asked as a footnote instead.
+    "footnote": "This is a footnote",
+}
+
+#: The note answers in the words of a card that says how we read the note:
+#: the same four answers, so an answer means what it always meant.
+READING_ANSWERS = {
+    "have_it": "Yes, that is what the note says",
+    "missing": "No, we read it wrong or missed part of it",
+    "no_change": "It doesn't apply to this number",
+    "unclear": "Can't tell",
 }
 
 #: What a reviewer may say about one footnote printed on the number.
@@ -93,12 +105,12 @@ REOPENED = "reopened"
 REPLIED = "replied"
 
 #: Answers that mean something needs fixing. They make the problems list.
-PROBLEMS = frozenset({"differs", "wrong_box", "missing", FLAG})
+PROBLEMS = frozenset({"differs", "wrong_box", "missing", "footnote", FLAG})
 
 #: Answers that end the questions about a number. A box on the wrong cell, or
 #: a number the page contradicts, has no footnotes worth asking about: they
 #: would be the footnotes of a cell that is not this standard.
-_STOPS = frozenset({"differs", "wrong_box", "unclear"})
+_STOPS = frozenset({"differs", "wrong_box", "unclear", "footnote"})
 
 #: What the reviewer is told happened.
 _SAID = {
@@ -109,6 +121,7 @@ _SAID = {
     "differs": "problem raised — it goes on the problems list to be traced back",
     "wrong_box": "problem raised — the box was wrong, so the reading is traced back",
     "missing": "problem raised — the footnote goes on the list as something to add",
+    "footnote": "filed — it goes on the problems list to be asked as a footnote",
     FLAG: "flag saved to the problems list — this card's own question is still open, answer it above",
 }
 
@@ -580,7 +593,9 @@ def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
         row["printed"] = _printed(layer, row)
         # A web code has no printed page: its card shows the stored text.
         row["web"] = why == "html"
+        row["in_note"] = _in_note(document, row["quote"] or "")
         out.append(row)
+    _carry(out)
     # By row of the table (Steph 2026-10-19): within a document, one data
     # point across every zone before the next, the data points in the order
     # they first appear. Sorting on the cited line alone flipped Gresham's
@@ -606,6 +621,69 @@ def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
             r["zone"],
         ),
     )
+
+
+@lru_cache(maxsize=512)
+def _census(document: str) -> footnotes.Census:
+    """The footnote census of one stored document, read once per process."""
+    return footnotes.census("\n".join(sheet.lines_of(_store(), document)), doc=document)
+
+
+def _in_note(document: str, quote: str) -> str:
+    """The note a quote is read from, where every line it quotes is that note's.
+
+    The census's own reading of the document's notes blocks: a quoted line
+    inside a block belongs to the last note opened at or above it. A quote
+    that also takes in a table line, the block's heading, or a second note is
+    not a footnote's alone, and answers "".
+    """
+    if not document or "#L" not in quote:
+        return ""
+    try:
+        blocks = _census(document).blocks
+    except Exception:  # noqa: BLE001 — no census is no note
+        return ""
+    marks = set()
+    for first, last in _ranges(quote):
+        for n in range(first, last + 1):
+            block = next((b for b in blocks if any(a < n <= z for a, z in b.covered)), None)
+            opened = [b for b in block.bodies if b.line <= n] if block else []
+            if not opened:
+                return ""
+            marks.add(opened[-1].mark)
+    return marks.pop() if len(marks) == 1 else ""
+
+
+def _carry(rows: list[dict[str, Any]]) -> None:
+    """Hand each number read off a footnote to the table cell the note qualifies.
+
+    Steph 2026-10-21: "I should only be asked about footnotes in the context
+    of being a footnote, not its own ruling." A held exception quoted from
+    note 5 alone is asked on the zone's own number for that standard, as note
+    5's question, with our reading of the note beside it. That cell must be in
+    the same document and read off the table, not off a note itself.
+    ``carried_by`` marks the exception; ``carries`` lists them on the cell,
+    by note. Where there is no such cell the exception keeps its own card,
+    asked as the note it is (``in_note``).
+    """
+    base = {(r["zone"], r["field"]): r for r in rows if not r["when"]}
+    for row in rows:
+        row["carries"] = {}
+        row.pop("carried_by", None)
+    for row in rows:
+        parent = base.get((row["zone"], row["field"]))
+        if (
+            not row["in_note"]
+            or not row["when"]
+            or parent is None
+            or parent["in_note"]
+            or not parent["quote"]
+            or parent["document"] != row["document"]
+            or parent["web"] != row["web"]
+        ):
+            continue
+        row["carried_by"] = parent
+        parent["carries"].setdefault(row["in_note"], []).append(row)
 
 
 #: Marker kinds read off stored text that name a note. A bare letter is a use
@@ -663,6 +741,9 @@ def _questions(
     """
     titled: dict[tuple, list[_Ask]] = {}
     for row in rows:
+        if row.get("carried_by") is not None:
+            # Asked on its table cell, as that cell's note (:func:`_carry`).
+            continue
         key = (layer.layer, row["zone"], row["field"], row["when"])
         said = _standing(answers.get((*key, "value")), row)
         if said is None:
@@ -675,8 +756,10 @@ def _questions(
         else:
             placed = _placed(row)
             notes = [(m.mark, m) for m in placed.markers]
+        printed = {mark for mark, _m in notes}
+        notes += [(mark, None) for mark in row.get("carries", {}) if mark not in printed]
         for mark, marker in notes:
-            if _standing(answers.get((*key, f"note:{mark}")), row) is not None:
+            if _note_answered(answers, layer, row, mark):
                 continue
             ask = _Ask(row, f"note:{mark}")
             if marker is not None and marker.on == "title":
@@ -686,6 +769,41 @@ def _questions(
                 yield ask
     for run in titled.values():
         yield from run
+
+
+def _note_answered(
+    answers: dict[tuple, FlatsPageCheck], layer: Layer, row: dict[str, Any], mark: str
+) -> bool:
+    """Whether a number's note question has a standing answer.
+
+    A note we read an exception from was asked, before the exception moved
+    onto its cell, as the exception's own "does the page say" card. An answer
+    standing on every one of those answers the note too: it is not asked a
+    second time. One of them reopened after a fix puts the note back, until
+    the note is answered after the reopening.
+    """
+    key = (layer.layer, row["zone"], row["field"], row["when"])
+    own = _standing(answers.get((*key, f"note:{mark}")), row)
+    carried = row.get("carries", {}).get(mark, [])
+    reopened = _reopened(answers, layer, carried)
+    if own is not None:
+        return all(own.decided_at > r.decided_at for r in reopened)
+    return bool(carried) and not reopened and all(
+        _standing(answers.get((layer.layer, r["zone"], r["field"], r["when"], "value")), r) is not None
+        for r in carried
+    )
+
+
+def _reopened(
+    answers: dict[tuple, FlatsPageCheck], layer: Layer, rows: list[dict[str, Any]]
+) -> list[FlatsPageCheck]:
+    """The reopen rows standing on these numbers' value questions."""
+    out = []
+    for r in rows:
+        said = answers.get((layer.layer, r["zone"], r["field"], r["when"], "value"))
+        if said is not None and said.answer == REOPENED and said.fingerprint == r["mark"]:
+            out.append(said)
+    return out
 
 
 def _next(
@@ -705,7 +823,13 @@ def _focus(
 ) -> _Ask | None:
     for row in rows:
         if (row["zone"], row["field"], row["when"]) == (zone, field, when):
-            if row["web"] and question != "value" and question.partition(":")[2] not in _web_marks(row["quote"]):
+            mark = question.partition(":")[2]
+            if (
+                row["web"]
+                and question != "value"
+                and mark not in _web_marks(row["quote"])
+                and mark not in row.get("carries", {})
+            ):
                 return None
             return _Ask(row, question)
     return None
@@ -1322,6 +1446,9 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         "answers": list(VALUE_ANSWERS.items()),
     }
     if ask.question == "value":
+        # Read off a footnote with no table cell to ask it on: asked as the
+        # note it is, not as though the page printed it in the grid.
+        card["in_note"] = row.get("in_note", "")
         # The other numbers held for the same standard. Without them a
         # reviewer reading "except townhouses: 20 ft" answers "No" to the
         # 25 ft card, not knowing the 20 is held too (Oregon City R-3.5).
@@ -1372,15 +1499,23 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
     mark = ask.question.partition(":")[2]
     card["answers"] = list(NOTE_ANSWERS.items())
     card["mark"] = mark
+    # The exceptions we read off this note, asked here rather than as cards
+    # of their own: "Note 5 applies here. We read it as: ..."
+    carried = row.get("carries", {}).get(mark, [])
+    card["readings"] = [_reading(r) for r in carried]
+    if carried:
+        card["answers"] = list(READING_ANSWERS.items())
     at, body = _note_text(document, mark, row["line"])
     card["note_text"] = body
     card["variants"] = _variants(layer, row["zone"], row["field"])
     if web:
         # The cited text is already on the card; there is no page to box.
-        card["mark_on"] = "web"
+        card["mark_on"] = "web" if mark in _web_marks(row["quote"]) else "read"
         return card
     marker = next((m for m in placed.markers if m.mark == mark), None)
-    card["mark_on"] = marker.on if marker else "number"
+    # A note we read an exception from whose marker is not found on the
+    # cell: said as our reading, not as a marker printed there.
+    card["mark_on"] = marker.on if marker else ("read" if carried else "number")
     page = placed.marker_page or (placed.pages[0] if placed.pages else 1)
     boxes = [b for b in placed.boxes.get(page, []) if b[1] == "value"]
     title_page = marker.page if marker and marker.page not in (None, page) else None
@@ -1407,6 +1542,17 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
     return card
 
 
+def _reading(row: dict[str, Any]) -> str:
+    """One exception read off a note, in plain words: "5 ft for townhouses"."""
+    who, where = _when_parts(row["when"])
+    words = [_said(row["value"], row["field"]), "for", _label(row["field"]).lower()]
+    if who:
+        words += ["for", who]
+    if where:
+        words.append(where)
+    return " ".join(words)
+
+
 def _note_box(document: str, page: int, body: list[str]) -> list[tuple[sheet.Box, str]]:
     """A box around the note's first line on its page, where it can be found."""
     if not body:
@@ -1429,6 +1575,9 @@ def _counts(layer: Layer, rows: list[dict[str, Any]], answers: dict[tuple, Flats
         if said is not None:
             checked += 1
             problems += said.answer in PROBLEMS and said.id not in replies
+        elif (parent := row.get("carried_by")) is not None:
+            # Asked as its cell's note: checked once that note is answered.
+            checked += _note_answered(answers, layer, parent, row["in_note"])
     return {"numbers": len(rows), "checked": checked, "left": len(rows) - checked, "problems": problems}
 
 
@@ -1487,6 +1636,11 @@ async def _card_ctx(
             if latest is not None and latest.answer == REOPENED
             else None
         )
+        mark = ask.question.partition(":")[2]
+        again = _reopened(answers, layer, ask.row.get("carries", {}).get(mark, []))
+        if card["asked_again"] is None and again and not _note_answered(answers, layer, ask.row, mark):
+            # Reopened on the exception's own card, before it moved here.
+            card["asked_again"] = {"answer": _WORDS.get(again[0].note, again[0].note), "says": again[0].says}
         # The id of the reviewer's own last answer to this question, which is
         # how a card is named in a conversation about it (Steph 2026-10-21:
         # "I don't see things like 273 and 282, I just see '3 of 7'"). A
@@ -1804,6 +1958,7 @@ async def flats_check(
     zone: str = Query(""),
     field: str = Query(""),
     when: str = Query(""),
+    question: str = Query("value"),
 ) -> HTMLResponse:
     """One jurisdiction's page check: one card, one question, four buttons."""
     user = await _get_user(session, request)
@@ -1812,7 +1967,10 @@ async def flats_check(
     if layer is None:
         return HTMLResponse("no such jurisdiction", status_code=404)
     ctx = await _card_ctx(
-        session, layer, skipped=skipped, focus=(zone, field, when, "value") if zone and field else None
+        session,
+        layer,
+        skipped=skipped,
+        focus=(zone, field, when, question if question.startswith("note:") else "value") if zone and field else None,
     )
     return templates.TemplateResponse(
         request,
@@ -1945,7 +2103,9 @@ async def flats_check_answer(
     if flag_page == "web" and not web:
         return await card(skipped=skipped, focus=tuple(here), error="pick one of the answers")
     if web and question.startswith("note:") and question.partition(":")[2] not in _web_marks(row["quote"]):
-        return await card(skipped=skipped, focus=tuple(here), error="that footnote is not printed on this number")
+        own = _focus(await run_in_threadpool(_rows, layer, set()), zone, field, when, question)
+        if own is None:
+            return await card(skipped=skipped, focus=tuple(here), error="that footnote is not printed on this number")
     if web:
         # No page and no box: the text copy's own hash stands in for the book's.
         page, placed_how, book = None, "web", _store().load(document).sha256
