@@ -669,6 +669,26 @@ def test_notes_closing_a_wrapped_cell_are_the_numbers(corridor):
     assert {"8", "11"} <= set(marks)
 
 
+def test_a_note_in_the_next_cell_in_words_is_that_cells(tmp_path: Path):
+    """Gresham Table 4.0130 corner frontage: MDR-12 "None", MDR-24 "Varies
+    depending on access¹⁰". Note 10 is MDR-24's (Steph 2026-10-20)."""
+    runs = [
+        (72, 700, 9, "Townhouse"),
+        (220, 700, 9, "None"),
+        (300, 700, 9, "Varies"),
+        (300, 690, 9, "depending on"),
+        (300, 680, 9, "access"),
+        (330, 684, 5, "10"),
+        (380, 700, 9, "None"),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "Townhouse None Varies None")
+
+    assert "10" not in [m.mark for m in S.markers(sheet, row, S.hits(row, None, sheet.aspect)[:1], "MDR-12")]
+
+
 def test_a_row_label_naming_several_zones_gives_each_its_own_note(tmp_path: Path):
     runs = [
         (72, 700, 9, "LDR-5"),

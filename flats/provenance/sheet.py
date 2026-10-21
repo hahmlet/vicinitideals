@@ -747,6 +747,11 @@ def _down_the_cell(sheet: Sheet, line: Line, span: tuple[int, int]) -> list[Mark
     k = next(k for k, c in enumerate(cells) if c[0] == span)
     left = cells[k][1].x0 - 0.005
     right = cells[k + 1][1].x0 if k + 1 < len(cells) else 1.0
+    # A neighbour cell in words is a cell all the same: MDR-24's "Varies
+    # depending on access¹⁰" is not MDR-12's "None", though only a figure
+    # counts as a cell above (Steph 2026-10-20).
+    beyond = [w.box.x0 for w in line.words if not w.sup and w.box.x0 > cells[k][1].x1]
+    right = min([right, *beyond])
     below = [ln for ln in sheet.lines if ln.box.y0 >= line.box.y1]
     out: list[Marker] = []
     bottom = line.box.y1
