@@ -296,3 +296,14 @@ def test_a_number_held_from_a_note_shows_the_note(logged_in_page: Page, base_url
     )
 
     expect(page.locator("#check-card [data-row-notes]")).to_contain_text("11,000 square feet")
+
+
+def test_a_number_read_off_a_note_shows_the_table_that_calls_it(logged_in_page: Page, base_url: str) -> None:
+    """CMF's corner townhouse frontage is quoted from note 11 alone; the card
+    shows the table whose CMF column calls the note, and the pages between
+    (Steph 2026-10-20)."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}?zone=CMF&field=min_frontage_ft&when=corner_lot%2Bunit_lots")
+
+    expect(page.locator('#check-card [data-context="that calls the note"]')).to_have_count(1)
+    expect(page.locator('#check-card [data-context="between"]').first).to_be_attached()

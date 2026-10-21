@@ -1075,11 +1075,49 @@ def _with_neighbours(document: str, sheets: list[dict[str, Any]], mark: str) -> 
     pages = {sh["page"] for sh in sheets}
     first, last, end = min(pages), max(pages), index.pages[-1].n
     out = list(sheets)
+    # Every page from where a note is called to where it is printed: with
+    # page 9's table and page 11's notes shown, page 10 between them was not
+    # (Steph 2026-10-20: "show enough pages to show both the origination of
+    # the footnote citation and the footnote, +/- 1 page").
+    for n in range(first + 1, min(last, first + _SPAN)):
+        if n not in pages:
+            out.append({**_sheet_view(document, n, [], mark), "context": "between"})
     if first > 1 and first - 1 not in pages:
-        out.insert(0, {**_sheet_view(document, first - 1, [], mark), "context": "before"})
+        out.append({**_sheet_view(document, first - 1, [], mark), "context": "before"})
     if last < end and last + 1 not in pages:
         out.append({**_sheet_view(document, last + 1, [], mark), "context": "after"})
-    return out
+    return sorted(out, key=lambda sh: sh["page"])
+
+
+#: The most pages a card fills in between a note's call and the note.
+_SPAN = 6
+
+
+def _calling_page(layer: Layer, row: dict[str, Any]) -> int | None:
+    """The page of the table a note-borne number hangs off, when it is not the note's.
+
+    CMF's corner townhouse frontage is quoted from note 11 alone; the card
+    showed the notes and not the table whose CMF column calls note 11, so
+    Steph could not tell the note reaches CMF (2026-10-20). The table row is
+    the one the zone's base number is read from.
+    """
+    if not row["when"]:
+        return None
+    base = next(
+        (
+            r
+            for r in _value_rows(layer)
+            if (r["zone"], r["field"], r["when"]) == (row["zone"], row["field"], "") and r["quote"]
+        ),
+        None,
+    )
+    document = row["quote"].partition("#L")[0]
+    if base is None or base["quote"].partition("#L")[0] != document:
+        return None
+    index = _page_index(document)
+    spans = list(_ranges(base["quote"]))
+    where = index.at(spans[0][0]) if index is not None and spans else None
+    return where.n if where else None
 
 
 def _note_text(document: str, mark: str, after: int) -> tuple[int | None, list[str]]:
@@ -1304,6 +1342,9 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
             card["row_notes"] = _ruled_notes(layer, row["zone"], row["field"])
         for page, boxes in _own_boxes(placed):
             card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))
+        calling = _calling_page(layer, row)
+        if card["sheets"] and calling is not None and calling not in {sh["page"] for sh in card["sheets"]}:
+            card["sheets"].append({**_sheet_view(document, calling, [], row["mark"]), "context": "that calls the note"})
         card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
         return card
 

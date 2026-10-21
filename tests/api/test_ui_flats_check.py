@@ -1057,21 +1057,41 @@ def test_a_number_read_off_another_zones_page_says_why_and_links_that_page():
     assert "borrowed" not in tldr
 
 
-def test_a_borrowed_number_is_boxed_under_the_zone_it_borrows():
-    """CMF's corridor height is read off Table 4.0130 H's TLDR column; the box
-    went on LDR-5's 35 ft, the first of seven (Steph 2026-10-20)."""
+def test_a_number_read_off_a_note_shows_the_table_that_calls_it(monkeypatch):
+    """CMF's corner townhouse frontage is quoted from note 11 alone; the card
+    shows the table whose CMF column calls the note, and every page between
+    (Steph 2026-10-20)."""
     layer = check._layers()["or/multnomah/gresham"]
     row = next(
         r
         for r in check._rows(layer, set())
-        if (r["zone"], r["field"], r["when"]) == ("CMF", "max_height_ft", "civic_corridor")
+        if (r["zone"], r["field"], r["when"]) == ("CMF", "min_frontage_ft", "corner_lot+unit_lots")
     )
-    assert check._column_zone(row) == "TLDR"
-    tldr = next(
-        r for r in check._rows(layer, set()) if (r["zone"], r["field"], r["when"]) == ("TLDR", "max_height_ft", "")
-    )
-    boxes = lambda r: sorted(b for bs in check._placed(r).boxes.values() for b, kind in bs if kind == "value")  # noqa: E731
-    assert boxes(row) and boxes(row)[0] in boxes(tldr)
+    # Note 11 is printed on page 12 of the corridor chapter; its table on 8.
+    monkeypatch.setattr(check, "_placed", lambda r: sheet.Placed(status="boxed", pages=[12], boxes={12: [(_BOX, "value")]}))
+    assert check._calling_page(layer, row) == 8
+
+    card = check._card(layer, check._Ask(row, "value"))
+
+    assert [(sh["page"], sh.get("context")) for sh in card["sheets"]] == [
+        (7, "before"),
+        (8, "that calls the note"),
+        (9, "between"),
+        (10, "between"),
+        (11, "between"),
+        (12, ""),
+        (13, "after"),
+    ]
+
+
+def test_a_borrowed_number_is_read_under_the_zone_it_borrows():
+    """CMF's corridor height is read off Table 4.0130 H's TLDR column; the box
+    went on LDR-5's 35 ft, the first of seven (Steph 2026-10-20)."""
+    layer = check._layers()["or/multnomah/gresham"]
+    rows = {(r["zone"], r["field"], r["when"]): r for r in check._rows(layer, set())}
+    assert check._column_zone(rows[("CMF", "max_height_ft", "civic_corridor")]) == "TLDR"
+    # A zone printed on its own page keeps its own column.
+    assert check._column_zone(rows[("TLDR", "max_height_ft", "")]) == "TLDR"
 
 
 def test_a_number_held_from_a_note_shows_the_note():
