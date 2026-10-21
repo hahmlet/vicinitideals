@@ -446,6 +446,10 @@ def hits(line: Line, value: Any, aspect: float = 1.0) -> list[tuple[int, int]]:
     set closer than a column gap are tried joined as well. A column gap is
     wider than a character; letter spacing is narrower.
     """
+    if value is None:
+        # Held as no limit, or as not reaching us: the cell prints a word, and
+        # that word is boxed as a number would be (Steph 2026-10-20).
+        return [(i, i) for i, w in enumerate(line.words) if _says_nothing(w)]
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         return []
     words = line.words
@@ -478,6 +482,14 @@ def hits(line: Line, value: Any, aspect: float = 1.0) -> list[tuple[int, int]]:
                 continue
         i += 1
     return out
+
+
+#: The words a table cell prints for "no standard here".
+_NOTHING = frozenset({"none", "na", "n/a", "n.a."})
+
+
+def _says_nothing(word: Word) -> bool:
+    return not word.sup and word.text.strip().lower().rstrip(",;:*") in _NOTHING
 
 
 def span_box(line: Line, span: tuple[int, int]) -> Box:
@@ -609,13 +621,17 @@ def _marks(text: str) -> list[str]:
     return [m for m in re.split(r"[,\s]+", text.strip()) if m]
 
 
-def markers(sheet: Sheet, line: Line, spans: Sequence[tuple[int, int]]) -> list[Marker]:
+def markers(
+    sheet: Sheet, line: Line, spans: Sequence[tuple[int, int]], zone: str = ""
+) -> list[Marker]:
     """The footnote markers that bear on the boxed words.
 
     Three places, the three a reader checks: a marker printed straight after
-    the number; one on the row's label (before the first number on the row);
-    and one printed in the column heading above the number, found by looking
-    up the page for superscripts sitting over the number's horizontal span.
+    the number (or further down its own cell, where the cell wraps); one on
+    the row's label (before the first number on the row); and one printed in
+    the column heading above the number, found by looking up the page for
+    superscripts sitting over the number's horizontal span, or on the zone's
+    own name where it heads the column.
     """
     out: list[Marker] = []
     words = line.words
@@ -631,17 +647,45 @@ def markers(sheet: Sheet, line: Line, spans: Sequence[tuple[int, int]]) -> list[
     first_numeral = next(
         (i for i, w in enumerate(words) if not w.sup and numeral(w.text)), len(words)
     )
-    for word in words[:first_numeral]:
-        if word.sup:
-            out += [Marker(m, "row", word.box) for m in _marks(word.text)]
+    label = words[:first_numeral]
+    # A label naming several zones marks each: "LDR-5⁴, LDR-7⁴, TLDR⁴, and
+    # TR⁴". TLDR's card points at TLDR's 4, not LDR-5's (Steph 2026-10-20);
+    # another zone's marker is that zone's.
+    named = _names_zone(label, zone)
+    for k, word in enumerate(label):
+        if not word.sup:
+            continue
+        owner = next((w for w in reversed(label[:k]) if not w.sup), None)
+        if named and owner is not None and _zone_like(owner) and not _is_zone(owner, zone):
+            continue
+        out += [Marker(m, "row", word.box) for m in _marks(word.text)]
     above = [ln for ln in sheet.lines if ln.box.y1 <= line.box.y0]
     out += _group_markers(above, line)
+    out += _zone_heading_markers(above, zone)
+    for span in spans:
+        out += _down_the_cell(sheet, line, span)
     for span in spans:
         box = span_box(line, span)
-        for printed in reversed(above[-8:]):
+        recent = above[-8:]
+        for at, printed in reversed(list(enumerate(recent))):
             for word in printed.words:
-                if word.sup and word.box.x0 < box.x1 and word.box.x1 > box.x0:
-                    out += [Marker(m, "column", word.box) for m in _marks(word.text)]
+                if not (word.sup and word.box.x0 < box.x1 and word.box.x1 > box.x0):
+                    continue
+                # A superscript in another cell of this column is that cell's
+                # note, not the column's. Gresham Table 4.0130 prints "12.1
+                # units per / acre⁵" on MDR-24's minimum density; two rows
+                # down, the maximum density cell was asked about note 5 as
+                # though the heading carried it (Steph 2026-10-20). A cell is
+                # a number on the marker's line or the line or two above it,
+                # in the same column.
+                # A lettered heading row's own marker is not a cell's: Gresham's
+                # "C. Minimum Net Density³" runs across every column, under the
+                # lot sizes of row B.
+                if not _heads_its_row(printed, word) and any(
+                    _states_number_over(ln, box) for ln in recent[max(0, at - 2) : at + 1]
+                ):
+                    continue
+                out += [Marker(m, "column", word.box) for m in _marks(word.text)]
     seen: set[str] = set()
     unique = []
     for marker in out:
@@ -649,6 +693,98 @@ def markers(sheet: Sheet, line: Line, spans: Sequence[tuple[int, int]]) -> list[
             seen.add(marker.mark)
             unique.append(marker)
     return unique
+
+
+def _is_zone(word: Word, zone: str) -> bool:
+    return bool(zone) and squash(word.text).strip(",;:*") == squash(zone)
+
+
+def _zone_like(word: Word) -> bool:
+    """A word that reads as a zone code: "LDR-5,", "TR", "MDR-24"."""
+    return bool(re.fullmatch(r"[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*[,;]?", word.text.strip()))
+
+
+def _names_zone(label: Sequence[Word], zone: str) -> bool:
+    return any(_is_zone(w, zone) for w in label if not w.sup)
+
+
+def _zone_heading_markers(above: Sequence[Line], zone: str) -> list[Marker]:
+    """A marker printed on the zone's own column heading: Gresham's "CMF¹⁴".
+
+    The superscript sits right of the name, which can be right of the
+    column's numbers too, so the search over the number's span misses it
+    (Steph 2026-10-20: "CMF has footnote 14 in the header for the column").
+    """
+    if not zone or zone.startswith("("):
+        return []
+    for printed in reversed(above[-30:]):
+        words = printed.words
+        for k, word in enumerate(words):
+            if word.sup or not _is_zone(word, zone):
+                continue
+            out = []
+            for after in words[k + 1 :]:
+                if not after.sup:
+                    break
+                out += [Marker(m, "column", after.box) for m in _marks(after.text)]
+            return out
+    return []
+
+
+def _down_the_cell(sheet: Sheet, line: Line, span: tuple[int, int]) -> list[Marker]:
+    """Markers printed further down the number's own cell, where the cell wraps.
+
+    Gresham Table 4.0430 prints "10,000 sq. ft. for / residential, none for /
+    commercial, institutional and / mixed-use⁶,⁷": the notes close the cell,
+    three lines under the number (Steph 2026-10-20). The cell runs from the
+    number to where the next cell on the number's line starts -- a wrapped
+    line is wider than the number, and "residential⁸,¹¹" ends past it. It
+    ends at a line that opens with a figure in the column (the next row's
+    cell; a "none" inside the cell's own sentence does not), at the next
+    lettered row, or at a gap wider than a line.
+    """
+    cells = _cells(line, [span])
+    k = next(k for k, c in enumerate(cells) if c[0] == span)
+    left = cells[k][1].x0 - 0.005
+    right = cells[k + 1][1].x0 if k + 1 < len(cells) else 1.0
+    below = [ln for ln in sheet.lines if ln.box.y0 >= line.box.y1]
+    out: list[Marker] = []
+    bottom = line.box.y1
+    height = line.box.y1 - line.box.y0
+    for printed in below[:8]:
+        if printed.box.y0 - bottom > height * 1.5:
+            break
+        if printed.words and _LETTERED.match(printed.words[0].text):
+            break
+        over = sorted((w for w in printed.words if left <= w.box.x0 < right), key=lambda w: w.box.x0)
+        opens = next((w for w in over if not w.sup), None)
+        if opens is not None and (opens.text[:1].isdigit() or _says_nothing(opens)):
+            break
+        out += [Marker(m, "number", w.box) for w in over if w.sup for m in _marks(w.text)]
+        bottom = printed.box.y1
+    return out
+
+
+_LETTERED = re.compile(r"^[A-Z]\.(?:\d+\.)*(?:[a-z]\.)?$")
+
+
+def _heads_its_row(line: Line, mark: Word) -> bool:
+    """Whether ``mark`` is printed on a lettered row label, before any cell."""
+    if not line.words or not _LETTERED.match(line.words[0].text):
+        return False
+    for word in line.words:
+        if word is mark:
+            return True
+        if not word.sup and (numeral(word.text) or _says_nothing(word)):
+            return False
+    return False
+
+
+def _states_number_over(line: Line, box: Box) -> bool:
+    """Whether ``line`` prints a number (not a superscript) over ``box``'s span."""
+    return any(
+        not w.sup and w.box.x0 < box.x1 and w.box.x1 > box.x0 and numeral(w.text) for w in line.words
+    )
 
 
 def _group_markers(above: Sequence[Line], line: Line) -> list[Marker]:
@@ -772,6 +908,132 @@ def under_heading(
     return list(spans)
 
 
+#: The heading words a column of standards is named by, where a table prints
+#: zones down the side and standards across the top (Gresham Table 4.0131:
+#: "Front Facade/Wall", "Garage", "Street Side Wall", "Rear No Alley
+#: Access"). Every word must head the column.
+_FIELD_HEADS: dict[str, frozenset[str]] = {
+    "setback_front_ft": frozenset({"front"}),
+    "setback_front_max_ft": frozenset({"front", "maximum"}),
+    "setback_side_ft": frozenset({"side"}),
+    "setback_street_side_ft": frozenset({"street", "side"}),
+    "setback_rear_ft": frozenset({"rear"}),
+    "setback_garage_entrance_ft": frozenset({"garage"}),
+    "setback_alley_side_ft": frozenset({"alley"}),
+    "min_lot_width_ft": frozenset({"width"}),
+    "min_average_lot_width_ft": frozenset({"average", "width"}),
+    "min_lot_depth_ft": frozenset({"depth"}),
+    "min_frontage_ft": frozenset({"frontage"}),
+    "max_height_ft": frozenset({"height"}),
+    "max_coverage_pct": frozenset({"coverage"}),
+    "max_density_du_per_acre": frozenset({"maximum", "density"}),
+    "min_density_du_per_acre": frozenset({"minimum", "density"}),
+}
+
+#: Heading words that make a column a different standard from the plain one:
+#: "Street Side Garage" is not the garage setback, "Front Porch" is not the
+#: front wall, "Maximum" is not the minimum. ("Minimum" is not one: Pleasant
+#: Valley heads its whole setback block "A. Minimum Setbacks".) An alley is
+#: weighed apart, because "Rear No Alley" and "Rear With Alley" both name it.
+_QUALIFIERS = frozenset({"porch", "garage", "street", "maximum", "average", "corner", "accessory"})
+
+
+def under_field_heading(
+    sheet: Sheet,
+    line: Line,
+    spans: Sequence[tuple[int, int]],
+    field: str,
+    when: Sequence[str] = (),
+) -> list[tuple[int, int]]:
+    """The hit under the column headed by this standard's name, where there is one.
+
+    A row that states the same number four times, one per standard, is one
+    number to the card (Steph 2026-10-20: "it boxes ALL instances of the
+    number 20, not just the column it's asking about"). Each cell on the row
+    owns the heading words printed over its stretch of the row; the hit whose
+    heading carries every word of the standard's name, and no word that names
+    a different standard, is the one. Anything short of exactly one such hit
+    leaves every hit boxed: a reviewer reading the column off the page is the
+    check, and a box under the wrong heading is the failure it exists to catch.
+    """
+    want = _FIELD_HEADS.get(field)
+    if not want or len(spans) < 2:
+        return list(spans)
+    # A lot WITH an alley reads the alley column, and only that lot does.
+    by_alley = "alley" in want or any("alley" in w for w in when)
+    cells = _cells(line, spans)
+    heads: dict[tuple[int, int], set[str]] = {c: set() for c, _box in cells}
+    above = [ln for ln in sheet.lines if ln.box.y1 <= line.box.y0][-40:]
+    for printed in reversed(above):
+        if printed.words[0].text.lower().startswith("table"):
+            break  # the caption: this table's headings are all below it
+        if any(not w.sup and w.text[:1].isdigit() for w in printed.words):
+            continue  # a row of the table, not a heading
+        for word in printed.words:
+            if word.sup:
+                continue
+            # A heading is set over its column, centred or flush; the column
+            # is the cell nearest it, and a word over no cell (the row-label
+            # column) heads nothing.
+            mid = _middle(word.box)
+            gap, cell = min((max(box.x0 - mid, mid - box.x1, 0.0), c) for c, box in cells)
+            if gap <= _HEAD_REACH:
+                heads[cell] |= _head_words(word.text)
+    fits = [
+        span
+        for span in spans
+        if want <= heads[span]
+        and not ((heads[span] & _QUALIFIERS) - want)
+        and _with_alley(heads[span]) == by_alley
+    ]
+    return fits if len(fits) == 1 else list(spans)
+
+
+def _with_alley(heads: set[str]) -> bool:
+    """Whether a column is headed for a lot WITH an alley: "Rear With Alley", not "Rear No Alley"."""
+    return "alley" in heads and not heads & {"no", "without", "non"}
+
+
+#: How far, as a share of the page width, a heading word may sit from the
+#: nearest cell of the row and still head it.
+_HEAD_REACH = 0.03
+
+
+def _cells(line: Line, spans: Sequence[tuple[int, int]]) -> list[tuple[tuple[int, int], Box]]:
+    """Each cell of a table row: where its figure starts, and the words it runs to.
+
+    A cell is a figure (or a "None") and the unit words printed behind it --
+    "10 ft.", "6 in. on" -- up to the next figure. The hits are cells of their
+    own, whatever words they span.
+    """
+    inside = {i for first, last in spans for i in range(first, last + 1)}
+    starts = sorted(
+        {
+            (i, i)
+            for i, w in enumerate(line.words)
+            if i not in inside and not w.sup and (numeral(w.text) or _says_nothing(w))
+        }
+        | set(spans)
+    )
+    out = []
+    for k, (first, last) in enumerate(starts):
+        end = starts[k + 1][0] if k + 1 < len(starts) else len(line.words)
+        box = span_box(line, (first, last))
+        for word in line.words[last + 1 : end]:
+            if word.sup or (word.box.x0 - box.x1) > _HEAD_REACH:
+                break
+            box = box.union(word.box)
+        out.append(((first, last), box))
+    return out
+
+
+def _head_words(text: str) -> set[str]:
+    return {_HEAD_SAME.get(w, w) for w in re.findall(r"[a-z]+", text.lower())}
+
+
+_HEAD_SAME = {"max": "maximum", "min": "minimum", "streetside": "street"}
+
+
 def _middle(box: Box) -> float:
     return (box.x0 + box.x1) / 2
 
@@ -782,6 +1044,8 @@ def place(
     value: Any,
     *,
     zone: str = "",
+    field: str = "",
+    when: Sequence[str] = (),
 ) -> Placed:
     """Box a number on the pages its quote spans.
 
@@ -798,6 +1062,8 @@ def place(
         narrowed = False
         if sheet and printed and len(spans) > 1:
             under = under_heading(sheet, printed, spans, zone)
+            if len(under) > 1:
+                under = under_field_heading(sheet, printed, under, field, when)
             narrowed = len(under) < len(spans)
             spans = tuple(under)
         columned = columned or narrowed
@@ -819,7 +1085,7 @@ def place(
         total = sum(len(f.hits) for f in with_hits)
         placed.status = ("column" if columned else "boxed") if total == 1 else "several"
         first = with_hits[0]
-        placed.markers = markers(sheets[first.page], first.line, first.hits)
+        placed.markers = markers(sheets[first.page], first.line, first.hits, zone)
         placed.marker_page = first.page
     elif any(f.line for f in found):
         placed.status = "lines"
@@ -837,11 +1103,34 @@ def note_line(text: Sequence[str], mark: str, after: int, *, reach: int = 600) -
     the cited line, a few hundred lines at most -- the next table's note 5 is
     not this table's.
     """
-    shape = re.compile(rf"^\s*(?:\(?{re.escape(mark)}[.)]|{re.escape(mark)}\s+[A-Z])")
+    # The mark starts its own line, near the margin: a note block is printed
+    # flush left. "9." is not "9.0600" (a section number) and a cell 200
+    # columns in is not a note -- Gresham's note 9 card showed a line of the
+    # height table (Steph 2026-10-20) -- and Rivergrove's "(2)" indented under
+    # 5.050(a) is a clause, not the "2" at the foot of the page (FOLLOWUPS 98).
+    shape = re.compile(
+        rf"^\s{{0,{_NOTE_INDENT}}}(?:\(?{re.escape(mark)}(?:\.(?!\d)|\))|{re.escape(mark)}\s+[A-Z])"
+    )
+    # A web code's note block prints the number on a line of its own and the
+    # note on the next: Happy Valley 16.43's "NOTES: / 1 / Parking maximums
+    # are based on...". Read as a note only when a sentence follows it, so a
+    # table cell holding a lone "1" is not one -- nor is a marker printed on a
+    # line of its own above its row (Oregon City R-2, "1 / Townhouse 0 feet").
+    alone = re.compile(rf"^\s{{0,{_NOTE_INDENT}}}\(?{re.escape(mark)}[.)]?\s*$")
     for n in range(after, min(after + reach, len(text)) + 1):
-        if shape.match(text[n - 1]):
+        line = text[n - 1]
+        if shape.match(line):
             return n
+        if alone.match(line):
+            following = next((t.strip() for t in text[n : n + 2] if t.strip()), "")
+            if following[:1].isupper() and len(following.split()) >= 8:
+                return n
     return None
+
+
+#: The furthest in from the margin a note's number is printed in a stored
+#: text copy. Measured over every note the page check asks (2026-10-20).
+_NOTE_INDENT = 8
 
 
 def lines_of(store: ProvenanceStore, document: str) -> list[str]:
@@ -926,6 +1215,8 @@ def locate(
     value: Any,
     *,
     zone: str = "",
+    field: str = "",
+    when: Sequence[str] = (),
     get: Any = None,
 ) -> Placed:
     """Box an encoded number on the printed pages its citation names.
@@ -979,4 +1270,4 @@ def locate(
             kept.append(entry)
     if not kept:
         return Placed(status="unfound")
-    return place(sheets, kept, value, zone=zone)
+    return place(sheets, kept, value, zone=zone, field=field, when=when)

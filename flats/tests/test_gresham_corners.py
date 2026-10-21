@@ -59,12 +59,14 @@ def test_mdr_24_had_no_width_standard_at_all(rules: RuleSet) -> None:
 
 
 def test_note_8_states_the_corner_townhouse_width_by_access(rules: RuleSet) -> None:
-    assert width(rules, "MDR-24", "unit_lots", "corner_lot") == 42
+    # Note 8 prints 42 ft without, 25 ft with "a shared access"; the pod's one
+    # drive serving four lots is a shared access (4.0100 L548; page check 372).
+    assert width(rules, "MDR-24", "unit_lots", "corner_lot") == 25
     assert width(rules, "MDR-24", "unit_lots", "corner_lot", "abuts_alley") == 16
 
 
 def test_note_10_states_the_corner_townhouse_frontage_by_access(rules: RuleSet) -> None:
-    assert frontage(rules, "MDR-24", "unit_lots", "corner_lot") == 32
+    assert frontage(rules, "MDR-24", "unit_lots", "corner_lot") == 25
     assert frontage(rules, "MDR-24", "unit_lots", "corner_lot", "abuts_alley") == 25
 
 
@@ -163,10 +165,13 @@ def test_the_cmf_rear_yard_follows_the_alley(rules: RuleSet) -> None:
     assert alley.values["setback_rear_ft"].value == 5
 
 
-def test_cmf_corner_frontage_binds_at_the_number_without_an_alley(rules: RuleSet) -> None:
+def test_cmf_corner_frontage_is_the_shared_access_number(rules: RuleSet) -> None:
+    # Note 11: 25 ft with an alley or a shared access, 32 with neither. The
+    # townhouse plat's one drive to the rear court is a shared access, as on
+    # MDR-24 (Steph 2026-10-20, check 427), so 25 with or without the alley.
     assert rules.resolve(GRESHAM, "CMF", ("unit_lots", "corner_lot")).values[
         "min_frontage_ft"
-    ].value == 32
+    ].value == 25
     assert rules.resolve(GRESHAM, "CMF", ("unit_lots", "corner_lot", "abuts_alley")).values[
         "min_frontage_ft"
     ].value == 25

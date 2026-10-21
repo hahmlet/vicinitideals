@@ -91,8 +91,9 @@ def test_the_lot_standards_are_what_bind_here(gresham: Layer) -> None:
     """10,000 sq ft and 100 feet of frontage, and the split plat escapes both.
 
     Note 6 switches the minimum lot size off for lots created for townhouses;
-    note 11 drops the frontage to 16 feet, or 25 on a corner with an alley and
-    32 without one. Both ride as ``unit_lots`` variants because that is what
+    note 11 drops the frontage to 16 feet, or 25 on a corner with an alley or
+    a shared access -- which the townhouse plat's one drive is -- and 32 with
+    neither. Both ride as ``unit_lots`` variants because that is what
     the notes say they turn on.
     """
     for zone in PERMITTED:
@@ -104,7 +105,7 @@ def test_the_lot_standards_are_what_bind_here(gresham: Layer) -> None:
         frontage = gresham.zones[zone].values["min_frontage_ft"]
         assert [(v.value, v.when) for v in frontage.variants] == [
             (16, ("unit_lots",)),
-            (32, ("unit_lots", "corner_lot")),
+            (25, ("unit_lots", "corner_lot")),
             (25, ("unit_lots", "corner_lot", "abuts_alley")),
         ]
 

@@ -140,15 +140,21 @@
       <p class="muted" style="font-size:12px;margin:0 0 4px" data-because>Read from: {{ card.because }}</p>
     {% elif card.question == "value" %}
       <p style="font-size:15px;margin:0 0 4px">
-        Does the page say <strong style="font-size:17px">{{ card.value }}</strong>
+        Does the page say <strong style="font-size:17px">{{ card.printed or card.value }}</strong>
         for <strong>{{ card.field_label }}</strong>{% if card.when_who %} for {{ card.when_who }}{% endif %}{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_where %} {{ card.when_where }}{% endif %}?
       </p>
+      {% if card.printed %}
+      <p class="muted" style="font-size:12px;margin:0 0 4px" data-derived>We hold <strong>{{ card.value }}</strong> from it: {{ card.derived_why }}.</p>
+      {% endif %}
     {% else %}
       <p style="font-size:15px;margin:0 0 4px">
         Note <strong>{{ card.mark }}</strong> is printed {% if card.mark_on == "web" %}in the cited text of this number{% else %}on this
         {% if card.mark_on == "number" %}number{% elif card.mark_on == "row" %}row{% else %}column{% endif %}{% endif %}.
         Does it change <strong>{{ card.field_label }}</strong> ({{ card.value }}){% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}?
       </p>
+    {% endif %}
+    {% if card.borrowed %}
+    <p class="muted" style="font-size:12px;margin:0 0 6px" data-borrowed>{{ card.zone_label | capitalize }} is not printed on this page. We read the number here because of: {{ card.borrowed }}.</p>
     {% endif %}
     {% if card.others %}
     <div style="font-size:12px;margin:0 0 6px">

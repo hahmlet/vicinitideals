@@ -51,7 +51,7 @@ from app.api.routers.ui_flats import (
 )
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import FlatsDocumentReadthrough, FlatsPageCheck, FlatsRuleSignature
-from flats.encode import footnotes
+from flats.encode import footnotes, readiness
 from flats.provenance import books, pages as page_map, sheet
 from flats.rules import conditions
 from flats.rules.fields import FIELDS
@@ -144,19 +144,126 @@ def _checkable(document: str) -> str:
 
 
 @lru_cache(maxsize=4096)
-def _placed_cached(document: str, ranges: tuple, value_json: str, zone: str) -> sheet.Placed:
-    return sheet.locate(_store(), document, list(ranges), json.loads(value_json), zone=zone)
+def _placed_cached(
+    document: str, ranges: tuple, value_json: str, zone: str, field: str = "", when: str = ""
+) -> sheet.Placed:
+    return sheet.locate(
+        _store(),
+        document,
+        list(ranges),
+        json.loads(value_json),
+        zone=zone,
+        field=field,
+        when=tuple(k for k in when.split("+") if k),
+    )
 
 
 def _placed(row: dict[str, Any]) -> sheet.Placed:
-    """Where a number's box goes. Cached: every card after this one asks again."""
+    """Where a number's box goes. Cached: every card after this one asks again.
+
+    The box goes on the figure the page prints, which for a derived number is
+    not the number held (:func:`_printed`).
+    """
     document = row["quote"].partition("#L")[0]
     return _placed_cached(
         document,
         tuple(_ranges(row["quote"])),
-        json.dumps(row["value"], sort_keys=True, default=str),
+        json.dumps(row.get("printed", row["value"]), sort_keys=True, default=str),
         row["zone"],
+        row["field"],
+        row["when"],
     )
+
+
+#: Why the number held is not the figure printed, in the order the citation
+#: check picks the printed figure (:func:`flats.encode.readiness._printed`).
+_DERIVED = (
+    ("per_dwelling", "the page states it per home, and we hold it for our four"),
+    ("sqft_per_unit", "the page states it per home, and we hold it for our four"),
+    ("per_units", "the page states one space per so many homes, and we hold it per home"),
+    ("spaces_total", "the page states spaces for the whole building, and we hold it per home"),
+    ("acres", "the page states acres, and we hold square feet"),
+    ("acres_per_dwelling", "the page states acres per home, and we hold the total for our four"),
+    ("per_height_ft", "the page states it against the building's height, and we hold what that comes to for ours"),
+    ("from_top_degrees", "the page states an angle off the top of the building, and we hold what that comes to for ours"),
+    ("same_as", "the page sets it equal to another standard, held on that standard's own card"),
+    (
+        "before_step_back",
+        "the page's setback, plus the step-back a building as tall as ours needs (a sloped line it may not rise above)",
+    ),
+    ("stories", "the page states stories, and we hold feet at the city's height per story"),
+    ("before_acre", "the page states it per the city's own size of acre, and we hold it per standard acre"),
+    ("before_story", "the page states it for one story plus more per story, and we hold it for our building"),
+)
+_DERIVED_VARIANT = (
+    ("before_step_back", _DERIVED[9][1]),
+    ("acres", _DERIVED[4][1]),
+    ("per_dwelling", _DERIVED[0][1]),
+    ("acres_per_dwelling", _DERIVED[5][1]),
+    ("sqft_per_unit", _DERIVED[1][1]),
+    ("times", "the page states the figure this is a multiple of"),
+    ("spaces_total", _DERIVED[3][1]),
+    ("pct_of_lot_width", "the page states a share of the lot's width, and we hold what that comes to"),
+    ("reduce_pct", "the page states a reduction by this share, and we hold the number it leaves"),
+)
+
+
+def _printed(layer: Layer, row: dict[str, Any]) -> Any:
+    """The figure the page prints for a number we hold.
+
+    Usually the number itself. A derived one -- Gresham's LDR-5 rear setback
+    is the table's 15 ft plus the 5 ft a 26 ft building steps back under
+    7.0420(G)(1) -- is printed nowhere as held: Steph answered "differs" to
+    "does the page say 20 ft?" on all three zones it reaches (2026-10-20). The
+    card asks about the printed figure, the same one the citation check reads.
+    """
+    number = _number(layer, row["zone"], row["field"], row["when"])
+    if number is None:
+        return row["value"]
+    return readiness._printed_variant(number) if row["when"] else readiness._printed(number)
+
+
+def _derived_why(layer: Layer, row: dict[str, Any]) -> str:
+    """Why the number held is not the printed one, in a reviewer's words; "" when it is."""
+    number = _number(layer, row["zone"], row["field"], row["when"])
+    for attr, why in _DERIVED_VARIANT if row["when"] else _DERIVED:
+        if getattr(number, attr, None) is not None:
+            return why
+    return ""
+
+
+@lru_cache(maxsize=4096)
+def _zone_off_page(document: str, line: int, zone: str) -> bool:
+    """Whether the page a number is cited on never names its zone.
+
+    Gresham's corridor CMF height is read off the residential table's TLDR
+    column, because note 14 sends that corridor to TLDR's standards. Shown
+    the page with nothing said, Steph found no CMF on it (2026-10-20). A card
+    whose zone the page does not print says why the number is read there.
+    """
+    if zone.startswith("("):
+        return False
+    index = _page_index(document)
+    page = index.at(line) if index is not None else None
+    if page is None:
+        return False
+    later = [p.line for p in index.pages if p.line > page.line]
+    lines = sheet.lines_of(_store(), document)[page.line - 1 : (min(later) - 1) if later else None]
+    # Superscripts are stored inline -- "LDR-54" is LDR-5 with its note 4 --
+    # so a digit may follow the name; a letter may not. "PDR6" is printed
+    # "PDR-6": a hyphen or space may part letters from digits or not.
+    parts = re.findall(r"[A-Za-z]+|\d+|[^\sA-Za-z\d-]", zone)
+    name = r"[\s\-\u2010-\u2013]?".join(re.escape(p) for p in parts)
+    return re.search(rf"(?<![A-Za-z0-9]){name}(?![A-Za-z])", " ".join(lines), re.IGNORECASE) is None
+
+
+@lru_cache(maxsize=1024)
+def _source_url(document: str) -> str:
+    """Where the city publishes the stored document, from its own record."""
+    try:
+        return _store().load(document).url
+    except Exception:  # noqa: BLE001 -- a document we cannot open links nowhere new
+        return ""
 
 
 def _unit(field: str) -> str:
@@ -412,6 +519,7 @@ def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
         row["document"] = document
         row["line"] = spans[0][0] if spans else 0
         row["signed"] = (layer.layer, row["zone"], row["field"], row["when"]) in signed
+        row["printed"] = _printed(layer, row)
         # A web code has no printed page: its card shows the stored text.
         row["web"] = why == "html"
         out.append(row)
@@ -631,7 +739,7 @@ def _by_document() -> dict[str, list[dict[str, Any]]]:
         for row in _value_rows(layer):
             document = (row["quote"] or "").partition("#L")[0]
             if document and not _exempt(layer, row):
-                out[document].append({**row, "layer_id": layer_id})
+                out[document].append({**row, "layer_id": layer_id, "printed": _printed(layer, row)})
     return out
 
 
@@ -950,6 +1058,8 @@ def _variants(layer: Layer, zone: str, field: str) -> list[dict[str, str]]:
 
 def _states(token: str, value: Any) -> bool:
     """Whether a word of stored text states this number (same reading as the page boxes)."""
+    if value is None:
+        return token.strip().lower().rstrip(",;:*.") in {"none", "na", "n/a", "n.a"}
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         return False
     read = sheet.numeral(token)
@@ -971,7 +1081,7 @@ def _web_text(row: dict[str, Any], note_mark: str = "") -> list[dict[str, Any]]:
         shown = line["shown"]
         if not note_mark:
             parts = [
-                {"text": p, "hit": line["quoted"] and bool(p.strip()) and _states(p, row["value"])}
+                {"text": p, "hit": line["quoted"] and bool(p.strip()) and _states(p, row.get("printed", row["value"]))}
                 for p in re.split(r"(\s+)", shown)
                 if p
             ]
@@ -990,7 +1100,7 @@ def _web_text(row: dict[str, Any], note_mark: str = "") -> list[dict[str, Any]]:
                 if token.start() > cursor:
                     parts.append({"text": shown[cursor : token.start()], "hit": False, "marker": False})
                 token_start, token_end = token.span()
-                hit = line["quoted"] and _states(token.group(), row["value"])
+                hit = line["quoted"] and _states(token.group(), row.get("printed", row["value"]))
                 cursor = token_start
                 for start, end in marker_spans:
                     if start < token_start or end > token_end:
@@ -1057,7 +1167,11 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         # point on the page (Oregon City's Institutional district did).
         "zone_label": "" if row["zone"].startswith("(") else f"the {row['zone']} zone",
         "quote": row["quote"],
-        "url": row["url"],
+        # The document the card shows, not the value's own: a number borrowed
+        # from another chapter (Gresham CMF's corridor height, read off the
+        # residential table) linked to the chapter it was not read from
+        # (Steph 2026-10-20).
+        "url": _source_url(document) or row["url"],
         "question": ask.question,
         "placed": "web" if web else placed.status,
         "placed_words": "" if web else sheet.PLACED.get(placed.status, ""),
@@ -1092,6 +1206,13 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
             card["value"] = READING_WORDS.get((row["field"], row["value"]), row["value"])
         card["because"] = row["cite"] if card["yes_no"] or card["reading"] else ""
         card["exempt"] = _exempt(layer, row)
+        if not web and _zone_off_page(document, row["line"], row["zone"]):
+            card["borrowed"] = row["cite"]
+        printed = row.get("printed", row["value"])
+        if printed != row["value"] and isinstance(printed, (int, float)) and not isinstance(printed, bool):
+            # Asked about what the page prints; told what we make of it.
+            card["printed"] = _said(printed, row["field"])
+            card["derived_why"] = _derived_why(layer, row)
         if web:
             return card
         for page, boxes in _own_boxes(placed):

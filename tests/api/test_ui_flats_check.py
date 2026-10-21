@@ -752,6 +752,13 @@ async def test_a_reopened_no_is_asked_again_with_what_was_said_before(client, se
     assert f"{LAYER} | {no['zone']} | {no['field']}" not in (await client.get("/flats/check/problems.txt")).text
     assert await reopen.reopen(session, LAYER) == [], "a reopened question is not reopened twice"
 
+    # Named by id, a "Yes" given about the wrong text is asked again too
+    # (Rivergrove note 2, 2026-10-20); nothing else is.
+    answers = await check._answers(session, LAYER)
+    standing_yes = next(a for a in answers.values() if a.answer == "matches")
+    named = await reopen.reopen(session, LAYER, frozenset({standing_yes.id}))
+    assert [(r.zone, r.field, r.note) for r in named] == [(yes["zone"], yes["field"], "matches")]
+
 
 WEB_LAYER = "or/clackamas/lake-oswego"
 
@@ -990,3 +997,61 @@ def test_the_queue_goes_by_row_one_data_point_at_a_time():
             assert here not in seen, f"{here} comes back after leaving"
             seen.add(here)
         previous = here
+
+
+def test_a_web_code_marks_the_word_that_says_a_standard_does_not_apply():
+    # Steph 2026-10-20: "none", "NA" and "N/A" are boxed as a number is.
+    assert [t for t in ("None", "NA", "N/A", "n.a.", "20", "Nonconforming") if check._states(t, None)] == [
+        "None",
+        "NA",
+        "N/A",
+        "n.a.",
+    ]
+    assert check._states("20", 20) and not check._states("NA", 20)
+
+
+def test_a_derived_number_is_asked_as_the_page_prints_it():
+    """Steph 2026-10-20 answered "differs" to "does the page say 20 ft?" for
+    Gresham LDR-5's rear setback: the table prints 15 ft, and the 20 is that
+    plus the 7.0420(G)(1) step-back. The card asks about the 15 and boxes it
+    under the rear column, then says what we hold."""
+    layer = check._layers()[LAYER]
+    row = next(
+        r for r in check._rows(layer, set()) if (r["zone"], r["field"], r["when"]) == ("LDR-5", "setback_rear_ft", "")
+    )
+    assert (row["value"], row["printed"]) == (20, 15)
+
+    card = check._card(layer, check._Ask(row, "value"))
+
+    assert (card["printed"], card["value"]) == ("15 ft", "20 ft")
+    assert "step-back" in card["derived_why"]
+    assert card["placed"] in ("boxed", "column")
+
+
+def test_a_number_printed_as_held_says_nothing_about_derivation():
+    layer = check._layers()[LAYER]
+    row = next(
+        r for r in check._rows(layer, set()) if (r["zone"], r["field"], r["when"]) == ("TLDR", "setback_rear_ft", "")
+    )
+    card = check._card(layer, check._Ask(row, "value"))
+    assert row["printed"] == row["value"] == 15
+    assert "printed" not in card
+
+
+def test_a_number_read_off_another_zones_page_says_why_and_links_that_page():
+    """Gresham's corridor CMF height is read off the residential table's TLDR
+    column (note 14). Steph found no CMF on the page and the source link went
+    to the corridor chapter (2026-10-20). The card says why it is read there,
+    and the link follows the page shown."""
+    layer = check._layers()[LAYER]
+    rows = {(r["zone"], r["field"], r["when"]): r for r in check._rows(layer, set())}
+    row = rows[("CMF", "max_height_ft", "civic_corridor")]
+    assert "4.0100" in row["document"]
+
+    card = check._card(layer, check._Ask(row, "value"))
+
+    assert card["borrowed"] == row["cite"]
+    assert card["url"] == check._source_url(row["document"])
+    # A zone the page prints with its note mark run on ("LDR-54") is on it.
+    tldr = check._card(layer, check._Ask(rows[("LDR-5", "setback_rear_ft", "")], "value"))
+    assert "borrowed" not in tldr

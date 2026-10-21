@@ -8,12 +8,15 @@ answer would stand and the fix would never be looked at. This appends one
 deleted), and the card asks it again, showing what was said before.
 
 Only standing answers that raised something are reopened: "No", "the box is
-wrong", "can't tell", and a footnote "we're missing it". A "Yes" stays done.
+wrong", "can't tell", and a footnote "we're missing it". A "Yes" stays done --
+unless it is named by ``--id``: an answer given about the wrong text (a note
+card that showed another note's line) is asked again whatever it said.
 
 Usage:
 
     uv run python scripts/flats_page_check_reopen.py --layer or/clackamas/oregon-city            # dry run
     uv run python scripts/flats_page_check_reopen.py --layer or/clackamas/oregon-city --write
+    uv run python scripts/flats_page_check_reopen.py --layer or/clackamas/rivergrove --id 254 --id 256
 """
 
 from __future__ import annotations
@@ -36,15 +39,20 @@ from app.models.flats import FlatsPageCheck  # noqa: E402
 RAISED = frozenset({"differs", "wrong_box", "unclear", "missing"})
 
 
-async def reopen(session, layer_id: str) -> list[FlatsPageCheck]:
-    """The reopen rows for every standing answer in ``layer_id`` that raised something."""
+async def reopen(session, layer_id: str, ids: frozenset[int] = frozenset()) -> list[FlatsPageCheck]:
+    """The reopen rows for every standing answer in ``layer_id`` that raised something.
+
+    With ``ids``, those standing answers and no others, whatever they said.
+    """
     layer = check._layers()[layer_id]
     rows = {(r["zone"], r["field"], r["when"]): r for r in check._value_rows(layer)}
     answers = await check._answers(session, layer_id)
     out = []
     for (_layer, zone, field, when, question), answer in answers.items():
         row = rows.get((zone, field, when))
-        if question.startswith("page:") or row is None or answer.answer not in RAISED:
+        if question.startswith("page:") or row is None:
+            continue
+        if (answer.id not in ids) if ids else (answer.answer not in RAISED):
             continue
         if check._standing(answer, row) is None:
             continue  # already back in the queue: the number or its quote moved
@@ -73,10 +81,11 @@ async def reopen(session, layer_id: str) -> list[FlatsPageCheck]:
 async def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--layer", required=True)
+    parser.add_argument("--id", type=int, action="append", default=[], help="reopen only this answer (repeatable)")
     parser.add_argument("--write", action="store_true", help="append the rows (default: list only)")
     args = parser.parse_args()
     async with AsyncSessionLocal() as session:
-        rows = await reopen(session, args.layer)
+        rows = await reopen(session, args.layer, frozenset(args.id))
         for r in rows:
             print(f"reopen  {r.zone:18} {r.field:34} {r.when_key or '-':20} {r.question:10} was {r.note}")
         print(f"{len(rows)} question(s) {'reopened' if args.write else 'would be reopened (dry run)'}")

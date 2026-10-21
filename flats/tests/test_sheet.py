@@ -180,6 +180,79 @@ def test_a_note_is_found_after_the_table_that_cites_it():
     assert S.note_line(text, "9", 2) is None
 
 
+def test_a_note_is_not_a_section_number_or_a_cell_far_from_the_margin():
+    """Gresham Table 4.0130's note 9 card showed a line of the height table
+    (Steph 2026-10-20): "9.0600 Height Transition", printed 226 columns in, was
+    read as note 9. Rivergrove's "(2)" indented under 5.050(a) was read as the
+    "2" at the foot of the page (FOLLOWUPS 98)."""
+    gresham = [
+        "Townhouse   16 ft.   16 ft.",
+        " " * 226 + "9.0600 for 9.0600 for 9.0600",
+        "  1. 9.0600 Height Transition",
+        "4.0131.",
+        "9.                In the LDR-7, LDR-5, TR, and TLDR districts a reduction ...",
+    ]
+    assert S.note_line(gresham, "9", 1) == 5
+    assert S.note_line(gresham, "4", 1) is None
+
+    rivergrove = [
+        "minimum lot size outside the Flood Hazard District is 10,000 square feet.",
+        "            (a)       One single-family detached dwelling",
+        "                        (2)       the dwelling shall have a pitched roof",
+        "2             RLDO 5.010 is subject to an interpretation of the Planning Commission.",
+    ]
+    assert S.note_line(rivergrove, "2", 1) == 4
+
+
+def test_a_web_note_numbered_on_a_line_of_its_own_is_found():
+    """Happy Valley 16.43 prints "NOTES: / 1 / Parking maximums are based on
+    ..."; Oregon City prints a marker on a line of its own above its row,
+    which is not the note."""
+    happy_valley = [
+        "1 per dwelling[3,5]",
+        "1",
+        "Townhouse 0 feet (attached)/5 feet",
+        "NOTES:",
+        "1",
+        "Parking maximums are based on A and B Zone designations, pursuant to Metro rules.",
+        "1.",
+        "Required parking facilities may be located off-site.",
+    ]
+    assert S.note_line(happy_valley, "1", 1) == 5
+
+
+def test_a_superscript_in_another_cell_of_the_column_is_not_the_columns_note(tmp_path: Path):
+    """Gresham Table 4.0130 prints "12.1 units per / acre⁵" on MDR-24's minimum
+    density. Two rows down, the maximum density card asked about note 5 as
+    though the column heading carried it (Steph 2026-10-20). A marker on the
+    heading itself still reaches every row under it."""
+
+    def table(heading_mark: str | None) -> S.Sheet:
+        runs = [
+            (300, 700, 11, "MDR-24"),
+            (72, 660, 11, "Minimum density"),
+            (300, 660, 11, "12.1 units per"),
+            (296, 646, 11, "acre"),
+            (320, 650, 6, "5"),
+            (72, 610, 11, "Maximum density"),
+            (300, 610, 11, "24.2 units per"),
+            (300, 596, 11, "acre"),
+        ]
+        if heading_mark:
+            runs.append((316, 704, 6, heading_mark))
+        path = tmp_path / f"book{heading_mark or ''}.pdf"
+        path.write_bytes(_pdf(runs))
+        return S.read(path, 1)
+
+    plain = table(None)
+    maximum = _line(plain, "Maximum density 24.2 units per")
+    assert S.markers(plain, maximum, S.hits(maximum, 24.2, plain.aspect)) == []
+
+    headed = table("3")
+    maximum = _line(headed, "Maximum density 24.2 units per")
+    assert [m.mark for m in S.markers(headed, maximum, S.hits(maximum, 24.2, headed.aspect))] == ["3"]
+
+
 def test_boxes_follow_the_page_when_it_is_printed_turned(tmp_path: Path):
     """A landscape table on a portrait sheet turned 90 degrees."""
     path = tmp_path / "turned.pdf"
@@ -403,3 +476,184 @@ def test_a_note_on_a_group_heading_reaches_the_rows_indented_under_it(tmp_path: 
 
     assert [m.mark for m in S.markers(sheet, triplex, S.hits(triplex, 6000, sheet.aspect))] == ["1"]
     assert S.markers(sheet, width, S.hits(width, 50, sheet.aspect)) == []
+
+
+#: Gresham Table 4.0131 in miniature: zones down the side, standards across
+#: the top, and one row stating 20 ft four times -- under Garage and under
+#: each of the three street-side columns (Steph 2026-10-20).
+SETBACKS = [
+    (150, 700, 9, "Front"),
+    (200, 700, 9, "Front"),
+    (250, 700, 9, "Garage"),
+    (300, 700, 9, "Interior"),
+    (350, 700, 9, "Street"),
+    (400, 700, 9, "Street"),
+    (450, 700, 9, "Street"),
+    (500, 700, 9, "Rear No"),
+    (550, 700, 9, "Rear"),
+    (150, 690, 9, "Wall"),
+    (200, 690, 9, "Porch"),
+    (300, 690, 9, "Side"),
+    (350, 690, 9, "Side Wall"),
+    (400, 690, 9, "Side"),
+    (450, 690, 9, "Side"),
+    (500, 690, 9, "Alley"),
+    (550, 690, 9, "With"),
+    (400, 680, 9, "Porch"),
+    (450, 680, 9, "Garage"),
+    (500, 680, 9, "Access"),
+    (550, 680, 9, "Alley"),
+    (40, 650, 9, "MDR-24"),
+    (150, 650, 9, "10 ft."),
+    (200, 650, 9, "10 ft."),
+    (250, 650, 9, "20 ft."),
+    (300, 650, 9, "NA"),
+    (350, 650, 9, "20 ft."),
+    (400, 650, 9, "20 ft."),
+    (450, 650, 9, "20 ft."),
+    (500, 650, 9, "15 ft."),
+    (550, 650, 9, "NA"),
+]
+
+
+@pytest.fixture
+def setbacks(tmp_path: Path) -> S.Sheet:
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(SETBACKS))
+    return S.read(path, 1)
+
+
+def _boxed_x(placed: S.Placed) -> list[float]:
+    # The column each box starts in, to the 50 pt grid the fixture is set on.
+    return [round(box.x0 * 612 / 50) * 50 for box, kind in placed.boxes[1] if kind == "value"]
+
+
+def test_a_number_repeated_across_standards_is_boxed_under_its_own_heading(setbacks):
+    row = _line(setbacks, "MDR-24 10 ft. 10 ft. 20 ft. NA 20 ft. 20 ft. 20 ft. 15 ft. NA")
+    cited = [(1, 1, "MDR-24 10 ft. 10 ft. 20 ft. NA 20 ft. 20 ft. 20 ft. 15 ft. NA", "", "")]
+
+    def at(value, field, when=()):
+        return _boxed_x(S.place({1: setbacks}, cited, value, zone="MDR-24", field=field, when=when))
+
+    # "Street Side Garage" is not the garage setback; "Front Porch" is not
+    # the front wall; "Rear With Alley" is not the rear of a lot with none.
+    assert len(_boxed_x(S.place({1: setbacks}, cited, 20, zone="MDR-24"))) == 4
+    assert at(20, "setback_garage_entrance_ft") == [250]
+    assert at(20, "setback_street_side_ft") == [350]
+    assert at(10, "setback_front_ft") == [150]
+    assert at(None, "setback_side_ft") == [300]
+    assert at(None, "setback_rear_ft", ("abuts_alley",)) == [550]
+    assert row.words[0].text == "MDR-24"
+
+
+def test_a_heading_that_does_not_settle_it_leaves_every_hit_boxed(setbacks):
+    cited = [(1, 1, "MDR-24 10 ft. 10 ft. 20 ft. NA 20 ft. 20 ft. 20 ft. 15 ft. NA", "", "")]
+
+    # Nothing is headed "height"; a standard with no heading words is never
+    # narrowed by a guess.
+    assert len(_boxed_x(S.place({1: setbacks}, cited, 20, zone="MDR-24", field="max_height_ft"))) == 4
+    assert len(_boxed_x(S.place({1: setbacks}, cited, 20, zone="MDR-24", field="max_far"))) == 4
+
+
+def test_a_standard_held_as_not_applying_boxes_the_cell_that_says_so(setbacks):
+    row = _line(setbacks, "MDR-24 10 ft. 10 ft. 20 ft. NA 20 ft. 20 ft. 20 ft. 15 ft. NA")
+
+    assert [row.words[a].text for a, _ in S.hits(row, None, setbacks.aspect)] == ["NA", "NA"]
+
+
+def test_a_lettered_heading_rows_marker_is_not_a_cell_note(tmp_path: Path):
+    """Gresham Table 4.0130: "C. Minimum Net Density³" runs across every
+    column, a line under the lot-size row -- its note is the density row's,
+    though a cell's number sits in the column just above it."""
+    runs = [
+        (72, 700, 9, "All other uses"),
+        (220, 700, 9, "5,000 sq. ft."),
+        (72, 685, 9, "C. Minimum Net Density"),
+        (230, 689, 5, "3"),
+        (260, 685, 9, "(See definition of Net Density in Article 3)"),
+        (72, 670, 9, "All uses"),
+        (220, 670, 9, "6.22 units per"),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "All uses 6.22 units per")
+
+    assert "3" in [m.mark for m in S.markers(sheet, row, S.hits(row, 6.22, sheet.aspect))]
+
+
+#: Gresham Table 4.0430 in miniature: the corridor zones head the columns,
+#: CMF's heading carries note 14, and the lot-size cell wraps over four lines
+#: with its notes at the end (Steph 2026-10-20).
+CORRIDOR = [
+    (256, 700, 9, "CMF"),
+    (276, 704, 5, "14"),
+    (320, 700, 9, "CMU"),
+    (72, 670, 9, "A. Minimum Lot Size"),
+    (72, 655, 9, "Minimum lot size"),
+    (220, 655, 9, "10,000 sq. ft. for"),
+    (320, 655, 9, "None"),
+    (220, 645, 9, "residential;"),
+    (262, 645, 9, "none for"),
+    (220, 635, 9, "mixed-use"),
+    (258, 639, 5, "6,7"),
+    (72, 615, 9, "B. Minimum Frontage"),
+    (220, 615, 9, "100 ft. for"),
+    (320, 615, 9, "None"),
+    (220, 603, 9, "residential"),
+    (268, 607, 5, "8,11"),
+]
+
+
+@pytest.fixture
+def corridor(tmp_path: Path) -> S.Sheet:
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(CORRIDOR))
+    return S.read(path, 1)
+
+
+def test_a_note_on_the_zones_own_heading_is_read(corridor):
+    row = _line(corridor, "Minimum lot size 10,000 sq. ft. for None")
+
+    marks = {m.mark: m.on for m in S.markers(corridor, row, S.hits(row, 10000, corridor.aspect), "CMF")}
+
+    # "CMF¹⁴" prints its marker right of the column's numbers; it is the
+    # column's note all the same. CMU's card is not asked about it.
+    assert marks.get("14") == "column"
+    cmu = S.markers(corridor, row, S.hits(row, None, corridor.aspect)[-1:], "CMU")
+    assert "14" not in [m.mark for m in cmu]
+
+
+def test_notes_closing_a_wrapped_cell_are_the_numbers(corridor):
+    row = _line(corridor, "Minimum lot size 10,000 sq. ft. for None")
+
+    marks = [m.mark for m in S.markers(corridor, row, S.hits(row, 10000, corridor.aspect), "CMF")]
+
+    # "6,7" ends the cell three lines down, past a "none" in the cell's own
+    # sentence; "8,11" is the next row's frontage, and is printed past the
+    # right edge of its number.
+    assert {"6", "7"} <= set(marks)
+    assert "8" not in marks
+    frontage = _line(corridor, "B. Minimum Frontage 100 ft. for None")
+    marks = [m.mark for m in S.markers(corridor, frontage, S.hits(frontage, 100, corridor.aspect), "CMF")]
+    assert {"8", "11"} <= set(marks)
+
+
+def test_a_row_label_naming_several_zones_gives_each_its_own_note(tmp_path: Path):
+    runs = [
+        (72, 700, 9, "LDR-5"),
+        (98, 704, 5, "4"),
+        (110, 700, 9, "TLDR"),
+        (134, 704, 5, "7"),
+        (220, 700, 9, "15 ft."),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "LDR-5 TLDR 15 ft.")
+    spans = S.hits(row, 15, sheet.aspect)
+
+    assert [m.mark for m in S.markers(sheet, row, spans, "TLDR")] == ["7"]
+    assert [m.mark for m in S.markers(sheet, row, spans, "LDR-5")] == ["4"]
+    # A card for a zone the label does not name keeps every marker.
+    assert sorted(m.mark for m in S.markers(sheet, row, spans, "TR")) == ["4", "7"]

@@ -264,21 +264,24 @@ notes:
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L382"
     digest: "f9d282159d16"
     state: encoded
-    encoded_as: "MDR-24 min_lot_width_ft variants, when [unit_lots, corner_lot] 42 ft and with abuts_alley 16 ft"
+    encoded_as: "MDR-24 min_lot_width_ft variants, when [unit_lots, corner_lot] 25 ft and with abuts_alley 16 ft"
     reason: >-
       the corner townhouse width cell in MDR-24 reads "See table note 8", and
-      the note states three numbers by access; 42 is the one that binds until
-      an alley is observed, because a shared access is a plat commitment and
-      not a fact about the parcel
+      the note states three numbers by access; 25 is the one that binds until
+      an alley is observed, because the townhouse plat's one drive to the rear
+      court is a shared access (the reading note 7 is dismissed on). It was
+      42, the no-access number, until Steph's page check 2026-10-20
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L385"
     digest: "c39eff4953c2"
     state: encoded
-    encoded_as: "MDR-24 min_frontage_ft variants, when [unit_lots, corner_lot] 32 ft and with abuts_alley 25 ft"
+    encoded_as: "MDR-24 min_frontage_ft variants, when [unit_lots, corner_lot] 25 ft and with abuts_alley 25 ft"
     reason: >-
       the corner townhouse frontage cell in MDR-24 reads "Varies depending on
-      access" and hands the number to this note; 32 binds without an alley or
-      shared access, 25 with one
+      access" and hands the number to this note; 32 without an alley or
+      shared access, 25 with one, and the townhouse plat always has the
+      shared access (note 8). Frontage is measured from the corner arc's end,
+      as this note says (Lot Analysis/quadfit/lotdims.py)
 
   # --- the rest of Table 4.0120, and the bonuses ----------------------
   # Rewritten 2026-09-08, both entries to the same words: this sentence is in
@@ -677,11 +680,12 @@ notes:
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L460"
     digest: "ecc7052c14d2"
     state: encoded
-    encoded_as: "CMF min_frontage_ft variants, when [unit_lots] 16 ft, corner 32 ft, corner with an alley 25 ft"
+    encoded_as: "corridor min_frontage_ft variants, when [unit_lots] 16 ft, corner 25 ft (the plat's shared access)"
     reason: >-
       the same shape as the residential chapter's note 10: 16 feet of frontage
       for a townhouse lot, 25 on a corner with an alley or shared access, 32 on
-      a corner without one -- and 32 is what binds until an alley is observed
+      a corner without one -- and the townhouse plat's one drive to the rear
+      court is a shared access, so 25 (Steph 2026-10-20, check 427)
 
   # --- read, and resting on where the parcel sits ---------------------
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L217"
