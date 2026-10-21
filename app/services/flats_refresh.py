@@ -844,6 +844,8 @@ _DRIFT_MATRIX = text(
     SELECT o.tier AS tier_from, n.tier AS tier_to,
            COALESCE(o.checks->>'if_signed', 'unknown') AS colour_from,
            COALESCE(n.checks->>'if_signed', 'unknown') AS colour_to,
+           COALESCE(o.checks->>'colour', o.checks->>'if_signed', 'unknown') AS shown_from,
+           COALESCE(n.checks->>'colour', n.checks->>'if_signed', 'unknown') AS shown_to,
            COALESCE((o.checks->>'screened')::boolean, true) AS screened_from,
            COALESCE((n.checks->>'screened')::boolean, true) AS screened_to,
            (c.county IS NOT NULL) AS lot_changed,
@@ -860,7 +862,7 @@ _DRIFT_MATRIX = text(
         LIMIT 1
     ) c ON true
     WHERE n.run_id = :to_run
-    GROUP BY 1, 2, 3, 4, 5, 6, 7, 8
+    GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
     """
 )
 
@@ -872,13 +874,19 @@ _DRIFT_GROUNDLESS = text(
            o.tier AS tier_from, n.tier AS tier_to,
            COALESCE(o.checks->>'if_signed', 'unknown') AS colour_from,
            COALESCE(n.checks->>'if_signed', 'unknown') AS colour_to,
+           COALESCE(o.checks->>'colour', o.checks->>'if_signed', 'unknown') AS shown_from,
+           COALESCE(n.checks->>'colour', n.checks->>'if_signed', 'unknown') AS shown_to,
            lo.facts AS facts_from, ln.facts AS facts_to
     FROM flats.lot_results n
     JOIN flats.lots ln ON ln.id = n.lot_id AND ln.snapshot_id = :to_snapshot
     JOIN flats.lots lo ON lo.snapshot_id = :from_snapshot AND lo.county = ln.county AND lo.tlid = ln.tlid
     JOIN flats.lot_results o ON o.lot_id = lo.id AND o.run_id = :from_run AND o.design_key = n.design_key
     WHERE n.run_id = :to_run
-      AND (o.tier <> n.tier OR COALESCE(o.checks->>'if_signed', 'unknown') <> COALESCE(n.checks->>'if_signed', 'unknown'))
+      AND (
+          o.tier <> n.tier
+          OR COALESCE(o.checks->>'if_signed', 'unknown') <> COALESCE(n.checks->>'if_signed', 'unknown')
+          OR COALESCE(o.checks->>'colour', o.checks->>'if_signed', 'unknown') <> COALESCE(n.checks->>'colour', n.checks->>'if_signed', 'unknown')
+      )
       AND COALESCE((o.checks->>'screened')::boolean, true)
       AND COALESCE((n.checks->>'screened')::boolean, true)
       AND ln.zone IS NOT DISTINCT FROM lo.zone
@@ -960,7 +968,8 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
 
     A result row is compared with the row of the same lot and design in the
     other run (lots matched by county and TLID across the two copies). A move
-    is a changed tier or a changed signed colour. Each move is put to one
+    is a changed tier, a changed signed colour, or a changed shown colour
+    (``COALESCE(checks->>'colour', checks->>'if_signed')`` -- what a flag moves). Each move is put to one
     cause, in this order: the ground (a ``lot_changes`` row for the lot in
     the new copy other than an attribute-only change -- the screen reads
     nothing from the assessor's roll, so a new assessment explains no move
@@ -1016,6 +1025,7 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
     by_cause = {"data": 0, "surroundings": 0, "remeasured": 0, "rules": 0, "code": 0, "unexplained": 0}
     tier_moves: dict[str, int] = {}
     colour_moves: dict[str, int] = {}
+    shown_moves: dict[str, int] = {}
     groundless = 0
     for r in rows:
         n = int(r.n)
@@ -1023,7 +1033,7 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
             unscreened += n
             continue
         compared += n
-        moved = r.tier_from != r.tier_to or r.colour_from != r.colour_to
+        moved = r.tier_from != r.tier_to or r.colour_from != r.colour_to or r.shown_from != r.shown_to
         if not moved:
             unchanged += n
             continue
@@ -1037,6 +1047,9 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
         if r.colour_from != r.colour_to:
             key = f"{r.colour_from}->{r.colour_to}"
             colour_moves[key] = colour_moves.get(key, 0) + n
+        if r.shown_from != r.shown_to:
+            key = f"{r.shown_from}->{r.shown_to}"
+            shown_moves[key] = shown_moves.get(key, 0) + n
 
     # The moves the ground does not explain, one row each: the measured
     # facts say whether the map around the lot moved.
@@ -1072,6 +1085,7 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
                         "design": r.design_key,
                         "tier": [r.tier_from, r.tier_to],
                         "colour": [r.colour_from, r.colour_to],
+                        "shown": [r.shown_from, r.shown_to],
                     }
                 )
         # The two queries share their joins; a move the matrix counted and
@@ -1112,6 +1126,7 @@ async def drift(session: AsyncSession, *, from_run: int, to_run: int, examples: 
         "only_in_old": int(only_in_old),
         "tier_moves": dict(sorted(tier_moves.items(), key=lambda kv: -kv[1])),
         "colour_moves": dict(sorted(colour_moves.items(), key=lambda kv: -kv[1])),
+        "shown_colour_moves": dict(sorted(shown_moves.items(), key=lambda kv: -kv[1])),
         "examples": sample,
         "computed_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
     }
@@ -1156,6 +1171,8 @@ def drift_markdown(doc: dict[str, Any]) -> str:
     lines += [f"- {k}: {v:,}" for k, v in doc["tier_moves"].items()] or ["- none"]
     lines += ["", "## Colour-if-signed moves", ""]
     lines += [f"- {k}: {v:,}" for k, v in doc["colour_moves"].items()] or ["- none"]
+    lines += ["", "## Shown-colour moves (the colour a flag can change)", ""]
+    lines += [f"- {k}: {v:,}" for k, v in (doc.get("shown_colour_moves") or {}).items()] or ["- none"]
     if doc.get("surroundings_facts"):
         lines += ["", "## What moved around the lots", ""]
         lines += [f"- {k}: {v:,}" for k, v in doc["surroundings_facts"].items()]
@@ -1167,6 +1184,7 @@ def drift_markdown(doc: dict[str, Any]) -> str:
         lines += [
             f"- {e['county']} {e['tlid']} {e['design']}: {e['tier'][0]} -> {e['tier'][1]}, "
             f"{e['colour'][0]} -> {e['colour'][1]}"
+            + (f", shown {e['shown'][0]} -> {e['shown'][1]}" if e.get("shown") and e["shown"][0] != e["shown"][1] else "")
             for e in doc["examples"]
         ]
     return "\n".join(lines) + "\n"
