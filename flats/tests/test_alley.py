@@ -425,7 +425,10 @@ def test_no_rear_setback_anywhere_is_switched_by_the_lot_level_fact(layers) -> N
     # + 3 on 2026-10-19 (FOLLOWUPS 93, townhomes on their own lots): Troutdale
     # HDR (1) and MU-1 (2) townhouse rows that take a rear-alley yard, keyed to
     # the rear line like the rest.
-    assert keyed_to_line == 28 + 19 + 1 + 6 + 3
+    # + 2 on 2026-10-20 (FOLLOWUPS 104): Gresham CMF on the NE Glisan / NE
+    # 162nd corridor takes TLDR's rear yards (Table 4.0430 note 14), whose
+    # alley rear is 8 feet; keyed to the rear line like the rest.
+    assert keyed_to_line == 28 + 19 + 1 + 6 + 3 + 2
 
 
 def test_the_side_half_lives_on_the_line_not_on_the_shared_number(layers) -> None:

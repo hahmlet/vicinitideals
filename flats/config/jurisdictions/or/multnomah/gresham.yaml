@@ -5230,6 +5230,17 @@ zones:
     setback_front_ft:
       value: 5
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
+      variants:
+        # Note 14 (corridor L485-L486): on CMF along NE Glisan and NE 162nd,
+        # homes "shall conform with ... Tables 4.0130 and 4.0131 for the TLDR
+        # district" -- and TLDR's setbacks are TIGHTER than CMF's. The
+        # 2026-08-15 reading called them looser (Steph 2026-10-20 asked how
+        # 4.0430's notes were used; read note by note). civic_corridor is not
+        # measured in Gresham, so these never fire; the unknown fact keeps
+        # every CMF lot out of GREEN until the corridor is mapped.
+        - value: 10
+          when: [civic_corridor]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
     setback_side_ft:
       value: 0
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
@@ -5243,6 +5254,16 @@ zones:
         - value: 0
           when: [unit_lots, attached_wall]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L423"
+        # Note 14: TLDR's side yards on the corridor (see setback_front_ft).
+        - value: 5
+          when: [civic_corridor]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+        - value: 5
+          when: [civic_corridor, unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
+        - value: 0
+          when: [civic_corridor, unit_lots, attached_wall]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
@@ -5253,9 +5274,27 @@ zones:
         - value: 5
           when: [unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
+        # Note 14: TLDR's rear yards on the corridor (see setback_front_ft).
+        - value: 15
+          when: [civic_corridor]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+        - value: 8
+          when: [civic_corridor, alley_at_rear]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+        - value: 15
+          when: [civic_corridor, unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
+        - value: 8
+          when: [civic_corridor, unit_lots, alley_at_rear]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
     setback_street_side_ft:
       value: 5
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
+      variants:
+        # Note 14: TLDR's street-side wall on the corridor (see setback_front_ft).
+        - value: 10
+          when: [civic_corridor]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
     setback_front_max_ft:
       value: 20
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L351-L356"
@@ -5273,7 +5312,7 @@ zones:
       value: 100
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L301-L302"
       variants:
-        # Note 17, the same shape as the residential chapter's note 10.
+        # Note 11, the same shape as the residential chapter's note 10.
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
@@ -5302,8 +5341,10 @@ zones:
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
     notes: 'Read against Table 4.0430 on 2026-08-15, and quoted as line ranges because this table is the worst case of the extraction problem in the corpus: seven columns (RTC, SC, SC-RJ, CMF, CMU, CC, MC, header at L359) collapse into one run of words per line, so no single line holds a whole cell and CMF is the fourth value along each of five consecutive lines. Reassembled, the residential row reads "5 feet front and street-side; 15 feet rear; 0 feet interior side" (L332-L336). A reviewer has to read the range and count columns; that is what the range citation is asking them to do, and it is honest about the work rather than pointing at a line that looks decisive and is not. The MAXIMUM front setback, 20 ft (L351-L356), is now encoded rather than living only in this note -- it is the standard that forces the pod forward on the lot and it was previously invisible to the engine. Lot size 10,000 (L296-L297) and frontage 100 (L301-L302) confirmed in the same table. quadfit confidence: verified | Base CMF regime: residential needs 10,000 sf min AND 100 ft
       street frontage; max front setback 20 ft + frontage occupancy — axis_required. NE Glisan/162nd corridors
-      follow TLDR standards instead (Table 4.0430 n.14) — NOT split out; base regime applied everywhere
-      = conservative.'
+      follow TLDR standards instead (Table 4.0430 n.14). CORRECTED 2026-10-20: TLDR is not looser -- its
+      setbacks (10 front, 10 street side, 5 side, 15/8 rear) are tighter than the CMF ones, so they are encoded
+      as civic_corridor variants; lot size, frontage and the 20 ft maximum front stay at the stricter
+      CMF numbers. The corridor is not mapped, so every CMF lot stays out of GREEN.'
   SC:
     section: ["4.04", "7.042"]
     cite_default:

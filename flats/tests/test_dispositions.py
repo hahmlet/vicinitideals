@@ -345,7 +345,7 @@ def test_no_narrowing_is_the_default(config: Path) -> None:
 
 
 def test_the_shipped_narrowing_is_the_one_that_was_read() -> None:
-    """Gresham Table 4.0420 note 2, the only narrowing in the corpus.
+    """Gresham Table 4.0420 note 2, the first narrowing in the corpus.
 
     Both its sentences name CMF -- the first is the L2 marker on that column's
     own cells, the second limits middle housing land divisions in that
@@ -359,8 +359,11 @@ def test_the_shipped_narrowing_is_the_one_that_was_read() -> None:
         for row in notes("or/multnomah/gresham")
         if row.state == "unmeasured" and row.zones
     ]
-    assert len(ruled) == 1, "the narrowings in Gresham moved"
-    (note,) = ruled
+    # + 1 on 2026-10-20 (FOLLOWUPS 104): Table 4.0430 note 14 sends CMF on the
+    # NE Glisan / NE 162nd corridor to TLDR's tables; it names CMF alone.
+    assert len(ruled) == 2, "the narrowings in Gresham moved"
+    assert all(row.zones == ("CMF",) for row in ruled)
+    (note,) = [row for row in ruled if row.line == 217]
     assert note.zones == ("CMF",)
     assert note.governs("CMF")
     assert not note.governs("CC")

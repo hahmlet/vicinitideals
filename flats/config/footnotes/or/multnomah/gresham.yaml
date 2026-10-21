@@ -575,7 +575,9 @@ notes:
     digest: "c8ca23808a27"
     state: dismissed
     reason: >-
-      raises the maximum front or streetside setback to 30 feet on arterials and boulevards; the encoded 20 is the stricter number and stays
+      raises the maximum front or streetside setback to 30 feet on arterials and boulevards; the encoded 20 is the stricter number and stays.
+      Its (b) and (c) -- 10 feet for commercial buildings, 5 feet on collectors and local streets --
+      are marked only on CC and MC (L353-L355), where the pod is not allowed (re-read 2026-10-20)
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L442"
     digest: "74b7a16bd317"
@@ -617,28 +619,29 @@ notes:
     digest: "6740bbae18b7"
     state: dismissed
     reason: >-
-      limits buildings in the Rockwood Design District to four or six stories; the pod is two
+      limits buildings in the Rockwood Design District to four or six stories; the pod is two.
+      Not the whole story (re-read 2026-10-20): Section 7.0512.B.6 requires at least three storeys
+      at the 181st/Burnside, 181st/Stark and Burnside/Stark gateways
+      (7.0500.rockwood-design.txt L3456-L3462), which the pod fails. Not encoded; those lots sit in
+      the Rockwood Design District, already held out of GREEN as unmeasured (note 13)
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L485"
     digest: "1301f87d5d82"
-    state: dismissed
+    state: unmeasured
+    fact: civic_corridor
+    zones: [CMF]
     reason: >-
-      sends the NE Glisan and NE 162nd corridor areas of CMF to the TLDR
-      standards, which are looser than the CMF ones encoded here; applying
-      the base CMF regime to the whole district is the stricter reading and
-      the one this layer takes.
-
-      That holds for every standard encoded in CMF and not for the one it
-      does not encode. The same note states a density regime -- "minimum net
-      density for middle housing shall be 12 units per acre and maximum
-      density shall be 25 units per acre for townhouses and 24 units per acre
-      for all other middle housing uses" -- and CMF carries no density at
-      all, so on that row the base regime is the LOOSER reading rather than
-      the stricter one. It is still not encoded, because the note reaches
-      only "the areas of CMF along the NE Glisan Street and NE 162nd Avenue
-      corridors" and nothing here decides which parcels are in them. Writing
-      the floor against all 665 CMF lots would apply a corridor standard to a
-      district, which is a worse error than a check that does not run
+      sends homes in "the areas of CMF along the NE Glisan Street and NE 162nd
+      Avenue corridors" to the TLDR standards of Tables 4.0130 and 4.0131. RE-RULED
+      2026-10-20 (Steph asked how Table 4.0430's notes were used): this was
+      dismissed as "TLDR is looser", and it is not -- TLDR's setbacks (front 10,
+      street side 10, interior side 5, rear 15 or 8 with an alley) and height (35)
+      are tighter than CMF's; only lot size, frontage and the maximum front
+      setback are looser, and those stay at CMF's numbers. The tighter ones are
+      encoded as civic_corridor variants on CMF. The note's density (12 minimum;
+      25 townhouses, 24 other middle housing maximum) is already met by CMF's 12
+      and 24. Which parcels are "along" the corridors is a map Gresham has and
+      we do not hold, so every CMF lot stays out of GREEN until it is mapped.
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L489"
     digest: "344b30e7d6e4"
@@ -650,8 +653,10 @@ notes:
     digest: "bd316ba6a05b"
     state: dismissed
     reason: >-
-      sets townhouse height in CMF at a one-storey minimum and a 45-foot
-      maximum; the pod is two storeys at 26 feet, inside both ends. The
+      sets townhouse height at a one-storey minimum in CMF and CMU and a
+      two-storey minimum in the other corridor zones, with a 45-foot maximum;
+      the pod is two storeys at 26 feet, inside both ends (it meets the
+      two-storey minimum exactly). The
       digest moved because the body used to stop mid-sentence at "CMU and
       CMF districts: 1 Story" -- the block cap cut it three lines short --
       and now carries the maximum this reason was already written against
