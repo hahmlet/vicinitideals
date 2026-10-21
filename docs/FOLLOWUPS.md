@@ -1255,7 +1255,9 @@ read when the weekly full re-screen lands.
    TITLE ("Table 4.0131 - Minimum Setbacks in Residential Districts¹") reaches every cell and no card
    asks it. STEPH 2026-10-21: "I think we have to" -- ask it, refined: a note on the table's title
    reaches every cell; a note on a COLUMN heading reaches only that column's cells; and the
-   title-note cards come one after another in the queue so Steph can clear them in a run. BUILDING. (f) DONE 67a8d0b5: reading down a wrapped cell
+   title-note cards come one after another in the queue so Steph can clear them in a run. DONE
+   3783bfb5 (merge 0da52f03, LIVE): 92 cards gained a title note, none reopened; card answer numbers
+   (#id) shown too. Limit: a column-heading note more than ~8 lines above a row does not reach it. (f) DONE 67a8d0b5: reading down a wrapped cell
    stops at a numbered block ("2. Minimum Street Frontage: Corner lots"); MDR-24's interior 45 ft
    frontage stopped asking the corner cell's note 10 (Steph check 646). Sweep: that one card only.
 104. [Claude] [BUILDING (a) edge, (b), (e)] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
@@ -1275,6 +1277,13 @@ read when the weekly full re-screen lands.
    mapped; (c) note 6 townhouse lot width not held on its own (low risk); (d) HOLD (Steph 2026-10-21: "could be a big change") row M buffering points
    to Section 9.0100, not stored; (e) BUILDING (Steph 2026-10-21) row C width/depth ratio for a single-lot quadplex in SC, SC-RJ,
    CMU not encoded.
+107. [Claude] [BUILDING on flats/footnote-cards] **Page check: footnotes asked as their own value card
+   (Steph 2026-10-21).** Steph: "I should only be asked about footnotes in the context of being a
+   footnote, not its own ruling. If this is happening because we systematically don't know it's a
+   footnote, we need to add a button option 'this is a footnote'." A variant (`when:`) whose quote is a
+   note's text gets its own "does the page say X when Y?" card. Plan: count them; where the code can
+   tell, fold each into a note question on the parent cell's card (keep Steph's answers); add a
+   "This is a footnote" button on every value card for the cases it cannot tell.
 106. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Gresham corridor minimum density for a quadplex
    on one lot (ids 736/738/740).** Steph 2026-10-21: density minimums on big lots are a known limit -- one pod
    is checked though the land would be split into several, which waits for plotting street additions
