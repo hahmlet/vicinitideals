@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import difflib
 import hashlib
+import math
 import re
 import statistics
 import threading
@@ -138,6 +139,12 @@ class Sheet:
     lines: tuple[Line, ...]
     #: Width over height of the page as displayed (after any rotation).
     aspect: float = 612 / 792
+    #: Words printed turned a quarter turn on an upright page, read along
+    #: their own direction: Gresham's Pleasant Valley and Springwater setback
+    #: tables set every column heading ("Front Porch", "Rear With Alley")
+    #: vertically. Kept out of ``lines``, where their letters fell one or two
+    #: to a line and read as nothing.
+    turned: tuple[Word, ...] = ()
 
 
 # --- reading a page ------------------------------------------------------
@@ -172,19 +179,30 @@ def _rotate(u: float, v: float, rotation: int) -> tuple[float, float]:
     return u, v
 
 
-def _chars(page: Any) -> tuple[list[tuple[str, float, float, float, float, bool]], float]:
+_Char = tuple[str, float, float, float, float, bool]
+
+
+def _chars(page: Any) -> tuple[list[_Char], float, list[_Char | None]]:
     """Every printed character with its box on the page as displayed.
 
     The last field says a space came before it. Spaces are not kept as
     characters -- PDFium generates them for visual gaps and gives them no
     useful box -- but they are word breaks, and some books (Gresham's downtown
     chapter) set words so tight that the gap alone does not show it.
+
+    The third result is the characters printed a quarter turn from the rest
+    of an upright page, in the order the text runs, with a None wherever an
+    upright character came between two of them. On any other page -- a
+    landscape table set sideways, a page turned by ``/Rotate`` -- it is empty
+    and every character is in the first, as it always was.
     """
+    import pypdfium2.raw as pdfium_c
+
     left, bottom, right, top = page.get_cropbox()
     width, height = (right - left) or 1.0, (top - bottom) or 1.0
     rotation = page.get_rotation() % 360
     textpage = page.get_textpage()
-    out = []
+    read: list[tuple[_Char, float]] = []
     spaced = False
     try:
         for i in range(textpage.count_chars()):
@@ -201,12 +219,71 @@ def _chars(page: Any) -> tuple[list[tuple[str, float, float, float, float, bool]
                 for x, y in ((l, t), (r, b))
             ]
             xs, ys = [c[0] for c in corners], [c[1] for c in corners]
-            out.append((char, min(xs), min(ys), max(xs), max(ys), spaced))
+            angle = math.degrees(pdfium_c.FPDFText_GetCharAngle(textpage.raw, i)) % 360
+            read.append(((char, min(xs), min(ys), max(xs), max(ys), spaced), angle))
             spaced = False
     finally:
         textpage.close()
     aspect = width / height if rotation in (0, 180) else height / width
-    return out, aspect
+
+    def off(angle: float, by: float) -> float:
+        return abs((angle - by + 180) % 360 - 180)
+
+    upright = sum(1 for _c, a in read if off(a, 0) < 5)
+    if rotation or upright < 0.75 * len(read):
+        return [c for c, _a in read], aspect, []
+    out: list[_Char] = []
+    turned: list[_Char | None] = []
+    for c, angle in read:
+        if min(off(angle, 90), off(angle, 270)) < 10:
+            turned.append(c)
+        else:
+            out.append(c)
+            if turned and turned[-1] is not None:
+                turned.append(None)
+    return out, aspect, turned
+
+
+def _turned_words(chars: Sequence[_Char | None], aspect: float) -> tuple[Word, ...]:
+    """Characters printed a quarter turn, run together into words.
+
+    They come in the order the text runs, so a word is the characters that
+    follow one another with no space and no upright text between, stacked in
+    one printed line (overlapping across it) with no gap along it. A
+    character thinner across its line than most is a footnote marker, as on
+    an upright line.
+    """
+    real = [c for c in chars if c is not None]
+    if not real:
+        return ()
+    # Across a turned line is horizontal on the page: the glyph's height.
+    body = statistics.median((c[3] - c[1]) * aspect for c in real)
+    words: list[list[Any]] = []
+    last: _Char | None = None
+    for c in chars:
+        if c is None:
+            last = None
+            continue
+        text, x0, y0, x1, y1, spaced = c
+        sup = (x1 - x0) * aspect < body * _SUPERSCRIPT
+        w = words[-1] if words else None
+        joins = (
+            w is not None
+            and last is not None
+            and not spaced
+            and sup == w[5]
+            # One printed line: the two overlap across it by half or more.
+            and min(x1, w[3]) - max(x0, w[1]) >= 0.5 * min(x1 - x0, w[3] - w[1])
+            # No gap along it wider than a fifth of the text height.
+            and max(y0 - w[4], w[2] - y1, 0.0) <= body * 0.2
+        )
+        if joins:
+            w[0] += text
+            w[1], w[2], w[3], w[4] = min(w[1], x0), min(w[2], y0), max(w[3], x1), max(w[4], y1)
+        else:
+            words.append([text, x0, y0, x1, y1, sup])
+        last = c
+    return tuple(Word(w[0], Box(w[1], w[2], w[3], w[4]), w[5]) for w in words)
 
 
 def _not_notes(words: list[list[Any]], body: float, aspect: float) -> list[list[Any]]:
@@ -312,12 +389,12 @@ def _read(book: Path, n: int, _edition: int) -> Sheet:
                 raise ProvenanceError(f"{book.name} has no page {n}")
             page = pdf[n - 1]
             try:
-                chars, aspect = _chars(page)
+                chars, aspect, turned = _chars(page)
             finally:
                 page.close()
         finally:
             pdf.close()
-    return Sheet(n=n, lines=_group(chars, aspect), aspect=aspect)
+    return Sheet(n=n, lines=_group(chars, aspect), aspect=aspect, turned=_turned_words(turned, aspect))
 
 
 def render(book: Path, n: int) -> Path:
@@ -1093,29 +1170,65 @@ def under_field_heading(
     leaves every hit boxed: a reviewer reading the column off the page is the
     check, and a box under the wrong heading is the failure it exists to catch.
     """
-    want = _FIELD_HEADS.get(field)
-    if not want or len(spans) < 2:
+    if len(spans) < 2:
         return list(spans)
+    fits, _elsewhere = _headed(sheet, line, spans, field, when)
+    return fits if len(fits) == 1 else list(spans)
+
+
+#: Every word a heading names a standard by. A cell headed by none of them
+#: ("Quadplex", a group label above the table's rows) is not known to be
+#: another standard's.
+#: "Minimum" and "Maximum" alone head a block of standards, not one of them.
+_STANDARD_WORDS = frozenset().union(*_FIELD_HEADS.values(), _QUALIFIERS, {"alley"}) - {"minimum", "maximum"}
+
+
+def _headed(
+    sheet: Sheet,
+    line: Line,
+    spans: Sequence[tuple[int, int]],
+    field: str,
+    when: Sequence[str] = (),
+) -> tuple[list[tuple[int, int]], list[tuple[int, int]]]:
+    """The hits headed by this standard's name, and the hits headed by another's.
+
+    A hit in neither list sits under no heading that names a standard. With
+    no heading words for the field, nothing is in either.
+    """
+    want = _FIELD_HEADS.get(field)
+    if not want or not spans:
+        return [], []
     # A lot WITH an alley reads the alley column, and only that lot does.
     by_alley = "alley" in want or any("alley" in w for w in when)
     cells = _cells(line, spans)
     heads: dict[tuple[int, int], set[str]] = {c: set() for c, _box in cells}
     above = [ln for ln in sheet.lines if ln.box.y1 <= line.box.y0][-40:]
+
+    def head(word: Word) -> None:
+        # A heading is set over its column, centred or flush; the column
+        # is the cell nearest it, and a word over no cell (the row-label
+        # column) heads nothing.
+        mid = _middle(word.box)
+        gap, cell = min((max(box.x0 - mid, mid - box.x1, 0.0), c) for c, box in cells)
+        if gap <= _HEAD_REACH:
+            heads[cell] |= _head_words(word.text)
+
+    top = above[0].box.y0 if above else line.box.y0
     for printed in reversed(above):
         if printed.words[0].text.lower().startswith("table"):
+            top = printed.box.y1
             break  # the caption: this table's headings are all below it
         if any(not w.sup and w.text[:1].isdigit() for w in printed.words):
             continue  # a row of the table, not a heading
         for word in printed.words:
-            if word.sup:
-                continue
-            # A heading is set over its column, centred or flush; the column
-            # is the cell nearest it, and a word over no cell (the row-label
-            # column) heads nothing.
-            mid = _middle(word.box)
-            gap, cell = min((max(box.x0 - mid, mid - box.x1, 0.0), c) for c, box in cells)
-            if gap <= _HEAD_REACH:
-                heads[cell] |= _head_words(word.text)
+            if not word.sup:
+                head(word)
+    # A heading printed turned reads up its column (Pleasant Valley's "Rear
+    # With Alley"): it heads the cell under it, like an upright one, when it
+    # sits between the caption and the row.
+    for word in sheet.turned:
+        if not word.sup and word.box.y0 >= top and word.box.y1 <= line.box.y0:
+            head(word)
     fits = [
         span
         for span in spans
@@ -1123,7 +1236,8 @@ def under_field_heading(
         and not ((heads[span] & _QUALIFIERS) - want)
         and _with_alley(heads[span]) == by_alley
     ]
-    return fits if len(fits) == 1 else list(spans)
+    elsewhere = [span for span in spans if span not in fits and heads[span] & _STANDARD_WORDS]
+    return fits, elsewhere
 
 
 def _with_alley(heads: set[str]) -> bool:
@@ -1205,6 +1319,8 @@ def place(
             spans = tuple(under)
         columned = columned or narrowed
         found.append(Found(line_no, page, printed, spans))
+    found, dropped = _off_heading(sheets, found, field, when)
+    columned = columned or dropped
 
     pages = sorted({f.page for f in found})
     placed = Placed(status="unfound", pages=pages)
@@ -1227,6 +1343,50 @@ def place(
     elif any(f.line for f in found):
         placed.status = "lines"
     return placed
+
+
+def _off_heading(
+    sheets: dict[int, Sheet], found: list[Found], field: str, when: Sequence[str]
+) -> tuple[list[Found], bool]:
+    """Hits under another standard's heading, dropped where this one's is boxed.
+
+    A text copy can split one printed row over two stored lines, and a
+    citation quoting both boxed the number wherever it recurs on the second
+    half: Pleasant Valley's "MDR-PV 10 ft. ..." boxed the front setback's
+    10 ft. and the street-side and rear 10 ft. beside it. Once one hit sits
+    under this standard's own heading, another stretch of that same printed
+    row whose every hit sits under a heading naming a different standard has
+    nothing of this number's on it, and keeps its quote-line mark only. A
+    different row is left alone (it may be a different case of the standard),
+    and short of exactly one hit under this standard's heading nothing is
+    dropped.
+    """
+    if not _FIELD_HEADS.get(field):
+        return found, False
+    judged = [
+        (f, _headed(sheets[f.page], f.line, f.hits, field, when) if f.line is not None and f.hits else ([], []))
+        for f in found
+    ]
+    anchors = [f for f, (fits, _e) in judged for _span in fits]
+    if len(anchors) != 1:
+        return found, False
+    anchor = anchors[0]
+    assert anchor.line is not None
+    row = anchor.line.box
+    out, dropped = [], False
+    for f, (fits, elsewhere) in judged:
+        same_row = (
+            f.line is not None
+            and f.page == anchor.page
+            and f.line.box.y0 < row.y1
+            and row.y0 < f.line.box.y1
+        )
+        if same_row and f.hits and not fits and len(elsewhere) == len(f.hits):
+            out.append(Found(f.line_no, f.page, f.line, ()))
+            dropped = True
+        else:
+            out.append(f)
+    return out, dropped
 
 
 # --- the notes -----------------------------------------------------------
