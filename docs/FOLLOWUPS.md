@@ -1253,8 +1253,9 @@ read when the weekly full re-screen lands.
    WEEKLY: Gresham MDR-24 and corridor corner townhouse frontage 32 -> 25 and MDR-24 corner width
    42 -> 25 (dc79bd29) -- read those gains lot by lot at the next weekly. (e) A marker on the TABLE'S
    TITLE ("Table 4.0131 - Minimum Setbacks in Residential Districts¹") reaches every cell and no card
-   asks it; asking it would add a note card to every setback in the table -- decide with Steph whether
-   that is wanted. (f) DONE 67a8d0b5: reading down a wrapped cell
+   asks it. STEPH 2026-10-21: "I think we have to" -- ask it, refined: a note on the table's title
+   reaches every cell; a note on a COLUMN heading reaches only that column's cells; and the
+   title-note cards come one after another in the queue so Steph can clear them in a run. BUILDING. (f) DONE 67a8d0b5: reading down a wrapped cell
    stops at a numbered block ("2. Minimum Street Frontage: Corner lots"); MDR-24's interior 45 ft
    frontage stopped asking the corner cell's note 10 (Steph check 646). Sweep: that one card only.
 104. [Claude] [Steph: (a) two edge questions] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
