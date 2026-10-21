@@ -1253,15 +1253,17 @@ read when the weekly full re-screen lands.
    (d) RIDES THE WEEKLY: Gresham MDR-24 and corridor (RTC/SC/SC-RJ/CMF/CMU) corner townhouse
    frontage 32 -> 25 and MDR-24 corner width 42 -> 25 (the plat's drive is a shared access; dc79bd29)
    -- read those gains lot by lot at the next weekly.
-104. [Claude] [scan: YES if any corridor number changes] **Gresham Table 4.0430 notes, read note by note (Steph
-   2026-10-20: "really complicated with different rulings for different streets, different uses,
-   different zones. I can't parse how these footnotes are or are not being incorporated").** Known
-   so far: note 14's ledger entry (footnotes gresham.yaml, corridor.txt#L485) is dismissed as "TLDR is
-   looser than CMF", but TLDR's setbacks are tighter (front 10, street side 10, rear 15/8, garage 20
-   vs CMF 5/5/15/none). civic_corridor is unmeasured in Gresham, so encoding the corridor setbacks
-   makes the tighter one bind on every CMF lot; CMF has no green lots today (226 red, 1,092 unknown),
-   so no false green now. Next: the note-by-note ledger (audit agent), a plain-English page for
-   Steph, encode the fixes, read the moves at the weekly.
+104. [Claude] [Steph] [scan: NO until the corridor is mapped] **Gresham Table 4.0430 notes, read note by
+   note (Steph 2026-10-20).** DONE: all 18 notes read, plain-English page
+   https://claude.ai/artifact/BQaymC5Un4njJZaTH9LJDf; note 14 re-ruled (TLDR setbacks are TIGHTER
+   than CMF's) and encoded as civic_corridor variants on CMF; ledger L431/L465/L492 corrected.
+   OPEN: (a) [Steph] map which CMF parcels are "along" NE Glisan / NE 162nd (Gresham's corridor
+   map) -- until then every CMF lot stays out of GREEN; (b) note 12's target 7.0512.B.6 requires 3
+   storeys at the 181st/Burnside, 181st/Stark, Burnside/Stark gateways (rockwood-design L3456-L3462)
+   -- those lots show yellow, should be red once Rockwood is mapped; (c) note 6 townhouse lot width
+   16/25 ft not held as its own rule (frontage covers ordinary lots; low risk); (d) row M buffering
+   points to Section 9.0100, not stored; (e) row C width/depth ratio for a single-lot quadplex in
+   SC, SC-RJ, CMU not encoded.
 105. [Claude] [AFTER 73's restructure + clean] [scan: YES (new standards bind)] **Follow every
    cross-reference one layer down (Steph 2026-10-20).** A footnote or standard that says "see Section
    X", "conform with Table Y for the Z district" or "may be approved per Section W" is not read until
