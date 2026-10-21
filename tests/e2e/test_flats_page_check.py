@@ -285,3 +285,14 @@ def test_a_number_read_off_another_zones_page_says_why(logged_in_page: Page, bas
     page.goto(f"{base_url}/flats/check/{LAYER}?zone=CMF&field=max_height_ft&when=civic_corridor")
 
     expect(page.locator("#check-card [data-borrowed]")).to_contain_text("not printed on this page")
+
+
+def test_a_number_held_from_a_note_shows_the_note(logged_in_page: Page, base_url: str) -> None:
+    """MDR-24's minimum density is waived under 11,000 sq ft by note 5, printed
+    on the next page; the card shows the note's words (Steph 2026-10-20)."""
+    page = logged_in_page
+    page.goto(
+        f"{base_url}/flats/check/{LAYER}?zone=MDR-24&field=min_density_du_per_acre&when=lot_sqft:%3C%3D%3C11000"
+    )
+
+    expect(page.locator("#check-card [data-row-notes]")).to_contain_text("11,000 square feet")

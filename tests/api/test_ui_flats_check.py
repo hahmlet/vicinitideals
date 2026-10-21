@@ -1057,6 +1057,20 @@ def test_a_number_read_off_another_zones_page_says_why_and_links_that_page():
     assert "borrowed" not in tldr
 
 
+def test_a_number_held_from_a_note_shows_the_note():
+    """MDR-24's minimum density is waived under 11,000 sq ft by note 5, which
+    Gresham prints on the next page; the card shows the note's words
+    (Steph 2026-10-20)."""
+    layer = check._layers()["or/multnomah/gresham"]
+    row = next(
+        r
+        for r in check._rows(layer, set())
+        if (r["zone"], r["field"]) == ("MDR-24", "min_density_du_per_acre") and r["when"]
+    )
+    card = check._card(layer, check._Ask(row, "value"))
+    assert any("11,000 square feet" in text for text in card["row_notes"])
+
+
 def test_a_figure_printed_in_another_unit_is_asked_in_that_unit():
     """A density stored from "1,742 square feet per dwelling" is asked as
     that, not as "1,742 units per acre" (2026-10-20); a figure with no unit

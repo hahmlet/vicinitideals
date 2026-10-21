@@ -156,6 +156,14 @@
     {% if card.borrowed %}
     <p class="muted" style="font-size:12px;margin:0 0 6px" data-borrowed>{{ card.zone_label | capitalize }} is not printed on this page. We read the number here because of: {{ card.borrowed }}.</p>
     {% endif %}
+    {% if card.row_notes %}
+    <div style="font-size:12px;margin:0 0 6px" data-row-notes>
+      <span class="muted">The notes printed on this number:</span>
+      {% for text in card.row_notes %}
+      <blockquote style="margin:2px 0 4px;padding:4px 10px;border-left:3px solid #2563eb;font-size:13px">{{ text }}</blockquote>
+      {% endfor %}
+    </div>
+    {% endif %}
     {% if card.others %}
     <div style="font-size:12px;margin:0 0 6px">
       <span class="muted">We also hold, for the same standard:</span>

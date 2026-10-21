@@ -1259,6 +1259,19 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
                 card["derived_why"] = _derived_why(layer, row)
         if web:
             return card
+        if row["when"]:
+            # A number held "on lots under 11,000 sq ft" comes from a note the
+            # page may print overleaf; the card asked whether the note was
+            # read right without showing the note (Steph 2026-10-20, MDR-24).
+            seen: set[str] = set()
+            card["row_notes"] = []
+            for m in placed.markers:
+                if m.mark in seen:
+                    continue
+                seen.add(m.mark)
+                body = _note_text(document, m.mark, row["line"])[1]
+                if body:
+                    card["row_notes"].append(" ".join(body))
         for page, boxes in _own_boxes(placed):
             card["sheets"].append(_sheet_view(document, page, boxes, row["mark"]))
         card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
