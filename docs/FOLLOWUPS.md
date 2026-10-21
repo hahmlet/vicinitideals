@@ -1287,6 +1287,9 @@ read when the weekly full re-screen lands.
    size, frontage or the ratio still be built on (and skips min density) -- treat every taxlot as a lot
    of record on the single-lot path? (ii) lift note 13's Rockwood setback hold, since 7.0502(B)/7.0512
    take the pod out? BUILDING both, then bound, merge, splice.
+   ALSO (possible false GREEN, found by 109): 7.0420(J)(1)(a) 50% street-oriented frontage reaches plexes
+   in the Corridor Design District, which 3.0100#L834 defines to include MDR-12, MDR-24, OFR -- encoded
+   on the corridor zones, missing on these three (live: 54 greens). Added to flats/gresham-4430.
 110. [Claude] [NEXT -- possible false GREEN] [scan: YES (greens may go yellow/red)] **Wilsonville Villebois
    (V): the quadplex route is for lots that already have a home.** 4.125(.23) opens "For lots previously
    developed with at least one residential unit" (4.planning.txt#L6439); FLATS applies its Table V-1 +
