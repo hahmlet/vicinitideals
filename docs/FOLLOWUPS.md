@@ -674,14 +674,17 @@ read when the weekly full re-screen lands.
    1N2E21AD  -06200 (RM1, 50 x 200 ft). PROPOSAL: fetch the two maps from the City's open-data
    portal as polygons (or get them from Steph), then add a frontage check and the rear setback with
    a corner exemption. Until then, consider marking these 902 yellow.
-90. [Claude] [(a)'s check change Copilot-able once (b)+(c) are read] [scan: NO (citations move, answers must not)] **409 cites name a section the cited lines
-   do not sit in (found 2026-10-16, docs/ops/quote-mismatch-2026-10-16.md).** Not quote
-   failures: gaps.py:462 / attribution.check. (a) header_or_xref 286: the named section is printed inside the
-   lines (running header / cross-reference -- likely harmless); (b) heading_same_file 88 the heading sits
-   elsewhere in the same file (cite may point at the wrong lines);    (c) heading_other_file 16 the
-      heading is only in another stored file; (d) unlocated 19 (the classifier's counts;
-      headline 123 = b+c+d). Hillsboro 123, Tigard 107, Beaverton 83 (was 80).
-   Next: read (b)+(c) by hand (judgement), fix cites; then teach the check to ignore (a).
+90. [Claude] [(a)'s check change Copilot-able] [scan: NO (citations move, answers must not)] **Cites that name a section
+   the cited lines do not sit in (found 2026-10-16, docs/ops/quote-mismatch-2026-10-16.md).** (b)+(c) DONE
+   8775562a 2026-10-21: 63 cites fixed in Estacada, Gladstone, Oregon City, Fairview, Troutdale, Wood
+   Village, Tigard -- the quoted lines were right, the cite named a neighbouring section; no value,
+   condition or quote moved. Counts now (a) header_or_xref 283, (b) 48, (c) 0, (d) unlocated 9. The 57
+   left are the CHECK's errors, not cites: lagging page headers beat a real heading (Sherwood 16.94, King
+   City 16.114.130 -- a fix added 89 false cases, reverted); Sherwood's 16.12.030 heading missing from
+   the stored text (43, hand-checked correct); Beaverton cells "18.511" / "see 20.25.15" read as
+   headings; the cite reader takes "Table 18.805.1" as a section and cannot read "19.65.030 through
+   19.65.060". Next: teach the check to ignore (a). Also: Gresham NC-PV quadplex_allowed cites Tables
+   4.1413/4.1415A/B but its quote is Table 4.1423 ("Quadplex NP") -- fix the cite.
 83. [Claude] [scan: YES (yellows only go green)] **Measure Washington County's "standard plat" gate instead
    of flagging it (offered 2026-10-14, item 79).** 731 R-9/R-15/... lots are yellow only because
    nothing says whether the lot was made by a standard subdivision or partition plat (302-2.14 ..
@@ -1250,7 +1253,9 @@ read when the weekly full re-screen lands.
    42 -> 25 (dc79bd29) -- read those gains lot by lot at the next weekly. (e) A marker on the TABLE'S
    TITLE ("Table 4.0131 - Minimum Setbacks in Residential Districts¹") reaches every cell and no card
    asks it; asking it would add a note card to every setback in the table -- decide with Steph whether
-   that is wanted.
+   that is wanted. (f) DONE 67a8d0b5: reading down a wrapped cell
+   stops at a numbered block ("2. Minimum Street Frontage: Corner lots"); MDR-24's interior 45 ft
+   frontage stopped asking the corner cell's note 10 (Steph check 646). Sweep: that one card only.
 104. [Claude] [Steph: (a) two edge questions] [scan: YES (a), on flats/gresham-corridor] **Gresham Table 4.0430
    notes, read note by note (Steph 2026-10-20).** DONE: all 18 notes read, plain-English page
    https://claude.ai/artifact/BQaymC5Un4njJZaTH9LJDf; note 14 encoded as civic_corridor variants.
