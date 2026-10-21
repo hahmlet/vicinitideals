@@ -1171,3 +1171,107 @@ def test_a_note_on_a_tables_title_is_asked_of_every_number_in_one_run(monkeypatc
 
     # C's note 1 is answered already and is not asked again.
     assert asked == [("A", "note:5"), ("B", "note:2"), ("A", "note:1"), ("B", "note:1")]
+
+
+def _footnoted_rows() -> list[dict]:
+    """A zone's front setback read off the table, and an exception to it read
+    off note 5 alone, in the same document."""
+    rows = [
+        {"zone": "A", "field": "setback_front_ft", "when": "", "web": False, "quote": "d#L10",
+         "document": "d", "mark": "m", "in_note": "", "value": 10},
+        {"zone": "A", "field": "setback_front_ft", "when": "fronts_cul_de_sac", "web": False,
+         "quote": "d#L40", "document": "d", "mark": "m", "in_note": "5", "value": 5},
+    ]
+    check._carry(rows)
+    return rows
+
+
+class _Said:
+    def __init__(self, answer: str = "matches", at: int = 0):
+        from datetime import datetime, timedelta
+
+        self.answer, self.fingerprint, self.id, self.question = answer, "m", 1, "value"
+        self.decided_at = datetime(2026, 10, 21) + timedelta(minutes=at)
+        self.note, self.says = "differs", ""
+
+
+def test_a_number_read_off_a_footnote_is_asked_as_its_cells_note(monkeypatch):
+    """Steph 2026-10-21: "I should only be asked about footnotes in the
+    context of being a footnote, not its own ruling." The exception has no
+    card of its own; the cell's card asks note 5, even where the marker on
+    the cell was not found."""
+    layer = check._layers()[LAYER]
+    rows = _footnoted_rows()
+    monkeypatch.setattr(check, "_placed", lambda row: sheet.Placed(status="boxed", markers=[], marker_page=1))
+
+    asked = [(a.row["when"], a.question) for a in check._questions(layer, rows, {})]
+    assert asked == [("", "value")]
+
+    answers = {(LAYER, "A", "setback_front_ft", "", "value"): _Said()}
+    asked = [(a.row["when"], a.question) for a in check._questions(layer, rows, answers)]
+    assert asked == [("", "note:5")]
+    counts = check._counts(layer, rows, answers)
+    assert (counts["numbers"], counts["checked"]) == (2, 1)
+
+    # Answering the note answers the exception too.
+    answers[(LAYER, "A", "setback_front_ft", "", "note:5")] = _Said("have_it")
+    assert list(check._questions(layer, rows, answers)) == []
+    assert check._counts(layer, rows, answers)["checked"] == 2
+
+
+def test_an_answer_already_given_on_the_footnotes_own_card_still_stands(monkeypatch):
+    """The exception's old "does the page say" answer is not thrown away and
+    the note is not asked a second time."""
+    layer = check._layers()[LAYER]
+    rows = _footnoted_rows()
+    monkeypatch.setattr(check, "_placed", lambda row: sheet.Placed(status="boxed", markers=[], marker_page=1))
+    answers = {
+        (LAYER, "A", "setback_front_ft", "", "value"): _Said(),
+        (LAYER, "A", "setback_front_ft", "fronts_cul_de_sac", "value"): _Said(),
+    }
+
+    assert list(check._questions(layer, rows, answers)) == []
+    assert check._counts(layer, rows, answers)["checked"] == 2
+
+
+def test_a_footnote_with_no_cell_to_ask_it_on_keeps_its_card():
+    rows = _footnoted_rows()[1:]
+    check._carry(rows)
+
+    assert "carried_by" not in rows[0]
+    assert rows[0]["in_note"] == "5"
+
+
+async def test_this_is_a_footnote_is_an_answer_that_files_a_problem(client, session):
+    await _login(client, session)
+    row = _first_row()
+
+    card = await client.get(f"/flats/check/{LAYER}")
+    assert 'data-answer="footnote"' in card.text
+    await client.post("/ui/flats/check", data=_form(row, answer="footnote"))
+
+    saved = (await session.execute(select(FlatsPageCheck))).scalars().one()
+    assert saved.answer == "footnote"
+    index = await client.get("/flats/check")
+    assert "This is a footnote" in index.text
+
+
+def test_a_footnote_reopened_on_its_own_card_is_asked_on_its_cells_note(monkeypatch):
+    """A reopen on the exception's old card is not lost when the question
+    moves: the cell's note is asked again, even over an older answer to it,
+    until it is answered after the reopening."""
+    layer = check._layers()[LAYER]
+    rows = _footnoted_rows()
+    monkeypatch.setattr(check, "_placed", lambda row: sheet.Placed(status="boxed", markers=[], marker_page=1))
+    answers = {
+        (LAYER, "A", "setback_front_ft", "", "value"): _Said(),
+        (LAYER, "A", "setback_front_ft", "", "note:5"): _Said("no_change", at=1),
+        (LAYER, "A", "setback_front_ft", "fronts_cul_de_sac", "value"): _Said(check.REOPENED, at=2),
+    }
+
+    assert [a.question for a in check._questions(layer, rows, answers)] == ["note:5"]
+    assert check._counts(layer, rows, answers)["checked"] == 1
+
+    answers[(LAYER, "A", "setback_front_ft", "", "note:5")] = _Said("have_it", at=3)
+    assert list(check._questions(layer, rows, answers)) == []
+    assert check._counts(layer, rows, answers)["checked"] == 2

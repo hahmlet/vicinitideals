@@ -36,7 +36,7 @@ from app.db import AsyncSessionLocal  # noqa: E402
 from app.models.flats import FlatsPageCheck  # noqa: E402
 
 #: What a reopen puts back: answers that said something was wrong or unclear.
-RAISED = frozenset({"differs", "wrong_box", "unclear", "missing"})
+RAISED = frozenset({"differs", "wrong_box", "unclear", "missing", "footnote"})
 
 
 async def reopen(session, layer_id: str, ids: frozenset[int] = frozenset()) -> list[FlatsPageCheck]:

@@ -139,6 +139,13 @@
         We hold <strong>{{ card.field_label }}: <span style="font-size:17px">{{ card.value }}</span></strong>{% if card.when_who %} for {{ card.when_who }}{% endif %}{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_where %} {{ card.when_where }}{% endif %}. Is that what the page says?
       </p>
       <p class="muted" style="font-size:12px;margin:0 0 4px" data-because>Read from: {{ card.because }}</p>
+    {% elif card.question == "value" and card.in_note %}
+      <p style="font-size:15px;margin:0 0 4px" data-in-note>
+        This is read from note <strong>{{ card.in_note }}</strong>, printed with the table's notes. We read it as:
+        <strong style="font-size:17px">{{ card.printed or card.value }}</strong>
+        for <strong>{{ card.field_label }}</strong>{% if card.when_who %} for {{ card.when_who }}{% endif %}{% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.when_where %} {{ card.when_where }}{% endif %}.
+        Is that what the note says?
+      </p>
     {% elif card.question == "value" %}
       <p style="font-size:15px;margin:0 0 4px">
         Does the page say <strong style="font-size:17px">{{ card.printed or card.value }}</strong>
@@ -147,6 +154,12 @@
       {% if card.printed %}
       <p class="muted" style="font-size:12px;margin:0 0 4px" data-derived>We hold <strong>{{ card.value }}</strong> from it: {{ card.derived_why }}.</p>
       {% endif %}
+    {% elif card.readings %}
+      <p style="font-size:15px;margin:0 0 4px" data-readings>
+        Note <strong>{{ card.mark }}</strong> applies to <strong>{{ card.field_label }}</strong> ({{ card.value }}){% if card.zone_label %} in <strong>{{ card.zone_label }}</strong>{% endif %}{% if card.mark_on == "read" %} &mdash; by our reading; we found no marker for it on this number{% endif %}. We read it as:
+      </p>
+      {% for r in card.readings %}<p style="font-size:15px;margin:0 0 4px"><strong>{{ r }}</strong></p>{% endfor %}
+      <p style="font-size:15px;margin:0 0 4px">Is that what the note says?</p>
     {% else %}
       <p style="font-size:15px;margin:0 0 4px">
         Note <strong>{{ card.mark }}</strong> is printed {% if card.mark_on == "web" %}in the cited text of this number{% elif card.mark_on == "title" %}on the title of this number's table{% if card.mark_page %} (on the page the table starts){% endif %}, so it may reach every number in the table{% else %}on this
