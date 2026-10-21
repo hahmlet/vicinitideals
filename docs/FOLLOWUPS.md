@@ -1284,6 +1284,10 @@ read when the weekly full re-screen lands.
    note's text gets its own "does the page say X when Y?" card. Plan: count them; where the code can
    tell, fold each into a note question on the parent cell's card (keep Steph's answers); add a
    "This is a footnote" button on every value card for the cases it cannot tell.
+   ALSO (Steph 2026-10-21, "that seems like a big gap"): a note on a COLUMN heading reaches only rows
+   within ~8-10 printed lines of it, so lower rows' cards never ask it. Card-only: the screen's numbers
+   come from the footnote ledgers, not this page reading, but the page check is then blind to a missed
+   note there. Fix: scan the table's whole heading band; sweep; new note questions arrive unanswered.
 106. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Gresham corridor minimum density for a quadplex
    on one lot (ids 736/738/740).** Steph 2026-10-21: density minimums on big lots are a known limit -- one pod
    is checked though the land would be split into several, which waits for plotting street additions
