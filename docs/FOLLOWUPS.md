@@ -1181,22 +1181,6 @@ read when the weekly full re-screen lands.
    Table 4.0430 / the DRL-1 table with the yaml (gresham.yaml CMF ~L5124, DRL-1 ~L4441), answer each
    in a plain line, encode any footnote that is missing (bound it), then Steph marks them handed on.
 
-97. [Copilot-able once worded] [scan: NO] **Page check card shows a converted number, not the page's
-   words (Steph 2026-10-19, Durham SDR).** The card asked "4.356 units per acre" for min density;
-   the page prints "10,000 square feet per dwelling" (durham.yaml `sqft_per_unit: 10000`; 43,560 /
-   10,000 = 4.356). Steph could not match it to the page. Where a value is stored in a derived form
-   (sqft_per_unit and the other value forms), the card question should state it as printed, with
-   the converted figure in brackets: "10,000 sq ft per home (= 4.356 units per acre)". Files:
-   app/api/routers/ui_flats_check.py (card question), its template; test: an API test on a
-   sqft_per_unit card. Must not change any stored value or a signature hash.
-
-98. [Claude] [scan: NO] **Page check shows the wrong footnote text (Steph 2026-10-19, Rivergrove
-   R10 min_lot_sqft, page 24, check id 255).** The note-2 card showed Section 5.050 (a)(2) as the
-   footnote; the real note 2 is printed at the foot of the page. `_note_text` in
-   app/api/routers/ui_flats_check.py takes the first "(2)"/"2." it finds near the cited line. Find
-   how many note cards pick body text over a page-foot note (rank: a marker line at the page foot
-   wins over a numbered clause), fix, re-show Rivergrove note 2. Steph answered "no change" twice on
-   the wrong text, so re-ask that card once fixed.
 99. [Claude] [scan: NO until a 2-unit design exists] **State middle-housing parking is held as a
    per-unit ratio (Steph 2026-10-19, page check id 248).** or layer defaults hold
    parking_min_per_unit 0.25 / 0.5 / 0.75 by lot size: right for a 4-unit pod (0.5 x 4 = 2 spaces),
@@ -1250,6 +1234,25 @@ read when the weekly full re-screen lands.
    year-0 revenue entries describe what the code no longer writes. (a) and
    (d) look like export bugs; (b) and (c) are presentation choices for
    Steph. Exporter = app/exporters/investor_export.py (not the engine).
+102. [Claude] [scan: maybe (front-line choice moves corner/through lots)] **Gresham front lot line on corner and
+   through lots (Steph page check 2026-10-20, ids 295-298 "differs").** Steph's words: on a corner, the
+   front is "determined by the orientation necessary to achieve minimum required lot depth. IF BOTH,
+   then you choose" (295); on a through lot "the manager determines regardless of orientation ... make
+   our best guess ... follow standards from other cities/parts of Gresham ... this would be a green
+   flag" (297). Read Gresham's definition (page 36 of the definitions doc), encode corner = the side
+   that makes min depth (either if both), through = best-guess front + a flag, keep it green. Durham
+   273/282 (front_lot_line_corner, corner_access_street) also "differs" with no comment -- read them
+   with Steph's Durham rulings before touching.
+103. [Claude] [scan: YES for (d) only] **Page check: notes the cards still cannot ask (2026-10-20).** (a) A marker on a
+   heading that spans several columns -- Gresham Table 4.0131 "FRONT²" over Front Facade / Front
+   Porch / Garage (Steph check 538) -- is over none of the numbers, so no card asks note 2 (held as
+   through_lot, unmeasured). (b) Tables whose headings print rotated (Pleasant Valley, Springwater)
+   cannot be narrowed to one column, so those cards box every repeat of a number. (c) ~890 cards now
+   say "<zone> is not printed on this page"; most are true (chapter-wide parking/open-space pages) --
+   watch whether Steph finds the line noisy, and quiet it on pages that state a city-wide rule.
+   (d) RIDES THE WEEKLY: Gresham MDR-24 and corridor (RTC/SC/SC-RJ/CMF/CMU) corner townhouse
+   frontage 32 -> 25 and MDR-24 corner width 42 -> 25 (the plat's drive is a shared access; dc79bd29)
+   -- read those gains lot by lot at the next weekly.
 
 ## 2. Waiting on Steph
 
