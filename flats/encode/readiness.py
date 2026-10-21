@@ -230,6 +230,10 @@ def _printed(value: object) -> object:
         # nowhere.
         else value.per_units
         if getattr(value, "per_units", None) is not None
+        # A width/depth ratio is checked against the ratio the table prints.
+        # Gresham Table 4.0430 prints 0.5 : 1 and prints the 2 nowhere.
+        else value.width_to_depth
+        if getattr(value, "width_to_depth", None) is not None
         # A rule that counts spaces for the whole building -- "two spaces in
         # total" -- is checked against the count. OAR 660-046-0220 prints
         # one, two, three and four and prints the rates they come to nowhere.

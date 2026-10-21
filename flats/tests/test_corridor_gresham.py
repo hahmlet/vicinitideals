@@ -3,11 +3,13 @@
 
 GDC Table 4.0420 note 2 and Table 4.0430 note 14 change CMF's rules on "the
 areas of CMF along the NE Glisan Street and NE 162nd Avenue corridors", and
-Gresham maps no such area. Steph 2026-10-20: "Yes, map it." These tests pin
-the three answers -- a street line on the corridor is True, a lot in a CMF
-block that reaches neither street is False, a lot behind the frontage of a
-block that does is left unanswered (the config's switch) -- and that missing
-data never answers.
+Gresham maps no such area. Steph 2026-10-20: "Yes, map it." Steph
+2026-10-21: "only lots actually touching the street count as 'along'. If it
+touches, it's along." These tests pin the answers -- a street line on the
+corridor is True, a lot whose land touches the corridor street (a corner
+included) is True, a lot in a CMF block that reaches neither street is
+False, a lot behind the frontage of a block that does is False (the config's
+switch) -- and that missing data never answers.
 """
 
 from __future__ import annotations
@@ -70,6 +72,12 @@ def _lot(x: float, y: float, streets: dict[str, bool]) -> tuple[list[list[object
 ON_GLISAN = _lot(X0 + 100, Y0, {"south": True})
 CORNER_183RD = _lot(X0, Y0, {"south": True, "west": True})
 BEHIND = _lot(X0 + 100, Y0 + 200, {"north": True})
+# A lot one lot depth behind the Glisan frontage with NO street line (130 ft
+# from Glisan), and the block's NE corner lot, whose one street line is on NE
+# Hoyt and whose east side meets the 162nd right-of-way without s4 classing
+# it a street line (30 ft from the centreline).
+DEEP = _lot(X0 + 300, Y0 + 100, {})
+CORNER_TOUCH = _lot(X0 + 500, Y0 + 200, {"north": True})
 ROCKWOOD = _lot(X0 + 10_100, Y0, {"south": True})
 SE_162ND = _lot(X0 + 660, Y0 - 2300, {"west": True})
 
@@ -136,8 +144,8 @@ def test_the_registered_corridor_is_gresham_cmf_on_glisan_and_ne_162nd() -> None
     assert spec.zones == {"CMF"}
     assert spec.streets == ("NE GLISAN ST", "NE 162ND AVE")
     assert spec.blocks == "corridor_blocks_gresham"
-    # Open with Steph (2026-10-20): unanswered until ruled.
-    assert spec.behind_frontage is None
+    # Steph 2026-10-21: behind the frontage is not "along".
+    assert spec.behind_frontage is False
 
 
 def test_the_snapshot_builds_one_named_corridor(maps: tuple[object, ...]) -> None:
@@ -157,9 +165,26 @@ def test_a_corner_lot_with_its_side_street_on_183rd_and_its_front_on_glisan(maps
     assert _fact(CORNER_183RD, maps) is True
 
 
-def test_a_lot_behind_the_frontage_of_a_corridor_block_is_unanswered(maps: tuple[object, ...]) -> None:
-    got = observed_facts(_row(BEHIND), corridors=maps)  # type: ignore[arg-type]
-    assert "civic_corridor" not in got
+def test_a_lot_behind_the_frontage_of_a_corridor_block_is_off_it(maps: tuple[object, ...]) -> None:
+    # 230 ft from Glisan with a whole lot between: not touching, so not along.
+    assert _fact(BEHIND, maps) is False
+    assert _fact(DEEP, maps) is False
+
+
+def test_a_lot_touching_the_corridor_only_at_its_corner_is_on_it(maps: tuple[object, ...]) -> None:
+    # Its one street line is on NE Hoyt; its east side is 30 ft from NE
+    # 162nd's centreline with only right-of-way between. "If it touches, it's
+    # along."
+    assert _fact(CORNER_TOUCH, maps) is True
+
+
+def test_touching_is_half_a_right_of_way_not_a_lot_further() -> None:
+    from flats.geom.corridor import BLOCK_REACH_FT, TOUCH_REACH_FT
+
+    # The 2026-10-19 weekly: frontage lots sit 34-54 ft from the centreline,
+    # the nearest lot behind one 125 ft. The reach has to fall in that gap.
+    assert 54 < TOUCH_REACH_FT < 125
+    assert TOUCH_REACH_FT == BLOCK_REACH_FT
 
 
 def test_a_cmf_lot_in_rockwood_is_off_the_corridor(maps: tuple[object, ...]) -> None:
@@ -194,7 +219,7 @@ def test_only_cmf_lots_on_gresham_are_asked(maps: tuple[object, ...]) -> None:
     assert _fact(ON_GLISAN, maps, zone="CMU") is None
     edges, wkb = ON_GLISAN
     assert observed_corridors(edges, "or/multnomah/portland", maps, zone="CMF", lot=wkb) == {}  # type: ignore[arg-type]
-    # A lot with no shape cannot be placed in a block: unanswered, unless a
+    # A lot with no shape cannot be placed or measured: unanswered, unless a
     # street line already settles it.
     assert observed_corridors(BEHIND[0], GRESHAM, maps, zone="CMF", lot=None) == {}  # type: ignore[arg-type]
     assert observed_corridors(edges, GRESHAM, maps, zone="CMF", lot=None) == {"civic_corridor": True}  # type: ignore[arg-type]
@@ -205,12 +230,14 @@ def test_the_behind_frontage_switch_answers_without_code(tmp_path: Path) -> None
 
     _snapshot(tmp_path)
     text = NAMED_PATH.read_text(encoding="utf-8")
-    assert "behind_frontage: null" in text
-    for value, expected in (("true", True), ("false", False)):
+    assert "behind_frontage: false" in text
+    for value, expected in (("true", True), ("false", False), ("null", None)):
         cfg = tmp_path / f"corridors_{value}.yaml"
-        cfg.write_text(text.replace("behind_frontage: null", f"behind_frontage: {value}"), encoding="utf-8")
+        cfg.write_text(text.replace("behind_frontage: false", f"behind_frontage: {value}"), encoding="utf-8")
         maps = load_maps(tmp_path, named=str(cfg))
         assert _fact(BEHIND, maps) is expected
+        # A lot that touches is along whatever the switch says.
+        assert _fact(CORNER_TOUCH, maps) is True
         # The switch moves only the lots behind the frontage.
         assert _fact(ON_GLISAN, maps) is True
         assert _fact(ROCKWOOD, maps) is False

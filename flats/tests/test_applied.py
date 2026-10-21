@@ -140,8 +140,12 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     use gates), Table 18.280.1 notes 1 and 2 (the attached-wall side and
     alley rear variants) and Table 18.650.3 notes 2 and 4 (MU-CBD's 45 ft
     height and its residential-only minimum density). All five confirm.
+
+    92 -> 93 on 2026-10-21, Gresham: Table 4.0130 note 2 (an undersized lot
+    of record may be developed), taken as lot_of_record_relief lot_area on
+    Steph's ruling that every existing taxlot is a lot of record.
     """
-    assert len(rows) == 92
+    assert len(rows) == 93
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

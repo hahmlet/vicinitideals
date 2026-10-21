@@ -484,6 +484,22 @@ _F: tuple[FieldDef, ...] = (
         True,
     ),
     FieldDef(
+        "lot_of_record_relief",
+        "enum",
+        "What an existing lot of record is let off on the single-lot path, "
+        "where the code says a lot of record that misses a lot standard may "
+        "be developed anyway. `lot_area`: the minimum lot area (Gresham Table "
+        "4.0130 note 2). `lot_dimensions`: minimum lot area, minimum frontage "
+        "and the depth ratio, and a lot that misses any of them is then "
+        "exempt from the minimum density (Gresham 4.0431.C). Every existing "
+        "taxlot is taken as a lot of record (Steph 2026-10-21, rulings.yaml "
+        "2026-10-21-existing-taxlots-are-lots-of-record). Never reaches the "
+        "unit-lots path, which makes new lots.",
+        None,
+        choices=("none", "lot_area", "lot_dimensions"),
+        label="lot-of-record relief",
+    ),
+    FieldDef(
         "land_division_parent_standards",
         "bool",
         "True where splitting the building onto one lot per unit is judged "
@@ -1639,6 +1655,8 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # still surfaces the omission through the clause ledger.
         "min_lot_depth_ft",
         "max_lot_depth_ratio",
+        # A relief, not a standard: a code that states none relieves nothing.
+        "lot_of_record_relief",
         # One jurisdiction in the corpus caps building width, and only inside
         # a historic district. A zone that is silent about it is not an
         # incomplete zone.

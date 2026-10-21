@@ -71,11 +71,19 @@ def test_the_chapter_now_holds_every_column_of_its_table(gresham: Layer) -> None
 
 
 def test_the_use_table_splits_the_corridor_in_half(gresham: Layer) -> None:
-    """A bare P and a bare NP, with nothing conditional between them."""
+    """A bare P and a bare NP, with nothing conditional between them -- save
+    CMF's townhouse path, which Table 4.0420 note 2 keeps to the NE Glisan and
+    NE 162nd corridors (no middle housing land division elsewhere in CMF)."""
     for zone in PERMITTED:
         use = gresham.zones[zone].values["quadplex_allowed"]
         assert use.value is True, zone
-        assert use.variants == (), zone
+        if zone == "CMF":
+            assert [(v.value, v.when) for v in use.variants] == [
+                (False, ("unit_lots",)),
+                (True, ("unit_lots", "civic_corridor")),
+            ]
+        else:
+            assert use.variants == (), zone
     for zone in BARRED:
         held = gresham.zones[zone]
         assert held.values["quadplex_allowed"].value is False, zone

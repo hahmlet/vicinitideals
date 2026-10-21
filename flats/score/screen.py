@@ -143,6 +143,15 @@ USE_PROHIBITED = "USE_PROHIBITED"
 CLOSER_LOOK_MIN_DENSITY = "CLOSER_LOOK_MIN_DENSITY"
 #: The checks a minimum density is measured by.
 MIN_DENSITY_CHECKS: frozenset[str] = frozenset({"min_density_du_per_acre", "min_units"})
+
+#: The lot standards each `lot_of_record_relief` lets an existing lot of
+#: record off, by check name. `lot_dimensions` also lifts the minimum density
+#: from a lot that missed one of them (Gresham 4.0431.C).
+LOT_OF_RECORD_WAIVES: dict[str, frozenset[str]] = {
+    "lot_area": frozenset({"min_lot_area_sqft"}),
+    "lot_dimensions": frozenset({"min_lot_area_sqft", "min_frontage_ft", "max_lot_depth_ratio"}),
+}
+_LOT_MAXIMA: frozenset[str] = frozenset({"max_lot_depth_ratio"})
 #: The ground the building and its court stand on falls more than GREEN
 #: allows and no more than RED does -- a stepped foundation or retaining
 #: walls, a cost to price (Steph 2026-10-04, ``flats/config/slope.yaml``).
@@ -934,11 +943,33 @@ def _checks(
     # twin beside it (Steph 2026-10-15, :func:`flats.ingest.quadfit.
     # townhouse_checked`), and this is where that twin's unit lots are read.
     per_unit = design.plat is Plat.unit_lots
+    # An existing lot of record that misses a lot standard may be developed
+    # anyway where the code says so (`lot_of_record_relief`), and every
+    # existing taxlot is taken as one (Steph 2026-10-21). Only on the one-lot
+    # path: the unit-lots plat makes new lots, and they meet the rows.
+    relieved = (
+        frozenset()
+        if per_unit
+        else LOT_OF_RECORD_WAIVES.get(rules.get("lot_of_record_relief"), frozenset())
+    )
+    #: The lot standards this lot missed and was let off.
+    let_off: list[str] = []
+
+    def lot_check(name: str, observed: float, threshold: float | None) -> None:
+        if name in relieved and threshold is not None:
+            result = policy.evaluate(name, observed, threshold, is_maximum=name in _LOT_MAXIMA, jurisdiction=where)
+            if result.verdict is Verdict.fails:
+                let_off.append(name)
+                return
+            out.append(result)
+            return
+        check(name, observed, threshold, is_maximum=name in _LOT_MAXIMA)
+
     min_lot, lot_answered = lot_standard(
         rules, "min_lot_sqft", per_unit=per_unit, lots=design.units
     )
     if lot_answered:
-        check("min_lot_area_sqft", lot.lot_sqft, min_lot, is_maximum=False)
+        lot_check("min_lot_area_sqft", lot.lot_sqft, min_lot)
     else:
         unchecked.append("min_lot_area_sqft")
     if lot.landlocked:
@@ -956,7 +987,7 @@ def _checks(
         )
         min_front = _row_of_home_lots(rules, design, "min_frontage_ft", min_front)
         if front_answered:
-            check("min_frontage_ft", lot.frontage_ft, min_front, is_maximum=False)
+            lot_check("min_frontage_ft", lot.frontage_ft, min_front)
         else:
             unchecked.append("min_frontage_ft")
     # The driveway's share of the street frontage (Sherwood 16.14.030 A.2,
@@ -1106,12 +1137,7 @@ def _checks(
         and lot.lot_width_ft is not None
         and lot.lot_width_ft > 0
     ):
-        check(
-            "max_lot_depth_ratio",
-            lot.lot_depth_ft / lot.lot_width_ft,
-            max_ratio,
-            is_maximum=True,
-        )
+        lot_check("max_lot_depth_ratio", lot.lot_depth_ft / lot.lot_width_ft, max_ratio)
     else:
         unchecked.append("max_lot_depth_ratio")
     if per_unit:
@@ -1223,13 +1249,17 @@ def _checks(
     # applied to the wrong jurisdiction turns a marginal lot the wrong colour
     # in whichever direction it was borrowed from. Compared this way the margin
     # is slack, and slack is what the triage bands already know how to read.
-    rate(
-        "min_density_du_per_acre",
-        float(design.units),
-        43_560.0,
-        "min_density_du_per_acre",
-        is_maximum=False,
-    )
+    # 4.0431.C: a lot of record developed under the relief -- one that missed
+    # a lot standard it was let off -- is exempt from the minimum density. A
+    # lot that met them all was not developed under it and still owes it.
+    if not (let_off and rules.get("lot_of_record_relief") == "lot_dimensions"):
+        rate(
+            "min_density_du_per_acre",
+            float(design.units),
+            43_560.0,
+            "min_density_du_per_acre",
+            is_maximum=False,
+        )
 
     # Minimum density only bites above the lot size that triggers it.
     trigger = rules.get("min_density_trigger_lot_sqft")

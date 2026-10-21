@@ -1026,7 +1026,10 @@ UNEXPRESSIBLE: dict[str, int] = {
     "min_building_separation_ft": 22,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,
-    "max_lot_depth_ratio": 4,
+    # 4 -> 8 on 2026-10-21 (FOLLOWUPS 104(e)): Gresham SC, SC-RJ, CMU and CMF
+    # hold Table 4.0430 row C, 0.5 : 1 width/depth. FLATS screens it; this
+    # pipeline still compares no ratio of two measurements.
+    "max_lot_depth_ratio": 8,
     "max_units": 14,
     "max_height_stories": 21,
     "setback_side_total_ft": 3,

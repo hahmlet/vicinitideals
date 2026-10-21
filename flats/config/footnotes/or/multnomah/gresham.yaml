@@ -182,11 +182,16 @@ notes:
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L374"
     digest: "be0e306681cb"
-    state: dismissed
+    state: encoded
+    encoded_as: >-
+      lot_of_record_relief lot_area on LDR-5, LDR-7, TLDR, TR and MDR-12
     reason: >-
-      note 2 lets an undersized lot of record be developed anyway; it can only
-      relax the minimum lot size this screen enforces, so ignoring it costs
-      lots we called too small and never the other way
+      note 2 lets an undersized lot of record be developed anyway. Dismissed
+      until 2026-10-21 because nothing said which taxlots are lots of record;
+      Steph ruled that day that every existing taxlot is taken as one
+      (rulings.yaml 2026-10-21-existing-taxlots-are-lots-of-record), so the
+      one-lot path is let off row B's minimum lot size. The unit-lots plat
+      makes new lots and is not
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L376"
     digest: "3aad28e9d598"
@@ -620,10 +625,16 @@ notes:
     state: dismissed
     reason: >-
       limits buildings in the Rockwood Design District to four or six stories; the pod is two.
-      Not the whole story (re-read 2026-10-20): Section 7.0512.B.6 requires at least three storeys
-      at the 181st/Burnside, 181st/Stark and Burnside/Stark gateways
-      (7.0500.rockwood-design.txt L3456-L3462), which the pod fails. Not encoded; those lots sit in
-      the Rockwood Design District, already held out of GREEN as unmeasured (note 13)
+      The note's pointer, Section 7.0512.B.6, requires at least three storeys of "Building
+      masses facing and abutting" the 181st/Burnside, 181st/Stark and Burnside/Stark gateways
+      (7.0500.rockwood-design.txt L3449-L3462). RE-READ 2026-10-21 for FOLLOWUPS 104(b), "map
+      Rockwood": it does not reach the pod either way it is built. The standard sits under the
+      "All Development" heading (L3447), which 7.0512 defines as "All developments, except
+      townhouses ... unless otherwise stated" (L214), and B.6 states nothing otherwise -- so the
+      four units on unit lots are out; and 7.0502(B) takes "Single detached dwellings, duplexes,
+      triplexes, and quadplexes" out of Sections 7.0501-7.0512 altogether (L44-L45), where a
+      quadplex divided through a Middle Housing Land Division is still a quadplex (3.0100
+      L962-L964). No gateway lot goes red; nothing to map for this note
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L485"
     digest: "1301f87d5d82"
@@ -646,10 +657,11 @@ notes:
       answers civic_corridor on CMF lots from the RLIS centrelines of NE
       Glisan St and NE 162nd Ave (north of Burnside) and Gresham's CMF blocks
       (flats/config/corridors.yaml) -- true with a street lot line on either,
-      false in a CMF block that reaches neither. A lot in a block that reaches
-      them with no line on them stays unanswered, and out of GREEN, until
-      Steph rules (behind_frontage). The note stays unmeasured so a lot the
-      data cannot answer keeps its hold.
+      or with land touching either, a corner included (within 75 ft of the
+      centreline, half a right-of-way); false otherwise, behind the frontage
+      included (Steph 2026-10-21: "only lots actually touching the street
+      count as 'along'. If it touches, it's along."). The note stays
+      unmeasured so a lot the data cannot answer keeps its hold.
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L489"
     digest: "344b30e7d6e4"
@@ -714,8 +726,11 @@ notes:
       2026-10-20-gresham-cmf-corridor-mapped): civic_corridor is read off the
       RLIS centrelines of NE Glisan St and NE 162nd Ave and Gresham's CMF
       blocks (flats/config/corridors.yaml) -- true with a street lot line on
-      either, false in a CMF block that reaches neither, unanswered behind the
-      frontage of a block that does until that is ruled.
+      either or land touching either (a corner included), false otherwise
+      (Steph 2026-10-21: "only lots actually touching the street count as
+      'along'. If it touches, it's along."). The consequence is encoded since
+      2026-10-21 as CMF quadplex_allowed variants: false for unit_lots, true
+      for unit_lots on civic_corridor.
 
       Narrowed to CMF, which is what the note says twice: the first sentence
       is the L2 marker on the CMF column's own cells, and the second names the
@@ -729,12 +744,21 @@ notes:
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L480"
     digest: "cbf12e6d1150"
-    state: unmeasured
-    fact: rockwood_design_district
+    state: dismissed
     reason: >-
-      inside the Rockwood Design District the front setbacks come from Section
-      7.0512.A.2 rather than from this table, and nothing decides whether a
-      parcel is inside it
+      inside the Rockwood Design District note 13 sends the street setbacks to
+      Section 7.0512.A.2, and that section does not reach the pod in either
+      form (Steph 2026-10-21, "Yes on Rockwood setback"; rulings.yaml
+      2026-10-21-gresham-rockwood-setbacks). 7.0502(B): "Section 7.0501-7.0512
+      do not apply to: Single detached dwellings, duplexes, triplexes, and
+      quadplexes" (7.0500 L44-L45), so the one-lot quadplex takes this table's
+      setbacks. A.2 S1 sits under "All Development", which 7.0512 defines as
+      "All developments, except townhouses" (L214, L525), and for townhouses
+      S1 itself says to "follow the minimum building setback requirements
+      provided in Table 4.0430, Footnote 1" with a 20 ft maximum (L577-L580)
+      -- the numbers note 1 and row G already hold. Held unmeasured until
+      2026-10-21 on rockwood_design_district, which kept every lot inside the
+      district out of GREEN
 
   # --- 4.1100, Downtown -----------------------------------------------
   #
