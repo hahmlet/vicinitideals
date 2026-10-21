@@ -670,6 +670,8 @@ def markers(
     out += _group_markers(above, line)
     out += _zone_heading_markers(above, zone)
     for span in spans:
+        out += _spanning_markers(above, span_box(line, span))
+    for span in spans:
         out += _down_the_cell(sheet, line, span)
     for span in spans:
         box = span_box(line, span)
@@ -815,6 +817,105 @@ def _states_number_over(line: Line, box: Box) -> bool:
     return any(
         not w.sup and w.box.x0 < box.x1 and w.box.x1 > box.x0 and numeral(w.text) for w in line.words
     )
+
+
+def _clusters(line: Line, gap: float = 0.01) -> list[tuple[Box, list[str]]]:
+    """A line's words run together into cells, each with the marks printed on it."""
+    out: list[tuple[Box, list[str]]] = []
+    for word in line.words:
+        if word.sup:
+            if out:
+                out[-1][1].extend(_marks(word.text))
+            continue
+        if out and word.box.x0 - out[-1][0].x1 < gap:
+            out[-1] = (out[-1][0].union(word.box), out[-1][1])
+        else:
+            out.append((word.box, []))
+    return out
+
+
+def _middle_x(box: Box) -> float:
+    return (box.x0 + box.x1) / 2
+
+
+def _runs(heads: Sequence[Box], cols: Sequence[Box]) -> list[tuple[int, int]] | None:
+    """The run of columns each heading is centred over, in order, or None.
+
+    A heading printed over several columns sits over the middle of them, so
+    the runs are the left-to-right partition whose middles come nearest the
+    headings' own. The runs meet: a column between two headings is one of
+    theirs, or "FRONT" over Front Façade, Front Porch and Garage is claimed by
+    the porch alone, the one it is printed over. Columns before the first run
+    or after the last may belong to none, at a cost each.
+    """
+    best: tuple[float, list[tuple[int, int]]] | None = None
+
+    def walk(h: int, start: int, err: float, got: list[tuple[int, int]]) -> None:
+        nonlocal best
+        if best is not None and err >= best[0]:
+            return
+        if h == len(heads):
+            err += _SPAN_LEFT_OVER * (len(cols) - start)
+            if best is None or err < best[0]:
+                best = (err, list(got))
+            return
+        for a in (range(start, len(cols)) if h == 0 else (start,)):
+            for b in range(a, len(cols)):
+                middle = (cols[a].x0 + cols[b].x1) / 2
+                miss = abs(middle - _middle_x(heads[h]))
+                # Over the run, not beside it.
+                if miss > _SPAN_MISS or not (cols[a].x0 <= heads[h].x1 and heads[h].x0 <= cols[b].x1):
+                    continue
+                got.append((a, b))
+                walk(h + 1, b + 1, err + miss + (_SPAN_LEFT_OVER * a if h == 0 else 0.0), got)
+                got.pop()
+
+    walk(0, 0, 0.0, [])
+    return best[1] if best else None
+
+
+#: How far a spanning heading's middle may sit from its columns' middle.
+_SPAN_MISS = 0.04
+#: What a column left out of every run costs the partition.
+_SPAN_LEFT_OVER = 0.01
+
+
+def _spanning_markers(above: Sequence[Line], box: Box) -> list[Marker]:
+    """A marker on a heading printed over several columns at once.
+
+    Gresham Table 4.0131 heads three columns -- Front Façade, Front Porch and
+    Garage -- with one "FRONT²", and the ² sits over the porch, so the column
+    scan above the façade's and the garage's numbers misses it and no card
+    asked note 2 (Steph check 538, FOLLOWUPS 103(a)). The heading is a line
+    of a few wide-spaced words over a line of more column headings, neither
+    stating a number; each heading owns the run of columns it is centred
+    over, and its marks reach every number under that run.
+    """
+    recent = above[-10:]
+    middle = _middle_x(box)
+    for at in range(len(recent) - 2, -1, -1):
+        head, under = recent[at], recent[at + 1]
+        # Digits: a heading may spell one ("Zero Lot Line").
+        if any(
+            not w.sup and numeral(w.text) and any(ch.isdigit() for ch in w.text)
+            for ln in (head, under)
+            for w in ln.words
+        ):
+            continue
+        heads = _clusters(head)
+        cols = [b for b, _ in _clusters(under)]
+        if len(heads) < 2 or len(cols) <= len(heads) or not any(m for _, m in heads):
+            continue
+        runs = _runs([b for b, _ in heads], cols)
+        if runs is None:
+            continue
+        centres = [_middle_x(c) for c in cols]
+        k = min(range(len(cols)), key=lambda i: abs(centres[i] - middle))
+        for (hbox, marks), (a, b) in zip(heads, runs):
+            if a <= k <= b:
+                return [Marker(m, "column", hbox) for m in marks]
+        return []
+    return []
 
 
 def _group_markers(above: Sequence[Line], line: Line) -> list[Marker]:

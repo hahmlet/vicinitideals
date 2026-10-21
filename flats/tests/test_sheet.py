@@ -612,6 +612,50 @@ def test_a_lettered_heading_rows_marker_is_not_a_cell_note(tmp_path: Path):
     assert "3" in [m.mark for m in S.markers(sheet, row, S.hits(row, 6.22, sheet.aspect))]
 
 
+def test_a_note_on_a_heading_over_several_columns_reaches_each(tmp_path: Path):
+    """Gresham Table 4.0131 heads Front Façade, Front Porch and Garage with
+    one "FRONT²", its ² over the porch; the façade's and the garage's numbers
+    carry note 2 too, the side yards under "SIDE" do not (Steph check 538)."""
+    runs = [
+        (174, 700, 9, "FRONT"),
+        (199, 704, 5, "2"),
+        (349, 700, 9, "SIDE"),
+        (130, 685, 9, "Front"),
+        (175, 685, 9, "Front"),
+        (215, 685, 9, "Garage"),
+        (255, 685, 9, "Interior"),
+        (300, 685, 9, "Common"),
+        (345, 685, 9, "Street"),
+        (390, 685, 9, "Street"),
+        (435, 685, 9, "Street"),
+        (130, 675, 9, "Wall"),
+        (175, 675, 9, "Porch"),
+        (255, 675, 9, "Side"),
+        (300, 675, 9, "Wall"),
+        (72, 650, 9, "LDR-5"),
+        (125, 650, 9, "10 ft."),
+        (172, 650, 9, "8 ft."),
+        (212, 650, 9, "20 ft."),
+        (252, 650, 9, "5 ft."),
+        (300, 650, 9, "NA"),
+        (342, 650, 9, "11 ft."),
+        (387, 650, 9, "12 ft."),
+        (432, 650, 9, "21 ft."),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "LDR-5 10 ft. 8 ft. 20 ft. 5 ft. NA 11 ft. 12 ft. 21 ft.")
+
+    def marks(value):
+        return [m.mark for m in S.markers(sheet, row, S.hits(row, value, sheet.aspect))]
+
+    assert "2" in marks(10)
+    assert "2" in marks(20)
+    assert "2" not in marks(5)
+    assert "2" not in marks(21)
+
+
 #: Gresham Table 4.0430 in miniature: the corridor zones head the columns,
 #: CMF's heading carries note 14, and the lot-size cell wraps over four lines
 #: with its notes at the end (Steph 2026-10-20).
