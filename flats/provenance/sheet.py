@@ -1119,13 +1119,43 @@ def note_line(text: Sequence[str], mark: str, after: int, *, reach: int = 600) -
     alone = re.compile(rf"^\s{{0,{_NOTE_INDENT}}}\(?{re.escape(mark)}[.)]?\s*$")
     for n in range(after, min(after + reach, len(text)) + 1):
         line = text[n - 1]
-        if shape.match(line):
+        if shape.match(line) and not _row_label(line, mark, text[n : n + 3]):
             return n
         if alone.match(line):
             following = next((t.strip() for t in text[n : n + 2] if t.strip()), "")
             if following[:1].isupper() and len(following.split()) >= 8:
                 return n
     return None
+
+
+#: A table cell's whole content: a figure, or the page's word for no figure.
+_CELL = re.compile(r"\d[\d,.]*%?|None|NA|N/A|-+", re.IGNORECASE)
+
+
+def _row_label(line: str, mark: str, below: Sequence[str] = ()) -> bool:
+    """A numbered row label inside a table, not a note: "2. Width at building
+    line: Corner lot" over "Single Detached  40 ft.  40 ft.".
+
+    Gresham Table 4.0130 numbers its sub-rows the way its notes are numbered,
+    and the note 2 card showed a row heading (Steph 2026-10-20, check 630). A
+    label is a few words with no full stop, and the table's figures follow it.
+    A short note -- Beaverton's "4. Refer to Figure 70.15.10.2.3", Oregon
+    City's "1. If a multi-family residential development abuts a" wrapping
+    onto the next line -- is followed by words, not by a row of figures. A
+    number alone on its line is left to the rule for that.
+    """
+    rest = re.sub(rf"^\s*\(?{re.escape(mark)}[.)]?", "", line).strip()
+    if not rest:
+        return True
+    if len(rest.split()) >= 8 or rest.endswith((".", ";", ":")):
+        return False
+    nxt = next((t for t in below if t.strip()), "")
+    if nxt.rstrip().endswith(","):
+        # The next row's own label wrapping: "Single Detached," (Springwater).
+        return True
+    following = nxt.split()
+    figures = sum(1 for w in following if _CELL.fullmatch(w))
+    return bool(following) and figures / len(following) >= 0.25
 
 
 #: The furthest in from the margin a note's number is printed in a stored

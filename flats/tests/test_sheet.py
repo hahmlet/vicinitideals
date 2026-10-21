@@ -204,6 +204,36 @@ def test_a_note_is_not_a_section_number_or_a_cell_far_from_the_margin():
     assert S.note_line(rivergrove, "2", 1) == 4
 
 
+def test_a_numbered_row_label_inside_the_table_is_not_its_note():
+    """Gresham Table 4.0130 numbers its sub-rows as its notes are numbered:
+    the note 2 card showed "2. Width at building line: Corner lot" (Steph
+    2026-10-20, check 630). The note is the sentence after "Notes:"."""
+    text = [
+        "B. Minimum Lot Size                5,000 sq. ft.",
+        "  1. Width at building line: Interior lot",
+        "        Townhouse                   16 ft.",
+        "  2. Width at building line: Corner lot",
+        "        Townhouse                   20 ft.         20 ft.",
+        "  2. Minimum Street Frontage: Corner lots",
+        "        Townhouse                   None           None",
+        "2. Section 7.0400 Rear Height Limits",
+        "Single Detached,",
+        "Table 4.0130 Notes:",
+        "1.  If a multi-family residential development abuts a",
+        "parcel zoned R-10, R-8, R-6, there shall be a",
+        "2.        Development of a Lot of Record which is less than the required minimum lot size may be",
+        "4. Refer to Figure 70.15.10.2.3",
+        "12.   Also see Section 10.1100 for shoreline height standards.",
+    ]
+
+    assert S.note_line(text, "2", 1) == 13
+    # Short notes are notes: one that wraps (Oregon City), one with no stop
+    # (Beaverton), one that is a sentence.
+    assert S.note_line(text, "1", 3) == 11
+    assert S.note_line(text, "4", 1) == 14
+    assert S.note_line(text, "12", 1) == 15
+
+
 def test_a_web_note_numbered_on_a_line_of_its_own_is_found():
     """Happy Valley 16.43 prints "NOTES: / 1 / Parking maximums are based on
     ..."; Oregon City prints a marker on a line of its own above its row,
