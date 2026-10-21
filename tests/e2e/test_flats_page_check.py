@@ -261,3 +261,27 @@ def test_the_answers_stay_put_from_card_to_card(logged_in_page: Page, base_url: 
     assert before and after
     assert abs(after["y"] - before["y"]) <= 1, f"the answers moved from {before['y']} to {after['y']}"
     assert after["y"] + after["height"] <= 900, "the answers are on screen"
+
+
+def test_a_derived_number_is_asked_as_printed_and_says_what_we_hold(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """Gresham LDR-5's rear setback is held as 20 ft: the table's 15 ft plus
+    the step-back. Steph answered "differs" to "does the page say 20 ft?"
+    (2026-10-20); the card asks about the 15 and says where the 20 comes from."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}?zone=LDR-5&field=setback_rear_ft&when=")
+
+    card = page.locator("#check-card")
+    expect(card).to_contain_text("Does the page say 15 ft")
+    expect(card.locator("[data-derived]")).to_contain_text("20 ft")
+    expect(card.locator("[data-derived]")).to_contain_text("step-back")
+
+
+def test_a_number_read_off_another_zones_page_says_why(logged_in_page: Page, base_url: str) -> None:
+    """CMF's corridor height is read off the residential table, which never
+    prints CMF; the card says why it is read there."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}?zone=CMF&field=max_height_ft&when=civic_corridor")
+
+    expect(page.locator("#check-card [data-borrowed]")).to_contain_text("not printed on this page")
