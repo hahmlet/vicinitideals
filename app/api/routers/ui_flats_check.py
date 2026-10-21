@@ -169,10 +169,26 @@ def _placed(row: dict[str, Any]) -> sheet.Placed:
         document,
         tuple(_ranges(row["quote"])),
         json.dumps(row.get("printed", row["value"]), sort_keys=True, default=str),
-        row["zone"],
+        _column_zone(row),
         row["field"],
         row["when"],
     )
+
+
+def _column_zone(row: dict[str, Any]) -> str:
+    """The zone whose column the number is read under.
+
+    Its own, unless the page never prints it and the cite names the zone it
+    borrows from: CMF's corridor height is "Table 4.0130 H (TLDR)", and the
+    box went on LDR-5's 35 ft, the first of seven (Steph 2026-10-20).
+    """
+    document = row["quote"].partition("#L")[0]
+    # "Table 4.0130 H (TLDR)" after "adopting"; a bare "(D)" or "(II)" is a
+    # subsection or a review type, not a column.
+    named = re.findall(r"adopt\w*\s[^()]*\(([A-Z][A-Za-z0-9-]*)\)", row.get("cite") or "")
+    if not named or not _zone_off_page(document, row["line"], row["zone"]):
+        return row["zone"]
+    return next((z for z in reversed(named) if not _zone_off_page(document, row["line"], z)), row["zone"])
 
 
 #: Why the number held is not the figure printed, in the order the citation

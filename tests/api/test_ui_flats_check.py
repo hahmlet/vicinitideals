@@ -1057,6 +1057,23 @@ def test_a_number_read_off_another_zones_page_says_why_and_links_that_page():
     assert "borrowed" not in tldr
 
 
+def test_a_borrowed_number_is_boxed_under_the_zone_it_borrows():
+    """CMF's corridor height is read off Table 4.0130 H's TLDR column; the box
+    went on LDR-5's 35 ft, the first of seven (Steph 2026-10-20)."""
+    layer = check._layers()["or/multnomah/gresham"]
+    row = next(
+        r
+        for r in check._rows(layer, set())
+        if (r["zone"], r["field"], r["when"]) == ("CMF", "max_height_ft", "civic_corridor")
+    )
+    assert check._column_zone(row) == "TLDR"
+    tldr = next(
+        r for r in check._rows(layer, set()) if (r["zone"], r["field"], r["when"]) == ("TLDR", "max_height_ft", "")
+    )
+    boxes = lambda r: sorted(b for bs in check._placed(r).boxes.values() for b, kind in bs if kind == "value")  # noqa: E731
+    assert boxes(row) and boxes(row)[0] in boxes(tldr)
+
+
 def test_a_number_held_from_a_note_shows_the_note():
     """MDR-24's minimum density is waived under 11,000 sq ft by note 5, which
     Gresham prints on the next page; the card shows the note's words

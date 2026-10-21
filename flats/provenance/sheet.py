@@ -652,6 +652,13 @@ def markers(
     # TR⁴". TLDR's card points at TLDR's 4, not LDR-5's (Steph 2026-10-20);
     # another zone's marker is that zone's.
     named = _names_zone(label, zone)
+    if zone and not named:
+        # The label wraps: "TLDR⁴, and TR⁴" is printed under "LDR-5⁴, LDR-7⁴,",
+        # and TLDR's card circled LDR-5's 4 (Steph 2026-10-20).
+        edge = words[first_numeral].box.x0 if first_numeral < len(words) else 1.0
+        wrapped = _label_below(sheet, line, edge)
+        if _names_zone(wrapped, zone):
+            label, named = [*label, *wrapped], True
     for k, word in enumerate(label):
         if not word.sup:
             continue
@@ -693,6 +700,24 @@ def markers(
             seen.add(marker.mark)
             unique.append(marker)
     return unique
+
+
+def _label_below(sheet: Sheet, line: Line, edge: float) -> list[Word]:
+    """The row label's words wrapped onto the lines under it, left of ``edge``."""
+    out: list[Word] = []
+    bottom = line.box.y1
+    height = line.box.y1 - line.box.y0
+    # A superscript raises the next line's top above this one's bottom.
+    under = [ln for ln in sheet.lines if ln.box.y0 > line.box.y0 + height / 2 and ln is not line]
+    for printed in sorted(under, key=lambda ln: ln.box.y0)[:3]:
+        if printed.box.y0 - bottom > height * 1.5:
+            break
+        left = [w for w in printed.words if w.box.x1 <= edge]
+        if not left:
+            break
+        out += left
+        bottom = printed.box.y1
+    return out
 
 
 def _is_zone(word: Word, zone: str) -> bool:

@@ -707,3 +707,26 @@ def test_a_row_label_naming_several_zones_gives_each_its_own_note(tmp_path: Path
     assert [m.mark for m in S.markers(sheet, row, spans, "LDR-5")] == ["4"]
     # A card for a zone the label does not name keeps every marker.
     assert sorted(m.mark for m in S.markers(sheet, row, spans, "TR")) == ["4", "7"]
+
+
+def test_a_zone_named_where_the_row_label_wraps_gets_its_own_note(tmp_path: Path):
+    """Gresham Table 4.0131: "LDR-5⁴, LDR-7⁴," over "TLDR⁹, and TR⁴"; the
+    TLDR card circled LDR-5's marker (Steph 2026-10-20)."""
+    runs = [
+        (72, 700, 9, "LDR-5"),
+        (98, 704, 5, "4"),
+        (110, 700, 9, "LDR-7"),
+        (136, 704, 5, "4"),
+        (220, 700, 9, "15 ft."),
+        (72, 691, 9, "TLDR"),
+        (96, 695, 5, "9"),
+        (108, 691, 9, "and TR"),
+        (140, 695, 5, "4"),
+    ]
+    path = tmp_path / "book.pdf"
+    path.write_bytes(_pdf(runs))
+    sheet = S.read(path, 1)
+    row = _line(sheet, "LDR-5 LDR-7 15 ft.")
+    spans = S.hits(row, 15, sheet.aspect)
+
+    assert [m.mark for m in S.markers(sheet, row, spans, "TLDR")] == ["9"]
