@@ -162,8 +162,10 @@ def test_the_deepest_garage_setback_in_the_corpus(gresham: Layer) -> None:
     """25 feet, and the street side matches it.
 
     Five feet more than anywhere else in Gresham, and the street-side wall is
-    20 where the Townhouse row of the same table asks 8 -- so the split plat
-    moves three of the five setbacks here, not one.
+    20 where the Townhouse row of the same table asks 8. The Townhouse row
+    prints Garage 25 too (its 20 is the Street Side Garage Access column; held
+    20 until 2026-10-21), so the split plat moves the street side and the
+    party wall, not the garage.
     """
     held = gresham.zones["VLDR-SW"].values
     assert held["setback_garage_entrance_ft"].value == 25
@@ -182,7 +184,7 @@ def test_the_deepest_garage_setback_in_the_corpus(gresham: Layer) -> None:
         )
     }
     assert moved == {
-        "setback_garage_entrance_ft": [(20, ("unit_lots",))],
+        "setback_garage_entrance_ft": [(25, ("unit_lots",))],
         "setback_street_side_ft": [(8, ("unit_lots",))],
         "setback_side_ft": [(0, ("unit_lots", "attached_wall"))],
     }

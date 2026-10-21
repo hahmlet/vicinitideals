@@ -3746,7 +3746,10 @@ zones:
       value: 25
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L347-L348"
       variants:
-        - value: 20
+        # The Townhouse row prints Garage 25 ft too; its 20 ft is the Street
+        # Side Garage Access column. Held 20 here until 2026-10-21, when the
+        # page check's rotated-heading fix boxed the Garage cell and it read 25.
+        - value: 25
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.1500.springwater.txt#L339-L340"
     notes: >-

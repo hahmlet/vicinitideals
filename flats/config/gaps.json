@@ -1,5 +1,5 @@
 {
-  "digest": "ef21a671df3183e7ffa26d35277c085fbac08d5c58614633ca181015a6ef8267",
+  "digest": "189b827f31fd04851d21f374e60fcd7549424739aa629bc1e99545bac490f74e",
   "layers": {
     "or": {
       "misattributed": [],
@@ -151,14 +151,6 @@
           "found": "9.0802 9.0825",
           "quote": "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343,L355-L357",
           "kind": "header_or_xref"
-        },
-        {
-          "zone": "NC-PV",
-          "field": "quadplex_allowed",
-          "claimed": "4.1413 4.1415 4.1415 7.0420",
-          "found": "4.1423",
-          "quote": "or/multnomah/gresham/4.1400.pleasant-valley.txt#L508-L509,L514",
-          "kind": "heading_same_file"
         }
       ],
       "label": "Gresham",
