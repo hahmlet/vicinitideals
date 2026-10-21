@@ -1277,17 +1277,12 @@ read when the weekly full re-screen lands.
    mapped; (c) note 6 townhouse lot width not held on its own (low risk); (d) HOLD (Steph 2026-10-21: "could be a big change") row M buffering points
    to Section 9.0100, not stored; (e) BUILDING (Steph 2026-10-21) row C width/depth ratio for a single-lot quadplex in SC, SC-RJ,
    CMU not encoded.
-107. [Claude] [BUILDING on flats/footnote-cards] **Page check: footnotes asked as their own value card
-   (Steph 2026-10-21).** Steph: "I should only be asked about footnotes in the context of being a
-   footnote, not its own ruling. If this is happening because we systematically don't know it's a
-   footnote, we need to add a button option 'this is a footnote'." A variant (`when:`) whose quote is a
-   note's text gets its own "does the page say X when Y?" card. Plan: count them; where the code can
-   tell, fold each into a note question on the parent cell's card (keep Steph's answers); add a
-   "This is a footnote" button on every value card for the cases it cannot tell.
-   ALSO (Steph 2026-10-21, "that seems like a big gap"): a note on a COLUMN heading reaches only rows
-   within ~8-10 printed lines of it, so lower rows' cards never ask it. Card-only: the screen's numbers
-   come from the footnote ledgers, not this page reading, but the page check is then blind to a missed
-   note there. Fix: scan the table's whole heading band; sweep; new note questions arrive unanswered.
+107. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Page check: footnotes asked as their own
+   value card (Steph 2026-10-21).** LIVE 411f37ae (335097e6 + 4a1c6d4e). 76 stand-alone cards read wholly
+   off one note now ride their table cell's note question ("we read it as ... is that what the note
+   says?"): 23 note questions added, 32 reworded; answers kept (reopened 802-806, 809-828 come back as
+   the note question). New "This is a footnote" button (key 5) files a card as a problem. Column-heading
+   notes now reach every row of the table: 3 Gresham parking cards gain note 1. E2E 18/18 on prod.
 106. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Gresham corridor minimum density for a quadplex
    on one lot (ids 736/738/740).** Steph 2026-10-21: density minimums on big lots are a known limit -- one pod
    is checked though the land would be split into several, which waits for plotting street additions
