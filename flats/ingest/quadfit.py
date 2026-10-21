@@ -152,6 +152,7 @@ from flats.geom.named_street import (
     observed_named_street,
 )
 from flats.geom.one_street import one_street_column
+from flats.geom.roll import NO_DWELLING_FACT, no_existing_dwelling
 from flats.geom.street_end import STREET_END_FACT, observed_street_end, street_end_column
 from flats.ingest.flatter import flatter_checked
 from flats.ingest.normalize import zone_for
@@ -265,6 +266,12 @@ Z_ANSWERS: frozenset[str] = frozenset({"portland", "multnomah_unincorporated"})
 GREENWAY_ANSWERS: frozenset[str] = frozenset({"milwaukie"})
 GREENWAY_COLUMN = "ovl_milwaukie_greenway"
 
+#: Where the assessor roll answers ``no_existing_dwelling``: Wilsonville, whose
+#: Village zone writes its quadplex standards for lots "previously developed
+#: with at least one residential unit" (4.125(.23), FOLLOWUPS 110). No other
+#: layer turns on the fact, so no other lot is asked.
+DWELLING_ANSWERS: frozenset[str] = frozenset({"wilsonville"})
+
 #: The s4 columns the bridge reads, and the s5o ones. Columns a stage file
 #: written before they existed lacks are read as absent (see
 #: :func:`iter_rows`); the bridge then answers those facts the way the
@@ -293,6 +300,10 @@ S4_COLUMNS: tuple[str, ...] = (
     "street_across_json",
     "street_kind_json",
     "sans_drive_json",
+    # The assessor's roll, for ``no_existing_dwelling`` (:data:`DWELLING_ANSWERS`).
+    "LANDUSE",
+    "PROP_CODE",
+    "BLDGVAL",
 )
 S5O_COLUMNS: tuple[str, ...] = (
     "TLID",
@@ -344,6 +355,8 @@ OBSERVABLE: tuple[str, ...] = (
     "willamette_historic_district",
     "public_sewer",
     "in_sewer_district",
+    # Wilsonville's lots only, off the assessor roll.
+    NO_DWELLING_FACT,
 )
 
 
@@ -489,6 +502,11 @@ def observed_facts(
       the code, not mapped) through the same call from the street network
       and the CMF blocks (``flats/config/corridors.yaml``), on CMF lots only,
       with the lot's shape (``lot_wkb``) for the block it lies in.
+    * ``no_existing_dwelling`` -- Wilsonville only (:data:`DWELLING_ANSWERS`),
+      off the assessor roll on the s4 row through
+      :func:`flats.geom.roll.no_existing_dwelling`: True on vacant land with
+      no building value, False where a home's value stands on residential
+      land, unasked otherwise.
     * a fact the lot's own map code settles -- an alias ruling's
       ``observes`` (Fairview's ``FLX`` is the VC flex area, so
       ``inside_mapped_use_area``). True only, and only with ``layers``.
@@ -555,6 +573,10 @@ def observed_facts(
         out["constrained_sites_overlay"] = _is_true(row.get("has_z_overlay"))
     if row.get("jurisdiction") in GREENWAY_ANSWERS and _answered(row.get(GREENWAY_COLUMN)):
         out["willamette_greenway_zone"] = _is_true(row.get(GREENWAY_COLUMN))
+    if row.get("jurisdiction") in DWELLING_ANSWERS:
+        vacant = no_existing_dwelling(row)
+        if vacant is not None:
+            out[NO_DWELLING_FACT] = vacant
     return out
 
 
