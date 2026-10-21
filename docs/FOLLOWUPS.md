@@ -1260,7 +1260,7 @@ read when the weekly full re-screen lands.
    (#id) shown too. Limit: a column-heading note more than ~8 lines above a row does not reach it. (f) DONE 67a8d0b5: reading down a wrapped cell
    stops at a numbered block ("2. Minimum Street Frontage: Corner lots"); MDR-24's interior 45 ft
    frontage stopped asking the corner cell's note 10 (Steph check 646). Sweep: that one card only.
-104. [Claude] [BUILDING (i)(ii) on flats/gresham-4430] [BUILT c0c53f7f, not merged] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
+104. [Claude] [SPLICING onto run 80] [MERGED 0060aad3 2026-10-21, deployed] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
    notes, read note by note (Steph 2026-10-20).** DONE: all 18 notes read, plain-English page
    https://claude.ai/artifact/BQaymC5Un4njJZaTH9LJDf; note 14 encoded as civic_corridor variants.
    (a) Steph 2026-10-20 "Yes, map it". Gresham has NO map (zoning layer GME/Planning/MapServer/4 is plain
@@ -1290,6 +1290,12 @@ read when the weekly full re-screen lands.
    ALSO (possible false GREEN, found by 109): 7.0420(J)(1)(a) 50% street-oriented frontage reaches plexes
    in the Corridor Design District, which 3.0100#L834 defines to include MDR-12, MDR-24, OFR -- encoded
    on the corridor zones, missing on these three (live: 54 greens). Added to flats/gresham-4430.
+   BOUND (ead841e2, 25,660 Gresham lots): 289 move, 0 false GREEN -- +149 green lots of record (CMF CMU
+   SC SC-RJ), +65 Rockwood setbacks, +81 both; -20 green on the 50% frontage (MDR-12 11, MDR-24 9).
+   LEFT: (f) the 50% frontage is applied to the TOWNHOUSE form too (as on the eight zones that already
+   carry it) -- J.1 names plexes only; read 7.0431 before exempting townhouses (possible false REDs).
+   (g) 1S3E14AA-08900 + two big yellows fail the 150 ft fire hose at 167 ft -- placement on very
+   large lots looks poor (too strict, not a false GREEN).
 110. [Claude] [NEXT -- possible false GREEN] [scan: YES (greens may go yellow/red)] **Wilsonville Villebois
    (V): the quadplex route is for lots that already have a home.** 4.125(.23) opens "For lots previously
    developed with at least one residential unit" (4.planning.txt#L6439); FLATS applies its Table V-1 +
