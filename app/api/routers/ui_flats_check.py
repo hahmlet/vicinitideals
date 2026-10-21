@@ -654,7 +654,14 @@ def _questions(
     A number's footnote questions are only known once its box is placed, and
     placing reads a page -- so this walks the queue and places as it goes, and
     the caller stops as soon as it has the card it needs.
+
+    A note on a table's title reaches every number in the table, so it is
+    asked of each, and those questions come last, one run per table and note,
+    so the same note is cleared card after card (Steph 2026-10-21: "ask all
+    of the title footnotes in a row so I can quickly process them"). Every
+    other question keeps its place.
     """
+    titled: dict[tuple, list[_Ask]] = {}
     for row in rows:
         key = (layer.layer, row["zone"], row["field"], row["when"])
         said = _standing(answers.get((*key, "value")), row)
@@ -663,10 +670,22 @@ def _questions(
             continue
         if said.answer in _STOPS:
             continue
-        marks = _web_marks(row["quote"]) if row["web"] else [m.mark for m in _placed(row).markers]
-        for mark in marks:
-            if _standing(answers.get((*key, f"note:{mark}")), row) is None:
-                yield _Ask(row, f"note:{mark}")
+        if row["web"]:
+            notes = [(mark, None) for mark in _web_marks(row["quote"])]
+        else:
+            placed = _placed(row)
+            notes = [(m.mark, m) for m in placed.markers]
+        for mark, marker in notes:
+            if _standing(answers.get((*key, f"note:{mark}")), row) is not None:
+                continue
+            ask = _Ask(row, f"note:{mark}")
+            if marker is not None and marker.on == "title":
+                table = (row["document"], marker.page or placed.marker_page, marker.box.y0)
+                titled.setdefault((*table, mark), []).append(ask)
+            else:
+                yield ask
+    for run in titled.values():
+        yield from run
 
 
 def _next(
@@ -1364,8 +1383,15 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
     card["mark_on"] = marker.on if marker else "number"
     page = placed.marker_page or (placed.pages[0] if placed.pages else 1)
     boxes = [b for b in placed.boxes.get(page, []) if b[1] == "value"]
-    if marker:
+    title_page = marker.page if marker and marker.page not in (None, page) else None
+    if marker and title_page is None:
         boxes.append((marker.box.pad(0.004), "marker"))
+    if title_page is not None:
+        # The table runs on from an earlier page, where its title is printed.
+        card["mark_page"] = title_page
+        card["sheets"].append(
+            _sheet_view(document, title_page, [(marker.box.pad(0.004), "marker")], row["mark"])
+        )
     note_page = None
     if at is not None and (index := _page_index(document)) is not None:
         where = index.at(at)
@@ -1406,6 +1432,28 @@ def _counts(layer: Layer, rows: list[dict[str, Any]], answers: dict[tuple, Flats
     return {"numbers": len(rows), "checked": checked, "left": len(rows) - checked, "problems": problems}
 
 
+async def _answer_id(session: DBSession, layer_id: str, ask: _Ask) -> int | None:
+    """The row id of the latest answer given to this question, if any.
+
+    Not the reopen row's: that is ours, and the answer it puts back is the
+    reviewer's.
+    """
+    stmt = (
+        select(FlatsPageCheck.id)
+        .where(
+            FlatsPageCheck.layer == layer_id,
+            FlatsPageCheck.zone == ask.row["zone"],
+            FlatsPageCheck.field == ask.row["field"],
+            FlatsPageCheck.when_key == ask.row["when"],
+            FlatsPageCheck.question == ask.question,
+            FlatsPageCheck.answer != REOPENED,
+        )
+        .order_by(FlatsPageCheck.decided_at.desc(), FlatsPageCheck.id.desc())
+        .limit(1)
+    )
+    return (await session.execute(stmt)).scalar_one_or_none()
+
+
 async def _card_ctx(
     session: DBSession,
     layer: Layer,
@@ -1439,6 +1487,11 @@ async def _card_ctx(
             if latest is not None and latest.answer == REOPENED
             else None
         )
+        # The id of the reviewer's own last answer to this question, which is
+        # how a card is named in a conversation about it (Steph 2026-10-21:
+        # "I don't see things like 273 and 282, I just see '3 of 7'"). A
+        # reopened card names the answer it reopens; an unanswered one, none.
+        card["answer_id"] = before.id if before else await _answer_id(session, layer.layer, ask)
         card["before"] = _WORDS.get(before.answer, before.answer) if before else ""
         card["before_answer"] = before.answer if before else ""
         # Coming back to change an answer starts from what was written.
@@ -1652,6 +1705,7 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
                         "field_label": _label(field),
                         "when": when,
                         "value": _said(row["value"], field),
+                        "id": answer.id,
                         "question": answer.question,
                         "answer": answer.answer,
                         "answer_words": _WORDS.get(answer.answer, ""),

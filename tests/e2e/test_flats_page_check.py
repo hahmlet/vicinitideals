@@ -20,6 +20,8 @@ Run:
 
 from __future__ import annotations
 
+import re
+
 import pytest
 from playwright.sync_api import Page, expect
 
@@ -307,3 +309,21 @@ def test_a_number_read_off_a_note_shows_the_table_that_calls_it(logged_in_page: 
 
     expect(page.locator('#check-card [data-context="that calls the note"]')).to_have_count(1)
     expect(page.locator('#check-card [data-context="between"]').first).to_be_attached()
+
+
+def test_an_answered_card_and_its_problem_row_show_the_answers_number(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """Steph 2026-10-21: "I think you need to add a card ID number, because I
+    don't see things like 273 and 282, I just see '3 of 7'." Read-only: a
+    raised problem's row names its answer by id, and its card names one too."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check")
+
+    rows = page.locator("tr:has([data-answer-id])").filter(has_not_text="flagged on PDF page")
+    if rows.count() == 0:
+        pytest.skip("no problem raised on a number to open")
+    expect(rows.first.locator("[data-answer-id]")).to_have_text(re.compile(r"^#\d+$"))
+    rows.first.get_by_role("link", name="Open the card").click()
+
+    expect(page.locator("#check-card [data-answer-id]")).to_have_text(re.compile(r"^#\d+$"))

@@ -165,6 +165,9 @@ async def test_a_no_lands_on_the_problems_list_with_what_the_page_says(client, s
 
     assert "Problems raised" in index.text
     assert "7,500 sq ft" in index.text
+    # Named by the answer's own row id, as the problem is talked about.
+    saved = (await session.execute(select(FlatsPageCheck))).scalars().one()
+    assert f"#{saved.id}</span>" in index.text
     assert f"{LAYER} | {row['zone']} | {row['field']}" in text.text
     assert "the page says: 7,500 sq ft" in text.text
     assert "our text copy:" in text.text
@@ -359,6 +362,8 @@ async def test_back_returns_to_the_answered_card_to_change_it(client, session):
     assert f'name="field" value="{row["field"]}"' in back.text
     assert "your answer: No" in back.text
     assert ">7,500 sq ft</textarea>" in back.text
+    first = (await session.execute(select(FlatsPageCheck))).scalars().one()
+    assert f"#{first.id}</span>" in back.text, "the card names the answer by its id"
     changed = await client.post("/ui/flats/check", data=_form(row, answer="matches"))
     assert changed.status_code == 200
     answers = await check._answers(session, LAYER)
@@ -747,6 +752,11 @@ async def test_a_reopened_no_is_asked_again_with_what_was_said_before(client, se
 
     assert "data-asked-again" in response.text
     assert "the page says 7,500" in response.text
+    # The id shown is Steph's "No", not the reopen row's.
+    said_no = (
+        await session.execute(select(FlatsPageCheck).where(FlatsPageCheck.answer == "differs"))
+    ).scalars().one()
+    assert f"#{said_no.id}</span>" in response.text
     assert "No, the page says something else" in response.text
     # Off the problems list until answered again; the history keeps the "No".
     assert f"{LAYER} | {no['zone']} | {no['field']}" not in (await client.get("/flats/check/problems.txt")).text
@@ -1130,3 +1140,34 @@ def test_a_figure_printed_in_another_unit_is_asked_in_that_unit():
     portland = check._layers()["or/multnomah/portland"]
     ir = next(r for r in check._rows(portland, set()) if (r["zone"], r["field"], r["when"]) == ("IR", "setback_side_ft", ""))
     assert "printed" not in check._card(portland, check._Ask(ir, "value"))
+
+
+def test_a_note_on_a_tables_title_is_asked_of_every_number_in_one_run(monkeypatch):
+    """Steph 2026-10-21 (FOLLOWUPS 103(e)): "ask all of the title footnotes
+    in a row so I can quickly process them". Every other question keeps its
+    place; the title's note is asked last, number after number."""
+    layer = check._layers()[LAYER]
+    rows = [
+        {"zone": z, "field": "setback_front_ft", "when": "", "web": False, "quote": "x#L1", "document": "d", "mark": "m"}
+        for z in ("A", "B", "C")
+    ]
+    title = sheet.Marker("1", "title", sheet.Box(0.6, 0.08, 0.61, 0.09))
+    own = {
+        "A": [sheet.Marker("5", "number", _BOX), title],
+        "B": [title, sheet.Marker("2", "column", _BOX)],
+        "C": [title],
+    }
+    monkeypatch.setattr(
+        check, "_placed", lambda row: sheet.Placed(status="boxed", markers=own[row["zone"]], marker_page=12)
+    )
+
+    class Said:
+        answer, fingerprint = "matches", "m"
+
+    answers = {(LAYER, z, "setback_front_ft", "", "value"): Said() for z in ("A", "B", "C")}
+    answers[(LAYER, "C", "setback_front_ft", "", "note:1")] = Said()
+
+    asked = [(a.row["zone"], a.question) for a in check._questions(layer, rows, answers)]
+
+    # C's note 1 is answered already and is not asked again.
+    assert asked == [("A", "note:5"), ("B", "note:2"), ("A", "note:1"), ("B", "note:1")]
