@@ -1260,7 +1260,7 @@ read when the weekly full re-screen lands.
    (#id) shown too. Limit: a column-heading note more than ~8 lines above a row does not reach it. (f) DONE 67a8d0b5: reading down a wrapped cell
    stops at a numbered block ("2. Minimum Street Frontage: Corner lots"); MDR-24's interior 45 ft
    frontage stopped asking the corner cell's note 10 (Steph check 646). Sweep: that one card only.
-104. [Claude] [BUILDING (a) edge, (b), (e)] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
+104. [Claude] [Steph: two questions below] [BUILT on flats/gresham-4430 c0c53f7f, not merged] [scan: (a) LIVE run 80 2026-10-21] **Gresham Table 4.0430
    notes, read note by note (Steph 2026-10-20).** DONE: all 18 notes read, plain-English page
    https://claude.ai/artifact/BQaymC5Un4njJZaTH9LJDf; note 14 encoded as civic_corridor variants.
    (a) Steph 2026-10-20 "Yes, map it". Gresham has NO map (zoning layer GME/Planning/MapServer/4 is plain
@@ -1277,6 +1277,15 @@ read when the weekly full re-screen lands.
    mapped; (c) note 6 townhouse lot width not held on its own (low risk); (d) HOLD (Steph 2026-10-21: "could be a big change") row M buffering points
    to Section 9.0100, not stored; (e) BUILDING (Steph 2026-10-21) row C width/depth ratio for a single-lot quadplex in SC, SC-RJ,
    CMU not encoded.
+   BUILT 2026-10-21 (flats/gresham-4430 c0c53f7f): along = within 75 ft of the centreline (frontage lots
+   34-54 ft, nearest behind-frontage 125 ft); ratio row C on SC, SC-RJ, CMU, CMF (townhouse split exempt,
+   note 6); NEW FIX Table 4.0420 note 2 -- CMF land division only on the corridor. Bound: 40 ratio reds
+   (9 green->red), 16 note-2 reds (4 green), 3 corridor greens. (b) Rockwood does NOT reach the pod:
+   7.0502(B) exempts quadplexes, 7.0512 "All Development" excludes townhouses -- no gateway reds.
+   QUESTIONS for Steph (counts pending): (i) 4.0431.C lets an EXISTING lot of record that misses lot
+   size, frontage or the ratio still be built on (and skips min density) -- treat every taxlot as a lot
+   of record on the single-lot path? (ii) lift note 13's Rockwood setback hold, since 7.0502(B)/7.0512
+   take the pod out? Hold the merge until (i) is answered.
 107. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Page check: footnotes asked as their own
    value card (Steph 2026-10-21).** LIVE 411f37ae (335097e6 + 4a1c6d4e). 76 stand-alone cards read wholly
    off one note now ride their table cell's note question ("we read it as ... is that what the note
