@@ -1995,3 +1995,24 @@
     zones). No colour changes; the 3 lots that went yellow to red in run 84
     stay red.
   source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
+- id: 2026-10-22-gresham-corner-frontage-main-street
+  kind: ruling
+  date: 2026-10-22
+  scope:
+    county: multnomah
+    city: gresham
+  question: >-
+    Gresham 7.0420(J)(1)(a) and Rockwood 7.0512(A)(2) S2: on a corner lot,
+    must buildings fill half the frontage on each street separately, or
+    only on the main street?
+  ruling: >-
+    "Main street only"
+  effect: >-
+    On a corner lot the share is owed on the main street alone; the other
+    street owes none. Which street is the main one is measured from the
+    streets' classes: the busier street is the main one. Where the two
+    streets rank the same or are unranked, the lot stays YELLOW until a
+    person picks (rulings 2026-10-09 unranked corner = yellow). Affects
+    the 89 Gresham corner lots held yellow by chunk 3 (docs/FOLLOWUPS.md
+    item 109).
+  source: Steph 2026-10-22 (chat), docs/FOLLOWUPS.md item 109
