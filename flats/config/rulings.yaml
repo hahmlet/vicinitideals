@@ -1914,3 +1914,25 @@
     Encoding follows in the design-district chunks (docs/FOLLOWUPS.md item
     109; plan docs/flats/design_districts_plan.md).
   source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
+
+- id: 2026-10-21-frontage-share-measured-as-coded
+  kind: ruling
+  date: 2026-10-21
+  scope: {}
+  question: >-
+    A building-frontage share (Beaverton 60.05.15.6 and Chapter 70,
+    Washington County 392-8, King City 16.114.060, Gresham 7.0420(J)) was
+    measured against the ORIGINAL lot's street frontage for both forms of the
+    pod. Built as four townhouses, should it be measured on the four new
+    unit lots instead?
+  ruling: >-
+    "Yeah, this feels like a gap. We should measure it based on what they
+    base it on."
+  effect: >-
+    Measure each share on whatever the code measures it on: where the code
+    applies it per lot, the townhouse form is measured on each of the four
+    unit lots; where it says site or development, on the original lot. The
+    single-building form is always measured on the original lot. Read the
+    wording city by city (docs/FOLLOWUPS.md item 109, chunk plan
+    docs/flats/design_districts_plan.md).
+  source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
