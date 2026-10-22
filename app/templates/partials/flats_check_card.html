@@ -58,9 +58,10 @@
 <div class="check-grid">
   <div class="check-pages">
     {% for s in card.sheets %}
-    <div class="card" style="padding:0;margin:0 0 12px;overflow:hidden"{% if s.context %} data-context="{{ s.context }}"{% else %} data-cited{% endif %}>
+    <div class="card" id="check-sheet-{{ s.page }}" style="padding:0;margin:0 0 12px;overflow:hidden"{% if s.context %} data-context="{{ s.context }}"{% else %} data-cited{% endif %}{% if s.via %} data-via{% endif %}>
       <div class="toolbar" style="margin:0;padding:6px 8px;font-size:11px">
         {% if s.context %}<strong style="margin-right:6px">The page {{ s.context }}, for context:</strong>{% endif %}
+        {% if s.via %}<strong style="margin-right:6px">The passage that sends us to the table below:</strong>{% endif %}
         <span class="muted">{{ s.cite }} of the printed code</span>
         <span style="margin-left:auto">
           <a href="{{ s.src }}" target="_blank" rel="noopener">open the page image</a>
@@ -168,7 +169,8 @@
       </p>
     {% endif %}
     {% if card.borrowed %}
-    <p class="muted" style="font-size:12px;margin:0 0 6px" data-borrowed>{{ card.zone_label | capitalize }} is not printed on this page. We read the number here because of: {{ card.borrowed }}.</p>
+    <p class="muted" style="font-size:12px;margin:0 0 6px" data-borrowed>{{ card.zone_label | capitalize }} is not printed on this page. We read the number here because of: {{ card.borrowed }}.
+      {% if card.via %}The passage that says so is boxed on the first page shown, above the table.{% else %}We have not stored the passage that sends us here; if you cannot see why, flag it.{% endif %}</p>
     {% endif %}
     {% if card.row_notes %}
     <div style="font-size:12px;margin:0 0 6px" data-row-notes>
@@ -205,6 +207,15 @@
 
     {% set cited = card.sheets | rejectattr("context") | list %}
     {% set flag_page = cited[0].page if cited else 0 %}
+    {% if cited | length > 1 %}
+    {#- The quote can sit pages apart -- a table row on one page, its note four
+        pages on (Gresham Table 4.0130 note 2) -- and only the first is in view
+        (Steph 2026-10-22: "it's not flagging the footnote"). -#}
+    <div style="font-size:12px;margin:0 0 12px" data-boxed-pages>
+      <span class="muted">What we read is boxed on {{ cited | length }} pages, scroll down for the rest:</span>
+      {% for s in cited %}<a href="#check-sheet-{{ s.page }}" onclick="var e=document.getElementById('check-sheet-{{ s.page }}');if(e){e.scrollIntoView({block:'start'});return false}">{{ s.cite }}</a>{% if not loop.last %} · {% endif %}{% endfor %}
+    </div>
+    {% endif %}
     {% if card.flags %}
     <div class="check-flags" style="font-size:12px;margin:0 0 12px">
       <div class="muted">Flagged on this page ({{ card.flags | length }}) — another flag adds to these:</div>
@@ -267,7 +278,7 @@
     </form>
   </aside>
 </div>
-{% if card.sheets and card.sheets[0].context %}
+{% if card.sheets and card.sheets[0].context and not card.via %}
 <script>
   // Open on the cited page; the page before is above it, a scroll away. On a
   // narrow screen the answers sit above the pages, so leave the top alone.

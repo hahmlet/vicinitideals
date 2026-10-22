@@ -868,7 +868,7 @@ def _flags_on(
     pages: set[int],
     web: tuple[str, str, str] | None = None,
 ) -> list[dict[str, Any]]:
-    """What has been flagged on the pages this card shows, oldest first.
+    """What has been flagged and not yet answered on the pages this card shows, oldest first.
 
     A flag is its own finding: a second one adds to the list, it does not
     replace the first, and the card shows them so the reviewer can see that.
@@ -886,8 +886,12 @@ def _flags_on(
             )
             and (r.quote or "").partition("#L")[0] == document
         ):
-            reply = replies.get(r.id)
-            out.append({"page": r.page, "says": r.says, "id": r.id, "reply": reply.note if reply else ""})
+            # A flag answered is resolved, and drops off the card: "we don't
+            # need to keep a record if resolved" (Steph 2026-10-22). The
+            # problems page still lists it with its answer.
+            if r.id in replies:
+                continue
+            out.append({"page": r.page, "says": r.says, "id": r.id, "reply": ""})
     return sorted(out, key=lambda f: f["id"])
 
 
@@ -1494,6 +1498,8 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         if card["sheets"] and calling is not None and calling not in {sh["page"] for sh in card["sheets"]}:
             card["sheets"].append({**_sheet_view(document, calling, [], row["mark"]), "context": "that calls the note"})
         card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
+        card["sheets"] = _via_sheets(row) + card["sheets"]
+        card["via"] = any(sh.get("via") for sh in card["sheets"])
         return card
 
     mark = ask.question.partition(":")[2]
@@ -1540,6 +1546,26 @@ def _card(layer: Layer, ask: _Ask) -> dict[str, Any]:
         )
     card["sheets"] = _with_neighbours(document, card["sheets"], row["mark"])
     return card
+
+
+def _via_sheets(row: dict[str, Any]) -> list[dict[str, Any]]:
+    """The pages of the passage that sends the reader to the quoted table, boxed.
+
+    Gresham's CMF corridor setbacks are read off Table 4.0131's TLDR column
+    because Table 4.0430 note 14 says so. The card named the note and showed
+    only the table, and Steph had "no evidence that the cross-table
+    references ... are accurate" (2026-10-22). Shown first, above the table.
+    """
+    via = row.get("via") or ""
+    document = via.partition("#L")[0]
+    if not document or _checkable(document):
+        return []
+    placed = _placed_cached(document, tuple(_ranges(via)), "null", "")
+    return [
+        {**_sheet_view(document, page, boxes, row["mark"]), "via": True}
+        for page, boxes in placed.boxes.items()
+        if boxes
+    ][:2]
 
 
 def _reading(row: dict[str, Any]) -> str:

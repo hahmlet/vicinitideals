@@ -5396,6 +5396,7 @@ zones:
           # which is where the reader needs it to know why this column.
           cite: Gresham Development Code Table 4.0430, note 14, adopting Table 4.0130 H (TLDR)
           quote: "or/multnomah/gresham/4.0100.residential.txt#L330,L332"
+          via: "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
     setback_front_ft:
       value: 5
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
@@ -5411,6 +5412,7 @@ zones:
         - value: 10
           when: [civic_corridor]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+          via: "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
     setback_side_ft:
       value: 0
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
@@ -5428,12 +5430,15 @@ zones:
         - value: 5
           when: [civic_corridor]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+          via: "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
         - value: 5
           when: [civic_corridor, unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
+          via: "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
         - value: 0
           when: [civic_corridor, unit_lots, attached_wall]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
+          via: "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
@@ -5448,15 +5453,19 @@ zones:
         - value: 15
           when: [civic_corridor]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+          via: "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
         - value: 8
           when: [civic_corridor, alley_at_rear]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+          via: "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
         - value: 15
           when: [civic_corridor, unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
+          via: "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
         - value: 8
           when: [civic_corridor, unit_lots, alley_at_rear]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L396,L405-L406"
+          via: "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
     setback_street_side_ft:
       value: 5
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
@@ -5465,6 +5474,7 @@ zones:
         - value: 10
           when: [civic_corridor]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L392-L400"
+          via: "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
     setback_front_max_ft:
       value: 20
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L351-L356"

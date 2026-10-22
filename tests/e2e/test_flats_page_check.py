@@ -289,6 +289,23 @@ def test_a_number_read_off_another_zones_page_says_why(logged_in_page: Page, bas
     expect(page.locator("#check-card [data-borrowed]")).to_contain_text("not printed on this page")
 
 
+def test_a_number_read_off_another_table_shows_the_note_that_sends_it_there(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """The first page shown is Table 4.0430 note 14, boxed: the evidence that
+    the corridor reads TLDR's setbacks (Steph 2026-10-22)."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}?zone=CMF&field=setback_front_ft&when=civic_corridor")
+
+    via = page.locator("#check-card [data-via]").first
+    expect(via).to_contain_text("The passage that sends us to the table below")
+    expect(via.locator(".check-box-line, .check-box-value").first).to_be_visible()
+    expect(page.locator("#check-card [data-borrowed]")).to_contain_text("boxed on the first page shown")
+    links = page.locator("#check-card [data-boxed-pages] a")
+    expect(links.first).to_be_visible()
+    assert links.count() >= 2
+
+
 def test_a_number_held_from_a_note_shows_the_note(logged_in_page: Page, base_url: str) -> None:
     """MDR-24's minimum density is waived under 11,000 sq ft by note 5, printed
     on the next page; the card shows the note's words (Steph 2026-10-20)."""

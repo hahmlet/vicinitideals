@@ -401,7 +401,7 @@ async def test_a_second_flag_adds_to_the_first_and_both_show_on_the_card(client,
     assert response.text.index("first thing") < response.text.index("second thing")
 
 
-async def test_an_answered_flag_leaves_the_open_list_and_shows_its_answer(client, session):
+async def test_an_answered_flag_leaves_the_open_list_and_the_card(client, session):
     # A flag traced and explained moves no fingerprint, so without a reply it
     # would sit on the open list forever asking to be looked at again.
     await _login(client, session)
@@ -431,7 +431,10 @@ async def test_an_answered_flag_leaves_the_open_list_and_shows_its_answer(client
     card = await client.get(
         f"/flats/check/{LAYER}", params={"zone": row["zone"], "field": row["field"], "when": row["when"]}
     )
-    assert "Answered: G2 sets no maximum side yard." in card.text
+    # Resolved, so gone from the card: "we don't need to keep a record if
+    # resolved" (Steph 2026-10-22). The index's Answered list still has it.
+    assert "what about G2?" not in card.text
+    assert "Answered: G2 sets no maximum side yard." not in card.text
 
 
 async def test_the_card_names_the_zone_as_a_zone(client, session):
@@ -461,6 +464,40 @@ def test_the_card_shows_the_page_before_and_after_the_cited_one(monkeypatch):
         (cited - 1, "before"), (cited, ""), (cited + 1, "after")
     ]
     assert not sheets[0]["boxes"] and not sheets[2]["boxes"] and sheets[1]["boxes"]
+
+
+async def test_a_quote_split_across_pages_says_which_pages_it_is_boxed_on(client, session, monkeypatch):
+    # Gresham Table 4.0130's row B is on one page and its note 2 four pages
+    # on; only the first was in view (Steph 2026-10-22).
+    await _login(client, session)
+    row = _first_row()
+    last = check._page_index(row["document"]).pages[-1].n
+    a, b = 2, min(6, last)
+    monkeypatch.setattr(
+        check, "_placed",
+        lambda row: sheet.Placed(status="line", pages=[a, b], boxes={a: [(_BOX, "line")], b: [(_BOX, "line")]}),
+    )
+    card = await client.get(
+        f"/flats/check/{LAYER}", params={"zone": row["zone"], "field": row["field"], "when": row["when"]}
+    )
+    pointer = card.text.partition("data-boxed-pages>")[2].partition("</div>")[0]
+    assert f'href="#check-sheet-{a}"' in pointer and f'href="#check-sheet-{b}"' in pointer
+    assert f'id="check-sheet-{b}"' in card.text
+
+
+def test_a_number_read_off_another_table_shows_the_passage_that_sends_us_there():
+    # CMF's corridor front setback is quoted from Table 4.0131's TLDR column;
+    # Table 4.0430 note 14 is why, and the card showed only the table: "I have
+    # no evidence that the cross-table references ... are accurate".
+    layer = check._layers()[LAYER]
+    row = next(
+        r for r in check._rows(layer, set())
+        if r["zone"] == "CMF" and r["field"] == "setback_front_ft" and r["when"] == "civic_corridor"
+    )
+    assert row["via"] == "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"
+    first = check._card(layer, check._Ask(row, "value"))["sheets"][0]
+    assert first.get("via") and first["boxes"]
+    assert first["src"].startswith("/flats/sheet/or/multnomah/gresham/4.0400.corridor.txt")
 
 
 def _hidden(text: str, name: str) -> str:

@@ -73,3 +73,40 @@ def test_every_shipped_quote_resolves_where_the_document_is_stored() -> None:
             broken.append(f"{layer_id} {zone}.{field}: {exc}")
 
     assert not broken, "citations that do not resolve:\n" + "\n".join(broken)
+
+
+def _vias() -> list[tuple[str, str, str, str]]:
+    """(layer, zone, field, via) for every cross-reference the corpus ships."""
+    out = []
+    for layer_id, layer in load_rules().items():
+        for zone_code, zone in layer.zones.items():
+            for field, value in zone.values.items():
+                for number in (value, *value.variants):
+                    if number.prov.via:
+                        out.append((layer_id, zone_code, field, number.prov.via))
+    return out
+
+
+def test_every_cross_reference_resolves_to_lines_the_store_holds() -> None:
+    """A `via` is shown boxed on the page check as the reason a number is read
+    off another table (Steph 2026-10-22); one that points at nothing would
+    show the reviewer an empty page as the evidence."""
+    store = ProvenanceStore()
+    vias = _vias()
+    assert any(layer == "or/multnomah/gresham" for layer, *_ in vias)
+    broken = []
+    for layer_id, zone, field, via in vias:
+        try:
+            if not store.quote(via).strip():
+                broken.append(f"{layer_id} {zone}.{field}: {via} resolves to blank")
+        except ProvenanceError as exc:
+            broken.append(f"{layer_id} {zone}.{field}: {exc}")
+    assert not broken, "cross-references that do not resolve:\n" + "\n".join(broken)
+
+
+def test_a_variant_quoting_its_own_text_does_not_inherit_the_base_cross_reference() -> None:
+    gresham = load_rules()["or/multnomah/gresham"]
+    front = gresham.zones["CMF"].values["setback_front_ft"]
+    assert front.prov.via is None
+    corridor = next(v for v in front.variants if v.when == ("civic_corridor",))
+    assert corridor.prov.via == "or/multnomah/gresham/4.0400.corridor.txt#L485-L488"

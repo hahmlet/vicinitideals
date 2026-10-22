@@ -295,6 +295,7 @@ def _value_rows(layer: Layer) -> list[dict[str, Any]]:
                         "trusted": number.status is Status.verified,
                         "reviewer": number.reviewer,
                         "quote": number.prov.quote,
+                        "via": number.prov.via,
                         "cite": number.prov.cite,
                         "url": number.prov.url,
                         "variants": len(value.variants),

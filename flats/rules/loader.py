@@ -88,7 +88,7 @@ AREAS_ROOT = CONFIG_ROOT.parent / "areas"
 #: lot and the area are compared without a projection in between.
 AREA_CRS = "EPSG::2913"
 
-_PROV_KEYS = ("cite", "url", "retrieved", "quote", "clause", "drawn", "read_by", "read_on")
+_PROV_KEYS = ("cite", "url", "retrieved", "quote", "clause", "drawn", "read_by", "read_on", "via")
 _REVIEW_KEYS = ("status", "reviewer", "reviewed", "preempts")
 
 
@@ -1199,6 +1199,10 @@ def _parse_variants(
             continue
 
         merged = dict(prov_src)
+        if "quote" in body:
+            # A variant quoting its own text is sent there by its own passage,
+            # not by the one that sent the base value to its table.
+            merged["via"] = None
         merged.update({k: body[k] for k in _PROV_KEYS if k in body})
         try:
             out.append(

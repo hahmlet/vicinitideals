@@ -676,6 +676,16 @@ class Provenance(BaseModel):
         default=None,
         description="Clause-ledger id. Links this value to its RASE-tagged source clause.",
     )
+    #: The passage that sends the reader to the quoted text, where the quote is
+    #: another zone's or another table's: Gresham's CMF corridor setbacks are
+    #: quoted from Table 4.0131's TLDR column, and Table 4.0430 note 14 is why.
+    #: The page check shows it boxed beside the quote; without it Steph had
+    #: "no evidence that the cross-table references ... are accurate"
+    #: (2026-10-22). Same form as `quote`.
+    via: str | None = Field(
+        default=None,
+        description="Path#Lnn of the cross-reference that sends the reader to `quote`.",
+    )
     #: The number is DRAWN rather than written, and a named person read it off
     #: the sheet. Clackamas County is the case this exists for: ZDO
     #: 1015.02(A)(4) hands stall and aisle dimensions to the Roadway Standards,
