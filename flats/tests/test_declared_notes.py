@@ -195,7 +195,13 @@ def test_the_use_table_limitation_that_decides_two_zones(
 
 
 def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
-    """A hundred and twenty-two notes, all of them ruled, none blocking.
+    """A hundred and thirty-nine notes, all of them ruled, none blocking.
+
+    The last seventeen came with the design overlay, design review and
+    historic resource review chapters (33.420, 33.825, 33.846), stored
+    2026-10-21 for FOLLOWUPS 109: one lifts a size limit the pod never
+    meets (Table 420-1's none for residential floor area), the other
+    sixteen pick a review's procedure type.
 
     The last three are Table 610-2's, read 2026-09-30 for RF's minimum lot
     area on the state middle housing path; none marks the row encoded.
@@ -214,7 +220,7 @@ def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
     Household Living row starts at five units on site. See
     test_portland_parking_max."""
     ruled = list(dispositions(PORTLAND))
-    assert len(ruled) == 122
+    assert len(ruled) == 139
     assert [row for row in ruled if row.state == "unread"] == []
     assert not [row for row in qualified() if row.blocking]
 

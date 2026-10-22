@@ -1211,8 +1211,11 @@
   read_by: dlcd-reader (Opus) 2026-10-15
   verdict: watch
   note: 'Portland Design Review Temporary Suspension: mandatory design review suspended to 2029-07-01.
-    PC hearing 2026-09-22, council later in 2026. If adopted, design-overlay (d) lots now YELLOW for review
-    could go GREEN -- the biggest colour mover in the batch. Re-check at adoption.'
+    PC hearing 2026-09-22, council later in 2026. Corrected 2026-10-21 (FOLLOWUPS 109): no code made
+    design-overlay (d) lots YELLOW. Four homes of 35 ft or less are exempt outside RX, EX and CX
+    (33.420.045.A.2); RX, EX and CX lots in the Central City are RED on design review
+    (flats/geom/pdx_overlays.py, pdx_design_review), and elsewhere take the design standards track. If
+    adopted, those Central City lots could go GREEN -- re-check at adoption.'
   followup: null
 - id: adopted:Happy Valley:001-26
   kind: adopted
