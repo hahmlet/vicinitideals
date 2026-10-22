@@ -1325,6 +1325,14 @@ read when the weekly full re-screen lands.
    boundaries: Oregon City, Portland plan districts + 33.420/33.5xx text, Troutdale, Tigard, Sandy,
    Wilsonville Old Town. QUESTIONS: is the pod roof flat (Fairview Village + West Linn ban flat roofs)?
    WashCo's eleven community plans (68,777 lots) are unread -- read them?
+   CHUNK 1 BUILT 2026-10-21 (merged; joint splice next): pdx-overlays-2 01a5d05d (Portland 925 greens
+   lost: Historic Districts red 197g/16y, Central City d RX/CX red 501g/217y -- both ORS 197A.400
+   exceptions; Conservation Districts yellow ~102; main street "m" yellow ~164, every street taken as a
+   transit street until the map is ingested) + frontage-share 45d8f5a7 (Beaverton 60.05 38r/94y lost +140
+   y->r; Downtown 16r/134y + 22 y->r; WashCo NMU/CCMU 26r/20y; King City 3 y->r). QUESTIONS for Steph:
+   (q1) a wide lot one pod cannot fill to the share -- RED (as built) or YELLOW (more buildings could)?
+   (q2) King City: must every one of the four front doors face the street (as built), or one per
+   building? Answers ride the next chunk's splice.
 107. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Page check: footnotes asked as their own
    value card (Steph 2026-10-21).** LIVE 411f37ae (335097e6 + 4a1c6d4e). 76 stand-alone cards read wholly
    off one note now ride their table cell's note question ("we read it as ... is that what the note
