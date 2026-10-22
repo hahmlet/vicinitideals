@@ -482,6 +482,14 @@ code:
     url: https://woodvillage.municipal.codes/WVDC/235.420
     title: "WVDC 235.420 - Concept Plan Regulating Diagram Development Standards"
     allow_thin: true
+  - id: "235.440"
+    url: https://woodvillage.municipal.codes/WVDC/235.440
+    title: "WVDC 235.440 - Building and Facade Standards (Table 235-5)"
+    allow_thin: true
+  - id: "235.450"
+    url: https://woodvillage.municipal.codes/WVDC/235.450
+    title: "WVDC 235.450 - Required Building and Landscape Frontage"
+    allow_thin: true
   - id: "235.465"
     url: https://woodvillage.municipal.codes/WVDC/235.465
     title: "WVDC 235.465 - Open Space Requirement (Town Center)"
@@ -1092,7 +1100,8 @@ zones:
       Table 240-1 reads N on Household Living and on Group Living in both manufacturing columns. Light Manufacturing is the looser of the two on retail and office and is no different on housing. The row that answers is Household Living, which 710.100 defines as "the residential occupancy of a dwelling unit or a structure by a household" with an average stay of thirty days or more. It names no housing type and excludes none, so a four-unit attached townhome is inside it -- which is how the non-residential zones speak about dwellings at all. The residential zones do the opposite and list types by name. The definition is quoted at or/multnomah/wood-village/710.100.txt#L56,L60.
   TC:
     section: ["235.200", "235.300", "235.310", "235.320", "235.330", "235.340",
-              "235.390", "235.410", "235.420", "235.465", "710.100"]
+              "235.390", "235.410", "235.420", "235.440", "235.450", "235.465",
+              "710.100"]
     cite_default:
       cite: WVDC 235.200 Table 235-1 (Uses in Town Center Zone); 235.300 Table 235-2 (Development Standards in Town Center Zone)
       url: https://woodvillage.municipal.codes/WVDC/235.300
@@ -1111,6 +1120,19 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/wood-village/235.200.txt#L60,L66,L68"
+    # Table 235-5 states a minimum ground floor height by the street type a
+    # site fronts: 16 feet on Town Center Main Street and Public Plaza, 14 on
+    # Local, Universal and Service streets and on the multi-use path. 235.440.B
+    # holds "all new buildings" to it -- no use is excepted, and the table's own
+    # "Separation of Ground Floor Residential Uses" row shows a residential
+    # building is meant. It is a number, not a judgement, so a miss is a
+    # measured fail and stays RED. The street type is Figure 235-1's and is not
+    # held, so the stricter column stands. The pod's ground story is 12 feet and
+    # misses both columns; which street the lot fronts cannot change the colour.
+    min_ground_story_ft:
+      value: 16
+      cite: "WVDC 235.440.B and Table 235-5, Minimum Ground Floor Height: 16 feet (Main Street and Public Plaza), 14 feet (all other street types)"
+      quote: "or/multnomah/wood-village/235.440.txt#L62,L94-L99,L110-L114"
     min_density_du_per_acre:
       # Stated here because the pointer above has no field list. Table 235-2
       # hands three rows to MR2 by name -- lot size and dimensions, maximum lot
@@ -1231,9 +1253,14 @@ zones:
       gateways and public plazas at locations shown on it. Table 235-5 then
       states building frontage, ground floor height, transparency, entry door
       and weather protection standards by the street type a parcel fronts.
-      Figure 235-1 is a diagram and Table 235-5 is keyed to it, so neither is
-      readable here, and a parcel's street type -- which decides its frontage
-      requirements -- is not a fact this system holds.
+      Figure 235-1 is a diagram and Table 235-5 is keyed to it, and a parcel's
+      street type is not a fact this system holds. Table 235-5's ground floor
+      height row is encoded anyway at its stricter column (16 feet), because
+      every column is above the pod's 12-foot ground story and the street type
+      cannot change the answer. Its building frontage row (60/60/40 per cent,
+      none on the path) is not encoded: it turns on the street type and is
+      measured between perpendicular street centrelines (235.450.B), which is a
+      block fact rather than a lot fact.
 
 
       Two more standards belong to the plan rather than the lot. 235.340 asks a

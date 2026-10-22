@@ -1926,6 +1926,17 @@ zones:
       # village zones in the same cell.
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. Table 315-3, Building Design Standards, in
+      # every column: "Hipped, gambrel, or gabled roofs are required. Flat
+      # roofs are prohibited." Note 23 adds Section 845's design standards
+      # to a quadplex or townhouse "in addition to", not instead of, these;
+      # note 24's exception is for 20 or more detached dwellings. No pitch is
+      # stated, so the value is the least that is not flat, 1 in 12. The
+      # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      value: 1
+      cite: Clackamas ZDO Table 315-3, Building Design Standards (notes 23 and 24)
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1312,L1389,L1392,L1526,L1528"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -2029,6 +2040,17 @@ zones:
       # village zones in the same cell.
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1102,L1104"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. Table 315-3, Building Design Standards, in
+      # every column: "Hipped, gambrel, or gabled roofs are required. Flat
+      # roofs are prohibited." Note 23 adds Section 845's design standards
+      # to a quadplex or townhouse "in addition to", not instead of, these;
+      # note 24's exception is for 20 or more detached dwellings. No pitch is
+      # stated, so the value is the least that is not flat, 1 in 12. The
+      # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      value: 1
+      cite: Clackamas ZDO Table 315-3, Building Design Standards (notes 23 and 24)
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1312,L1389,L1392,L1526,L1528"
     min_lot_sqft:
       # Section 845.01, and the only minimum lot size that reaches this pod.
       # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
@@ -2967,6 +2989,16 @@ zones:
       value: true
       cite: Clackamas ZDO Table 315-1, Quadplexes row, ninth column (P)
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. Sunnyside Village, 1005.11 ("applies in
+      # Sunnyside Village"; the VA district is mapped nowhere else): "In the
+      # VA District, hipped, gambrel, or gabled roofs are required. Flat
+      # roofs are prohibited except for mechanical equipment areas." No
+      # pitch is stated, so the value is the least that is not flat, 1 in
+      # 12. The pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      value: 1
+      cite: Clackamas ZDO 1005.11, Sunnyside Village standards, roofs in the VA District
+      quote: "or/clackamas/_unincorporated/zdo.1005.txt#L889,L891,L935"
     review_discretion:
       # Steph 2026-10-14: a review whose criteria weigh judgement words beside
       # its measurable standards is YELLOW. 1005's measurable checklist

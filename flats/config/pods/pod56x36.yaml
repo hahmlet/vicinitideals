@@ -21,6 +21,10 @@ height_ft: 26
 # (Tigard TMU's first-storey minimum): "Yes, 12 ft or more." The least
 # stated, not a drawn figure.
 ground_story_ft: 12
+# Steph, 2026-10-21, asked whether the roof is flat: "the intent is to. So
+# this would be a red flag" (rulings.yaml 2026-10-21-pod-roof-flat). A code
+# that sets a minimum pitch or prohibits flat roofs misses on it.
+roof_pitch_in_12: 0
 parking:
   # Same rule as the county map (Steph, 2026-09-18: "same as the county map.
   # 4 is enough to sell"). The floor is what the colour charges -- one per
@@ -39,6 +43,8 @@ notes: >-
 assumptions:
   - "height_ft 26: two storeys at typical townhome floor-to-floor. Not from a
      drawing set — confirm before any height-binding result is trusted."
+  - "roof_pitch_in_12 0: the roof is flat (Steph, 2026-10-21). Product
+     intent, not a drawing set."
   - "ground_story_ft 12: the ground storey, floor to the floor above, is 12 ft
      or more (Steph, 2026-10-01). The least stated, not from a drawing set."
   - "Delivery method is the product intent (factory-built); module dimensions

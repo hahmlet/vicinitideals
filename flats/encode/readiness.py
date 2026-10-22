@@ -553,6 +553,12 @@ def _spelled(number: float) -> str:
         # Not `if rest` -- _spelled(0) is "zero", and "one hundred zero" is
         # not a thing anybody has ever printed.
         return f"{hundreds} {_spelled(whole % 100)}" if whole % 100 else hundreds
+    # The thousands were added 2026-10-22 for Oregon City's concept plans:
+    # "Residences with footprints over one thousand two hundred square feet"
+    # (17.21.040.A, 17.22.040.A) is the only way either chapter prints 1,200.
+    if 1000 <= whole < 10000:
+        thousands = f"{_UNITS[whole // 1000]} thousand"
+        return f"{thousands} {_spelled(whole % 1000)}" if whole % 1000 else thousands
     return ""
 
 
@@ -910,6 +916,40 @@ def states_as_percent(text: str, field: str, value) -> bool:
 _SHARE_WORDS = {50.0: re.compile(r"\b(?:one[-\s])?half\b", re.I)}
 
 
+#: A district that refuses a flat roof without printing a pitch. "Hipped,
+#: gambrel, or gabled roofs are required. Flat roofs are prohibited" (ZDO
+#: Table 315-3, HVMC 16.22, FDC 19.150.050) states no number, and the field
+#: holds such a rule as 1 in 12 -- the least pitch that is not flat -- so the
+#: line has no figure to show. Narrow on purpose: the sentence has to refuse
+#: flat roofs in so many words.
+_FLAT_ROOF_REFUSED = re.compile(
+    r"\bflat\s+roofs?\s+(?:are|is|shall\s+be)\s+(?:not\s+(?:permitted|allowed)|prohibited)\b",
+    re.I,
+)
+
+
+def states_a_roof_rule(text: str, field: str, value) -> bool:
+    """Whether the line states a roof-pitch floor in a code's own words.
+
+    Two spellings no digit scan reads. Oregon City's Park Place plan pitches
+    the primary roof "at a minimum ratio of five-twelfths" (17.21.030.A), and
+    a flat-roof refusal with no pitch in it is held as 1 (see
+    :data:`_FLAT_ROOF_REFUSED`). Only ``min_roof_pitch_in_12``.
+    """
+    # A variant's row is named "<field> [<conditions>]".
+    if field.split(" ", 1)[0] != "min_roof_pitch_in_12" or isinstance(value, bool):
+        return False
+    if not isinstance(value, (int, float)):
+        return False
+    if value == 1 and _FLAT_ROOF_REFUSED.search(text):
+        return True
+    word = _spelled(float(value))
+    if not word or value <= 0:
+        return False
+    spelled = r"[-\s]+".join(re.escape(p) for p in re.split(r"[- ]", word) if p)
+    return bool(re.search(rf"\b{spelled}[-\s]+twelfths?\b", text, re.I))
+
+
 def states_as_share_word(text: str, field: str, value) -> bool:
     """Whether the line writes a percent field's value as a word.
 
@@ -1020,7 +1060,9 @@ def readiness_for(
         doc_id = quote.split("#", 1)[0]
         states = quotes_the_number(
             cited, number, spaced=doc_id in spaced, glued=doc_id in glued
-        ) or states_as_percent(cited, name, number) or states_as_share_word(cited, name, number)
+        ) or states_as_percent(cited, name, number) or states_as_share_word(
+            cited, name, number
+        ) or states_a_roof_rule(cited, name, number)
         if not states or cites_a_different_unit(cited, name, number):
             misquoted.append((zone_code, name))
 

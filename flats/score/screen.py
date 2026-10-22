@@ -330,6 +330,8 @@ CHECK_FIELD: dict[str, str] = {
     "min_height_ft": "min_building_height_ft",
     "min_stories": "min_building_height_stories",
     "min_ground_story_ft": "min_ground_story_ft",
+    "roof_pitch": "min_roof_pitch_in_12",
+    "mass_footprint": "max_mass_footprint_sqft",
     "max_units": "max_units",
     "min_units": "min_units_at_trigger",
     "density_du_per_acre": "max_density_du_per_acre",
@@ -1258,6 +1260,30 @@ def _checks(
             ground_floor,
             is_maximum=False,
         )
+    # The roof (FOLLOWUPS 109 chunk 3). A design district that sets a floor
+    # under the primary roof's pitch, or refuses flat roofs, is asking about
+    # this building; the pod's roof is flat (Steph, 2026-10-21), so it misses
+    # every one. A design that states no roof has not answered.
+    pitch_floor = rules.get("min_roof_pitch_in_12")
+    if pitch_floor is not None and design.roof_pitch_in_12 is None:
+        unchecked.append("roof_pitch")
+    else:
+        check(
+            "roof_pitch",
+            float(design.roof_pitch_in_12 or 0.0),
+            pitch_floor,
+            is_maximum=False,
+        )
+    # One mass under one roofline (Oregon City 17.21.040 / 17.22.040: a
+    # footprint over 1,200 sq ft must break into secondary masses of 600 or
+    # less under separate roof-lines). The pod is one box, so its whole
+    # ground floor is the mass.
+    check(
+        "mass_footprint",
+        design.ground_sqft,
+        rules.get("max_mass_footprint_sqft"),
+        is_maximum=True,
+    )
     check("max_units", float(design.units), rules.get("max_units"), is_maximum=True)
     # A ceiling on units per acre, measured on the lot in front of us. An acre
     # is 43,560 sq ft, and the arithmetic is done here rather than in the rule

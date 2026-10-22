@@ -3017,6 +3017,23 @@ zones:
       # three lower-density use tables only.
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L775,L778"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. 16.22.050(B)(2)(c), for "Attached
+      # Single-Family Dwellings in the VTH District": "Hipped, gambrel, or
+      # gabled roofs are required. Flat roofs are prohibited." That is the
+      # townhouse form. The quadplex on one lot is not reached by it, nor by
+      # 16.44.010's multifamily 3:12 roof, because multifamily here is "five
+      # or more families" (16.12) and the pod is four. No pitch is stated,
+      # so the townhouse value is the least that is not flat, 1 in 12. The
+      # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      exempt: true
+      cite: HV LDC 16.12, dwelling, multiple-family (five or more families); 16.22.050(B)(2), attached single-family dwellings only
+      quote: "or/clackamas/happy-valley/16.12.definitions.txt#L560-L561"
+      variants:
+        - value: 1
+          when: [unit_lots]
+          cite: HV LDC 16.22.050(B)(2)(c), roofs of attached single-family dwellings in VTH
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1066,L1098"
     min_lot_sqft:
       value: 2000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L950,L953"

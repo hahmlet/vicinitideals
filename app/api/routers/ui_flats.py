@@ -2815,6 +2815,8 @@ _CHECK_WORDS = {
     "height_ft": "building taller than allowed",
     "stories": "more storeys than allowed",
     "min_height_ft": "building shorter than the minimum",
+    "roof_pitch": "the district requires a pitched roof and the pod's roof is flat",
+    "mass_footprint": "the district caps the footprint under one roof below the pod's",
     "max_units": "more homes than the zone allows here",
     "min_units": "fewer homes than the zone requires here",
     "density_du_per_acre": "more homes per acre than allowed",

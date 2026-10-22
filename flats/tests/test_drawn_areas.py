@@ -45,6 +45,9 @@ def test_every_drawn_condition_is_a_registered_condition() -> None:
     assert DRAWN_CONDITIONS == (
         "inside_mapped_use_area",
         "north_of_marine_drive",
+        "oregon_city_historic_overlay",
+        "oregon_city_park_place",
+        "oregon_city_south_end",
         "rockwood_design_district",
         "willamette_historic_district",
     )

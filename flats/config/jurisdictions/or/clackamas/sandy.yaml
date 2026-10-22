@@ -491,6 +491,21 @@ zones:
           when: [unit_lots]
           cite: Sandy SDC 17.36.10 (A)(4), row houses permitted outright
           quote: "or/clackamas/sandy/sdc.17.36.txt#L38"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. 17.90.160 binds "Multi-family residential
+      # developments in residential zones" -- the "more than six units"
+      # that follows is about single room occupancies, the same split
+      # 17.90.150 makes ("single room occupancies with up to six units") --
+      # and A.1 is a number: "Roofs shall be gabled or hip type roofs
+      # (minimum pitch 3:12)". The pod is a multi-family dwelling here on
+      # both paths, the reading 17.90.160 F's parking cap already takes
+      # (see the layer's defaults). 17.90.10 B holds residential
+      # development to the chapter's clear and objective standards, and
+      # this is one; the Design Deviation is relief on a finding about
+      # neighbouring roofs. The pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      value: 3
+      cite: Sandy SDC 17.90.160 A.1, multi-family roofs gabled or hip, minimum pitch 3:12
+      quote: "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2227,L2231"
     review_discretion:
       # Steph 2026-10-14. On its own the Type II Director's review is GREEN:
       # residential development meets "only ... the clear and objective
@@ -594,6 +609,21 @@ zones:
       value: true
       cite: Sandy SDC 17.38.10 (A), row houses and multi-family dwellings permitted outright
       quote: "or/clackamas/sandy/sdc.17.38.txt#L34,L42"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. 17.90.160 binds "Multi-family residential
+      # developments in residential zones" -- the "more than six units"
+      # that follows is about single room occupancies, the same split
+      # 17.90.150 makes ("single room occupancies with up to six units") --
+      # and A.1 is a number: "Roofs shall be gabled or hip type roofs
+      # (minimum pitch 3:12)". The pod is a multi-family dwelling here on
+      # both paths, the reading 17.90.160 F's parking cap already takes
+      # (see the layer's defaults). 17.90.10 B holds residential
+      # development to the chapter's clear and objective standards, and
+      # this is one; the Design Deviation is relief on a finding about
+      # neighbouring roofs. The pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      value: 3
+      cite: Sandy SDC 17.90.160 A.1, multi-family roofs gabled or hip, minimum pitch 3:12
+      quote: "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2227,L2231"
     review_discretion:
       # Steph 2026-10-14. On its own the Type II Director's review is GREEN:
       # residential development meets "only ... the clear and objective
@@ -696,6 +726,21 @@ zones:
       value: true
       cite: Sandy SDC 17.40.10 (A), row houses and multi-family dwellings permitted outright
       quote: "or/clackamas/sandy/sdc.17.40.txt#L38,L42"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. 17.90.160 binds "Multi-family residential
+      # developments in residential zones" -- the "more than six units"
+      # that follows is about single room occupancies, the same split
+      # 17.90.150 makes ("single room occupancies with up to six units") --
+      # and A.1 is a number: "Roofs shall be gabled or hip type roofs
+      # (minimum pitch 3:12)". The pod is a multi-family dwelling here on
+      # both paths, the reading 17.90.160 F's parking cap already takes
+      # (see the layer's defaults). 17.90.10 B holds residential
+      # development to the chapter's clear and objective standards, and
+      # this is one; the Design Deviation is relief on a finding about
+      # neighbouring roofs. The pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      value: 3
+      cite: Sandy SDC 17.90.160 A.1, multi-family roofs gabled or hip, minimum pitch 3:12
+      quote: "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2227,L2231"
     review_discretion:
       # Steph 2026-10-14. On its own the Type II Director's review is GREEN:
       # residential development meets "only ... the clear and objective

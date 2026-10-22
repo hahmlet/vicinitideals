@@ -126,13 +126,6 @@
   extraction: plain
   allow_thin: true
 
-# ---- flats/config/jurisdictions/or/clackamas/wilsonville.yaml
-- id: "old-town-residential-design-standards"
-  url: https://wilsonvilleoregon.gov/DocumentCenter/View/9181/Wilsonville-Old-Town-Residential-Design-Standards-Book-October-2021-PDF
-  title: "Old Town Residential Design Standards Book (October 2021)"
-  extraction: plain
-  allow_thin: true
-
 # ---- flats/config/jurisdictions/or/washington/_unincorporated.yaml
 - id: "community-plan.aloha-reedville-cooper-mountain"
   url: https://washingtoncountyor.gov/lut/planning/documents/aloha-reedville-cooper-mountain-community-plan-updated-08-2026/download

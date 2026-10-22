@@ -699,6 +699,10 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         "or/washington/beaverton/wc.beaverton-upaa.txt",
         # ORS 197A.400, the state's clear-and-objective statute (FOLLOWUPS 85).
         "or/ors.197a.400.txt",
+        # A design book WDC 4.123(.06)A and 4.138(.04)B name by title. It is
+        # organised by architectural style and numbers no section of the
+        # code (design-districts chunk 3, 2026-10-22).
+        "or/clackamas/wilsonville/old-town-residential-design-standards.txt",
     }
     assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 

@@ -1,0 +1,1135 @@
+431 TRANSIT ORIENTED DESIGN PRINCIPLES, STANDARDS AND
+GUIDELINES
+431-1 Intent and Purpose
+The following design principles, standards and guidelines shall be applied to the
+review of all development occurring in transit oriented districts, for those uses
+listed in Section 375. Principles are the broad, fundamental rules upon which
+the standards and guidelines are based. All Type III applications for development
+in transit oriented districts shall demonstrate complianc e with applicable
+principles and/or standards of this section. Standards are specific, usually
+quantitative, rules which development applications must comply with if processed
+through a Type I or II procedure. Guidelines are advisory statements that should
+be considered when designing a development in a transit oriented district, but
+are not mandatory.
+Because an application for a development may vary from a standard in this
+Section when the application demonstrates, through a Type I II process,
+compliance with the related design principle, a variance or adjustment pursuant
+to Section 435 shall not be granted from any standard in this Section.
+431-2 Conflicts
+In the event of a conflict between the requirements of this se ction and
+requirements of any other provision of the Code or a community plan, the
+requirements of this section shall control, except Area of Special Concern or
+Subarea provisions in a Community Plan, any code provisions of Section 375
+that apply to a single dwelling, Duplex or Middle Housing, 418-3, 421, 422,
+430-84 or 501-8.5 F. Sections 431-5.2 through 431-11 shall not apply to a Single
+Detached Dwelling Unit or Duplex (when not part of a Standard Land Division),
+Middle Housing (430-84) or Middle Housing Land Divisions (Article VI) - which
+are subject to other design requirements of this Code.
+(Ord. No. 885A, § 2.1.(Exh. 1, § 28.), 6-28-22, eff. 7-28-22; Ord. No. 890A, § 2.A.(Exh. 1,
+§ 1.), 2-7-23, eff. 3-9-23)
+431-3 Definitions
+The following definitions apply in transit oriented districts:
+431-3.1 Adjacent Building. The location of a building sited on a parcel or lot abutting a
+pedestrian route or transit station and not separated by an existing or planned
+intervening building.
+ 431DEVELOPMENT STANDARDS
+IV:421
+431-3.2 Adjoining Buildings. Buildings on abutting sites, not separated by a street or
+accessway.
+431-3.3 Campus Development. A development which meets the following criteria:
+A. Is located on a lot or contiguous lots within the Transit Oriented Employment
+or Institutional Districts that total at least five acres in size; and
+B. Includes multiple buildings which are interrelated in a common business or
+educational activity or process, and share a common infrastructure such
+as pedestrian ways and spaces, parking and vehicular accessways.
+431-3.4 Common Open Space. Areas available for active or passive shared use by all
+occupants of a development, or the general public. Common open space shall
+not be part of a street, required sidewalk, parking lot or loading area. Significant
+Natural Resource areas subject to protection, shall not constitute common open
+space. Common open space may be located on a flat building roof if designed
+for safe use. Common open space may have an accessway through it. Special
+recreation uses open to all occupants of a development and meeting the
+standards of Section 431-7 meet the definition of common open space.
+431-3.5 Main Building Entrance. An entrance to a building which is a point of public
+access during business hours.
+431-3.6 Pedestrian Focus Area. A geographically defined area, identified on a
+community plan map, with dense, mixed-use development and nearby transit
+service. Walking is promoted as the preferred mode choice by developing a
+strong pedestrian scale and emphasizing pedestrian access and activities. For
+guidance on pedestrian amenities that help foster attracti ve pedestrian
+environments, see the County's Pedestrian Enhancements Design Guideline
+Booklet.
+431-3.7 Pedestrian Route. Any accessway or greenway, as defined by Section 408-3,
+and any pedestrian street.
+431-3.8 Pedestrian Street. Any public or private street, but not including freeways,
+alleys, parking lot access drives, and parking lot aisles.
+431-3.9 Transit Street. Any street that is an existing public transit route, or any street
+that is likely to be a public transit route. All public streets with a functional
+classification of Principal Arterial, Arterial, Special Area Collector or Collector, as
+defined in the Washington County Transportation System Pla n, shall be
+considered likely to be a public transit route.
+431-3.10 Streetscape. Refers to all of the elements that constitute the physical makeup
+of a pedestrian street and that, as a group, define its character, including
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:422
+building façade, street paving and streetscape amenities. For guidance on
+pedestrian amenities that help foster attractive pedestrian environments, see
+the County's Pedestrian Enhancements Design Guideline Booklet.
+431-3.11 Streetscape Amenities. Include but are not limited to the following elements:
+street furniture, landscaping, including trees and other plantings, awnings,
+signs, and lighting. Guidelines for some of these features are provided in the
+County's Pedestrian Enhancements Design Guideline Booklet.
+431-3.12 Street Frontage. A portion of a lot or parcel fronting on or abutting a street
+right-of-way, if public, or street tract, if private, and located between either the
+site's side property lines, as defined by CDC Section 106-113.3 or, if a corner lot,
+the radius point (Point "B," Section 501-8.5 A.), of a street intersection.
+431-3.14 Build to Line. Required linear building frontage.
+(Ord. No. 813, § 2.C.(Exh. 3, § 6), 8-23-16, eff. 11-25-16)
+431-4 Circulation System Design
+The design and location of the circulation system in a community is the key
+element for determining pedestrian orientation, connectivity and the arrangement
+of land uses. These principles and standards apply to the design and location of
+the circulation system in transit oriented districts.
+431-4.1 Principles:
+A. Pedestrian routes in a Transit Oriented District shall, to the extent
+practicable, directly connect major activity centers (concentrations of
+employment and households, major public buildings and spac es,
+institutional uses and parks & common open spaces, and shopping areas)
+and transit stops, particularly light rail stations;
+B. Block dimensions and perimeters shall be at an urban rather than a
+suburban scale;
+C. Provide accessways and greenways, as needed, to supplement pedestrian
+routes along pedestrian streets; and
+D. Provide clearly marked and well-designed pedestrian street, driveway,
+loading area and surface parking lot crossings.
+431-4.2 Standards:
+A. In addition to the standards of this subsection, developme nt in a
+transit-oriented district shall be subject to the requirements of Section 408,
+ 431DEVELOPMENT STANDARDS
+IV:423
+Section 409, and Article V. In the event of a conflict between the
+requirements of Sections 408, 409, and Article V, the requirements of
+Section 431-4 shall control.
+In a transit-oriented district, Sections 408 and 431-4.2 C and E do not
+apply to a Single Detached Dwelling Unit or Duplex (when not part of a
+Standard Land Division), Middle Housing (430-84) or Middle Housing
+Land Divisions (Article VI). For those uses, application of Section 409 is
+limited as described in Section 409, and:
+(1) Street tree and right-of-way dedication requirements sha ll not exceed
+those specified under Section 407-7 and district standards; and
+(2) In a transit-oriented district, public improvements required under
+Section 431-5 shall not apply to a Single Detached Dwelling Unit or
+Duplex (when not part of a Standard Land Division), or Middle
+Housing (430-84).
+They may be required for Middle Housing Land Divisions (Article VI)
+in a transit-oriented district only as follows:
+(a) Any street frontage improvement requirements exceeding
+"Sufficient Infrastructure" as defined in Section 106 may be
+required, but only where a resulting lot or parcel abuts the
+street;
+(b) Sidewalks wider than five feet may be required along the
+frontage of resulting lots where and at widths specified by
+community plan special area/special area street provisions or
+431-5.1 B (9), to the extent the sidewalks can be accommodated
+within district-specified right-of-way widths for these uses; and
+(c) Additional sidewalk easement area may be required where
+such sidewalks would exceed right-of-way limits, but these
+easements and sidewalk width therein shall be limited as
+necessary to accommodate the sidewalk.
+(d) Beyond frontage of resulting lots, improvement requirements
+shall not exceed those necessary to accommodate "Sufficient
+Infrastructure" as defined in Section 106.
+B. Other Community Development Code provisions that apply to Collectors
+shall apply to Special Area Collectors; provisions that app ly to
+Neighborhood Routes shall apply to Special Area Neighborhood Routes;
+and provisions that apply to Local Streets shall apply to Special Area Local
+Streets and Special Area Commercial Streets. (See limitations for certain
+uses under A, above). In the case of a conflict, specific Special Area street
+provisions shall control.
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:424
+C. Blocks (not applicable to a Single Detached Dwelling Unit/Duplex when
+not part of a Standard Land Division, Middle Housing (430-84) or Middle
+Housing Land Divisions (Article VI) in a transit-oriented district).
+(1) Block perimeters for blocks with more than four sides, as defined by
+public or private streets, accessways or greenways, shall not exceed
+1,600 feet measured along the nearside curb line of the public or
+private street or the centerline of the defining accessway or greenway.
+These standards shall not be used to provide direct connections to
+collector roads where indirect connections are specifically shown in
+the community plan.
+(2) Block lengths for streets, accessways and greenways shall not
+exceed 330 feet between public or private streets, accessways or
+greenways, measured along the nearside curb line of the public or
+private street or the centerline of the accessway or greenway. These
+standards shall not be used to provide direct connections to collector
+roads where indirect connections are specifically shown in the
+community plan.
+(3) Except for specific transportation facilities identified in the community
+plan, the Review Authority may modify these standards based on
+findings that strict compliance with the standards is not reasonably
+practicable due to:
+(a) Topography;
+(b) The standards of Sections 421 and 422;
+Existing development patterns on abutting property which
+preclude the logical connection of streets or accessways;
+(d) Railroads;
+(e) Traffic safety concerns;
+(f) The functional and operational need to create a large building;
+(g) The provisions of Significant Natural Resources as identified in
+the Community Plan; or
+(h) Campus Development.
+Modifications shall be the minimum necessary to address the
+constraint.
+D. Design (See A, above, regarding limited application to certain uses).
+(1) Streets complying with the provisions of this Section may be public or
+private. Where a private street is used to meet the block length and
+perimeter standards of this Section, documents shall be recorded
+pursuant to Section 409-4. In addition, private streets shall comply
+ 431DEVELOPMENT STANDARDS
+IV:425
+with the applicable design provisions of CDC Section 409-3, except
+as otherwise regulated by this Section or a Community Plan provision.
+(2) When streets are utilized to meet the block length and block perimeter
+standards within the TO:R24-40, TO:R40-80, TO:R80-120, TO:EMP,
+TO:BUS, and TO:RC Districts, the Special Area Commercial Street
+standards shall be used, except for existing or planned arterials or
+collectors or other specific street designations in the Community
+Plan. The Review Authority may permit Special Area Local Streets in
+these Districts based on findings that vehicle traffic volumes and
+pedestrian activity are likely to be found on a special area local street.
+If the Review Authority does permit a Special Area Local Street, it
+may be utilized to meet block length and block perimeter standards.
+(3) When streets are utilized to meet the block length and block perimeter
+standards within the TO:R9-12, TO:R12-18, and TO:R18-24 Districts,
+the Special Area Local Street standards shall be used, except for
+existing or planned arterials or collectors or other specific street
+designations in the Community Plan.
+(4) Streets in transit oriented districts shall incorporate the following
+traffic management elements consistent with the Washington County
+Road Design and Construction Standards:
+(a) Curb extensions at all intersections of Special Area Local Streets
+with Special Area Local Streets, Special Area Neighborhood
+Routes, and Special Area Commercial Streets.
+(b) Landscaped center medians at all Special Area Collector and
+Special Area Neighborhood Route street intersections.
+(c) In addition to the above requirements, curb extensions, colored
+and/or textured pavement treatments, or medians may be
+allowed on any special area public street based on prior approval
+from the County Engineer and findings that the treatment will be
+safe, will not result in an unreasonable amount of public
+maintenance, and will maintain the functional classification of
+the facility.
+(5) In addition to the requirements of Section 431-4.2 D. (4) above, the
+Review Authority may approve other traffic management measures
+on any Special Area street based on prior approval from the County
+Engineer through the engineering modification process. Any prior
+engineering approval for such measures is to be considered
+preliminary and subject to subsequent land use approval.
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:426
+(6) The required minimum rights-of-way listed in Table 6, Functional
+Classification Design Parameters for Special Area streets do not
+assume the presence of neighborhood traffic management devices
+that would necessitate a wider curb-to-curb street width, such as a
+raised median. When neighborhood traffic management devices are
+used, additional right-of-way shall be required to provide three feet
+behind the curb face, except when curb extensions are used. When
+curb extensions are used, the right-of-way shall remain three feet
+behind the standard curb face extended through the curb extension
+area.
+(7) Use of the Special Area Local Street standard which provides a
+20-foot paved width and parking on one side of the street (SAL-4)
+may be allowed based on compliance with all of the following criteria:
+(a) Block lengths less than 300 feet;
+(b) The street is expected to carry less than 200 average daily trips;
+(c) The street is signed and striped for no parking on one side
+consistent with MUTCD standards; and
+(d) Fire Marshal review.
+(8) The Special Area Local Street - Alley (SAL-5) standard may be
+allowed in any transit-oriented district subject to compliance with all
+of the following criteria:
+(a) Lots or parcels utilizing an alley must have frontage on a
+separate street which provides on-street parking and sidewalks;
+(b) Alleys cannot be used to meet the block length or perimeter
+standards of this Section;
+(c) Alleys cannot directly access a Special Area Collector, Collector
+or Arterial road; and
+(d) Minimum 4-foot setback to a garage or parking area.
+(e) Fire Marshal review.
+(f) Special Area alley right-of-way needs are to be determined by
+the Review Authority during development review based on the
+specific needs and use of the alley. Alley right-of-way width shall
+not be less than 16 feet.
+(9) Private Streets. In addition to the standards of Section 409, private
+streets in transit-oriented districts shall meet the following standards:
+(a) Private Streets with sidewalks shall include a minimum 4-foot
+landscape strip between curb and sidewalk with trees spaced
+no more than every 30 feet, unless Section 431-5.1 B. (4)(a)
+and/or (b) applies.
+ 431DEVELOPMENT STANDARDS
+IV:427
+(b) Local Residential Streets serving five or more units shall have
+curbs and sidewalks on both sides. Local Residential Streets
+serving three to four units shall have curbs on one side and a
+sidewalk on one side.
+(c) When an accessway is provided adjoining to a private street in
+order to meet the block length and block perimeter standards of
+this Section, a sidewalk does not need to be provided on the
+side of the private street that includes the accessway.
+(10) Whether publicly or privately owned, a pedestrian street, accessway
+or greenway shall conform to the section design specified for its
+functional classification and remain accessible to the public at all
+times.
+(11) Pedestrian crossings of streets, driveways, surface parking lots and
+loading areas shall be designed to be consistent with the provisions
+of Section 408-10.3 B. In transit oriented districts, striping alone is not
+an acceptable way to identify connections.
+(12) Special Area Off-Street Pathways (Accessways and Greenways)
+shall be developed consistent with Section 408. Special Are a
+Off-Street Pathways shall be at least 10 feet in paved, unobstructed
+width when bicycles are intended to share the Special Area Off-Street
+Pathway. When bicycle travel is otherwise adequately provided,
+Special Area Off-Street Pathways shall be at least 5 feet in paved,
+unobstructed width.
+(13) Special Area Trails shall incorporate all of the following design
+criteria:
+(a) Minimum 5-foot wide;
+(b) Minimum 8-foot vertical clearance;
+(c) Minimum 2-foot horizontal clearance from edge of pathway;
+(d) Gravel or wood chips, with a compacted subgrade;
+(e) Non-skid boardwalks if wetland construction necessary; and
+(f) At intersections with other pedestrian improvements, a tr ailhead
+with a minimum area of 100 square feet. A trail map sign shall be
+provided at each trailhead.
+(14) Parking Lot Driveways. In transit oriented districts, Parking Lot
+Driveways that link public streets and/or private streets with parking
+stalls shall be designed as private streets, unless one of the following
+is met:
+(a) The parking lot driveway is less than 100 feet long;
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:428
+(b) The parking lot driveway serves two or less residential units; or
+(c) The parking lot driveway provides direct access to angled or
+perpendicular parking stalls.
+(d) Average spacing to perpendicular parking lot aisles off of the
+parking lot driveway is less than one access for every 80 feet.
+For example, if the parking lot driveway was 200 feet long, and
+it provided direct access to three parking lot aisles, it would not
+need to be designed as a private street.
+E. Circulation/Connections. In a transit-oriented district, not applicable to a
+Single Detached Dwelling Unit/Duplex when not part of a Standard Land
+Division, Middle Housing (430-84) or Middle Housing Land Divisions
+(Article VI).
+(1) Connections shall be provided between existing and planne d
+pedestrian streets, as specified in the applicable community plan or
+in the Transportation System Plan or Community Development Code.
+(2) When connecting new streets in transit oriented districts to existing
+local and Neighborhood Route streets pursuant to the community
+plan, this Section and Section 501-8.1 B. (3), the Review Authority
+may allow a temporary closure of a street connection when the
+following criteria are met:
+(a) There are alternative routes serving the site that will operate
+within their planned function without the connection; and
+(b) Average daily vehicle volumes on the route would significantly
+exceed normally expected volumes for the functional
+classification of the facility; or
+(c) The proportion of vehicle traffic without a trip end along the
+route would be significantly higher than normally expected for
+the functional classification of the facility.
+If the review authority requires a temporary road closure, a pedestrian
+and bicycle connection shall be made at the location.
+A street which is temporarily closed under these provisions may be
+opened by the Director at any time, based on evidence that the
+connected road will operate within its expected functional
+classification. This determination will be made using evid ence
+regarding establishment of alternative routes, traffic volumes and/or
+proportion of through traffic. A street which is temporarily closed
+under these provisions shall be connected no later than when all of
+the planned street connections are made to the transit oriented
+development community.
+ 431DEVELOPMENT STANDARDS
+IV:429
+(3) The street alignment corridors shown in the Community Plan allow
+planned street centerlines to be moved to a limited degree through a
+Type II process. Where those planned street centerlines also form
+the boundary between land use districts, those districts may move
+with the street centerline within the Type II alignment corridors.
+Through a Type III process, the planned on-site street network for
+collector, local and commercial streets may be modified to a greater
+extent than is allowed on the applicable map in the Community Plan,
+if the proposed modification meets all of the following criteria:
+(a) The new street pattern does not result in an increase or decrease
+in planned densities within transit oriented districts;
+(b) The new street network maintains the planned functional
+classification of new and existing roads in the area; and
+(c) The new street network provides a similar degree of connectivity
+to existing abutting streets, including:
+(i) Where future street connections identified on an adopted
+Community Plan to either existing or future abutting streets
+are shown to be direct, they shall remain direct. Where
+they are shown to be circuitous, they shall remain
+circuitous;
+(ii) The connections encourage motor vehicle traffic to go
+slow, consistent with the road standards for Special Area
+roads;
+(iii) The proposed circulation system meets station area block
+length and perimeter requirements; and
+(iv) The proposed circulation system includes off-street
+pedestrian facilities similar to those identified in the
+community plan.
+It is recognized that the adopted on-site street network in the
+Community Plan provides a public street network which achieves
+the state, regional, county, and neighborhood planning objectives
+in the station area. The review authority shall use the adopted
+street network as a prototype to apply the above criteria.
+(Ord. No. 885A, § 2.1.(Exh. 1, § 28.), 6-28-22, eff. 7-28-22; Ord. No. 890A, § 2.A.(Exh. 1,
+§ 1.), 2-7-23, eff. 3-9-23)
+431-5 Streetscapes for Pedestrians
+431-5.1 Streetscapes - Transit Oriented Districts
+These principles and standards apply to the network of pedestrian streets within
+transit oriented districts.
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:430
+A. Principles:
+(1) Development along pedestrian routes shall be designed to encourage
+use by pedestrians by providing a safe, comfortable and interesting
+walking environment. Examples of pedestrian enhancements that
+help foster such a pedestrian environment can be found in the
+county's Pedestrian Enhancements Design Guideline Booklet.
+(2) All pedestrian streets shall incorporate pedestrian scale lighting at a
+level sufficient to provide a safe walking environment. Pedestrian
+scale lighting guidelines are provided in the county's Pedestrian
+Enhancements Design Guideline Booklet.
+B. Standards:
+(1) In the TO:BUS and TO:RC Districts along pedestrian streets where
+on-street parking is allowed, except as provided in Section 431-12 or
+in an applicable Community Plan provision, buildings shall be built to
+the sidewalk edge for a minimum of 90% of their site's pedestrian
+street frontage (excluding street, driveway and accessway
+intersections). However, where a development site has frontage on
+two or more pedestrian streets with on-street parking, buildings are
+not required to meet the frontage requirements on both streets.
+Notwithstanding the above, a building shall be built to the sidewalk
+edge of both intersecting streets at their intersection.
+Where a development site has frontage on two pedestrian streets
+with on-street parking on only one of the streets, buildings are
+required to meet the frontage requirement on the street that allows
+on-street parking. Notwithstanding the above, a building shall be built
+to the sidewalk edge of both intersecting streets at their intersection.
+Where a development site in a TO:BUS District fronts only on a
+pedestrian street that does not allow on-street parking, buildings
+shall be built to the sidewalk edge for a minimum of 75% of the site's
+pedestrian street frontage (excluding street and accesswa y
+intersections). Where a development site in a TO:RC District fronts
+only on a pedestrian street that does not allow on-street parking,
+buildings shall be built to the sidewalk edge for a minimum of 50% of
+their site's pedestrian street frontage (excluding street and accessway
+intersections).
+(2) Street trees are required on all pedestrian streets with an average
+spacing of no more than 30 feet on center on both sides and 2 to 4
+feet from back of curb. Street trees shall not be spaced or located so
+as to result in a violation of Section 418-3. Trees in the county
+ 431DEVELOPMENT STANDARDS
+IV:431
+right-of-way or in sidewalk easements shall be approved by the
+county as to size, quality, tree well design if applicable, and irrigation
+(see Section 407-7).
+(3) All utility lines shall be underground but utility vault access lids may
+be located in the sidewalk area, provided that they are flush with the
+sidewalk and provide for a safe pedestrian walking surface during all
+types of weather.
+(4) Except as limited for certain uses under 431-4.2 A, minimum sidewalk
+widths in Transit Oriented Districts shall be the widest identified by
+the Washington County Road Design and Construction Standards
+for the adjacent Special Area Street (as shown in the Transportation
+System Plan), except for Special Area Commercial Streets. Special
+Area Commercial Streets shall have sidewalks that are a minimum of
+12 feet in width. On arterials within or adjacent to Transit Oriented
+Districts and which are designated as 'Streetscape Overlay' on the
+Pedestrian System Map in the Transportation System Plan, the
+minimum sidewalk width shall be 12 feet.
+(5) Sidewalks along pedestrian streets adjacent to undeveloped parcels
+may be temporary.
+(6) Pedestrian scale street lighting, such as that described in the county's
+Pedestrian Design Guidelines Booklet shall be provided along all
+pedestrian streets.
+(7) Pedestrian street lights shall be no taller than 20 feet along Special
+Area Neighborhood Routes, Special Area Commercial Streets, and
+Special Area Local Streets.
+(8) In designated pedestrian focus areas in a transit-oriented district,
+except along frontage of a Single Detached Dwelling Unit or Duplex
+(when not part of a Standard Land Division), Middle Housing (430-84)
+or Middle Housing Land Divisions (Article VI):
+(a) Sidewalks in front of buildings shall be covered to at least eight
+feet from building face by one of the following to provide
+protection from sun and rain: canopies, arcades, or pergolas.
+Supports for these features shall not impede pedestrian traffic;
+(b) One or more pedestrian-scaled amenities are required every
+100 feet in the sidewalk area, including but not limited to street
+furniture, plantings, distinctive paving, drinking fount ains,
+sculpture. Recommendations for design of pedestrian amenities
+may be found in the county's Pedestrian Enhancements Design
+Guidelines Booklet;
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:432
+(9) In designated pedestrian focus areas, minimum 12-foot wid e
+sidewalks (eight-foot minimum unobstructed clearance) are required
+on all public streets.
+(10) Except for a Single Detached Dwelling Unit or Duplex (when not part
+of a Standard Land Division), Middle Housing (430-84) or Middle
+Housing Land Divisions (Article VI), in a transit-oriented district -
+which are subject to other design standards of this Code - the design
+character of an individual building shall be compatible wit h its
+neighbors, but each building shall be unique. Attention shall be paid
+to similarities and contrasts between the following archit ectural
+elements: building forms and massing; building height; rooflines and
+parapet features; special building features (e.g., towers, arcades,
+entries, canopies, signs, and artwork); window size, orientation and
+detailing; materials and color; the buildings' relationship to the site.
+431-5.2 Building Entrances
+The following principles and standards apply to building entrances in transit
+oriented districts:
+A. Principles:
+Provide for safe, convenient, direct and identifiable access for pedestrians
+between pedestrian streets, accessways, transit facilities, and adjacent
+buildings.
+B. Standards:
+(1) Non-residential and mixed-use buildings fronting a pedestrian street
+where on-street parking is allowed adjacent to the building, shall
+have at least one main building entrance oriented to the pedestrian
+street. Such an entrance shall not require a pedestrian to first pass
+through a garage, parking structure, parking lot or loading area to
+gain access to the entrance from the pedestrian street, but the
+entrance may be through a porch, breezeway, arcade, anti-chamber,
+portico, outdoor plaza or similar architectural features. The entrance
+shall be visible from the street and no further back from the front of
+the building than one-half the depth of the building. Entrances set
+back from the sidewalk shall have a well-demarcated walkway leading
+to them. If a building has frontage on more than one pedestrian
+street, the building shall provide a main building entrance oriented to
+at least one of the pedestrian streets or a single entrance at the
+corner where both pedestrian streets intersect. A building may have
+ 431DEVELOPMENT STANDARDS
+IV:433
+more than one main building entrance oriented to a pedestrian street,
+and may have other entrances facing off-street parking areas and
+loading areas.
+(2) Residential buildings fronting on a pedestrian street shall have an
+entrance to the building oriented on to the pedestrian street. Such an
+entrance shall open directly to the outside and shall not require
+passage through a garage or parking structure to gain access to the
+doorway. Single detached and rowhouse/Townhouse residential units
+fronting on a pedestrian street shall have separate entries to each
+dwelling unit directly from the street. Ground floor and upper story
+dwelling units in a multi-dwelling building fronting a pedestrian street
+may share one or more building entries accessible directly from the
+pedestrian street. Entries shall be visible from the pedestrian street.
+In no case shall the primary entry be accessed through a side yard
+except for an accessory unit to a Single Detached Dwelling Unit.
+(3) In all transit oriented districts, except the TO:EMP District, building
+façades over 300 feet in length facing a pedestrian street where
+on-street parking is allowed adjacent to the building, shall provide
+two or more main building entrances. In the TO:EMP District, building
+façades over 400 feet in length facing a pedestrian street shall
+provide two or more main building entrances.
+(4) If a building fronts on a pedestrian street where on-street parking is
+not allowed adjacent to the building, a main building entrance does
+not have to be oriented to the pedestrian street. If the main building
+entrance is not oriented to the pedestrian street, a well-demarcated,
+unobstructed, and well-lighted pathway shall be provided to the
+entrance from the pedestrian street. The pathway shall not be located
+within or require passage through a garage, parking structure of
+loading area.
+(5) Minimum lighting levels shall conform to the standards as set forth in
+Section 415-4.
+(6) For non-residential buildings, or non-residential portions of mixed-use
+buildings, main building entrances fronting on pedestrian streets
+shall remain open during normal business hours for that building.
+(7) All entries fronting a pedestrian route shall be sheltered with a
+minimum 4-foot overhang or shelter.
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:434
+(8) An exception to the requirement of 431-5.2 B. (1) shall be allowed
+upon finding that:
+(a) The slope of the land between the building and the pedestrian
+street is greater than 1:12 for more than 20 feet and that a more
+accessible pedestrian route to the building is available from a
+different side of the building; or
+(b) The access is to a campus development in the TO:EMP District,
+and identified pedestrian accessways are provided through a
+parking lot to directly connect the building complex to the most
+appropriate adjacent pedestrian route(s) via the most safe and
+direct route(s) practicable.
+431-5.3 Building Façades
+The following principles, standards and guidelines apply to building façades in
+transit oriented districts:
+A. Principles:
+(1) The dominant feature of a building frontage shall be the habitable
+area with its accompanying windows and doors. Parking lots, garages,
+and solid wall façades (e.g., warehouses) shall not dominate a
+pedestrian street frontage.
+(2) Developments shall be designed to encourage informal surveillance
+of pedestrian streets and other public spaces by maximizing sight
+lines between the buildings and the pedestrian street.
+(3) Ensure compatible building designs along a pedestrian street through
+similar massing (building façade height and width as well as the
+space between buildings) and frontage setbacks.
+(4) Avoid building designs that result in a street frontage with a uniform
+design style, roof line or façade treatment, which results in an
+uninteresting and unattractive pedestrian environment.
+(5) All new commercial, industrial, office, institutional, mixed use, and
+multi-dwelling residential buildings shall, on any façade facing a
+pedestrian route, incorporate discernible architectural features, such
+as, but not limited to: cornices, bases, fenestration, fluted masonry,
+bays, recesses, arcades, display windows, unique entry areas or
+other architectural treatments for visual interest, to create community
+character and to promote a sense of pedestrian scale. The overall
+design shall recognize that the simple relief provided by window
+cutouts or sills on an otherwise flat façade, in and of itself, does not
+meet the requirements of this subsection.
+ 431DEVELOPMENT STANDARDS
+IV:435
+(6) Lighting of a building façade shall be designed so that lighting
+complements the architectural design. Lighting shall not d raw
+inordinate attention to the building.
+(7) All buildings, of any type, constructed within any transit oriented
+district, shall be constructed with exterior building materials and
+finishes that are of high quality to convey an impression of
+permanence and durability.
+(8) To balance horizontal features on longer façades, vertical building
+elements shall be emphasized.
+B. Standards:
+(1) Ground floor windows shall be provided on building façades facing a
+pedestrian route or common open space. Garage door windows shall
+not count towards compliance with this standard.
+(2) Darkly tinted windows and mirrored windows that block two-way
+visibility are prohibited as ground floor windows.
+(3) Except as provided in Section 431-12, ground floor building façades
+along a pedestrian street in the TO:RC or TO:BUS Districts must
+contain unobscured windows for at least 50% of the wall area and
+75% of the wall length within the first 10 feet of wall height. Required
+windows shall allow views in to lobbies or similar areas of activity,
+building entrances, or merchandise type displays. Lower window sills
+shall not be more than 3 feet above grade except where interior floor
+levels prohibit such placement, in which case the lower window sill
+shall not be more than a maximum of 4 feet above the finished
+exterior grade.
+(4) In all other transit oriented districts, for any exterior wall which is
+within 20 feet of and facing onto a pedestrian street or common open
+space, at least 20% of the ground floor wall area shall be comprised
+of either display area, windows or doorways. The square footage of
+garage doors shall not count towards compliance with this standard.
+(5) Ground floor openings in parking structures, except at points of
+access, must be covered with grills, mesh or lattice that obscure at
+least 30% of the interior view, (e.g., at least 30% solid material to 70%
+transparency).
+(6) In all transit oriented districts, building frontages greater than 200 feet
+in length along pedestrian routes shall break any flat, monolithic
+façade by including architectural elements such as bay windows,
+recessed entrances, changes in materials, or other articulation so as
+to provide pedestrian scale to the ground floor.
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:436
+(7) Except as provided in Section 431-12, building façades along a
+pedestrian route in the TO:RC or TO:BUS Districts shall not have
+more than 40 linear feet of ground floor wall area without a change in
+materials or an 8-inch minimum vertical or horizontal wall relief.
+(8) In all transit oriented districts, the exterior walls of building façades
+along pedestrian routes shall be of suitable durable building materials
+including the following: stucco, stone, terra-cotta, tile, cedar shakes
+and shingles, beveled or ship-lap or other narrow-course horizontal
+boards or siding, vertical board & batten siding, articulat ed
+architectural concrete masonry units (CMU), or similar materials
+which are low maintenance, weather resistant, abrasion resistant
+and easy to clean. Prohibited building materials include the following:
+Plain, smooth, untextured concrete; plain, smooth untextured concrete
+block; corrugated metal; unarticulated board siding (e.g., T1-11 siding,
+plain plywood, sheet pressboard); and similar quality, non-durable
+materials.
+(9) No exterior lighting shall be provided above the second floor of
+buildings for the purpose of highlighting the presence of the building,
+except for façade sign lighting.
+(10) Buildings and sites shall be organized to group the utilitarian functions
+away from the public view. Delivery and loading operations,
+mechanical equipment (HVAC), trash compacting/collection, and
+other utility and service functions shall be incorporated into the
+overall design of the building(s) and the landscaping. The visual and
+acoustic impacts of these functions, along with all wall or
+ground-mounted mechanical, electrical and communication s
+equipment shall be out of view from adjacent properties and public
+pedestrian streets. Screening materials and landscape screens shall
+be architecturally compatible with and not inferior to the principal
+materials of the building and primary landscaping. The visual and
+acoustic aspects of roof-mounted equipment, vents and chimneys
+shall be minimized by placing equipment behind parapets, within
+architectural screening, roof-top landscaping, or by usin g other
+aesthetically pleasing methods of screening and deadening the
+sound of such equipment.
+ 431DEVELOPMENT STANDARDS
+IV:437
+(11) The façades of Townhouse and single detached residences (including
+Duplexes, Triplexes, fourplexes, Townhouses and rowhouses) shall
+comply with the following standards:
+(a) No more than 40% of the horizontal length of the ground floor
+front elevation of a single detached or Townhouse dwelling shall
+be an attached garage door entrance (i.e., garage doorway).
+(b) Front-loaded and street side-loaded garages shall be set back
+at least 18 feet from the back of the sidewalk.
+(c) Garages shall be recessed at least 5 feet from the ground floor
+front of the dwelling.
+(d) For all residences with sloped roofs, the roof slope shall be at
+least 5:12, and no more than 12:12.
+(e) Flat roofs with a parapet and cornice are allowed in all transit
+oriented residential districts except the TO:R 9-12 District, in
+which only sloped roofs are allowed.
+(f) Residential building elevations facing a pedestrian route shall
+not consist of undifferentiated blank walls, but shall be articulated
+with architectural features such as windows, dormers, porch
+details, alcoves, balconies or bays. Porches, if provided, shall
+have clear dimensions of at least 8 feet wide and 6 feet deep,
+and shall be covered by a roof supported by columns or brackets.
+(g) Windows shall be vertical or square in proportion. Horizontal
+windows may be created when vertical windows or a mixture or
+vertical and other shaped windows are grouped together, or
+there is a row of clerestory windows across the top.
+(h) There must be architectural detailing that varies from unit to
+unit. Architectural detailing includes but is not limited to the
+following: the use of different exterior siding materials or trim,
+shutters, different window types or sizes, varying roof lines,
+balconies or porches, and dormers.
+(i) Fences or hedges in a front yard shall not be over 4 feet high.
+(12) The façades of multi-dwelling residences shall comply with the
+following standards:
+(a) Flat roofs with a parapet and cornice are allowed in all transit
+oriented residential districts except the TO:R 9-12 District, in
+which only sloped roofs with a minimum slope of 3 inches per
+foot are allowed.
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:438
+(b) Building elevations facing a pedestrian route shall not consist of
+undifferentiated blank walls, but shall be articulated wit h
+architectural features such as windows, balconies, and dormers.
+(c) Windows shall be vertical or square in proportion. Horizontal
+windows may be created when vertical windows or a mixture or
+vertical and other shaped windows are grouped together, or
+there is a row of clerestory windows across the top.
+C. Guidelines:
+(1) Arcades or awnings over sidewalks should be provided to shelter
+pedestrians from sun and rain.
+(2) Upper stories should be articulated with features such as bays and
+balconies.
+(3) Ornamental features, such as molding, entablatures, pediments and
+friezes, are encouraged at the roofline of commercial building façades.
+Where such ornamentation is present in the form of a linear molding
+or board, the band should be at least 8 inches wide.
+(4) Where masonry is used for exterior finish, decorative patterns should
+be employed. These decorative patterns may include multi-colored
+masonry units, such as brick, tile, stone or cast stone, in a layered or
+geometric pattern, or multi-colored ceramic tile used in conjunction
+with materials such as concrete or stucco.
+(5) Key public or civic buildings, such as community centers, religious
+institutions, schools, libraries, post offices, and museums, should be
+placed in prominent locations, such as fronting on public squares or
+where pedestrian street vistas terminate, in order to serve as
+landmarks and to symbolically reinforce their importance.
+(6) Certain buildings, because of their size, purpose or location, should
+be given special attention in the form of ornamental building features,
+such as towers, cupolas or pediments. Examples of these special
+buildings include theaters, hotels, cultural centers, religious institutions
+and civic buildings.
+(Ord. No. 885A, § 2.1.(Exh. 1, § 28.), 6-28-22, eff. 7-28-22; Ord. No. 890A, § 2.A.(Exh. 1,
+§ 1.), 2-7-23, eff. 3-9-23)
+ 431DEVELOPMENT STANDARDS
+IV:439
+431-6 Parking Areas, Garages and Parking Structures
+Automobile parking areas consume significant amounts of land. Their location
+and design are key determinants of the attractiveness and pedestrian orientation
+of a community. The principles and standards in Section 431-6 apply to parking
+areas, garages and parking structures in transit oriented districts.
+431-6.1 Location
+A. Principles:
+Off-street surface parking lots shall be located to the side or rear of buildings,
+other than single-family residences, that front on pedestrian streets where
+on-street parking is allowed. Parking at mid-block or behind buildings is preferred.
+Exceptions to this principle may be appropriate for uses that require new
+buildings to be clustered near existing groups of buildings located away from a
+pedestrian street, such as expansions of a campus development.
+B. Standards:
+(1) Off-street surface parking lots shall not be located between a front
+façade of a building adjacent to a pedestrian street where on-street
+parking is allowed, and the pedestrian street.
+(2) Garages and off-street parking areas shall be set back at least 5 feet
+from adjacent primary building façades.
+(3) Parking lots, garages, including garages serving residential uses,
+and parking structures shall not be located within 40 feet of a street
+corner, except when the first floor of the parking structure is developed
+with (to be occupied by) commercial/retail uses.
+(4) If a building adjoins a pedestrian route on two or more sides,
+off-street parking may be allowed between the building and the
+pedestrian route in the following order of priority:
+1st. Accessways.
+2nd. Pedestrian streets that are non-transit streets and do not allow
+on-street parking.
+3rd. Pedestrian streets that are transit streets and do not allow
+on-street parking.
+4th. Pedestrian streets that are non-transit streets and do allow
+on-street parking.
+5th. Pedestrian streets that are transit streets and allow on-street
+parking.
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:440
+(5) Notwithstanding Sections 431-6.1 A. and 431-6.1 B. (1), off-street
+surface parking for campus development within the TO:EMP District
+may be located between an adjacent building and a pedestrian route,
+a transit street or a light rail station site upon finding that:
+(a) Identified accessways will be provided to connect each building
+within the campus area and to directly connect the building
+complex to the most appropriate transit street(s) and/or
+pedestrian route(s); and
+(b) All accessways between the building complex and adjacent
+transit facilities:
+(i) Will comply with Section 431-6.2 A. (4);
+(ii) Will be clearly identifiable to a pedestrian through measures
+such as signage;
+(iii) Will be lighted; and
+(iv) Will be as short as reasonably practicable.
+431-6.2 Parking Area and Garage Design:
+A. Principles:
+(1) Garages, parking structures and off-street surface parking areas
+shall be designed to be as unobtrusive, and as attractive in
+appearance, as possible.
+(2) There shall be low bushes or a low wall or berm at the perimeter of
+surface parking lots to reduce their visibility from the surrounding
+area. Barriers around the perimeter of a parking lot shall not be so
+high, however, that it becomes a safety or security problem.
+(3) Trees shall be used extensively at the perimeter and in the interior of
+surface parking lots to break up large parking areas and provide
+shade.
+(4) Accessways through surface parking lots shall be clearly identified
+through the use of: different paving materials, grade separation, or
+landscaping, pedestrian-scale lighting, and be as short as practicable.
+B. Standards:
+(1) Garage doors for single-family dwellings fronting a pedestrian route
+shall not exceed 16 feet in width nor exceed 8 feet in height.
+(2) Except at access points, parking structure openings on all levels shall
+be no lower than at least 3 feet from floor level to limit exterior views
+of vehicle fronts below the windshield.
+ 431DEVELOPMENT STANDARDS
+IV:441
+(3) Surface parking areas shall provide perimeter parking lot landscaping
+adjacent to a pedestrian street which meets one of the following
+standards:
+(a) A 5-foot wide planting strip between the right-of-way and the
+parking area. The planting strip may be pierced by
+pedestrian-accessible and vehicular accessways. Planting strips
+shall be planted with an evergreen hedge. Hedges shall be no
+less than 36 inches or more than 42 inches in height at maturity.
+Hedges and other landscaping shall be planted and maintained
+to afford adequate sight distance for vehicles exiting the parking
+lot; or
+(b) A solid decorative wall or fence 36 inches to 42 inches in height
+parallel to and not nearer than two feet from the right-of-way
+line. The area between the wall or fence and the pedestrian
+street line shall be landscaped. The required wall or screening
+shall be designed to allow for access to the site and sidewalk by
+pedestrians and shall be constructed and maintained to afford
+adequate sight distance as described above for vehicles exiting
+the parking lot.
+Perimeter landscaping shall not be required where two parking
+lots using a common driveway are joined by a common
+circulation aisle or other traffic area. Landscaping may be
+reduced or eliminated adjacent to landscaped open space in
+order to transition the open space landscaping into the parking
+area and afford better access between the two areas.
+(4) Surface parking areas shall provide interior landscaping which meets
+the following standards:
+(a) Angled or perpendicular parking spaces shall provide, where
+needed, extruded curbs (tire stops) or widened curbs to prevent
+bumper overhang into required landscape areas and/or over
+walkways.
+(b) Landscaping shall be installed within planting bays, and in any
+other area where parking stalls, circulation aisles, driveways, or
+pedestrian movements would not be precluded by the
+landscaping. Landscaping around and within surface parking
+areas shall not be less than 10% of the total area of the parking
+area (see Section 407 for additional landscape requirements).
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:442
+(5) Except in residential areas, parking associated with new development
+shall be designed to the extent practicable to connect with auto
+parking areas on adjacent sites to eliminate the necessity of utilizing
+the pedestrian street for parallel movements.
+(6) In the TO:BUS and TO:RC Districts, the portion of the first floor of a
+parking structure fronting on a pedestrian route shall contain space
+for retail and/or office or other active uses, or shall be designed to
+allow for conversion to such space at a later time in accordance with
+an approved phased development.
+(7) Surface parking, garages and carports for apartment developments
+shall not be located adjacent to a pedestrian street, but shall be
+located behind apartment buildings adjacent to a pedestrian street,
+except as noted in Section 431-6.1 B. (4).
+(8) Detached garages or carports shall reflect the architectural style and
+building materials that are used for the dwelling structures.
+431-7 Common Open Space
+Provision of common open space in transit oriented communities is critical to
+create an attractive location for living, working and shopping near transit. The
+principles, standards and guidelines in Section 431-7 apply to common open
+space areas in transit oriented districts.
+431-7.1 Location
+A. Principles:
+(1) Common open spaces shall be located within walking distance of all
+those living, working and shopping in transit oriented areas.
+(2) Common open spaces shall be easily and safely accessed by
+pedestrians and bicyclists.
+(3) For security purposes, common open spaces shall be visible from
+nearby residences, stores, a pedestrian route and/or pedestrian
+street or offices.
+(4) Common open space shall be available for both passive and active
+use by people of all ages.
+B. Standards:
+(1) Common open space shall be located within all residential and all
+mixed residential/nonresidential developments with four or more
+dwelling units, as well as all non-residential developments on sites
+exceeding one-half acre. Alternatively, common open space for a
+development may be located within 1,300 feet walking distance of
+ 431DEVELOPMENT STANDARDS
+IV:443
+the development. However, if common open space for a residential
+development is located off-site, it shall be unnecessary to cross an
+arterial street to gain access to the site.
+(2) Common open space in a residential development shall be located
+so that windows from the living areas (kitchens, family rooms, living
+rooms but not bedrooms or bathrooms) of a minimum of four
+residences face on to the common open space.
+(3) Common open spaces for residential developments shall not abut
+roads classified as an arterial.
+431-7.2 Amount and Size
+A. Principles:
+(1) Common open spaces may vary in size depending on their function
+and location.
+(2) The total amount of common open space provided in a transit
+oriented community shall be adequate to meet the needs of those
+projected (at the time of build-out), to live, work, shop and recreate
+there.
+(3) Developers in station areas shall provide common open space for
+their project commensurate with the size of the project and the
+number of residents, workers, shoppers and other users the
+development is likely to attract.
+B. Standards:
+(1) All residential developments of four or more dwelling units, and all
+non-residential or mixed-use developments, shall be required to
+reserve, improve and establish commitments to maintaining common
+open space.
+(2) Any common open space shall be at least 400 square feet in area,
+and shall be able to encompass a square area at least 20 feet wide
+and 20 feet long.
+(3) Residential developers shall provide common open space within or
+near their developments, consistent with the locational standards in
+Section 431-7.1 B., according to the following standards:
+(a) For single detached and Townhouse residences, including
+Duplex units, Townhouses and rowhouses: 100 square feet of
+common open space shall be provided for each dwelling.
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:444
+(b) For apartment units exceeding 500 square feet in floor area: 75
+square feet of common open space shall be provided for each
+dwelling.
+(c) For apartment units equal to or less than 500 square feet in floor
+area: 50 square feet of common open space shall be provided
+for each dwelling.
+(4) Common open space in a mixed use and non-residential development
+shall equal at least 2% of the development site's total acreage after
+netting out those portions of the site within areas listed under CDC
+Section 300-3.1.
+(5) In phased developments, common open space shall be provided in
+each phase of the development consistent with the standards for
+each land use and development phase.
+C. Guidelines:
+(1) Developers, particularly smaller developers, are encour aged to
+acquire and improve common open space off-site in combination
+with such land acquired and improved by other developers in a
+station community to create larger common open spaces. The
+assistance and advice of the Tualatin Hills Park and Recreation
+District and Washington County should be sought in identifying
+off-site common open spaces that could be cooperatively acquired
+and improved by station community developers.
+431-7.3 Open Space Design
+A. Principles:
+(1) Common open spaces in transit oriented communities shall be
+designed to accommodate a variety of activities and users ranging
+from active play by children to passive contemplation by adults, but
+shall generally be able to accommodate a relatively intensive level of
+use. They shall be pedestrian-friendly, with amenities suc h as
+benches, directional signs, water fountains, and good lighting. They
+shall be attractive and interesting, with good landscaping and possibly
+public art or a water feature. And they shall be safe places to be at any
+time of day.
+B. Standards:
+(1) Common open spaces shall include at least two of the following
+improvements:
+(a) A bench or benches for seating;
+ 431DEVELOPMENT STANDARDS
+IV:445
+(b) Public art such as a statue;
+(c) A water feature such as a fountain;
+(d) A children's play structure including a swing and a slide;
+(e) A gazebo;
+(f) Picnic tables with a barbecue;
+(g) An indoor or outdoor sports court for one or more of the
+following: tennis, basketball, volleyball, badminton, racquetball,
+handball/paddleball; or
+(h) An indoor or outdoor swimming and/or wading pool suitable for
+children to use.
+(2) Residential developments that may house children shall provide at
+least one common open space with a children's play structure.
+(3) For security purposes, all common open spaces shall be adequately
+illuminated during hours of darkness.
+(4) Required common open spaces within a Standard Subdivision shall
+be located within a tract(s) and not located within an easement(s) on
+any portion of a platted residential lot.
+(5) Common open spaces shall be free from all structural encroachments
+(i.e., roof overhangs, awnings and other architectural features) of
+structures on abutting properties.
+(Ord. No. 885A, § 2.1.(Exh. 1), 6-28-22, eff. 7-28-22; Ord. No. 890A, § 2.A.(Exh. 1, § 1.),
+2-7-23, eff. 3-9-23)
+431-8 Transitions in Density
+A major issue in areas where higher density, attached dwelling development is
+planned is the impact of that development on existing lower density, single-family
+dwelling neighborhoods. The following principles, standards and guidelines
+address this issue.
+431-8.1 Principles:
+A. Adequate buffer strips with vegetative screens shall be placed to mitigate
+the impact of higher density development on adjacent lower density
+development.
+431-8.2 Standards:
+A. Buildings with similar massing and height shall be located on both sides of
+a pedestrian street. Changes in building massing and height shall occur
+mid-block, at the rear lot line.
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:446
+B. Where the TO:R9-12 District abuts existing R-5 or R-6 neighborhoods:
+(1) There shall be a Type #2 buffer, as specified in CDC Section 411-6;
+(2) New residential units shall be no higher than 35 feet (the maximum
+building height in the R-5 District) above grade or above the average
+elevation of the nearest lot occupied by an existing single-family
+residence, whichever is highest; and
+(3) New residential buildings on lots directly abutting existing single-family
+dwellings shall be either single detached units, Duplexes, Triplexes
+or fourplexes.
+C. Where the TO:R12-18 District abuts an existing R-5 or R-6 neighborhood,
+a Type #3 screening and buffering, as specified in CDC Section 411-6,
+shall be required. Additionally, new residential buildings within 100 feet of
+the property line abutting the R-5 or R-6 neighborhood shall be no higher
+than 35 feet above grade or above the average elevation of the nearest lot
+occupied by an existing single-family residence, whichever is highest.
+D. Where the TO:R18-24 District abuts an existing R-5 or R-6 neighborhood,
+Type #4 screening and buffering, as specified in CDC Section 411-6, shall
+be required. Additionally new residential buildings within 100 feet of the
+property line abutting the R-5 or R-6 neighborhood shall be no higher than
+35 feet above grade or above the average elevation of the nearest lot
+occupied by an existing single-family residence, whichever is highest.
+E. Where the TO:R24-40 District abuts an existing R-5 or R-6 neighborhood
+Type #5 screening and buffering, as specified in CDC Section 411-6, shall
+be required. Additionally, new residential buildings within 100 feet of the
+property line abutting the R-5 or R-6 neighborhood shall be no higher than
+35 feet above grade or above the average elevation of the nearest lot
+occupied by an existing single-family residence, whichever is highest.
+F. Where the TO:R40-80 District or the TO:R80-120 District abuts an existing
+R-5 or R-6 neighborhood, Type #6 screening and buffering as specified in
+CDC Section 411-6, shall be required.
+G. The setback from a proposed attached dwelling unit structure in a Transit
+Oriented District to the nearest lot line for an existing R-5 or R-6
+neighborhood shall be required to be no less than the required rear yard
+setback for the adjacent district. Any screening and buffering required
+pursuant to Section 411 may be included within this setback (see Section
+411-1.1).
+ 431DEVELOPMENT STANDARDS
+IV:447
+431-8.3 Guidelines:
+A. Dwellings in a transit oriented community should not be grouped by cost
+range but mixed to encourage interaction among people of var ying
+backgrounds and income levels.
+(Ord. No. 885A, § 2.1.(Exh. 1), 6-28-22, eff. 7-28-22; Ord. No. 890A, § 2.A.(Exh. 1, § 1.),
+2-7-23, eff. 3-9-23)
+431-9 Landscaping
+Well-designed and located landscaping can soften the edges of buildings and
+paving, add aesthetic interest and generally increase the attractiveness of a
+community. The following principles, standards and guidel ines apply to
+landscaping in transit oriented districts.
+431-9.1 Principles:
+A. The size of the landscaped area on a development site in a transit-oriented
+community shall be in inverse proportion to the density of development on
+the site.
+B. Landscaping shall primarily be located to serve as a screen or buffer for or
+to soften the appearance of unattractive structures or uses such as
+parking lots or large blank walls, or to increase the attractiveness of
+common open spaces.
+431-9.2 Standards:
+No minimum landscaping standard shall be set as a percentage of a development
+site. Landscaping may be required, however, in conjunction with parking lot
+design (see Section 431-6.2), building design or the provision of common open
+space.
+431-9.3 Guidelines:
+A. Stormwater detention facilities may be incorporated into landscapes (see
+Section 431-10.1).
+431-10 Water Quantity/Quality Facilities
+Water quantity/quality facilities are necessary elements of the urban landscape
+in Washington County, but their location and appearance can influence the
+attractiveness of a community. The following principles and standards apply to
+water quantity/quality facilities in transit oriented districts.
+431-10.1 Principles:
+Stormwater detention and treatment facilities shall be integrated into the design
+of a development site and, if visible, shall appear as a component of the
+431 WASHINGTON COUNTY COMMUNITY DEVELOPMENT CODE
+IV:448
+landscape rather than as a utility element. If practicable and acceptable by to
+the Clean Water Services, such facilities shall be consolidated to serve multiple
+developments in a location away from the center of the community.
+431-10.2 Standards:
+Non-vaulted surface stormwater detention and/or treatment facilities shall not
+be located between a pedestrian street and the front of an adjacent building.
+431-11 Signs
+The principles and standards of Sections 431-11.1 and 431-11.2 below shall
+apply to all permitted signage within transit oriented districts. Exceptions to
+these standards are designated in Section 431-11.3.
+431-11.1 Principles:
+A. Signs in Transit Oriented District communities shall be located and scaled
+to the function of the pedestrian street on which they front.
+B. Signs within any transit-oriented district shall be consistent with the visual
+quality and aesthetics of the surrounding neighborhood.
+C. Signage must be of high quality in design and materials.
+D. Signage shall be consistent throughout a development.
+E. Signage attached to a building shall complement the building's character
+(e.g., wall signs shall avoid covering building columns).
+431-11.2 Standards:
+A. In the TO:BUS and TO:RC Districts, the standards of Article IV - Section
+414-2 shall apply, except as noted in Section 431-11.3.
+B. In all transit oriented residential districts the standards of Article IV -
+Section 414-1 shall apply.
+C. In the TO:EMP District, the standards of Article IV - Section 414-3 shall
+apply.
+431-11.3 Exceptions to Sections 414-1 and 414-2
+A. Façade­mounted, nonresidential signs shall not exceed 5% of the area of
+the façade upon which it is mounted, up to a maximum of 200 square feet
+per façade or 400 square feet per building.
+B. Ground-mounted monuments or site entry markers up to 15 feet in height
+may be approved subject to the following:
+(1) Total area and volume of the portion of the monument or marker
+incorporating sign letters shall not exceed 45 square feet or 90 cubic
+feet; and
+ 431DEVELOPMENT STANDARDS
+IV:449
+(2) Position of the monument or marker shall not obscure roadway
+visibility or result in potential traffic hazard(s) as may be determined
+by the County Engineer.
+C. Prohibited signs:
+(1) Free-standing signs (e.g., pole-mounted signs) as defined in Section
+106-193.4;
+(2) Signs with moving or flashing lights;
+(3) Signs with exposed electrical conduits, ballast boxes, or other
+equipment;
+(4) Signs incorporating audible or odor-producing elements;
+(5) Roof-mounted signs; and
+(6) Other signs prohibited under Article IV Section 414.
+(Ord. No. 813, § 2.C.(Exh. 3, § 6), 8-23-16, eff. 11-25-16)

@@ -916,6 +916,50 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4053"
+      variants:
+        # FOLLOWUPS 109 chunk 3: inside the historic overlay district (the
+        # Canemah Historic District, the McLoughlin Conservation District and
+        # the Barlow Road corridor, `drawn_areas` below) no new construction
+        # without a certificate of appropriateness from the Historic Review
+        # Board, decided at a hearing on judgement criteria. A historic area
+        # is the statute's own exception to ORS 197A.400 and the standing rule
+        # for historic districts outside Portland is RED (FOLLOWUPS 87).
+        - value: false
+          when: [oregon_city_historic_overlay]
+          cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+    max_mass_footprint_sqft:
+      # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
+      # footprint under one roofline, and each reaches only its mapped area
+      # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
+      # part of a structure containing dwelling units", so the conservative
+      # reading is the whole building; a townhouse read as one 500 sq ft
+      # residence a unit would clear it, and that reading is Steph's to make.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      variants:
+        - value: 1200
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.040.A, Park Place modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+        - value: 1200
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.040.A, South End modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
+      # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat). The director's exemption
+      # turns on "consistent with the architectural style", a judgement.
+      exempt: true
+      cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      variants:
+        - value: 5
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.030.A, Park Place roof design
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4138"
@@ -1024,6 +1068,50 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4053"
+      variants:
+        # FOLLOWUPS 109 chunk 3: inside the historic overlay district (the
+        # Canemah Historic District, the McLoughlin Conservation District and
+        # the Barlow Road corridor, `drawn_areas` below) no new construction
+        # without a certificate of appropriateness from the Historic Review
+        # Board, decided at a hearing on judgement criteria. A historic area
+        # is the statute's own exception to ORS 197A.400 and the standing rule
+        # for historic districts outside Portland is RED (FOLLOWUPS 87).
+        - value: false
+          when: [oregon_city_historic_overlay]
+          cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+    max_mass_footprint_sqft:
+      # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
+      # footprint under one roofline, and each reaches only its mapped area
+      # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
+      # part of a structure containing dwelling units", so the conservative
+      # reading is the whole building; a townhouse read as one 500 sq ft
+      # residence a unit would clear it, and that reading is Steph's to make.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      variants:
+        - value: 1200
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.040.A, Park Place modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+        - value: 1200
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.040.A, South End modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
+      # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat). The director's exemption
+      # turns on "consistent with the architectural style", a judgement.
+      exempt: true
+      cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      variants:
+        - value: 5
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.030.A, Park Place roof design
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4138"
@@ -1125,6 +1213,50 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4053"
+      variants:
+        # FOLLOWUPS 109 chunk 3: inside the historic overlay district (the
+        # Canemah Historic District, the McLoughlin Conservation District and
+        # the Barlow Road corridor, `drawn_areas` below) no new construction
+        # without a certificate of appropriateness from the Historic Review
+        # Board, decided at a hearing on judgement criteria. A historic area
+        # is the statute's own exception to ORS 197A.400 and the standing rule
+        # for historic districts outside Portland is RED (FOLLOWUPS 87).
+        - value: false
+          when: [oregon_city_historic_overlay]
+          cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+    max_mass_footprint_sqft:
+      # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
+      # footprint under one roofline, and each reaches only its mapped area
+      # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
+      # part of a structure containing dwelling units", so the conservative
+      # reading is the whole building; a townhouse read as one 500 sq ft
+      # residence a unit would clear it, and that reading is Steph's to make.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      variants:
+        - value: 1200
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.040.A, Park Place modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+        - value: 1200
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.040.A, South End modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
+      # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat). The director's exemption
+      # turns on "consistent with the architectural style", a judgement.
+      exempt: true
+      cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      variants:
+        - value: 5
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.030.A, Park Place roof design
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4138"
@@ -1226,6 +1358,38 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4246"
+    max_mass_footprint_sqft:
+      # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
+      # footprint under one roofline, and each reaches only its mapped area
+      # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
+      # part of a structure containing dwelling units", so the conservative
+      # reading is the whole building; a townhouse read as one 500 sq ft
+      # residence a unit would clear it, and that reading is Steph's to make.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      variants:
+        - value: 1200
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.040.A, Park Place modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+        - value: 1200
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.040.A, South End modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
+      # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat). The director's exemption
+      # turns on "consistent with the architectural style", a judgement.
+      exempt: true
+      cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      variants:
+        - value: 5
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.030.A, Park Place roof design
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4331"
@@ -1348,6 +1512,50 @@ zones:
       # not on it.
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4498-L4499,L4505"
+      variants:
+        # FOLLOWUPS 109 chunk 3: inside the historic overlay district (the
+        # Canemah Historic District, the McLoughlin Conservation District and
+        # the Barlow Road corridor, `drawn_areas` below) no new construction
+        # without a certificate of appropriateness from the Historic Review
+        # Board, decided at a hearing on judgement criteria. A historic area
+        # is the statute's own exception to ORS 197A.400 and the standing rule
+        # for historic districts outside Portland is RED (FOLLOWUPS 87).
+        - value: false
+          when: [oregon_city_historic_overlay]
+          cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+    max_mass_footprint_sqft:
+      # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
+      # footprint under one roofline, and each reaches only its mapped area
+      # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
+      # part of a structure containing dwelling units", so the conservative
+      # reading is the whole building; a townhouse read as one 500 sq ft
+      # residence a unit would clear it, and that reading is Steph's to make.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      variants:
+        - value: 1200
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.040.A, Park Place modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+        - value: 1200
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.040.A, South End modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
+      # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat). The director's exemption
+      # turns on "consistent with the architectural style", a judgement.
+      exempt: true
+      cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      variants:
+        - value: 5
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.030.A, Park Place roof design
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
     min_lot_sqft:
       # Table 17.12.040, the row "Triplex, quadplex and multi-family". The row
       # label wraps across two lines on the page, which is why the quote takes
@@ -1547,6 +1755,50 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4246"
+      variants:
+        # FOLLOWUPS 109 chunk 3: inside the historic overlay district (the
+        # Canemah Historic District, the McLoughlin Conservation District and
+        # the Barlow Road corridor, `drawn_areas` below) no new construction
+        # without a certificate of appropriateness from the Historic Review
+        # Board, decided at a hearing on judgement criteria. A historic area
+        # is the statute's own exception to ORS 197A.400 and the standing rule
+        # for historic districts outside Portland is RED (FOLLOWUPS 87).
+        - value: false
+          when: [oregon_city_historic_overlay]
+          cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
+    max_mass_footprint_sqft:
+      # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
+      # footprint under one roofline, and each reaches only its mapped area
+      # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
+      # part of a structure containing dwelling units", so the conservative
+      # reading is the whole building; a townhouse read as one 500 sq ft
+      # residence a unit would clear it, and that reading is Steph's to make.
+      exempt: true
+      cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
+      variants:
+        - value: 1200
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.040.A, Park Place modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6162-L6167"
+        - value: 1200
+          when: [oregon_city_south_end]
+          cite: OCMC 17.22.040.A, South End modulation and massing
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6373-L6378"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. Park Place only: "Primary roofs shall be
+      # pitched at a minimum ratio of five-twelfths". The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat). The director's exemption
+      # turns on "consistent with the architectural style", a judgement.
+      exempt: true
+      cite: OCMC 17.21.020 (applicability, the Park Place Concept Plan areas only)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+      variants:
+        - value: 5
+          when: [oregon_city_park_place]
+          cite: OCMC 17.21.030.A, Park Place roof design
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L6148-L6151"
     setback_front_ft:
       value: 5
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4331"
@@ -1739,6 +1991,18 @@ zones:
       # clause, no conditional-use path, no footnote.
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6964,L6993-L6994"
+      variants:
+        # FOLLOWUPS 109 chunk 3: inside the historic overlay district (the
+        # Canemah Historic District, the McLoughlin Conservation District and
+        # the Barlow Road corridor, `drawn_areas` below) no new construction
+        # without a certificate of appropriateness from the Historic Review
+        # Board, decided at a hearing on judgement criteria. A historic area
+        # is the statute's own exception to ORS 197A.400 and the standing rule
+        # for historic districts outside Portland is RED (FOLLOWUPS 87).
+        - value: false
+          when: [oregon_city_historic_overlay]
+          cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
     min_lot_sqft:
       # 17.29.050.A: "Minimum lot areas: None." The safe use of `exempt` --
       # the paragraph is printed and states no standard, rather than being
@@ -2013,6 +2277,18 @@ zones:
       # than the dimensions. The `unit_lots` path is refused in the notes.
       value: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7725-L7726"
+      variants:
+        # FOLLOWUPS 109 chunk 3: inside the historic overlay district (the
+        # Canemah Historic District, the McLoughlin Conservation District and
+        # the Barlow Road corridor, `drawn_areas` below) no new construction
+        # without a certificate of appropriateness from the Historic Review
+        # Board, decided at a hearing on judgement criteria. A historic area
+        # is the statute's own exception to ORS 197A.400 and the standing rule
+        # for historic districts outside Portland is RED (FOLLOWUPS 87).
+        - value: false
+          when: [oregon_city_historic_overlay]
+          cite: OCMC 17.40.060.A (exterior alteration and new construction, certificate of appropriateness) and 17.40.030 (the overlay's districts)
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8922-L8937,L9057-L9064"
     min_lot_sqft:
       exempt: true
       quote: "or/clackamas/oregon-city/17.zoning.txt#L7853"
@@ -2522,6 +2798,70 @@ zone_rulings:
 # observed fact lifts a cap, so that list may not be written until that
 # footnote is encoded as a variant. Nothing waits on it: every R-2 value is
 # capped on `utility_easement` by note 2 as well.
+# Areas the code draws inside a zone that the zoning layer does not carry
+# (FOLLOWUPS 109 chunk 3, 2026-10-22). See flats/rules/model.py DrawnArea.
+drawn_areas:
+  park_place_concept_plan:
+    condition: oregon_city_park_place
+    zones: [R-10, R-8, R-6, R-5, R-3.5, R-2]
+    file: or/clackamas/oregon-city/park-place-concept-plan.geojson
+    source: >-
+      City of Oregon City GIS, LandUseAndPlanning_PUBLIC MapServer, the Park
+      Place Concept Plan boundary layer, queried in EPSG:2913 and saved
+      unchanged by the design-districts chunk 2 ingest on 2026-10-22
+      (docs/flats/ingest_c2_2026-10-22.md).
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134"
+    cite: OCMC 17.21.020
+    note: >-
+      Chapter 17.21 "applies to all new detached single-family residential
+      units, duplexes, triplexes, quadplexes, townhouses ... located within
+      the Park Place Concept Plan areas", so its roof pitch (5:12) and its
+      massing cap (1,200 sq ft under one roofline) reach the pod on the
+      mapped area and nowhere else. The residential zones are listed because
+      the chapter reaches residences whatever their zone. The boundary also
+      takes in county land (39 Clackamas unincorporated R8.5 lots); the city's
+      code does not govern those until annexed and they are not touched here.
+  south_end_concept_plan:
+    condition: oregon_city_south_end
+    zones: [R-10, R-8, R-6, R-5, R-3.5, R-2]
+    file: or/clackamas/oregon-city/south-end-concept-plan.geojson
+    source: >-
+      City of Oregon City GIS, LandUseAndPlanning_PUBLIC MapServer, the South
+      End Concept Plan boundary layer, queried in EPSG:2913 and saved
+      unchanged by the design-districts chunk 2 ingest on 2026-10-22
+      (docs/flats/ingest_c2_2026-10-22.md).
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L6339-L6345"
+    cite: OCMC 17.22.020
+    note: >-
+      Chapter 17.22 applies "in addition to OCMC 17.14, OCMC 17.16, or OCMC
+      17.20" to every new quadplex and townhouse "located within the South
+      End Concept Plan area", so its massing cap (1,200 sq ft under one
+      roofline) reaches the pod there. It states no roof pitch. The
+      residential zones are listed because the chapter reaches residences
+      whatever their zone.
+  historic_overlay:
+    condition: oregon_city_historic_overlay
+    zones: [R-10, R-8, R-6, R-3.5, R-2, MUC-1, MUD]
+    file: or/clackamas/oregon-city/historic-overlay.geojson
+    source: >-
+      Three City of Oregon City GIS layers saved unchanged by the chunk 2
+      ingest on 2026-10-22 and held here as three features of one file:
+      LandUseAndPlanning_PUBLIC MapServer layer 32 (Canemah Historic
+      District), layer 31 (McLoughlin Conservation District) and layer 49
+      (Barlow Trail Corridor). The single-layer files sit beside it.
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L8907-L8908,L8917-L8920,L9057-L9064"
+    cite: OCMC 17.40.030 and 17.40.060.A
+    note: >-
+      17.40.030.B puts "the boundaries of the historic districts, the
+      boundaries of conservation districts, historic corridors" on a city
+      map, and 17.40.060.A allows no "new construction in an historic
+      district, conservation district, historic corridor" without a
+      certificate of appropriateness from the Historic Review Board. The
+      three are one rule, so one condition and one file. The zones listed
+      are every zone whose lots the three outlines touch. The corridor is a
+      strip along the old road, so most lots it touches are cut by it and
+      stay unanswered (UNKNOWN) rather than in or out.
+
 neighbours:
   abuts_residential_zone:
     true_for: [R-10, R-8, R-6, R-5, R-3.5, R-2]

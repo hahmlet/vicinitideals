@@ -276,6 +276,8 @@ CHECK_WORDS: dict[str, tuple[str, str]] = {
     "min_height_ft": ("Minimum height", "ft"),
     "min_stories": ("Minimum storeys", "storeys"),
     "min_ground_story_ft": ("Ground storey height", "ft"),
+    "roof_pitch": ("Roof pitch", "in 12"),
+    "mass_footprint": ("Footprint under one roof", "sq ft"),
     "max_units": ("Homes allowed", "homes"),
     "density_du_per_acre": ("Density", "homes / acre"),
     "min_density_du_per_acre": ("Minimum density", "homes / acre"),
