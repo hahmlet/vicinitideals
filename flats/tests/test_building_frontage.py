@@ -144,6 +144,19 @@ def test_the_driveway_off_the_frontage_saves_a_lot_it_would_fail() -> None:
     assert check(less, BUILDING_SHARE) is None
 
 
+def test_a_plaza_the_plan_does_not_draw_saves_a_lot_from_red_never_to_green() -> None:
+    # 56 ft over 110 ft is 51 percent; with a fifth of the frontage off as a
+    # plaza (88 ft left) it is 64: the pod might meet it, so not RED.
+    plain = run(facts(street_lines_ft=(110.0,)), rules(**SHARE))
+    assert plain.colour is Colour.red
+    plaza = {**SHARE, "building_frontage_plaza_pct": 20}
+    saved = run(facts(street_lines_ft=(110.0,), building_frontage_pct=(51.0,)), rules(**plaza))
+    assert saved.colour is Colour.yellow
+    assert check(saved, BUILDING_SHARE) is None
+    # Far past what a plaza can take off, it is still RED.
+    assert run(facts(street_lines_ft=(160.0,)), rules(**plaza)).colour is Colour.red
+
+
 def test_a_share_by_street_type_fails_below_the_least_and_holds_between() -> None:
     banded = {"building_frontage_min_pct": 90, "building_frontage_min_pct_least": 50, "setback_front_max_ft": 20}
     # 56 over 130 is 43 percent: under 50, whatever the street.
@@ -187,6 +200,8 @@ def test_beavertons_mixed_use_zones_ask_sixty_and_thirty_five(corpus: RuleSet, z
     assert got["building_frontage_min_pct"].value == 60
     assert got["building_frontage_other_pct"].value == 35
     assert got["building_frontage_less_drive"].value is True
+    assert got["building_frontage_plaza_pct"].value == 20
+    assert "Plazas up to 20 percent" in quoted(got["building_frontage_plaza_pct"].prov.quote)
     assert got["setback_front_max_ft"].value is not None
     text = quoted(got["building_frontage_min_pct"].prov.quote)
     assert "60 percent" in text and "Primary Frontage" in text
@@ -195,6 +210,7 @@ def test_beavertons_mixed_use_zones_ask_sixty_and_thirty_five(corpus: RuleSet, z
 def test_cm_cs_asks_fifty_with_no_band(corpus: RuleSet) -> None:
     got = corpus.resolve(BEAVERTON, "CM-CS").values
     assert got["building_frontage_min_pct"].value == 50
+    assert got["building_frontage_plaza_pct"].value == 20
     assert "CM-CS" in quoted(got["building_frontage_min_pct"].prov.quote)
 
 
@@ -205,6 +221,7 @@ def test_downtown_asks_fifty_to_ninety_by_street_type(corpus: RuleSet, zone: str
     assert got["building_frontage_min_pct_least"].value == 50
     assert got["building_frontage_other_pct"].value == 70
     assert "building_frontage_other_pct_least" not in got
+    assert "building_frontage_plaza_pct" not in got
     assert got["building_frontage_less_drive"].value is True
     text = quoted(got["building_frontage_min_pct"].prov.quote)
     assert "90 percent" in text and "50 percent" in text

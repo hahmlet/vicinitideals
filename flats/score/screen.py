@@ -2568,9 +2568,14 @@ def _building_frontage(
     if rules.get("building_frontage_less_drive") is True:
         drive = drive_at_street(design, rules, lot.alley, corner=lot.corner, beside=beside) or 0.0
     w, d = float(design.footprint.width_ft), float(design.footprint.depth_ft)
+    # A plaza the applicant may take off the frontage (Beaverton
+    # 60.05.15.6.A.4.c, up to a share of the site's total street frontage):
+    # the plan draws none, so it is taken on the reading that decides RED --
+    # on every street at once, the lenient way -- and never toward GREEN.
+    plaza = (_pct(rules, "building_frontage_plaza_pct") or 0.0) / 100.0 * sum(lines)
 
     def most(face: float, line: float) -> float:
-        net = line - drive
+        net = line - drive - min(plaza, line)
         return 100.0 if net <= 0 else min(100.0, 100.0 * face / net)
 
     # The best any one placement could do, on the most lenient reading.

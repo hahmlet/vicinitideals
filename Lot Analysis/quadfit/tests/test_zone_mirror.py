@@ -1100,6 +1100,7 @@ UNEXPRESSIBLE: dict[str, int] = {
     "building_frontage_other_pct": 18,
     "building_frontage_through_one": 2,
     "building_frontage_less_drive": 16,
+    "building_frontage_plaza_pct": 12,
 }
 
 

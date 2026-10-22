@@ -128,6 +128,7 @@ _LABELS: dict[str, str] = {
     "building_frontage_other_pct": "min. building share of other street frontages",
     "building_frontage_through_one": "through lot owes the building share on one street",
     "building_frontage_less_drive": "driveway width comes off the frontage",
+    "building_frontage_plaza_pct": "plaza that may come off the frontage (share of it)",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
@@ -1372,6 +1373,17 @@ _F: tuple[FieldDef, ...] = (
         "70.20.05.4 S1.g.I. The pod's one drive comes off the street it "
         "crosses.",
     ),
+    FieldDef(
+        "building_frontage_plaza_pct",
+        "percent",
+        "Share of the total public street frontage a plaza may take off the "
+        "frontage before the building's share is figured, at the applicant's "
+        "choice: Beaverton 60.05.15.6.A.4.c (\"Plazas up to 20 percent of the "
+        "total public street frontage per site\") and B.3.d. The pod's plan "
+        "draws no plaza, so it is taken only where it could save a lot from "
+        "RED, never toward GREEN.",
+        False,
+    ),
     # --- orientation ----------------------------------------------------
     FieldDef(
         "orientation_constraint",
@@ -1786,6 +1798,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "building_frontage_other_pct",
         "building_frontage_through_one",
         "building_frontage_less_drive",
+        "building_frontage_plaza_pct",
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
         "parking_alley_access_required",

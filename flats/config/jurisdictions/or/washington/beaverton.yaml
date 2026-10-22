@@ -1239,11 +1239,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted (units attached). No minimum lot or width; min
       34 du/net acre; front 0 (max 16 under 60.05.15.6.A for residential
@@ -1375,6 +1383,10 @@ zones:
       value: true
       cite: "Beaverton BDC 60.05.15.6.B.3.a, the width of the widest part of a driveway's public element shall be subtracted"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L312-L314"
+    building_frontage_plaza_pct:
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.B.3.d, plazas, including pedestrian plazas, up to 20 percent of the total public street frontage per site are subtracted"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L312-L313,L318"
     notes: >-
       DRAFT. Quadplex permitted (units attached). No minimum lot or width; min
       34 du/net acre; yards 0 (side and rear 5 beside a residential zone); 65
@@ -1529,11 +1541,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted (units attached; the 50% residential share of
       the NS district not encoded). No minimum lot; 70 x 100; min 34 du/net
@@ -1668,11 +1688,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted (units attached). No minimum lot; min 34
       du/net acre; front 0 (max 16), side 0, rear 0 (15 beside a residential
@@ -1798,11 +1826,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted (units attached). No minimum lot; min 34
       du/net acre; front 0 (max 16), side 0, rear 0; no height limit (60 by a
@@ -1935,11 +1971,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted (units attached). No minimum lot; min 34
       du/net acre; front 0 (max 16), side 0, rear 0 (15 beside a residential
@@ -2075,11 +2119,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 12 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -2207,11 +2259,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -2339,11 +2399,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -2480,11 +2548,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
@@ -2622,11 +2698,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
@@ -2762,11 +2846,19 @@ zones:
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
     building_frontage_less_drive:
       # A.4.a "may be subtracted": the applicant's choice, so taken. The
-      # sight-clearance areas (b), plazas (c) and natural areas (d) are
-      # not measured and are not taken: the stricter share.
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
       value: true
       cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
