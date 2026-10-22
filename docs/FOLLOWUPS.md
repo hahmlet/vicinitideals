@@ -1310,10 +1310,21 @@ read when the weekly full re-screen lands.
    reliefs were dismissed as conservative (e.g. Gresham residential note 2, Clackamas ZDO notes). Sweep
    every layer's footnote ledgers + yamls for "lot of record" relief on the single-lot path; take each
    (a new lot from a division still meets the table); bound per city; read gains one by one.
-109. [Claude] [Steph: approve the plan first -- major feature] **Design districts (Steph 2026-10-21: "we
-   do need to incorporate Rockwood (and other) design districts").** Rockwood itself does not reach the
-   pod (7.0502(B)); others may. Inventory running (every covered city: district, does it reach the pod,
-   screenable standards, boundary source); then a scoped plan for Steph.
+109. [Claude] [Steph: approve tiers 2-3; roof; WashCo plans] [tier 1 BUILDING] **Design districts (Steph
+   2026-10-21: "we do need to incorporate Rockwood (and other) design districts").** Inventory DONE:
+   docs/flats/design_districts_2026-10-21.md -- 84 districts, 62 reach the pod, 32 non-zone districts
+   lack a boundary. TIER 1 false-GREEN fixes (no ask): (a) building-frontage share -- Beaverton Downtown
+   50-90% (~150 greens), Beaverton mixed-use 60% (1,504 lots), WashCo NMU/CCMU 50%, King City Kingston
+   Terrace entrance -- BUILDING flats/frontage-share; (b) Portland main street "m" townhouse ban within
+   100 ft of a transit street + 70% build-to + vehicle cap; historic/conservation district vacant lots;
+   "d" overlay yellow claim nothing implements -- BUILDING flats/pdx-overlays-2; (c) Oregon City Park
+   Place/South End concept plans (1,200 sf footprint rule) + historic districts -- needs boundaries;
+   smaller: Sunnyside Village, WashCo transit townhouses, Wood Village TC, Sandy Bornstedt, Wilsonville
+   Old Town. TIER 2 false-RED openings: Gresham townhouse-only zones (~832), Troutdale HDR Town Center
+   (~350), Tigard Washington Square map, Estacada, Canby, Tualatin CO Block 1, Gladstone TC. TIER 3
+   boundaries: Oregon City, Portland plan districts + 33.420/33.5xx text, Troutdale, Tigard, Sandy,
+   Wilsonville Old Town. QUESTIONS: is the pod roof flat (Fairview Village + West Linn ban flat roofs)?
+   WashCo's eleven community plans (68,777 lots) are unread -- read them?
 107. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Page check: footnotes asked as their own
    value card (Steph 2026-10-21).** LIVE 411f37ae (335097e6 + 4a1c6d4e). 76 stand-alone cards read wholly
    off one note now ride their table cell's note question ("we read it as ... is that what the note
