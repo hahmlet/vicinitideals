@@ -1958,3 +1958,22 @@
     meets the share on its own is judged as before. Encoded in chunk 3
     (docs/flats/design_districts_plan.md).
   source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
+
+- id: 2026-10-21-king-city-all-four-doors
+  kind: ruling
+  date: 2026-10-21
+  scope:
+    county: washington
+    city: king-city
+  question: >-
+    King City KCMC 16.114.060 C.4: must each of the pod's four front doors
+    stand within eight feet of the longest street-facing wall and face the
+    street, or is one street-facing entrance per building enough?
+  ruling: >-
+    "King City: all four doors. Not worth nitpicking over 3 lots"
+  effect: >-
+    All four doors. The pod's long side must face the street, as already
+    encoded (orientation_constraint: axis_required in the Kingston Terrace
+    zones). No colour changes; the 3 lots that went yellow to red in run 84
+    stay red.
+  source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
