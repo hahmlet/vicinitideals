@@ -1,0 +1,196 @@
+# Declarations for the documents in this directory (design-districts chunk 2, 2026-10-22).
+# Chunk 3: move a document into flats/provenance/docs/ (git mv the .txt and its .meta.json, same
+# relative path), paste its block into the code: list of the jurisdiction file named on the
+# header line, then rule the footnotes, designations and cross-references the store-wide ledgers
+# will ask for (they scan every stored document; that is why these are held here, unread).
+
+# ---- flats/config/jurisdictions/or/multnomah/portland.yaml
+- id: "33.500"
+  url: https://www.portland.gov/sites/default/files/code/33.500-plan-districts-in-general.pdf
+  title: "Chapter 33.500 Plan Districts in General"
+  extraction: plain
+  allow_thin: true
+- id: "33.505"
+  url: https://www.portland.gov/sites/default/files/code/33.505-albina-community-plan-district.pdf
+  title: "Chapter 33.505 Albina Community Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.510"
+  url: https://www.portland.gov/sites/default/files/code/510-central-city_1.pdf
+  title: "Chapter 33.510 Central City Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.520"
+  url: https://www.portland.gov/sites/default/files/code/520-division-pd.pdf
+  title: "Chapter 33.520 Division Street Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.521"
+  url: https://www.portland.gov/sites/default/files/code/521-east-corridor-pd_0.pdf
+  title: "Chapter 33.521 East Corridor Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.530"
+  url: https://www.portland.gov/sites/default/files/code/530-glendoveer-pd.pdf
+  title: "Chapter 33.530 Glendoveer Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.532"
+  url: https://www.portland.gov/sites/default/files/code/532-hayden-island-pd.pdf
+  title: "Chapter 33.532 Hayden Island Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.533"
+  url: https://www.portland.gov/sites/default/files/code/33.533-healy-heights-plan-district.pdf
+  title: "Chapter 33.533 Healy Heights Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.534"
+  url: https://www.portland.gov/sites/default/files/code/534-hillsdale-pd_0.pdf
+  title: "Chapter 33.534 Hillsdale Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.536"
+  url: https://www.portland.gov/sites/default/files/code/536-hollywood-pd_1.pdf
+  title: "Chapter 33.536 Hollywood Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.537"
+  url: https://www.portland.gov/sites/default/files/code/537-johnson-creek-basin-pd_0.pdf
+  title: "Chapter 33.537 Johnson Creek Basin Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.538"
+  url: https://www.portland.gov/sites/default/files/code/538-kenton-pd_0.pdf
+  title: "Chapter 33.538 Kenton Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.540"
+  url: https://www.portland.gov/sites/default/files/code/33.540-laurelhurst-eastmoreland-plan-district.pdf
+  title: "Chapter 33.540 Laurelhurst/Eastmoreland Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.545"
+  url: https://www.portland.gov/sites/default/files/code/545-lombard-pd.pdf
+  title: "Chapter 33.545 Lombard Street Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.550"
+  url: https://www.portland.gov/sites/default/files/code/550-macadam-pd.pdf
+  title: "Chapter 33.550 Macadam Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.560"
+  url: https://www.portland.gov/sites/default/files/code/560-north-cully-pd.pdf
+  title: "Chapter 33.560 North Cully Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.561"
+  url: https://www.portland.gov/sites/default/files/code/561-north-interstate-pd_0.pdf
+  title: "Chapter 33.561 North Interstate Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.562"
+  url: https://www.portland.gov/sites/default/files/code/562-northwest-pd_1.pdf
+  title: "Chapter 33.562 Northwest Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.563"
+  url: https://www.portland.gov/sites/default/files/code/563-northwest-hills-pd_1.pdf
+  title: "Chapter 33.563 Northwest Hills Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.565"
+  url: https://www.portland.gov/sites/default/files/code/565-portland-international-airport-pd_0.pdf
+  title: "Chapter 33.565 Portland International Airport Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.570"
+  url: https://www.portland.gov/sites/default/files/code/33.570-rocky-butte-plan-district.pdf
+  title: "Chapter 33.570 Rocky Butte Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.580"
+  url: https://www.portland.gov/sites/default/files/code/580-south-auditorium-pd_0.pdf
+  title: "Chapter 33.580 South Auditorium Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.583"
+  url: https://www.portland.gov/sites/default/files/code/583-st-johns-pd.pdf
+  title: "Chapter 33.583 St. Johns Plan District"
+  extraction: plain
+  allow_thin: true
+- id: "33.595"
+  url: https://www.portland.gov/sites/default/files/code/595-west-port-multi-pd_0.pdf
+  title: "Chapter 33.595 West Portland Multicultural"
+  extraction: plain
+  allow_thin: true
+
+# ---- flats/config/jurisdictions/or/clackamas/wilsonville.yaml
+- id: "old-town-residential-design-standards"
+  url: https://wilsonvilleoregon.gov/DocumentCenter/View/9181/Wilsonville-Old-Town-Residential-Design-Standards-Book-October-2021-PDF
+  title: "Old Town Residential Design Standards Book (October 2021)"
+  extraction: plain
+  allow_thin: true
+
+# ---- flats/config/jurisdictions/or/washington/_unincorporated.yaml
+- id: "community-plan.aloha-reedville-cooper-mountain"
+  url: https://washingtoncountyor.gov/lut/planning/documents/aloha-reedville-cooper-mountain-community-plan-updated-08-2026/download
+  title: "Washington County Community Plan - Aloha Reedville Cooper Mountain"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.bethany"
+  url: https://washingtoncountyor.gov/lut/planning/documents/chapter-1-bethany-community-plan-text-and-maps-08-2026/download
+  title: "Washington County Community Plan - Bethany"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.bull-mountain"
+  url: https://washingtoncountyor.gov/lut/planning/documents/bull-mountain-community-plan-updated-08-2026/download
+  title: "Washington County Community Plan - Bull Mountain"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.cedar-hills-cedar-mill"
+  url: https://washingtoncountyor.gov/lut/planning/documents/cedar-hills-cedar-mill-community-plan-updated-08-2026/download
+  title: "Washington County Community Plan - Cedar Hills Cedar Mill"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.east-hillsboro"
+  url: https://washingtoncountyor.gov/lut/planning/documents/east-hillsboro-community-plan-updated-11-2024/download
+  title: "Washington County Community Plan - East Hillsboro"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.metzger-progress"
+  url: https://washingtoncountyor.gov/lut/planning/documents/metzger-progress-community-plan-updated-08-2026/download
+  title: "Washington County Community Plan - Metzger Progress"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.north-bethany-subarea"
+  url: https://washingtoncountyor.gov/lut/planning/documents/chapter-2-north-bethany-subarea-plan-text-11-2024/download
+  title: "Washington County Community Plan - North Bethany Subarea"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.raleigh-hills-garden-home"
+  url: https://washingtoncountyor.gov/lut/planning/documents/raleigh-hills-garden-home-community-plan-updated-08-2026/download
+  title: "Washington County Community Plan - Raleigh Hills Garden Home"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.sherwood"
+  url: https://washingtoncountyor.gov/lut/planning/documents/sherwood-community-plan-updated-11-2024/download
+  title: "Washington County Community Plan - Sherwood"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.sunset-west"
+  url: https://washingtoncountyor.gov/lut/planning/documents/sunset-west-community-plan-updated-10-2025/download
+  title: "Washington County Community Plan - Sunset West"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.west-tigard"
+  url: https://washingtoncountyor.gov/lut/planning/documents/west-tigard-community-plan-updated-11-2024/download
+  title: "Washington County Community Plan - West Tigard"
+  extraction: plain
+  allow_thin: true
+- id: "community-plan.west-union"
+  url: https://washingtoncountyor.gov/lut/planning/documents/west-union-community-plan-updated-11-2024/download
+  title: "Washington County Community Plan - West Union"
+  extraction: plain
+  allow_thin: true

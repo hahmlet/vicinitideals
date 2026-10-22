@@ -1,0 +1,9 @@
+{
+  "status": "map only, needs tracing",
+  "source_url": "https://online.encodeplus.com/regs/beaverton-or/export2doc.aspx?pdf=1&tocid=001&file=doc-001-pid-607.pdf",
+  "retrieved": "2026-10-22",
+  "sha256": "59b8f9aa099ecd2eee37d95494b24d389024fbda98cdce218d9325323f11b59c",
+  "source_pages": "all",
+  "pages_in_file": 4,
+  "note": "Beaverton Development Code Chapter 70 (Downtown Design Standards) figure pages, source PDF pages 536, 554, 558, 559: Downtown street types / active frontage maps. Vector map in the code PDF; no city GIS layer exists for it. Needs tracing before any lot can be tested against it."
+}

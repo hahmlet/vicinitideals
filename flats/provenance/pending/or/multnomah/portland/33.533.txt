@@ -1,0 +1,188 @@
+Title 33, Planning and Zoning Chapter 33.533
+7/11/14 Healy Heights Plan District
+
+533-1
+33.533 Healy Heights Plan District
+533
+
+Sections:
+33.533.010 Purpose
+33.533.020 Where the Regulations Apply
+33.533.030 Existing Towers
+33.533.040 Relocation of Existing Towers
+33.533.050 New Towers and Expanded Facilities
+33.533.060 Damage, Destruction and Discontinuance
+33.533.070 Development Standards
+33.522.080 Monitoring and Power Density Measurements
+33.522.090 Radiofrequency Interference
+33.533.100 Procedures
+Map 533-1 Healy Heights Plan District
+33.533.010 Purpose
+The Healy Heights Plan District provides additional regulations for the conditional use review of
+Radio Frequency Transmission Facilities in a unique situation. Healy Heights has a concentrated and
+complex array of radiofrequency sources and towers located within a developed single-family
+neighborhood. The plan district protects the established character of the neighborhood while
+ensuring that the broadcast and communications industry at this location remains viable. This plan
+district achieves its purpose through:
+• Control of aesthetic impacts through limitations on additions to or expansion of
+broadcast towers;
+• Improving the opportunity for communication between the users of broadcast facilities and
+surrounding residents;
+• Requiring mitigation of the effects of radiofrequency interference to the extent
+practicable; and
+• Reaffirming the importance of Healy Heights to the Radio Frequency Transmission industry
+and to the people served by that industry.
+33.533.020 Where the Regulations Apply
+The regulations of this chapter apply only to Radio Frequency Transmission Facilities within the Healy
+Heights Plan District. All Radio Frequency Transmission Facilities and accessory uses are described in and
+regulated by Chapter 33.274. The boundaries of the plan district are shown on Map 533-1 at the end of
+this chapter, and on the Official Zoning Maps.
+33.533.030 Existing Towers
+Existing towers may continue to operate. Up to 7 Radio Frequency Transmission towers are allowed
+in the plan district. Additional towers are prohibited. When a tower is removed from the plan
+district, the maximum number of towers allowed is reduced accordingly. The maximum number of
+towers cannot exceed the number of towers present in the plan district.
+Chapter 33.533 Title 33, Planning and Zoning
+Healy Heights Plan District 7/11/14
+
+533-2
+
+33.533.040 Relocation of Existing Towers
+Existing towers may be relocated within the plan district if the review body finds the following
+approval criteria are met:
+A. Relocation of an existing tower does not result in a taller tower, an increase in the extent to
+which ice may fall from the tower to a nearby property in residential use, an increase in
+wind noise, or in power density on properties in residential use.
+B. Relocation of an existing tower must result in reduced aesthetic impact for nearby
+residential uses and may not result in a significant increase in the aesthetic impacts to the
+City as whole. Aesthetic impacts include, but are not limited to:
+• Tower design;
+• Tower height;
+• Tower mass;
+• Tower coloring/visibility;
+• Landscaping;
+• Accessory structure design; and
+• Setbacks.
+33.533.050 New Towers and Expanded Facilities
+New towers and reconstruction that will expand tower capacity may be approved if the review body
+finds the approval criteria of A and B, below, are met. Temporary towers may be approved if the
+review body finds that criterion C, below, is met. All other new towers or reconstruction that will
+expand tower capacity are prohibited.
+A. Tower sharing. The new or expanded tower facility is designed as a shared use facility and
+will provide for consolidation of existing Radio Frequency Transmission Facilities from
+within the plan district.
+B. Tower consolidation. An existing tower, or towers, within the plan district is to be removed
+as part of the proposal, resulting in a net reduction of the number of towers present in the
+plan district.
+C. Temporary towers. Temporary auxiliary towers may be used when necessary for the
+reconstruction of an existing tower, to protect workers from excessive levels of
+radiofrequency energy, or to replace a damaged tower. The temporary auxiliary tower may
+remain until such time as the existing tower is returned to regular use, and then it must be
+dismantled and removed from the plan district within 90 days. A temporary tower may not
+be in place for more than 2 years or exceed the radio frequency emissions levels or
+exposure limits established by the Federal Communications Commission (FCC). Applicants
+must certify compliance with FCC emissions standards with the permit application.
+33.533.060 Damage, Destruction, and Discontinuance
+A. Reconstruction and maintenance. Existing towers may be repaired or undergo major
+maintenance for structural safety, as confirmed by a licensed engineer. Repair or
+maintenance may not result in a tower with increased dimensions. Improved structural
+Title 33, Planning and Zoning Chapter 33.533
+7/11/14 Healy Heights Plan District
+
+533-3
+integrity may not, by itself, result in an increase in the number of antennas or transmitters,
+or in power density.
+B. Discontinuance. In the event that a tower is demolished or not used and maintained as a
+broadcast or relay facility for a period of 2 years, it must be dismantled and removed from
+the plan district.
+33.533.070 Development Standards
+A. Minimum site size. The minimum site size requirements of 33.274.040, do not apply to
+sites in this plan district, as they appear at the time of adoption of this plan district, and as
+long as such sites have a tower used and maintained as a broadcast or relay facility.
+B. Setbacks. Where the subject site abuts a site which includes a Radio Frequency
+Transmission Facility, the minimum tower setback requirements of 33.274.040, do not
+apply to new or replacement towers in this plan district. Where the subject site abuts a site
+in exclusive residential use, the minimum tower setback requirements of 33.274.040 apply
+to all new or replacement towers in this plan district.
+C. Other development aspects. All aspects of development not regulated by this chapter are
+regulated by 33.274.
+33.533.080 Monitoring and Power Density Measurements
+A. Monitoring. Monitoring of RF fields will occur as determined by the Healy Heights RF
+Advisory Board, to confirm that conditions as described by An Investigation of
+Radiofrequency Fields on Healy Heights, Portland, Oregon, Phase II, December 16, 1991,
+have remained the same or changed in the manner predicted by subsequent approved
+applications for change or addition.
+1. Monitoring must be performed by a qualified technician or engineer.
+2. Monitoring will consist of measurement of radiofrequency fields in a manner
+comparative to and compatible with, the methodology used in and described by An
+Investigation of Radiofrequency Fields on Healy Heights, Portland, Oregon, Phase I,
+August 14, 1990.
+3. Monitoring must include at least the points used for narrow band measurements in
+An Investigation of Radiofrequency Fields on Healy Heights, Portland, Oregon, Phases I
+and II, plus a minimum of 10 other points identified in that document, falling outside
+of and generally dispersed around the plan district.
+4. Monitoring will occur when there is reasonable cause to believe that one or more of
+the facilities at Healy Heights is causing radiofrequency radiation in excess of the
+levels allowed. Monitoring may occur at random.
+B. Required power density assessment.
+1. Calculation of power density. All applications for new or expanded facilities not
+exempted by 33.274.030, will be accompanied by a calculation of the effects of the
+proposed facility on the existing radiofrequency environment. The calculation of
+power density must be made for the points used for narrow band measurements in
+An Investigation of Radiofrequency Fields on Healy Heights, Portland, Oregon, Phases I
+Chapter 33.533 Title 33, Planning and Zoning
+Healy Heights Plan District 7/11/14
+
+533-4
+
+and II, plus a minimum of 10 other points identified in this document, falling outside
+of and generally dispersed around the plan district.
+2. Measurement of power density. When calculations show that the majority of the
+measurement points will have an increase of 25 percent of the difference between the
+latest base line study of power density levels and the maximum power density
+allowed, a new base line power density level must be established. A new base line will
+be established by measuring the power density at, or as near as reasonably possible,
+all measurement points identified in An Investigation of Radiofrequency Fields on
+Healy Heights, Portland, Oregon, Phases I and II, after regular operation of the facility
+has commenced. Final approval of the facility will be contingent upon documenting
+compliance with the radio frequency emissions levels and exposure limits established
+by the Federal Communications Commission (FCC).
+C. Method of power density measurements. All measurements, whether for monitoring or
+required of an applicant, must be made in the manner described by the section entitled
+Technical Approach, beginning on page 9 of An Investigation of Radiofrequency Fields on
+Healy Heights, Portland, Oregon, Phase I, August 14, 1990. For the purpose of monitoring
+radiofrequency fields, measurements need not necessarily occur at all points measured in
+An Investigation of Radiofrequency Fields on Healy Heights, Portland, Oregon, Phases I and
+II, but should occur as near to those points as reasonably possible and in sufficient number
+to ascertain to what extent the radiofrequency environment has changed.
+33.533.090 Radiofrequency Interference
+All Radio Frequency Transmission Facilities owners and operators are responsible for assuring that
+interference to consumer electronic devices, from their equipment, is kept to the minimum
+level possible.
+A. Interference survey. Surveying the extent of radiofrequency interference (RFI) will occur in
+the manner and frequency as determined by the Healy Heights RF Advisory Board. Survey
+of RFI may be included as a condition of approval to a land use approval or as a joint
+responsibility of the operators and owners of the Healy Heights RF facilities. To the extent
+possible, such surveys will determine the types of interference encountered, the area of
+interference, and the source of interference.
+B. Mitigation of interference. When the source of RFI can be determined, the owner and
+operator of that source will be responsible for any and all steps necessary for mitigation of
+the effects of the RFI, as determined appropriate by the Healy Heights RF Advisory Board.
+33.533.100 Procedures
+Construction of a temporary tower will be reviewed through the Type II procedure. All other Radio
+Frequency Transmission Facility proposals are subject to the review procedures of Chapter 33.274,
+Radio Frequency Transmission Facilities.
+The staff may require an application for a new tower to be reviewed by the Design Commission for
+advice to the Hearings Officer or City Council.
+
+Title 33, Planning and Zoning Chapter 33.533
+7/11/14 Healy Heights Plan District
+
+533-5
+(Added by: Ord. No. 166921, effective 10/1/93; Ord. No. 167650, effective June 10, 1994; Ord. No.
+171718, effective 11/29/97; Ord. No. 186639, effective 7/11/14.)
+
+Chapter 33.533 Title 33, Planning and Zoning
+Healy Heights Plan District 7/11/14
+
+533-6
