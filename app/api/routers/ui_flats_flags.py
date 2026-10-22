@@ -290,6 +290,8 @@ CHECK_WORDS: dict[str, tuple[str, str]] = {
     "parking_frontage_share": ("Parking along the worst street", "% of frontage"),
     "parking_frontage_width": ("Parking along the worst street", "ft"),
     "front_yard_vehicle_share": ("Paving across the front yard", "ft"),
+    "building_frontage_share": ("Building along the street", "% of frontage"),
+    "building_frontage_other_share": ("Building along the other street", "% of frontage"),
     "parking_stalls": ("Parking stalls", "stalls"),
     "parking_cap": ("Parking cap", "stalls"),
     "covered_parking": ("Covered stalls", "stalls"),

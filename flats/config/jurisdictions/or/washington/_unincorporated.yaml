@@ -2158,10 +2158,15 @@ zones:
   # elsewhere in this layer. 392-2 lets Community Plan subareas and Areas of
   # Special Concern prevail; refused above the zones with the Community Plans.
   #
-  # NOT ENCODED: the 392-8 street frontage occupancy standard ("At least 50%
-  # of a site's street frontage(s) must be occupied by a building located no
-  # further than the maximum 20-foot setback", cdc.392.mixed-use.txt#L309-L313).
-  # No field holds it. The pod's frontage share depends on the lot.
+  # ENCODED 2026-10-21 (FOLLOWUPS 109): the 392-8 street frontage occupancy
+  # standard ("At least 50% of a site's street frontage(s) must be occupied
+  # by a building located no further than the maximum 20-foot setback",
+  # cdc.392.mixed-use.txt#L309-L313), on every frontage of a corner lot and
+  # one of a through lot (392-9.5), as `building_frontage_min_pct` in each
+  # zone. The pod fills at most its own width of a street, so a lot with
+  # more than about twice that of one street fails it. Detached dwellings in
+  # NMU owe the same share, so the state's middle-housing design limits do
+  # not lift it.
   #
   # NOT ENCODED: the 392-9 development standards (entrances, 25 percent
   # ground-floor transparency for residential, weather protection, a 2-foot
@@ -2266,11 +2271,34 @@ zones:
       cite: Washington County CDC 392-9.7 C(2)(a), 5-foot setback between surface parking and right-of-way
       quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L603,L615-L617"
     # setback_side_ft and setback_rear_ft owed; see the block comment above.
+    building_frontage_min_pct:
+      # 392-8 Street Frontage Occupancy, within the 20-foot maximum setback
+      # (`setback_front_max_ft`). Note (2) lifts it only on a lot that
+      # already has buildings along nearly all its street frontage (less
+      # than 25 feet left without one); the screen reads a lot as built
+      # new, so it is not taken. 392-6.2/6.3 exempt conversions and small
+      # additions, not a new building. No driveway subtraction is stated.
+      value: 50
+      cite: "Washington County CDC 392-8, Street Frontage Occupancy: at least 50% of a site's street frontage(s) occupied by a building no further than the 20-foot maximum setback"
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L309-L313,L319-L322"
+    building_frontage_other_pct:
+      # 392-9.5 A(1): a corner lot, or a site with three or more frontages,
+      # meets it "on all street frontages".
+      value: 50
+      cite: "Washington County CDC 392-9.5 A(1), the street frontage occupancy requirements of 392-8 must be met on all street frontages of a corner lot"
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L309-L313,L327-L329,L480-L486"
+    building_frontage_through_one:
+      # 392-9.5 B(1): a through lot meets it on one frontage, chosen by the
+      # B(2)(a) hierarchy (not held), so GREEN still needs both.
+      value: true
+      cite: "Washington County CDC 392-9.5 B(1), a through lot: at least one frontage must meet the street frontage occupancy requirements"
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L510-L512"
     notes: >-
       DRAFT. Neighborhood mixed use: attached dwellings Type II, 6,000 sq ft,
       85 ft average width, 65 ft, 10 ft front and street side (20 ft max),
-      20 to 25 units per acre. Interior yards owed; frontage occupancy and
-      facade design standards not held.
+      20 to 25 units per acre. Interior yards owed; the building fills half
+      of every street frontage it owes (392-8); facade design standards not
+      held.
   CCMU:
     cite_default:
       cite: Washington County CDC 392 (Pedestrian-Oriented Mixed-Use Districts), CCMU
@@ -2346,11 +2374,34 @@ zones:
       cite: Washington County CDC 392-9.7 C(2)(a), 5-foot setback between surface parking and right-of-way
       quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L603,L615-L617"
     # setback_side_ft and setback_rear_ft owed; see the NMU block comment.
+    building_frontage_min_pct:
+      # 392-8 Street Frontage Occupancy, within the 20-foot maximum setback
+      # (`setback_front_max_ft`). Note (2) lifts it only on a lot that
+      # already has buildings along nearly all its street frontage (less
+      # than 25 feet left without one); the screen reads a lot as built
+      # new, so it is not taken. 392-6.2/6.3 exempt conversions and small
+      # additions, not a new building. No driveway subtraction is stated.
+      value: 50
+      cite: "Washington County CDC 392-8, Street Frontage Occupancy: at least 50% of a site's street frontage(s) occupied by a building no further than the 20-foot maximum setback"
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L309-L313,L319-L322"
+    building_frontage_other_pct:
+      # 392-9.5 A(1): a corner lot, or a site with three or more frontages,
+      # meets it "on all street frontages".
+      value: 50
+      cite: "Washington County CDC 392-9.5 A(1), the street frontage occupancy requirements of 392-8 must be met on all street frontages of a corner lot"
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L309-L313,L327-L329,L480-L486"
+    building_frontage_through_one:
+      # 392-9.5 B(1): a through lot meets it on one frontage, chosen by the
+      # B(2)(a) hierarchy (not held), so GREEN still needs both.
+      value: true
+      cite: "Washington County CDC 392-9.5 B(1), a through lot: at least one frontage must meet the street frontage occupancy requirements"
+      quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L510-L512"
     notes: >-
       DRAFT. Community-center mixed use: attached dwellings Type II, 6,000
       sq ft, 85 ft average width, 100 ft, 10 ft front and street side (20 ft
-      max), 20 to 40 units per acre. Interior yards owed; frontage
-      occupancy and facade design standards not held.
+      max), 20 to 40 units per acre. Interior yards owed; the building fills
+      half of every street frontage it owes (392-8); facade design
+      standards not held.
   # --- Commercial, industrial and institutional districts -----------------
   CBD:
     cite_default:

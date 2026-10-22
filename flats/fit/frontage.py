@@ -383,9 +383,65 @@ def parking_share(
     return best
 
 
+#: How near the street line the lane must be seen for that foot of frontage
+#: to be the driveway crossing it, feet.
+DRIVE_AT_LINE_FT = 1.0
+
+#: Slack on the band's far edge, feet: a building drawn on the maximum
+#: setback line is inside it.
+BAND_TOL_FT = 0.5
+
+
+def building_runs(
+    lot: BaseGeometry,
+    edges: LotEdges,
+    building: BaseGeometry,
+    band_ft: float,
+    *,
+    lane: BaseGeometry | None = None,
+) -> tuple[tuple[float, float], ...]:
+    """Each street's ``(share in percent, net frontage in feet)`` that the
+    BUILDING occupies within ``band_ft`` of the street line, in
+    :func:`street_chains` order (FOLLOWUPS 109): the feet of street line from
+    which the first thing seen straight into the lot is the building, no
+    further than the maximum setback -- "the length of the building present
+    between the minimum and maximum front setback" (Gresham 7.0420(J)(1)),
+    "occupied by a building located no further than the maximum 20-foot
+    setback" (Washington County 392-8). The minimum setback holds already:
+    the building is drawn inside the yards.
+
+    ``lane`` given, the feet where the lane is seen at the street line come
+    off that street's frontage before the share is taken (Beaverton
+    60.05.15.6.A.4.a, 70.20.05.4 S1.g.I: the driveway's width is subtracted).
+    """
+    minx, miny, maxx, maxy = lot.bounds
+    reach = math.hypot(maxx - minx, maxy - miny) + 1.0
+    out: list[tuple[float, float]] = []
+    for chain in street_chains(edges):
+        frontage = sum(math.hypot(e.x2 - e.x1, e.y2 - e.y1) for e in chain)
+        if frontage <= 0:
+            continue
+        pts, lines, piece = _looks(lot, chain, reach)
+        if not len(pts):
+            continue
+        built = _first_seen(pts, lines, building)
+        held = built <= band_ft + BAND_TOL_FT
+        net = frontage
+        if lane is not None and not lane.is_empty:
+            drive = _first_seen(pts, lines, lane)
+            crossing = (drive <= DRIVE_AT_LINE_FT) & (drive < built)
+            net = max(frontage - float(crossing.sum()) * piece, 0.0)
+        run = min(net, float(held.sum()) * piece)
+        out.append((100.0 * run / net if net > 0 else 100.0, net))
+    return tuple(out)
+
+
 __all__ = [
+    "BAND_TOL_FT",
+    "DRIVE_AT_LINE_FT",
     "STEP_FT",
     "along",
+    "building_runs",
     "parking_share",
     "parking_share_pct",
     "street_chains",

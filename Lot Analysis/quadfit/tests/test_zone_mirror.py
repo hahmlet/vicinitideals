@@ -1091,6 +1091,15 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: may still take one building (4.0431.C, Table 4.0130 note 2). FLATS
     #: lifts those rows per form; quadfit has no per-form lift.
     "lot_of_record_relief": 10,
+    #: FOLLOWUPS 109 (2026-10-21): the building's share of the street
+    #: frontage, measured on FLATS's drawn plan (flats/fit/frontage.py
+    #: building_runs). Beaverton's twelve 60.05 blocks and four Downtown
+    #: blocks, Washington County NMU and CCMU; quadfit draws no building.
+    "building_frontage_min_pct": 18,
+    "building_frontage_min_pct_least": 4,
+    "building_frontage_other_pct": 18,
+    "building_frontage_through_one": 2,
+    "building_frontage_less_drive": 16,
 }
 
 

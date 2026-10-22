@@ -123,6 +123,11 @@ _LABELS: dict[str, str] = {
     "parking_area_max_width_ft": "max. parking area width",
     "parking_area_frontage_any_street": "parking share capped on every street frontage",
     "parking_area_frontage_front_yard": "parking share capped in the front yard(s)",
+    "building_frontage_min_pct": "min. building share of street frontage",
+    "building_frontage_min_pct_least": "min. building share of frontage (lowest street type)",
+    "building_frontage_other_pct": "min. building share of other street frontages",
+    "building_frontage_through_one": "through lot owes the building share on one street",
+    "building_frontage_less_drive": "driveway width comes off the frontage",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
@@ -1302,6 +1307,71 @@ _F: tuple[FieldDef, ...] = (
         "have.",
         False,
     ),
+    # --- building frontage ----------------------------------------------
+    FieldDef(
+        "building_frontage_min_pct",
+        "percent",
+        "Least share of a street frontage the building must occupy, counted "
+        "between the minimum and the maximum front setback "
+        "(`setback_front_max_ft`): Beaverton 60.05.15.6.A, \"At least 60 "
+        "percent of the site's Primary Frontage ... shall be occupied by a "
+        "building\"; Washington County 392-8, 50 percent; Beaverton Downtown "
+        "70.20.05.4 S1, 50 to 90 by street type. Measured on the drawn plan "
+        "(:func:`flats.fit.frontage.building_runs`): the feet of street line "
+        "from which the first thing seen straight into the lot is the "
+        "building, within the band, over that street's length. One pod fills "
+        "at most its own width, so on a wide lot it fails. Where the share "
+        "turns on a street type FLATS does not hold, this is the HIGHEST any "
+        "type asks (GREEN only above it) and `building_frontage_min_pct_least` "
+        "the lowest (RED only below it). On a lot with more than one street "
+        "the code picks the primary frontage (transit, classification), which "
+        "is not held: GREEN needs every street to clear this share.",
+        False,
+    ),
+    FieldDef(
+        "building_frontage_min_pct_least",
+        "percent",
+        "The LOWEST share `building_frontage_min_pct` can be where the code "
+        "sets it by a street type nothing here holds (Beaverton Downtown "
+        "70.20.05.4 S1: Local 75, Major 50, Commercial 90). A pod that cannot "
+        "reach it on any street fails; one between this and "
+        "`building_frontage_min_pct` is held out of GREEN on the unheld "
+        "street type, never failed on it. Absent, the two are one number.",
+        False,
+    ),
+    FieldDef(
+        "building_frontage_other_pct",
+        "percent",
+        "Least share of each OTHER street frontage -- a corner lot's side "
+        "street, a through lot's far street -- the building must occupy: "
+        "Beaverton 60.05.15.6.A.2, 35 percent of the secondary frontage; "
+        "Washington County 392-9.5 A, the 50 percent on every frontage of a "
+        "corner lot. Read with the primary on whichever street serves the "
+        "pod best when deciding a failure. Where the zone sets "
+        "`building_frontage_min_pct_least` (a share by street type) this is "
+        "the most the other street may ask and never fails a lot: it holds "
+        "it out of GREEN only. Absent, the other streets ask nothing.",
+        False,
+    ),
+    FieldDef(
+        "building_frontage_through_one",
+        "bool",
+        "True where a THROUGH lot (streets at both ends, not a corner) owes "
+        "the building frontage share on one of its streets only: Washington "
+        "County 392-9.5 B(1), \"At least one frontage must meet the maximum "
+        "setback and street frontage occupancy requirements\". The other "
+        "street then asks nothing.",
+    ),
+    FieldDef(
+        "building_frontage_less_drive",
+        "bool",
+        "True where the code takes the driveway's width off the street "
+        "frontage before the building's share is figured: Beaverton "
+        "60.05.15.6.A.4.a (\"The width of the widest part of the driveway's "
+        "public element for a maximum of one driveway\") and Downtown "
+        "70.20.05.4 S1.g.I. The pod's one drive comes off the street it "
+        "crosses.",
+    ),
     # --- orientation ----------------------------------------------------
     FieldDef(
         "orientation_constraint",
@@ -1709,6 +1779,13 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_area_max_width_ft",
         "parking_area_frontage_any_street",
         "parking_area_frontage_front_yard",
+        # A handful of mixed-use and downtown codes ask a building share of
+        # the street frontage; most zones ask none.
+        "building_frontage_min_pct",
+        "building_frontage_min_pct_least",
+        "building_frontage_other_pct",
+        "building_frontage_through_one",
+        "building_frontage_less_drive",
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
         "parking_alley_access_required",

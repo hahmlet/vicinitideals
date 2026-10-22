@@ -696,8 +696,13 @@ zones:
   # NOT ENCODED, all four zones: 16.114.060, the design standards (Table
   # 16.114-5 applies articulation, eyes on the street, main entrance,
   # detailed design and transitional space to a fourplex's street-facing
-  # elevations; the main entrance must face the street within eight feet
-  # of the longest street-facing wall). Design, not placement.
+  # elevations). Design, not placement -- except the main entrance, which
+  # must stand within eight feet of the longest street-facing wall and face
+  # the street: held as `orientation_constraint: axis_required` in each
+  # zone (FOLLOWUPS 109). Table 16.114-6's 60/40 percent building frontage
+  # binds "dwelling-multi, mixed-use, and commercial" buildings only
+  # (C.3.b, C.3.b.i); a fourplex is not a Dwelling, multi (five or more
+  # units, 16.24), so it does not reach the pod.
   # 16.114.080-16.114.090, the Habitat Conservation Area standards: a
   # per-area overlay nothing measures (the handoff has it); 16.114.090's
   # own relief (lot size down by up to 1,000 square feet, yards by up to
@@ -773,6 +778,19 @@ zones:
       value: 90
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
+    orientation_constraint:
+      # 16.114.060 C.4.b-d: each residential dwelling's primary entrance no
+      # further than eight feet behind the building's longest street-facing
+      # wall, facing the street (or within 45 degrees, or onto a porch with
+      # a street-facing entry). A fourplex's four units each are a dwelling
+      # (16.24, "Fourplex" is four primary dwelling units); turned end-on,
+      # three of the four doors stand 20 to 50 feet behind the end wall, so
+      # the long side must face the street. Read the stricter way, as
+      # Tigard's "each rowhouse" entrance is; a doubt (read per building,
+      # one door on the street end would do and the axis would be free).
+      value: axis_required
+      cite: "King City KCMC 16.114.060 C.4.b-d, the primary entrance within eight feet of the longest street-facing wall and facing the street"
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L483,L486-L487,L493-L499"
     notes: >-
       DRAFT. Fourplex allowed outright. 1,500 sq ft lot, 20 wide, 45 deep;
       at least 22 units per net acre; front 10 to 26, garage 18, side 3,
@@ -846,6 +864,19 @@ zones:
       value: 90
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
+    orientation_constraint:
+      # 16.114.060 C.4.b-d: each residential dwelling's primary entrance no
+      # further than eight feet behind the building's longest street-facing
+      # wall, facing the street (or within 45 degrees, or onto a porch with
+      # a street-facing entry). A fourplex's four units each are a dwelling
+      # (16.24, "Fourplex" is four primary dwelling units); turned end-on,
+      # three of the four doors stand 20 to 50 feet behind the end wall, so
+      # the long side must face the street. Read the stricter way, as
+      # Tigard's "each rowhouse" entrance is; a doubt (read per building,
+      # one door on the street end would do and the axis would be free).
+      value: axis_required
+      cite: "King City KCMC 16.114.060 C.4.b-d, the primary entrance within eight feet of the longest street-facing wall and facing the street"
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L483,L486-L487,L493-L499"
     notes: >-
       DRAFT. Fourplex allowed outright. 1,500 sq ft lot, 20 wide, 45 deep;
       at least 18 units per net acre; front 10 to 26, garage 18, side 3,
@@ -919,6 +950,19 @@ zones:
       value: 90
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
+    orientation_constraint:
+      # 16.114.060 C.4.b-d: each residential dwelling's primary entrance no
+      # further than eight feet behind the building's longest street-facing
+      # wall, facing the street (or within 45 degrees, or onto a porch with
+      # a street-facing entry). A fourplex's four units each are a dwelling
+      # (16.24, "Fourplex" is four primary dwelling units); turned end-on,
+      # three of the four doors stand 20 to 50 feet behind the end wall, so
+      # the long side must face the street. Read the stricter way, as
+      # Tigard's "each rowhouse" entrance is; a doubt (read per building,
+      # one door on the street end would do and the axis would be free).
+      value: axis_required
+      cite: "King City KCMC 16.114.060 C.4.b-d, the primary entrance within eight feet of the longest street-facing wall and facing the street"
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L483,L486-L487,L493-L499"
     notes: >-
       DRAFT. Fourplex allowed outright. 2,400 sq ft lot, 20 wide, 60 deep;
       at least 10 units per net acre; front 10 to 26, garage 18, side 3,
@@ -992,6 +1036,19 @@ zones:
       value: 80
       cite: King City KCMC 16.114.050 Table 16.114-4, Maximum coverage of buildings and impervious surfaces
       quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303"
+    orientation_constraint:
+      # 16.114.060 C.4.b-d: each residential dwelling's primary entrance no
+      # further than eight feet behind the building's longest street-facing
+      # wall, facing the street (or within 45 degrees, or onto a porch with
+      # a street-facing entry). A fourplex's four units each are a dwelling
+      # (16.24, "Fourplex" is four primary dwelling units); turned end-on,
+      # three of the four doors stand 20 to 50 feet behind the end wall, so
+      # the long side must face the street. Read the stricter way, as
+      # Tigard's "each rowhouse" entrance is; a doubt (read per building,
+      # one door on the street end would do and the axis would be free).
+      value: axis_required
+      cite: "King City KCMC 16.114.060 C.4.b-d, the primary entrance within eight feet of the longest street-facing wall and facing the street"
+      quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L483,L486-L487,L493-L499"
     notes: >-
       DRAFT. Fourplex allowed outright (multi-dwelling only as a
       conditional use here). 2,400 sq ft lot, 20 wide, 60 deep; at least 8
