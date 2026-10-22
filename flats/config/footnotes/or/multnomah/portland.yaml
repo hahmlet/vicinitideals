@@ -1356,3 +1356,117 @@ notes:
     reason: >-
       note 3 sends lot width to 33.930.100.A for how it is measured. The value
       encoded from this table is an area, not a width
+
+  # --- 33.420 / 33.825 / 33.846, read 2026-10-21 (FOLLOWUPS 109) -----------
+  # The design overlay, design review and historic resource review chapters,
+  # stored for the district and design-overlay screen. One note lifts a size
+  # limit the pod never meets; the rest are procedure-table notes (which Type
+  # of review runs, and how a change to an approved review is processed).
+
+  - quote: "or/multnomah/portland/33.420.txt#L253"
+    digest: "6c342a8c99aa"
+    state: dismissed
+    reason: >-
+      note [1] of Table 420-1: "There are no maximum limits for proposals
+      where any of the floor area is in residential use." It lifts the
+      table's size ceilings on the design standards track; the pod is all
+      residential floor area, so no ceiling bars it. A limit taken away binds
+      nothing, so no field holds it; the screen cites it where it sends RX,
+      EX and CX lots outside the Central City down the standards track
+      (flats/geom/pdx_overlays.py, PDX-DESIGN-STANDARDS)
+
+  - quote: "or/multnomah/portland/33.825.txt#L122"
+    digest: "afa7ce4b969e"
+    state: dismissed
+    reason: >-
+      note 1 of the design review procedure table: its height threshold leaves out height exceptions. The threshold picks a procedure (Type II or III) for a review the screen already reds in the Central City; the pod's 25-30 ft is far under any threshold either way
+
+  - quote: "or/multnomah/portland/33.825.txt#L124"
+    digest: "2fbf69672849"
+    state: dismissed
+    reason: >-
+      an affordable housing project may choose a lighter review procedure (Type II or Ix) and must then hold a design advice request first. It changes which procedure runs, not whether the review is judged on guidelines or compatibility, and the screen answers as market rate (Steph 2026-10-19). The review itself is red in flats/geom/pdx_overlays.py
+
+  - quote: "or/multnomah/portland/33.825.txt#L131"
+    digest: "619aee64e9c7"
+    state: dismissed
+    reason: >-
+      the procedure for a change to an already approved review. The screen asks about a new building with no approval, so the note never reaches it
+
+  - quote: "or/multnomah/portland/33.825.txt#L138"
+    digest: "644ff415c66d"
+    state: dismissed
+    reason: >-
+      a change to an approved review keeps the original procedure. Nothing is approved for a new pod, so the note never reaches it
+
+  - quote: "or/multnomah/portland/33.846.txt#L320"
+    digest: "a300ab9fa043"
+    state: dismissed
+    reason: >-
+      an affordable housing project may choose a lighter review procedure (Type II or Ix) and must then hold a design advice request first. It changes which procedure runs, not whether the review is judged on guidelines or compatibility, and the screen answers as market rate (Steph 2026-10-19). The review itself is red in flats/geom/pdx_overlays.py
+
+  - quote: "or/multnomah/portland/33.846.txt#L330"
+    digest: "ec5cddda264f"
+    state: dismissed
+    reason: >-
+      the procedure for a change to an already approved review. The screen asks about a new building with no approval, so the note never reaches it
+
+  - quote: "or/multnomah/portland/33.846.txt#L337"
+    digest: "4f4c2f2af9a2"
+    state: dismissed
+    reason: >-
+      a change to an approved review keeps the original procedure. Nothing is approved for a new pod, so the note never reaches it
+
+  - quote: "or/multnomah/portland/33.846.txt#L382"
+    digest: "2170e935c6a6"
+    state: dismissed
+    reason: >-
+      an affordable housing project may choose a lighter review procedure (Type II or Ix) and must then hold a design advice request first. It changes which procedure runs, not whether the review is judged on guidelines or compatibility, and the screen answers as market rate (Steph 2026-10-19). The review itself is red in flats/geom/pdx_overlays.py
+
+  - quote: "or/multnomah/portland/33.846.txt#L389"
+    digest: "ec5cddda264f"
+    state: dismissed
+    reason: >-
+      the procedure for a change to an already approved review. The screen asks about a new building with no approval, so the note never reaches it
+
+  - quote: "or/multnomah/portland/33.846.txt#L401"
+    digest: "4f4c2f2af9a2"
+    state: dismissed
+    reason: >-
+      a change to an approved review keeps the original procedure. Nothing is approved for a new pod, so the note never reaches it
+
+  - quote: "or/multnomah/portland/33.846.txt#L448"
+    digest: "a300ab9fa043"
+    state: dismissed
+    reason: >-
+      an affordable housing project may choose a lighter review procedure (Type II or Ix) and must then hold a design advice request first. It changes which procedure runs, not whether the review is judged on guidelines or compatibility, and the screen answers as market rate (Steph 2026-10-19). The review itself is red in flats/geom/pdx_overlays.py
+
+  - quote: "or/multnomah/portland/33.846.txt#L458"
+    digest: "ec5cddda264f"
+    state: dismissed
+    reason: >-
+      the procedure for a change to an already approved review. The screen asks about a new building with no approval, so the note never reaches it
+
+  - quote: "or/multnomah/portland/33.846.txt#L465"
+    digest: "2b27167b7fdb"
+    state: dismissed
+    reason: >-
+      a change to an approved review keeps the original procedure. Nothing is approved for a new pod, so the note never reaches it. Its tail (item 4, run into the note by the page) sends Conservation District proposals that are not exempt to Table 846-4 for their procedure -- again which procedure, not whether; the Conservation District answer is in flats/geom/pdx_overlays.py
+
+  - quote: "or/multnomah/portland/33.846.txt#L508"
+    digest: "38aafaf4766b"
+    state: dismissed
+    reason: >-
+      an affordable housing project may choose a lighter review procedure (Type II or Ix) and must then hold a design advice request first. It changes which procedure runs, not whether the review is judged on guidelines or compatibility, and the screen answers as market rate (Steph 2026-10-19). The review itself is red in flats/geom/pdx_overlays.py
+
+  - quote: "or/multnomah/portland/33.846.txt#L515"
+    digest: "ec5cddda264f"
+    state: dismissed
+    reason: >-
+      the procedure for a change to an already approved review. The screen asks about a new building with no approval, so the note never reaches it
+
+  - quote: "or/multnomah/portland/33.846.txt#L522"
+    digest: "372b3bafeab6"
+    state: dismissed
+    reason: >-
+      a change to an approved review keeps the original procedure. Nothing is approved for a new pod, so the note never reaches it

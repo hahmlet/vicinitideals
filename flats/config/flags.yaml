@@ -507,6 +507,82 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_SPLIT_ZONE]
+  # --- Portland's overlays (flats/geom/pdx_overlays.py, FOLLOWUPS 109) ------
+  PDX-MAIN-STREET-TRANSIT:
+    description: "The townhouse form on a lot in Portland's Centers Main Street overlay (\"m\"): PCC 33.415.300.B bars \"Houses, attached houses, and duplexes\" within 100 ft of a transit street, and four homes each on its own lot are attached houses unless the lots come from a middle housing land division (33.910). No map of the city's transit streets is held, so every street is taken as one. The apartment form (a fourplex) is not barred."
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Acquire the Transportation System Plan's transit street classes (Major Transit Priority, Transit Access, Community Transit) and measure 100 ft from them; or plat the four homes by a middle housing land division"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [PDX_MAIN_STREET_TRANSIT]
+  PDX-MAIN-STREET-VEHICLE-AREA:
+    description: "Portland's Centers Main Street overlay caps the frontage of any transit street used for vehicle areas (the driveway and the parking court): 30% in the Inner pattern area, 50% in the Eastern and Western (PCC 33.415.330.B). The drawn plan's lane and court face more than that of one of the lot's streets, or there is no drawing to measure; no map of transit streets is held, so every street was taken as one."
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Acquire the Transportation System Plan's transit street classes; where the street is one, move the driveway to a street that is not, or narrow the court's face to the street"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [PDX_MAIN_STREET_VEHICLE_AREA]
+  PDX-MAIN-STREET-SETBACK:
+    description: "In the Inner pattern area of Portland's Centers Main Street overlay at least 70% of the ground level street-facing facade must meet the base zone's maximum building setback (PCC 33.415.320; 10 ft, 20 ft on a Map 130-1 civic corridor). The drawn building has less than that within reach of one of the lot's streets, there is no drawing, or no maximum is read for the zone. The pod could be stood forward, so not red."
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Search the placement with the building at the street (within the maximum setback of each street frontage) and the parking behind it"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [PDX_MAIN_STREET_SETBACK]
+  PDX-COMMUNITY-DESIGN-STANDARDS:
+    description: "The lot is in a Portland Conservation District, where a new building needs historic resource review or must meet the Community Design Standards, the clear and objective alternative (PCC 33.445.210.D, 33.445.500, 33.218). Those standards place the building and its parking -- the front setback between the neighbours' and never more than 25 ft (exactly 25 ft in Piedmont), the car in off an alley where there is one, no parking in the front setback -- and none of it is measured."
+    kind: categorical
+    risk: possible
+    severity: 4
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot]
+    path: "Measure the neighbouring houses' front setbacks (the city's building footprints) and stand the pod between them, with its parking off the alley where the lot has one"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [PDX_COMMUNITY_DESIGN_STANDARDS]
+  PDX-DESIGN-STANDARDS:
+    description: "The lot is in Portland's Design overlay (\"d\") in an RX, EX or CX zone outside the Central City, where four homes are not exempt (PCC 33.420.045.A.2.d) and must meet the design standards or pass design review (33.420.041). The design standards are the clear and objective track, with no size limit for residential floor area (Table 420-1 note [1]); their design details are not checked (Steph 2026-10-14: an unchecked measurable design detail does not block green). A lot may carry it higher: over 35 ft in the Gateway plan district only design review is open (33.420.050.B.2.a), or past four homes or 35 ft the zoning map's d is not read."
+    kind: categorical
+    risk: unlikely
+    severity: 2
+    absorbs: null
+    resolution: document_review
+    scope: per_lot
+    key: [lot]
+    path: "Hand the architect the Table 420-2 design standards (required standards plus 20 optional points, or one per 1,000 sf of site)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [PDX_DESIGN_STANDARDS]
   SLOPE-STEEP-COARSE:
     description: "Ground steeper than 15% on the coarse 10 m elevation map alone would keep the building and its parking off the lot; the lot was screened as though it were not there (Steph 2026-10-07: \"yellow with flag. 7 severity\")"
     kind: categorical

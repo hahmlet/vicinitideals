@@ -2838,6 +2838,8 @@ _CHECK_WORDS = {
     "pod_width": "the lot is too narrow: no 20 ft circle fits inside it, and the building is wider than that",
     "pdx_min_far": "too little building for the lot: Portland's main street overlay asks for more floor area than the four homes give",
     "pdx_protected_resource": "a protected historic building stands on the lot: removing it needs the city's demolition review",
+    "pdx_historic_review": "a new building here needs Portland's historic resource review, decided on whether it fits the district's character",
+    "pdx_design_review": "a new building here needs Portland's design review, decided on the city's design guidelines",
 }
 
 #: What the verdict the screen actually gave means. Today it is "unknown" on
@@ -2883,6 +2885,13 @@ _REASON_WORDS = {
     "CORNER_READ_AS_BEND": "the lot's street lines are all one street that bends, and the city's code does not say whether that makes a corner lot, so it was screened the stricter way: one front on one street",
     "PDX_MAIN_STREET_MIN_FAR": "Portland's Centers Main Street overlay (the \"m\" on the zoning map) sets a minimum floor area: half the lot's area in the inner neighbourhoods, a quarter in the eastern and western, counted on the part of the lot inside the overlay -- on a lot this big the four homes are too little building, so it is red",
     "PDX_PROTECTED_RESOURCE": "a protected historic building stands on the lot -- a city or National Register landmark, or a contributing building in a historic, conservation or National Register district -- and removing it needs the city's demolition review, a hearing nobody can count on, so it is red",
+    "PDX_HISTORIC_REVIEW": "the lot is in one of Portland's historic districts (or a conservation district inside the Central City), where any new building needs the city's historic resource review, decided on whether it fits the district -- a judgement nobody can count on, so it is red",
+    "PDX_DESIGN_REVIEW": "the lot is in Portland's Central City in a zone (RX, EX or CX) where four homes must pass the city's design review, decided on its design guidelines rather than measured standards -- a judgement nobody can count on, so it is red",
+    "PDX_MAIN_STREET_TRANSIT": "closer look: Portland's main street overlay (the \"m\") bars townhouses on their own lots within 100 ft of a transit street, and we do not hold the city's map of which streets those are",
+    "PDX_MAIN_STREET_VEHICLE_AREA": "closer look: Portland's main street overlay (the \"m\") limits how much of a transit street's frontage the driveway and parking may take, this plan takes more than that on one street (or was not drawn), and we do not hold the map of which streets are transit streets",
+    "PDX_MAIN_STREET_SETBACK": "closer look: Portland's main street overlay (the \"m\") wants most of the building's street face close to the street, and the plan as drawn stands too far back (or was not drawn); the building may be movable forward",
+    "PDX_COMMUNITY_DESIGN_STANDARDS": "closer look: the lot is in one of Portland's conservation districts, where a new building can skip the historic review by meeting the city's written design standards -- but those also fix where the building sits (lined up with the neighbours' houses, no more than 25 ft back) and where the car comes in, which we have not measured",
+    "PDX_DESIGN_STANDARDS": "Portland's design overlay (the \"d\") applies here, and four homes can meet its written design standards instead of a design review; the design details are for the architect",
     "CURVE_ON_THE_LINE": "the street's curve measured within a degree of the angle the city's corner rule turns on, closer than the map can be trusted, so it was read as one street that bends, not a corner",
     "THROUGH_FRONT_GUESSED": "the lot has a street on two opposite sides and the city leaves which one is the front to its planner, so it was screened with both streets as fronts -- the usual reading, but the planner could pick one",
     # The county copy's own reasons (flats.ingest.normalize gates and the

@@ -1,0 +1,227 @@
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.825
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Design Review
+
+33.825                                                                                                Design Review
+                                                                                                                                                                                                                                                     825
+
+Sections:
+          33.825.010                          Purpose
+          33.825.025                          Review Procedures
+          33.825.035                          Factors Reviewed During Design Review
+          33.825.040                          Modifications That Will Better Meet Design Review Requirements
+          33.825.055                          Approval Criteria
+          33.825.065                           Design Guidelines
+          33.825.075                          Relationship to Other Regulations
+33.825.010 Purpose
+Design review implements the Design overlay zone, strengthening these areas as places designed for
+people. Design review supports development that builds on context, contributes to the public realm,
+and provides high quality and resilient buildings and public spaces. Design Review offers
+opportunities for increased flexibility over the design standards within Chapter 33.420.
+
+33.825.025 Review Procedures
+This section lists procedures for design review for proposals in Design overlay zones. These
+procedures also apply where design review is required by the regulations of a plan district or overlay
+zone, or as a condition of approval of a quasi-          judicial decision.
+The procedures stated in this section supersede procedural and threshold statements in the City's
+adopted design guidelines documents. Procedures for design review vary with the type of proposal
+being reviewed and the geographic area          in which the site is located. Some proposals in the Central
+City plan district must provide a model of the approved proposal, as set out in Subsection D          .
+
+          A.                                             Proposals subject to design review are reviewed according to the procedure type listed in
+                        Table 825-1.
+                        1.                                                   When a proposal is subject to more than one procedure type, the higher procedure
+                                     type applies. For example, a proposal may include both an alteration and an addition
+                                     to a building. If the alteration is subject to a Type II                         procedure, but the addition is
+                                     subject to a Type III procedure, the proposal would be subject to a Type III procedure.
+                        2.                                                   Until January 1, 2029, when a proposal includes a residential use, the proposal may be
+                                     subject to the next lower procedure type as follows:
+                                      a.                                                    If the proposal is subject to a Type III procedure, the applicant may choose a Type
+                                                   II procedure. A design advice request is required before the application for
+                                                   design review is submitted. See 730.050.B;
+                                      b.                                                  If the proposal is subject to a Type III procedure, the applicant may choose a Type
+                                                   Ix or Type II procedure if at least 50 percent of the total number of dwelling units
+                                                   on the site are affordable to those earning no more than 60 percent of the area
+                                                   median family income or an affordability level established by Title 30. If a Type Ix
+                                                   or Type II review procedure is chosen, the applicant must provide a letter from
+
+                                                                                                                                 825-                                                            1
+Chapter 33.825                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Design Review                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             10/1/24
+
+                                                          the Portland Housing Bureau certifying that the development meets the
+                                                          affordability requirement and any administrative requirements of the Portland
+                                                          Housing Bureau; and
+                                          c.                                                       If the proposal is subject to a Type II procedure, the applicant may choose a Type
+                                                          Ix procedure.
+            B.                                               Phased design plans.
+                           1.                                                     For multi-          phased projects. Applicants may submit design plans for multi-phased
+                                          projects, provided the application includes adequate information to allow review of
+                                          the immediate and later phases of the project, including anticipated timelines.
+                           2.                                                   Benefits of a phased design plan. Development in conformance with an approved
+                                          phased design plan does not have to go through a separate design review for each
+                                          phase.
+                           3.                                                   Procedure. A phased design plan application is reviewed using the same procedure
+                                          and with the same guidelines as a design review for a
+                                          specific development.
+            C.                                                 Models of proposals in the Central City plan district. For proposals located in the Central
+                           City plan district shown on Map 510          -1, a three dimensional digital                                                                               model of the proposal is
+                           required with an application for Design Review. This requirement applies only to new
+                           developments or changes in the bulk of existing buildings.
+                                                                                                   Before a building permit is issued, a three dimensional digital                                               model of the proposal as
+                           approved must be submitted to the Bureau of Planning and Sustainability          . The model
+                           requirements will be waived if the application does not involve a change in the bulk of
+                           buildings on a site for which the City possesses an accurate digital                                             model.
+
+                                                                                                                                       Table 825-1
+                                                                               Procedure Type for Design Review Proposals
+Geographic Area                                                             Proposal                                                                    Threshold                                                                                                  Procedure
+                                                                            New development or                                                          1) New floor area is
+                                                                            new building(s) on a site                                                   > 25,000 s.f. or                                                                                           Type III                                            [2]
+                                                                            with existing                                                               2) New building height is > 45 ft. [1]
+                                                                            development                                                                 All other new development or new                                                                           Type II
+                                                                                                                                                        buildings
+
+                                                                                                                                                        Addition to an existing building > 45
+                                                                                                                                                        ft height [1], and adds > 25,000 s.f.                                                                      Type III [2]
+Central City Plan District                                                                                                                              of floor area
+                                                                            Exterior alteration to
+                                                                            existing development                                                        Exterior alteration affecting 500 s.f.
+                                                                                                                                                        or less of facade or roof area                       or sign                                               Type I
+                                                                                                                                                        up to 100 s.f.
+                                                                                                                                                        All other exterior alterations                                                                                                                                                                                  Type II
+                                                                            Changes to an approved                                                      Rooftop mechanical equipment                                                                               Type I
+                                                                            design review [3]                                                           Alteration to ground floor facade                                                                          Type I
+                                                                                                                                                        All other changes [4]                                                                                      Type II
+
+                                                                                                                                                 825-                                                            2
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.825
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Design Review
+
+                                                                               Exterior development                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Type II
+                                                                               not listed above
+
+                                                                               New development or                                                            1) New floor area is
+                                                                               new building(s) on a site                                                     > 80,000 s.f. or                                                                                                Type III [2]
+                                                                               with existing                                                                 2) New building height is > 65 ft. [1]
+                                                                               development                                                                   All other new development or new                                                                                Type II
+                                                                                                                                                             buildings
+                                                                                                                                                             Addition to an existing building > 65
+                                                                                                                                                             ft height [1] and adds > 50,000 s.f of                                                                          Type III [2]
+All Other Areas Subject                                                        Exterior alteration to                                                        floor area
+to Design Review                                                               existing development                                                          Exterior alteration affecting 500 s.f.
+                                                                                                                                                             or less of facade or roof area                       or sign                                                    Type I
+                                                                                                                                                             up to 100 s.f.
+                                                                                                                                                             All other exterior alteration                                                                                   Type II
+                                                                                                                                                             Rooftop mechanical equipment                                                                                    Type I
+                                                                               Changes to an approved                                                        Alteration to ground floor facade                                                                               Type I
+                                                                               design review [3]
+                                                                                                                                                             All other changes [4]                                                                                           Type II
+                                                                               Exterior development                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Type II
+                                                                               not listed above
+
+[1] The height threshold does not include additional height allowed through a height exception in the base
+zone.
+[2] An affordable housing project may choose a Type II review procedure if at least 50 percent of the total
+number of dwelling units on the site are affordable to those earning no more than 60 percent of the area
+median family income or an affordability level established by Title 30. If a Type II review procedure is chosen,
+the applicant must provide a letter from the Portland Housing Bureau certifying that the development meets
+the affordability requirement and any administrative requirements of the Portland Housing Bureau and a
+design advice request is required. See 33.730.050.B. The application for design review may not be submitted
+before the required design advice request is held.
+[3] Changes to an approved design review are reviewed as stated in this table when all of the following are
+met. Changes to an approved review that do not meet these thresholds are processed through the same
+procedure as the original review:
+1. The original design review has not expired;
+2. The building permit for the project has not received final approval;
+3. The change will not modify any condition of approval. Changes to an approved exhibit are allowed; and
+4. The change alters no more than 30 percent of any façade and does not increase the approved floor area.
+[4] If the original design review was processed through a Type I procedure, then review of a change is
+processed through the same procedure as the original review.
+
+33.825.035 Factors Reviewed During Design Review.
+The review may evaluate the architectural style; structure placement, dimensions, height, and bulk;
+lot coverage by structures; and exterior alterations of the proposal, including building materials,
+color, off-street parking areas, open areas, landscaping, and tree preservation.
+While the review may evaluate the distribution of massing and placement of structures on the site,
+the review may not require the applicant to reduce or increase the total floor area or height, except
+
+                                                                                                                                                      825-                                                            3
+Chapter 33.825                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Design Review                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             10/1/24
+
+when the height being proposed includes bonus height, and the bonus requires approval through
+design review or a modification through design review.
+The review body is not obligated to approve modifications or adjustments that are requested in
+order to achieve the proposed development intensity.
+
+33.825.040 Modifications That Will Better Meet Design Review Requirements
+The review body may consider modification of site-related development standards, including the
+sign standards of Chapters 32.32 and 32.34 of the Sign Code, as part of the design review process.
+The review body may not consider modifications to standards for which adjustments are prohibited.
+Modifications are done as part of design review and are not required to go through the adjustment
+process. Adjustments to use-related development standards (such as floor area ratios, intensity of
+use, size of the use, number of units, or other standards that are calculated based upon the size or
+intensity of the use such as the quantity of parking and loading spaces) are required to go through
+the adjustment process. Modifications that are denied through design review may be requested as
+an adjustment through the adjustment process. The review body will approve requested
+modifications if it finds that the applicant has shown that the following approval criteria are met:
+
+         A.                                             Better meets design guidelines. The resulting development will better meet the applicable
+                     design guidelines;
+         B.                                               Purpose of the standard. On balance, the proposal will be consistent with the purpose of
+                     the standard for which a modification is requested; and
+         C.                                                 Mitigation of impacts. Any impacts resulting from the modifications are mitigated to the
+                     extent practical.
+
+33.825.055 Approval Criteria
+A design review application will be approved if the review body finds the applicant to have shown
+that the proposal complies with the design guidelines for the area.
+
+33.825.065 Design Guidelines
+         A.                                              Purpose. Design guidelines are the approval criteria used to review new development and
+                     alterations to existing development. They ensure that the development builds on the
+                     context of the area, contributes to the public realm and promotes quality and long-term
+                     resilience within the Design overlay zone.
+         B.                                               Design guidelines.  Guidelines specific to a design district have been adopted for the areas
+                     shown on maps 420-1 through 420-4. Where two of the design districts shown on those
+                     maps overlap, both sets of guidelines apply. Projects within the South Auditorium Plan
+                     District use the Central City Fundamental Design Guidelines for the Downtown Subdistrict.
+                                                                                                All other areas within the Design o          verlay zone or proposals subject to design review use the
+                     Portland Citywide Design Guidelines.
+
+                     The design guidelines are mandatory approval criteria used in design review procedures.
+                     Within design districts, the design guidelines may consist of a common set of design
+                     guidelines for the whole district and special design guidelines for subdistricts. Where
+                     subdistrict guidelines conflict with the district guidelines, the subdistrict guidelines control.
+
+                                                                                                                 825-                                                            4
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  Chapter 33.825
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Design Review
+
+              C.                                                                                       Waiver of design guidelines. If a design district's design guidelines document includes goals
+                                for the design district, the review body may waive one or more of the guidelines as part of
+                                the design review of a development in order to meet the goals.
+
+33.825.075 Relationship to Other Regulations
+Design review approval by PP&D                                          does not imply compliance with the other requirements of the
+Zoning Code or other City, Regional, State, and Federal agencies.
+
+(Amended by:             Ord. No. 169987, effective 7/1/96; Ord. No. 171219, effective 7/1/97; Ord. No.
+171589, effective 11/1/97; Ord. No. 174325, effective 5/5/00; Ord. No. 175204, effective 3/1/01;
+Ord. No. 175837, effective 9/7/01; Ord. Nos. 175965 and 176333, effective 7/1/02; Ord. No. 176469,
+effective 7/1/02; Ord. 176742, effective 7/31/02; Ord. No. 177701, effective 8/30/03; Ord. No.
+177920, effective 11/8/03; Ord. No. 178423, effective 6/18/04; Ord. No. 178452, effective 7/10/04;
+Ord. No. 178509, effective 7/16/04; Ord. No. 179092, effective 4/1/05; Ord. No. 181357, effective
+11/9/07; Ord. No. 182072, effective 8/22/08; Ord. No. 184016, effective date 08/20/10; Ord. No.
+185915, effective 5/1/13; Ord. No. 186053, effective 1/1/15; Ord. No. 187216, effective 7/24/15;
+Ord. No. 188259, effective 3/31/17; Ord. No. 188177, effective 5/24/18            ; Ord. No. 188958, effective
+5/24/18; Ord. No. 189000, effective 7/9/18; Ord. No.                                                                                                                                                                                                                                                                   189488, effective 12/2/19; Ord. No. 189805,
+effective 3/1/20; Ord. No. 190023, effective 8/10/20                                                    and 8/1/21; Ord. No. 190477, effective 8/1/21;
+Ord. No. 190687, effective 3/1/22; Ord. No. 191609, effective 3/1/24; Ord. No.                                                                                                                                                                                                                                                                                                                                                                                                                                  191779, effective
+10/1/24.)
+
+                                                                                                                                                                            825-5
+Chapter 33.825                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Title 33, Planning and Zoning
+Design Review                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             10/1/                                                 24
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              825-                                                            6

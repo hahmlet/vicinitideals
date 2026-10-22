@@ -5,6 +5,7 @@ box around each lot, from the 2026-10-15 acquire)."""
 
 from __future__ import annotations
 
+import dataclasses
 import json
 import re
 from pathlib import Path
@@ -330,3 +331,260 @@ def test_the_bridge_refuses_a_snapshot_without_the_layers(tmp_path) -> None:
     (raw / "dem" / "tile.tif").write_bytes(b"")
     with pytest.raises(FileNotFoundError, match=pdx.MAIN_STREET_KEY):
         quadfit.run(tmp_path / "out", s4=tmp_path / "s4_lots.parquet", roads=s1, dem=raw, sources=snap)
+
+
+# --- FOLLOWUPS 109: the districts, the design overlay, the rest of 33.415 ----
+
+IRVINGTON = "IRVINGTON HISTORIC DISTRICT"
+EASTMORELAND = "EASTMORELAND NATIONAL REGISTER DISTRICT"
+
+
+def _district(name: str, status: str = "Non-contributing") -> list:
+    return [({"Status": status, "DistStatus": status, "DistName": name, "Address": "X"}, MISSOURI)]
+
+
+def _flags(reading, *, zone="R5", plat="one_lot", height=26.0, max_setback=None, lot=None, edges=None, drawing=None):
+    return pdx.flags_for(
+        reading, zone=zone, plat=plat, units=4, height_ft=height, max_setback_ft=max_setback,
+        lot=lot, edges=edges, drawing=drawing,
+    )
+
+
+def _colour(binds=(), flags=()):
+    from flats.score import flags as flag_plan
+
+    return flag_plan.colour(list(binds), list(flags))
+
+
+def test_a_district_is_known_by_its_name() -> None:
+    assert pdx.district_kind(IRVINGTON) == pdx.HISTORIC
+    assert pdx.district_kind("NEW CHINATOWN/JAPAN TOWN-SKIDMORE/OLDTOWN HISTORI") == pdx.HISTORIC
+    assert pdx.district_kind("MISSISSIPPI CONSERVATION DISTRICTC") == pdx.CONSERVATION
+    assert pdx.district_kind(EASTMORELAND) == pdx.NATIONAL_REGISTER
+    assert pdx.district_name({"DistName": " KING'S HILL HISTORIC DISTRI* "}) == "KING'S HILL HISTORIC DISTRI"
+
+
+def test_a_noncontributing_lot_in_a_historic_district_is_red_on_its_review(tmp_path) -> None:
+    # 33.445.200.D.1.b: a new structure in a Historic District needs
+    # historic resource review, judged on compatibility (33.846.060.G.8):
+    # judgement, red. A non-contributing house is no exception.
+    got = pdx.read(MISSOURI, pdx.load(snapshot(tmp_path, resources=_district(IRVINGTON))))
+    assert got.protected == () and got.districts == (IRVINGTON,)
+    (bind,) = pdx.binds_for(got, 4032, MISSOURI.area, zone="R5", height_ft=26.0)
+    assert bind.check == pdx.HISTORIC_REVIEW_CHECK
+    assert bind.source.startswith("PCC 33.445.200.D.1.b") and "Irvington Historic District" in bind.source
+    assert "PCC 33.846.060.G.8" in bind.source
+    assert _colour(binds=[bind]).value == "red"
+    # The design overlay does not reach a district (33.420.025), even in RX.
+    assert _flags(got, zone="RX") == ()
+    assert pdx.binds_for(got, 4032, MISSOURI.area, zone="RX", height_ft=26.0) == (bind,)
+    # A contributing house there is red twice over: its demolition and the review.
+    got = pdx.read(MISSOURI, pdx.load(snapshot(tmp_path, resources=_district(IRVINGTON, "Contributing"))))
+    checks = sorted(b.check for b in pdx.binds_for(got, 4032, MISSOURI.area))
+    assert checks == sorted([pdx.HISTORIC_REVIEW_CHECK, pdx.PROTECTED_RESOURCE_CHECK])
+
+
+def test_a_noncontributing_lot_in_a_conservation_district_is_yellow_on_its_standards(maps) -> None:
+    # 4032 N Missouri, Mississippi Conservation District: the Community
+    # Design Standards are the clear and objective path (33.445.500), but
+    # they place the building and its parking, and none of that is measured.
+    got = pdx.read(RESOURCES[1][1], maps)
+    assert got.districts == (MISSISSIPPI,)
+    assert pdx.binds_for(got, 4032, RESOURCES[1][1].area, zone="R5", height_ft=26.0) == ()
+    (flag,) = _flags(got)
+    assert flag.code == pdx.COMMUNITY_DESIGN_FLAG and flag.by == pdx.COMMUNITY_DESIGN_REASON
+    assert "Mississippi Conservation District" in flag.source and "PCC 33.218.100.B" in flag.source
+    assert _colour(flags=[flag]).value == "yellow"
+
+
+def test_a_conservation_district_in_the_central_city_is_red(maps) -> None:
+    # 33.445.510.A: the Community Design Standards are not open in the
+    # Central City plan district, so historic resource review.
+    got = dataclasses.replace(pdx.read(RESOURCES[1][1], maps), pattern_areas=(pdx.CENTRAL_CITY,))
+    (bind,) = pdx.binds_for(got, 4032, RESOURCES[1][1].area)
+    assert bind.check == pdx.HISTORIC_REVIEW_CHECK and bind.source.startswith("PCC 33.445.510.A")
+    assert _flags(got) == ()
+
+
+def test_a_national_register_district_asks_no_review_of_a_new_house(tmp_path) -> None:
+    # 33.445.220.D: "Historic resource review is not required".
+    got = pdx.read(MISSOURI, pdx.load(snapshot(tmp_path, resources=_district(EASTMORELAND))))
+    assert got.districts == (EASTMORELAND,)
+    assert pdx.binds_for(got, 4032, MISSOURI.area, zone="R5", height_ft=26.0) == ()
+    assert _flags(got) == ()
+
+
+def test_the_districts_ride_the_row() -> None:
+    r = pdx.Reading(districts=(IRVINGTON,))
+    assert pdx.decode(pdx.encode(r)).districts == (IRVINGTON,)
+    assert pdx.decode('{"pdx_main_street_overlay": false}').districts == ()
+
+
+def test_the_design_overlay_reaches_only_rx_ex_and_cx() -> None:
+    plain = pdx.Reading()
+    central = pdx.Reading(pattern_areas=(pdx.CENTRAL_CITY,))
+    # 33.420.045.A.2: four homes of Household Living, 35 ft or less, are
+    # exempt outside RX, EX and CX.
+    for zone in ("R5", "RM2", "CM2", "CM3"):
+        assert pdx.binds_for(central, 4032, 5000, zone=zone, height_ft=26.0) == ()
+        assert _flags(central, zone=zone) == ()
+    # In the Central City there is no design standards track
+    # (33.420.050.B.1): design review on guidelines (33.825.055), red.
+    for zone in ("RX", "EX", "CX"):
+        (bind,) = pdx.binds_for(central, 4032, 5000, zone=zone, height_ft=26.0)
+        assert bind.check == pdx.DESIGN_REVIEW_CHECK
+        assert "PCC 33.420.050.B.1" in bind.source and "PCC 33.825.055" in bind.source
+        assert _flags(central, zone=zone) == ()
+    # Elsewhere the design standards track: green, the flag beside it.
+    (flag,) = _flags(plain, zone="RX")
+    assert flag.code == pdx.DESIGN_STANDARDS_FLAG and _colour(flags=[flag]).value == "green"
+    assert pdx.binds_for(plain, 4032, 5000, zone="CX", height_ft=26.0) == ()
+    # Past 35 ft only design review in Gateway, whose map is not read: yellow.
+    (flag,) = _flags(plain, zone="CX", height=40.0)
+    assert flag.severity == 5 and _colour(flags=[flag]).value == "yellow"
+    # Past 75 ft only design review anywhere (33.420.050.B.3): red.
+    (bind,) = pdx.binds_for(plain, 4032, 5000, zone="CX", height_ft=80.0)
+    assert bind.check == pdx.DESIGN_REVIEW_CHECK and "PCC 33.420.050.B.3" in bind.source
+    # Past 35 ft in another zone the exemption ends, and the map's "d" is not read.
+    (flag,) = _flags(plain, zone="R5", height=40.0)
+    assert flag.code == pdx.DESIGN_STANDARDS_FLAG and flag.severity == 5
+    # Without a zone and a height, nothing of the design overlay.
+    assert pdx.binds_for(central, 4032, 5000) == ()
+
+
+# A main street lot, 80 x 120, its one street along the south line (y = 0).
+STREET_LOT = box(0, 0, 80, 120)
+MAIN = pdx.Reading(True, ("Inner",))
+
+
+def _street_edges():
+    from flats.tests.test_round2_rulings import F, R, S, _edges
+
+    return _edges([(0, 0, 80, 0, F), (80, 0, 80, 120, S), (80, 120, 0, 120, R), (0, 120, 0, 0, S)], [0.0])
+
+
+def _ring(g) -> list:
+    return [list(c) for c in g.exterior.coords]
+
+
+def _plan(building, lane=None, court=None) -> dict:
+    return {"building": _ring(building), "lane": _ring(lane) if lane else None, "court": _ring(court) if court else None}
+
+
+#: The pod at the street, a 12 ft lane up the east side to a court behind it.
+NEAR = box(4, 2, 60, 38)
+LANE = box(64, 0, 76, 110)
+REAR_COURT = box(4, 60, 76, 110)
+
+
+def test_the_townhouse_form_is_asked_about_transit_streets() -> None:
+    # 33.415.300.B bars attached houses within 100 ft of a transit street;
+    # the apartment form (a fourplex) is not on the list.
+    kw = dict(zone="CM2", max_setback=10.0, lot=STREET_LOT, edges=_street_edges(), drawing=_plan(NEAR, LANE, REAR_COURT))
+    assert _flags(MAIN, **kw) == ()
+    (flag,) = _flags(MAIN, plat="unit_lots", **kw)
+    assert flag.code == pdx.MAIN_STREET_TRANSIT_FLAG and flag.source.startswith("PCC 33.415.300.B")
+    assert _colour(flags=[flag]).value == "yellow"
+    assert _flags(pdx.Reading(), plat="unit_lots") == ()
+
+
+def test_vehicle_areas_are_held_to_the_cap_on_the_street() -> None:
+    edges = _street_edges()
+    # A 12 ft lane to a rear court: 15% of the street, inside 30%.
+    share, feet = pdx.vehicle_share(STREET_LOT, edges, _plan(NEAR, LANE, REAR_COURT))
+    assert share == pytest.approx(15.0, abs=1.0) and feet == pytest.approx(12.0, abs=1.0)
+    assert pdx.vehicle_share(STREET_LOT, edges, _plan(NEAR)) == (0.0, 0.0)
+    assert pdx.vehicle_share(STREET_LOT, edges, None) is None
+    # The court across the front of a pod stood at the back: 65%, past 50%.
+    back = box(4, 70, 60, 106)
+    front = _plan(back, LANE, box(4, 0, 44, 60))
+    share, _ = pdx.vehicle_share(STREET_LOT, edges, front)
+    assert share == pytest.approx(65.0, abs=1.0)
+    kw = dict(zone="CM2", max_setback=10.0, lot=STREET_LOT, edges=edges)
+    eastern = pdx.Reading(True, ("Eastern",))
+    (flag,) = _flags(eastern, drawing=front, **kw)
+    assert flag.code == pdx.MAIN_STREET_VEHICLE_FLAG and "PCC 33.415.330.B.2" in flag.source
+    # 40 ft of 80: inside Eastern's 50%, past Inner's 30%.
+    half = _plan(back, LANE, box(48, 0, 76, 60))
+    share, _ = pdx.vehicle_share(STREET_LOT, edges, half)
+    assert 30.0 < share < 50.0
+    assert _flags(eastern, drawing=half, **kw) == ()
+    inner = [f.code for f in _flags(MAIN, drawing=half, **kw)]
+    assert pdx.MAIN_STREET_VEHICLE_FLAG in inner
+    # River states no cap; with no pattern area mapped the Inner cap is taken.
+    assert _flags(pdx.Reading(True, ("River",)), drawing=front, **kw) == ()
+    unmapped = [f.code for f in _flags(pdx.Reading(True, ()), drawing=half, **kw)]
+    assert pdx.MAIN_STREET_VEHICLE_FLAG in unmapped
+    # No drawing: asked, never passed.
+    codes = [f for f in _flags(eastern, drawing=None, **kw)]
+    assert [f.code for f in codes] == [pdx.MAIN_STREET_VEHICLE_FLAG] and "no drawn plan" in codes[0].source
+
+
+def test_the_inner_area_wants_the_facade_at_the_maximum_setback() -> None:
+    # 33.415.320: 70% of the street-facing facade within the base zone's
+    # maximum setback (10 ft in CM2, 20 ft on a civic corridor).
+    edges = _street_edges()
+    assert pdx.facade_share(STREET_LOT, edges, NEAR, 10.0) == pytest.approx(100.0)
+    # The same lot turned 30 degrees: the walls are read by the lot lines' own bearing.
+    from shapely import affinity
+
+    from flats.tests.test_round2_rulings import F, R, S, _edges
+
+    turn = [affinity.rotate(g, 30, origin=(0, 0)) for g in (STREET_LOT, NEAR)]
+    pts = list(turn[0].exterior.coords)
+    cls = {(3, 4): F, (0, 1): S, (1, 2): R, (2, 3): S}  # box() starts at (80, 0)
+    lines = [(*pts[i], *pts[j], c) for (i, j), c in cls.items()]
+    turned = _edges(lines, [30.0])
+    assert pdx.facade_share(turn[0], turned, turn[1], 10.0) == pytest.approx(100.0)
+    kw = dict(zone="CM2", lot=STREET_LOT, edges=edges)
+    assert _flags(MAIN, max_setback=10.0, drawing=_plan(NEAR, LANE, REAR_COURT), **kw) == ()
+    # Stood 20 ft back none of it is within 10 ft: yellow, the pod could move.
+    back = box(4, 20, 60, 56)
+    assert pdx.facade_share(STREET_LOT, edges, back, 10.0) == 0.0
+    (flag,) = _flags(MAIN, max_setback=10.0, drawing=_plan(back, LANE, REAR_COURT), **kw)
+    assert flag.code == pdx.MAIN_STREET_SETBACK_FLAG and "0%" in flag.source
+    assert _colour(flags=[flag]).value == "yellow"
+    # Within a civic corridor's 20 ft it passes.
+    assert _flags(MAIN, max_setback=20.0, drawing=_plan(back, LANE, REAR_COURT), **kw) == ()
+    # A zone whose maximum is not read is asked, never passed.
+    (flag,) = _flags(MAIN, max_setback=None, drawing=_plan(NEAR, LANE, REAR_COURT), **kw)
+    assert flag.code == pdx.MAIN_STREET_SETBACK_FLAG
+    # The Eastern and Western areas are not held to it.
+    eastern = pdx.Reading(True, ("Eastern",))
+    assert _flags(eastern, max_setback=10.0, drawing=_plan(back, LANE, REAR_COURT), **kw) == ()
+
+
+def test_the_bridge_reds_a_historic_district_lot(tmp_path) -> None:
+    from flats.encode.load import load_trusted
+    from flats.ingest.quadfit import lot_from_row, screen_lot
+    from flats.score import relief, slack
+    from flats.score.flags import Colour
+    from flats.tests.test_quadfit_bridge import pod, row
+
+    corpus = load_trusted(strict=False).rules
+    policy, relieve = slack.load_policy(), relief.load_policy()
+    r = row(TLID="1N1E22CB  -01200", lot_wkb=shapely.to_wkb(MISSOURI))
+    pdx.with_overlays([r], snapshot(tmp_path, resources=_district(IRVINGTON)))
+    (s,) = screen_lot(lot_from_row(r, corpus.layers), [pod()], rules=corpus, policy=policy, relief=relieve, step_deg=30.0)
+    assert s.signed.colour is Colour.red
+    assert pdx.HISTORIC_REVIEW_REASON in s.signed.reasons
+    assert [b.check for b in s.signed.binds].count(pdx.HISTORIC_REVIEW_CHECK) == 1
+    again = pdx.checked(s, lot_from_row(r).pdx_overlays)
+    assert again.signed.binds == s.signed.binds and again.signed.flags == s.signed.flags
+
+
+def test_on_the_main_street_the_townhouse_form_is_screened_and_asked(tmp_path) -> None:
+    from flats.encode.load import load_trusted
+    from flats.ingest.quadfit import lot_from_row, screen_lot
+    from flats.score import relief, slack
+    from flats.tests.test_quadfit_bridge import pod, row
+
+    corpus = load_trusted(strict=False).rules
+    policy, relieve = slack.load_policy(), relief.load_policy()
+    r = row(TLID="1S1E22BA  -02300", zone="CM2", area_sqft=8907.0, lot_wkb=shapely.to_wkb(MACADAM))
+    pdx.with_overlays([r], snapshot(tmp_path))
+    (s,) = screen_lot(lot_from_row(r, corpus.layers), [pod()], rules=corpus, policy=policy, relief=relieve, step_deg=30.0)
+    townhomes = s.forms["townhomes"]
+    assert townhomes.get("screened", True) is True
+    assert pdx.MAIN_STREET_TRANSIT_FLAG in [f["code"] for f in townhomes.get("flags", [])]
+    assert pdx.MAIN_STREET_TRANSIT_FLAG not in [f["code"] for f in s.forms["apartment"].get("flags", [])]

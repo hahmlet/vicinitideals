@@ -2719,7 +2719,12 @@ def _plat_matters(lot: QuadfitLot, s: Screened, rules: RuleSet) -> bool:
     use). Where neither, the twin would be the same screen twice. Nor where
     the use table shuts both forms out alike and ``s`` is red on it: no
     yard or lot size the townhouse rows state can open a door the table
-    keeps shut (a farm zone whose parking rules differ for townhouses)."""
+    keeps shut (a farm zone whose parking rules differ for townhouses).
+    Always on a lot in Portland's Centers Main Street overlay, where 33.415.300.B
+    bars attached houses near a transit street and the townhouse form is
+    asked about it (:data:`flats.geom.pdx_overlays.MAIN_STREET_TRANSIT_FLAG`)."""
+    if lot.pdx_overlays is not None and lot.pdx_overlays.main_street:
+        return True
     layer_id = lot.layer_id or f"or/?/{lot.jurisdiction}"
     one = configure(lot.facts, s.design, observed=lot.observed)
     two = configure(lot.facts, townhouse(s.design), observed=lot.observed)
