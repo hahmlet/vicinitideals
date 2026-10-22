@@ -39,7 +39,7 @@
 <div id="check-card">
 {% if not card %}
 <div class="toolbar" style="gap:24px;margin:0 0 12px">
-  <div><span class="muted">Numbers checked</span> <strong>{{ counts.checked }}</strong> of {{ counts.numbers }}</div>
+  <div><span class="muted">Numbers checked</span> <strong>{{ counts.checked }}</strong> of {{ counts.numbers }}{% if counts.two_source %} <span class="muted" data-two-source>· {{ counts.two_source }} wait for the two-source check</span>{% endif %}</div>
   <div>{{ nav() }}</div>
   {% if said %}<div style="margin-left:auto;font-size:12px;color:#15803d">✓ {{ said }}</div>{% endif %}
 </div>
@@ -105,6 +105,7 @@
     <div style="font-size:12px;margin:0 0 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap">
       {{ nav() }}
       <span class="muted">Checked</span> <strong>{{ counts.checked }}</strong> of {{ counts.numbers }}
+      {% if counts.two_source %}<span class="muted" data-two-source title="numbers that need two sources side by side, set aside for the two-source check">+{{ counts.two_source }} for two sources</span>{% endif %}
       {% if card.answer_id %}<span class="muted" data-answer-id title="the number of your last answer to this question">#{{ card.answer_id }}</span>{% endif %}
       {% if card.signed %}<span class="badge badge-green" style="margin-left:8px" title="signed against the text copy">signed</span>{% endif %}
       {% if card.before %}<span class="badge badge-yellow" style="margin-left:4px">your answer: {{ card.before }}</span>{% endif %}

@@ -595,6 +595,9 @@ def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
         row["web"] = why == "html"
         row["in_note"] = _in_note(document, row["quote"] or "")
         out.append(row)
+    base = {(r["zone"], r["field"]): r for r in out if not r["when"]}
+    for row in out:
+        row["two_source"] = _two_source(row, base.get((row["zone"], row["field"])))
     _carry(out)
     # By row of the table (Steph 2026-10-19): within a document, one data
     # point across every zone before the next, the data points in the order
@@ -621,6 +624,39 @@ def _rows(layer: Layer, signed: set[tuple]) -> list[dict[str, Any]]:
             r["zone"],
         ),
     )
+
+
+def _two_source(row: dict[str, Any], parent: dict[str, Any] | None) -> str:
+    """Why a number cannot be checked against the one page a card shows, or "".
+
+    Steph 2026-10-22, on Gresham CMF's building-share basis, read off the
+    Site definition: "this is asking for comparing 2 PDFs and we only show
+    one. I am taking it on its word that GDC 7.0420(J)(1)(a) and
+    7.0512(A)(2) S2 actually says 'site' and doesn't have a different
+    qualification that modifies." Such a number waits for a check that
+    shows both sources side by side; the page check asks only what one
+    page can answer.
+
+    - ``via``: a cross-reference sends the reader to the quoted text (CMF's
+      corridor values, Table 4.0430 note 14 adopting 4.0131).
+    - ``borrowed``: the page never names the zone, so what ties the zone to
+      the page lives somewhere else.
+    - ``modified``: an exception read from another document than the
+      zone's own number -- a district or overlay changing the base rule.
+    """
+    if row.get("via"):
+        return "via"
+    if not row["web"] and _zone_off_page(row["document"], row["line"], row["zone"]):
+        return "borrowed"
+    if row["when"] and parent is not None and parent["document"] and parent["document"] != row["document"]:
+        return "modified"
+    return ""
+
+
+def _single(row: dict[str, Any]) -> bool:
+    """Whether the page check asks about this number (:func:`_two_source`)."""
+    parent = row.get("carried_by")
+    return not row.get("two_source") and not (parent is not None and parent.get("two_source"))
 
 
 @lru_cache(maxsize=512)
@@ -743,6 +779,8 @@ def _questions(
     for row in rows:
         if row.get("carried_by") is not None:
             # Asked on its table cell, as that cell's note (:func:`_carry`).
+            continue
+        if not _single(row):
             continue
         key = (layer.layer, row["zone"], row["field"], row["when"])
         said = _standing(answers.get((*key, "value")), row)
@@ -1594,6 +1632,8 @@ def _note_box(document: str, page: int, body: list[str]) -> list[tuple[sheet.Box
 def _counts(layer: Layer, rows: list[dict[str, Any]], answers: dict[tuple, FlatsPageCheck]) -> dict[str, int]:
     checked = problems = 0
     replies = _replies(answers)
+    two = sum(not _single(r) for r in rows)
+    rows = [r for r in rows if _single(r)]
     for row in rows:
         said = _standing(
             answers.get((layer.layer, row["zone"], row["field"], row["when"], "value")), row
@@ -1604,7 +1644,13 @@ def _counts(layer: Layer, rows: list[dict[str, Any]], answers: dict[tuple, Flats
         elif (parent := row.get("carried_by")) is not None:
             # Asked as its cell's note: checked once that note is answered.
             checked += _note_answered(answers, layer, parent, row["in_note"])
-    return {"numbers": len(rows), "checked": checked, "left": len(rows) - checked, "problems": problems}
+    return {
+        "numbers": len(rows),
+        "checked": checked,
+        "left": len(rows) - checked,
+        "problems": problems,
+        "two_source": two,
+    }
 
 
 async def _answer_id(session: DBSession, layer_id: str, ask: _Ask) -> int | None:
@@ -1851,7 +1897,7 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
 
     def build() -> tuple[list[dict[str, Any]], dict[str, int], list[dict[str, Any]], list[dict[str, Any]]]:
         layers = _layers()
-        table, totals, problems = [], {"numbers": 0, "checked": 0, "problems": 0, "no_map": 0, "html": 0}, []
+        table, totals, problems = [], {"numbers": 0, "checked": 0, "problems": 0, "two_source": 0, "no_map": 0, "html": 0}, []
         answered: list[dict[str, Any]] = []
         for layer_id, layer in sorted(layers.items()):
             rows = _rows(layer, signed)
@@ -1864,7 +1910,7 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
             if not rows and not any(elsewhere.values()):
                 continue
             table.append({"id": layer_id, "label": _layer_label(layer), **counts, **elsewhere})
-            for key in ("numbers", "checked", "problems"):
+            for key in ("numbers", "checked", "problems", "two_source"):
                 totals[key] += counts[key]
             for key in ("no_map", "html"):
                 totals[key] += elsewhere[key]

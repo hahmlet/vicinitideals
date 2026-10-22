@@ -744,7 +744,7 @@ def test_the_card_names_the_other_numbers_held_for_the_same_standard():
     held = check._variants(layer, zone, field)
 
     assert held[0]["when"] == "normally"
-    assert all(v["when"].startswith(("in the case where ", "for ")) for v in held[1:])
+    assert all(v["when"].startswith(("in the case where ", "for ", "where ")) for v in held[1:])
     assert "_" not in " ".join(v["when"] for v in held), "conditions in words, not keys"
 
 
@@ -1312,3 +1312,31 @@ def test_a_footnote_reopened_on_its_own_card_is_asked_on_its_cells_note(monkeypa
     answers[(LAYER, "A", "setback_front_ft", "", "note:5")] = _Said("have_it", at=3)
     assert list(check._questions(layer, rows, answers)) == []
     assert check._counts(layer, rows, answers)["checked"] == 2
+
+
+def test_a_number_that_needs_two_sources_is_not_asked_on_one_page(monkeypatch):
+    """Steph 2026-10-22: "this is asking for comparing 2 PDFs and we only show
+    one." A number sent to its page by a cross-reference, read off a page that
+    never names its zone, or changed by a district written in another
+    document waits for the two-source check: not asked, not counted, and
+    counted apart."""
+    layer = check._layers()[LAYER]
+    monkeypatch.setattr(check, "_zone_off_page", lambda document, line, zone: zone == "B")
+    base = {"field": "setback_front_ft", "when": "", "web": False, "quote": "d#L10", "document": "d",
+            "mark": "m", "in_note": "", "value": 10, "line": 10}
+    rows = [
+        {**base, "zone": "A"},
+        {**base, "zone": "A", "when": "rockwood_design_district", "quote": "e#L5", "document": "e"},
+        {**base, "zone": "B"},
+        {**base, "zone": "C", "via": "f#L1"},
+    ]
+    parents = {(r["zone"], r["field"]): r for r in rows if not r["when"]}
+    for r in rows:
+        r["two_source"] = check._two_source(r, parents.get((r["zone"], r["field"])))
+    check._carry(rows)
+    monkeypatch.setattr(check, "_placed", lambda row: sheet.Placed(status="boxed", markers=[], marker_page=1))
+
+    assert [r["two_source"] for r in rows] == ["", "modified", "borrowed", "via"]
+    assert [(a.row["zone"], a.row["when"]) for a in check._questions(layer, rows, {})] == [("A", "")]
+    counts = check._counts(layer, rows, {})
+    assert (counts["numbers"], counts["two_source"]) == (1, 3)

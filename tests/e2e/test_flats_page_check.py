@@ -52,6 +52,18 @@ def test_the_index_lists_jurisdictions_and_what_cannot_be_checked_yet(
     expect(page.locator(f"a[href='/flats/check/{LAYER}']")).to_be_visible()
 
 
+def test_numbers_needing_two_sources_are_set_aside(logged_in_page: Page, base_url: str) -> None:
+    """Steph 2026-10-22: the page check asks only what one page can answer.
+    A number sent to its table by another table's note waits for the
+    two-source check, and the card and the index say how many wait."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check")
+    expect(page.locator("[data-two-source]")).to_contain_text("Waiting for the two-source check")
+
+    page.goto(f"{base_url}/flats/check/{LAYER}")
+    expect(page.locator("#check-card [data-two-source]").first).to_contain_text("for two sources")
+
+
 def test_the_sidebar_reaches_the_page_check(logged_in_page: Page, base_url: str) -> None:
     page = logged_in_page
     page.goto(f"{base_url}/flats/rules")
