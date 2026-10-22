@@ -1219,6 +1219,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -1366,6 +1376,18 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.B sets the share of "the abutting Primary
+      # Frontage" where "a parcel abuts more than one public street", plazas
+      # coming off "per site", and Chapter 90 makes a Lot (and so a parcel)
+      # any area "of one distinct ownership", an abutting platted lot "in the
+      # same ownership" being "part of such lot". The townhouse form's four
+      # lots, in one ownership when built, are one parcel: the original lot,
+      # for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.B (the parcel's Primary Frontage; plazas per site) and Chapter 90, Lot: an abutting platted lot in the same ownership is part of the lot; parcel and lot are used interchangeably"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L1398-L1401"
     building_frontage_min_pct:
       # 60.05.15.6.B, which binds "All buildings in the CM-CS zone". It
       # names no band (A's "between the minimum setback and the maximum
@@ -1521,6 +1543,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -1668,6 +1700,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -1806,6 +1848,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -1951,6 +2003,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -2099,6 +2161,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -2239,6 +2311,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -2379,6 +2461,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -2528,6 +2620,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -2678,6 +2780,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -2826,6 +2938,16 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 60.05.15.6.A sets the share of "a site frontage" and of
+      # "the site's Primary Frontage", and Chapter 90 makes a Site "That
+      # parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC 60.05.15.6.A (the share of the site frontage) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
       # the minimum and the maximum setback (16 feet where none is listed,
@@ -2974,6 +3096,16 @@ zones:
       per_dwelling: 48
       cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): S1 sets the share of "the site frontage" and S2 of a
+      # "development" with multiple frontages, and Chapter 90 makes a Site
+      # "That parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC Table 70.20.05.4.A S1-S2 (the share of the site frontage; a development with multiple frontages) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # Table 70.20.05.4.A S1: buildings occupy a share of the site frontage
       # between the minimum and the maximum setback, set by street type
@@ -3093,6 +3225,16 @@ zones:
       per_dwelling: 48
       cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): S1 sets the share of "the site frontage" and S2 of a
+      # "development" with multiple frontages, and Chapter 90 makes a Site
+      # "That parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC Table 70.20.05.4.A S1-S2 (the share of the site frontage; a development with multiple frontages) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # Table 70.20.05.4.A S1: buildings occupy a share of the site frontage
       # between the minimum and the maximum setback, set by street type
@@ -3211,6 +3353,16 @@ zones:
       per_dwelling: 48
       cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): S1 sets the share of "the site frontage" and S2 of a
+      # "development" with multiple frontages, and Chapter 90 makes a Site
+      # "That parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC Table 70.20.05.4.A S1-S2 (the share of the site frontage; a development with multiple frontages) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # Table 70.20.05.4.A S1: buildings occupy a share of the site frontage
       # between the minimum and the maximum setback, set by street type
@@ -3341,6 +3493,16 @@ zones:
       per_dwelling: 48
       cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): S1 sets the share of "the site frontage" and S2 of a
+      # "development" with multiple frontages, and Chapter 90 makes a Site
+      # "That parcel, or parcels, of real property in common ownership". The
+      # townhouse form's four lots, in one ownership when built, are one
+      # site: the original lot, for both forms.
+      value: site
+      cite: "Beaverton BDC Table 70.20.05.4.A S1-S2 (the share of the site frontage; a development with multiple frontages) and Chapter 90, Site: the parcel or parcels in common ownership"
+      quote: "or/washington/beaverton/bdc.90.definitions.txt#L2410-L2411"
     building_frontage_min_pct:
       # Table 70.20.05.4.A S1: buildings occupy a share of the site frontage
       # between the minimum and the maximum setback, set by street type

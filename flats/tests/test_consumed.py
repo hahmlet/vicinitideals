@@ -89,9 +89,12 @@ from flats.score import paper
 #: `setback_front_max_ft` left on 2026-10-21 (FOLLOWUPS 109): it is the band
 #: the building's share of the street frontage is measured in
 #: (`building_frontage_min_pct`).
+#:
+#: `min_building_separation_ft` left on 2026-10-22 (FOLLOWUPS 109 chunk 3): it
+#: is the gap between pods counted side by side along a street one pod cannot
+#: fill (`screen._pods_to_fill`, Steph's wide-lot ruling of 2026-10-21).
 SILENTLY_UNREAD = frozenset(
     {
-        "min_building_separation_ft",
         "max_building_width_ft",
         # 2026-10-02: `parking_front_yard_max_pct` is checked
         # (`front_yard_vehicle_share`), and the approach widths are declared

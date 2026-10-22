@@ -155,7 +155,7 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 435, "numeric": 124, "marker": 0, "dash": 2, "silent": 3}
+EXPECTED = {"stated": 435, "numeric": 131, "marker": 0, "dash": 2, "silent": 3}
 # 427 -> 435 stated, 112 -> 124 numeric and 2 -> 3 silent on 2026-10-22 (design districts
 # chunk 3): a district rule is a variant on a base the rest of the zone does not carry.
 # Oregon City's concept-plan massing cap and Park Place roof pitch are exempt outside the
@@ -164,6 +164,10 @@ EXPECTED = {"stated": 435, "numeric": 124, "marker": 0, "dash": 2, "silent": 3}
 # Valley VTH's roof rule on one lot: 16.22 sets it for attached single-family dwellings,
 # and a four-unit building on one lot is not multifamily either (16.12, five or more), so
 # the quote is the definition that puts the one-lot pod outside both.
+# 112 -> 119 numeric on 2026-10-22 (FOLLOWUPS 109 chunk 3, 104(f)): Gresham 7.0420(J)(1)(a)'s
+# 50 percent frontage share names "single detached dwellings and plexes" only, and 7.0431,
+# the townhouse standards, states none, so the townhouse form (unit_lots) holds it exempt in
+# MDR-12, MDR-24, OFR, CMF, CMU, DRL-1 and DRL-2, each citing J.1's scope and 7.0431's list.
 # 423 -> 427 stated on 2026-10-21 (FOLLOWUPS 104(e)): Gresham Table 4.0430 note 6 lifts row
 # C's width/depth ratio for lots created for townhouses, in SC, SC-RJ, CMU and CMF
 # (unit_lots variants on the new max_lot_depth_ratio).

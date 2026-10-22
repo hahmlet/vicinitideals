@@ -131,6 +131,7 @@ _LABELS: dict[str, str] = {
     "building_frontage_through_one": "through lot owes the building share on one street",
     "building_frontage_less_drive": "driveway width comes off the frontage",
     "building_frontage_plaza_pct": "plaza that may come off the frontage (share of it)",
+    "building_frontage_basis": "what the building share is measured on (site or each lot)",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
@@ -1356,7 +1357,9 @@ _F: tuple[FieldDef, ...] = (
         "(:func:`flats.fit.frontage.building_runs`): the feet of street line "
         "from which the first thing seen straight into the lot is the "
         "building, within the band, over that street's length. One pod fills "
-        "at most its own width, so on a wide lot it fails. Where the share "
+        "at most its own width, so on a wide lot it fails -- RED where no "
+        "more pods could stand side by side along the street to fill it, "
+        "held out of GREEN where they could (Steph 2026-10-21). Where the share "
         "turns on a street type FLATS does not hold, this is the HIGHEST any "
         "type asks (GREEN only above it) and `building_frontage_min_pct_least` "
         "the lowest (RED only below it). On a lot with more than one street "
@@ -1418,6 +1421,22 @@ _F: tuple[FieldDef, ...] = (
         "draws no plaza, so it is taken only where it could save a lot from "
         "RED, never toward GREEN.",
         False,
+    ),
+    FieldDef(
+        "building_frontage_basis",
+        "enum",
+        "What the code measures the building's share of the frontage on "
+        "(Steph 2026-10-21, rulings.yaml 2026-10-21-frontage-share-measured-"
+        "as-coded). `site`: the site or the development -- the original lot, "
+        "for both forms of the pod, the four townhouse lots together being "
+        "the site (Beaverton 60.05.15.6 and 70.20.05.4, \"site frontage\"; "
+        "Washington County 392-8, \"a site's street frontage(s)\"; Gresham "
+        "7.0420(J)(1)(a) and 7.0512(A)(2) S2). `lot`: each lot on its own, so "
+        "the townhouse form owes the share on every one of its unit lots. "
+        "Absent is `site`. No code in the corpus says `lot` yet, and the "
+        "screen does not measure one: the townhouse form is held out of "
+        "GREEN on it, never passed on the original lot's share.",
+        choices=("site", "lot"),
     ),
     # --- orientation ----------------------------------------------------
     FieldDef(
@@ -1838,6 +1857,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "building_frontage_through_one",
         "building_frontage_less_drive",
         "building_frontage_plaza_pct",
+        "building_frontage_basis",
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
         "parking_alley_access_required",

@@ -17,8 +17,16 @@ of the longest street-facing wall, facing the street -- held as
 ``orientation_constraint: axis_required``, as Gresham 7.0420(J)(1) is.
 
 One pod fills at most its own width of a street, so on a wide lot the share
-is a measured standard the pod fails: RED (Steph 2026-10-14). Unmeasured is
-never GREEN.
+is a measured standard the pod fails: RED (Steph 2026-10-14) -- unless
+enough pods to fill it could stand side by side along that street, which is
+YELLOW with FRONTAGE-MORE-BUILDINGS (Steph 2026-10-21, rulings.yaml
+2026-10-21-wide-lot-frontage-more-pods). Unmeasured is never GREEN.
+
+Each share is measured on what the code measures it on (rulings.yaml
+2026-10-21-frontage-share-measured-as-coded): every code here says site or
+development, so both forms are measured on the original lot
+(``building_frontage_basis: site``); a code that measured each lot would
+hold the townhouse form out of GREEN.
 """
 
 from __future__ import annotations
@@ -26,9 +34,11 @@ from __future__ import annotations
 import pytest
 from shapely.geometry import box
 
+from flats.designs.model import Plat
 from flats.fit.frontage import building_runs
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
+from flats.score import relief, slack
 from flats.score.flags import Colour
 from flats.score.paper import drive_at_street
 from flats.score.screen import (
@@ -36,7 +46,10 @@ from flats.score.screen import (
     BUILDING_OTHER_SHARE,
     BUILDING_SHARE,
     CHECK_FIELD,
+    DEFAULT_BUILDING_SEPARATION_FT,
     FRONTAGE_STREET,
+    MORE_BUILDINGS,
+    screen,
 )
 from flats.score.slack import Verdict
 from flats.tests.test_frontage_caps import quoted
@@ -49,6 +62,7 @@ from flats.tests.test_round2_rulings import (
     _edges,
     check,
     facts,
+    fit,
     rules,
     run,
 )
@@ -56,6 +70,7 @@ from flats.tests.test_round2_rulings import (
 pytestmark = pytest.mark.unit
 
 BEAVERTON = "or/washington/beaverton"
+GRESHAM = "or/multnomah/gresham"
 WASHCO = "or/washington/_unincorporated"
 KING_CITY = "or/washington/king-city"
 BEAVERTON_605 = ("CM-HDR", "NS", "CS", "CC", "GC", "RC-E", "TC-MU", "TC-HDR", "SC-MU", "SC-HDR", "SC-S")
@@ -100,11 +115,54 @@ def test_the_check_is_named_for_its_field() -> None:
     assert CHECK_FIELD[BUILDING_OTHER_SHARE] == "building_frontage_other_pct"
 
 
-def test_a_frontage_one_pod_cannot_fill_is_red() -> None:
-    # 56 ft of pod over 200 ft of street is 28 percent, under 60 anyway.
-    got = run(facts(street_lines_ft=(200.0,)), rules(**SHARE))
+def test_a_frontage_one_pod_cannot_fill_and_two_cannot_stand_on_is_red() -> None:
+    # 56 ft of pod over 100 ft of street is 56 percent, under 60; even two
+    # pods end-on need 36 + 10 + 36 ft and a 2 ft wider drive than the gap,
+    # 84 ft, and 10 ft side yards leave 80.
+    got = run(facts(street_lines_ft=(100.0,)), rules(**SHARE, setback_side_ft=10))
     assert check(got, BUILDING_SHARE).verdict is not Verdict.passes
     assert got.colour is Colour.red
+    assert "FRONTAGE-MORE-BUILDINGS" not in codes(got)
+
+
+def test_a_street_more_pods_could_fill_is_yellow_with_the_flag() -> None:
+    # 200 ft: one pod is 28 percent; three side by side (168 ft built, two
+    # 10 ft gaps) are 84 and stand in 188 ft. Steph 2026-10-21: yellow.
+    got = run(facts(street_lines_ft=(200.0,)), rules(**SHARE))
+    assert check(got, BUILDING_SHARE) is None
+    assert BUILDING_SHARE in got.unchecked
+    assert got.colour is Colour.yellow
+    assert "FRONTAGE-MORE-BUILDINGS" in codes(got)
+    # The yards and the zone's own separation count: with 10 ft side yards
+    # and 30 ft between buildings, a 140 ft street less its yards (120)
+    # holds two pods end-on (36 + 30 + 36) but they fill 51 percent, and one
+    # side-on beside one end-on (56 + 30 + 36 = 122) does not stand. RED.
+    tight = rules(**SHARE, setback_side_ft=10, min_building_separation_ft=30)
+    assert run(facts(street_lines_ft=(140.0,)), tight).colour is Colour.red
+    # With the default gap, 130 less its yards (110) holds one side-on and
+    # one end-on (56 + 10 + 36 + 2 = 104), 71 percent: YELLOW.
+    yards = rules(**SHARE, setback_side_ft=10)
+    assert run(facts(street_lines_ft=(130.0,)), yards).colour is Colour.yellow
+    assert DEFAULT_BUILDING_SEPARATION_FT == 10.0
+    assert MORE_BUILDINGS != BUILDING_FRONTAGE
+
+
+def test_pods_may_stand_end_on_where_side_on_they_do_not() -> None:
+    # Gresham's shape, 50 percent of a 126 ft street inside 5 ft side yards
+    # (116 ft). Two pods side-on (56 + 10 + 56 + 2 = 124) do not stand, but
+    # one side-on beside one end-on (104) does and fills 73 percent: YELLOW.
+    half = {"building_frontage_min_pct": 50, "setback_front_max_ft": 16, "setback_side_ft": 5}
+    got = run(facts(street_lines_ft=(126.0,)), rules(**half))
+    assert got.colour is Colour.yellow
+    assert "FRONTAGE-MORE-BUILDINGS" in codes(got)
+    # With 30 ft between buildings only two end-on stand (36 + 30 + 36 =
+    # 102): 57 percent, still past 50.
+    wide_gap = run(facts(street_lines_ft=(126.0,)), rules(**half, min_building_separation_ft=30))
+    assert wide_gap.colour is Colour.yellow
+    assert "FRONTAGE-MORE-BUILDINGS" in codes(wide_gap)
+    # And at 50 ft between them (122) none do: RED.
+    no_room = run(facts(street_lines_ft=(126.0,)), rules(**half, min_building_separation_ft=50))
+    assert no_room.colour is Colour.red
 
 
 def test_a_drawn_share_that_clears_is_green_and_unmeasured_is_not() -> None:
@@ -135,32 +193,43 @@ def test_the_driveway_off_the_frontage_saves_a_lot_it_would_fail() -> None:
     lane = drive_at_street(DESIGN, rules(**SHARE))
     assert lane and lane > 0
     # Just wide enough that the pod's 56 ft misses 60 percent of the whole
-    # street but clears it once the drive is taken off.
+    # street but clears it once the drive is taken off; 10 ft side yards
+    # leave no room for a second pod.
     line = 56 / 0.6 + lane / 2
-    plain = run(facts(street_lines_ft=(line,)), rules(**SHARE))
+    plain = run(facts(street_lines_ft=(line,)), rules(**SHARE, setback_side_ft=10))
     assert plain.colour is Colour.red
-    less = run(facts(street_lines_ft=(line,)), rules(**SHARE, building_frontage_less_drive=True))
+    less = run(
+        facts(street_lines_ft=(line,)), rules(**SHARE, setback_side_ft=10, building_frontage_less_drive=True)
+    )
     assert less.colour is not Colour.red
     assert check(less, BUILDING_SHARE) is None
 
 
 def test_a_plaza_the_plan_does_not_draw_saves_a_lot_from_red_never_to_green() -> None:
-    # 56 ft over 110 ft is 51 percent; with a fifth of the frontage off as a
-    # plaza (88 ft left) it is 64: the pod might meet it, so not RED.
-    plain = run(facts(street_lines_ft=(110.0,)), rules(**SHARE))
+    # 56 ft over 100 ft is 56 percent, and 20 ft side yards leave no room
+    # for a second pod; with a fifth of the frontage off as a plaza (80 ft
+    # left) it is 70: the pod might meet it, so not RED.
+    plain = run(facts(street_lines_ft=(100.0,)), rules(**SHARE, setback_side_ft=20))
     assert plain.colour is Colour.red
-    plaza = {**SHARE, "building_frontage_plaza_pct": 20}
-    saved = run(facts(street_lines_ft=(110.0,), building_frontage_pct=(51.0,)), rules(**plaza))
+    plaza = {**SHARE, "building_frontage_plaza_pct": 20, "setback_side_ft": 20}
+    saved = run(facts(street_lines_ft=(100.0,), building_frontage_pct=(56.0,)), rules(**plaza))
     assert saved.colour is Colour.yellow
     assert check(saved, BUILDING_SHARE) is None
-    # Far past what a plaza can take off, it is still RED.
-    assert run(facts(street_lines_ft=(160.0,)), rules(**plaza)).colour is Colour.red
+    # Past what a plaza can take off (120 less 24: 58 percent) and too short
+    # for a second pod (80 ft inside the yards), RED.
+    assert run(facts(street_lines_ft=(120.0,)), rules(**plaza)).colour is Colour.red
 
 
 def test_a_share_by_street_type_fails_below_the_least_and_holds_between() -> None:
     banded = {"building_frontage_min_pct": 90, "building_frontage_min_pct_least": 50, "setback_front_max_ft": 20}
-    # 56 over 130 is 43 percent: under 50, whatever the street.
-    assert run(facts(street_lines_ft=(130.0,)), rules(**banded)).colour is Colour.red
+    # 56 over 115 is 49 percent: under 50, whatever the street, and inside
+    # 20 ft side yards (75 ft) not even two pods end-on (84) stand.
+    assert run(facts(street_lines_ft=(115.0,)), rules(**banded, setback_side_ft=20)).colour is Colour.red
+    # 130: two pods fill 86 percent of it, past even the 50; a second
+    # building, not a miss.
+    two = run(facts(street_lines_ft=(130.0,)), rules(**banded))
+    assert two.colour is Colour.yellow
+    assert "FRONTAGE-MORE-BUILDINGS" in codes(two)
     # 56 over 100 is 56 percent: a Major Street's 50 passes, a Local's 75 not.
     between = run(facts(street_lines_ft=(100.0,), building_frontage_pct=(56.0,)), rules(**banded))
     assert between.colour is Colour.yellow
@@ -171,9 +240,15 @@ def test_a_share_by_street_type_fails_below_the_least_and_holds_between() -> Non
 def test_a_corner_lot_owes_the_other_street_and_a_through_lot_one() -> None:
     corner = {**SHARE, "building_frontage_other_pct": 35}
     # The width on the 80-ft street (70 percent) leaves the 36-ft depth on a
-    # 200-ft one (18 percent); the depth on the 80 (45) misses 60 itself.
-    got = run(facts(street_lines_ft=(80.0, 200.0), corner=True), rules(**corner))
+    # 110-ft one (33 percent); the depth on the 80 (45) misses 60 itself.
+    # Even a second pod end-on along the 110 (36 + 10 + 36 + 2 = 84 ft)
+    # cannot stand inside 15 ft yards (80 ft): RED.
+    got = run(facts(street_lines_ft=(80.0, 110.0), corner=True), rules(**corner, setback_side_ft=15))
     assert got.colour is Colour.red
+    # On a 200-ft side street it can: a second building, YELLOW.
+    more = run(facts(street_lines_ft=(80.0, 200.0), corner=True), rules(**corner))
+    assert more.colour is Colour.yellow
+    assert "FRONTAGE-MORE-BUILDINGS" in codes(more)
     # A through lot that owes one street: the near street alone decides.
     through = {**corner, "building_frontage_through_one": True}
     one = run(facts(street_lines_ft=(80.0, 200.0)), rules(**through))
@@ -184,6 +259,35 @@ def test_a_corner_lot_owes_the_other_street_and_a_through_lot_one() -> None:
               "building_frontage_other_pct": 70}
     held = run(facts(street_lines_ft=(80.0, 200.0), corner=True), rules(**banded))
     assert held.colour is not Colour.red
+
+
+def test_a_share_measured_per_lot_holds_the_townhouse_form_and_not_the_plex() -> None:
+    # Measured on each lot, the townhouse form's end lots carry the long
+    # street line: nothing measures that, so it is held, never passed on the
+    # original lot's share. The one-lot form is measured as before.
+    split = DESIGN.model_copy(update={"plat": Plat.unit_lots})
+    per_lot = rules(**SHARE, building_frontage_basis="lot")
+    lot = facts(street_lines_ft=(80.0,), building_frontage_pct=(70.0,))
+
+    def under(design):
+        return screen(
+            per_lot, lot, design, fit(),
+            policy=slack.SlackPolicy(tolerance={"fit_ft": 0.5}), relief=relief.load_policy(),
+        )
+
+    town = under(split)
+    assert BUILDING_SHARE in town.unchecked
+    assert "MEASURE-BUILDING-FRONTAGE" in codes(town)
+    assert town.colour is not Colour.green
+    plex = under(DESIGN)
+    assert check(plex, BUILDING_SHARE).verdict is Verdict.passes
+    # `site` is today's reading for both forms.
+    site = rules(**SHARE, building_frontage_basis="site")
+    got = screen(
+        site, lot, split, fit(),
+        policy=slack.SlackPolicy(tolerance={"fit_ft": 0.5}), relief=relief.load_policy(),
+    )
+    assert check(got, BUILDING_SHARE).verdict is Verdict.passes
 
 
 # --- the corpus -------------------------------------------------------------
@@ -238,6 +342,60 @@ def test_washington_county_asks_half_of_every_corner_frontage(corpus: RuleSet, z
     assert "50%" in quoted(got["building_frontage_min_pct"].prov.quote)
 
 
+@pytest.mark.parametrize(
+    ("layer", "zone"),
+    [(BEAVERTON, z) for z in (*BEAVERTON_605, "CM-CS", *DOWNTOWN)]
+    + [(WASHCO, "NMU"), (WASHCO, "CCMU")]
+    + [(GRESHAM, z) for z in ("MDR-12", "MDR-24", "OFR", "CMF", "CMU", "SC", "SC-RJ", "DRL-1", "DRL-2")],
+)
+def test_every_share_is_measured_on_the_site(corpus: RuleSet, layer: str, zone: str) -> None:
+    # Steph 2026-10-21, measured as coded: every code here says site (or
+    # development, or parcel) -- the original lot -- and quotes the
+    # definition that makes the townhouse form's four lots one site.
+    got = corpus.resolve(layer, zone).values["building_frontage_basis"]
+    assert got.value == "site"
+    text = quoted(got.prov.quote)
+    assert "Site" in text or "Lot" in text
+
+
+@pytest.mark.parametrize("zone", ("MDR-12", "MDR-24", "OFR", "CMF", "CMU"))
+def test_gresham_measures_the_plex_share_and_only_rockwood_asks_it_of_townhouses(
+    corpus: RuleSet, zone: str
+) -> None:
+    plex = corpus.resolve(GRESHAM, zone)
+    assert plex.get("building_frontage_min_pct") == 50
+    assert plex.get("building_frontage_less_drive") is False
+    assert plex.get("orientation_constraint") == "axis_required"
+    assert "plexes" in quoted(plex.values["building_frontage_min_pct"].prov.quote)
+    # 7.0420(J)(1) names plexes; 7.0431, the townhouse chapter, no share.
+    town = corpus.resolve(GRESHAM, zone, ("unit_lots",))
+    assert town.get("building_frontage_min_pct") is None
+    assert "building_frontage_min_pct" in town.exempted
+    assert town.get("orientation_constraint") == "entrance_only"
+    # Inside Rockwood 7.0512(A)(2) S2 names townhouses, and takes the drive off.
+    rock = corpus.resolve(GRESHAM, zone, ("unit_lots", "rockwood_design_district"))
+    assert rock.get("building_frontage_min_pct") == 50
+    assert rock.get("building_frontage_less_drive") is True
+    assert rock.get("orientation_constraint") == "axis_required"
+    assert "townhouse" in quoted(rock.values["building_frontage_min_pct"].prov.quote)
+
+
+@pytest.mark.parametrize("zone", ("SC", "SC-RJ"))
+def test_gresham_station_centers_keep_the_share_on_both_forms(corpus: RuleSet, zone: str) -> None:
+    # Not in 7.0431's list: the townhouse form keeps the share everywhere.
+    town = corpus.resolve(GRESHAM, zone, ("unit_lots",))
+    assert town.get("building_frontage_min_pct") == 50
+    assert town.get("orientation_constraint") == "axis_required"
+
+
+@pytest.mark.parametrize("zone", ("DRL-1", "DRL-2"))
+def test_gresham_downtown_townhouses_owe_no_share(corpus: RuleSet, zone: str) -> None:
+    assert corpus.resolve(GRESHAM, zone).get("building_frontage_min_pct") == 50
+    town = corpus.resolve(GRESHAM, zone, ("unit_lots",))
+    assert town.get("building_frontage_min_pct") is None
+    assert town.get("orientation_constraint") == "entrance_only"
+
+
 @pytest.mark.parametrize("zone", ("KTTC", "KTBB", "KTC", "KTRC"))
 def test_king_city_turns_the_entrances_to_the_street(corpus: RuleSet, zone: str) -> None:
     got = corpus.resolve(KING_CITY, zone).values
@@ -254,7 +412,6 @@ def _beaverton_lot(corpus: RuleSet, width: float):
     import shapely
 
     from flats.ingest.quadfit import lot_from_row, screen_lot
-    from flats.score import relief, slack
     from flats.tests.test_fire import X0, Y0, bridge_row
 
     depth = 120.0
@@ -281,11 +438,14 @@ def _beaverton_lot(corpus: RuleSet, width: float):
     return s
 
 
-def test_the_bridge_measures_the_drawn_share_and_fails_a_wide_lot(corpus: RuleSet) -> None:
+def test_the_bridge_measures_the_drawn_share_and_holds_a_wide_lot(corpus: RuleSet) -> None:
     narrow = _beaverton_lot(corpus, 80.0)
     assert narrow.facts.street_lines_ft == pytest.approx((80.0,))
     drawn = narrow.facts.building_frontage_pct
     assert drawn is not None and drawn[0] >= 60.0
     assert check(narrow.screening, BUILDING_SHARE).verdict is Verdict.passes
+    # 160 ft: one pod cannot fill 60 percent of it, two side by side can.
     wide = _beaverton_lot(corpus, 160.0)
-    assert check(wide.screening, BUILDING_SHARE).verdict is Verdict.fails
+    assert check(wide.screening, BUILDING_SHARE) is None
+    assert "FRONTAGE-MORE-BUILDINGS" in codes(wide.screening)
+    assert wide.screening.colour is not Colour.green

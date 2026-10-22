@@ -430,6 +430,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  FRONTAGE-MORE-BUILDINGS:
+    description: "One pod cannot fill the building share of a street this long, but enough pods to fill it could stand side by side along it: the lot needs more than one building"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: per_lot_review
+    scope: per_lot
+    key: [lot, design]
+    path: "A site plan with more than one building on the lot (Steph 2026-10-21, rulings.yaml 2026-10-21-wide-lot-frontage-more-pods; multi-pod plotting, FOLLOWUPS 31)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-TOLERANCE:
     description: "A check misses or clears by less than its measurement tolerance"
     kind: parametric
