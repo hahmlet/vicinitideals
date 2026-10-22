@@ -400,6 +400,36 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED]
+  MEASURE-BUILDING-FRONTAGE:
+    description: "The zone asks the building to fill a share of the street frontage; the drawn plan was not measured, or falls short where the same pod placed otherwise could clear it"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Draw the pod against the street at the build-to line and measure its share (FOLLOWUPS 109)"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
+  MEASURE-FRONTAGE-STREET:
+    description: "The building's share of the street frontage clears the lowest share any reading asks and not the highest: the street's type (not held) or which street the code makes the primary frontage decides"
+    kind: categorical
+    risk: possible
+    severity: 6
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Hold the street typology (Beaverton Figure 70.15.15.1) and the primary-frontage order (transit, street class) per lot (FOLLOWUPS 109)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED]
   MEASURE-TOLERANCE:
     description: "A check misses or clears by less than its measurement tolerance"
     kind: parametric

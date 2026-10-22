@@ -315,12 +315,19 @@ defaults:
 # bdc.20.22.cooper-mountain.txt#L111). No field holds a floor on FAR. A
 # four-unit pod on a large lot can fall under it; a doubt.
 #
-# NOT ENCODED: the frontage occupancy of 60.05.15.6.A, "At least 60
-# percent of the site's Primary Frontage ... shall be occupied by a
-# building" (bdc.60.05.design-review-standards.txt#L272-L273), and the
-# lower percentages that follow. No field holds a building share of
-# frontage. The pod's 26-foot-deep building across a 30-to-40-foot
-# frontage may meet it; nothing checks it.
+# ENCODED 2026-10-21 (FOLLOWUPS 109): the frontage occupancy of
+# 60.05.15.6.A, "At least 60 percent of the site's Primary Frontage ...
+# shall be occupied by a building" (bdc.60.05.design-review-standards.txt
+# #L272-L273), 35 percent of a secondary frontage, as
+# `building_frontage_min_pct` / `building_frontage_other_pct` in every
+# Commercial and Multiple Use zone the pod may use (Chapter 10's lists:
+# NS, CS, CC, GC; RC-E, TC-MU, TC-HDR, CM-HDR, SC-MU, SC-HDR, SC-S; CM-CS
+# under B). One pod fills at most its own width of a street, so a lot much
+# wider than the pod fails it. New single-detached dwellings are
+# prohibited in every one of these zones (20.10 note 10, 20.20 note 6), so
+# the state's middle-housing design limits, which compare with detached
+# housing, do not reach them. The Downtown zones carry Chapter 70's own
+# version (S1-S2) below.
 #
 # THE MINIMUM-DENSITY ESCAPE. 20.25.05.1.A lets a project below minimum
 # density proceed if it shows "how, in all aspects, future intensification
@@ -1172,9 +1179,8 @@ zones:
     setback_front_max_ft:
       # 60.05.15.6.A: buildings occupy a share of the frontage "between the
       # minimum setback and the maximum setback ... or 16 feet if there is
-      # no maximum setback listed". NOT ENCODED: the share itself (60
-      # percent of the Primary Frontage, 35 percent of a secondary one);
-      # no field holds a frontage-occupancy percentage.
+      # no maximum setback listed". The share itself is
+      # `building_frontage_min_pct` below (FOLLOWUPS 109).
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L137,L265-L273"
@@ -1213,6 +1219,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted (units attached). No minimum lot or width; min
       34 du/net acre; front 0 (max 16 under 60.05.15.6.A for residential
@@ -1327,6 +1366,27 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.B, which binds "All buildings in the CM-CS zone". It
+      # names no band (A's "between the minimum setback and the maximum
+      # setback" is not repeated) and the zone lists no maximum front
+      # setback, so nothing bounds how far back the building may stand and
+      # count: the share is unmeasured and the lot held out of GREEN.
+      value: 50
+      cite: "Beaverton BDC 60.05.15.6.B.1, all buildings in the CM-CS zone occupy 50 percent of the abutting Primary Frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L299-L302"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.B.2, 35 percent of the abutting secondary public street frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L299-L300,L308-L309"
+    building_frontage_less_drive:
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.B.3.a, the width of the widest part of a driveway's public element shall be subtracted"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L312-L314"
+    building_frontage_plaza_pct:
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.B.3.d, plazas, including pedestrian plazas, up to 20 percent of the total public street frontage per site are subtracted"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L312-L313,L318"
     notes: >-
       DRAFT. Quadplex permitted (units attached). No minimum lot or width; min
       34 du/net acre; yards 0 (side and rear 5 beside a residential zone); 65
@@ -1393,9 +1453,8 @@ zones:
     setback_front_max_ft:
       # 60.05.15.6.A: buildings occupy a share of the frontage "between the
       # minimum setback and the maximum setback ... or 16 feet if there is
-      # no maximum setback listed". NOT ENCODED: the share itself (60
-      # percent of the Primary Frontage, 35 percent of a secondary one);
-      # no field holds a frontage-occupancy percentage.
+      # no maximum setback listed". The share itself is
+      # `building_frontage_min_pct` below (FOLLOWUPS 109).
       # Table 20.10.15 D prints None for NS, so the 16 feet of 60.05.15.6.A.
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
@@ -1462,6 +1521,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted (units attached; the 50% residential share of
       the NS district not encoded). No minimum lot; 70 x 100; min 34 du/net
@@ -1576,6 +1668,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted (units attached). No minimum lot; min 34
       du/net acre; front 0 (max 16), side 0, rear 0 (15 beside a residential
@@ -1681,6 +1806,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted (units attached). No minimum lot; min 34
       du/net acre; front 0 (max 16), side 0, rear 0; no height limit (60 by a
@@ -1793,6 +1951,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted (units attached). No minimum lot; min 34
       du/net acre; front 0 (max 16), side 0, rear 0 (15 beside a residential
@@ -1867,9 +2058,8 @@ zones:
     setback_front_max_ft:
       # 60.05.15.6.A: buildings occupy a share of the frontage "between the
       # minimum setback and the maximum setback ... or 16 feet if there is
-      # no maximum setback listed". NOT ENCODED: the share itself (60
-      # percent of the Primary Frontage, 35 percent of a secondary one);
-      # no field holds a frontage-occupancy percentage.
+      # no maximum setback listed". The share itself is
+      # `building_frontage_min_pct` below (FOLLOWUPS 109).
       # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
@@ -1909,6 +2099,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 12 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -1975,9 +2198,8 @@ zones:
     setback_front_max_ft:
       # 60.05.15.6.A: buildings occupy a share of the frontage "between the
       # minimum setback and the maximum setback ... or 16 feet if there is
-      # no maximum setback listed". NOT ENCODED: the share itself (60
-      # percent of the Primary Frontage, 35 percent of a secondary one);
-      # no field holds a frontage-occupancy percentage.
+      # no maximum setback listed". The share itself is
+      # `building_frontage_min_pct` below (FOLLOWUPS 109).
       # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
@@ -2017,6 +2239,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -2083,9 +2338,8 @@ zones:
     setback_front_max_ft:
       # 60.05.15.6.A: buildings occupy a share of the frontage "between the
       # minimum setback and the maximum setback ... or 16 feet if there is
-      # no maximum setback listed". NOT ENCODED: the share itself (60
-      # percent of the Primary Frontage, 35 percent of a secondary one);
-      # no field holds a frontage-occupancy percentage.
+      # no maximum setback listed". The share itself is
+      # `building_frontage_min_pct` below (FOLLOWUPS 109).
       # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
@@ -2125,6 +2379,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre; yards 0
       (front max 16); no height limit (60 by a residential lot line); FAR 4.0.
@@ -2200,9 +2487,8 @@ zones:
     setback_front_max_ft:
       # 60.05.15.6.A: buildings occupy a share of the frontage "between the
       # minimum setback and the maximum setback ... or 16 feet if there is
-      # no maximum setback listed". NOT ENCODED: the share itself (60
-      # percent of the Primary Frontage, 35 percent of a secondary one);
-      # no field holds a frontage-occupancy percentage.
+      # no maximum setback listed". The share itself is
+      # `building_frontage_min_pct` below (FOLLOWUPS 109).
       # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
@@ -2242,6 +2528,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
@@ -2318,9 +2637,8 @@ zones:
     setback_front_max_ft:
       # 60.05.15.6.A: buildings occupy a share of the frontage "between the
       # minimum setback and the maximum setback ... or 16 feet if there is
-      # no maximum setback listed". NOT ENCODED: the share itself (60
-      # percent of the Primary Frontage, 35 percent of a secondary one);
-      # no field holds a frontage-occupancy percentage.
+      # no maximum setback listed". The share itself is
+      # `building_frontage_min_pct` below (FOLLOWUPS 109).
       # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
@@ -2360,6 +2678,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
@@ -2434,9 +2785,8 @@ zones:
     setback_front_max_ft:
       # 60.05.15.6.A: buildings occupy a share of the frontage "between the
       # minimum setback and the maximum setback ... or 16 feet if there is
-      # no maximum setback listed". NOT ENCODED: the share itself (60
-      # percent of the Primary Frontage, 35 percent of a secondary one);
-      # no field holds a frontage-occupancy percentage.
+      # no maximum setback listed". The share itself is
+      # `building_frontage_min_pct` below (FOLLOWUPS 109).
       # C.2 of Table 20.20.15 prints "See 60.05.15.6" for this zone.
       value: 16
       cite: "Beaverton BDC 60.05.15.6.A, building location along streets in Commercial and Multiple Use zones (16 feet where no maximum is listed)"
@@ -2476,6 +2826,39 @@ zones:
       value: 15
       cite: "Beaverton BDC 60.05.25.2.A, 15 percent of the gross site area as Open Space for 4 to 7 attached units"
       quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L722,L724-L725,L731-L735"
+    building_frontage_min_pct:
+      # 60.05.15.6.A.1: 60 percent of the Primary Frontage, measured between
+      # the minimum and the maximum setback (16 feet where none is listed,
+      # the band `setback_front_max_ft` holds). The Primary Frontage is the
+      # code's pick -- frequent transit, then other transit, then street
+      # class -- which is not held, so a lot with more than one street is
+      # GREEN only where every street clears 60. Residential buildings are
+      # not excepted: only CM-CS buildings and non-residential or mixed
+      # buildings in CM-HDR are (they go to B). 60.05.11.3 sends every use but
+      # single-detached through 60.05.15-30 or the guidelines; the standards
+      # are read, the guidelines being no number (layer note above).
+      value: 60
+      cite: "Beaverton BDC 60.05.15.6.A.1, at least 60 percent of the site's Primary Frontage occupied by a building between the minimum and maximum setback"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L278"
+    building_frontage_other_pct:
+      value: 35
+      cite: "Beaverton BDC 60.05.15.6.A.2, 35 percent of the abutting secondary public street frontage where a parcel abuts more than one public street"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L265-L269,L279-L282"
+    building_frontage_less_drive:
+      # A.4.a "may be subtracted": the applicant's choice, so taken. The
+      # sight-clearance areas (b) and natural areas (d) are what the site
+      # has, not measured, and not taken: the stricter share.
+      value: true
+      cite: "Beaverton BDC 60.05.15.6.A.4.a, the width of the widest part of the driveway's public element, for one driveway, may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L288"
+    building_frontage_plaza_pct:
+      # A.4.c: a plaza is the applicant's to build (open to the public, next
+      # to or in front of a building set back no more than 40 feet). The
+      # pod's plan draws none, so it is taken only on the reading that
+      # decides RED: a pod that misses even with the plaza off fails.
+      value: 20
+      cite: "Beaverton BDC 60.05.15.6.A.4.c, plazas up to 20 percent of the total public street frontage per site may be subtracted from the site frontage"
+      quote: "or/washington/beaverton/bdc.60.05.design-review-standards.txt#L286-L287,L291-L292"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 30 (24 beyond 400 ft of a
       platform, not encoded) du/net acre; yards 0 (front max 16); no height
@@ -2499,6 +2882,11 @@ zones:
   # and rear setback beside "property zoned residential and/or Downtown
   # Transition (DT)"; that stricter row is the base value and the interior
   # 0 is the variant (see RC-BC). RC-DT's own row names only residential.
+  # Building frontage (Table 70.20.05.4.A S1-S2) is encoded per zone
+  # (FOLLOWUPS 109): 50 to 90 percent by street type, not held, so a pod
+  # under 50 fails and one between is held out of GREEN. The Type 2 and 3
+  # tracks may answer a guideline instead of a standard (70.05.10); a
+  # measured standard the pod fails stays RED (Steph 2026-10-14).
   # ------------------------------------------------------------------
   RC-BC:
     cite_default:
@@ -2586,6 +2974,39 @@ zones:
       per_dwelling: 48
       cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    building_frontage_min_pct:
+      # Table 70.20.05.4.A S1: buildings occupy a share of the site frontage
+      # between the minimum and the maximum setback, set by street type
+      # (Figure 70.15.15.1, not held): Commercial Streets and Hall/Watson
+      # between Canyon and Fourth 90; the other Loop segments, Fourth and
+      # Fifth, Millikan and Local Streets 75; Canyon and Farmington Major
+      # segments 70; Cedar Hills 60, other Connectors 60; other Major 50.
+      # The highest is held here and the lowest in _least: below 50 the pod
+      # fails on any street, between them the street type decides (held out
+      # of GREEN). Accessory and non-habitable structures do not count; the
+      # pod is neither. S1.f's recesses and public open space may count
+      # toward it; not measured, so not counted (the stricter share).
+      value: 90
+      cite: "Beaverton BDC Table 70.20.05.4.A S1, minimum building frontage along streets by street type (highest: Commercial Streets, and Hall and Watson between Canyon and Fourth, 90 percent)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L874,L890-L915"
+    building_frontage_min_pct_least:
+      value: 50
+      cite: "Beaverton BDC Table 70.20.05.4.A S1.c.IV, all other Major Street frontages, 50 percent (the lowest street type)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L890-L896,L906-L911"
+    building_frontage_other_pct:
+      # S2: the full share on the primary frontage; ONE non-primary frontage
+      # may drop 25 points, except a Major Street. The most a non-primary
+      # can ask after its drop is 70 (a Canyon or Farmington Major segment,
+      # not reduced). The least (a Connector's 60 less 25, 35) is printed
+      # nowhere and not held, so the other street never makes the lot RED
+      # here; it holds it out of GREEN until every street clears 90.
+      value: 70
+      cite: "Beaverton BDC Table 70.20.05.4.A S2, on multiple frontages the primary meets the S1 share and one non-primary frontage may be reduced by 25 percent, except a Major Street"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L906-L909,L961-L968"
+    building_frontage_less_drive:
+      value: true
+      cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L934-L938"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 60 du/net acre (all-
       residential development); 120 ft; front 6 (max 12), street side 6,
@@ -2672,6 +3093,39 @@ zones:
       per_dwelling: 48
       cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    building_frontage_min_pct:
+      # Table 70.20.05.4.A S1: buildings occupy a share of the site frontage
+      # between the minimum and the maximum setback, set by street type
+      # (Figure 70.15.15.1, not held): Commercial Streets and Hall/Watson
+      # between Canyon and Fourth 90; the other Loop segments, Fourth and
+      # Fifth, Millikan and Local Streets 75; Canyon and Farmington Major
+      # segments 70; Cedar Hills 60, other Connectors 60; other Major 50.
+      # The highest is held here and the lowest in _least: below 50 the pod
+      # fails on any street, between them the street type decides (held out
+      # of GREEN). Accessory and non-habitable structures do not count; the
+      # pod is neither. S1.f's recesses and public open space may count
+      # toward it; not measured, so not counted (the stricter share).
+      value: 90
+      cite: "Beaverton BDC Table 70.20.05.4.A S1, minimum building frontage along streets by street type (highest: Commercial Streets, and Hall and Watson between Canyon and Fourth, 90 percent)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L874,L890-L915"
+    building_frontage_min_pct_least:
+      value: 50
+      cite: "Beaverton BDC Table 70.20.05.4.A S1.c.IV, all other Major Street frontages, 50 percent (the lowest street type)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L890-L896,L906-L911"
+    building_frontage_other_pct:
+      # S2: the full share on the primary frontage; ONE non-primary frontage
+      # may drop 25 points, except a Major Street. The most a non-primary
+      # can ask after its drop is 70 (a Canyon or Farmington Major segment,
+      # not reduced). The least (a Connector's 60 less 25, 35) is printed
+      # nowhere and not held, so the other street never makes the lot RED
+      # here; it holds it out of GREEN until every street clears 90.
+      value: 70
+      cite: "Beaverton BDC Table 70.20.05.4.A S2, on multiple frontages the primary meets the S1 share and one non-primary frontage may be reduced by 25 percent, except a Major Street"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L906-L909,L961-L968"
+    building_frontage_less_drive:
+      value: true
+      cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L934-L938"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 24 du/net acre (18 where
       Figure 70.15.10.2.3 says so, not encoded); 65 ft; front 6 (max 16),
@@ -2757,6 +3211,39 @@ zones:
       per_dwelling: 48
       cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    building_frontage_min_pct:
+      # Table 70.20.05.4.A S1: buildings occupy a share of the site frontage
+      # between the minimum and the maximum setback, set by street type
+      # (Figure 70.15.15.1, not held): Commercial Streets and Hall/Watson
+      # between Canyon and Fourth 90; the other Loop segments, Fourth and
+      # Fifth, Millikan and Local Streets 75; Canyon and Farmington Major
+      # segments 70; Cedar Hills 60, other Connectors 60; other Major 50.
+      # The highest is held here and the lowest in _least: below 50 the pod
+      # fails on any street, between them the street type decides (held out
+      # of GREEN). Accessory and non-habitable structures do not count; the
+      # pod is neither. S1.f's recesses and public open space may count
+      # toward it; not measured, so not counted (the stricter share).
+      value: 90
+      cite: "Beaverton BDC Table 70.20.05.4.A S1, minimum building frontage along streets by street type (highest: Commercial Streets, and Hall and Watson between Canyon and Fourth, 90 percent)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L874,L890-L915"
+    building_frontage_min_pct_least:
+      value: 50
+      cite: "Beaverton BDC Table 70.20.05.4.A S1.c.IV, all other Major Street frontages, 50 percent (the lowest street type)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L890-L896,L906-L911"
+    building_frontage_other_pct:
+      # S2: the full share on the primary frontage; ONE non-primary frontage
+      # may drop 25 points, except a Major Street. The most a non-primary
+      # can ask after its drop is 70 (a Canyon or Farmington Major segment,
+      # not reduced). The least (a Connector's 60 less 25, 35) is printed
+      # nowhere and not held, so the other street never makes the lot RED
+      # here; it holds it out of GREEN until every street clears 90.
+      value: 70
+      cite: "Beaverton BDC Table 70.20.05.4.A S2, on multiple frontages the primary meets the S1 share and one non-primary frontage may be reduced by 25 percent, except a Major Street"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L906-L909,L961-L968"
+    building_frontage_less_drive:
+      value: true
+      cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L934-L938"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; min 43 du/net acre; 75 ft;
       front 6 (max 16), street side 6, side 10 and rear 20 (0 as RC-BC).
@@ -2854,6 +3341,39 @@ zones:
       per_dwelling: 48
       cite: "Beaverton BDC Table 70.20.10.7.A S2, residential-only buildings 48 square feet of Usable Open Space per unit"
       quote: "or/washington/beaverton/bdc.70.downtown.txt#L2812,L2824,L2830,L2841-L2842"
+    building_frontage_min_pct:
+      # Table 70.20.05.4.A S1: buildings occupy a share of the site frontage
+      # between the minimum and the maximum setback, set by street type
+      # (Figure 70.15.15.1, not held): Commercial Streets and Hall/Watson
+      # between Canyon and Fourth 90; the other Loop segments, Fourth and
+      # Fifth, Millikan and Local Streets 75; Canyon and Farmington Major
+      # segments 70; Cedar Hills 60, other Connectors 60; other Major 50.
+      # The highest is held here and the lowest in _least: below 50 the pod
+      # fails on any street, between them the street type decides (held out
+      # of GREEN). Accessory and non-habitable structures do not count; the
+      # pod is neither. S1.f's recesses and public open space may count
+      # toward it; not measured, so not counted (the stricter share).
+      value: 90
+      cite: "Beaverton BDC Table 70.20.05.4.A S1, minimum building frontage along streets by street type (highest: Commercial Streets, and Hall and Watson between Canyon and Fourth, 90 percent)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L874,L890-L915"
+    building_frontage_min_pct_least:
+      value: 50
+      cite: "Beaverton BDC Table 70.20.05.4.A S1.c.IV, all other Major Street frontages, 50 percent (the lowest street type)"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L890-L896,L906-L911"
+    building_frontage_other_pct:
+      # S2: the full share on the primary frontage; ONE non-primary frontage
+      # may drop 25 points, except a Major Street. The most a non-primary
+      # can ask after its drop is 70 (a Canyon or Farmington Major segment,
+      # not reduced). The least (a Connector's 60 less 25, 35) is printed
+      # nowhere and not held, so the other street never makes the lot RED
+      # here; it holds it out of GREEN until every street clears 90.
+      value: 70
+      cite: "Beaverton BDC Table 70.20.05.4.A S2, on multiple frontages the primary meets the S1 share and one non-primary frontage may be reduced by 25 percent, except a Major Street"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L906-L909,L961-L968"
+    building_frontage_less_drive:
+      value: true
+      cite: "Beaverton BDC Table 70.20.05.4.A S1.g.I, the width of driveways occupying the frontage is subtracted from the total street frontage"
+      quote: "or/washington/beaverton/bdc.70.downtown.txt#L934-L938"
     notes: >-
       DRAFT. Quadplex permitted. No minimum lot; 30 to 60 du/net acre; 60 ft;
       front 10 (max 20), street side 10, interior 0 (side 10 and rear 20

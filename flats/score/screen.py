@@ -309,6 +309,8 @@ CHECK_FIELD: dict[str, str] = {
     "driveway_frontage_share": "driveway_max_frontage_pct",
     "parking_frontage_share": "parking_area_max_frontage_pct",
     "parking_frontage_width": "parking_area_max_width_ft",
+    "building_frontage_share": "building_frontage_min_pct",
+    "building_frontage_other_share": "building_frontage_other_pct",
     "front_yard_vehicle_share": "parking_front_yard_max_pct",
     "min_lot_width_ft": "min_lot_width_ft",
     "min_average_lot_width_ft": "min_average_lot_width_ft",
@@ -364,6 +366,18 @@ COURT_UNDRIVEN = "court_undriven"
 #: ``FACT_UNOBSERVED``: a question, never a red on a corner piece the drive
 #: need not cross, and never a pass.
 DRIVE_STREET = "drive_street"
+
+#: The building's share of the street frontage (FOLLOWUPS 109): the check
+#: names and the two quantities that hold it out of GREEN without failing it.
+#: ``BUILDING_FRONTAGE``: the share was not measured on a drawn plan, or the
+#: drawn plan falls short where another placement of the same pod could
+#: clear it. ``FRONTAGE_STREET``: the pod clears the lowest share any reading
+#: of the street asks and not the highest -- which street type it is (not
+#: held), or which of several streets the code makes the primary frontage.
+BUILDING_SHARE = "building_frontage_share"
+BUILDING_OTHER_SHARE = "building_frontage_other_share"
+BUILDING_FRONTAGE = "building_frontage"
+FRONTAGE_STREET = "frontage_street_type"
 
 
 @dataclass(frozen=True, slots=True)
@@ -497,6 +511,18 @@ class LotFacts:
     #: and the screen does not draw that: the cap is a question
     #: (:data:`DRIVE_STREET`). None where nothing measured the streets.
     street_line_max_ft: float | None = None
+    #: Every one of the lot's streets, in feet, measured as
+    #: ``street_line_min_ft`` is, in :func:`flats.fit.frontage.street_chains`
+    #: order: what a building share of each street's frontage is read
+    #: against (FOLLOWUPS 109). Empty where nothing measured the streets.
+    street_lines_ft: tuple[float, ...] = ()
+    #: The building's share of each street's frontage on the drawn plan,
+    #: percent, in the same order (:func:`flats.fit.frontage.building_runs`):
+    #: the building seen from the street within the maximum front setback.
+    #: Measured by the bridge only where the zone asks a share
+    #: (``building_frontage_min_pct``); None where nobody measured it, which
+    #: holds the lot out of GREEN.
+    building_frontage_pct: tuple[float, ...] | None = None
     #: Distances to transit, feet, as ``(measure, ft)`` pairs
     #: (:data:`flats.rules.model.TRANSIT_MEASURES`), measured once per
     #: transit release by :mod:`flats.ingest.transit` and read by the rules
@@ -1072,6 +1098,8 @@ def _checks(
                     float(width_cap),
                     is_maximum=True,
                 )
+    # The building's share of the street frontage (FOLLOWUPS 109).
+    _building_frontage(rules, lot, design, beside, check, unchecked, unmeasured)
     # The front yard's share in vehicle area (Portland 33.266.120.C.1.b, 40
     # percent; Milwaukie 19.607.1.D, 50). An AREA share of the ground between
     # the front lot line and the building, which the pod's drive crosses
@@ -2472,6 +2500,119 @@ def screen(
     return Screening(triage=Triage.green, reasons=(), **common)
 
 
+def _pct(rules: ZoneResolution, name: str) -> float | None:
+    got = rules.get(name)
+    if isinstance(got, bool) or not isinstance(got, (int, float)):
+        return None
+    return float(got)
+
+
+def _building_frontage(
+    rules: ZoneResolution,
+    lot: LotFacts,
+    design: Design,
+    beside: Beside | None,
+    check: Callable[..., None],
+    unchecked: list[str],
+    unmeasured: set[str],
+) -> None:
+    """The building's share of the street frontage (FOLLOWUPS 109):
+    Beaverton 60.05.15.6.A and Downtown 70.20.05.4 S1-S2, Washington County
+    392-8 and 392-9.5.
+
+    One pod fills at most its own width (or depth) of a street, and less
+    the driveway where the code takes it off (``building_frontage_less_drive``).
+    So, read on the street lengths alone, with the primary on whichever
+    street serves the pod best and the lowest share any street type asks
+    (``*_least``): a pod short of that on every reading FAILS -- a measured
+    standard the pod cannot meet, wherever it stands.
+
+    Clearing that is not a pass. GREEN needs the drawn plan
+    (:attr:`LotFacts.building_frontage_pct`) to clear the highest share on
+    every street the code may make the primary frontage: the primary is the
+    code's pick (transit, street class), which is not held. A corner lot
+    owes ``building_frontage_other_pct`` on the other street as well; a
+    through lot under ``building_frontage_through_one`` owes one street.
+    Anything between is held out of GREEN on what is not held --
+    :data:`FRONTAGE_STREET` where a street type or the choice of primary
+    decides, :data:`BUILDING_FRONTAGE` where the plan was not measured or
+    another placement could clear it.
+    """
+    need = _pct(rules, "building_frontage_min_pct")
+    if need is None:
+        return
+    least = _pct(rules, "building_frontage_min_pct_least")
+    banded = least is not None
+    least = need if least is None else min(least, need)
+    other = _pct(rules, "building_frontage_other_pct")
+    # One share on the other street, whatever its type -- except where the
+    # share turns on the street type (Beaverton Downtown: S2's 25-point drop
+    # leaves a floor the table prints nowhere). There the other street makes
+    # no lot RED; what it owes only holds the lot out of GREEN, below.
+    other_least = None if banded else other
+    lines = tuple(float(x) for x in lot.street_lines_ft if x > 0)
+    if (
+        lot.landlocked
+        or not lines
+        or rules.get("setback_front_max_ft") is None
+    ):
+        unchecked.append(BUILDING_SHARE)
+        unmeasured.add(BUILDING_FRONTAGE)
+        return
+    if len(lines) == 1 or (
+        rules.get("building_frontage_through_one") is True and not lot.corner
+    ):
+        # One street, or a through lot that owes one of its two.
+        other = other_least = None
+    drive = 0.0
+    if rules.get("building_frontage_less_drive") is True:
+        drive = drive_at_street(design, rules, lot.alley, corner=lot.corner, beside=beside) or 0.0
+    w, d = float(design.footprint.width_ft), float(design.footprint.depth_ft)
+    # A plaza the applicant may take off the frontage (Beaverton
+    # 60.05.15.6.A.4.c, up to a share of the site's total street frontage):
+    # the plan draws none, so it is taken on the reading that decides RED --
+    # on every street at once, the lenient way -- and never toward GREEN.
+    plaza = (_pct(rules, "building_frontage_plaza_pct") or 0.0) / 100.0 * sum(lines)
+
+    def most(face: float, line: float) -> float:
+        net = line - drive - min(plaza, line)
+        return 100.0 if net <= 0 else min(100.0, 100.0 * face / net)
+
+    # The best any one placement could do, on the most lenient reading.
+    best: tuple[float, float, float | None] | None = None
+    for a, line in enumerate(lines):
+        for face, back in ((w, d), (d, w)):
+            primary = most(face, line)
+            rest = [most(back, x) for b, x in enumerate(lines) if b != a]
+            second = max(rest) if (other_least is not None and rest) else None
+            margin = primary - least
+            if second is not None:
+                margin = min(margin, second - float(other_least))  # type: ignore[arg-type]
+            if best is None or margin > best[0]:
+                best = (margin, primary, second)
+    assert best is not None
+    margin, primary, second = best
+    if margin < 0:
+        if primary < least:
+            check(BUILDING_SHARE, primary, least, is_maximum=False)
+        else:
+            check(BUILDING_OTHER_SHARE, float(second), other_least, is_maximum=False)
+        return
+    drawn = lot.building_frontage_pct
+    if drawn is None or len(drawn) != len(lines):
+        unchecked.append(BUILDING_SHARE)
+        unmeasured.add(BUILDING_FRONTAGE)
+        return
+    if min(drawn) >= need:
+        check(BUILDING_SHARE, min(drawn), need, is_maximum=False)
+        return
+    unchecked.append(BUILDING_SHARE)
+    if len(lines) == 1 and most(max(w, d), lines[0]) >= need:
+        unmeasured.add(BUILDING_FRONTAGE)
+    else:
+        unmeasured.add(FRONTAGE_STREET)
+
+
 #: Why :func:`review_with_conditions` holds, and the field whose citation
 #: names the review.
 REVIEW_FIELDS: dict[str, str] = {
@@ -2564,6 +2705,8 @@ _MEASURED_FLAG: dict[str, str] = {
     SITE_GRADE: "MEASURE-SITE-GRADE",
     COURT_UNDRIVEN: "MEASURE-COURT-TURNS",
     DRIVE_STREET: "MEASURE-DRIVE-STREET",
+    BUILDING_FRONTAGE: "MEASURE-BUILDING-FRONTAGE",
+    FRONTAGE_STREET: "MEASURE-FRONTAGE-STREET",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on

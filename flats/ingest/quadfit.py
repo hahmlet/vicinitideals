@@ -73,7 +73,7 @@ from flats.encode.port_quadfit import COUNTY, layer_id_for
 from flats.fit import easement
 from flats.fit.angles import DEFAULT_STEP_DEG, angles_for, normalize
 from flats.fit.draw import draw
-from flats.fit.frontage import parking_share, street_chains
+from flats.fit.frontage import building_runs, parking_share, street_chains
 from flats.fit.outdoor import largest_square, open_ground
 from flats.fit.rectangle import Fit, Fitter
 from flats.fit.slope import ONE_M, TEN_M, load_rules as slope_rules
@@ -181,6 +181,7 @@ from flats.score.paper import (
     side_street_fed,
 )
 from flats.score.screen import (
+    BUILDING_SHARE,
     CLOSER_LOOK_SPLIT_ZONE,
     COURT_SHAPED,
     STEEP_GROUND,
@@ -1798,6 +1799,9 @@ def lot_from_row(
         # lot line" is read against (FOLLOWUPS 84), not the summed frontage.
         street_line_min_ft=street_line_min_ft(edges),
         street_line_max_ft=street_line_max_ft(edges),
+        # Every street's line, for a building share of each street's
+        # frontage (FOLLOWUPS 109).
+        street_lines_ft=street_lines_ft(edges),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
         street_unconfirmed=unconfirmed,
@@ -2300,6 +2304,16 @@ def _screen_on(
                     parking_frontage_share_pct=share[0],
                     parking_frontage_run_ft=share[1],
                 )
+                result = screen(
+                    got, facts, design, fit, policy=policy, relief=relief, config=config
+                )
+        if BUILDING_SHARE in result.unchecked and facts.building_frontage_pct is None:
+            # The zone asks the building to fill a share of the street
+            # frontage (FOLLOWUPS 109): measure this plan's share on the
+            # drawn plan and screen again on it.
+            built = building_frontage(here, streets, design, got, fit, fitters[key], env)
+            if built is not None:
+                facts = dataclasses.replace(facts, building_frontage_pct=built)
                 result = screen(
                     got, facts, design, fit, policy=policy, relief=relief, config=config
                 )
@@ -3978,6 +3992,16 @@ def street_line_min_ft(edges: LotEdges | None) -> float | None:
     return min(sum(e.length_ft for e in chain) for chain in chains)
 
 
+def street_lines_ft(edges: LotEdges | None) -> tuple[float, ...]:
+    """Every one of the lot's streets, in feet, as :func:`street_line_min_ft`
+    measures them, in :func:`flats.fit.frontage.street_chains` order.
+    Empty where the lot has no edges or no street line.
+    :attr:`flats.score.screen.LotFacts.street_lines_ft`."""
+    if edges is None:
+        return ()
+    return tuple(sum(e.length_ft for e in chain) for chain in street_chains(edges))
+
+
 def street_line_max_ft(edges: LotEdges | None) -> float | None:
     """The longest of the lot's streets, in feet, as :func:`street_line_min_ft`
     measures them. :attr:`flats.score.screen.LotFacts.street_line_max_ft`."""
@@ -4054,6 +4078,46 @@ def parking_frontage(
     return parking_share(
         here.lot_geom, streets, drawn.rows, drawn.building, front_deg=front_deg
     )
+
+
+def building_frontage(
+    here: QuadfitLot,
+    streets: LotEdges | None,
+    design: Design,
+    got: ZoneResolution,
+    fit: Fit,
+    fitter: Fitter,
+    env: Envelope,
+) -> tuple[float, ...] | None:
+    """The building's share of each street frontage on this plan, percent,
+    in :func:`flats.fit.frontage.street_chains` order (FOLLOWUPS 109;
+    :func:`flats.fit.frontage.building_runs`), or None where it cannot be
+    measured: no lot polygon, no maximum front setback to bound the band,
+    or no drawing. The plan is drawn as :func:`outdoor_square` draws it;
+    ``streets`` as :func:`parking_frontage` reads them. Where the code takes
+    the driveway off the frontage (``building_frontage_less_drive``) the
+    drawn lane is what comes off; a court beside the building is drawn with
+    no lane, so nothing comes off -- the stricter share.
+    """
+    if here.lot_geom is None or streets is None or here.edges is None:
+        return None
+    band = _yard(got, "setback_front_max_ft")
+    if band is None:
+        return None
+    street = tuple((e.x1, e.y1, e.x2, e.y2) for e in here.edges.of_class(EdgeClass.front))
+    if not street:
+        return None
+    if fit.beside:
+        drawn = _beside_drawn(here, design, got, fit, fitter, env)
+    else:
+        drawn = _court_drawn(here, design, got, fit, fitter, env, street)
+    if drawn is None or drawn.building is None or drawn.building.is_empty:
+        return None
+    lane = drawn.lane if got.get("building_frontage_less_drive") is True else None
+    runs = building_runs(here.lot_geom, streets, drawn.building, band, lane=lane)
+    if not runs:
+        return None
+    return tuple(pct for pct, _ in runs)
 
 
 def _largest_left(

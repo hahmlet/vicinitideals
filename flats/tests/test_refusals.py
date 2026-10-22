@@ -373,7 +373,10 @@ pytestmark = pytest.mark.unit
 # (FOLLOWUPS 93 + 85): notes arrive on Troutdale HDR and MU-1 (the 8.130.C townhouse
 # design standards, read and NOT ENCODED), Fairview VTH and Milwaukie SMU, and leave
 # Milwaukie NMU (now encoded); one Fairview comment arrives.
-EXPECTED = {"notes": 156, "comments": 289, "tests": 18}
+EXPECTED = {"notes": 156, "comments": 286, "tests": 18}
+# 289 -> 286 comments on 2026-10-21 (FOLLOWUPS 109): the building frontage
+# share is encoded -- Beaverton 60.05.15.6 (layer comment), Washington County
+# 392-8 and King City 16.114.060 C.4 (the entrance faces the street).
 # 157 -> 156 notes on 2026-10-21 (FOLLOWUPS 108): Gresham MDR-24's note no longer
 # refuses Table 4.0130 note 2, now encoded as lot_of_record_relief on the zones
 # whose row B it marks (Steph's lots-of-record ruling).

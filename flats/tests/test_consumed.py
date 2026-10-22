@@ -85,9 +85,12 @@ from flats.score import paper
 #: ban the row stops at the rear wall), `parking_street_setback_ft` (the row
 #: starts that far back of the street), and `parking_area_max_width_ft` /
 #: `parking_area_max_frontage_pct` (the aisle and stall face the street).
+#:
+#: `setback_front_max_ft` left on 2026-10-21 (FOLLOWUPS 109): it is the band
+#: the building's share of the street frontage is measured in
+#: (`building_frontage_min_pct`).
 SILENTLY_UNREAD = frozenset(
     {
-        "setback_front_max_ft",
         "min_building_separation_ft",
         "max_building_width_ft",
         # 2026-10-02: `parking_front_yard_max_pct` is checked
