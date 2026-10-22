@@ -1333,6 +1333,10 @@ read when the weekly full re-screen lands.
    (q1) a wide lot one pod cannot fill to the share -- RED (as built) or YELLOW (more buildings could)?
    (q2) King City: must every one of the four front doors face the street (as built), or one per
    building? Answers ride the next chunk's splice.
+   STEPH 2026-10-21 (on q1, a gap found): the share is measured on the ORIGINAL lot for both forms --
+   "We should measure it based on what they base it on": per lot -> townhouse form on each unit lot;
+   site/development -> original lot (rulings.yaml 2026-10-21-frontage-share-measured-as-coded; chunk 3).
+   q1 (single-building wide lot red/yellow) and q2 still open.
 107. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Page check: footnotes asked as their own
    value card (Steph 2026-10-21).** LIVE 411f37ae (335097e6 + 4a1c6d4e). 76 stand-alone cards read wholly
    off one note now ride their table cell's note question ("we read it as ... is that what the note
