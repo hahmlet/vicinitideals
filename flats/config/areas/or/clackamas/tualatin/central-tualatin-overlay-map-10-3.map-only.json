@@ -1,0 +1,9 @@
+{
+  "status": "map only, needs tracing",
+  "source_url": "https://web.archive.org/web/2026/https://tualatinoregon.gov/sites/default/files/fileattachments/planning/project/56610/pma_24-0002_cfec_map_amendments.pdf",
+  "retrieved": "2026-10-22",
+  "sha256": "797555ec45424443458fc2676badb39e9adbae18904d51267a9ba4faf0822be6",
+  "source_pages": "all",
+  "pages_in_file": 2,
+  "note": "Tualatin Comprehensive Plan Map 10-3, Central Tualatin Overlay Zone and its numbered blocks (1-33), page 1 EXISTING and page 2 PROPOSED, from PMA 24-0002 (CFEC map amendments). The city URL returned 404 on 2026-10-22; fetched from the Internet Archive copy of that URL. Blocks are not in city GIS. TDC 58.110 sends the reader to this map. Needs tracing."
+}

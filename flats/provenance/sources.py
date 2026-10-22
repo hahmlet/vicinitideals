@@ -73,6 +73,8 @@ OFFICIAL: frozenset[str] = frozenset(
         "greshamoregon.gov",
         "multco.us",
         "clackamas.us",
+        # Washington County's own land-use site: its eleven community plans.
+        "washingtoncountyor.gov",
         "happyvalleyor.gov",
         "ci.oswego.or.us",
         "cityoffairview-or.gov",
