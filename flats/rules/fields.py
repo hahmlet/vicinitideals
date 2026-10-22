@@ -132,6 +132,7 @@ _LABELS: dict[str, str] = {
     "building_frontage_less_drive": "driveway width comes off the frontage",
     "building_frontage_plaza_pct": "plaza that may come off the frontage (share of it)",
     "building_frontage_basis": "what the building share is measured on (site or each lot)",
+    "building_frontage_corner": "which street of a corner lot owes the building share",
     "parking_building_buffer_ft": "min. parking-to-building buffer",
     "parking_lot_line_buffer_ft": "min. parking setback from other lot lines",
     "parking_island_sqft_per_space": "min. landscape island per parking space",
@@ -1438,6 +1439,27 @@ _F: tuple[FieldDef, ...] = (
         "GREEN on it, never passed on the original lot's share.",
         choices=("site", "lot"),
     ),
+    FieldDef(
+        "building_frontage_corner",
+        "enum",
+        "Which street of a CORNER lot owes the building share "
+        "(`building_frontage_min_pct`) where the code names the primary "
+        "frontage by its class. `highest_class`: the street with the highest "
+        "classification on the city's TSP map, alone (GDC 3.0100, Primary "
+        "Street: \"the primary street shall be the street with the highest "
+        "classification ... When two streets have the same classification, "
+        "the applicant shall identify the primary street frontage\"; Steph "
+        "2026-10-22, rulings.yaml "
+        "2026-10-22-gresham-corner-frontage-main-street). Read off "
+        "`LotFacts.street_line_ranks`: two streets of the same measured class "
+        "are the applicant's pick, either one filled passes; a street whose "
+        "class nobody read leaves the primary unheld and the lot out of "
+        "GREEN unless every street is filled. `street_type`: the code ranks "
+        "its own street types on a map FLATS does not hold (Gresham Downtown, "
+        "Map 4.1140), so the primary is unheld. Absent is the same: every "
+        "street for GREEN, the best street alone for RED.",
+        choices=("highest_class", "street_type"),
+    ),
     # --- orientation ----------------------------------------------------
     FieldDef(
         "orientation_constraint",
@@ -1858,6 +1880,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "building_frontage_less_drive",
         "building_frontage_plaza_pct",
         "building_frontage_basis",
+        "building_frontage_corner",
         "parking_front_yard_max_pct",
         "parking_front_prohibited",
         "parking_alley_access_required",

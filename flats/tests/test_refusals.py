@@ -373,7 +373,10 @@ pytestmark = pytest.mark.unit
 # (FOLLOWUPS 93 + 85): notes arrive on Troutdale HDR and MU-1 (the 8.130.C townhouse
 # design standards, read and NOT ENCODED), Fairview VTH and Milwaukie SMU, and leave
 # Milwaukie NMU (now encoded); one Fairview comment arrives.
-EXPECTED = {"notes": 157, "comments": 286, "tests": 18}
+EXPECTED = {"notes": 157, "comments": 287, "tests": 18}
+# 286 -> 287 comments on 2026-10-22 (gresham-corner): Rockwood 7.0512(A)(2) S3.b-c, the
+# 60 ft of building at a corner, binds neither of the pod's forms (S3 is "All Development",
+# which leaves townhouses out, and 7.0502(B) leaves plexes out of 7.0501-7.0512).
 # 156 -> 157 notes on 2026-10-22 (design districts chunk 3): Wood Village TC's note
 # encodes Table 235-5's ground floor height and records its building frontage row
 # (60/60/40 per cent by street type, measured along the block) as not encoded.

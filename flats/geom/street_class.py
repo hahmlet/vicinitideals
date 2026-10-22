@@ -342,6 +342,31 @@ CLASS_MAPS: dict[str, ClassSpec] = {
         access=False,
         name_field="FULL_NAME",
     ),
+    # GDC 3.0100, Primary Street: "As used in the Design District standards,
+    # the primary street shall be the street with the highest
+    # classification", and Rockwood 7.0512(A)(2) S3.a the same in its own
+    # words ("the street with the highest functional classification"). On a
+    # corner lot the building share is owed there alone (Steph 2026-10-22,
+    # rulings.yaml 2026-10-22-gresham-corner-frontage-main-street;
+    # `building_frontage_corner`). Only ranks: Gresham's driveway rule names
+    # no class, and nothing here reads local_street. Proposed and Future
+    # lines, Driveway and a blank rank nothing, so a lot on one is unranked.
+    "street_class_gresham": ClassSpec(
+        field="Description",
+        local=frozenset(),
+        other=frozenset(),
+        rank={
+            "Local": 0,
+            "Minor Collector": 1,
+            "Standard Collector": 2,
+            "Major Collector": 3,
+            "Minor Arterial": 4,
+            "Standard Arterial": 5,
+            "Major Arterial": 6,
+            "Principal Arterial (ODOT)": 7,
+            "Freeway (ODOT)": 8,
+        },
+    ),
 }
 
 

@@ -56,6 +56,7 @@ from flats.tests.test_frontage_caps import quoted
 from flats.tests.test_round2_rulings import (
     DESIGN,
     LOT,
+    SS,
     F,
     R,
     S,
@@ -290,6 +291,116 @@ def test_a_share_measured_per_lot_holds_the_townhouse_form_and_not_the_plex() ->
     assert check(got, BUILDING_SHARE).verdict is Verdict.passes
 
 
+# --- the main street of a corner lot (Steph 2026-10-22, GDC 3.0100) ---------
+
+#: Gresham's shape: half the frontage inside a 20 ft maximum setback, the
+#: primary street the one with the highest class.
+MAIN = {"building_frontage_min_pct": 50, "setback_front_max_ft": 20, "building_frontage_corner": "highest_class"}
+
+
+def test_the_main_street_filled_passes_whatever_the_side_street_holds() -> None:
+    # 56 ft on the 80 ft arterial is 70 percent; the 150 ft local holds 24.
+    lot = facts(street_lines_ft=(80.0, 150.0), building_frontage_pct=(70.0, 24.0), corner=True,
+                street_line_ranks=(4, 0))
+    got = run(lot, rules(**MAIN))
+    assert check(got, BUILDING_SHARE).verdict is Verdict.passes
+    assert "MEASURE-FRONTAGE-STREET" not in codes(got)
+    # Before the ruling every street owed the share: held on which street.
+    every = run(lot, rules(building_frontage_min_pct=50, setback_front_max_ft=20))
+    assert check(every, BUILDING_SHARE) is None
+    assert "MEASURE-FRONTAGE-STREET" in codes(every)
+
+
+def test_only_the_quieter_street_filled_is_red() -> None:
+    # The arterial is 120 ft: one pod fills 47 percent, and inside 20 ft
+    # side yards (80 ft) not even two end-on (84) stand. The 80 ft local
+    # the pod fills does not count.
+    lot = facts(street_lines_ft=(120.0, 80.0), building_frontage_pct=(30.0, 70.0), corner=True,
+                street_line_ranks=(5, 0))
+    got = run(lot, rules(**MAIN, setback_side_ft=20))
+    assert check(got, BUILDING_SHARE).verdict is not Verdict.passes
+    assert got.colour is Colour.red
+    # Read on every street, the local saved it from RED.
+    every = run(lot, rules(building_frontage_min_pct=50, setback_front_max_ft=20, setback_side_ft=20))
+    assert every.colour is not Colour.red
+    # Where more pods would fill the arterial: YELLOW on more buildings.
+    long = facts(street_lines_ft=(200.0, 80.0), corner=True, street_line_ranks=(5, 0))
+    more = run(long, rules(**MAIN))
+    assert more.colour is Colour.yellow
+    assert "FRONTAGE-MORE-BUILDINGS" in codes(more)
+    # The drawn plan short on the arterial the pod could fill turned: held.
+    turned = facts(street_lines_ft=(80.0, 150.0), building_frontage_pct=(45.0, 37.0), corner=True,
+                   street_line_ranks=(4, 0))
+    held = run(turned, rules(**MAIN))
+    assert check(held, BUILDING_SHARE) is None
+    assert "MEASURE-BUILDING-FRONTAGE" in codes(held)
+
+
+def test_two_streets_of_one_measured_class_leave_the_pick_to_the_applicant() -> None:
+    # 3.0100: "When two streets have the same classification, the applicant
+    # shall identify the primary street frontage." Either street filled.
+    for lines, drawn in (((80.0, 150.0), (70.0, 24.0)), ((150.0, 80.0), (24.0, 70.0))):
+        lot = facts(street_lines_ft=lines, building_frontage_pct=drawn, corner=True, street_line_ranks=(2, 2))
+        got = run(lot, rules(**MAIN))
+        assert check(got, BUILDING_SHARE).verdict is Verdict.passes
+    # Neither filled: held, the pod could fill the 80 ft street turned.
+    short = facts(street_lines_ft=(80.0, 150.0), building_frontage_pct=(45.0, 24.0), corner=True,
+                  street_line_ranks=(2, 2))
+    assert check(run(short, rules(**MAIN)), BUILDING_SHARE) is None
+
+
+def test_an_unread_street_class_holds_the_lot_on_which_street() -> None:
+    lot = dict(street_lines_ft=(80.0, 150.0), building_frontage_pct=(70.0, 24.0), corner=True)
+    for ranks in ((4, None), (None, None), (), (4,)):
+        got = run(facts(**lot, street_line_ranks=ranks), rules(**MAIN))
+        assert check(got, BUILDING_SHARE) is None, ranks
+        assert got.colour is not Colour.green
+        assert "MEASURE-FRONTAGE-STREET" in codes(got)
+    # A primary named by street type (Gresham Downtown, Map 4.1140) is not
+    # held, ranks or no.
+    typed = run(facts(**lot, street_line_ranks=(4, 0)), rules(**{**MAIN, "building_frontage_corner": "street_type"}))
+    assert "MEASURE-FRONTAGE-STREET" in codes(typed)
+    # Only on a corner: a through lot's two ends are not named by class here.
+    through = run(facts(street_lines_ft=(80.0, 80.0), building_frontage_pct=(70.0, 24.0),
+                        street_line_ranks=(4, 0)), rules(**MAIN))
+    assert check(through, BUILDING_SHARE) is None
+
+
+def _ranked(lot, *ranks):
+    import dataclasses
+
+    it = iter(ranks)
+    return dataclasses.replace(lot, edges=tuple(
+        dataclasses.replace(e, street_rank=next(it)) if e.cls in (F, SS) else e for e in lot.edges
+    ))
+
+
+def test_a_street_carries_a_class_only_where_its_lines_agree_on_most_of_it() -> None:
+    from flats.ingest.quadfit import street_line_ranks, street_lines_ft
+
+    corner = _edges([(0, 0, 80, 0, F), (80, 0, 80, 120, SS), (80, 120, 0, 120, R), (0, 120, 0, 0, S)], [0.0, 90.0])
+    assert street_line_ranks(None) == ()
+    got = _ranked(corner, 4, 0)
+    assert len(street_line_ranks(got)) == len(street_lines_ft(got)) == 2
+    # The rank rides with its own street, chain for chain.
+    assert dict(zip(street_lines_ft(got), street_line_ranks(got))) == {80.0: 4, 120.0: 0}
+    assert set(street_line_ranks(_ranked(corner, 4, None))) == {4, None}
+    assert street_line_ranks(corner) == (None, None)
+    # The front in two pieces read 4 and 2: no one class.
+    pieces = _edges([(0, 0, 40, 0, F), (40, 0, 80, 0, F), (80, 0, 80, 120, SS), (80, 120, 0, 120, R),
+                     (0, 120, 0, 0, S)], [0.0, 90.0])
+    split = dict(zip(street_lines_ft(pieces), street_line_ranks(_ranked(pieces, 4, 2, 0))))
+    assert split == {80.0: None, 120.0: 0}
+    # A short chord unread (an eighth of the street) does not unseat it.
+    chord = _edges([(0, 0, 70, 0, F), (70, 0, 80, 0, F), (80, 0, 80, 120, SS), (80, 120, 0, 120, R),
+                    (0, 120, 0, 0, S)], [0.0, 90.0])
+    assert dict(zip(street_lines_ft(chord), street_line_ranks(_ranked(chord, 4, None, 0)))) == {80.0: 4, 120.0: 0}
+    # Half of it unread does.
+    assert dict(zip(street_lines_ft(pieces), street_line_ranks(_ranked(pieces, 4, None, 0))))[80.0] is None
+
+
+
+
 # --- the corpus -------------------------------------------------------------
 
 
@@ -394,6 +505,21 @@ def test_gresham_downtown_townhouses_owe_no_share(corpus: RuleSet, zone: str) ->
     town = corpus.resolve(GRESHAM, zone, ("unit_lots",))
     assert town.get("building_frontage_min_pct") is None
     assert town.get("orientation_constraint") == "entrance_only"
+
+
+@pytest.mark.parametrize("zone", ("MDR-12", "MDR-24", "OFR", "CMF", "CMU", "SC", "SC-RJ"))
+def test_gresham_names_the_corner_primary_by_class_on_both_forms(corpus: RuleSet, zone: str) -> None:
+    for levers in ((), ("unit_lots",), ("rockwood_design_district",), ("unit_lots", "rockwood_design_district")):
+        got = corpus.resolve(GRESHAM, zone, levers)
+        assert got.get("building_frontage_corner") == "highest_class", levers
+        text = quoted(got.values["building_frontage_corner"].prov.quote)
+        assert "highest classification" in text
+        assert "same classification" in text
+
+
+@pytest.mark.parametrize("zone", ("DRL-1", "DRL-2"))
+def test_gresham_downtown_names_its_primary_by_street_type(corpus: RuleSet, zone: str) -> None:
+    assert corpus.resolve(GRESHAM, zone).get("building_frontage_corner") == "street_type"
 
 
 @pytest.mark.parametrize("zone", ("KTTC", "KTBB", "KTC", "KTRC"))
