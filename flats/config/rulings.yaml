@@ -1895,3 +1895,22 @@
     density-floor cards on big lots on these grounds.
   source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 106
   encoded_in: [flats/score/screen.py]
+
+- id: 2026-10-21-pod-roof-flat
+  kind: ruling
+  date: 2026-10-21
+  scope: {}
+  question: >-
+    Some design districts refuse flat roofs (Fairview Village 19.145.040:
+    hipped, gambrel or gabled at no less than 4:12; West Linn). They were read
+    and left out because a roof describes the building, not the lot. Is the
+    pod's roof flat?
+  ruling: >-
+    "the intent is to. So this would be a red flag"
+  effect: >-
+    The pod has a flat roof. A standard that refuses flat roofs, or requires
+    a pitched roof form, wherever it reaches the pod, makes the lot RED -- it
+    is a measured standard the pod fails, not an unchecked design detail.
+    Encoding follows in the design-district chunks (docs/FOLLOWUPS.md item
+    109; plan docs/flats/design_districts_plan.md).
+  source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
