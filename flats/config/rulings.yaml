@@ -2009,10 +2009,14 @@
     "Main street only"
   effect: >-
     On a corner lot the share is owed on the main street alone; the other
-    street owes none. Which street is the main one is measured from the
-    streets' classes: the busier street is the main one. Where the two
-    streets rank the same or are unranked, the lot stays YELLOW until a
-    person picks (rulings 2026-10-09 unranked corner = yellow). Affects
+    street owes none. Which street is the main one is the code's own
+    (Steph 2026-10-22 pointed at chapter 3): GDC 3.0100 "Primary Street",
+    the street with the highest classification (Downtown by Map 4.1140's
+    street types, Civic by 4.1241), and where both have the same
+    classification "the applicant shall identify the primary street
+    frontage" -- so a measured tie passes on either street. Rockwood
+    7.0512(A)(2) S3.a says the same for its share. An unranked or
+    unmeasured street keeps the lot YELLOW. Affects
     the 89 Gresham corner lots held yellow by chunk 3 (docs/FOLLOWUPS.md
     item 109).
   source: Steph 2026-10-22 (chat), docs/FOLLOWUPS.md item 109
