@@ -1936,3 +1936,25 @@
     wording city by city (docs/FOLLOWUPS.md item 109, chunk plan
     docs/flats/design_districts_plan.md).
   source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
+
+- id: 2026-10-21-wide-lot-frontage-more-pods
+  kind: ruling
+  date: 2026-10-21
+  scope: {}
+  question: >-
+    A building-frontage share on a street too long for one pod to fill
+    (Beaverton 60.05.15.6 and Chapter 70, Washington County 392-8): RED
+    because the one pod screened cannot meet it, or YELLOW because more
+    buildings could?
+  ruling: >-
+    "Can we measure this by a rough approximation? i.e. if there's enough
+    room for a 2nd pod, even suboptimally placed, we make it yellow? If
+    there's just no way a 2nd would fit, red?"
+  effect: >-
+    Rough count, not a site plan: if enough pods to reach the share could
+    stand side by side along that street (inside the yards, with a
+    separation between buildings), the lot is YELLOW with a flag that it
+    needs more than one building; if they cannot fit, RED. One pod that
+    meets the share on its own is judged as before. Encoded in chunk 3
+    (docs/flats/design_districts_plan.md).
+  source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
