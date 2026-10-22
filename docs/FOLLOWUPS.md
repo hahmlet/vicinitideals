@@ -1310,7 +1310,7 @@ read when the weekly full re-screen lands.
    reliefs were dismissed as conservative (e.g. Gresham residential note 2, Clackamas ZDO notes). Sweep
    every layer's footnote ledgers + yamls for "lot of record" relief on the single-lot path; take each
    (a new lot from a division still meets the table); bound per city; read gains one by one.
-109. [Claude] [Steph: approve tiers 2-3; roof; WashCo plans] [tier 1 BUILDING] **Design districts (Steph
+109. [Claude] [chunk 1 of 7 BUILDING; PLAN docs/flats/design_districts_plan.md] [Steph 2026-10-21: all go, ingest first, flat roof = RED, read WashCo plans, max 2 chunks/week] **Design districts (Steph
    2026-10-21: "we do need to incorporate Rockwood (and other) design districts").** Inventory DONE:
    docs/flats/design_districts_2026-10-21.md -- 84 districts, 62 reach the pod, 32 non-zone districts
    lack a boundary. TIER 1 false-GREEN fixes (no ask): (a) building-frontage share -- Beaverton Downtown
