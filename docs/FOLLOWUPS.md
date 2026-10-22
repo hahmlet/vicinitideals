@@ -1337,7 +1337,7 @@ read when the weekly full re-screen lands.
    "We should measure it based on what they base it on": per lot -> townhouse form on each unit lot;
    site/development -> original lot (rulings.yaml 2026-10-21-frontage-share-measured-as-coded; chunk 3).
    q1 ANSWERED: room for enough pods side by side (rough) -> YELLOW, else RED (rulings.yaml
-   2026-10-21-wide-lot-frontage-more-pods; chunk 3). q2 (King City doors) still open.
+   2026-10-21-wide-lot-frontage-more-pods; chunk 3). q2 ANSWERED: all four doors face the street, as built -- no change (rulings.yaml 2026-10-21-king-city-all-four-doors).
 107. [Claude] [DONE 2026-10-21 -- remove at next bookkeeping] **Page check: footnotes asked as their own
    value card (Steph 2026-10-21).** LIVE 411f37ae (335097e6 + 4a1c6d4e). 76 stand-alone cards read wholly
    off one note now ride their table cell's note question ("we read it as ... is that what the note
