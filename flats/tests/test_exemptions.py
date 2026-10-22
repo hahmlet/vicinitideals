@@ -155,7 +155,11 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 427, "numeric": 112, "marker": 0, "dash": 2, "silent": 2}
+EXPECTED = {"stated": 427, "numeric": 119, "marker": 0, "dash": 2, "silent": 2}
+# 112 -> 119 numeric on 2026-10-22 (FOLLOWUPS 109 chunk 3, 104(f)): Gresham 7.0420(J)(1)(a)'s
+# 50 percent frontage share names "single detached dwellings and plexes" only, and 7.0431,
+# the townhouse standards, states none, so the townhouse form (unit_lots) holds it exempt in
+# MDR-12, MDR-24, OFR, CMF, CMU, DRL-1 and DRL-2, each citing J.1's scope and 7.0431's list.
 # 423 -> 427 stated on 2026-10-21 (FOLLOWUPS 104(e)): Gresham Table 4.0430 note 6 lifts row
 # C's width/depth ratio for lots created for townhouses, in SC, SC-RJ, CMU and CMF
 # (unit_lots variants on the new max_lot_depth_ratio).

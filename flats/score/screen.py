@@ -378,6 +378,19 @@ BUILDING_SHARE = "building_frontage_share"
 BUILDING_OTHER_SHARE = "building_frontage_other_share"
 BUILDING_FRONTAGE = "building_frontage"
 FRONTAGE_STREET = "frontage_street_type"
+#: The one pod screened cannot fill the share of a street too long for it,
+#: and enough pods to fill it could stand side by side along that street
+#: (Steph 2026-10-21, rulings.yaml 2026-10-21-wide-lot-frontage-more-pods):
+#: a plan with more than one building, which nothing here draws. A rough
+#: count (:func:`_pods_to_fill`), never a pass. Joins ``_checks``'s
+#: ``unmeasured``, so it reports as ``FACT_UNOBSERVED`` and the lot is held
+#: out of GREEN with the flag, not failed.
+MORE_BUILDINGS = "building_frontage_more_buildings"
+#: The gap left between two pods standing side by side where the zone states
+#: no separation between buildings on one lot (`min_building_separation_ft`):
+#: the widest any code in the corpus asks (Fairview 19.30, ten feet;
+#: Washington County's districts ask six).
+DEFAULT_BUILDING_SEPARATION_FT = 10.0
 
 
 @dataclass(frozen=True, slots=True)
@@ -2518,14 +2531,21 @@ def _building_frontage(
 ) -> None:
     """The building's share of the street frontage (FOLLOWUPS 109):
     Beaverton 60.05.15.6.A and Downtown 70.20.05.4 S1-S2, Washington County
-    392-8 and 392-9.5.
+    392-8 and 392-9.5, Gresham 7.0420(J)(1)(a) and 7.0512(A)(2) S2.
 
     One pod fills at most its own width (or depth) of a street, and less
     the driveway where the code takes it off (``building_frontage_less_drive``).
     So, read on the street lengths alone, with the primary on whichever
     street serves the pod best and the lowest share any street type asks
     (``*_least``): a pod short of that on every reading FAILS -- a measured
-    standard the pod cannot meet, wherever it stands.
+    standard the pod cannot meet, wherever it stands -- unless enough pods
+    side by side would fill the street (:func:`_more_pods_fill`, Steph
+    2026-10-21), which holds the lot out of GREEN on :data:`MORE_BUILDINGS`.
+
+    Each share is measured on what its code measures it on
+    (``building_frontage_basis``, Steph 2026-10-21): the site -- the
+    original lot, for both forms -- unless the code says each lot, where the
+    townhouse form is held out of GREEN.
 
     Clearing that is not a pass. GREEN needs the drawn plan
     (:attr:`LotFacts.building_frontage_pct`) to clear the highest share on
@@ -2540,6 +2560,15 @@ def _building_frontage(
     """
     need = _pct(rules, "building_frontage_min_pct")
     if need is None:
+        return
+    if rules.get("building_frontage_basis") == "lot" and design.plat is Plat.unit_lots:
+        # The code measures each lot on its own, and the townhouse form makes
+        # four. Nothing here measures a unit lot's share, and the original
+        # lot's is no stand-in: its long street line lands on the end lots,
+        # so a share the whole row clears an end lot can miss. Held out of
+        # GREEN, never failed (Steph 2026-10-21, measured as coded).
+        unchecked.append(BUILDING_SHARE)
+        unmeasured.add(BUILDING_FRONTAGE)
         return
     least = _pct(rules, "building_frontage_min_pct_least")
     banded = least is not None
@@ -2592,6 +2621,13 @@ def _building_frontage(
                 best = (margin, primary, second)
     assert best is not None
     margin, primary, second = best
+    if margin < 0 and _more_pods_fill(
+        rules, lot, design, beside, lines, need=least, other=other_least, most=most
+    ):
+        # One pod is short, but enough of them would fill the street.
+        unchecked.append(BUILDING_SHARE)
+        unmeasured.add(MORE_BUILDINGS)
+        return
     if margin < 0:
         if primary < least:
             check(BUILDING_SHARE, primary, least, is_maximum=False)
@@ -2611,6 +2647,103 @@ def _building_frontage(
         unmeasured.add(BUILDING_FRONTAGE)
     else:
         unmeasured.add(FRONTAGE_STREET)
+
+
+def _pods_to_fill(
+    rules: ZoneResolution,
+    design: Design,
+    line: float,
+    need: float,
+    most: Callable[[float, float], float],
+    *,
+    lane: float,
+    corner: bool,
+    first: float | None = None,
+) -> int | None:
+    """The fewest pods, two or more, that standing side by side along a street
+    line ``line`` feet long would fill ``need`` percent of it, or None where
+    that many cannot stand there (Steph 2026-10-21: "if there's enough room
+    for a 2nd pod, even suboptimally placed, we make it yellow").
+
+    A rough count, not a site plan. Each pod turns its long side to the
+    street; between two of them stands the zone's separation between
+    buildings (`min_building_separation_ft`, else
+    :data:`DEFAULT_BUILDING_SEPARATION_FT`), and inside the two end yards
+    (the side setback, and on a corner lot the street-side one at one end).
+    The pods share one drive (``lane``, nothing where the cars come in off
+    the alley), which stands in one of the gaps where it is no wider than the
+    separation. What each count fills is read through ``most``, the same
+    reading of the frontage (the driveway and a plaza off it where the code
+    takes them) the one-pod check uses. The depth of the lot is not asked
+    again: the pods stand in the same band along the street the one pod
+    already fits in.
+
+    ``first`` is what the first pod presents to this street where it is not
+    its long side: on a corner lot's other street, the end of the pod that
+    already stands along the primary one.
+    """
+    face = float(max(design.footprint.width_ft, design.footprint.depth_ft))
+    first = face if first is None else float(first)
+    got = rules.get("min_building_separation_ft")
+    gap = (
+        float(got)
+        if isinstance(got, (int, float)) and not isinstance(got, bool)
+        else DEFAULT_BUILDING_SEPARATION_FT
+    )
+    side = _side_yard(rules)
+    end = side
+    if corner:
+        street = rules.get("setback_street_side_ft")
+        if isinstance(street, (int, float)) and not isinstance(street, bool):
+            end = max(side, float(street))
+    room = line - side - end
+    n = 2
+    while True:
+        built = first + (n - 1) * face
+        run = built + (n - 1) * gap + max(0.0, lane - gap)
+        if run > room:
+            return None
+        if most(built, line) >= need:
+            return n
+        n += 1
+
+
+def _more_pods_fill(
+    rules: ZoneResolution,
+    lot: LotFacts,
+    design: Design,
+    beside: Beside | None,
+    lines: tuple[float, ...],
+    *,
+    need: float,
+    other: float | None,
+    most: Callable[[float, float], float],
+) -> bool:
+    """Whether, on some choice of the primary street, every street the share
+    is owed on is filled either by the one pod or by enough pods side by side
+    (:func:`_pods_to_fill`), and at least one needs more than one -- the lot
+    Steph's wide-lot ruling makes YELLOW where one pod alone is RED. The
+    other streets are counted on their own: the pod at the corner shows them
+    its end, and the pods added along them their long sides."""
+    w, d = float(design.footprint.width_ft), float(design.footprint.depth_ft)
+    lane = drive_at_street(design, rules, lot.alley, corner=lot.corner, beside=beside) or 0.0
+
+    def filled(line: float, share: float, face: float, *, first: float | None = None) -> bool:
+        if most(face, line) >= share:
+            return True
+        n = _pods_to_fill(
+            rules, design, line, share, most, lane=lane, corner=lot.corner, first=first
+        )
+        return n is not None
+
+    for a, line in enumerate(lines):
+        rest = [x for b, x in enumerate(lines) if b != a]
+        for face, back in ((w, d), (d, w)):
+            if not filled(line, need, face):
+                continue
+            if other is None or not rest or any(filled(x, other, back, first=back) for x in rest):
+                return True
+    return False
 
 
 #: Why :func:`review_with_conditions` holds, and the field whose citation
@@ -2707,6 +2840,7 @@ _MEASURED_FLAG: dict[str, str] = {
     DRIVE_STREET: "MEASURE-DRIVE-STREET",
     BUILDING_FRONTAGE: "MEASURE-BUILDING-FRONTAGE",
     FRONTAGE_STREET: "MEASURE-FRONTAGE-STREET",
+    MORE_BUILDINGS: "FRONTAGE-MORE-BUILDINGS",
 }
 
 #: Screen reasons with no flag of their own: RELIEF_UNCONFIRMED is logged on

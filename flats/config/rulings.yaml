@@ -1935,7 +1935,21 @@
     single-building form is always measured on the original lot. Read the
     wording city by city (docs/FOLLOWUPS.md item 109, chunk plan
     docs/flats/design_districts_plan.md).
+    Read 2026-10-22 (chunk 3): every code here says site -- Beaverton
+    60.05.15.6 and 70.20.05.4 ("site frontage"; Chapter 90 Site, parcels in
+    common ownership), Washington County 392-8 ("a site's street
+    frontage(s)"; 106-60 Development Site), Gresham 7.0420(J)(1)(a) and
+    7.0512(A)(2) S2 (3.0100 Site) -- so both forms stay on the original lot
+    (`building_frontage_basis: site`). Gresham's J.1 names plexes only, so
+    the townhouse form owes no share outside Rockwood (7.0431 states none);
+    King City's Table 16.114-6 binds Dwelling, multi (five units or more)
+    and does not reach the pod.
   source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
+  encoded_in:
+    - flats/score/screen.py
+    - flats/config/jurisdictions/or/washington/beaverton.yaml
+    - flats/config/jurisdictions/or/washington/_unincorporated.yaml
+    - flats/config/jurisdictions/or/multnomah/gresham.yaml
 
 - id: 2026-10-21-wide-lot-frontage-more-pods
   kind: ruling
@@ -1956,8 +1970,12 @@
     separation between buildings), the lot is YELLOW with a flag that it
     needs more than one building; if they cannot fit, RED. One pod that
     meets the share on its own is judged as before. Encoded in chunk 3
-    (docs/flats/design_districts_plan.md).
+    (docs/flats/design_districts_plan.md). Built 2026-10-22: pods turn their
+    long side to the street, the zone's building separation between them
+    (ten feet where none is stated), inside the side yards, one shared
+    drive; flag FRONTAGE-MORE-BUILDINGS.
   source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109
+  encoded_in: [flats/score/screen.py, flats/config/flags.yaml]
 
 - id: 2026-10-21-king-city-all-four-doors
   kind: ruling

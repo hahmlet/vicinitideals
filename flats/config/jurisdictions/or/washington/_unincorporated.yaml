@@ -2293,6 +2293,15 @@ zones:
       value: true
       cite: "Washington County CDC 392-9.5 B(1), a through lot: at least one frontage must meet the street frontage occupancy requirements"
       quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L510-L512"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 392-8 asks it of "a site's street frontage(s)", and 106-60
+      # makes the Development Site "A lot or parcel or combination of lots or
+      # parcels upon which any development ... occurs" -- the townhouse
+      # form's four lots together, the original lot, for both forms.
+      value: site
+      cite: "Washington County CDC 392-8 (a site's street frontage(s)) and 106-60, Development Site: a lot or parcel or combination of lots or parcels"
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L402-L403"
     notes: >-
       DRAFT. Neighborhood mixed use: attached dwellings Type II, 6,000 sq ft,
       85 ft average width, 65 ft, 10 ft front and street side (20 ft max),
@@ -2396,6 +2405,15 @@ zones:
       value: true
       cite: "Washington County CDC 392-9.5 B(1), a through lot: at least one frontage must meet the street frontage occupancy requirements"
       quote: "or/washington/_unincorporated/cdc.392.mixed-use.txt#L510-L512"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): 392-8 asks it of "a site's street frontage(s)", and 106-60
+      # makes the Development Site "A lot or parcel or combination of lots or
+      # parcels upon which any development ... occurs" -- the townhouse
+      # form's four lots together, the original lot, for both forms.
+      value: site
+      cite: "Washington County CDC 392-8 (a site's street frontage(s)) and 106-60, Development Site: a lot or parcel or combination of lots or parcels"
+      quote: "or/washington/_unincorporated/cdc.106.definitions.txt#L402-L403"
     notes: >-
       DRAFT. Community-center mixed use: attached dwellings Type II, 6,000
       sq ft, 85 ft average width, 100 ft, 10 ft front and street side (20 ft

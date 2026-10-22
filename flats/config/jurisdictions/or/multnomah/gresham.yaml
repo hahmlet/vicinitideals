@@ -4017,6 +4017,69 @@ zones:
       # and missing here.
       value: axis_required
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form: J.1 names "single detached dwellings and plexes"
+        # only, and townhouses go to 7.0431, which asks no frontage share
+        # (FOLLOWUPS 104(f), read 2026-10-22). Its entry orientation, 7.0431(A),
+        # binds each entrance -- facing the street, at 45 degrees, onto a
+        # porch, or onto an internal drive treated as the street -- and not
+        # the long axis.
+        - value: entrance_only
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
+        # Inside the Rockwood Design District 7.0512(A)(2) S2 states the share
+        # for townhouses in so many words (below): kept as it was.
+        - value: axis_required
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_min_pct:
+      # 7.0420(J)(1)(a), measured (FOLLOWUPS 109 chunk 3). Held until
+      # 2026-10-22 only as the axis above, which a pod on a street more than
+      # twice its width passed: 56 ft is not half of 150. Between the minimum
+      # and the maximum front setback (`setback_front_max_ft`); the site's
+      # frontage less public streets, primary internal drives, paths and
+      # clear vision areas -- not the pod's own driveway, which is no
+      # primary internal drive (3.0100: a way "through a site, serving as an
+      # alternative to a public street connection"). On a corner lot the
+      # site's frontage is read street by street for GREEN, the best street
+      # alone for RED (no `building_frontage_other_pct`).
+      value: 50
+      cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form owes none outside Rockwood: J.1 names plexes
+        # only, and 7.0431 states no share.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436"
+        # Inside Rockwood, 7.0512(A)(2) S2: the "All Development" heading
+        # leaves townhouses out "unless otherwise stated", and S2 states it:
+        # "For Residential development (multi-family, townhouse, and townhouse
+        # style), street frontages of a site shall be occupied by building
+        # facades for a minimum of 50 percent of the frontage length."
+        - value: 50
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_less_drive:
+      # J.1.a takes off primary internal drives, not a driveway.
+      value: false
+      cite: "GDC 7.0420(J)(1)(a), space attributed to public streets, primary internal drives, bicycle and/or pedestrian paths and clear vision areas is subtracted (no driveway)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L413-L417"
+      variants:
+        # Rockwood's S2 subtracts "driveways (excluding driveways for
+        # individual garages, such as for townhouses)": the pod's shared drive.
+        - value: true
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L596-L600"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): J.1.a asks it of "the site's frontage" and Rockwood's S2
+      # of the "street frontages of a site", and 3.0100 makes a Site "An area
+      # of real property encompassing single or multiple lots": the original
+      # lot, for both forms.
+      value: site
+      cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
     min_frontage_ft:
       value: 45
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
@@ -4260,6 +4323,69 @@ zones:
       # and missing here.
       value: axis_required
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form: J.1 names "single detached dwellings and plexes"
+        # only, and townhouses go to 7.0431, which asks no frontage share
+        # (FOLLOWUPS 104(f), read 2026-10-22). Its entry orientation, 7.0431(A),
+        # binds each entrance -- facing the street, at 45 degrees, onto a
+        # porch, or onto an internal drive treated as the street -- and not
+        # the long axis.
+        - value: entrance_only
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
+        # Inside the Rockwood Design District 7.0512(A)(2) S2 states the share
+        # for townhouses in so many words (below): kept as it was.
+        - value: axis_required
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_min_pct:
+      # 7.0420(J)(1)(a), measured (FOLLOWUPS 109 chunk 3). Held until
+      # 2026-10-22 only as the axis above, which a pod on a street more than
+      # twice its width passed: 56 ft is not half of 150. Between the minimum
+      # and the maximum front setback (`setback_front_max_ft`); the site's
+      # frontage less public streets, primary internal drives, paths and
+      # clear vision areas -- not the pod's own driveway, which is no
+      # primary internal drive (3.0100: a way "through a site, serving as an
+      # alternative to a public street connection"). On a corner lot the
+      # site's frontage is read street by street for GREEN, the best street
+      # alone for RED (no `building_frontage_other_pct`).
+      value: 50
+      cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form owes none outside Rockwood: J.1 names plexes
+        # only, and 7.0431 states no share.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436"
+        # Inside Rockwood, 7.0512(A)(2) S2: the "All Development" heading
+        # leaves townhouses out "unless otherwise stated", and S2 states it:
+        # "For Residential development (multi-family, townhouse, and townhouse
+        # style), street frontages of a site shall be occupied by building
+        # facades for a minimum of 50 percent of the frontage length."
+        - value: 50
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_less_drive:
+      # J.1.a takes off primary internal drives, not a driveway.
+      value: false
+      cite: "GDC 7.0420(J)(1)(a), space attributed to public streets, primary internal drives, bicycle and/or pedestrian paths and clear vision areas is subtracted (no driveway)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L413-L417"
+      variants:
+        # Rockwood's S2 subtracts "driveways (excluding driveways for
+        # individual garages, such as for townhouses)": the pod's shared drive.
+        - value: true
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L596-L600"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): J.1.a asks it of "the site's frontage" and Rockwood's S2
+      # of the "street frontages of a site", and 3.0100 makes a Site "An area
+      # of real property encompassing single or multiple lots": the original
+      # lot, for both forms.
+      value: site
+      cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
     min_frontage_ft:
       value: 45
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
@@ -4377,6 +4503,69 @@ zones:
       # and missing here.
       value: axis_required
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form: J.1 names "single detached dwellings and plexes"
+        # only, and townhouses go to 7.0431, which asks no frontage share
+        # (FOLLOWUPS 104(f), read 2026-10-22). Its entry orientation, 7.0431(A),
+        # binds each entrance -- facing the street, at 45 degrees, onto a
+        # porch, or onto an internal drive treated as the street -- and not
+        # the long axis.
+        - value: entrance_only
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
+        # Inside the Rockwood Design District 7.0512(A)(2) S2 states the share
+        # for townhouses in so many words (below): kept as it was.
+        - value: axis_required
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_min_pct:
+      # 7.0420(J)(1)(a), measured (FOLLOWUPS 109 chunk 3). Held until
+      # 2026-10-22 only as the axis above, which a pod on a street more than
+      # twice its width passed: 56 ft is not half of 150. Between the minimum
+      # and the maximum front setback (`setback_front_max_ft`); the site's
+      # frontage less public streets, primary internal drives, paths and
+      # clear vision areas -- not the pod's own driveway, which is no
+      # primary internal drive (3.0100: a way "through a site, serving as an
+      # alternative to a public street connection"). On a corner lot the
+      # site's frontage is read street by street for GREEN, the best street
+      # alone for RED (no `building_frontage_other_pct`).
+      value: 50
+      cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form owes none outside Rockwood: J.1 names plexes
+        # only, and 7.0431 states no share.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436"
+        # Inside Rockwood, 7.0512(A)(2) S2: the "All Development" heading
+        # leaves townhouses out "unless otherwise stated", and S2 states it:
+        # "For Residential development (multi-family, townhouse, and townhouse
+        # style), street frontages of a site shall be occupied by building
+        # facades for a minimum of 50 percent of the frontage length."
+        - value: 50
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_less_drive:
+      # J.1.a takes off primary internal drives, not a driveway.
+      value: false
+      cite: "GDC 7.0420(J)(1)(a), space attributed to public streets, primary internal drives, bicycle and/or pedestrian paths and clear vision areas is subtracted (no driveway)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L413-L417"
+      variants:
+        # Rockwood's S2 subtracts "driveways (excluding driveways for
+        # individual garages, such as for townhouses)": the pod's shared drive.
+        - value: true
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L596-L600"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): J.1.a asks it of "the site's frontage" and Rockwood's S2
+      # of the "street frontages of a site", and 3.0100 makes a Site "An area
+      # of real property encompassing single or multiple lots": the original
+      # lot, for both forms.
+      value: site
+      cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
     min_frontage_ft:
       # G reads NA in this column on both the interior and the corner line,
       # and None on the townhouse line. Read, and no frontage standard
@@ -4743,6 +4932,50 @@ zones:
       # does not loosen this one.
       value: axis_required
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form: J.1 names "single detached dwellings and plexes"
+        # only, and townhouses go to 7.0431, which asks no frontage share
+        # (FOLLOWUPS 104(f), read 2026-10-22). Its entry orientation, 7.0431(A),
+        # binds each entrance -- facing the street, at 45 degrees, onto a
+        # porch, or onto an internal drive treated as the street -- and not
+        # the long axis.
+        - value: entrance_only
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
+    building_frontage_min_pct:
+      # 7.0420(J)(1)(a), measured (FOLLOWUPS 109 chunk 3). Held until
+      # 2026-10-22 only as the axis above, which a pod on a street more than
+      # twice its width passed: 56 ft is not half of 150. Between the minimum
+      # and the maximum front setback (`setback_front_max_ft`); the site's
+      # frontage less public streets, primary internal drives, paths and
+      # clear vision areas -- not the pod's own driveway, which is no
+      # primary internal drive (3.0100: a way "through a site, serving as an
+      # alternative to a public street connection"). On a corner lot the
+      # site's frontage is read street by street for GREEN, the best street
+      # alone for RED (no `building_frontage_other_pct`).
+      value: 50
+      cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form owes none outside Rockwood: J.1 names plexes
+        # only, and 7.0431 states no share.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436"
+    building_frontage_less_drive:
+      # J.1.a takes off primary internal drives, not a driveway.
+      value: false
+      cite: "GDC 7.0420(J)(1)(a), space attributed to public streets, primary internal drives, bicycle and/or pedestrian paths and clear vision areas is subtracted (no driveway)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L413-L417"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): J.1.a asks it of "the site's frontage" and Rockwood's S2
+      # of the "street frontages of a site", and 3.0100 makes a Site "An area
+      # of real property encompassing single or multiple lots": the original
+      # lot, for both forms.
+      value: site
+      cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Downtown. MAXIMUM front setback 15-20 ft + >=50% frontage occupancy
       (7.0420(J)) effectively force the long axis parallel to the street — axis_required. Max-front-setback
       placement band not modeled (blind spot).'
@@ -4911,6 +5144,50 @@ zones:
       # does not loosen this one.
       value: axis_required
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form: J.1 names "single detached dwellings and plexes"
+        # only, and townhouses go to 7.0431, which asks no frontage share
+        # (FOLLOWUPS 104(f), read 2026-10-22). Its entry orientation, 7.0431(A),
+        # binds each entrance -- facing the street, at 45 degrees, onto a
+        # porch, or onto an internal drive treated as the street -- and not
+        # the long axis.
+        - value: entrance_only
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
+    building_frontage_min_pct:
+      # 7.0420(J)(1)(a), measured (FOLLOWUPS 109 chunk 3). Held until
+      # 2026-10-22 only as the axis above, which a pod on a street more than
+      # twice its width passed: 56 ft is not half of 150. Between the minimum
+      # and the maximum front setback (`setback_front_max_ft`); the site's
+      # frontage less public streets, primary internal drives, paths and
+      # clear vision areas -- not the pod's own driveway, which is no
+      # primary internal drive (3.0100: a way "through a site, serving as an
+      # alternative to a public street connection"). On a corner lot the
+      # site's frontage is read street by street for GREEN, the best street
+      # alone for RED (no `building_frontage_other_pct`).
+      value: 50
+      cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form owes none outside Rockwood: J.1 names plexes
+        # only, and 7.0431 states no share.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436"
+    building_frontage_less_drive:
+      # J.1.a takes off primary internal drives, not a driveway.
+      value: false
+      cite: "GDC 7.0420(J)(1)(a), space attributed to public streets, primary internal drives, bicycle and/or pedestrian paths and clear vision areas is subtracted (no driveway)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L413-L417"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): J.1.a asks it of "the site's frontage" and Rockwood's S2
+      # of the "street frontages of a site", and 3.0100 makes a Site "An area
+      # of real property encompassing single or multiple lots": the original
+      # lot, for both forms.
+      value: site
+      cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Same as DRL-1; height 50 ft.'
   DCC:
     section: ["4.11", "7.042"]
@@ -5545,6 +5822,69 @@ zones:
       # does not loosen this one.
       value: axis_required
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form: J.1 names "single detached dwellings and plexes"
+        # only, and townhouses go to 7.0431, which asks no frontage share
+        # (FOLLOWUPS 104(f), read 2026-10-22). Its entry orientation, 7.0431(A),
+        # binds each entrance -- facing the street, at 45 degrees, onto a
+        # porch, or onto an internal drive treated as the street -- and not
+        # the long axis.
+        - value: entrance_only
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
+        # Inside the Rockwood Design District 7.0512(A)(2) S2 states the share
+        # for townhouses in so many words (below): kept as it was.
+        - value: axis_required
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_min_pct:
+      # 7.0420(J)(1)(a), measured (FOLLOWUPS 109 chunk 3). Held until
+      # 2026-10-22 only as the axis above, which a pod on a street more than
+      # twice its width passed: 56 ft is not half of 150. Between the minimum
+      # and the maximum front setback (`setback_front_max_ft`); the site's
+      # frontage less public streets, primary internal drives, paths and
+      # clear vision areas -- not the pod's own driveway, which is no
+      # primary internal drive (3.0100: a way "through a site, serving as an
+      # alternative to a public street connection"). On a corner lot the
+      # site's frontage is read street by street for GREEN, the best street
+      # alone for RED (no `building_frontage_other_pct`).
+      value: 50
+      cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form owes none outside Rockwood: J.1 names plexes
+        # only, and 7.0431 states no share.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436"
+        # Inside Rockwood, 7.0512(A)(2) S2: the "All Development" heading
+        # leaves townhouses out "unless otherwise stated", and S2 states it:
+        # "For Residential development (multi-family, townhouse, and townhouse
+        # style), street frontages of a site shall be occupied by building
+        # facades for a minimum of 50 percent of the frontage length."
+        - value: 50
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_less_drive:
+      # J.1.a takes off primary internal drives, not a driveway.
+      value: false
+      cite: "GDC 7.0420(J)(1)(a), space attributed to public streets, primary internal drives, bicycle and/or pedestrian paths and clear vision areas is subtracted (no driveway)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L413-L417"
+      variants:
+        # Rockwood's S2 subtracts "driveways (excluding driveways for
+        # individual garages, such as for townhouses)": the pod's shared drive.
+        - value: true
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L596-L600"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): J.1.a asks it of "the site's frontage" and Rockwood's S2
+      # of the "street frontages of a site", and 3.0100 makes a Site "An area
+      # of real property encompassing single or multiple lots": the original
+      # lot, for both forms.
+      value: site
+      cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
     notes: 'Read against Table 4.0430 on 2026-08-15, and quoted as line ranges because this table is the worst case of the extraction problem in the corpus: seven columns (RTC, SC, SC-RJ, CMF, CMU, CC, MC, header at L359) collapse into one run of words per line, so no single line holds a whole cell and CMF is the fourth value along each of five consecutive lines. Reassembled, the residential row reads "5 feet front and street-side; 15 feet rear; 0 feet interior side" (L332-L336). A reviewer has to read the range and count columns; that is what the range citation is asking them to do, and it is honest about the work rather than pointing at a line that looks decisive and is not. The MAXIMUM front setback, 20 ft (L351-L356), is now encoded rather than living only in this note -- it is the standard that forces the pod forward on the lot and it was previously invisible to the engine. Lot size 10,000 (L296-L297) and frontage 100 (L301-L302) confirmed in the same table. quadfit confidence: verified | Base CMF regime: residential needs 10,000 sf min AND 100 ft
       street frontage; max front setback 20 ft + frontage occupancy — axis_required. NE Glisan/162nd corridors
       follow TLDR standards instead (Table 4.0430 n.14). CORRECTED 2026-10-20: TLDR is not looser -- its
@@ -5723,6 +6063,49 @@ zones:
       # and these are Corridor districts.
       value: axis_required
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+    building_frontage_min_pct:
+      # 7.0420(J)(1)(a), measured (FOLLOWUPS 109 chunk 3). Held until
+      # 2026-10-22 only as the axis above, which a pod on a street more than
+      # twice its width passed: 56 ft is not half of 150. Between the minimum
+      # and the maximum front setback (`setback_front_max_ft`); the site's
+      # frontage less public streets, primary internal drives, paths and
+      # clear vision areas -- not the pod's own driveway, which is no
+      # primary internal drive (3.0100: a way "through a site, serving as an
+      # alternative to a public street connection"). On a corner lot the
+      # site's frontage is read street by street for GREEN, the best street
+      # alone for RED (no `building_frontage_other_pct`).
+      value: 50
+      cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # Inside Rockwood, 7.0512(A)(2) S2: the "All Development" heading
+        # leaves townhouses out "unless otherwise stated", and S2 states it:
+        # "For Residential development (multi-family, townhouse, and townhouse
+        # style), street frontages of a site shall be occupied by building
+        # facades for a minimum of 50 percent of the frontage length."
+        - value: 50
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_less_drive:
+      # J.1.a takes off primary internal drives, not a driveway.
+      value: false
+      cite: "GDC 7.0420(J)(1)(a), space attributed to public streets, primary internal drives, bicycle and/or pedestrian paths and clear vision areas is subtracted (no driveway)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L413-L417"
+      variants:
+        # Rockwood's S2 subtracts "driveways (excluding driveways for
+        # individual garages, such as for townhouses)": the pod's shared drive.
+        - value: true
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L596-L600"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): J.1.a asks it of "the site's frontage" and Rockwood's S2
+      # of the "street frontages of a site", and 3.0100 makes a Site "An area
+      # of real property encompassing single or multiple lots": the original
+      # lot, for both forms.
+      value: site
+      cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
     notes: 'Read against Tables 4.0420 and 4.0430 on 2026-08-19. A quadplex is a bare P here (L148), which makes this the loosest use permission left in Gresham -- and the lot standards are what bind: 10,000 sq ft and 100 feet of street frontage for anything residential, against a 5,000 sq ft Downtown and 4,000 in the DRL blocks. Splitting the plat escapes both, which is why note 6 and note 11 ride as unit_lots variants. The setbacks come from the Residential sub-cell of row G (L343-L347), which prints identical numbers in the RTC, SC and SC-RJ columns -- a reviewer has to read the range and count columns, and the range is what asks them to. Two readings of this table were left out on purpose. The minimum-density cell names Townhouses and multi-family and nothing else, and Gresham defines a Multi-Family Dwelling as five units or more that is expressly not middle housing (3.0100.definitions.txt L939-L942) -- so a quadplex on one lot is neither, and the floor is encoded as not applying rather than borrowed from the nearest cell that does. The lot width/depth ratio of row C, 0.5 to 1, is held since 2026-10-21 as max_lot_depth_ratio 2 (width_to_depth 0.5): a lot at most twice as deep as it is wide. The height ceiling is ten STOREYS and the chapter prints no figure in feet for this district anywhere; note 18 states 45 feet for townhouses and only for townhouses, so the storey count is what is encoded and max_height_stories exists because of this row. Row H''s maximum front setback is delegated to Section 7.0512.A.2 inside the Rockwood Design District, which the footnote ledger already holds as unmeasured.'
   SC-RJ:
     section: ["4.04", "7.042"]
@@ -5895,6 +6278,49 @@ zones:
       # and these are Corridor districts.
       value: axis_required
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+    building_frontage_min_pct:
+      # 7.0420(J)(1)(a), measured (FOLLOWUPS 109 chunk 3). Held until
+      # 2026-10-22 only as the axis above, which a pod on a street more than
+      # twice its width passed: 56 ft is not half of 150. Between the minimum
+      # and the maximum front setback (`setback_front_max_ft`); the site's
+      # frontage less public streets, primary internal drives, paths and
+      # clear vision areas -- not the pod's own driveway, which is no
+      # primary internal drive (3.0100: a way "through a site, serving as an
+      # alternative to a public street connection"). On a corner lot the
+      # site's frontage is read street by street for GREEN, the best street
+      # alone for RED (no `building_frontage_other_pct`).
+      value: 50
+      cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # Inside Rockwood, 7.0512(A)(2) S2: the "All Development" heading
+        # leaves townhouses out "unless otherwise stated", and S2 states it:
+        # "For Residential development (multi-family, townhouse, and townhouse
+        # style), street frontages of a site shall be occupied by building
+        # facades for a minimum of 50 percent of the frontage length."
+        - value: 50
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_less_drive:
+      # J.1.a takes off primary internal drives, not a driveway.
+      value: false
+      cite: "GDC 7.0420(J)(1)(a), space attributed to public streets, primary internal drives, bicycle and/or pedestrian paths and clear vision areas is subtracted (no driveway)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L413-L417"
+      variants:
+        # Rockwood's S2 subtracts "driveways (excluding driveways for
+        # individual garages, such as for townhouses)": the pod's shared drive.
+        - value: true
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L596-L600"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): J.1.a asks it of "the site's frontage" and Rockwood's S2
+      # of the "street frontages of a site", and 3.0100 makes a Site "An area
+      # of real property encompassing single or multiple lots": the original
+      # lot, for both forms.
+      value: site
+      cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
     notes: 'Read against Tables 4.0420 and 4.0430 on 2026-08-19. A quadplex is a bare P here (L148), which makes this the loosest use permission left in Gresham -- and the lot standards are what bind: 10,000 sq ft and 100 feet of street frontage for anything residential, against a 5,000 sq ft Downtown and 4,000 in the DRL blocks. Splitting the plat escapes both, which is why note 6 and note 11 ride as unit_lots variants. The setbacks come from the Residential sub-cell of row G (L343-L347), which prints identical numbers in the RTC, SC and SC-RJ columns -- a reviewer has to read the range and count columns, and the range is what asks them to. Two readings of this table were left out on purpose. The minimum-density cell names Townhouses and multi-family and nothing else, and Gresham defines a Multi-Family Dwelling as five units or more that is expressly not middle housing (3.0100.definitions.txt L939-L942) -- so a quadplex on one lot is neither, and the floor is encoded as not applying rather than borrowed from the nearest cell that does. The lot width/depth ratio of row C, 0.5 to 1, is held since 2026-10-21 as max_lot_depth_ratio 2 (width_to_depth 0.5): a lot at most twice as deep as it is wide. The height ceiling is ten STOREYS and the chapter prints no figure in feet for this district anywhere; note 18 states 45 feet for townhouses and only for townhouses, so the storey count is what is encoded and max_height_stories exists because of this row. Row H''s maximum front setback is delegated to Section 7.0512.A.2 inside the Rockwood Design District, which the footnote ledger already holds as unmeasured.'
   CMU:
     section: ["4.04", "7.042"]
@@ -6057,6 +6483,69 @@ zones:
       # and these are Corridor districts.
       value: axis_required
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form: J.1 names "single detached dwellings and plexes"
+        # only, and townhouses go to 7.0431, which asks no frontage share
+        # (FOLLOWUPS 104(f), read 2026-10-22). Its entry orientation, 7.0431(A),
+        # binds each entrance -- facing the street, at 45 degrees, onto a
+        # porch, or onto an internal drive treated as the street -- and not
+        # the long axis.
+        - value: entrance_only
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436,L442-L458"
+        # Inside the Rockwood Design District 7.0512(A)(2) S2 states the share
+        # for townhouses in so many words (below): kept as it was.
+        - value: axis_required
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_min_pct:
+      # 7.0420(J)(1)(a), measured (FOLLOWUPS 109 chunk 3). Held until
+      # 2026-10-22 only as the axis above, which a pod on a street more than
+      # twice its width passed: 56 ft is not half of 150. Between the minimum
+      # and the maximum front setback (`setback_front_max_ft`); the site's
+      # frontage less public streets, primary internal drives, paths and
+      # clear vision areas -- not the pod's own driveway, which is no
+      # primary internal drive (3.0100: a way "through a site, serving as an
+      # alternative to a public street connection"). On a corner lot the
+      # site's frontage is read street by street for GREEN, the best street
+      # alone for RED (no `building_frontage_other_pct`).
+      value: 50
+      cite: "GDC 7.0420(J)(1)(a), a minimum of 50 percent of the site's frontage occupied by buildings oriented to the abutting street, measured between the minimum and maximum front setback (plexes in the Downtown, Rockwood, Civic and Corridor Design Districts)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+      variants:
+        # The townhouse form owes none outside Rockwood: J.1 names plexes
+        # only, and 7.0431 states no share.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L411-L412,L432-L436"
+        # Inside Rockwood, 7.0512(A)(2) S2: the "All Development" heading
+        # leaves townhouses out "unless otherwise stated", and S2 states it:
+        # "For Residential development (multi-family, townhouse, and townhouse
+        # style), street frontages of a site shall be occupied by building
+        # facades for a minimum of 50 percent of the frontage length."
+        - value: 50
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L214-L215,L596-L600,L624-L627"
+    building_frontage_less_drive:
+      # J.1.a takes off primary internal drives, not a driveway.
+      value: false
+      cite: "GDC 7.0420(J)(1)(a), space attributed to public streets, primary internal drives, bicycle and/or pedestrian paths and clear vision areas is subtracted (no driveway)"
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L413-L417"
+      variants:
+        # Rockwood's S2 subtracts "driveways (excluding driveways for
+        # individual garages, such as for townhouses)": the pod's shared drive.
+        - value: true
+          when: [unit_lots, rockwood_design_district]
+          quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L596-L600"
+    building_frontage_basis:
+      # Measured as coded (rulings.yaml 2026-10-21-frontage-share-measured-
+      # as-coded): J.1.a asks it of "the site's frontage" and Rockwood's S2
+      # of the "street frontages of a site", and 3.0100 makes a Site "An area
+      # of real property encompassing single or multiple lots": the original
+      # lot, for both forms.
+      value: site
+      cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
     notes: 'Read against Tables 4.0420 and 4.0430 on 2026-08-19. Corridor Mixed-Use, and dimensionally the twin of CMF one column to its left: the same 10,000 sq ft, the same 100 feet of frontage, the same 5 front and street-side, 0 interior side, 15 rear, the same 20 ft maximum front setback and the same 45 ft ceiling. Where it differs from SC is the density cell, which here is a bare 12 units per acre rather than a list of housing types -- so the floor does reach a quadplex, and read against the 10,000 sq ft minimum it makes the district a window: four units need at least 10,000 sq ft to satisfy the lot-size row and at most about 14,520 to satisfy the density floor. Neither number says that on its own. The ceiling of 24 units per acre is not binding on any lot that clears the floor.'
   RTC:
     section: ["4.04"]
