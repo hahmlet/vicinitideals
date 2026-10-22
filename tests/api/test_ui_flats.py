@@ -3210,6 +3210,18 @@ async def test_a_lot_too_small_for_the_pod_is_said_in_words() -> None:
     assert "20 ft" in _CHECK_WORDS["pod_width"]
 
 
+async def test_the_design_district_building_checks_are_said_in_words() -> None:
+    """FOLLOWUPS 109 chunk 3: a roof-pitch or one-roof footprint miss reads
+    as a sentence, on the lot page and on the flag card."""
+    from app.api.routers.ui_flats import _CHECK_WORDS
+    from app.api.routers.ui_flats_flags import CHECK_WORDS
+
+    assert "pitched roof" in _CHECK_WORDS["roof_pitch"]
+    assert "footprint" in _CHECK_WORDS["mass_footprint"]
+    assert CHECK_WORDS["roof_pitch"][0] == "Roof pitch"
+    assert CHECK_WORDS["mass_footprint"][1] == "sq ft"
+
+
 async def test_a_permit_area_flag_names_its_area() -> None:
     """A RESOURCE-PERMIT flag says which mapped area and which code
     section, not only that some area is there (FOLLOWUPS 42(b))."""

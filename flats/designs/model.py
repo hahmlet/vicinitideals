@@ -327,6 +327,13 @@ class Design(BaseModel):
     #: stated", and a screen asking it leaves the check unrun. Adding it
     #: stated a fact about an unchanged building, so no version moved.
     ground_story_ft: float | None = Field(default=None, gt=0)
+    #: The primary roof's pitch as rise in twelve of run; 0 is a flat roof.
+    #: Read only by a code that sets a floor under it (Fairview 19.145.040
+    #: "no less than 4:12", Clackamas ZDO Table 315-3 "Flat roofs are
+    #: prohibited"). ``None`` is "not stated", and the check is left unrun.
+    #: Adding it stated a fact about an unchanged building, so no version
+    #: moved.
+    roof_pitch_in_12: float | None = Field(default=None, ge=0)
     parking: Parking
     delivery: DeliverySpec
     #: Which plat path this entry is costed for. Defaults to the path the rule

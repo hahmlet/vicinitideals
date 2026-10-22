@@ -873,6 +873,60 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "oregon_city_park_place",
+        "site_fact",
+        "The parcel is inside Oregon City's Park Place Concept Plan area. "
+        "OCMC 17.21 reaches every new quadplex and townhouse there "
+        "(17.21.020) and asks two things of the building that no base zone "
+        "asks: a primary roof pitched at least 5:12 (17.21.030.A) and, for a "
+        "residence over 1,200 sq ft, secondary masses of no more than 600 "
+        "under separate roof-lines (17.21.040.A). The pod is a flat-roofed "
+        "box of 2,000 sq ft or more, so it misses both. Assumed unknown, "
+        "because the answer decides the colour and the zones do not carry it.",
+        evidence=(
+            "Oregon City's own Park Place Concept Plan boundary -- held as "
+            "Oregon City's drawn_areas, from the city's LandUseAndPlanning "
+            "MapServer"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "oregon_city_south_end",
+        "site_fact",
+        "The parcel is inside Oregon City's South End Concept Plan area. "
+        "OCMC 17.22 reaches every new quadplex and townhouse there and "
+        "carries Park Place's massing rule word for word (17.22.040.A: over "
+        "1,200 sq ft, secondary masses of no more than 600 under separate "
+        "roof-lines), but no roof pitch. Assumed unknown, for the same "
+        "reason as Park Place.",
+        evidence=(
+            "Oregon City's own South End Concept Plan boundary -- held as "
+            "Oregon City's drawn_areas, from the city's LandUseAndPlanning "
+            "MapServer"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
+        "oregon_city_historic_overlay",
+        "site_fact",
+        "The parcel is inside Oregon City's historic overlay district as the "
+        "city maps it (OCMC 17.40.030): the Canemah Historic District, the "
+        "McLoughlin Conservation District or the Oregon Trail-Barlow Road "
+        "Historic Corridor. 17.40.060.A allows no new construction in any of "
+        "them without a certificate of appropriateness from the Historic "
+        "Review Board, decided at a hearing on compatibility, and a historic "
+        "area is one of the exceptions ORS 197A.400 leaves to the city "
+        "(rulings.yaml 2026-10-15-clear-objective-green-flag), so the lot is "
+        "RED. Held apart from `historic_resource`, the general question of a "
+        "listing. Assumed unknown: it decides the colour.",
+        evidence=(
+            "Oregon City's own historic overlay layers (Canemah, McLoughlin, "
+            "Barlow Road corridor) unioned into one file -- held as Oregon "
+            "City's drawn_areas, from the city's LandUseAndPlanning MapServer"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "no_existing_dwelling",
         "site_fact",
         "The lot holds no home today. Wilsonville's Village zone writes its "
@@ -1135,6 +1189,9 @@ PARK_CONDITIONS: tuple[str, ...] = ("abuts_park",)
 DRAWN_CONDITIONS: tuple[str, ...] = (
     "inside_mapped_use_area",
     "north_of_marine_drive",
+    "oregon_city_historic_overlay",
+    "oregon_city_park_place",
+    "oregon_city_south_end",
     "rockwood_design_district",
     "willamette_historic_district",
 )

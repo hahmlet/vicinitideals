@@ -131,30 +131,34 @@ def test_and_the_setback_cell_beside_it_is_read_the_same_way_already(
 # -- what the lot comes back as ----------------------------------------------
 
 
-def test_no_wilsonville_zone_that_permits_the_building_is_silent_but_one(
+def test_no_wilsonville_zone_that_permits_the_building_is_silent(
     rules: RuleSet, wilsonville: Layer
 ) -> None:
+    """OTR was the one, until the design book was stored (2026-10-22)."""
     silent = [
         zone
         for zone in wilsonville.zones
         if "max_height_ft" in rules.resolve(WILSONVILLE, zone).missing_required
     ]
-    assert silent == ["OTR"]
+    assert silent == []
 
 
-def test_otr_is_silent_on_purpose_and_has_nothing_to_borrow(
+def test_otr_takes_its_height_from_the_book_and_has_nothing_else_to_borrow(
     wilsonville: Layer, store: ProvenanceStore
 ) -> None:
     """4.123(.06)A hands design and siting to the Old Town Residential Design
-    Standards Book, naming height explicitly. The book is not a stored document,
-    and there is no citywide number underneath it: 4.113(.03) is headed "Height
-    Guidelines" and lists what the Development Review Board MAY regulate, which
-    is a discretion rather than a standard."""
-    assert "max_height_ft" not in wilsonville.zones["OTR"].values
+    Standards Book, naming height explicitly, and there is no citywide number
+    underneath it: 4.113(.03) is headed "Height Guidelines" and lists what the
+    Development Review Board MAY regulate, which is a discretion rather than a
+    standard. The book permits a quadplex 25 feet "regardless of context"."""
+    height = wilsonville.zones["OTR"].values["max_height_ft"]
+    assert height.value == 25
+    assert height.prov.quote.startswith(
+        "or/clackamas/wilsonville/old-town-residential-design-standards.txt#"
+    )
     text = store.load(CODE).text
     assert "Design Standards Book including but not limited to architectural design" in text
     assert "(.03) Height Guidelines. The Development Review Board may regulate heights" in text
-    assert "Fetch the design book before signing an OTR screen" in wilsonville.zones["OTR"].notes
 
 
 def test_the_pod_clears_all_seven(rules: RuleSet) -> None:

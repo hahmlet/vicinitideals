@@ -95,6 +95,8 @@ _LABELS: dict[str, str] = {
     "driveway_walkway_ft": "walkway beside the driveway",
     "land_division_parent_standards": "parent-lot standards apply",
     "max_building_width_ft": "max. building width",
+    "max_mass_footprint_sqft": "max. footprint under one roof",
+    "min_roof_pitch_in_12": "min. roof pitch (rise in 12)",
     "max_coverage_pct": "max. lot coverage %",
     "max_impervious_pct": "max. coverage of buildings and paving %",
     "max_density_du_per_acre": "max. density (units/acre)",
@@ -546,6 +548,39 @@ _F: tuple[FieldDef, ...] = (
         "where a building may stand and this says how big it may be, so a lot "
         "with room to spare on every yard still fails it.",
         True,
+    ),
+    FieldDef(
+        "max_mass_footprint_sqft",
+        "area_sqft",
+        "MAXIMUM footprint of one building mass under one roofline. Oregon "
+        "City's two concept plan areas print it as a massing rule: "
+        "\"Residences with footprints over one thousand two hundred square "
+        "feet ... shall provide for secondary massing ... under separate "
+        "roof-lines. Each secondary mass shall not have a footprint larger "
+        "than six hundred square feet\" (OCMC 17.21.040.A Park Place, "
+        "17.22.040.A South End). The pod is one box under one roof, so its "
+        "whole footprint is the mass -- 2,016 sq ft (56 x 36) or 2,000 "
+        "(80 x 25) against 1,200 -- and it misses on every lot the rule "
+        "reaches (`mass_footprint`). The director's exemption is a finding "
+        "on judgement words, which the no-variances ruling does not count. "
+        "Optional: absent means no such rule was read.",
+        True,
+    ),
+    FieldDef(
+        "min_roof_pitch_in_12",
+        "ratio",
+        "MINIMUM pitch of the building's primary roof, as rise in twelve of "
+        "run: Fairview 19.145.040 \"The pitch of the roof shall be no less "
+        "than 4:12\", Oregon City 17.21.030.A \"five-twelfths\", West Linn "
+        "25.070(C)(9) \"at least 6:12\". A code that only requires hipped, "
+        "gambrel or gabled roofs and prohibits flat ones (Clackamas ZDO "
+        "Table 315-3, 1005.11) states no number; it is held as the least "
+        "pitch that is not flat, 1. The pod's roof is flat (Steph "
+        "2026-10-21, rulings.yaml `2026-10-21-pod-roof-flat`: \"the intent "
+        "is to. So this would be a red flag\"), pitch 0, so it misses "
+        "every instance (`roof_pitch`). A design that states no roof is not "
+        "measured. Optional: absent means no roof rule was read.",
+        False,
     ),
     FieldDef(
         "min_building_height_ft",
@@ -1743,6 +1778,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # a historic district. A zone that is silent about it is not an
         # incomplete zone.
         "max_building_width_ft",
+        # Design-district rules on the building itself (FOLLOWUPS 109 chunk
+        # 3): a handful of districts state them and most zones state none.
+        "max_mass_footprint_sqft",
+        "min_roof_pitch_in_12",
         "land_division_parent_standards",
         "max_far",
         "max_coverage_pct",

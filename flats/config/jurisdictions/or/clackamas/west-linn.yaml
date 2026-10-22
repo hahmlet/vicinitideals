@@ -978,6 +978,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/west-linn/08.r-40.txt#L75"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
+      # have a pitch of at least 6:12", under the same applicability
+      # sentence as the 35 ft width cap: new construction of residential
+      # properties in the Willamette Historic District. Outside the district
+      # no West Linn chapter sets a roof pitch. The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat).
+      exempt: true
+      cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
+      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      variants:
+        - value: 6
+          when: [willamette_historic_district]
+          cite: West Linn CDC 25.070(C)(9), roof pitch
+          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
     setback_front_ft:
       value: 30
       quote: "or/clackamas/west-linn/08.r-40.txt#L150"
@@ -1103,6 +1118,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/west-linn/09.r-20.txt#L73"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
+      # have a pitch of at least 6:12", under the same applicability
+      # sentence as the 35 ft width cap: new construction of residential
+      # properties in the Willamette Historic District. Outside the district
+      # no West Linn chapter sets a roof pitch. The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat).
+      exempt: true
+      cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
+      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      variants:
+        - value: 6
+          when: [willamette_historic_district]
+          cite: West Linn CDC 25.070(C)(9), roof pitch
+          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/west-linn/09.r-20.txt#L154"
@@ -1227,6 +1257,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/west-linn/10.r-15.txt#L71"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
+      # have a pitch of at least 6:12", under the same applicability
+      # sentence as the 35 ft width cap: new construction of residential
+      # properties in the Willamette Historic District. Outside the district
+      # no West Linn chapter sets a roof pitch. The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat).
+      exempt: true
+      cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
+      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      variants:
+        - value: 6
+          when: [willamette_historic_district]
+          cite: West Linn CDC 25.070(C)(9), roof pitch
+          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/west-linn/10.r-15.txt#L150"
@@ -1329,6 +1374,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/west-linn/11.r-10.txt#L63"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
+      # have a pitch of at least 6:12", under the same applicability
+      # sentence as the 35 ft width cap: new construction of residential
+      # properties in the Willamette Historic District. Outside the district
+      # no West Linn chapter sets a roof pitch. The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat).
+      exempt: true
+      cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
+      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      variants:
+        - value: 6
+          when: [willamette_historic_district]
+          cite: West Linn CDC 25.070(C)(9), roof pitch
+          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/west-linn/11.r-10.txt#L151"
@@ -1486,6 +1546,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/west-linn/12.r-7.txt#L63"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
+      # have a pitch of at least 6:12", under the same applicability
+      # sentence as the 35 ft width cap: new construction of residential
+      # properties in the Willamette Historic District. Outside the district
+      # no West Linn chapter sets a roof pitch. The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat).
+      exempt: true
+      cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
+      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      variants:
+        - value: 6
+          when: [willamette_historic_district]
+          cite: West Linn CDC 25.070(C)(9), roof pitch
+          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
     setback_front_ft:
       quote: "or/clackamas/west-linn/12.r-7.txt#L153"
       value: 20
@@ -1624,6 +1699,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/west-linn/13.r-5.txt#L65"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
+      # have a pitch of at least 6:12", under the same applicability
+      # sentence as the 35 ft width cap: new construction of residential
+      # properties in the Willamette Historic District. Outside the district
+      # no West Linn chapter sets a roof pitch. The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat).
+      exempt: true
+      cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
+      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      variants:
+        - value: 6
+          when: [willamette_historic_district]
+          cite: West Linn CDC 25.070(C)(9), roof pitch
+          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/west-linn/13.r-5.txt#L163"
@@ -1774,6 +1864,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/west-linn/14.r-4.5.txt#L63"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
+      # have a pitch of at least 6:12", under the same applicability
+      # sentence as the 35 ft width cap: new construction of residential
+      # properties in the Willamette Historic District. Outside the district
+      # no West Linn chapter sets a roof pitch. The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat).
+      exempt: true
+      cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
+      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      variants:
+        - value: 6
+          when: [willamette_historic_district]
+          cite: West Linn CDC 25.070(C)(9), roof pitch
+          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
     setback_front_ft:
       quote: "or/clackamas/west-linn/14.r-4.5.txt#L188"
       value: 20
@@ -1899,6 +2004,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/west-linn/15.r-3.txt#L65"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
+      # have a pitch of at least 6:12", under the same applicability
+      # sentence as the 35 ft width cap: new construction of residential
+      # properties in the Willamette Historic District. Outside the district
+      # no West Linn chapter sets a roof pitch. The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat).
+      exempt: true
+      cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
+      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      variants:
+        - value: 6
+          when: [willamette_historic_district]
+          cite: West Linn CDC 25.070(C)(9), roof pitch
+          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
     setback_front_ft:
       quote: "or/clackamas/west-linn/15.r-3.txt#L181"
       value: 15

@@ -373,7 +373,10 @@ def test_and_the_corpus_wide_height_gap_is_now_one_zone_wide(rules: RuleSet) -> 
 
     2026-10-14, later: one zone wide again. The lot-line-bearing lane encoded
     HDR's dimensions, and its height is held exempt (Table 315-4 prints
-    "None")."""
+    "None").
+
+    2026-10-22: closed. The Old Town book was stored (design districts chunk
+    3) and OTR takes its 25 ft quadplex height from it."""
     silent = [
         (layer_id, zone)
         for layer_id, layer in sorted(rules.layers.items())
@@ -382,4 +385,4 @@ def test_and_the_corpus_wide_height_gap_is_now_one_zone_wide(rules: RuleSet) -> 
         and got.values["quadplex_allowed"].value
         and "max_height_ft" in got.missing_required
     ]
-    assert silent == [("or/clackamas/wilsonville", "OTR")]
+    assert silent == []

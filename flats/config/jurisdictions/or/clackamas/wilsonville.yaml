@@ -75,11 +75,11 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   shape in the same rendering.
 
 
-  OTR is deliberately still without one, and should stay that way until somebody fetches the book:
-  4.123(.06)A hands height to the Old Town Residential Design Standards Book by name. There is no
-  citywide fallback to borrow -- 4.113(.03) "Height Guidelines" is discretionary, a list of things the
-  Development Review Board MAY regulate, and states no number. A zone that reports no height is the
-  ledger working.
+  OTR takes its height from the book: 4.123(.06)A hands height to the Old Town Residential Design
+  Standards Book by name, and the book (stored 2026-10-22) permits triplexes, quadplexes and
+  townhouses 25 feet "regardless of context". There is no citywide fallback -- 4.113(.03) "Height
+  Guidelines" is discretionary, a list of things the Development Review Board MAY regulate, and
+  states no number.
 
 
   THE TWO MISSING ZONES ARE CLOSED, 2026-09-01. They were named here because nothing else in this
@@ -1021,6 +1021,15 @@ code:
     end: "201.2.24 Curbs and Grading"
     nth: 2
     extraction: plain
+  # THE OLD TOWN DESIGN BOOK, fetched in design-districts chunk 2 and moved out
+  # of the pending store in chunk 3 (2026-10-22). Section 4.138 sends Old Town
+  # Overlay residential work to it. Nothing in it moves the pod: it permits a
+  # flat roof with a parapet, and the Old Town residential lots hold no GREEN.
+  - id: "old-town-residential-design-standards"
+    url: https://wilsonvilleoregon.gov/DocumentCenter/View/9181/Wilsonville-Old-Town-Residential-Design-Standards-Book-October-2021-PDF
+    title: "Old Town Residential Design Standards Book (October 2021)"
+    extraction: plain
+    allow_thin: true
 defaults:
   # PARKING, read 2026-08-22 off Table 5 and the two notes under it, which were
   # the last unread footnotes in this layer. Wilsonville held no parking field
@@ -1660,7 +1669,7 @@ zones:
       <=10,000sf get 15/5/15 (2-story side=7, rear=20); lots >10,000sf get 20/10/20. Quadplex min lot
       7,000 (SFD/duplex/triplex 5,000).'
   OTR:
-    section: ["4.123", "4.113", "4.001"]
+    section: ["4.123", "4.113", "4.001", "old-town-residential-design-standards"]
     cite_default:
       cite: Wilsonville Development Code 4.123 (Old Town Residential OTR Zone) + 4.113(.02) setbacks; Ord. 841
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.123OLTOREOTZO
@@ -1670,6 +1679,24 @@ zones:
       cite: Wilsonville Development Code 4.123(.03)B (OTR permitted uses) + 4.001(181) definition of Middle Housing; Ord. 841
       value: true
       quote: "or/clackamas/wilsonville/4.planning.txt#L874-L875,L4496-L4498"
+    # THE DESIGN BOOK, read 2026-10-22 (design-districts chunk 3). New middle
+    # housing "shall meet all design standards for the applicable
+    # architectural style", and the book offers three: Western Farmhouse
+    # (gable, 7:12 to 12:12), Craftsman (gable, 6:12 to 10:12) and New Ranch
+    # (hip or low-pitched gable, 4:12 to 6:12). No style has a flat roof, so
+    # the flattest roof the book allows is 4 in 12. Its height line is the
+    # one that does not depend on the neighbours: "Regardless of context,
+    # triplexes, quadplexes, and townhouses are permitted to be 25 feet in
+    # height and two stories" -- the most the book allows a quadplex, with
+    # the immediate-context steps (1.5 or 2 storeys) only ever lower.
+    min_roof_pitch_in_12:
+      value: 4
+      cite: "Wilsonville Old Town Residential Design Standards Book (Ord. 851, October 2021), Example Middle Housing Styles and Style Guidelines roof pitches"
+      quote: "or/clackamas/wilsonville/old-town-residential-design-standards.txt#L371-L373,L414,L418,L422"
+    max_height_ft:
+      value: 25
+      cite: "Wilsonville Old Town Residential Design Standards Book (Ord. 851, October 2021), Using Design Standards, Step 2.2.d"
+      quote: "or/clackamas/wilsonville/old-town-residential-design-standards.txt#L217"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -1766,10 +1793,11 @@ zones:
       attached townhouse units. Those are the zone''s own, and .05 is not delegated anywhere.
 
       SETBACKS AND COVERAGE ARE NOT: 4.123(.06)A hands design and siting to the ''Old Town Residential
-      Design Standards Book'', naming height, setbacks and lot coverage explicitly. The book is not a
-      stored document. The setbacks shown are the 4.113(.02) citywide default, which is what applies
-      absent the book rather than what the book says, and coverage is deliberately absent rather than
-      guessed. Fetch the design book before signing an OTR screen. quadfit confidence:
+      Design Standards Book'', naming height, setbacks and lot coverage explicitly. The book was
+      stored on 2026-10-22 and its roof pitch and quadplex height are encoded; its edges, setbacks
+      and coverage pages are not yet read. The setbacks shown are the 4.113(.02) citywide default,
+      and coverage is deliberately absent rather than guessed. The pod misses both encoded book
+      standards (flat roof; 26 ft against 25), so no OTR lot can be GREEN on the unread pages. quadfit confidence:
       needs_verification.'
   PDR1:
     section: ["4.124", "4.113"]

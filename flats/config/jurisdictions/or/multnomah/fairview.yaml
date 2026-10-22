@@ -2501,6 +2501,15 @@ zones:
       # Closed by the 2026-10-08 ruling, reopened 2026-10-15 by ORS 197A.400:
       # Attached single-unit dwellings are a conditional use (19.135.010 row c); multi-unit
       # dwellings are a separate row.
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. 19.150.050: "Hipped, gambrel or gabled roofs
+      # are required. Flat roofs are not permitted except for mechanical
+      # equipment areas in VMU zones." No pitch is stated, so the value is
+      # the least pitch that is not flat, 1 in 12. The pod's roof is flat
+      # (rulings.yaml 2026-10-21-pod-roof-flat).
+      value: 1
+      cite: Fairview FMC 19.150.050, roofs in the mixed use zone (VMU) (applicability 19.150.010)
+      quote: "or/multnomah/fairview/19.150.txt#L17,L67,L69"
     # 19.135.030 states density, coverage and height for this zone and states
     # no lot size. Read and empty.
     min_lot_sqft:
@@ -2662,6 +2671,15 @@ zones:
       #
       # Closed by the 2026-10-08 ruling, reopened 2026-10-15 by ORS 197A.400:
       # Townhouses are a conditional use after Planning Commission approval (19.125.030(A)).
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. 19.145.040 applies in VSF, VTH and VA
+      # (19.145.010): "Hipped gambrel or gabled roofs are required. The pitch
+      # of the roof shall be no less than 4:12." A flat roof is allowed only
+      # over mechanical equipment areas in VA and never in VSF or VTH. The
+      # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      value: 4
+      cite: Fairview FMC 19.145.040, roofs (applicability 19.145.010)
+      quote: "or/multnomah/fairview/19.145.txt#L17,L45"
     min_lot_sqft:
       exempt: true
       quote: "or/multnomah/fairview/19.125.txt#L73,L75-L77,L79-L81,L83-L85,L87-L89"
@@ -2834,6 +2852,15 @@ zones:
       # row h, quoted under R-6 above, where a quadplex reads permitted.
       value: true
       quote: "or/multnomah/fairview/19.115.txt#L21-L25"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. 19.145.040 applies in VSF, VTH and VA
+      # (19.145.010): "Hipped gambrel or gabled roofs are required. The pitch
+      # of the roof shall be no less than 4:12." A flat roof is allowed only
+      # over mechanical equipment areas in VA and never in VSF or VTH. The
+      # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      value: 4
+      cite: Fairview FMC 19.145.040, roofs (applicability 19.145.010)
+      quote: "or/multnomah/fairview/19.145.txt#L17,L45"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.115.txt#L71-L73"
@@ -2904,6 +2931,15 @@ zones:
           when: [unit_lots]
           cite: "FMC 19.120.020(B), townhouses permitted in the VTH zone; FMC 19.13 \"Townhouse\", each unit on an individual lot (Steph 2026-10-15, townhomes have separate lots)"
           quote: "or/multnomah/fairview/19.120.txt#L21,L23,L29-L31"
+    min_roof_pitch_in_12:
+      # FOLLOWUPS 109 chunk 3. 19.145.040 applies in VSF, VTH and VA
+      # (19.145.010): "Hipped gambrel or gabled roofs are required. The pitch
+      # of the roof shall be no less than 4:12." A flat roof is allowed only
+      # over mechanical equipment areas in VA and never in VSF or VTH. The
+      # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
+      value: 4
+      cite: Fairview FMC 19.145.040, roofs (applicability 19.145.010)
+      quote: "or/multnomah/fairview/19.145.txt#L17,L45"
     # 19.120.040 states every lot standard in this zone, and since the only
     # door for the pod is four townhouse lots, each is a standard for ONE unit
     # lot: the screen reads area, width and frontage four times over on the

@@ -1452,6 +1452,51 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-OREGON-CITY-HISTORIC-OVERLAY:
+    description: "Whether the lot lies in an Oregon City historic overlay district (Canemah, McLoughlin, Barlow Trail corridor)"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The city's historic district layers"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-OREGON-CITY-PARK-PLACE:
+    description: "Whether the lot lies inside the Oregon City Park Place Concept Plan area"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The city's concept plan boundary layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-OREGON-CITY-SOUTH-END:
+    description: "Whether the lot lies inside the Oregon City South End Concept Plan area"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: shared
+    key: [jurisdiction, fact]
+    path: "The city's concept plan boundary layer"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
 
   # --- lots the bridge never measured (flats.ingest.assign) ------------
   # One per gate the normalize stage closes (flats.ingest.normalize.GATES)

@@ -373,7 +373,10 @@ pytestmark = pytest.mark.unit
 # (FOLLOWUPS 93 + 85): notes arrive on Troutdale HDR and MU-1 (the 8.130.C townhouse
 # design standards, read and NOT ENCODED), Fairview VTH and Milwaukie SMU, and leave
 # Milwaukie NMU (now encoded); one Fairview comment arrives.
-EXPECTED = {"notes": 156, "comments": 286, "tests": 18}
+EXPECTED = {"notes": 157, "comments": 286, "tests": 18}
+# 156 -> 157 notes on 2026-10-22 (design districts chunk 3): Wood Village TC's note
+# encodes Table 235-5's ground floor height and records its building frontage row
+# (60/60/40 per cent by street type, measured along the block) as not encoded.
 # 289 -> 286 comments on 2026-10-21 (FOLLOWUPS 109): the building frontage
 # share is encoded -- Beaverton 60.05.15.6 (layer comment), Washington County
 # 392-8 and King City 16.114.060 C.4 (the entrance faces the street).

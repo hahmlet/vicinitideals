@@ -98,6 +98,16 @@ def wide():
     return load_catalog().latest("pod80x25")
 
 
+def pitched(design):
+    """The same pod under a pitched roof.
+
+    Fairview's village zones refuse a flat roof (FDC 19.145.040, 19.150.050;
+    design-districts chunk 3), and the pod's roof is flat, so every Fairview
+    village lot is RED on the roof. These tests are about the plat, not the
+    roof, so they screen a pod that clears it."""
+    return design.model_copy(update={"roof_pitch_in_12": 6})
+
+
 def both(corpus, policies, r: dict, design=None):
     """The apartment form alone, and what the bridge answers."""
     design = pod() if design is None else design
@@ -124,7 +134,7 @@ def test_a_fairview_village_lot_passes_as_townhouses_with_the_flag(corpus, polic
     19.125.030(A) (VA, townhouses): the four homes only on their own lots. As
     one apartment building the lot is red on the use table; as four unit lots
     it clears, GREEN, and says it needs the land division."""
-    one, got = both(corpus, policies, row("fairview", zone))
+    one, got = both(corpus, policies, row("fairview", zone), design=pitched(pod()))
 
     assert one.signed.colour is Colour.red
     assert any(b.check == "use" for b in one.signed.binds)
@@ -143,19 +153,28 @@ def test_a_fairview_village_lot_passes_as_townhouses_with_the_flag(corpus, polic
     assert [b["check"] for b in forms["apartment"]["binds"]] == ["use"]
 
 
+@pytest.mark.parametrize("zone", ["VMU", "VA"])
+def test_the_flat_roofed_pod_is_red_on_a_fairview_village_lot(corpus, policies, zone) -> None:
+    """The catalogued pod's roof is flat, and FDC 19.145.040 (VA) and
+    19.150.050 (VMU) refuse a flat roof: RED in either form, on the roof."""
+    _, got = both(corpus, policies, row("fairview", zone))
+    assert got.signed.colour is Colour.red
+    assert any(b.check == "roof_pitch" for b in got.signed.binds)
+
+
 def test_a_village_townhouse_lot_passes_and_a_narrow_one_stays_red(corpus, policies) -> None:
     """FMC 19.120.020(B): townhouses are permitted outright in VTH and a
     quadplex is not listed. 19.120.040(A)-(B) ask 2,000 sq ft and 20 ft of
     width of every lot. The 80 ft pod's homes are 20 ft wide, so its middle
     lots meet the width and, 120 ft deep, the area: a 100 x 120 lot clears
     with the flag. A 60 ft lot is red on the width."""
-    one, got = both(corpus, policies, row("fairview", "VTH", width=100.0), design=wide())
+    one, got = both(corpus, policies, row("fairview", "VTH", width=100.0), design=pitched(wide()))
     assert one.signed.colour is Colour.red
     assert got.design.plat is Plat.unit_lots
     assert got.signed.colour is Colour.green
     assert land_division(got)
 
-    one, got = both(corpus, policies, row("fairview", "VTH", width=60.0), design=wide())
+    one, got = both(corpus, policies, row("fairview", "VTH", width=60.0), design=pitched(wide()))
     assert got.signed.colour is Colour.red
     assert got.design.plat is Plat.one_lot
     assert not land_division(got)
@@ -280,7 +299,7 @@ def test_the_record_rides_into_the_bridge_row(corpus, policies) -> None:
     from flats.ingest.assign import ROW_COLUMNS
     from scripts.flats_load_bridge import result_checks
 
-    _, got = both(corpus, policies, row("fairview", "VMU"))
+    _, got = both(corpus, policies, row("fairview", "VMU"), design=pitched(pod()))
     written = quadfit.row_for(got)
     assert "forms" in ROW_COLUMNS  # a synthetic row carries the column too
     assert json.loads(written["forms"])["works_as"] == "townhomes"
