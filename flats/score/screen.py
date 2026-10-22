@@ -2665,8 +2665,10 @@ def _pods_to_fill(
     that many cannot stand there (Steph 2026-10-21: "if there's enough room
     for a 2nd pod, even suboptimally placed, we make it yellow").
 
-    A rough count, not a site plan. Each pod turns its long side to the
-    street; between two of them stands the zone's separation between
+    A rough count, not a site plan. Each pod turns either side to the
+    street -- every mix of long and short sides is tried, since where the
+    room is short two pods end-on can stand where two side-on cannot and
+    still fill more than one; between two of them stands the zone's separation between
     buildings (`min_building_separation_ft`, else
     :data:`DEFAULT_BUILDING_SEPARATION_FT`), and inside the two end yards
     (the side setback, and on a corner lot the street-side one at one end).
@@ -2679,11 +2681,11 @@ def _pods_to_fill(
     already fits in.
 
     ``first`` is what the first pod presents to this street where it is not
-    its long side: on a corner lot's other street, the end of the pod that
-    already stands along the primary one.
+    the pod's own choice: on a corner lot's other street, the end of the pod
+    that already stands along the primary one.
     """
-    face = float(max(design.footprint.width_ft, design.footprint.depth_ft))
-    first = face if first is None else float(first)
+    long = float(max(design.footprint.width_ft, design.footprint.depth_ft))
+    short = float(min(design.footprint.width_ft, design.footprint.depth_ft))
     got = rules.get("min_building_separation_ft")
     gap = (
         float(got)
@@ -2699,12 +2701,21 @@ def _pods_to_fill(
     room = line - side - end
     n = 2
     while True:
-        built = first + (n - 1) * face
-        run = built + (n - 1) * gap + max(0.0, lane - gap)
-        if run > room:
+        # The pods free to turn: all n, or all but the fixed first one.
+        free = n if first is None else n - 1
+        base = 0.0 if first is None else float(first)
+        stood = False
+        for longs in range(free, -1, -1):
+            built = base + longs * long + (free - longs) * short
+            run = built + (n - 1) * gap + max(0.0, lane - gap)
+            if run > room:
+                continue
+            stood = True
+            if most(built, line) >= need:
+                return n
+        if not stood:
+            # Not even n pods end-on stand here; more never will.
             return None
-        if most(built, line) >= need:
-            return n
         n += 1
 
 
@@ -2724,7 +2735,7 @@ def _more_pods_fill(
     (:func:`_pods_to_fill`), and at least one needs more than one -- the lot
     Steph's wide-lot ruling makes YELLOW where one pod alone is RED. The
     other streets are counted on their own: the pod at the corner shows them
-    its end, and the pods added along them their long sides."""
+    its end, and the pods added along them either side."""
     w, d = float(design.footprint.width_ft), float(design.footprint.depth_ft)
     lane = drive_at_street(design, rules, lot.alley, corner=lot.corner, beside=beside) or 0.0
 

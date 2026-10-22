@@ -1970,8 +1970,8 @@
     separation between buildings), the lot is YELLOW with a flag that it
     needs more than one building; if they cannot fit, RED. One pod that
     meets the share on its own is judged as before. Encoded in chunk 3
-    (docs/flats/design_districts_plan.md). Built 2026-10-22: pods turn their
-    long side to the street, the zone's building separation between them
+    (docs/flats/design_districts_plan.md). Built 2026-10-22: pods turn
+    either side to the street, the zone's building separation between them
     (ten feet where none is stated), inside the side yards, one shared
     drive; flag FRONTAGE-MORE-BUILDINGS.
   source: Steph 2026-10-21 (chat), docs/FOLLOWUPS.md item 109

@@ -116,9 +116,10 @@ def test_the_check_is_named_for_its_field() -> None:
 
 
 def test_a_frontage_one_pod_cannot_fill_and_two_cannot_stand_on_is_red() -> None:
-    # 56 ft of pod over 110 ft of street is 51 percent, under 60; two pods
-    # need 56 + 10 + 56 ft and a 2 ft wider drive than the gap: 124 ft.
-    got = run(facts(street_lines_ft=(110.0,)), rules(**SHARE))
+    # 56 ft of pod over 100 ft of street is 56 percent, under 60; even two
+    # pods end-on need 36 + 10 + 36 ft and a 2 ft wider drive than the gap,
+    # 84 ft, and 10 ft side yards leave 80.
+    got = run(facts(street_lines_ft=(100.0,)), rules(**SHARE, setback_side_ft=10))
     assert check(got, BUILDING_SHARE).verdict is not Verdict.passes
     assert got.colour is Colour.red
     assert "FRONTAGE-MORE-BUILDINGS" not in codes(got)
@@ -133,17 +134,35 @@ def test_a_street_more_pods_could_fill_is_yellow_with_the_flag() -> None:
     assert got.colour is Colour.yellow
     assert "FRONTAGE-MORE-BUILDINGS" in codes(got)
     # The yards and the zone's own separation count: with 10 ft side yards
-    # and 30 ft between buildings two pods (56 + 30 + 56) need 162 ft of a
-    # 140 ft street less its yards (120). RED.
+    # and 30 ft between buildings, a 140 ft street less its yards (120)
+    # holds two pods end-on (36 + 30 + 36) but they fill 51 percent, and one
+    # side-on beside one end-on (56 + 30 + 36 = 122) does not stand. RED.
     tight = rules(**SHARE, setback_side_ft=10, min_building_separation_ft=30)
     assert run(facts(street_lines_ft=(140.0,)), tight).colour is Colour.red
-    # With the default gap two pods need 124 ft: 130 less its yards (110)
-    # does not hold them; 150 (130) does.
+    # With the default gap, 130 less its yards (110) holds one side-on and
+    # one end-on (56 + 10 + 36 + 2 = 104), 71 percent: YELLOW.
     yards = rules(**SHARE, setback_side_ft=10)
-    assert run(facts(street_lines_ft=(130.0,)), yards).colour is Colour.red
-    assert run(facts(street_lines_ft=(150.0,)), yards).colour is Colour.yellow
+    assert run(facts(street_lines_ft=(130.0,)), yards).colour is Colour.yellow
     assert DEFAULT_BUILDING_SEPARATION_FT == 10.0
     assert MORE_BUILDINGS != BUILDING_FRONTAGE
+
+
+def test_pods_may_stand_end_on_where_side_on_they_do_not() -> None:
+    # Gresham's shape, 50 percent of a 126 ft street inside 5 ft side yards
+    # (116 ft). Two pods side-on (56 + 10 + 56 + 2 = 124) do not stand, but
+    # one side-on beside one end-on (104) does and fills 73 percent: YELLOW.
+    half = {"building_frontage_min_pct": 50, "setback_front_max_ft": 16, "setback_side_ft": 5}
+    got = run(facts(street_lines_ft=(126.0,)), rules(**half))
+    assert got.colour is Colour.yellow
+    assert "FRONTAGE-MORE-BUILDINGS" in codes(got)
+    # With 30 ft between buildings only two end-on stand (36 + 30 + 36 =
+    # 102): 57 percent, still past 50.
+    wide_gap = run(facts(street_lines_ft=(126.0,)), rules(**half, min_building_separation_ft=30))
+    assert wide_gap.colour is Colour.yellow
+    assert "FRONTAGE-MORE-BUILDINGS" in codes(wide_gap)
+    # And at 50 ft between them (122) none do: RED.
+    no_room = run(facts(street_lines_ft=(126.0,)), rules(**half, min_building_separation_ft=50))
+    assert no_room.colour is Colour.red
 
 
 def test_a_drawn_share_that_clears_is_green_and_unmeasured_is_not() -> None:
@@ -174,33 +193,38 @@ def test_the_driveway_off_the_frontage_saves_a_lot_it_would_fail() -> None:
     lane = drive_at_street(DESIGN, rules(**SHARE))
     assert lane and lane > 0
     # Just wide enough that the pod's 56 ft misses 60 percent of the whole
-    # street but clears it once the drive is taken off.
+    # street but clears it once the drive is taken off; 10 ft side yards
+    # leave no room for a second pod.
     line = 56 / 0.6 + lane / 2
-    plain = run(facts(street_lines_ft=(line,)), rules(**SHARE))
+    plain = run(facts(street_lines_ft=(line,)), rules(**SHARE, setback_side_ft=10))
     assert plain.colour is Colour.red
-    less = run(facts(street_lines_ft=(line,)), rules(**SHARE, building_frontage_less_drive=True))
+    less = run(
+        facts(street_lines_ft=(line,)), rules(**SHARE, setback_side_ft=10, building_frontage_less_drive=True)
+    )
     assert less.colour is not Colour.red
     assert check(less, BUILDING_SHARE) is None
 
 
 def test_a_plaza_the_plan_does_not_draw_saves_a_lot_from_red_never_to_green() -> None:
-    # 56 ft over 110 ft is 51 percent; with a fifth of the frontage off as a
-    # plaza (88 ft left) it is 64: the pod might meet it, so not RED.
-    plain = run(facts(street_lines_ft=(110.0,)), rules(**SHARE))
+    # 56 ft over 100 ft is 56 percent, and 20 ft side yards leave no room
+    # for a second pod; with a fifth of the frontage off as a plaza (80 ft
+    # left) it is 70: the pod might meet it, so not RED.
+    plain = run(facts(street_lines_ft=(100.0,)), rules(**SHARE, setback_side_ft=20))
     assert plain.colour is Colour.red
-    plaza = {**SHARE, "building_frontage_plaza_pct": 20}
-    saved = run(facts(street_lines_ft=(110.0,), building_frontage_pct=(51.0,)), rules(**plaza))
+    plaza = {**SHARE, "building_frontage_plaza_pct": 20, "setback_side_ft": 20}
+    saved = run(facts(street_lines_ft=(100.0,), building_frontage_pct=(56.0,)), rules(**plaza))
     assert saved.colour is Colour.yellow
     assert check(saved, BUILDING_SHARE) is None
-    # Past what a plaza can take off and too short for a second pod, RED.
+    # Past what a plaza can take off (120 less 24: 58 percent) and too short
+    # for a second pod (80 ft inside the yards), RED.
     assert run(facts(street_lines_ft=(120.0,)), rules(**plaza)).colour is Colour.red
 
 
 def test_a_share_by_street_type_fails_below_the_least_and_holds_between() -> None:
     banded = {"building_frontage_min_pct": 90, "building_frontage_min_pct_least": 50, "setback_front_max_ft": 20}
-    # 56 over 120 is 47 percent: under 50, whatever the street, and two
-    # pods do not stand on it.
-    assert run(facts(street_lines_ft=(120.0,)), rules(**banded)).colour is Colour.red
+    # 56 over 115 is 49 percent: under 50, whatever the street, and inside
+    # 20 ft side yards (75 ft) not even two pods end-on (84) stand.
+    assert run(facts(street_lines_ft=(115.0,)), rules(**banded, setback_side_ft=20)).colour is Colour.red
     # 130: two pods fill 86 percent of it, past even the 50; a second
     # building, not a miss.
     two = run(facts(street_lines_ft=(130.0,)), rules(**banded))
@@ -216,10 +240,10 @@ def test_a_share_by_street_type_fails_below_the_least_and_holds_between() -> Non
 def test_a_corner_lot_owes_the_other_street_and_a_through_lot_one() -> None:
     corner = {**SHARE, "building_frontage_other_pct": 35}
     # The width on the 80-ft street (70 percent) leaves the 36-ft depth on a
-    # 120-ft one (30 percent); the depth on the 80 (45) misses 60 itself.
-    # A second pod along the 120 (36 + 10 + 56 + 2 = 104 ft) cannot stand
-    # inside 10 ft yards (100 ft): RED.
-    got = run(facts(street_lines_ft=(80.0, 120.0), corner=True), rules(**corner, setback_side_ft=10))
+    # 110-ft one (33 percent); the depth on the 80 (45) misses 60 itself.
+    # Even a second pod end-on along the 110 (36 + 10 + 36 + 2 = 84 ft)
+    # cannot stand inside 15 ft yards (80 ft): RED.
+    got = run(facts(street_lines_ft=(80.0, 110.0), corner=True), rules(**corner, setback_side_ft=15))
     assert got.colour is Colour.red
     # On a 200-ft side street it can: a second building, YELLOW.
     more = run(facts(street_lines_ft=(80.0, 200.0), corner=True), rules(**corner))
