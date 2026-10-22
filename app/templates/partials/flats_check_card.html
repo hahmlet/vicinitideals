@@ -265,6 +265,12 @@
                 title="Press {{ loop.index }}"
                 style="text-align:left{% if key == card.before_answer %};box-shadow:0 0 0 2px #f59e0b{% endif %}"><kbd class="check-key">{{ loop.index }}</kbd>{% if key == card.before_answer %}✓ {% endif %}{{ words }}</button>
         {% endfor %}
+        {#- A value card has five answers and a note card four; the dock is the
+            height of its buttons, so without these the answers moved from
+            card to card (Steph 2026-10-20: they stay put). -#}
+        {% for _ in range(5 - card.answers | length) %}
+        <div class="btn btn-secondary btn-sm" aria-hidden="true" style="visibility:hidden"><kbd class="check-key">0</kbd>&nbsp;</div>
+        {% endfor %}
       </div>
       <textarea name="comment" rows="2" placeholder="Comment (optional) — what the page says instead, or anything else"
                 style="width:100%;box-sizing:border-box;font-size:12px;padding:5px;margin-top:8px">{{ card.before_comment }}</textarea>
