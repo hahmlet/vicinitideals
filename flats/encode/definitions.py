@@ -54,6 +54,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from flats.provenance.store import ProvenanceStore
 from flats.rules.definitions import TERMS
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer
@@ -207,7 +208,7 @@ def _stored(layer_id: str) -> list[Path]:
     directory = DOCS / layer_id
     if not directory.is_dir():
         return []
-    return sorted(p for p in directory.glob("*.txt") if p.is_file())
+    return ProvenanceStore.owned(directory)
 
 
 def _uses(layer_id: str, term: str) -> int:

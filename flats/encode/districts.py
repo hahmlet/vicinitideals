@@ -61,6 +61,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable, Iterator
 
+from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
 
@@ -182,7 +183,7 @@ def _documents(layer: str) -> Iterator[Path]:
     directory = DOCS / layer
     if not directory.is_dir():
         return
-    yield from sorted(directory.glob("*.txt"))
+    yield from ProvenanceStore.owned(directory)
 
 
 #: How far a bare column head may sit from a sentence about districts and still

@@ -317,7 +317,7 @@ def test_the_cul_de_sac_width_has_to_already_be_here() -> None:
             )
             assert {float(v.value) for v in alone} == {number}, (jname, row["zone"], number)
             assert number < float(held.value), (jname, row["zone"])
-            assert all(v.prov.quote.endswith(("#L192-L193", "#L503-L504")) for v in alone), (
+            assert all(v.prov.quote.endswith(("40.300.txt#L65-L66", "41.300.txt#L72-L73")) for v in alone), (
                 jname, row["zone"])
             # quadfit's own pair reads the same way, and on the WIDTH row: the
             # bulb figure under the interior one, with no frontage in sight

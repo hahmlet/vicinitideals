@@ -1,0 +1,11 @@
+{
+  "url": "https://api.municode.com/PublicationPdfDownload/1818",
+  "retrieved": "2026-09-28",
+  "sha256": "6e6a9500fa5e6d515e7d19f30ddb2c9e4b936eacc4721b5064647b5a9af8a7c8",
+  "extractor": "flats-html-text/8",
+  "part_of": {
+    "document": "or/clackamas/tualatin/71.wetlands-protection.txt",
+    "first": 76,
+    "last": 78
+  }
+}

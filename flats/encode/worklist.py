@@ -59,6 +59,7 @@ from typing import Iterable, Mapping, Sequence
 from flats.encode.crossrefs import _cited_lines
 from flats.encode.triage import _wrap, layer_path
 from flats.encode.uncited import Uncited, survey
+from flats.provenance.sections import chapters
 from flats.provenance.store import ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.ledger import read_coverage
@@ -564,7 +565,7 @@ def cards(
     if not rows:
         return []
 
-    quoted_docs = set(_cited_lines(layer))
+    quoted_docs = chapters(_cited_lines(layer), store)
     held = _held(layer)
     by_layer = lots if lots is not None else _lots_by_layer()
     extra = overrides or {}

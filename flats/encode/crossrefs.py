@@ -95,6 +95,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Collection, Iterable, Iterator, Sequence
 
+from flats.provenance.sections import splits
 from flats.provenance.store import ProvenanceStore, parse_quote
 from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
@@ -443,6 +444,7 @@ def _cited_lines(
     corpus holds "the same standard, measured differently".
     """
     lines: dict[str, dict[int, set[str]]] = defaultdict(lambda: defaultdict(set))
+    cuts = splits()
 
     def take(quote: str | None, name: str) -> None:
         if not quote:
@@ -451,8 +453,14 @@ def _cited_lines(
             ref = parse_quote(quote)
         except Exception:
             return
+        cut = cuts.get(ref.path)
         for n in ref.numbers:
             lines[ref.path][n].add(name)
+            # A citation spanning two sections stays on the proof copy, and
+            # the lines it read are lines of those sections all the same.
+            landed = cut.at(n) if cut is not None else None
+            if landed is not None:
+                lines[landed[0]][landed[1]].add(name)
 
     def take_all(value: Value, name: str) -> None:
         take(value.prov.quote, name)
@@ -646,7 +654,9 @@ def state_law(layer: Layer, store: ProvenanceStore | None = None) -> dict[str, i
     """ORS and OAR references, counted apart from a city's own chapters."""
     store = store or ProvenanceStore()
     counts: dict[str, int] = defaultdict(int)
-    held = {Path(p).stem for p in store.documents() if p.startswith("or/")}
+    # A section file is named for its own number; "40.220" is not ORS 40.220.
+    cut = store.section_files()
+    held = {Path(p).stem for p in store.documents() if p.startswith("or/") and p not in cut}
     for path in store.documents():
         if path.rsplit("/", 1)[0] != layer.layer:
             continue

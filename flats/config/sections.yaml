@@ -1,0 +1,22 @@
+# How each jurisdiction's code is cut into one file per section
+# (flats/provenance/sections.py). Only a layer named here is cut.
+#
+#   heading:   a heading line; group `n` is the section number
+#   furniture: heading-shaped lines that are not headings (running headers)
+#   lead:      document id -> the section its opening lines belong to, for a
+#              slice that starts inside a section instead of at a heading
+
+or/clackamas/tualatin:
+  # "TDC 40.220. Lot Size and Dimensional Standards." -- the number, a full
+  # stop, a capitalised title. Chapter 58 prints "TDC 58.100  Purpose." with
+  # no stop. The running header "TDC 40.220 TUALATIN DEVELOPMENT CODE" names
+  # the section on the page, not a new one; the page footer " TDC
+  # 42.300MEDIUM HIGH DENSITY..." has no space after the number; and a
+  # reference wrapped to the start of a line ("TDC 71.090(2) and (3)", "TDC
+  # 40.220 of this") is followed by neither a space and a capital.
+  heading: '^\s*TDC\s+(?P<n>\d+[A-Z]?\.\d+)\.?\s+[A-Z]'
+  furniture: '^\s*TDC\s+\d+[A-Z]?\.\d+\.?\s+TUALATIN DEVELOPMENT CODE'
+  lead:
+    # The extract is cut at "Lot Types:", inside the definitions section;
+    # its running header names it (TDC 31.060).
+    31.definitions: "31.060"

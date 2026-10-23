@@ -60,6 +60,7 @@ from flats.encode.despace import repair_text
 from flats.encode.load import Trusted
 from flats.encode.qualified import qualified
 from flats.encode.tagging import blocked, gaps
+from flats.provenance.sections import derived
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.model import LIKE, Layer, Status
@@ -1028,8 +1029,9 @@ def readiness_for(
     verified = sum(1 for s in statuses if s is Status.verified)
 
     unfetched = tuple(sorted(p for p in layer.documents() if not store.exists(p)))
-    spaced = frozenset(p for p, doc in layer.documents().items() if doc.spaced)
-    glued = frozenset(p for p, doc in layer.documents().items() if doc.glued_markers)
+    # Declared on the book; a quote into a section cut from it reads the same type.
+    spaced = derived((p for p, doc in layer.documents().items() if doc.spaced), store)
+    glued = derived((p for p, doc in layer.documents().items() if doc.glued_markers), store)
     unquoted: list[tuple[str, str]] = []
     drawn: list[tuple[str, str]] = []
     no_evidence: list[tuple[str, str]] = []

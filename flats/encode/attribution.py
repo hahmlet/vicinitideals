@@ -442,6 +442,7 @@ def check(
     corpus = corpus or CorpusHeadings(store)
     out: list[Attribution] = []
     cache: dict[str, list[str]] = {}
+    cut = store.section_files()
     for zone, field, value in _values(layer):
         quote = value.prov.quote or ""
         if "#L" not in quote:
@@ -461,8 +462,10 @@ def check(
         # Every span, de-duplicated but kept in the order the quote reads --
         # two spans on the same page are one authority, not two.
         here: list[str] = []
+        # A section file needs no reading upward: the file is the section.
+        held = store.section_of(document, cut)
         for first in starts:
-            section = section_at(lines, first)
+            section = held or section_at(lines, first)
             if section and section not in here:
                 here.append(section)
         item = Attribution(

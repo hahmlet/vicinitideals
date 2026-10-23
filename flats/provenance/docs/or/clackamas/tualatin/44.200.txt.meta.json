@@ -1,0 +1,11 @@
+{
+  "url": "https://api.municode.com/PublicationPdfDownload/1818",
+  "retrieved": "2026-10-01",
+  "sha256": "d99aacb7dff7c045e9e8546baed15719d9c6b07893f85a13598b4eede68c34f7",
+  "extractor": "flats-html-text/8",
+  "part_of": {
+    "document": "or/clackamas/tualatin/44.rh-hr.txt",
+    "first": 14,
+    "last": 72
+  }
+}

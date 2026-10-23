@@ -58,6 +58,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Sequence
 
+from flats.provenance.store import ProvenanceStore
+
 DOCS = Path(__file__).resolve().parents[1] / "provenance" / "docs"
 
 #: How a table names itself: a number, and the parenthesised parts a codifier
@@ -1876,7 +1878,7 @@ def _stored(layer_id: str) -> list[Path]:
     directory = DOCS / layer_id
     if not directory.is_dir():
         return []
-    return sorted(p for p in directory.glob("*.txt") if p.is_file())
+    return ProvenanceStore.owned(directory)
 
 
 def _layers() -> list[str]:

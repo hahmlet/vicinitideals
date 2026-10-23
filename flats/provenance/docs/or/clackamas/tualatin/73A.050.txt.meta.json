@@ -1,0 +1,11 @@
+{
+  "url": "https://api.municode.com/PublicationPdfDownload/1818",
+  "retrieved": "2026-09-20",
+  "sha256": "b00b38378ebc17eef2acee4cf71593e9ad4cb0eb70a51cc922232a9f931d2d00",
+  "extractor": "flats-html-text/8",
+  "part_of": {
+    "document": "or/clackamas/tualatin/73A.020-060.residential-design.txt",
+    "first": 80,
+    "last": 118
+  }
+}

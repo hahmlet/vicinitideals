@@ -1,0 +1,11 @@
+{
+  "url": "https://api.municode.com/PublicationPdfDownload/1818",
+  "retrieved": "2026-09-20",
+  "sha256": "21947794049ab1f24e34e92095a5e3ef539f55bb8d6ede62a610b3d09bdb1d81",
+  "extractor": "flats-html-text/8",
+  "part_of": {
+    "document": "or/clackamas/tualatin/72.natural-resource-overlay.txt",
+    "first": 20,
+    "last": 135
+  }
+}

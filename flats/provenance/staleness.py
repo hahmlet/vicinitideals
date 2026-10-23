@@ -25,6 +25,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Iterable, Mapping
 
+from flats.provenance.sections import derived
 from flats.provenance.store import ProvenanceError, ProvenanceStore, parse_quote
 from flats.rules.model import Layer, Status, Value
 
@@ -93,7 +94,9 @@ def apply_staleness(
     value's quote actually resolves — catching a citation that points at text
     which was never fetched.
     """
-    bad = frozenset(invalidated)
+    # Drift is found on what was fetched; a section file is cut from it and
+    # falls with it.
+    bad = derived(invalidated, store)
     out: dict[str, Layer] = {}
     report: list[Staleness] = []
 

@@ -1,0 +1,29 @@
+TDC 40.220.  Housing Types.
+Table 40-2 lists housing types permitted in the RL zone. Housing types may be Permitted Outright
+(P), Conditionally Permitted (C), or Not Permitted (N).
+Table 40-2
+Housing Types in the RL Zone
+
+HOUSING TYPE STATUS
+LIMITATIONS AND CODE
+REFERENCES
+Single-Family Dwelling P/L Single-family dwellings in a small
+lot subdivision permitted, sub-
+ject to TDC 36.410
+Accessory Dwelling Unit P Subject to TDC 73A.170.
+Duplex P See TDC definition in 31.060
+Townhouse P See TDC definition in 31.060
+ TDC 40.220LOW DENSITY RESIDENTIAL ZONE (RL)
+TDC40:3Supp. No. 12
+HOUSING TYPE STATUS
+LIMITATIONS AND CODE
+REFERENCES
+Triplex P See TDC definition in 31.060
+Quadplex P See TDC definition in 31.060
+Cottage Cluster P See TDC definition in 31.060
+Multi-Family Structure C See TDC definition in 31.060
+Manufactured Dwelling P Subject to TDC 40.300(4)
+Manufactured Dwelling Park N
+Retirement Housing Facility C Subject to TDC 34.400
+Residential Home P See TDC definition in 31.060
+(Ord. No. 1463-21, § 14, 12-13-21)

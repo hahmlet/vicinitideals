@@ -219,8 +219,15 @@ def _known_documents() -> frozenset[str]:
     the gate: a reference naming anything the store did not fetch is refused
     before a path is built from it, which leaves no room for "..", an absolute
     path, or a symlink to argue about.
+
+    A proof copy is held too: a citation spanning two sections stays on it.
     """
-    return frozenset(_store().documents())
+    return frozenset(_store().documents()) | _store().proofs()
+
+
+@lru_cache(maxsize=1)
+def _section_files() -> frozenset[str]:
+    return _store().section_files()
 
 
 _LAYER_KIND_WORDS = {
@@ -791,7 +798,8 @@ def _misattributed(cite: str, quote: str) -> dict[str, str] | None:
         return None
     # A table is read as the section it is printed in, as the ledger reads it.
     claimed = resolved_sections(cite or "", lines, span[0])
-    found = section_at(lines, span[0])
+    document = quote.partition("#L")[0]
+    found = _store().section_of(document, _section_files()) or section_at(lines, span[0])
     if not claimed or not found:
         return None
     if any(one.startswith(found) or found.startswith(one) for one in claimed):

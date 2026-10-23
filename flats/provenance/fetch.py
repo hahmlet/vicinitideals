@@ -1108,7 +1108,10 @@ class Evidence:
 def evidence(layers: dict[str, Layer], store: ProvenanceStore) -> Evidence:
     """Reconcile declared, stored and cited documents across the hierarchy."""
     declared_paths = {path for _, path, _ in declared(layers)}
-    stored = {p for p in store.documents() if p.endswith('.txt')}
+    # What was fetched, so a proof copy is the document and its section files
+    # are not; a citation into a section is a citation of the book it was cut
+    # from, which is the thing declared and the thing a re-fetch replaces.
+    stored = {p for p in store.fetched() if p.endswith('.txt')}
     outdated = set()
     for path in stored:
         try:
@@ -1152,6 +1155,12 @@ def evidence(layers: dict[str, Layer], store: ProvenanceStore) -> Evidence:
         for defn in layer.definitions.values():
             _cite(getattr(defn, "quote", None)
                   or (defn.get("quote") if isinstance(defn, dict) else None))
+    from flats.provenance.sections import splits
+
+    for proof, cut in splits(store).items():
+        cut_from = {cut.path(section) for section in cut.sections}
+        if cited & cut_from:
+            cited = (cited - cut_from) | {proof}
     return Evidence(
         frozenset(declared_paths), frozenset(stored), frozenset(cited), frozenset(outdated)
     )

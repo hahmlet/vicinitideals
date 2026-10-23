@@ -1,0 +1,11 @@
+{
+  "url": "https://api.municode.com/PublicationPdfDownload/1818",
+  "retrieved": "2026-10-01",
+  "sha256": "8505b0feef3b11ed7345bd6908280ac26b978443c8193e8f5a74b52d3beed85b",
+  "extractor": "flats-html-text/8",
+  "part_of": {
+    "document": "or/clackamas/tualatin/58.central-tualatin-overlay.txt",
+    "first": 86,
+    "last": 101
+  }
+}

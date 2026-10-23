@@ -171,12 +171,14 @@ def uncited(layer: Layer, store: ProvenanceStore | None = None) -> list[Uncited]
         return []
 
     cited = _cited_lines(layer)
+    cut = store.section_files()
     rows: list[Uncited] = []
     for path in paths:
         lines = store.text_path(path).read_text(encoding="utf-8").splitlines()
         here = cited.get(path, set())
         owns = {i.partition(".")[0] for i in _doc_ids([path])}
-        sections = _sections(lines, owns)
+        own = store.section_of(path, cut)
+        sections = [own] * len(lines) if own else _sections(lines, owns)
 
         # The same standard, printed again. Milwaukie's Table 19.301.4 runs
         # four lot-size columns and prints "35 ft" once per column on four

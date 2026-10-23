@@ -331,6 +331,7 @@ def _read_sections(
     """
     store = store or ProvenanceStore()
     cited = _cited_lines(layer)
+    cut = store.section_files()
     out: dict[str, dict[str, set[str]]] = {}
     for path, lines_read in cited.items():
         if path.rsplit("/", 1)[0] != layer.layer:
@@ -339,7 +340,12 @@ def _read_sections(
             lines = store.text_path(path).read_text(encoding="utf-8").splitlines()
         except OSError:  # pragma: no cover - a document in the ledger but not on disk
             continue
-        sections = _sections(lines, {i.partition(".")[0] for i in _doc_ids([path])})
+        own = store.section_of(path, cut)
+        sections = (
+            [own] * len(lines)
+            if own
+            else _sections(lines, {i.partition(".")[0] for i in _doc_ids([path])})
+        )
         here: dict[str, set[str]] = defaultdict(set)
         for line, fields in lines_read.items():
             if 0 < line <= len(sections):

@@ -43,7 +43,7 @@ ingest:
   zone_field: PLANDIST.CZONE
   strip_lowercase_suffix: false
 readings:
-  "40-41.residential.txt#41.220":
+  "41.200.txt#41.200":
     queue: missed
     outcome: not_here
     note: >-
@@ -53,39 +53,15 @@ readings:
       earlier; both are now encoded, and of the two relaxations on the row one is held and one
       deliberately not: "may be reduced to 30 feet if on a cul-de-sac" turned on a street geometry
       nothing measured until 2026-09-15 and is a fronts_cul_de_sac variant since, and the
-      twenty-six foot figure belongs to Flexible Lot Subdivisions. Everything
-      still uncited on the card is another building's row: 20,000 square feet and seventy-five or
-      a hundred feet of width for multi-family structures of five or more units and for
-      condominium ownership, 10,000 and 20,000 for other permitted and conditional uses, 3,000
-      square feet and twenty-five feet of width for single family detached but only inside a
-      Flexible Lot Subdivision, 4,500 square feet for duplexes and cottage clusters, and a
-      seventy-five foot height for water reservoirs.
-    fingerprint: 7b542b6cf6597957
-
-  "40-41.residential.txt#41.300":
-    queue: missed
-    outcome: not_here
-    note: >-
-      Other people's densities and one relaxation. The uncited density rows are ten units per acre
-      for a use whose name is split across the page break, twelve for manufactured dwelling parks
-      and only for single-wide parks, and fifteen each for retirement housing, congregate care,
-      nursing facilities and group living. The minimum lot size line is single family dwelling at
-      3,000 square feet, available only inside a Flexible Lot Subdivision. The last statement is
-      the conditional-use height increase to fifty feet, which raises a ceiling this pod is
-      nowhere near.
-    fingerprint: f5b4e2df9db1c306
-  "40-41.residential.txt#40.300":
-    queue: missed
-    outcome: not_here
-    note: >-
-      Two rows of RL's density table, neither of them the quadplex line. One is the minimum
-      density of one unit per acre stated on the single family dwelling row, whose maximum of 6.4
-      units per acre sits beside it and whose neighbour row for duplexes reads None; the other is
-      ten units per acre for retirement housing or a congregate care facility. A four-unit pod on
-      a residential lot is far above one unit an acre in any case, so even if the row travelled it
-      would not bind.
-    fingerprint: 17f4b7f07a5d3922
-  "36.400-420.lot-dimensions.txt#36.125":
+      twenty-six foot figure belongs to Flexible Lot Subdivisions. Everything still uncited on the
+      card is another building's row: 20,000 square feet and seventy-five or a hundred feet of
+      width for multi-family structures of five or more units and for condominium ownership,
+      10,000 and 20,000 for other permitted and conditional uses, 3,000 square feet and
+      twenty-five feet of width for single family detached but only inside a Flexible Lot
+      Subdivision, 4,500 square feet for duplexes and cottage clusters, and a seventy-five foot
+      height for water reservoirs.
+    fingerprint: fc5a615469115d01
+  "36.410.txt#36.410":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -106,8 +82,8 @@ readings:
       types are finished. That is a phasing plan for a developer building a neighbourhood. This
       project screens whether one pod fits one existing lot, so the relaxation is unavailable and
       the conditions are unmeasurable, and both facts point the same way.
-    fingerprint: c64092d96a69c6ab
-  "36.400-420.lot-dimensions.txt#36.420":
+    fingerprint: 195d5bac748098df
+  "36.420.txt#36.420":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -124,8 +100,25 @@ readings:
       until somebody creates it. Also on the page and equally out of reach: the abutting-lot size
       test ("no more than 500 square feet smaller than the size of the abutting lot"), which would
       need the neighbour's lot area, and the 50-foot separation where a tract lies between.
-    fingerprint: bd25fb8c437d3782
-  "31.definitions.txt#31.060":
+    fingerprint: a6163f3512fc94e8
+  "73A.020.txt#73A.020":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The applicability section for Tualatin's residential design standards, and the three 35
+      percent figures on this card are its ALTERATION trigger, not a standard: an addition or
+      alteration to an existing dwelling is caught where it results in a 35 percent or more
+      expansion of the footprint, a 35 percent or more increase in building height, or a 35
+      percent or more alteration of an existing wall plane. This project builds new, so the
+      trigger it lands on is (1)(b) -- "Duplex; Triplex, or Quadplex" -- which catches the pod
+      outright and needs no threshold. The standards themselves are facade design and are ruled on
+      the 73A.010, .030 and .050 cards. Two exceptions in the same section are worth carrying: the
+      standards do not apply to a side wall plane abutting the side yard of an adjacent dwelling,
+      and facades separated from a street by another dwelling are exempt from the front and rear
+      standards -- both are relief conditioned on what the NEIGHBOUR has built, which is the
+      neighbours'-side shape this corpus holds nothing for and, being relief, declines anyway.
+    fingerprint: a92711b319977ea4
+  "31.060.txt#31.060":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -144,7 +137,157 @@ readings:
       in this corpus define net acre seven ways, and this is the one that also defines it two ways
       within itself.
     fingerprint: ee6393ef335c1903
-  "71.wetlands-protection.txt#71":
+  "40.320.txt#40.320":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "The manufactured home must be multi-sectional and enclose a space of not less than 1,000
+      square feet" -- a minimum floor area for a manufactured home placed on a lot, in the section
+      of additional standards written for that one housing type. A factory-built four-unit
+      attached townhome is not a manufactured home in this code's vocabulary, and a minimum
+      enclosed area for a single dwelling is not a dimension of land.
+    fingerprint: e296f899740d24e8
+  "41.210.txt#41.210":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      "Wireless Communication Facility, provided the facility is located within 300 feet of the
+      centerline of Interstate 5" -- a permitted-use entry for an antenna in a corridor beside a
+      freeway. A mast is not a dwelling, and 300 feet from a centreline is a strip on a map.
+    fingerprint: 579cb3278d41697d
+  "72.030.txt#72.030":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      The widths of Tualatin's named natural resource protection districts: 300 feet east and west
+      of the I-5 right-of-way on Map 72-1, a line 75 feet inland from the top of bank extending to
+      the middle of the river, the NRPO-GC district at 50 feet out from the top of bank, and 25
+      feet out from the upland edge of wetlands in a stream corridor. Each is a district boundary
+      drawn from a feature -- a freeway, a river bank, a wetland edge -- and every one of them is
+      the overlay layer's business. What makes this card worth a note rather than a shrug is the
+      first entry: a 300-foot band measured from an INTERSTATE right-of-way is not a water
+      corridor at all, it is a view or noise district, and a reader skimming for creeks would file
+      it under the wrong heading. It is still geometry, and it is still carved rather than
+      encoded.
+    fingerprint: f038ccccaf923294
+  "72.040.txt#72.040":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      Two lines of the natural resource protection overlay's general provisions -- a 50-foot band
+      from a stream's top of bank, and a slope measured over a horizontal distance of 100 feet.
+      Corridor geometry, measured from the water and from the ground rather than from a lot line,
+      held by the screening layer. Note the second one for what it is: "measured for a horizontal
+      distance of 100 feet" is a method for deciding what counts as a slope, the same kind of
+      measurement rule Portland's 33.930.150 states for finding a top of bank, and this corpus
+      rules them all the same way.
+    fingerprint: a452a0403cfbcc93
+  "73A.030.txt#73A.030":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      "Windows that occupy at least 12 percent of the wall plane" -- the front-face transparency
+      standard from Tualatin's clear and objective residential design standards, landing on a card
+      headed 73A.010 because of where the section break falls. THESE STANDARDS DO REACH THIS
+      BUILDING: 73A.020(1)(b) lists "Duplex; Triplex, or Quadplex" by name, which is rarer than it
+      sounds and worth recording plainly rather than closing on a scope argument that is not
+      available here. They close on what they ask. Twelve percent of a wall in glass, three roof
+      design elements, five wall design elements, and reductions to ten or eight percent if extra
+      elements are provided -- all of it is what the facade looks like, none of it is where the
+      building sits or how much ground it takes. A design standard, not modelled, which is this
+      corpus's standing answer to every transparency percentage it meets and the reason the
+      reading queue's fourth lane has a button for exactly this. 73A.030, the Clear and Objective
+      (Type I) design standards proper, and the line here is the rear elevation's twin of the
+      front one: windows occupying at least 12 percent of the wall plane, with two roof design
+      elements and four wall design elements, reducible to ten percent if an extra wall element is
+      provided. Ruled with 73A.010 and for the same reason -- glass as a share of a wall changes
+      no dimension of the building or the lot. Worth naming the mechanism, because it is the
+      design-menu shape wearing a percentage: the percentage itself is negotiable downward by
+      adding elements from a list, so even the one number on the card is a starting point rather
+      than a standard.
+    fingerprint: 6764759b8783f70a
+  "73A.050.txt#73A.050":
+    queue: chapter
+    outcome: nothing_here
+    note: >-
+      "Covered porch at least 36 square feet in area and at least four feet deep" -- item three in
+      the list of Residential Wall Design Elements, of which 73A.030 requires five on the front
+      face and four on the rear. A menu entry, chosen or not chosen by the applicant, alongside
+      options that project nothing at all. The four feet of depth is the only number here that
+      would touch the ground, and it would sit in the front yard as an encroachment if selected --
+      which is a reason for a designer to pick a different element, not a constraint on the lot.
+      Design menu, ruled with the rest of Chapter 73A in the same pass.
+    fingerprint: f06d98a5c8c2ff60
+  "73C.040.txt#73C.040":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Thirteen statements arriving under a bare chapter key -- another attribution slip, this one
+      gathering fragments from four different sections. A green-energy investment of 1.5 percent
+      of project cost that applies to PUBLIC PROJECTS ONLY; the 40 percent canopy over new parking
+      lots; use ratios for churches by seat and bench-foot, bowling alleys and health clubs per
+      thousand square feet, and park-and-ride lots; the commercial ingress table that starts at 32
+      feet for the first 50 feet from the right-of-way; a 40-foot maximum driveway width for
+      commercial, industrial and institutional uses; the five-foot rule for driveways near a
+      property line -- from which quadplexes and cottage clusters are expressly EXEMPTED, so it
+      loosens here; and a 40-foot separation between adjacent driveways on one property, which
+      needs two. Nothing on the card is addressed to a four-unit dwelling.
+    fingerprint: 9b2f59208ad6abc5
+  "73C.080.txt#73C.080":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      The loading-berth table: commercial and institutional floor area from 5,000 square feet up
+      takes one 12-by-25-foot berth, industrial takes 12 by 60, and the count rises to three above
+      60,000 square feet with 14 feet of vertical clearance throughout. Every row is keyed to
+      commercial, industrial or institutional floor area and the first threshold is 5,000 square
+      feet, so the operative row for a four-unit dwelling is the one requiring nothing. Ruled the
+      same way as Portland's 33.266.310, Troutdale's 9.120, Milwaukie's 19.608.2 and the county's
+      ZDO 1015 in this pass.
+    fingerprint: 2aaa0da66b5cac00
+  "73C.090.txt#73C.090":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      Thirteen statements arriving under a bare chapter key -- another attribution slip, this one
+      gathering fragments from four different sections. A green-energy investment of 1.5 percent
+      of project cost that applies to PUBLIC PROJECTS ONLY; the 40 percent canopy over new parking
+      lots; use ratios for churches by seat and bench-foot, bowling alleys and health clubs per
+      thousand square feet, and park-and-ride lots; the commercial ingress table that starts at 32
+      feet for the first 50 feet from the right-of-way; a 40-foot maximum driveway width for
+      commercial, industrial and institutional uses; the five-foot rule for driveways near a
+      property line -- from which quadplexes and cottage clusters are expressly EXEMPTED, so it
+      loosens here; and a 40-foot separation between adjacent driveways on one property, which
+      needs two. Nothing on the card is addressed to a four-unit dwelling. PARKING LOT DRIVEWAY
+      WIDTHS, AND THE PARAGRAPH ABOVE THE TABLES IS THE ANSWER. 73C.090(1)(a) states the rule for
+      this building by name -- "ingress and egress for single-family residential uses and MIDDLE
+      HOUSING TYPES (duplexes, triplexes quadplexes, townhouses, and cottage clusters) must be
+      paved to a minimum width of ten feet", with a 24-foot maximum measured at the right-of-way
+      line -- and this layer already encodes both figures as the driveway approach minimum and
+      maximum. What reached the card is everything AFTER that sentence: 73C.090(1)(b)'s
+      multi-family table, which opens at FIVE dwelling units (24 feet at 5 to 19, then 24 or 16
+      one-way at 20 to 49, 32 or 24 at 50 to 499, and City Manager discretion over 500);
+      73C.090(2)'s commercial and institutional table, keyed to provided parking spaces at 32 feet
+      for the first 50 feet from the right-of-way and 24 feet thereafter; and 73C.090(3)'s
+      industrial one at 36 feet. Three tables for buildings the pod is not, and the fourth line --
+      the one that is about it -- is already held.
+    fingerprint: a6f177ec0aea113a
+  "73C.220.txt#73C.220":
+    queue: nofield
+    outcome: other_building
+    note: >-
+      A TEN-FOOT LANDSCAPE SETBACK BETWEEN EVERY PROPERTY LINE AND THE PARKING AREA, PLUS A
+      TEN-FOOT TRANSITION BETWEEN THE PARKING AND THE BUILDING -- which together would set a rear
+      court ten feet off the lot lines and ten feet off the wall it serves, and would be one of
+      the heaviest charges in this corpus if it reached. It does not, and this layer already says
+      so in its own words: 73C.220 opens "MULTI-FAMILY RESIDENTIAL USES (AS DEFINED IN TDC 31.060)
+      must comply with the following", and Tualatin's definition of that term does not take in a
+      quadplex. The section is recorded in this file as read and out of reach, which is why the
+      card closes rather than opening work. The exception clause is the corroboration: the
+      ten-foot transition is expressly waived for duplexes and townhouses, a carve-out that would
+      be pointless if the section reached middle housing generally.
+    fingerprint: d7c1a7d910ae6988
+  "71.900.txt#71.900":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -160,133 +303,15 @@ readings:
       chapter queue has no button for "this is not a sentence", which the reading-queue design
       gives to the no-field lane instead; closing it here with the reason written out is the
       nearest honest thing, and the boundary the traverse describes is held by the overlay layer,
-      not by any value in this file.
+      not by any value in this file. The same traverse continued -- fifty-nine more bearings and
+      distances, including the "45 FOOT ROAD CORRIDOR THROUGH WETLANDS PROTECTED AREA" description
+      and the five-foot strip dedicated to the City under a Washington County fee number. Legal
+      descriptions of a boundary and of a road corridor through it, not standards. Ruled with the
+      71 card in the same pass and for the same reasons; the 45 feet in the heading is the width
+      of a road somebody already built through the protected area, not a width anything on our lot
+      must have.
     fingerprint: 299f253aa8178658
-  "71.wetlands-protection.txt#71.900":
-    queue: chapter
-    outcome: nothing_here
-    note: >-
-      The same traverse continued -- fifty-nine more bearings and distances, including the "45
-      FOOT ROAD CORRIDOR THROUGH WETLANDS PROTECTED AREA" description and the five-foot strip
-      dedicated to the City under a Washington County fee number. Legal descriptions of a boundary
-      and of a road corridor through it, not standards. Ruled with the 71 card in the same pass
-      and for the same reasons; the 45 feet in the heading is the width of a road somebody already
-      built through the protected area, not a width anything on our lot must have.
-    fingerprint: f5f45b477de059ea
-  "72.natural-resource-overlay.txt#72":
-    queue: chapter
-    outcome: nothing_here
-    note: >-
-      Two lines of the natural resource protection overlay's general provisions -- a 50-foot band
-      from a stream's top of bank, and a slope measured over a horizontal distance of 100 feet.
-      Corridor geometry, measured from the water and from the ground rather than from a lot line,
-      held by the screening layer. Note the second one for what it is: "measured for a horizontal
-      distance of 100 feet" is a method for deciding what counts as a slope, the same kind of
-      measurement rule Portland's 33.930.150 states for finding a top of bank, and this corpus
-      rules them all the same way.
-    fingerprint: 983ffadb766136bc
-  "72.natural-resource-overlay.txt#72.030":
-    queue: chapter
-    outcome: nothing_here
-    note: >-
-      The widths of Tualatin's named natural resource protection districts: 300 feet east and west
-      of the I-5 right-of-way on Map 72-1, a line 75 feet inland from the top of bank extending to
-      the middle of the river, the NRPO-GC district at 50 feet out from the top of bank, and 25
-      feet out from the upland edge of wetlands in a stream corridor. Each is a district boundary
-      drawn from a feature -- a freeway, a river bank, a wetland edge -- and every one of them is
-      the overlay layer's business. What makes this card worth a note rather than a shrug is the
-      first entry: a 300-foot band measured from an INTERSTATE right-of-way is not a water
-      corridor at all, it is a view or noise district, and a reader skimming for creeks would file
-      it under the wrong heading. It is still geometry, and it is still carved rather than
-      encoded.
-    fingerprint: 3544297c6d87610c
-  "73A.020-060.residential-design.txt#73A.010":
-    queue: chapter
-    outcome: nothing_here
-    note: >-
-      "Windows that occupy at least 12 percent of the wall plane" -- the front-face transparency
-      standard from Tualatin's clear and objective residential design standards, landing on a card
-      headed 73A.010 because of where the section break falls. THESE STANDARDS DO REACH THIS
-      BUILDING: 73A.020(1)(b) lists "Duplex; Triplex, or Quadplex" by name, which is rarer than it
-      sounds and worth recording plainly rather than closing on a scope argument that is not
-      available here. They close on what they ask. Twelve percent of a wall in glass, three roof
-      design elements, five wall design elements, and reductions to ten or eight percent if extra
-      elements are provided -- all of it is what the facade looks like, none of it is where the
-      building sits or how much ground it takes. A design standard, not modelled, which is this
-      corpus's standing answer to every transparency percentage it meets and the reason the
-      reading queue's fourth lane has a button for exactly this.
-    fingerprint: 25f41c6bab81c5cd
-  "73A.020-060.residential-design.txt#73A.020":
-    queue: chapter
-    outcome: nothing_here
-    note: >-
-      The applicability section for Tualatin's residential design standards, and the three 35
-      percent figures on this card are its ALTERATION trigger, not a standard: an addition or
-      alteration to an existing dwelling is caught where it results in a 35 percent or more
-      expansion of the footprint, a 35 percent or more increase in building height, or a 35
-      percent or more alteration of an existing wall plane. This project builds new, so the
-      trigger it lands on is (1)(b) -- "Duplex; Triplex, or Quadplex" -- which catches the pod
-      outright and needs no threshold. The standards themselves are facade design and are ruled on
-      the 73A.010, .030 and .050 cards. Two exceptions in the same section are worth carrying: the
-      standards do not apply to a side wall plane abutting the side yard of an adjacent dwelling,
-      and facades separated from a street by another dwelling are exempt from the front and rear
-      standards -- both are relief conditioned on what the NEIGHBOUR has built, which is the
-      neighbours'-side shape this corpus holds nothing for and, being relief, declines anyway.
-    fingerprint: a92711b319977ea4
-  "73A.020-060.residential-design.txt#73A.030":
-    queue: chapter
-    outcome: nothing_here
-    note: >-
-      73A.030, the Clear and Objective (Type I) design standards proper, and the line here is the
-      rear elevation's twin of the front one: windows occupying at least 12 percent of the wall
-      plane, with two roof design elements and four wall design elements, reducible to ten percent
-      if an extra wall element is provided. Ruled with 73A.010 and for the same reason -- glass as
-      a share of a wall changes no dimension of the building or the lot. Worth naming the
-      mechanism, because it is the design-menu shape wearing a percentage: the percentage itself
-      is negotiable downward by adding elements from a list, so even the one number on the card is
-      a starting point rather than a standard.
-    fingerprint: 1ebe13b4979460a5
-  "73A.020-060.residential-design.txt#73A.050":
-    queue: chapter
-    outcome: nothing_here
-    note: >-
-      "Covered porch at least 36 square feet in area and at least four feet deep" -- item three in
-      the list of Residential Wall Design Elements, of which 73A.030 requires five on the front
-      face and four on the rear. A menu entry, chosen or not chosen by the applicant, alongside
-      options that project nothing at all. The four feet of depth is the only number here that
-      would touch the ground, and it would sit in the front yard as an encroachment if selected --
-      which is a reason for a designer to pick a different element, not a constraint on the lot.
-      Design menu, ruled with the rest of Chapter 73A in the same pass.
-    fingerprint: 4d56845987505c76
-  "73C.parking.txt#73C.030":
-    queue: nofield
-    outcome: design
-    note: >-
-      General parking standards, and every statement on the card is either a surface treatment or
-      a threshold above this building. Sub-compact spaces capped at 35 percent of the total -- an
-      applicant's choice that loosens. EV service capacity to 40 percent of spaces at developments
-      of five or more units. A maximum-coverage rule that opens at 65,000 square feet of floor
-      area. Tree canopy of 30 percent over parking areas under half an acre, with trees at 30 feet
-      on centre. And the one line that would dimension something, "vehicular access at the
-      entrance may be a minimum of 18 feet in width, if gated", is an exception FOR PARKING
-      STRUCTURES AND UNDERGROUND PARKING, which the standing no-garage ruling closes.
-    fingerprint: 746e122b83e3a4c9
-  "73C.parking.txt#73C":
-    queue: nofield
-    outcome: other_building
-    note: >-
-      Thirteen statements arriving under a bare chapter key -- another attribution slip, this one
-      gathering fragments from four different sections. A green-energy investment of 1.5 percent
-      of project cost that applies to PUBLIC PROJECTS ONLY; the 40 percent canopy over new parking
-      lots; use ratios for churches by seat and bench-foot, bowling alleys and health clubs per
-      thousand square feet, and park-and-ride lots; the commercial ingress table that starts at 32
-      feet for the first 50 feet from the right-of-way; a 40-foot maximum driveway width for
-      commercial, industrial and institutional uses; the five-foot rule for driveways near a
-      property line -- from which quadplexes and cottage clusters are expressly EXEMPTED, so it
-      loosens here; and a 40-foot separation between adjacent driveways on one property, which
-      needs two. Nothing on the card is addressed to a four-unit dwelling.
-    fingerprint: 07009753b0e6acb7
-  "73C.parking.txt#73C.210":
+  "73C.210.txt#73C.210":
     queue: nofield
     outcome: design
     note: >-
@@ -299,120 +324,110 @@ readings:
       the interesting case: none of it applies where parking areas on separate lots adjoin and
       connect.
     fingerprint: 509b022d44c758af
-  "40-41.residential.txt#40":
-    queue: nofield
-    outcome: other_building
+  "40.300.txt#40.300":
+    queue: missed
+    outcome: not_here
     note: >-
-      THREE FRAGMENTS OUT OF TABLE 40-3 AND THE ROW LABEL IS EVERYTHING. "No minimum setback must
-      be greater than 50 feet. Parking and vehicular circulation areas must be set back a minimum
-      of ten feet from any public right-of-way or property line" is the LIMITATIONS cell of the
-      table's CONDITIONAL USES row -- setbacks for a conditional use are set through Architectural
-      Review, and these two sentences are the bounds on that discretion. A ten-foot setback around
-      parking would be a serious charge against a rear court, which is exactly why the row it sits
-      on had to be read: the pod is an outright permitted quadplex in RL and takes the front-15,
-      side-5, rear-15 line above it, which this layer encodes. The Type II Architectural Review
-      bonus that raises height to 50 feet where every setback is at least one and a half times
-      the building height is discretion, and a bonus. CORRECTED 2026-10-09 (FOLLOWUPS 52): the
-      third fragment, "Any Yard Area Adjacent to Basalt Creek Parkway 50 feet" (L234-L235), is a
-      row of its own, NOT the conditional-use row, and it does reach this building on a lot beside
-      the parkway; the outcome above is the conditional-use row's. Measured instead: the nearest
-      Tualatin lot is 2,234 ft from the built parkway and 343 ft from a straight course for its
-      unbuilt extension east, so the yard reaches no lot (RL notes).
-    fingerprint: 30e18c2a11efb844
-  "40-41.residential.txt#40.220":
-    queue: nofield
-    outcome: other_building
+      Every line on this card was ruled closed on the whole-chapter copy before TDC was cut into
+      one file per section (2026-10-23), under 40-41.residential.txt#40,
+      40-41.residential.txt#40.220, 40-41.residential.txt#40.300; the rulings, joined: [40:
+      other_building] THREE FRAGMENTS OUT OF TABLE 40-3 AND THE ROW LABEL IS EVERYTHING. "No
+      minimum setback must be greater than 50 feet. Parking and vehicular circulation areas must
+      be set back a minimum of ten feet from any public right-of-way or property line" is the
+      LIMITATIONS cell of the table's CONDITIONAL USES row -- setbacks for a conditional use are
+      set through Architectural Review, and these two sentences are the bounds on that discretion.
+      A ten-foot setback around parking would be a serious charge against a rear court, which is
+      exactly why the row it sits on had to be read: the pod is an outright permitted quadplex in
+      RL and takes the front-15, side-5, rear-15 line above it, which this layer encodes. The Type
+      II Architectural Review bonus that raises height to 50 feet where every setback is at least
+      one and a half times the building height is discretion, and a bonus. CORRECTED 2026-10-09
+      (FOLLOWUPS 52): the third fragment, "Any Yard Area Adjacent to Basalt Creek Parkway 50 feet"
+      (L234-L235), is a row of its own, NOT the conditional-use row, and it does reach this
+      building on a lot beside the parkway; the outcome above is the conditional-use row's.
+      Measured instead: the nearest Tualatin lot is 2,234 ft from the built parkway and 343 ft
+      from a straight course for its unbuilt extension east, so the yard reaches no lot (RL
+      notes). [40.220: other_building] Rows from Table 40-3's lot-size and lot-width blocks, and
+      every flagged one belongs to a different housing type: a single-family dwelling at an
+      average of 6,500 square feet and 50 feet of width reducible to 30 on a cul-de-sac, a duplex
+      at 6,500, a cottage cluster at 6,500, conditional uses at 6,000. The quadplex rows of the
+      same two blocks -- 6,500 square feet and 50 feet -- are read and encoded in this layer, and
+      it is worth saying that they are the same numbers, because a card showing four neighbouring
+      rows and not the fifth invites the conclusion that the fifth is missing. Re-confirmed
+      2026-09-15 evening: the quadplex row's cul-de-sac relief (30 feet, L192-L193) left the card
+      when it was encoded on min_lot_width_ft; the six lines that remain are the other housing
+      types' rows as before. [40.300: not_here] Two rows of RL's density table, neither of them
+      the quadplex line. One is the minimum density of one unit per acre stated on the single
+      family dwelling row, whose maximum of 6.4 units per acre sits beside it and whose neighbour
+      row for duplexes reads None; the other is ten units per acre for retirement housing or a
+      congregate care facility. A four-unit pod on a residential lot is far above one unit an acre
+      in any case, so even if the row travelled it would not bind.
+    fingerprint: 3bff9ea26f642751
+  "41.300.txt#41.300":
+    queue: missed
+    outcome: not_here
     note: >-
-      Rows from Table 40-3's lot-size and lot-width blocks, and every flagged one belongs to a
-      different housing type: a single-family dwelling at an average of 6,500 square feet and 50
-      feet of width reducible to 30 on a cul-de-sac, a duplex at 6,500, a cottage cluster at
-      6,500, conditional uses at 6,000. The quadplex rows of the same two blocks -- 6,500 square
-      feet and 50 feet -- are read and encoded in this layer, and it is worth saying that they are
-      the same numbers, because a card showing four neighbouring rows and not the fifth invites
-      the conclusion that the fifth is missing. Re-confirmed 2026-09-15 evening: the quadplex
-      row's cul-de-sac relief (30 feet, L192-L193) left the card when it was encoded on
-      min_lot_width_ft; the six lines that remain are the other housing types' rows as before.
-    fingerprint: 893dd3abc0dbe190
-  "40-41.residential.txt#40.320":
-    queue: nofield
-    outcome: other_building
+      Every line on this card was ruled closed on the whole-chapter copy before TDC was cut into
+      one file per section (2026-10-23), under 40-41.residential.txt#41,
+      40-41.residential.txt#41.220, 40-41.residential.txt#41.300; the rulings, joined: [41:
+      other_building] A FRONT SETBACK THAT CLIMBS WITH BUILDING HEIGHT -- under 25 feet takes 10,
+      25 to under 30 takes 15, 30 and over takes 20 -- and at 26 feet this pod would land on the
+      middle rung and owe 15 feet where this layer encodes 10. It does not, and the reason is the
+      block heading three rows above: the ladder belongs to "Multi-family (5 OR MORE UNITS),
+      Conditional Uses, and Other Permitted Uses Not Listed". The block above it is "Single Family
+      Detached, Duplex, Townhouse, Triplex, or Quadplex" and states a flat 10-foot front, 20-foot
+      garage door, 5-foot side and 10-foot rear, which is exactly what this file holds for RML.
+      The five-foot side on this card is common to both blocks and agrees. The 50-foot yard along
+      Basalt Creek Parkway (L568-L570) is a row of its own and does reach this building on a lot
+      beside the parkway -- corrected 2026-10-09 (FOLLOWUPS 52): measured, the nearest Tualatin
+      lot is 2,234 ft from the built parkway and 343 ft from a straight course for its unbuilt
+      extension east, so it reaches no lot (RL and RML notes). This is the check that a
+      height-keyed setback deserves and it comes out clean. [41.220: not_here] What is left of
+      Table 41.220 after this commit took the row that mattered. The RML minimum average lot width
+      for a quadplex -- fifty feet, with fourteen on the townhouse row -- was stated here and held
+      nowhere, while RL carried the identical rows from Table 40.220 a page earlier; both are now
+      encoded, and of the two relaxations on the row one is held and one deliberately not: "may be
+      reduced to 30 feet if on a cul-de-sac" turned on a street geometry nothing measured until
+      2026-09-15 and is a fronts_cul_de_sac variant since, and the twenty-six foot figure belongs
+      to Flexible Lot Subdivisions. Everything still uncited on the card is another building's
+      row: 20,000 square feet and seventy-five or a hundred feet of width for multi-family
+      structures of five or more units and for condominium ownership, 10,000 and 20,000 for other
+      permitted and conditional uses, 3,000 square feet and twenty-five feet of width for single
+      family detached but only inside a Flexible Lot Subdivision, 4,500 square feet for duplexes
+      and cottage clusters, and a seventy-five foot height for water reservoirs. [41.300:
+      not_here] Other people's densities and one relaxation. The uncited density rows are ten
+      units per acre for a use whose name is split across the page break, twelve for manufactured
+      dwelling parks and only for single-wide parks, and fifteen each for retirement housing,
+      congregate care, nursing facilities and group living. The minimum lot size line is single
+      family dwelling at 3,000 square feet, available only inside a Flexible Lot Subdivision. The
+      last statement is the conditional-use height increase to fifty feet, which raises a ceiling
+      this pod is nowhere near.
+    fingerprint: e4f47e55cd2e21fd
+  "73C.030.txt#73C.030":
+    queue: chapter
+    outcome: nothing_here
     note: >-
-      "The manufactured home must be multi-sectional and enclose a space of not less than 1,000
-      square feet" -- a minimum floor area for a manufactured home placed on a lot, in the section
-      of additional standards written for that one housing type. A factory-built four-unit
-      attached townhome is not a manufactured home in this code's vocabulary, and a minimum
-      enclosed area for a single dwelling is not a dimension of land.
-    fingerprint: 97b261db7bcf1224
-  "40-41.residential.txt#41":
-    queue: nofield
-    outcome: other_building
-    note: >-
-      A FRONT SETBACK THAT CLIMBS WITH BUILDING HEIGHT -- under 25 feet takes 10, 25 to under 30
-      takes 15, 30 and over takes 20 -- and at 26 feet this pod would land on the middle rung and
-      owe 15 feet where this layer encodes 10. It does not, and the reason is the block heading
-      three rows above: the ladder belongs to "Multi-family (5 OR MORE UNITS), Conditional Uses,
-      and Other Permitted Uses Not Listed". The block above it is "Single Family Detached, Duplex,
-      Townhouse, Triplex, or Quadplex" and states a flat 10-foot front, 20-foot garage door,
-      5-foot side and 10-foot rear, which is exactly what this file holds for RML. The five-foot
-      side on this card is common to both blocks and agrees. The 50-foot yard along Basalt Creek
-      Parkway (L568-L570) is a row of its own and does reach this building on a lot beside the
-      parkway -- corrected 2026-10-09 (FOLLOWUPS 52): measured, the nearest Tualatin lot is 2,234
-      ft from the built parkway and 343 ft from a straight course for its unbuilt extension east,
-      so it reaches no lot (RL and RML notes). This is the check that a height-keyed setback
-      deserves and it comes out clean.
-    fingerprint: 0d8aebc8d82c6c8f
-  "40-41.residential.txt#41.210":
-    queue: nofield
-    outcome: other_building
-    note: >-
-      "Wireless Communication Facility, provided the facility is located within 300 feet of the
-      centerline of Interstate 5" -- a permitted-use entry for an antenna in a corridor beside a
-      freeway. A mast is not a dwelling, and 300 feet from a centreline is a strip on a map.
-    fingerprint: 388434c9bbc73b25
-  "73C.parking.txt#73C.080":
-    queue: nofield
-    outcome: other_building
-    note: >-
-      The loading-berth table: commercial and institutional floor area from 5,000 square feet up
-      takes one 12-by-25-foot berth, industrial takes 12 by 60, and the count rises to three above
-      60,000 square feet with 14 feet of vertical clearance throughout. Every row is keyed to
-      commercial, industrial or institutional floor area and the first threshold is 5,000 square
-      feet, so the operative row for a four-unit dwelling is the one requiring nothing. Ruled the
-      same way as Portland's 33.266.310, Troutdale's 9.120, Milwaukie's 19.608.2 and the county's
-      ZDO 1015 in this pass.
-    fingerprint: 05dd63a842bbc034
-  "73C.parking.txt#73C.090":
-    queue: nofield
-    outcome: other_building
-    note: >-
-      PARKING LOT DRIVEWAY WIDTHS, AND THE PARAGRAPH ABOVE THE TABLES IS THE ANSWER. 73C.090(1)(a)
-      states the rule for this building by name -- "ingress and egress for single-family
-      residential uses and MIDDLE HOUSING TYPES (duplexes, triplexes quadplexes, townhouses, and
-      cottage clusters) must be paved to a minimum width of ten feet", with a 24-foot maximum
-      measured at the right-of-way line -- and this layer already encodes both figures as the
-      driveway approach minimum and maximum. What reached the card is everything AFTER that
-      sentence: 73C.090(1)(b)'s multi-family table, which opens at FIVE dwelling units (24 feet at
-      5 to 19, then 24 or 16 one-way at 20 to 49, 32 or 24 at 50 to 499, and City Manager
-      discretion over 500); 73C.090(2)'s commercial and institutional table, keyed to provided
-      parking spaces at 32 feet for the first 50 feet from the right-of-way and 24 feet
-      thereafter; and 73C.090(3)'s industrial one at 36 feet. Three tables for buildings the pod
-      is not, and the fourth line -- the one that is about it -- is already held.
-    fingerprint: 74dffec21e238f69
-  "73C.parking.txt#73C.220":
-    queue: nofield
-    outcome: other_building
-    note: >-
-      A TEN-FOOT LANDSCAPE SETBACK BETWEEN EVERY PROPERTY LINE AND THE PARKING AREA, PLUS A
-      TEN-FOOT TRANSITION BETWEEN THE PARKING AND THE BUILDING -- which together would set a rear
-      court ten feet off the lot lines and ten feet off the wall it serves, and would be one of
-      the heaviest charges in this corpus if it reached. It does not, and this layer already says
-      so in its own words: 73C.220 opens "MULTI-FAMILY RESIDENTIAL USES (AS DEFINED IN TDC 31.060)
-      must comply with the following", and Tualatin's definition of that term does not take in a
-      quadplex. The section is recorded in this file as read and out of reach, which is why the
-      card closes rather than opening work. The exception clause is the corroboration: the
-      ten-foot transition is expressly waived for duplexes and townhouses, a carve-out that would
-      be pointless if the section reached middle housing generally.
-    fingerprint: 0f626fe8f8106370
+      Every line on this card was ruled closed on the whole-chapter copy before TDC was cut into
+      one file per section (2026-10-23), under 73C.parking.txt#73C, 73C.parking.txt#73C.030; the
+      rulings, joined: [73C: other_building] Thirteen statements arriving under a bare chapter key
+      -- another attribution slip, this one gathering fragments from four different sections. A
+      green-energy investment of 1.5 percent of project cost that applies to PUBLIC PROJECTS ONLY;
+      the 40 percent canopy over new parking lots; use ratios for churches by seat and bench-foot,
+      bowling alleys and health clubs per thousand square feet, and park-and-ride lots; the
+      commercial ingress table that starts at 32 feet for the first 50 feet from the right-of-way;
+      a 40-foot maximum driveway width for commercial, industrial and institutional uses; the
+      five-foot rule for driveways near a property line -- from which quadplexes and cottage
+      clusters are expressly EXEMPTED, so it loosens here; and a 40-foot separation between
+      adjacent driveways on one property, which needs two. Nothing on the card is addressed to a
+      four-unit dwelling. [73C.030: design] General parking standards, and every statement on the
+      card is either a surface treatment or a threshold above this building. Sub-compact spaces
+      capped at 35 percent of the total -- an applicant's choice that loosens. EV service capacity
+      to 40 percent of spaces at developments of five or more units. A maximum-coverage rule that
+      opens at 65,000 square feet of floor area. Tree canopy of 30 percent over parking areas
+      under half an acre, with trees at 30 feet on centre. And the one line that would dimension
+      something, "vehicular access at the entrance may be a minimum of 18 feet in width, if
+      gated", is an exception FOR PARKING STRUCTURES AND UNDERGROUND PARKING, which the standing
+      no-garage ruling closes.
+    fingerprint: 41f8beb7f4ed02c6
 crossrefs:
 
   # --- two use-table rows that are not this building -----------------------
@@ -448,19 +463,19 @@ crossrefs:
     note: >-
       "Wireless Communication Facility P (L) Subject to maximum height and minimum setback
       standards defined by TDC Chapter 73F" -- the antenna's own height and setbacks
-      (49.in.txt L64-L67, 65.bce.txt L91-L92), not a dwelling's.
+      (49.200.txt L45-L48, 65.200.txt L76-L77), not a dwelling's.
   "39.115":
     outcome: other_building
     note: >-
       "Memorial Planning and Products Center (as defined in TDC 39.115) not permitted" -- a
-      retail row in CO, CC and the overlay's CC table (53.cc.txt L54-L55); a definition of a
+      retail row in CO, CC and the overlay's CC table (53.200.txt L44-L45); a definition of a
       shop that the row refuses.
   "32":
     outcome: procedure
     note: >-
       MBP 64.210(4)(c): an expanded or new permitted use in the Tonquin overlay "must be
       reviewed according to TDC Chapter 32 (Procedures)" -- the review path, with no
-      number in it (64.mbp.txt L135-L138).
+      number in it (64.210.txt L56-L59).
 
 definitions:
   # "Corner Lot. A lot abutting two intersecting streets other than an alley."
@@ -474,7 +489,7 @@ definitions:
   corner_lot:
     test: intersecting_frontages
     count: 2
-    quote: "or/clackamas/tualatin/31.definitions.txt#L2"
+    quote: "or/clackamas/tualatin/31.060.txt#L2"
     cite: "TDC 31, Lot Types, Corner Lot"
 
 code:
@@ -771,13 +786,13 @@ defaults:
     cite: TDC 73C.040 Table 73C-1(a)(ii)(c), Quadplexes; no minimum vehicle parking column exists
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-30'
-    quote: "or/clackamas/tualatin/73C.parking.txt#L130,L132,L137,L154,L157,L160"
+    quote: "or/clackamas/tualatin/73C.040.txt#L25,L27,L32,L49,L52,L55"
   parking_max_per_unit:
     exempt: true
     cite: TDC 73C.040 Table 73C-1(a)(ii)(c), Quadplexes, None in both maximum columns
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-30'
-    quote: "or/clackamas/tualatin/73C.parking.txt#L130,L132,L137,L154,L157,L160"
+    quote: "or/clackamas/tualatin/73C.040.txt#L25,L27,L32,L49,L52,L55"
   # Figure 73-1, first grid, 90-degree column. The stored figures document
   # opens on the line of Appendix B's list that names Figure 73-1 and keeps
   # the page numbering, because the figure captions themselves are images:
@@ -842,13 +857,13 @@ defaults:
     cite: TDC 73C.090(1)(a), middle housing types incl. quadplexes
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-30'
-    quote: "or/clackamas/tualatin/73C.parking.txt#L530,L532-L537"
+    quote: "or/clackamas/tualatin/73C.090.txt#L1,L3-L8"
   driveway_approach_max_width_ft:
     value: 24
     cite: TDC 73C.090(1)(a), maximum width for new or expanded driveways
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-30'
-    quote: "or/clackamas/tualatin/73C.parking.txt#L530,L532-L537"
+    quote: "or/clackamas/tualatin/73C.090.txt#L1,L3-L8"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from
@@ -867,7 +882,7 @@ defaults:
     cite: TDC 41.300 Table, Parking and Vehicle Circulation Areas ten feet from a lot line, and no yard named
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-30'
-    quote: "or/clackamas/tualatin/40-41.residential.txt#L554,L561-L563"
+    quote: "or/clackamas/tualatin/41.300.txt#L123,L130-L132"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -882,10 +897,10 @@ defaults:
   # slice (FOLLOWUPS 5 (iv)).
   corner_access_street:
     value: any
-    cite: TDC 31, Lot Types, a double frontage lot is not a corner lot, and 36.400(b) sends only a double frontage lot to the lowest classification street
+    cite: TDC 31.060, Lot Types, a double frontage lot is not a corner lot, and 36.400(b) sends only a double frontage lot to the lowest classification street
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-27'
-    quote: "or/clackamas/tualatin/31.definitions.txt#L2-L4"
+    quote: "or/clackamas/tualatin/31.060.txt#L2-L4"
   # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
   # lets the site plan know whether it may try each street as the front: only
   # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
@@ -902,14 +917,14 @@ defaults:
     cite: TDC 40.300 Table, Secondary Frontage on Corner Lot, determined by the orientation of the structure based on the front door
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-27'
-    quote: "or/clackamas/tualatin/40-41.residential.txt#L213-L218"
+    quote: "or/clackamas/tualatin/40.300.txt#L86-L91"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
   #
   # NOT ENCODED: `front_lot_line_through`, because the stored code does not
   # say. TDC 31.060 defines a Through Lot and a Double Frontage Lot
-  # (31.definitions.txt#L3-L4,L18-L19) but the stored extract carries no
+  # (31.060.txt#L3-L4,L18-L19) but the stored extract carries no
   # front-lot-line definition, and a grep of all 16 stored files for "front
   # lot line", "through lot", "double frontage", "each street" and "both
   # street" finds only the flag-lot designation, lot width and 36.400(1)(b)
@@ -935,7 +950,7 @@ defaults:
     cite: TDC 73C.210(3), perimeter landscaping at least five feet wide around off-street parking and vehicular circulation areas
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-30'
-    quote: "or/clackamas/tualatin/73C.parking.txt#L675-L676,L684-L685"
+    quote: "or/clackamas/tualatin/73C.210.txt#L1-L2,L10-L11"
   # THE LANDSCAPE ISLANDS, encoded 2026-10-02. 73C.210(4) asks a "Minimum 25
   # square feet per parking space" of landscape island -- a hundred square
   # feet for the pod's four -- and (c) puts them "at aisle ends", inside the
@@ -948,14 +963,14 @@ defaults:
     cite: TDC 73C.210(4), landscape island at least 25 square feet per parking space, at aisle ends
     url: https://api.municode.com/PublicationPdfDownload/1818
     retrieved: '2026-08-30'
-    quote: "or/clackamas/tualatin/73C.parking.txt#L695-L696,L702-L703"
+    quote: "or/clackamas/tualatin/73C.210.txt#L21-L22,L28-L29"
   #
   # NOT ENCODED: 30 percent tree canopy over the parking area, 73C.030(12)(a),
   # for lots whose parking is under half an acre, which is all of them here. A
   # canopy is measured at fifteen years and sits above a car rather than in
   # its way, so unlike the islands it takes no ground the stall needs; it is a
   # planting schedule this screen cannot check and does not have to.
-  # (or/clackamas/tualatin/73C.parking.txt#L79-L83)
+  # (or/clackamas/tualatin/73C.030.txt#L58-L62)
   #
   # READ AND DOES NOT REACH. 73C.220 states the two numbers that would have
   # hurt -- a 10-foot landscape setback between parking and every property
@@ -970,7 +985,7 @@ defaults:
   # 73C.210(5)'s access landscaping starts at twelve spaces; 73C.030(11)'s
   # parking coverage cap starts at 65,000 square feet of floor area; and
   # 73C.030(13)'s solar-or-canopy choice starts at half an acre of parking.
-  # (or/clackamas/tualatin/31.definitions.txt#L250-L252,
+  # (or/clackamas/tualatin/31.060.txt#L250-L252,
   #  or/clackamas/tualatin/73C.parking.txt#L44-L46,L728-L731,L737,L746-L747)
 zones:
   RL:
@@ -980,24 +995,24 @@ zones:
       # one lot. Exempt rather than a large number: the code states no maximum
       # here.
       exempt: true
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L140,L146"
+      quote: "or/clackamas/tualatin/40.300.txt#L13,L19"
       variants:
         # The same table's Townhouse row, which is the split-plat path.
         - value: 25
           when: [unit_lots]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L140,L144"
+          quote: "or/clackamas/tualatin/40.300.txt#L13,L17"
     section: ["40."]
     cite_default:
-      cite: TDC 40.220 Table (Minimum Lot Size, Lot Width, Setbacks, Height, Coverage); quadplex permitted
-        outright per TDC 40.210
+      cite: TDC 40.300 Table 40-3 (Minimum Lot Size, Lot Width, Setbacks, Height, Coverage); quadplex permitted
+        outright per TDC 40.220 Table 40-2
       url: https://api.municode.com/PublicationPdfDownload/1818
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L120"
+      quote: "or/clackamas/tualatin/40.220.txt#L22"
     setback_front_ft:
       value: 15
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L211"
+      quote: "or/clackamas/tualatin/40.300.txt#L84"
     # NO PARKING SETBACK IN RL, and it is worth saying where the ten feet
     # went. Table 40.300 does state one -- "Parking and vehicular circula-
     # tion areas must be set back a minimum of ten feet from any public
@@ -1007,28 +1022,28 @@ zones:
     # outright here by TDC 40.210. RML states the same ten feet as a row of
     # its own, which is what makes the placement in RL a choice rather than
     # an accident. All 653 of Tualatin's lots that reach the site plan are
-    # RL. (or/clackamas/tualatin/40-41.residential.txt#L225-L233)
+    # RL. (or/clackamas/tualatin/40.300.txt#L98-L106)
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L220"
+      quote: "or/clackamas/tualatin/40.300.txt#L93"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L224"
+      quote: "or/clackamas/tualatin/40.300.txt#L97"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L213-L214"
+      quote: "or/clackamas/tualatin/40.300.txt#L86-L87"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L219"
+      quote: "or/clackamas/tualatin/40.300.txt#L92"
     min_lot_sqft:
       value: 6500
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L171"
+      quote: "or/clackamas/tualatin/40.300.txt#L44"
       variants:
         # The same table's townhouse row. Four of these is 5,600 sq ft against
         # the quadplex row's 6,500 — the split plat buys a smaller lot here.
         - value: 1400
           when: [unit_lots]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L166"
+          quote: "or/clackamas/tualatin/40.300.txt#L39"
     min_lot_width_ft:
       # Table 40.220, MINIMUM LOT WIDTH, the quadplex row. The relief printed
       # under it -- "May be reduced to 30 feet if on a cul-de-sac" -- is
@@ -1039,7 +1054,7 @@ zones:
       # relief was refused for the one reason a looser row should be:
       # nothing measured the fact. A lot not proven on a bulb still owes 50.
       value: 50
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L190-L191"
+      quote: "or/clackamas/tualatin/40.300.txt#L63-L64"
       variants:
         # The cul-de-sac relief, on the same row. A lot WIDTH -- TDC 31.060
         # measures it at the centre of the lot, parallel to the front lot
@@ -1047,30 +1062,30 @@ zones:
         # Wilsonville's bulb rows loosen; the field says which.
         - value: 30
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L192-L193"
+          quote: "or/clackamas/tualatin/40.300.txt#L65-L66"
         # "T ownhouse None" — the table states no minimum lot width for a
         # townhouse. Encoded as zero rather than left out, because left out
         # would inherit the 50 ft quadplex row, which is the opposite of what
         # the row says.
         - value: 0
           when: [unit_lots]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L196"
+          quote: "or/clackamas/tualatin/40.300.txt#L69"
         # The townhouse row spelled out beside the relief, so a townhome pod
         # on a bulb does not tie two one-condition rows into UNKNOWN. It says
         # what the townhouse row says: the relief cannot tighten "None".
         - value: 0
           when: [unit_lots, fronts_cul_de_sac]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L196"
+          quote: "or/clackamas/tualatin/40.300.txt#L69"
     max_coverage_pct:
       value: 60
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L248"
+      quote: "or/clackamas/tualatin/40.300.txt#L121"
       variants:
         - value: 75
           when: [unit_lots]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L246"
+          quote: "or/clackamas/tualatin/40.300.txt#L119"
     max_height_ft:
       value: 35
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L237"
+      quote: "or/clackamas/tualatin/40.300.txt#L110"
     notes: 'Every value is now read off the adopted Development Code rather than an aggregator, and
       every one is the quadplex row where the table states standards by housing type — the single-family
       rows differ (45% coverage, and a 6,500 sq ft lot stated as a subdivision average). min_frontage_ft
@@ -1088,7 +1103,7 @@ zones:
       is lot creation — double frontage, side lot lines at right angles, and a public-street frontage
       requirement on lots created after 1 September 1979 — none of which bind development on a lot
       that already exists. NOT ENCODED, measured to reach no lot (FOLLOWUPS 52, 2026-10-09): "Any
-      Yard Area Adjacent to Basalt Creek Parkway 50 feet" (40-41.residential.txt#L234-L235) is a row
+      Yard Area Adjacent to Basalt Creek Parkway 50 feet" (40.300.txt#L107-L108) is a row
       of its own and reaches this building, but measured against the street centrelines run 69
       screened with, the nearest Tualatin lot is 2,234 ft from the parkway. That file holds only the
       built stretch, 124th Avenue to Grahams Ferry Road; the extension east to Boones Ferry Road is
@@ -1102,24 +1117,24 @@ zones:
       # one lot. Exempt rather than a large number: the code states no maximum
       # here.
       exempt: true
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L445,L450"
+      quote: "or/clackamas/tualatin/41.300.txt#L14,L19"
       variants:
         # The same table's Townhouse row, which is the split-plat path.
         - value: 25
           when: [unit_lots]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L445,L448"
+          quote: "or/clackamas/tualatin/41.300.txt#L14,L17"
     section: ["41."]
     cite_default:
-      cite: TDC 41.220 Table (Minimum Lot Size, Average Lot Width, Setbacks, Height, Coverage); quadplex
-        permitted outright per TDC 41.210
+      cite: TDC 41.300 Table 41-3 (Minimum Lot Size, Average Lot Width, Setbacks, Height, Coverage); quadplex
+        permitted outright per TDC 41.220 Table 41-2
       url: https://api.municode.com/PublicationPdfDownload/1818
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L417"
+      quote: "or/clackamas/tualatin/41.220.txt#L13"
     setback_front_ft:
       value: 10
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L532"
+      quote: "or/clackamas/tualatin/41.300.txt#L101"
     # THE ONE PARKING SETBACK IN THIS CITY, and only half of it fits in a
     # field. Table 41.300's MINIMUM SETBACKS, under "Other Development
     # Types", carries a row of its own: "Parking and Vehicle Circulation
@@ -1131,7 +1146,7 @@ zones:
       cite: TDC 41.300 Table, Minimum Setbacks, Other Development Types, Parking and Vehicle Circulation Areas
       url: https://api.municode.com/PublicationPdfDownload/1818
       retrieved: '2026-08-30'
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L554,L561-L563"
+      quote: "or/clackamas/tualatin/41.300.txt#L123,L130-L132"
     # NOT ENCODED: the same ten feet against the side and rear lot lines,
     # and this refusal is NOT inert -- which makes it the first one in this
     # corpus that is not. RML's side yard for a quadplex is five feet, so a
@@ -1143,26 +1158,26 @@ zones:
     # sentence is confined to conditional uses. The day an RML lot appears,
     # this city comes off the laid-out list until the model can hold a
     # parking setback that is not measured from a street.
-    # (or/clackamas/tualatin/40-41.residential.txt#L554,L561-L563)
+    # (or/clackamas/tualatin/41.300.txt#L123,L130-L132)
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L534"
+      quote: "or/clackamas/tualatin/41.300.txt#L103"
     setback_rear_ft:
       value: 10
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L537"
+      quote: "or/clackamas/tualatin/41.300.txt#L106"
     setback_street_side_ft:
       value: 10
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L548-L553"
+      quote: "or/clackamas/tualatin/41.300.txt#L117-L122"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L533"
+      quote: "or/clackamas/tualatin/41.300.txt#L102"
     min_lot_sqft:
       value: 4500
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L478"
+      quote: "or/clackamas/tualatin/41.300.txt#L47"
       variants:
         - value: 1400
           when: [unit_lots]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L475"
+          quote: "or/clackamas/tualatin/41.300.txt#L44"
     min_lot_width_ft:
       # Table 41.220, MINIMUM AVERAGE LOT WIDTH, "Duplex, Triplex, Quadplex,
       # and Cottage Clusters". RL holds the same row from Table 40.220 and this
@@ -1180,35 +1195,35 @@ zones:
       # the bulb relief has no interior row to stand under there and is
       # held here only; test_port pins that as the one such zone.
       value: 50
-      cite: TDC 41.220 Table, Minimum Average Lot Width
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L497,L501-L503"
+      cite: TDC 41.300 Table 41-3, Minimum Average Lot Width
+      quote: "or/clackamas/tualatin/41.300.txt#L66,L70-L72"
       variants:
         # The cul-de-sac relief on the quadplex row, since 2026-09-15.
         - value: 30
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L503-L504"
+          quote: "or/clackamas/tualatin/41.300.txt#L72-L73"
         # The Townhouse row, which is the split-plat path. RL prints "None"
         # here and this zone prints a number, so the two are not the same
         # standard written twice.
         - value: 14
           when: [unit_lots]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L497,L500"
+          quote: "or/clackamas/tualatin/41.300.txt#L66,L69"
         # The townhouse row spelled out beside the relief, so a townhome pod
         # on a bulb does not tie. The relief is printed on the quadplex row
         # and not on this one, so the pair says what the townhouse row says.
         - value: 14
           when: [unit_lots, fronts_cul_de_sac]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L497,L500"
+          quote: "or/clackamas/tualatin/41.300.txt#L66,L69"
     max_coverage_pct:
       value: 60
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L586"
+      quote: "or/clackamas/tualatin/41.300.txt#L155"
       variants:
         - value: 75
           when: [unit_lots]
-          quote: "or/clackamas/tualatin/40-41.residential.txt#L584"
+          quote: "or/clackamas/tualatin/41.300.txt#L153"
     max_height_ft:
       value: 35
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L577"
+      quote: "or/clackamas/tualatin/41.300.txt#L146"
     notes: 'The RML quadplex minimum lot is 4,500 sq ft, which this file did not carry at all — the
       prior note guessed 3,000 sq ft off the flexible-lot subdivision standard and said to verify it.
       min_lot_width_ft is deliberately absent: RML states a minimum AVERAGE lot width (50 ft for
@@ -1226,7 +1241,7 @@ zones:
       and enacted a new 36.410 that states lot size and nothing else. The cross-reference points at a
       rule that no longer exists, so there is nothing behind it to encode. NOT ENCODED, measured to
       reach no lot (FOLLOWUPS 52, 2026-10-09): the 50 ft yard adjacent to Basalt Creek Parkway
-      (40-41.residential.txt#L568-L570) reaches this building, but the nearest Tualatin lot in the
+      (41.300.txt#L137-L139) reaches this building, but the nearest Tualatin lot in the
       screen is 2,234 ft from the built parkway and 343 ft from a straight course due east from its
       Grahams Ferry end standing in for the unbuilt extension to Boones Ferry Road (see the RL notes),
       so no RML lot is adjacent to it. Re-measure when the extension reaches the street file or
@@ -1263,7 +1278,7 @@ zones:
       # grep of Chapter 50 for dwelling, household living, housing type:
       # nothing. 13 lots.
       value: false
-      quote: "or/clackamas/tualatin/50.co.txt#L17-L20,L23-L29"
+      quote: "or/clackamas/tualatin/50.200.txt#L5-L8,L11-L17"
     notes: >-
       Encoded 2026-09-20 from Table 50-1. A zone "intended to provide for
       office development" and the table says so: the only residential row
@@ -1282,7 +1297,7 @@ zones:
       # and no Household Living row. Whole-document grep of Chapter 54 for
       # dwelling, household living, housing type: nothing. 15 lots.
       value: false
-      quote: "or/clackamas/tualatin/54.cg.txt#L16-L19,L22-L28"
+      quote: "or/clackamas/tualatin/54.200.txt#L5-L8,L11-L17"
     notes: >-
       Encoded 2026-09-20 from Table 54-1. The largest of Tualatin's six and
       the plainest: a commercial strip zone with no home in it.
@@ -1300,7 +1315,7 @@ zones:
       # living. No Household Living row. Whole-document grep of Chapter 56
       # for dwelling, household living, housing type: nothing. 5 lots.
       value: false
-      quote: "or/clackamas/tualatin/56.mc.txt#L13-L16,L19-L29"
+      quote: "or/clackamas/tualatin/56.200.txt#L5-L8,L11-L21"
     notes: >-
       Encoded 2026-09-20 from Table 56-1. The hospital district; its one
       residential category is the care-facility kind Chapter 39 keeps apart
@@ -1324,7 +1339,7 @@ zones:
       # and service of manufactured dwellings as a commercial use (L51,
       # L202), and nothing else. 4 lots.
       value: false
-      quote: "or/clackamas/tualatin/60.ml.txt#L20-L23,L28-L36"
+      quote: "or/clackamas/tualatin/60.200.txt#L5-L8,L13-L21"
     notes: >-
       Encoded 2026-09-20 from Table 60-1. Not a conditional-use zone for
       this building: the C is on a row whose (L) limitation is one
@@ -1348,7 +1363,7 @@ zones:
       # (L198). 7 lots, plus the one county lot at 21E18BB02700 that the
       # county layer sends here as a pocket.
       value: false
-      quote: "or/clackamas/tualatin/61.mg.txt#L17-L20,L25-L31"
+      quote: "or/clackamas/tualatin/61.200.txt#L5-L8,L13-L19"
     notes: >-
       Encoded 2026-09-20 from Table 61-1. See ML; "one caretaker residence
       per site" is the whole of household living in the zone.
@@ -1382,7 +1397,7 @@ zones:
       # commercial zones carry. Whole-chapter grep of 49.in.txt for
       # dwelling, household, housing, townhouse, quadplex: nothing. 4 lots.
       value: false
-      quote: "or/clackamas/tualatin/49.in.txt#L20-L27,L31-L35,L45,L63-L68"
+      quote: "or/clackamas/tualatin/49.200.txt#L1-L8,L12-L16,L26,L44-L49"
     notes: >-
       Encoded 2026-10-01 from Table 49-1. A zone for "public, educational,
       religious, recreational, and incidental support facilities" on land
@@ -1405,7 +1420,7 @@ zones:
       # grep of 51.cn.txt for dwelling, household, housing, townhouse,
       # quadplex: this row only. 4 lots.
       value: false
-      quote: "or/clackamas/tualatin/51.cn.txt#L24-L30,L34-L39"
+      quote: "or/clackamas/tualatin/51.200.txt#L2-L8,L12-L17"
     notes: >-
       Encoded 2026-10-01 from Table 51-1. The one way a home enters CN is
       with a business beside it, one for one. Read the other way -- four
@@ -1427,10 +1442,10 @@ zones:
       # refusal: conditional, which this corpus refuses as a use-table cell,
       # and limited to two housing types neither of which is four units --
       # TDC 31.060 makes a Multi-Family Structure "five or more dwelling
-      # units on one lot" (31.definitions.txt L251). Whole-chapter grep:
+      # units on one lot" (31.060.txt L251). Whole-chapter grep:
       # this row and the same two types in Table 52-2's density line. 1 lot.
       value: false
-      quote: "or/clackamas/tualatin/52.cr.txt#L13-L19,L22-L28"
+      quote: "or/clackamas/tualatin/52.200.txt#L2-L8,L11-L17"
     notes: >-
       Encoded 2026-10-01 from Table 52-1. The 10 units per acre and 10,000
       sq ft in Table 52-2 (L128-L133) are the multi-family and park rows'
@@ -1450,7 +1465,7 @@ zones:
       # chapter grep of 62.mp.txt for dwelling, household, housing: this
       # row only. 20 lots.
       value: false
-      quote: "or/clackamas/tualatin/62.mp.txt#L19-L25,L28-L34"
+      quote: "or/clackamas/tualatin/62.200.txt#L2-L8,L11-L17"
     notes: >-
       Encoded 2026-10-01 from Table 62-1. See ML; a security caretaker is
       the whole of household living in the zone.
@@ -1470,7 +1485,7 @@ zones:
       # same one dwelling: 64.210(4)(a) lists "caretaker residence" among
       # the uses the overlay lets outright, and otherwise brings in only the
       # Light Manufacturing zone's list, whose Household Living row is the
-      # caretaker again (60.ml.txt L28-L36). Whole-chapter grep of
+      # caretaker again (60.200.txt L13-L21). Whole-chapter grep of
       # 64.mbp.txt: these rows only. 6 lots.
       value: false
       quote: "or/clackamas/tualatin/64.mbp.txt#L19-L25,L28-L37,L121-L129"
@@ -1494,7 +1509,7 @@ zones:
       # dwellings" in the list of goods light manufacturing may make (L64).
       # 10 lots.
       value: false
-      quote: "or/clackamas/tualatin/65.bce.txt#L17-L23,L24-L29"
+      quote: "or/clackamas/tualatin/65.200.txt#L2-L8,L9-L14"
     notes: >-
       Encoded 2026-10-01 from Table 65-1. A zone "to implement the goals
       of the Basalt Creek Concept Plan" for "employment uses that ...
@@ -1527,7 +1542,7 @@ zones:
       # `inside_mapped_use_area` reads here.
       value: false
       cite: TDC 53.200(1) and Table 53-1, no Household Living row in the CC zone
-      quote: "or/clackamas/tualatin/53.cc.txt#L11-L18,L21-L26"
+      quote: "or/clackamas/tualatin/53.200.txt#L1-L8,L11-L16"
       variants:
         - value: true
           when: [inside_mapped_use_area]
@@ -1536,7 +1551,7 @@ zones:
     min_lot_sqft:
       value: 5000
       cite: TDC Table 53-2, Minimum Lot Size, All Uses (Table 58-7 states none for CC)
-      quote: "or/clackamas/tualatin/53.cc.txt#L139-L146"
+      quote: "or/clackamas/tualatin/53.300.txt#L4-L11"
     min_lot_width_ft:
       # 58.800(1): "Where no standard is listed, the standards of the base
       # zone apply" -- and Table 58-7 lists one: a 40 ft Minimum Lot Width
@@ -1545,16 +1560,16 @@ zones:
       # on is inside the overlay, so the overlay's number is the one read.
       value: 40
       cite: TDC 58.800(1) and Table 58-7, CC, Minimum Lot Width
-      quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L283-L285,L294,L298"
+      quote: "or/clackamas/tualatin/58.800.txt#L1-L3,L12,L16"
     min_frontage_ft:
       value: 40
       cite: TDC Table 58-7, CC, Minimum Lot Width at the Street
-      quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L294,L304-L306"
+      quote: "or/clackamas/tualatin/58.800.txt#L12,L22-L24"
       variants:
         - value: 35
           when: [fronts_cul_de_sac]
           cite: TDC Table 58-7, CC, Minimum Lot Width at the Street on a Cul-De-Sac Street
-          quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L294,L307-L309"
+          quote: "or/clackamas/tualatin/58.800.txt#L12,L25-L27"
     setback_front_ft:
       # "Front None. Determined through Architectural Review Process." The
       # corner lot row puts "0-20 feet along each frontage" on a corner, for
@@ -1562,57 +1577,57 @@ zones:
       # of its range, the number no review can exceed.
       value: 0
       cite: TDC Table 53-2, Minimum Setbacks, Front None
-      quote: "or/clackamas/tualatin/53.cc.txt#L158-L160"
+      quote: "or/clackamas/tualatin/53.300.txt#L23-L25"
       variants:
         - value: 20
           when: [corner_lot]
           cite: TDC Table 53-2, Minimum Setbacks, Corner Lots 0-20 feet along each frontage
-          quote: "or/clackamas/tualatin/53.cc.txt#L175-L180"
+          quote: "or/clackamas/tualatin/53.300.txt#L40-L45"
     setback_front_max_ft:
       value: 20
       cite: TDC Table 53-2, Maximum Setback, Front
-      quote: "or/clackamas/tualatin/53.cc.txt#L186-L187"
+      quote: "or/clackamas/tualatin/53.300.txt#L51-L52"
     setback_side_ft:
       # "Side and Rear 0-20 feet. Determined through Architectural Review
       # Process." A range a review settles, held at its top.
       value: 20
       cite: TDC Table 53-2, Minimum Setbacks, Side and Rear 0-20 feet (top of the range)
-      quote: "or/clackamas/tualatin/53.cc.txt#L171-L172"
+      quote: "or/clackamas/tualatin/53.300.txt#L36-L37"
     setback_rear_ft:
       # Two rows reach the rear: "Side and Rear 0-20" and "Rear 0-15", both
       # by Architectural Review. Held at 20, the stricter of the two tops,
       # because nothing on the page says the second row displaces the first.
       value: 20
       cite: TDC Table 53-2, Minimum Setbacks, Side and Rear 0-20 feet and Rear 0-15 feet (the stricter top)
-      quote: "or/clackamas/tualatin/53.cc.txt#L171-L174"
+      quote: "or/clackamas/tualatin/53.300.txt#L36-L39"
     setback_street_side_ft:
       value: 20
       cite: TDC Table 53-2, Minimum Setbacks, Corner Lots 0-20 feet along each frontage (top of the range)
-      quote: "or/clackamas/tualatin/53.cc.txt#L175-L180"
+      quote: "or/clackamas/tualatin/53.300.txt#L40-L45"
     setback_garage_entrance_ft:
       value: 20
       cite: TDC Table 53-2, Minimum Setbacks, Front, residential garage doors facing a public street
-      quote: "or/clackamas/tualatin/53.cc.txt#L158,L164-L165"
+      quote: "or/clackamas/tualatin/53.300.txt#L23,L29-L30"
     parking_street_setback_ft:
       value: 5
       cite: TDC Table 53-2, Minimum Setbacks, Parking and Vehicle Circulation Areas 5 feet
-      quote: "or/clackamas/tualatin/53.cc.txt#L181-L184"
+      quote: "or/clackamas/tualatin/53.300.txt#L46-L49"
     max_height_ft:
       value: 45
       cite: TDC Table 53-2, Maximum Structure Height, All Uses
-      quote: "or/clackamas/tualatin/53.cc.txt#L188-L189"
+      quote: "or/clackamas/tualatin/53.300.txt#L53-L54"
     max_coverage_pct:
       exempt: true
       cite: TDC Table 53-2 states no lot coverage, and Table 58-7 none for CC
-      quote: "or/clackamas/tualatin/53.cc.txt#L139-L144"
+      quote: "or/clackamas/tualatin/53.300.txt#L4-L9"
     max_density_du_per_acre:
       value: 25
       cite: TDC Table 58-7, CC, Density within the Residential Sub-District 16-25 dwelling units per acre
-      quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L294-L297"
+      quote: "or/clackamas/tualatin/58.800.txt#L12-L15"
     min_density_du_per_acre:
       value: 16
       cite: TDC Table 58-7, CC, Density within the Residential Sub-District 16-25 dwelling units per acre
-      quote: "or/clackamas/tualatin/58.central-tualatin-overlay.txt#L294-L297"
+      quote: "or/clackamas/tualatin/58.800.txt#L12-L15"
     notes: >-
       Encoded 2026-10-02 from Tables 53-1, 53-2, 58-1 and 58-7, after Steph
       supplied Map 10-3 (Tualatin 2040 Comprehensive Plan, 2025, p. 51) and
@@ -1686,99 +1701,99 @@ zones:
     quadplex_allowed:
       value: false
       cite: TDC 42.220 Table 42-2, Housing Types in the RMH Zone, no Quadplex row (a Multi-Family Structure is five or more units, TDC 31.060)
-      quote: "or/clackamas/tualatin/42.rmh.txt#L86-L101"
+      quote: "or/clackamas/tualatin/42.220.txt#L2-L17"
       variants:
         - value: true
           when: [unit_lots]
           cite: TDC 42.220 Table 42-2, Townhouse (or Rowhouse) P
-          quote: "or/clackamas/tualatin/42.rmh.txt#L91,L96"
+          quote: "or/clackamas/tualatin/42.220.txt#L7,L12"
     min_lot_sqft:
       value: 10000
       cite: TDC 42.300 Table 42-3, Minimum Lot Size, All Other Permitted Uses
-      quote: "or/clackamas/tualatin/42.rmh.txt#L123,L139"
+      quote: "or/clackamas/tualatin/42.300.txt#L21,L37"
       variants:
         - value: 1400
           when: [unit_lots]
           cite: TDC 42.300 Table 42-3, Minimum Lot Size, Townhouse (or Rowhouse)
-          quote: "or/clackamas/tualatin/42.rmh.txt#L123-L124"
+          quote: "or/clackamas/tualatin/42.300.txt#L21-L22"
     min_lot_width_ft:
       # An AVERAGE width, held as the width the way RML holds its own.
       value: 75
       cite: TDC 42.300 Table 42-3, Minimum Average Lot Width, All Other Permitted Uses
-      quote: "or/clackamas/tualatin/42.rmh.txt#L144,L153"
+      quote: "or/clackamas/tualatin/42.300.txt#L42,L51"
       variants:
         - value: 14
           when: [unit_lots]
           cite: TDC 42.300 Table 42-3, Minimum Average Lot Width, Townhouse (or Rowhouse)
-          quote: "or/clackamas/tualatin/42.rmh.txt#L144-L145"
+          quote: "or/clackamas/tualatin/42.300.txt#L42-L43"
     setback_front_ft:
       # The 25+ ft row (the pod is 26 ft); the Townhouse row is 0-10 by
       # Architectural Review, held at its top.
       value: 15
       cite: TDC 42.300 Table 42-3, Front Setback (based on structure height), 25+ feet
-      quote: "or/clackamas/tualatin/42.rmh.txt#L166-L171"
+      quote: "or/clackamas/tualatin/42.300.txt#L64-L69"
       variants:
         - value: 10
           when: [unit_lots]
           cite: TDC 42.300 Table 42-3, Front Setback, Townhouse (or Rowhouse) 0-10 feet as determined through Architectural Review (top of the range)
-          quote: "or/clackamas/tualatin/42.rmh.txt#L166-L167,L172-L173"
+          quote: "or/clackamas/tualatin/42.300.txt#L64-L65,L70-L71"
     setback_street_side_ft:
       # "Corner Lots: the setback is the same as the front yard setback on any
       # side facing a street other than an alley."
       value: 15
       cite: TDC 42.300 Table 42-3, Corner Lots, same as the front yard setback
-      quote: "or/clackamas/tualatin/42.rmh.txt#L166-L171,L180-L183"
+      quote: "or/clackamas/tualatin/42.300.txt#L64-L69,L78-L81"
       variants:
         - value: 10
           when: [unit_lots]
           cite: TDC 42.300 Table 42-3, Corner Lots, same as the Townhouse front setback (0-10 feet, top of the range)
-          quote: "or/clackamas/tualatin/42.rmh.txt#L166-L167,L172-L173,L180-L183"
+          quote: "or/clackamas/tualatin/42.300.txt#L64-L65,L70-L71,L78-L81"
     setback_garage_entrance_ft:
       value: 20
       cite: TDC 42.300 Table 42-3, Front Setback, minimum setback to a garage door 20 feet
-      quote: "or/clackamas/tualatin/42.rmh.txt#L168-L169"
+      quote: "or/clackamas/tualatin/42.300.txt#L66-L67"
     setback_side_ft:
       value: 12
       cite: TDC 42.300 Table 42-3, Side and Rear Setback (based on structure height), 25+ feet
-      quote: "or/clackamas/tualatin/42.rmh.txt#L174-L179"
+      quote: "or/clackamas/tualatin/42.300.txt#L72-L77"
     setback_rear_ft:
       value: 12
       cite: TDC 42.300 Table 42-3, Side and Rear Setback (based on structure height), 25+ feet
-      quote: "or/clackamas/tualatin/42.rmh.txt#L174-L179"
+      quote: "or/clackamas/tualatin/42.300.txt#L72-L77"
     parking_street_setback_ft:
       # "Parking and Vehicle Circulation Areas 10 feet; for Townhouses
       # determined through the Architectural Review process" -- held at 10.
       value: 10
       cite: TDC 42.300 Table 42-3, Minimum Setbacks, Parking and Vehicle Circulation Areas
-      quote: "or/clackamas/tualatin/42.rmh.txt#L190-L194"
+      quote: "or/clackamas/tualatin/42.300.txt#L88-L92"
     parking_lot_line_buffer_ft:
       # The same row read against the other lot lines, as RML's note left it
       # open: unqualified, so ten feet from any lot line. Larger than the
       # city-wide five feet of 73C.210(3), and the row governs.
       value: 10
       cite: TDC 42.300 Table 42-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (any lot line)
-      quote: "or/clackamas/tualatin/42.rmh.txt#L190-L194"
+      quote: "or/clackamas/tualatin/42.300.txt#L88-L92"
     max_height_ft:
       value: 35
       cite: TDC 42.300 Table 42-3, Maximum Structure Height, All Uses (50 ft by conditional use permit is not counted)
-      quote: "or/clackamas/tualatin/42.rmh.txt#L202-L207"
+      quote: "or/clackamas/tualatin/42.300.txt#L100-L105"
     max_coverage_pct:
       value: 40
       cite: TDC 42.300 Table 42-3, Maximum Lot Coverage, All Other Permitted Uses
-      quote: "or/clackamas/tualatin/42.rmh.txt#L208,L210"
+      quote: "or/clackamas/tualatin/42.300.txt#L106,L108"
       variants:
         - value: 90
           when: [unit_lots]
           cite: TDC 42.300 Table 42-3, Maximum Lot Coverage, Townhouse (or Rowhouse)
-          quote: "or/clackamas/tualatin/42.rmh.txt#L208-L209"
+          quote: "or/clackamas/tualatin/42.300.txt#L106-L107"
     max_density_du_per_acre:
       value: 15
       cite: TDC 42.300 Table 42-3, Maximum Density, Household Living Uses
-      quote: "or/clackamas/tualatin/42.rmh.txt#L114-L116"
+      quote: "or/clackamas/tualatin/42.300.txt#L12-L14"
     min_density_du_per_acre:
       value: 11
       cite: TDC 42.300 Table 42-3, Maximum Density, Household Living Uses, Minimum
-      quote: "or/clackamas/tualatin/42.rmh.txt#L114-L116"
+      quote: "or/clackamas/tualatin/42.300.txt#L12-L14"
     notes: >-
       Medium High Density Residential, TDC Chapter 42; 4 lots when ruled, 192
       on the three-county ledger of 2026-10-01. Encoded 2026-10-08 from
@@ -1808,89 +1823,89 @@ zones:
     quadplex_allowed:
       value: false
       cite: TDC 43.220 Table 43-2, Housing Types in the RH Zone, no Quadplex row (a Multi-Family Structure is five or more units, TDC 31.060)
-      quote: "or/clackamas/tualatin/43.rh.txt#L92-L104"
+      quote: "or/clackamas/tualatin/43.220.txt#L2-L14"
       variants:
         - value: true
           when: [unit_lots]
           cite: TDC 43.220 Table 43-2, Townhouse (or Rowhouse) P
-          quote: "or/clackamas/tualatin/43.rh.txt#L96,L99"
+          quote: "or/clackamas/tualatin/43.220.txt#L6,L9"
     min_lot_sqft:
       value: 10000
       cite: TDC 43.300 Table 43-3, Minimum Lot Size, All Other Permitted Uses
-      quote: "or/clackamas/tualatin/43.rh.txt#L129,L144"
+      quote: "or/clackamas/tualatin/43.300.txt#L24,L39"
       variants:
         - value: 1400
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Minimum Lot Size, Townhouse, or Rowhouse
-          quote: "or/clackamas/tualatin/43.rh.txt#L129-L130"
+          quote: "or/clackamas/tualatin/43.300.txt#L24-L25"
     min_lot_width_ft:
       value: 75
       cite: TDC 43.300 Table 43-3, Minimum Average Lot Width, All Other Permitted Uses
-      quote: "or/clackamas/tualatin/43.rh.txt#L150,L160"
+      quote: "or/clackamas/tualatin/43.300.txt#L45,L55"
       variants:
         - value: 14
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Minimum Average Lot Width, Townhouses (or Rowhouses)
-          quote: "or/clackamas/tualatin/43.rh.txt#L150-L153"
+          quote: "or/clackamas/tualatin/43.300.txt#L45-L48"
     setback_front_ft:
       value: 15
       cite: TDC 43.300 Table 43-3, Front Setback (based on structure height), 25+ feet
-      quote: "or/clackamas/tualatin/43.rh.txt#L165-L171"
+      quote: "or/clackamas/tualatin/43.300.txt#L60-L66"
       variants:
         - value: 10
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Front Setback, Townhouse (or Rowhouses) 0-10 feet as determined through Architectural Review (top of the range)
-          quote: "or/clackamas/tualatin/43.rh.txt#L165-L167,L172-L175"
+          quote: "or/clackamas/tualatin/43.300.txt#L60-L62,L67-L70"
     setback_street_side_ft:
       value: 15
       cite: TDC 43.300 Table 43-3, Corner Lots, same as the front yard setback
-      quote: "or/clackamas/tualatin/43.rh.txt#L165-L171,L188-L190"
+      quote: "or/clackamas/tualatin/43.300.txt#L60-L66,L83-L85"
       variants:
         - value: 10
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Corner Lots, same as the Townhouse front setback (0-10 feet, top of the range)
-          quote: "or/clackamas/tualatin/43.rh.txt#L165-L167,L172-L175,L188-L190"
+          quote: "or/clackamas/tualatin/43.300.txt#L60-L62,L67-L70,L83-L85"
     setback_garage_entrance_ft:
       value: 20
       cite: TDC 43.300 Table 43-3, Front Setback, minimum setback to a garage door 20 feet
-      quote: "or/clackamas/tualatin/43.rh.txt#L168-L169"
+      quote: "or/clackamas/tualatin/43.300.txt#L63-L64"
     setback_side_ft:
       value: 12
       cite: TDC 43.300 Table 43-3, Side and Rear Setback (based on structure height), 25+ feet
-      quote: "or/clackamas/tualatin/43.rh.txt#L181-L187"
+      quote: "or/clackamas/tualatin/43.300.txt#L76-L82"
     setback_rear_ft:
       value: 12
       cite: TDC 43.300 Table 43-3, Side and Rear Setback (based on structure height), 25+ feet
-      quote: "or/clackamas/tualatin/43.rh.txt#L181-L187"
+      quote: "or/clackamas/tualatin/43.300.txt#L76-L82"
     parking_street_setback_ft:
       value: 10
       cite: TDC 43.300 Table 43-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (Townhouses by Architectural Review, held at 10)
-      quote: "or/clackamas/tualatin/43.rh.txt#L197-L200"
+      quote: "or/clackamas/tualatin/43.300.txt#L92-L95"
     parking_lot_line_buffer_ft:
       value: 10
       cite: TDC 43.300 Table 43-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (any lot line)
-      quote: "or/clackamas/tualatin/43.rh.txt#L197-L200"
+      quote: "or/clackamas/tualatin/43.300.txt#L92-L95"
     max_height_ft:
       value: 35
       cite: TDC 43.300 Table 43-3, Maximum Structure Height, All Uses (50 ft by conditional use permit is not counted)
-      quote: "or/clackamas/tualatin/43.rh.txt#L207-L211"
+      quote: "or/clackamas/tualatin/43.300.txt#L102-L106"
     max_coverage_pct:
       value: 45
       cite: TDC 43.300 Table 43-3, Maximum Lot Coverage, All Other Permitted Uses
-      quote: "or/clackamas/tualatin/43.rh.txt#L212,L214"
+      quote: "or/clackamas/tualatin/43.300.txt#L107,L109"
       variants:
         - value: 90
           when: [unit_lots]
           cite: TDC 43.300 Table 43-3, Maximum Lot Coverage, Townhouse (or Rowhouse)
-          quote: "or/clackamas/tualatin/43.rh.txt#L212-L213"
+          quote: "or/clackamas/tualatin/43.300.txt#L107-L108"
     max_density_du_per_acre:
       value: 25
       cite: TDC 43.300 Table 43-3, Maximum density, Household Living Uses
-      quote: "or/clackamas/tualatin/43.rh.txt#L115-L117"
+      quote: "or/clackamas/tualatin/43.300.txt#L10-L12"
     min_density_du_per_acre:
       value: 16
       cite: TDC 43.300 Table 43-3, Maximum density, Household Living Uses, Minimum
-      quote: "or/clackamas/tualatin/43.rh.txt#L115-L117"
+      quote: "or/clackamas/tualatin/43.300.txt#L10-L12"
     notes: >-
       High Density Residential, TDC Chapter 43; 198 lots, the largest of the
       four. Encoded 2026-10-08 from Tables 43-2 and 43-3 on RMH's shape
@@ -1919,78 +1934,78 @@ zones:
     quadplex_allowed:
       value: false
       cite: TDC 44.220 Table 44-2, Housing Types in the RH-HR Zone, no Quadplex row (a Multi-Family Structure is five or more units, TDC 31.060)
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L96-L107"
+      quote: "or/clackamas/tualatin/44.220.txt#L4-L15"
       variants:
         - value: true
           when: [unit_lots]
           cite: TDC 44.220 Table 44-2, Townhouse (or Rowhouse) P
-          quote: "or/clackamas/tualatin/44.rh-hr.txt#L98,L101"
+          quote: "or/clackamas/tualatin/44.220.txt#L6,L9"
     min_lot_sqft:
       # RULED by Steph 2026-10-02: Table 44-3 prints no Townhouse lot size, so
       # townhouses take the "All Other Permitted Uses" row -- one number for
       # the pod on one lot and on unit lots, hence no variant.
       value: 10000
       cite: TDC 44.300 Table 44-3, Minimum Lot Size, All Other Permitted Uses (townhouses have no row of their own; Steph's ruling of 2026-10-02)
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L128,L141"
+      quote: "or/clackamas/tualatin/44.300.txt#L21,L34"
     min_lot_width_ft:
       value: 75
       cite: TDC 44.300 Table 44-3, Minimum Average Lot Width, All Other Permitted Uses
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L146,L154"
+      quote: "or/clackamas/tualatin/44.300.txt#L39,L47"
       variants:
         - value: 14
           when: [unit_lots]
           cite: TDC 44.300 Table 44-3, Minimum Average Lot Width, Townhouses (Rowhouses)
-          quote: "or/clackamas/tualatin/44.rh-hr.txt#L146-L147"
+          quote: "or/clackamas/tualatin/44.300.txt#L39-L40"
     setback_front_ft:
       # The 25 to 30 ft row (the pod is 26 ft). Table 44-3 has no Townhouse
       # front row; at 30 ft and over the setback goes to Architectural Review.
       value: 15
       cite: TDC 44.300 Table 44-3, Front Setback (based on structure height), 25-30 feet
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L158-L168"
+      quote: "or/clackamas/tualatin/44.300.txt#L51-L61"
     setback_street_side_ft:
       value: 15
       cite: TDC 44.300 Table 44-3, Corner Lots, same as the front yard setback
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L158-L163,L185-L188"
+      quote: "or/clackamas/tualatin/44.300.txt#L51-L56,L78-L81"
     setback_garage_entrance_ft:
       value: 20
       cite: TDC 44.300 Table 44-3, Front Setback, minimum setback to a garage door 20 feet
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L158-L162"
+      quote: "or/clackamas/tualatin/44.300.txt#L51-L55"
     setback_front_max_ft:
       value: 20
       cite: TDC 44.300 Table 44-3, Maximum Setbacks, Front Setback 20 feet (44.315 asks 40 to 50 percent of the site width to meet it)
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L203-L204"
+      quote: "or/clackamas/tualatin/44.300.txt#L96-L97"
     setback_side_ft:
       value: 12
       cite: TDC 44.300 Table 44-3, Side and Rear Setback (based on structure height), 25 to under 30 feet
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L173-L179"
+      quote: "or/clackamas/tualatin/44.300.txt#L66-L72"
     setback_rear_ft:
       value: 12
       cite: TDC 44.300 Table 44-3, Side and Rear Setback (based on structure height), 25 to under 30 feet
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L173-L179"
+      quote: "or/clackamas/tualatin/44.300.txt#L66-L72"
     parking_street_setback_ft:
       value: 10
       cite: TDC 44.300 Table 44-3, Minimum Setbacks, Parking and Vehicle Circulation Areas
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L193-L194"
+      quote: "or/clackamas/tualatin/44.300.txt#L86-L87"
     parking_lot_line_buffer_ft:
       value: 10
       cite: TDC 44.300 Table 44-3, Minimum Setbacks, Parking and Vehicle Circulation Areas (any lot line)
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L193-L194"
+      quote: "or/clackamas/tualatin/44.300.txt#L86-L87"
     max_height_ft:
       value: 64
       cite: TDC 44.300 Table 44-3, Structure Height, Maximum Height
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L205,L211"
+      quote: "or/clackamas/tualatin/44.300.txt#L98,L104"
     max_coverage_pct:
       value: 45
       cite: TDC 44.300 Table 44-3, Maximum Lot Coverage, All Uses
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L212-L213"
+      quote: "or/clackamas/tualatin/44.300.txt#L105-L106"
     max_density_du_per_acre:
       value: 30
       cite: TDC 44.300 Table 44-3, Maximum Density, Household Living Uses
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L116-L118"
+      quote: "or/clackamas/tualatin/44.300.txt#L9-L11"
     min_density_du_per_acre:
       value: 26
       cite: TDC 44.300 Table 44-3, Maximum Density, Household Living Uses, Minimum
-      quote: "or/clackamas/tualatin/44.rh-hr.txt#L116-L118"
+      quote: "or/clackamas/tualatin/44.300.txt#L9-L11"
     notes: >-
       High Density High Rise, TDC Chapter 44 (RH-HR); 6 lots. Encoded
       2026-10-08 from Tables 44-2 and 44-3. Same use shape as RH (no Quadplex
@@ -2030,59 +2045,59 @@ zones:
     quadplex_allowed:
       value: false
       cite: TDC 57.220 Table 57-2, Housing Types in the MUC, no Triplex or Quadplex row (a Multi-Family Structure is five or more units, TDC 31.060)
-      quote: "or/clackamas/tualatin/57.muc.txt#L152-L166"
+      quote: "or/clackamas/tualatin/57.220.txt#L1-L15"
       variants:
         - value: true
           when: [unit_lots]
           cite: TDC 57.220 Table 57-2, Duplex; Townhouse (or Rowhouse) P
-          quote: "or/clackamas/tualatin/57.muc.txt#L157,L161"
+          quote: "or/clackamas/tualatin/57.220.txt#L6,L10"
     min_lot_sqft:
       exempt: true
       cite: TDC 57.300 Table 57-3, Minimum Lot Size, All Uses None
-      quote: "or/clackamas/tualatin/57.muc.txt#L174-L175"
+      quote: "or/clackamas/tualatin/57.300.txt#L7-L8"
     setback_front_ft:
       value: 0
       cite: TDC 57.300 Table 57-3, Minimum Setbacks, Front None
-      quote: "or/clackamas/tualatin/57.muc.txt#L176-L177"
+      quote: "or/clackamas/tualatin/57.300.txt#L9-L10"
     setback_front_max_ft:
       value: 20
       cite: TDC 57.300 Table 57-3, Maximum Setbacks, Residential Uses, Front/Corner 20 feet
-      quote: "or/clackamas/tualatin/57.muc.txt#L184-L188"
+      quote: "or/clackamas/tualatin/57.300.txt#L17-L21"
     setback_street_side_ft:
       value: 0
       cite: TDC 57.300 Table 57-3, Minimum Setbacks, Corner None
-      quote: "or/clackamas/tualatin/57.muc.txt#L176,L183"
+      quote: "or/clackamas/tualatin/57.300.txt#L9,L16"
     setback_side_ft:
       # "Interior Side and Rear 0-20 feet. Setbacks are 20 feet where the site
       # abuts a residential district." A per-line neighbour condition this
       # layer does not declare; held at the 20 ft the abutting case asks.
       value: 20
       cite: TDC 57.300 Table 57-3, Minimum Setbacks, Interior Side and Rear 0-20 feet, 20 where the site abuts a residential district (the abutting case, held for every lot)
-      quote: "or/clackamas/tualatin/57.muc.txt#L176,L181-L182"
+      quote: "or/clackamas/tualatin/57.300.txt#L9,L14-L15"
     setback_rear_ft:
       value: 20
       cite: TDC 57.300 Table 57-3, Minimum Setbacks, Interior Side and Rear 0-20 feet, 20 where the site abuts a residential district (the abutting case, held for every lot)
-      quote: "or/clackamas/tualatin/57.muc.txt#L176,L181-L182"
+      quote: "or/clackamas/tualatin/57.300.txt#L9,L14-L15"
     min_building_height_ft:
       value: 20
       cite: TDC 57.300 Table 57-3, Minimum Structure Height, All uses 20 feet
-      quote: "or/clackamas/tualatin/57.muc.txt#L189-L191"
+      quote: "or/clackamas/tualatin/57.300.txt#L22-L24"
     max_height_ft:
       value: 70
       cite: TDC 57.300 Table 57-3, Maximum Structure Height, All uses 70 feet (Figure 57-1 is captioned 100-Foot Maximum Structure Height and is not read)
-      quote: "or/clackamas/tualatin/57.muc.txt#L192-L193"
+      quote: "or/clackamas/tualatin/57.300.txt#L25-L26"
     max_coverage_pct:
       value: 90
       cite: TDC 57.300 Table 57-3, Maximum Lot Coverage, All uses
-      quote: "or/clackamas/tualatin/57.muc.txt#L199-L200"
+      quote: "or/clackamas/tualatin/57.300.txt#L32-L33"
     max_density_du_per_acre:
       value: 50
       cite: TDC 57.300 Table 57-3, Density, All uses with a residential component 25-50 units per acre
-      quote: "or/clackamas/tualatin/57.muc.txt#L197-L198"
+      quote: "or/clackamas/tualatin/57.300.txt#L30-L31"
     min_density_du_per_acre:
       value: 25
       cite: TDC 57.300 Table 57-3, Density, All uses with a residential component 25-50 units per acre
-      quote: "or/clackamas/tualatin/57.muc.txt#L197-L198"
+      quote: "or/clackamas/tualatin/57.300.txt#L30-L31"
     notes: >-
       Mixed Use Commercial, TDC Chapter 57; 19 lots. Encoded 2026-10-08 from
       Tables 57-2 and 57-3. Household Living is P/C by housing type; Table
@@ -2141,7 +2156,7 @@ drawn_areas:
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: false
-  quote: "or/clackamas/tualatin/31.definitions.txt#L315"
+  quote: "or/clackamas/tualatin/31.060.txt#L315"
   says: "within the boundary lines of a public right-of-way"
   cite: "TDC 31.060 (Street; Street Right-of-Way; Corner Lot)"
   note: >-

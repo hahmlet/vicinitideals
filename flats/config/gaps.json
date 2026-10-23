@@ -1,5 +1,5 @@
 {
-  "digest": "b4dd87d24f09b69b6921dcde59c5036053822c19fc9950f511d98fcc52c60d1b",
+  "digest": "a13998ad3d8dbf85b685399dcec436986f5356c269560ef2d3a455ed7c644974",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -97,7 +97,7 @@
       "gaps": []
     },
     "or/clackamas/tualatin": {
-      "section_unread": 122,
+      "section_unread": 2,
       "misattributed": [],
       "label": "Tualatin",
       "counts": {},

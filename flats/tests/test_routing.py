@@ -319,6 +319,12 @@ OPEN = {
     # Ferry, (2) a frontage-occupancy rule for "Commercial buildings". The
     # pod is neither, no value quotes 53.310, and the layer's CC notes say so.
     "or/clackamas/tualatin 53.300 -> 53.310",
+    # 2026-10-23, surfaced when TDC was cut into one file per section: the
+    # line sat in Table 52-1, which the old heading guess filed under 52.100.
+    # It is the Retail Sales row of the CR use table ("All uses are subject to
+    # TDC 52.120(3)"; there is no 52.120 -- likely 52.210(3)). A shop rule,
+    # nothing the pod is measured by.
+    "or/clackamas/tualatin 52.200 -> 52.120",
     # 2026-10-01, Cornelius (a worktree draft). Nine rows, all open, none on
     # a figure the pod needs (a tenth, 18.75.065 -> 18.75.050, closed the
     # same day; see FOLLOWED):

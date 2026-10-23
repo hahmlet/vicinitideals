@@ -37,6 +37,11 @@ from typing import Callable, Iterable
 #: keeping them apart means a stored document can never shadow a module.
 STORE_ROOT = Path(__file__).resolve().parent / "docs"
 
+#: Beside a jurisdiction's section files: which fetched documents were cut into
+#: them, and where each section sits in its proof copy. See
+#: ``flats/provenance/sections.py``.
+INDEX = "sections.json"
+
 #: ``or/multnomah/portland/33.110.txt#L42-L48`` -- path, then optional line
 #: spans. Several are allowed, comma-separated: a number stated in a table row
 #: and qualified by a footnote three lines further down is cited from both
@@ -189,19 +194,96 @@ class ProvenanceStore:
         return self.text_path(path).is_file() and self.meta_path(path).is_file()
 
     def documents(self) -> list[str]:
-        """Every stored document path, sorted.
+        """Every stored document a citation can name, sorted.
 
         Matched on the way out of the walk rather than filtered afterwards:
         the store holds a ``.meta.json`` beside every document, so walking
         everything and asking each entry whether it is a file was two stat
         calls per document to find one. The sidecars cannot match ``*.txt``,
         which is what the discarded name test was for.
+
+        A proof copy that has been cut into section files is not listed. Its
+        words are listed once, in their sections, and every ledger that walks
+        this list would otherwise count each line twice. It is still stored,
+        still loads, and is what :meth:`fetched` hands the drift check.
         """
+        kept = self.proofs()
         return sorted(
-            str(p.relative_to(self.root)).replace("\\", "/")
+            path
             for p in self.root.rglob("*.txt")
             if p.is_file()
+            and (path := str(p.relative_to(self.root)).replace("\\", "/")) not in kept
         )
+
+    def proofs(self) -> frozenset[str]:
+        """Every fetched document that has been cut into section files."""
+        out: set[str] = set()
+        for index in self.root.rglob(INDEX):
+            directory = str(index.parent.relative_to(self.root)).replace("\\", "/")
+            raw = json.loads(index.read_text(encoding="utf-8"))
+            out.update(f"{directory}/{name}" for name in raw.get("documents", {}))
+        return frozenset(out)
+
+    def section_files(self) -> frozenset[str]:
+        """Every section file: derived from a proof copy, never fetched itself."""
+        out: set[str] = set()
+        for index in self.root.rglob(INDEX):
+            directory = str(index.parent.relative_to(self.root)).replace("\\", "/")
+            raw = json.loads(index.read_text(encoding="utf-8"))
+            for body in raw.get("documents", {}).values():
+                out.update(f"{directory}/{number}.txt" for number, _, _ in body["sections"])
+        return frozenset(out)
+
+    def section_of(self, path: str, cut: frozenset[str] | None = None) -> str | None:
+        """The section a section file holds, or None for any other document.
+
+        Every line of a section file is that section, whatever a running
+        header or a wrapped reference inside it looks like. ``cut`` is
+        :meth:`section_files`, for a caller asking about many paths.
+        """
+        if path not in (cut if cut is not None else self.section_files()):
+            return None
+        return path.rsplit("/", 1)[-1].removesuffix(".txt")
+
+    def fetched(self) -> list[str]:
+        """Every document as it was fetched: what a re-fetch can be compared with.
+
+        A section file carries its book's URL, but it is a slice of what that
+        URL serves, so comparing it with a re-fetch would call every section
+        changed. Its proof copy stands in for it.
+        """
+        cut = self.section_files()
+        return sorted({p for p in self.documents() if p not in cut} | self.proofs())
+
+    @staticmethod
+    def owned(directory: Path) -> list[Path]:
+        """The ``*.txt`` in one directory that a citation can name.
+
+        For tools that glob a jurisdiction's folder rather than ask the store:
+        the proof copies are left out for the same reason :meth:`documents`
+        leaves them out. Static because those tools are handed a folder, often
+        a test's, not a store.
+        """
+        index = directory / INDEX
+        skip: set[str] = set()
+        if index.is_file():
+            skip = set(json.loads(index.read_text(encoding="utf-8")).get("documents", {}))
+        return sorted(p for p in directory.glob("*.txt") if p.is_file() and p.name not in skip)
+
+    @staticmethod
+    def owned_tree(root: Path) -> list[Path]:
+        """:meth:`owned` for every folder under ``root``."""
+        folders = sorted({p.parent for p in root.rglob("*.txt")})
+        return sorted(p for folder in folders for p in ProvenanceStore.owned(folder))
+
+    @staticmethod
+    def cut_names(directory: Path) -> frozenset[str]:
+        """The names of the section files in one folder."""
+        index = directory / INDEX
+        if not index.is_file():
+            return frozenset()
+        raw = json.loads(index.read_text(encoding="utf-8")).get("documents", {})
+        return frozenset(f"{n}.txt" for body in raw.values() for n, _, _ in body["sections"])
 
     # --- read / write ------------------------------------------------
 
@@ -285,7 +367,7 @@ class ProvenanceStore:
         citing it can no longer be trusted, but the causes need different fixes.
         """
         bad: list[str] = []
-        for path in self.documents():
+        for path in sorted(set(self.documents()) | self.proofs()):
             try:
                 doc = self.load(path)
             except ProvenanceError:
@@ -332,7 +414,7 @@ def check_drift(
     a network and so the store stays out of the HTTP business.
     """
     results: list[DriftResult] = []
-    for path in sorted(paths) if paths is not None else store.documents():
+    for path in sorted(paths) if paths is not None else store.fetched():
         try:
             doc = store.load(path)
         except ProvenanceError as exc:

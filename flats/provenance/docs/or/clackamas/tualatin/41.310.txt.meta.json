@@ -1,0 +1,11 @@
+{
+  "url": "https://api.municode.com/PublicationPdfDownload/1818",
+  "retrieved": "2026-09-20",
+  "sha256": "44333cec7dcb23c4ae0d4cfa5908bd96e4448e7fcf38530c969090dbd58a500f",
+  "extractor": "flats-html-text/8",
+  "part_of": {
+    "document": "or/clackamas/tualatin/40-41.residential.txt",
+    "first": 592,
+    "last": 596
+  }
+}

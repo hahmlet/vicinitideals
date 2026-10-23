@@ -308,11 +308,14 @@ def redirects(layer: Layer, store: ProvenanceStore | None = None) -> list[Routin
     ids = _doc_ids(paths)
     headings: set[str] = set()
     heads: dict[str, dict[int, str]] = {}
+    cut = store.section_files()
     for path, text in texts.items():
         own = _doc_ids([path])
         owns = {i.partition(".")[0] for i in own}
         headings |= _headings(text, owns, own)
-        heads[path] = _heading_lines(text, owns, own)
+        held = store.section_of(path, cut)
+        # A section file is its section from its first line to its last.
+        heads[path] = {1: held} if held else _heading_lines(text, owns, own)
 
     # off_plat=False: a citation that only applies on a plat this screen does
     # not draw does not close a redirect. That is the ruling this module was

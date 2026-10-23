@@ -31,6 +31,8 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 
+from flats.provenance.store import ProvenanceStore
+
 DOCS = Path(__file__).resolve().parents[1] / "provenance" / "docs"
 
 #: One use-table cell. A verdict letter, the slashed pairs Oregon codifiers
@@ -131,7 +133,7 @@ def scan(root: Path | None = None) -> list[Document]:
     """Every stored document that holds enough table rows to judge, worst first."""
     root = root or DOCS
     found: list[Document] = []
-    for path in sorted(root.rglob("*.txt")):
+    for path in ProvenanceStore.owned_tree(root):
         lengths = runs(path.read_text(encoding="utf-8", errors="replace").splitlines())
         if len(lengths) < MIN_RUNS_PER_DOC:
             continue

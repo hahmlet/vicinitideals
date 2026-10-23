@@ -355,6 +355,7 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes] | Non
     import argparse
 
     from flats.provenance.fetch import declared, fetch_source
+    from flats.provenance.sections import repage
     from flats.rules.loader import load_rules
 
     parser = argparse.ArgumentParser(prog="python -m flats.provenance.pages")
@@ -398,6 +399,7 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes] | Non
         )
         if not args.check:
             write(store, built, extractor=store.load(path).extractor)
+            repage(store, path)
             # The bytes are already here and the review pages will want them.
             # Fetching a 40 MB book a second time to show a page out of it is
             # a rude thing to do to a city's web server.

@@ -1,0 +1,17 @@
+{
+  "sha256": "fd281b99922540fc3fea5790b3d8ecd8744c761b6f60500b9843adbc3a5f93f2",
+  "extractor": "flats-html-text/8",
+  "source_sha256": "0772d8f5ce71963dda4cddf3bd87c1ece6c386d2a28261486619b35eddc31c05",
+  "pages": [
+    {
+      "n": 535,
+      "line": 1,
+      "label": "TDC72:13"
+    },
+    {
+      "n": 536,
+      "line": 10,
+      "label": "TDC72:14"
+    }
+  ]
+}

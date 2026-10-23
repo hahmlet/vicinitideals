@@ -1,0 +1,11 @@
+{
+  "url": "https://api.municode.com/PublicationPdfDownload/1818",
+  "retrieved": "2026-10-01",
+  "sha256": "2f39a8cc6c6a81ad638e3f49b678263ff34d940ef81edf09b695de4b8b280259",
+  "extractor": "flats-html-text/8",
+  "part_of": {
+    "document": "or/clackamas/tualatin/53.cc.txt",
+    "first": 11,
+    "last": 92
+  }
+}

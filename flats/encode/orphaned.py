@@ -60,6 +60,8 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from flats.provenance.store import ProvenanceStore
+
 DOCS = Path(__file__).resolve().parents[1] / "provenance" / "docs"
 
 #: Words that can only be a dimension. Deliberately short: see the module
@@ -130,7 +132,7 @@ def scan(root: Path | None = None) -> list[Orphan]:
     """Every stored line whose unit word lost its measurement."""
     root = root or DOCS
     found: list[Orphan] = []
-    for path in sorted(root.rglob("*.txt")):
+    for path in ProvenanceStore.owned_tree(root):
         lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
         found += [Orphan(path=path, line=n, text=lines[n - 1].strip()) for n in orphans(lines)]
     return found

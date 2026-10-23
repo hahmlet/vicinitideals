@@ -1,0 +1,11 @@
+{
+  "url": "https://api.municode.com/PublicationPdfDownload/1818",
+  "retrieved": "2026-09-20",
+  "sha256": "f7476304099b543dd343a01077aecb71b668e512a8839276db5373c65066b7ed",
+  "extractor": "flats-html-text/8",
+  "part_of": {
+    "document": "or/clackamas/tualatin/31.definitions.txt",
+    "first": 503,
+    "last": 507
+  }
+}

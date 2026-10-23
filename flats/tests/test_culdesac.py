@@ -94,9 +94,9 @@ BY_REFERENCE = {("or/clackamas/happy-valley", "R20CC"): ("R20", 50)}
 #: Where the rows are printed: Happy Valley's three tables and Wilsonville's
 #: two notes, Tualatin's two tables, then the townhome rows beside them.
 CUL_DE_SAC_LINES = (
-    "#L285", "#L475", "#L651", "#L4740", "#L7254", "#L192-L193", "#L503-L504", "#L294,L307-L309",
+    "#L285", "#L475", "#L651", "#L4740", "#L7254", "40.300.txt#L65-L66", "41.300.txt#L72-L73", "58.800.txt#L12,L25-L27",
 )
-TOWNHOME_LINES = ("#L287", "#L477", "#L653", "#L7253", "#L196", "#L497,L500")
+TOWNHOME_LINES = ("#L287", "#L477", "#L653", "#L7253", "#L196", "40.300.txt#L69", "41.300.txt#L66,L69")
 
 
 # --- the bridge -------------------------------------------------------------

@@ -56,6 +56,7 @@ from pathlib import Path
 
 from flats.encode import crossrefs, glossary
 from flats.encode.crossrefs import _HEADING, _REF
+from flats.provenance.store import ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
 from flats.rules.model import WORD_CLOSED, Layer, Reading
@@ -387,6 +388,15 @@ def _home(doc: str) -> str:
     return found.group(1) if found else ""
 
 
+def _home_of(doc: str, cut: frozenset[str]) -> str:
+    """:func:`_home` for any stored file: a section file's chapter is its
+    number less the section, so a pointer to a neighbouring section of the
+    same chapter still reads as staying in the book."""
+    if doc in cut:
+        return doc.removesuffix(".txt").rsplit(".", 1)[0]
+    return _home(doc)
+
+
 def _away(home: str, sends: Sequence[tuple[str, int]]) -> bool:
     """Whether this line sends the reader out of the chapter they are in.
 
@@ -523,9 +533,10 @@ def _read(
     #: disagree with the patterns it guards: a union of alternations is the
     #: alternation of the union. Only lines it lets through pay for the rest.
     gate = re.compile("|".join(p.pattern for p in patterns.values()), re.I)
-    for path in sorted(directory.glob("*.txt")):
+    cut = ProvenanceStore.cut_names(directory)
+    for path in ProvenanceStore.owned(directory):
         doc = path.name
-        home = _home(doc)
+        home = _home_of(doc, cut)
         text = path.read_text(encoding="utf-8", errors="replace")
         for number, line in enumerate(text.splitlines(), start=1):
             if len(line) < 4 or not gate.search(line):
@@ -888,8 +899,9 @@ def undefined_here(
     }
     fields: dict[str, set[str]] = {}
     words: dict[str, list[str]] = {}
-    for path in sorted(directory.glob("*.txt")):
-        home = _home(path.name)
+    cut = ProvenanceStore.cut_names(directory)
+    for path in ProvenanceStore.owned(directory):
+        home = _home_of(path.name, cut)
         for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
             if len(line) < 4:
                 continue

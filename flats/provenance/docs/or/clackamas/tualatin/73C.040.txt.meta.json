@@ -1,0 +1,11 @@
+{
+  "url": "https://api.municode.com/PublicationPdfDownload/1818",
+  "retrieved": "2026-09-20",
+  "sha256": "2e203d61e464f2156ec36febc00aa23949e352518f9e0316359b5e4d99f33b19",
+  "extractor": "flats-html-text/8",
+  "part_of": {
+    "document": "or/clackamas/tualatin/73C.parking.txt",
+    "first": 106,
+    "last": 442
+  }
+}
