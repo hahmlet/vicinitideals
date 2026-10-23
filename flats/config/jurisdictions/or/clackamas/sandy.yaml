@@ -428,20 +428,27 @@ defaults:
   # 17.90.10 B holds residential development to the clear and objective
   # standards of the chapter (L126), and this is one. The pod is a
   # multi-family dwelling here ("at least three dwelling units ... located
-  # on a lot or development site", 17.10), and so are four row houses on one
-  # development site ("one or more adjacent ... lots", 17.10 L289), so the
-  # cap is read on both paths -- the conservative reading of two overlapping
-  # definitions. "Parking lot" is not defined; the court of stalls and its
+  # on a lot or development site", 17.10); four row houses on one
+  # development site ("one or more adjacent ... lots", 17.10 L289) were read
+  # the same way until Steph's ruling below. "Parking lot" is not defined; the court of stalls and its
   # aisle is read as one. "Any public street abutting the lot": every street
   # the lot has, the shape Steph read into the model code's half-frontage
   # cap (2026-10-14, FOLLOWUPS 80(a)). A court behind the building on a lot
   # with no street behind it is not reached.
+  # Steph 2026-10-22 settled the overlap: row houses on their own lots are
+  # not multi-family (rulings.yaml 2026-10-22-sandy-row-houses-not-multi-family),
+  # so the cap reaches the one-lot path only.
   parking_area_max_frontage_pct:
     value: 50
     cite: Sandy SDC 17.90.160 F, parking lots in multi-family developments no more than 50 percent of the frontage of any public street abutting the lot or building
     url: https://api.municode.com/CodesContent?jobId=480528&productId=15896&nodeId=TIT17DECO_CH17.90DEST
     retrieved: '2026-10-07'
     quote: "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2289,L2291"
+    variants:
+      - exempt: true
+        when: [unit_lots]
+        cite: Sandy SDC 17.10 building types, row house (own lots) apart from multi-family dwelling
+        quote: "or/clackamas/sandy/sdc.17.10.txt#L191,L195"
   parking_area_frontage_any_street:
     value: true
     cite: "Sandy SDC 17.90.160 F, parking lots no more than 50 percent of the frontage of any public street abutting the lot or building (any street frontage: front, side and rear streets)"
@@ -506,6 +513,15 @@ zones:
       value: 3
       cite: Sandy SDC 17.90.160 A.1, multi-family roofs gabled or hip, minimum pitch 3:12
       quote: "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2227,L2231"
+      variants:
+        # Steph 2026-10-22 (rulings.yaml 2026-10-22-sandy-row-houses-not-multi-family):
+        # four townhomes on their own lots are row houses, a building type
+        # 17.10 lists apart from the multi-family dwelling, so 17.90.160 does
+        # not reach them.
+        - exempt: true
+          when: [unit_lots]
+          cite: Sandy SDC 17.10 building types, row house (own lots) apart from multi-family dwelling
+          quote: "or/clackamas/sandy/sdc.17.10.txt#L191,L195"
     review_discretion:
       # Steph 2026-10-14. On its own the Type II Director's review is GREEN:
       # residential development meets "only ... the clear and objective
@@ -624,6 +640,15 @@ zones:
       value: 3
       cite: Sandy SDC 17.90.160 A.1, multi-family roofs gabled or hip, minimum pitch 3:12
       quote: "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2227,L2231"
+      variants:
+        # Steph 2026-10-22 (rulings.yaml 2026-10-22-sandy-row-houses-not-multi-family):
+        # four townhomes on their own lots are row houses, a building type
+        # 17.10 lists apart from the multi-family dwelling, so 17.90.160 does
+        # not reach them.
+        - exempt: true
+          when: [unit_lots]
+          cite: Sandy SDC 17.10 building types, row house (own lots) apart from multi-family dwelling
+          quote: "or/clackamas/sandy/sdc.17.10.txt#L191,L195"
     review_discretion:
       # Steph 2026-10-14. On its own the Type II Director's review is GREEN:
       # residential development meets "only ... the clear and objective
@@ -741,6 +766,15 @@ zones:
       value: 3
       cite: Sandy SDC 17.90.160 A.1, multi-family roofs gabled or hip, minimum pitch 3:12
       quote: "or/clackamas/sandy/sdc.17.90.txt#L2221,L2224,L2227,L2231"
+      variants:
+        # Steph 2026-10-22 (rulings.yaml 2026-10-22-sandy-row-houses-not-multi-family):
+        # four townhomes on their own lots are row houses, a building type
+        # 17.10 lists apart from the multi-family dwelling, so 17.90.160 does
+        # not reach them.
+        - exempt: true
+          when: [unit_lots]
+          cite: Sandy SDC 17.10 building types, row house (own lots) apart from multi-family dwelling
+          quote: "or/clackamas/sandy/sdc.17.10.txt#L191,L195"
     review_discretion:
       # Steph 2026-10-14. On its own the Type II Director's review is GREEN:
       # residential development meets "only ... the clear and objective

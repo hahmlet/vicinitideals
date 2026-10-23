@@ -1966,18 +1966,18 @@ zones:
       # Middle Housing, 431-2). 431-7.2 B: every residential development of
       # four or more dwellings keeps common open space, "at least 400 square
       # feet in area" and 100 sq ft a townhouse, which for four is the same
-      # 400. 431-7.1 B(1) lets it sit off the site within 1,300 feet's walk;
-      # nothing here holds land the developer controls off the lot, so it is
-      # read on the lot -- the stricter reading.
-      value: 400
-      cite: Washington County CDC 431-7.1 B(1) and 431-7.2 B(1)-(3), common open space for four or more dwellings, at least 400 sq ft
+      # 400. 431-7.1 B(1) lets it sit off the site within 1,300 feet's walk,
+      # without crossing an arterial, and Steph ruled 2026-10-22 that this
+      # is good enough to pass (rulings.yaml
+      # 2026-10-22-washco-open-space-off-site): the lot owes none of it.
+      exempt: true
+      cite: Washington County CDC 431-7.1 B(1), common open space may be located within 1,300 feet walking distance of the development
       quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L891-L896,L920-L926,L930-L932"
     open_space_min_dimension_ft:
-      # 431-7.2 B(2): "able to encompass a square area at least 20 feet wide
-      # and 20 feet long".
-      value: 20
-      cite: Washington County CDC 431-7.2 B(2), common open space encompasses a 20 by 20 ft square
-      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L924-L926"
+      # 431-7.2 B(2)'s 20 by 20 ft square belongs to the same off-site space.
+      exempt: true
+      cite: Washington County CDC 431-7.1 B(1) and 431-7.2 B(2), the 20 by 20 ft square may sit off the site
+      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L891-L896,L924-L926"
     review_discretion:
       # The townhouse row is the pod's only door here (four units on one lot
       # are not listed), and it is Type II: 375-4.2 holds a Type II use to
@@ -2052,18 +2052,18 @@ zones:
       # Middle Housing, 431-2). 431-7.2 B: every residential development of
       # four or more dwellings keeps common open space, "at least 400 square
       # feet in area" and 100 sq ft a townhouse, which for four is the same
-      # 400. 431-7.1 B(1) lets it sit off the site within 1,300 feet's walk;
-      # nothing here holds land the developer controls off the lot, so it is
-      # read on the lot -- the stricter reading.
-      value: 400
-      cite: Washington County CDC 431-7.1 B(1) and 431-7.2 B(1)-(3), common open space for four or more dwellings, at least 400 sq ft
+      # 400. 431-7.1 B(1) lets it sit off the site within 1,300 feet's walk,
+      # without crossing an arterial, and Steph ruled 2026-10-22 that this
+      # is good enough to pass (rulings.yaml
+      # 2026-10-22-washco-open-space-off-site): the lot owes none of it.
+      exempt: true
+      cite: Washington County CDC 431-7.1 B(1), common open space may be located within 1,300 feet walking distance of the development
       quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L891-L896,L920-L926,L930-L932"
     open_space_min_dimension_ft:
-      # 431-7.2 B(2): "able to encompass a square area at least 20 feet wide
-      # and 20 feet long".
-      value: 20
-      cite: Washington County CDC 431-7.2 B(2), common open space encompasses a 20 by 20 ft square
-      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L924-L926"
+      # 431-7.2 B(2)'s 20 by 20 ft square belongs to the same off-site space.
+      exempt: true
+      cite: Washington County CDC 431-7.1 B(1) and 431-7.2 B(2), the 20 by 20 ft square may sit off the site
+      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L891-L896,L924-L926"
     review_discretion:
       # The townhouse row is the pod's only door here (four units on one lot
       # are not listed), and it is Type II: 375-4.2 holds a Type II use to
@@ -2138,18 +2138,18 @@ zones:
       # Middle Housing, 431-2). 431-7.2 B: every residential development of
       # four or more dwellings keeps common open space, "at least 400 square
       # feet in area" and 100 sq ft a townhouse, which for four is the same
-      # 400. 431-7.1 B(1) lets it sit off the site within 1,300 feet's walk;
-      # nothing here holds land the developer controls off the lot, so it is
-      # read on the lot -- the stricter reading.
-      value: 400
-      cite: Washington County CDC 431-7.1 B(1) and 431-7.2 B(1)-(3), common open space for four or more dwellings, at least 400 sq ft
+      # 400. 431-7.1 B(1) lets it sit off the site within 1,300 feet's walk,
+      # without crossing an arterial, and Steph ruled 2026-10-22 that this
+      # is good enough to pass (rulings.yaml
+      # 2026-10-22-washco-open-space-off-site): the lot owes none of it.
+      exempt: true
+      cite: Washington County CDC 431-7.1 B(1), common open space may be located within 1,300 feet walking distance of the development
       quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L891-L896,L920-L926,L930-L932"
     open_space_min_dimension_ft:
-      # 431-7.2 B(2): "able to encompass a square area at least 20 feet wide
-      # and 20 feet long".
-      value: 20
-      cite: Washington County CDC 431-7.2 B(2), common open space encompasses a 20 by 20 ft square
-      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L924-L926"
+      # 431-7.2 B(2)'s 20 by 20 ft square belongs to the same off-site space.
+      exempt: true
+      cite: Washington County CDC 431-7.1 B(1) and 431-7.2 B(2), the 20 by 20 ft square may sit off the site
+      quote: "or/washington/_unincorporated/cdc.431.transit-design.txt#L891-L896,L924-L926"
     building_frontage_min_pct:
       # FOLLOWUPS 109 chunk 3. 431-5.1 B(1): in TO:BUS along a pedestrian
       # street (any street but a freeway, alley or parking drive, 431-3.8)

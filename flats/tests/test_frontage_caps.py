@@ -359,8 +359,8 @@ SANDY = (7_749_541.0, 635_766.0)
 TROUTDALE = (7_717_882.0, 688_269.0)
 
 
-def _screen(corpus: RuleSet, jurisdiction: str, zone: str, at, w: float, d: float, kind: str):
-    from flats.ingest.quadfit import lot_from_row, screen_lot
+def _screen(corpus: RuleSet, jurisdiction: str, zone: str, at, w: float, d: float, kind: str, plat: bool = False):
+    from flats.ingest.quadfit import _screen_plat, lot_from_row, screen_lot
     from flats.tests.test_fire import bridge_row
 
     x0, y0 = at
@@ -385,7 +385,7 @@ def _screen(corpus: RuleSet, jurisdiction: str, zone: str, at, w: float, d: floa
         lot_wkb=shapely.to_wkb(box(x0, y0, x0 + w, y0 + d)),
     )
     lot = lot_from_row(row, corpus.layers)
-    (s,) = screen_lot(
+    (s,) = (_screen_plat if plat else screen_lot)(
         lot, [DESIGN], rules=corpus, policy=slack.load_policy(), relief=relief.load_policy(), step_deg=30.0
     )
     return s
@@ -528,12 +528,17 @@ def test_a_lot_round_a_block_end_keeps_three_streets() -> None:
 
 def test_sandy_holds_a_through_lots_far_street_to_half(corpus: RuleSet) -> None:
     # A 70 ft through lot: the court behind the building faces the far
-    # street across more than half of it.
-    s = _screen(corpus, "sandy", "R-2", SANDY, 70.0, 200.0, "through")
+    # street across more than half of it. The cap binds the apartment
+    # building on the one lot; four row houses on their own lots are not
+    # multi-family (Steph 2026-10-22), so the townhouse form escapes it.
+    s = _screen(corpus, "sandy", "R-2", SANDY, 70.0, 200.0, "through", plat=True)
     share = check(s.screening, "parking_frontage_share")
     assert share is not None and share.threshold == 50.0
     assert share.observed == pytest.approx(s.facts.parking_frontage_share_pct)
     assert share.verdict is not Verdict.passes
+    kept = _screen(corpus, "sandy", "R-2", SANDY, 70.0, 200.0, "through")
+    assert check(kept.screening, "parking_frontage_share") is None
+    assert any(f.code == "LAND-DIVISION" for f in kept.screening.flags)
 
 
 def test_troutdale_measures_the_side_street_on_a_corner_lot(corpus: RuleSet) -> None:

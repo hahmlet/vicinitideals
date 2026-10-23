@@ -932,9 +932,11 @@ zones:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
       # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
-      # part of a structure containing dwelling units", so the conservative
-      # reading is the whole building; a townhouse read as one 500 sq ft
-      # residence a unit would clear it, and that reading is Steph's to make.
+      # part of a structure containing dwelling units", and Steph read it
+      # 2026-10-22: each dwelling unit, a quadplex's as much as a
+      # townhouse's, is a residence (rulings.yaml
+      # 2026-10-22-oregon-city-residence-per-unit). The screen measures the
+      # cap on the ground floor a unit.
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
@@ -1084,9 +1086,11 @@ zones:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
       # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
-      # part of a structure containing dwelling units", so the conservative
-      # reading is the whole building; a townhouse read as one 500 sq ft
-      # residence a unit would clear it, and that reading is Steph's to make.
+      # part of a structure containing dwelling units", and Steph read it
+      # 2026-10-22: each dwelling unit, a quadplex's as much as a
+      # townhouse's, is a residence (rulings.yaml
+      # 2026-10-22-oregon-city-residence-per-unit). The screen measures the
+      # cap on the ground floor a unit.
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
@@ -1229,9 +1233,11 @@ zones:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
       # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
-      # part of a structure containing dwelling units", so the conservative
-      # reading is the whole building; a townhouse read as one 500 sq ft
-      # residence a unit would clear it, and that reading is Steph's to make.
+      # part of a structure containing dwelling units", and Steph read it
+      # 2026-10-22: each dwelling unit, a quadplex's as much as a
+      # townhouse's, is a residence (rulings.yaml
+      # 2026-10-22-oregon-city-residence-per-unit). The screen measures the
+      # cap on the ground floor a unit.
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
@@ -1362,9 +1368,11 @@ zones:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
       # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
-      # part of a structure containing dwelling units", so the conservative
-      # reading is the whole building; a townhouse read as one 500 sq ft
-      # residence a unit would clear it, and that reading is Steph's to make.
+      # part of a structure containing dwelling units", and Steph read it
+      # 2026-10-22: each dwelling unit, a quadplex's as much as a
+      # townhouse's, is a residence (rulings.yaml
+      # 2026-10-22-oregon-city-residence-per-unit). The screen measures the
+      # cap on the ground floor a unit.
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
@@ -1528,9 +1536,11 @@ zones:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
       # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
-      # part of a structure containing dwelling units", so the conservative
-      # reading is the whole building; a townhouse read as one 500 sq ft
-      # residence a unit would clear it, and that reading is Steph's to make.
+      # part of a structure containing dwelling units", and Steph read it
+      # 2026-10-22: each dwelling unit, a quadplex's as much as a
+      # townhouse's, is a residence (rulings.yaml
+      # 2026-10-22-oregon-city-residence-per-unit). The screen measures the
+      # cap on the ground floor a unit.
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"
@@ -1771,9 +1781,11 @@ zones:
       # FOLLOWUPS 109 chunk 3. Only the two concept plan chapters cap the
       # footprint under one roofline, and each reaches only its mapped area
       # (`drawn_areas` below). "Residence" (17.04.1021) is "a structure or
-      # part of a structure containing dwelling units", so the conservative
-      # reading is the whole building; a townhouse read as one 500 sq ft
-      # residence a unit would clear it, and that reading is Steph's to make.
+      # part of a structure containing dwelling units", and Steph read it
+      # 2026-10-22: each dwelling unit, a quadplex's as much as a
+      # townhouse's, is a residence (rulings.yaml
+      # 2026-10-22-oregon-city-residence-per-unit). The screen measures the
+      # cap on the ground floor a unit.
       exempt: true
       cite: OCMC 17.21.020 and 17.22.020 (applicability, the concept plan areas only)
       quote: "or/clackamas/oregon-city/17.zoning.txt#L6129-L6134,L6339-L6345"

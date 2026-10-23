@@ -1297,11 +1297,13 @@ def _checks(
         )
     # One mass under one roofline (Oregon City 17.21.040 / 17.22.040: a
     # footprint over 1,200 sq ft must break into secondary masses of 600 or
-    # less under separate roof-lines). The pod is one box, so its whole
-    # ground floor is the mass.
+    # less under separate roof-lines). The rule binds a "residence", and
+    # Steph read 17.04.1021's "part of a structure" 2026-10-22: each dwelling
+    # unit is one (rulings.yaml 2026-10-22-oregon-city-residence-per-unit),
+    # so the mass is the pod's ground floor a unit.
     check(
         "mass_footprint",
-        design.ground_sqft,
+        design.ground_sqft / max(design.units, 1),
         rules.get("max_mass_footprint_sqft"),
         is_maximum=True,
     )

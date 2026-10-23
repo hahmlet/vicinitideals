@@ -155,7 +155,13 @@ pytestmark = pytest.mark.unit
 # 108 -> 112 numeric on 2026-10-21 (FOLLOWUPS 96, Steph feedback 14): Gresham Table 4.1130
 # prints "Depth, interior lot: 70 feet" and no corner depth; DRL-1, DRL-2, DCC and DTM
 # exempt a corner lot, cited on the width and depth rows that name interior and corner.
-EXPECTED = {"stated": 435, "numeric": 131, "marker": 0, "dash": 2, "silent": 3}
+EXPECTED = {"stated": 435, "numeric": 137, "marker": 0, "dash": 2, "silent": 7}
+# 131 -> 137 numeric and 3 -> 7 silent on 2026-10-22, Steph's rulings on the chunk 3 questions.
+# The six numeric are Washington County 431-7's open space and its 20 ft square in TO:R24-40,
+# TO:R40-80 and TO:BUS, taken off the site within 1,300 ft (the quote holds the 400 and the
+# 1,300). The four silent are Sandy's row-house path off 17.90.160 (three roofs and the parking
+# share): the quote is 17.10's two building-type definitions, which say no "exempt" -- the
+# exemption is the ruling that a row house is not a multi-family dwelling.
 # 427 -> 435 stated, 112 -> 124 numeric and 2 -> 3 silent on 2026-10-22 (design districts
 # chunk 3): a district rule is a variant on a base the rest of the zone does not carry.
 # Oregon City's concept-plan massing cap and Park Place roof pitch are exempt outside the

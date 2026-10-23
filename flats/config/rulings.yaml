@@ -2025,3 +2025,76 @@
     - flats/config/jurisdictions/or/multnomah/gresham.yaml
     - flats/geom/street_class.py
     - flats/config/pipeline.yaml
+
+- id: 2026-10-22-oregon-city-residence-per-unit
+  kind: ruling
+  date: 2026-10-22
+  scope:
+    county: clackamas
+    city: oregon-city
+  question: >-
+    Oregon City Park Place and South End concept plans (OCMC 17.21.040.A,
+    17.22.040.A): residences with footprints over 1,200 sq ft must break
+    into secondary masses. Is the residence each townhome, or the whole
+    four-unit building?
+  ruling: >-
+    "It says 'part of a structure' is also a 'residence'. So each individual
+    apartment/quadplex is a 'residence'"
+  effect: >-
+    OCMC 17.04.1021 Residence, "a structure or part of a structure
+    containing dwelling units": each dwelling unit is a residence, a
+    quadplex's as much as a townhouse's. The 1,200 sq ft cap is measured on
+    the pod's ground floor a unit (about 500 sq ft), which clears it. Park
+    Place's 5:12 roof still turns the flat-roofed pod RED there. Affects the
+    21 South End lots held by chunk 3 (docs/FOLLOWUPS.md item 109).
+  source: Steph 2026-10-22 (chat), docs/FOLLOWUPS.md item 109
+  encoded_in:
+    - flats/score/screen.py
+    - flats/config/jurisdictions/or/clackamas/oregon-city.yaml
+
+- id: 2026-10-22-sandy-row-houses-not-multi-family
+  kind: ruling
+  date: 2026-10-22
+  scope:
+    county: clackamas
+    city: sandy
+  question: >-
+    Sandy SDC 17.90.160 (additional requirements for multi-family
+    developments, including the 3:12 pitched roof): does it cover four
+    townhomes, each on its own lot?
+  ruling: >-
+    "not covered"
+  effect: >-
+    SDC 17.10 lists the row house ("each unit located on its own separate
+    lot") as a building type apart from the multi-family dwelling, and
+    17.90.160 binds multi-family developments. On the townhouse path
+    (unit_lots) neither its pitched roof (A.1) nor its parking share of the
+    street frontage (F) applies; both still bind four units on one lot.
+    Affects the 32 Sandy lots turned red by chunk 3, and the parking cap
+    read on both paths since FOLLOWUPS 84.
+  source: Steph 2026-10-22 (chat), docs/FOLLOWUPS.md item 109
+  encoded_in:
+    - flats/config/jurisdictions/or/clackamas/sandy.yaml
+
+- id: 2026-10-22-washco-open-space-off-site
+  kind: ruling
+  date: 2026-10-22
+  scope:
+    county: washington
+    city: _unincorporated
+  question: >-
+    Washington County transit oriented districts (CDC 431-7): the 400 sq ft
+    common open space with a 20 by 20 ft square may sit off the site within
+    1,300 feet's walk. Does that pass, or must it fit on the lot?
+  ruling: >-
+    "We aren't going to put it on the roof. This is good enough to say 'yes'
+    even if we have to go 1300 ft away. We aren't going to set up a test for
+    that for 11 lots."
+  effect: >-
+    The common open space is not charged on the lot in TO:R24-40, TO:R40-80
+    and TO:BUS: 431-7.1 B(1)'s off-site allowance passes, with no test of
+    land nearby. The flat-roof allowance of 431-3.4 is not used. Affects the
+    11 lots held yellow by chunk 3.
+  source: Steph 2026-10-22 (chat), docs/FOLLOWUPS.md item 109
+  encoded_in:
+    - flats/config/jurisdictions/or/washington/_unincorporated.yaml

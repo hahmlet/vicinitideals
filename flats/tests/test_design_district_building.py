@@ -124,12 +124,16 @@ def test_a_pitched_pod_clears_the_rule() -> None:
         Design(**{**body, "id": "bad", "roof_pitch_in_12": -1})
 
 
-def test_the_massing_cap_turns_the_pod_red_and_a_bigger_cap_does_not() -> None:
+def test_the_massing_cap_is_measured_a_unit() -> None:
+    # Steph 2026-10-22: each dwelling unit is a "residence" (OCMC 17.04.1021),
+    # so the 1,200 sq ft cap reads a unit's ground floor, about 504 sq ft.
     got = run(facts(), rules(max_mass_footprint_sqft=1200))
-    assert got.colour is Colour.red
     c = check(got, "mass_footprint")
-    assert c is not None and c.observed == 56 * 36 and c.slack < 0
-    assert run(facts(), rules(max_mass_footprint_sqft=2500)).colour is Colour.green
+    assert c is not None and c.observed == 56 * 36 / 4 and c.slack > 0
+    assert got.colour is Colour.green
+    smaller = run(facts(), rules(max_mass_footprint_sqft=400))
+    assert smaller.colour is Colour.red
+    assert check(smaller, "mass_footprint").slack < 0
 
 
 # --- the Oregon City areas ------------------------------------------------------
@@ -260,10 +264,12 @@ def test_wilsonville_old_town_takes_the_design_book_height(corpus) -> None:
 
 
 @pytest.mark.parametrize("zone", ["TO:R24-40", "TO:R40-80", "TO:BUS"])
-def test_washington_county_transit_districts_hold_431_open_space(corpus, zone) -> None:
+def test_washington_county_transit_districts_take_431_open_space_off_site(corpus, zone) -> None:
+    # 431-7.1 B(1) lets the common open space sit within 1,300 ft's walk,
+    # and Steph ruled 2026-10-22 that passes: the lot owes none of it.
     got = RuleSet(corpus).resolve("or/washington/_unincorporated", zone)
-    assert got.get("open_space_min_sqft") == 400
-    assert got.get("open_space_min_dimension_ft") == 20
+    assert got.get("open_space_min_sqft") is None
+    assert got.get("open_space_min_dimension_ft") is None
 
 
 def test_washington_county_transit_business_holds_431_frontage(corpus) -> None:
