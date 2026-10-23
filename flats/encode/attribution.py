@@ -82,11 +82,15 @@ _SECTION = re.compile(r"(?<![\d.])(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)(?![\d])"
 #: sat at the margin with nothing after it and read as a heading for every
 #: row below it -- nine FAR and parking values reported as sitting in section
 #: "0.45" or "0.30". No codifier numbers a section zero-point-anything.
+#: Nor can a number be a table's or a figure's name: Hillsboro's wrapped
+#: titles leave "12.22.220-1." and "12.61.400-A." at the margin, and a dash
+#: followed by a digit or a lone capital is a name, not a title (27 values
+#: re-read 2026-10-22, none lost).
 _HEADING = re.compile(
     r"^[ 	]{0,8}(?:"
     r"Section\s+(?P<s>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.\s*(?:[A-Z—-])"
-    r"|(?:§|�)\s*(?P<m>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.?\s*(?:[A-Z§—-]|$)"
-    r"|(?!0\.)(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—-]|$)"
+    r"|(?:§|�)\s*(?P<m>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.?\s*(?:[A-Z§—]|-(?!\d)|$)"
+    r"|(?!0\.)(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—]|-(?!\d|[A-Z](?:[.:)]|\s|$))|$)"
     r"|(?P<t>\d{1,3})\. (?P<u>\d{2,4}\.\d{1,4})\s+[A-Z]"
     r")"
 )
@@ -118,8 +122,40 @@ def _same_section(a: str, b: str) -> bool:
     return a == b or a.startswith(b + ".") or b.startswith(a + ".")
 
 
-def _heading_number(line: str) -> str:
-    found = _HEADING.match(line)
+#: The word a cross-reference is introduced by, at the end of the line above
+#: it. Beaverton's tables wrap "See 20.10.16" across two lines, so the number
+#: lands alone at the margin and read as a heading for every row below it --
+#: 75 values reported as sitting in 20.10.16, 60.05.15 or 60.35.10. A
+#: heading follows the end of a sentence, a history note or a blank line,
+#: never "See" or "standards of".
+_LEADS_IN = re.compile(
+    r"(?:\bsee|\brefer to|\bof|\bin|\bper|\bunder|\band|\bor|\bto|\bby|\bwith|"
+    r"\bsections?|\bchapters?|\bsubsections?)\s*$",
+    re.IGNORECASE,
+)
+
+
+def _led_in(lines: Sequence[str], n: int) -> bool:
+    """Whether the line above ``n`` (blank lines skipped) introduces a reference."""
+    for above in range(n - 1, max(n - 3, -1), -1):
+        if lines[above].strip():
+            return _LEADS_IN.search(lines[above].rstrip()) is not None
+    return False
+
+
+def _marker(lines: Sequence[str], n: int) -> re.Match[str] | None:
+    """The heading match at line ``n``, or None where it is not one."""
+    found = _HEADING.match(lines[n])
+    if not found:
+        return None
+    alone = found.group("n") and lines[n].strip() == found.group("n")
+    if (alone or found.group("s")) and _led_in(lines, n):
+        return None
+    return found
+
+
+def _heading_number(line: str, lines: Sequence[str] = (), n: int = -1) -> str:
+    found = _marker(lines, n) if lines else _HEADING.match(line)
     if not found:
         return ""
     return (
@@ -130,8 +166,8 @@ def _heading_number(line: str) -> str:
     )
 
 
-def _headings(lines: Iterable[str]) -> set[str]:
-    return {n for line in lines if (n := _heading_number(line))}
+def _headings(lines: Sequence[str]) -> set[str]:
+    return {h for n, line in enumerate(lines) if (h := _heading_number(line, lines, n))}
 
 
 def _span_ranges(quote: str) -> tuple[tuple[int, int], ...]:
@@ -190,7 +226,7 @@ def classify(
     for first, last in _span_ranges(item.quote):
         covered.update(range(first - 1, last))
     for n, line in enumerate(lines):
-        if n not in covered and (number := _heading_number(line)):
+        if n not in covered and (number := _heading_number(line, lines, n)):
             outside.add(number)
     if any(_same_section(one, h) for one in claims for h in outside):
         return HEADING_SAME_FILE
@@ -221,6 +257,15 @@ class Attribution:
     def probably_harmless(self) -> bool:
         """Whether the claimed section is printed in the cited lines themselves."""
         return self.kind == HEADER_OR_XREF
+
+    @property
+    def unread(self) -> bool:
+        """Whether the citation names a section and none was read off the page.
+
+        Such a value counts as agreeing -- there is nothing to disagree with --
+        so without this count the check looks complete where it never looked.
+        """
+        return bool(self.claimed) and not self.found
 
     @property
     def agrees(self) -> bool:
@@ -262,6 +307,53 @@ def claimed_sections(cite: str) -> tuple[str, ...]:
     return tuple(found.group("n") for found in _SECTION.finditer(cite or ""))
 
 
+#: What a citation says just before a number it names as a table: "Table
+#: 18.280.1", or a later entry of a list, "Tables 4.0120/4.0130/4.0131".
+_TABLE_LEAD = re.compile(r"Tables?\s+(?:[\d.]+(?:-\d+)?\s*(?:/|,|and|&)\s*)*$")
+
+
+def _table_title(lines: Sequence[str], table: str, near: int) -> int:
+    """The 1-based line a table's title is printed on, nearest above ``near``.
+
+    A title is a line that opens with "Table <number>" and not a longer
+    number; a codifier that reprints the title on every page of a long table
+    leaves several, and the one above the quote is the table the quote is in.
+    0 where the document prints no such title.
+    """
+    title = re.compile(r"^\s*Table\s+" + re.escape(table) + r"(?![\d.]\d)")
+    found = [n + 1 for n, line in enumerate(lines) if title.match(line)]
+    above = [n for n in found if n <= near]
+    return above[-1] if above else (found[0] if found else 0)
+
+
+def resolved_sections(cite: str, lines: Sequence[str], near: int) -> tuple[str, ...]:
+    """The sections a citation names, a table read as the section it sits in.
+
+    Tigard numbers its tables by chapter -- "Table 18.280.1" is printed inside
+    18.280.040 -- so the table number is not a section at all, and 54 rowhouse
+    values were reported as sitting somewhere their citation never named.
+    Hillsboro and Beaverton name a table after its section ("Table
+    12.22.250-1", "Table 20.10.15"), and the same reading gives the same
+    section back. A table whose title the document does not print stays the
+    number it was, so a citation to a table that is not there still disagrees.
+    """
+    out: list[str] = []
+    for found in _SECTION.finditer(cite or ""):
+        number = found.group("n")
+        if _TABLE_LEAD.search(cite[: found.start()]):
+            suffix = re.match(r"-\d+", cite[found.end() :])
+            table = number + (suffix.group(0) if suffix else "")
+            at = _table_title(lines, table, near)
+            if at and (section := section_at(lines, at)) and section != number:
+                # Both stay claimed: Oregon City prints "Table 17.08.040"
+                # above the 17.08.040 heading itself, so the title reads as
+                # sitting in 17.08.020 and the table's own number is the
+                # section it is in.
+                out.append(section)
+        out.append(number)
+    return tuple(out)
+
+
 def claimed_section(cite: str) -> str:
     """The first section a citation names, or "" if it names none."""
     found = claimed_sections(cite)
@@ -300,15 +392,21 @@ def section_at(lines: Sequence[str], line: int) -> str:
     scan goes on to the nearest spelled-out heading within reach, and a
     heading that opens a LATER section than the furniture names is the one
     the text sits under. An earlier heading is what the furniture already
-    said, and the furniture wins as before.
+    said, and the furniture wins as before. So does a heading of another
+    chapter: "Section 12.40.110." printed in Hillsboro's 12.24 is a use
+    table's cross-reference, and a heading only outranks the page when it
+    shares the chapter the page is in.
     """
     furniture = ""
     for n in range(min(line, len(lines)) - 1, max(line - _LOOK_BACK, 0) - 1, -1):
-        found = _HEADING.match(lines[n])
+        found = _marker(lines, n)
         if not found:
             continue
         if spelled := found.group("s"):
-            if furniture and _order(spelled) <= _order(furniture):
+            if furniture and (
+                _order(spelled) <= _order(furniture)
+                or not furniture.startswith(spelled.rpartition(".")[0] + ".")
+            ):
                 return furniture
             return spelled
         if not furniture:
@@ -372,7 +470,7 @@ def check(
             zone=zone,
             field=field,
             quote=quote,
-            claimed=" ".join(claimed_sections(value.prov.cite or "")),
+            claimed=" ".join(resolved_sections(value.prov.cite or "", lines, starts[0])),
             found=" ".join(here),
         )
         out.append(replace(item, kind=classify(item, lines, corpus)))
@@ -406,12 +504,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     store = ProvenanceStore()
     corpus = CorpusHeadings(store)
     checked = 0
+    unread = 0
     disagreeing: list[Attribution] = []
     for layer_id, layer in sorted(load_rules(strict=False).items()):
         if args.layer and not layer_id.startswith(args.layer):
             continue
         for item in check(layer, store, corpus):
             checked += 1
+            unread += item.unread
             if item.agrees:
                 if args.verbose:
                     print(f"  ok  {item.line()}")
@@ -423,6 +523,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     print(f"\n{len(disagreeing)} of {checked} value(s) cite a section their text is not in")
     print(f"  {real} to review (heading elsewhere or unlocated)")
     print(f"  {counts[HEADER_OR_XREF]} probably harmless (section printed in the cited lines)")
+    print(f"  {unread} not checked: a section is cited but none could be read above the lines")
     return 1 if disagreeing else 0
 
 

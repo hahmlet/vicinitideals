@@ -397,8 +397,10 @@ def snapshot(layers: Mapping[str, Layer], store: ProvenanceStore) -> dict:
     for layer_id in sorted(layers):
         layer = layers[layer_id]
         items = gaps(layer, read_layer(layer, store), printed_in(layer, store))
-        wrong = [one for one in attribution_check(layer, store, corpus) if not one.agrees]
+        checked = attribution_check(layer, store, corpus)
+        wrong = [one for one in checked if not one.agrees]
         out["layers"][layer_id] = {
+            "section_unread": sum(one.unread for one in checked),
             "misattributed": [
                 {
                     "zone": one.zone,
@@ -470,6 +472,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         f"  {harmless} more probably harmless: the named section is printed in the "
         f"cited lines (running header or cross-reference)"
     )
+    unread = sum(one.get("section_unread", 0) for one in built["layers"].values())
+    print(f"  {unread} not checked: a section is cited but none could be read above the quoted lines")
     return 0
 
 

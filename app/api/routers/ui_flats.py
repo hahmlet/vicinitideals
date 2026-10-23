@@ -79,7 +79,7 @@ from flats.encode.attribution import (
     HEADING_OTHER_FILE,
     HEADING_SAME_FILE,
     UNLOCATED,
-    claimed_sections,
+    resolved_sections,
     section_at,
 )
 from flats.encode.find import passages
@@ -789,7 +789,8 @@ def _misattributed(cite: str, quote: str) -> dict[str, str] | None:
     lines = _document_lines(quote.partition("#L")[0]) if span else ()
     if not lines:
         return None
-    claimed = claimed_sections(cite or "")
+    # A table is read as the section it is printed in, as the ledger reads it.
+    claimed = resolved_sections(cite or "", lines, span[0])
     found = section_at(lines, span[0])
     if not claimed or not found:
         return None

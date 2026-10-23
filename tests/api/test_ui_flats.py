@@ -1251,6 +1251,21 @@ async def test_a_citation_naming_several_tables_is_not_flagged_for_the_wrong_one
     assert found is None or found["found"] not in cite
 
 
+async def test_a_table_numbered_by_chapter_is_read_as_the_section_it_is_printed_in():
+    """Tigard's "Table 18.280.1" is printed inside 18.280.040; the review page
+    flagged every rowhouse value citing it until the table was read for the
+    section it sits in. A table the document does not print still disagrees."""
+    from app.api.routers import ui_flats as ui
+
+    quote = "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78"
+
+    assert ui._misattributed("Tigard CDC Table 18.280.1, rowhouse maximum height", quote) is None
+    assert ui._misattributed("Tigard CDC Table 18.990.1", quote) == {
+        "claimed": "18.990.1",
+        "found": "18.280.040",
+    }
+
+
 async def test_the_holes_have_a_page_of_their_own(
     client: AsyncClient, session: AsyncSession
 ):

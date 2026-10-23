@@ -290,3 +290,87 @@ def test_a_heading_split_after_its_title_number_still_reads():
     # what they were: not headings.
     toc = ["Sections:", "17. 32.010", "text"]
     assert section_at(toc, 3) == ""
+
+
+def test_a_table_name_is_not_a_heading():
+    """Hillsboro names its tables after their section and the PDF wraps the
+    title: "Table 12.22.220-1." lands at the margin as "12.22.220-1." and read
+    as a heading for every row below it -- 27 values reported as sitting in a
+    section their own table title contradicts. A heading's number is followed
+    by its title; a table's is followed by "-1". "Figure 12.61.400-A." is the
+    same with a letter.
+    """
+    from flats.encode.attribution import section_at
+
+    page = ["12.22.250  Development Standards.", "Table 12.22.250-1:", "12.22.220-1.", "Maximum Density 21.25 du/na"]
+    assert section_at(page, 4) == "12.22.250"
+    figure = ["12.23.360  Development Standards.", "locations shown on Figure", "12.61.400-A. Higher densities", "Lot width"]
+    assert section_at(figure, 4) == "12.23.360"
+    assert section_at(["4.113 - Title", "text"], 2) == "4.113"
+
+
+def test_a_number_led_in_by_see_is_a_cross_reference():
+    """Beaverton's tables wrap "See 20.10.16" across two lines, so the number
+    stands alone at the margin. Read as a heading it put 75 rows of Table
+    20.10.15 in 20.10.16, 60.05.15 or 60.35.10. A heading follows the end of
+    a sentence or a blank line, never "See"; page furniture interrupts a
+    sentence anywhere, so it has its title beside it and is not affected.
+    Hillsboro writes a cross-reference the long way, "definition of
+    half-story in" / "Section 12.01.500. Maximum height for cottage", and the
+    same lead-in tells it apart from a heading.
+    """
+    from flats.encode.attribution import section_at
+
+    table = [
+        "20.10.15 Commercial Site Development Standards",
+        "B. Maximum Floor Area Ratio10 3.0 See",
+        "20.10.16",
+        "See",
+        "20.10.16",
+        "F.1. Building Height - Maximum 40 None None None Feet",
+    ]
+    assert section_at(table, 6) == "20.10.15"
+    furniture = ["12.80.030 Title.", "standards for public systems; and", " 12.80.040APPLICATIONS", "text"]
+    assert section_at(furniture, 4) == "12.80.040"
+    spelled = ["12.21.150  Development Standards.", "see also definition of half-story in", "Section 12.01.500. Maximum height for cottage", "Lot coverage"]
+    assert section_at(spelled, 4) == "12.21.150"
+
+
+def test_a_spelled_out_heading_from_another_chapter_does_not_overrule_the_page():
+    """The lag rule lets a later spelled-out heading beat the running header,
+    because Municode's furniture can name the previous section. A heading of
+    another chapter printed in this one is a cross-reference in a use table:
+    "Section 12.40.110. Minor assembly facilities subject to" sits in
+    Hillsboro's 12.24, and 20 values below it read as sitting in 12.40.110.
+    """
+    from flats.encode.attribution import section_at
+
+    page = ["Section 12.40.110. Minor assembly facilities subject to", "P", "12.24.760  Development Standards.", "Table 12.24.760-1:"]
+    assert section_at(page, 4) == "12.24.760"
+
+
+def test_a_table_cited_by_number_is_the_section_it_is_printed_in():
+    """Tigard numbers tables by chapter: "Table 18.280.1" is printed inside
+    18.280.040, and 54 rowhouse values citing it were reported as sitting in
+    a section their citation never named. The table's title is found in the
+    document and read as the section it sits in; a table the document does
+    not print stays the number it was, so it still disagrees.
+    """
+    from flats.encode.attribution import resolved_sections
+
+    lines = ["18.280.040 Development Standards", "Table 18.280.1 Development Standards for Rowhouses", "Maximum Height 35"]
+    assert resolved_sections("Tigard CDC Table 18.280.1, rowhouse maximum height", lines, 3) == ("18.280.040", "18.280.1")
+    assert resolved_sections("Tigard CDC Table 18.999.1", lines, 3) == ("18.999.1",)
+    assert resolved_sections("Tigard CDC 18.280.1", lines, 3) == ("18.280.1",)
+    hillsboro = ["12.22.250  Development Standards.", "Table 12.22.250-1:", "Maximum Density"]
+    assert resolved_sections("Hillsboro CDC Table 12.22.250-1, Maximum Density", hillsboro, 3) == ("12.22.250",)
+
+
+def test_a_cited_section_with_none_read_is_counted_as_not_checked():
+    """A value whose page shows no heading agrees by default -- there is
+    nothing to disagree with -- so the check looked complete over 1,533 values
+    it never compared (2026-10-22). They are counted, not hidden."""
+    unread = Attribution(layer="x", zone="Z", field="f", quote="d#L1", claimed="4.113", found="")
+    assert unread.agrees and unread.unread
+    assert not Attribution(layer="x", zone="Z", field="f", quote="d#L1", claimed="", found="").unread
+    assert not Attribution(layer="x", zone="Z", field="f", quote="d#L1", claimed="4.113", found="4.113").unread
