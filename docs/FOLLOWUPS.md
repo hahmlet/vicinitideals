@@ -1349,7 +1349,7 @@ read when the weekly full re-screen lands.
 
 ## 2. Waiting on Steph
 
-73. [Steph] [scan: NO (citations move, answers must not)] **The code library as a public, structured repository
+73. [Steph] [OFFERED 2026-10-23 on ~50% of a week's allowance: CORE ONLY -- (1) pilot one mid-size city end to end, (2) section tree + citation translation for every city, gate = every citation's quoted words still found in the section it names, page-check boxes and signatures carried where words match, old line files kept as the proof copy; worktree; start after the weekly ~10-26 settles, code-text edits frozen per city while it converts. DEFERRED: readability cleanup, tables by row/column, the public GitHub repo + licence notice. Waits on Steph's go] [scan: NO (citations move, answers must not)] **The code library as a public, structured repository
    (Steph 2026-10-10, thinking only -- "Don't begin work"). Not started.** Today: 397 text files,
    23 MB, 25 jurisdictions under flats/provenance/docs, each with .meta.json (url, retrieved,
    sha256, extractor) and .pages.json; rules cite them 6,668 times by LINE
