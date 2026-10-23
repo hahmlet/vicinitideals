@@ -1075,6 +1075,26 @@ def test_a_derived_number_is_asked_as_the_page_prints_it():
     assert card["placed"] in ("boxed", "column")
 
 
+async def test_a_ratio_is_asked_as_the_table_prints_it_and_never_as_calculated(client, session):
+    """Steph 2026-10-22: Gresham row C prints the lot width/depth ratio as
+    "0.5 : 1"; we hold it as depth at most 2 times width. "I want the card to
+    show the value in the table, I don't want to see the calculated number at
+    all." The card and its list of other numbers say 0.5 : 1, never 2."""
+    layer = check._layers()[LAYER]
+    rows = {(r["zone"], r["field"], r["when"]): r for r in check._rows(layer, set())}
+    row = rows[("CMF", "max_lot_depth_ratio", "")]
+    assert (row["value"], row["printed"]) == (2, 0.5)
+    assert check._card(layer, check._Ask(row, "value"))["printed"] == "0.5 : 1"
+    assert [v["value"] for v in check._variants(layer, "CMF", "max_lot_depth_ratio")][0] == "0.5 : 1"
+
+    await _login(client, session)
+    response = await client.get(f"/flats/check/{LAYER}?zone=CMF&field=max_lot_depth_ratio&when=")
+
+    assert response.status_code == 200
+    assert "Does the page say <strong" in response.text and "0.5 : 1</strong>" in response.text
+    assert "data-derived" not in response.text
+
+
 def test_a_number_printed_as_held_says_nothing_about_derivation():
     layer = check._layers()[LAYER]
     row = next(
@@ -1176,7 +1196,11 @@ def test_a_figure_printed_in_another_unit_is_asked_in_that_unit():
 
     portland = check._layers()["or/multnomah/portland"]
     ir = next(r for r in check._rows(portland, set()) if (r["zone"], r["field"], r["when"]) == ("IR", "setback_side_ft", ""))
-    assert "printed" not in check._card(portland, check._Ask(ir, "value"))
+    # Since 2026-10-22 ("I don't want to see the calculated number at all")
+    # a figure measured off the building is asked as the table states it.
+    assert check._card(portland, check._Ask(ir, "value"))["printed"] == (
+        "1 ft for every 2 ft of building height, not less than 10 ft"
+    )
 
 
 def test_a_note_on_a_tables_title_is_asked_of_every_number_in_one_run(monkeypatch):

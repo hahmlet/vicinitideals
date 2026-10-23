@@ -277,19 +277,28 @@ def test_the_answers_stay_put_from_card_to_card(logged_in_page: Page, base_url: 
     assert after["y"] + after["height"] <= 900, "the answers are on screen"
 
 
-def test_a_derived_number_is_asked_as_printed_and_says_what_we_hold(
+def test_a_derived_number_is_asked_as_printed_and_never_shows_the_calculation(
     logged_in_page: Page, base_url: str
 ) -> None:
     """Gresham LDR-5's rear setback is held as 20 ft: the table's 15 ft plus
     the step-back. Steph answered "differs" to "does the page say 20 ft?"
-    (2026-10-20); the card asks about the 15 and says where the 20 comes from."""
+    (2026-10-20); the card asks about the 15. Since 2026-10-22 ("I don't want
+    to see the calculated number at all") the 20 is not shown."""
     page = logged_in_page
     page.goto(f"{base_url}/flats/check/{LAYER}?zone=LDR-5&field=setback_rear_ft&when=")
 
     card = page.locator("#check-card")
     expect(card).to_contain_text("Does the page say 15 ft")
-    expect(card.locator("[data-derived]")).to_contain_text("20 ft")
-    expect(card.locator("[data-derived]")).to_contain_text("step-back")
+    expect(card.locator("[data-derived]")).to_have_count(0)
+
+
+def test_a_ratio_is_asked_as_the_table_prints_it(logged_in_page: Page, base_url: str) -> None:
+    """Gresham row C prints "0.5 : 1"; the card asks that, not the 2 we work out."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/check/{LAYER}?zone=CMF&field=max_lot_depth_ratio&when=")
+
+    card = page.locator("#check-card")
+    expect(card).to_contain_text("Does the page say 0.5 : 1")
 
 
 def test_a_number_read_off_another_zones_page_says_why(logged_in_page: Page, base_url: str) -> None:

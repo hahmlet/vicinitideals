@@ -223,6 +223,7 @@ _DERIVED = (
     ("stories", "the page states stories, and we hold feet at the city's height per story"),
     ("before_acre", "the page states it per the city's own size of acre, and we hold it per standard acre"),
     ("before_story", "the page states it for one story plus more per story, and we hold it for our building"),
+    ("width_to_depth", "the page states width to depth, and we hold depth to width"),
 )
 _DERIVED_VARIANT = (
     ("before_step_back", _DERIVED[9][1]),
@@ -283,8 +284,10 @@ _PRINTED_AS: dict[str, str | None] = {
     "from_top_degrees": "{n} degrees",
     "reduce_pct": "{n}% less",
     "pct_of_lot_width": "{n}% of the lot's width",
-    "times": None,
-    "per_height_ft": None,
+    "width_to_depth": "{n} : 1",
+    # Two figures each, said by :func:`_printed_said` itself.
+    "times": "",
+    "per_height_ft": "",
 }
 
 
@@ -296,6 +299,17 @@ def _printed_said(layer: Layer, row: dict[str, Any], printed: Any) -> str:
     form = _PRINTED_AS.get(attr, "")
     if form is None:
         return ""
+    number = _number(layer, row["zone"], row["field"], row["when"])
+    if attr == "per_height_ft":
+        # Portland Table 150-2: "1 ft. for every 2 ft. of building height but
+        # not less than 10 ft." -- the 13 a 26 ft building comes to is printed
+        # nowhere, and Steph wants no calculated number on a card (2026-10-22).
+        floor = getattr(number, "floor_ft", None)
+        said = f"1 ft for every {_said(number.per_height_ft, 'x')} ft of building height"
+        return said + (f", not less than {_said(floor, row['field'])}" if floor is not None else "")
+    if attr == "times":
+        # Wilsonville Table 1: "four times" the 3 it prints, never 12.
+        return f"{number.times:g} times {_said(printed, row['field'])}"
     if not form:
         return _said(printed, row["field"])
     shown = f"{printed:,.0f}" if float(printed).is_integer() else f"{printed:,}"
@@ -1347,16 +1361,29 @@ def _variants(layer: Layer, zone: str, field: str) -> list[dict[str, str]]:
     value = values.get(field)
     if value is None:
         return []
-    out = [{"when": "normally", "value": _said(value.value, field), "key": ""}]
+    out = [{"when": "normally", "value": _shown(layer, zone, field, "", value.value), "key": ""}]
     out += [
         {
             "when": _when_phrase("+".join(v.key)),
-            "value": _said(v.value, field),
+            "value": _shown(layer, zone, field, "+".join(v.key), v.value),
             "key": "+".join(v.key),
         }
         for v in value.variants
     ]
     return out
+
+
+def _shown(layer: Layer, zone: str, field: str, when: str, value: Any) -> str:
+    """A number as the page prints it where we hold a calculated one; Steph
+    2026-10-22: "I want the card to show the value in the table, I don't
+    want to see the calculated number at all"."""
+    row = {"zone": zone, "field": field, "when": when, "value": value}
+    printed = _printed(layer, row)
+    if printed != value and isinstance(printed, (int, float)) and not isinstance(printed, bool):
+        said = _printed_said(layer, row, printed)
+        if said:
+            return said
+    return _said(value, field)
 
 
 def _states(token: str, value: Any) -> bool:
