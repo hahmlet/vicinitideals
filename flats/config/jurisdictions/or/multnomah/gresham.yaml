@@ -2204,6 +2204,39 @@ defaults:
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-3.0100.pdf
     retrieved: '2026-08-27'
     quote: "or/multnomah/gresham/3.0100.definitions.txt#L1337-L1340,L1347-L1350"
+  # WHICH STREET OF A CORNER LOT OWES THE BUILDING SHARE (the 50 percent of
+  # 7.0420(J)(1)(a) for plexes and Rockwood 7.0512(A)(2) S2 for townhouses).
+  # Steph ruled 2026-10-22, "Main street only" (rulings.yaml
+  # 2026-10-22-gresham-corner-frontage-main-street), and pointed at chapter
+  # 3 for which street that is: 3.0100 makes the primary street, "As used in
+  # the Design District standards", "the street with the highest
+  # classification", and "When two streets have the same classification, the
+  # applicant shall identify the primary street frontage." The class is the
+  # city's TSP map (pipeline street_class_gresham). Downtown and Civic rank
+  # their own street types (Map 4.1140; 4.1241), which FLATS does not hold:
+  # DRL-1 and DRL-2 say `street_type` below, and no Civic zone carries a
+  # share. Rockwood's S3.a says the same in its own words, but S3 sits under
+  # "All Development", which leaves townhouses out (7.0500 L214-L215), and
+  # 7.0502(B) leaves plexes out of 7.0501-7.0512 altogether, so the ruling
+  # and 3.0100 decide it for both forms.
+  #
+  # NOT ENCODED: Rockwood 7.0512(A)(2) S3.b, "100 percent of the street
+  # frontage at intersections shall be occupied by buildings or publicly
+  # accessible open spaces for a minimum distance of 60 feet along each
+  # frontage" (L645-L650). The pod's short sides (36, 25 ft) could not meet
+  # it, but it binds neither of its forms: S3 is an "All Development"
+  # standard, "except townhouses ... unless otherwise stated" (L214-L215),
+  # and S3 states none; and 7.0502(B), "Section 7.0501-7.0512 do not apply
+  # to: Single detached dwellings, duplexes, triplexes, and quadplexes (for
+  # these developments, see Section 7.0420)" (L44-L45). S3.c (L651-L663)
+  # likewise: and in any case its landscaping and amenity options are
+  # choices any site can make.
+  building_frontage_corner:
+    value: highest_class
+    cite: "GDC 3.0100, Primary Street: as used in the Design District standards, the street with the highest classification; on the same classification the applicant identifies the primary street frontage (Steph 2026-10-22, rulings.yaml 2026-10-22-gresham-corner-frontage-main-street: main street only)"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-3.0100.pdf
+    retrieved: '2026-10-22'
+    quote: "or/multnomah/gresham/3.0100.definitions.txt#L1578-L1583"
   #
   # NOT ENCODED: Public Works Standards 6.03, where a driveway may meet the
   # street. Table 6.03 sets the minimum distance from a driveway centerline to
@@ -4976,6 +5009,13 @@ zones:
       value: site
       cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
       quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
+    building_frontage_corner:
+      # Downtown ranks its own street types for the primary street (3.0100:
+      # Urban Boulevard, Main Avenue, Urban Local, other Unique Streets,
+      # Downtown Local, on Map 4.1140), which FLATS does not hold.
+      value: street_type
+      cite: "GDC 3.0100, Primary Street: for the Downtown Design District the street type hierarchy of Map 4.1140 (Urban Boulevard, Main Avenue, Urban Local, other Unique Streets, Downtown Local)"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1578-L1583"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Downtown. MAXIMUM front setback 15-20 ft + >=50% frontage occupancy
       (7.0420(J)) effectively force the long axis parallel to the street — axis_required. Max-front-setback
       placement band not modeled (blind spot).'
@@ -5188,6 +5228,13 @@ zones:
       value: site
       cite: "GDC 7.0420(J)(1)(a) and 7.0512(A)(2) S2 (the site's frontage) and 3.0100, Site: an area of real property encompassing single or multiple lots"
       quote: "or/multnomah/gresham/3.0100.definitions.txt#L1923-L1925"
+    building_frontage_corner:
+      # Downtown ranks its own street types for the primary street (3.0100:
+      # Urban Boulevard, Main Avenue, Urban Local, other Unique Streets,
+      # Downtown Local, on Map 4.1140), which FLATS does not hold.
+      value: street_type
+      cite: "GDC 3.0100, Primary Street: for the Downtown Design District the street type hierarchy of Map 4.1140 (Urban Boulevard, Main Avenue, Urban Local, other Unique Streets, Downtown Local)"
+      quote: "or/multnomah/gresham/3.0100.definitions.txt#L1578-L1583"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Same as DRL-1; height 50 ft.'
   DCC:
     section: ["4.11", "7.042"]

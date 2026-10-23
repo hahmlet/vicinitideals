@@ -2020,3 +2020,8 @@
     the 89 Gresham corner lots held yellow by chunk 3 (docs/FOLLOWUPS.md
     item 109).
   source: Steph 2026-10-22 (chat), docs/FOLLOWUPS.md item 109
+  encoded_in:
+    - flats/score/screen.py
+    - flats/config/jurisdictions/or/multnomah/gresham.yaml
+    - flats/geom/street_class.py
+    - flats/config/pipeline.yaml

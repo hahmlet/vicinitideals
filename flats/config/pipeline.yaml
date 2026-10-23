@@ -787,6 +787,30 @@ datasets:
       ultimate right-of-way (flats/geom/dedication.py, FOLLOWUPS 81); no
       driveway rule reads its ranks.
 
+  street_class_gresham:
+    kind: arcgis
+    label: Gresham TSP functional classification (Street Classifications)
+    provides: streets
+    url: https://gis.greshamoregon.gov/ext/rest/services/GME/Planning/MapServer/8
+    geometry: polyline
+    fields: [STREETNAME, Description]
+    serves: [or/multnomah/gresham]
+    notes: >-
+      The city's "Street Classifications" layer on its Planning service
+      ("Functional Classification refers to the design of streets to
+      accommodate various levels of traffic demand", read 2026-10-22; 4,419
+      lines). Description: Local 3,280, Minor Collector 54, Standard
+      Collector 268, Major Collector 17, Minor Arterial 227, Standard
+      Arterial 388, Major Arterial 67, Principal Arterial (ODOT) 12, Freeway
+      (ODOT) 22; Proposed and Future lines, Driveway and a blank rank
+      nothing. STREETNAME carries the bare name ("169TH"), so lines are
+      matched to Metro's by position. Ranked for the primary street of a
+      Design District corner lot (GDC 3.0100 Primary Street, "the street
+      with the highest classification"; Rockwood 7.0512(A)(2) S3.a; Steph
+      2026-10-22, rulings.yaml 2026-10-22-gresham-corner-frontage-main-street).
+      Gresham's driveway rule names no class (corner_access_street: any), so
+      no driveway reads these ranks, and it answers no local_street.
+
   # --- curbs and pavement widths (flats/geom/curbs.py) ----------------------
   # Where the fire truck stands (FOLLOWUPS 29): the hose's 150 ft
   # (OFC 503.1.1) is measured from 10 ft out from the near curb (Steph

@@ -531,6 +531,14 @@ class LotFacts:
     #: order: what a building share of each street's frontage is read
     #: against (FOLLOWUPS 109). Empty where nothing measured the streets.
     street_lines_ft: tuple[float, ...] = ()
+    #: Each of those streets' class rank off the city's TSP map, on the same
+    #: chains in the same order (:func:`flats.ingest.quadfit.street_line_ranks`;
+    #: 0 the lowest, an order within one city's map). None on a street whose
+    #: class was not read, or read two ways. Which street is the primary of a
+    #: corner lot where the code names the highest-classed one
+    #: (``building_frontage_corner``, GDC 3.0100). Empty where no map serves
+    #: the lot, which leaves every street unranked.
+    street_line_ranks: tuple[int | None, ...] = ()
     #: The building's share of each street's frontage on the drawn plan,
     #: percent, in the same order (:func:`flats.fit.frontage.building_runs`):
     #: the building seen from the street within the maximum front setback.
@@ -2583,6 +2591,17 @@ def _building_frontage(
     :data:`FRONTAGE_STREET` where a street type or the choice of primary
     decides, :data:`BUILDING_FRONTAGE` where the plan was not measured or
     another placement could clear it.
+
+    Where the code names the primary of a corner lot by class
+    (``building_frontage_corner: highest_class``; GDC 3.0100 Primary Street,
+    Rockwood 7.0512(A)(2) S3.a, Steph 2026-10-22) and every street's class
+    was read (:attr:`LotFacts.street_line_ranks`), the share is owed on the
+    highest-classed street alone (:func:`_primary_streets`): RED where the
+    pod cannot fill that street, GREEN where the drawn plan fills it. Two
+    streets of the same measured class leave the pick to the applicant, so
+    either one filled is enough. A street whose class was not read leaves
+    the lot as above: every street for GREEN, :data:`FRONTAGE_STREET`
+    between.
     """
     need = _pct(rules, "building_frontage_min_pct")
     if need is None:
@@ -2605,7 +2624,8 @@ def _building_frontage(
     # leaves a floor the table prints nowhere). There the other street makes
     # no lot RED; what it owes only holds the lot out of GREEN, below.
     other_least = None if banded else other
-    lines = tuple(float(x) for x in lot.street_lines_ft if x > 0)
+    kept = tuple(i for i, x in enumerate(lot.street_lines_ft) if x > 0)
+    lines = tuple(float(lot.street_lines_ft[i]) for i in kept)
     if (
         lot.landlocked
         or not lines
@@ -2619,6 +2639,9 @@ def _building_frontage(
     ):
         # One street, or a through lot that owes one of its two.
         other = other_least = None
+    # The streets the code may make the primary, where it names it by class
+    # and every class was read; None where the primary is not held.
+    primaries = _primary_streets(rules, lot, kept)
     drive = 0.0
     if rules.get("building_frontage_less_drive") is True:
         drive = drive_at_street(design, rules, lot.alley, corner=lot.corner, beside=beside) or 0.0
@@ -2636,6 +2659,8 @@ def _building_frontage(
     # The best any one placement could do, on the most lenient reading.
     best: tuple[float, float, float | None] | None = None
     for a, line in enumerate(lines):
+        if primaries is not None and a not in primaries:
+            continue
         for face, back in ((w, d), (d, w)):
             primary = most(face, line)
             rest = [most(back, x) for b, x in enumerate(lines) if b != a]
@@ -2648,7 +2673,8 @@ def _building_frontage(
     assert best is not None
     margin, primary, second = best
     if margin < 0 and _more_pods_fill(
-        rules, lot, design, beside, lines, need=least, other=other_least, most=most
+        rules, lot, design, beside, lines, need=least, other=other_least, most=most,
+        primaries=primaries,
     ):
         # One pod is short, but enough of them would fill the street.
         unchecked.append(BUILDING_SHARE)
@@ -2665,6 +2691,20 @@ def _building_frontage(
         unchecked.append(BUILDING_SHARE)
         unmeasured.add(BUILDING_FRONTAGE)
         return
+    if primaries is not None:
+        # The primary is held: the share is owed there, and the other streets
+        # owe what the code asks of them, if anything.
+        for a in primaries:
+            rest = [float(drawn[b]) for b in range(len(drawn)) if b != a]
+            if float(drawn[a]) >= need and (other is None or all(x >= other for x in rest)):
+                check(BUILDING_SHARE, float(drawn[a]), need, is_maximum=False)
+                return
+        unchecked.append(BUILDING_SHARE)
+        if any(most(max(w, d), lines[a]) >= need for a in primaries):
+            unmeasured.add(BUILDING_FRONTAGE)
+        else:
+            unmeasured.add(FRONTAGE_STREET)
+        return
     if min(drawn) >= need:
         check(BUILDING_SHARE, min(drawn), need, is_maximum=False)
         return
@@ -2673,6 +2713,37 @@ def _building_frontage(
         unmeasured.add(BUILDING_FRONTAGE)
     else:
         unmeasured.add(FRONTAGE_STREET)
+
+
+def _primary_streets(
+    rules: ZoneResolution, lot: LotFacts, kept: Sequence[int]
+) -> tuple[int, ...] | None:
+    """Which of a corner lot's streets the code may make its primary frontage,
+    as indices into the streets the share is read against (``kept``, the
+    indices of :attr:`LotFacts.street_lines_ft` with a length), or None where
+    that is not held.
+
+    Held only where the code names the primary by class
+    (``building_frontage_corner: highest_class``: GDC 3.0100, "the primary
+    street shall be the street with the highest classification"; Rockwood
+    7.0512(A)(2) S3.a) on a corner lot, and every street's class was read
+    (:attr:`LotFacts.street_line_ranks`, the same chains in the same order).
+    The highest-classed street, or every street sharing the highest class:
+    "When two streets have the same classification, the applicant shall
+    identify the primary street frontage." A street whose class was not read
+    could be the busier one, so one unread street leaves the primary unheld.
+    """
+    if rules.get("building_frontage_corner") != "highest_class" or not lot.corner:
+        return None
+    ranks = lot.street_line_ranks
+    if len(kept) < 2 or len(ranks) != len(lot.street_lines_ft):
+        return None
+    got = [ranks[i] for i in kept]
+    if any(r is None for r in got):
+        return None
+    top = max(r for r in got if r is not None)
+    return tuple(a for a, r in enumerate(got) if r == top)
+
 
 
 def _pods_to_fill(
@@ -2755,13 +2826,15 @@ def _more_pods_fill(
     need: float,
     other: float | None,
     most: Callable[[float, float], float],
+    primaries: Sequence[int] | None = None,
 ) -> bool:
     """Whether, on some choice of the primary street, every street the share
     is owed on is filled either by the one pod or by enough pods side by side
     (:func:`_pods_to_fill`), and at least one needs more than one -- the lot
     Steph's wide-lot ruling makes YELLOW where one pod alone is RED. The
     other streets are counted on their own: the pod at the corner shows them
-    its end, and the pods added along them either side."""
+    its end, and the pods added along them either side. ``primaries`` (see
+    :func:`_primary_streets`) limits the choice of the primary street."""
     w, d = float(design.footprint.width_ft), float(design.footprint.depth_ft)
     lane = drive_at_street(design, rules, lot.alley, corner=lot.corner, beside=beside) or 0.0
 
@@ -2774,6 +2847,8 @@ def _more_pods_fill(
         return n is not None
 
     for a, line in enumerate(lines):
+        if primaries is not None and a not in primaries:
+            continue
         rest = [x for b, x in enumerate(lines) if b != a]
         for face, back in ((w, d), (d, w)):
             if not filled(line, need, face):

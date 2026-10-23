@@ -1802,6 +1802,9 @@ def lot_from_row(
         # Every street's line, for a building share of each street's
         # frontage (FOLLOWUPS 109).
         street_lines_ft=street_lines_ft(edges),
+        # Each of those streets' class rank, on the same chains in the same
+        # order: which is the primary street of a corner lot (GDC 3.0100).
+        street_line_ranks=street_line_ranks(edges),
         # A street line only a drive makes, with no reading of the lot
         # without it to screen, or none with a street left (FOLLOWUPS 4).
         street_unconfirmed=unconfirmed,
@@ -2312,6 +2315,10 @@ def _screen_on(
             # frontage (FOLLOWUPS 109): measure this plan's share on the
             # drawn plan and screen again on it.
             built = building_frontage(here, streets, design, got, fit, fitters[key], env)
+            if built is not None and not _same_streets(streets, facts.street_lines_ft):
+                # Drawn on other streets than the lot's facts name: the shares
+                # would be read against the wrong lines and the wrong ranks.
+                built = None
             if built is not None:
                 facts = dataclasses.replace(facts, building_frontage_pct=built)
                 result = screen(
@@ -4000,6 +4007,44 @@ def street_lines_ft(edges: LotEdges | None) -> tuple[float, ...]:
     if edges is None:
         return ()
     return tuple(sum(e.length_ft for e in chain) for chain in street_chains(edges))
+
+
+#: The share of one street's line whose class must be read for the street to
+#: carry a class (:func:`street_line_ranks`). A rounded corner is drawn as
+#: short chords no centreline runs parallel to, so they read no class; the
+#: rest of the street must, and all of it the same.
+RANKED_SHARE = 0.8
+
+
+def street_line_ranks(edges: LotEdges | None) -> tuple[int | None, ...]:
+    """Each of the lot's streets' class rank, in the order and on the chains
+    :func:`street_lines_ft` measures (:func:`flats.fit.frontage.street_chains`),
+    from the street lines' own ranks (:attr:`flats.geom.edges.Edge.street_rank`,
+    the city's TSP map). None on a street whose lines read two classes, or
+    whose read lines cover less than :data:`RANKED_SHARE` of it: unranked,
+    never the quieter reading. :attr:`flats.score.screen.LotFacts.street_line_ranks`."""
+    if edges is None:
+        return ()
+    out: list[int | None] = []
+    for chain in street_chains(edges):
+        total = sum(e.length_ft for e in chain)
+        read = [e for e in chain if e.street_rank is not None]
+        ranks = {e.street_rank for e in read}
+        covered = sum(e.length_ft for e in read)
+        if total > 0 and len(ranks) == 1 and covered >= RANKED_SHARE * total:
+            out.append(next(iter(ranks)))
+        else:
+            out.append(None)
+    return tuple(out)
+
+
+def _same_streets(streets: LotEdges | None, lines_ft: Sequence[float]) -> bool:
+    """Whether ``streets`` are the street chains ``lines_ft`` measured, one
+    for one and in order (to a tenth of a foot): the drawn building shares
+    (:func:`building_frontage`) are then read index for index against the
+    lot's streets and their ranks (:attr:`flats.score.screen.LotFacts.street_line_ranks`)."""
+    got = street_lines_ft(streets)
+    return len(got) == len(lines_ft) and all(abs(a - b) <= 0.1 for a, b in zip(got, lines_ft))
 
 
 def street_line_max_ft(edges: LotEdges | None) -> float | None:
