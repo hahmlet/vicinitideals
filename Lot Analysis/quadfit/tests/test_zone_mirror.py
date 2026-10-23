@@ -1049,11 +1049,11 @@ UNEXPRESSIBLE: dict[str, int] = {
     "setback_street_across_nonresidential_ft": 4,
     #: The outdoor square (FOLLOWUPS 7(b)): quadfit charges the open-space
     #: AMOUNT, never its shape; FLATS measures the square on the lot.
-    "open_space_min_dimension_ft": 6,
+    "open_space_min_dimension_ft": 9,
     "driveway_min_width_one_way_ft": 12,
     "driveway_min_width_two_way_ft": 12,
     "driveway_one_lane_ft": 1,
-    "min_ground_story_ft": 1,
+    "min_ground_story_ft": 2,
     "parking_covered_required": 5,
     "parking_stall_depth_ft": 9,
     "parking_stall_width_ft": 9,
@@ -1095,12 +1095,22 @@ UNEXPRESSIBLE: dict[str, int] = {
     #: frontage, measured on FLATS's drawn plan (flats/fit/frontage.py
     #: building_runs). Beaverton's twelve 60.05 blocks and four Downtown
     #: blocks, Washington County NMU and CCMU; quadfit draws no building.
-    "building_frontage_min_pct": 18,
-    "building_frontage_min_pct_least": 4,
+    "building_frontage_min_pct": 28,
+    "building_frontage_min_pct_least": 5,
     "building_frontage_other_pct": 18,
     "building_frontage_through_one": 2,
-    "building_frontage_less_drive": 16,
+    "building_frontage_less_drive": 26,
     "building_frontage_plaza_pct": 12,
+    #: Design districts chunk 3 (FOLLOWUPS 109, run 85): Gresham's design
+    #: districts join the frontage share, which is measured on the unit lot or
+    #: the whole site as the code bases it (Steph 2026-10-21); the pitched roof
+    #: Sandy and others require (a flat-roofed pod is RED); and the outdoor
+    #: square's newly read districts. Quadfit draws no building and no roof.
+    "building_frontage_basis": 27,
+    "min_roof_pitch_in_12": 11,
+    #: Steph 2026-10-22: a Gresham corner lot owes the share on its main
+    #: street only (GDC 3.0100 Primary Street), measured per street class.
+    "building_frontage_corner": 2,
 }
 
 
