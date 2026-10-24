@@ -55,12 +55,14 @@ the kind of district Portland's CM2 and CX turned out to be.
 
 from __future__ import annotations
 
+import json
 import re
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable, Iterator
 
+from flats.provenance.sections import INDEX
 from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
@@ -179,11 +181,32 @@ class Designation:
         return f"{self.first.document}:{self.first.line}"
 
 
-def _documents(layer: str) -> Iterator[Path]:
+def _documents(layer: str) -> Iterator[tuple[str, list[str], bool]]:
+    """Each document this layer owns: its name, its lines, and whether they
+    are readable text (a section file, one sentence to a line).
+
+    A chapter cut into section files is read in its sections, and its front
+    -- the lines above its first section, which no section file holds -- is
+    read from the proof copy. That front is where a web print puts the
+    chapter's own title, and the title is where some codes name the district
+    and nowhere else in the chapter: Fairview's "Chapter 19.25. AGRICULTURAL
+    HOLDING ZONE (F-2)".
+    """
     directory = DOCS / layer
     if not directory.is_dir():
         return
-    yield from ProvenanceStore.owned(directory)
+    for path in ProvenanceStore.owned(directory):
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+        yield path.name, lines, path.parent != directory
+    index = directory / INDEX
+    if not index.is_file():
+        return
+    for name, body in json.loads(index.read_text(encoding="utf-8"))["documents"].items():
+        first = min((row[1] for row in body["sections"]), default=1)
+        if first > 1:
+            proof = directory / name
+            lines = proof.read_text(encoding="utf-8", errors="replace").splitlines()
+            yield name, lines[: first - 1], False
 
 
 #: How far a bare column head may sit from a sentence about districts and still
@@ -252,25 +275,30 @@ def declared(layer: str) -> dict[str, Designation]:
             token, Designation(layer=layer, token=token)
         ).sightings.append(sighting)
 
-    for document in _documents(layer):
-        lines = document.read_text(encoding="utf-8", errors="replace").splitlines()
+    for name, lines, readable in _documents(layer):
         zoney = [n for n, text in enumerate(lines, 1) if _ZONEY.search(text)]
         run: list[str] = []
         for number, line in enumerate(lines, 1):
             stripped = line.strip()
-            if _ZONEY.search(line):
+            # Readable text is a sentence to a line, so in a section file the
+            # sentence before this one in its paragraph counts too: "...
+            # applies in the Habitat Conservation Area District (HCAD)." / "The
+            # HCAD applies to all parcels containing a Habitat Conservation
+            # Area (HCA)." was one printed line before Gladstone was cut.
+            above = lines[number - 2] if readable and number > 1 else ""
+            if _ZONEY.search(line) or (stripped and _ZONEY.search(above)):
                 for match in _PAREN.finditer(line):
                     inner = match.group(1).strip()
                     parts = _SPLIT.split(inner) if len(inner) > 9 else [inner]
                     for part in parts:
                         token = part.strip().rstrip(".")
                         if _shaped(token):
-                            add(token, Sighting(document.name, number, stripped))
+                            add(token, Sighting(name, number, stripped))
             token = _demark(stripped).rstrip(".")
             if _shaped(token) and any(
                 abs(z - number) <= _NEAR_LINES for z in zoney
             ):
-                bare[token].append(Sighting(document.name, number, stripped))
+                bare[token].append(Sighting(name, number, stripped))
                 run.append(token)
             elif run:
                 if len(run) >= _MIN_RUN:

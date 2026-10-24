@@ -677,3 +677,21 @@ def test_a_lowercase_body_that_opens_with_its_verb_is_still_an_entry() -> None:
         "Public infrastructure",
         "Structure, for insurance purposes, means",
     ]
+
+
+def test_a_chapter_cut_into_sections_is_read_as_one_chapter(corpus: list[Chapter]) -> None:
+    """A definitions chapter held in section files is one chapter, its order
+    and density asked of the whole: asked of each section, one stray entry in
+    Fairview's eighteen-entry 19.13.130 read as a skimmed chapter."""
+    from flats.encode.definitions import DOCS
+    from flats.provenance.sections import splits
+    from flats.provenance.store import ProvenanceStore
+
+    cut = splits(ProvenanceStore(DOCS))
+    held = [c for c in corpus if c.doc in cut]
+    assert held, "no cut definitions chapter in the corpus to hold this to"
+    for c in held:
+        assert sum(1 for other in corpus if other.doc == c.doc) == 1, c.doc
+    # and one is read across its sections, each entry quoted where it stands
+    # (Fairview 19.13); a chapter declared at a span is read in its proof copy
+    assert any(len({e.doc for e in c.entries}) > 1 for c in held)

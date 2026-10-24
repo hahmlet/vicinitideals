@@ -11,12 +11,14 @@ Minimum lot width (ft.)                    70             60             50     
 Minimum lot depth (ft.)                  100            80             70             70            N/A      see 3.235
 Minimum lot frontage (ft.)               20             20             20             20            N/A            20
 Setbacks (ft):
-Front yard                                   20             20         10 or 20           10 or 20           N/A        10 or 20 see note 1      see note 1                      see note 1
+Front yard                                   20             20         10 or 20           10 or 20           N/A        10 or 20
+see note 1      see note 1                      see note 1
 Side yard                                    10             7.5              5               5             N/A             5
 Building side (duplex)                  0               0               0               0             N/A             0
 Building side (zero lot line)   see note 2 see note 2 see note 2 see note 2      N/A      see note 2
 Street side yard                          10             10             10             10            N/A        10 or 20 see note 5
-Rear yard                               15 or 20           15 or 20        15 or 20       15 or 20           N/A      see 3.235 see note 3      see note 3     see note 4      see note 4
+Rear yard                               15 or 20           15 or 20        15 or 20       15 or 20           N/A      see 3.235
+see note 3      see note 3     see note 4      see note 4
 Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010      N/A      see 5.010
 Maximum building height (ft.)         35             35             35             35            N/A            35
 Density standards                    see 3.140 see 3.140 see 3.140 see 3.140      N/A      see 3.140
@@ -39,7 +41,8 @@ Minimum lot width (ft.)                    70             60             50     
 Minimum lot depth (ft.)                  100            80             70             70            N/A      see 3.235
 Minimum lot frontage (ft.)               20             20             20             16            N/A            20
 Setbacks (ft):
-Front yard                                   10             10             10         10 or 20                 N/A        10 or 20 see note 1                      see note 1
+Front yard                                   10             10             10         10 or 20                 N/A        10 or 20
+see note 1                      see note 1
 Side yard                                    10             7.5              5               5             N/A             5
 Building side                                0               0               0               0             N/A             0
 Street side yard                          10             10             10             10            N/A        10 or 20 see note 2
@@ -62,12 +65,14 @@ Setbacks (ft):
 Front yard                                   10             10             10       10  or  20                  10              0 see note 2
 Side yard                                     5               5               5               5               5               5
 Building side                                0               0               0               0               0               0
-Street side yard                          10             10             10             10       10 or 18,                  0  or  18, see note 3      see note 3
+Street side yard                          10             10             10             10       10 or 18,                  0  or  18,
+see note 3      see note 3
 
 
 MDR                            HDR
 Dimensional Standard              LDR-1       LDR-2        MDR                                 (TC)          HDR              (TC)
-Rear yard                                10 or 0           10 or 0         10 or 0      10   or   0     10   or   0      10 or 0, see note 4      see note 4      see note 4     see note 4      see note 4      see note 4
+Rear yard                                10 or 0           10 or 0         10 or 0      10   or   0     10   or   0      10 or 0,
+see note 4      see note 4      see note 4     see note 4      see note 4      see note 4
 Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010 see 5.010 see 5.010
 Maximum building height (ft.)         35             35             35             35             35             35
 Density standards                    see 3.140 see 3.140 see 3.140 see 3.140 see 3.140 see 3.140
@@ -92,7 +97,8 @@ Rear yard                                    10             10             10   
 Building separation                      6               6               6               6             N/A           N/A
 Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010      N/A           N/A
 Maximum building height (ft.)         25             25             25             25            N/A           N/A
-Minimum density                         4 units             4 units per 4 units per        4 units per         N/A           N/A per acre          acre            acre           acre
+Minimum density                         4 units             4 units per 4 units per        4 units per         N/A           N/A
+per acre          acre            acre           acre
 Maximum density                          N/A           N/A           N/A           N/A           N/A           N/A
 E.     Multi-family. The standards within this Subsection shall apply for multi-family residential developments or buildings that do not have a ground-floor commercial component.
 For vertical-based mixed-use development, dimensional standards for commercial development shall apply unless otherwise referenced within this Code.

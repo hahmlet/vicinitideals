@@ -194,10 +194,12 @@ def test_fairviews_flx_is_inside_the_vc_flex_area_by_its_own_code() -> None:
     assert fairview.holds("FLX") == "VC"
     assert fairview.observed_by_code("FLX") == ("inside_mapped_use_area",)
     assert fairview.observed_by_code("VC") == ()
-    assert "19.135.txt L78-L80" in fairview.zone_rulings["FLX"].note
-    doc = Path(__file__).resolve().parents[1] / "provenance/docs/or/multnomah/fairview/19.135.txt"
+    # The chapter is read in its sections since 2026-10-24 (the proof copy
+    # held the same three lines at L78-L80).
+    assert "19.135.030.txt L27-L29" in fairview.zone_rulings["FLX"].note
+    doc = Path(__file__).resolve().parents[1] / "provenance/docs/or/multnomah/fairview/19.135/19.135.030.txt"
     lines = doc.read_text(encoding="utf-8").splitlines()
-    assert '"VC flex" area' in lines[79] and "residential uses are allowed on the first floors" in lines[79]
+    assert '"VC flex" area' in lines[28] and "residential uses are allowed on the first floors" in lines[28]
     (variant,) = fairview.zones["VC"].values["quadplex_allowed"].variants
     assert "inside_mapped_use_area" in variant.when
 

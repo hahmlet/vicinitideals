@@ -17,7 +17,8 @@ from flats.rules.model import Layer
 pytestmark = pytest.mark.unit
 
 WEST_LINN = "or/clackamas/west-linn"
-DOC = "or/clackamas/west-linn/59.mu.txt"
+#: The MU chapter, cut into one file per section (2026-10-24).
+DOC = "or/clackamas/west-linn/59/"
 
 #: field -> (value, a phrase the quoted lines must contain)
 EXPECTED = {

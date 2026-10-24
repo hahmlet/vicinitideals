@@ -332,7 +332,8 @@ def test_west_linn_prints_its_ceiling_in_a_column_the_header_names(
     for zone in ("R-40", "R-20", "R-15", "R-10", "R-7", "R-5", "R-4.5", "R-3", "R-2.1"):
         held = city[zone].values["max_density_du_per_acre"]
         assert held.measured_on == "net_developable_area", zone
-        assert held.prov.quote.startswith("or/clackamas/west-linn/05.density.txt#L29,")
+        # Line 6 of 05.020 is the header (L29 of the chapter before the cut).
+        assert held.prov.quote.startswith("or/clackamas/west-linn/05/05.020.txt#L6,")
 
 
 def test_the_zone_west_linn_never_restated_is_the_one_the_state_carries(

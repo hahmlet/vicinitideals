@@ -34,8 +34,10 @@ Facilities for people with                      None                            
 443.400
 Domestic violence, emergency,                   None                                        No maximum and transitional shelters
 Commercial Land Use                    Minimum                                  Maximum
-General retail or personal service,             4.1 spaces per 1,000 sq. ft. of            6.2 spaces per 1,000 sq. ft. of including shopping centers and                  gross floor area                           gross floor area grocery stores
-General retail with bulky                       2 spaces per 1,000 sq. ft. of              3 spaces per 1,000 sq. ft. of merchandise, such as a furniture                gross floor area                           gross floor area or appliance store
+General retail or personal service,             4.1 spaces per 1,000 sq. ft. of            6.2 spaces per 1,000 sq. ft. of
+including shopping centers and                  gross floor area                           gross floor area grocery stores
+General retail with bulky                       2 spaces per 1,000 sq. ft. of              3 spaces per 1,000 sq. ft. of
+merchandise, such as a furniture                gross floor area                           gross floor area or appliance store
 Eating and drinking establishment               10 spaces per 1,000 sq. ft. of             19.1 spaces per 1,000 sq. ft.
 without a drive-thru                            gross floor area                           of gross floor area
 
@@ -45,13 +47,19 @@ Eating and drinking establishment              8 spaces per 1,000 sq. ft of     
 with a drive-thru                              gross floor area                         of gross floor area
 Mobile food vendor                         See Section 5.100                    Food stands/food carts: N/A
 Food trucks: 1 per truck Kiosks: 12.4 spaces per 1,000 sq. ft. of gross floor area
-Medical/dental office or clinic          3.9 spaces per 1,000 sq. ft. of                5.9 spaces per 1,000 sq. ft. of gross floor area                         gross floor area
-General professional office or                 2.7 spaces per 1,000 sq. ft. of          4.1 spaces per 1,000 sq. ft. of financial institution                          gross floor area                         gross floor area
-Financial institution with a drive-            4.3 spaces per 1,000 sq. ft. of          6.5 spaces per 1,000 sq. ft. of thru                                           gross floor area                         gross floor area
-Personal services or minor                     4.3 spaces per 1,000 sq. ft. of          6.5 spaces per 1,000 sq. ft. of entertainment facility                         gross floor area                         gross floor area
-Auto, boat, or trailer sales, or               1 space per 1,000 sq. ft. of             2 spaces per 1,000 sq. ft. of nursery                                        gross floor area                         gross floor area
+Medical/dental office or clinic          3.9 spaces per 1,000 sq. ft. of                5.9 spaces per 1,000 sq. ft. of
+gross floor area                         gross floor area
+General professional office or                 2.7 spaces per 1,000 sq. ft. of          4.1 spaces per 1,000 sq. ft. of
+financial institution                          gross floor area                         gross floor area
+Financial institution with a drive-            4.3 spaces per 1,000 sq. ft. of          6.5 spaces per 1,000 sq. ft. of
+thru                                           gross floor area                         gross floor area
+Personal services or minor                     4.3 spaces per 1,000 sq. ft. of          6.5 spaces per 1,000 sq. ft. of
+entertainment facility                         gross floor area                         gross floor area
+Auto, boat, or trailer sales, or               1 space per 1,000 sq. ft. of             2 spaces per 1,000 sq. ft. of
+nursery                                        gross floor area                         gross floor area
 Lodging facility or bed and                    1 space per guestroom/suite    2 spaces per guestroom/suite breakfast
-Service station                                0.5 space per 1,000 sq. ft. of           1 space per 1,000 sq. ft. of gross lot area                           gross lot area
+Service station                                0.5 space per 1,000 sq. ft. of           1 space per 1,000 sq. ft. of
+gross lot area                           gross lot area
 Bowling alley                                   2 spaces per lane                     3 spaces per lane
 Major entertainment facility                   1 space per 4 seats or 1                 1.5 spaces per 4 seats or 1
 (theater, racetrack, stadium, or               space per 8-foot bench length            space per 8-foot bench length similar use)
@@ -62,14 +70,19 @@ Service Land Use                           Minimum                              
 Child care facility as defined in              None                                        No maximum
 ORS 329A.250
 School (elementary or middle)        2 spaces per teacher               3 spaces per teacher
-School (high school, college, or               0.2 spaces per number of                 0.3 spaces per number of trade school)                                  students and staff                       students and staff
-Library or museum                          2.5 spaces per 1,000 sq. ft. of              3 spaces per 1,000 sq. ft. of gross floor area, plus 1 space           gross floor area, plus 1.25 per 2 employees                          spaces per 2 employees
-Religious facility or mortuary           1 space per 4 seats or 1                       2 spaces per 4 seats or 2 space for 7 feet of bench                spaces for 7 feet of bench length                                   length
+School (high school, college, or               0.2 spaces per number of                 0.3 spaces per number of
+trade school)                                  students and staff                       students and staff
+Library or museum                          2.5 spaces per 1,000 sq. ft. of              3 spaces per 1,000 sq. ft. of
+gross floor area, plus 1 space           gross floor area, plus 1.25
+per 2 employees                          spaces per 2 employees
+Religious facility or mortuary           1 space per 4 seats or 1                       2 spaces per 4 seats or 2
+space for 7 feet of bench                spaces for 7 feet of bench length                                   length
 Hospital                                           1.5 spaces per bed                  2 spaces per bed
 
 
 Industrial Land Use                         Minimum                                  Maximum
-Storage, warehouse, or                      1 space per employee on the            1.5 spaces per employee on manufacturing establishment; air,           largest shift                          the largest shift rail, or trucking freight terminal
+Storage, warehouse, or                      1 space per employee on the            1.5 spaces per employee on
+manufacturing establishment; air,           largest shift                          the largest shift rail, or trucking freight terminal
 (Ord. No. 899, § 2(Att.
 A), 6-24-2025)
 

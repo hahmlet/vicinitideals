@@ -270,3 +270,25 @@ def test_the_angle_is_measured_the_way_the_codes_write_it() -> None:
     assert interior_angle_deg(straight, Side(10, 60.0)) == pytest.approx(120.0)
     assert interior_angle_deg(straight, Side(10, 179.0)) == pytest.approx(179.0)
     assert not math.isnan(interior_angle_deg(straight, Side(10, 45.0)))
+
+
+def test_a_definitions_chapter_cut_into_sections_is_held() -> None:
+    """The proof copy of a cut chapter is no document of its own, so the
+    chapter is held in its sections: Fairview's 19.13 read as unfetched the
+    day it was cut."""
+    from flats.encode.definitions import DOCS, _chapter
+    from flats.encode.glossary import declared
+    from flats.provenance.sections import splits
+    from flats.provenance.store import ProvenanceStore
+    from flats.rules.loader import load_rules
+
+    cut = splits(ProvenanceStore(DOCS))
+    rules = load_rules()
+    seen = 0
+    for layer_id, layer in rules.items():
+        doc = declared(layer)
+        if doc is None or f"{layer_id}/{doc.id}.txt" not in cut:
+            continue
+        seen += 1
+        assert _chapter(layer) == (doc.id, True), layer_id
+    assert seen, "no cut definitions chapter to hold this to"

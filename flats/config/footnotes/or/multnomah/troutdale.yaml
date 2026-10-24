@@ -16,7 +16,7 @@ notes:
   #
   # Our numbers come from 3.130.B and 3.130.C. These two notes are in scope
   # only because the block's region is read wide on purpose.
-  - quote: "or/multnomah/troutdale/3/3.130.txt#L24"
+  - quote: "or/multnomah/troutdale/3/3.130.txt#L26"
     digest: "69c6bfb3111a"
     state: dismissed
     reason: >-
@@ -24,7 +24,7 @@ notes:
       where the driveway comes off the rear; screening against the unreduced
       front yard is a compliance path the code offers outright
 
-  - quote: "or/multnomah/troutdale/3/3.130.txt#L25"
+  - quote: "or/multnomah/troutdale/3/3.130.txt#L27"
     digest: "58af85c8a9a8"
     state: dismissed
     reason: >-
@@ -38,7 +38,7 @@ notes:
   # header, so these three were never captured at all -- and notes 3 and 4 are
   # the only ones of the five that attach to a column this layer encodes.
 
-  - quote: "or/multnomah/troutdale/3/3.130.txt#L30"
+  - quote: "or/multnomah/troutdale/3/3.130.txt#L32"
     digest: "8e2179267b47"
     state: dismissed
     reason: >-
@@ -48,7 +48,7 @@ notes:
       and the pod is a quadplex -- its rear yard is read from 3.130.B, which
       prints a bare 10 in those three columns with no marker on it
 
-  - quote: "or/multnomah/troutdale/3/3.130.txt#L31"
+  - quote: "or/multnomah/troutdale/3/3.130.txt#L33"
     digest: "b5a4b59afec6"
     state: dismissed
     reason: >-
@@ -64,7 +64,7 @@ notes:
   # this layer encodes prints a bare number and carries no marker, which is
   # what the quotes were re-cut to prove when they were opened on the header
   # row.
-  - quote: "or/multnomah/troutdale/3/3.130.txt#L51"
+  - quote: "or/multnomah/troutdale/3/3.130.txt#L54"
     digest: "c4700f359115"
     state: dismissed
     reason: >-
@@ -72,21 +72,21 @@ notes:
       Town Center district is encoded here; LDR-1, LDR-2, MDR and HDR print a
       bare 10 front yard with no marker
 
-  - quote: "or/multnomah/troutdale/3/3.130.txt#L52"
+  - quote: "or/multnomah/troutdale/3/3.130.txt#L55"
     digest: "4273dfc63f83"
     state: dismissed
     reason: >-
       attaches to HDR (TC) in 3.130.B, which is not encoded here; the four
       encoded columns print a bare 10 street side yard with no marker
 
-  - quote: "or/multnomah/troutdale/3/3.130.txt#L77"
+  - quote: "or/multnomah/troutdale/3/3.130.txt#L82"
     digest: "1ec1f39024ab"
     state: dismissed
     reason: >-
       attaches to the MDR (TC) and HDR (TC) columns of 3.130.C, neither of
       which is encoded here
 
-  - quote: "or/multnomah/troutdale/3/3.130.txt#L75"
+  - quote: "or/multnomah/troutdale/3/3.130.txt#L80"
     digest: "14a25d638372"
     state: encoded
     encoded_as: "min_frontage_ft variant, when [unit_lots], 15 ft"
@@ -96,7 +96,7 @@ notes:
       unit_lots variant rather than exempting the standard on a lot whose
       parking has not been placed
 
-  - quote: "or/multnomah/troutdale/3/3.130.txt#L78"
+  - quote: "or/multnomah/troutdale/3/3.130.txt#L83"
     digest: "1b03340f4814"
     state: encoded
     encoded_as: "setback_rear_ft variant, when [unit_lots, alley_at_rear], 0 ft"
@@ -110,7 +110,7 @@ notes:
   #
   # Different chapters of the same document. No MU, CC or GC zone is encoded
   # in this layer, so nothing here reaches a value we screen.
-  - quote: "or/multnomah/troutdale/3/3.230.txt#L18"
+  - quote: "or/multnomah/troutdale/3/3.230.txt#L22"
     digest: "3c86e9804fc1"
     state: dismissed
     reason: >-
@@ -118,7 +118,7 @@ notes:
       size, and the pod is new construction. Printed twice in this chapter,
       once under each of the two tables that carry a maximum building size
 
-  - quote: "or/multnomah/troutdale/3/3.230.txt#L43"
+  - quote: "or/multnomah/troutdale/3/3.230.txt#L50"
     digest: "3c86e9804fc1"
     state: dismissed
     reason: >-
@@ -126,7 +126,7 @@ notes:
       size, and the pod is new construction. Printed twice in this chapter,
       once under each of the two tables that carry a maximum building size
 
-  - quote: "or/multnomah/troutdale/3/3.330.txt#L19"
+  - quote: "or/multnomah/troutdale/3/3.330.txt#L21"
     digest: "7906baeec84a"
     state: dismissed
     reason: >-
@@ -134,7 +134,7 @@ notes:
       yard where they abut a residential district; no commercial zone is
       encoded here
 
-  - quote: "or/multnomah/troutdale/3/3.330.txt#L20"
+  - quote: "or/multnomah/troutdale/3/3.330.txt#L22"
     digest: "8b3ad92c2486"
     state: dismissed
     reason: >-
@@ -145,7 +145,7 @@ notes:
   # lot fronting a street narrower than the City standard, which nothing
   # measures -- if CC or GC is ever encoded, this comes back as unmeasured
   # rather than as a dismissal, and it needs a right-of-way width layer.
-  - quote: "or/multnomah/troutdale/3/3.330.txt#L21"
+  - quote: "or/multnomah/troutdale/3/3.330.txt#L23"
     digest: "c9ca132bce83"
     state: dismissed
     reason: >-

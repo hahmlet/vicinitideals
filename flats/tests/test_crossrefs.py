@@ -440,7 +440,7 @@ def test_a_reference_can_be_settled_by_reading_it(layers: dict[str, Layer]) -> N
     assert ruled["17.62.070"].mentions == 11
     assert ruled["17.62.070"].binding == 10
     assert "mobile home park" in ruled["17.62.070"].ruling
-    assert "17.14.mr.txt#L91" in ruled["17.62.070"].ruling
+    assert "17.14.040.txt#L11" in ruled["17.62.070"].ruling
 
 
 def test_a_ruled_reference_stops_leading_the_queue(layers: dict[str, Layer]) -> None:

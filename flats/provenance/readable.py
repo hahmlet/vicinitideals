@@ -227,6 +227,12 @@ def _carries_on(upper: str, lower: str, heading: re.Pattern[str] | None) -> bool
         return False
     upper = upper.rstrip()
     ended = re.search(r"[.:;]$", upper) is not None
+    if _table_row(upper) and _table_row(lower):
+        # Two rows of one space-set table. The second opening in lower case is
+        # a row label ("when abutting a park ... 0 0 10" over "when abutting a
+        # non-residential zoning district ... 0 0 0", Troutdale 3.230), not
+        # the rest of a cell.
+        return False
     if re.match(r"\s*[a-z]", lower) and not ended:
         return True
     if _table_row(upper) or _table_row(lower):

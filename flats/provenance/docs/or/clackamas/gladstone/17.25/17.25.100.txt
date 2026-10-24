@@ -77,7 +77,11 @@ Non-native sterile wheat grass may also be planted or seeded, in equal or lesser
 
 Table 6 Tree Replacement
 Size of Tree to be Removed (inches in diameter at breast height)  Number of Trees and Shrubs to be Planted
-6 to 12                                                           2 trees and 3 shrubs over 12 to 18                                                     3 trees and 6 shrubs over 18 to 24                                                     5 trees and 12 shrubs over 24 to 30                                                     7 trees and 18 shrubs over 30                                                           10 trees and 30 shrubs
+6 to 12                                                           2 trees and 3 shrubs
+over 12 to 18                                                     3 trees and 6 shrubs
+over 18 to 24                                                     5 trees and 12 shrubs
+over 24 to 30                                                     7 trees and 18 shrubs
+over 30                                                           10 trees and 30 shrubs
 
 ii. The mitigation requirement shall be calculated based on the size of the disturbance area within the HCA.
 Native trees and shrubs shall be planted at a rate of five trees and 25 shrubs per every 500 square feet of disturbance area (calculated by dividing the number of square feet of disturbance area by 500, and then multiplying that result times five trees and 25 shrubs, and rounding all fractions to the nearest whole number of trees and shrubs; for example, if there will be 330 square feet of disturbance area, then 330 divided by 500 equals 0.66, and 0.66 times five equals 3.3, so three trees shall be planted, and 0.66 times 25 equals 16.5, so 17 shrubs shall be planted).

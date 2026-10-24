@@ -193,7 +193,8 @@ def test_the_village_zones_state_their_own_height_in_prose(rules: RuleSet) -> No
     for zone, doc in (("VSF", "19.115"), ("VTH", "19.120")):
         held = load_rules()[FAIRVIEW].zones[zone].values["max_height_ft"]
         assert held.value == 35, zone
-        assert held.prov.quote.startswith(f"or/multnomah/fairview/{doc}.txt"), zone
+        # The chapter, cut into one file per section (2026-10-24).
+        assert held.prov.quote.startswith(f"or/multnomah/fairview/{doc}/"), zone
 
 
 def test_the_townhouse_overlay_takes_the_stricter_of_its_two_columns(

@@ -60,8 +60,8 @@ def test_mr_and_c2_are_outright(layer, rules) -> None:
         got = rules.resolve(G, z, POD)
         assert got.values["quadplex_allowed"].value is True
         assert got.missing_required == ()
-    assert "17.14.mr.txt#L29-L33" in _quote(layer, "MR", "quadplex_allowed")
-    assert "17.18.c-2.txt#L61-L63" in _quote(layer, "C2", "quadplex_allowed")
+    assert "17.14/17.14.020.txt#L3-L7" in _quote(layer, "MR", "quadplex_allowed")
+    assert "17.18/17.18.020.txt#L25-L27" in _quote(layer, "C2", "quadplex_allowed")
 
 
 @pytest.mark.parametrize("zone", RED)
@@ -108,15 +108,15 @@ def test_mr_numbers_and_quotes(layer, rules) -> None:
     assert unit["setback_side_ft"].value == 0
     assert unit["min_lot_sqft"].value == 4800  # 1,200 x 4 lots
     for field, line in (
-        ("setback_front_ft", "L132-L133"),
-        ("setback_side_ft", "L137-L138"),
-        ("setback_rear_ft", "L147-L148"),
-        ("setback_street_side_ft", "L142-L143"),
-        ("min_lot_sqft", "L122-L123"),
-        ("max_height_ft", "L152-L153"),
-        ("min_landscaped_pct", "L155-L156"),
+        ("setback_front_ft", "L21-L22"),
+        ("setback_side_ft", "L26-L27"),
+        ("setback_rear_ft", "L36-L37"),
+        ("setback_street_side_ft", "L31-L32"),
+        ("min_lot_sqft", "L12-L13"),
+        ("max_height_ft", "L41-L42"),
+        ("min_landscaped_pct", "L44-L45"),
     ):
-        assert f"17.14.mr.txt#{line}" in _quote(layer, "MR", field), field
+        assert f"17.14/17.14.050.txt#{line}" in _quote(layer, "MR", field), field
     assert layer.zones["MR"].values["min_density_du_per_acre"].measured_on == "net_developable_area"
 
 
@@ -131,8 +131,8 @@ def test_c2_numbers_and_quotes(layer, rules) -> None:
     # Lot area is R-5's, by 17.18.060(5)(a), and nothing else is borrowed.
     assert v["min_lot_sqft"].value == 7000
     assert rules.resolve(G, "C2", (*POD, "unit_lots")).values["min_lot_sqft"].value == 6000  # 1,500 x 4
-    assert "17.18.c-2.txt#L137" in _quote(layer, "C2", "setback_front_max_ft")
-    assert "17.18.c-2.txt#L141" in _quote(layer, "C2", "max_height_ft")
+    assert "17.18/17.18.060.txt#L9" in _quote(layer, "C2", "setback_front_max_ft")
+    assert "17.18/17.18.060.txt#L14" in _quote(layer, "C2", "max_height_ft")
     assert "Portland Avenue" in (layer.zones["C2"].notes or "")
 
 

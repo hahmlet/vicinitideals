@@ -128,3 +128,40 @@ def test_a_numbered_item_spaced_off_its_text_still_wraps() -> None:
     got = clean(lines)
     assert len(got.lines) == 1
     _same(lines, got)
+
+
+def test_two_table_rows_stay_apart_when_the_second_label_is_lower_case() -> None:
+    """Troutdale 3.230 labels its rows in lower case ("when abutting a park").
+    A lower-case line read as the rest of the row above, so two rows of the
+    setback table printed as one line under the wrong row's numbers."""
+    lines = [
+        "when abutting a park (regardless of zoning district)            0                    0                   10",
+        "when abutting a non-residential zoning district                   0                    0                    0",
+    ]
+    got = clean(lines)
+    assert got.lines == tuple(lines)
+    _same(lines, got)
+    # a lower-case line under a row that is not itself a row still joins it
+    wrapped = ["Front yard                 20                  20 to the front", "porch of a unit."]
+    assert len(clean(wrapped).lines) == 1
+
+
+def test_a_running_head_goes_only_from_a_pages_first_line() -> None:
+    """Troutdale prints its running header at the top of the page, so the
+    extraction puts it on the page's own first line, not in the band above."""
+    head = re.compile(r"^\s*TROUTDALE DEVELOPMENT CODE\s*$")
+    lines = ["One sentence here.", "TROUTDALE DEVELOPMENT CODE", "Two sentence here.",
+             "TROUTDALE DEVELOPMENT CODE"]
+    got = clean(lines, breaks=[2], head=head)
+    assert got.removed == (2,)
+    assert "TROUTDALE DEVELOPMENT CODE" in got.lines
+    _same(lines, got, breaks=[2], head=head)
+
+
+def test_a_web_prints_note_marker_alone_opens_a_block() -> None:
+    """Fairview's web print sets a footnote marker "[2]" on a line of its own;
+    joined onto the cell above, it read as part of that cell's number."""
+    lines = [LONG, "[2]", "work nearby."]
+    got = clean(lines)
+    assert got.lines[0] == LONG
+    assert "[2]" in got.lines[1]

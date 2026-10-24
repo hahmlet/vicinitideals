@@ -208,9 +208,10 @@ or/multnomah/fairview:
           '19.162', '19.163', '19.164', '19.165', 19.25.ah, '19.30', '19.65', '19.70',
           '19.80', '19.85']
 
-or/clackamas/lake-oswego:
-  # ecode360 print, as Fairview: "§ 50.04.002. Special Street Setbacks." on
-  # its own line, printed once. A table cell naming a subsection ("§
-  # 50.04.001.1.b") has a digit after the number's stop, not a space.
-  heading: '^§ (?P<n>50\.\d+\.\d+)\.\s+[A-Z]'
-  front: [50.03.002.use-table, 50.04.dimensional]
+# or/clackamas/lake-oswego: NOT CUT (2026-10-24). Its headings take one clean
+# rule ('^§ (?P<n>50\.\d+\.\d+)\.\s+[A-Z]', front: both documents), but its
+# tables print one cell to a line, and readable text joins a cell that runs to
+# the margin onto the next: R-6's "Maximum (units/acre)" landed on the line of
+# the subdivision densities above it ("... 14 units/acre Maximum (units/acre)").
+# Switched off (eligible: false) besides; left whole until readable text can
+# tell a table cell from a wrapped sentence.

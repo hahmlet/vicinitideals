@@ -119,3 +119,15 @@ def test_a_first_cut_moves_citations_off_the_fetched_document(tmp_path) -> None:
     text = rules.read_text(encoding="utf-8")
     assert f'a: "{S100}#L2"' in text
     assert f'b: "{proof}#L2,L5"' in text  # spans two sections: left where it was
+
+
+def test_a_quote_whose_lines_run_out_of_order_is_refused_and_left(tmp_path) -> None:
+    """A note in prose may list lines out of order ("#L452,L464,L63", Gladstone):
+    that is no quote to move, and it used to stop the whole re-cut."""
+    store, before = _old_cut(tmp_path)
+    rules = tmp_path / "town.yaml"
+    rules.write_text(f'a: "{S100}#L3,L1"\n', encoding="utf-8")
+    moved, refused = _move_citations(store, before, [rules], {rules}, write_files=True, known=KNOWN)
+    assert moved == []
+    assert [why for _, _, why in refused] == ["its spans are out of order"]
+    assert rules.read_text(encoding="utf-8") == f'a: "{S100}#L3,L1"\n'

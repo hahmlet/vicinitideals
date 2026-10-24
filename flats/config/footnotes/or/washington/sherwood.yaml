@@ -17,10 +17,9 @@
 #   criteria (16.22.050); the others qualify non-dwelling uses and the
 #   commercial heights. The multi-family row the layer quotes carries its
 #   own numbered conditions in the cell and is read there.
-# - sdc.16.31.industrial L107-L200: markers 3, 5, 6, 7, 9 and 10 in the
-#   industrial use table, on fueling stations, business services,
-#   marijuana facilities, tool rental, storage and building maintenance.
-#   The bodies were not found by the census. No dwelling row carries one.
+# - sdc.16.31.industrial: the industrial use table's notes. Read since the
+#   section cut (16.31/16.31.020.txt, ruled below); the proof copy's census
+#   found no bodies. No dwelling row carries one.
 # - sdc.16.14.residential-design L169: "D. Detailed design1", a heading's
 #   footnote marker in the design standards. The standards the layer holds
 #   from 16.14 are 16.14.010 F (front-yard parking) and the garage limit
@@ -97,3 +96,95 @@ notes:
       pod is a quadplex on one lot, whose side yard is the row above it (5
       feet), and a quadplex has no neighbouring unit on another lot to be
       attached to.
+
+  # --- 16.31/16.31.020.txt (industrial use table notes) ---
+  # The section cut takes the page furniture out of the table's foot, so the
+  # census now reads this block; on the proof copy it found no bodies. The
+  # table's only dwelling row is "Single dwelling unit ... for one (1)
+  # security person employed on the premises", P in all three columns and
+  # carrying no marker; the layer refuses the pod in LI, GI and EI on that
+  # row and on B, unlisted uses prohibited. Note 10 is printed on the same
+  # readable line as note 9 and is read with it.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L140"
+    digest: "ad275183f781"
+    state: dismissed
+    reason: >-
+      Note 1 is printed on the EI column head and sends the EI zone to its
+      special criteria (16.31.050) and the Tonquin Employment Area to its
+      commercial node rules (16.31.060). Both limit retail, service and
+      commercial floor area; neither lists a dwelling, so the column's one
+      dwelling row (the security dwelling) is unchanged and the pod is still
+      refused in EI.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L141"
+    digest: "47aa1ea280e7"
+    state: dismissed
+    reason: >-
+      Note 2 lets a use mixed with another, such as a restaurant, count as
+      secondary and permitted under half the floor area. It qualifies a
+      commercial row; no dwelling row carries it.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L142"
+    digest: "a5f941fc1172"
+    state: dismissed
+    reason: >-
+      Note 3 caps a retail or service outlet at 5,000 square feet (20,000 in
+      one project). A floor-area limit on commercial rows; no dwelling row
+      carries it.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L143"
+    digest: "daf30519cc97"
+    state: dismissed
+    reason: >-
+      Note 4 allows its use on constrained land where structures would not
+      otherwise be permitted, if no wetland or floodplain is impacted. It
+      qualifies a non-dwelling row; no dwelling row carries it.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L144"
+    digest: "1ab198affc6b"
+    state: dismissed
+    reason: >-
+      Note 5 limits fueling to cardlock, wholesale or facilities serving an
+      associated use, with no public retail fuel sales. A fuel-station row,
+      not a dwelling.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L145"
+    digest: "6522f5a418c2"
+    state: dismissed
+    reason: >-
+      Note 6 sends marijuana facilities to the special criteria of Chapter
+      16.38. Not a dwelling.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L146"
+    digest: "c6b5b77cb3f0"
+    state: dismissed
+    reason: >-
+      Note 7 caps the sales and rental area of an outlet at 5,000 square feet
+      (20,000 in one project). A rental and sales row, not a dwelling.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L147"
+    digest: "539a3ad57a7d"
+    state: dismissed
+    reason: >-
+      Note 8 says animal boarding, kennels and pet daycare inside a building
+      count as "other personal service". A service row, not a dwelling.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L148"
+    digest: "47f8b8546586"
+    state: dismissed
+    reason: >-
+      Note 9 applies the warehousing row to standalone warehousing and
+      distribution only. Its captured text runs on into note 10, printed on
+      the same line, which describes business-to-business supply firms whose
+      sales are mostly off site. Both qualify non-dwelling rows.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L154"
+    digest: "56eaf53aebef"
+    state: dismissed
+    reason: >-
+      Note 11 prohibits towers within 1,000 feet of the Old Town District. A
+      tower row, not a dwelling.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L155"
+    digest: "b1593afadbb8"
+    state: dismissed
+    reason: >-
+      Note 12 sends hospitality and lodging uses in LI to the special
+      criteria of 16.31.040. A hotel is not the pod, as the LI comment in the
+      layer already says.
+  - quote: "or/washington/sherwood/16.31/16.31.020.txt#L156"
+    digest: "a3669a7f51ed"
+    state: dismissed
+    reason: >-
+      Note 13 sends psilocybin service centers and manufacturing to the
+      special criteria of 16.38.040. Not a dwelling.
