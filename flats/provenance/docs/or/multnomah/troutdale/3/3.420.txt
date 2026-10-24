@@ -1,0 +1,100 @@
+3.420  Use Table for Industrial Zoning Districts.
+
+A.     Uses that are permitted are marked with a "P", with specific standards for the use listed in the far-right column as shown below.
+
+B.     Uses that require conditional use approval in accordance with Section 6.300 of this Code are marked with a "C", with specific standards for the use listed in the far-right column as shown below.
+
+
+C.     Uses that are not permitted are marked with a "N".
+D.     Gyms up to five thousand (5,000) square feet shall not be permitted in areas designated Regionally Significant Industrial Areas (RSIA) on Metro's 2040 Growth Map.
+
+Specific
+Land Use                                                                  IP                LI                GI                Standards
+Residential Uses
+One Caretaker unit in conjunction with an ex-                                 N                 P                 P isting industrial use
+All other residential uses                                           N                 N                 N
+Commercial Uses
+Commercial sports complexes including, but                                    N                 C                 C not limited to, health clubs, tennis courts, aquatic centers, skating rinks, and similar facilities
+Convenience stores                                                   C                 N                 N             3.440.I
+Eating and drinking establishments
+Restaurants and bars                                             P                 N                 N            3.440.H
+Mobile Food Vendor operating a Food                                        P                 P                 P              5.200
+Stand, Food Cart, and Food Trailer
+Financial institutions                                                  C                 N                 N          3.440.D.1
+Hotels/Motels/Convention Halls                                 C                 C                 N
+Marijuana facilities                                                     N                 C                 C            3.440.F
+Medical and dental clinics                                          C                 P                 P           3.440.D.1
+Personal services                                                      C                 N                 N          3.440.D.1
+Product sales, service, and/or display acces-                                 N                 P                 P            3.440.K sory to any manufacturing, fabricating, or processing use
+Professional Offices                                                   P                 P                 N          3.440.D.1
+Storage facilities                                                        N                 C                 N            3.440.J
+Automobile, truck, trailer, heavy equipment, recreational vehicle, boat and manufactured home services
+Card-lock fueling stations, truck stops, ser-                              N                 C                 P vice stations, tire shops, and oil change facilities.
+Repair and modification shops                               N                 P                 P
+Sales and rentals                                                   N                 P                 P           3.440.D.1
+3.440.D.3
+Wholesale trade/retail/discount sales and ser-                                C                 P                 P           3.440.D.1 vices
+Industrial Uses
+Aggregate resource                                                   N                 N                 P              4.000
+
+
+Specific
+Land Use                                                                  IP                LI                GI                   Standards
+Manufacturing, milling, and processing
+Assembly and limited manufacturing                     C                 P                 P
+Concrete and asphalt manufacturing plants          N                 N                 C
+Electronic and appliance products                         N                 C                 P
+Food and beverage products
+Food processing involving slaughtering,                                  N                 N                 C fermentation, or fat rendering
+Beverage processing involving brewing,                                   C                 P                 P distilling, roasting, or fermentation
+Other food and beverage products                     P                 P                 P
+Furniture and related products                               N                 P                 P
+Machinery and transportation equipment               N                 C                 P
+Use and temporary storage in the manufac-                                     N                 N                 P turing process of toxic or hazardous material by-products
+The manufacturing or storing of toxic or                                      N                 N                 C hazardous materials when done in compliance with federal and state regulations
+Marijuana processors                                             N                 N                 C            3.440.G
+Metal and fabricated metal products
+Primary manufacturing or milling                        N                 N                 P
+Secondary manufacturing or processing            N                 P                 P
+Nonmetallic mineral products                                 N                 C                 P
+Plastic or rubber products                                      N                 C                 P
+Printing                                                                   C                 P                 P
+Textile, apparel, and leather products                    N                 C                 P
+Wood or paper products
+Primary manufacturing and milling                     N                 N                 P
+Secondary manufacturing and processing         N                 C                 P
+Transportation facilities
+Airports (including heliports)                                  N                 P                 P
+Heliports (not within an airport)                              N                 C                 P
+Marinas                                                                  C                 P                 P
+Freight and trucking firm                                        N                 C                 P
+Warehousing and Storage
+Warehouse                                                             N                 P                 P
+Accessory storage                                                 P                 P                 P
+Storage facilities                                                     N                 C                 N            3.440.J
+Junk yard                                                                   N                 N                 C
+Marine industrial or service facilities                          N                 N                 P
+
+
+Specific
+Land Use                                                                  IP                LI                GI                   Standards
+Research, experimental, or testing                                              P                 P                 P laboratories
+Sanitary landfills, recycling centers, and                                      N                 N                 C transfer stations.
+Trade or commercial schools                                     P                 P                 P
+Other Uses
+Agricultural or animal-based uses                             N                 N                 N
+Child-care facilities in conjunction with a                                     C                 C                 C          3.440.D.1 permitted use or an approved conditional use
+Community service uses                                           C                 C                 C
+Public Parks, parkways, trails, and related                                     P                 P                 P facilities
+Recreation facilities (active)                                       C                 C                 C
+Gym (up to 5,000 s.f.)
+P                 P                 P            3.420.D
+Gym (above 5,000 s.f.)
+C                 C                 C
+Recreation facilities (passive)                                    P                 P                 P
+Utility facilities (major)                                                C                 C                 P
+Utility facilities (minor)                                                P                 P                 P
+Other uses similar to those listed above                  P/C              P/C              P/C
+(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att.
+A), 2-25-2025)
+

@@ -1,0 +1,84 @@
+17.10.065 Cottage cluster design standards.
+
+The following design standards apply to cottage cluster development in the R-7.2 zone.
+Where conflicts arise between the standards within this section and elsewhere in the code, the standards of this section will supersede.
+
+(1) Cottage Orientation. Cottages must be clustered or abut around a common courtyard or are directly connected to it by a pedestrian path, and must meet the following standards (see Figure 1):
+
+(a) Each cottage within a cluster must either abut the common courtyard or must be directly connected to it by a pedestrian path that is at least four feet wide.
+
+(b) A minimum of 50 percent of cottages within a cluster must be oriented to the common courtyard and must:
+
+(A) Have a main entrance facing the common courtyard;
+
+(B) Be within 10 feet from the common courtyard, measured from the facade of the cottage to the nearest edge of the common courtyard; and
+
+(C) Be connected to the common courtyard by a pedestrian path.
+
+(c) Cottages within 20 feet of a street property line may have their entrances facing the street.
+
+(d) Cottages not facing the common courtyard or the street must have their main entrances facing a pedestrian path that is directly connected to the common courtyard.
+
+Figure 1. Cottage Cluster Orientation and Common Courtyard Standards
+
+(2) Common Courtyard Design Standards. Each cottage cluster must share a common courtyard in order to provide a sense of openness and community of residents.
+Common courtyards must meet the following standards:
+
+(a) The common courtyard must be a single, contiguous piece.
+
+(b) The common courtyard must contain a minimum of 150 square feet per cottage within the associated cluster.
+
+(c) The common courtyard must be a minimum of 15 feet wide at its narrowest dimension.
+
+(d) The common courtyard shall be developed with a mix of landscaping, lawn area, pedestrian paths, and/or paved courtyard area, and may also include recreational amenities.
+Impervious elements of the common courtyard shall not exceed 75 percent of the total common courtyard area.
+
+(e) Pedestrian paths must be included in a common courtyard.
+Paths that are contiguous to a courtyard shall count toward the courtyard’s minimum dimension and area.
+Parking areas, required setbacks, and driveways do not qualify as part of a common courtyard.
+
+(3) Pedestrian Access.
+
+(a) An accessible pedestrian path that is at least four feet wide must be provided that connects the main entrance of each cottage to one or all the following:
+
+(A) The common courtyard;
+
+(B) Shared parking areas;
+
+(C) Community buildings; and
+
+(D) Sidewalks in public rights-of-way abutting the site or rights-of-way if there are no sidewalks.
+
+(b) The pedestrian path must be hard-surfaced and a minimum of four feet wide.
+
+(4) Parking Location and Access.
+
+(a) Off-street parking spaces and vehicle maneuvering areas shall not be located:
+
+(A) Within 20 feet from any street property line, except alley property lines;
+
+(B) Between a street property line and the front facade of cottages located closest to the street property line.
+This standard does not apply to alleys.
+
+(b) Off-street parking spaces shall not be located within 10 feet of any other property line, except alley property lines.
+Driveways and drive aisles are permitted within 10 feet of other property lines.
+
+(c) Clustered Parking. Off-street parking may be arranged in clusters and separated from common spaces by at least four feet of landscaping.
+
+(5) Screening. Landscaping, fencing, or walls at least three feet tall shall separate clustered parking areas and parking structures from common courtyards and public streets.
+
+(6) Garages and Carports.
+
+(a) Garages and carports (whether shared or individual) must not abut common courtyards.
+
+(b) Individual attached garages up to 200 square feet shall be exempted from the calculation of maximum building footprint for cottages.
+
+(c) Individual detached garages must not exceed 400 square feet in floor area.
+
+(d) Garage doors for attached and detached individual garages must not exceed 20 feet in width.
+
+History: Ord. 1515 §2 (Exh.
+B), 2022; Ord. 1535 §1 (Exh.
+A), 2024; Ord. 1544 §1 (Exh.
+A), 2026.
+

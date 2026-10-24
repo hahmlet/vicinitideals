@@ -1,0 +1,262 @@
+17.25.100 Habitat conservation area development permits.
+
+A Habitat Conservation Area (HCA) Development Permit shall be approved if the applicant provides evidence substantiating compliance with either Subsection 17.25.100(A) or (B).
+However, if the proposed development is in a Water Quality Resource Area District regulated pursuant to Chapter 17.27, it shall comply with either Subsection 17.25.100(B) or 17.25.100, except that if the subject parcel contains an HCA and a WQRA and is the subject of a land use application for a partition or subdivision, the partition or subdivision shall comply with the requirements of Sections 17.25.100 and 17.25.110, and if the provisions conflict, the most restrictive standard shall apply.
+
+A. Development in an HCA shall be permitted subject to the following criteria:
+
+1. Except as provided in Subsections 17.25.100(A)(2) through (5), a maximum disturbance area (MDA) shall apply to the subject property.
+
+a. The MDA shall be calculated pursuant to Table 3 for property with a Comprehensive Plan designation of Urban Low Density Residential and Table 4 for property with any other Comprehensive Plan designation.
+
+Table 3 Maximum Disturbance Area for Urban Low Density Residential Property
+HCA Type 1
+Maximum Disturbance Area
+High
+50 percent of the area of the subject property, up to a maximum of 5,000 square feet Moderate/Low2
+65 percent of the area of the subject property, up to a maximum of 6,000 square feet 1 If more than one HCA Type is present on the subject property, the MDA shall be based on the predominant type.
+For the purpose of this provision, High HCA shall be the predominant type if at least 50 percent of the area of the HCA on the subject property is High HCA. 2 For the purpose of Table 3, Moderate and Low HCA shall be combined as one HCA Type. 1 If more than one HCA Type is present on the subject property, the MDA shall be based on the predominant type.
+For the purpose of this provision, High HCA shall be the predominant type if at least 50 percent of the area of the HCA on the subject property is High HCA. 2 For the purpose of Table 3, Moderate and Low HCA shall be combined as one HCA Type.
+
+Table 4 Maximum Disturbance Area for Other Property Inside the City
+HCA Type                                                                                                                                                 Maximum Disturbance Area1
+High                                                                                                                                                     10 percent of High HCA on the subject property Moderate                                                                                                                                                 15 percent of Moderate HCA on the subject property Low                                                                                                                                                      50 percent of Low HCA on the subject property 1 The MDA refers only to the maximum percentage of each type of HCA that may be disturbed.
+Table 4 imposes no limit on disturbance area outside an HCA.  1 The MDA refers only to the maximum percentage of each type of HCA that may be disturbed.
+Table 4 imposes no limit on disturbance area outside an HCA.
+
+2. The following disturbance area limitations shall apply to certain utility facilities.
+Utility facilities other than those addressed in Subsections 17.25.100(A)(2)(a) through (c) shall be subject to Subsection 17.25.100(A)(1).
+
+a. The disturbance area for private connections of utility lines, pipes, or cables to other utility facilities shall be no greater than 10 feet wide.
+
+b. The disturbance area for the upgrade of existing utility lines, pipes, or cables shall be no greater than 15 feet wide.
+
+c. The disturbance area for new underground utility lines, pipes, or cables shall be no greater than 25 feet wide and shall disturb no more than 200 linear feet of the Water Quality Resource Area District regulated pursuant to Chapter 17.27, provided that this disturbance area, with the exception of necessary access points to the utility facility, shall be restored by the planting of native vegetation.
+
+3. A partition of a parcel that contains an HCA shall comply with one of the following options:
+
+a. There shall be no more than a 30 percentage point difference in the percentage of each parcel’s area that is in an HCA.
+For example, a partition that produces two parcels, one that is 55 percent HCA and the other that is 35 percent HCA, is permissible; whereas a partition that produces two parcels, one that is 75 percent HCA and the other that is 30 percent HCA, is not permissible.
+In this case, development in the HCA shall be subject to further review under Chapter 17.25;
+
+b. The partition shall comply with Subsection 17.25.100(A)(4); or
+
+c. The applicant shall demonstrate, through an analysis of different possible partition plans based on the characteristics and zoning of the subject property, that it is not practicable to comply with Subsection 17.25.100(A)(3)(a) or (b) and that the applicant’s alternate plan will result in the smallest practicable percentage point difference in the percentage of each parcel’s area that is in an HCA.
+
+4. A subdivision of property that contains an HCA shall require that a minimum of 90 percent of the subject property’s High HCA and a minimum of 80 percent of its Moderate HCA shall be platted as a tract rather than as part of any lot.
+Any HCA that remains outside such a tract may be developed, subject to compliance with the mitigation standards of Subsection 17.25.100(A) or (B).
+Unless any HCA that remains outside an HCA tract is protected from development by a restrictive covenant or a conservation easement, it shall be assumed that such areas eventually will be developed, and mitigation shall be required.
+Mitigation shall be completed, or a performance bond in an amount sufficient to cover the cost of mitigation shall be posted with the County, prior to approval of the final plat.
+
+a. If over 50% of the HCA on the subject property is High HCA, the entire calculation is for High (i.e., 90% of the HCA shall be placed within a separate tract).
+
+b. If over 50% of the HCA on a property is Moderate HCA, the entire calculation is for Moderate (i.e., 80% of the HCA shall be placed within a separate tract).
+
+c. An HCA tract shall be protected from development by restrictive covenant, conservation easement, or public dedication.
+However, the tract may be subject to an easement conveying storm and surface water management rights to the surface water management authority.
+The tract shall be designated as one of the following prior to final plat approval:
+
+i. A private natural area owned by a homeowners association or a private non-profit with the mission of land conservation; or
+
+ii. A public natural area where the tract has been dedicated to a public entity.
+
+5. The MDA for publicly owned parks and open spaces designated as natural areas shall be five percent of the HCA on the subject property.
+Subsection 17.25.100(A)(5) imposes no limit on disturbance area outside an HCA for such natural areas.
+
+6. If development in an HCA is approved pursuant to Subsection 17.25.100(A), compliance with the following mitigation standards shall be required, except that the mitigation standards for development in a wetland (as distinct from an HCA that is adjacent to a wetland) shall be only those required by federal and state law.
+
+a. Required Plants and Plant Densities.
+All trees, shrubs and ground cover shall be native vegetation.
+An applicant shall comply with Subsection 17.25.100(A)(6)(a)(i) or (ii), whichever results in more tree plantings, except that where the disturbance area is one acre or more, the applicant shall comply with Subsection 17.25.100(A)(6)(a)(ii).
+
+i. The mitigation requirement shall be calculated based on the number and size of trees that are removed from the site.
+Trees that are removed from the site shall be replaced as shown in Table 6.
+Conifers shall be replaced with conifers.
+Bare ground shall be planted or seeded with native grasses or herbs.
+Non-native sterile wheat grass may also be planted or seeded, in equal or lesser proportion to the native grasses or herbs; or
+
+Table 6 Tree Replacement
+Size of Tree to be Removed (inches in diameter at breast height)  Number of Trees and Shrubs to be Planted
+6 to 12                                                           2 trees and 3 shrubs
+over 12 to 18                                                     3 trees and 6 shrubs
+over 18 to 24                                                     5 trees and 12 shrubs
+over 24 to 30                                                     7 trees and 18 shrubs
+over 30                                                           10 trees and 30 shrubs
+
+ii. The mitigation requirement shall be calculated based on the size of the disturbance area within the HCA.
+Native trees and shrubs shall be planted at a rate of five trees and 25 shrubs per every 500 square feet of disturbance area (calculated by dividing the number of square feet of disturbance area by 500, and then multiplying that result times five trees and 25 shrubs, and rounding all fractions to the nearest whole number of trees and shrubs; for example, if there will be 330 square feet of disturbance area, then 330 divided by 500 equals 0.66, and 0.66 times five equals 3.3, so three trees shall be planted, and 0.66 times 25 equals 16.5, so 17 shrubs shall be planted).
+Bare ground shall be planted or seeded with native grasses or herbs.
+Non-native sterile wheat grass may also be planted or seeded, in equal or lesser proportion to the native grasses or herbs.
+
+b. Plant Size.
+Replacement trees shall be at least one-half inch in caliper, measured at six inches above the ground level for field grown trees or above the soil line for container grown trees (the one-half inch minimum size may be an average caliper measure, recognizing that trees are not uniformly round), unless they are oak or madrone which may be one-gallon size.
+Shrubs shall be in at least a one-gallon container or the equivalent in ball and burlap and shall be at least 12 inches in height.
+
+c. Plant Spacing.
+Trees shall be planted between eight and 12 feet on center, and shrubs shall be planted between four and five feet on center, or clustered in single species groups of no more than four plants, with each cluster planted between eight and 10 feet on center.
+When planting near existing trees, the drip line of the existing tree shall be the starting point for plant spacing measurements.
+
+d. Plant Diversity.
+Shrubs shall consist of at least two different species.
+If 10 trees or more are planted, then no more than 50 percent of the trees may be of the same genus.
+
+e. Invasive Vegetation.
+Invasive non-native or noxious vegetation shall be removed within the mitigation area prior to planting, and shall be removed or controlled for five years following the date that the mitigation planting is completed.
+
+f. Mulching. Mulch shall be applied around new plantings at a minimum of three inches in depth and 18 inches in diameter.
+
+g. Tree and Shrub Survival.
+Trees and shrubs that die shall be replaced in kind to the extent necessary to ensure that a minimum of 80 percent of the trees initially required and 80 percent of the shrubs initially required shall remain alive on the fifth anniversary of the date that the mitigation planting is completed.
+
+h. Monitoring and Reporting.
+Monitoring of the mitigation site shall be the ongoing responsibility of the property owner.
+For a period of five years following the date that the mitigation planting is completed, the property owner shall submit an annual report to the Planning Director documenting the survival of the trees and shrubs on the mitigation site.
+In lieu of complying with the monitoring and reporting requirement, the property owner may post with the County a performance bond, or other surety acceptable to the County, in an amount sufficient to cover costs of plant material and labor associated with site preparation, planting, and maintenance.
+An applicant who elects to post a surety shall be subject to Chapter 17.96.
+
+7. The mitigation area required by Subsection 17.25.100(A)(6) shall be located as follows:
+
+a. All vegetation shall be planted on the subject property, either within the HCA or in an area contiguous to the HCA, provided, however, that if the vegetation is planted in an area contiguous to the HCA, such area shall be protected from development by a restrictive covenant, conservation easement, or public dedication.
+
+b. Off-site mitigation within the same subwatershed (6th Field Hydrologic Unit Code) as the HCA within which development is proposed, may be approved for part or all of the required mitigation, if the applicant provides evidence substantiating that:
+
+i. It is not practicable to complete the mitigation on-site; and
+
+ii. The applicant possesses legal authority to conduct and maintain the mitigation, such as having a sufficient ownership interest in the mitigation site, and, if the mitigation is not within an HCA, that the mitigation site will be protected from development after the monitoring period expires by a restrictive covenant, conservation easement, or public dedication.
+
+8. An applicant may request to proportionally vary the number and size of trees and shrubs required pursuant to Subsections 17.25.100(A)(6)(a) and (b)—for example, to plant fewer larger trees and shrubs or to plant more smaller trees and shrubs—and a corresponding modification of the plant spacing requirements of Subsection 17.25.100(A)(6)(c).
+The request shall be approved if the applicant provides evidence substantiating that the proposed planting will achieve, at the end of the fifth year after initial planting, comparable or better mitigation results as the results that would be achieved if the applicant complied with all of the requirements of Subsections 17.25.100(A)(6)(a) through (c).
+
+B. Development in an HCA that does not comply with Subsection 17.25.100(A) shall be permitted subject to the following criteria:
+
+1. Development in the HCA shall be avoided to the extent practicable.
+If there is more than one category (High, Moderate, or Low) of HCA on the subject property, then the applicant shall first avoid the intrusion of development into the higher-valued HCA, to the extent practicable.
+To comply with these requirements, the following approaches shall be used, to the extent practicable:
+
+a. Multi-story construction;
+
+b. Minimizing building and development footprint;
+
+c. Maximizing the use of native landscaping materials and meeting applicable landscaping requirements by preservation of the HCA as permitted by Chapter 17.46;
+
+d. Minimal excavation foundation systems (e.g., pier, post, or piling foundation);
+
+e. Placing facilities that are required to infiltrate stormwater onsite, including associated piping, within the HCA, provided that such facilities comply with Subsection 17.25.040(R); and
+
+f. Complying with the setback standards of Section 17.25.110 rather than those of the underlying zoning district.
+
+2. If there is no practicable alternative that will avoid disturbance of the HCA, then significant detrimental impacts to the HCA shall be minimized as follows:
+
+a. The proposed development shall minimize loss of habitat as compared to other practicable alternatives, including significantly different practicable alternatives that would result in less development within the HCA.
+
+b. The proposed development shall minimize significant detrimental impacts to ecological functions of the HCA on the subject property as compared to other practicable alternatives, including significantly different practicable alternatives that would result in less development within the HCA.
+The ecological functions that shall be considered are:
+
+i. Connectivity of the habitat to water;
+
+ii. Connectivity of the habitat to other habitat areas; and
+
+iii. The functions identified in Table 7.
+
+Table 7 Ecological Functional Values of Riparian Corridors
+Ecological function
+Landscape features providing functional values
+Microclimate and shade
+Forest canopy or woody vegetation within 100 feet of a stream; a wetland1; or a flood area2 Streamflow moderation and water storage
+A wetland or other water body3 with a hydrologic connection to a stream; or a flood area2 Bank stabilization, sediment and pollution control
+All sites within 50 feet of a surface stream;
+Forest canopy, woody vegetation, or low structure vegetation/open soils within 100 feet of a stream or a wetland; or forest canopy, woody vegetation, or low structure vegetation/open soils within a flood area; and Forest canopy, woody vegetation, or low structure vegetation/open soils within 100-200 feet of a stream if the slope is greater than 25 percent Large wood and channel dynamics
+Forest canopy within 150 feet of a stream or wetland, or within a flood area; and The channel migration zone is defined by the flood area, but where there is no mapped flood area, a default of 50 feet is established to allow for the channel migration zone.
+Organic material sources
+Forest canopy or woody vegetation within 100 feet of a stream or wetland, or within a flood area 1 Refers to “hydrologically-connected wetlands,” which are located partially or wholly within ¼ mile of a surface stream or flood area. 2 Developed flood areas are not identified as HCAs because they do not provide primary ecological functional value. 3 “Other water body” could include lakes, ponds, reservoirs, or manmade water resource that is not a water quality facility or farm pond. 1 Refers to “hydrologically-connected wetlands,” which are located partially or wholly within ¼ mile of a surface stream or flood area. 2 Developed flood areas are not identified as HCAs because they do not provide primary ecological functional value. 3 “Other water body” could include lakes, ponds, reservoirs, or manmade water resource that is not a water quality facility or farm pond.
+
+c. If there is more than one category of HCA on the subject property, then development within a higher-valued HCA shall be considered more detrimental than development within a lower-valued HCA.
+
+d. To the extent practicable, development in the HCA shall be designed, located, and constructed to:
+
+i. Minimize grading, removal of native vegetation, and disturbance and removal of native soils by using the approaches required by Section 17.25.080, reducing building footprints, and using minimal excavation foundation systems (e.g., pier, post, or piling foundation);
+
+ii. Minimize adverse hydrological impacts on water resources, such as by using the techniques described in Part (a) of Table 8, unless their use is prohibited by an applicable and required state or federal permit issued to a unit of local government having jurisdiction in the area, such as a permit required under the federal Clean Water Act, 33 U.S.C. §§1251 et seq., or the federal Safe Drinking Water Act, 42 U.S.C. §§300f et seq., and including conditions or plans required by such permit;
+
+iii. Minimize impacts on wildlife corridors and fish passage, such as by using the techniques described in Part (b) of Table 8; and
+
+iv. Consider using the techniques described in Part (c) of Table 8.
+
+Table 8 Habitat-Friendly Development Practices 1
+Part (a): Design and Construction Practices to Minimize Hydrologic Impacts
+1. Amend disturbed soils to original or higher level of porosity to regain infiltration and stormwater storage capacity.
+2. Use pervious paving materials for residential driveways, parking lots, walkways, and within centers of cul-de-sacs.
+3. Incorporate stormwater management in road right-of-ways.
+4. Landscape with rain gardens to provide on-lot detention, filtering of rainwater, and groundwater recharge.
+5. Use green roofs for runoff reduction, energy savings, improved air quality, and enhanced aesthetics.
+6. Disconnect downspouts from roofs and direct the flow to vegetated infiltration/filtration areas such as rain gardens.
+7. Retain rooftop runoff in a rain barrel for later on-lot use in lawn and garden watering.
+8. Use multi-functional open drainage systems in lieu of more conventional curb-and-gutter systems.
+9. Use bioretention cells as rain gardens in landscaped parking lot islands to reduce runoff volume and filter pollutants.
+10. Apply a treatment train approach to provide multiple opportunities for storm water treatment and reduce the possibility of system failure.
+11. Reduce sidewalk width and grade them such that they drain to the front yard of a residential lot or retention area.
+12. Reduce impervious impacts of residential driveways by narrowing widths and moving access to the rear of the site.
+13. Use shared driveways.
+14. Reduce width of residential streets, depending on traffic and parking needs.
+15. Reduce street length, primarily in residential areas, by encouraging clustering and using curvilinear designs.
+16. Reduce cul-de-sac radii and use pervious vegetated islands in center to minimize impervious effects, and allow them to be utilized for truck maneuvering/loading to reduce need for wide loading areas on site.
+17. Eliminate redundant non-ADA sidewalks within a site (i.e., sidewalk to all entryways and/or to truck loading areas may be unnecessary for industrial developments).
+18. Minimize car spaces and stall dimensions, reduce parking ratios, and use shared parking facilities and structured parking.
+19. Minimize the number of stream crossings and place crossing perpendicular to stream channel if possible.
+20. Allow narrow street right-of-ways through stream corridors whenever possible to reduce adverse impacts of transportation corridors.
+Part (b): Design and Construction Practices to Minimize Impacts on Wildlife Corridors and Fish Passage
+1. Carefully integrate fencing into the landscape to guide animals toward animal crossings under, over, or around transportation corridors.
+2. Use bridge crossings rather than culverts wherever possible.
+3. If culverts are utilized, install slab, arch or box type culverts, preferably using bottomless designs that more closely mimic stream bottom habitat.
+4. Design stream crossings for fish passage with shelves and other design features to facilitate terrestrial wildlife passage.
+5. Extend vegetative cover through the wildlife crossing in the migratory route, along with sheltering areas.
+Part (c): Miscellaneous Other Habitat-Friendly Design and Construction Practices
+1. Use native vegetation throughout the development (not just in HCA).
+2. Locate landscaping (required by other sections of this Ordinance) adjacent to HCA.
+3. Reduce light spill-off into HCAs from development.
+4. Preserve and maintain existing trees and tree canopy coverage, and plant trees, where appropriate, to maximize future tree canopy coverage. 1 These development practices represent the state of scientific knowledge at the time of the adoption of Chapter 17.25.
+If more effective habitat-friendly practices become available, they may be used.
+
+3. If development in an HCA is approved pursuant to Subsection 17.25.100(B), compliance with the following mitigation standards shall be required, except that the mitigation standards for development in a wetland (as distinct from an HCA that is adjacent to a wetland) shall be only those required by federal and state law.
+
+a. Compliance with Subsections 17.25.100(A) (6), (7), and, if applicable, (8) shall be required; or
+
+b. An alternative mitigation plan (e.g., a proposal to create an alternative plant community type such as an oak savannah or a low-structure plant community, or where an applicant demonstrates that a portion of identified HCA on the subject property provides only impaired ecological functions) may be approved, subject to the following criteria:
+
+i. The mitigation plan shall demonstrate that it compensates for significant detrimental impacts to the ecological functions provided by the HCA on the subject property, after taking into consideration efforts to minimize such significant detrimental impacts through the use of the techniques described in Table 8 and through any additional or innovative techniques.
+
+ii. Mitigation shall occur on the subject property, except that offsite mitigation may be approved pursuant to Subsection 17.25.100(A)(7)(b).
+
+iii. All mitigation plantings shall be native vegetation.
+
+iv. All in-stream work in fish-bearing streams shall be done in accordance with the Oregon Department of Fish and Wildlife in-stream work-timing schedule.
+
+v. A mitigation maintenance plan shall be included and shall be sufficient to ensure the success of the planting.
+
+4. Municipal potable water, stormwater (drainage), and wastewater utility facilities, which may include, but are not limited to, water treatment plants, wastewater treatment plants, raw water intakes, pump stations, transmission mains, conduits or service lines, terminal storage reservoirs, and outfall devices, shall not have to comply with Subsection 17.25.100(B)(1), provided that:
+
+a. Where practicable, the development shall not encroach closer to a water resource than existing operations and development, or for new projects where there are no existing operations or development, the development shall not encroach closer to a water resource than practicable; and
+
+b. Best management practices shall be employed that accomplish the following:
+
+i. Account for watershed assessment information in project design;
+
+ii. Minimize the trench area and tree removal within the HCA;
+
+iii. Utilize and maintain erosion prevention and sediment control measures until other site stabilization measures are established, post-construction;
+
+iv. Replant immediately after backfilling or as soon as effective;
+
+v. Preserve wetland soils and retain soil profiles;
+
+vi. Minimize compactions and the duration of the work within the HCA;
+
+vii. Complete in-water construction during appropriate seasons, or as approved within requisite state or federal permits;
+
+viii. Monitor water quality during the construction phases, if applicable; and
+
+ix. Implement a full inspection and monitoring program during and after project completion, if applicable.
+
+History: Ord. 1496 §1 (Exh.
+A), 2009.
+

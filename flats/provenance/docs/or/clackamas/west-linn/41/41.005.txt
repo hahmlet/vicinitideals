@@ -1,0 +1,27 @@
+41.005 DETERMINING HEIGHT OF BUILDING
+
+A. For all zoning districts, building height shall be the vertical distance above a reference datum measured to the highest point of a flat roof or to the deck line of a mansard roof or to the highest gable, ridgeline or peak of a pitched or hipped roof, not including projections not used for human habitation, as provided in CDC 41.030.
+The reference datum shall be selected by either of the following, whichever yields a greater height of building.
+
+1. For relatively flat sites where there is less than a 10-foot difference in grade between the front and rear of the building, the height of the building shall be measured from the proposed finished grade five feet out from the exterior wall at the front of the building (Figure 1); or
+
+2. For steeper lots where there is more than a 10-foot difference in grade between the front and rear of the building, the height of the building is measured from the proposed finished grade at a point five feet out from the exterior wall on the lowest side (front or rear) of the building.
+One then measures vertically to the peak or ridgeline of the roof to determine the height (Figure 2).
+
+3. Buildings on cross slopes or side slopes are measured at either the front or rear of the building using methods described in subsections (A)(1) and (2) of this definition only (Figure 3).
+
+Even if the cross slope creates a tall elevation on the side, the method of determining height is not modified.
+
+Also see CDC 41.020, Height Exceptions.
+
+Figure 1. Height of building on relatively flat lot is measured from proposed finished grade at front of house to peak of roof.
+Figure 1. Height of building on relatively flat lot is measured from proposed finished grade at front of house to peak of roof.
+Figure 1. Height of building on relatively flat lot is measured from proposed finished grade at front of house to peak of roof.
+Figure 2. Height of building on steep lots where there is more than a 10-foot difference in elevation between the front and rear of the building is measured from the proposed finished grade at a point five feet out from the front or rear exterior wall on the lowest side of the house to the peak of the building.
+Figure 2. Height of building on steep lots where there is more than a 10-foot difference in elevation between the front and rear of the building is measured from the proposed finished grade at a point five feet out from the front or rear exterior wall on the lowest side of the house to the peak of the building.
+Figure 3. Height of building with a cross slope is still measured at either the front or rear by methods described in subsection (A)(1) or (2) of this definition.
+Figure 3. Height of building with a cross slope is still measured at either the front or rear by methods described in subsection (A)(1) or (2) of this definition.
+
+(Ord. 1604 § 42, 2011; Ord. 1745 § 1 (Exh.
+A), 2023)
+

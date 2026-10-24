@@ -274,10 +274,17 @@ def _chapter(layer: Layer) -> tuple[str, bool]:
     naive report and opposite instructions to whoever reads it.
     """
     from flats.encode.glossary import declared
+    from flats.provenance.sections import splits
 
     stored = {p.stem for p in _stored(layer.layer)}
     doc = declared(layer)
-    return ("", False) if doc is None else (doc.id, doc.id in stored)
+    if doc is None:
+        return "", False
+    # A chapter cut into section files is held in its sections: the proof copy
+    # is no longer a document of its own, and Fairview's 19.13 read as
+    # unfetched the day it was cut.
+    cut = f"{layer.layer}/{doc.id}.txt" in splits(ProvenanceStore(DOCS))
+    return doc.id, doc.id in stored or cut
 
 
 def coverage_for(rules: RuleSet, layer_id: str) -> list[Coverage]:

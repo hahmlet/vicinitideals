@@ -1,0 +1,18 @@
+16.04.010 Districts
+16.04.010
+For the purposes of this Code, the City is hereby divided into the following zoning districts:
+Very Low Density Residential VLDR
+Low Density Residential LDR
+Medium Density Residential-Low MDRL
+Medium Density Residential-High MDRH
+High Density Residential HDR
+Neighborhood Commercial NC
+Office Commercial oc
+Office Retail OR
+Retail Commercial RC
+General Commercial GC
+Light Industrial LI
+General Industrial GI
+Flood Plain Overlay FP
+Institutional/Public IP
+Old Town Overlay OT

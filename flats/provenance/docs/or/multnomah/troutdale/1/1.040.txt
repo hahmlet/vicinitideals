@@ -1,0 +1,381 @@
+1.040  Vegetation Corridor and Slope District, Water Quality, and Flood Management Definitions.
+
+100-Year Flood. The flood that is equaled or exceeded once in one hundred (100) years on the average; equivalent to the one percent (1%) annual chance flood.
+Also called the Special Flood Hazard Area, Base Flood, and 100-year Floodplain.
+
+Area of Shallow Flooding. Means a designated AO, AH, AR/AO, AR/AH, or VO zone on a community's Flood Insurance Rate Map (FIRM) with a one percent (1%) or greater annual chance of flooding to an average depth of 1 - 3 feet where a clearly defined channel does not exist, where the path of flooding is unpredictable, and where velocity flow may be evident.
+Such flooding is characterized by ponding or sheet flow.
+
+Area of Special Flood Hazard. Means the land in the floodplain within a community subject to a one percent (1%) or greater chance of flooding in any given year.
+The area may be designated as Zone A on the Flood Hazard Boundary Map (FHBM).
+After detailed ratemaking has been completed in preparation for publication of the flood insurance rate map, Zone A usually is refined into Zones A, AO, AH, A1-30, AE, A99, AR, AR/A1-30, AR/AE, AR/AO, AR/AH, AR/A, VO, or V1-30, VE, or V. For purposes of these regulations, the term ''special flood hazard area'' is synonymous in meaning with the phrase ''area of special flood hazard''.
+
+Bankfull Stage. As defined in the Oregon Administrative Rules pertaining to removal/fill permits, the stage or elevation at which water overflows the natural banks of a stream or other waters of the state and begins to inundate upland areas.
+In the absence of physical evidence, the two-year recurrent flood elevation (storm level) may be used to approximate the bankfull stage.
+The bankfull stage is the starting point for measuring the width of a vegetation corridor from a protected water feature.
+In the absence of any data to establish the bankfull stage or two-year storm event, the starting point for measuring the vegetation corridor is determined by the following indicators:
+
+A.     Water marks on fixed objects (vegetation, rocks, buildings, etc.);
+
+B.     Drift lines (deposited waterborne twigs, litter, etc.); or
+
+C.     Waterborne sediment deposits on the soil surface or fixed objects (vegetation, rocks, buildings, etc.).
+
+
+Base Flood. A flood having a one percent (1%) chance of being equaled or exceeded in any given year.
+
+Base Flood Elevation. The water surface elevation during the Base Flood in relation to a specified datum.
+The Base Flood Elevation (BFE) is depicted on the Flood Insurance Rate Map to the nearest foot and in the Flood Insurance Study to the nearest one-tenth (0.1) foot.
+Not every potential Special Flood Hazard Area within the Urban Growth Boundary has been mapped by the Federal Emergency Management Agency through the Flood Insurance Study, Flood Insurance Rate Maps, and Digital Flood Insurance Rate Maps.
+The Floodplain Manager or designee is authorized through Section 14.020 to obtain the information necessary to determine the presence and extent of unmapped Special Flood Hazard Areas and the associated Base Flood Elevation as part of reviewing development proposals that affect the 100-year Floodplain.
+Such information shall be used by the City of Troutdale to supplement the Flood Insurance Study, Flood Insurance Rate Maps, and Digital Flood Insurance Rate Maps.
+
+Basement. Any area of the building having its floor subgrade (below ground level) on all sides.
+
+Below-Grade Crawl Space. Means an enclosed area below the base flood elevation in which the interior grade is not more than two (2) feet below the lowest adjacent exterior grade and the height, measured from the interior grade of the crawlspace to the top of the crawlspace foundation, does not exceed four (4) feet at any point.
+
+Breakaway Wall. Means a wall that is not part of the structural support of the building and is intended through its design and construction to collapse under specific lateral loading forces, without causing damage to the elevated portion of the building or supporting foundation system.
+
+Conservation Easement. An easement applied to environmentally sensitive lands including, but not limited to, lands identified as hillsides, wetlands, floodplains, and floodways.
+The field verification shall be done by a licensed surveyor, engineer, hydrologist, or any other licensed specialist in the fields of engineering, hydrology, or botany.
+A conservation easement prohibits most forms of development and assures that native vegetation will be maintained or enhanced.
+Conservation easements usually affect privately owned land and are enforceable by the City.
+Trails and limited public facilities may be permitted under carefully controlled conditions within conservation easements.
+
+Construction, Start of.
+(For other than new construction or substantial improvements under the Coastal Barrier Resources Act (Pub.
+L. 97-348)), includes substantial improvement, and means the date the building permit was issued, provided the actual start of construction, repair, reconstruction, rehabilitation, addition placement, or other improvement was within one hundred eighty (180) days of the permit date.
+The actual start means either the first placement of permanent construction of a structure on a site, such as the pouring of slab or footings, the installation of piles, the construction of columns, or any work beyond the stage of excavation; or the placement of a manufactured home on a foundation.
+Permanent construction does not include land preparation, such as clearing, grading and filling; nor does it include the installation of streets and/or walkways; nor does it include excavation for a basement, footings, piers, or foundations or the erection of temporary forms; nor does it include the installation on the property of accessory buildings, such as garages or sheds not
+
+
+occupied as dwelling units or not part of the main structure.
+For a substantial improvement, the actual start of construction means the first alteration of any wall, ceiling, floor, or other structural part of a building, whether or not that alteration affects the external dimensions of the building.
+
+Critical Facility. A facility that is critical for the health and welfare of the population and is especially important to be located above the Base Flood Elevation following hazard events.
+The following is the list of Critical Facilities for the purposes of Chapter 14:
+
+A.     Hospitals and other medical facilities having surgery and emergency treatment areas;
+
+B.     Fire and police stations;
+
+C.     Tanks or other structures containing, housing or supporting water or fire-suppression materials or equipment required for the protection of essential or hazardous facilities or special occupancy structures.
+These tanks or other structures do not include City water distribution facilities;
+
+D.     Emergency vehicle shelters and garages;
+
+E.     Structures and equipment in emergency-preparedness centers;
+
+F.     Standby power generating equipment for essential facilities;
+
+G.    Structures and equipment in government communication centers and other facilities required for emergency response; and
+
+H.     Other facilities as determined by the Floodplain Manager or designee.
+
+Some types of facilities may be critical to a community, but require location within or partially within Special Flood Hazard Areas because of the nature of the facilities.
+
+Debris. Debris includes discarded man-made objects and may include tires, vehicles, litter, scrap metal, construction waste, lumber, plastic, or styrofoam.
+Debris does not include objects necessary to a use allowed by this Code, or ornamental and recreational structures.
+Debris does not include existing natural plant materials or natural plant materials which are left after flooding, downed or standing dead trees, or trees which have fallen into protected water features.
+
+Department of Environmental Quality (DEQ) Water Quality Standards. State of Oregon DEQ water quality standards are the numerical criteria or narrative condition needed in order to protect an identified beneficial use.
+
+Design Flood Elevation. The elevation of the 100-year storm as defined in the Federal Emergency Management Agency Flood Insurance Studies or, in areas without Federal Emergency Management Agency floodplains, the elevation of the 25-year storm or the edge of mapped flood-prone soils or similar methodologies.
+
+Developer. The owners of property, their agents or contractors, or their successors and assigns, who have undertaken or are proposing development which is regulated by Sections 4.300, 5.600, 5.700, and Chapter 14 of this Code.
+
+
+Development. Any man-made change to improved or unimproved real estate, including but not limited to buildings or other structures, mining, dredging, filling, grading, paving, excavation or drilling operations or storage of equipment or materials.
+
+Digital Flood Insurance Rate Map. Depicts flood risk and federal flood zones and flood risk information.
+The Digital Flood Insurance Rate Map (DFIRM) presents the flood risk information in a format suitable for electronic mapping applications.
+
+Disturb. Any man-made changes to the existing physical status of the land which are made in connection with development.
+
+Elevated Building. Means, for insurance purposes, a non-basement building which has its lowest elevated floor raised above ground level by foundation walls, shear walls, posts, piers, pilings, or columns.
+
+Elevation Certificate. A form supplied by the Federal Emergency Management Agency (FEMA) and used to document the lowest floor elevation of a building.
+
+Emergency. Any man-made or natural event or circumstance causing or threatening loss of life, injury to person or property, and includes, but is not limited to, fire, explosion, flood, severe weather, drought, earthquake, volcanic activity, spills or releases of oil or hazardous material, contamination, utility or transportation disruptions, and disease.
+
+Engineer. A registered professional engineer licensed by the State of Oregon.
+
+Enhancement. The process of improving upon the natural functions and/or values of an area or feature which has been degraded by human activity.
+Enhancement activities may or may not return the site to a pre-disturbance condition, but create/recreate processes and features that occur naturally.
+
+Erosion. Erosion is the detachment and movement of soil particles, rock fragments, or other material, organic or inorganic, resulting from actions of water, wind, human, or animal activity.
+
+Erosion Hazard Zone. The area adjacent to a stream or river that is at risk of bank erosion from stream flow or mass wasting, as designated on the communities FIRM.
+
+Erosion Prevention and Sediment Control Plans. Plan requirements are specified in the City of Troutdale's Construction Standards for Public Works Facilities.
+
+Erosion, Visible or Measurable.
+Visible or measurable erosion includes, but is not limited to:
+
+A.     Deposits of mud, dirt sediment, or similar material exceeding one-half (½) cubic foot in volume on public or private streets, adjacent property, or onto the storm and surface water system, either by direct deposit, dropping discharge, or as a result of the action of erosion.
+
+B.     Evidence of concentrated flows of water over bare soils, turbid or sediment laden flows, or evidence of onsite erosion such as rivulets on bare soil slopes where the flow of water is not filtered or captured on the site.
+
+
+C.     Earth slides, mudflows, earth sloughing, or other earth movement that leaves the property.
+
+Excavation. Any act by which soil or rock is cut into, dug, quarried, uncovered, removed, displaced, or relocated.
+
+Existing Building or Structure. A structure for which the Start of Construction commenced before February 1, 2019.
+
+Federal Emergency Management Agency (FEMA). The agency with the overall responsibility for administering the National Flood Insurance Program.
+
+Fill. Any material such as, but not limited to, sand, soil, rock, gravel, clay, or mud that is placed on a site for the purposes of development or redevelopment.
+
+FIRM. See Flood Insurance Rate Map.
+
+Flood or Flooding. Means:
+
+A.     A general and temporary condition of partial or complete inundation of normally dry land areas from:
+1.     The overflow of inland or tidal waters.
+2.     The unusual and rapid accumulation or runoff of surface waters from any source.
+3.     Mudslides (i.e., mudflows) which are proximately caused by flooding as defined in Subsection (A.2) of this definition and are akin to a river of liquid and flowing mud on the surfaces of normally dry land areas, as when earth is carried by a current of water and deposited along the path of the current.
+4.     The collapse or subsidence of land along the shore of a lake or other body of water as a result of erosion or undermining caused by waves or currents of water exceeding anticipated cyclical levels or suddenly caused by an unusually high water level in a natural body of water, accompanied by a severe storm, or by an unanticipated force of nature, such as flash flood or an abnormal tidal surge, or by some similarly unusual and unforeseeable event which results in flooding as defined in Subsection (A.1) of this definition.
+
+Flood Insurance Rate Map (FIRM). An official map of a community, on which the Federal Insurance Administrator has delineated both the special hazard areas and the risk premium zones applicable to the community.
+
+Flood Insurance Study (FIS). Also known as the flood elevation study, means an examination, evaluation and determination of flood hazards and, if appropriate, corresponding water surface elevations, or an examination, evaluation and determination of mudslide (i.e., mudflow) and/or flood-related erosion hazards.
+
+Flood Management Area (FLMA). All lands contained within the 100-year floodplain and floodway as shown on the Flood Insurance Rate Map, and the area of inundation for the February 1996 flood.
+In addition, all lands which have documented evidence of flooding.
+
+
+Floodplain. As shown below in Figure 1 - Floodplain Cross Section, the area adjacent to a stream or river channel that is covered by water when the river or stream overflows its banks.
+
+Floodplain Development Permit. Federally required permit required prior to construction and other development in any Special Flood Hazard Area (100-year Floodplain).
+See Section 14.035 of this Code.
+
+Floodplain Functions. Hydrological and ecological functions including conveyance and temporary storage of floodwater, depositions of sediments outside of the channel, ground water recharge, filtering of pollutants, and reduction of floodwater velocity and erosive forces.
+Also included, but to a lesser extent in previously urbanized areas, are such functions as nutrient exchange, refuges, and feeding areas for fish.
+
+Floodplain, 100-Year. As shown below in Figure 1 - Floodplain Cross Section, land area adjacent to a river, stream, or other water body that is subject to a one percent (1%) or greater chance of flooding in any given year.
+It consists of land ranging from that which is subject to annual flooding to that which has a one percent (1%) or greater chance of flooding in any given year.
+The 100-year Floodplain consists of the Floodway and the Floodway Fringe.
+The 100-year Floodplain is mapped by the Federal Emergency Management Agency (FEMA) on Flood Insurance Rate Maps (FIRMs) and is the area subject to Base Flood regulations.
+Not every potential Special Flood Hazard Area within the Urban Growth Boundary has been mapped by the Federal Emergency Management Agency through the Flood Insurance Study, Flood Insurance Rate Maps, and Digital Flood Insurance Rate Maps.
+The Floodplain Manager or designee is authorized through Section 14.020 to obtain the information necessary to determine the presence and extent of unmapped Special Flood Hazard Areas as part of reviewing development proposals that affect the 100-year Floodplain.
+Such information shall be used by the City of Troutdale to supplement the Flood Insurance Study, Flood Insurance Rate Maps, and Digital Flood Insurance Rate Maps and these areas are also subject to Base Flood regulations.
+See Base Flood.
+
+Floodway (Regulatory Floodway). Means the channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than a designated height.
+
+Flow-Through Design. Typically a structure that does not displace surface floodwater or hinder or obstruct the movement of surface floodwater.
+
+Highest Adjacent Grade (HAG). The highest natural elevation of the ground surface prior to construction, adjacent to the proposed walls of a structure.
+Refer to the Elevation Certificate, FEMA Form 81-31, for more information.
+
+High Hazard Zone. Lands within the furthest landward extent of the floodway and erosion hazard zone, as designated on the communities FIRM.
+
+Hydrodynamic Load. Force of water in motion.
+
+Hydrostatic Load. Force of water at rest.
+
+Invasive Non-native or Noxious Vegetation. Plant species that are listed as nuisance plants or prohibited plants on the most recent Portland Plant List as adopted by the City of Portland by
+
+
+ordinance because they are plant species that have been introduced and, due to aggressive growth patterns and lack of natural enemies in the area where introduced, spread rapidly into native plant communities.
+
+Joint Fill Permit/404 Removal/Fill Permit.
+A permit issued jointly by the Oregon Department of State Lands and U.S. Army Corps of Engineers to allow, with conditions and mitigation, the removal or fill of wetlands determined to be of either local or state significance by the Oregon Department of State Lands.
+
+Letter of Map Change (LOMC). An official FEMA determination, by letter, to amend or revise effective Flood Insurance Rate Maps and Flood Insurance Studies.
+LOMCs are issued in the following categories:
+
+A.     Letter of Map Amendment (LOMA) - A revision based on technical data showing that a property was incorrectly included in a designated Special Flood Hazard Area.
+A LOMA amends the current effective Flood Insurance Rate Map and establishes that a specific property is not located in a Special Flood Hazard Area.
+
+B.     Letter of Map Revision (LOMR) - A revision based on technical data showing, usually due to man-made changes, alterations to Federal Flood Zones, flood elevations floodplain and floodway delineations, and planimetric features.
+One (1) common type of LOMR, a LOMR-F, is a determination that a structure has been elevated through the placement of fill above the Base Flood Elevation and is excluded from the Special Flood Hazard Area.
+
+C.     Conditional Letter of Map Revision (CLOMR) - A formal review and comment by FEMA as to whether a proposed project complies with the minimum National Flood Insurance Program floodplain management criteria.
+A CLOMR does NOT amend or revise effective Flood Insurance Rate Maps, Flood Boundary and Floodway Maps, or Flood Insurance Studies.
+
+Lowest Floor. Means the lowest floor of the lowest enclosed area (including basement).
+An unfinished or flood resistant enclosure, usable solely for parking of vehicles, building access or storage in an area other than a basement area is not considered a building's lowest floor.
+Provided that such enclosure is not built so as to render the structure in violation of the applicable non-elevation design requirements of CFR Sec. 60.3.
+
+Manufactured Dwelling. Means a structure, transportable in one (1) or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities.
+The term "manufactured dwelling" does not include a "recreational vehicle."
+
+Manufactured Dwelling Park or Subdivision. Means a parcel (or contiguous parcels) of land divided into two (2) or more manufactured home lots for rent or sale.
+
+Mean Sea Level. For purposes of the National Flood Insurance Program, the North American Vertical Datum of 1988 or other Datum, to which Base Flood Elevations shown on a community's FIRM are referenced.
+
+
+Mitigation. The reduction of adverse effects of a proposed project by considering, in this order:
+A.     Avoiding the impact altogether by not taking a certain action or parts of an action;
+B.     Minimizing impacts by limiting the degree or magnitude of the action and its implemen-tation;
+
+C.     Rectifying the impact by repairing, rehabilitating, or restoring the effected environment;
+D.     Reducing or eliminating the impact over time by preservation and maintenance operations during the life of the action by monitoring and taking appropriate measures; and
+E.     Compensating for the impact by replacing or providing comparable substitute water quality resource areas.
+
+Mulch. Application of plant residue, netting, or other suitable materials to the land surface to conserve moisture, hold soil in place, and aid in establishing plant cover.
+
+National Flood Insurance Program (NFIP). A federal program enabling property owners in partici-pating communities to purchase insurance as a protection against flood losses in exchange for state and community floodplain management regulations that reduce future flood damages.
+
+National Wetland Inventory (NWI) Map. The City is mapped on the Camas and Washougal, Washington-Oregon wetland maps prepared by the U.S. Department of the Interior, Fish and Wildlife Service.
+
+Native Vegetation or Native Plant. Vegetation listed as a native plant on the most recent Portland Plant List as adopted by the City of Portland by ordinance and any other vegetation native to the Portland metropolitan area provided that it is not listed as a nuisance plant or a prohibited plant on the Portland Plant List.
+
+NAVD 88. The North American Vertical Datum of 1988 (NAVD 88) is the vertical control datum established in 1991 by the minimum-constraint adjustment of the Canadian-Mexican-U.S. leveling observations.
+This is the data used on FIRMs and in flood insurance studies adopted in 2009.
+
+New Construction. A structure for which the Start of Construction commenced after February 1, 2019, and includes subsequent Substantial Improvements to the structure.
+
+NGVD 29. "The National Geodetic Vertical Datum of 1929: The name, after May 10, 1973, of (the) Sea Level Datum of 1929."
+(Vertical control datum established for vertical control in the United States by the general adjustment of 1929).
+This is the datum used on FIRMs and in flood insurance studies prior to 2009.
+
+NPDES Permit. The National Pollutant Discharge Elimination System 1200-C Permit is a State of Oregon Department of Environmental Quality permit that covers federal stormwater regulations as they pertain to construction activities in Oregon.
+The permit is administered by the City.
+
+ODFW Construction Standards. The Oregon Department of Fish and Wildlife construction guidelines for building roads, bridges, and culverts, or any transportation structure within a waterway.
+
+One Percent Annual Chance Flood. The flood that has a one percent (1%) chance of being equaled or exceeded on the average in any given year; equivalent to the 100-year flood.
+
+
+Open Space. Land that is undeveloped and that is planned to remain so indefinitely.
+The term encompasses parks, forests, and farmland.
+It may also refer only to land zoned as being available to the public, including playgrounds, watershed preserves, and parks.
+
+Perennial Streams. All primary and secondary perennial waterways mapped by the U.S. Geological Survey, having year-round flow.
+
+Practicable. Available and capable of being done after taking into consideration cost, existing technology, and logistics in light of overall project purpose.
+
+Pre-FIRM Structures. Buildings that were built before the flood risk was known and identified on the community's FIRM.
+
+Protected Water Features, Primary.
+Includes:
+A.     Title 3 wetlands.
+
+B.     Rivers, streams (creeks or brooks) and drainages downstream from the point at which 100 acres or more are drained to that water feature (regardless of whether it carries year-round flow).
+C.     Streams carrying year-round flow.
+D.     Springs which feed streams and wetlands and have perennial (year-round) flow.
+
+E.     Natural lakes.
+
+Protected Water Features, Secondary.
+Includes intermittent streams and seeps downstream of the point at which fifty (50) acres are drained and upstream of the point at which one hundred (100) acres are drained to that water feature.
+
+Recreational Vehicle (RV). A vehicle which is:
+
+A.     Built on a single chassis;
+B.     Four hundred (400) square feet or less when measured at the largest horizontal projection;
+
+C.     Designed to be self-propelled or permanently towable; and
+
+D.     Designed primarily not for use as a permanent dwelling but as temporary living quarters for recreational, camping, travel, or seasonal use.
+
+Resource. A functioning natural system such as a wetland or stream.
+
+Restoration. The process of returning a disturbed or altered area or feature to a previously existing natural condition.
+Restoration activities reestablish the structure, function, and/or diversity to that which occurred prior to impacts caused by human activity.
+
+Riparian. Those areas associated with streams, lakes, and wetlands where vegetation communities are predominately influenced by their association with water.
+
+Routine Repair and Maintenance. Activities directed at preserving an existing allowed use or facility, or nonconforming use, without expanding the development footprint or site use.
+
+
+Sediment. Any material that is in suspension, is being transported, or has been moved from its site of origin by water, wind, or gravity as a result of erosion.
+
+Site. The lot, or contiguous lots, under the same ownership that are subject to a development permit or erosion control plan.
+
+Slope District. Slopes of twenty-five percent (25%) or greater throughout the City that have a minimum horizontal distance of fifty (50) feet.
+Engineered slopes associated with public streets or roads are not included.
+
+Special Flood Hazard Area (SFHA). The land in the floodplain within a community subject to a one percent (1%) or greater chance of flooding in any given year.
+The area may be designated as Zone A on the FHBM (Flood Hazard Boundary Map).
+After detailed ratemaking has been completed in preparation for publication of the flood insurance rate map, Zone A usually is refined into Zones A, AO, AH, A1-30, AE, A99, AR, AR/A1-30, AR/AE, AR/AO, AR/AH, AR/A, VO, or V1-30, VE, or V. For purposes of these regulations, the term "special flood hazard area'' is synonymous in meaning with the phrase "area of special flood hazard''.
+
+Statewide Planning Goal 5.
+Oregon's statewide planning goal that addresses open space, scenic and historic areas, and natural resources.
+The purpose of the goal is to conserve open space and protect natural and scenic resources.
+
+Statewide Planning Goal 6.
+Oregon's statewide planning goal that addresses air, water, and land resources quality to "maintain and improve the quality of the air, water, and land resources of the state" as implemented by the Land Conservation and Development Commission (LCDC).
+
+Statewide Planning Goal 7.
+Oregon's statewide planning goal that addresses areas subject to natural disasters and hazards to "protect life and property from natural disasters and hazards" as implemented by the Land Conservation and Development Commission.
+
+Stockpile. Onsite storage of any soil, sand, gravel, clay, mud, debris, vegetation, refuse, or any other material, organic or inorganic, in a concentrated state.
+
+Stream. A body of running water moving over the earth's surface in a channel or bed, such as a creek, rivulet, or river, that flows at least part of the year, including perennial and intermittent streams.
+Streams are dynamic in nature and their structure is maintained through build-up and loss of sediment.
+
+Stream Bank, Top of.
+See Bankfull Stage.
+
+Structure. Means, for floodplain management purposes, a walled and roofed building, including a gas or liquid storage tank that is principally above ground, as well as a manufactured home.
+Structure, for insurance purposes, means:
+
+A.     A building with two (2) or more outside rigid walls and a fully secured roof that is affixed to a permanent site;
+
+B.     A manufactured dwelling; or
+
+
+C.     A travel trailer without wheels, built on a chassis and affixed to a permanent foundation, that is regulated under the community's floodplain management and building ordinances or laws.
+
+For the latter purpose, structure does not mean a recreational vehicle or a park trailer or other similar vehicle, except as described in Section 1.040(C), or a gas or liquid storage tank.
+
+Substantial Damage. Damage of any origin sustained by a structure located within the 100-year Floodplain, whereby the cost of restoring the structure to its prior condition would equal or exceed fifty percent (50%) of the structure's market value before the damage occurred.
+
+Substantial Improvement. Means any reconstruction, rehabilitation, addition, or other improvement of a structure, the cost of which equals or exceeds forty-nine percent (49%) of the market value of the structure before the start of construction of the improvement.
+This term includes structures which have incurred substantial damage, regardless of the actual repair work performed.
+The term does not, however, include either:
+
+A.     Any project for improvement of a structure to correct existing violations of state or local health, sanitary, or safety code specifications which have been identified by the local code enforcement official and which are the minimum necessary to assure safe living conditions; or,
+
+B.     Any alteration of a historic structure, provided that the alteration will not preclude the structure's continued designation as a historic structure.
+
+Surface Water Management System. All natural and constructed facilities used to regulate the quantity and quality of surface water, including drainage easements, culverts, storm drains, catch basins, drainage ditches, natural drainageways, stream corridors, rivers, ponds, wetlands, and impoundments.
+
+Title 3. Title 3 is part of the Metro Urban Growth Management Functional Plan pertaining to water quality, flood management, and fish and wildlife conservation, and directly pertains to Statewide Planning Goals 5, Open Spaces, Scenic and Historic Areas, and Natural Resources; 6, Air, Water, and Land Resources Quality; and 7, Areas Subject to Natural Disasters and Hazards.
+
+Variance. Means a grant of relief by a community from the terms of a floodplain management regulation.
+
+Vegetation, Approved. Vegetation which typically does not require irrigation or fertilization because it is adapted to natural soil, water, and climatic conditions.
+The list of approved vegetation species is based on the most recent Portland Plant List as adopted by the City of Portland by ordinance, and is on file in the Community Development Department.
+
+Vegetation Corridor. The undisturbed area between a development and a protected water feature as designated in Sections 4.316, Width of Vegetation Corridor, and 4.317, Method for Determining Vegetation Corridors Next to Primary Protected Water Features, of this Code, or slopes of twenty-five percent (25%) or greater throughout the City, except engineered slopes associated with public streets or roads.
+
+
+Vegetation, Invasive, Non-Native, or Noxious.
+Plant species that have been introduced and due to aggressive growth patterns and lack of natural enemies in the area where introduced, spread rapidly into native plant communities, or which are not listed on the most recent Portland Plant List as adopted by the City of Portland by ordinance.
+
+Vegetation, Native. Any vegetation native to the Portland Metropolitan Area or listed on the Portland Plant List as adopted by the City of Portland by ordinance.
+
+Water-Dependent. A structure for commerce or industry which cannot exist in any other location and is dependent on the water by reason of the intrinsic nature of its operations.
+
+Water Features. See Protected Water Features, primary and secondary.
+
+Water Quality Facility. A created or constructed structure or drainageway that is designed, constructed, and maintained to collect, filter, retain, or detain surface water runoff during and after a storm event for the purpose of stormwater management and water quality improvement.
+The facility may take on characteristics of a wetland, but it does not become a resource.
+
+Watershed. A geographic unit defined by the flows of rainwater or snowmelt.
+All land in a watershed drains to a common outlet, such as a stream, lake, or wetland.
+
+Water Surface Elevation. The height, in relation to a specific datum, of floods of various magnitudes and frequencies in the floodplains of coastal or riverine areas.
+
+Wetlands. Areas inundated or saturated by surface or ground water at a frequency and duration sufficient to support, and under normal circumstances do support, a prevalence of vegetation typically adapted for life in saturated soil conditions.
+Wetlands generally include swamps, marshes, bogs, and similar areas.
+Wetlands are those areas identified and delineated by qualified wetland specialists as set forth in the 1987 Corps of Engineers Wetland Delineation Manual.
+A.     Wetlands, Constructed.
+Wetlands developed as a water quality or quantity facility, subject to change and maintenance as such.
+These areas must be clearly defined and/or separated from naturally occurring or created wetlands.
+B.     Wetlands, Created.
+Those wetlands developed in an area previously identified as a non-wetland to replace or mitigate wetland destruction or displacement.
+A created wetland shall be regulated and managed the same as an existing wetland.
+C.     Wetland Determinations.
+The identification of an area as either wetland or non-wetland.
+D.     Wetlands, Title 3.
+Wetlands of metropolitan concern as shown on the Metro Water Quality and Flood Management Overlay District Map and other wetlands not mapped but determined significant by the Oregon Department of State Lands, consistent with the criteria in Title 3, Section 7.C. of the Metro Urban Growth Management Functional Plan.
+Title 3 wetlands include created wetlands approved and monitored by the Oregon Department of State Lands and U.S. Army Corps of Engineers.
+Title 3 wetlands do not include artificially constructed and managed stormwater and water quality treatment facilities.
+(Ord. No. 894, § 1, 12-10-2024)
+

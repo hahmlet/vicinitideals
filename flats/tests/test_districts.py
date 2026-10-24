@@ -492,6 +492,16 @@ RULINGS: dict[str, dict[str, str]] = {
             "overlay: Natural Resource Protection Overlay District, TDC "
             "Chapter 72."
         ),
+        # 2026-10-24: in readable sections a parenthesis is read with the
+        # sentence before it, which is how the printed paragraph had it.
+        "NRPO-GC": (
+            "overlay: the Creek Greenways part of the Natural Resource "
+            "Protection Overlay District, TDC 72.030(3)."
+        ),
+        "SPMA": (
+            "overlay: the Sweek Pond Management Area, defined in TDC 71.020 "
+            "and fixed on Map 71-1 with the Wetlands Protection District."
+        ),
     },
     "or/clackamas/wilsonville": {
         "PDR-7": (
@@ -526,6 +536,17 @@ RULINGS: dict[str, dict[str, str]] = {
         "J 1J 1J": (
             "not-a-zone: extractor debris from a tax-lot schedule in WC 4, "
             "where it sits between 'S2 TL 500' and a street address."
+        ),
+    },
+    "or/multnomah/troutdale": {
+        # 2026-10-24, surfaced when the TDC was cut into readable sections.
+        "FHBM": (
+            "not-a-zone: FEMA's Flood Hazard Boundary Map, named in the "
+            "definitions (1.040) where an area 'may be designated as Zone A'."
+        ),
+        "CR": (
+            "overlay: a Community Resource, a historic designation; 8.165 "
+            "keeps a manufactured home from being sited next to one."
         ),
     },
     "or/multnomah/fairview": {
@@ -780,6 +801,20 @@ RULINGS: dict[str, dict[str, str]] = {
             "not-a-zone: the Local Wetlands Inventory, the wetland map "
             "16.114.080 protects ('the City's adopted Local Wetlands Inventory "
             "(LWI)', 16.114.080 L8)."
+        ),
+        # 2026-10-24: in readable sections a parenthesis is read with the
+        # sentence before it, which is how the printed paragraph had it.
+        "CWS": (
+            "not-a-zone: Clean Water Services, whose requirements 16.114.080 "
+            "supplements."
+        ),
+        "HCA": (
+            "overlay: a Habitat Conservation Area, which note 33 of the "
+            "16.114.120 street table lets a narrow street or alley serve."
+        ),
+        "UBC": (
+            "not-a-zone: the Uniform Building Code, named in the LC "
+            "multi-family setback (16.104.040)."
         ),
     },
     "or/washington/cornelius": {

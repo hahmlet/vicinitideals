@@ -1,0 +1,38 @@
+05.020 CLASSIFICATIONS OF ZONES
+
+All areas within the corporate limits of the City of West Linn are hereby divided into zone districts, and the use of each tract and ownership of land within the corporate limits shall be limited to those uses permitted by the zoning classification applicable to each such tract as hereinafter designated.
+The zoning districts within the City of West Linn are hereby classified and designated as follows:
+
+Zoning District                                    Zone Designation  Dwelling Units per Net Acre  Lot Size per Unit in Square Feet
+Low Density
+Single-Family Residential detached                 R-40              1.1                          40,000
+Single-Family Residential detached                 R-20              2.18                         20,000
+Single-Family Residential detached                 R-15              2.9                          15,000
+Single-Family Residential detached                 R-10              4.35                         10,000
+Single-Family Residential detached                 R-7               6.2                          7,000
+
+Medium Density Residential                         R-5 R-4.5         8.7 9.68                     5,000 4,500
+
+Medium High Density                                R-3 R-2.1         14.5 20.74                   3,000 2,100
+
+Commercial
+Neighborhood Commercial                            NC
+General Commercial                                 GC
+Office Business Center                             OBC
+
+Industrial
+Campus Industrial                                  CI
+General Industrial                                 GI
+
+Overlay Zones
+Planned Unit Development                           PUD
+Historic District                                  HD
+Historic Landmark                                  HL
+Flood Management Area                              FMA
+Willamette River Greenway                          WRG
+Tualatin River Protection                          TRP
+Wetland and Riparian Area                          WRA
+Willamette Falls Drive Commercial Design District  WFC
+
+(Ord. 1291, 1990; Ord. 1321, 1992; Ord. 1377, 1995; Ord. 1463, 2000; Ord. 1638 § 3, 2015)
+

@@ -1,0 +1,158 @@
+16.31.020 Uses
+A. The table below identifies the land uses that are permitted outright (P), permitted conditionally (C) and not permitted (N) in the industrial zoning districts.
+The specific land use categories are described and defined in Chapter 16.88.
+B. Uses listed in other sections of this Code, but not within this specific table are prohibited.
+C. Any use not otherwise listed that can be shown to be consistent or associated with the uses permitted outright or conditionally in the industrial zones or contribute to the achievement of the objectives of the industrial zones may be permitted outright or conditionally, utilizing the provisions of Chapter 16.88.
+D. Additional limitations for specific uses are identified in the footnotes of this table.
+Uses LI GI EI 1
+RESIDENTIAL
+• Single dwelling unit, including a manufactured home, for one (1) security person employed on the premises and their immediate family
+P P P
+CIVIC
+• Hospitals C N N
+• Police and fire stations and other emergency services C C C
+• Vehicle testing stations C C C
+• Postal services - Public C C C
+• Postal substations when located entirely within and incidental to a use permitted outright
+C C C
+• Public and private utility structures, including but not limited to telephone exchanges, electric substations, gas regulator stations, treatment plants, water wells, and public work yards
+P P C
+• Small-scale power generation facilities P P P
+• Large-scale power generation facilities C P C
+• Public recreational facilities including parks, trails, playfields and sports and racquet courts on publicly owned property or under power line easements
+C C C
+COMMERCIAL
+• Commercial Trade Schools, commercial educational services and training facilities
+P P C
+Uses LI GI EI 1
+Entertainment/recreation
+• Country clubs, sports and racquet clubs and other similar clubs C C C
+• Indoor recreation facilities such as arcades, mini-golf, or bounce house facilities
+2,3
+C C C
+Hospitality and lodging
+• Hotel/Motel CU
+12 N N
+Motor vehicle related
+• Motorized vehicle and sport craft repairs and service C C N
+• Motorized vehicle and sport craft repair and service clearly incidental and secondary to and customarily associated with a use permitted outright or conditionally
+P P P
+• Automotive, boat, trailer and recreational vehicle storage C C C
+4
+• Vehicle fueling stations or car wash facilities5 C C C
+• Junkyards and salvage yards N N N
+• Manufactured home sales and display area N N N
+Office and professional support services
+• Business and professional offices
+3 P P P
+• Business support services such as duplicating, photocopying, mailing services, fax and computer facilities3
+P P P
+• Any incidental business, service, processing, storage or display, not otherwise permitted, that is essential to and customarily associated with a use permitted outright, provided said incidental use is conducted entirely within an enclosed building
+P P P
+Childcare
+• Day cares, preschools, and kindergartens, when clearly secondary to a permitted use
+P P P
+• Day cares, preschools, and kindergartens as a stand-alone use
+3 C C C
+General retail - sales oriented
+• Incidental retail sales or display/showroom directly associated with a permitted use and limited to a maximum of 10% of the total floor area of the business
+3
+P P P
+• Medical and recreational marijuana facilities P 6 P6 N
+• Tool and equipment repair, rental and sales, including truck rental7 P P P
+• Retail plant nurseries and garden supply stores (excluding wholesale plant nurseries)
+P P N
+• Wholesale building material sales and service C P N
+• Retail building material sales and lumber yards
+3 C P N
+Personal services
+• Health clubs and studios less than 5,000 square feet in size P P P
+Uses LI GI EI 1
+• Psilocybin Service Centers N P 13 N
+• Personal services catering to daily customers where patrons pay for or receive a service rather than goods or materials, including but not limited to financial, beauty, pet grooming, and similar services
+8
+C C C
+• Public or commercial parking (non-accessory) N N N
+• Veterinarian offices and animal hospitals C C C
+• Animal boarding/kennels and pet daycare facilities with outdoor recreation areas
+8
+C C C
+Eating and drinking establishments:
+• Restaurants, taverns, and lounges without drive-thru
+3 C C C
+• Restaurants with drive-thru services N N N
+• On-site cafeteria that is secondary to, and serving employees of, a permitted use
+P P P
+INDUSTRIAL
+• Manufacture, compounding, processing, assembling, packaging, treatment, fabrication of products contained wholly within an enclosed building provided exterior odor and noise is consistent with municipal code standards and there is no unscreened storage and not otherwise regulated elsewhere in the code
+P P P
+• Manufacture, compounding, processing, assembling, packaging, treatment, fabrication of products not otherwise prohibited elsewhere in the code provided other off-site impacts are compliant with local, state and federal regulations
+C P C
+• Manufacture, compounding, processing, assembling, packaging, treatment, or fabrication of acids, paints, dyes, soaps, ammonia, chlorine, sodium compounds, fertilizer, herbicides, insecticides and similar chemicals
+N C N
+• Psilocybin Manufacturing Facilities N P
+13 N
+• Distribution, warehousing and storage associated with a permitted use operating on the same site
+P P P
+• Distribution and warehousing up to 150,000 square feet, provided product(s) are stored within an enclosed building9
+P P P
+• Distribution and warehousing greater than 150,000 square feet provided product(s) are stored within an enclosed building9
+N P C
+• Mini-warehousing or self-storage N P N
+• Medical or dental laboratories, including biomedical compounding P P P
+• Laboratories (not medical or dental) P P P
+• Research and development and associated manufacturing P P P
+• Contractors' storage and equipment yards C P C
+4
+• Building, heating, plumbing or electrical contractors and suppliers, building maintenance services, and similar uses10
+P P P
+Uses LI GI EI 1
+• Industrial laundry, dry cleaning, dyeing, or rug cleaning plants C P N
+• Sawmills C C N
+• Sand and gravel pits, rock crushing facilities, aggregate storage and distribution facilities or concrete or asphalt batch plants
+N C N
+• Solid waste transfer stations N C N
+The following uses are specifically prohibited in all industrial zones because they have been determined to have adverse environmental, public and aesthetic impacts and are not suitable for location in any of the industrial zones in the City
+• Manufacture, compounding, processing, assembling, packaging, treatment, or fabrication of toxins or explosive materials, or any product or compound determined by a public health official to be detrimental to the health, safety and welfare of the community
+N N N
+• Pulp and paper mills N N N
+• Distillation of oil, coal, wood or tar compounds and the creosote treatment of any products
+N N N
+• Metal rolling and extraction mills, forge plants, smelters and blast furnaces
+N N N
+• Meat, fish, poultry and tannery processing N N N
+• General purpose solid waste landfills, incinerators, and other solid waste facilities not otherwise permitted in this Code
+N N N
+WIRELESS COMMUNICATION FACILITIES
+• Radio, television, and similar communication stations, including associated transmitters
+C C C
+• Wireless communication towers
+11 and transmitters C C C
+• Wireless communication facilities on City-owned property C C C
+• Wireless communication antennas co-located on an existing tower or on an existing building or structure not exceeding the roof of the structure
+P P P
+OTHER
+Agricultural uses including but not limited to:
+• Farm equipment sales and rentals N N N
+• Farming and horticulture P P P
+• Raising of animals other than household pets N N N
+• Truck and bus yards N P N
+1 See special criteria for the EI zone, 16.31.050 and the Tonquin Employment Area (TEA), 16.31.060.
+2 If use is mixed with another, such as a restaurant, it is considered secondary to that use and permitted, provided it occupies less than fifty (50) percent of the total area.
+3 Limited in size to five thousand (5,000) square feet in a single outlet and no more than twenty thousand (20,000) square feet in multiple outlets in the same development project.
+4 On constrained land where structures would not otherwise be permitted, provided that no natural resources such as wetland or floodplains are impacted.
+5 Limited to Cardlock, wholesale or facilities incidental to and solely serving an associated permitted or conditional use - no public retail fuel sales.
+6 See Special Criteria for Medical and Recreational Marijuana Facilities in Chapter 16.38, Special Uses.
+7 Sales and rental area Limited in size to five thousand (5,000) square feet in a single outlet and no more than twenty thousand (20,000) square feet in multiple outlets in the same development project.
+8 Animal boarding/kennels and pet daycare facilities entirely within an enclosed building are considered "other personal service."
+9 For standalone warehousing and distribution only.
+Warehousing and distribution associated with another approved use is ancillary and permitted without size limitations. 10 These businesses are involved in the servicing and supplying of materials and equipment primarily intended for industrial, institutional, or commercial businesses.
+On-site sales are limited as most activity occurs electronically or off-site.
+Businesses may or may not be open to the general public, but sales to the general public are limited as a result of the way in which the firm operates.
+Products are generally delivered to the customer.
+Few customers, especially the general public, come to the site.
+11 Except for towers located within one thousand (1,000) feet of the Old Town District which are prohibited.
+12 See special standard criteria for hospitality and lodging uses within the Light Industrial Land Use District SZCDC 16.31.040.
+13 See Special Criteria for Psilocybin Service Centers and manufacturing facilities under
+Section 16.38.040.
+(Ord. No. 2023-002, § 2, 3-7-2023; Ord. No. 2022-002, § 2, 3-15-2022; Ord. No. 2020-006, § 2, 7-21-2020; Ord. No. 2016-008, § 2, 6-21-2016; Ord. No. 2015-005, § 2, 5-5-2015; Ord. No. 2015-003, § 2, 3-17-2015; Ord. No. 2012-011, § 2, 8-7-2012)

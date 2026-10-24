@@ -137,7 +137,7 @@ def test_c2s_permission_is_qualified_on_the_avenue_with_the_codes_own_words() ->
     assert held.value is True
     assert held.qualified_by == AVENUE_FACT
     assert "17.18.050(3)" in held.qualified_cite and "17.18.040(4)" in held.qualified_cite
-    assert held.qualified_quote == "or/clackamas/gladstone/17.18.c-2.txt#L115-L121"
+    assert held.qualified_quote == "or/clackamas/gladstone/17.18/17.18.050.txt#L9-L20"
     res = RuleSet(load_rules()).resolve(GLADSTONE, "C2", POD)
     assert AVENUE_FACT in res.unencoded
     assert AVENUE_FACT in res.values["quadplex_allowed"].levers

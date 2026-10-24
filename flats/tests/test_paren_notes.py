@@ -34,6 +34,9 @@ pytestmark = pytest.mark.unit
 
 FAIRVIEW = "or/multnomah/fairview"
 DOC = f"{FAIRVIEW}/19.30.txt"
+#: The section file the use table's notes were cut into (2026-10-24); the
+#: rulings are matched there. Note (n) is line 154 + n.
+USES = f"{FAIRVIEW}/19.30/19.30.020.txt"
 
 
 @pytest.fixture(scope="module")
@@ -159,7 +162,7 @@ def test_the_note_that_sends_a_quadplex_to_its_design_standards(chapter) -> None
     assert "19.30.040" in fifth.text
 
     ruled = {(row.doc, row.line): row for row in dispositions(FAIRVIEW)}
-    ruling = ruled[(DOC, 219)]
+    ruling = ruled[(USES, 159)]
     assert ruling.state == "encoded"
     assert "entrance_only" in ruling.encoded_as
 
@@ -179,9 +182,9 @@ def test_the_two_notes_the_glossary_keeps_off_the_pod(store: ProvenanceStore) ->
     assert "four dwelling units on a lot or parcel" in glossary[647]  # quadplex
     assert "located on an individual lot or parcel" in glossary[816]  # townhouse
 
-    ruled = {row.line: row for row in dispositions(FAIRVIEW)}
-    assert "five or more" in ruled[216].reason
-    assert "individual lot" in ruled[218].reason
+    ruled = {(row.doc, row.line): row for row in dispositions(FAIRVIEW)}
+    assert "five or more" in ruled[(USES, 156)].reason
+    assert "individual lot" in ruled[(USES, 158)].reason
 
 
 def test_and_nothing_the_chapter_encodes_is_left_blocked() -> None:

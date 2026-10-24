@@ -1,0 +1,732 @@
+[
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "cf148752dbbfd7d1b1e0dc421471602238668bd3406f9f34126e9174c9266781",
+  "new_quote": "or/clackamas/gladstone/17.06/17.06.290.txt#L3-L6",
+  "old_fingerprint": "83fc240685410ae487ba0b3bbdbde8413ab581443aa686c4db5ff0418155612c",
+  "old_quote": "or/clackamas/gladstone/17.06.definitions.txt#L881",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "aa20f9467e4fd8c7c86562ae2b0d3910bf880013e02796e498f44fa87565fd89",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L57,L62-L63",
+  "old_fingerprint": "aa4b6d4f61b2afbdc3fd9defa41da7f843de6aae4b9d3643c50d8fd2830b347d",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L213-L214",
+  "when_key": "",
+  "zone": "R7.2"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "84e027312cd4320fe0aa34bd601fbdd6b97de83d5fbf38aec24eafe5d6900edb",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L57,L60-L61",
+  "old_fingerprint": "1611f1eabac64c2a5920a03b236d623963fed55eb0efc21517d585cee36e032a",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L212",
+  "when_key": "",
+  "zone": "R7.2"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "09aa8e899f366c5e32c4eb366169a6406e5b56d9973aac1346405402c7c37a08",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L57,L60-L61",
+  "old_fingerprint": "556803ba2265648f7bf19c795bec4c2d70c0bacf77aceebf406a610c06d4b1e4",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L212",
+  "when_key": "unit_lots",
+  "zone": "R7.2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "b4287cc59f78bf0b2a15dcd0c5fffb400bd17be6850e067aa9dc43e479a12feb",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.020.txt#L1-L7",
+  "old_fingerprint": "aa453783f5fd4a192400eacce1d89eedaf3e57fc27f6de974e96179783d55592",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L33-L39",
+  "when_key": "",
+  "zone": "R7.2"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "804038908d0b6908bf42d8fde667d669847d279b9d2523a5a8564ac1e144a60a",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L17",
+  "old_fingerprint": "09dc6853a58eabed1a68e794c1deb897753f97a8f41a6ffb1164c8839a60a950",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L169",
+  "when_key": "",
+  "zone": "R7.2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "6d4dfa2953a9933cdfd084d776c61d0a59246e7241a0cb8c8fdf6c7236a50b79",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L23-L24",
+  "old_fingerprint": "f412d4e392c3ccf334802906bfa6ed453ebf66273c2b7cdb4e66dd5704b69798",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L175-L176",
+  "when_key": "",
+  "zone": "R7.2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "9eb04759ecf53a2b94e0ea575056dc04129815356994f737035a42e44600ea90",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L27",
+  "old_fingerprint": "f06e158e498118c039d92e292b09fbec805b0da4213379c956a5bfea06f2c382",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L179",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "R7.2"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "be1470049822ccfa6132737aace398eb68f3bfc9f2704cbb6e1d0cf354fe3d61",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L45",
+  "old_fingerprint": "de1dc59f6867ec6e02256ae31785986d876d3bc6b3fa5fd9d8e86b13acda3115",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L197",
+  "when_key": "",
+  "zone": "R7.2"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "ee9a9387fa98fe870781cdf44134de0362f31402e4ac443dd5396030c6c62b9c",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L31",
+  "old_fingerprint": "561c08dd401f181cac45461c10a50c1060acb8cfc62671ed65b02b494f1cd8aa",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L183",
+  "when_key": "",
+  "zone": "R7.2"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "2cba38213cfe523e20dc4d37586738c5133ed6fab8dc196df1810d4d9bfd80e4",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L9",
+  "old_fingerprint": "4217b830577dad43be728c14433945f66a0bf89fcb94a47461fcfb096053839d",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L161",
+  "when_key": "",
+  "zone": "R7.2"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "2e1b804588e1c2bcb6bca732b4e8c5b655791c4d5e303f585f933a95c43f7588",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L52",
+  "old_fingerprint": "ee1cca12932fede2abfb8befdd0e96f0844cf2c2b71f49cc71ee5e1dcbaa0533",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L204",
+  "when_key": "",
+  "zone": "R7.2"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "5affd3370df09d5882e4e53f253206f782024c48ed416b84b7477bfb7fa54bb9",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L57,L62-L63",
+  "old_fingerprint": "5a01a9e8ff476411607d539fa5f8a0d3a5e338dae9a1dcb3e7d476cd9ef012e1",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L213-L214",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "30f3930f89b61a543e8afde730bbffba09b0de0ad11898fa93c12427c29c6950",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L57,L60-L61",
+  "old_fingerprint": "f626a2f77f3fb0fec56067afba04a4d71e3dc70defbb8a81f76e2568588b64fc",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L212",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "max_units",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "b79209d97f4bbfb0783583f16a2bc07b2549b2584f2f37cd3d6115800f62772b",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L57,L60-L61",
+  "old_fingerprint": "fe440ad89156bf5388e1e500cec257a7cfdc52be6610d4f7ba68413404a369ed",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L212",
+  "when_key": "unit_lots",
+  "zone": "R10"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "169600590d1b3b271b3b91106bef72bdf6b3f3e7074080fce976c8fb476941ae",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.020.txt#L1-L7",
+  "old_fingerprint": "dedbd4d795641b79eae4a5f97c12b18031fa8eb70f5f2733d6c5553a6272f91c",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L33-L39",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "668f208e9fb93a6ef0cff01d5d952694b5b5e294d7e51bbc31112aa5bd318e79",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L17",
+  "old_fingerprint": "bd18ab1b0bd9398960a0bf9f50bc43b649eab5162b2717d4d2777c929b685af0",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L169",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "db8d63df9fbbae1fbe94541f52c31a8b2bc7e774521991edb2e92d5ac35880c4",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L23-L24",
+  "old_fingerprint": "72691b94533bee943098851ef6984ed3a835e036eab75eb89abb9656ddfc5552",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L175-L176",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "fb73f7a074c194259b066cb6096d3aa22dd05eade123ef2f75fb1d6c99f84b5c",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L27",
+  "old_fingerprint": "e2f92ba384e82795294b992df70e49cca34dd5b13e97005ca645a0b162f83871",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L179",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "3b92d9d9a37dafd68e7d119361bc088f81998c40fd93e893fbc1ba0070c9c32b",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L45",
+  "old_fingerprint": "a7c12138bae2a35c056fd2effd2256ca4d163ebeb09685a4fe95c60a3c51ac8e",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L197",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "240be11690162b8141af0f948aa7e22e01ac8bde903c383e9564f37690aa4052",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L31",
+  "old_fingerprint": "14705f5e652c906cbfe421c1a44b06b45b0d0e416d626c6468b42947b5373522",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L183",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "348bf6cd9d3484cc9579568a65620bc7396c4c666f9fc86a3016fc68069eb17f",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L9",
+  "old_fingerprint": "65bce35dc62cc78c821c77c5f0e704501f3bf5d7d29754e66cd685abcc1d7cff",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L161",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "6b63d95e45af9afd476cce407002321f151c7e9b165fd512351f0022da0fc230",
+  "new_quote": "or/clackamas/gladstone/17.10/17.10.050.txt#L52",
+  "old_fingerprint": "104a43c6593956d373db636e3bf32c4f0883651ed27e76b78ea7b6363b6a8eab",
+  "old_quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L204",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "fb4d0c3b54102ba33809581094195c0c04209911c9e6f59ec28ff8dfb7e2eb0e",
+  "new_quote": "or/clackamas/gladstone/17.12/17.12.020.txt#L1-L7",
+  "old_fingerprint": "c79de3f3ab66c814e34a0057e61e587d38dfb6e31e78d31d47a244d18da3c984",
+  "old_quote": "or/clackamas/gladstone/17.12.r-5.txt#L31-L37",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "e3a61542e401f5fe211c24f2b931dbdde7c820cbf3c5f012f0c69465573165ca",
+  "new_quote": "or/clackamas/gladstone/17.12/17.12.050.txt#L26",
+  "old_fingerprint": "c21b7f124632529602f1638af990e61e4e8367da085da50424d0790e5152c61d",
+  "old_quote": "or/clackamas/gladstone/17.12.r-5.txt#L182",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "4774462afd59b83df2f80e12ca4c8742492d9b06b7026df329906201ceb2bde0",
+  "new_quote": "or/clackamas/gladstone/17.12/17.12.050.txt#L33-L34",
+  "old_fingerprint": "dd59420ef959eb25f2d21a975cb19f40612e0c635f9caa1a91abfcf3c1bbe3ad",
+  "old_quote": "or/clackamas/gladstone/17.12.r-5.txt#L189-L190",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "e634463c7cc28ddcf9dc2cc65f85ab0a865c22c7adf29363c1e2a59f2ed1e697",
+  "new_quote": "or/clackamas/gladstone/17.12/17.12.050.txt#L37",
+  "old_fingerprint": "f30c6e2cfba1ac2d9fcbbeed9ca322ebc224f252d8d66535192a72c88cf49eac",
+  "old_quote": "or/clackamas/gladstone/17.12.r-5.txt#L193",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "5c137657364e739f776233d98b663c28fb40d3d90a550f8f6e1da3637e6564df",
+  "new_quote": "or/clackamas/gladstone/17.12/17.12.050.txt#L49",
+  "old_fingerprint": "4bf6ad6a7b0b258d9b9eee89e987c92b2b698a931d03acbf66886bfe6f815d48",
+  "old_quote": "or/clackamas/gladstone/17.12.r-5.txt#L205",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "15e5080831997a88761e66104669bf8a46ec253e234e23da1b494bf316f15087",
+  "new_quote": "or/clackamas/gladstone/17.12/17.12.050.txt#L41",
+  "old_fingerprint": "7856241349f6fa1d9672d9265fad4f26c4cbde92727479148286fb773b58d6ad",
+  "old_quote": "or/clackamas/gladstone/17.12.r-5.txt#L197",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "80c9f7a9a72d4e494ea355d89434cd9935bfe58220bbd068b860fba9c7d04808",
+  "new_quote": "or/clackamas/gladstone/17.12/17.12.050.txt#L11-L12",
+  "old_fingerprint": "08a09138ed8c2de04cab8fba8b7fc83fa475844e1aa3ed2598a9181d90680af7",
+  "old_quote": "or/clackamas/gladstone/17.12.r-5.txt#L167-L168",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "ffe642cfe6f0d3387a5109a341fd5c15f18bade27c832a9378ab2fc286793344",
+  "new_quote": "or/clackamas/gladstone/17.12/17.12.050.txt#L15-L17",
+  "old_fingerprint": "ae76d50dc1f461f666fe9d77a8d9ff57883c8a40a54e61b0dbcd97e8785dd5e2",
+  "old_quote": "or/clackamas/gladstone/17.12.r-5.txt#L171-L173",
+  "when_key": "unit_lots",
+  "zone": "R5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "7490db8888be06604b3dc3cd76b4f8439189fd14442f20791e87631ba8733454",
+  "new_quote": "or/clackamas/gladstone/17.12/17.12.050.txt#L56",
+  "old_fingerprint": "8b5ca95e7cdab1acaf2c42b4c3ef0653c3f73e0d26a3ef936e7ade3d354896e7",
+  "old_quote": "or/clackamas/gladstone/17.12.r-5.txt#L212",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "a490b76455e1128b2fd735875767994b086cad7d6728fb95fea5ade2c52f41be",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.020.txt#L3-L7",
+  "old_fingerprint": "c39a9577ecc4a809122872600ec5f83664a20665da9de0564d934c803ece54c0",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L29-L33",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "94ad31f6de27e0d552022b83ffa31514e5841e8dd207ae8a2f886aa3d4376c5d",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.050.txt#L21-L22",
+  "old_fingerprint": "98d7a6d6f740c571e89fac9a90c0affe7a22073630231333a055a35de0301ea6",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L132-L133",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "6842cb4f3073e15319ec65032c536bd8c52ae6a15359e132657976786e458a6d",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.050.txt#L26-L27",
+  "old_fingerprint": "f41298144b13afcc33e0f5035df1c2c489626f677142ff04bee96c70e1e72f94",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L137-L138",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "7b1481e273a775e3cfc5d5d4dccf32b81d68a0f343f195a063544f705016deb0",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.050.txt#L29",
+  "old_fingerprint": "2c859310ebe172301b70013f7c21c89e12c3f5424e03aa5fdd463202dc2d9579",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L140",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "MR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "768f3808852fecf630b8453fad31c575af965c54edf2e95351dcd5410018cdb3",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.050.txt#L36-L37",
+  "old_fingerprint": "849dc661ec61fd4825c473bfd384b560a3101f9f2bbb03efd7f9fddafd56bf6b",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L147-L148",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "af5c08b751c63bcf4bd766dc4e28efa41bf55784d53eb824002c2797e51fb637",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.050.txt#L31-L32",
+  "old_fingerprint": "9e2ebfeb13d5f2751d319939df128a7a8a336760bb86425539b5959b4b4ca1dc",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L142-L143",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "fdd0282645c7817f9114cf3ecb8bff6d2ed72c0a2a9a5d3be479e7d39038c144",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.050.txt#L12-L13",
+  "old_fingerprint": "37ba2dca6e4d1c8f8a9af243557472bbc045691bfa25bbf47036926357b849b4",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L122-L123",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "78d229f8a29a5755e3dc5f8acd2fc5009a3444ad0791e440f29f82691c17e57d",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.050.txt#L16-L17",
+  "old_fingerprint": "b3f2423fd3f806bdd922ca730d097fa26ea6f5529cfaa64011d03828f58e59f5",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L126-L127",
+  "when_key": "unit_lots",
+  "zone": "MR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "e935a5814645c7412b3ea0d5055f67ebcc8f05cde7b75e4126525987c10266a2",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.050.txt#L41-L42",
+  "old_fingerprint": "1c7ea3e1f99aaf02474bea942920eb610063bac278272b38198577974a42f0aa",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L152-L153",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "25015141437b4d2a23fadcc0db2ae680a506e17c14fb1f5feb1bc9cd67bf4349",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.050.txt#L44-L45",
+  "old_fingerprint": "268487cb8e0e130a4bd3a2315180e7d55be34e4402f43f183a87fdc1ccd8002e",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L155-L156",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "b7069c0dcbbdb611328bae730b8492b9c561ec0407b31d73c3957f09cd7bd27f",
+  "new_quote": "or/clackamas/gladstone/17.14/17.14.050.txt#L46,L48",
+  "old_fingerprint": "98ef865b6cd80e1de8682aabc12d406b917c6d20df037a0a6202904923a99d9a",
+  "old_quote": "or/clackamas/gladstone/17.14.mr.txt#L157,L159",
+  "when_key": "",
+  "zone": "MR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "b8050b31e1664dd37c043487bbcf58e9b198c7a931e1a00fb5a71c387b312fd8",
+  "new_quote": "or/clackamas/gladstone/17.16/17.16.040.txt#L15",
+  "old_fingerprint": "7ecda745a592861d0efb007a167bf5a381ad8357dbbdfe31485bbfa73dc4dd44",
+  "old_quote": "or/clackamas/gladstone/17.16.c-1.txt#L73",
+  "when_key": "conditional_use",
+  "zone": "C1"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "8984bf4fbaac18cb99df897df9743bf8a8b7bcdfcdf1aa0f4846870d54e8e0f9",
+  "new_quote": "or/clackamas/gladstone/17.16/17.16.060.txt#L9",
+  "old_fingerprint": "a30549ee27eae5ddaad9eaf096e565f0279fde7687434fe48daac5d17394be01",
+  "old_quote": "or/clackamas/gladstone/17.16.c-1.txt#L113",
+  "when_key": "",
+  "zone": "C1"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "245781ab06ca5e9c1832052d789505530cfab02d2c4744637cc2d6f5efe00eba",
+  "new_quote": "or/clackamas/gladstone/17.16/17.16.040.txt#L15",
+  "old_fingerprint": "f9fbc115c5c3c9e5cb90c8c065fc496e3eb0fbad2876406d742950a2dab793b6",
+  "old_quote": "or/clackamas/gladstone/17.16.c-1.txt#L73",
+  "when_key": "",
+  "zone": "C1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "acd1a7061f347ccd85e648fcccf5a926f37feadb288cba0a717f11f4998f780a",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.020.txt#L25-L27",
+  "old_fingerprint": "169c3dcd209f901ca1658180f4f69ca515cd75fbd60a437d08461be631e4bf6e",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L61-L63",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "f584d670d6228b97e556b8f78dea243d902080c5c04ff71a4a450470eb359b28",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.060.txt#L7-L9",
+  "old_fingerprint": "defecbc082265c20f0c330120149f97ad7c645f12db520bb5f7e3071b2bf4854",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L135-L137",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "9c921bd8c4de7fbaae8a41c05f75a0a6b3e9fb4d29f93146d6b341ee46961bff",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.060.txt#L9",
+  "old_fingerprint": "ee273d80e735f0bc97ea27131c096325c53eb1a129b6b78a1f3aea4a77c4b3e6",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L137",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "24ebb7dfea22293c9789883851220f3a8e8a11d6759d5e2fd14f021a754fc6bc",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.060.txt#L7-L9",
+  "old_fingerprint": "b159cb538f70a6fa9051b84e55e0013351c2cded916bdffa7ddc9e357b31969c",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L135-L137",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "30d4363cda91b4eb247d2c3be25653fe68d731b0b43e2f883af6e3ec3e383be2",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.060.txt#L7-L9",
+  "old_fingerprint": "90bf208f72ec85a965ed0fa0589453e73217aac3896199f5fc648c3740354fcb",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L135-L137",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "3a1ad064483acbf63c4a079a8faa8447e09c1a559f375cdb4936569caa92b1fe",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.060.txt#L9",
+  "old_fingerprint": "34a9abb1f9b9e407a784d11167aac82a3272bab111d6f649c49997ce313b19b8",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L137",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "8c87716613e8ee8f667b33c219278b08ddfd2eeb212854e1bff4f55ab3590a09",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.060.txt#L14",
+  "old_fingerprint": "99ef781ee53eef92261c7c7e858c3be83bec02052b608d9ef3926f92f3dd415a",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L141",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "max_height_stories",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "46f149f2b1c67bedd6f7a0d4ac059785ae5a7c120647a5e42901b3eee25e6a79",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.060.txt#L14",
+  "old_fingerprint": "0bb9da2a44496929c617fa0b93e6287eac1ac861563e7e12dadbde5f6bb2a5b0",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L141",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "5f9f28dceb1ed42ba23b68df0401eddf9474ec751a9e38a5680e5e19105a0b9a",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.070.txt#L3",
+  "old_fingerprint": "0eb679d49261bba9de68192092e577e308194550b49e7eb6646eca40f3d0b209",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L171",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "parking_required_yard_prohibited",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "031046a274ef5a87bdf1f271c3891f8e89970064ecffa5dabd2832055836a7ac",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.070.txt#L3",
+  "old_fingerprint": "92e0a436d3fd5a17db40c566ce2aa823888390ce8907e3341d348c1e11fbc826",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L171",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "15706f2427f83b36e2fa8bdcf763831651ece941b3ead3be00e297677a02a785",
+  "new_quote": "or/clackamas/gladstone/17.18/17.18.060.txt#L22",
+  "old_fingerprint": "f0936df1d7b026eab4299624d45675e32626d790cb8e3cf9a8efa38c81e677e5",
+  "old_quote": "or/clackamas/gladstone/17.18.c-2.txt#L149",
+  "when_key": "",
+  "zone": "C2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "fe322ec38aed527e1f24b4ac07ebdd4e7e14fe7a1080a1c99c3ee568d5c5bc33",
+  "new_quote": "or/clackamas/gladstone/17.20/17.20.040.txt#L9",
+  "old_fingerprint": "f69a377aa606e0019fa3c3c2b0b3c3a7591a9be4eecb364c7ef642e29212651c",
+  "old_quote": "or/clackamas/gladstone/17.20.c-3.txt#L99",
+  "when_key": "conditional_use",
+  "zone": "C3"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "606e1fe3dd46f81360c12ec0e4ffb681c437d69efcfa21520ad0685475c041ef",
+  "new_quote": "or/clackamas/gladstone/17.20/17.20.040.txt#L9",
+  "old_fingerprint": "6e9fa4139fc4f5da2aef37a82f7b2491f562e4b0fd81d28e0d962ce9d1d8e5c4",
+  "old_quote": "or/clackamas/gladstone/17.20.c-3.txt#L99",
+  "when_key": "",
+  "zone": "C3"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "b3cfe5b567db047aabd001da72f8a149d2f68edbd5bdfb36a5958151864d2652",
+  "new_quote": "or/clackamas/gladstone/17.24/17.24.040.txt#L7",
+  "old_fingerprint": "82b7d84c09adec5e67f9751b470ddab5a480c1d07fbf09cc3857893c590a7780",
+  "old_quote": "or/clackamas/gladstone/17.24.li.txt#L85",
+  "when_key": "conditional_use",
+  "zone": "LI"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "6d1b3365e2ef19576ab0e80d8b1cda160393b9c48a3737292412293d7b94d2c7",
+  "new_quote": "or/clackamas/gladstone/17.24/17.24.060.txt#L14",
+  "old_fingerprint": "1a195e1cd03c70cc3fbbfb80dcb04b588bf328bac19ae5f6f68574293b6fce56",
+  "old_quote": "or/clackamas/gladstone/17.24.li.txt#L143",
+  "when_key": "",
+  "zone": "LI"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "fbb4e1c3eefa2494150fac6d0cba61b67c8e64092fb1b1072702af4c25356ada",
+  "new_quote": "or/clackamas/gladstone/17.24/17.24.060.txt#L16",
+  "old_fingerprint": "d9a20196a43fa2a55a3b08bc0e53e577ec4c0971d14a517d8023cc89cfca1b38",
+  "old_quote": "or/clackamas/gladstone/17.24.li.txt#L145",
+  "when_key": "",
+  "zone": "LI"
+ },
+ {
+  "field": "like",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "9fb49e959d3b7b011b96560674d91931f886e2272f063d42c55fe7b47f58e551",
+  "new_quote": "or/clackamas/gladstone/17.24/17.24.040.txt#L7",
+  "old_fingerprint": "5721e2eed23635764cfd4edf895923e61888140e22be48a504ae3b7221b6aa0d",
+  "old_quote": "or/clackamas/gladstone/17.24.li.txt#L85",
+  "when_key": "",
+  "zone": "LI"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "9135837b76a2c65833b464f070a31bc19bf5d4c2fc2dc66d4d6870e1641e9587",
+  "new_quote": "or/clackamas/gladstone/17.48/17.48.030.txt#L122,L137,L139,L152-L154",
+  "old_fingerprint": "0269e92e144d7c0287c1eb88d312d5c79dc9664f092a0637b00303798aa31828",
+  "old_quote": "or/clackamas/gladstone/17.48.parking.txt#L141,L156,L158,L171-L173",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "672a7b4909b71ed2754e20cf50049ca4d03b06dc751f81bf3bc212f5dde840e4",
+  "new_quote": "or/clackamas/gladstone/17.48/17.48.030.txt#L122,L137,L140-L141,L152-L153,L155-L157",
+  "old_fingerprint": "110f33ba3a28103a6eec3a011b958fee3a00cf3d1fe976b848ebda295a5e3561",
+  "old_quote": "or/clackamas/gladstone/17.48.parking.txt#L141,L156,L159-L160,L171-L172,L174-L176",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "2112614d5a15c2ac12504a3556199c5eb9cc2431516b612612fcfaa29c3fef90",
+  "new_quote": "or/clackamas/gladstone/17.48/17.48.040.txt#L1,L3,L30-L31,L49-L50,L53",
+  "old_fingerprint": "7c58820ceef59acfc233f77cc5731767dc80af5c144177176f7f3321c9ff2881",
+  "old_quote": "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L468,L484-L485,L488",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "0350495608a3b6e6ebecca5f39ed9b847ee857fa6c79b75493fee7780b16015c",
+  "new_quote": "or/clackamas/gladstone/17.48/17.48.040.txt#L1,L3,L30-L31,L49-L50,L53",
+  "old_fingerprint": "4785464740e22de52d311704d4fce2d01cca70506bdd165fc10659521d4646bf",
+  "old_quote": "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L468,L484-L485,L488",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "e1f46d9e824de90f03bb378121c0d915c7d41de7c44a0eb3ebd7c9c4d3b54fd6",
+  "new_quote": "or/clackamas/gladstone/17.48/17.48.040.txt#L1,L3,L30-L31,L49-L50,L53",
+  "old_fingerprint": "6fae6691c40297615544d8c901e31f586eac55842bfc6c3a0ac83d78bfa3d130",
+  "old_quote": "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L468,L484-L485,L488",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "b01e5526ae7618b370e22f09205048510faa5c8813c58cb3da13884a7d654e66",
+  "new_quote": "or/clackamas/gladstone/17.48/17.48.040.txt#L1,L3,L30-L31,L49-L50,L53",
+  "old_fingerprint": "b894d3552047592af108286234ca96997fea8d8cb027acaa5347ead8a4c6d3fb",
+  "old_quote": "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L468,L484-L485,L488",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_lot_line_buffer_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "5a632b9892a8ce3cc7c92cd2ffa7101f2db98a4c6a20fc4b47b810f5962222f1",
+  "new_quote": "or/clackamas/gladstone/17.48/17.48.040.txt#L1,L3,L17,L27-L28",
+  "old_fingerprint": "554174ee716c6e03c8b495f67426e80ee923ee442fb9111f372d90990d2f5404",
+  "old_quote": "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L456,L466",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "f52166a3d6ed3cd51bc93ad87b757b1960c221689f2df974fedb27954454338d",
+  "new_quote": "or/clackamas/gladstone/17.48/17.48.040.txt#L1,L3,L17,L27-L28",
+  "old_fingerprint": "5af3f3f9f60f44b9d753d08d3b755bea823eee62004189f7f6745a12ba977881",
+  "old_quote": "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L456,L466",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_side_prohibited",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "766bd24b9f6ec6cafcfa684870fee59df4832e2f3bffb09899b30f9c52d0937e",
+  "new_quote": "or/clackamas/gladstone/17.48/17.48.040.txt#L17,L27-L28",
+  "old_fingerprint": "dd8465eeca4de7fd58fb1abcbc661f255ef3240adc14d90e81080ec7d62434c1",
+  "old_quote": "or/clackamas/gladstone/17.48.parking.txt#L456,L466",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/clackamas/gladstone",
+  "new_fingerprint": "1bcce11573b552044b15e4deb5b6d60c02c449c15eee97736c8b05da18b09e2c",
+  "new_quote": "or/clackamas/gladstone/17.48/17.48.040.txt#L17,L27-L28",
+  "old_fingerprint": "da7109a677b3ff09be9cd2b4529cdedff2bc0f3b4ddd5d669c64e6687daf663e",
+  "old_quote": "or/clackamas/gladstone/17.48.parking.txt#L456,L466",
+  "when_key": "",
+  "zone": "defaults"
+ }
+]

@@ -255,10 +255,15 @@ def test_documents_that_lost_their_markers_are_named(store: list) -> None:
     assert not butte.reconciled
     assert len(butte.unmarked) == len(butte.bodies)
 
-    troutdale = next(
-        row for row in store if row.doc.endswith("troutdale/3.zoning-districts.txt")
-    )
-    assert troutdale.reconciled
+    # Since 2026-10-24 the chapter is read in its sections (3/3.130.txt and
+    # so on); every section of it that states a note reconciles.
+    troutdale = [
+        row
+        for row in store
+        if "/troutdale/3/" in row.doc and (row.bodies or row.markers)
+    ]
+    assert troutdale
+    assert all(row.reconciled for row in troutdale)
 
 
 def test_a_lettered_notes_block_is_a_notes_block():

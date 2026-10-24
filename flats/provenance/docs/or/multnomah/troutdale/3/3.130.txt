@@ -1,0 +1,173 @@
+3.130  Dimensional Standards for Residential Zoning Districts.
+The following standards are outlined below based on the residential use proposed for the respective lot.
+A.     Single-family detached and duplex dwellings:
+
+MDR                            HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                  (TC)          HDR               (TC)
+Minimum lot size (sq. ft.):
+Single-family detached            10,000       7,000        5,000        5,000          N/A      see 3.235
+Duplex                                     10,000       7,000        5,000        5,000          N/A      see 3.235
+Minimum lot width (ft.)                    70             60             50             50            N/A            20
+Minimum lot depth (ft.)                  100            80             70             70            N/A      see 3.235
+Minimum lot frontage (ft.)               20             20             20             20            N/A            20
+Setbacks (ft):
+Front yard                                   20             20         10 or 20           10 or 20           N/A        10 or 20
+see note 1      see note 1                      see note 1
+Side yard                                    10             7.5              5               5             N/A             5
+Building side (duplex)                  0               0               0               0             N/A             0
+Building side (zero lot line)   see note 2 see note 2 see note 2 see note 2      N/A      see note 2
+Street side yard                          10             10             10             10            N/A        10 or 20 see note 5
+Rear yard                               15 or 20           15 or 20        15 or 20       15 or 20           N/A      see 3.235
+see note 3      see note 3     see note 4      see note 4
+Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010      N/A      see 5.010
+Maximum building height (ft.)         35             35             35             35            N/A            35
+Density standards                    see 3.140 see 3.140 see 3.140 see 3.140      N/A      see 3.140
+Table Notes
+1. Front yard setback may be reduced if driveway access is taken from rear yard and corresponding setbacks are adjusted.
+2. Zero lot line dwellings shall have no side setback on one side yard or a lot and double the amount of required side yard setback on the other side yard.
+
+
+MDR                              HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                    (TC)          HDR               (TC)
+3. Rear yard setbacks for duplexes are 15 feet unless driveway access is taken from a rear yard (20 feet).
+4. Rear yard setback is 20 feet if driveway access is taken from a side yard.
+5. Street side yard setback is 20 feet if driveway access is taken from street side yard.
+B.     Triplex and quadplex dwellings:
+
+MDR                              HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                    (TC)          HDR               (TC)
+Minimum lot size (sq. ft.)             10,000       7,000        5,000        5,000          N/A      see 3.235
+Minimum lot width (ft.)                    70             60             50             50            N/A            20
+Minimum lot depth (ft.)                  100            80             70             70            N/A      see 3.235
+Minimum lot frontage (ft.)               20             20             20             16            N/A            20
+Setbacks (ft):
+Front yard                                   10             10             10         10 or 20                 N/A        10 or 20
+see note 1                      see note 1
+Side yard                                    10             7.5              5               5             N/A             5
+Building side                                0               0               0               0             N/A             0
+Street side yard                          10             10             10             10            N/A        10 or 20 see note 2
+Rear yard                                    10             10             10             10            N/A      see 3.235
+Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010      N/A           N/A
+Maximum building height (ft.)         35             35             35             35            N/A           N/A
+Density standards                    see 3.140 see 3.140 see 3.140 see 3.140      N/A           N/A
+Table Notes
+1. Front yard setback is 20 feet if driveway access is taken from front yard.
+2. Street side yard setback is 20 feet if driveway access is taken from street side yard.
+C.     Townhouse dwellings:
+
+MDR                              HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                    (TC)          HDR               (TC)
+Minimum lot size (sq. ft.)              none         none         none         none         none         none
+Minimum lot width (ft.)                  none         none         none         none         none         none
+Minimum lot depth (ft.)                 none         none         none         none         none         none
+Minimum lot frontage (ft.)         see note 1 see note 1 see note 1 see note 1 see note 1 see note 1
+Setbacks (ft):
+Front yard                                   10             10             10       10  or  20                  10              0 see note 2
+Side yard                                     5               5               5               5               5               5
+Building side                                0               0               0               0               0               0
+Street side yard                          10             10             10             10       10 or 18,                  0  or  18,
+see note 3      see note 3
+
+
+MDR                            HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                 (TC)          HDR              (TC)
+Rear yard                                10 or 0           10 or 0         10 or 0      10   or   0     10   or   0      10 or 0,
+see note 4      see note 4      see note 4     see note 4      see note 4      see note 4
+Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010 see 5.010 see 5.010
+Maximum building height (ft.)         35             35             35             35             35             35
+Density standards                    see 3.140 see 3.140 see 3.140 see 3.140 see 3.140 see 3.140
+Table Notes
+1. Minimum lot frontage is 15 feet if driveway, garage, or off-street parking area is in front yard.
+2. Front yard setback is 20 feet if driveway access is taken from front yard.
+3. Street side yard setback is 18 feet if driveway access is taken from street side yard.
+4. Rear yard setbacks are 0 feet for lots with rear alley access; 10 feet for other situations.
+D.     Cottage cluster development and dwellings:
+
+MDR                            HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                 (TC)          HDR              (TC)
+Minimum lot size (sq. ft.)             10,000       7,000        5,000        5,000          N/A           N/A
+Minimum lot width (ft.)                    70             60             50             50            N/A           N/A
+Minimum lot depth (ft.)                  100            80             70             70            N/A           N/A
+Minimum lot frontage (ft.)             none         none         none         none          N/A           N/A
+Setbacks (ft):                                                                                                       N/A           N/A
+Front yard                                   10             10             10             10            N/A           N/A
+Side yard                                     5               5               5               5             N/A           N/A
+Street side yard                           5               5               5               5             N/A           N/A
+Rear yard                                    10             10             10             10            N/A           N/A
+Building separation                      6               6               6               6             N/A           N/A
+Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010      N/A           N/A
+Maximum building height (ft.)         25             25             25             25            N/A           N/A
+Minimum density                         4 units             4 units per 4 units per        4 units per         N/A           N/A
+per acre          acre            acre           acre
+Maximum density                          N/A           N/A           N/A           N/A           N/A           N/A
+E.     Multi-family. The standards within this Subsection shall apply for multi-family residential developments or buildings that do not have a ground-floor commercial component.
+For vertical-based mixed-use development, dimensional standards for commercial development shall apply unless otherwise referenced within this Code.
+1.     Minimum lot size.
+Refer to the table in the Maximum Density and Lot Size provisions of this Section for residential uses; 5,400 square feet for all other uses.
+2.     Minimum lot width:
+a.     Sixty feet at the front setback line.
+b.     Seventy feet at the front setback line of a corner lot.
+3.     Minimum lot depth:
+a.     Ninety feet when there is approved street access;
+
+
+b.     One hundred feet for any use with access from an alley within an easement that is part of the lot.
+
+4.     Minimum lot frontage: Twenty feet.
+
+5.     Minimum Density. See Section 3.140.A of this Code.
+
+6.     Maximum Density and Lot Size. Where the number of dwelling units erected on a lot is calculated in accordance with this Section, no greater number of units shall in any event be permitted at any time unless the lot is within the Town Center Overlay District, or except as may be approved under the Planned Development District.
+
+Max Lot
+Dwellings       Minimum Lot Area                                                                 Coverage
+5 to 14            9,000 sq. ft. plus 2,500 sq. ft. for each unit over 3                   45%
+15 to 37          41,000 sq. ft. plus 2,000 sq. ft. for each unit over 15               50%
+38 to 94          87,000 sq. ft. plus 1,500 sq. ft. for each unit over 38               50%
+95 to 155        172,500 sq. ft. plus 1,000 sq. ft for each unit over 95              55%
+Over 155         1,500 sq. ft. per unit                                                                  55%
+7.     Setbacks.
+
+a.     Front yard setback: Minimum of 20 feet.
+
+b.     Side yard setback:
+i.      Adjoining the HDR zoning district or a non-residential zoning district:
+Minimum of 5 feet.
+ii.      Adjoining a different residential zoning district:
+(a)    Single-story construction: One and one-half times the minimum side yard setback of the adjoining residential zoning district but not less than 10 feet.
+(b)    Two-story construction: Two (2) times the minimum required side yard setback of the adjoining residential district but not less than 15 feet.
+(c)    Three-story or greater construction: Three (3) times the minimum required side yard setback of the adjoining residential district but not less than 20 feet.
+iii.     No side yard setback shall apply for the interior side property lines of attached dwelling on individual lots.
+iv.     Ten foot side yard setback shall apply for the exterior side property line for attached dwelling on individual lot.
+
+c.     Street side yard setback: Minimum of 10 feet unless the street side yard is used for the driveway, in which case the minimum setback shall be 18 feet to the garage.
+
+
+d.     Rear yard setback:
+i.      Adjoining the HDR zoning district or a non-residential zoning district:
+(a)    Without an alley: Minimum of 15 feet.
+(b)    With an alley that is platted either as an easement or a separate tract that is at least 20 feet in width:
+(i)     Minimum of 18 feet from the nearest edge of the tract or easement to the garage door.
+(ii)    Minimum of 5 feet to any other wall of the garage and all other structures as measured from the nearest edge of the tract or easement.
+e.     Adjoining a different residential zoning district:
+i.      Without an alley:
+(a)    Single story construction: The minimum rear yard setback of the adjoining residential zoning district.
+(b)    Two-story and greater construction: One and one-half times the minimum rear yard setback of the adjoining residential district but not less than 20 feet.
+ii.      With an alley that is platted either as an easement or a separate tract that is at least 20 feet in width, and the alley intervenes between the dwelling or structure and the other residential zoning district: Minimum of 20 feet to the nearest edge of the tract or easement, regardless of the number of stories.
+f.      Projections into setbacks.
+See Section 5.020 of this Code.
+g.     Structures in setback areas.
+See Section 5.010 of this Code.
+h.     Distance between buildings: See Section 8.150 of this Code.
+i.      Off-street parking, garages, and carports: See Section 8.225 of this Code.
+8.     Height Limitation. The maximum height of a structure shall be 35 feet.
+
+F.     Manufactured homes.
+Dimensional standards are referenced in Section 8.160 of this Code for individual manufactured homes and in Section 8.165 of this Code for manufactured home parks.
+
+G.    Accessory dwelling units.
+Dimensional standards are referenced in Section 8.170 of this Code.
+
+H.     Shared dwellings.
+Dimensional standards are referenced in Section 8.180 of this Code.
+

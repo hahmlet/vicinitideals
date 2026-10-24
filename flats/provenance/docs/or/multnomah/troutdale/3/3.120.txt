@@ -1,0 +1,53 @@
+3.120  Land Use Table for Residential Zoning Districts.
+
+A.     Uses that are permitted are marked with a "P", with specific standards for the use listed in the far-right column as shown below.
+
+B.     Uses that require conditional use approval in accordance with Section 6.300 of this Code are marked with a "C", with specific standards for the use listed in the far-right column as shown below.
+
+C.     Uses that are not permitted are marked with a "N".
+
+Specific
+MDR                         HDR        Stan-
+Land Use                             LDR-1     LDR-2      MDR                       (TC)        HDR             (TC)         dards
+Residential Dwellings and Uses
+Single-family                                P             P             P             P             N             P          8.110 detached
+Duplex                                       P             P             P             P             N             P          8.110
+Triplex                                       P             P             P             P             N             P          8.120
+Quadplex                                  P             P             P             P             N             P          8.120
+Townhouse                                P             P             P             P             P             P          8.130
+Cottage cluster                          P             P             P             P             N             P          8.140
+Multi-family                                N             N             N             N             P             P          8.150
+(residential only)
+Multi-family                                N             N             N             N             N             N         varies,
+(vertical mixed-use)                                                                                                           see
+8.200
+Manufactured home                  P             P             P             P             N             P          8.160
+Manufactured home park          P             P             P             N             N             N          8.160
+Accessory dwelling units           P             P             P             P             P             P          8.170
+
+
+Specific
+MDR                            HDR         Stan-
+Land Use                             LDR-1     LDR-2      MDR                               (TC)        HDR                (TC)          dards
+Shared dwellings                      P             P             P             P             P             P          8.180
+Residential facility                     P             P             P             P             P             P
+Other Uses
+Agricultural or                                  C             N             N             N             N             N          5.090 animal-based uses
+Bed and breakfast inns             P             P             P             P             P             P          5.100
+Community service uses          C             C             C             C             C             C
+Food stand                                P             P             P             P             P             P          5.200
+Home-based child care             P             P             P             P             P             P
+Human services                        C             C             C             C             C             C
+
+
+
+Specific
+MDR                          HDR        Stan-
+Land Use                             LDR-1     LDR-2      MDR                         (TC)        HDR             (TC)         dards
+Recreation facilities (ac-                   C             C             C             C             C             C tive)
+Recreation facilities (pas-                  P             P             P             P             P             P sive)
+Utility facilities                           C             C             C             C             C             C
+(major)
+Utility facilities                           P             P             P             P             P             P
+(minor)
+

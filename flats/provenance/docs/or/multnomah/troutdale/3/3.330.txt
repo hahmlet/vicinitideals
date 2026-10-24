@@ -1,0 +1,28 @@
+3.330  Dimensional Standards for Commercial Zoning Districts.
+A.     All land uses:
+
+Dimensional Standard                                                                         CC                     GC
+Minimum lot size (sq. ft.)                                                                       none                  none
+Minimum lot width (ft.)                                                                           none                  none
+Minimum lot depth (ft.)                                                                          none                  none
+Minimum lot frontage (ft.)                                                                        20                      50
+Setbacks (ft):
+Front yard                                                                                            20                      20
+Side yard when abutting a non-residential zoning district                                 0                        0
+when abutting a residential zoning district                                 see note 1         see note 1
+Street side yard                                                                                   10                       5
+Rear yard when abutting a non-residential zoning district                                 0                        0
+when abutting a residential zoning district                                 see note 2         see note 2
+In cases of insufficient right-of-way                                               see note 3         see note 3
+Maximum building height (ft.)                                                                  45                      45
+Maximum building size (sq. ft.)                                                         60,000 s.f.
+N/A
+Table Notes
+1. Side yard setback shall be the same side yard setback as required by the abutting zoning district.
+2. Rear yard setback shall be the same rear yard setback as required by the abutting zoning district, but in no case shall be less than fifteen (15) feet.
+3. The minimum front, side, or other setbacks shall be increased where such yard or setback abuts a street having right-of-way width less than the applicable City or County standard.
+The necessary right-of-way widths and the additional yard or setback requirements in such cases shall be based upon the Comprehensive Land Use Plan and applicable ordinances and standards.
+
+
+3.400  INDUSTRIAL ZONING DISTRICTS
+

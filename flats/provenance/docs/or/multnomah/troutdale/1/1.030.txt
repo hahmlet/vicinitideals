@@ -1,0 +1,37 @@
+1.030  Airport Overlay Definitions.
+
+Airport. An area of land or water that is used or intended to be used for the landing and takeoff of aircraft and includes any buildings and facilities.
+
+Airport Approach Safety Zone. A surface longitudinally centered on the extended runway centerline and extending outward and upward from each end of the primary surface.
+The inner edge of the approach surface is the same width as the primary surface and extends to a width of one thousand two hundred fifty (1,250) feet for a utility runway having only visual approaches, one thousand five hundred (1,500) feet for a runway other than a utility runway having only visual approaches, two thousand (2,000) feet for a utility runway having a non-precision instrument approach, and three thousand five hundred (3,500) feet for a non-precision instrument runway other than utility having visibility minimums greater than three-fourths (¾) of a statute mile.
+The airport approach safety zone extends for a horizontal distance of five thousand (5,000) feet at a slope of twenty (20) feet for each
+
+
+foot upward (20:1) for all utility and visual runways, and ten thousand (10,000) feet at a slope of thirty-four (34) feet for each one (1) foot upward (34:1) for all non-precision instrument runways other than utility.
+
+Airport Hazard. Any structure, tree, or use of land which exceeds height limitations established by local, state, and federal regulations.
+
+Airport Imaginary Surfaces. Those imaginary areas in space which are defined by the airport approach safety zone, transitional zone, horizontal surface, clear zone, and conical surface, and in which any object extending above these imaginary surfaces is an obstruction.
+
+Clear Zone. Extends from the primary surface to a point where the approach surface is fifty (50) feet above the runway end elevation.
+
+Conical Surface. Extends one (1) foot upward for each twenty (20) feet outward (20:1) for four thousand (4,000) feet beginning at the edge of the horizontal surface five thousand (5,000) feet from the center of each end of the primary surface of each visual and utility runway or ten thousand (10,000) feet for all non-precision instrument runways other than utility at one hundred fifty (150) feet above the airport elevation), and upward extending to a height of three hundred fifty (350) feet above the airport elevation.
+
+Horizontal Surface. A horizontal plane one hundred fifty (150) feet above the established airport elevation, the perimeter of which is constructed by swinging arcs of five thousand (5,000) feet from the center of each end of the primary surface of each visual or utility runway and ten thousand (10,000) feet from the center of each end of the primary surface of all other runways, and connecting the adjacent arcs by lines tangent to those arcs.
+
+Noise Impact. Noise levels exceeding fifty-five (55) LDN (Day/Night Sound Level)
+
+Place of Public Assembly. A structure or place which the public may enter for such purposes as deliberation, education, worship, shopping, entertainment, amusement, awaiting transportation, or similar activity.
+
+Primary Surface. A surface longitudinally centered on a runway.
+When the runway has a specially prepared hard surface, the primary surface extends two hundred (200) feet beyond each end of that runway.
+When the runway has no specially prepared hard surface or planned hard surface, the primary surface ends at each end of that runway.
+The width of the primary surface is two hundred fifty
+(250) feet for utility runways having only visual approaches, five hundred (500) feet for utility runways having non-precision instrument approaches, and five hundred (500) feet for other than utility runways.
+
+Transitional Zones. Extend one (1) foot upward for each seven (7) feet outward (7:1) beginning on each side of the primary surface, which point is the same elevation as the runway surface, and from the sides of the approach surfaces thence extending upward to a height of one hundred fifty (150) feet above the airport elevation (horizontal surface).
+
+Utility Runway. A runway that is constructed and intended to be used by propeller driven aircraft of twelve thousand five hundred (12,500) pounds maximum gross weight or less.
+(Ord. No. 894, § 1, 12-10-2024)
+
+

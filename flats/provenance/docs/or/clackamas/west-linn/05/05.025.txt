@@ -1,0 +1,35 @@
+05.025 MEASUREMENTS
+
+A. Density calculations.
+
+1. Developable net area is determined by subtracting the following areas from the developable gross area:
+
+a. Type I and II lands;
+
+b. All land dedicated to the public for park purposes;
+
+c. All land dedicated for public rights-of-way;
+
+d. All land proposed for private streets; and
+
+e. Optionally, the applicant may subtract the following (as measured in CDC 55.105(C)(2)(a)):
+
+1) Heritage trees,
+
+2) Significant trees or tree clusters.
+
+2. Maximum density is determined by dividing the developable net area square footage by the zoning district minimum lot size square footage.
+Where a maximum density calculation results in a fraction it is rounded down to the next whole number.
+
+3. Minimum density is determined by multiplying the maximum density by 0.70.
+Where a minimum density calculation results in a fraction it is rounded up to the next whole number.
+
+B. Segmented lot or parcel lines.
+Segmented lot lines include one or more lateral changes in direction.
+A lateral change is measured by drawing a hypothetical straight line between opposing lot corners and measuring the horizontal distance between the hypothetical straight line and the furthest extent of the actual lot line perpendicular from the hypothetical straight line.
+Cumulative lateral changes are measured by repeating this process for each lateral change in direction and summing all the distances as shown in the figure below.
+In the case of flag lots or parcels, the pole portion of the lot or parcel is not included in the measurement of cumulative lateral changes; cumulative lateral changes are measured only between the opposing corners of the flag portion of the lot or parcel.
+
+(Ord. 1763 § 1 (Exh.
+A), 2025)
+

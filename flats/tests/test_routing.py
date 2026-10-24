@@ -67,8 +67,10 @@ def rows() -> list[Routing]:
 #: *Somebody else's building.* Multnomah's 39.4753 is UF-20 conditional uses,
 #: reached from a farm-use exception in a zone whose minimum lot is twenty
 #: acres. Gresham's 4.0330 is industrial development and 4.1414 is commercial
-#: use limits. West Linn's 25.020 is the Willamette Historic District, an
-#: overlay this screen does not place into.
+#: use limits. (West Linn's 25.070 -> 25.020, the Willamette Historic
+#: District, left on 2026-10-24: cut to one sentence a line, "do not apply"
+#: and the matrix in 25.020 are two sentences, and the second hands nothing
+#: off.)
 #:
 #: *A rule that can only loosen.* Lake Oswego's 50.04.003 is Exceptions,
 #: Projections and Encroachments, reached from two minimum-density footnotes.
@@ -278,7 +280,6 @@ OPEN = {
     # the 45 ft ceiling and is not taken, so nothing in it can tighten.
     "or/clackamas/milwaukie 19.303.4 -> 19.510",
     "or/clackamas/lake-oswego 50.04.001.3 -> 50.04.003",
-    "or/clackamas/west-linn 25.070 -> 25.020",
     "or/clackamas/wilsonville 4.001 -> 4.140",
     "or/clackamas/wilsonville 4.135 -> 4.156.01",
     "or/clackamas/wilsonville 4.135 -> 4.156.11",
@@ -310,7 +311,6 @@ OPEN = {
     "or/washington/hillsboro 12.61.400 -> 12.50.845",
     "or/washington/beaverton 20.05.15 -> 20.25.05",
     "or/washington/beaverton 20.15.15 -> 60.50.05",
-    "or/washington/sherwood 16.40.050 -> 16.40.040",
     "or/washington/king-city 16.114.040 -> 16.84.060",
     "or/washington/king-city 16.114.130 -> 16.132",
     # 2026-10-24, surfaced when KCC was cut into one file per section: the
@@ -530,6 +530,14 @@ FOLLOWED = {
     # interpretation of the Rivergrove Planning Commission dated September 5,
     # 2002", printed inside 5.050. 5.010 is read (the layer quotes it).
     "or/clackamas/rivergrove 5.050 -> 5.010",
+    # 2026-10-24, open until the SZCDC was cut into one file per section:
+    # 16.40.050, PUD density "the same as that allowed in the underlying
+    # zoning district, except as provided in Sections 16.40.040.D". The
+    # residential PUD variants' quadplex permissions are qualified by
+    # 16.40.040 C (L184-L192 of the chapter, a citation that spans two
+    # sections and so stays on the chapter), and the cut files those lines
+    # under 16.40.040, so the target is read.
+    "or/washington/sherwood 16.40.050 -> 16.40.040",
 }
 
 

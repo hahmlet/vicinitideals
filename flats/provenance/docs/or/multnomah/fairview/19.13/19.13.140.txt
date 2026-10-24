@@ -1,0 +1,36 @@
+§ 19.13.140. "N" definitions.
+
+"Natural resource areas/natural resources" means the same as sensitive lands.
+
+"Natural hazard" means natural areas that can cause dangerous or difficult development situations.
+For example, natural hazard areas include steep slopes, unstable soils, landslides, flood areas.
+
+"Neighborhood" means a geographic area lived in by neighbors and usually having distinguishing character.
+
+"Neighborhood-scale design" means site and building design elements that are dimensionally related to housing and pedestrians, such as narrower streets with tree canopies, smaller parking areas, lower building heights (as compared to downtown areas) and similar neighborhood characteristics.
+These features are generally smaller in scale than those that are primarily intended to accommodate automobile traffic.
+
+"Neighborhood commercial" means small-scale commercial uses allowed within the neighborhood commercial district.
+
+"Net density" means the total number of lots or dwelling units per acre based on net site area.
+
+1.
+
+Maximum density is calculated by taking the net site area and dividing it by the minimum lot area per dwelling unit or lot.
+To determine maximum allowed density in number of units/lots, fractions are rounded down for a decimal less than 0.50 and rounded up for a decimal greater than 0.50.
+
+2.
+
+Minimum density is calculated by taking the maximum density and multiplying it by 0.80.
+To determine minimum required density in units/lots, fractions are rounded down to the nearest whole number.
+
+"Net site area" means the square footage of land after subtracting street right-of-way.
+
+"Nonconforming use/nonconforming development" means a land use/structure that exists which would not be permitted by the regulations imposed by the code, but was lawful at the time it was established (see Chapter 19.530 FMC).
+
+"Non-native invasive plants" means plants not historically found in the Fairview area prior to 1840.
+See the Metro Native Plant List.
+
+(Ord. 6-2001 § 1; Ord. 1-2024 § 1 (Att.
+A))
+

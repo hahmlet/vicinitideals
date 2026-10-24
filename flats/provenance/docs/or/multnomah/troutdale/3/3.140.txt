@@ -1,0 +1,26 @@
+3.140  Residential Densities.
+
+A.     Minimum density.
+
+1.     Applicability. Minimum density standards shall apply to all residential development.
+
+
+2.     Standard. Residential development is required to be built at eighty percent (80%) or more of the maximum number of dwelling units per net acre unless another standard is explicitly stated within this Code.
+For computing the minimum number of dwelling units, if the total contains a fraction, then the number shall be rounded down to the next lower whole number.
+
+B.     Maximum density.
+1.     Single-family detached.
+Development shall not exceed one hundred percent (100%) of the maximum number of dwelling units per net acre.
+For purposes of this standard, in computing the maximum number of dwelling units, if the total contains a fraction, then the number shall be rounded down to the next lower whole number.
+2.     Multi-family residential.
+See Subsection 3.130.E of this Code.
+3.     Townhouse projects.
+a.     In the LDR-1 and LDR-2 zoning districts, townhouse projects are allowed four (4) times the allowed density for detached single-family dwellings.
+b.     In the MDR zoning district, townhouse projects are allowed three (3) times the allowed density for detached single-family dwellings.
+c.     In all other zoning districts where townhouses are permitted, the maximum density for a townhouse project shall not exceed twenty-five (25) units per net acre.
+4.     Other residential development.
+Maximum density standards shall not apply to duplex, triplex, quadplex, cottage cluster projects, or vertical mixed-use development on a dwelling units per net acre calculation and are instead regulated by development provisions of the corresponding housing typology within Section 8.100 of this Code.
+
+
+3.200  MIXED-USE ZONING DISTRICTS
+

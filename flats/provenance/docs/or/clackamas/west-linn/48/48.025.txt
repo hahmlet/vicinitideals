@@ -1,0 +1,75 @@
+48.025 ACCESS CONTROL
+
+A. Purpose. The following access control standards apply to public, industrial, commercial and residential developments including land divisions.
+Access shall be managed to maintain an adequate level of service and to maintain the functional classification of roadways as required by the West Linn Transportation System Plan.
+
+B. Access control standards.
+
+1. Traffic impact analysis requirements.
+A traffic analysis prepared by a qualified professional may be required to determine access, circulation and other transportation requirements.
+The purpose, applicability and standards of this analysis are found in CDC 85.170(B)(2).
+
+2. In order to comply with the access standards in this chapter, the City or other agency with access permit jurisdiction may require the closing or consolidation of existing curb cuts or other vehicle access points, recording of reciprocal access easements (i.e., for shared driveways), development of a frontage street, installation of traffic control devices, and/or other mitigation as a condition of granting an access permit.
+Access to and from off-street parking areas shall not permit backing onto a public street.
+
+3. Access options.
+When vehicle access is required for development (i.e., for off-street parking, delivery, service, drive-through facilities, etc.), access shall be provided from a public street adjacent to the development lot or parcel.
+Street accesses shall comply with access spacing standards in subsection (B)(6) of this section, the West Linn Public Works Design Standards, and TSP.
+As an alternative, the applicant may request alternative access provisions listed below as Option 1 and Option 2, subject to approval by the City Engineer through a discretionary process.
+
+a) Option 1.
+Access is from an existing or proposed alley or mid-block lane.
+If a property has access to an alley or lane, direct access to a public street is not permitted.
+For the purpose of this subsection, a mid-block lane is a narrow private drive providing lot frontage and access for rear lot development.
+
+b) Option 2.
+Access is from a private street or driveway connected to an adjoining property that has direct access to a public street (i.e., “shared driveway”).
+A public access easement covering the driveway shall be recorded in this case to ensure access to the closest public street for all users of the private street/drive.
+
+4. Subdivisions fronting onto an arterial street.
+New residential land divisions fronting onto an arterial street shall be required to provide alleys or secondary (local or collector) streets for access to individual lots.
+When alleys or secondary streets cannot be constructed due to topographic or other physical constraints, access may be provided by consolidating driveways for clusters of two or more lots.
+
+5. Double-frontage lots.
+When a lot or parcel has frontage onto two or more streets, access shall be provided first from the street with the lowest classification.
+For example, access shall be provided from a local street before a collector or arterial street.
+
+6. Access spacing.
+
+a. The access spacing standards found in Tables 14 and 15 of the TSP and in CDC 48.060 shall be applicable to all newly established public street intersections, non-traversable medians, and curb cuts.
+Deviation from the access spacing standards may be granted by the City Engineer as part of a discretionary review if the applicant demonstrates that the deviation will not compromise the safe and efficient operation of the street and highway system.
+
+b. Private drives and other access ways are subject to the requirements of CDC 48.060.
+
+7. Number of access points.
+For single-family (detached and attached) housing types, one street access point is permitted per lot or parcel when alley access cannot otherwise be provided; except that two access points may be permitted corner lots (i.e., no more than one access per street), subject to the access spacing standards in CDC 48.060.
+The number of street access points for multiple family development is subject to the access spacing standards in CDC 48.060.
+The number of street access points for commercial, industrial, and public/institutional developments shall be minimized to protect the function, safety and operation of the street(s) and sidewalk(s) for all users.
+Shared access may be required, in conformance with subsection (C)(8) of this section, in order to maintain the required access spacing, and minimize the number of access points.
+
+8. Shared driveways.
+For residential development, shared driveways may be required in order to meet the access spacing standards in subsection (C)(6) of this section.
+For non-residential development, the number of driveway and private street intersections with public streets shall be minimized by the use of shared driveways with adjoining lots where feasible.
+The City shall require shared driveways as a condition of land division or site design review, as applicable, for traffic safety and access management purposes in accordance with the following standards:
+
+a. When necessary pursuant to this subsection (C)(8), shared driveways and/or frontage streets shall be required to consolidate access onto a collector or arterial street.
+When shared driveways or frontage streets are required, they shall be stubbed to adjacent developable parcels to indicate future extension. “Stub” means that a driveway or street temporarily ends at the property line, but may be extended in the future as the adjacent lot or parcel develops. “Developable” means that a lot or parcel is either vacant or it is likely to receive additional development (i.e., due to infill or redevelopment potential).
+
+b. Access easements (i.e., for the benefit of affected properties) shall be recorded for all shared driveways, including pathways, at the time of final plat approval or as a condition of site development approval.
+
+c. Exception. Exceptions to the shared driveway or frontage street requirements may be granted as part of a discretionary review if the City determines that existing development patterns or physical constraints (e.g., topography, lot or parcel configuration, and similar conditions) prevent extending the street/driveway in the future.
+
+C. Street connectivity and formation of blocks required.
+In order to promote efficient vehicular and pedestrian circulation throughout the City, land divisions and site developments shall produce complete blocks bounded by a connecting network of public and/or private streets, in accordance with the following standards:
+
+1. Block length and perimeter.
+The maximum block length shall not exceed 800 feet along a collector, neighborhood route, or local street, or 1,800 feet along an arterial, unless a smaller block length is required pursuant to CDC 85.200(B)(2).
+
+2. Street standards.
+Public and private streets shall also conform to Chapter 92 CDC, Required Improvements, and to any other applicable sections of the West Linn Community Development Code and approved TSP.
+
+3. Exception. Exceptions to the above standards may be granted as part of a discretionary review when blocks are divided by one or more pathway(s), in conformance with the provisions of CDC 85.200(C), Pedestrian and bicycle trails, or cases where extreme topographic (e.g., slope, creek, wetlands, etc.) conditions or compelling functional limitations preclude implementation, not just inconveniences or design challenges.
+(Ord. 1635 § 25, 2014; Ord. 1636 § 33, 2014; Ord. 1650 § 1 (Exh.
+A), 2016; Ord. 1675 § 40, 2018; Ord. 1745 § 1 (Exh.
+A), 2023)
+

@@ -1,0 +1,232 @@
+[
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "e6b6cbfe394e414a40c714fbf796c0f99dd591132a4d0c225156a54e6ca3c8e7",
+  "new_quote": "or/washington/sherwood/16.10/16.10.020.txt#L245",
+  "old_fingerprint": "155b40a8c2f4726ac4e7a6e904bf4b5d92738aafd742e5401c908581b86c2245",
+  "old_quote": "or/washington/sherwood/sdc.16.10.definitions.txt#L505-L506",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_class_by",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "adc90e70dbcd2c617176e46db711c0ff54a476dd5e8b84cdf837291efdf7b895",
+  "new_quote": "or/washington/sherwood/16.106/16.106.020.txt#L1-L4",
+  "old_fingerprint": "fc814b67b90fa063e6b05edd37c5bcea0a628992172369806fef31b71c62e536",
+  "old_quote": "or/washington/sherwood/sdc.16.106.transportation.txt#L118-L125",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "e4c556e309f62074811ed71593ea22b93e7be47740b7e557e68d4ef251a83137",
+  "new_quote": "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32",
+  "old_fingerprint": "09bab2e3380f80c2fd3ead68d30fff3898bb9c9adc089b5ca95e99814f831182",
+  "old_quote": "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135",
+  "when_key": "",
+  "zone": "OC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "2da500a77bfb4e8ef7f3f216fe2dd9aada16651a591cffa090d99cc8eb1ffa36",
+  "new_quote": "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32",
+  "old_fingerprint": "4b637d1d3a4db0d410c8a50287e47841ffb4f847e28e0ceca13b2069a2f2e338",
+  "old_quote": "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135",
+  "when_key": "",
+  "zone": "NC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "880f5ff27a3efac38b37482901ffce7afc72eeaf94217d9b1d374c1fa12851d4",
+  "new_quote": "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32",
+  "old_fingerprint": "72bc630af200dfd9a0ae8507ba52261e1d3f5f548372161e7ed4de8ac3532232",
+  "old_quote": "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135",
+  "when_key": "",
+  "zone": "RC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "dbbb02ea9afd4e89828f7ba2efa544a57c15b7cdffa8e1dc3ffad2c49d59821a",
+  "new_quote": "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32",
+  "old_fingerprint": "1c66573f6ca177eb796b71185434e5994ab5958260596f26a120a4ad20a6c279",
+  "old_quote": "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135",
+  "when_key": "",
+  "zone": "GC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "a121aab40cd0b70eca09ee15a4f3cbdb0f17f709974503f904857f99a28b99a5",
+  "new_quote": "or/washington/sherwood/16.31/16.31.020.txt#L1-L4,L7-L10",
+  "old_fingerprint": "54de52a6b5b8e19f2f7e63402e1a1ec7219873611885b9f54c80b6ecd8ed1b7d",
+  "old_quote": "or/washington/sherwood/sdc.16.31.industrial.txt#L49-L53,L59-L64",
+  "when_key": "",
+  "zone": "LI"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "968bbe9a00584d150a177c48138a1148222456ebaaa92faedd24b2d87c1c434a",
+  "new_quote": "or/washington/sherwood/16.31/16.31.020.txt#L1-L4,L7-L10",
+  "old_fingerprint": "afed4291be73f2365b76af0e07ae6764e9161348c32b78fd77faa86297e2b947",
+  "old_quote": "or/washington/sherwood/sdc.16.31.industrial.txt#L49-L53,L59-L64",
+  "when_key": "",
+  "zone": "GI"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "359bb85ad00aaf7a77473785faf7a7af40d19d18beae00d13911f894c0026b66",
+  "new_quote": "or/washington/sherwood/16.31/16.31.020.txt#L1-L4,L7-L10",
+  "old_fingerprint": "1923a378ad63807d48f1afd83bc940b1c3934b4b606adc06cfcbf468cbecdb64",
+  "old_quote": "or/washington/sherwood/sdc.16.31.industrial.txt#L49-L53,L59-L64",
+  "when_key": "",
+  "zone": "EI"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "3c1ac3d2ff2b125a9c043b0611aacd630bb0410d4e528c4eaa56da9a72b85bc4",
+  "new_quote": "or/washington/sherwood/16.36/16.36.020.txt#L1-L4,L7-L9",
+  "old_fingerprint": "d641fce55efd5af58eb8bf65ca48abf006c2d61e7ae5dab63d232e366abddd2d",
+  "old_quote": "or/washington/sherwood/sdc.16.36.institutional-public.txt#L14-L19,L25-L29",
+  "when_key": "",
+  "zone": "IP"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "20056532e5def20d3aa090f28bb5d9f07884afa88020aecb84df3264bfa3b98b",
+  "new_quote": "or/washington/sherwood/16.40/16.40.060.txt#L1-L3,L9-L10",
+  "old_fingerprint": "61583a41fc45dace9fcc7b4de187166ede9bae64e9b196abb711b74c07179b39",
+  "old_quote": "or/washington/sherwood/sdc.16.40.pud.txt#L240-L244,L253-L256",
+  "when_key": "",
+  "zone": "OC_PUD"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "f629874f950d5cdd640c74d6779179a79a34aa521b47ceaf42ad9c160f2c5993",
+  "new_quote": "or/washington/sherwood/16.40/16.40.060.txt#L1-L3,L9-L10",
+  "old_fingerprint": "df79801065baba249fdfa3cb5ef7419634984b2b5de7c34fa4cd95f6cd3fcb5b",
+  "old_quote": "or/washington/sherwood/sdc.16.40.pud.txt#L240-L244,L253-L256",
+  "when_key": "",
+  "zone": "RC_PUD"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "11c20181dc999043ddad42c685e8a8b64b0e62644fc3d6eebe8911bf305f27ae",
+  "new_quote": "or/washington/sherwood/16.40/16.40.060.txt#L1-L3,L9-L10",
+  "old_fingerprint": "d723a8086daac659694ed5513bbe58984629dd8c9f342446c43aa2f577aa138a",
+  "old_quote": "or/washington/sherwood/sdc.16.40.pud.txt#L240-L244,L253-L256",
+  "when_key": "",
+  "zone": "LI_PUD"
+ },
+ {
+  "field": "like",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "0b8ba7a07b37a3a7a2a0153ca429f99c53bf576997aa978ce91018b576593e24",
+  "new_quote": "or/washington/sherwood/16.40/16.40.050.txt#L1,L10,L15-L16",
+  "old_fingerprint": "cd1b463435ab55d90978c81bb77978f686ed0834be6abd28ee476bc3d1f51428",
+  "old_quote": "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230",
+  "when_key": "",
+  "zone": "LDR_PUD"
+ },
+ {
+  "field": "like",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "45d2c7f900dad7e4c2ff16c28fd02231bc02fc45de4636c462eb0ad6e118e580",
+  "new_quote": "or/washington/sherwood/16.40/16.40.050.txt#L1,L10,L15-L16",
+  "old_fingerprint": "8af272b5091c007620f51ea5b0b034a461c4aa149ea72cdc8a7428592c7beed5",
+  "old_quote": "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230",
+  "when_key": "",
+  "zone": "MDRL_PUD"
+ },
+ {
+  "field": "like",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "2e5f1b38de7ab19f14b587071bd6d2fb304d9898239dad9f1990c813a4c209db",
+  "new_quote": "or/washington/sherwood/16.40/16.40.050.txt#L1,L10,L15-L16",
+  "old_fingerprint": "007f98c81cba265110c65be547d193cf56eee88e4146e1dcd07bc14dea7bb5d4",
+  "old_quote": "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230",
+  "when_key": "",
+  "zone": "MDRH-PUD"
+ },
+ {
+  "field": "like",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "fd7912626951787c80d46edd8dcce724a727e8d71255ded529710d2637266058",
+  "new_quote": "or/washington/sherwood/16.40/16.40.050.txt#L1,L10,L15-L16",
+  "old_fingerprint": "4c69ac0aff07d3b0c856413af8e87a882b6dc6f1422a8058a25b64bf0ace873a",
+  "old_quote": "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230",
+  "when_key": "",
+  "zone": "HDR_PUD"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "c92eeea4f894a46f7a41396b52d5d137b25cf623755969b2073b2078c960af76",
+  "new_quote": "or/washington/sherwood/16.68/16.68.030.txt#L1-L5",
+  "old_fingerprint": "315ec052678de8968efcca2d914cb98448064f7636bf95416d94ca06828089b9",
+  "old_quote": "or/washington/sherwood/sdc.16.68.infill.txt#L74-L82",
+  "when_key": "",
+  "zone": "LDR"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "47f787d2978f94aa2cbc48016c5a2f9c62c5cbcf363d1faafe31ffca1f828eb7",
+  "new_quote": "or/washington/sherwood/16.68/16.68.030.txt#L1-L4,L6",
+  "old_fingerprint": "68071b740a3115e55833e6b8d28e55c2a9c0748b0e9882c6776f102ef17ef1b6",
+  "old_quote": "or/washington/sherwood/sdc.16.68.infill.txt#L74-L81,L83",
+  "when_key": "",
+  "zone": "MDRL"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "ea6a590c0aa76d1425275550e256b63e685c1898f568ab71e6d1abe7090207f9",
+  "new_quote": "or/washington/sherwood/16.68/16.68.030.txt#L1-L4,L7",
+  "old_fingerprint": "b5b2f0bcb5cf733e74c654741a7d1484ac5b5ce90aced574ea38da6fe84ba32f",
+  "old_quote": "or/washington/sherwood/sdc.16.68.infill.txt#L74-L81,L84",
+  "when_key": "",
+  "zone": "MDRH"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "650fb3b942a86b79745b4d75047cd788562c94154730dd1caa84d0cb428e6703",
+  "new_quote": "or/washington/sherwood/16.68/16.68.030.txt#L1-L4,L8",
+  "old_fingerprint": "6613ef21d53f9f0b989d38c2b688f3a84ba27e71e8f33ac00378c4398af59b5e",
+  "old_quote": "or/washington/sherwood/sdc.16.68.infill.txt#L74-L81,L85",
+  "when_key": "",
+  "zone": "HDR"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "38547ac3ace7c5cb0288fbbea9300e8419053b9073660ac26467bad6a9dca0e4",
+  "new_quote": "or/washington/sherwood/16.94/16.94.020.txt#L17,L20-L34,L80,L86-L100,L115-L119",
+  "old_fingerprint": "730a1004ea5be78e488de1d622817454505ffe173d2ad63289361ab366e013bd",
+  "old_quote": "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L375-L398,L490,L502-L525,L560-L571",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/washington/sherwood",
+  "new_fingerprint": "c030ee7e6e964be4d172fcd74afda4d1e4c29c379d13d7c91280982c0b7f56b2",
+  "new_quote": "or/washington/sherwood/16.94/16.94.020.txt#L17,L80,L86-L100,L115-L119",
+  "old_fingerprint": "172fed8ffe1b3ec76e0a7340bff11c8b4e17ef1febcafa798f8882f763d57f21",
+  "old_quote": "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L490,L502-L525,L560-L571",
+  "when_key": "",
+  "zone": "defaults"
+ }
+]

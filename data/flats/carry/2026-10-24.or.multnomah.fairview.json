@@ -1,0 +1,1622 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "e2f43da4d6cffea64bbd7a15e7fb1e8907bc1c08b2fd821d183a255a30a96bf7",
+  "new_quote": "or/multnomah/fairview/19.108/19.108.010.txt#L1,L3-L4,L6-L32",
+  "old_fingerprint": "ffce4cbdb5fcf3ec5cfdc53478d4a203908e34be3890fdb80d947c21b0fd7ad2",
+  "old_quote": "or/multnomah/fairview/19.108.txt#L15,L17,L19-L45",
+  "when_key": "",
+  "zone": "R/CSP"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "6f228d3aa2afbdaad4707ed94a7733498c33237b1de4231e93de8d486bb36b80",
+  "new_quote": "or/multnomah/fairview/19.115/19.115.040.txt#L19-L21",
+  "old_fingerprint": "04318dd6c9af6de227f11744125347efba0272ba01805953051fde693da8a8f6",
+  "old_quote": "or/multnomah/fairview/19.115.txt#L59-L61",
+  "when_key": "",
+  "zone": "VSF"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "21089b65b248801cf5f2ef0961a8fadacff1bcba3254b131336d4c1ef27d1e10",
+  "new_quote": "or/multnomah/fairview/19.115/19.115.040.txt#L10-L13",
+  "old_fingerprint": "8c140d6e32e9eb338195f78ec36454f1e80e0c310e688674aebfd78c4c225cf1",
+  "old_quote": "or/multnomah/fairview/19.115.txt#L51-L53",
+  "when_key": "",
+  "zone": "VSF"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "98632787834229f430d5fa7d15dc3d0a250bfc5346c6194cdff6748fc1e90afc",
+  "new_quote": "or/multnomah/fairview/19.115/19.115.020.txt#L1-L7",
+  "old_fingerprint": "34ad3febf952f4371b809138150e2e67064c0813a84935ee2f459b6236a2a647",
+  "old_quote": "or/multnomah/fairview/19.115.txt#L21-L25",
+  "when_key": "",
+  "zone": "VSF"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "4699357f2658664253d9564b17866351dee1082d9697c77a1658dbd1d7e5f046",
+  "new_quote": "or/multnomah/fairview/19.115/19.115.040.txt#L31-L33",
+  "old_fingerprint": "fcefaf743749d7f9700a2e32115c9b0361afffce891e1ba9fbbf78097a1a1837",
+  "old_quote": "or/multnomah/fairview/19.115.txt#L71-L73",
+  "when_key": "",
+  "zone": "VSF"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "d6b7e82f87fb43104e0bfd09d0a798c48db7db4b72194babc9430b6a11a29b7d",
+  "new_quote": "or/multnomah/fairview/19.115/19.115.040.txt#L45-L48",
+  "old_fingerprint": "08af2af4052f45428b3c752669e55f14ef144af06ac494513a76638407b9270b",
+  "old_quote": "or/multnomah/fairview/19.115.txt#L83-L85",
+  "when_key": "",
+  "zone": "VSF"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "44f6539b9a895b2d431e425f3bedc25114040a8f480977b892b15c8d39fa274c",
+  "new_quote": "or/multnomah/fairview/19.115/19.115.040.txt#L50-L52",
+  "old_fingerprint": "ad8d82b0b31c315dc904c218352d123140a33a425cedb0386fe1cb4de80132b7",
+  "old_quote": "or/multnomah/fairview/19.115.txt#L87-L89",
+  "when_key": "",
+  "zone": "VSF"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "20a38565a3b5aa54026a89d2c0fb44ca14a583267c5773e3e5204b2cf8479856",
+  "new_quote": "or/multnomah/fairview/19.115/19.115.040.txt#L45-L48",
+  "old_fingerprint": "44a3e73a926e84ffd84635558066db4dc5d687a08aa3e3b620e4945ed160a580",
+  "old_quote": "or/multnomah/fairview/19.115.txt#L83-L85",
+  "when_key": "",
+  "zone": "VSF"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "21ac2cca91414bf01ef7de743bfb08fd1ac7fccdea4df8648fefae60e23056c6",
+  "new_quote": "or/multnomah/fairview/19.115/19.115.040.txt#L3-L8",
+  "old_fingerprint": "68f1139d32b53a486a8140a590033e59e35addd140166323a98096e2e927cf9b",
+  "old_quote": "or/multnomah/fairview/19.115.txt#L47-L49",
+  "when_key": "",
+  "zone": "VSF"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "8b03acfc284cfc865a55d166f04d036fc540f91dc23d07f4adc25668996cefa6",
+  "new_quote": "or/multnomah/fairview/19.115/19.115.040.txt#L15-L17",
+  "old_fingerprint": "17aadb058023d3eebf528d07faae4bbe8430e4504c87b31fb3782cf653d486f6",
+  "old_quote": "or/multnomah/fairview/19.115.txt#L55-L57",
+  "when_key": "",
+  "zone": "VSF"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "cb5d807d63770f5856711c8f6b5b08bb990822aec8b7ac4dd1ac4546c33ca9a7",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.040.txt#L16-L18",
+  "old_fingerprint": "a06a2bc75fa96e8ec7a36acb5bc0dbf6946e10f4f3e29e58db68334e506d220d",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L103-L105",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "7e109e0e440163f59f17206407ac949fb8013d4648c705cb1fd3965a0fc08dbd",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.020.txt#L1-L35",
+  "old_fingerprint": "ce28a51198e1648d00df2925384aea2de7f052ae7749522ccf21279527d442eb",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L21-L55",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "be1e32c1ae93fe2b12a8e76ffb0f88239cb89169f352898a0d048b4698d1b6d8",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.020.txt#L1,L3,L9-L11",
+  "old_fingerprint": "9215235a6e246053f565ffeb8d04cee93b4eef72b9e688d910e7413bf0dd91b6",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L21,L23,L29-L31",
+  "when_key": "unit_lots",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "cf213fd2a610fb75aedc50a2425a201932f24bc8ecd4e9809a6310bb0defce00",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.040.txt#L1,L3,L5-L6",
+  "old_fingerprint": "a6c515dd456d8dbc2853e87c5eee0429957340962cd0562288c446c97f26522b",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L89,L91,L93",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "90e0327a6516afa33d8266b3b113ee449f5291d4e0e4918c8e446f898bbec8d1",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.040.txt#L1,L8,L10",
+  "old_fingerprint": "7c83d08e86d1589d6c4cfb2f137f6a6a141b9c15adbe898f1514ec70be89061a",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L89,L95,L97",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "54fe02557cca68f2431279d06e285463db4302ca475d455a9b3c47629740a0d5",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.040.txt#L1,L8,L10",
+  "old_fingerprint": "8c4a07708a740b97904c287bf9d1e8d4add4542063b59217c0d5e5bc79fe07c2",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L89,L95,L97",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "9031ca770776b47d993e84a4d91c10b0ea8a353211829de2593c08bd46b883ae",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.040.txt#L1,L12,L14",
+  "old_fingerprint": "cd85813c4d055d53924e6131a3cc2de7adf64c8beab1c714d3bab16953934f86",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L89,L99,L101",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "e091500fdad739bb1bd11ab060c89f6daffe2ccdf286bbd4be575c74aacd8552",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.040.txt#L1,L20,L22-L24",
+  "old_fingerprint": "5aa517fb253b1337344b4c0bac927c8cdce48f9f992d2bbca5afeefc123ebaac",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L89,L107,L109",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "0c4acf4f3599162c23a8bf04c1a44b30d6e3d4aadbc6d9644f5772580d7111d6",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.040.txt#L1,L20,L22-L24",
+  "old_fingerprint": "f0c3cd6eb0f4a64fc53342bdbb74bf9964572fee018abf774659df78721c86c6",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L89,L107,L109",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "cfa864966f86e9fe3046c36c237dc405f24e32b4925f8dc4185bff9450f38309",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.040.txt#L1,L20,L22-L24",
+  "old_fingerprint": "f647bfae4c6a2b664f47dd6c8d720b3ea245778f39df7df4700bc9f15e0b855b",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L89,L107,L109",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "323d3bce95fd5521154f0fd9af34174adbf508082bc2f84d4032489a5fcc975e",
+  "new_quote": "or/multnomah/fairview/19.120/19.120.040.txt#L1,L20,L22-L24",
+  "old_fingerprint": "a748a087775b8b4ce134e0c0692ce53dbe2bfc844e0d16a6b867322c37eb5df6",
+  "old_quote": "or/multnomah/fairview/19.120.txt#L89,L107,L109",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "197c9a53e96ca05913ce0a2a47afe35a53886af5912e1c6c737bd93bc9c477ab",
+  "new_quote": "or/multnomah/fairview/19.125/19.125.030.txt#L1,L3,L5-L7",
+  "old_fingerprint": "888552d9c5630806384bfe068f5a68b398610813e15c067dc775da0d540ac456",
+  "old_quote": "or/multnomah/fairview/19.125.txt#L63,L65,L67-L69",
+  "when_key": "conditional_use+unit_lots",
+  "zone": "VA"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "db7bcc9205741332a910e27e6dae2e68f10ec9627d97e968cdc33c77d44daed2",
+  "new_quote": "or/multnomah/fairview/19.125/19.125.040.txt#L1,L3-L6,L8-L10,L12-L14,L16-L19",
+  "old_fingerprint": "28c8df326a92e462d0408fe45a24417e58d2c08fd52044dab12429bc1273516b",
+  "old_quote": "or/multnomah/fairview/19.125.txt#L73,L75-L77,L79-L81,L83-L85,L87-L89",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "16c505db042570c6d3c99370acd769b93dfd2c35418d2e9ba7bc0bca793158db",
+  "new_quote": "or/multnomah/fairview/19.125/19.125.040.txt#L1,L12-L14",
+  "old_fingerprint": "fdfa69d4d0b3c98c37e92b96e00775be92cf50047868b74cbb7659e555d36fcf",
+  "old_quote": "or/multnomah/fairview/19.125.txt#L73,L83-L85",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "2092e9ecc44a0a430dbb09fcb1d7831408756585beff7f17b95471cc041dbe41",
+  "new_quote": "or/multnomah/fairview/19.125/19.125.040.txt#L1,L8-L10",
+  "old_fingerprint": "59e593dbece5d4d2c9a84de83b482db415a3e1915412128122c8c61bdc2ae00d",
+  "old_quote": "or/multnomah/fairview/19.125.txt#L73,L79-L81",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "fa99669d78ab10625e1b1ba01c36610c0bf0f80c2331a98564febe78f9552b25",
+  "new_quote": "or/multnomah/fairview/19.125/19.125.040.txt#L1,L3-L6",
+  "old_fingerprint": "ae21f971619bac06890d63955410957ddfec40183822e5b5fef32185a3195ca4",
+  "old_quote": "or/multnomah/fairview/19.125.txt#L73,L75-L77",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "cefbc7298e4f3e562ed3a93c47e4e0739380652ecb91edf22726c62b31670c49",
+  "new_quote": "or/multnomah/fairview/19.125/19.125.040.txt#L1,L3-L6",
+  "old_fingerprint": "051b22b87d5385c786ac715de4759ecff6cedfa10bf2f5ec72dfc8544f74e9a7",
+  "old_quote": "or/multnomah/fairview/19.125.txt#L73,L75-L77",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "88bb182fea8e2ffd6235359f42fd41d483c386168b80ab296820360f33abc7e8",
+  "new_quote": "or/multnomah/fairview/19.125/19.125.040.txt#L1,L16-L19",
+  "old_fingerprint": "da51f98b11f4fc244810dd0ac52eb1e96b720fec55e2f2f12942818a001e0df9",
+  "old_quote": "or/multnomah/fairview/19.125.txt#L73,L87-L89",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "3ed93834fdd71d1bd23e6c1e1700999fff4abf31bc128e58aac49d5053d21cfb",
+  "new_quote": "or/multnomah/fairview/19.125/19.125.040.txt#L1,L16-L19",
+  "old_fingerprint": "f3a57ac25446f3c5438246051d9e4364c89e65b6412b7c66106db61cef762891",
+  "old_quote": "or/multnomah/fairview/19.125.txt#L73,L87-L89",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "d985d012895a8e2a043863a7214402f3d3a10ddc6a7274162602ac4380cca144",
+  "new_quote": "or/multnomah/fairview/19.125/19.125.040.txt#L1,L16-L19",
+  "old_fingerprint": "6313f898bd1c1f9f3b3c8e5e63fb20a0c59006dc2cd753abcb6c6cbc646d756e",
+  "old_quote": "or/multnomah/fairview/19.125.txt#L73,L87-L89",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "2445418e6dccbe3f52fa921c2232533a3773fcea814db615cfc19d8856ec816b",
+  "new_quote": "or/multnomah/fairview/19.13/19.13.060.txt#L58-L60",
+  "old_fingerprint": "b0ca2b019f5f9b9b89efa9b83b45553eb3529ce54fdc8fae9c901a1d76c61fd6",
+  "old_quote": "or/multnomah/fairview/19.13.definitions.txt#L325-L326",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "14c5765db5f77c441fe70475e27d7cb32e3e468408f48fcccf435934931ddc0d",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.010.txt#L1,L3-L4,L6-L7",
+  "old_fingerprint": "306ea0ab22ba6b0dc9ab0e57b7bb79a4f67c50f6789edbbce0d0ad36541f374c",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L15,L17-L18,L20-L21",
+  "when_key": "",
+  "zone": "VMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "d683531a214af3a2643fac1d8bf32e3b01d009ec01244802cf2aa84b245640a6",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.010.txt#L1,L3-L4,L6-L7",
+  "old_fingerprint": "e23e9ef6dd20fe1fb4842fa6d9c3613ae84c392b88f5d2d1e56efd19038109d9",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L15,L17-L18,L20-L21",
+  "when_key": "conditional_use+unit_lots",
+  "zone": "VMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "14b0fcfd42d47b78034d60147065ecd400e573d49c79f25732a16a81bba5430d",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L66-L68,L70-L72,L74-L76",
+  "old_fingerprint": "8e212c69441b7413dde3e9b1634ef4909a19775628428e827c893cbf0a000824",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L114-L116,L118-L120,L122-L124",
+  "when_key": "",
+  "zone": "VMU"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "6888e1fa950e2ccc6abfe652a2710313be28c72c2b8ee6d314cb6a244e3c565f",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L74-L76",
+  "old_fingerprint": "680b2db3ae93de02a28beaac441c263c3cbe1d45d4fb593236b8266e034aa642",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L122-L124",
+  "when_key": "",
+  "zone": "VMU"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "d52357a583abe0a6892026d609d2e426aca89916236e4f3babd55970062eede1",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L70-L72",
+  "old_fingerprint": "1c5dc6ab8d64801bea2fa6f0fa8547b935b38b818b03fac982103ceea336a33b",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L118-L120",
+  "when_key": "",
+  "zone": "VMU"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "64ebf7893d0fa523315c092cd65d863d83d7d21f5f4c57b9b8093c06972ab80c",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L66-L68",
+  "old_fingerprint": "d5761df816ccc39ed9f0889852918cae92da0a2e4254fb134c3388e0120c1d05",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L114-L116",
+  "when_key": "",
+  "zone": "VMU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "cf0a63c4d79fe6fd07a596091fc94d0ea262cc6e412c3547cbe3c3bec5068ea8",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L31-L33,L35-L37,L52-L54",
+  "old_fingerprint": "2e4686eca0f7428b1b97547d65ebaebccfea0d462348ed18d8087001d6e24007",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L54-L56,L82-L84,L86-L88,L102-L104",
+  "when_key": "",
+  "zone": "VMU"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "be8f061abb6db31ec9beca4725f97b7160655d4c54dd21facdf212dbc5f06e89",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L31-L33,L52-L54",
+  "old_fingerprint": "7acc49d0628619ace7fffdb4ed41cc03b521bd1ad78b739daed1f07386b41fec",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L54-L56,L82-L84,L102-L104",
+  "when_key": "",
+  "zone": "VMU"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "60b0b104396da01d399cc388124bbc1c47597243029a19c1c98a573be2e8bff8",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L31-L33,L52-L54",
+  "old_fingerprint": "6d335c998a683c4a2352444bb733cd76588bdacbae8442ba2c98f831cccbf424",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L54-L56,L82-L84,L102-L104",
+  "when_key": "",
+  "zone": "VMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "741029ee3fb714bd5859370d2f5d380508c7caec1c5540862b9d59227384385b",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L66-L68,L70-L72,L74-L76",
+  "old_fingerprint": "270a05f938e7f0093b2253f0c19ffd64b62703202755602b1f337f52c0315194",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L114-L116,L118-L120,L122-L124",
+  "when_key": "",
+  "zone": "VC"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "5ee80c481e704170c9d6362585394583d7253226a7b8bc467224bcbeb2914c2d",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L74-L76",
+  "old_fingerprint": "e3226531caa64d499b4cf9d12ee141869f012ab41daf9872b38985bbeab7bdf1",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L122-L124",
+  "when_key": "",
+  "zone": "VC"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "07210c3c3918b84d5f229a909485958fd6183fac8c58b37e58077bd6691a2df8",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L70-L72",
+  "old_fingerprint": "740cddceae2f9ee7e4dec6e9a306b38afd12b18e151df8ea3a9bd6df6621e06e",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L118-L120",
+  "when_key": "",
+  "zone": "VC"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "c82f98f1e398de6357428e4fa6e8771832feb033c1033d4577de1743abc0edcf",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L66-L68",
+  "old_fingerprint": "b773cce8712477b7562a6bf15041d10c5dc06c6909155ea5d9780cfb139a08db",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L114-L116",
+  "when_key": "",
+  "zone": "VC"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "ff3f9fde7af8c74642a7d233afc1a5a5e2c47a01856f59b83119ad0eb4ccb8c5",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L7-L9,L23-L25",
+  "old_fingerprint": "b46f76326eb3d79de6eb34bcffd6425b1e467a5037ead6202e5214cdfe81b7de",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L54-L56,L58-L60,L74-L76",
+  "when_key": "",
+  "zone": "VC"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "7fd590de108b16efa9b7944bcfe2013a069fb058187dafd5a38beb66dfab5c74",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L7-L9,L19-L21",
+  "old_fingerprint": "a1b26f85f5f82d64b3a46588a4f0a796ab5c9913c8ab83493621f9a3dae7acde",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L54-L56,L58-L60,L70-L72",
+  "when_key": "",
+  "zone": "VC"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "d468a3bfe402b879e1fd1a448c89c31d8301f4671c4f57738b3e74fb95730109",
+  "new_quote": "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L7-L9,L19-L21",
+  "old_fingerprint": "3534492ff140f7ca6d53ae8d806eb5d4b8c7ba09c44b12e893df4ff6c154e78e",
+  "old_quote": "or/multnomah/fairview/19.135.txt#L52,L54-L56,L58-L60,L70-L72",
+  "when_key": "",
+  "zone": "VC"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "021a3caa75811f7fe1e83656470b9d9e714dc7d874da82d6814e2cec9a3554ba",
+  "new_quote": "or/multnomah/fairview/19.145/19.145.070.txt#L1,L3",
+  "old_fingerprint": "7cc538e2ceefcb4538a77856b1a02ffe8817578f90685d25389c8be22a57d9f2",
+  "old_quote": "or/multnomah/fairview/19.145.txt#L63,L65",
+  "when_key": "",
+  "zone": "VA"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "3d468db7d71c77dfd43ed064359724fd2bbbef69f829eb3e3a69e4872e1d2c16",
+  "new_quote": "or/multnomah/fairview/19.145/19.145.070.txt#L1,L3",
+  "old_fingerprint": "58cdb666773dadbe0e2b316cdf22a5cef5c203e014902bad9ac1f888760ded06",
+  "old_quote": "or/multnomah/fairview/19.145.txt#L63,L65",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "7268f4b8e564002cf34ae3516805845738bd244cc30c10a8de24f3c544e036ea",
+  "new_quote": "or/multnomah/fairview/19.150/19.150.070.txt#L1,L3",
+  "old_fingerprint": "2e476b10c4f4a5d9fca054ab4a70dc2630acc00415c2bd731f57e3200c17f672",
+  "old_quote": "or/multnomah/fairview/19.150.txt#L79,L81",
+  "when_key": "",
+  "zone": "VC"
+ },
+ {
+  "field": "driveway_approach_min_width_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "7f75119ab903243f5323ddaea02dce18647a4bcb6b639caf287617bd9d56315f",
+  "new_quote": "or/multnomah/fairview/19.162/19.162.020.txt#L199-L211",
+  "old_fingerprint": "352bea75c3d56a45e24195004eab829e06ea68c724f5bf9119fbace51216345e",
+  "old_quote": "or/multnomah/fairview/19.162.txt#L177-L187",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "baa2833040feddef0f07014634a7388b9fae5733fd8e0164a60d838eb56cf277",
+  "new_quote": "or/multnomah/fairview/19.162/19.162.020.txt#L199-L211",
+  "old_fingerprint": "286da302becde2f465e940c6597d3dd4e61ca816ad7bae64b6bc24947f55cdbb",
+  "old_quote": "or/multnomah/fairview/19.162.txt#L177-L187",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "cf8b54a2df730a1edaf89b51364df9019ac25f2086bc93bd173ecca1bcc5a621",
+  "new_quote": "or/multnomah/fairview/19.162/19.162.020.txt#L87-L92",
+  "old_fingerprint": "acc23e84cfc2e5c67a507113a2307aaff6f1d73541b3d422548f1d63ca9a3b4a",
+  "old_quote": "or/multnomah/fairview/19.162.txt#L81-L83",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_building_buffer_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "79b903d87508d9eeb1c87ef474fec8251c2e221ef9569bd10e3b6535b2cd1d11",
+  "new_quote": "or/multnomah/fairview/19.163/19.163.030.txt#L242-L246",
+  "old_fingerprint": "5806d85eaafeff1e37284f04aa31a539c85229b3e3b1d2d37b8541c9a1bf9d3a",
+  "old_quote": "or/multnomah/fairview/19.163.txt#L307-L309",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "02a9a44e8641e6f624b9d61054b4af57354dba862e9e9dff1788ed1809fa5335",
+  "new_quote": "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L16-L18",
+  "old_fingerprint": "3f90e00a6eb9314233aa2e63506926347ecbd07e4c28a4f49e12cb65581dc814",
+  "old_quote": "or/multnomah/fairview/19.163.txt#L109-L111,L113-L115",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "03f18921645ad4ae510218b33237d233aba43ee079bf2c97d1a3d262e05862a0",
+  "new_quote": "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L16-L18",
+  "old_fingerprint": "e2480125b2514cb465e6b2cfd46fe45b491ed6ae634a01a94422f7e5ce9188ef",
+  "old_quote": "or/multnomah/fairview/19.163.txt#L109-L111,L113-L115",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "0d6dfec79f1b50c64993feb6432d4f4b66cc2d38fedd6107cc7b0cc23883c6e9",
+  "new_quote": "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L16-L18",
+  "old_fingerprint": "f3a2262da2126f9bd1bed6d9b4a83d9c339201acc1f56b158d3588b5b7a00ba6",
+  "old_quote": "or/multnomah/fairview/19.163.txt#L109-L111,L113-L115",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "3ea120cbe49e373083487787127a73a4c204cee8a2dab64b447f395cb023b1b8",
+  "new_quote": "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L16-L18",
+  "old_fingerprint": "04330657ad0d913d0aa3e3b38cf28090ef406c2de3982251b09ff9fb92c07550",
+  "old_quote": "or/multnomah/fairview/19.163.txt#L109-L111,L113-L115",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "63c761862026bc016e8069c0bbffbee0bbd3acf22b0af7be4651554f6f777442",
+  "new_quote": "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L16-L18",
+  "old_fingerprint": "cef180ba815c2a74ef3cfc575625133548477a7362bcb056b1c0c232688c6319",
+  "old_quote": "or/multnomah/fairview/19.163.txt#L109-L111,L113-L115",
+  "when_key": "",
+  "zone": "RM/TOZ"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "a812e8c112ae694c7cbff6b79bd281962e3d9478c4b3f9254b6e0ec9f828c581",
+  "new_quote": "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L20-L22",
+  "old_fingerprint": "95cb03b4ec01524e7b475d9b35f6e4564158f7f001260f1b65467fd703103c73",
+  "old_quote": "or/multnomah/fairview/19.163.txt#L109-L111,L117-L119",
+  "when_key": "",
+  "zone": "TCC"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "6e5afea986e0c707094633af00a703c7dc4f169694c7123a46efd81bca0478e1",
+  "new_quote": "or/multnomah/fairview/19.164/19.164.030.txt#L3-L5",
+  "old_fingerprint": "8024a6f052afaab78e03ef0c0dda5179cdfb328bdf1f02e81f9e400a727269fb",
+  "old_quote": "or/multnomah/fairview/19.164.txt#L29-L31",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "eed804826b791abf6355ad9222c09d87d4d2896fb9461ec480b25f5f8c4579b9",
+  "new_quote": "or/multnomah/fairview/19.164/19.164.030.txt#L17-L18,L29-L31,L153-L155",
+  "old_fingerprint": "f8d3aa6d56f87972fa3c18e95ec040a3b98fb96e4528fa7306622373ef379f9d",
+  "old_quote": "or/multnomah/fairview/19.164.txt#L43-L44,L55-L57,L175-L177",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "30eb53d19defb7e7e5ebca8f4c0eb82a68144edbddf899ed000659558a8abace",
+  "new_quote": "or/multnomah/fairview/19.164/19.164.030.txt#L165-L166,L171",
+  "old_fingerprint": "f707b0bc44a9f2ba8b493c70745aeab5c15028c4e14eba2993b394cce7211189",
+  "old_quote": "or/multnomah/fairview/19.164.txt#L185-L186,L191",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "bc3bfec86d66f6ecf4372d46cca5ceac2b630272396b4dc13fe88ae8bae694d7",
+  "new_quote": "or/multnomah/fairview/19.164/19.164.030.txt#L165-L166,L171",
+  "old_fingerprint": "d912f2a89b4762311265265750b46b54cddf0a4e58a10b6de9cbb2481cc3a5d7",
+  "old_quote": "or/multnomah/fairview/19.164.txt#L185-L186,L191",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "9c3c092b54cba17bbf1e99c19db3ac13bfb5e3a194c5b13964d89893b6b1b19c",
+  "new_quote": "or/multnomah/fairview/19.164/19.164.030.txt#L165-L166,L171",
+  "old_fingerprint": "4cb8d8e6992bc7e350ecc93688534898496d3dc5a787f4c056769aa9465d3d9e",
+  "old_quote": "or/multnomah/fairview/19.164.txt#L185-L186,L191",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "2e747e7a7d357d821049e6e93e2fb0e9779d19bc614e5268b342a23e55b51094",
+  "new_quote": "or/multnomah/fairview/19.164/19.164.030.txt#L165-L166,L171",
+  "old_fingerprint": "bfeb3d3629142babe58c510aeb9230a72315c6c2b6ab648fa6cc7b62a1aeb5fd",
+  "old_quote": "or/multnomah/fairview/19.164.txt#L185-L186,L191",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_area_max_frontage_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "4beed83b9aca79193b042a43bec7a5bfc699a6702e056a6d781c5e9c909795dd",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.040.txt#L107-L117",
+  "old_fingerprint": "d53ae047e70c4ee08ebb126a1eebe679d037d74cc1ec4bebdf055708567a3aa4",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L666-L676",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_area_frontage_any_street",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "f2c91781e5f1640a2e23150d81ff7e17d2b20bd20bf0a5998d495a1e8a3b77e2",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.040.txt#L107-L117",
+  "old_fingerprint": "1713848da1f7fdb0622f0a89c8cf041ee1ceebedb84c4011f5040b7e892aab07",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L666-L676",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "241e59f5b369855bacdfde2bc3250bb08f7870a3366b2937809bebeb1eb1aa84",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.040.txt#L107-L117",
+  "old_fingerprint": "f99bc57ff79f6de2fa48d899f98223cd6d8039fd4f4009e3ce268b01399e8f0e",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L666-L676",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "53d8ab7fa23b0ff0f4efd1c2b2fbef2f00eb54768910415927c78e0612c4caab",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.050.txt#L120-L123",
+  "old_fingerprint": "6e107b962dca10fb536b6a0553f29581a999d228793a2f9b96d1d3fc35790733",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L860-L862",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_maneuvering_max_width_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "7b753f743eb1e9b8c7880ce198803425eb055c089e003bd12295c028b534c717",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.040.txt#L107-L117",
+  "old_fingerprint": "346059bcf81b1a8e3ea8c515d6480a1cd8559e54660a84b2767a6f65817c2f20",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L666-L676",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_maneuvering_max_width_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "1aeb4dc69782fb038c904f61f1e06443876e593ae2d5cd2bd22a272ca5b36b93",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.050.txt#L84-L107",
+  "old_fingerprint": "cf8ea1fb2727bf198991d04c78249be4c35bf7e1f6898a140e563552971b7aea",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L826-L848",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "396e50a665fecab28637c115946e8524bda47bd571884f9d5b0a0f1408d41eec",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L84,L91-L92",
+  "old_fingerprint": "745ab386d41da0975c942503c0294e04267c4455298205774b40ba370943cfde",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L305,L312,L313",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "0c284047dda130faca1f287b13b0eb622b720880682d07ea9b178898283d0719",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L84,L97-L98",
+  "old_fingerprint": "a69b21297673b8bf7603a2b5f1a83118388f39f1955350486d357dac0c02c074",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L305,L318,L319",
+  "when_key": "unit_lots",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "8949f245a4c20c44060d6bb8b34512ca355ba82d7f9a2e7e2842d9aab8648347",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L109,L116-L117",
+  "old_fingerprint": "0b0a7583fa0ee103d395f9587f59e098bf1f251b2a9075e957d5e4b03b072c37",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L330,L337,L338",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "1ef9f126c8c3751df6c852b2dc6e91d59c1b4c3192ea1bf589b4afa02924a66b",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L109,L122-L123",
+  "old_fingerprint": "1b356ab5c066b71ee246f1ae6f153dad39c2de3b01da06c8d5658e86fe3a83d3",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L330,L343,L344",
+  "when_key": "unit_lots",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "d19ff81d1ef562e6364467a98230cf7ecbd016dd7dee7f55f6e362eafde29fb2",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L197",
+  "old_fingerprint": "edebd432dc7970f8691b02c6b8150b145745892b9bc15daf681121c1071df4e7",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L418",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "6d0e91bdbf7baeb5d0309f493e4a234a9c7531e6a89239670c9eae1c7c483b0f",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L231-L232",
+  "old_fingerprint": "217549fb734dcdef5074ca07d3b74a8f0732927ba307efed0d0f5417f68f86fc",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L452,L453",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "d5f24df96116606e4633d3bfab95b3dd141daca04a96739840f99cc74bf05b25",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L209-L211",
+  "old_fingerprint": "9aa268233e4fcc6e60efab6e7860c76b7eac57d60b95f329c37c0c7a7df4082e",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L430,L431,L432",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_lot_depth_ratio",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "dab8a5b7c5a3ee3e0540b740580619abcbbe1cade64c0eaf75f52ba75b10e5ee",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L145",
+  "old_fingerprint": "f408f07b56179002bd4c7439ce72ebae3846724b2fd99711da7cf985a3da8b4d",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L366",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_lot_depth_ratio",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "aec15ea21d18bc4d29f05fe18fe62008014cd06f2c75e3e6a596571abb35a1d5",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L146",
+  "old_fingerprint": "b8ce6fbcc2a1bee689a44b535209d22d23855818d62edf93f2887d9168b09c2e",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L367",
+  "when_key": "unit_lots",
+  "zone": "R-6"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "c432e9a8534a31ef5f58d5906dd6a383a7e3e747829d4a700f15c6a3d4a7cd09",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.020.txt#L13-L36,L81-L85",
+  "old_fingerprint": "045ba69c48739255e7f8c768b99feba0f80e4918f24400c0908e0cfed335e655",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L72-L95,L140-L144",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "574340425ab3cd3c6a3b13f8049db3a7db1bf332320fc769f7916603cd355a7d",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.040.txt#L15-L18,L20-L22,L24-L51",
+  "old_fingerprint": "772aea875fefeba2d0a5bf0e0d37f3834297744ec9f45e9871f23e2c023d77c3",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "102915d4732fde98f9383339b0c7cde0058d23e2549f6b59a1d7f01f21e5a24d",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L154",
+  "old_fingerprint": "24e0df429277f78fe79484ea57d8447ddd537011a71a6228f63f50da7f96b22c",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L375",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "cb5c0f10ec1b05796bb3e33e09572fd44ab5270ea517c0e1435722cbfae33a78",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L179",
+  "old_fingerprint": "ed1931839a46b9801ddc1e09a7714e8860023209c243c339cd2903c6a416e802",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L400",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "3864653f75fe8a571d6532b1f70d896bfab38cc63194ea6f3fe1c74f877c71cf",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L169",
+  "old_fingerprint": "f4541e0ec6f5057d40eb6974da02894e0083b2c32824c705349c2cb69dc977d1",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L390",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "fb42bd2371f70a65fbb9ef9b540f293fc7a8c14f9c3dab6be5d9cde13f6ef078",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L191",
+  "old_fingerprint": "9e3348f468c536e88b680c23030b070360b95c290579d2128d82a7cb75a25646",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L412",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "10533bf9efb8bf2b96a404a8f1970a8aef31884f550a68545e1f9f8dce926835",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L49",
+  "old_fingerprint": "cc634e528d891be6b615976f80c4cda05ec6169dd9c509f17b2063d2b3a38fc4",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L270",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "1d2f709625794749c5fa29295308bc6fb8c8c6451460f13846573e536f5f87e2",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L135",
+  "old_fingerprint": "a8eb1d01e0e2f611f0f3b6bad84d7f16b0db5ffe7b09d3c8497cca103767896d",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L356",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "d13a278f3c65197c6aceda1f3ff724cf2c62f08aaa62e460388274a0e67a39ca",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L220",
+  "old_fingerprint": "72955c610bc10591ef193e519ce4b8b0f14d9ee35fd797c3212fcc9489e61d50",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L441",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "7e552311850b2541c93f8d3e002e71e2755333fd7ac27bfc87cbb987814351b4",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L161",
+  "old_fingerprint": "fbb2e35982d5ac28cec4fc8a2ae7a0fd10b57e94759ac770082436acd4f4b24e",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L382",
+  "when_key": "",
+  "zone": "R-6"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "9029397cbff37f20d1fca2ad97a25fa67ebf4d50e5bd869b3c9d8cc7c6293072",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L84,L91,L93",
+  "old_fingerprint": "4629734e3443b33153fa4751898fb11685cbf4bc84adfff781792998dec66700",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L305,L312,L314",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "2aff881e5cfe9be0c78a63cd40cd8ebf21a2b73b9311b65a6dfc292e9d400e2e",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L84,L97,L99",
+  "old_fingerprint": "8151c9c36b2406da73f81383645dcdf7ef95c7204ab81378615f8bf5805b8a32",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L305,L318,L320",
+  "when_key": "unit_lots",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "d5bc1ddd4ec02275d5e35885e4eeaf3e38d98e2ef2e8887cd6b5d63e8ddf6440",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L109,L116,L118",
+  "old_fingerprint": "e624fbae2f93f03a963dfcd974cfc194814cad42aedd3f8224b84cc0dd785ecb",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L330,L337,L339",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "d0813f00088b0dd72e283cdbcf1153bc5e378e69d8a32c9efa142e1324c8dec8",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L109,L122,L124",
+  "old_fingerprint": "bb40d7e6907a8b0acfb0b0bcf8bc83776366d0e3640ce473aeb2f503656725f7",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L330,L343,L345",
+  "when_key": "unit_lots",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "2197cd59c3db25e5e60ccf848e3e85d1b2809e5bee2a302c663846aa1c52009c",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L198",
+  "old_fingerprint": "be480137faa7367f18b4f617e2bd25274f444d080c6de0b70c55abfdbb4652f5",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L419",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "19f5918114c3d3083f607f69150e76470ec36b10f040a35299b2daea8e225d1d",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L231,L233",
+  "old_fingerprint": "74e98dd873b66e5108408af0664101cb792fdd70497fd689d26c7b1b21f23504",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L452,L454",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "ba5da2a9d44e1a8b2b6deef4406fd5aac29efddd8002c67067713a5a751c6c2c",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L209,L212-L213",
+  "old_fingerprint": "8a2e70e65742098d7417f2f0691ebcd6be49e27cf793c9c64a5fdfb70dca68b2",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L430,L433,L434",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "max_lot_depth_ratio",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "c7b6997d158f0ea4cdd743bf69a2df9c2203caafd6b6a3671e5b95b09535772b",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L147",
+  "old_fingerprint": "e608c820510cd3836b86967a20dfcaa58ed257dd1d146a6d26235478cb6213d3",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L368",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "max_lot_depth_ratio",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "efffb42570d6f9a78067ff6f9e1bf922cf5afa3d7a53a7bcad7e31d128e8eb9a",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L148",
+  "old_fingerprint": "4e00f6db8e1c0961da5d05e67c1ce2e3739b64e6682dd96f341726f796882425",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L369",
+  "when_key": "unit_lots",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "c87932ccb12578b9790f2355c2e394df6acf051fdf947efab881217d7de49600",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.020.txt#L13-L36,L81-L85",
+  "old_fingerprint": "ce400707747a9e9807825057666abc8bc91c9c666443898bc9ef6f2b25a931ce",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L72-L95,L140-L144",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "4bc7821699f51e0dd990188504522365589feadc8e47e728fa898772fb69c8b9",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.040.txt#L15-L18,L20-L22,L24-L51",
+  "old_fingerprint": "f571cec6f602f9aff2bca10e5511d10d8990c17ed94ca22d8898e9d31deee823",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "5341ee9a2b5a5184bc0337791f5fd113d579e129bd588efa2eaf958176737dae",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L155",
+  "old_fingerprint": "56ae5f17d1e65961da5af92fe7996b9f955e62b47491c89683ed4c62a75b9a82",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L376",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "8c1ce473aaaa0471f568ac3478af1ff7bef42d39be86a1cc5c6aab043bfb7935",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L181",
+  "old_fingerprint": "98b0c96f7141a49abc0f019e192db6574b66e7eed6d084ea5f9da751ba7a70df",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L402",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "9f7cc94c8d9dc8de49e68b64de6296db3f433008bd951cb2f38160137fd1b96c",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L171",
+  "old_fingerprint": "187c838604fb27ecf6f4ed6aae48b66b981c3466f8f36fa0b8d8ab87480636d7",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L392",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "86297e93d2ac70593b1ea7ffd359fcb3466f84bb7d98408b9bb3037324c197dc",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L192",
+  "old_fingerprint": "3e33c04b6c9c2c69333253e7e28fe2468ac3e7a7573463f5754e05859aadf7bd",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L413",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "0f1642363c064e8db7e782d7bd7ffbca44f273df117ba27dfea25a6e446e9773",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L50",
+  "old_fingerprint": "63c1ae3b6bc5dc7b18caba2d43026e8e7a7dcf4544fa1984fb39210ef4d04558",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L271",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "b15a571738d961d19a0448206513ee31304cfe17e1928985360c2dd97b48e203",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L137",
+  "old_fingerprint": "28425269a118f5f0ac02fde8e1dd3a500c1aaeed89130f4caaf5ae702c305584",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L358",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "65fb50786d81f5f05f47af122fab1463c46775b7f8b413f91ed4da86728f07cd",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L221",
+  "old_fingerprint": "57ce211ba3e9590d1a28a35934e0020dd360ff7458f1072a490493f36813691a",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L442",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "ef640c376618cd7fa30a66684a49661ac95e55023eb93e40a3e7395ca05ebe47",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L162",
+  "old_fingerprint": "1fed6bcf57d4a58fb3b704d0312c1589f3e35482f84b68139916a16bcd8b6f17",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L383",
+  "when_key": "",
+  "zone": "R-7.5"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "0973ce1e4c3e80eebfe277028048c8f5bd3d1a7dac3aae72947f090442474940",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L84,L91,L94",
+  "old_fingerprint": "2bdc87507eabd586a0467c518549a1d34b4a034424c7e4de81dd05242bdceaa8",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L305,L312,L315",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "150b4ef40d383ce2e89a1dd8b88c36e4968cffdf3bf245b6b0ec8394621c9263",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L84,L97,L100",
+  "old_fingerprint": "6e9f0cacc777a20be1086cc83da4039195fee40f742dfbe3387dd6865b6944f6",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L305,L318,L321",
+  "when_key": "unit_lots",
+  "zone": "R-10"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "b097fa0c9f54b6e7a81d403a97d9e99f2062aad83d3058110a5182c20a9c1f9a",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L109,L116,L119",
+  "old_fingerprint": "957f41a0171327b9beedd1522f6877f053b66caa0b02d6af36906c2e06a95fbe",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L330,L337,L340",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "c3fc77c74290db9a291b5c04d4730d12370f0aa71a092ca663ac26509f643de2",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L109,L122,L125",
+  "old_fingerprint": "aeb992590ca47891fe4e843c2e71558ee3618244609ace9fdd9d73cb6013efb5",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L330,L343,L346",
+  "when_key": "unit_lots",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "29dd2c99aec21cae1f758a034b798fa0348edbc805f70a2ab54750ab80583fbb",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L199",
+  "old_fingerprint": "7fb747b30d7d427393316e173536e1ee3a412da3ae549688ff31792a5031e88d",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L420",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "a5b6faf0920e44bf3613c212e934599529c3c3ae6fe0a52165b4ec0a3504c4ca",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L231,L234",
+  "old_fingerprint": "163ac67d3deed11575f4862ec23cb4e14a9060ec18beb6b49ebc1589f128b47e",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L452,L455",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "f5d893466ba475ca6b36df5df2d65afd994b03ad139f39f2d311d525594b3b9e",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L209,L214-L215",
+  "old_fingerprint": "dbd234f64cbea7d218c5cef7795e51983bbd7e444f322034ee31f7d30df767df",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L430,L435,L436",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "max_lot_depth_ratio",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "04c684139f48b145881c74c54f90324ef0b417322eecc938415a8ffa98a539c4",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L149",
+  "old_fingerprint": "bf6641ae9e46c1c24aaefaed4f0e1276c7d0bccd55bb9dfbdfba264a2b300d41",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L370",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "max_lot_depth_ratio",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "b49a2f8cc359ba18f42164386eeba9a11bb6054ee16444b13d14930d4dd65f26",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L150",
+  "old_fingerprint": "b330569c95278364e7c751b8ea777fe114c2e1ad5230b574bba0b86e85c9238a",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L371",
+  "when_key": "unit_lots",
+  "zone": "R-10"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "5de79821b2d1881bf602198ff69385b690933ce6addff311dc3e7daef44600ff",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.020.txt#L13-L36,L81-L85",
+  "old_fingerprint": "09fbb12f0260f2ebcb8400508978306808b9065d5b55619ab92732bac79bafca",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L72-L95,L140-L144",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "3cb7eec1976584be48d520976705c6671ee2ec40571d9d08f0434957a4b6a6ac",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.040.txt#L15-L18,L20-L22,L24-L51",
+  "old_fingerprint": "988d41699dcc36a20011a093c22a9b38d333d02dd21f11e75e184ec1c73ab53a",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "3486ba2b542561219895f662e527c760f92240377c88d602d3533700347a0d8e",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L156",
+  "old_fingerprint": "e3441d6698534115403729e0ebe286f384add58c86da0ef7c7a30c01c442704e",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L377",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "992387f3416515e2174cf9de1d2703c321924aebaa7294b1f3413357750706fc",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L183",
+  "old_fingerprint": "d4fbd091c0fad60e22d66ac5c1bf056542bdb7e73b4ef8d25df89f04494960fa",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L404",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "09ebb53f46b4cdf936705bb69663dc23f22325c1d1fc64d99040a5b09b4c2352",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L173",
+  "old_fingerprint": "5cc08c91cf602cb733c80bf684af9d4c122c1e7a4d7d1de582a9f8ac8305179d",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L394",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "bd87f969e5d219600b184d7884d120389ddea6b5840e4bfca5569581c059e8ea",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L193",
+  "old_fingerprint": "5180145e8c20a4744e9ea86a7b4d7e50683dd2ecb0a57cf94704645c976ea258",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L414",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "ce3df5ab535c1f6449934b33614ac6131a2fca5eccef8f3a2e65b2e54b1ef2df",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L51",
+  "old_fingerprint": "e31538663f8ca35e72f6d74d19b7342205484024a57e598d5871c666324f6775",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L272",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "83a2bad3852178d443e88dbd4cf2bd4270feaf081a520630396e069dd4d31b4d",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L139",
+  "old_fingerprint": "531dc5a7d6568c891d1e518db086679265e5c4aa32d0b4219bc6c9d4a1384c30",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L360",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "bc04ae1d03c2fc63e283331be591d215a5fb50bb4f1b75cd3e78c2d4acf25893",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L222",
+  "old_fingerprint": "983f5711ddc2ed9d0a98c738274d6d2448834bc8e75b943b903cf25f6b7faaca",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L443",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "7d709ab6976d61e10af0b7bcf9f3221ebc5054030b81f91836cdf5c12b589559",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L163",
+  "old_fingerprint": "29b17967af9a99d04806f491f489ffd989db51ae9ae60bc263eedd94f6c56354",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L384",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "a02a56a151ffe5b5f6c56e47b759f8c09b9d542aacba83a9df3ddaf156c4da0e",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.090.txt#L1,L3-L6,L10-L12,L14-L18",
+  "old_fingerprint": "85a156ccd2f42fe76e616272700d24996fa53065a25dc80104c9a1eb8d85306d",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L1330,L1332-L1334,L1338-L1340,L1342-L1344",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "c471b25909c34655eccfa6f8da2165ef5b712fa74383cb2ce7d7ab392e7f378b",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L84,L91,L96",
+  "old_fingerprint": "a33c18e844e525c17d005e5ef35866f2428234127d7c91c9faa94fd1dfc806d1",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L305,L312,L317",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "afb255a5cb726bce7cd31148d3b476dec56d6387ae233144b15a0882d8c5c0e7",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L109,L116,L121",
+  "old_fingerprint": "75503adb2fbaab0b01816171ee960eed52f3815c6d3c39f75c396dc63c153a03",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L330,L337,L342",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "20725c1aef6218b348800e951868e5e814614b9ffa520c76a74a9714b6005e70",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L201",
+  "old_fingerprint": "65a21976934bbbeefa699fe199affc1d59aa7b13dd40744ffe85b1f950c3fc9d",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L422",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "48f4d58c531d1762e55b1d104aa1c0739372dfd39a81a0dc9f3122ef40138635",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L231,L236",
+  "old_fingerprint": "813c3763e4ae0ec4f97467ab3b531c465fcf0aa3eb807da0d89d4d63b36bc341",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L452,L457",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "27308ed86b875000ffd640c7c51793246053e4adfcc1559ecf937ab3951897db",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L209,L217-L218",
+  "old_fingerprint": "13e2d9eb62d7e95108f0b87c8d8ee4fb4424dfc1a2ffe07f70914e81aa48ab70",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L430,L438,L439",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "9224c9d75ccb8009bfc8c9ad867cd85b666299e207e23df48f7d32693f7abfb6",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.020.txt#L13-L36,L81-L85",
+  "old_fingerprint": "140487f6c3b7cb059ff906f65d9664f58e47b13541a8711ec3a06ea067f0f375",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L72-L95,L140-L144",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "f9d381618c96a6aa80b723288f23bdfd03e5a1f8075975b50121acec79a78d90",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.040.txt#L15-L18,L20-L22,L24-L51",
+  "old_fingerprint": "1e820f117b566876469a4a5b8261d05e70be71cbcbdd5f49c29b1110ce17eb6d",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "4ea9e27187301fcd7a7d2c46bf490b248ddebe9619e599848c50f8cf141ba57e",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L158",
+  "old_fingerprint": "743b23b33b4939cb54c04dc39a47a5ec7f9b36d32000534d2d8b6dbf2cd952b8",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L379",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "49b5f2ef5ac44b5ec468ac53cfa807df93048f3910522d8ab2fa19f90793bcf6",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L187",
+  "old_fingerprint": "7b999d8dbb351b976d5997fc320fe3ccd926f8c02ee07cbfdfac0a3d188e60ed",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L408",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "3e4831d5a744be222a94aee508e15e7d2eadf57d7b5621186039a8f8dc0e7c73",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L176",
+  "old_fingerprint": "9b02b48e0867ae56c4773b974e198fb7f1dbd48ed63b1eb398c0a34b83a6c349",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L397",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "fc8a3c4aba449edf643bf346d3218d2a41619e499d6b10805923bfa2521ef7d5",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L195",
+  "old_fingerprint": "9ac33b2e5ad76896a2cacbbf1c3f4ed74a749dfb44b0bf4791ae66f3f0e755d7",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L416",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "5d2d3ffc4e74c2a2c02a9b96bc6efa05911d21efef4de684bcdee291196f2d5f",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L48-L53",
+  "old_fingerprint": "f7c5e95e7ba8cf5deb4c97464ef1d2cdd7d6412826b0d6aaf1a8910078e09c74",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L269-L274",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "73dd373436f8731a546c67d44b87fc971ddaec5b640ed63a59ec9b921b87e0f2",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L142",
+  "old_fingerprint": "892280c82a4813ab2d423bbd0914054adef80166f41bf9135947248b0bb1be65",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L363",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "73662738e618d2d3e8f2b3e40105971c96e960a60ac73f91204fba8cf7655a7b",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L224",
+  "old_fingerprint": "605e6efd53e0be724ab115c94b3a2be6a8dd915e0082ce390d112c45349c2603",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L445",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "9f8b3a4d78892f629f38dade50182bba5bfbffd8debf5d52aee739b88a5c2fc5",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L165",
+  "old_fingerprint": "cb3e88319acbf01f766f63f3f31532f79684714856fba5362d6ec50e31d02177",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L386",
+  "when_key": "",
+  "zone": "RM"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "6d3c3fc110cc0ba967baa053f9deb47733203f0a1ee262fd1a2b6ef370d72fc5",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L231,L235",
+  "old_fingerprint": "434d12d71105593e7d51f7fca9ce4603b41a6cf97cc4f23c2f1a191860d559f7",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L452,L456",
+  "when_key": "",
+  "zone": "RM/TOZ"
+ },
+ {
+  "field": "max_far",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "094a87d3c6f9108a042ca569d9e3bcae4f6ef1f93a4ff2584cd41d9a60653ef0",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.030.txt#L209,L216",
+  "old_fingerprint": "2eaf0d9b7255dc1a91b8b04760eddc40752c5f1a5c45918414d3d9c2bb5ebe80",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L430,L437",
+  "when_key": "",
+  "zone": "RM/TOZ"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "c7e82df0cec815dbd1a3f678113946fdd76e7f7fb241a3861a765cc3c28e9e1c",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.100.txt#L1-L42",
+  "old_fingerprint": "cc7a8c1a145e8515f26cd319891105a1d8d6099259b4aab19a96e3d50fa51b47",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L1512-L1544",
+  "when_key": "",
+  "zone": "R/MH"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "385e5acfe3e6b49d0e8e80dd1541d36cd9b842eefe1e77be59e292d91c4ec33d",
+  "new_quote": "or/multnomah/fairview/19.30/19.30.020.txt#L13-L36,L81-L85",
+  "old_fingerprint": "52611cd35e76b0ce507957af7860ba0a0d3dda07b7ee1d62c57c1d3963061db8",
+  "old_quote": "or/multnomah/fairview/19.30.txt#L72-L95,L140-L144",
+  "when_key": "",
+  "zone": "R/MH"
+ },
+ {
+  "field": "front_lot_line_through",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "3c543a1f510eca2e8efdd9ccc429acb0f963c9c095ddf891087e9cc8df7aa726",
+  "new_quote": "or/multnomah/fairview/19.65/19.65.040.txt#L112",
+  "old_fingerprint": "e7dd053def6cb5366f4db65ce65223bcb17b16a1cf188a3581a5d7064d93874f",
+  "old_quote": "or/multnomah/fairview/19.65.txt#L378",
+  "when_key": "",
+  "zone": "TCC"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "2e318e83456e4d754e54f27b178c654283ad950cc13376424b6727ff515c1ac8",
+  "new_quote": "or/multnomah/fairview/19.65/19.65.100.txt#L12-L16,L18-L21",
+  "old_fingerprint": "3e879c51f77f797394647274bd07cd6edef2382034f94eede2580e04fde66639",
+  "old_quote": "or/multnomah/fairview/19.65.txt#L972-L974,L976-L978",
+  "when_key": "",
+  "zone": "TCC"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "eca1784ecd4794e90ee01174674aedbe58682942a1201e0625f4d040eca6ba30",
+  "new_quote": "or/multnomah/fairview/19.65/19.65.060.txt#L1,L6-L10,L12-L14,L16-L19,L21-L24",
+  "old_fingerprint": "96f1adc5a39ec41598f2a45c837bf34d7628fa45a84d7a05d6298e46c7a4bff8",
+  "old_quote": "or/multnomah/fairview/19.65.txt#L444,L448-L450,L452-L454,L456-L458,L460-L462",
+  "when_key": "",
+  "zone": "TCC"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "3914db3a55afb75705d731e62211ad0bdb35fd97ffb40e896af5603f211a37c6",
+  "new_quote": "or/multnomah/fairview/19.65/19.65.040.txt#L1,L11-L13,L15-L17",
+  "old_fingerprint": "0154e251fc601a5bbfc2ada219e7ae89e754ab7c6ef5cd462674da90aa34f286",
+  "old_quote": "or/multnomah/fairview/19.65.txt#L284,L290-L292,L294-L296",
+  "when_key": "",
+  "zone": "TCC"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "381be51fe52889a6b9d9e49505f95d6b1bf5302b87d0f6807ac3faa1578e5fd5",
+  "new_quote": "or/multnomah/fairview/19.65/19.65.040.txt#L1,L19-L21,L45-L47,L49-L56",
+  "old_fingerprint": "7697b23c8dff6a832237603b317d6e604c6549832b2b2dec6d8625610cfb3997",
+  "old_quote": "or/multnomah/fairview/19.65.txt#L284,L298-L300,L322-L324,L326-L328",
+  "when_key": "",
+  "zone": "TCC"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "76b2752f052292905e64b05343a9c397f37ae8957b353dcc3f54d5a0fa4a9496",
+  "new_quote": "or/multnomah/fairview/19.65/19.65.040.txt#L1,L114-L117",
+  "old_fingerprint": "ff97cd93bc8ab35937fb19d6f28762a3e14d6a1d8e09c1849568068d544952a3",
+  "old_quote": "or/multnomah/fairview/19.65.txt#L284,L380-L382",
+  "when_key": "",
+  "zone": "TCC"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "3baf440affca1a6f1aa0e3f43cb3b91fcaefb67100a50c5946bcb9b7b133781f",
+  "new_quote": "or/multnomah/fairview/19.65/19.65.040.txt#L1,L114-L117",
+  "old_fingerprint": "b93d7f03cfefb8e6b3cc224ed7d8cffd17978ce45341f1e68599fc5508a966ed",
+  "old_quote": "or/multnomah/fairview/19.65.txt#L284,L380-L382",
+  "when_key": "abuts_nonresidential_zone",
+  "zone": "TCC"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "0492a9389748c9ea71571ff8d49ff7b901c6446ef483b7739868aae7b292b1af",
+  "new_quote": "or/multnomah/fairview/19.65/19.65.040.txt#L1,L101-L103,L105-L108",
+  "old_fingerprint": "708e7d466f3b5313a68a5017b33ee0b64a02043d9136b062e0396a48922fe544",
+  "old_quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374",
+  "when_key": "",
+  "zone": "TCC"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "c2ce50564920b4e204940735f63dbab4fd217c0f116a44c5d55220db4846b1d6",
+  "new_quote": "or/multnomah/fairview/19.65/19.65.040.txt#L1,L101-L103,L105-L108",
+  "old_fingerprint": "7f018fe508e83ce3c1c892a06bf8daa90003a9e4440afdfb095785ee9e672af4",
+  "old_quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374",
+  "when_key": "abuts_nonresidential_zone",
+  "zone": "TCC"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "e08fb63c434ce64dadb096b2b836735fe69e7db3a13c37f5889d1e860aa5743e",
+  "new_quote": "or/multnomah/fairview/19.65/19.65.040.txt#L1,L101-L103,L105-L108",
+  "old_fingerprint": "6bc0e11800a3f29a1e7b6959b1210dfc4bc46543d1e40e36207c51277265e4d1",
+  "old_quote": "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374",
+  "when_key": "abuts_nonresidential_zone+alley_at_rear",
+  "zone": "TCC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "67b70e8ce57e848d58036720072cd02608049210b9d068154bf6e8532a4335c9",
+  "new_quote": "or/multnomah/fairview/19.70/19.70.020.txt#L3-L7,L9-L20,L74-L83",
+  "old_fingerprint": "4f0b749afc45909c1e26e5f5ccad3f99c53e6973ad330de0e9f15ef0595a96b3",
+  "old_quote": "or/multnomah/fairview/19.70.txt#L23-L25,L27-L38,L97-L106",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "82e1ae57a127aa4fc209ef4febcf006bc47cc4eb9cfd0a63c8ccbbc5cf98b09f",
+  "new_quote": "or/multnomah/fairview/19.80/19.80.020.txt#L3-L7,L9-L20,L89-L92",
+  "old_fingerprint": "17fc15baab86f750361ad943e0f9f58766eafe72dbb93a431d23c3b4fc3ee7f0",
+  "old_quote": "or/multnomah/fairview/19.80.txt#L51-L53,L55-L66,L143-L145",
+  "when_key": "",
+  "zone": "LI"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/multnomah/fairview",
+  "new_fingerprint": "1a3c67d2b782346bd82451d9a3c6f5bc731c1a279fd07c54728e6420b0a5f30c",
+  "new_quote": "or/multnomah/fairview/19.85/19.85.020.txt#L3-L7,L9-L20,L39-L41",
+  "old_fingerprint": "6392f717ac3e7f754382c4e44fb19ad6942554cbda644b37f1f69bd00ceb1453",
+  "old_quote": "or/multnomah/fairview/19.85.txt#L35-L37,L39-L50,L70-L72",
+  "when_key": "",
+  "zone": "GI"
+ }
+]

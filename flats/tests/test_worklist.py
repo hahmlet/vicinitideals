@@ -721,10 +721,12 @@ def test_a_table_row_arrives_with_the_rows_around_it(layers: dict[str, Layer]) -
     around = context(card)
     at = {r.line: r for r in around}
 
-    assert 311 in at and at[311].marked, "the statement itself is marked"
+    # Line 120 of 46/46.150.txt since the chapter was cut into sections
+    # (2026-10-24); it was line 311 of the chapter's proof copy.
+    assert 120 in at and at[120].marked, "the statement itself is marked"
     # The brackets above it, which are what make the row mean anything.
-    assert any("401" in at[n].text for n in (308, 309, 310) if n in at)
-    assert not at[310].marked, "its neighbours are context, not statements"
+    assert any("401" in at[n].text for n in (117, 118, 119) if n in at)
+    assert not at[119].marked, "its neighbours are context, not statements"
 
 
 def test_context_shows_the_jumps_rather_than_reading_as_continuous(

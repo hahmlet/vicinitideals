@@ -1,5 +1,5 @@
 {
-  "digest": "7aeeae9cfb573321f283595a7d566df77564a0c72559a6982adc87bf0fdccb28",
+  "digest": "06beee0c9d32ca4da71be01485219d526ac6aecf27e362979846a47ba5371a1e",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -104,7 +104,7 @@
       "gaps": []
     },
     "or/clackamas/west-linn": {
-      "section_unread": 2,
+      "section_unread": 0,
       "misattributed": [],
       "label": "West Linn",
       "counts": {},
@@ -134,7 +134,7 @@
       "gaps": []
     },
     "or/multnomah/fairview": {
-      "section_unread": 69,
+      "section_unread": 1,
       "misattributed": [],
       "label": "Fairview",
       "counts": {
@@ -555,22 +555,6 @@
     "or/washington/sherwood": {
       "section_unread": 6,
       "misattributed": [
-        {
-          "zone": "(defaults)",
-          "field": "parking_min_per_unit",
-          "claimed": "16.94.020",
-          "found": "16.94.010 16.94.020",
-          "quote": "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L375-L398,L490,L502-L525,L560-L571",
-          "kind": "heading_same_file"
-        },
-        {
-          "zone": "(defaults)",
-          "field": "parking_max_per_unit",
-          "claimed": "16.94.020",
-          "found": "16.94.010 16.94.020",
-          "quote": "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L490,L502-L525,L560-L571",
-          "kind": "heading_same_file"
-        },
         {
           "zone": "(defaults)",
           "field": "parking_front_prohibited",

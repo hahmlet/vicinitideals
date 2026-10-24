@@ -1,0 +1,119 @@
+17.25.030 Definitions.
+
+Unless specifically defined in this Subsection, words or phrases used in Chapter 17.25 shall be interpreted to give them the same meaning as they have in common usage and to give Chapter 17.25 its most reasonable application.
+
+A. Bankfull Stage: The stage or elevation at which water overflows the natural banks of streams or other waters of the state and begins to inundate the upland.
+The bankfull stage may be approximated using either the two-year recurrence interval flood elevation or one foot measured vertically above the ordinary mean high water line.
+
+B. Building Footprint: The area that is covered by buildings or other roofed structures.
+A roofed structure includes any structure more than six feet above grade at any point, and that provides an impervious cover over what is below.
+Building footprint also includes uncovered horizontal structures such as decks, stairways, and entry bridges that are more than six feet above grade.
+Eaves are not included in the building footprint.
+Underground facilities and structures are defined based on the foundation line.
+
+C. Developed Areas Not Providing Vegetative Cover: Areas that do not meet the definition of Forest Canopy, Low Structure Vegetation or Open Soils, or Woody Vegetation.
+
+D. Developed Flood Area: A flood area (a) upon which a building or other structure has been located, or (b) that is an uncovered, hard-surfaced area or an area covered with a perforated hard surface (such as “Grasscrete”) that is able to withstand vehicular traffic or other heavy-impact uses; provided, however, that graveled areas shall not be considered developed flood areas.
+
+E. Development: any manmade change defined as structures, roads, utilities, mining, dredging, paving, filling, or grading in amounts greater than 10 cubic yards.
+In addition, “development” is any other activity that results in the removal of more than 10 percent or 20,000 square feet of the Habitat Conservation Area vegetation on a lot of record, whichever is less.
+The calculation of the amount of vegetative cover removed shall be done separately for each lot of record and shall include all vegetative cover removed after December 8, 2009, regardless of whether the removal is done as one project or a series of projects.
+When individual trees are removed, the area contained within the tree’s drip line shall be the basis for calculating the square footage of vegetation removed.
+
+F. Disturb: Manmade changes to the existing physical status of the land, which are made in connection with development.
+
+G. Disturbance Area: An area that contains all temporary and permanent development, exterior improvements, and staging and storage areas on the site.
+For new development the disturbance area must be contiguous.
+The disturbance area does not include agricultural and pasture lands or naturalized areas.
+
+H. Drip Line: The outermost edge of a tree’s canopy; when delineating the drip line on the ground, it will appear as an irregularly shaped circle defining the canopy’s perimeter.
+
+I. Ecological Functions: The primary biological and hydrologic characteristics of healthy fish and wildlife habitat.
+Riparian ecological functions include microclimate and shade, streamflow moderation and water storage, bank stabilization and sediment/pollution control, sources of large woody debris and natural channel dynamics, and organic material sources.
+Upland wildlife ecological functions include size of habitat area, amount of habitat with interior conditions, connectivity of habitat to water resources, connectivity to other habitat areas, and presence of unique habitat types.
+
+J. Emergency: Any manmade or natural event or circumstance causing or threatening loss of life, injury to person or property, and includes, but is not limited to, fire, explosion, flood, severe weather, drought, earthquake, volcanic activity, spills or releases of oil or hazardous material, contamination, utility or transportation disruptions, and disease.
+
+K. Enhancement: The process of improving upon the natural functions and/or values of an area or water resource that has been degraded by human activity.
+Enhancement activities may or may not return the site to a pre-disturbance condition, but create/recreate beneficial processes and resources that occur naturally.
+
+L. Erosion: The movement of soil particles resulting from actions of water or wind.
+
+M. Fill: Any material such as, but not limited to, sand, soil, rock, or gravel that is placed in a wetland or flood area for the purposes of development.
+
+N. Flood Areas: Lands contained within the Floodplain Management District regulated by Section Chapter 17.25 and lands that were inundated in the February 1996 flood.
+(Note: Areas that were mapped as flood areas but were filled to a level above the base flood level prior to September 30, 2005, consistent with all applicable local, state, and federal laws shall no longer be considered habitat based on their status as flood areas.)
+
+O. Flood Management Areas: Flood areas and, in addition, lands that have documented evidence of flooding.
+
+P. Forest Canopy: Areas that are part of a contiguous grove of trees of one acre or larger in area with approximately 60% or greater crown closure, irrespective of whether the entire grove is within 200 feet of the relevant water resource.
+
+Q. Habitat-Friendly Development: A method of developing property that has less detrimental impact on fish and wildlife habitat than do traditional development methods.
+Examples include clustering development to avoid habitat, using alternative materials and designs such as pier, post, or piling foundations designed to minimize tree root disturbance, managing storm water on-site to help filter rainwater and recharge groundwater sources, collecting rooftop water in rain barrels for reuse in site landscaping and gardening, and reducing the amount of effective impervious surface created by development.
+
+R. Invasive Non-Native or Noxious Vegetation: Plant species that are listed in the Oregon Department of Agriculture’s Noxious Weed Policy and Classification System.
+
+S. Low Structure Vegetation or Open Soils: Areas that are part of a contiguous area one acre or larger of grass, meadow, crop-lands, or areas of open soils located within 300 feet of a surface stream (low structure vegetation areas may include areas of shrub vegetation less than one acre in size if they are contiguous with areas of grass, meadow, crop-lands, orchards, Christmas tree farms, holly farms, or areas of open soils located within 300 feet of a surface stream and together form an area of one acre in size or larger).
+
+T. Mitigation: The reduction of adverse effects of proposed development by considering, in the following order
+
+1. Avoiding the impact by not taking a certain action or parts of an action;
+
+2. Minimizing impacts by limiting the degree or magnitude of the action and its implementation;
+
+3. Rectifying the impact by repairing, rehabilitating, or restoring the affected environment;
+
+4. Reducing or eliminating the impact over time by preservation and maintenance operations during the life of the action by monitoring and taking appropriate measures; and
+
+5. Compensating for the impact by replacing or providing comparable substitute Habitat Conservation Areas.
+
+U. Native Vegetation: Vegetation native to the Portland metropolitan area provided that it is not invasive non-native or noxious vegetation.
+
+V. Open Space: Land that is undeveloped and that is planned to remain so indefinitely.
+The term encompasses parks, forests, and farmland.
+It may also refer only to land zoned as being available to the public, including playgrounds, watershed preserves, and parks.
+
+W. Ordinary Mean High Water Line: The line on the bank or shore to which water ordinarily rises in season.
+
+X. Practicable: Available and capable of being done after taking into consideration cost, existing technology, and logistics in light of overall project purpose and probable impact on ecological functions.
+The practicability of a development option shall include consideration of the type of HCA that will be affected by the proposed development.
+For example, High HCAs have been so designated because they are areas that have been identified as having lower urban development value and higher-valued habitat, so it should be more difficult to show that alternative development options that avoid the habitat are not practicable.
+On the other hand, Low HCAs have been so designated because they are areas that have been identified as having higher urban development value and lower-valued habitat, so it should be less difficult to show that alternative development options that avoid the habitat are not practicable.
+
+Y. Restoration: The process of returning a disturbed or altered area or water resource to a previously existing natural condition.
+Restoration activities reestablish the structure, function, or diversity to that which existed prior to impacts caused by human activity.
+
+Z. Riparian: Those areas associated with streams, lakes, and wetlands where vegetation communities are predominately influenced by their association with water.
+
+AA. Significant Detrimental Impact: An impact that affects the natural environment, considered individually or cumulatively with other impacts on the HCA, to the point where existing fish and wildlife habitat functional values are degraded.
+
+BB. Stormwater: The surface water runoff that results from all natural forms of precipitation.
+
+CC. Stormwater Pretreatment Facility: Any structure or drainage way that is designed, constructed, and maintained to collect and filter, retain, or detain surface water run-off during and after a storm event for the purpose of water quality improvement.
+
+DD. Stream: A body of running water moving over the earth’s surface in a channel or bed, such as a creek, rivulet, or river.
+A stream flows at least part of the year, including perennial and intermittent streams.
+Streams are dynamic in nature and their structure is maintained through build-up and loss of sediment.
+
+EE. Structure: A building or other major improvement that is built, constructed, or installed, not including minor improvements—such as fences, utility poles, flagpoles, or irrigation system components—that are not customarily regulated through zoning codes.
+
+FF. Urban Development Value: The economic value of a property lot or parcel as determined by analyzing three separate variables: assessed land value, value as a property that could generate jobs (“employment value”), and the Metro 2040 design type designation of property.
+The urban development value of all properties containing regionally significant fish and wildlife habitat is depicted on the Metro Habitat Urban Development Value Map.
+
+GG. Utility Facilities: Buildings, structures, or any constructed portion of a system that provides for the production, transmission, conveyance, delivery, or furnishing of services including, but not limited to, heat, light, water, power, natural gas, sanitary sewer, stormwater, telephone, and cable television.
+Utility facilities do not include stormwater pre-treatment facilities.
+
+HH. Water Resource: All rivers, streams (regardless of whether they carry year-round flow, i.e., including intermittent streams), springs which feed streams and wetlands and have year-round flow, flood management areas, wetlands, and all other bodies of open water.
+
+II. Watershed: A watershed is a geographic unit defined by the flows of rainwater or snowmelt.
+All land in a watershed drains to a common outlet, such as a stream, lake, or wetland.
+
+JJ. Wetlands: Areas that are inundated or saturated by surface water or ground water at a frequency and duration sufficient to support and under normal circumstances do support a prevalence of vegetation typically adapted for life in saturated soil conditions.
+Wetlands generally include swamps, marshes, bogs, and similar areas.
+Wetlands are those areas identified and delineated by a qualified wetland specialist as set forth in the 1987 Corps of Engineers Wetland Delineation Manual.
+
+KK. Woody Vegetation: Areas that are part of a contiguous area one acre or larger of shrub or open or scattered forest canopy (less than 60% crown closure) located within 300 feet of a surface stream.
+
+History: Ord. 1496 §1 (Exh.
+A), 2009.
+

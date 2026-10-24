@@ -715,10 +715,24 @@ def read_all(layer: Layer) -> list[Chapter]:
         if doc.definitions_at:
             out.append(_read_one(layer, doc, DOCS / proof.proof))
             continue
-        for section in proof.sections:
-            chapter = _read_one(layer, doc, DOCS / proof.path(section))
-            if chapter.entries:
-                out.append(chapter)
+        # One chapter, read section by section: the entries are quoted where
+        # they stand, and the order and density are asked of the chapter.
+        # Asked of each section, one stray entry in an eighteen-entry "M"
+        # section read as a skimmed chapter (Fairview 19.13.130, 2026-10-24)
+        # where the same stray among the chapter's 227 is the noise the
+        # tolerance is for.
+        parts = [_read_one(layer, doc, DOCS / proof.path(s)) for s in proof.sections]
+        entries = tuple(e for part in parts for e in part.entries)
+        if entries:
+            out.append(
+                Chapter(
+                    layer=layer.layer,
+                    doc=proof.proof,
+                    entries=entries,
+                    disorder=tuple(_disorder(entries)),
+                    lines=sum(part.lines for part in parts),
+                )
+            )
     return out
 
 
