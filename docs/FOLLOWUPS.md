@@ -36,7 +36,18 @@ read when the weekly full re-screen lands.
 
 ## 1. Claude -- priority
 
-### 1a. The weekly re-screen (~2026-10-19): traps to honour before it, moves to read after it
+### 1a. The weekly re-screen: traps to honour before it, moves to read after it
+
+   NEXT: FULL weekly ~2026-10-26 (Monday). DRY RUN PASSED 2026-10-24 (Steph: "Dry run"): 137 checkout
+   fast-forwarded to a8f2ebf3; first preflight REFUSED -- corridor_blocks_gresham + street_class_gresham
+   not in the 2026-10-07 snapshot (the Gresham corner ruling 4bdfeb29 needs street_class_gresham or every
+   Gresham street stays unranked); fetched (34 + 4,419 features, /root/acq_1024.log); second preflight OK.
+   Launch Monday at the then-current main (fast-forward 137 first, re-run --preflight-only): same line as
+   /root/launch_weekly_1019.sh with --sha <main> --tag 2026-10-26_weekly --transit-reuse
+   data/flats/transit/2026-10-19_weekly/distances.parquet > /root/weekly_chain_1026.log. Then load, read the
+   moves one by one (incl. 109's 4bdfeb29 + cr_bound expectations), promote.
+
+   PREVIOUS (2026-10-19):
 
    LAUNCHED 2026-10-19 16:07Z (Steph "execute scan"): tag 2026-10-19_weekly, log 137
    /root/weekly_chain_1019.log, state /root/weekly_2026-10-19_weekly, status copied to 114
