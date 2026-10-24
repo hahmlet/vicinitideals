@@ -1,4 +1,4 @@
-"""Code text one section to a file, cut from the document it was fetched as.
+"""Code text one section to a file, readable, cut from the document it was fetched as.
 
 A city publishes its code as chapters, and the store kept it that way: one
 file per fetch, cited by line -- ``40-41.residential.txt#L225-L233``. The line
@@ -7,19 +7,35 @@ second tool had to read headings upward to check that a value citing "TDC
 40.220" was quoting 40.220 at all (``flats/encode/attribution.py``), and 1,533
 values cited a section that tool could not find above its lines.
 
-Here a document is cut at its own headings into one file per section --
-``40.220.txt`` -- and a citation names the section by naming the file. Line 1
-of every file is its heading, so the line in a citation is a line WITHIN the
-section.
+Here a document is cut at its own headings into one file per section, filed
+in a folder per chapter -- ``40/40.220.txt`` -- and a citation names the
+section by naming the file. Line 1 of every file is its heading, so the line
+in a citation is a line WITHIN the section.
+
+**A section file is readable text, not the extraction's lines.**
+:mod:`flats.provenance.readable` takes off the page furniture, repairs the
+letter-spacing, settles the margin hyphens and joins the wrapped lines one
+sentence to a line, and then proves the result keeps every word of the
+extraction in order. The order is PDF, readable authoritative text, cited
+encoding: a reader checks a value against a sentence, not against a column
+the PDF happened to wrap.
 
 **The fetched document stays, untouched, as the proof copy.** It is what the
 URL served, what drift re-fetches and compares, and what the PDF page map was
-built against. The section files are derived from it and nothing else: a
-``sections.json`` beside them records each one's first and last line in the
-proof copy and the proof copy's hash, and :func:`check` fails the day a
-section file is not exactly that slice of exactly that text. A re-fetch that
-changes a proof copy therefore cannot leave section files quietly describing
-the old one.
+built against. The section files are derived from it and nothing else. ONE
+index per city (``sections.json``) is the only bookkeeping: each section's
+first and last line in the proof copy, its file, its hash and its pages, plus
+the proof copy's hash; no sidecar sits beside a section file. :func:`check`
+fails the day a section file is not exactly the readable text of exactly that
+slice, so a re-fetch cannot leave section files quietly describing the old
+proof copy.
+
+Each readable line knows the proof-copy lines it holds (:func:`held`, read
+from the file on disk so it stays true whichever cleaning made it). That is
+how a citation reaches the printed page (:func:`in_proof`), and how a change
+to the cleaning moves every citation, reading ruling and page-check answer
+standing on the old text without changing a word of what they quote
+(``python -m flats.encode.recut``).
 
 Three limits, each the conservative direction:
 
@@ -43,6 +59,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Mapping, Sequence
@@ -50,8 +67,10 @@ from typing import Iterable, Mapping, Sequence
 import yaml
 
 from flats.provenance import pages as page_map
+from flats.provenance import readable
 from flats.provenance.store import (
     INDEX,
+    Part,
     ProvenanceError,
     ProvenanceStore,
     parse_quote,
@@ -74,6 +93,9 @@ class Rule:
     #: Document id -> the section its opening lines belong to, for a slice
     #: that starts inside a section rather than at a heading.
     lead: Mapping[str, str] | None = None
+    #: A page's header and footer, which the readable text leaves out (only
+    #: in the lines just above a page start; see ``readable.py``).
+    page_furniture: re.Pattern[str] | None = None
 
 
 def rules(path: Path = RULES) -> dict[str, Rule]:
@@ -84,11 +106,13 @@ def rules(path: Path = RULES) -> dict[str, Rule]:
         if "n" not in heading.groupindex:
             raise ValueError(f"{layer}: the heading pattern names no group 'n'")
         furniture = body.get("furniture")
+        page = body.get("page_furniture")
         out[layer] = Rule(
             layer=layer,
             heading=heading,
             furniture=re.compile(furniture) if furniture else None,
             lead=dict(body.get("lead") or {}),
+            page_furniture=re.compile(page) if page else None,
         )
     return out
 
@@ -101,8 +125,13 @@ class Section:
     last: int
 
     @property
+    def chapter(self) -> str:
+        """``40.300`` -> ``40``, ``73C.030`` -> ``73C``: the folder it is filed in."""
+        return self.number.split(".", 1)[0]
+
+    @property
     def file(self) -> str:
-        return f"{self.number}.txt"
+        return f"{self.chapter}/{self.number}.txt"
 
 
 def _is_heading(rule: Rule, line: str) -> re.Match[str] | None:
@@ -199,11 +228,11 @@ class Split:
     def path(self, section: Section) -> str:
         return f"{self.directory}/{section.file}"
 
-    def at(self, line: int) -> tuple[str, int] | None:
-        """Where a proof-copy line lives now: (section path, line within it)."""
+    def at(self, line: int) -> Section | None:
+        """The section a proof-copy line was cut into."""
         for section in self.sections:
             if section.first <= line <= section.last:
-                return self.path(section), line - section.first + 1
+                return section
         return None
 
 
@@ -223,7 +252,7 @@ def splits(store: ProvenanceStore | None = None) -> dict[str, Split]:
             out[proof] = Split(
                 proof=proof,
                 sha256=body["sha256"],
-                sections=tuple(Section(n, a, b) for n, a, b in body["sections"]),
+                sections=tuple(Section(row[0], row[1], row[2]) for row in body["sections"]),
             )
     return out
 
@@ -257,107 +286,345 @@ def chapters(paths: Iterable[str], store: ProvenanceStore | None = None) -> froz
     return frozenset(out)
 
 
-def move_quote(quote: str, cuts: Mapping[str, Split]) -> str | None:
-    """The same quote addressed to its section, or None when it spans two.
+# --- the readable text ------------------------------------------------------
 
-    A quote into a document that was not split is returned unchanged.
+
+def _breaks(store: ProvenanceStore, proof: str, length: int) -> list[int]:
+    """The proof-copy lines a printed page starts on, and one past the end.
+
+    The end counts because the last page's furniture is the book's last lines.
+    """
+    pages = page_map.read(store, proof)
+    return [*(p.line for p in pages.pages), length + 1] if pages is not None else []
+
+
+def _vocabulary(store: ProvenanceStore, proofs: Iterable[str]) -> Counter[str]:
+    return readable.vocabulary(store.load(p).text for p in sorted(set(proofs)))
+
+
+@dataclass(frozen=True, slots=True)
+class Cut:
+    """One section, cut and made readable."""
+
+    section: Section
+    path: str
+    text: readable.Readable
+    #: (PDF page, first line of the section on it).
+    pages: tuple[tuple[int, int], ...]
+
+
+def _cut(
+    lines: Sequence[str],
+    cut: Split,
+    rule: Rule,
+    breaks: Sequence[int],
+    words: Mapping[str, int],
+    pages: page_map.PageIndex | None,
+) -> list[Cut]:
+    out: list[Cut] = []
+    for section in cut.sections:
+        raw = lines[section.first - 1 : section.last]
+        local = [b - section.first + 1 for b in breaks if section.first < b <= section.last + 1]
+        text = readable.clean(
+            raw, breaks=local, furniture=rule.page_furniture, heading=rule.heading, words=words
+        )
+        problems = readable.prove(raw, text, breaks=local, furniture=rule.page_furniture)
+        if problems:
+            raise ProvenanceError(f"{cut.path(section)}: {'; '.join(problems)}")
+        out.append(Cut(section, cut.path(section), text, _pages_of(text, section, pages)))
+    return out
+
+
+def _pages_of(
+    text: readable.Readable, section: Section, pages: page_map.PageIndex | None
+) -> tuple[tuple[int, int], ...]:
+    """The book's page map, cut to one section and renumbered to its lines."""
+    if pages is None:
+        return ()
+    out: list[tuple[int, int]] = []
+    for page in pages.pages:
+        if page.line > section.last:
+            break
+        local = max(page.line, section.first) - section.first + 1
+        line = next(
+            (k for k, src in enumerate(text.sources, start=1) if src and src[0] >= local), None
+        )
+        if line is None:
+            continue
+        if out and out[-1][1] == line:
+            out[-1] = (page.n, line)
+        else:
+            out.append((page.n, line))
+    return tuple(out)
+
+
+def cuts(
+    store: ProvenanceStore, proof: str, known: Mapping[str, Rule] | None = None
+) -> list[Cut]:
+    """The sections of a proof copy as its index says they were cut.
+
+    Re-derived from the proof copy itself, so it is what :func:`check`
+    compares the section files with. ``known`` is :func:`rules`, for a test.
+    """
+    return _cuts(store, proof, store.load(proof).sha256, known)
+
+
+_HELD: dict[tuple[Path, str, str], list[Cut]] = {}
+
+
+def _cuts(
+    store: ProvenanceStore, proof: str, digest: str, known: Mapping[str, Rule] | None = None
+) -> list[Cut]:
+    layer = proof.rsplit("/", 1)[0]
+    family = {p: c for p, c in splits(store).items() if p.rsplit("/", 1)[0] == layer}
+    key = (store.root, proof, digest + "".join(sorted(c.sha256 for c in family.values())))
+    if key not in _HELD:
+        rule = (known if known is not None else rules())[layer]
+        lines = _lines(store.load(proof).text)
+        _HELD[key] = _cut(
+            lines,
+            family[proof],
+            rule,
+            _breaks(store, proof, len(lines)),
+            _vocabulary(store, family),
+            page_map.read(store, proof),
+        )
+    return _HELD[key]
+
+
+def addresses(
+    store: ProvenanceStore, proof: str, known: Mapping[str, Rule] | None = None
+) -> dict[int, tuple[str, tuple[int, ...]]]:
+    """Proof-copy line -> (section file, the readable lines holding it).
+
+    Page furniture and a contents list are in no section and map nowhere.
+    """
+    out: dict[int, tuple[str, tuple[int, ...]]] = {}
+    for cut in cuts(store, proof, known):
+        for k, src in enumerate(cut.text.sources, start=1):
+            for local in src:
+                line = cut.section.first + local - 1
+                held = out.get(line)
+                out[line] = (cut.path, (*held[1], k) if held else (k,))
+    return out
+
+
+def held(
+    store: ProvenanceStore, path: str, known: Mapping[str, Rule] | None = None
+) -> list[tuple[int, ...]]:
+    """Each line of a section file AS STORED, as the proof-copy lines it holds.
+
+    Read from the file on disk, not re-derived: after the cleaning changes,
+    this is still where the old text's words were, which is what moving a
+    citation of the old text needs. Raises when the file is not the proof
+    copy's words.
+    """
+    part = store.part_of(path)
+    if part is None:
+        raise ProvenanceError(f"{path}: not a section file")
+    key = (store.root, path, part.sha256)
+    if key not in _ALIGNED:
+        _ALIGNED[key] = _held(store, part, known)
+    return list(_ALIGNED[key])
+
+
+#: (store root, section file, its hash) -> what :func:`held` found.
+_ALIGNED: dict[tuple[Path, str, str], tuple[tuple[int, ...], ...]] = {}
+
+
+def _held(store: ProvenanceStore, part: Part, known: Mapping[str, Rule] | None) -> tuple[tuple[int, ...], ...]:
+    path = part.path
+    rule = (known if known is not None else rules())[part.layer]
+    lines = _lines(store.load(part.proof).text)
+    raw = lines[part.first - 1 : part.last]
+    local = [
+        b - part.first + 1
+        for b in _breaks(store, part.proof, len(lines))
+        if part.first < b <= part.last + 1
+    ]
+    text = store.text_path(path).read_text(encoding="utf-8").splitlines()
+    found = readable.align(raw, text, breaks=local, furniture=rule.page_furniture)
+    if found is None:
+        raise ProvenanceError(f"{path}: the stored text is not the proof copy's words")
+    return tuple(tuple(part.first + k - 1 for k in src) for src in found)
+
+
+def printed(
+    store: ProvenanceStore, path: str, known: Mapping[str, Rule] | None = None
+) -> list[tuple[str, ...]] | None:
+    """Each line of a section file as the extraction lines it was joined from.
+
+    None for a document that is not a section file. For a tool whose rule was
+    tuned on the printed line -- its width, its wrap -- and must keep meaning
+    the same thing now that a line is a sentence. Read through :func:`held`,
+    so it describes the file on disk whichever cleaning made it.
+    """
+    part = store.part_of(path)
+    if part is None:
+        return None
+    lines = _lines(store.load(part.proof).text)
+    return [tuple(lines[k - 1] for k in src) for src in held(store, path, known)]
+
+
+def in_proof(
+    store: ProvenanceStore,
+    path: str,
+    ranges: Sequence[tuple[int, int]],
+    known: Mapping[str, Rule] | None = None,
+) -> tuple[str, list[tuple[int, int]]]:
+    """A citation of a section file as the proof-copy lines its words are on.
+
+    The page map and the book are the proof copy's, and the printed sheet
+    carries the extraction's lines, not the readable ones: boxing a number on
+    the page reads the lines the PDF printed.
+    """
+    part = store.part_of(path)
+    if part is None:
+        return path, list(ranges)
+    sources = held(store, path, known)
+    wanted = sorted(
+        {
+            n
+            for first, last in ranges
+            for k in range(first, last + 1)
+            if 1 <= k <= len(sources)
+            for n in sources[k - 1]
+        }
+    )
+    out: list[tuple[int, int]] = []
+    for n in wanted:
+        if out and n == out[-1][1] + 1:
+            out[-1] = (out[-1][0], n)
+        else:
+            out.append((n, n))
+    return part.proof, out
+
+
+def move_quote(
+    quote: str, store: ProvenanceStore, known: Mapping[str, Rule] | None = None
+) -> str | None:
+    """A quote of a proof copy addressed to its section, or None when it spans two.
+
+    The readable lines that hold every cited line; a quote into a document
+    that was not split is returned unchanged.
     """
     ref = parse_quote(quote)
-    cut = cuts.get(ref.path)
-    if cut is None or ref.whole_document:
+    if ref.path not in store.proofs() or ref.whole_document:
         return quote
-    landed = {cut.at(n) for first, last in ref.spans for n in (first, last)}
-    if None in landed:
-        return None
-    targets = {path for path, _ in landed}  # type: ignore[misc]
-    if len(targets) != 1:
-        return None
-    # Every line between a span's ends is in the same section as its ends,
-    # because a section is one unbroken run of the proof copy.
-    target = targets.pop()
-    section = next(s for s in cut.sections if cut.path(s) == target)
-    shift = section.first - 1
-    parts = [
-        f"L{a - shift}" if a == b else f"L{a - shift}-L{b - shift}" for a, b in ref.spans
-    ]
-    return f"{target}#{','.join(parts)}"
+    return _moved(quote, addresses(store, ref.path, known))
+
+
+def _spans(lines: Sequence[int]) -> str:
+    runs: list[list[int]] = []
+    for n in lines:
+        if runs and n == runs[-1][1] + 1:
+            runs[-1][1] = n
+        else:
+            runs.append([n, n])
+    return ",".join(f"L{a}" if a == b else f"L{a}-L{b}" for a, b in runs)
 
 
 def write(store: ProvenanceStore, rule: Rule, *, only: Iterable[str] | None = None) -> list[Split]:
-    """Cut every document in ``rule.layer`` and write the section files."""
+    """Cut every document in ``rule.layer`` and write the readable section files."""
     directory = store.root / rule.layer
     chosen = set(only) if only is not None else None
     index_path = directory / INDEX
     existing = json.loads(index_path.read_text(encoding="utf-8"))["documents"] if index_path.is_file() else {}
-    already = set(existing)
-    made: list[Split] = []
+    before = _files_of(existing)
+    flat = {directory / p for paths in before.values() for p in paths}
+    todo: list[Split] = []
     for text_file in sorted(directory.glob("*.txt")):
         name = text_file.name
         doc_id = text_file.stem
         proof = f"{rule.layer}/{name}"
         if chosen is not None and doc_id not in chosen:
             continue
-        if name not in already and _is_section_file(store, proof):
-            continue
+        if name not in existing and text_file in flat:
+            continue  # a section file of a flat cut, about to be replaced
         doc = store.load(proof)
-        lines = _lines(doc.text)
-        sections = split(lines, rule, doc_id)
-        if not sections:
-            continue
-        cut = Split(proof=proof, sha256=doc.sha256, sections=tuple(sections))
-        pages = page_map.read(store, proof)
-        for section in sections:
-            path = cut.path(section)
-            if store.text_path(path).exists() and not _is_section_file(store, path):
-                raise ProvenanceError(f"{path} already exists and is not a section file")
-            body = "\n".join(lines[section.first - 1 : section.last]) + "\n"
-            store.text_path(path).write_text(body, encoding="utf-8", newline="")
-            meta = {
-                "url": doc.url,
-                "retrieved": doc.retrieved.isoformat(),
-                "sha256": sha256(body),
-                **({"extractor": doc.extractor} if doc.extractor else {}),
-                "part_of": {"document": proof, "first": section.first, "last": section.last},
-            }
-            store.meta_path(path).write_text(
-                json.dumps(meta, indent=2) + "\n", encoding="utf-8", newline=""
+        sections = split(_lines(doc.text), rule, doc_id)
+        if sections:
+            todo.append(Split(proof=proof, sha256=doc.sha256, sections=tuple(sections)))
+    family = {f"{rule.layer}/{name}" for name in existing} | {c.proof for c in todo}
+    words = _vocabulary(store, family)
+    made: list[Split] = []
+    for cut in todo:
+        name = cut.proof.rsplit("/", 1)[-1]
+        lines = _lines(store.load(cut.proof).text)
+        pages = page_map.read(store, cut.proof)
+        done = _cut(lines, cut, rule, _breaks(store, cut.proof, len(lines)), words, pages)
+        for old in before.get(name, ()):
+            for stale in (old.name, f"{old.name}.meta.json", f"{old.name}.pages.json"):
+                (directory / old.parent / stale).unlink(missing_ok=True)
+        rows = []
+        for piece in done:
+            target = store.text_path(piece.path)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(piece.text.text, encoding="utf-8", newline="")
+            rows.append(
+                [
+                    piece.section.number,
+                    piece.section.first,
+                    piece.section.last,
+                    piece.section.file,
+                    sha256(piece.text.text),
+                    [list(p) for p in piece.pages],
+                ]
             )
-            if pages is not None:
-                page_map.write(
-                    store,
-                    _pages_within(pages, path, sha256(body), section),
-                    extractor=pages.extractor,
-                )
-        existing[name] = {
-            "sha256": doc.sha256,
-            "sections": [[s.number, s.first, s.last] for s in sections],
-        }
+        existing[name] = {"sha256": cut.sha256, "sections": rows}
         made.append(cut)
     if existing:
         index_path.write_text(_index_text(existing), encoding="utf-8", newline="")
+    _HELD.clear()
     return made
 
 
-def repage(store: ProvenanceStore, proof: str) -> int:
-    """Re-derive the page maps of a proof copy's sections from its own map.
+def _files_of(documents: Mapping[str, Mapping[str, object]]) -> dict[str, list[Path]]:
+    """Proof name -> the section files an index lists for it, in either form.
 
-    Called after the proof copy's map is rebuilt; a section's map is never
-    built from the PDF itself, so it cannot disagree with its book's.
+    A flat cut listed ``[number, first, last]`` and filed ``<number>.txt``
+    beside its proof copy with sidecars of its own; it is replaced, not kept
+    beside the readable one.
+    """
+    return {
+        name: [
+            Path(row[3]) if len(row) > 3 else Path(f"{row[0]}.txt")  # type: ignore[index]
+            for row in body["sections"]  # type: ignore[union-attr]
+        ]
+        for name, body in documents.items()
+    }
+
+
+def repage(store: ProvenanceStore, proof: str, known: Mapping[str, Rule] | None = None) -> int:
+    """Re-derive a proof copy's section pages after its page map was rebuilt.
+
+    The readable text depends on where pages start -- furniture is only taken
+    from above a page start, and no line is joined across one -- so a rebuilt
+    map that moves the text is refused: the citations into the old text would
+    have to be re-pointed first.
     """
     cut = splits(store).get(proof)
-    pages = page_map.read(store, proof)
-    if cut is None or pages is None:
+    if cut is None:
         return 0
-    for section in cut.sections:
-        path = cut.path(section)
-        digest = store.load(path).sha256
-        page_map.write(store, _pages_within(pages, path, digest, section), extractor=pages.extractor)
-    return len(cut.sections)
+    index_path = store.root / cut.directory / INDEX
+    raw = json.loads(index_path.read_text(encoding="utf-8"))
+    rows = raw["documents"][proof.rsplit("/", 1)[-1]]["sections"]
+    _HELD.clear()
+    fresh = cuts(store, proof, known)
+    for row, piece in zip(rows, fresh):
+        if sha256(piece.text.text) != row[4]:
+            raise ProvenanceError(
+                f"{piece.path}: the new page map changes its readable text; "
+                f"re-cut and re-point its citations"
+            )
+        row[5] = [list(p) for p in piece.pages]
+    index_path.write_text(_index_text(raw["documents"]), encoding="utf-8", newline="")
+    return len(fresh)
 
 
 def _index_text(documents: Mapping[str, Mapping[str, object]]) -> str:
     """The index, one section to a line, so a re-cut reads as a diff of sections."""
-    out = ["{", '  "documents": {']
+    out = ["{", f'  "readable": {json.dumps(readable.VERSION)},', '  "documents": {']
     names = sorted(documents)
     for k, name in enumerate(names):
         body = documents[name]
@@ -373,39 +640,13 @@ def _index_text(documents: Mapping[str, Mapping[str, object]]) -> str:
     return "\n".join(out) + "\n"
 
 
-def _pages_within(
-    pages: page_map.PageIndex, path: str, digest: str, section: Section
-) -> page_map.PageIndex:
-    """The proof copy's page map, cut to one section and renumbered from it."""
-    out: list[page_map.Page] = []
-    for page in pages.pages:
-        if page.line > section.last:
-            break
-        line = max(page.line, section.first) - section.first + 1
-        if out and out[-1].line == line:
-            out[-1] = page_map.Page(n=page.n, line=line, label=page.label)
-        else:
-            out.append(page_map.Page(n=page.n, line=line, label=page.label))
-    return page_map.PageIndex(
-        path=path,
-        sha256=digest,
-        extractor=pages.extractor,
-        source_sha256=pages.source_sha256,
-        pages=tuple(out),
-    )
-
-
-def _is_section_file(store: ProvenanceStore, path: str) -> bool:
-    meta = store.meta_path(path)
-    if not meta.is_file():
-        return False
-    return "part_of" in json.loads(meta.read_text(encoding="utf-8"))
-
-
-def check(store: ProvenanceStore | None = None) -> list[str]:
-    """Every way a section file has stopped being its slice of the proof copy."""
+def check(
+    store: ProvenanceStore | None = None, known: Mapping[str, Rule] | None = None
+) -> list[str]:
+    """Every way a section file has stopped being its proof copy's words."""
     store = store or ProvenanceStore()
     problems: list[str] = []
+    parts = store.parts()
     for proof, cut in splits(store).items():
         try:
             doc = store.load(proof)
@@ -417,22 +658,30 @@ def check(store: ProvenanceStore | None = None) -> list[str]:
                 f"{proof}: the proof copy changed since it was cut; re-run the split"
             )
             continue
-        lines = _lines(doc.text)
-        for section in cut.sections:
-            path = cut.path(section)
-            want = "\n".join(lines[section.first - 1 : section.last]) + "\n"
+        try:
+            fresh = _cuts(store, proof, doc.sha256, known)
+        except ProvenanceError as exc:
+            problems.append(str(exc))
+            continue
+        for piece in fresh:
+            path = piece.path
+            part = parts.get(path)
             try:
                 # Normalised like every load: a checkout with autocrlf on hands
-                # back CRLF, and that is not a different slice.
+                # back CRLF, and that is not a different text.
                 got = store.text_path(path).read_text(encoding="utf-8").replace("\r\n", "\n")
             except OSError:
                 problems.append(f"{path}: missing")
                 continue
-            if got != want:
-                problems.append(f"{path}: not lines {section.first}-{section.last} of {proof}")
-            meta = json.loads(store.meta_path(path).read_text(encoding="utf-8"))
-            if meta.get("sha256") != sha256(got) or meta.get("part_of", {}).get("document") != proof:
-                problems.append(f"{path}: sidecar does not describe this slice")
+            if got != piece.text.text:
+                problems.append(f"{path}: not the readable text of lines "
+                                f"{piece.section.first}-{piece.section.last} of {proof}")
+            if part is None or part.sha256 != sha256(got):
+                problems.append(f"{path}: the index does not describe this text")
+            elif part.pages != piece.pages:
+                problems.append(f"{path}: the index's pages are not its book's")
+            if store.meta_path(path).exists() or page_map.sidecar(store, path).exists():
+                problems.append(f"{path}: a sidecar beside a section file")
     return problems
 
 
@@ -458,14 +707,29 @@ class Moved:
     after: str
 
 
-def repoint_text(text: str, cut: Split) -> tuple[str, list[tuple[str, str]], list[str]]:
-    """Every citation of ``cut.proof`` in ``text`` re-addressed to its section.
+def _moved(quote: str, where: Mapping[int, tuple[str, tuple[int, ...]]]) -> str | None:
+    ref = parse_quote(quote)
+    landed = [where.get(n) for n in ref.numbers]
+    if not landed or None in landed:
+        return None
+    targets = {path for path, _ in landed}  # type: ignore[misc]
+    if len(targets) != 1:
+        return None
+    lines = sorted({k for _, ks in landed for k in ks})  # type: ignore[misc]
+    return f"{targets.pop()}#{_spans(lines)}"
 
-    Returns the new text, the (before, after) pairs, and the citations left on
-    the proof copy because they span two sections.
+
+def repoint_text(
+    text: str, proof: str, where: Mapping[int, tuple[str, tuple[int, ...]]]
+) -> tuple[str, list[tuple[str, str]], list[str]]:
+    """Every citation of ``proof`` in ``text`` re-addressed to its section.
+
+    ``where`` is :func:`addresses` for the proof copy. Returns the new text,
+    the (before, after) pairs, and the citations left on the proof copy
+    because they span two sections.
     """
-    name = cut.proof.rsplit("/", 1)[-1]
-    directory = cut.directory + "/"
+    name = proof.rsplit("/", 1)[-1]
+    directory = proof.rsplit("/", 1)[0] + "/"
     moved: list[tuple[str, str]] = []
     kept: list[str] = []
 
@@ -474,8 +738,7 @@ def repoint_text(text: str, cut: Split) -> tuple[str, list[tuple[str, str]], lis
         if prefix and prefix != directory:
             return found.group(0)
         spans = found.group("spans").replace(" ", "")
-        quote = f"{cut.proof}#L{spans}"
-        after = move_quote(quote, {cut.proof: cut})
+        after = _moved(f"{proof}#L{spans}", where)
         if after is None:
             kept.append(found.group(0))
             return found.group(0)
@@ -489,18 +752,23 @@ def repoint_text(text: str, cut: Split) -> tuple[str, list[tuple[str, str]], lis
 
 
 def repoint(
-    cuts: Iterable[Split], files: Iterable[Path], *, write: bool = False
+    store: ProvenanceStore,
+    proofs: Iterable[str],
+    files: Iterable[Path],
+    *,
+    write: bool = False,
+    known: Mapping[str, Rule] | None = None,
 ) -> tuple[list[Moved], list[tuple[Path, str]]]:
     moved: list[Moved] = []
     kept: list[tuple[Path, str]] = []
-    chosen = list(cuts)
+    chosen = {proof: addresses(store, proof, known) for proof in proofs}
     for file in files:
         original = file.read_text(encoding="utf-8")
         text = original
-        for cut in chosen:
-            if cut.proof.rsplit("/", 1)[-1] not in text:
+        for proof, where in chosen.items():
+            if proof.rsplit("/", 1)[-1] not in text:
                 continue
-            text, pairs, left = repoint_text(text, cut)
+            text, pairs, left = repoint_text(text, proof, where)
             moved.extend(Moved(file, a, b) for a, b in pairs)
             kept.extend((file, q) for q in left)
         if write and text != original:
@@ -532,13 +800,19 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 __all__ = [
     "INDEX",
+    "Cut",
     "Rule",
     "Section",
     "Split",
+    "addresses",
     "chapters",
     "check",
+    "cuts",
     "derived",
+    "held",
+    "in_proof",
     "move_quote",
+    "printed",
     "repage",
     "repoint",
     "repoint_text",

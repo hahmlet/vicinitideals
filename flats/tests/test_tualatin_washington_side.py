@@ -42,7 +42,7 @@ REFUSED = {
     "IN": "Use categories which are not listed are prohibited",
     "CN": "one (1) dwelling unit for each business located on the lot",
     "CR": "Conditional uses limited to:",
-    "MP": "caretaker resi- dence when necessary for security",
+    "MP": "caretaker residence when necessary for security",
     "MBP": "caretaker residence if located in the Tonquin",
     "BCE": "caretaker residence when necessary for security purposes",
 }

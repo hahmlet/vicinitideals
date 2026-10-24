@@ -644,3 +644,36 @@ def test_tigards_chapter_is_read_whole_with_its_nouns(corpus: list[Chapter]) -> 
     assert terms["Quad"] == "or/washington/tigard/tdc.18.30.definitions.txt#L1028"
     assert terms["Corner lot"] == "or/washington/tigard/tdc.18.30.definitions.txt#L1236"
     assert terms["Driveway"] == "or/washington/tigard/tdc.18.30.definitions.txt#L978"
+
+
+def test_a_sentence_running_on_below_is_not_a_term_and_its_body() -> None:
+    """Readable text keeps one page to a line, so a sentence broken at a page
+    sits over its own lowercase continuation; and one sentence to a line sets
+    a list's lead-in alone (Tualatin 31.060, 2026-10-23)."""
+    text = "\n".join(
+        [
+            "Examples of neighborhood",
+            "activity centers include existing or planned parks and schools.",
+            "Deductions include:",
+            "(1) The following sensitive land areas within the floodplain.",
+        ]
+    )
+    assert read(text) == []
+
+
+def test_a_lowercase_body_that_opens_with_its_verb_is_still_an_entry() -> None:
+    text = "\n".join(
+        [
+            "Abutting",
+            "means sharing a common boundary or property line with another lot.",
+            '"Public infrastructure" -',
+            "structures in the public right-of-way that are in public ownership.",
+            "Structure, for insurance purposes, means:",
+            "A. A building with two or more outside rigid walls and a fully secured roof.",
+        ]
+    )
+    assert [e.term for e in read(text)] == [
+        "Abutting",
+        "Public infrastructure",
+        "Structure, for insurance purposes, means",
+    ]

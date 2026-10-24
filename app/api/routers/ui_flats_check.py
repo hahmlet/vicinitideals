@@ -1045,7 +1045,7 @@ def _set_aside_items(only: str | None) -> dict[str, list[dict[str, str]]]:
         for row in _value_rows(layer):
             if row["quote"] and _exempt(layer, row):
                 add(row["quote"], f"{_label(row['field'])} -- does not reach this building")
-        if only is not None and only.rpartition("/")[0] != layer_id:
+        if only is not None and _store().layer_of(only) != layer_id:
             continue
         try:
             for card in worklist.cards(layer, _store()):

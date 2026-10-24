@@ -9,7 +9,7 @@
 notes:
 
   # --- 58.central-tualatin-overlay.txt (Table 58-1, modifications to use) ---
-  - quote: "or/clackamas/tualatin/58.200.txt#L53"
+  - quote: "or/clackamas/tualatin/58/58.200.txt#L39-L40"
     digest: "fff627adf3c3"
     state: dismissed
     reason: >-

@@ -1,6 +1,0 @@
-TDC 51.110.  District Location Standards.
-(1)  District Location. The boundaries of a CN District must be separated from all other CN, CC, and
-CG districts by at least 1,320 feet.
-(2)  Street Frontage. At least one-fourth of the total street frontage of the CN District area must be
-on an Arterial or Major Collector street.
-(Ord. No. 1418-19, § 4, 4-22-19; Ord. No. 1454-21, § 1, 3-22-21)

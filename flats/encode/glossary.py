@@ -44,7 +44,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
 
-from flats.encode.definitions import CHAPTER, _stored
+from flats.encode.definitions import CHAPTER, DOCS, _stored
+from flats.provenance.sections import splits
+from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
 from flats.rules.model import CodeDocument, Layer
 
@@ -397,6 +399,8 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
             continue
         if _misfiled(stacked.group("term"), body):
             continue
+        if _carries_on(stripped, body):
+            continue
         if STACKED.match(body) or FURNITURE.match(body):
             # The line beneath is another term, or the page stamp between two
             # of them. Either way this entry's body is somewhere we did not
@@ -471,7 +475,7 @@ def _whole(lines: Sequence[str], start: int, first: str) -> str:
         opens = ENTRY.match(stripped)
         if opens is not None and MIN_TERM <= len(opens.group("term")) <= MAX_TERM:
             break
-        if STACKED.match(stripped) and not _closes(body[-1], stripped):
+        if STACKED.match(stripped) and not _closes(body[-1], stripped) and not _LEAD_IN.search(stripped):
             break
         body.append(stripped)
     return _collapse(" ".join(body))
@@ -498,6 +502,37 @@ def _closes(above: str, line: str) -> bool:
     Sherwood's "Figure 1. Areas Excluded from" over "Floor Area Calculation".
     """
     return bool(_IN_FLIGHT.search(above.rstrip())) and line.endswith(".")
+
+
+#: A lowercase body may open only with the verb that defines: "Lot" over
+#: "means an area of land". Any other lowercase opening is a sentence that
+#: carries on from the line above, and the line above is a fragment, not a
+#: term -- the readable text keeps one page per line, so Tualatin's
+#: "Examples of neighborhood" ends a page above "activity centers include".
+_DEFINING_VERB = re.compile(
+    r"^(?:means|mean|shall\s+mean|shall\s+include|includes|include|is|are|refers|describes|relates|provides)\b"
+)
+
+#: A sentence that introduces a list: "Deductions include:" over "(1) The
+#: following sensitive land areas". One sentence per line sets it alone,
+#: where it reads as a stacked term, but it is the middle of a meaning.
+#: Troutdale's "Structure, for insurance purposes, means:" over its list is
+#: a term all the same, so the verb that defines does not count.
+_LEAD_IN = re.compile(r"\b(?!means:)[a-z]+:$")
+
+#: The codifier's own mark that a line is a term: a closing quote, then a
+#: dash. Tigard's "Public infrastructure" - sits over "structures in the
+#: public right-of-way", a lowercase body that does not open with a verb.
+_MARKED = re.compile(r"[\"”]\s*[–—-]$")
+
+
+def _carries_on(term_line: str, body: str) -> bool:
+    """Whether a heading-shaped line is really part of a running sentence."""
+    if _MARKED.search(term_line):
+        return False
+    if body[:1].islower() and not _DEFINING_VERB.match(body):
+        return True
+    return bool(_LEAD_IN.search(term_line))
 
 
 def _under_a_marker(lines: Sequence[str], i: int) -> bool:
@@ -664,16 +699,31 @@ def read(layer: Layer) -> Chapter | None:
 def read_all(layer: Layer) -> list[Chapter]:
     """Every definitions chapter this jurisdiction declared and we hold."""
     stored = {p.stem: p for p in _stored(layer.layer)}
+    cut = splits(ProvenanceStore(DOCS))
     out: list[Chapter] = []
     for doc in declared_all(layer):
         path = stored.get(doc.id)
         if path is not None:
             out.append(_read_one(layer, doc, path))
+            continue
+        # A declared chapter cut into section files is read in its sections,
+        # so every entry is quoted where a citation of it points. A span is
+        # lines of the proof copy, and is read there.
+        proof = cut.get(f"{layer.layer}/{doc.id}.txt")
+        if proof is None:
+            continue
+        if doc.definitions_at:
+            out.append(_read_one(layer, doc, DOCS / proof.proof))
+            continue
+        for section in proof.sections:
+            chapter = _read_one(layer, doc, DOCS / proof.path(section))
+            if chapter.entries:
+                out.append(chapter)
     return out
 
 
 def _read_one(layer: Layer, doc: CodeDocument, path: Path) -> Chapter:
-    name = f"{layer.layer}/{path.name}"
+    name = path.relative_to(DOCS).as_posix()
     text = path.read_text(encoding="utf-8", errors="replace")
     offset = 0
     if doc.definitions_at:

@@ -1,0 +1,16 @@
+TDC 43.220.  Housing Types.
+Table 43-2 lists Housing Types permitted in the RH zone.
+Housing types may be Permitted Outright
+(P), Conditionally Permitted (C), or Not Permitted (N) in the RH zone.
+Table 43-2
+Housing Types in the RH Zone
+HOUSING TYPE STATUS LIMITATIONS AND CODE REFERENCES
+Single-Family Dwelling N
+Accessory Dwelling Unit N
+Townhouse (or Rowhouse) P See TDC definition in 31.060.
+Multi-Family Structure P See TDC definition in 31.060.
+Manufacturing Dwelling N
+Manufactured Dwelling Park N
+Retirement Housing Facility C Subject to TDC 34.400.
+Residential Home P See TDC definition in 31.060.
+(Ord. No. 1454-25, § 1(Exhs. 2, 3), 11-24-25)

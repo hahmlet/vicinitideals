@@ -1,0 +1,24 @@
+TDC 41.220. Housing Types.
+Table 41-2 lists Housing Types permitted in the RML zone.
+Housing types may be Permitted Outright
+(P), Conditionally Permitted (C), or Not Permitted (N) in the RML zone.
+Table 41-2
+Housing Types in the RML Zone
+HOUSING TYPE STATUS LIMITATIONS AND CODE REFERENCES
+Single-Family Dwelling P Limited to single-family dwellings in a flexible lot subdivision subject to TDC 36.410.
+Accessory Dwelling Unit P Subject to TDC 73A.170.
+Duplex P See TDC definition in 31.060.
+Townhouse P See TDC definition in 31.060.
+Triplex P See TDC definition in 31.060.
+Quadplex P See TDC definition in 31.060.
+Cottage Cluster P See TDC definition in 31.060.
+Multi-Family Structure (5 or more units)
+P See TDC definition in 31.060.
+Manufacturing Dwelling N See TDC definition in 31.060.
+HOUSING TYPE STATUS LIMITATIONS AND CODE REFERENCES
+Manufactured Dwelling Park P Limited to locations designated by the Tualatin
+Community Plan Map and subject to TDC
+34.190.
+Retirement Housing Facility C Subject to TDC 34.400.
+Residential Home P See TDC definition in 31.060.
+(Ord. No. 1444-20, § 1, 10-12-20; Ord. No. 1463-21, § 18, 12-13-21)

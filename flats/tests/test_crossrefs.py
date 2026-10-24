@@ -960,7 +960,7 @@ def test_a_layer_owns_only_the_documents_in_its_own_directory(
     store = ProvenanceStore()
     for name, layer in layers.items():
         mine = {
-            p.rsplit("/", 1)[0]
+            store.layer_of(p)
             for row in dangling(layer, store)
             for p in (f"{name}/{s}" for s in row.sources)
         }

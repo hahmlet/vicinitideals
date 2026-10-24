@@ -323,7 +323,7 @@ def read(store: ProvenanceStore, path: str) -> PageIndex | None:
     """
     file = sidecar(store, path)
     if not file.is_file():
-        return None
+        return _section_pages(store, path)
     try:
         raw = json.loads(file.read_text(encoding="utf-8"))
         document = store.load(path)
@@ -339,6 +339,28 @@ def read(store: ProvenanceStore, path: str) -> PageIndex | None:
         pages=tuple(
             Page(n=p["n"], line=p["line"], label=p.get("label", "")) for p in raw["pages"]
         ),
+    )
+
+
+def _section_pages(store: ProvenanceStore, path: str) -> PageIndex | None:
+    """A section file's pages: its book's, as its index cut them.
+
+    Bound to the book's map as a sidecar is bound to its text. A proof copy
+    whose map has moved on reads as no map, so its sections do too.
+    """
+    part = store.part_of(path)
+    if part is None or not part.pages:
+        return None
+    book = read(store, part.proof)
+    if book is None:
+        return None
+    labels = {p.n: p.label for p in book.pages}
+    return PageIndex(
+        path=path,
+        sha256=part.sha256,
+        extractor=book.extractor,
+        source_sha256=book.source_sha256,
+        pages=tuple(Page(n=n, line=line, label=labels.get(n, "")) for n, line in part.pages),
     )
 
 

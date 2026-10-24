@@ -5,6 +5,10 @@
 #   furniture: heading-shaped lines that are not headings (running headers)
 #   lead:      document id -> the section its opening lines belong to, for a
 #              slice that starts inside a section instead of at a heading
+#   page_furniture: a page's running header and footer, left out of the
+#              readable text -- only in the lines just above a page start
+#              (flats/provenance/readable.py), so the same words in the code
+#              text stay
 
 or/clackamas/tualatin:
   # "TDC 40.220. Lot Size and Dimensional Standards." -- the number, a full
@@ -20,3 +24,10 @@ or/clackamas/tualatin:
     # The extract is cut at "Lot Types:", inside the definitions section;
     # its running header names it (TDC 31.060).
     31.definitions: "31.060"
+  # The Municode footer "TDC40:4Supp. No. 12" (chapter:page, then the
+  # supplement), the running header "TDC 40.220 TUALATIN DEVELOPMENT CODE",
+  # and the chapter-title header the extraction glues to its number, "TDC
+  # 40.300LOW DENSITY RESIDENTIAL ZONE (RL)". Measured 2026-10-23 on every
+  # page start of Tualatin's 24 chapters: every other line in those places is
+  # code text ("Sections:", "CHAPTER 42", an ordinance history) and stays.
+  page_furniture: '^\s*(?:TDC\s?\d+[A-Z]?:\d+(?:Supp\. No\. \d+)?|TDC \d+[A-Z]?\.\d+\s*(?:TUALATIN DEVELOPMENT CODE|[A-Z][A-Z ,&()/''-]+))\s*$'

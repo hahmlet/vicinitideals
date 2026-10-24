@@ -1,0 +1,180 @@
+TDC 73C.040.  Off-Street Vehicle and Bicycle Parking Quantity Requirements.
+(1)  Parking Table. Table 73C-1 lists the maximum permitted vehicle and minimum required bicycle parking requirements listed for land use types.
+(2)  Parking Categories.
+(a)  Parking Zone A. Parking Zone A reflects the maximum number of permitted vehicle parking spaces allowed for each listed land use.
+Parking Zone A areas include those parcels that are located within the town center (Comprehensive Plan Map 10-4), one-quarter mile walking distance of bus transit stops that have 20-minute peak hour transit service, or one-half mile walking distance of light rail station platforms that have 20-minute peak hour transit service.
+(b)  Parking Zone B . Parking Zone B reflects the maximum number of permitted vehicle parking spaces allowed for each listed land use.
+Parking Zone B areas include those parcels that are located within one-quarter mile walking distance of bus transit stops, one-half mile walking distance of light rail station platforms, or both, and that have a greater than 20-minute peak hour transit service.
+Parking Zone B areas also include those parcels that are located at a distance greater than one-quarter mile walking distance of bus transit stops and one-half mile walking distance of light rail station platforms, or both,
+(c)  Dual Parking Zones. If a parcel is partially located within Parking Zone A, then the use(s) located on the entire parcel shall observe the Parking Zone A ratios.
+(3)  Ratios. Calculations to determine the parking quantities must be rounded to the nearest whole number.
+(4)  Uses Not Listed. For uses not specifically mentioned in Table 73C-1, a use determination may be requested as provided in TDC 31.070 for the purposes of determining off-street parking facilities for vehicles and bicycles.
+TABLE 73C-1: Off-Street Vehicle and Bicycle Parking Quantity Requirements
+USE
+MAXIMUM PERMITTED VEHICLE PARKING MINIMUM
+PERMITTED
+BICYCLE PARKING
+PERCENTAGE OF
+BICYCLE PARKING
+TO BE COVERED Zone A Zone B
+(a) Residential Uses
+(i) Single-family dwellings and accessory dwelling units
+None None None Required N/A
+TABLE 73C-1: Off-Street Vehicle and Bicycle Parking Quantity Requirements
+USE
+MAXIMUM PERMITTED VEHICLE PARKING MINIMUM
+PERMITTED
+BICYCLE PARKING
+PERCENTAGE OF
+BICYCLE PARKING
+TO BE COVERED Zone A Zone B
+(ii) Middle Housing:
+a. Duplexes
+b. Triplexes
+c. Quadplexes
+d. Townhouses
+e. Cottage Clusters
+None None None Required N/A
+(iii) Multi-family dwellings:
+a. studio units
+b. non-studio units
+a. 1.2 spaces per unit
+b. 2.0 spaces per unit
+None 1.0 space per unit
+100
+(iv) Retirement housing facility
+None None 0.50 space per unit 50
+(v) Congregate care, assisted living and
+None None 2, or 0.20 spaces per dwelling unit;
+whichever is greater
+50
+(vi) Residential facilities
+None None 2, or 1.0 space for every six beds;
+whichever is greater
+50
+(b) Institutions
+(i) Convalescent home, or nursing home
+None None 2, or 1.0 space for every six beds;
+whichever is greater
+50
+(ii) Hospital None None 1 space per 1,000 gross square feet
+10 spaces or 40 percent whichever is greater
+(c) Places of Public Assembly
+(i) Library, reading room
+None None 2, or 1.5 spaces per 1,000 gross square feet; whichever is greater
+10
+(ii) Nursery, primary, elementary or middle school, child day care center
+None None 4, or 1.0 space per five students based on the design capacity of the facility; whichever is greater
+75
+(iii) Senior high school 0.3 spaces per student and staff
+0.3 spaces per student and staff
+4, or 1.0 space per five students based on the design capacity of
+25
+(iv) Other places of public assembly, including churches
+0.6 spaces per seat 0.8 spaces per seat 1.0 space per 40 seats or 80 feet of bench length
+35
+(d) Commercial Amusements
+(i) Theater 0.4 spaces per seat
+0.5 spaces per seat
+1.0 space per 30 seats 10
+(ii) Bowling alley 5.4 spaces per
+1,000 square feet of gross floor area
+6.5 spaces per
+1,000 square feet of gross floor area
+4 spaces, or 0.5 spaces per lane;
+whichever is greater
+40
+(iii) Dance hall, skating rink
+5.4 spaces per
+1,000 square feet of gross floor area
+6.5 spaces per 1,000 square feet of gross floor area
+2.0 spaces per
+1,000 square feet of floor area
+50
+(iv) Racquet court, health club
+1.3 spaces per 1,000 square feet of gross floor area
+1.5 spaces per 1,000 square feet of gross floor area
+2.0 spaces per
+1,000 square feet of exercise area
+50
+(e) Commercial
+TDC 73C-040PARKING STANDARDS
+TABLE 73C-1: Off-Street Vehicle and Bicycle Parking Quantity Requirements
+USE
+MAXIMUM PERMITTED VEHICLE PARKING MINIMUM
+PERMITTED
+BICYCLE PARKING
+PERCENTAGE OF
+BICYCLE PARKING
+TO BE COVERED Zone A Zone B
+(i) General retail— grocery stores, convenience stores, specialty retail and shops
+5.0 spaces per 1,000 square feet of gross floor area
+6.2 spaces per 1,000 square feet of gross floor area
+0.5 space per
+1,000 square feet of gross floor area
+50
+(ii) Bulk retail— furniture and home furnishings, appliances, building materials, and similar large items
+5.0 spaces per
+1,000 square feet of gross floor area
+6.2 spaces per 1,000 square feet of gross floor area
+2 spaces, or 0.2 space per 1,000 square feet of sales floor area; whichever is greater
+50
+(iii) Banks/Savings and loans
+5.0 spaces per 1,000 square feet of gross floor area
+6.5 spaces per 1,000 square feet of gross floor area
+2 spaces, or 0.33 spaces per 1,000 square feet; whichever is greater
+10
+(iv) Medical & dental offices
+4.9 spaces per
+1,000 square feet of gross floor area
+5.9 spaces per 1,000 square feet of gross floor area
+2 spaces, or 0.33 spaces per 1,000 gross square feet;
+whichever is greater
+10 spaces or 40 percent; whichever is greater
+(vi) General office 3.4 spaces per 1,000 square feet of gross floor area
+4.1 spaces per 1,000 square feet of gross floor area
+2 spaces, or 0.5 spaces per 1,000 gross square feet;
+whichever is greater
+10 spaces or 40 percent; whichever is greater
+(vii) Restaurant 19.1 spaces per 1,000 square feet of gross floor area
+23.0 spaces per 1,000 square feet of gross floor area
+2 spaces per
+1,000 gross square feet
+25
+(viii) Drive-through restaurant
+12.4 spaces per 1,000 square feet of gross floor area
+14.9 spaces per 1,000 square feet of gross floor area
+2 spaces per
+1,000 gross square feet
+25
+(viii) Motel None None 0.2 space per room
+10
+(ix) Mortuary None None 1.0 space per 40 seats or 80 feet of bench length
+10
+(x) Park and ride lots
+None None 5 percent of auto spaces
+100
+(xi) Major transit stops
+(not Park and Ride lots)
+None None 4 100
+(f) Industrial
+(i) Manufacturing None None 2 spaces, or 0.1 spaces per 1,000 gross square feet;
+whichever is greater
+5 spaces or 30 percent; whichever is greater
+(ii) Warehousing 0.4 spaces per
+1,000 square feet of gross floor area
+0.5 spaces per 1,000 square feet of gross floor area
+2 spaces, or 0.1 spaces per 1,000 gross square feet;
+whichever is greater
+5 spaces or 30 percent; whichever is greater
+(iii) Wholesale establishment
+None None 2 spaces, or 0.5 spaces per 1,000 gross square feet;
+whichever is greater
+5 spaces or 30 percent; whichever is greater
+(g) Exempt Uses
+(i) Commercial
+Parking Structures
+Exempt Exempt Exempt Exempt
+(ii) Fleet Parking Exempt Exempt Exempt Exempt
+TDC 73C-040 TUALATIN DEVELOPMENT CODE
+(Ord. No. 1486-24, § 13, 6-10-24; Ord. No. 1454-25, § 1(Exhs. 2, 3), 11-24-25)

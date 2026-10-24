@@ -471,13 +471,8 @@ RULINGS: dict[str, dict[str, str]] = {
             "(62.mp.txt L225-L227, L235-L237), and the flag lot row of "
             "40-41.residential.txt (L519). Chapter 73C is access standards."
         ),
-        "GC": (
-            "aliased: the running page header of Chapter 54 prints 'GENERAL "
-            "COMMERCIAL ZONE (GC)' (54.cg.txt L117, L191, L266, L354) while "
-            "the chapter's own table is 'Use Categories in the CG District' "
-            "(L23) and the county parcel layer says CG on all 15 lots; the "
-            "refusal is keyed CG."
-        ),
+        # GC, the alias Chapter 54's running page header printed, went with the
+        # header: the readable section text (2026-10-23) takes page furniture out.
         "CURD": (
             "not-a-zone: the Central Urban Renewal District, an urban renewal "
             "area whose Blocks 11, 28 and 29 the outdoor pet day care "

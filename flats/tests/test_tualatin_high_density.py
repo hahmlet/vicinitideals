@@ -87,7 +87,7 @@ NUMBERS = [
     ("RMH", "min_lot_sqft", 10000, "All Other Permitted Uses 10,000 square feet"),
     ("RMH", "min_lot_width_ft", 75, "All Other Permitted Uses 75 feet"),
     ("RMH", "setback_front_ft", 15, "25+ feet 15 feet"),
-    ("RMH", "setback_street_side_ft", 15, "same as the front yard set- back"),
+    ("RMH", "setback_street_side_ft", 15, "same as the front yard setback"),
     ("RMH", "setback_garage_entrance_ft", 20, "garage door must be 20 feet"),
     ("RMH", "setback_side_ft", 12, "25+ feet 12 feet"),
     ("RMH", "setback_rear_ft", 12, "25+ feet 12 feet"),

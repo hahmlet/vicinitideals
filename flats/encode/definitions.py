@@ -262,7 +262,7 @@ def _find(layer_id: str, term: str) -> str:
             body = " ".join([head, *lines[i + 1 : i + 1 + LOOKAHEAD]]).strip()
             if NOT_A_DEFINITION.match(body) or len(body) < MIN_BODY:
                 continue
-            return f"{layer_id}/{path.stem}.txt#L{i + 1}"
+            return f"{path.relative_to(DOCS).as_posix()}#L{i + 1}"
     return ""
 
 

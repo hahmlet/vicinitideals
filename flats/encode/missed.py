@@ -334,7 +334,7 @@ def _read_sections(
     cut = store.section_files()
     out: dict[str, dict[str, set[str]]] = {}
     for path, lines_read in cited.items():
-        if path.rsplit("/", 1)[0] != layer.layer:
+        if store.layer_of(path) != layer.layer:
             continue
         try:
             lines = store.text_path(path).read_text(encoding="utf-8").splitlines()

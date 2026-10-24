@@ -1,0 +1,222 @@
+[
+ {
+  "field": "corner_access_street",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "39fc33c5caf5f175a8db57c84fce5b554834f2f57d41f1cf176b00b66ffc249c",
+  "new_quote": "or/clackamas/tualatin/31/31.060.txt#L2-L3",
+  "old_fingerprint": "1cbd286ff7daa275527e4ef817c58acef26cf96b38e5eb67c876aac79736af8f",
+  "old_quote": "or/clackamas/tualatin/31/31.060.txt#L2-L4",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "8396b0589ad72818d08ebcc48b441c429ebc3c8e452afd8defccb1beb5b8f40a",
+  "new_quote": "or/clackamas/tualatin/41/41.300.txt#L54,L58-L60",
+  "old_fingerprint": "6386f43892862b5c28414067b54081223a6e3d356ccacb2b8694caa736929ca0",
+  "old_quote": "or/clackamas/tualatin/41/41.300.txt#L54,L58-L59",
+  "when_key": "",
+  "zone": "RML"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "699b52ec7af136b192b119506f2a8fa132821aa78f29e9ecdb9e960346341e3c",
+  "new_quote": "or/clackamas/tualatin/42/42.220.txt#L2-L6,L8-L18",
+  "old_fingerprint": "64846c84335d594a64e030215bd954eb6f24d596d29042f25cc5144077d72568",
+  "old_quote": "or/clackamas/tualatin/42/42.220.txt#L2-L18",
+  "when_key": "",
+  "zone": "RMH"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "3e0d92be58b3851e92ca7a859d27823bcb5bc2d23db49f603ab535824ba430b0",
+  "new_quote": "or/clackamas/tualatin/49/49.200.txt#L1-L5,L8-L12,L19,L34-L38",
+  "old_fingerprint": "a6e262f34bb16dc7750aaf48da0d41607c3ef4a6b7e163ac52741e85a5b0cfb2",
+  "old_quote": "or/clackamas/tualatin/49/49.200.txt#L1-L6,L10-L14,L21,L36-L40",
+  "when_key": "",
+  "zone": "IN"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "b0ce8514c86fedca2b4af58a65e8ba84369026c2e192fa1de4c1e664df0c1f30",
+  "new_quote": "or/clackamas/tualatin/50/50.200.txt#L3-L5,L8-L14",
+  "old_fingerprint": "f39c96533a2c1e0ba9825f6288389bbc9bb2ab405eb47ce8704eca529106769d",
+  "old_quote": "or/clackamas/tualatin/50/50.200.txt#L5-L6,L10-L16",
+  "when_key": "",
+  "zone": "CO"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "2b4ec1228b62a5f038566b45aa342175ad6b05205d73b956f558a4e5193678f5",
+  "new_quote": "or/clackamas/tualatin/51/51.200.txt#L2-L5,L8-L12",
+  "old_fingerprint": "20e2b59e3a7c733ca729426b2866bb75881d8706a07268967b544bf4be86ca4e",
+  "old_quote": "or/clackamas/tualatin/51/51.200.txt#L2-L6,L10-L14",
+  "when_key": "",
+  "zone": "CN"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "e3103e6213d98044fa70e3d5c2414279be14ebc96bd15cabfeb77f6e5a838751",
+  "new_quote": "or/clackamas/tualatin/52/52.200.txt#L2-L5,L8-L14",
+  "old_fingerprint": "28244e5cc2598a502af2bf0181539a45704f1c1e9ee27895a7621f62ff26cec5",
+  "old_quote": "or/clackamas/tualatin/52/52.200.txt#L2-L6,L10-L16",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "26a2bac4ff736ca2b80e0d733179820ec9d366f6f0426120656bf63aad388b73",
+  "new_quote": "or/clackamas/tualatin/53/53.200.txt#L1-L5,L8-L13",
+  "old_fingerprint": "82f42a1710aaad979ed13eb9f3fdd62169abc79f8b856ca1781d47ef6113370f",
+  "old_quote": "or/clackamas/tualatin/53/53.200.txt#L1-L6,L10-L15",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "eeedcb8c195201180843928d377a74791e67d22dcff46ccbe68ec8811c1bfa11",
+  "new_quote": "or/clackamas/tualatin/53/53.300.txt#L4-L5,L7-L11",
+  "old_fingerprint": "89d9a4ac8c57599fb52a202073ba30b2a27726657849471a5e93462eb14fb10c",
+  "old_quote": "or/clackamas/tualatin/53/53.300.txt#L4-L11",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "5077bc3736a55ff17c76e6c8ceee36962380553575eda00a5baeee611d4a9470",
+  "new_quote": "or/clackamas/tualatin/53/53.300.txt#L4-L5,L7-L9",
+  "old_fingerprint": "d7b2938d000b8bf687c4fb129be34ddf4f3ef09a9aa11aa50cea0b9ec39dd36c",
+  "old_quote": "or/clackamas/tualatin/53/53.300.txt#L4-L9",
+  "when_key": "",
+  "zone": "CC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "c1e69f37296547d7480f79a548b8574b007ae8e44cc05b58edff6f310148560c",
+  "new_quote": "or/clackamas/tualatin/54/54.200.txt#L3-L5,L8-L14",
+  "old_fingerprint": "cdfdca1b18e17217d83820a96c693ab7b1e98d1a1044e7e2816ba79e9d02a98c",
+  "old_quote": "or/clackamas/tualatin/54/54.200.txt#L5-L6,L10-L16",
+  "when_key": "",
+  "zone": "CG"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "8e3f6ae925f5b9fb35126b15d956da0da9c0f7a8f0a8c2ebf58b212095a26ba8",
+  "new_quote": "or/clackamas/tualatin/56/56.200.txt#L3-L5,L8-L18",
+  "old_fingerprint": "4d88c092af1aa2c677ac43eb004095eba2123b359af777164997b0ee074b52ce",
+  "old_quote": "or/clackamas/tualatin/56/56.200.txt#L5-L6,L10-L20",
+  "when_key": "",
+  "zone": "MC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "bf2f327bc46eb881655b238a16763f55b6a2660be85f0faa1356de96e71f7f0d",
+  "new_quote": "or/clackamas/tualatin/60/60.200.txt#L3-L5,L9-L15",
+  "old_fingerprint": "f19488e60ef35589259cda35e798a2bf60bb55892d7e5b7b91f281ea2864f9fd",
+  "old_quote": "or/clackamas/tualatin/60/60.200.txt#L5-L6,L12-L18",
+  "when_key": "",
+  "zone": "ML"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "620061b062dce48eddbca65f67cd05c6aef00b6eeebd3f9c6b5679eb376c6da5",
+  "new_quote": "or/clackamas/tualatin/61/61.200.txt#L3-L5,L9-L14",
+  "old_fingerprint": "aa735aedec6f0ad91c443c7dcc18500163dc4c9dc5cb58dceb944d65f442a873",
+  "old_quote": "or/clackamas/tualatin/61/61.200.txt#L5-L6,L12-L17",
+  "when_key": "",
+  "zone": "MG"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "1b82e3588f7eff44ebc95e00018be5895a80e69dfceb75e687263e31473d9f03",
+  "new_quote": "or/clackamas/tualatin/62/62.200.txt#L2-L5,L8-L12",
+  "old_fingerprint": "97b3cb8d53f2908778844de67b566cc9eacc807623a8209e9dc7d2fd9cfc2450",
+  "old_quote": "or/clackamas/tualatin/62/62.200.txt#L2-L6,L10-L14",
+  "when_key": "",
+  "zone": "MP"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "5b52af9bac38eb3531cadd0a83d4ad3eebeb88f30b302037ac5510bca12597f0",
+  "new_quote": "or/clackamas/tualatin/65/65.200.txt#L2-L10",
+  "old_fingerprint": "eb0473038cb22ae0efbdebbd7b60afb969b7bfac90d1c109a5cea2b715b64300",
+  "old_quote": "or/clackamas/tualatin/65/65.200.txt#L2-L11",
+  "when_key": "",
+  "zone": "BCE"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "965ab425e6c48657c293eed0a30b2b13a55a33057a1568f4e5cd111a471ca176",
+  "new_quote": "or/clackamas/tualatin/73C/73C.040.txt#L12,L14,L19,L31,L34,L37",
+  "old_fingerprint": "f227d840fb4606b7db3d25596cd1b0cd191992625852c8707d83557d4ed644b1",
+  "old_quote": "or/clackamas/tualatin/73C/73C.040.txt#L16,L18,L23,L35,L38,L41",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "91ed35138796cd57046325980ef7b22508ddbe638fed2770d927d5d9ad71f581",
+  "new_quote": "or/clackamas/tualatin/73C/73C.040.txt#L12,L14,L19,L31,L34,L37",
+  "old_fingerprint": "fd7fd06e92793dcc10d5430746cb8fc5a4a4a4ed29f9cffbcb8a7fa7a5d79c1f",
+  "old_quote": "or/clackamas/tualatin/73C/73C.040.txt#L16,L18,L23,L35,L38,L41",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_min_width_ft",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "ad606a64653895d7527e39512a52762224e59e83d911d14569b511ec32fd8279",
+  "new_quote": "or/clackamas/tualatin/73C/73C.090.txt#L1,L3-L6",
+  "old_fingerprint": "f937d078ace6bfc9fac03f37175b3321f2199c602a0704654bb576da254997c7",
+  "old_quote": "or/clackamas/tualatin/73C/73C.090.txt#L1,L3-L7",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "5e77f0b5984068208165d6608f0792037d1b090f0b8454953c3d008a213bcdf2",
+  "new_quote": "or/clackamas/tualatin/73C/73C.090.txt#L1,L3-L6",
+  "old_fingerprint": "4c4a79c64ea228c88592414f6edc823ec8b7e0e6b692fd169fb965e11a8a4cbe",
+  "old_quote": "or/clackamas/tualatin/73C/73C.090.txt#L1,L3-L7",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_lot_line_buffer_ft",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "762c4bad3ef4c34086ebc59af3873621cd5a686445a9205555252c0106cd7e2d",
+  "new_quote": "or/clackamas/tualatin/73C/73C.210.txt#L1-L2,L6",
+  "old_fingerprint": "f53c23102224ebef85588828eeda18c9e5ff2236c1efbfb0d62c259cfd488b14",
+  "old_quote": "or/clackamas/tualatin/73C/73C.210.txt#L1-L2,L7",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_island_sqft_per_space",
+  "layer": "or/clackamas/tualatin",
+  "new_fingerprint": "4b55b2ff9bc35e41721e6a59b0d5cb3461039c83e153df333fba15ca64f90dfc",
+  "new_quote": "or/clackamas/tualatin/73C/73C.210.txt#L12,L15",
+  "old_fingerprint": "9162c5a0cee87a2d8e4a5159dc378ef6ac497f5965deec1adb85138fa5a56883",
+  "old_quote": "or/clackamas/tualatin/73C/73C.210.txt#L13-L14,L17",
+  "when_key": "",
+  "zone": "defaults"
+ }
+]

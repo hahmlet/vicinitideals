@@ -355,7 +355,7 @@ def _answers_for(ref: str, cited: set[str], root: str, store: ProvenanceStore) -
     from flats.encode.crossrefs import _doc_ids, _headings
 
     for path in cited:
-        if path.rsplit("/", 1)[0] != root:
+        if store.layer_of(path) != root:
             continue
         own = _doc_ids([path])
         if ref in own or any(i.startswith(f"{ref}.") for i in own):

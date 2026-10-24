@@ -32,6 +32,7 @@ from flats.encode.uncited import (
     PROSE_CHARS,
     READ_WINDOW,
     Uncited,
+    _prose,
     _sections,
     by_field,
     render,
@@ -245,3 +246,23 @@ def test_the_state_does_not_survey_a_city_s_code(layers: dict[str, Layer]) -> No
 
     assert held, "the state layer does hold documents of its own"
     assert {r.path for r in uncited(layers["or"])} <= held
+
+
+def test_prose_is_measured_on_the_printed_line_the_measure_sits_on() -> None:
+    """A readable line is a sentence; the length test was tuned on printed lines.
+
+    Measuring the whole sentence would refuse the short table rows and list
+    items the unfielded bucket was kept for, now that the re-cut joins them
+    into the sentence around them.
+    """
+    printed = ("Fences, walls and hedges along the front lot line of a corner lot may not exceed a",
+               "height of 3 feet.")
+    sentence = " ".join(printed)
+    assert len(sentence) > PROSE_CHARS
+    assert not _prose(sentence, printed)
+    paragraph = ("A restaurant, delicatessen, or coffee shop may include an outdoor eating area, provided the "
+                 "outdoor area consists on an all-weather surface not greater than 900 square feet",)
+    assert _prose(paragraph[0], paragraph)
+    # a document that is not a section file is measured as before
+    assert _prose("x" * (PROSE_CHARS + 1), None)
+    assert not _prose("x" * PROSE_CHARS, None)

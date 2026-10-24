@@ -95,7 +95,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Collection, Iterable, Iterator, Sequence
 
-from flats.provenance.sections import splits
+from flats.provenance.sections import addresses, splits
 from flats.provenance.store import ProvenanceStore, parse_quote
 from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
@@ -444,7 +444,9 @@ def _cited_lines(
     corpus holds "the same standard, measured differently".
     """
     lines: dict[str, dict[int, set[str]]] = defaultdict(lambda: defaultdict(set))
-    cuts = splits()
+    store = ProvenanceStore()
+    proofs = set(splits(store))
+    where: dict[str, dict[int, tuple[str, tuple[int, ...]]]] = {}
 
     def take(quote: str | None, name: str) -> None:
         if not quote:
@@ -453,14 +455,17 @@ def _cited_lines(
             ref = parse_quote(quote)
         except Exception:
             return
-        cut = cuts.get(ref.path)
+        if ref.path in proofs and ref.path not in where:
+            where[ref.path] = addresses(store, ref.path)
+        held = where.get(ref.path, {})
         for n in ref.numbers:
             lines[ref.path][n].add(name)
             # A citation spanning two sections stays on the proof copy, and
             # the lines it read are lines of those sections all the same.
-            landed = cut.at(n) if cut is not None else None
+            landed = held.get(n)
             if landed is not None:
-                lines[landed[0]][landed[1]].add(name)
+                for k in landed[1]:
+                    lines[landed[0]][k].add(name)
 
     def take_all(value: Value, name: str) -> None:
         take(value.prov.quote, name)
@@ -537,7 +542,7 @@ def opens(layer: Layer, store: ProvenanceStore | None = None) -> Callable[[str],
     # 179 of them. Found and fixed in the reading ledger and the fetch
     # queue on 2026-09-04; both left a comment saying the other was its
     # twin, and neither of them looked here. Fixed 2026-09-08.
-    paths = [p for p in store.documents() if p.rsplit("/", 1)[0] == layer.layer]
+    paths = [p for p in store.documents() if store.layer_of(p) == layer.layer]
     ids = _doc_ids(paths)
     headings: set[str] = set()
     for path in paths:
@@ -557,7 +562,7 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
     # 179 of them. Found and fixed in the reading ledger and the fetch
     # queue on 2026-09-04; both left a comment saying the other was its
     # twin, and neither of them looked here. Fixed 2026-09-08.
-    paths = [p for p in store.documents() if p.rsplit("/", 1)[0] == layer.layer]
+    paths = [p for p in store.documents() if store.layer_of(p) == layer.layer]
     if not paths:
         return []
 
@@ -584,6 +589,9 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
     #: reference for the first time. A line attributed to a document that does
     #: not contain it is the failure this whole ledger exists to prevent.
     sample: dict[str, dict[str, str]] = defaultdict(dict)
+    # Named from the layer's folder down, not by file name alone: a section
+    # file sits in a chapter folder (``57/57.300.txt``), and its bare name
+    # is no document the row can be opened at.
 
     for path, text in texts.items():
         here = cited.get(path, {})
@@ -597,13 +605,13 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
                 if _resolves(ref, ids, headings):
                     continue
                 mentions[ref] += 1
-                sources[ref][Path(path).name] += 1
+                sources[ref][path.removeprefix(f"{layer.layer}/")] += 1
                 near = _near(n, here)
                 if near:
                     binding[ref] += 1
                     for name in near:
                         beside[ref][name] += 1
-                sample[ref].setdefault(Path(path).name, line.strip()[:160])
+                sample[ref].setdefault(path.removeprefix(f"{layer.layer}/"), line.strip()[:160])
 
     def _ordered(ref: str) -> tuple[str, ...]:
         return tuple(
@@ -658,7 +666,7 @@ def state_law(layer: Layer, store: ProvenanceStore | None = None) -> dict[str, i
     cut = store.section_files()
     held = {Path(p).stem for p in store.documents() if p.startswith("or/") and p not in cut}
     for path in store.documents():
-        if path.rsplit("/", 1)[0] != layer.layer:
+        if store.layer_of(path) != layer.layer:
             continue
         text = store.text_path(path).read_text(encoding="utf-8")
         for m in _STATE.finditer(text):

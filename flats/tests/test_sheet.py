@@ -1027,3 +1027,28 @@ def test_gresham_aisle_width_note_reaches_the_ninety_degree_rows():
     # The stall columns carry no note.
     placed = S.locate(store, document, ranges, 8.5, field="parking_stall_width_ft", get=_no_fetch)
     assert placed.markers == []
+
+
+def test_a_section_citation_is_boxed_on_its_books_printed_lines():
+    """A section file's lines are sentences, not the lines the sheet prints.
+    Tualatin's RL height (40.300 L87) is looked for on the proof copy's
+    printed line and boxed on the same page a citation of the chapter gets."""
+    from flats.provenance import books
+    from flats.provenance.sections import in_proof
+    from flats.provenance.store import ProvenanceStore
+
+    store = ProvenanceStore()
+    section = "or/clackamas/tualatin/40/40.300.txt"
+    try:
+        url = store.load(section).url
+    except Exception:
+        pytest.skip("Tualatin's residential chapter is not stored")
+    if not books.cache_path(url).is_file():
+        pytest.skip("Tualatin's code book is not cached")
+    proof, ranges = in_proof(store, section, [(87, 87)])
+    assert proof == "or/clackamas/tualatin/40-41.residential.txt"
+    by_section = S.locate(store, section, [(87, 87)], 35, field="max_height_ft", get=_no_fetch)
+    by_proof = S.locate(store, proof, ranges, 35, field="max_height_ft", get=_no_fetch)
+    assert by_section.status == "boxed"
+    assert by_section.pages == by_proof.pages
+    assert by_section.boxes == by_proof.boxes

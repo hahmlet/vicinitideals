@@ -60,6 +60,7 @@ from typing import Iterator, Sequence
 
 from flats.encode.crossrefs import _HEADING, _cited_lines, _doc_ids
 from flats.encode.extract import _subject
+from flats.provenance.sections import printed
 from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer
@@ -135,6 +136,20 @@ class Uncited:
         return "unread" if self.field else "unfielded"
 
 
+def _prose(text: str, wrapped: Sequence[str] | None) -> bool:
+    """Too long to be a standard with no field behind it.
+
+    Measured on the printed line the measure sits on. A readable line is a
+    whole sentence, and nearly every sentence is longer than a printed line,
+    so measuring the sentence would refuse the short table rows and list items
+    this bucket was kept for; measuring nothing would admit every paragraph.
+    """
+    if wrapped is None:
+        return len(text) > PROSE_CHARS
+    held = [" ".join(t.split()) for t in wrapped]
+    return not any(MEASURE.search(t) and len(t) <= PROSE_CHARS for t in held)
+
+
 def _sections(lines: Sequence[str], owns: set[str]) -> list[str]:
     """The section heading in force at each line, by the document's own rule.
 
@@ -166,7 +181,7 @@ def uncited(layer: Layer, store: ProvenanceStore | None = None) -> list[Uncited]
     # every unread line in the corpus under the state's name — 4,686 of 10,018
     # rows, a ledger half again as long as the reading it measures, with the
     # duplicate blaming the wrong jurisdiction.
-    paths = [p for p in store.documents() if p.rsplit("/", 1)[0] == layer.layer]
+    paths = [p for p in store.documents() if store.layer_of(p) == layer.layer]
     if not paths:
         return []
 
@@ -178,6 +193,9 @@ def uncited(layer: Layer, store: ProvenanceStore | None = None) -> list[Uncited]
         here = cited.get(path, set())
         owns = {i.partition(".")[0] for i in _doc_ids([path])}
         own = store.section_of(path, cut)
+        # A section file's line is a sentence, joined from the printed lines.
+        # The prose test below was tuned on printed lines, so it still reads them.
+        wrapped = printed(store, path)
         sections = [own] * len(lines) if own else _sections(lines, owns)
 
         # The same standard, printed again. Milwaukie's Table 19.301.4 runs
@@ -208,7 +226,7 @@ def uncited(layer: Layer, store: ProvenanceStore | None = None) -> list[Uncited]
                 # height 4.5 ft" is not an unread height standard.
                 continue
             field = _subject(text) or ""
-            if not field and len(text) > PROSE_CHARS:
+            if not field and _prose(text, wrapped[n - 1] if wrapped else None):
                 continue
             seen[text] += 1
             first.setdefault(

@@ -1884,8 +1884,10 @@ def _stored(layer_id: str) -> list[Path]:
 def _layers() -> list[str]:
     """Every layer with stored documents, as ``or/county/city``."""
     out = []
+    store = ProvenanceStore(DOCS)
     for path in sorted(DOCS.rglob("*.txt")):
-        layer = path.parent.relative_to(DOCS).as_posix()
+        # A section file is filed under its chapter, a folder below its layer.
+        layer = store.layer_of(path.relative_to(DOCS).as_posix())
         if layer not in out:
             out.append(layer)
     return out
@@ -1897,7 +1899,7 @@ def survey(layer: str | None = None) -> list[Census]:
     out: list[Census] = []
     for layer_id in layers:
         for path in _stored(layer_id):
-            doc = f"{layer_id}/{path.name}"
+            doc = path.relative_to(DOCS).as_posix()
             text = path.read_text(encoding="utf-8", errors="replace")
             out.append(census(text, layer=layer_id, doc=doc))
     return out

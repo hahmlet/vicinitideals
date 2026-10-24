@@ -37,10 +37,52 @@ from typing import Callable, Iterable
 #: keeping them apart means a stored document can never shadow a module.
 STORE_ROOT = Path(__file__).resolve().parent / "docs"
 
-#: Beside a jurisdiction's section files: which fetched documents were cut into
-#: them, and where each section sits in its proof copy. See
-#: ``flats/provenance/sections.py``.
+#: In a jurisdiction's folder: which fetched documents were cut into section
+#: files, where each section sits in its proof copy, its hash and its pages.
+#: The section files carry no sidecars of their own; this is their bookkeeping,
+#: one file for the jurisdiction. See ``flats/provenance/sections.py``.
 INDEX = "sections.json"
+
+
+@dataclass(frozen=True, slots=True)
+class Part:
+    """A section file and the proof copy it was cut from."""
+
+    #: Store path of the section file.
+    path: str
+    #: Store path of the proof copy.
+    proof: str
+    number: str
+    #: First and last line of the slice in the proof copy, 1-based, inclusive.
+    first: int
+    last: int
+    #: Hash of the section file's text.
+    sha256: str
+    #: (PDF page, first line of the section on it), in line order.
+    pages: tuple[tuple[int, int], ...] = ()
+
+    @property
+    def layer(self) -> str:
+        return self.proof.rsplit("/", 1)[0]
+
+
+def _parts_in(index: Path, directory: str) -> dict[str, Part]:
+    """Every section an index records, keyed by the section file's store path."""
+    raw = json.loads(index.read_text(encoding="utf-8"))
+    out: dict[str, Part] = {}
+    for name, body in raw.get("documents", {}).items():
+        for number, first, last, file, digest, pages in body["sections"]:
+            path = f"{directory}/{file}"
+            out[path] = Part(
+                path=path,
+                proof=f"{directory}/{name}",
+                number=number,
+                first=first,
+                last=last,
+                sha256=digest,
+                pages=tuple((n, line) for n, line in pages),
+            )
+    return out
 
 #: ``or/multnomah/portland/33.110.txt#L42-L48`` -- path, then optional line
 #: spans. Several are allowed, comma-separated: a number stated in a table row
@@ -165,6 +207,9 @@ class ProvenanceStore:
 
     def __init__(self, root: Path | str | None = None) -> None:
         self.root = Path(root) if root is not None else STORE_ROOT
+        #: index file -> (its mtime and size, what it records). Read once per
+        #: edition, because every load of a section file asks it.
+        self._indexes: dict[Path, tuple[tuple[int, int], dict[str, Part]]] = {}
 
     # --- paths -------------------------------------------------------
 
@@ -191,7 +236,55 @@ class ProvenanceStore:
         return self._under_root(f"{path}.meta.json")
 
     def exists(self, path: str) -> bool:
-        return self.text_path(path).is_file() and self.meta_path(path).is_file()
+        if not self.text_path(path).is_file():
+            return False
+        return self.meta_path(path).is_file() or self.part_of(path) is not None
+
+    # --- section files -------------------------------------------------
+
+    def _index(self, file: Path) -> dict[str, Part]:
+        try:
+            stat = file.stat()
+        except OSError:
+            return {}
+        stamp = (stat.st_mtime_ns, stat.st_size)
+        held = self._indexes.get(file)
+        if held is None or held[0] != stamp:
+            directory = str(file.parent.relative_to(self.root)).replace("\\", "/")
+            held = (stamp, _parts_in(file, directory))
+            self._indexes[file] = held
+        return held[1]
+
+    def parts(self) -> dict[str, Part]:
+        """Every section file in the store, keyed by its path."""
+        out: dict[str, Part] = {}
+        for index in sorted(self.root.rglob(INDEX)):
+            out.update(self._index(index))
+        return out
+
+    def part_of(self, path: str) -> Part | None:
+        """Where a section file was cut from, or None for any other document.
+
+        A section file sits in a chapter folder under its jurisdiction's, so
+        its index is one folder up.
+        """
+        here = self.root / path
+        for folder in (here.parent.parent, here.parent):
+            index = folder / INDEX
+            if index.is_file():
+                found = self._index(index).get(path)
+                if found is not None:
+                    return found
+        return None
+
+    def layer_of(self, path: str) -> str:
+        """The jurisdiction a stored document belongs to.
+
+        A document's folder, except that a section file is filed a folder
+        deeper, under its chapter.
+        """
+        part = self.part_of(path)
+        return part.layer if part is not None else path.rsplit("/", 1)[0]
 
     def documents(self) -> list[str]:
         """Every stored document a citation can name, sorted.
@@ -226,13 +319,7 @@ class ProvenanceStore:
 
     def section_files(self) -> frozenset[str]:
         """Every section file: derived from a proof copy, never fetched itself."""
-        out: set[str] = set()
-        for index in self.root.rglob(INDEX):
-            directory = str(index.parent.relative_to(self.root)).replace("\\", "/")
-            raw = json.loads(index.read_text(encoding="utf-8"))
-            for body in raw.get("documents", {}).values():
-                out.update(f"{directory}/{number}.txt" for number, _, _ in body["sections"])
-        return frozenset(out)
+        return frozenset(self.parts())
 
     def section_of(self, path: str, cut: frozenset[str] | None = None) -> str | None:
         """The section a section file holds, or None for any other document.
@@ -257,33 +344,51 @@ class ProvenanceStore:
 
     @staticmethod
     def owned(directory: Path) -> list[Path]:
-        """The ``*.txt`` in one directory that a citation can name.
+        """The ``*.txt`` under one jurisdiction's folder that a citation can name.
 
         For tools that glob a jurisdiction's folder rather than ask the store:
         the proof copies are left out for the same reason :meth:`documents`
-        leaves them out. Static because those tools are handed a folder, often
-        a test's, not a store.
+        leaves them out, and the section files in its chapter folders are put
+        in. A chapter folder on its own owns nothing -- its files are its
+        jurisdiction's -- so walking every folder lists each file once. Static
+        because those tools are handed a folder, often a test's, not a store.
         """
+        above = directory.parent / INDEX
+        if above.is_file() and directory in ProvenanceStore._chapter_folders(above):
+            return []
         index = directory / INDEX
         skip: set[str] = set()
+        cut: list[Path] = []
         if index.is_file():
-            skip = set(json.loads(index.read_text(encoding="utf-8")).get("documents", {}))
-        return sorted(p for p in directory.glob("*.txt") if p.is_file() and p.name not in skip)
+            raw = json.loads(index.read_text(encoding="utf-8")).get("documents", {})
+            skip = set(raw)
+            cut = [directory / row[3] for body in raw.values() for row in body["sections"]]
+        top = [p for p in directory.glob("*.txt") if p.is_file() and p.name not in skip]
+        return sorted({*top, *(p for p in cut if p.is_file())})
+
+    @staticmethod
+    def _chapter_folders(index: Path) -> frozenset[Path]:
+        raw = json.loads(index.read_text(encoding="utf-8")).get("documents", {})
+        return frozenset(
+            (index.parent / row[3]).parent for body in raw.values() for row in body["sections"]
+        )
 
     @staticmethod
     def owned_tree(root: Path) -> list[Path]:
         """:meth:`owned` for every folder under ``root``."""
         folders = sorted({p.parent for p in root.rglob("*.txt")})
-        return sorted(p for folder in folders for p in ProvenanceStore.owned(folder))
+        return sorted({p for folder in folders for p in ProvenanceStore.owned(folder)})
 
     @staticmethod
     def cut_names(directory: Path) -> frozenset[str]:
-        """The names of the section files in one folder."""
+        """The names of the section files cut in one jurisdiction's folder."""
         index = directory / INDEX
         if not index.is_file():
             return frozenset()
         raw = json.loads(index.read_text(encoding="utf-8")).get("documents", {})
-        return frozenset(f"{n}.txt" for body in raw.values() for n, _, _ in body["sections"])
+        return frozenset(
+            row[3].rsplit("/", 1)[-1] for body in raw.values() for row in body["sections"]
+        )
 
     # --- read / write ------------------------------------------------
 
@@ -336,7 +441,20 @@ class ProvenanceStore:
         if not text_path.is_file():
             raise ProvenanceError(f"no stored text at {path!r} — fetch it before citing it")
         if not meta_path.is_file():
-            raise ProvenanceError(f"{path!r} has text but no sidecar; its hash is unknown")
+            part = self.part_of(path)
+            if part is None:
+                raise ProvenanceError(f"{path!r} has text but no sidecar; its hash is unknown")
+            # A section file's URL and date are its book's, and its hash is
+            # the one its index recorded when it was cut.
+            book = self.load(part.proof)
+            return Document(
+                path=path,
+                url=book.url,
+                retrieved=book.retrieved,
+                sha256=part.sha256,
+                text=text_path.read_text(encoding="utf-8").replace("\r\n", "\n"),
+                extractor=book.extractor,
+            )
 
         meta = json.loads(meta_path.read_text(encoding="utf-8"))
         # Normalize on the way in too: a document that reached the store by some

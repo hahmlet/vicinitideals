@@ -1703,7 +1703,12 @@ def locate(
     whole check exists to catch.
     """
     from flats.provenance import books, pages as page_map
+    from flats.provenance.sections import in_proof
 
+    # A section file is readable text: its lines are sentences, not the lines
+    # the sheet prints. The number is looked for on the lines the PDF gave,
+    # in the proof copy it was cut from.
+    document, ranges = in_proof(store, document, ranges)
     index = page_map.read(store, document)
     if index is None:
         return Placed(status="no_map")

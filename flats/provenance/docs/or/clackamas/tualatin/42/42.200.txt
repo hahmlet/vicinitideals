@@ -1,0 +1,42 @@
+TDC 42.200. Use Categories.
+(1) Use Categories. Table 42-1 lists use categories Permitted Outright (P) or Conditionally Permitted (C) in the RMH zone.
+Use categories may also be designated as Limited (L) and subject to the limitations listed in Table 42-1 and restrictions identified in TDC 42.210.
+Limitations may restrict the specific type of use, location, size, or other characteristics of the use category.
+Use categories which are not listed are prohibited within the zone, except for uses which are found by the City Manager or appointee to be of a similar character and to meet the purpose of this zone, as provided in TDC 31.070.
+(2) Overlay Zones. Additional uses may be allowed in a particular overlay zone.
+See the overlay zone Chapters for additional uses.
+Table 42-1
+Use Categories in the RMH Zone
+USE CATEGORY STATUS LIMITATIONS AND CODE REFERENCES
+RESIDENTIAL USE CATEGORIES
+Household Living P/C Permitted housing types subject to TDC 42.220.
+Residential Accessory Uses P (L) Permitted uses limited to Family Child Care Home subject to ORS 329A.440.
+Group Living P/C (L) Permitted uses limited to:
+• Residential Facility.
+• Nursing Facility.
+Conditional uses limited to Congregate Care
+Facilities subject to TDC 34.400.
+USE CATEGORY STATUS LIMITATIONS AND CODE REFERENCES
+COMMERCIAL USE CATEGORIES
+Agriculture C (L) Subject to TDC 42.210(1).
+Durable Goods Sales C (L) Conditional uses limited to nurseries.
+Retail Sales and Service C (L) Conditional uses limited to Child Day Care Center.
+INSTITUTIONAL USE CATEGORIES
+Assembly Facilities C (L) Conditional uses limited to places of religious worship.
+See TDC 34.800 Religious uses and
+ORS 227.500 pertaining to activities customarily associated with the practices of religious activity.
+Community Services C —
+Medical Center C (L) Conditional uses limited to a hospital.
+Schools C —
+INFRASTRUCTURE AND UTILITIES USE CATEGORIES
+Basic Utilities P/C (L) Permitted uses limited to water or sewage pump stations and pressure stations.
+Conditional uses limited to water reservoirs, with a maximum height of 75 feet.
+Greenways and Natural Areas P —
+Parks and Open Areas P/C (L) Permitted uses limited to public park or playground.
+Conditional uses limited to golf course or country club with golf course.
+Public Safety Facilities C (L) Conditional uses limited to fire stations.
+Transportation Facilities P —
+Wireless Communication
+Facilities
+P/C (L) Subject to TDC 42.210(2).
+Maximum height and minimum setbacks subject to TDC Chapter 73F .

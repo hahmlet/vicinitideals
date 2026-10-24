@@ -73,7 +73,9 @@ def expected(store: ProvenanceStore, path: str) -> str:
 
     sidecar = page_map.sidecar(store, path)
     if not sidecar.is_file():
-        return ""
+        # A section file is printed in its proof copy's book.
+        part = store.part_of(path)
+        return expected(store, part.proof) if part is not None else ""
     try:
         raw = json.loads(sidecar.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
