@@ -1,0 +1,69 @@
+{
+"book": "ea77f384bb4d43de8da1cf04931e65752f6bd86efc5328f5d852e5175cfa2419",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"47": [
+{
+"text": "1",
+"before": "g-is-la-tive)AllowedUses",
+"after": "XExpeditedUsesXReviewUs-",
+"box": [
+94.1,
+561.01,
+97.58,
+567.97
+]
+}
+],
+"48": [
+{
+"text": "th",
+"before": "hecloseofbusinessonthe14",
+"after": "dayafterthedateontheprel",
+"box": [
+354.91,
+540.97,
+360.31,
+547.93
+]
+}
+],
+"56": [
+{
+"text": "th",
+"before": "hecloseofbusinessonthe14",
+"after": "dayafterthedateontheprel",
+"box": [
+534.7,
+501.97,
+540.1,
+508.93
+]
+}
+],
+"234": [
+{
+"text": "#",
+"before": "RN1234567Vege-tationType",
+"after": "ForestStructure(Average%",
+"box": [
+61.68,
+154.56,
+64.68,
+160.56
+]
+},
+{
+"text": "*",
+"before": "%totalcanopyclosure(cc))",
+"after": "TypicalForestOpen-ingsSi",
+"box": [
+102.02,
+200.52,
+105.02,
+206.52
+]
+}
+]
+}
+}

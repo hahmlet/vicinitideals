@@ -1,0 +1,113 @@
+{
+"book": "e6dd27c454f47c704b5181e1827b858961546a567d66000cdaf883465db2ac68",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"543": [
+{
+"text": "1",
+"before": "apurchasepriceaffordable",
+"after": "tohouseholdsatnomorethan",
+"box": [
+450.41,
+139.68,
+455.13,
+146.66
+]
+},
+{
+"text": "2",
+"before": "veofutilities,affordable",
+"after": "tohouseholdsatnomorethan",
+"box": [
+503.76,
+219.5,
+508.47,
+226.48
+]
+}
+],
+"871": [
+{
+"text": "2",
+"before": "ransitCenters/P&RLots(2)",
+"after": "Twospacesor5%ofautospace",
+"box": [
+318.77,
+318.19,
+323.49,
+325.17
+]
+}
+],
+"919": [
+{
+"text": "1",
+"before": "ncomeoverthegrowingcycle",
+"after": "formerchantabletrees.2CU",
+"box": [
+237.48,
+518.34,
+242.19,
+525.32
+]
+},
+{
+"text": "2",
+"before": "le1formerchantabletrees.",
+"after": "CUBICFEETSITECLASSACREAG",
+"box": [
+358.09,
+518.34,
+362.81,
+525.32
+]
+}
+],
+"960": [
+{
+"text": "1",
+"before": "DECEMBER27,1983Frontyard",
+"after": "10feet2Meetthesetbackreq",
+"box": [
+200.37,
+385.24,
+205.08,
+392.22
+]
+},
+{
+"text": "2",
+"before": "R27,1983Frontyard110feet",
+"after": "Meetthesetbackrequiremen",
+"box": [
+321.75,
+385.24,
+326.47,
+392.22
+]
+},
+{
+"text": "3",
+"before": "(Setbacks)Rearyard10feet",
+"after": "StreetSideYard10feetSide",
+"box": [
+321.75,
+399.75,
+326.47,
+406.74
+]
+},
+{
+"text": "4",
+"before": "eYard10feetSideYard5feet",
+"after": "1Thefrontorstreetsideyar",
+"box": [
+318.7,
+428.79,
+323.42,
+435.78
+]
+}
+]
+}
+}

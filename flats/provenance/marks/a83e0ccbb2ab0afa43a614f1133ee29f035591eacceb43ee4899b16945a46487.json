@@ -1,0 +1,471 @@
+{
+"book": "a83e0ccbb2ab0afa43a614f1133ee29f035591eacceb43ee4899b16945a46487",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"48": [
+{
+"text": "1",
+"before": "PIPEMATERIALMINIMUMDEPTH",
+"after": "MAXIMUMDEPTH1ALLOWABLEFO",
+"box": [
+249.96,
+106.15,
+253.56,
+112.63
+]
+},
+{
+"text": "1",
+"before": "INIMUMDEPTH1MAXIMUMDEPTH",
+"after": "ALLOWABLEFORWASTEWATERAL",
+"box": [
+307.68,
+106.15,
+311.28,
+112.63
+]
+},
+{
+"text": "2",
+"before": "2ftXXDuctileIron,Class52",
+"after": "2.5ft29ftXXX1RefertotheM",
+"box": [
+185.4,
+374.83,
+189.0,
+381.31
+]
+}
+],
+"71": [
+{
+"text": "1",
+"before": "ingNotapplicable1RiprapA",
+"after": "1.51812RiprapB12.521220S",
+"box": [
+306.12,
+290.11,
+309.72,
+296.59
+]
+},
+{
+"text": "1",
+"before": "e1RiprapA11.51812RiprapB",
+"after": "2.521220Slopemattress,et",
+"box": [
+306.12,
+303.07,
+309.72,
+309.55
+]
+}
+],
+"92": [
+{
+"text": "4",
+"before": "SPACING(FT)LUMINAIRETYPE",
+"after": "WATTAGELEVELMajorArteria",
+"box": [
+436.68,
+84.16,
+440.28,
+90.64
+]
+},
+{
+"text": "1",
+"before": "ATTAGELEVELMajorArterial",
+"after": "35BothSides2150MediumCob",
+"box": [
+163.44,
+110.59,
+167.04,
+117.07
+]
+},
+{
+"text": "2",
+"before": "ajorArterial135BothSides",
+"after": "150MediumCobraMediumStan",
+"box": [
+298.8,
+110.59,
+302.4,
+117.07
+]
+},
+{
+"text": "1",
+"before": "raMediumStandardArterial",
+"after": "35BothSides2150MediumCob",
+"box": [
+171.24,
+135.91,
+174.84,
+142.39
+]
+},
+{
+"text": "2",
+"before": "dardArterial135BothSides",
+"after": "150MediumCobraMediumMino",
+"box": [
+298.8,
+135.91,
+302.4,
+142.39
+]
+},
+{
+"text": "1",
+"before": "CobraMediumMinorArterial",
+"after": "35BothSides3160SmallCobr",
+"box": [
+163.44,
+155.95,
+167.04,
+162.43
+]
+},
+{
+"text": "3",
+"before": "inorArterial135BothSides",
+"after": "160SmallCobraHighMajorCo",
+"box": [
+298.8,
+155.95,
+302.4,
+162.43
+]
+},
+{
+"text": "1",
+"before": "lCobraHighMajorCollector",
+"after": "35Staggered6orOneSide170",
+"box": [
+167.28,
+170.95,
+170.88,
+177.43
+]
+},
+{
+"text": "6",
+"before": "jorCollector135Staggered",
+"after": "orOneSide170LargeCobraEx",
+"box": [
+297.84,
+235.39,
+301.44,
+241.87
+]
+},
+{
+"text": "1",
+"before": "tandardandMinorCollector",
+"after": "25120SmallCobraHighLocal",
+"box": [
+153.36,
+197.23,
+156.96,
+203.71
+]
+},
+{
+"text": "1",
+"before": "CobraHighLocalIndustrial",
+"after": "35185LargeCobraExtra-Low",
+"box": [
+167.28,
+211.15,
+170.88,
+217.63
+]
+},
+{
+"text": "1",
+"before": "Extra-LowLocalCommercial",
+"after": "25130Extra-SmallCobraHig",
+"box": [
+173.64,
+231.19,
+177.24,
+237.67
+]
+},
+{
+"text": "1",
+"before": "braHighLocalTransitional",
+"after": "25150Extra-SmallCobraMed",
+"box": [
+172.8,
+256.51,
+176.4,
+262.99
+]
+},
+{
+"text": "1",
+"before": "lCobraMediumLocalQueuing",
+"after": "25150Extra-SmallCobraMed",
+"box": [
+165.96,
+281.83,
+169.56,
+288.31
+]
+},
+{
+"text": "1",
+"before": "mOffStreetMulti-UsePaths",
+"after": "1260Extra-SmallCobraLowS",
+"box": [
+146.4,
+313.39,
+150.0,
+319.87
+]
+},
+{
+"text": "1",
+"before": "mallCobraLowSharedStreet",
+"after": "14Staggered650Acorn5LowC",
+"box": [
+164.52,
+327.31,
+168.12,
+333.79
+]
+},
+{
+"text": "6",
+"before": "SharedStreet114Staggered",
+"after": "50Acorn5LowCivicNeighbor",
+"box": [
+297.72,
+327.31,
+301.32,
+333.79
+]
+},
+{
+"text": "5",
+"before": "reet114Staggered650Acorn",
+"after": "LowCivicNeighborhoodStan",
+"box": [
+436.68,
+327.31,
+440.28,
+333.79
+]
+},
+{
+"text": "2",
+"before": "ornHighStandardArterials",
+"after": "35150MediumCobraMediumLo",
+"box": [
+173.64,
+560.47,
+177.24,
+566.95
+]
+},
+{
+"text": "7",
+"before": "StreetsInsidetheTriangle",
+"after": "14100AcornLowLocalStreet",
+"box": [
+151.68,
+592.03,
+155.28,
+598.51
+]
+},
+{
+"text": "7",
+"before": "ectorsOutsidetheTriangle",
+"after": "14110AcornLowDesignatedC",
+"box": [
+151.68,
+629.71,
+155.28,
+636.19
+]
+}
+],
+"93": [
+{
+"text": "st",
+"before": "h,Burnsideonthenorth,181",
+"after": "onthewestand190thontheea",
+"box": [
+240.96,
+185.71,
+246.0,
+192.19
+]
+},
+{
+"text": "th",
+"before": "rth,181stonthewestand190",
+"after": "ontheeast.Newstreetlight",
+"box": [
+339.0,
+185.71,
+344.4,
+192.19
+]
+}
+],
+"95": [
+{
+"text": "1,3",
+"before": "RIALMajorArterial100feet",
+"after": "100feet1StandardArterial",
+"box": [
+348.12,
+374.71,
+357.24,
+381.19
+]
+},
+{
+"text": "1",
+"before": "rterial100feet1,3100feet",
+"after": "StandardArterial100feet1",
+"box": [
+474.96,
+374.71,
+478.56,
+381.19
+]
+},
+{
+"text": "1,3",
+"before": "1StandardArterial100feet",
+"after": "100feet1MinorArterial45f",
+"box": [
+348.12,
+387.67,
+357.24,
+394.15
+]
+},
+{
+"text": "1",
+"before": "rterial100feet1,3100feet",
+"after": "MinorArterial45feet3100f",
+"box": [
+474.96,
+387.67,
+478.56,
+394.15
+]
+},
+{
+"text": "3",
+"before": "feet1MinorArterial45feet",
+"after": "100feet1Major,Standard,M",
+"box": [
+348.12,
+400.51,
+351.72,
+406.99
+]
+},
+{
+"text": "1",
+"before": "orArterial45feet3100feet",
+"after": "Major,Standard,MinorColl",
+"box": [
+474.96,
+400.51,
+478.56,
+406.99
+]
+},
+{
+"text": "2,3",
+"before": "ard,MinorCollector45feet",
+"after": "100feet1LocalTransitiona",
+"box": [
+345.48,
+413.47,
+354.48,
+419.95
+]
+},
+{
+"text": "1",
+"before": "ollector45feet2,3100feet",
+"after": "LocalTransitional,Indust",
+"box": [
+474.96,
+413.47,
+478.56,
+419.95
+]
+},
+{
+"text": "2",
+"before": "ustrial,Commercial45feet",
+"after": "45feetLocalQueuing45feet",
+"box": [
+348.12,
+426.43,
+351.72,
+432.91
+]
+},
+{
+"text": "2",
+"before": "45feetLocalQueuing45feet",
+"after": "MinorAccessStreet45feet2",
+"box": [
+348.12,
+439.27,
+351.72,
+445.75
+]
+},
+{
+"text": "2",
+"before": "2MinorAccessStreet45feet",
+"after": "Notes:1.Minimumdistancef",
+"box": [
+348.12,
+452.23,
+351.72,
+458.71
+]
+}
+],
+"266": [
+{
+"text": "2",
+"before": "ofthecomputations(0.011d",
+"after": "L)foreachsizeofpipeandit",
+"box": [
+375.0,
+488.23,
+378.6,
+494.71
+]
+}
+],
+"298": [
+{
+"text": "3",
+"before": "NPROPERTIESDensity(GM/CM",
+"after": ")ASTMD1505>0.947-0.955Me",
+"box": [
+209.4,
+590.95,
+213.0,
+597.43
+]
+}
+]
+}
+}

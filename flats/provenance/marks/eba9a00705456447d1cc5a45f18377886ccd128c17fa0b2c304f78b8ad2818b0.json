@@ -1,0 +1,150 @@
+{
+"book": "eba9a00705456447d1cc5a45f18377886ccd128c17fa0b2c304f78b8ad2818b0",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"537": [
+{
+"text": "th",
+"before": "NEAlderStreetbetweenNE68",
+"after": "AvenueandNECenturyBoulev",
+"box": [
+237.3,
+526.96,
+243.54,
+533.45
+]
+}
+],
+"724": [
+{
+"text": "!",
+"before": "rimatleast3incheswideand",
+"after": "inchesthick.Multi-panedw",
+"box": [
+514.6,
+626.2,
+522.92,
+626.3
+]
+}
+],
+"923": [
+{
+"text": "1",
+"before": "pertyLinetoFinishedGrade",
+"after": "LandscapeTreatmentPositi",
+"box": [
+250.3,
+425.97,
+254.46,
+432.46
+]
+}
+],
+"1007": [
+{
+"text": "1",
+"before": "ApplicationProcedureType",
+"after": "NeighborhoodMeetingRequi",
+"box": [
+236.8,
+215.63,
+240.68,
+221.12
+]
+},
+{
+"text": "2",
+"before": "gRequiredReviewAuthority",
+"after": "PrimaryCodeSectionsDecis",
+"box": [
+433.03,
+201.26,
+436.92,
+206.75
+]
+},
+{
+"text": "3",
+"before": "maryCodeSectionsDecision",
+"after": "AppealAdjustment,MinorSa",
+"box": [
+397.45,
+221.02,
+401.33,
+226.51
+]
+}
+],
+"1008": [
+{
+"text": "1",
+"before": "ApplicationProcedureType",
+"after": "NeighborhoodMeetingRequi",
+"box": [
+236.8,
+151.52,
+240.68,
+157.01
+]
+},
+{
+"text": "2",
+"before": "gRequiredReviewAuthority",
+"after": "PrimaryCodeSectionsDecis",
+"box": [
+433.03,
+137.4,
+436.92,
+142.89
+]
+},
+{
+"text": "3",
+"before": "maryCodeSectionsDecision",
+"after": "AppealDirector'sInterpre",
+"box": [
+397.45,
+156.66,
+401.33,
+162.15
+]
+}
+],
+"1009": [
+{
+"text": "1",
+"before": "ApplicationProcedureType",
+"after": "NeighborhoodMeetingRequi",
+"box": [
+236.8,
+152.27,
+240.68,
+157.76
+]
+},
+{
+"text": "2",
+"before": "gRequiredReviewAuthority",
+"after": "PrimaryCodeSectionsDecis",
+"box": [
+433.03,
+137.9,
+436.92,
+143.39
+]
+},
+{
+"text": "3",
+"before": "maryCodeSectionsDecision",
+"after": "AppealByDevelopmentRevie",
+"box": [
+397.45,
+157.66,
+401.33,
+163.15
+]
+}
+]
+}
+}

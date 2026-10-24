@@ -1,0 +1,429 @@
+{
+"book": "b47e78a2bbef141ebade896d9f14fd1de133aa90c6078d706991386c5a9feca8",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"60": [
+{
+"text": "®",
+"before": "orerosioncontrol,Regreen",
+"after": "orequivalent,orsterilewh",
+"box": [
+415.08,
+632.23,
+421.19,
+640.27
+]
+}
+],
+"66": [
+{
+"text": "th",
+"before": "ereitcanbeshownthatthe85",
+"after": "percentilespeedoftraffic",
+"box": [
+227.16,
+682.03,
+233.46,
+690.07
+]
+}
+],
+"74": [
+{
+"text": "th",
+"before": "structedbetweenOctober15",
+"after": "andMarch15th(winterconst",
+"box": [
+517.8,
+644.23,
+524.1,
+652.27
+]
+},
+{
+"text": "th",
+"before": "eenOctober15thandMarch15",
+"after": "(winterconstruction)shal",
+"box": [
+192.48,
+658.03,
+198.78,
+666.07
+]
+}
+],
+"110": [
+{
+"text": "°",
+"before": "storageshallnotexceed350",
+"after": "Fandshallnotbelessthan24",
+"box": [
+261.96,
+550.29,
+265.18,
+558.33
+]
+},
+{
+"text": "°",
+"before": "andshallnotbelessthan240",
+"after": "FasperODOTSSCSection0074",
+"box": [
+416.16,
+550.29,
+419.38,
+558.33
+]
+},
+{
+"text": "°",
+"before": "MACshallnotbelessthan215",
+"after": "FasperODOTSSCSection0074",
+"box": [
+221.28,
+632.13,
+224.5,
+640.17
+]
+}
+],
+"115": [
+{
+"text": "o",
+"before": "ericTemperature2”to2½”50",
+"after": "F2½”+to3”40oFb.PCCpaveme",
+"box": [
+390.36,
+431.5,
+393.84,
+438.46
+]
+},
+{
+"text": "o",
+"before": "ure2”to2½”50oF2½”+to3”40",
+"after": "Fb.PCCpavementshallnotbe",
+"box": [
+390.36,
+456.22,
+393.84,
+463.18
+]
+},
+{
+"text": "o",
+"before": "rtemperaturefallsbelow40",
+"after": "F,norshallitresumeuntila",
+"box": [
+482.04,
+520.51,
+486.06,
+528.55
+]
+},
+{
+"text": "°",
+"before": "gairtemperaturereaches35",
+"after": "F.Thecontractorshallprot",
+"box": [
+366.48,
+535.05,
+369.7,
+543.09
+]
+},
+{
+"text": "°",
+"before": "eisforecasttodropbelow35",
+"after": "F,thecontractorshallprev",
+"box": [
+319.92,
+577.41,
+323.14,
+585.45
+]
+},
+{
+"text": "°",
+"before": "endingairtemperatureis80",
+"after": "Forgreater.",
+"box": [
+341.28,
+645.45,
+344.5,
+653.49
+]
+}
+],
+"121": [
+{
+"text": "®",
+"before": "tyMinuteFastSettingGrout",
+"after": ",orapprovedequal.h.Selec",
+"box": [
+251.76,
+260.47,
+257.87,
+268.51
+]
+}
+],
+"132": [
+{
+"text": "®",
+"before": "ddle”orbyusingInsertaTee",
+"after": "asperSection401.4.02.b.5",
+"box": [
+330.24,
+280.27,
+336.35,
+288.31
+]
+}
+],
+"147": [
+{
+"text": "®",
+"before": "tyMinuteFastSettingGrout",
+"after": ",orapprovedequal.Unusedg",
+"box": [
+450.24,
+173.47,
+456.35,
+181.51
+]
+}
+],
+"149": [
+{
+"text": "®",
+"before": "tyMinuteFastSettingGrout",
+"after": ",orapprovedequal.Unusedg",
+"box": [
+347.64,
+631.51,
+353.75,
+639.55
+]
+}
+],
+"150": [
+{
+"text": "®",
+"before": "tyMinuteFastSettingGrout",
+"after": ",orapprovedequal,withthe",
+"box": [
+291.36,
+323.35,
+297.47,
+331.39
+]
+}
+],
+"153": [
+{
+"text": "®",
+"before": "xceptC-900.(c)InsertaTee",
+"after": ",orapprovedequal:hubadap",
+"box": [
+222.84,
+440.35,
+228.95,
+448.39
+]
+},
+{
+"text": "®",
+"before": "ew,andhousing.InsertaTee",
+"after": "connectionshallhaveagask",
+"box": [
+410.52,
+523.03,
+416.63,
+531.07
+]
+}
+],
+"159": [
+{
+"text": "®",
+"before": "ddle”orbyusingInsertaTee",
+"after": "asperSection401.4.02.b.5",
+"box": [
+222.84,
+185.47,
+228.95,
+193.51
+]
+},
+{
+"text": "®",
+"before": ".4.02.b.5(c),“InsertaTee",
+"after": "”.(d)PVCteesaddlesshallb",
+"box": [
+440.52,
+185.47,
+446.63,
+193.51
+]
+},
+{
+"text": "®",
+"before": "hesestandards.InsertaTee",
+"after": "shallbeinstalledinaccord",
+"box": [
+304.8,
+225.07,
+310.91,
+233.11
+]
+}
+],
+"164": [
+{
+"text": "2",
+"before": "ula:T=K/CWhere:K=0.011×d",
+"after": "L.C=1or0.0003882×dL,whic",
+"box": [
+297.6,
+463.51,
+301.62,
+471.55
+]
+}
+],
+"168": [
+{
+"text": "1",
+"before": "PIPE–1.0PSIGPRESSUREDROP",
+"after": ".1.DatafromtheUNI-Bell®P",
+"box": [
+664.92,
+125.4,
+668.94,
+133.44
+]
+},
+{
+"text": "®",
+"before": "P1.1.DatafromtheUNI-Bell",
+"after": "PVCPipeAssociation.Speci",
+"box": [
+194.64,
+451.03,
+199.56,
+457.51
+]
+}
+],
+"169": [
+{
+"text": "1",
+"before": "PIPE–0.5PSIGPRESSUREDROP",
+"after": ".1.DatafromtheUNI-Bell®P",
+"box": [
+664.92,
+125.4,
+668.94,
+133.44
+]
+},
+{
+"text": "®",
+"before": "P1.1.DatafromtheUNI-Bell",
+"after": "PVCPipeAssociation.Speci",
+"box": [
+198.24,
+450.55,
+203.16,
+457.03
+]
+}
+],
+"180": [
+{
+"text": "®",
+"before": "raintsystemsuchasMegalug",
+"after": "Series1100retainersasman",
+"box": [
+529.56,
+205.27,
+535.67,
+213.31
+]
+}
+],
+"181": [
+{
+"text": "™",
+"before": "aintssuchasU.S.PipeTyton",
+"after": ",AmericanFastite™orappro",
+"box": [
+485.16,
+258.67,
+493.04,
+266.71
+]
+},
+{
+"text": "™",
+"before": "peTyton™,AmericanFastite",
+"after": "orapprovedequal,exceptwh",
+"box": [
+139.92,
+272.47,
+147.8,
+280.51
+]
+}
+],
+"182": [
+{
+"text": "™",
+"before": "n,suchasU.S.PipeFieldLok",
+"after": ",AmericanFast-Grip®,orap",
+"box": [
+221.52,
+205.27,
+229.4,
+213.31
+]
+},
+{
+"text": "®",
+"before": "ldLok™,AmericanFast-Grip",
+"after": ",orapprovedequalGasketss",
+"box": [
+331.8,
+205.27,
+337.91,
+213.31
+]
+},
+{
+"text": "®",
+"before": ",orsleevesshallbeDresser",
+"after": ",orapprovedequal.501.5.0",
+"box": [
+375.24,
+379.15,
+381.35,
+387.19
+]
+}
+],
+"190": [
+{
+"text": "®",
+"before": "raintsystemsuchasMegalug",
+"after": "Series1100asmanufactured",
+"box": [
+310.32,
+86.59,
+316.43,
+94.63
+]
+}
+]
+}
+}

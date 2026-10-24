@@ -141,3 +141,13 @@ async def test_a_checked_table_is_drawn_and_its_printed_lines_kept(client, sessi
     assert 'data-table="66-97"' in page.text
     assert 'id="L66"' in page.text and 'id="L97"' in page.text
     assert "rows 4 and 5 overlap on the page" in page.text
+
+
+async def test_raised_marks_are_drawn_raised_and_linked_to_their_note(client, session):
+    # Table 58-1 prints a raised 1 after "prohibited." pointing to note 1 on
+    # line 39; the note says where it is marked.
+    await _login(client, session)
+    page = await client.get(f"/flats/code/{CITY}/58/58.200.txt")
+    assert page.status_code == 200
+    assert re.search(r'<sup class="mark" title="[^"]*"><a href="#L39">1</a></sup>', page.text)
+    assert "↩ marked on" in page.text

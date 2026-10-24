@@ -32,10 +32,11 @@ import re
 from collections import defaultdict
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Any
+from typing import Any, Sequence
 
 from fastapi import APIRouter, Query, Request
 from fastapi.responses import HTMLResponse
+from markupsafe import Markup, escape
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
@@ -43,6 +44,8 @@ from app.api.routers.ui_flats import _known_documents, _layers, _page_index, _st
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from flats.encode import legible
 from flats.encode.readiness import _quoted_parts
+from flats.provenance.marks import Mark
+from flats.provenance.marks import marks as raised
 from flats.provenance.store import INDEX, ProvenanceError, parse_quote
 from flats.provenance.tables import Table, tables
 from flats.rules.fields import FIELDS
@@ -284,9 +287,48 @@ def outline(lines: list[str]) -> list[tuple[int, str]]:
     return out
 
 
-def _cell_text(words: str) -> str:
-    """A cell's words as one run: a word broken at a line end ("Cover- age") rejoined as printed ("Cover-age")."""
-    return re.sub(r"(?<=[A-Za-z])-\s+(?=[a-z])", "-", words)
+def _marked(text: str, found: Sequence[Mark], offset: int = 0) -> Markup:
+    """Text with the characters the book prints raised drawn raised.
+
+    ``offset`` is where ``text`` starts in its line, for a word cut out of one.
+    A mark printed against a number says so, because that is the one that
+    reads as a digit of the number in the plain text.
+    """
+    out: list[Markup] = []
+    at = 0
+    for m in sorted(found, key=lambda m: m.start):
+        start, end = m.start - offset, m.end - offset
+        if start < at or start < 0 or end > len(text):
+            continue
+        out.append(escape(text[at:start]))
+        title = "Printed raised in the book"
+        if m.glued:
+            title += ", against the number before it: a footnote mark, not a digit of that number"
+        if m.note:
+            title += f"; the note is line {m.note}"
+        inner: Markup = escape(text[start:end])
+        if m.note:
+            inner = Markup('<a href="#L{}">{}</a>').format(m.note, inner)
+        css = "mark glued" if m.glued else "mark"
+        out.append(Markup('<sup class="{}" title="{}">{}</sup>').format(css, title, inner))
+        at = end
+    out.append(escape(text[at:]))
+    return Markup("").join(out)
+
+
+def _cell_html(words: Sequence[tuple[int, int]], lines: dict[int, dict[str, Any]], fallback: str) -> Markup:
+    """A cell's words as one run, raised marks drawn raised.
+
+    A word broken at a line end ("Cover- age") is rejoined as printed ("Cover-age").
+    """
+    if not words:
+        return escape(fallback)
+    parts = []
+    for n, i in words:
+        line = lines[n]
+        start, end = line["spans"][i]
+        parts.append(_marked(line["text"][start:end], line["marks"], offset=start))
+    return Markup(re.sub(r"(?<=[A-Za-z])-\s+(?=[a-z])", "-", str(Markup(" ").join(parts))))
 
 
 def _table_block(table: Table, lines: list[dict[str, Any]]) -> dict[str, Any]:
@@ -317,7 +359,7 @@ def _table_block(table: Table, lines: list[dict[str, Any]]) -> dict[str, Any]:
         rows[cell.row[0]].append(
             {
                 "col": cell.col[0],
-                "text": _cell_text(cell.text),
+                "text": _cell_html(cell.words, by_n, cell.text),
                 "header": cell.header,
                 "rowspan": cell.row[1] - cell.row[0],
                 "colspan": cell.col[1] - cell.col[0],
@@ -387,12 +429,22 @@ def _document(document: str) -> dict[str, Any]:
     readers = _readers().get(document, {})
     starts = _page_rows(document)
     text_lines = doc.text.splitlines()
+    on_line: dict[int, list[Mark]] = defaultdict(list)
+    notes_from: dict[int, set[int]] = defaultdict(set)
+    for mark in raised(document, store):
+        on_line[mark.line].append(mark)
+        if mark.note:
+            notes_from[mark.note].add(mark.line)
     lines = []
     for n, (text, (depth, kind)) in enumerate(zip(text_lines, outline(text_lines)), start=1):
         lines.append(
             {
                 "n": n,
                 "text": text,
+                "html": _marked(text, on_line.get(n, ())),
+                "marks": on_line.get(n, ()),
+                "spans": [m.span() for m in re.finditer(r"\S+", text)],
+                "notes_from": sorted(notes_from.get(n, ())),
                 "grid": legible.is_grid(text),
                 "page": starts.get(n),
                 "readers": readers.get(n, ()),

@@ -1,0 +1,2024 @@
+{
+"book": "03c8849474f589724e081d69b063c424ee28e4b7f324e8fcc381bd75753064fb",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"8": [
+{
+"text": "1",
+"before": "llingNPNPNPNPPPNPDuplexL",
+"after": "L1L1NPPPNPTriplexL1NPL1N",
+"box": [
+269.64,
+129.85,
+273.17,
+136.81
+]
+},
+{
+"text": "1",
+"before": "ingNPNPNPNPPPNPDuplexL1L",
+"after": "L1NPPPNPTriplexL1NPL1NPP",
+"box": [
+312.84,
+129.85,
+316.37,
+136.81
+]
+},
+{
+"text": "1",
+"before": "gNPNPNPNPPPNPDuplexL1L1L",
+"after": "NPPPNPTriplexL1NPL1NPPPN",
+"box": [
+356.04,
+129.85,
+359.57,
+136.81
+]
+},
+{
+"text": "1",
+"before": "plexL1L1L1NPPPNPTriplexL",
+"after": "NPL1NPPPNPQuadplexL1NPL1",
+"box": [
+269.64,
+144.85,
+273.17,
+151.81
+]
+},
+{
+"text": "1",
+"before": "L1L1L1NPPPNPTriplexL1NPL",
+"after": "NPPPNPQuadplexL1NPL1NPPP",
+"box": [
+356.04,
+144.85,
+359.57,
+151.81
+]
+},
+{
+"text": "1",
+"before": "lexL1NPL1NPPPNPQuadplexL",
+"after": "NPL1NPPPNPTownhousePPPPP",
+"box": [
+269.64,
+159.73,
+273.17,
+166.69
+]
+},
+{
+"text": "1",
+"before": "1NPL1NPPPNPQuadplexL1NPL",
+"after": "NPPPNPTownhousePPPPPPPCo",
+"box": [
+356.04,
+159.73,
+359.57,
+166.69
+]
+},
+{
+"text": "24",
+"before": "ousePPPPPPPCottageCluster",
+"after": "NPNPNPNPPPNPMulti-Family/",
+"box": [
+128.4,
+189.49,
+135.41,
+196.45
+]
+},
+{
+"text": "21",
+"before": "ly/SharedHousingFacility",
+"after": "P/L2,22P2P2P2L2P2P2Elder",
+"box": [
+223.8,
+204.37,
+230.81,
+211.33
+]
+},
+{
+"text": "2,",
+"before": "aredHousingFacility21P/L",
+"after": "22P2P2P2L2P2P2ElderlyHou",
+"box": [
+269.04,
+204.37,
+274.26,
+211.33
+]
+},
+{
+"text": "2",
+"before": "ousingFacility21P/L2,22P",
+"after": "P2P2L2P2P2ElderlyHousing",
+"box": [
+313.32,
+204.37,
+316.85,
+211.33
+]
+},
+{
+"text": "2",
+"before": "singFacility21P/L2,22P2P",
+"after": "P2L2P2P2ElderlyHousingSU",
+"box": [
+356.52,
+204.37,
+360.05,
+211.33
+]
+},
+{
+"text": "2",
+"before": "ngFacility21P/L2,22P2P2P",
+"after": "L2P2P2ElderlyHousingSURS",
+"box": [
+399.84,
+204.37,
+403.37,
+211.33
+]
+},
+{
+"text": "2",
+"before": "Facility21P/L2,22P2P2P2L",
+"after": "P2P2ElderlyHousingSURSUR",
+"box": [
+442.44,
+204.37,
+445.97,
+211.33
+]
+},
+{
+"text": "2",
+"before": "cility21P/L2,22P2P2P2L2P",
+"after": "P2ElderlyHousingSURSURSU",
+"box": [
+486.12,
+204.37,
+489.65,
+211.33
+]
+},
+{
+"text": "2",
+"before": "lity21P/L2,22P2P2P2L2P2P",
+"after": "ElderlyHousingSURSURSURS",
+"box": [
+529.32,
+204.37,
+532.85,
+211.33
+]
+},
+{
+"text": "3",
+"before": "PNPPPNPAﬀordableHousingP",
+"after": "P3P3P3P3P3P3CommercialUs",
+"box": [
+270.12,
+278.89,
+273.65,
+285.85
+]
+},
+{
+"text": "3",
+"before": "PPPNPAﬀordableHousingP3P",
+"after": "P3P3P3P3P3CommercialUses",
+"box": [
+313.32,
+278.89,
+316.85,
+285.85
+]
+},
+{
+"text": "3",
+"before": "PNPAﬀordableHousingP3P3P",
+"after": "P3P3P3P3CommercialUsesDC",
+"box": [
+356.52,
+278.89,
+360.05,
+285.85
+]
+},
+{
+"text": "3",
+"before": "PAﬀordableHousingP3P3P3P",
+"after": "P3P3P3CommercialUsesDCCD",
+"box": [
+399.84,
+278.89,
+403.37,
+285.85
+]
+},
+{
+"text": "3",
+"before": "ﬀordableHousingP3P3P3P3P",
+"after": "P3P3CommercialUsesDCCDMU",
+"box": [
+442.92,
+278.89,
+446.45,
+285.85
+]
+},
+{
+"text": "3",
+"before": "rdableHousingP3P3P3P3P3P",
+"after": "P3CommercialUsesDCCDMUDT",
+"box": [
+486.12,
+278.89,
+489.65,
+285.85
+]
+},
+{
+"text": "3",
+"before": "ableHousingP3P3P3P3P3P3P",
+"after": "CommercialUsesDCCDMUDTMD",
+"box": [
+529.32,
+278.89,
+532.85,
+285.85
+]
+},
+{
+"text": "4",
+"before": "ependentUseNPNPNPNPNPNPL",
+"after": "BusinessandRetailService",
+"box": [
+528.84,
+330.61,
+532.37,
+337.57
+]
+},
+{
+"text": "23",
+"before": "andRetailServiceandTrade",
+"after": "PPPPL5L6PClinicsPPPPL5L6",
+"box": [
+226.8,
+345.49,
+233.81,
+352.45
+]
+},
+{
+"text": "5",
+"before": "ilServiceandTrade23PPPPL",
+"after": "L6PClinicsPPPPL5L6PComme",
+"box": [
+442.44,
+345.49,
+445.97,
+352.45
+]
+},
+{
+"text": "6",
+"before": "ServiceandTrade23PPPPL5L",
+"after": "PClinicsPPPPL5L6PCommerc",
+"box": [
+485.64,
+345.49,
+489.17,
+352.45
+]
+},
+{
+"text": "5",
+"before": "e23PPPPL5L6PClinicsPPPPL",
+"after": "L6PCommercialParkingL7L7",
+"box": [
+442.44,
+360.49,
+445.97,
+367.45
+]
+},
+{
+"text": "6",
+"before": "3PPPPL5L6PClinicsPPPPL5L",
+"after": "PCommercialParkingL7L7L7",
+"box": [
+485.64,
+360.49,
+489.17,
+367.45
+]
+},
+{
+"text": "7",
+"before": "PL5L6PCommercialParkingL",
+"after": "L7L7L7NPL7L7DaycareFacil",
+"box": [
+269.64,
+375.37,
+273.17,
+382.33
+]
+},
+{
+"text": "7",
+"before": "5L6PCommercialParkingL7L",
+"after": "L7L7NPL7L7DaycareFaciliti",
+"box": [
+312.84,
+375.37,
+316.37,
+382.33
+]
+},
+{
+"text": "7",
+"before": "6PCommercialParkingL7L7L",
+"after": "L7NPL7L7DaycareFacilities",
+"box": [
+356.04,
+375.37,
+359.57,
+382.33
+]
+},
+{
+"text": "7",
+"before": "CommercialParkingL7L7L7L",
+"after": "NPL7L7DaycareFacilitiesPP",
+"box": [
+399.36,
+375.37,
+402.89,
+382.33
+]
+},
+{
+"text": "7",
+"before": "ercialParkingL7L7L7L7NPL",
+"after": "L7DaycareFacilitiesPPPPSU",
+"box": [
+485.64,
+375.37,
+489.17,
+382.33
+]
+},
+{
+"text": "7",
+"before": "cialParkingL7L7L7L7NPL7L",
+"after": "DaycareFacilitiesPPPPSURS",
+"box": [
+528.84,
+375.37,
+532.37,
+382.33
+]
+},
+{
+"text": "8",
+"before": "rCommercialNPNPNPNPNPNPL",
+"after": "IndustrialUsesDCCDMUDTMD",
+"box": [
+528.84,
+449.89,
+532.37,
+456.85
+]
+},
+{
+"text": "9",
+"before": "sPPPPNPNPPManufacturingL",
+"after": "L9L9L9NPNPL9Miscellaneou",
+"box": [
+269.64,
+561.13,
+273.17,
+568.09
+]
+},
+{
+"text": "9",
+"before": "PPPNPNPPManufacturingL9L",
+"after": "L9L9NPNPL9MiscellaneousI",
+"box": [
+312.84,
+561.13,
+316.37,
+568.09
+]
+},
+{
+"text": "9",
+"before": "PNPNPPManufacturingL9L9L",
+"after": "L9NPNPL9MiscellaneousInd",
+"box": [
+356.04,
+561.13,
+359.57,
+568.09
+]
+},
+{
+"text": "9",
+"before": "PNPPManufacturingL9L9L9L",
+"after": "NPNPL9MiscellaneousIndus",
+"box": [
+399.36,
+561.13,
+402.89,
+568.09
+]
+},
+{
+"text": "9",
+"before": "nufacturingL9L9L9L9NPNPL",
+"after": "MiscellaneousIndustrialN",
+"box": [
+528.84,
+561.13,
+532.37,
+568.09
+]
+},
+{
+"text": "10",
+"before": "PNPWarehousing/StorageNP",
+"after": "NP10NP10NP10NP10NP10NP10",
+"box": [
+271.92,
+620.77,
+278.93,
+627.73
+]
+},
+{
+"text": "10",
+"before": "arehousing/StorageNP10NP",
+"after": "NP10NP10NP10NP10NP10Wast",
+"box": [
+315.12,
+620.77,
+322.13,
+627.73
+]
+},
+{
+"text": "10",
+"before": "ousing/StorageNP10NP10NP",
+"after": "NP10NP10NP10NP10WasteMan",
+"box": [
+358.32,
+620.77,
+365.33,
+627.73
+]
+},
+{
+"text": "10",
+"before": "ng/StorageNP10NP10NP10NP",
+"after": "NP10NP10NP10WasteManagem",
+"box": [
+401.64,
+620.77,
+408.65,
+627.73
+]
+},
+{
+"text": "10",
+"before": "torageNP10NP10NP10NP10NP",
+"after": "NP10NP10WasteManagementN",
+"box": [
+444.72,
+620.77,
+451.73,
+627.73
+]
+},
+{
+"text": "10",
+"before": "geNP10NP10NP10NP10NP10NP",
+"after": "NP10WasteManagementNPNPN",
+"box": [
+487.92,
+620.77,
+494.93,
+627.73
+]
+},
+{
+"text": "10",
+"before": "10NP10NP10NP10NP10NP10NP",
+"after": "WasteManagementNPNPNPNPN",
+"box": [
+531.12,
+620.77,
+538.13,
+627.73
+]
+}
+],
+"9": [
+{
+"text": "11",
+"before": "OpenSpacesandTrailsL/SUR",
+"after": "L/SUR11L/SUR12L/SUR11L/S",
+"box": [
+266.16,
+138.25,
+273.17,
+145.21
+]
+},
+{
+"text": "11",
+"before": "cesandTrailsL/SUR11L/SUR",
+"after": "L/SUR12L/SUR11L/SUR11L/S",
+"box": [
+311.4,
+138.25,
+318.41,
+145.21
+]
+},
+{
+"text": "12",
+"before": "railsL/SUR11L/SUR11L/SUR",
+"after": "L/SUR11L/SUR11L/SUR11L/S",
+"box": [
+356.76,
+138.25,
+363.77,
+145.21
+]
+},
+{
+"text": "11",
+"before": "SUR11L/SUR11L/SUR12L/SUR",
+"after": "L/SUR11L/SUR11L/SUR11Rel",
+"box": [
+402.12,
+138.25,
+409.13,
+145.21
+]
+},
+{
+"text": "11",
+"before": "SUR11L/SUR12L/SUR11L/SUR",
+"after": "L/SUR11L/SUR11ReligiousI",
+"box": [
+447.24,
+138.25,
+454.25,
+145.21
+]
+},
+{
+"text": "11",
+"before": "SUR12L/SUR11L/SUR11L/SUR",
+"after": "L/SUR11ReligiousInstitutio",
+"box": [
+492.12,
+138.25,
+499.13,
+145.21
+]
+},
+{
+"text": "11",
+"before": "SUR11L/SUR11L/SUR11L/SUR",
+"after": "ReligiousInstitutionsPPPPS",
+"box": [
+537.36,
+138.25,
+544.37,
+145.21
+]
+},
+{
+"text": "12",
+"before": "sPPPPSURSURPSchoolsP/SUR",
+"after": "P/SUR12P/SUR12P/SUR12SUR",
+"box": [
+266.4,
+168.13,
+273.41,
+175.09
+]
+},
+{
+"text": "12",
+"before": "RSURPSchoolsP/SUR12P/SUR",
+"after": "P/SUR12P/SUR12SURSURP/SU",
+"box": [
+311.64,
+168.13,
+318.65,
+175.09
+]
+},
+{
+"text": "12",
+"before": "hoolsP/SUR12P/SUR12P/SUR",
+"after": "P/SUR12SURSURP/SUR12Rene",
+"box": [
+357.0,
+168.13,
+364.01,
+175.09
+]
+},
+{
+"text": "12",
+"before": "SUR12P/SUR12P/SUR12P/SUR",
+"after": "SURSURP/SUR12RenewableEn",
+"box": [
+402.36,
+168.13,
+409.37,
+175.09
+]
+},
+{
+"text": "12",
+"before": "/SUR12P/SUR12SURSURP/SUR",
+"after": "RenewableEnergyUses15DCC",
+"box": [
+537.6,
+168.13,
+544.61,
+175.09
+]
+},
+{
+"text": "15",
+"before": "SUR12RenewableEnergyUses",
+"after": "DCCDMUDTMDEMDRL-1DRL-2DC",
+"box": [
+159.48,
+204.63,
+166.49,
+211.59
+]
+},
+{
+"text": "16",
+"before": "LSolarEnergySystemsL/SUR",
+"after": "L/SUR16L/SUR16L/SUR16L16",
+"box": [
+268.08,
+219.85,
+275.09,
+226.81
+]
+},
+{
+"text": "16",
+"before": "nergySystemsL/SUR16L/SUR",
+"after": "L/SUR16L/SUR16L16L16L/SU",
+"box": [
+312.96,
+219.85,
+319.97,
+226.81
+]
+},
+{
+"text": "16",
+"before": "stemsL/SUR16L/SUR16L/SUR",
+"after": "L/SUR16L16L16L/SUR16Wind",
+"box": [
+357.96,
+219.85,
+364.97,
+226.81
+]
+},
+{
+"text": "16",
+"before": "SUR16L/SUR16L/SUR16L/SUR",
+"after": "L16L16L/SUR16WindEnergyS",
+"box": [
+402.84,
+219.85,
+409.85,
+226.81
+]
+},
+{
+"text": "16",
+"before": "16L/SUR16L/SUR16L/SUR16L",
+"after": "L16L/SUR16WindEnergySyst",
+"box": [
+436.44,
+219.85,
+443.45,
+226.81
+]
+},
+{
+"text": "16",
+"before": "/SUR16L/SUR16L/SUR16L16L",
+"after": "L/SUR16WindEnergySystems",
+"box": [
+481.32,
+219.85,
+488.33,
+226.81
+]
+},
+{
+"text": "16",
+"before": "/SUR16L/SUR16L16L16L/SUR",
+"after": "WindEnergySystemsL/SUR17",
+"box": [
+537.48,
+219.85,
+544.49,
+226.81
+]
+},
+{
+"text": "17",
+"before": "16WindEnergySystemsL/SUR",
+"after": "L/SUR17L/SUR17L/SUR17L17",
+"box": [
+268.08,
+234.73,
+275.09,
+241.69
+]
+},
+{
+"text": "17",
+"before": "nergySystemsL/SUR17L/SUR",
+"after": "L/SUR17L/SUR17L17L17L/SU",
+"box": [
+312.96,
+234.73,
+319.97,
+241.69
+]
+},
+{
+"text": "17",
+"before": "stemsL/SUR17L/SUR17L/SUR",
+"after": "L/SUR17L17L17L/SUR17Biom",
+"box": [
+357.96,
+234.73,
+364.97,
+241.69
+]
+},
+{
+"text": "17",
+"before": "SUR17L/SUR17L/SUR17L/SUR",
+"after": "L17L17L/SUR17BiomassEner",
+"box": [
+402.84,
+234.73,
+409.85,
+241.69
+]
+},
+{
+"text": "17",
+"before": "17L/SUR17L/SUR17L/SUR17L",
+"after": "L17L/SUR17BiomassEnergyS",
+"box": [
+436.44,
+234.73,
+443.45,
+241.69
+]
+},
+{
+"text": "17",
+"before": "/SUR17L/SUR17L/SUR17L17L",
+"after": "L/SUR17BiomassEnergySyst",
+"box": [
+481.32,
+234.73,
+488.33,
+241.69
+]
+},
+{
+"text": "17",
+"before": "/SUR17L/SUR17L17L17L/SUR",
+"after": "BiomassEnergySystemsL18L",
+"box": [
+537.48,
+234.73,
+544.49,
+241.69
+]
+},
+{
+"text": "18",
+"before": "R17BiomassEnergySystemsL",
+"after": "L18L18L18L/SUR18L/SUR18L",
+"box": [
+256.8,
+249.61,
+263.81,
+256.57
+]
+},
+{
+"text": "18",
+"before": "BiomassEnergySystemsL18L",
+"after": "L18L18L/SUR18L/SUR18L18G",
+"box": [
+301.68,
+249.61,
+308.69,
+256.57
+]
+},
+{
+"text": "18",
+"before": "massEnergySystemsL18L18L",
+"after": "L18L/SUR18L/SUR18L18Geot",
+"box": [
+346.68,
+249.61,
+353.69,
+256.57
+]
+},
+{
+"text": "18",
+"before": "sEnergySystemsL18L18L18L",
+"after": "L/SUR18L/SUR18L18Geother",
+"box": [
+391.56,
+249.61,
+398.57,
+256.57
+]
+},
+{
+"text": "18",
+"before": "SystemsL18L18L18L18L/SUR",
+"after": "L/SUR18L18GeothermalEner",
+"box": [
+447.72,
+249.61,
+454.73,
+256.57
+]
+},
+{
+"text": "18",
+"before": "L18L18L18L18L/SUR18L/SUR",
+"after": "L18GeothermalEnergySyste",
+"box": [
+492.6,
+249.61,
+499.61,
+256.57
+]
+},
+{
+"text": "18",
+"before": "L18L18L18L/SUR18L/SUR18L",
+"after": "GeothermalEnergySystemsL",
+"box": [
+526.2,
+249.61,
+533.21,
+256.57
+]
+},
+{
+"text": "19",
+"before": "hermalEnergySystemsL/SUR",
+"after": "L/SUR19L/SUR19L/SUR19L19",
+"box": [
+268.08,
+264.49,
+275.09,
+271.45
+]
+},
+{
+"text": "19",
+"before": "nergySystemsL/SUR19L/SUR",
+"after": "L/SUR19L/SUR19L19L19L/SU",
+"box": [
+312.96,
+264.49,
+319.97,
+271.45
+]
+},
+{
+"text": "19",
+"before": "stemsL/SUR19L/SUR19L/SUR",
+"after": "L/SUR19L19L19L/SUR19Micr",
+"box": [
+357.96,
+264.49,
+364.97,
+271.45
+]
+},
+{
+"text": "19",
+"before": "SUR19L/SUR19L/SUR19L/SUR",
+"after": "L19L19L/SUR19Micro-Hydro",
+"box": [
+402.84,
+264.49,
+409.85,
+271.45
+]
+},
+{
+"text": "19",
+"before": "19L/SUR19L/SUR19L/SUR19L",
+"after": "L19L/SUR19Micro-HydroEne",
+"box": [
+436.44,
+264.49,
+443.45,
+271.45
+]
+},
+{
+"text": "19",
+"before": "/SUR19L/SUR19L/SUR19L19L",
+"after": "L/SUR19Micro-HydroEnergy",
+"box": [
+481.32,
+264.49,
+488.33,
+271.45
+]
+},
+{
+"text": "19",
+"before": "/SUR19L/SUR19L19L19L/SUR",
+"after": "Micro-HydroEnergySystems",
+"box": [
+537.48,
+264.49,
+544.49,
+271.45
+]
+},
+{
+"text": "20",
+"before": "icro-HydroEnergySystemsL",
+"after": "L20L20L20L20L20L20OtherU",
+"box": [
+256.8,
+279.37,
+263.81,
+286.33
+]
+},
+{
+"text": "20",
+"before": "o-HydroEnergySystemsL20L",
+"after": "L20L20L20L20L20OtherUses",
+"box": [
+301.68,
+279.37,
+308.69,
+286.33
+]
+},
+{
+"text": "20",
+"before": "ydroEnergySystemsL20L20L",
+"after": "L20L20L20L20OtherUsesDCC",
+"box": [
+346.68,
+279.37,
+353.69,
+286.33
+]
+},
+{
+"text": "20",
+"before": "oEnergySystemsL20L20L20L",
+"after": "L20L20L20OtherUsesDCCDMU",
+"box": [
+391.56,
+279.37,
+398.57,
+286.33
+]
+},
+{
+"text": "20",
+"before": "ergySystemsL20L20L20L20L",
+"after": "L20L20OtherUsesDCCDMUDTM",
+"box": [
+436.44,
+279.37,
+443.45,
+286.33
+]
+},
+{
+"text": "20",
+"before": "ySystemsL20L20L20L20L20L",
+"after": "L20OtherUsesDCCDMUDTMDEM",
+"box": [
+481.32,
+279.37,
+488.33,
+286.33
+]
+},
+{
+"text": "20",
+"before": "stemsL20L20L20L20L20L20L",
+"after": "OtherUsesDCCDMUDTMDEMDRL",
+"box": [
+526.2,
+279.37,
+533.21,
+286.33
+]
+},
+{
+"text": "13",
+"before": "esPSURPSURPSURPSURPL/SUR",
+"after": "PL/SUR13PSURHelicopterLa",
+"box": [
+449.52,
+357.97,
+456.53,
+364.93
+]
+},
+{
+"text": "13",
+"before": "URPSURPSURPL/SUR13PL/SUR",
+"after": "PSURHelicopterLandingFac",
+"box": [
+494.52,
+357.97,
+501.53,
+364.93
+]
+},
+{
+"text": "14",
+"before": "opterLandingFacilitiesSUR",
+"after": "SUR14SUR14SUR14SUR14SUR1",
+"box": [
+271.92,
+371.89,
+278.93,
+378.85
+]
+},
+{
+"text": "14",
+"before": "LandingFacilitiesSUR14SUR",
+"after": "SUR14SUR14SUR14SUR14SUR1",
+"box": [
+314.88,
+371.89,
+321.89,
+378.85
+]
+},
+{
+"text": "14",
+"before": "ngFacilitiesSUR14SUR14SUR",
+"after": "SUR14SUR14SUR14SUR14Wire",
+"box": [
+357.96,
+371.89,
+364.97,
+378.85
+]
+},
+{
+"text": "14",
+"before": "ilitiesSUR14SUR14SUR14SUR",
+"after": "SUR14SUR14SUR14WirelessC",
+"box": [
+401.04,
+371.89,
+408.05,
+378.85
+]
+},
+{
+"text": "14",
+"before": "sSUR14SUR14SUR14SUR14SUR",
+"after": "SUR14SUR14WirelessCommun",
+"box": [
+444.96,
+371.89,
+451.97,
+378.85
+]
+},
+{
+"text": "14",
+"before": "4SUR14SUR14SUR14SUR14SUR",
+"after": "SUR14WirelessCommunicatio",
+"box": [
+489.96,
+371.89,
+496.97,
+378.85
+]
+},
+{
+"text": "14",
+"before": "4SUR14SUR14SUR14SUR14SUR",
+"after": "WirelessCommunicationsFac",
+"box": [
+533.88,
+371.89,
+540.89,
+378.85
+]
+},
+{
+"text": "th",
+"before": "orless.b.InDCCnorthofNE8",
+"after": "Streetonalotofrecordthat",
+"box": [
+155.88,
+475.75,
+161.07,
+481.75
+]
+}
+],
+"10": [
+{
+"text": "th",
+"before": "enEPowellBoulevardandNE4",
+"after": "Street.3.NE3rdStreetbetw",
+"box": [
+376.8,
+467.41,
+382.74,
+474.37
+]
+},
+{
+"text": "rd",
+"before": "vardandNE4thStreet.3.NE3",
+"after": "StreetbetweenNMainAvenue",
+"box": [
+92.64,
+486.85,
+98.58,
+493.81
+]
+},
+{
+"text": "rd",
+"before": "enueandthenorthsideofNE3",
+"after": "StreetbetweenNEHoodAvenu",
+"box": [
+457.56,
+486.85,
+463.5,
+493.81
+]
+}
+],
+"12": [
+{
+"text": "1,2,3,4",
+"before": "DCLMainAve1MaximumHeight",
+"after": "(feet)854511258570355065",
+"box": [
+111.48,
+145.42,
+129.41,
+151.9
+]
+},
+{
+"text": "1",
+"before": "mHeight1,2,3,4(feet)8545",
+"after": "1258570355065MinimumFloo",
+"box": [
+254.28,
+146.5,
+257.57,
+152.98
+]
+},
+{
+"text": "1,5,6",
+"before": "mixed-useprojects(based)",
+"after": "SeeMap4.1130:MinimumFloo",
+"box": [
+106.56,
+184.66,
+122.56,
+191.14
+]
+},
+{
+"text": "6,9",
+"before": "RatioMaximumFloorAreaRatio",
+"after": "3.01.513.53.02.51.01.01.",
+"box": [
+150.0,
+203.98,
+158.21,
+210.46
+]
+},
+{
+"text": "1",
+"before": "umFloorAreaRatio6,93.01.5",
+"after": "3.53.02.51.01.01.0Maximu",
+"box": [
+255.48,
+205.06,
+258.77,
+211.54
+]
+},
+{
+"text": "6",
+"before": "tiowithbonuses(see4.1131)",
+"after": "Residential3.52.015.03.53",
+"box": [
+91.56,
+243.34,
+94.85,
+249.82
+]
+},
+{
+"text": "1",
+"before": "4.1131)6Residential3.52.0",
+"after": "5.03.53.02.02.02.0Non-Re",
+"box": [
+255.48,
+219.94,
+258.77,
+226.42
+]
+},
+{
+"text": "1",
+"before": "02.0Non-Residential4.53.0",
+"after": "6.04.53.03.03.02.5Combin",
+"box": [
+255.48,
+242.14,
+258.77,
+248.62
+]
+},
+{
+"text": "1",
+"before": "03.03.02.5Combined5.04.0",
+"after": "7.05.05.04.04.03.0Minimu",
+"box": [
+255.48,
+264.22,
+258.77,
+270.7
+]
+},
+{
+"text": "7",
+"before": "mixed-use)(unitsperacre)",
+"after": "(SeedeﬁnitionofNetDensity",
+"box": [
+150.12,
+302.38,
+153.41,
+308.86
+]
+},
+{
+"text": "8",
+"before": "use25;Allotheruses:12.45",
+"after": "Nomaximum608TABLE4.1130C",
+"box": [
+468.72,
+391.54,
+472.01,
+398.02
+]
+},
+{
+"text": "8",
+"before": "eruses:12.458Nomaximum60",
+"after": "TABLE4.1130CONTINUEDStre",
+"box": [
+560.64,
+373.18,
+563.93,
+379.66
+]
+},
+{
+"text": "10",
+"before": ")MinimumBuildingSetbacks",
+"after": "Front:0Side:011Rear:011A",
+"box": [
+86.64,
+528.22,
+93.29,
+534.7
+]
+},
+{
+"text": "11",
+"before": "gSetbacks10Front:0Side:0",
+"after": "Rear:011Alley:3Front:0Si",
+"box": [
+179.16,
+515.98,
+185.69,
+522.46
+]
+},
+{
+"text": "11",
+"before": "s10Front:0Side:011Rear:0",
+"after": "Alley:3Front:0Side:011Re",
+"box": [
+180.48,
+528.22,
+187.13,
+534.7
+]
+},
+{
+"text": "11",
+"before": ":011Alley:3Front:0Side:0",
+"after": "Rear:011Alley:3Front:0Si",
+"box": [
+251.16,
+515.98,
+257.69,
+522.46
+]
+},
+{
+"text": "11",
+"before": "y:3Front:0Side:011Rear:0",
+"after": "Alley:3Front:0Side:014Re",
+"box": [
+252.48,
+528.22,
+259.13,
+534.7
+]
+},
+{
+"text": "14",
+"before": ":011Alley:3Front:0Side:0",
+"after": "Rear:011Alley:3Front:0Si",
+"box": [
+323.16,
+515.98,
+329.69,
+522.46
+]
+},
+{
+"text": "11",
+"before": "y:3Front:0Side:014Rear:0",
+"after": "Alley:3Front:0Side:014Re",
+"box": [
+324.48,
+528.22,
+331.13,
+534.7
+]
+},
+{
+"text": "14",
+"before": ":011Alley:3Front:0Side:0",
+"after": "Rear:0Alley:3Front:0Side",
+"box": [
+395.16,
+515.98,
+401.69,
+522.46
+]
+},
+{
+"text": "14",
+"before": "ar:0Alley:3Front:0Side:0",
+"after": "Rear:0Alley:3Front:5Side",
+"box": [
+467.16,
+515.98,
+473.69,
+522.46
+]
+},
+{
+"text": "11,14",
+"before": "ar:0Alley:3Front:5Side:0",
+"after": "Rear:011Alley:3MaximumBu",
+"box": [
+539.16,
+515.98,
+555.4,
+522.46
+]
+},
+{
+"text": "11",
+"before": "Front:5Side:011,14Rear:0",
+"after": "Alley:3MaximumBuildingSe",
+"box": [
+540.48,
+528.22,
+547.13,
+534.7
+]
+},
+{
+"text": "5,",
+"before": "3MaximumBuildingSetbacks",
+"after": "9Front:516Front:516Front",
+"box": [
+86.64,
+565.3,
+91.62,
+571.78
+]
+},
+{
+"text": "16",
+"before": "ildingSetbacks5,9Front:5",
+"after": "Front:516Front:516Front:",
+"box": [
+183.72,
+553.06,
+190.25,
+559.54
+]
+},
+{
+"text": "16",
+"before": "backs5,9Front:516Front:5",
+"after": "Front:516Front:516Front:",
+"box": [
+255.72,
+553.06,
+262.25,
+559.54
+]
+},
+{
+"text": "16",
+"before": "ront:516Front:516Front:5",
+"after": "Front:516Front:516Front:",
+"box": [
+327.72,
+553.06,
+334.25,
+559.54
+]
+},
+{
+"text": "16",
+"before": "ront:516Front:516Front:5",
+"after": "Front:516Front:1016Multi-",
+"box": [
+399.72,
+553.06,
+406.25,
+559.54
+]
+},
+{
+"text": "16",
+"before": "ront:516Front:516Front:5",
+"after": "Front:1016Multi-FamilyMin",
+"box": [
+471.72,
+553.06,
+478.25,
+559.54
+]
+},
+{
+"text": "16",
+"before": "ont:516Front:516Front:10",
+"after": "Multi-FamilyMinimumBuildi",
+"box": [
+548.76,
+553.06,
+555.29,
+559.54
+]
+},
+{
+"text": "10",
+"before": "yMinimumBuildingSetbacks",
+"after": "Front:10Side:012Rear:512",
+"box": [
+86.64,
+629.5,
+93.29,
+635.98
+]
+},
+{
+"text": "12",
+"before": "Setbacks10Front:10Side:0",
+"after": "Rear:512Alley:3Front:0Si",
+"box": [
+179.16,
+617.38,
+185.69,
+623.86
+]
+},
+{
+"text": "12",
+"before": "10Front:10Side:012Rear:5",
+"after": "Alley:3Front:0Side:011Re",
+"box": [
+180.48,
+629.5,
+187.13,
+635.98
+]
+},
+{
+"text": "11",
+"before": ":512Alley:3Front:0Side:0",
+"after": "Rear:511Alley:3Front:5Si",
+"box": [
+251.16,
+617.38,
+257.69,
+623.86
+]
+},
+{
+"text": "11",
+"before": "y:3Front:0Side:011Rear:5",
+"after": "Alley:3Front:5Side:014Re",
+"box": [
+252.48,
+629.5,
+259.13,
+635.98
+]
+},
+{
+"text": "14",
+"before": ":511Alley:3Front:5Side:0",
+"after": "Rear:5Alley:3Front:0Side",
+"box": [
+323.16,
+617.38,
+329.69,
+623.86
+]
+},
+{
+"text": "14",
+"before": "ar:5Alley:3Front:0Side:0",
+"after": "Rear:0Alley:3Front:0Side",
+"box": [
+395.16,
+617.38,
+401.69,
+623.86
+]
+},
+{
+"text": "14",
+"before": "ar:0Alley:3Front:0Side:0",
+"after": "Rear:0Alley:3Front:5Side",
+"box": [
+467.16,
+617.38,
+473.69,
+623.86
+]
+},
+{
+"text": "11,14",
+"before": "ar:0Alley:3Front:5Side:0",
+"after": "Rear:511Alley:3MaximumBu",
+"box": [
+539.16,
+617.38,
+555.4,
+623.86
+]
+},
+{
+"text": "11",
+"before": "Front:5Side:011,14Rear:5",
+"after": "Alley:3MaximumBuildingSe",
+"box": [
+540.48,
+629.5,
+547.13,
+635.98
+]
+},
+{
+"text": "12,16",
+"before": "BuildingSetbacksFront:20",
+"after": "Front:1012,16Front:1012,",
+"box": [
+188.76,
+654.46,
+205.01,
+660.94
+]
+},
+{
+"text": "12,",
+"before": "cksFront:2012,16Front:10",
+"after": "16Front:1012,16Front:512",
+"box": [
+260.76,
+654.46,
+268.98,
+660.94
+]
+},
+{
+"text": "12,",
+"before": ",16Front:1012,16Front:10",
+"after": "16Front:512,16Front:1012",
+"box": [
+332.76,
+654.46,
+340.98,
+660.94
+]
+},
+{
+"text": "12,16",
+"before": "2,16Front:1012,16Front:5",
+"after": "Front:1012,16Front:2016",
+"box": [
+399.72,
+654.46,
+415.97,
+660.94
+]
+},
+{
+"text": "12,",
+"before": "2,16Front:512,16Front:10",
+"after": "16Front:2016",
+"box": [
+476.76,
+654.46,
+484.98,
+660.94
+]
+},
+{
+"text": "16",
+"before": ",16Front:1012,16Front:20",
+"after": "",
+"box": [
+548.76,
+654.46,
+555.29,
+660.94
+]
+}
+],
+"13": [
+{
+"text": "10",
+"before": "LMinimumBuildingSetbacks",
+"after": "FRONTFaçade:10Porch:6Gar",
+"box": [
+86.64,
+231.1,
+93.29,
+237.58
+]
+},
+{
+"text": "15",
+"before": "açade:10Porch:6Garage:15",
+"after": "SIDE13Interior:5Streetsi",
+"box": [
+195.84,
+194.38,
+202.37,
+200.86
+]
+},
+{
+"text": "13",
+"before": "10Porch:6Garage:1515SIDE",
+"after": "Interior:5Streetside:10C",
+"box": [
+170.52,
+206.86,
+177.17,
+213.34
+]
+},
+{
+"text": "15",
+"before": "Façade:5Porch:3Garage:10",
+"after": "SIDE13Interior:5Streetsi",
+"box": [
+267.84,
+194.38,
+274.37,
+200.86
+]
+},
+{
+"text": "13",
+"before": ":5Porch:3Garage:1015SIDE",
+"after": "Interior:5Streetside:5Co",
+"box": [
+242.52,
+206.86,
+249.17,
+213.34
+]
+},
+{
+"text": "15",
+"before": "Façade:5Porch:3Garage:10",
+"after": "SIDE13Interior:5Streetsi",
+"box": [
+339.84,
+194.38,
+346.37,
+200.86
+]
+},
+{
+"text": "13",
+"before": ":5Porch:3Garage:1015SIDE",
+"after": "Interior:5Streetside:5Co",
+"box": [
+314.52,
+206.86,
+321.17,
+213.34
+]
+},
+{
+"text": "15",
+"before": "Façade:5Porch:3Garage:10",
+"after": "SIDE13Interior:5Streetsi",
+"box": [
+483.84,
+194.38,
+490.37,
+200.86
+]
+},
+{
+"text": "13",
+"before": ":5Porch:3Garage:1015SIDE",
+"after": "Interior:5Streetside:5Co",
+"box": [
+458.52,
+206.86,
+465.17,
+213.34
+]
+},
+{
+"text": "15",
+"before": "Façade:5Porch:3Garage:10",
+"after": "SIDE13Interior:5Streetsi",
+"box": [
+555.84,
+194.38,
+562.37,
+200.86
+]
+},
+{
+"text": "13",
+"before": ":5Porch:3Garage:1015SIDE",
+"after": "Interior:5Streetside:5Co",
+"box": [
+530.52,
+206.86,
+537.17,
+213.34
+]
+},
+{
+"text": "12,16",
+"before": "BuildingSetbacksFront:10",
+"after": "Front:1012,16Front:1512,",
+"box": [
+188.76,
+304.78,
+205.01,
+311.26
+]
+},
+{
+"text": "12,",
+"before": "cksFront:1012,16Front:10",
+"after": "16Front:1512,16Front:151",
+"box": [
+260.76,
+304.78,
+268.98,
+311.26
+]
+},
+{
+"text": "12,",
+"before": ",16Front:1012,16Front:15",
+"after": "16Front:1512,16Front:201",
+"box": [
+332.76,
+304.78,
+340.98,
+311.26
+]
+},
+{
+"text": "12,",
+"before": ",16Front:1512,16Front:15",
+"after": "16Front:2012,16Single-de",
+"box": [
+476.76,
+304.78,
+484.98,
+311.26
+]
+},
+{
+"text": "12,",
+"before": ",16Front:1512,16Front:20",
+"after": "16Single-detached,duplex",
+"box": [
+548.76,
+304.78,
+556.98,
+311.26
+]
+},
+{
+"text": "10",
+"before": "2MinimumBuildingSetbacks",
+"after": "FRONTFaçade:10Porch:6Gar",
+"box": [
+86.64,
+452.26,
+93.29,
+458.74
+]
+},
+{
+"text": "12",
+"before": "BuildingSetbacksFront:20",
+"after": "Front:2012Front:1512N/AN",
+"box": [
+188.76,
+538.18,
+195.29,
+544.66
+]
+},
+{
+"text": "12",
+"before": "tbacksFront:2012Front:20",
+"after": "Front:1512N/AN/AFront:20",
+"box": [
+260.76,
+538.18,
+267.29,
+544.66
+]
+},
+{
+"text": "12",
+"before": "t:2012Front:2012Front:15",
+"after": "N/AN/AFront:2012MinimumL",
+"box": [
+332.76,
+538.18,
+339.29,
+544.66
+]
+},
+{
+"text": "12",
+"before": "Front:1512N/AN/AFront:20",
+"after": "MinimumLotSizeSingledeta",
+"box": [
+548.76,
+538.18,
+555.29,
+544.66
+]
+}
+],
+"14": [
+{
+"text": "th",
+"before": "enEPowellBoulevardandNE5",
+"after": "Streetarelimitedtothoses",
+"box": [
+201.36,
+100.39,
+206.55,
+106.39
+]
+}
+],
+"79": [
+{
+"text": "1",
+"before": "nationLevel(Foot-Candles)",
+"after": "PrimaryInternalDrives1.0",
+"box": [
+335.16,
+344.5,
+338.45,
+350.98
+]
+}
+],
+"117": [
+{
+"text": "1",
+"before": "ensional)PPStone/Masonry",
+"after": "PPStucco2PPGlass(transpa",
+"box": [
+120.12,
+158.5,
+123.41,
+164.98
+]
+},
+{
+"text": "2",
+"before": "PPStone/Masonry1PPStucco",
+"after": "PPGlass(transparentandsp",
+"box": [
+83.88,
+175.42,
+87.17,
+181.9
+]
+},
+{
+"text": "3",
+"before": "ﬁled,FlutedorRibbedMetal",
+"after": "PanelsPPFinishedWood,Woo",
+"box": [
+325.2,
+225.94,
+328.49,
+232.42
+]
+},
+{
+"text": "3",
+"before": "nish)AAStandingSeamMetal",
+"after": "SSVegetatedWallPanelsand",
+"box": [
+143.04,
+361.06,
+146.33,
+367.54
+]
+}
+]
+}
+}

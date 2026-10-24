@@ -1,0 +1,340 @@
+{
+"book": "c378ec2e14da6b8270f7f3cd4a74a435d2a800d91c239ab83ff89ca6d0581647",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"2": [
+{
+"text": "1",
+"before": "NPNPAffordableHousingNPP",
+"after": "CommercialAuto-Dependent",
+"box": [
+477.96,
+618.13,
+481.49,
+625.09
+]
+},
+{
+"text": "2",
+"before": "ndRetailServiceandTradeL",
+"after": "L2ClinicsL2L2CommercialP",
+"box": [
+377.88,
+666.01,
+381.41,
+672.97
+]
+},
+{
+"text": "2",
+"before": "RetailServiceandTradeL2L",
+"after": "ClinicsL2L2CommercialPar",
+"box": [
+476.88,
+666.01,
+480.41,
+672.97
+]
+},
+{
+"text": "2",
+"before": "viceandTradeL2L2ClinicsL",
+"after": "L2CommercialParkingNPNP",
+"box": [
+377.88,
+681.85,
+381.41,
+688.81
+]
+},
+{
+"text": "2",
+"before": "ceandTradeL2L2ClinicsL2L",
+"after": "CommercialParkingNPNP",
+"box": [
+476.88,
+681.85,
+480.41,
+688.81
+]
+}
+],
+"3": [
+{
+"text": "3",
+"before": "UsesPNPIndustrialOfficeL",
+"after": "PInformationServicesNPPM",
+"box": [
+377.88,
+217.81,
+381.41,
+224.77
+]
+},
+{
+"text": "4",
+"before": "iscellaneousIndustrialPL",
+"after": "TradeSchoolsNPPTransport",
+"box": [
+476.88,
+265.57,
+480.41,
+272.53
+]
+},
+{
+"text": "5",
+"before": "gePPWasteManagementP/SUR",
+"after": "P/SUR5WholesaleTradeNPPI",
+"box": [
+401.28,
+329.41,
+404.81,
+336.37
+]
+},
+{
+"text": "5",
+"before": "steManagementP/SUR5P/SUR",
+"after": "WholesaleTradeNPPInstitu",
+"box": [
+500.28,
+329.41,
+503.81,
+336.37
+]
+},
+{
+"text": "6",
+"before": "URCommunityServicesL/SUR",
+"after": "L/SUR6MedicalNPNPParks,O",
+"box": [
+400.32,
+393.13,
+403.85,
+400.09
+]
+},
+{
+"text": "6",
+"before": "unityServicesL/SUR6L/SUR",
+"after": "MedicalNPNPParks,OpenSpa",
+"box": [
+499.32,
+393.13,
+502.85,
+400.09
+]
+},
+{
+"text": "7",
+"before": "ces,Paths,andTrailsL/SUR",
+"after": "L/SUR7ReligiousInstituti",
+"box": [
+400.32,
+425.05,
+403.85,
+432.01
+]
+},
+{
+"text": "7",
+"before": "ths,andTrailsL/SUR7L/SUR",
+"after": "ReligiousInstitutionsL/S",
+"box": [
+499.32,
+425.05,
+502.85,
+432.01
+]
+},
+{
+"text": "8",
+"before": "ligiousInstitutionsL/SUR",
+"after": "L/SUR8SchoolsL/SUR8L/SUR",
+"box": [
+400.32,
+441.01,
+403.85,
+447.97
+]
+},
+{
+"text": "8",
+"before": "sInstitutionsL/SUR8L/SUR",
+"after": "SchoolsL/SUR8L/SUR8Renew",
+"box": [
+499.32,
+441.01,
+502.85,
+447.97
+]
+},
+{
+"text": "8",
+"before": "L/SUR8L/SUR8SchoolsL/SUR",
+"after": "L/SUR8RenewableEnergy9So",
+"box": [
+400.32,
+456.97,
+403.85,
+463.93
+]
+},
+{
+"text": "8",
+"before": "L/SUR8SchoolsL/SUR8L/SUR",
+"after": "RenewableEnergy9SolarEne",
+"box": [
+499.32,
+456.97,
+502.85,
+463.93
+]
+},
+{
+"text": "9",
+"before": "UR8L/SUR8RenewableEnergy",
+"after": "SolarEnergySystemsP10P10",
+"box": [
+147.72,
+473.07,
+151.25,
+480.03
+]
+},
+{
+"text": "10",
+"before": "ergy9SolarEnergySystemsP",
+"after": "P10WindEnergySystemsL/SU",
+"box": [
+378.96,
+488.77,
+385.97,
+495.73
+]
+},
+{
+"text": "10",
+"before": "y9SolarEnergySystemsP10P",
+"after": "WindEnergySystemsL/SUR11",
+"box": [
+477.96,
+488.77,
+484.97,
+495.73
+]
+},
+{
+"text": "11",
+"before": "10WindEnergySystemsL/SUR",
+"after": "L/SUR11BiomassEnergySyst",
+"box": [
+400.32,
+504.73,
+407.33,
+511.69
+]
+},
+{
+"text": "11",
+"before": "nergySystemsL/SUR11L/SUR",
+"after": "BiomassEnergySystemsL/SU",
+"box": [
+499.32,
+504.73,
+506.33,
+511.69
+]
+},
+{
+"text": "12",
+"before": "iomassEnergySystemsL/SUR",
+"after": "L/SUR12GeothermalEnergyS",
+"box": [
+400.32,
+520.69,
+407.33,
+527.65
+]
+},
+{
+"text": "12",
+"before": "nergySystemsL/SUR12L/SUR",
+"after": "GeothermalEnergySystemsP",
+"box": [
+499.32,
+520.69,
+506.33,
+527.65
+]
+},
+{
+"text": "13",
+"before": "GeothermalEnergySystemsP",
+"after": "P13Hydro-MicroEnergySyst",
+"box": [
+378.96,
+536.65,
+385.97,
+543.61
+]
+},
+{
+"text": "13",
+"before": "thermalEnergySystemsP13P",
+"after": "Hydro-MicroEnergySystems",
+"box": [
+477.96,
+536.65,
+484.97,
+543.61
+]
+},
+{
+"text": "14",
+"before": "ydro-MicroEnergySystemsL",
+"after": "L14OtherBasicUtilitiesMi",
+"box": [
+377.88,
+552.61,
+384.89,
+559.57
+]
+},
+{
+"text": "14",
+"before": "o-MicroEnergySystemsL14L",
+"after": "OtherBasicUtilitiesMinor",
+"box": [
+476.88,
+552.61,
+483.89,
+559.57
+]
+},
+{
+"text": "15",
+"before": "esPPMarijuanaBusinessesL",
+"after": "L15",
+"box": [
+377.88,
+679.09,
+384.89,
+686.05
+]
+},
+{
+"text": "15",
+"before": "PMarijuanaBusinessesL15L",
+"after": "",
+"box": [
+476.88,
+679.09,
+483.89,
+686.05
+]
+}
+]
+}
+}

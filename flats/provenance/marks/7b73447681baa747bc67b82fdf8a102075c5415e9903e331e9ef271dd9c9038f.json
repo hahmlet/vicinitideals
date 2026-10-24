@@ -1,0 +1,1026 @@
+{
+"book": "7b73447681baa747bc67b82fdf8a102075c5415e9903e331e9ef271dd9c9038f",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"40": [
+{
+"text": "th",
+"before": "inancetakeseffectonthe30",
+"after": "dayafteritsadoptionorona",
+"box": [
+504.05,
+315.95,
+511.56,
+322.93
+]
+},
+{
+"text": "th",
+"before": "thebudgetonorbeforethe30",
+"after": "dayofthetwelfthmonthofth",
+"box": [
+391.61,
+540.2,
+399.11,
+547.18
+]
+}
+],
+"93": [
+{
+"text": "st",
+"before": "edandcalculatedeachJuly1",
+"after": "bytheCityManagerandcharg",
+"box": [
+203.33,
+110.9,
+209.42,
+117.88
+]
+}
+],
+"263": [
+{
+"text": "2",
+"before": "g13,500squarefeet(1,256m",
+"after": ")(projected)withoutdisch",
+"box": [
+422.06,
+471.33,
+426.3,
+478.32
+]
+}
+],
+"297": [
+{
+"text": "~un",
+"before": "ngyournorthernneighbor's",
+"after": "I..~10'i~----------~~10'",
+"box": [
+289.92,
+439.92,
+304.38,
+446.64
+]
+}
+],
+"340": [
+{
+"text": "1",
+"before": "imumlotsize,insquarefeet",
+"after": "2,4002,0005,0005,0004,00",
+"box": [
+175.73,
+120.51,
+179.22,
+126.0
+]
+},
+{
+"text": "2",
+"before": "00Minimumlotwidth,infeet",
+"after": "303283--4040Minimumlotde",
+"box": [
+156.71,
+132.29,
+160.2,
+137.78
+]
+},
+{
+"text": "3",
+"before": "mumlotwidth,infeet230328",
+"after": "--4040Minimumlotdepth,in",
+"box": [
+316.11,
+132.29,
+319.6,
+137.78
+]
+},
+{
+"text": "4",
+"before": ",interior—minimum,infeet",
+"after": "33-545/105Rearyard—tores",
+"box": [
+196.44,
+241.65,
+199.93,
+247.14
+]
+},
+{
+"text": "5",
+"before": "minimum,infeet433-545/10",
+"after": "Rearyard—toresidentialbu",
+"box": [
+504.11,
+241.65,
+507.6,
+247.14
+]
+},
+{
+"text": "7",
+"before": "ryonalley,minimum,infeet",
+"after": "0—60—6202015Maximumbuild",
+"box": [
+67.46,
+283.17,
+70.95,
+288.65
+]
+},
+{
+"text": "8",
+"before": "gsandimpervioussur-faces",
+"after": "80%80%75%75%75%75%1Townh",
+"box": [
+72.42,
+345.43,
+75.91,
+350.92
+]
+}
+],
+"355": [
+{
+"text": "1",
+"before": "ertylines,exceptasnoted)",
+"after": "Frontyard:Residentialand",
+"box": [
+294.47,
+416.05,
+297.97,
+421.54
+]
+}
+],
+"356": [
+{
+"text": "2",
+"before": "ings20%ofthetotallotarea",
+"after": "Live-workunits20%oftheto",
+"box": [
+386.24,
+189.56,
+389.73,
+195.05
+]
+},
+{
+"text": "2",
+"before": "nits20%ofthetotallotarea",
+"after": "Non-residentialandmixed-",
+"box": [
+386.24,
+210.31,
+389.73,
+215.8
+]
+},
+{
+"text": "2",
+"before": "ings15%ofthetotallotarea",
+"after": "BuildingheightSingle-fam",
+"box": [
+386.24,
+222.09,
+389.73,
+227.58
+]
+},
+{
+"text": "3",
+"before": "i-family)buildings35feet",
+"after": "Accessorystructuresandde",
+"box": [
+318.56,
+296.13,
+322.05,
+301.62
+]
+},
+{
+"text": "4",
+"before": "riented)Maximum1.5to1FAR",
+"after": "Live-workunitsCommercial",
+"box": [
+385.05,
+375.76,
+388.54,
+381.25
+]
+}
+],
+"366": [
+{
+"text": "th",
+"before": "licstreetportionsofSW116",
+"after": "AvenueandRoyaltyParkway.",
+"box": [
+439.84,
+84.08,
+445.14,
+89.07
+]
+},
+{
+"text": "th",
+"before": "licstreetportionsofSW116",
+"after": "AvenueandRoyaltyParkway.",
+"box": [
+513.6,
+110.58,
+518.9,
+115.57
+]
+},
+{
+"text": "th",
+"before": "licstreetportionsofSW116",
+"after": "AvenueandRoyaltyPark-way",
+"box": [
+428.02,
+137.07,
+433.32,
+142.06
+]
+}
+],
+"368": [
+{
+"text": "th",
+"before": "signingtheportionofSW116",
+"after": "Av-enue,whichiswithinthe",
+"box": [
+252.35,
+533.46,
+259.86,
+540.45
+]
+}
+],
+"377": [
+{
+"text": "14",
+"before": "14-4DimensionalStandards",
+"after": "DimensionalStandardsTown",
+"box": [
+404.79,
+278.39,
+413.27,
+285.38
+]
+},
+{
+"text": "15",
+"before": "imumlotsize,insquarefeet",
+"after": "1,500161,500162,4002,400",
+"box": [
+212.75,
+334.9,
+219.74,
+340.88
+]
+},
+{
+"text": "16",
+"before": "size,insquarefeet151,500",
+"after": "1,500162,4002,400Minimum",
+"box": [
+286.15,
+334.9,
+293.14,
+340.88
+]
+},
+{
+"text": "16",
+"before": "squarefeet151,500161,500",
+"after": "2,4002,400Minimumlotwidt",
+"box": [
+366.86,
+334.9,
+373.84,
+340.88
+]
+},
+{
+"text": "17",
+"before": "Minimumlotwidth,infeet20",
+"after": "201720172017Minimumlotde",
+"box": [
+280.13,
+346.42,
+287.11,
+352.41
+]
+},
+{
+"text": "17",
+"before": "mumlotwidth,infeet201720",
+"after": "20172017Minimumlotdepth,",
+"box": [
+360.83,
+346.42,
+367.82,
+352.41
+]
+},
+{
+"text": "17",
+"before": "otwidth,infeet2017201720",
+"after": "2017Minimumlotdepth,infe",
+"box": [
+441.54,
+346.42,
+448.52,
+352.41
+]
+},
+{
+"text": "17",
+"before": "dth,infeet20172017201720",
+"after": "Minimumlotdepth,infeet45",
+"box": [
+522.24,
+346.42,
+529.23,
+352.41
+]
+},
+{
+"text": "19",
+"before": "um,infeet180or30or30or35",
+"after": "Sideyard—topublicstreet,",
+"box": [
+519.87,
+488.71,
+526.86,
+494.7
+]
+},
+{
+"text": "20",
+"before": "lbuilding,minimum,infeet",
+"after": "10101010Rearyard—togarag",
+"box": [
+152.39,
+535.46,
+159.37,
+541.45
+]
+},
+{
+"text": "21",
+"before": "ryonalley,minimum,infeet",
+"after": "0-60-60-60-6Rearyard—tor",
+"box": [
+154.76,
+556.47,
+161.74,
+562.46
+]
+},
+{
+"text": "22",
+"before": "ximum,infeet0/200/200/20",
+"after": "N/ASideyard,interior—min",
+"box": [
+445.24,
+649.32,
+452.23,
+655.31
+]
+},
+{
+"text": "23",
+"before": "interior—minimum,infeet0",
+"after": "023022,23N/ARearsetback,",
+"box": [
+277.76,
+665.59,
+284.74,
+671.57
+]
+},
+{
+"text": "23",
+"before": "erior—minimum,infeet0230",
+"after": "022,23N/ARearsetback,min",
+"box": [
+358.46,
+665.59,
+365.45,
+671.57
+]
+},
+{
+"text": "22,23",
+"before": "or—minimum,infeet0230230",
+"after": "N/ARearsetback,minimum,i",
+"box": [
+434.73,
+665.59,
+450.59,
+671.57
+]
+},
+{
+"text": "23",
+"before": "rsetback,minimum,infeet0",
+"after": "023022,23N/A16.114.05017",
+"box": [
+277.76,
+677.11,
+284.74,
+683.1
+]
+},
+{
+"text": "23",
+"before": "tback,minimum,infeet0230",
+"after": "022,23N/A16.114.050174.8",
+"box": [
+358.46,
+677.11,
+365.45,
+683.1
+]
+},
+{
+"text": "22,23",
+"before": "ck,minimum,infeet0230230",
+"after": "N/A16.114.050174.83(King",
+"box": [
+434.73,
+677.11,
+450.59,
+683.1
+]
+}
+],
+"389": [
+{
+"text": "th",
+"before": "eTualatinRiverbetween137",
+"after": "AvenueandRoyRogersRoad.T",
+"box": [
+216.07,
+605.8,
+223.58,
+612.79
+]
+}
+],
+"406": [
+{
+"text": "th",
+"before": "ofElsnerRoadandwestof155",
+"after": "AvenueextensionbetweenBe",
+"box": [
+401.75,
+266.55,
+409.26,
+273.54
+]
+},
+{
+"text": "th",
+"before": "oad-TSPProjectID10.f.155",
+"after": "AvenueExtension-Collecto",
+"box": [
+350.83,
+308.96,
+358.34,
+315.94
+]
+},
+{
+"text": "th",
+"before": "ighborhoodRouteeastof155",
+"after": "Avenueextensionandwestof",
+"box": [
+523.88,
+337.4,
+531.39,
+344.38
+]
+},
+{
+"text": "th",
+"before": "nueextensionandwestof150",
+"after": "Avenuebe-tweenBeefBendRo",
+"box": [
+467.06,
+351.37,
+474.56,
+358.35
+]
+},
+{
+"text": "th",
+"before": "oad-TSPProjectID12.h.150",
+"after": "Avenue-Collector-TSPProj",
+"box": [
+353.81,
+393.77,
+361.32,
+400.76
+]
+},
+{
+"text": "th",
+"before": "tor-TSPProjectID13.i.147",
+"after": "Avenue-NeighborhoodRoute",
+"box": [
+350.73,
+422.21,
+358.24,
+429.19
+]
+},
+{
+"text": "th",
+"before": "ute-TSPProjectID15.k.137",
+"after": "Avenue-Collector-TSPProj",
+"box": [
+353.81,
+479.08,
+361.32,
+486.07
+]
+},
+{
+"text": "th",
+"before": "ofBeefBendRoadbetween137",
+"after": "Avenueandnewneigh-borhoo",
+"box": [
+414.47,
+564.4,
+421.98,
+571.38
+]
+},
+{
+"text": "th",
+"before": "rRoadextensionbetween137",
+"after": "Avenueand150thAvenue-TSP",
+"box": [
+437.44,
+606.8,
+444.95,
+613.79
+]
+},
+{
+"text": "th",
+"before": "between137thAvenueand150",
+"after": "Avenue-TSPProjectID16.d.",
+"box": [
+523.88,
+606.8,
+531.39,
+613.79
+]
+}
+],
+"407": [
+{
+"text": "th",
+"before": "dRoad;h.FischerRoadat137",
+"after": "Avenue;andi.FischerRoada",
+"box": [
+208.64,
+465.86,
+216.14,
+472.85
+]
+},
+{
+"text": "th",
+"before": "ue;andi.FischerRoadat150",
+"after": "Avenue.2.TypeBIntersecti",
+"box": [
+205.55,
+480.58,
+213.06,
+487.57
+]
+}
+],
+"416": [
+{
+"text": "37",
+"before": "treetB(BufferedBikeLane)",
+"after": "16.114.120174.86.34(King",
+"box": [
+402.26,
+91.32,
+409.75,
+97.8
+]
+}
+],
+"417": [
+{
+"text": "38",
+"before": "reetC(SeparatedBikeLane)",
+"after": "16.114.120174.86.35(King",
+"box": [
+435.99,
+91.32,
+443.47,
+97.8
+]
+}
+],
+"484": [
+{
+"text": ".",
+"before": "'IfIiUl£Jj1ili\"~-.------",
+"after": ".~~-;2..~~__:.'.\\\"'I.•..",
+"box": [
+367.67,
+119.9,
+370.23,
+129.1
+]
+},
+{
+"text": "P",
+"before": "\"\"\",,'iIio\"_\"=\"\"_oUa....",
+"after": "....._1.\".SerVices.,LLC.",
+"box": [
+483.8,
+629.11,
+488.69,
+637.91
+]
+}
+],
+"487": [
+{
+"text": "st",
+"before": "andFischerRoad(eastof131",
+"after": ").16.144.030174.121(King",
+"box": [
+363.3,
+371.32,
+369.39,
+378.31
+]
+}
+],
+"534": [
+{
+"text": "firewor~",
+"before": "and4.Storageand/orsaleof",
+"after": "C(Ord.96-4§I(part),1996)",
+"box": [
+440.64,
+299.04,
+507.02,
+306.72
+]
+}
+],
+"550": [
+{
+"text": "th",
+"before": "eTualatinRiverbetween137",
+"after": "AvenueandRoyRogersRoad.T",
+"box": [
+107.7,
+556.16,
+115.21,
+563.15
+]
+}
+],
+"565": [
+{
+"text": "m~or",
+"before": "ionwithanapplicationfora",
+"after": "orminorpartition(Chapter",
+"box": [
+164.4,
+242.16,
+190.32,
+250.56
+]
+}
+],
+"601": [
+{
+"text": "~'4",
+"before": "ou...-...MOIe\"9\"'_,.....",
+"after": ",.._Iaof'tqJ\"~'tt.o\"lll.",
+"box": [
+196.8,
+534.24,
+205.0,
+538.08
+]
+},
+{
+"text": "~",
+"before": "ROSSACRESWTTHINTHEOOB...",
+"after": "~q;~R·:21':13Ii06rl:i6)I",
+"box": [
+147.6,
+416.4,
+150.48,
+420.48
+]
+}
+],
+"619": [
+{
+"text": "st",
+"before": "dRoad,FischerRoad,and131",
+"after": "Avenue;•OregonDepartment",
+"box": [
+433.85,
+420.96,
+439.94,
+427.95
+]
+}
+],
+"621": [
+{
+"text": "st",
+"before": "ding99W,BeefBendRoad,131",
+"after": "Avenue,FischerRoad,andDu",
+"box": [
+555.54,
+621.77,
+561.63,
+628.75
+]
+}
+],
+"629": [
+{
+"text": "rd",
+"before": "totheputtinggreenforthe3",
+"after": "holeshouldalsobeconsider",
+"box": [
+195.77,
+206.02,
+201.3,
+211.01
+]
+}
+],
+"635": [
+{
+"text": "th",
+"before": "ucingparking.Redesign116",
+"after": "Avenueandtheconnectingpa",
+"box": [
+172.26,
+240.76,
+179.77,
+247.75
+]
+},
+{
+"text": "th",
+"before": "rovidingabusstopalong116",
+"after": "Avenueandimprovingtheacc",
+"box": [
+253.25,
+304.73,
+260.76,
+311.71
+]
+}
+],
+"644": [
+{
+"text": "1",
+"before": "o197.490,andOAR600-007).",
+"after": "Goal10requiresincorporat",
+"box": [
+94.33,
+242.11,
+98.57,
+249.09
+]
+},
+{
+"text": "2",
+"before": "vernmentassistedhousing;",
+"after": "(c)Mobilehomeormanufactu",
+"box": [
+229.44,
+381.8,
+233.68,
+388.78
+]
+}
+],
+"648": [
+{
+"text": "3",
+"before": "ildableresidentiallands.",
+"after": "Note—3TheMetroRLISvacant",
+"box": [
+375.7,
+227.1,
+379.95,
+234.08
+]
+}
+],
+"658": [
+{
+"text": "4",
+"before": "rsAffectingHousingChoice",
+"after": "Analyststypicallydescrib",
+"box": [
+386.62,
+69.1,
+391.11,
+76.58
+]
+}
+],
+"659": [
+{
+"text": "5",
+"before": "NationalTrends",
+"after": "Thisbriefsummaryonnation",
+"box": [
+161.93,
+69.1,
+166.42,
+76.58
+]
+},
+{
+"text": "6",
+"before": "BabyBoomers,Millennials,",
+"after": "andimmigrants.Note—5Thes",
+"box": [
+416.21,
+639.23,
+420.45,
+646.21
+]
+}
+],
+"661": [
+{
+"text": "7",
+"before": "fromtheNewHousingReport:",
+"after": "ºLargersingle-familyunit",
+"box": [
+234.1,
+158.79,
+238.34,
+165.78
+]
+},
+{
+"text": "8",
+"before": "ibehousingneedstatewide.",
+"after": "Forhousingtobeconsidered",
+"box": [
+403.0,
+500.04,
+407.24,
+507.02
+]
+}
+],
+"663": [
+{
+"text": "9",
+"before": "mmunityaslongaspossible.",
+"after": "Regionalandlocalgrowthin",
+"box": [
+192.72,
+582.39,
+196.96,
+589.37
+]
+}
+],
+"664": [
+{
+"text": "10",
+"before": "ncreasesinpropertytaxes.",
+"after": "Millennials.Millennialsa",
+"box": [
+386.07,
+99.92,
+394.55,
+106.91
+]
+},
+{
+"text": "11",
+"before": "thwalkableneighborhoods.",
+"after": "Arecentsurveyofpeopleliv",
+"box": [
+428.95,
+421.71,
+437.43,
+428.7
+]
+},
+{
+"text": "12",
+"before": "singforyoungerresidents.",
+"after": "Thesurveyresultssuggestt",
+"box": [
+151.03,
+478.84,
+159.51,
+485.82
+]
+}
+],
+"667": [
+{
+"text": "13",
+"before": "ngneedsinavarietyofways.",
+"after": "Growthinfirst-generation",
+"box": [
+119.6,
+485.62,
+128.08,
+492.6
+]
+}
+],
+"679": [
+{
+"text": "15",
+"before": "kids),the\"emptynesters.\"",
+"after": "Thus,simplylookingatthel",
+"box": [
+488.95,
+292.75,
+497.43,
+299.73
+]
+}
+],
+"681": [
+{
+"text": "16",
+"before": "yforthe2015to2040period.",
+"after": "TheMetroCounciladoptedth",
+"box": [
+457.6,
+206.69,
+466.08,
+213.67
+]
+}
+],
+"683": [
+{
+"text": "17",
+"before": "thefollowingassumptions:",
+"after": "•Fiftypercentofnewhousin",
+"box": [
+328.05,
+407.74,
+336.53,
+414.73
+]
+}
+],
+"689": [
+{
+"text": "18",
+"before": "lleda\"capacityanalysis,\"",
+"after": "canbeusedtoevaluatediffe",
+"box": [
+519.73,
+346.38,
+528.22,
+353.36
+]
+},
+{
+"text": "19",
+"before": "edineachPlanDesignation.",
+"after": "Note—18Thereisambiguityi",
+"box": [
+307.82,
+544.94,
+316.3,
+551.92
+]
+}
+]
+}
+}

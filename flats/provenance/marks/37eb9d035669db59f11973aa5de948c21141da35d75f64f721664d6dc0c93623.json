@@ -1,0 +1,32 @@
+{
+"book": "37eb9d035669db59f11973aa5de948c21141da35d75f64f721664d6dc0c93623",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"17": [
+{
+"text": "nd",
+"before": "heNEGlisanStreetandNE162",
+"after": "Avenuecorridors),CMU,TC-",
+"box": [
+290.28,
+499.81,
+297.65,
+506.77
+]
+}
+],
+"24": [
+{
+"text": "1",
+"before": "ELOPMENTAREA(GROSSACRES)",
+"after": "BUILDINGFORM(SECTION7.04",
+"box": [
+232.44,
+127.71,
+235.97,
+134.67
+]
+}
+]
+}
+}

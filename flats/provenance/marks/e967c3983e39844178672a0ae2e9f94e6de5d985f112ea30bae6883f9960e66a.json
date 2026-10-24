@@ -1,0 +1,1477 @@
+{
+"book": "e967c3983e39844178672a0ae2e9f94e6de5d985f112ea30bae6883f9960e66a",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"381": [
+{
+"text": "2,",
+"before": "r'snote-OrdNo.2009-007,*",
+"after": "adoptedJune16,2009,amend",
+"box": [
+241.87,
+651.72,
+247.54,
+659.52
+]
+}
+],
+"382": [
+{
+"text": "1",
+"before": "ructureisoneandonehalf{1",
+"after": "h)inchesorlessininternal",
+"box": [
+115.72,
+434.04,
+119.17,
+440.24
+]
+}
+],
+"494": [
+{
+"text": "1",
+"before": "ter16.52PPPPP•GroupHomes",
+"after": "PPPPP•Government-Assiste",
+"box": [
+164.57,
+654.3,
+168.81,
+661.28
+]
+},
+{
+"text": "2",
+"before": "vernment-Assistedhousing",
+"after": "PPPPPACCESSORYUSES16.12.",
+"box": [
+238.27,
+670.51,
+242.51,
+677.5
+]
+}
+],
+"495": [
+{
+"text": "1",
+"before": "7,0007,0007,000•Townhome",
+"after": ":Aver-ageof1,500SFperuni",
+"box": [
+161.01,
+172.12,
+165.25,
+179.1
+]
+},
+{
+"text": "2",
+"before": "umLotwidthatbuildingline",
+"after": ":(infeet)•SingleFamilyDe",
+"box": [
+157.71,
+398.37,
+161.95,
+405.35
+]
+},
+{
+"text": "3",
+"before": "080MaximumHeight(infeet)",
+"after": "•CottageClusters1.5sto-r",
+"box": [
+221.98,
+507.87,
+226.22,
+514.86
+]
+},
+{
+"text": "4",
+"before": "evices,RadioandTVaerials",
+"after": "50505050556016.12.030296",
+"box": [
+139.31,
+678.5,
+143.55,
+685.48
+]
+}
+],
+"496": [
+{
+"text": "5",
+"before": "tbacks(infeet)•Frontyard",
+"after": "302020141414•Frontyard-C",
+"box": [
+147.79,
+121.98,
+152.03,
+128.96
+]
+},
+{
+"text": "6",
+"before": "0202020•Interiorsideyard",
+"after": "•Single-FamilyDe-tached;",
+"box": [
+178.28,
+185.09,
+182.52,
+192.07
+]
+},
+{
+"text": "7",
+"before": "geCluster555555•Townhome",
+"after": "555555•Multi-FamilyDwell",
+"box": [
+170.58,
+257.43,
+174.82,
+264.41
+]
+}
+],
+"497": [
+{
+"text": "st",
+"before": "loorArea•CottageCluster1",
+"after": "floorbuild-ingfootprintl",
+"box": [
+250.57,
+120.98,
+256.66,
+127.96
+]
+},
+{
+"text": "nd",
+"before": "tprintlessthan900sq.ft.2",
+"after": "floorshallnotexceed50%of",
+"box": [
+250.57,
+237.72,
+259.94,
+244.7
+]
+},
+{
+"text": "st",
+"before": "50%ofsquarefootageofthe1",
+"after": "floor.1stfloorbuild-ingf",
+"box": [
+250.57,
+354.46,
+256.66,
+361.45
+]
+},
+{
+"text": "st",
+"before": "refootageofthe1stfloor.1",
+"after": "floorbuild-ingfootprintl",
+"box": [
+299.02,
+120.98,
+305.11,
+127.96
+]
+},
+{
+"text": "nd",
+"before": "tprintlessthan900sq.ft.2",
+"after": "floorshallnotexceed50%of",
+"box": [
+299.02,
+237.72,
+308.38,
+244.7
+]
+},
+{
+"text": "st",
+"before": "50%ofsquarefootageofthe1",
+"after": "floor.1stfloorbuild-ingf",
+"box": [
+299.02,
+354.46,
+305.11,
+361.45
+]
+},
+{
+"text": "st",
+"before": "refootageofthe1stfloor.1",
+"after": "floorbuild-ingfootprintl",
+"box": [
+347.46,
+120.98,
+353.55,
+127.96
+]
+},
+{
+"text": "nd",
+"before": "tprintlessthan900sq.ft.2",
+"after": "floorshallnotexceed50%of",
+"box": [
+347.46,
+237.72,
+356.83,
+244.7
+]
+},
+{
+"text": "st",
+"before": "50%ofsquarefootageofthe1",
+"after": "floor.1stfloorbuild-ingf",
+"box": [
+347.46,
+354.46,
+353.55,
+361.45
+]
+},
+{
+"text": "st",
+"before": "refootageofthe1stfloor.1",
+"after": "floorbuild-ingfootprintl",
+"box": [
+395.91,
+120.98,
+402.0,
+127.96
+]
+},
+{
+"text": "nd",
+"before": "tprintlessthan900sq.ft.2",
+"after": "floorshallnotexceed50%of",
+"box": [
+395.91,
+237.72,
+405.27,
+244.7
+]
+},
+{
+"text": "st",
+"before": "50%ofsquarefootageofthe1",
+"after": "floor.1stfloorbuild-ingf",
+"box": [
+395.91,
+354.46,
+402.0,
+361.45
+]
+},
+{
+"text": "st",
+"before": "refootageofthe1stfloor.1",
+"after": "floorbuild-ingfootprintl",
+"box": [
+444.35,
+120.98,
+450.44,
+127.96
+]
+},
+{
+"text": "nd",
+"before": "tprintlessthan900sq.ft.2",
+"after": "floorshallnotexceed50%of",
+"box": [
+444.35,
+237.72,
+453.71,
+244.7
+]
+},
+{
+"text": "st",
+"before": "50%ofsquarefootageofthe1",
+"after": "floor.1stfloorbuild-ingf",
+"box": [
+444.35,
+354.46,
+450.44,
+361.45
+]
+},
+{
+"text": "st",
+"before": "refootageofthe1stfloor.1",
+"after": "floorbuild-ingfootprintl",
+"box": [
+492.79,
+120.98,
+498.88,
+127.96
+]
+},
+{
+"text": "nd",
+"before": "tprintlessthan900sq.ft.2",
+"after": "floorshallnotexceed50%of",
+"box": [
+492.79,
+237.72,
+502.15,
+244.7
+]
+},
+{
+"text": "st",
+"before": "50%ofsquarefootageofthe1",
+"after": "floor.Footnote:Iftheloti",
+"box": [
+492.79,
+354.46,
+498.88,
+361.45
+]
+}
+],
+"502": [
+{
+"text": "1",
+"before": "nReview)D.Detaileddesign",
+"after": "1.Allsingledetacheddwell",
+"box": [
+173.02,
+111.45,
+177.26,
+118.43
+]
+}
+],
+"515": [
+{
+"text": "1",
+"before": "ootnotesofthistable.OCNC",
+"after": "RCGCRESIDENTIAL*Editor’s",
+"box": [
+499.78,
+503.83,
+504.02,
+510.82
+]
+}
+],
+"516": [
+{
+"text": "1",
+"before": "OCNC",
+"after": "RCGC•Multi-Familydwellin",
+"box": [
+254.26,
+73.28,
+258.5,
+80.27
+]
+},
+{
+"text": "1",
+"before": "sidentialuse(s).PPPPOCNC",
+"after": "RCGC•Residentialcarefaci",
+"box": [
+488.26,
+73.28,
+492.5,
+80.27
+]
+}
+],
+"517": [
+{
+"text": "1",
+"before": "OCNC",
+"after": "RCGC•Large-scalepowergen",
+"box": [
+265.78,
+73.28,
+270.02,
+80.27
+]
+},
+{
+"text": "4",
+"before": ",orbouncehousefacilities",
+"after": "NNPPHotelsandmotelsCNPPM",
+"box": [
+168.24,
+630.1,
+172.48,
+637.09
+]
+},
+{
+"text": "1",
+"before": "PMotorVehiclerelatedOCNC",
+"after": "RCGC•Motorizedvehicleand",
+"box": [
+499.78,
+73.28,
+504.02,
+80.27
+]
+}
+],
+"518": [
+{
+"text": "1",
+"before": "OCNC",
+"after": "RCGC•Businesssupportser-",
+"box": [
+254.26,
+73.28,
+258.5,
+80.27
+]
+},
+{
+"text": "5",
+"before": "lsalesandlumberyards.NNC",
+"after": "POCNC1RCGCPersonalServic",
+"box": [
+263.24,
+673.76,
+267.48,
+680.74
+]
+},
+{
+"text": "1",
+"before": "andlumberyards.NNC5POCNC",
+"after": "RCGCPersonalServices•Hea",
+"box": [
+488.26,
+73.28,
+492.5,
+80.27
+]
+},
+{
+"text": "6",
+"before": "thoutdoorrecreationareas",
+"after": "NNCCEatingandDrinkingest",
+"box": [
+346.32,
+413.08,
+350.56,
+420.07
+]
+},
+{
+"text": "7",
+"before": "loungeswithoutdrive-thru",
+"after": "PCPP•Restaurantswithdriv",
+"box": [
+369.13,
+472.45,
+373.37,
+479.44
+]
+},
+{
+"text": "8",
+"before": "ervicesNNPP•FoodCartPods",
+"after": "NNCCINDUSTRIAL•Limitedma",
+"box": [
+405.44,
+518.85,
+409.68,
+525.83
+]
+}
+],
+"519": [
+{
+"text": "1",
+"before": "OCNC",
+"after": "RCGC•Radio,television,an",
+"box": [
+265.78,
+73.28,
+270.02,
+80.27
+]
+},
+{
+"text": "9",
+"before": "ontowersandtransmit-ters",
+"after": "CCCC•Wirelesscommunica-t",
+"box": [
+116.67,
+172.86,
+120.91,
+179.85
+]
+}
+],
+"520": [
+{
+"text": "9",
+"before": "CNCRCGCFrontyardset-back",
+"after": "020ft00Whenabuttingresid",
+"box": [
+110.64,
+117.74,
+114.88,
+124.72
+]
+},
+{
+"text": "9",
+"before": "ntialzoneSideyardsetback",
+"after": "0000whenabuttingresiden-",
+"box": [
+123.33,
+241.21,
+127.57,
+248.2
+]
+},
+{
+"text": "9",
+"before": "one10ft20Rearyardsetback",
+"after": "0000whenabuttingresiden-",
+"box": [
+123.33,
+364.94,
+127.57,
+371.92
+]
+},
+{
+"text": "9",
+"before": "k2010ft10ft20ftCornerlot",
+"after": "020ftonanysidefac-ingstr",
+"box": [
+100.92,
+475.69,
+105.16,
+482.68
+]
+},
+{
+"text": "10,11",
+"before": "ysidefac-ingstreetHeight",
+"after": "2sto-riesor30ftLeastre-s",
+"box": [
+120.25,
+557.01,
+139.51,
+564.0
+]
+},
+{
+"text": "13,14",
+"before": "tingresi-dentialzone50ft",
+"after": "50ft13,149Existingreside",
+"box": [
+226.21,
+569.99,
+245.47,
+576.97
+]
+},
+{
+"text": "13,14",
+"before": "dentialzone50ft13,1450ft",
+"after": "9Existingresidentialuses",
+"box": [
+261.87,
+569.99,
+281.13,
+576.97
+]
+}
+],
+"527": [
+{
+"text": "1",
+"before": "esofthistable.UsesLIGIEI",
+"after": "RESIDENTIAL•Singledwelli",
+"box": [
+513.75,
+353.66,
+518.0,
+360.65
+]
+}
+],
+"528": [
+{
+"text": "1",
+"before": "UsesLIGIEI",
+"after": "Entertainment/recreation",
+"box": [
+502.24,
+73.28,
+506.48,
+80.27
+]
+},
+{
+"text": "2,3",
+"before": ",orbouncehousefacilities",
+"after": "CCCHospitalityandlodging",
+"box": [
+166.09,
+138.69,
+176.87,
+145.67
+]
+},
+{
+"text": "12",
+"before": "andlodging•Hotel/MotelCU",
+"after": "NNMotorvehiclerelated•Mo",
+"box": [
+440.55,
+172.12,
+449.03,
+179.1
+]
+},
+{
+"text": "4",
+"before": "ationalvehiclestorageCCC",
+"after": "•Vehiclefuelingstationso",
+"box": [
+498.58,
+264.91,
+502.82,
+271.89
+]
+},
+{
+"text": "5",
+"before": "tionsorcarwashfacilities",
+"after": "CCC•Junkyardsandsalvagey",
+"box": [
+302.34,
+281.62,
+306.58,
+288.61
+]
+},
+{
+"text": "3",
+"before": "ssandprofessionaloffices",
+"after": "PPP•Businesssupportservi",
+"box": [
+249.64,
+348.48,
+253.88,
+355.46
+]
+},
+{
+"text": "3",
+"before": "faxandcomputerfacilities",
+"after": "PPP•Anyincidentalbusines",
+"box": [
+279.31,
+378.16,
+283.55,
+385.14
+]
+},
+{
+"text": "3",
+"before": "gartensasastand-aloneuse",
+"after": "CCCGeneralretail-salesor",
+"box": [
+383.02,
+496.9,
+387.26,
+503.88
+]
+},
+{
+"text": "3",
+"before": "alfloorareaofthebusiness",
+"after": "PPP•Medicalandrecreation",
+"box": [
+215.14,
+556.27,
+219.38,
+563.25
+]
+},
+{
+"text": "6",
+"before": "onalmarijuanafacilitiesP",
+"after": "P6N•Toolandequipmentrepa",
+"box": [
+430.25,
+572.98,
+434.49,
+579.96
+]
+},
+{
+"text": "6",
+"before": "almarijuanafacilitiesP6P",
+"after": "N•Toolandequipmentrepair",
+"box": [
+463.78,
+572.98,
+468.02,
+579.96
+]
+},
+{
+"text": "7",
+"before": "les,includingtruckrental",
+"after": "PPP•Retailplantnurseries",
+"box": [
+404.45,
+589.69,
+408.69,
+596.68
+]
+},
+{
+"text": "3",
+"before": "erialsalesandlumberyards",
+"after": "CPNPersonalservices•Heal",
+"box": [
+316.17,
+652.8,
+320.41,
+659.79
+]
+}
+],
+"529": [
+{
+"text": "1",
+"before": "UsesLIGIEI",
+"after": "•PsilocybinServiceCenter",
+"box": [
+513.75,
+73.28,
+518.0,
+80.27
+]
+},
+{
+"text": "13",
+"before": "ilocybinServiceCentersNP",
+"after": "N•Personalservicescateri",
+"box": [
+475.3,
+91.79,
+483.79,
+98.78
+]
+},
+{
+"text": "8",
+"before": "oming,andsimilarservices",
+"after": "CCC•Publicorcommercialpa",
+"box": [
+416.38,
+133.95,
+420.62,
+140.93
+]
+},
+{
+"text": "8",
+"before": "thoutdoorrecreationareas",
+"after": "CCCEatinganddrinkingesta",
+"box": [
+182.47,
+195.81,
+186.71,
+202.8
+]
+},
+{
+"text": "13",
+"before": "anufacturingFacilitiesNP",
+"after": "N•Distribution,warehousi",
+"box": [
+475.3,
+486.67,
+483.79,
+493.65
+]
+},
+{
+"text": "9",
+"before": "withinanenclosedbuilding",
+"after": "PPP•Distributionandwareh",
+"box": [
+336.3,
+545.54,
+340.54,
+552.52
+]
+},
+{
+"text": "9",
+"before": "withinanenclosedbuilding",
+"after": "NPC•Mini-warehousingorse",
+"box": [
+364.43,
+574.98,
+368.67,
+581.96
+]
+},
+{
+"text": "4",
+"before": "rageandequipmentyardsCPC",
+"after": "•Building,heating,plumbi",
+"box": [
+510.1,
+657.29,
+514.34,
+664.28
+]
+},
+{
+"text": "10",
+"before": "eservices,andsimilaruses",
+"after": "PPP16.31.020321Supp.No.2",
+"box": [
+327.29,
+686.73,
+335.77,
+693.71
+]
+}
+],
+"530": [
+{
+"text": "1",
+"before": "UsesLIGIEI",
+"after": "•Industriallaundry,drycl",
+"box": [
+502.24,
+73.28,
+506.48,
+80.27
+]
+},
+{
+"text": "11",
+"before": "elesscommunicationtowers",
+"after": "andtransmittersCCC•Wirel",
+"box": [
+244.73,
+432.29,
+253.21,
+439.27
+]
+}
+],
+"532": [
+{
+"text": "9",
+"before": "s:10,000SF20,000SF3acres",
+"after": "Lotarea-commercialuses(s",
+"box": [
+487.15,
+143.68,
+491.39,
+150.66
+]
+},
+{
+"text": "11",
+"before": ":100feetFrontyardsetback",
+"after": "20feetNone20feetSideyard",
+"box": [
+176.26,
+221.51,
+184.74,
+228.49
+]
+},
+{
+"text": "10",
+"before": "one20feetSideyardsetback",
+"after": "NoneNoneNoneRearyardsetb",
+"box": [
+169.61,
+237.72,
+178.09,
+244.7
+]
+},
+{
+"text": "11",
+"before": "eNoneNoneRearyardsetback",
+"after": "NoneNoneNoneCornerlotstr",
+"box": [
+172.1,
+253.93,
+180.58,
+260.92
+]
+},
+{
+"text": "11",
+"before": "1120feetNone20feetHeight",
+"after": "50feet9LotswithintheEIzo",
+"box": [
+120.25,
+286.36,
+128.73,
+293.35
+]
+}
+],
+"539": [
+{
+"text": "1",
+"before": "iontowersandtransmitters",
+"after": "C•Wirelesscommunicationf",
+"box": [
+339.1,
+305.91,
+342.76,
+312.43
+]
+},
+{
+"text": "2",
+"before": "ingtheroofofthestructure",
+"after": "1Exceptfortowerslocatedw",
+"box": [
+390.17,
+351.21,
+393.82,
+357.73
+]
+}
+],
+"577": [
+{
+"text": "1",
+"before": "anAccessoryDwellingUnit.",
+"after": "D.Floorarea:Themaximumgr",
+"box": [
+479.52,
+449.87,
+482.97,
+456.77
+]
+}
+],
+"581": [
+{
+"text": "1",
+"before": "xceedingtwoandone-half(2",
+"after": "/2)feetinheight,measured",
+"box": [
+445.47,
+360.42,
+448.57,
+366.62
+]
+}
+],
+"592": [
+{
+"text": "1",
+"before": "(s)anadditionalone-half(",
+"after": "/2)footforeveryone(1)foo",
+"box": [
+383.21,
+139.72,
+387.05,
+146.3
+]
+}
+],
+"596": [
+{
+"text": "1",
+"before": "ationpacket,onereduced(8",
+"after": "/2×11)copyofthefullappli",
+"box": [
+323.2,
+171.65,
+327.04,
+178.23
+]
+}
+],
+"598": [
+{
+"text": "st",
+"before": "onsideredcompleteonthe31",
+"after": "dayfromthedatetheapplica",
+"box": [
+124.45,
+98.93,
+130.54,
+105.91
+]
+}
+],
+"649": [
+{
+"text": "1",
+"before": "tiplebuildings.Materials",
+"after": "Concrete,artificialmater",
+"box": [
+357.7,
+230.36,
+360.69,
+235.35
+]
+},
+{
+"text": "2",
+"before": "rnedmasonry,woodRoofForm",
+"after": "Flat(nocornice)orsingle-",
+"box": [
+354.43,
+380.58,
+357.42,
+385.57
+]
+},
+{
+"text": "3",
+"before": "tment——CommercialGlazing",
+"after": "0—20%glazingonstreet-fac",
+"box": [
+357.69,
+510.85,
+360.69,
+515.83
+]
+}
+],
+"650": [
+{
+"text": "4",
+"before": "eandcoveredStructureSize",
+"after": "todiscourage\"bigbox\"styl",
+"box": [
+101.76,
+349.15,
+104.76,
+354.14
+]
+},
+{
+"text": "5",
+"before": "3PointsRequired)Location",
+"after": "Building(s)notflushtoany",
+"box": [
+112.18,
+494.93,
+115.17,
+499.92
+]
+},
+{
+"text": "6",
+"before": "—SecondaryPublicEntrance",
+"after": "Secondarypublicpedestria",
+"box": [
+346.18,
+536.74,
+349.17,
+541.73
+]
+}
+],
+"651": [
+{
+"text": "7",
+"before": "ow—NumberofParkingSpaces",
+"after": ">120%101—120%100%<100%(i",
+"box": [
+122.41,
+384.13,
+125.4,
+389.11
+]
+},
+{
+"text": "8",
+"before": "tsRequired)TreeRetention",
+"after": "Lessthan50%ofexistingtre",
+"box": [
+123.7,
+501.02,
+126.69,
+506.01
+]
+},
+{
+"text": "9",
+"before": "eretainedMitigationTrees",
+"after": "Treesmitigatedoff-siteor",
+"box": [
+119.81,
+551.96,
+122.8,
+556.95
+]
+},
+{
+"text": "10",
+"before": "nts01234LandscapingTrees",
+"after": "Lessthanonetreeforevery5",
+"box": [
+352.31,
+139.51,
+358.3,
+144.5
+]
+},
+{
+"text": "11,12",
+"before": "5—50%>50%——AmountofGrass",
+"after": ">75%oflandscapedareas50—",
+"box": [
+347.09,
+340.22,
+360.69,
+345.21
+]
+},
+{
+"text": "13",
+"before": "lAmountofSiteLandscaping",
+"after": "<10%ofgrosssite10—15%ofg",
+"box": [
+354.7,
+379.19,
+360.69,
+384.18
+]
+},
+{
+"text": "14",
+"before": "re/finish—FencesandWalls",
+"after": "Standardfencingandwallma",
+"box": [
+352.8,
+543.03,
+358.78,
+548.02
+]
+}
+],
+"666": [
+{
+"text": "1",
+"before": "udeslandswithinone-half(",
+"after": "/2)mileofa16.94.010430Su",
+"box": [
+461.3,
+693.74,
+465.14,
+700.33
+]
+}
+],
+"667": [
+{
+"text": "1",
+"before": "mPer-mittedPark-ingZoneA",
+"after": "Maxi-mumPer-mittedPark-i",
+"box": [
+217.2,
+355.16,
+221.44,
+362.14
+]
+},
+{
+"text": "2",
+"before": "mPer-mittedPark-ingZoneB",
+"after": "AccessoryDwellingUnitNon",
+"box": [
+262.85,
+355.16,
+267.09,
+362.14
+]
+},
+{
+"text": "3",
+"before": "ndmanu-facturedhomeonlot",
+"after": "1perdwell-ingunitNoneNon",
+"box": [
+112.44,
+494.65,
+116.68,
+501.64
+]
+},
+{
+"text": "1",
+"before": "mPer-mittedPark-ingZoneA",
+"after": "Maxi-mumPer-mittedPark-i",
+"box": [
+451.2,
+164.08,
+455.44,
+171.07
+]
+},
+{
+"text": "2",
+"before": "mPer-mittedPark-ingZoneB",
+"after": "•Lotarealessthan3,000SF1",
+"box": [
+496.85,
+164.08,
+501.09,
+171.07
+]
+}
+],
+"668": [
+{
+"text": "1",
+"before": "mPer-mittedPark-ingZoneA",
+"after": "Maxi-mumPer-mittedPark-i",
+"box": [
+205.68,
+164.08,
+209.92,
+171.07
+]
+},
+{
+"text": "2",
+"before": "mPer-mittedPark-ingZoneB",
+"after": "•Lotareaequaltoorgreater",
+"box": [
+251.33,
+164.08,
+255.57,
+171.07
+]
+},
+{
+"text": "1",
+"before": "mPer-mittedPark-ingZoneA",
+"after": "Maxi-mumPer-mittedPark-i",
+"box": [
+439.68,
+164.08,
+443.92,
+171.07
+]
+},
+{
+"text": "2",
+"before": "mPer-mittedPark-ingZoneB",
+"after": "CottageCluster1spaceperu",
+"box": [
+485.33,
+164.08,
+489.57,
+171.07
+]
+},
+{
+"text": "4",
+"before": "NoneMulti-Familydwelling",
+"after": "1perunitNoneNoneHotelorm",
+"box": [
+360.82,
+251.69,
+365.06,
+258.67
+]
+}
+],
+"669": [
+{
+"text": "1",
+"before": "mPer-mittedPark-ingZoneA",
+"after": "Maxi-mumPer-mittedPark-i",
+"box": [
+217.2,
+164.08,
+221.44,
+171.07
+]
+},
+{
+"text": "2",
+"before": "mPer-mittedPark-ingZoneB",
+"after": "Eatingordrinkingestablis",
+"box": [
+262.85,
+164.08,
+267.09,
+171.07
+]
+},
+{
+"text": "1",
+"before": "mPer-mittedPark-ingZoneA",
+"after": "Maxi-mumPer-mittedPark-i",
+"box": [
+451.2,
+164.08,
+455.44,
+171.07
+]
+},
+{
+"text": "2",
+"before": "mPer-mittedPark-ingZoneB",
+"after": "AffordableUnitsasdefined",
+"box": [
+496.85,
+164.08,
+501.09,
+171.07
+]
+}
+],
+"746": [
+{
+"text": "I,",
+"before": "snote--Ord.No.2011-011,*",
+"after": "adoptedOctober4.201I.ame",
+"box": [
+225.25,
+663.82,
+229.46,
+671.63
+]
+}
+],
+"762": [
+{
+"text": "1",
+"before": "depthofoneandone-half(1-",
+"after": "/2)feet,unlessevidenceis",
+"box": [
+354.26,
+540.08,
+358.1,
+546.67
+]
+},
+{
+"text": "1",
+"before": "essthanoneandone-half(1-",
+"after": "/2)feetoftopsoilpriortoc",
+"box": [
+393.38,
+554.05,
+397.22,
+560.64
+]
+}
+],
+"773": [
+{
+"text": "1",
+"before": "bynotmorethanone-fourth(",
+"after": "/4)inch.Ametalfenceconsi",
+"box": [
+269.22,
+285.65,
+273.06,
+292.23
+]
+},
+{
+"text": "3",
+"before": "otmorethanthree-eighths(",
+"after": "/8)inch.Landscapingissig",
+"box": [
+514.3,
+313.58,
+518.14,
+320.17
+]
+},
+{
+"text": "1",
+"before": "llextendatleastone-half(",
+"after": "/2)milefromthefacilitybo",
+"box": [
+408.34,
+460.26,
+412.18,
+466.84
+]
+}
+],
+"787": [
+{
+"text": "2",
+"before": "reebyusingtheequa-tionπr",
+"after": "tocalculatetheexpectedsq",
+"box": [
+165.2,
+661.18,
+169.44,
+668.17
+]
+},
+{
+"text": "2",
+"before": "treebyusingtheequationπr",
+"after": "tocalculatetheexpectedsq",
+"box": [
+339.69,
+423.71,
+343.93,
+430.69
+]
+},
+{
+"text": "1",
+"before": "parkinglotsmorethanhalf(",
+"after": "/2)acreinsize,seeSection",
+"box": [
+481.97,
+665.81,
+485.81,
+672.39
+]
+}
+],
+"789": [
+{
+"text": "2",
+"before": "ecanopy=35'(3.14159*17.5",
+"after": ")=962squarefeet4.TheCity",
+"box": [
+166.98,
+657.54,
+171.22,
+664.53
+]
+}
+],
+"794": [
+{
+"text": "1",
+"before": "ment.Iflessthanone-half(",
+"after": "/2)ofthetreesremovedwill",
+"box": [
+385.69,
+266.69,
+389.54,
+273.27
+]
+}
+]
+}
+}

@@ -1,0 +1,2257 @@
+{
+"book": "ed9c19bcb5842ad2fe4700961e9aa6e4b6fc1a0dcc4b0acbdcfd75eabec0f885",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"41": [
+{
+"text": "st",
+"before": "ctioncommencesonJanuary1",
+"after": "oftheyearimmediatelyfoll",
+"box": [
+517.55,
+546.42,
+522.92,
+552.91
+]
+}
+],
+"92": [
+{
+"text": "th",
+"before": "ly.(5)Notlaterthanthe180",
+"after": "dayaftertheinitiativeisa",
+"box": [
+211.52,
+439.41,
+218.14,
+445.89
+]
+}
+],
+"128": [
+{
+"text": "!",
+"before": "port,or(2)Whenownersof66",
+"after": "percentofthepropertythat",
+"box": [
+203.8,
+664.6,
+212.12,
+664.7
+]
+}
+],
+"131": [
+{
+"text": "!",
+"before": "madebyownersrepresenting",
+"after": "ormoreoftheareatobeasses",
+"box": [
+371.7,
+636.7,
+380.02,
+636.8
+]
+}
+],
+"286": [
+{
+"text": "a",
+"before": "nMapDensityRangeDistrict",
+"after": "MaxDensityPerAcreb,cMin.",
+"box": [
+225.2,
+251.34,
+228.94,
+257.82
+]
+},
+{
+"text": "b,",
+"before": "strictaMaxDensityPerAcre",
+"after": "cMin.DensityperAcred2—33",
+"box": [
+367.49,
+251.34,
+372.83,
+257.82
+]
+},
+{
+"text": "d",
+"before": "creb,cMin.DensityperAcre",
+"after": "2—332.44—5546—77.5610—12",
+"box": [
+501.13,
+251.34,
+504.88,
+257.82
+]
+}
+],
+"289": [
+{
+"text": "A,",
+"before": "estBuilding/AllBuildings",
+"after": "B20,000sformore20/25More",
+"box": [
+463.66,
+294.58,
+471.07,
+301.07
+]
+}
+],
+"294": [
+{
+"text": "a",
+"before": "nMapDensityRangeDistrict",
+"after": "Max.DensityperAcreb,cMin",
+"box": [
+262.99,
+224.49,
+266.73,
+230.97
+]
+},
+{
+"text": "b,",
+"before": "trictaMax.DensityperAcre",
+"after": "cMin.DensityperAcredPDR-",
+"box": [
+408.09,
+224.49,
+413.44,
+230.97
+]
+},
+{
+"text": "d",
+"before": "creb,cMin.DensityperAcre",
+"after": "PDR-10-11.8PDR-22-332.4P",
+"box": [
+499.64,
+224.49,
+503.39,
+230.97
+]
+}
+],
+"303": [
+{
+"text": "21",
+"before": "V-1:DevelopmentStandards",
+"after": "BuildingTypeMin.LotSize(",
+"box": [
+680.29,
+108.78,
+687.28,
+114.77
+]
+},
+{
+"text": "10,",
+"before": "in.BuildingFrontageWidth",
+"after": "12(%age)Max.Bldg.Height9",
+"box": [
+615.91,
+150.74,
+624.79,
+156.73
+]
+},
+{
+"text": "9",
+"before": ",12(%age)Max.Bldg.Height",
+"after": "(ft.)Setbacks10,13,20All",
+"box": [
+694.84,
+141.26,
+698.33,
+147.25
+]
+},
+{
+"text": "10,",
+"before": "ldg.Height9(ft.)Setbacks",
+"after": "13,20Alley-LoadedGarage(",
+"box": [
+862.03,
+131.78,
+870.9,
+137.77
+]
+},
+{
+"text": "19",
+"before": ")FrontMin.(ft.)FrontMax.",
+"after": "(ft.)RearMin.(ft.)SideMi",
+"box": [
+848.21,
+145.3,
+855.36,
+151.29
+]
+},
+{
+"text": "14",
+"before": "lBuildings—VillageCenter",
+"after": "NRNRNR19060NR35NRNRNRNAH",
+"box": [
+257.94,
+173.74,
+264.93,
+179.73
+]
+},
+{
+"text": "3",
+"before": "ageCenter14NRNRNR19060NR",
+"after": "5NRNRNRNAHotels—VillageC",
+"box": [
+758.97,
+173.74,
+762.46,
+179.73
+]
+},
+{
+"text": "14",
+"before": "NRNAHotels—VillageCenter",
+"after": "NRNRNR18060NR315NRNRNRNA",
+"box": [
+194.66,
+187.26,
+201.64,
+193.25
+]
+},
+{
+"text": "3",
+"before": "ageCenter14NRNRNR18060NR",
+"after": "15NRNRNRNAMixedUseBuildi",
+"box": [
+758.97,
+187.26,
+762.46,
+193.25
+]
+},
+{
+"text": "14",
+"before": "eBuildings—VillageCenter",
+"after": "NRNRNR19060NR38NRNRNRNAM",
+"box": [
+252.51,
+200.78,
+259.49,
+206.77
+]
+},
+{
+"text": "3",
+"before": "ageCenter14NRNRNR19060NR",
+"after": "8NRNRNRNAMulti-FamilyDwe",
+"box": [
+758.97,
+200.78,
+762.46,
+206.77
+]
+},
+{
+"text": "14",
+"before": "yDwellings—VillageCenter",
+"after": "NRNRNR180455415NRNRNRNAR",
+"box": [
+158.62,
+223.78,
+165.6,
+229.77
+]
+},
+{
+"text": "4",
+"before": "lageCenter14NRNRNR180455",
+"after": "15NRNRNRNARowHouses11—Vi",
+"box": [
+753.79,
+214.3,
+757.28,
+220.29
+]
+},
+{
+"text": "11",
+"before": "0455415NRNRNRNARowHouses",
+"after": "—VillageCenter14NRNRNR18",
+"box": [
+151.75,
+237.3,
+158.74,
+243.29
+]
+},
+{
+"text": "14",
+"before": "owHouses11—VillageCenter",
+"after": "NRNRNR180455410NRNRNRNAC",
+"box": [
+227.81,
+237.3,
+234.79,
+243.29
+]
+},
+{
+"text": "4",
+"before": "lageCenter14NRNRNR180455",
+"after": "10NRNRNRNACommercialBuil",
+"box": [
+753.79,
+237.3,
+757.28,
+243.29
+]
+},
+{
+"text": "4",
+"before": "ilyDwellingsNRNRNR160458",
+"after": "15NRNRNRNARowHouses11NR1",
+"box": [
+753.79,
+277.87,
+757.28,
+283.86
+]
+},
+{
+"text": "11",
+"before": "0458415NRNRNRNARowHouses",
+"after": "NR1550180458515NRNRNRNAS",
+"box": [
+151.75,
+291.39,
+158.74,
+297.38
+]
+},
+{
+"text": "5",
+"before": "ARowHouses11NR1550180458",
+"after": "15NRNRNRNASingle-FamilyD",
+"box": [
+753.79,
+291.39,
+757.28,
+297.38
+]
+},
+{
+"text": "16",
+"before": "sandDuplexes2,2503550260",
+"after": "35125,6206551578,17,18No",
+"box": [
+613.59,
+304.91,
+620.57,
+310.9
+]
+},
+{
+"text": "5,",
+"before": "plexes2,2503550260163512",
+"after": "6206551578,17,18Notes:NR",
+"box": [
+752.28,
+304.91,
+757.67,
+310.9
+]
+},
+{
+"text": "6",
+"before": "s2,25035502601635125,620",
+"after": "551578,17,18Notes:NRNoRe",
+"box": [
+826.57,
+304.91,
+830.06,
+310.9
+]
+},
+{
+"text": "15",
+"before": "25035502601635125,620655",
+"after": "78,17,18Notes:NRNoRequir",
+"box": [
+963.27,
+304.91,
+970.25,
+310.9
+]
+}
+],
+"308": [
+{
+"text": "2",
+"before": "UnitsNRNRNRMiddleHousing",
+"after": "NRNRNRMulti-FamilyDwelli",
+"box": [
+251.75,
+271.82,
+255.25,
+277.31
+]
+}
+],
+"324": [
+{
+"text": "th",
+"before": "ncreaseinrunofffromthe90",
+"after": "percentileofallrainevent",
+"box": [
+461.56,
+198.94,
+468.19,
+205.42
+]
+}
+],
+"339": [
+{
+"text": "rd",
+"before": "ceRoad,andwestoffuture63",
+"after": "Avenueextensionfromthein",
+"box": [
+338.58,
+119.61,
+345.49,
+126.1
+]
+},
+{
+"text": "rd",
+"before": "onofSWAdvanceRoadandSW63",
+"after": "AvenuenorthtoSubdistrict",
+"box": [
+292.71,
+134.08,
+299.62,
+140.57
+]
+},
+{
+"text": "th",
+"before": "ceRoad,andwestoffuture60",
+"after": "Avenueextensionfromthein",
+"box": [
+440.78,
+173.49,
+447.4,
+179.98
+]
+},
+{
+"text": "th",
+"before": "onofSWAdvanceRoadandSW60",
+"after": "AvenuenorthtotheBPAEasem",
+"box": [
+403.37,
+187.96,
+409.99,
+194.45
+]
+},
+{
+"text": "rd",
+"before": "olproperty,andwestofSW63",
+"after": "Avenue.h.SubdistrictS2.T",
+"box": [
+284.19,
+295.72,
+291.1,
+302.21
+]
+},
+{
+"text": "th",
+"before": "SWAdvanceRoad,eastofSW60",
+"after": "Avenue,andnorthofanexist",
+"box": [
+462.01,
+320.67,
+468.63,
+327.15
+]
+},
+{
+"text": "th",
+"before": "SubdistrictS2,eastofSW60",
+"after": "Avenue,northofSWKruseRoa",
+"box": [
+427.58,
+374.55,
+434.2,
+381.04
+]
+},
+{
+"text": "th",
+"before": "erPlanarea,andwestofSW60",
+"after": "Avenue.§4.127PLANNINGAND",
+"box": [
+410.61,
+442.9,
+417.23,
+449.38
+]
+}
+],
+"341": [
+{
+"text": "a,b",
+"before": "inimumLotsinSub-district",
+"after": "MaximumLotsinSub-distric",
+"box": [
+388.69,
+242.89,
+398.59,
+249.38
+]
+},
+{
+"text": "a,b",
+"before": "aximumLotsinSub-district",
+"after": "R-10LargeLot326327243084",
+"box": [
+499.9,
+242.89,
+509.8,
+249.38
+]
+},
+{
+"text": "a",
+"before": "668267493103038Civic1207",
+"after": "PublicFacilities(PF)1300",
+"box": [
+464.47,
+417.12,
+468.22,
+423.61
+]
+}
+],
+"342": [
+{
+"text": "A,",
+"before": "mberofMiddleHousingUnits",
+"after": "B,GMinimumNumberofSmallU",
+"box": [
+313.73,
+165.06,
+321.53,
+171.55
+]
+},
+{
+"text": "B,",
+"before": "inimumNumberofSmallUnits",
+"after": "C,D,GMinimumNumberofMobi",
+"box": [
+392.61,
+165.06,
+399.41,
+171.55
+]
+},
+{
+"text": "B,",
+"before": "berofMobility-ReadyUnits",
+"after": "C,E,F,HE110426713E211028",
+"box": [
+469.5,
+165.06,
+476.31,
+171.55
+]
+},
+{
+"text": "H",
+"before": "13E211028714E313334917E4",
+"after": "211E4TL1101(portion)I185",
+"box": [
+143.73,
+223.14,
+149.89,
+229.63
+]
+},
+{
+"text": "I",
+"before": "7E4H211E4TL1101(portion)",
+"after": "1851548E4TL120024623E4TL",
+"box": [
+179.98,
+250.46,
+181.9,
+254.95
+]
+},
+{
+"text": "J",
+"before": "8E4TL120024623E4TL100021",
+"after": "1J0E5227571529E614136918",
+"box": [
+293.05,
+280.67,
+296.33,
+287.15
+]
+},
+{
+"text": "J",
+"before": "4TL120024623E4TL100021J1",
+"after": "0E5227571529E614136918S1",
+"box": [
+371.98,
+280.67,
+375.26,
+287.15
+]
+},
+{
+"text": "E",
+"before": "71529E614136918S125724S2",
+"after": "91S2TL100028050SW60thAve",
+"box": [
+140.71,
+338.74,
+145.7,
+345.23
+]
+},
+{
+"text": "th",
+"before": "24S2E91S2TL100028050SW60",
+"after": "Ave62J1J1JS2TL8005890SWA",
+"box": [
+195.49,
+367.23,
+202.11,
+373.72
+]
+},
+{
+"text": "J",
+"before": "S2TL100028050SW60thAve62",
+"after": "1J1JS2TL8005890SWAdvance",
+"box": [
+293.05,
+367.23,
+296.33,
+373.72
+]
+},
+{
+"text": "J",
+"before": "TL100028050SW60thAve62J1",
+"after": "1JS2TL8005890SWAdvanceRd",
+"box": [
+371.98,
+367.23,
+375.26,
+373.72
+]
+},
+{
+"text": "J",
+"before": "100028050SW60thAve62J1J1",
+"after": "S2TL8005890SWAdvanceRd62",
+"box": [
+450.9,
+367.23,
+454.18,
+373.72
+]
+},
+{
+"text": "J",
+"before": "S2TL8005890SWAdvanceRd62",
+"after": "1J1JS2TL5005780SWAdvance",
+"box": [
+293.05,
+409.69,
+296.33,
+416.17
+]
+},
+{
+"text": "J",
+"before": "TL8005890SWAdvanceRd62J1",
+"after": "1JS2TL5005780SWAdvanceRd",
+"box": [
+371.98,
+409.69,
+375.26,
+416.17
+]
+},
+{
+"text": "J",
+"before": "8005890SWAdvanceRd62J1J1",
+"after": "S2TL5005780SWAdvanceRd52",
+"box": [
+450.9,
+409.69,
+454.18,
+416.17
+]
+},
+{
+"text": "J",
+"before": "S2TL5005780SWAdvanceRd52",
+"after": "1J1JS2TL3005738SWAdvance",
+"box": [
+293.05,
+452.15,
+296.33,
+458.63
+]
+},
+{
+"text": "J",
+"before": "TL5005780SWAdvanceRd52J1",
+"after": "1JS2TL3005738SWAdvanceRd",
+"box": [
+371.98,
+452.15,
+375.26,
+458.63
+]
+},
+{
+"text": "J",
+"before": "5005780SWAdvanceRd52J1J1",
+"after": "S2TL3005738SWAdvanceRd52",
+"box": [
+450.9,
+452.15,
+454.18,
+458.63
+]
+},
+{
+"text": "J",
+"before": "S2TL3005738SWAdvanceRd52",
+"after": "1J1JS2TL1005696SWAdvance",
+"box": [
+293.05,
+494.6,
+296.33,
+501.09
+]
+},
+{
+"text": "J",
+"before": "TL3005738SWAdvanceRd52J1",
+"after": "1JS2TL1005696SWAdvanceRd",
+"box": [
+371.98,
+494.6,
+375.26,
+501.09
+]
+},
+{
+"text": "J",
+"before": "3005738SWAdvanceRd52J1J1",
+"after": "S2TL1005696SWAdvanceRd52",
+"box": [
+450.9,
+494.6,
+454.18,
+501.09
+]
+},
+{
+"text": "J",
+"before": "S2TL1005696SWAdvanceRd52",
+"after": "1J1JS2TL90052J1J1JS2TL70",
+"box": [
+293.05,
+537.06,
+296.33,
+543.55
+]
+},
+{
+"text": "J",
+"before": "TL1005696SWAdvanceRd52J1",
+"after": "1JS2TL90052J1J1JS2TL7003",
+"box": [
+371.98,
+537.06,
+375.26,
+543.55
+]
+},
+{
+"text": "J",
+"before": "1005696SWAdvanceRd52J1J1",
+"after": "S2TL90052J1J1JS2TL700339",
+"box": [
+450.9,
+537.06,
+454.18,
+543.55
+]
+},
+{
+"text": "J",
+"before": "dvanceRd52J1J1JS2TL90052",
+"after": "1J1JS2TL70033935S2TL4004",
+"box": [
+293.05,
+565.55,
+296.33,
+572.03
+]
+},
+{
+"text": "J",
+"before": "anceRd52J1J1JS2TL90052J1",
+"after": "1JS2TL70033935S2TL40041J",
+"box": [
+371.98,
+565.55,
+375.26,
+572.03
+]
+},
+{
+"text": "J",
+"before": "ceRd52J1J1JS2TL90052J1J1",
+"after": "S2TL70033935S2TL40041J1J",
+"box": [
+450.9,
+565.55,
+454.18,
+572.03
+]
+},
+{
+"text": "J",
+"before": "J1JS2TL70033935S2TL40041",
+"after": "1J0S2TL20041J1J0S2TL1100",
+"box": [
+293.05,
+594.59,
+296.33,
+601.07
+]
+},
+{
+"text": "J",
+"before": "JS2TL70033935S2TL40041J1",
+"after": "0S2TL20041J1J0S2TL110028",
+"box": [
+371.98,
+594.59,
+375.26,
+601.07
+]
+},
+{
+"text": "J",
+"before": "35S2TL40041J1J0S2TL20041",
+"after": "1J0S2TL110028152SW60thAv",
+"box": [
+293.05,
+609.11,
+296.33,
+615.59
+]
+},
+{
+"text": "J",
+"before": "S2TL40041J1J0S2TL20041J1",
+"after": "0S2TL110028152SW60thAve5",
+"box": [
+371.98,
+609.11,
+375.26,
+615.59
+]
+},
+{
+"text": "th",
+"before": "041J1J0S2TL110028152SW60",
+"after": "Ave52J1J1JS2TL120052J1J1",
+"box": [
+195.49,
+637.59,
+202.11,
+644.08
+]
+},
+{
+"text": "J",
+"before": "S2TL110028152SW60thAve52",
+"after": "1J1JS2TL120052J1J1J§4.12",
+"box": [
+293.05,
+637.59,
+296.33,
+644.08
+]
+},
+{
+"text": "J",
+"before": "TL110028152SW60thAve52J1",
+"after": "1JS2TL120052J1J1J§4.127W",
+"box": [
+371.98,
+637.59,
+375.26,
+644.08
+]
+},
+{
+"text": "J",
+"before": "110028152SW60thAve52J1J1",
+"after": "S2TL120052J1J1J§4.127WIL",
+"box": [
+450.9,
+637.59,
+454.18,
+644.08
+]
+},
+{
+"text": "J",
+"before": "60thAve52J1J1JS2TL120052",
+"after": "1J1J§4.127WILSONVILLECOD",
+"box": [
+293.05,
+666.08,
+296.33,
+672.57
+]
+},
+{
+"text": "J",
+"before": "thAve52J1J1JS2TL120052J1",
+"after": "1J§4.127WILSONVILLECODEC",
+"box": [
+371.98,
+666.08,
+375.26,
+672.57
+]
+},
+{
+"text": "J",
+"before": "Ave52J1J1JS2TL120052J1J1",
+"after": "§4.127WILSONVILLECODECD4",
+"box": [
+450.9,
+666.08,
+454.18,
+672.57
+]
+}
+],
+"343": [
+{
+"text": "A,",
+"before": "mberofMiddleHousingUnits",
+"after": "B,GMinimumNumberofSmallU",
+"box": [
+313.73,
+164.57,
+321.53,
+171.05
+]
+},
+{
+"text": "B,",
+"before": "inimumNumberofSmallUnits",
+"after": "C,D,GMinimumNumberofMobi",
+"box": [
+392.61,
+164.57,
+399.41,
+171.05
+]
+},
+{
+"text": "B,",
+"before": "berofMobility-ReadyUnits",
+"after": "C,E,F,HS2TL130028300SW60",
+"box": [
+469.5,
+164.57,
+476.31,
+171.05
+]
+},
+{
+"text": "th",
+"before": "C,E,F,HS2TL130028300SW60",
+"after": "Ave82J1J1JS3E125S3TL1400",
+"box": [
+185.51,
+192.56,
+192.13,
+199.04
+]
+},
+{
+"text": "J",
+"before": "S2TL130028300SW60thAve82",
+"after": "1J1JS3E125S3TL140028424S",
+"box": [
+293.05,
+192.56,
+296.33,
+199.04
+]
+},
+{
+"text": "J",
+"before": "TL130028300SW60thAve82J1",
+"after": "1JS3E125S3TL140028424SW6",
+"box": [
+371.98,
+192.56,
+375.26,
+199.04
+]
+},
+{
+"text": "J",
+"before": "130028300SW60thAve82J1J1",
+"after": "S3E125S3TL140028424SW60t",
+"box": [
+450.9,
+192.56,
+454.18,
+199.04
+]
+},
+{
+"text": "E",
+"before": "028300SW60thAve82J1J1JS3",
+"after": "125S3TL140028424SW60thAv",
+"box": [
+142.58,
+220.54,
+147.57,
+227.03
+]
+},
+{
+"text": "th",
+"before": "JS3E125S3TL140028424SW60",
+"after": "Ave2572J4S3TL150028500SW",
+"box": [
+195.49,
+248.53,
+202.11,
+255.02
+]
+},
+{
+"text": "J",
+"before": "TL140028424SW60thAve2572",
+"after": "4S3TL150028500SW60thAve2",
+"box": [
+371.98,
+248.53,
+375.26,
+255.02
+]
+},
+{
+"text": "th",
+"before": "e2572J4S3TL150028500SW60",
+"after": "Ave2572J4S3TL160082J1J1J",
+"box": [
+195.49,
+290.49,
+202.11,
+296.98
+]
+},
+{
+"text": "J",
+"before": "TL150028500SW60thAve2572",
+"after": "4S3TL160082J1J1JS3TL1800",
+"box": [
+371.98,
+290.49,
+375.26,
+296.98
+]
+},
+{
+"text": "J",
+"before": "W60thAve2572J4S3TL160082",
+"after": "1J1JS3TL180028668SW60thA",
+"box": [
+293.05,
+318.48,
+296.33,
+324.97
+]
+},
+{
+"text": "J",
+"before": "0thAve2572J4S3TL160082J1",
+"after": "1JS3TL180028668SW60thAve",
+"box": [
+371.98,
+318.48,
+375.26,
+324.97
+]
+},
+{
+"text": "J",
+"before": "hAve2572J4S3TL160082J1J1",
+"after": "S3TL180028668SW60thAve82",
+"box": [
+450.9,
+318.48,
+454.18,
+324.97
+]
+},
+{
+"text": "th",
+"before": "82J1J1JS3TL180028668SW60",
+"after": "Ave82J1J2JS3TL170028580S",
+"box": [
+195.49,
+346.47,
+202.11,
+352.96
+]
+},
+{
+"text": "J",
+"before": "S3TL180028668SW60thAve82",
+"after": "1J2JS3TL170028580SW60thA",
+"box": [
+293.05,
+346.47,
+296.33,
+352.96
+]
+},
+{
+"text": "J",
+"before": "TL180028668SW60thAve82J1",
+"after": "2JS3TL170028580SW60thAve",
+"box": [
+371.98,
+346.47,
+375.26,
+352.96
+]
+},
+{
+"text": "J",
+"before": "180028668SW60thAve82J1J2",
+"after": "S3TL170028580SW60thAve10",
+"box": [
+450.9,
+346.47,
+454.18,
+352.96
+]
+},
+{
+"text": "th",
+"before": "82J1J2JS3TL170028580SW60",
+"after": "Ave1031J2JS3TL19005899SW",
+"box": [
+195.49,
+388.43,
+202.11,
+394.91
+]
+},
+{
+"text": "J",
+"before": "TL170028580SW60thAve1031",
+"after": "2JS3TL19005899SWKruseRd3",
+"box": [
+371.98,
+388.43,
+375.26,
+394.91
+]
+},
+{
+"text": "J",
+"before": "170028580SW60thAve1031J2",
+"after": "S3TL19005899SWKruseRd339",
+"box": [
+450.9,
+388.43,
+454.18,
+394.91
+]
+},
+{
+"text": "J",
+"before": "3TL20005691SWKruseRd1641",
+"after": "2JS4D158S4TL260035935S4T",
+"box": [
+371.98,
+472.35,
+375.26,
+478.83
+]
+},
+{
+"text": "J",
+"before": "L20005691SWKruseRd1641J2",
+"after": "S4D158S4TL260035935S4TL2",
+"box": [
+450.9,
+472.35,
+454.18,
+478.83
+]
+},
+{
+"text": "D",
+"before": "005691SWKruseRd1641J2JS4",
+"after": "158S4TL260035935S4TL2700",
+"box": [
+142.58,
+500.34,
+148.74,
+506.82
+]
+},
+{
+"text": "th",
+"before": "0035935S4TL270028901SW60",
+"after": "Ave12331816Notes:A.Clust",
+"box": [
+195.49,
+542.34,
+202.11,
+548.83
+]
+}
+],
+"345": [
+{
+"text": "th",
+"before": "rea,roundtothenearest100",
+"after": ".ThisistheReductionRatio",
+"box": [
+245.09,
+511.25,
+251.72,
+517.73
+]
+}
+],
+"346": [
+{
+"text": "A.",
+"before": "fiedasOtherDetachedUnits",
+"after": "•CottageclusterAccessory",
+"box": [
+509.0,
+294.38,
+516.79,
+300.87
+]
+},
+{
+"text": "A",
+"before": "ngle-familydetachedunits",
+"after": ",anddetachedmulti-family",
+"box": [
+451.17,
+406.34,
+456.94,
+412.82
+]
+}
+],
+"347": [
+{
+"text": "rd",
+"before": "oadandtheextensionofSW63",
+"after": "Avenue.Itspurposeistocre",
+"box": [
+422.27,
+682.87,
+429.18,
+689.35
+]
+}
+],
+"348": [
+{
+"text": "rd",
+"before": "tthatisanextensionofSW63",
+"after": "Avenueandconnectingtothe",
+"box": [
+301.43,
+340.88,
+308.34,
+347.36
+]
+},
+{
+"text": "rd",
+"before": "thatareanextensionofSW63",
+"after": "AvenueandSWFrogPondLane.",
+"box": [
+354.0,
+386.77,
+360.91,
+393.26
+]
+}
+],
+"349": [
+{
+"text": "rd",
+"before": "dattheintersectionofSW63",
+"after": "Avenue.c.UrbanFormType2:",
+"box": [
+481.13,
+369.06,
+488.04,
+375.55
+]
+},
+{
+"text": "th",
+"before": "ately680feeteastfromSW60",
+"after": "Avenue.Theexacteasternli",
+"box": [
+354.1,
+697.09,
+360.72,
+703.57
+]
+}
+],
+"350": [
+{
+"text": "th",
+"before": "etand700[feet]eastofSW60",
+"after": "Avenueandisencouragedtob",
+"box": [
+406.71,
+133.08,
+413.33,
+139.57
+]
+},
+{
+"text": "th",
+"before": "rict,extendingeastofSW60",
+"after": "Avenueapproximately360fe",
+"box": [
+215.24,
+261.8,
+221.87,
+268.28
+]
+},
+{
+"text": "th",
+"before": "imately500feeteastofSW60",
+"after": "Avenuefromthatpointtothe",
+"box": [
+280.25,
+289.74,
+286.88,
+296.22
+]
+},
+{
+"text": "th",
+"before": "feetand520feeteastofSW60",
+"after": "Avenueandisencouragedtob",
+"box": [
+325.46,
+345.61,
+332.08,
+352.1
+]
+},
+{
+"text": "th",
+"before": "n320and360feeteastofSW60",
+"after": "Avenueandisencouragedtob",
+"box": [
+216.04,
+373.55,
+222.67,
+380.04
+]
+},
+{
+"text": "th",
+"before": "imately220feeteastofSW60",
+"after": "Avenuebetweenapointdirec",
+"box": [
+322.66,
+468.09,
+329.28,
+474.58
+]
+},
+{
+"text": "th",
+"before": "feetand240feeteastofSW60",
+"after": "Avenueandisencouragedtob",
+"box": [
+265.79,
+551.91,
+272.41,
+558.39
+]
+},
+{
+"text": "th",
+"before": "istrictextendingfromSW60",
+"after": "Avenuetotheeastapproxima",
+"box": [
+355.43,
+697.09,
+362.05,
+703.57
+]
+}
+],
+"351": [
+{
+"text": "th",
+"before": "etand520[feet]eastofSW60",
+"after": "Avenueandisencouragedtob",
+"box": [
+396.18,
+148.55,
+402.8,
+155.04
+]
+},
+{
+"text": "th",
+"before": "e1area,extendingfromSW60",
+"after": "Avenuetotheeastapproxima",
+"box": [
+221.51,
+213.41,
+228.13,
+219.89
+]
+},
+{
+"text": "th",
+"before": "eet]and360feeteastofSW60",
+"after": "Avenueandisencouragedtob",
+"box": [
+221.51,
+271.28,
+228.13,
+277.76
+]
+},
+{
+"text": "th",
+"before": "trictextendingwestofSW60",
+"after": "Avenueapproximately380fe",
+"box": [
+228.17,
+378.54,
+234.79,
+385.03
+]
+},
+{
+"text": "th",
+"before": "feetand400feetwestofSW60",
+"after": "Avenueandisencouragedtob",
+"box": [
+405.8,
+436.41,
+412.43,
+442.9
+]
+},
+{
+"text": "th",
+"before": "imately570feetwestofSW60",
+"after": "Avenueandsouthtoafuturel",
+"box": [
+395.81,
+533.7,
+402.43,
+540.18
+]
+},
+{
+"text": "th",
+"before": "feetand590feetwestofSW60",
+"after": "Avenueandisencouragedtob",
+"box": [
+455.08,
+591.57,
+461.71,
+598.06
+]
+}
+],
+"353": [
+{
+"text": "A,B",
+"before": "trictMin.LotSize(sq.ft.)",
+"after": "Min.LotDepth(ft.)Max.Lot",
+"box": [
+203.71,
+389.38,
+213.63,
+394.37
+]
+},
+{
+"text": "I,",
+"before": "Cover-age(%)Min.LotWidth",
+"after": "J,N(ft.)Max.Bldg.HeightH",
+"box": [
+313.86,
+371.56,
+316.8,
+376.05
+]
+},
+{
+"text": "K,",
+"before": "ldg.HeightH(ft.)Setbacks",
+"after": "L,MFrontMin.(ft.)RearMin",
+"box": [
+444.69,
+336.95,
+450.61,
+341.94
+]
+},
+{
+"text": "O,P",
+"before": "rageMinSetbackfromStreet",
+"after": "(ft.)R-10LargeLot8,00060",
+"box": [
+511.56,
+381.4,
+521.36,
+386.39
+]
+},
+{
+"text": "E",
+"before": ")R-10LargeLot8,00060'40%",
+"after": "403520F20M18G20R-7Medium",
+"box": [
+273.32,
+401.83,
+277.31,
+406.81
+]
+},
+{
+"text": "F",
+"before": "rgeLot8,00060'40%E403520",
+"after": "20M18G20R-7MediumLot6,00",
+"box": [
+366.53,
+401.83,
+370.52,
+406.81
+]
+},
+{
+"text": "G",
+"before": "8,00060'40%E403520F20M18",
+"after": "20R-7MediumLot6,000C60'4",
+"box": [
+466.31,
+401.83,
+471.23,
+406.81
+]
+},
+{
+"text": "C",
+"before": "0M18G20R-7MediumLot6,000",
+"after": "60'45%E353515F15M18G20R-",
+"box": [
+210.37,
+414.35,
+214.68,
+419.34
+]
+},
+{
+"text": "E",
+"before": "R-7MediumLot6,000C60'45%",
+"after": "353515F15M18G20R-5SmallL",
+"box": [
+273.32,
+414.35,
+277.31,
+419.34
+]
+},
+{
+"text": "F",
+"before": "umLot6,000C60'45%E353515",
+"after": "15M18G20R-5SmallLot4,000",
+"box": [
+368.02,
+414.35,
+372.02,
+419.34
+]
+},
+{
+"text": "G",
+"before": ",000C60'45%E353515F15M18",
+"after": "20R-5SmallLot4,000C,D60'",
+"box": [
+466.31,
+414.35,
+471.23,
+419.34
+]
+},
+{
+"text": "C,D",
+"before": "15M18G20R-5SmallLot4,000",
+"after": "60'60%E353512F15M18G20No",
+"box": [
+210.37,
+434.85,
+221.05,
+439.84
+]
+},
+{
+"text": "E",
+"before": "-5SmallLot4,000C,D60'60%",
+"after": "353512F15M18G20Notes:A.M",
+"box": [
+273.32,
+434.85,
+277.31,
+439.84
+]
+},
+{
+"text": "F",
+"before": "Lot4,000C,D60'60%E353512",
+"after": "15M18G20Notes:A.Minimuml",
+"box": [
+366.53,
+434.85,
+370.52,
+439.84
+]
+},
+{
+"text": "G",
+"before": "00C,D60'60%E353512F15M18",
+"after": "20Notes:A.Minimumlotsize",
+"box": [
+466.31,
+434.85,
+471.23,
+439.84
+]
+}
+],
+"354": [
+{
+"text": "A",
+"before": "rages(note)SideMin.(ft.)",
+"after": "BMin.distanceBetweenmult",
+"box": [
+431.76,
+263.53,
+436.06,
+268.52
+]
+},
+{
+"text": "F",
+"before": "storySeeTable8C.None10E5",
+"after": "Doublethemin.sideyardset",
+"box": [
+421.2,
+319.95,
+425.2,
+324.94
+]
+},
+{
+"text": "I",
+"before": ",000squarefeetorgreater.",
+"after": "UrbanFormType21540,3-sto",
+"box": [
+514.06,
+456.21,
+516.36,
+461.19
+]
+},
+{
+"text": "G",
+"before": "toc-cupyentireblockface.",
+"after": "105FUrbanFormType3151001",
+"box": [
+324.94,
+412.3,
+329.87,
+417.29
+]
+},
+{
+"text": "F",
+"before": "cupyentireblockface.G105",
+"after": "UrbanFormType31510015H5f",
+"box": [
+421.2,
+376.38,
+425.2,
+381.37
+]
+},
+{
+"text": "H",
+"before": "05FUrbanFormType31510015",
+"after": "5forstruc-turesupto25fee",
+"box": [
+353.45,
+468.73,
+358.37,
+473.72
+]
+}
+],
+"355": [
+{
+"text": "A",
+"before": "orkStreetsFrontMin.(ft.)",
+"after": "FrontMax.C(ft.)•Lotfront",
+"box": [
+440.64,
+261.36,
+444.94,
+266.35
+]
+},
+{
+"text": "C",
+"before": "FrontMin.(ft.)AFrontMax.",
+"after": "(ft.)•Lotfrontagesalonge",
+"box": [
+484.36,
+261.36,
+488.67,
+266.35
+]
+},
+{
+"text": "rd",
+"before": "risbandStreetbetweenSW63",
+"after": "Avenueanditseasternmostp",
+"box": [
+159.86,
+281.79,
+165.39,
+286.78
+]
+},
+{
+"text": "rd",
+"before": "eenSWStaffordRoadandSW63",
+"after": "AvenuecanbefoundinTable2",
+"box": [
+267.84,
+289.77,
+273.37,
+294.76
+]
+},
+{
+"text": "rd",
+"before": "A.•LotfrontagesalongSW63",
+"after": "Avenuefromsouthernedgeof",
+"box": [
+225.25,
+297.75,
+230.78,
+302.74
+]
+},
+{
+"text": "B",
+"before": "streetlistedinthistable6",
+"after": "10D•LotfrontagesalongSW6",
+"box": [
+410.95,
+273.81,
+414.94,
+278.8
+]
+},
+{
+"text": "D",
+"before": "eetlistedinthistable6B10",
+"after": "•LotfrontagesalongSW60th",
+"box": [
+473.88,
+273.81,
+478.81,
+278.8
+]
+},
+{
+"text": "th",
+"before": "0D•LotfrontagesalongSW60",
+"after": "Avenue•Lotfrontagesalong",
+"box": [
+227.96,
+334.22,
+233.26,
+339.21
+]
+},
+{
+"text": "rd",
+"before": "ue•LotfrontagesalongSW63",
+"after": "AvenuesouthofSWAdvanceRo",
+"box": [
+227.96,
+342.21,
+233.49,
+347.2
+]
+},
+{
+"text": "rd",
+"before": "ingSWFrogPondLaneandSW63",
+"after": "Avenue•Lotfrontagesalong",
+"box": [
+212.99,
+390.1,
+218.52,
+395.09
+]
+},
+{
+"text": "E",
+"before": "eetlistedinthistable1025",
+"after": "•LotfrontagesonlotswithU",
+"box": [
+473.88,
+334.22,
+477.88,
+339.21
+]
+},
+{
+"text": "E",
+"before": "treetlistedinthistable10",
+"after": "NomaxNotes:A.Whereafront",
+"box": [
+414.94,
+434.55,
+418.93,
+439.54
+]
+}
+],
+"359": [
+{
+"text": "th",
+"before": "vistaonthenorthendofSW60",
+"after": "Avenueandmayprovideaterm",
+"box": [
+402.66,
+105.15,
+409.28,
+111.63
+]
+}
+],
+"370": [
+{
+"text": "A",
+"before": ".Buildingheight(stories)",
+"after": "MinimumtwoMaximumfourGro",
+"box": [
+231.96,
+325.07,
+237.73,
+331.56
+]
+},
+{
+"text": "B",
+"before": "%Minimumbuildingfrontage",
+"after": "OnSWBrisbandStreet70%OnS",
+"box": [
+247.93,
+409.2,
+252.92,
+415.68
+]
+}
+],
+"372": [
+{
+"text": "rd",
+"before": "cingSWStaffordRoadorSW63",
+"after": "Avenue40%ofgroundfloorwa",
+"box": [
+229.91,
+122.61,
+236.82,
+129.09
+]
+},
+{
+"text": "rd",
+"before": "et,SWStaffordRoad,orSW63",
+"after": "Avenue20%offacadeOtherfa",
+"box": [
+306.77,
+150.6,
+313.68,
+157.08
+]
+}
+],
+"429": [
+{
+"text": "*",
+"before": "cy:20%AccessibleEntrance",
+"after": "ThePrimaryBuildingEntran",
+"box": [
+170.45,
+378.99,
+173.95,
+384.48
+]
+},
+{
+"text": "*",
+"before": "csidewalk.RequiredCanopy",
+"after": "ProtectthePrimaryBuildin",
+"box": [
+161.68,
+522.87,
+165.17,
+528.36
+]
+}
+],
+"430": [
+{
+"text": "*",
+"before": "fPrimaryBuildingEntrance",
+"after": "WherethePrimaryBuild-ing",
+"box": [
+166.08,
+168.45,
+169.57,
+173.93
+]
+},
+{
+"text": "*",
+"before": "inimum.GroundFloorHeight",
+"after": "TheGroundFloorheightshal",
+"box": [
+177.15,
+411.51,
+180.64,
+417.0
+]
+}
+],
+"471": [
+{
+"text": "th",
+"before": "rryRoad,BaileyStreet,or5",
+"after": "Street,theinterveningare",
+"box": [
+215.22,
+497.03,
+221.84,
+503.52
+]
+}
+],
+"474": [
+{
+"text": "th",
+"before": "rryRoad,BaileyStreet,or5",
+"after": "Streetshallbeinwindowsor",
+"box": [
+237.72,
+683.12,
+244.35,
+689.6
+]
+}
+],
+"491": [
+{
+"text": "1",
+"before": "sanduplandforestedareas)",
+"after": ":i.Wildlifehabitatdivers",
+"box": [
+512.89,
+566.63,
+516.63,
+573.11
+]
+}
+],
+"523": [
+{
+"text": "nd",
+"before": "andstaff8perclass(above2",
+"after": "grade)K—2ndgrade:1per3,5",
+"box": [
+484.6,
+298.17,
+492.31,
+303.65
+]
+},
+{
+"text": "nd",
+"before": "rclass(above2ndgrade)K—2",
+"after": "grade:1per3,500sq.ft.5.H",
+"box": [
+432.37,
+307.15,
+440.08,
+312.63
+]
+}
+],
+"548": [
+{
+"text": "th",
+"before": "erailroadtrackswestto110",
+"after": ".m.Eithersideof110thbetw",
+"box": [
+202.55,
+356.09,
+209.17,
+362.58
+]
+},
+{
+"text": "th",
+"before": "o110th.m.Eithersideof110",
+"after": "betweenBarberStreetandBo",
+"box": [
+262.62,
+373.3,
+269.24,
+379.79
+]
+},
+{
+"text": "th",
+"before": "ofBarberStreetbetween110",
+"after": "andBrownRoad,includingis",
+"box": [
+362.32,
+407.73,
+368.94,
+414.21
+]
+}
+],
+"550": [
+{
+"text": "1",
+"before": "orAgri-culturezonedlots.",
+"after": "Areapersignface6sq.ft.6s",
+"box": [
+163.76,
+162.66,
+167.26,
+168.15
+]
+},
+{
+"text": "2",
+"before": "ublicFacil-ityzonedlots.",
+"after": "Areapersignface6sq.ft.32",
+"box": [
+147.13,
+198.18,
+150.63,
+203.67
+]
+},
+{
+"text": "3",
+"before": "lAllowancesforRigidSigns",
+"after": "Lotswithactivecommercial",
+"box": [
+293.15,
+251.67,
+296.65,
+257.15
+]
+},
+{
+"text": "4",
+"before": "lycon-structionprojects.",
+"after": "Areapersignface64sq.ft.E",
+"box": [
+162.35,
+300.86,
+165.84,
+306.35
+]
+}
+],
+"766": [
+{
+"text": "th",
+"before": "costs.(2)Onorbeforethe15",
+"after": "dayofthemonthfollowingea",
+"box": [
+202.45,
+592.32,
+209.07,
+598.8
+]
+}
+],
+"775": [
+{
+"text": "th",
+"before": "dpayableonorbeforeJuly15",
+"after": "shallbe$100.00plus$3.00p",
+"box": [
+125.72,
+174.99,
+132.34,
+181.48
+]
+},
+{
+"text": "th",
+"before": "yableonorbeforeJanuary15",
+"after": ";andtheannuallicensefeea",
+"box": [
+309.63,
+251.82,
+316.25,
+258.31
+]
+}
+],
+"963": [
+{
+"text": "th",
+"before": "lpoxtomalariainthelate18",
+"after": "andearly19thcenturies.Af",
+"box": [
+121.03,
+267.04,
+127.65,
+273.52
+]
+},
+{
+"text": "th",
+"before": "ainthelate18thandearly19",
+"after": "centuries.Afterthat,thee",
+"box": [
+186.71,
+267.04,
+193.33,
+273.52
+]
+}
+],
+"1048": [
+{
+"text": "th",
+"before": "mentforaroadconnecting95",
+"after": "AvenueandKinsmanRoadthro",
+"box": [
+399.19,
+205.42,
+405.82,
+211.91
+]
+}
+],
+"1049": [
+{
+"text": "th",
+"before": "developmentasfarsouthas4",
+"after": "Street.Forpropertieswith",
+"box": [
+486.29,
+235.11,
+492.91,
+241.59
+]
+}
+],
+"1050": [
+{
+"text": "th",
+"before": "altrafficimpactssouthof4",
+"after": "Street,whileplanningfori",
+"box": [
+350.64,
+257.31,
+357.26,
+263.79
+]
+}
+],
+"1051": [
+{
+"text": "th",
+"before": "extensionofBaileyand/or5",
+"after": "Streets,westatleasttoInd",
+"box": [
+482.76,
+155.04,
+489.38,
+161.52
+]
+}
+]
+}
+}

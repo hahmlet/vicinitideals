@@ -1,0 +1,1157 @@
+{
+"book": "a7ce5491a7fb1a9a09018b393e35f51a2251f5f5a6bb5db500f73717763ef8e2",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"5": [
+{
+"text": "15",
+"before": "wnhousePPPCottageCluster",
+"after": "PPPMulti-Family/SharedHo",
+"box": [
+132.0,
+203.53,
+139.01,
+210.49
+]
+},
+{
+"text": "1",
+"before": "ly/SharedHousingFacility",
+"after": "NPNPNPElderlyHousingNPNP",
+"box": [
+227.4,
+219.49,
+230.93,
+226.45
+]
+},
+{
+"text": "2",
+"before": "ePPPAffordableHousingP/L",
+"after": "P/L2P3CommercialAuto-Dep",
+"box": [
+357.84,
+299.17,
+361.37,
+306.13
+]
+},
+{
+"text": "2",
+"before": "AffordableHousingP/L2P/L",
+"after": "P3CommercialAuto-Depende",
+"box": [
+427.92,
+299.17,
+431.45,
+306.13
+]
+},
+{
+"text": "3",
+"before": "fordableHousingP/L2P/L2P",
+"after": "CommercialAuto-Dependent",
+"box": [
+495.48,
+299.17,
+499.01,
+306.13
+]
+},
+{
+"text": "4",
+"before": "sSURSURSURLive-WorkNPNPL",
+"after": "MajorEventEntertainmentN",
+"box": [
+494.4,
+409.45,
+497.93,
+416.41
+]
+}
+],
+"6": [
+{
+"text": "3",
+"before": "ligiousInstitutionsL/SUR",
+"after": "SURSURSchoolsSURSURSURRe",
+"box": [
+370.32,
+122.17,
+373.85,
+129.13
+]
+},
+{
+"text": "8",
+"before": "SURSURSURRenewableEnergy",
+"after": "SolarEnergySystemsL9L9L9",
+"box": [
+139.92,
+154.18,
+143.21,
+160.66
+]
+},
+{
+"text": "9",
+"before": "ergy8SolarEnergySystemsL",
+"after": "L9L9WindEnergySystemsL10",
+"box": [
+347.88,
+168.61,
+351.41,
+175.57
+]
+},
+{
+"text": "9",
+"before": "gy8SolarEnergySystemsL9L",
+"after": "L9WindEnergySystemsL10L1",
+"box": [
+417.96,
+168.61,
+421.49,
+175.57
+]
+},
+{
+"text": "9",
+"before": "8SolarEnergySystemsL9L9L",
+"after": "WindEnergySystemsL10L10L",
+"box": [
+494.4,
+168.61,
+497.93,
+175.57
+]
+},
+{
+"text": "10",
+"before": "L9L9L9WindEnergySystemsL",
+"after": "L10L10BiomassEnergySyste",
+"box": [
+347.88,
+184.45,
+354.89,
+191.41
+]
+},
+{
+"text": "10",
+"before": "9L9WindEnergySystemsL10L",
+"after": "L10BiomassEnergySystemsL",
+"box": [
+417.96,
+184.45,
+424.97,
+191.41
+]
+},
+{
+"text": "10",
+"before": "WindEnergySystemsL10L10L",
+"after": "BiomassEnergySystemsL/SU",
+"box": [
+494.4,
+184.45,
+501.41,
+191.41
+]
+},
+{
+"text": "11",
+"before": "iomassEnergySystemsL/SUR",
+"after": "L/SUR11L/SUR11Geothermal",
+"box": [
+370.32,
+200.41,
+377.33,
+207.37
+]
+},
+{
+"text": "11",
+"before": "nergySystemsL/SUR11L/SUR",
+"after": "L/SUR11GeothermalEnergyS",
+"box": [
+440.4,
+200.41,
+447.41,
+207.37
+]
+},
+{
+"text": "11",
+"before": "stemsL/SUR11L/SUR11L/SUR",
+"after": "GeothermalEnergySystemsL",
+"box": [
+516.84,
+200.41,
+523.85,
+207.37
+]
+},
+{
+"text": "12",
+"before": "GeothermalEnergySystemsL",
+"after": "L12L12Micro-HydroEnergyS",
+"box": [
+347.88,
+216.37,
+354.89,
+223.33
+]
+},
+{
+"text": "12",
+"before": "thermalEnergySystemsL12L",
+"after": "L12Micro-HydroEnergySyst",
+"box": [
+417.96,
+216.37,
+424.97,
+223.33
+]
+},
+{
+"text": "12",
+"before": "rmalEnergySystemsL12L12L",
+"after": "Micro-HydroEnergySystems",
+"box": [
+494.4,
+216.37,
+501.41,
+223.33
+]
+},
+{
+"text": "13",
+"before": "icro-HydroEnergySystemsL",
+"after": "L13L13OtherBasicUtilitie",
+"box": [
+347.88,
+232.33,
+354.89,
+239.29
+]
+},
+{
+"text": "13",
+"before": "o-HydroEnergySystemsL13L",
+"after": "L13OtherBasicUtilitiesMi",
+"box": [
+417.96,
+232.33,
+424.97,
+239.29
+]
+},
+{
+"text": "13",
+"before": "ydroEnergySystemsL13L13L",
+"after": "OtherBasicUtilitiesMinor",
+"box": [
+494.4,
+232.33,
+501.41,
+239.29
+]
+},
+{
+"text": "6",
+"before": "ajorBasicUtilitiesPL/SUR",
+"after": "PL/SUR6PL/SUR6Helliports",
+"box": [
+370.32,
+293.65,
+373.85,
+300.61
+]
+},
+{
+"text": "6",
+"before": "icUtilitiesPL/SUR6PL/SUR",
+"after": "PL/SUR6Helliports14NPNPN",
+"box": [
+440.4,
+293.65,
+443.93,
+300.61
+]
+},
+{
+"text": "6",
+"before": "tiesPL/SUR6PL/SUR6PL/SUR",
+"after": "Helliports14NPNPNPWirele",
+"box": [
+516.84,
+293.65,
+520.37,
+300.61
+]
+},
+{
+"text": "14",
+"before": "PL/SUR6PL/SUR6Helliports",
+"after": "NPNPNPWirelessCommunicat",
+"box": [
+106.44,
+309.61,
+113.45,
+316.57
+]
+}
+],
+"7": [
+{
+"text": "1",
+"before": ".NoneB.MinimumNetDensity",
+"after": "(SeedefinitionofNetDensi",
+"box": [
+181.2,
+281.07,
+184.73,
+288.03
+]
+},
+{
+"text": "2",
+"before": "racreC.MaximumNetDensity",
+"after": "(SeedefinitionofNetDensi",
+"box": [
+182.76,
+331.83,
+186.29,
+338.79
+]
+}
+],
+"8": [
+{
+"text": "3",
+"before": "WG.MaximumBuildingHeight",
+"after": "AllUses40ft.35ft.45ft.H.",
+"box": [
+200.04,
+93.15,
+203.57,
+100.11
+]
+},
+{
+"text": "4",
+"before": "ion4.1535)AllUsesNoNoYes",
+"after": "N.ClearVisionAreaRequire",
+"box": [
+443.16,
+459.49,
+446.69,
+466.45
+]
+},
+{
+"text": "4",
+"before": "ion4.1531-4.1534)NoNoYes",
+"after": "Table4.1508Notes1.Minimu",
+"box": [
+441.6,
+529.93,
+445.13,
+536.89
+]
+}
+],
+"9": [
+{
+"text": "5",
+"before": "o/6ft.other8ft.8ft.10ft.",
+"after": "N/A8ft.Table4.1508(conti",
+"box": [
+459.84,
+425.65,
+463.37,
+432.61
+]
+}
+],
+"11": [
+{
+"text": "20",
+"before": "ialUSESVC-SWRTI-SWIND-SW",
+"after": "NC-SWResidentialSingleDe",
+"box": [
+480.48,
+522.75,
+487.49,
+529.71
+]
+},
+{
+"text": "1,2",
+"before": "y/SharedHousingFacilityL",
+"after": "L2L2NPElderlyHousingSURN",
+"box": [
+344.28,
+650.05,
+353.09,
+657.01
+]
+},
+{
+"text": "2",
+"before": "aredHousingFacilityL1,2L",
+"after": "L2NPElderlyHousingSURNPN",
+"box": [
+396.24,
+650.05,
+399.77,
+657.01
+]
+},
+{
+"text": "2",
+"before": "edHousingFacilityL1,2L2L",
+"after": "NPElderlyHousingSURNPNPN",
+"box": [
+448.08,
+650.05,
+451.61,
+657.01
+]
+},
+{
+"text": "1",
+"before": "NPNPResidentialFacilityL",
+"after": "NPNPNP",
+"box": [
+344.28,
+697.93,
+347.81,
+704.89
+]
+}
+],
+"12": [
+{
+"text": "20",
+"before": "26)USESVC-SWRTI-SWIND-SW",
+"after": "NC-SWResidentialHomeNPNP",
+"box": [
+480.48,
+74.55,
+487.49,
+81.51
+]
+},
+{
+"text": "3",
+"before": "NPNPNPAffordableHousingP",
+"after": "P3L4P3CommercialAuto-Dep",
+"box": [
+345.36,
+106.21,
+348.89,
+113.17
+]
+},
+{
+"text": "3",
+"before": "NPNPAffordableHousingP3P",
+"after": "L4P3CommercialAuto-Depen",
+"box": [
+397.32,
+106.21,
+400.85,
+113.17
+]
+},
+{
+"text": "4",
+"before": "NPAffordableHousingP3P3L",
+"after": "P3CommercialAuto-Depende",
+"box": [
+448.08,
+106.21,
+451.61,
+113.17
+]
+},
+{
+"text": "3",
+"before": "AffordableHousingP3P3L4P",
+"after": "CommercialAuto-Dependent",
+"box": [
+505.32,
+106.21,
+508.85,
+113.17
+]
+},
+{
+"text": "5",
+"before": "Auto-DependentUseNPNPNPL",
+"after": "BusinessandRetailService",
+"box": [
+504.24,
+138.13,
+507.77,
+145.09
+]
+},
+{
+"text": "6",
+"before": "ndRetailServiceandTradeL",
+"after": "L7,8L9L10ClinicsL11L7L9N",
+"box": [
+344.28,
+153.97,
+347.81,
+160.93
+]
+},
+{
+"text": "7,8",
+"before": "RetailServiceandTradeL6L",
+"after": "L9L10ClinicsL11L7L9NPCom",
+"box": [
+396.24,
+153.97,
+405.05,
+160.93
+]
+},
+{
+"text": "9",
+"before": "ilServiceandTradeL6L7,8L",
+"after": "L10ClinicsL11L7L9NPComme",
+"box": [
+448.08,
+153.97,
+451.61,
+160.93
+]
+},
+{
+"text": "10",
+"before": "ServiceandTradeL6L7,8L9L",
+"after": "ClinicsL11L7L9NPCommerci",
+"box": [
+504.24,
+153.97,
+511.25,
+160.93
+]
+},
+{
+"text": "11",
+"before": "TradeL6L7,8L9L10ClinicsL",
+"after": "L7L9NPCommercialParkingS",
+"box": [
+344.28,
+169.93,
+351.29,
+176.89
+]
+},
+{
+"text": "7",
+"before": "deL6L7,8L9L10ClinicsL11L",
+"after": "L9NPCommercialParkingSUR",
+"box": [
+396.24,
+169.93,
+399.77,
+176.89
+]
+},
+{
+"text": "9",
+"before": "L6L7,8L9L10ClinicsL11L7L",
+"after": "NPCommercialParkingSURNP",
+"box": [
+448.08,
+169.93,
+451.61,
+176.89
+]
+},
+{
+"text": "12",
+"before": "rEventEntertainmentL/SUR",
+"after": "SURSURSURMini-StorageFac",
+"box": [
+366.72,
+240.73,
+373.73,
+247.69
+]
+},
+{
+"text": "13",
+"before": "NPNPNPOutdoorCommercialL",
+"after": "NPNPNPIndustrialConstruc",
+"box": [
+344.28,
+277.21,
+351.29,
+284.17
+]
+},
+{
+"text": "21",
+"before": "esNPPPNPManufacturingNPL",
+"after": "L14NPMiscellaneousIndust",
+"box": [
+396.24,
+384.61,
+403.25,
+391.57
+]
+},
+{
+"text": "14",
+"before": "PPPNPManufacturingNPL21L",
+"after": "NPMiscellaneousIndustria",
+"box": [
+448.08,
+384.61,
+455.09,
+391.57
+]
+},
+{
+"text": "15",
+"before": "scellaneousIndustrialNPL",
+"after": "L15NPTradeSchoolsNPPPNPT",
+"box": [
+396.24,
+402.85,
+403.25,
+409.81
+]
+},
+{
+"text": "15",
+"before": "llaneousIndustrialNPL15L",
+"after": "NPTradeSchoolsNPPPNPTran",
+"box": [
+448.08,
+402.85,
+455.09,
+409.81
+]
+},
+{
+"text": "16",
+"before": "ortation/DistributionNPL",
+"after": "L16NPWarehousing/Storage",
+"box": [
+396.24,
+439.33,
+403.25,
+446.29
+]
+},
+{
+"text": "16",
+"before": "ation/DistributionNPL16L",
+"after": "NPWarehousing/StorageNPL",
+"box": [
+448.08,
+439.33,
+455.09,
+446.29
+]
+},
+{
+"text": "16",
+"before": "NPWarehousing/StorageNPL",
+"after": "L16NPWasteManagementNPSU",
+"box": [
+396.24,
+457.69,
+403.25,
+464.65
+]
+},
+{
+"text": "16",
+"before": "arehousing/StorageNPL16L",
+"after": "NPWasteManagementNPSURSU",
+"box": [
+448.08,
+457.69,
+455.09,
+464.65
+]
+},
+{
+"text": "16",
+"before": "SURNPWholesaleTradeNPNPL",
+"after": "NPInstitutionalUsesCivic",
+"box": [
+448.08,
+494.17,
+455.09,
+501.13
+]
+},
+{
+"text": "17",
+"before": "ommunityServicesSURL/SUR",
+"after": "L/SUR17SURMedicalSURSURN",
+"box": [
+418.68,
+546.61,
+425.69,
+553.57
+]
+},
+{
+"text": "7",
+"before": "ServicesSURL/SUR17L/SUR1",
+"after": "SURMedicalSURSURNPSURPar",
+"box": [
+476.04,
+546.61,
+479.57,
+553.57
+]
+},
+{
+"text": "18",
+"before": "ces,Paths,andTrailsL/SUR",
+"after": "L/SUR18L/SUR18SURReligio",
+"box": [
+366.72,
+583.21,
+373.73,
+590.17
+]
+},
+{
+"text": "18",
+"before": "hs,andTrailsL/SUR18L/SUR",
+"after": "L/SUR18SURReligiousInsti",
+"box": [
+418.68,
+583.21,
+425.69,
+590.17
+]
+},
+{
+"text": "18",
+"before": "railsL/SUR18L/SUR18L/SUR",
+"after": "SURReligiousInstitutions",
+"box": [
+470.52,
+583.21,
+477.53,
+590.17
+]
+},
+{
+"text": "19",
+"before": "iousInstitutionsSURL/SUR",
+"after": "L/SUR19SURSchoolsP/SUR23",
+"box": [
+418.68,
+601.45,
+425.69,
+608.41
+]
+},
+{
+"text": "19",
+"before": "titutionsSURL/SUR19L/SUR",
+"after": "SURSchoolsP/SUR23L/SUR19",
+"box": [
+470.52,
+601.45,
+477.53,
+608.41
+]
+},
+{
+"text": "23",
+"before": "19L/SUR19SURSchoolsP/SUR",
+"after": "L/SUR19L/SUR19SURRenewab",
+"box": [
+367.68,
+619.69,
+374.69,
+626.65
+]
+},
+{
+"text": "19",
+"before": "19SURSchoolsP/SUR23L/SUR",
+"after": "L/SUR19SURRenewableEnerg",
+"box": [
+418.68,
+619.69,
+425.69,
+626.65
+]
+},
+{
+"text": "19",
+"before": "hoolsP/SUR23L/SUR19L/SUR",
+"after": "SURRenewableEnergy24Sola",
+"box": [
+470.52,
+619.69,
+477.53,
+626.65
+]
+},
+{
+"text": "24",
+"before": "/SUR19SURRenewableEnergy",
+"after": "SolarEnergySystemsL/SUR2",
+"box": [
+147.72,
+638.31,
+154.73,
+645.27
+]
+},
+{
+"text": "25",
+"before": "4SolarEnergySystemsL/SUR",
+"after": "P25P25L/SUR25WindEnergyS",
+"box": [
+366.72,
+654.01,
+373.73,
+660.97
+]
+},
+{
+"text": "25",
+"before": "larEnergySystemsL/SUR25P",
+"after": "P25L/SUR25WindEnergySyst",
+"box": [
+397.32,
+654.01,
+404.33,
+660.97
+]
+},
+{
+"text": "25",
+"before": "EnergySystemsL/SUR25P25P",
+"after": "L/SUR25WindEnergySystems",
+"box": [
+449.16,
+654.01,
+456.17,
+660.97
+]
+},
+{
+"text": "25",
+"before": "ystemsL/SUR25P25P25L/SUR",
+"after": "WindEnergySystemsL/SUR26",
+"box": [
+526.68,
+654.01,
+533.69,
+660.97
+]
+},
+{
+"text": "26",
+"before": "25WindEnergySystemsL/SUR",
+"after": "L/SUR26L/SUR26L/SUR26Bio",
+"box": [
+366.72,
+672.25,
+373.73,
+679.21
+]
+},
+{
+"text": "26",
+"before": "nergySystemsL/SUR26L/SUR",
+"after": "L/SUR26L/SUR26BiomassEne",
+"box": [
+418.68,
+672.25,
+425.69,
+679.21
+]
+},
+{
+"text": "26",
+"before": "stemsL/SUR26L/SUR26L/SUR",
+"after": "L/SUR26BiomassEnergySyst",
+"box": [
+470.52,
+672.25,
+477.53,
+679.21
+]
+},
+{
+"text": "26",
+"before": "SUR26L/SUR26L/SUR26L/SUR",
+"after": "BiomassEnergySystemsL27L",
+"box": [
+526.68,
+672.25,
+533.69,
+679.21
+]
+},
+{
+"text": "27",
+"before": "R26BiomassEnergySystemsL",
+"after": "L/SUR27L/SUR27L27",
+"box": [
+344.28,
+690.49,
+351.29,
+697.45
+]
+},
+{
+"text": "27",
+"before": "assEnergySystemsL27L/SUR",
+"after": "L/SUR27L27",
+"box": [
+418.68,
+690.49,
+425.69,
+697.45
+]
+},
+{
+"text": "27",
+"before": "gySystemsL27L/SUR27L/SUR",
+"after": "L27",
+"box": [
+470.52,
+690.49,
+477.53,
+697.45
+]
+},
+{
+"text": "27",
+"before": "ystemsL27L/SUR27L/SUR27L",
+"after": "",
+"box": [
+504.24,
+690.49,
+511.25,
+697.45
+]
+}
+],
+"13": [
+{
+"text": "20",
+"before": "26)USESVC-SWRTI-SWIND-SW",
+"after": "NC-SWGeothermalEnergySys",
+"box": [
+480.48,
+74.55,
+487.49,
+81.51
+]
+},
+{
+"text": "28",
+"before": "hermalEnergySystemsL/SUR",
+"after": "P28P28L/SUR28Micro-Hydro",
+"box": [
+366.72,
+90.25,
+373.73,
+97.21
+]
+},
+{
+"text": "28",
+"before": "malEnergySystemsL/SUR28P",
+"after": "P28L/SUR28Micro-HydroEne",
+"box": [
+397.32,
+90.25,
+404.33,
+97.21
+]
+},
+{
+"text": "28",
+"before": "EnergySystemsL/SUR28P28P",
+"after": "L/SUR28Micro-HydroEnergy",
+"box": [
+449.16,
+90.25,
+456.17,
+97.21
+]
+},
+{
+"text": "28",
+"before": "ystemsL/SUR28P28P28L/SUR",
+"after": "Micro-HydroEnergySystems",
+"box": [
+526.68,
+90.25,
+533.69,
+97.21
+]
+},
+{
+"text": "29",
+"before": "icro-HydroEnergySystemsL",
+"after": "L29L29L29OtherBasicUtili",
+"box": [
+344.28,
+108.49,
+351.29,
+115.45
+]
+},
+{
+"text": "29",
+"before": "o-HydroEnergySystemsL29L",
+"after": "L29L29OtherBasicUtilitie",
+"box": [
+396.24,
+108.49,
+403.25,
+115.45
+]
+},
+{
+"text": "29",
+"before": "ydroEnergySystemsL29L29L",
+"after": "L29OtherBasicUtilitiesMi",
+"box": [
+448.08,
+108.49,
+455.09,
+115.45
+]
+},
+{
+"text": "29",
+"before": "oEnergySystemsL29L29L29L",
+"after": "OtherBasicUtilitiesMinor",
+"box": [
+504.24,
+108.49,
+511.25,
+115.45
+]
+},
+{
+"text": "22",
+"before": "sMajorbasicutilitiesPSUR",
+"after": "PSURPSURPSURHeliportsSUR",
+"box": [
+357.72,
+173.65,
+364.73,
+180.61
+]
+},
+{
+"text": "30",
+"before": "PPMarijuanaBusinessesNPL",
+"after": "L30L30Table4.1520Notes:1",
+"box": [
+396.24,
+242.05,
+403.25,
+249.01
+]
+},
+{
+"text": "30",
+"before": "arijuanaBusinessesNPL30L",
+"after": "L30Table4.1520Notes:1.Re",
+"box": [
+448.08,
+242.05,
+455.09,
+249.01
+]
+},
+{
+"text": "30",
+"before": "juanaBusinessesNPL30L30L",
+"after": "Table4.1520Notes:1.Resid",
+"box": [
+504.24,
+242.05,
+511.25,
+249.01
+]
+}
+],
+"15": [
+{
+"text": "1",
+"before": "dIndustrialSub-Districts",
+"after": "VC-SWRTI-SWIND-SWA.Minim",
+"box": [
+249.96,
+254.69,
+254.04,
+262.73
+]
+},
+{
+"text": "2",
+"before": "nimumLotSizeNoneNoneNone",
+"after": "B.MinimumAvg.FloorAreaRa",
+"box": [
+475.44,
+290.65,
+478.97,
+297.61
+]
+},
+{
+"text": "3",
+"before": "neforinteriorsideandrear",
+"after": "20ft.frontandstreetside;",
+"box": [
+252.6,
+477.13,
+256.13,
+484.09
+]
+},
+{
+"text": "4",
+"before": "t(Section4.1524)2stories",
+"after": "NoneNoneH.MaximumBuildin",
+"box": [
+272.28,
+495.37,
+275.81,
+502.33
+]
+},
+{
+"text": "5",
+"before": "ight(Section4.1524)45ft.",
+"after": "100ft.120ft.I.MinimumOff",
+"box": [
+257.64,
+528.37,
+261.17,
+535.33
+]
+}
+]
+}
+}

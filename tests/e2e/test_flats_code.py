@@ -77,3 +77,15 @@ def test_a_table_the_check_refused_stays_as_printed_lines(logged_in_page: Page) 
     expect(page.locator(".table-held")).to_contain_text("shown as its printed lines")
     # The page-303 rows are ordinary lines, visible without opening anything.
     expect(page.locator("[data-code-lines] > tbody > tr#L100")).to_be_visible()
+
+
+def test_a_footnote_mark_leads_to_its_note(logged_in_page: Page) -> None:
+    page = logged_in_page
+    page.goto(f"/flats/code/{CITY}/58/58.200.txt")
+    mark = page.locator(".code-table sup.mark a").first
+    expect(mark).to_be_visible()
+    mark.click()
+    note = page.locator("tr.hit")
+    expect(note).to_have_count(1)
+    expect(note.locator(".t")).to_contain_text("New drive-through")
+    expect(note.locator(".note-back a").first).to_be_visible()

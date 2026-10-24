@@ -1,0 +1,199 @@
+{
+"book": "0f5dbb2ffac631f43a00865027577a6b6dc106467803c569bb01b94d2aa924d5",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"2": [
+{
+"text": "1",
+"before": "strictsUSESNCRESIDENTIAL",
+"after": "SingleDetachedDwellingNP",
+"box": [
+126.6,
+379.81,
+130.13,
+386.77
+]
+},
+{
+"text": "2",
+"before": "HomeNPAffordableHousingP",
+"after": "COMMERCIALAuto-Dependent",
+"box": [
+496.32,
+571.09,
+499.85,
+578.05
+]
+},
+{
+"text": "3",
+"before": "ERCIALAuto-DependentUseL",
+"after": "BusinessandRetailService",
+"box": [
+495.24,
+603.01,
+498.77,
+609.97
+]
+},
+{
+"text": "4",
+"before": "ndRetailServiceandTradeL",
+"after": "ClinicsNPCommercialParki",
+"box": [
+495.24,
+618.97,
+498.77,
+625.93
+]
+}
+],
+"3": [
+{
+"text": "6",
+"before": "choolsSURRENEWABLEENERGY",
+"after": "SolarEnergySystemsL/SUR7",
+"box": [
+164.04,
+432.01,
+167.57,
+438.97
+]
+},
+{
+"text": "7",
+"before": "6SolarEnergySystemsL/SUR",
+"after": "WindEnergySystemsL8Bioma",
+"box": [
+517.68,
+447.97,
+521.21,
+454.93
+]
+},
+{
+"text": "8",
+"before": "L/SUR7WindEnergySystemsL",
+"after": "BiomassEnergySystemsL9Ge",
+"box": [
+495.24,
+463.93,
+498.77,
+470.89
+]
+},
+{
+"text": "9",
+"before": "sL8BiomassEnergySystemsL",
+"after": "GeothermalEnergySystemsL",
+"box": [
+495.24,
+479.89,
+498.77,
+486.85
+]
+},
+{
+"text": "10",
+"before": "hermalEnergySystemsL/SUR",
+"after": "Micro-HydroEnergySystems",
+"box": [
+517.68,
+495.73,
+524.69,
+502.69
+]
+},
+{
+"text": "11",
+"before": "icro-HydroEnergySystemsL",
+"after": "OTHERBasicUtilitiesMinor",
+"box": [
+495.24,
+511.69,
+502.25,
+518.65
+]
+},
+{
+"text": "5",
+"before": "icutilitiesPSURHeliports",
+"after": "NPWirelessCommunicationF",
+"box": [
+108.48,
+590.41,
+112.01,
+597.37
+]
+},
+{
+"text": "12",
+"before": "sesPMarijuanaBusinessesL",
+"after": "Table4.0220Notes:1.Homeo",
+"box": [
+495.24,
+638.29,
+502.25,
+645.25
+]
+}
+],
+"4": [
+{
+"text": "1",
+"before": "CA.MaximumSiteSize4acres",
+"after": "B.MinimumLotSize10,000sq",
+"box": [
+370.44,
+454.47,
+373.97,
+461.43
+]
+},
+{
+"text": "2",
+"before": "eetD.MinimumYardSetbacks",
+"after": "Front20feetSide-interior",
+"box": [
+186.24,
+547.11,
+189.77,
+554.07
+]
+},
+{
+"text": "3",
+"before": "thesideabuttingthestreet",
+"after": ".Rear0feetE.MaximumBuild",
+"box": [
+509.16,
+625.83,
+512.69,
+632.79
+]
+},
+{
+"text": "4",
+"before": "eightSeeSection4.0231(A)",
+"after": "F.MaximumLotCoverage50%G",
+"box": [
+437.88,
+662.79,
+441.41,
+669.75
+]
+},
+{
+"text": "5",
+"before": "itiesSeeSection4.0231(B)",
+"after": "",
+"box": [
+437.64,
+699.87,
+441.17,
+706.83
+]
+}
+]
+}
+}

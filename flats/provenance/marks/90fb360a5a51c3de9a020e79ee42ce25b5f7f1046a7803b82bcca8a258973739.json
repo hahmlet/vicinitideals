@@ -1,0 +1,19 @@
+{
+"book": "90fb360a5a51c3de9a020e79ee42ce25b5f7f1046a7803b82bcca8a258973739",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"6": [
+{
+"text": "TM",
+"before": "itions,Section3.0120LEED",
+"after": "LegalDescriptionofProper",
+"box": [
+79.8,
+444.01,
+89.11,
+450.97
+]
+}
+]
+}
+}

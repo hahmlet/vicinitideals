@@ -1,0 +1,30 @@
+{
+"book": "d92ffb3869634f5ce4839fe65b8d5be6bbd902ef47df9dea8daafa3c6751040f",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"2": [
+{
+"text": "1",
+"before": "cres=2D.U.,1.499…=1D.U.)",
+"after": "AverageLotSizeMinimumAve",
+"box": [
+477.48,
+215.17,
+481.01,
+222.13
+]
+},
+{
+"text": "2",
+"before": "separateopenspacearea(s)",
+"after": "is(are)created,theareaof",
+"box": [
+404.16,
+231.13,
+407.69,
+238.09
+]
+}
+]
+}
+}

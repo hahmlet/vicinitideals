@@ -1,0 +1,183 @@
+{
+"book": "646a56b2925689d9625d2b83e5648c31794c30e94b4e12b5b4f78673b29c0206",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"108": [
+{
+"text": "1",
+"before": "ricCRH19079.StrebinHouse",
+"after": "2720S.TroutdaleRd.1951Mi",
+"box": [
+186.99,
+693.56,
+191.15,
+700.04
+]
+}
+],
+"109": [
+{
+"text": "2",
+"before": "darPlace(EmilOlsenHouse)",
+"after": "2611S.TroutdaleRd.1907Am",
+"box": [
+267.92,
+108.64,
+272.08,
+115.12
+]
+},
+{
+"text": "3",
+"before": "r-Square11.McGinnisHouse",
+"after": "324S.E.KiblingAve.1903Cr",
+"box": [
+196.96,
+136.63,
+201.12,
+143.11
+]
+}
+],
+"151": [
+{
+"text": "1",
+"before": "esPermittedongravelareas",
+"after": "YesYesYesYesPermittedinp",
+"box": [
+208.52,
+357.2,
+212.68,
+363.68
+]
+},
+{
+"text": "2",
+"before": "YesNoDrivethroughallowed",
+"after": "NoNoYesYesUtilityconnect",
+"box": [
+190.78,
+413.23,
+194.94,
+419.71
+]
+},
+{
+"text": "3",
+"before": "tilityconnectionrequired",
+"after": "NoNoNoYesRequiredtomeetd",
+"box": [
+209.07,
+441.27,
+213.24,
+447.75
+]
+},
+{
+"text": "4",
+"before": "esParkingrequiredNoNoYes",
+"after": "Yes4Limiteddailyduration",
+"box": [
+450.11,
+483.28,
+454.27,
+489.76
+]
+},
+{
+"text": "4",
+"before": "rkingrequiredNoNoYes4Yes",
+"after": "Limiteddailyduration5Yes",
+"box": [
+516.2,
+483.28,
+520.36,
+489.76
+]
+},
+{
+"text": "5",
+"before": "Yes4Limiteddailyduration",
+"after": "YesYesYesNoLimitednumber",
+"box": [
+188.56,
+497.3,
+192.72,
+503.78
+]
+},
+{
+"text": "6",
+"before": "YesNoLimitednumberofdays",
+"after": "NoNoYesNoSiteDevelopment",
+"box": [
+197.99,
+511.32,
+202.15,
+517.8
+]
+}
+],
+"278": [
+{
+"text": "1",
+"before": "ing1spaceperdwellingunit",
+"after": "NomaximumAffordableunits",
+"box": [
+360.25,
+352.16,
+364.41,
+358.65
+]
+}
+],
+"310": [
+{
+"text": "th",
+"before": "artmentlocatedat2200SW18",
+"after": "Way,Troutdale,OR97060(st",
+"box": [
+145.01,
+669.15,
+151.25,
+675.63
+]
+}
+],
+"353": [
+{
+"text": "nd",
+"before": "ColumbiaRiverHighwayand2",
+"after": "Streetextendedwesttoitsi",
+"box": [
+419.15,
+424.44,
+427.47,
+430.93
+]
+},
+{
+"text": "th",
+"before": "toitsintersectionwith257",
+"after": "Avenuefrom257thAvenuetot",
+"box": [
+230.53,
+438.41,
+236.78,
+444.89
+]
+},
+{
+"text": "th",
+"before": "onwith257thAvenuefrom257",
+"after": "AvenuetotheSESandyStreet",
+"box": [
+314.8,
+438.41,
+321.04,
+444.89
+]
+}
+]
+}
+}

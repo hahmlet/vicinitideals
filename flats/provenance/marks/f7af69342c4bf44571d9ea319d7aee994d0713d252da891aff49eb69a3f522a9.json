@@ -1,0 +1,9218 @@
+{
+"book": "f7af69342c4bf44571d9ea319d7aee994d0713d252da891aff49eb69a3f522a9",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"19": [
+{
+"text": "2,3",
+"before": "reFeetB.1.MinimumLotArea",
+"after": "-Single-DetachedandDuple",
+"box": [
+153.36,
+347.88,
+162.3,
+353.88
+]
+},
+{
+"text": "2,3",
+"before": "reFeetB.2.MinimumLotArea",
+"after": "-TriplexandQuadplexN/A3,",
+"box": [
+153.36,
+377.48,
+162.3,
+383.48
+]
+},
+{
+"text": "2,3",
+"before": "reFeetB.3.MinimumLotArea",
+"after": "-TownhouseN/A1,1001,3001",
+"box": [
+153.36,
+407.09,
+162.3,
+413.09
+]
+},
+{
+"text": "2,3",
+"before": "areFeetB.4MinimumLotArea",
+"after": "-CottageClusterN/A7,0007",
+"box": [
+153.36,
+423.27,
+162.3,
+429.27
+]
+},
+{
+"text": "2,3",
+"before": "reFeetB.5.MinimumLotArea",
+"after": "-Single-RoomOccupancies1",
+"box": [
+153.36,
+439.44,
+162.3,
+445.44
+]
+},
+{
+"text": "22",
+"before": "aximumResidentialDensity",
+"after": "N/A22formulti-dwellingso",
+"box": [
+202.86,
+469.05,
+208.94,
+475.05
+]
+},
+{
+"text": "4,22,23",
+"before": "inimumResidentialDensity",
+"after": "3417107UnitsPerAcreE.Min",
+"box": [
+201.13,
+512.08,
+222.04,
+518.08
+]
+},
+{
+"text": "3,6",
+"before": "PerAcreE.MinimumLotWidth",
+"after": "14142020FeetF.1.a.Setbac",
+"box": [
+159.97,
+528.26,
+168.91,
+534.26
+]
+},
+{
+"text": "3,18",
+"before": "142020FeetF.1.a.Setbacks",
+"after": "-FrontYardMinimum1010101",
+"box": [
+108.96,
+544.44,
+120.94,
+550.44
+]
+},
+{
+"text": "3,18",
+"before": "101010FeetF.1.b.Setbacks",
+"after": "-FrontYardMaximum2018Non",
+"box": [
+108.96,
+560.62,
+120.94,
+566.62
+]
+},
+{
+"text": "18",
+"before": "s3,18-FrontYardMaximum20",
+"after": "NoneNoneNoneFeetF.2.a.Se",
+"box": [
+277.43,
+560.62,
+283.52,
+566.62
+]
+},
+{
+"text": "3,18",
+"before": "neNoneFeetF.2.a.Setbacks",
+"after": "-SideYardMinimum7:Townho",
+"box": [
+108.96,
+576.8,
+120.94,
+582.8
+]
+},
+{
+"text": "7",
+"before": "acks3,18-SideYardMinimum",
+"after": ":Townhouse0internal,5ext",
+"box": [
+113.34,
+590.22,
+116.38,
+596.22
+]
+},
+{
+"text": "3,18",
+"before": "ternalFeetF.2.b.Setbacks",
+"after": "-SideYardMinimum7:LandDi",
+"box": [
+108.96,
+606.4,
+120.94,
+612.4
+]
+},
+{
+"text": "7",
+"before": "acks3,18-SideYardMinimum",
+"after": ":LandDivisions(Perimeter",
+"box": [
+113.34,
+619.83,
+116.38,
+625.83
+]
+},
+{
+"text": "7",
+"before": ":LandDivisions(Perimeter",
+"after": ")N/A555FeetF.2.c.Setback",
+"box": [
+117.85,
+633.26,
+120.9,
+639.26
+]
+},
+{
+"text": "3,18",
+"before": "N/A555FeetF.2.c.Setbacks",
+"after": "-SideYardMinimum7:LandDi",
+"box": [
+108.96,
+649.44,
+120.94,
+655.44
+]
+},
+{
+"text": "7",
+"before": "acks3,18-SideYardMinimum",
+"after": ":LandDivisions(Internal7",
+"box": [
+113.34,
+662.86,
+116.38,
+668.86
+]
+},
+{
+"text": "7",
+"before": "7:LandDivisions(Internal",
+"after": ")N/A333FeetF.3.Setbacks3",
+"box": [
+226.18,
+662.86,
+229.22,
+668.86
+]
+},
+{
+"text": "3,18",
+"before": "7)N/A333FeetF.3.Setbacks",
+"after": "-RearYardMinimum15158158",
+"box": [
+108.96,
+679.04,
+120.94,
+685.04
+]
+},
+{
+"text": "8",
+"before": "3,18-RearYardMinimum1515",
+"after": "158158Feet",
+"box": [
+344.55,
+679.04,
+347.6,
+685.04
+]
+},
+{
+"text": "8",
+"before": "8-RearYardMinimum1515815",
+"after": "158Feet",
+"box": [
+407.66,
+679.04,
+410.7,
+685.04
+]
+},
+{
+"text": "8",
+"before": "earYardMinimum1515815815",
+"after": "Feet",
+"box": [
+471.98,
+679.04,
+475.02,
+685.04
+]
+}
+],
+"20": [
+{
+"text": "3,18",
+"before": "easurementF.4.a.Setbacks",
+"after": "-GarageMinimum9:Townhous",
+"box": [
+108.96,
+113.44,
+120.94,
+119.44
+]
+},
+{
+"text": "9",
+"before": "tbacks3,18-GarageMinimum",
+"after": ":TownhouseNomorethan5orn",
+"box": [
+150.27,
+126.87,
+153.32,
+132.87
+]
+},
+{
+"text": "3,18",
+"before": ".518.5FeetF.4.b.Setbacks",
+"after": "-GarageMinimum9:Allother",
+"box": [
+108.96,
+169.9,
+120.94,
+175.9
+]
+},
+{
+"text": "9",
+"before": "tbacks3,18-GarageMinimum",
+"after": ":Allotherdevelopment20No",
+"box": [
+206.19,
+169.9,
+209.23,
+175.9
+]
+},
+{
+"text": "3,18",
+"before": "18.518.5FeetF.5.Setbacks",
+"after": "-GarageDoortoRearMinimum",
+"box": [
+108.96,
+226.37,
+120.94,
+232.37
+]
+},
+{
+"text": "11",
+"before": "-GarageDoortoRearMinimum",
+"after": "22222222FeetF.6.a.Setbac",
+"box": [
+113.34,
+239.79,
+119.42,
+245.79
+]
+},
+{
+"text": "3,18",
+"before": "222222FeetF.6.a.Setbacks",
+"after": "-MinimumBetweenBuildings",
+"box": [
+108.96,
+255.97,
+120.94,
+261.97
+]
+},
+{
+"text": "12",
+"before": "-MinimumBetweenBuildings",
+"after": "651018666FeetG.1.Buildin",
+"box": [
+110.12,
+269.4,
+116.21,
+275.4
+]
+},
+{
+"text": "5",
+"before": "nimumBetweenBuildings126",
+"after": "1018666FeetG.1.BuildingH",
+"box": [
+266.31,
+255.97,
+269.35,
+261.97
+]
+},
+{
+"text": "18",
+"before": "umBetweenBuildings126510",
+"after": "666FeetG.1.BuildingHeigh",
+"box": [
+282.99,
+255.97,
+289.07,
+261.97
+]
+},
+{
+"text": "13",
+"before": "1.BuildingHeight-Maximum",
+"after": "N/A4035143514FeetG.2.Bui",
+"box": [
+191.46,
+285.58,
+197.54,
+291.58
+]
+},
+{
+"text": "14",
+"before": "gHeight-Maximum13N/A4035",
+"after": "3514FeetG.2.BuildingHeig",
+"box": [
+407.38,
+285.58,
+413.47,
+291.58
+]
+},
+{
+"text": "14",
+"before": "ght-Maximum13N/A40351435",
+"after": "FeetG.2.BuildingHeight-H",
+"box": [
+470.46,
+285.58,
+476.54,
+291.58
+]
+},
+{
+"text": "3,",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "15,16,17-Single-Detached",
+"box": [
+218.77,
+331.36,
+223.31,
+337.36
+]
+},
+{
+"text": "3,",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "15,16,17-DuplexN/A,Refer",
+"box": [
+218.77,
+414.68,
+223.31,
+420.68
+]
+},
+{
+"text": "3,",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "15,16,17-TriplexandQuadp",
+"box": [
+218.77,
+498.0,
+223.31,
+504.0
+]
+},
+{
+"text": "3,",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "15,16,17-TownhouseN/A,Re",
+"box": [
+218.77,
+581.31,
+223.31,
+587.31
+]
+}
+],
+"21": [
+{
+"text": "3,",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "15,16,17-CottageClusterN",
+"box": [
+218.77,
+113.44,
+223.31,
+119.44
+]
+},
+{
+"text": "3,",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "15,16,17-Single-RoomOccu",
+"box": [
+218.77,
+196.76,
+223.31,
+202.76
+]
+},
+{
+"text": "3,",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "15,16,17-Non-Residential",
+"box": [
+218.77,
+280.08,
+223.31,
+286.08
+]
+},
+{
+"text": "19",
+"before": "entI.1.MaximumHeight-WCF",
+"after": "80808080FeetI.2.MaximumH",
+"box": [
+118.19,
+466.47,
+124.27,
+472.47
+]
+},
+{
+"text": "20",
+"before": "Height-EquipmentShelters",
+"after": "12121212FeetI.3.MaximumH",
+"box": [
+95.78,
+522.94,
+101.86,
+528.94
+]
+},
+{
+"text": "21",
+"before": "ight.N/AJ.1.YardSetbacks",
+"after": "-RequirementsShallcomply",
+"box": [
+98.86,
+676.14,
+104.95,
+682.14
+]
+}
+],
+"22": [
+{
+"text": "21",
+"before": "surementJ.2.YardSetbacks",
+"after": "-OtherReferto60.70.35.14",
+"box": [
+98.86,
+126.87,
+104.95,
+132.87
+]
+}
+],
+"25": [
+{
+"text": "17",
+"before": "2.A.ResidentialDwellings",
+"after": "-AccessoryDwellingUnitsP",
+"box": [
+171.64,
+114.97,
+177.72,
+120.97
+]
+},
+{
+"text": "17",
+"before": "2.B.ResidentialDwellings",
+"after": "-Single-DetachedDwelling",
+"box": [
+171.64,
+131.15,
+177.72,
+137.15
+]
+},
+{
+"text": "12",
+"before": "-Single-DetachedDwelling",
+"after": "N1PPP2.C.ResidentialDwel",
+"box": [
+298.83,
+131.15,
+304.91,
+137.15
+]
+},
+{
+"text": "1",
+"before": "ngle-DetachedDwelling12N",
+"after": "PPP2.C.ResidentialDwelli",
+"box": [
+475.51,
+131.15,
+478.55,
+137.15
+]
+},
+{
+"text": "17",
+"before": "2.C.ResidentialDwellings",
+"after": "-DuplexP8PPP2.D.Resident",
+"box": [
+171.64,
+147.33,
+177.72,
+153.33
+]
+},
+{
+"text": "8",
+"before": "ntialDwellings17-DuplexP",
+"after": "PPP2.D.ResidentialDwelli",
+"box": [
+474.8,
+147.33,
+477.84,
+153.33
+]
+},
+{
+"text": "17",
+"before": "2.D.ResidentialDwellings",
+"after": "-TriplexandQuadplexP8PPP",
+"box": [
+171.64,
+163.5,
+177.72,
+169.5
+]
+},
+{
+"text": "8",
+"before": "gs17-TriplexandQuadplexP",
+"after": "PPP2.E.ResidentialDwelli",
+"box": [
+474.8,
+163.5,
+477.84,
+169.5
+]
+},
+{
+"text": "17",
+"before": "2.E.ResidentialDwellings",
+"after": "-TownhousePPPP2.F.Reside",
+"box": [
+171.64,
+179.68,
+177.72,
+185.68
+]
+},
+{
+"text": "17",
+"before": "2.F.ResidentialDwellings",
+"after": "-CottageClusterNPPP2.G.R",
+"box": [
+171.64,
+195.86,
+177.72,
+201.86
+]
+},
+{
+"text": "17",
+"before": "2.G.ResidentialDwellings",
+"after": "-Multi-DwellingPPNN2.H.R",
+"box": [
+171.64,
+212.04,
+177.72,
+218.04
+]
+},
+{
+"text": "17",
+"before": "2.H.ResidentialDwellings",
+"after": "-HomeOccupationPPPP2.I.R",
+"box": [
+171.64,
+228.22,
+177.72,
+234.22
+]
+},
+{
+"text": "17",
+"before": "2.I.ResidentialDwellings",
+"after": "-ManufacturedandMobileHo",
+"box": [
+171.64,
+244.39,
+177.72,
+250.39
+]
+},
+{
+"text": "3",
+"before": "nufacturedandMobileHomes",
+"after": "NP4PP2.J.ResidentialDwel",
+"box": [
+336.0,
+244.39,
+339.05,
+250.39
+]
+},
+{
+"text": "4",
+"before": "acturedandMobileHomes3NP",
+"after": "PP2.J.ResidentialDwellin",
+"box": [
+501.7,
+244.39,
+504.74,
+250.39
+]
+},
+{
+"text": "17",
+"before": "2.J.ResidentialDwellings",
+"after": "-ManufacturedHomeParksNP",
+"box": [
+171.64,
+260.57,
+177.72,
+266.57
+]
+},
+{
+"text": "17",
+"before": "2.K.ResidentialDwellings",
+"after": "-PlannedUnitDevelopmentC",
+"box": [
+171.64,
+276.75,
+177.72,
+282.75
+]
+},
+{
+"text": "17",
+"before": "2.L.ResidentialDwellings",
+"after": "-HomeTestingofConsumerEl",
+"box": [
+171.64,
+292.93,
+177.72,
+298.93
+]
+},
+{
+"text": "13",
+"before": "nsumerElectronicProducts",
+"after": "PPPP2.M.ResidentialDwell",
+"box": [
+395.17,
+292.93,
+401.26,
+298.93
+]
+},
+{
+"text": "17",
+"before": "2.M.ResidentialDwellings",
+"after": "-Single-RoomOccupanciesP",
+"box": [
+171.64,
+309.11,
+177.72,
+315.11
+]
+},
+{
+"text": "18",
+"before": "rcialChildCareCentersPPP",
+"after": "CP18C3.D.CommercialResid",
+"box": [
+526.27,
+357.64,
+532.36,
+363.64
+]
+},
+{
+"text": "18",
+"before": "lChildCareCentersPPP18CP",
+"after": "C3.D.CommercialResidenti",
+"box": [
+556.07,
+357.64,
+562.16,
+363.64
+]
+},
+{
+"text": "5",
+"before": "TemporaryLivingQuartersC",
+"after": "C5C5N5.A.CommercialAnima",
+"box": [
+474.89,
+390.0,
+477.93,
+396.0
+]
+},
+{
+"text": "5",
+"before": "mporaryLivingQuartersC5C",
+"after": "C5N5.A.CommercialAnimalC",
+"box": [
+501.79,
+390.0,
+504.83,
+396.0
+]
+},
+{
+"text": "5",
+"before": "oraryLivingQuartersC5C5C",
+"after": "N5.A.CommercialAnimalCar",
+"box": [
+532.06,
+390.0,
+535.1,
+396.0
+]
+},
+{
+"text": "14",
+"before": "5.A.CommercialAnimalCare",
+"after": "-MajorCCCC5.B.Commercial",
+"box": [
+182.88,
+406.17,
+188.96,
+412.17
+]
+},
+{
+"text": "14",
+"before": "5.B.CommercialAnimalCare",
+"after": "-MinorCCCC6.A.Commercial",
+"box": [
+182.88,
+422.35,
+188.96,
+428.35
+]
+},
+{
+"text": "9",
+"before": "SelfStorageFacilitiesCCN",
+"after": "N6.B.CommercialStorageYa",
+"box": [
+532.68,
+438.53,
+535.72,
+444.53
+]
+},
+{
+"text": "6",
+"before": "B.CommercialStorageYards",
+"after": "CCCC7.CommercialMarijuan",
+"box": [
+190.03,
+454.71,
+193.07,
+460.71
+]
+},
+{
+"text": "15",
+"before": "anaProcessingNNNN8.Civic",
+"after": "CemeteryCCCC9.A.Civic15E",
+"box": [
+89.03,
+500.49,
+95.12,
+506.49
+]
+},
+{
+"text": "15",
+"before": "c15CemeteryCCCC9.A.Civic",
+"after": "EducationalInstitutionsC",
+"box": [
+89.03,
+516.67,
+95.12,
+522.67
+]
+},
+{
+"text": "15",
+"before": "nstitutionsCCCC9.B.Civic",
+"after": "CommercialSchoolsNNNN10.",
+"box": [
+89.03,
+532.85,
+95.12,
+538.85
+]
+},
+{
+"text": "15",
+"before": "rcialSchoolsNNNN10.Civic",
+"after": "PlacesofWorshipCCCC11.A.",
+"box": [
+89.03,
+549.03,
+95.12,
+555.03
+]
+},
+{
+"text": "15",
+"before": "sofWorshipCCCC11.A.Civic",
+"after": "PublicBuildingsandUses-N",
+"box": [
+89.03,
+565.2,
+95.12,
+571.2
+]
+},
+{
+"text": "7",
+"before": "rvicesinPublicBuildingsP",
+"after": "NNN11.B.Civic15PublicBui",
+"box": [
+474.8,
+565.2,
+477.84,
+571.2
+]
+},
+{
+"text": "15",
+"before": "BuildingsP7NNN11.B.Civic",
+"after": "PublicBuildingsandUses-P",
+"box": [
+89.03,
+581.38,
+95.12,
+587.38
+]
+},
+{
+"text": "15",
+"before": "cBuildingsCCCC11.C.Civic",
+"after": "PublicBuildingsandUses-P",
+"box": [
+89.03,
+597.56,
+95.12,
+603.56
+]
+},
+{
+"text": "15",
+"before": "ssionLinesPPPP11.D.Civic",
+"after": "PublicBuildingsandUses-P",
+"box": [
+89.03,
+627.17,
+95.12,
+633.17
+]
+},
+{
+"text": "15",
+"before": "ssionLinesCCCC12.A.Civic",
+"after": "PublicParkCCCC12.B.Civic",
+"box": [
+89.03,
+656.77,
+95.12,
+662.77
+]
+},
+{
+"text": "15",
+"before": "PublicParkCCCC12.B.Civic",
+"after": "PublicDogParksorDogRunsC",
+"box": [
+89.03,
+672.95,
+95.12,
+678.95
+]
+},
+{
+"text": "15",
+"before": "sorDogRunsCCCC12.C.Civic",
+"after": "PublicRecreationalFacili",
+"box": [
+89.03,
+689.13,
+95.12,
+695.13
+]
+},
+{
+"text": "15",
+"before": "FacilitiesCCCC12.D.Civic",
+"after": "CommunityGardensPPPP13.A",
+"box": [
+89.03,
+705.31,
+95.12,
+711.31
+]
+},
+{
+"text": "15",
+"before": "ityGardensPPPP13.A.Civic",
+"after": "DomesticViolenceShelters",
+"box": [
+89.03,
+721.49,
+95.12,
+727.49
+]
+}
+],
+"26": [
+{
+"text": "15",
+"before": "Chapter20,ZD-913.B.Civic",
+"after": "EmergencySheltersP2P2P2P",
+"box": [
+89.03,
+81.39,
+95.12,
+87.39
+]
+},
+{
+"text": "2",
+"before": "ivic15EmergencySheltersP",
+"after": "P2P2P213.C.Civic15MassSh",
+"box": [
+474.8,
+81.39,
+477.84,
+87.39
+]
+},
+{
+"text": "2",
+"before": "ic15EmergencySheltersP2P",
+"after": "P2P213.C.Civic15MassShel",
+"box": [
+501.7,
+81.39,
+504.74,
+87.39
+]
+},
+{
+"text": "2",
+"before": "15EmergencySheltersP2P2P",
+"after": "P213.C.Civic15MassShelte",
+"box": [
+531.97,
+81.39,
+535.01,
+87.39
+]
+},
+{
+"text": "2",
+"before": "EmergencySheltersP2P2P2P",
+"after": "13.C.Civic15MassShelters",
+"box": [
+561.77,
+81.39,
+564.81,
+87.39
+]
+},
+{
+"text": "15",
+"before": "eltersP2P2P2P213.C.Civic",
+"after": "MassSheltersPPPP14.A.Civ",
+"box": [
+89.03,
+97.57,
+95.12,
+103.57
+]
+},
+{
+"text": "15",
+"before": "ssSheltersPPPP14.A.Civic",
+"after": "Utilities-UtilitySubstat",
+"box": [
+89.03,
+113.75,
+95.12,
+119.75
+]
+},
+{
+"text": "15",
+"before": "missionLinesCCCC15.Civic",
+"after": "VehicleCamping16PPPP16.C",
+"box": [
+89.03,
+143.36,
+95.12,
+149.36
+]
+},
+{
+"text": "16",
+"before": "15.Civic15VehicleCamping",
+"after": "PPPP16.Civic15WirelessCo",
+"box": [
+203.04,
+143.36,
+209.12,
+149.36
+]
+},
+{
+"text": "15",
+"before": "cleCamping16PPPP16.Civic",
+"after": "WirelessCommunicationsFa",
+"box": [
+89.03,
+159.53,
+95.12,
+165.53
+]
+}
+],
+"28": [
+{
+"text": "1",
+"before": "surementA.MinimumDensity",
+"after": "34343434UnitsPerAcreB.Ma",
+"box": [
+141.58,
+395.98,
+144.63,
+401.98
+]
+},
+{
+"text": "10",
+"before": "eB.MaximumFloorAreaRatio",
+"after": "3.0See20.10.16See20.10.1",
+"box": [
+181.99,
+412.16,
+188.07,
+418.16
+]
+},
+{
+"text": "2",
+"before": "FeetD.MaximumYardSetback",
+"after": "None161616FeetE.1.Minimu",
+"box": [
+167.45,
+474.12,
+170.49,
+480.12
+]
+},
+{
+"text": "3",
+"before": "Setbacks-SideAbuttingLot",
+"after": "10NoneNoneNoneFeetE.3.Mi",
+"box": [
+255.05,
+506.48,
+258.09,
+512.48
+]
+},
+{
+"text": "5",
+"before": "etbacks-OpenAirDisplay15",
+"after": "155None15FeetE.4.Minimum",
+"box": [
+309.8,
+522.66,
+312.85,
+528.66
+]
+},
+{
+"text": "5",
+"before": "acks-OpenAirDisplay15515",
+"after": "None15FeetE.4.MinimumYar",
+"box": [
+354.15,
+522.66,
+357.2,
+528.66
+]
+},
+{
+"text": "4",
+"before": "MinimumYardSetbacks-Rear",
+"after": "1515None15FeetF.1.Buildi",
+"box": [
+198.91,
+538.83,
+201.95,
+544.83
+]
+}
+],
+"29": [
+{
+"text": "7",
+"before": "entG.1.MaximumHeight-WCF",
+"after": "80808080FeetG.2.MaximumH",
+"box": [
+121.64,
+126.87,
+124.68,
+132.87
+]
+},
+{
+"text": "8",
+"before": "Height-EquipmentShelters",
+"after": "12121212FeetG.3.MaximumH",
+"box": [
+99.23,
+183.33,
+102.27,
+189.33
+]
+},
+{
+"text": "9",
+"before": "ight.N/AH.1.YardSetbacks",
+"after": "-RequirementsShallcomply",
+"box": [
+102.31,
+336.54,
+105.36,
+342.54
+]
+},
+{
+"text": "9",
+"before": "mentsN/AH.2.YardSetbacks",
+"after": "-OtherReferto60.70.35.14",
+"box": [
+125.05,
+379.57,
+128.09,
+385.57
+]
+}
+],
+"31": [
+{
+"text": "19",
+"before": "2.A.ResidentialDwellings",
+"after": "-AccessoryDwellingUnitsP",
+"box": [
+199.09,
+203.11,
+205.17,
+209.11
+]
+},
+{
+"text": "19",
+"before": "2.B.ResidentialDwellings",
+"after": "-Single-DetachedDwelling",
+"box": [
+199.09,
+219.29,
+205.17,
+225.29
+]
+},
+{
+"text": "10",
+"before": "-Single-DetachedDwelling",
+"after": "NNNN2.C.ResidentialDwell",
+"box": [
+326.28,
+219.29,
+332.36,
+225.29
+]
+},
+{
+"text": "19",
+"before": "2.C.ResidentialDwellings",
+"after": "-Duplex11P1PPP2.D.Reside",
+"box": [
+199.09,
+235.47,
+205.17,
+241.47
+]
+},
+{
+"text": "11",
+"before": "entialDwellings19-Duplex",
+"after": "P1PPP2.D.ResidentialDwel",
+"box": [
+243.47,
+235.47,
+249.55,
+241.47
+]
+},
+{
+"text": "1",
+"before": "ialDwellings19-Duplex11P",
+"after": "PPP2.D.ResidentialDwelli",
+"box": [
+492.48,
+235.47,
+495.52,
+241.47
+]
+},
+{
+"text": "19",
+"before": "2.D.ResidentialDwellings",
+"after": "-TriplexandQuadplex11P1P",
+"box": [
+199.09,
+251.64,
+205.17,
+257.64
+]
+},
+{
+"text": "11",
+"before": "ngs19-TriplexandQuadplex",
+"after": "P1PPP2.E.ResidentialDwel",
+"box": [
+307.21,
+251.64,
+313.3,
+257.64
+]
+},
+{
+"text": "1",
+"before": "19-TriplexandQuadplex11P",
+"after": "PPP2.E.ResidentialDwelli",
+"box": [
+492.48,
+251.64,
+495.52,
+257.64
+]
+},
+{
+"text": "19",
+"before": "2.E.ResidentialDwellings",
+"after": "-TownhouseP1PPP2.F.Resid",
+"box": [
+199.09,
+267.82,
+205.17,
+273.82
+]
+},
+{
+"text": "1",
+"before": "alDwellings19-TownhouseP",
+"after": "PPP2.F.ResidentialDwelli",
+"box": [
+492.48,
+267.82,
+495.52,
+273.82
+]
+},
+{
+"text": "19",
+"before": "2.F.ResidentialDwellings",
+"after": "-CottageClusterNNNN2.G.R",
+"box": [
+199.09,
+284.0,
+205.17,
+290.0
+]
+},
+{
+"text": "19",
+"before": "2.G.ResidentialDwellings",
+"after": "-Multi-DwellingP1PPP2.H.",
+"box": [
+199.09,
+300.18,
+205.17,
+306.18
+]
+},
+{
+"text": "1",
+"before": "llings19-Multi-DwellingP",
+"after": "PPP2.H.ResidentialDwelli",
+"box": [
+492.48,
+300.18,
+495.52,
+306.18
+]
+},
+{
+"text": "19",
+"before": "2.H.ResidentialDwellings",
+"after": "-HomeOccupationPPPP2.I.R",
+"box": [
+199.09,
+316.36,
+205.17,
+322.36
+]
+},
+{
+"text": "19",
+"before": "2.I.ResidentialDwellings",
+"after": "-ManufacturedandMobileHo",
+"box": [
+199.09,
+332.53,
+205.17,
+338.53
+]
+},
+{
+"text": "19",
+"before": "2.J.ResidentialDwellings",
+"after": "-ManufacturedHomeParksNN",
+"box": [
+199.09,
+348.71,
+205.17,
+354.71
+]
+},
+{
+"text": "19",
+"before": "2.K.ResidentialDwellings",
+"after": "-PlannedUnitDevelopmentC",
+"box": [
+199.09,
+364.89,
+205.17,
+370.89
+]
+},
+{
+"text": "19",
+"before": "2.L.ResidentialDwellings",
+"after": "-Single-RoomOccupanciesP",
+"box": [
+199.09,
+381.07,
+205.17,
+387.07
+]
+},
+{
+"text": "1",
+"before": "-Single-RoomOccupanciesP",
+"after": "PPP3.A.CommercialAnimalC",
+"box": [
+492.48,
+381.07,
+495.52,
+387.07
+]
+},
+{
+"text": "2",
+"before": "sPPPP8.CommercialOfficeP",
+"after": "PPP9.CommercialParkingas",
+"box": [
+492.48,
+542.85,
+495.52,
+548.85
+]
+},
+{
+"text": "3",
+"before": "10.CommercialRetailTrade",
+"after": "PPPP11.CommercialMeeting",
+"box": [
+209.8,
+575.21,
+212.84,
+581.21
+]
+},
+{
+"text": "7",
+"before": "cialMeetingFacilitiesCPC",
+"after": "PP12.CommercialMarijuana",
+"box": [
+523.43,
+591.38,
+526.48,
+597.38
+]
+},
+{
+"text": "13",
+"before": "rcialMarijuanaDispensary",
+"after": "NPPP13.CommercialRetailM",
+"box": [
+253.41,
+607.56,
+259.49,
+613.56
+]
+},
+{
+"text": "16",
+"before": "cialRetailMarijuanaSales",
+"after": "NPPP14.CommercialService",
+"box": [
+254.96,
+623.74,
+261.04,
+629.74
+]
+}
+],
+"32": [
+{
+"text": "20",
+"before": "lVehicleSalesorLeaseNNNP",
+"after": "17.E.CommercialVehicleRe",
+"box": [
+561.28,
+114.97,
+567.37,
+120.97
+]
+},
+{
+"text": "14",
+"before": "9.CommercialFoodCartPods",
+"after": "P15PPP20.Civic17Cemetery",
+"box": [
+223.78,
+163.5,
+229.86,
+169.5
+]
+},
+{
+"text": "15",
+"before": "ommercialFoodCartPods14P",
+"after": "PPP20.Civic17CemeteryNNN",
+"box": [
+492.48,
+163.5,
+498.57,
+169.5
+]
+},
+{
+"text": "17",
+"before": "CartPods14P15PPP20.Civic",
+"after": "CemeteryNNNN21.A.Civic17",
+"box": [
+89.03,
+179.68,
+95.12,
+185.68
+]
+},
+{
+"text": "17",
+"before": "17CemeteryNNNN21.A.Civic",
+"after": "CommercialSchoolsCPPP21.",
+"box": [
+89.03,
+195.86,
+95.12,
+201.86
+]
+},
+{
+"text": "17",
+"before": "ialSchoolsCPPP21.B.Civic",
+"after": "EducationalInstitutionsP",
+"box": [
+89.03,
+212.04,
+95.12,
+218.04
+]
+},
+{
+"text": "17",
+"before": "InstitutionsPPPP22.Civic",
+"after": "PlacesofWorshipCPC7PP23.",
+"box": [
+89.03,
+228.22,
+95.12,
+234.22
+]
+},
+{
+"text": "7",
+"before": "ivic17PlacesofWorshipCPC",
+"after": "PP23.Civic17PublicBuildi",
+"box": [
+523.43,
+228.22,
+526.48,
+234.22
+]
+},
+{
+"text": "17",
+"before": "sofWorshipCPC7PP23.Civic",
+"after": "PublicBuildings,Services",
+"box": [
+89.03,
+244.4,
+95.12,
+250.4
+]
+},
+{
+"text": "17",
+"before": "cesandUsesCCCC24.A.Civic",
+"after": "PublicParkPPPP24.B.Civic",
+"box": [
+89.03,
+260.57,
+95.12,
+266.57
+]
+},
+{
+"text": "17",
+"before": "PublicParkPPPP24.B.Civic",
+"after": "PublicDogParksorDogRunsC",
+"box": [
+89.03,
+276.75,
+95.12,
+282.75
+]
+},
+{
+"text": "17",
+"before": "sorDogRunsCCCC24.C.Civic",
+"after": "RecreationalFacilitiesPP",
+"box": [
+89.03,
+292.93,
+95.12,
+298.93
+]
+},
+{
+"text": "17",
+"before": "FacilitiesPPPP25.A.Civic",
+"after": "DomesticViolenceShelters",
+"box": [
+89.03,
+309.11,
+95.12,
+315.11
+]
+},
+{
+"text": "17",
+"before": "ceSheltersPPPP25.B.Civic",
+"after": "EmergencySheltersP12P12P",
+"box": [
+89.03,
+325.29,
+95.12,
+331.29
+]
+},
+{
+"text": "12",
+"before": "ivic17EmergencySheltersP",
+"after": "P12P12P1225.C.Civic17Mas",
+"box": [
+492.48,
+325.29,
+498.57,
+331.29
+]
+},
+{
+"text": "12",
+"before": "c17EmergencySheltersP12P",
+"after": "P12P1225.C.Civic17MassSh",
+"box": [
+515.08,
+325.29,
+521.17,
+331.29
+]
+},
+{
+"text": "12",
+"before": "EmergencySheltersP12P12P",
+"after": "P1225.C.Civic17MassShelt",
+"box": [
+542.53,
+325.29,
+548.62,
+331.29
+]
+},
+{
+"text": "12",
+"before": "rgencySheltersP12P12P12P",
+"after": "25.C.Civic17MassShelters",
+"box": [
+561.28,
+325.29,
+567.37,
+331.29
+]
+},
+{
+"text": "17",
+"before": "rsP12P12P12P1225.C.Civic",
+"after": "MassSheltersPPPP26.Civic",
+"box": [
+89.03,
+341.46,
+95.12,
+347.46
+]
+},
+{
+"text": "17",
+"before": "MassSheltersPPPP26.Civic",
+"after": "SocialOrganizationsCPC7P",
+"box": [
+89.03,
+357.64,
+95.12,
+363.64
+]
+},
+{
+"text": "7",
+"before": "17SocialOrganizationsCPC",
+"after": "PP27.Civic17TransitCente",
+"box": [
+523.43,
+357.64,
+526.48,
+363.64
+]
+},
+{
+"text": "17",
+"before": "anizationsCPC7PP27.Civic",
+"after": "TransitCentersNCCN28.A.C",
+"box": [
+89.03,
+373.82,
+95.12,
+379.82
+]
+},
+{
+"text": "17",
+"before": "sitCentersNCCN28.A.Civic",
+"after": "Utilities-UtilitySubstat",
+"box": [
+89.03,
+396.71,
+95.12,
+402.71
+]
+},
+{
+"text": "17",
+"before": "ssionLinesCCCC28.B.Civic",
+"after": "Utilities-TransmissionLi",
+"box": [
+89.03,
+419.6,
+95.12,
+425.6
+]
+},
+{
+"text": "17",
+"before": "missionLinesPPPP29.Civic",
+"after": "VehicleCamping18PPPP30.C",
+"box": [
+89.03,
+435.78,
+95.12,
+441.78
+]
+},
+{
+"text": "18",
+"before": "29.Civic17VehicleCamping",
+"after": "PPPP30.Civic17WirelessCo",
+"box": [
+230.49,
+435.78,
+236.57,
+441.78
+]
+},
+{
+"text": "17",
+"before": "cleCamping18PPPP30.Civic",
+"after": "WirelessCommunicationsFa",
+"box": [
+89.03,
+451.96,
+95.12,
+457.96
+]
+},
+{
+"text": "5,13,16",
+"before": "ween10:00p.m.and7:00a.m.",
+"after": "PC6PC6,7PPC8[ORD4879;Apr",
+"box": [
+380.5,
+474.85,
+401.41,
+480.85
+]
+},
+{
+"text": "6",
+"before": "p.m.and7:00a.m.5,13,16PC",
+"after": "PC6,7PPC8[ORD4879;April2",
+"box": [
+492.66,
+481.56,
+495.71,
+487.56
+]
+},
+{
+"text": "6,",
+"before": ".and7:00a.m.5,13,16PC6PC",
+"after": "7PPC8[ORD4879;April2026]",
+"box": [
+523.43,
+469.36,
+527.98,
+475.36
+]
+},
+{
+"text": "8",
+"before": "00a.m.5,13,16PC6PC6,7PPC",
+"after": "[ORD4879;April2026]Footn",
+"box": [
+561.46,
+481.56,
+564.51,
+487.56
+]
+}
+],
+"35": [
+{
+"text": "th",
+"before": "JenkinsRoad,andeastof158",
+"after": "Avenue.[ORD4649,February",
+"box": [
+326.7,
+602.84,
+331.86,
+608.84
+]
+}
+],
+"36": [
+{
+"text": "5",
+"before": "imum/MaximumN/ANone/0.35",
+"after": "N/AN/AD.1.LotDimensions-",
+"box": [
+420.11,
+377.48,
+423.15,
+383.48
+]
+},
+{
+"text": "1",
+"before": "tE.1.MinimumYardSetbacks",
+"after": "-AnyYardAbuttingAResiden",
+"box": [
+171.12,
+426.02,
+174.16,
+432.02
+]
+},
+{
+"text": "1",
+"before": "tE.2.MinimumYardSetbacks",
+"after": "-Front35None35FeetE.3.Mi",
+"box": [
+171.12,
+455.62,
+174.16,
+461.62
+]
+},
+{
+"text": "1",
+"before": "tE.3.MinimumYardSetbacks",
+"after": "-Side1,210None10FeetE.4.",
+"box": [
+171.12,
+471.8,
+174.16,
+477.8
+]
+},
+{
+"text": "1,2",
+"before": "inimumYardSetbacks1-Side",
+"after": "10None10FeetE.4.MinimumY",
+"box": [
+200.2,
+471.8,
+207.78,
+477.8
+]
+},
+{
+"text": "1",
+"before": "tE.4.MinimumYardSetbacks",
+"after": "-Rear2NoneNoneNoneFeetF.",
+"box": [
+171.12,
+487.98,
+174.16,
+493.98
+]
+},
+{
+"text": "2",
+"before": "inimumYardSetbacks1-Rear",
+"after": "NoneNoneNoneFeetF.1.Buil",
+"box": [
+201.92,
+487.98,
+204.96,
+493.98
+]
+},
+{
+"text": "3",
+"before": "1.BuildingHeight-Maximum",
+"after": "8080-110645FeetG.1.Publi",
+"box": [
+184.81,
+504.16,
+187.85,
+510.16
+]
+},
+{
+"text": "6",
+"before": "gHeight-Maximum38080-110",
+"after": "45FeetG.1.PublicParks4Ex",
+"box": [
+414.26,
+504.16,
+417.31,
+510.16
+]
+},
+{
+"text": "4",
+"before": "10645FeetG.1.PublicParks",
+"after": "ExemptExemptExemptN/A20.",
+"box": [
+116.62,
+520.33,
+119.66,
+526.33
+]
+},
+{
+"text": "7",
+"before": "urementH.1.MaximumHeight",
+"after": "-WCF7808080FeetH.2.Maxim",
+"box": [
+92.49,
+640.81,
+95.54,
+646.81
+]
+},
+{
+"text": "7",
+"before": "ntH.1.MaximumHeight7-WCF",
+"after": "808080FeetH.2.MaximumHei",
+"box": [
+124.58,
+640.81,
+127.62,
+646.81
+]
+},
+{
+"text": "7",
+"before": "080FeetH.2.MaximumHeight",
+"after": "-EquipmentShelters812121",
+"box": [
+92.49,
+670.42,
+95.54,
+676.42
+]
+},
+{
+"text": "8",
+"before": "eight7-EquipmentShelters",
+"after": "121212Feet",
+"box": [
+99.13,
+697.27,
+102.17,
+703.27
+]
+}
+],
+"37": [
+{
+"text": "7",
+"before": "urementH.3.MaximumHeight",
+"after": "-RoofMountedAntennasShal",
+"box": [
+92.49,
+126.87,
+95.54,
+132.87
+]
+},
+{
+"text": "9",
+"before": "ight.N/AI.1.YardSetbacks",
+"after": "-RequirementsShallcomply",
+"box": [
+124.94,
+210.19,
+127.99,
+216.19
+]
+},
+{
+"text": "9",
+"before": "mentsN/AI.2.YardSetbacks",
+"after": "-OtherReferto60.70.35.14",
+"box": [
+124.94,
+253.22,
+127.99,
+259.22
+]
+}
+],
+"38": [
+{
+"text": "1",
+"before": "mmercialAnimalCare,Major",
+"after": "NNC1.B.CommercialAnimalC",
+"box": [
+214.0,
+188.15,
+217.04,
+194.15
+]
+},
+{
+"text": "1",
+"before": "mmercialAnimalCare,Minor",
+"after": "PNP2.A.CommercialHospita",
+"box": [
+214.4,
+204.33,
+217.45,
+210.33
+]
+},
+{
+"text": "1",
+"before": "P2.A.CommercialHospitals",
+"after": "PNC2.B.CommercialMedical",
+"box": [
+168.69,
+220.51,
+171.73,
+226.51
+]
+},
+{
+"text": "1",
+"before": "CommercialMedicalClinics",
+"after": "PP24C2.C.CommercialChild",
+"box": [
+193.93,
+236.69,
+196.98,
+242.69
+]
+},
+{
+"text": "24",
+"before": "mercialMedicalClinics1PP",
+"after": "C2.C.CommercialChildCare",
+"box": [
+494.13,
+236.69,
+500.21,
+242.69
+]
+},
+{
+"text": "1",
+"before": "mmercialChildCareCenters",
+"after": "PPP3.A.CommercialParking",
+"box": [
+209.95,
+252.87,
+212.99,
+258.87
+]
+},
+{
+"text": "2",
+"before": "dDrinkingEstablishmentsP",
+"after": "P24C24.B.CommercialRetai",
+"box": [
+441.72,
+301.4,
+444.76,
+307.4
+]
+},
+{
+"text": "24",
+"before": "rinkingEstablishmentsP2P",
+"after": "C24.B.CommercialRetailan",
+"box": [
+494.13,
+301.4,
+500.21,
+307.4
+]
+},
+{
+"text": "2",
+"before": "kingEstablishmentsP2P24C",
+"after": "4.B.CommercialRetailandS",
+"box": [
+549.69,
+301.4,
+552.73,
+307.4
+]
+},
+{
+"text": "4",
+"before": "-EquipmentandSupplySales",
+"after": "PNP54.C.CommercialRetail",
+"box": [
+381.92,
+331.01,
+384.96,
+337.01
+]
+},
+{
+"text": "5",
+"before": "ipmentandSupplySales4PNP",
+"after": "4.C.CommercialRetailandS",
+"box": [
+549.6,
+331.01,
+552.64,
+337.01
+]
+},
+{
+"text": "6",
+"before": "-EquipmentRentalAgencies",
+"after": "CNC4.D.CommercialRetaila",
+"box": [
+378.53,
+347.18,
+381.58,
+353.18
+]
+},
+{
+"text": "7",
+"before": "oandIncluding5,000sq.ft.",
+"after": "PP24N4.E.CommercialRetai",
+"box": [
+309.86,
+376.79,
+312.91,
+382.79
+]
+},
+{
+"text": "24",
+"before": "dIncluding5,000sq.ft.7PP",
+"after": "N4.E.CommercialRetailand",
+"box": [
+494.13,
+363.36,
+500.21,
+369.36
+]
+},
+{
+"text": "7",
+"before": "0butLessthan30,000sq.ft.",
+"after": "CP24N4.F.CommercialRetai",
+"box": [
+185.92,
+419.82,
+188.96,
+425.82
+]
+},
+{
+"text": "24",
+"before": "tLessthan30,000sq.ft.7CP",
+"after": "N4.F.CommercialRetailand",
+"box": [
+494.13,
+392.97,
+500.21,
+398.97
+]
+},
+{
+"text": "24",
+"before": "s-ProfessionalServicesPP",
+"after": "C4.G.CommercialRetailand",
+"box": [
+494.13,
+436.0,
+500.21,
+442.0
+]
+},
+{
+"text": "1",
+"before": "mercialColdStoragePlants",
+"after": "NNP5.B.CommercialSelfSto",
+"box": [
+214.13,
+530.32,
+217.17,
+536.32
+]
+},
+{
+"text": "1",
+"before": "ialSelfStorageFacilities",
+"after": "NNC5.C.CommercialStorage",
+"box": [
+221.86,
+546.5,
+224.9,
+552.5
+]
+},
+{
+"text": "1,8",
+"before": "mercialStorageorSaleYard",
+"after": "NP24P5.D.CommercialStora",
+"box": [
+217.61,
+562.68,
+226.54,
+568.68
+]
+},
+{
+"text": "24",
+"before": "alStorageorSaleYard1,8NP",
+"after": "P5.D.CommercialStorageYa",
+"box": [
+494.13,
+562.68,
+500.21,
+568.68
+]
+},
+{
+"text": "1",
+"before": "YardforBuildingMaterials",
+"after": "NNP6.CommercialTemporary",
+"box": [
+283.49,
+578.85,
+286.53,
+584.85
+]
+},
+{
+"text": "1",
+"before": "to,TruckandTrailerRental",
+"after": "NNC7.B.CommercialAutomot",
+"box": [
+260.95,
+611.21,
+263.99,
+617.21
+]
+},
+{
+"text": "1",
+"before": "lAutomotiveService,Major",
+"after": "NNP107.C.CommercialAutom",
+"box": [
+247.16,
+627.39,
+250.2,
+633.39
+]
+},
+{
+"text": "10",
+"before": "omotiveService,Major1NNP",
+"after": "7.C.CommercialAutomotive",
+"box": [
+548.07,
+627.39,
+554.16,
+633.39
+]
+},
+{
+"text": "1",
+"before": "lAutomotiveService,Minor",
+"after": "NNP7.D.CommercialBulkFue",
+"box": [
+247.56,
+643.57,
+250.6,
+649.57
+]
+},
+{
+"text": "1",
+"before": "rcialBulkFuelDealerships",
+"after": "NNP7.E.CommercialHeavyEq",
+"box": [
+222.77,
+659.74,
+225.82,
+665.74
+]
+},
+{
+"text": "1,11",
+"before": "rcialHeavyEquipmentSales",
+"after": "NNP7.F.CommercialTrailer",
+"box": [
+231.75,
+675.92,
+243.72,
+681.92
+]
+},
+{
+"text": "1",
+"before": "onalVehicleorBoatStorage",
+"after": "NP24P7.G.CommercialTrail",
+"box": [
+325.24,
+692.1,
+328.29,
+698.1
+]
+},
+{
+"text": "24",
+"before": "lVehicleorBoatStorage1NP",
+"after": "P7.G.CommercialTrailerSa",
+"box": [
+494.13,
+692.1,
+500.21,
+698.1
+]
+},
+{
+"text": "1",
+"before": "cialTrailerSalesorRepair",
+"after": "NNC7.H.CommercialVehicle",
+"box": [
+225.04,
+708.28,
+228.09,
+714.28
+]
+},
+{
+"text": "1",
+"before": "rcialVehicleStorageYards",
+"after": "NNC",
+"box": [
+224.13,
+724.46,
+227.17,
+730.46
+]
+}
+],
+"39": [
+{
+"text": "25",
+"before": "8.CommercialFoodCartPods",
+"after": "PNN9.IndustrialConcreteM",
+"box": [
+195.28,
+98.79,
+201.36,
+104.79
+]
+},
+{
+"text": "1",
+"before": "fOn-SiteSalestothePublic",
+"after": "PPP13.IndustrialManufact",
+"box": [
+209.1,
+176.93,
+212.14,
+182.93
+]
+},
+{
+"text": "1",
+"before": "ssing,Packing,andStorage",
+"after": "P12,13PP1314.IndustrialM",
+"box": [
+181.26,
+206.54,
+184.3,
+212.54
+]
+},
+{
+"text": "12,13",
+"before": "ing,Packing,andStorage1P",
+"after": "PP1314.IndustrialMarijua",
+"box": [
+435.73,
+193.11,
+450.75,
+199.11
+]
+},
+{
+"text": "13",
+"before": "king,andStorage1P12,13PP",
+"after": "14.IndustrialMarijuanaPr",
+"box": [
+548.07,
+193.11,
+554.16,
+199.11
+]
+},
+{
+"text": "12",
+"before": "rialMarijuanaProcessingP",
+"after": "NP1215.IndustrialMotorFr",
+"box": [
+440.2,
+222.72,
+446.28,
+228.72
+]
+},
+{
+"text": "12",
+"before": "MarijuanaProcessingP12NP",
+"after": "15.IndustrialMotorFreigh",
+"box": [
+548.07,
+222.72,
+554.16,
+228.72
+]
+},
+{
+"text": "14",
+"before": "dustrialOperationCenters",
+"after": "NNP17.IndustrialLaborato",
+"box": [
+209.98,
+255.07,
+216.06,
+261.07
+]
+},
+{
+"text": "1",
+"before": "P17.IndustrialLaboratory",
+"after": "P12,13PP18.IndustrialSal",
+"box": [
+176.53,
+271.25,
+179.57,
+277.25
+]
+},
+{
+"text": "12,13",
+"before": "7.IndustrialLaboratory1P",
+"after": "PP18.IndustrialSalvageYa",
+"box": [
+435.73,
+271.25,
+450.75,
+277.25
+]
+},
+{
+"text": "1",
+"before": "lidWasteTransferStations",
+"after": "NNC19.IndustrialWarehous",
+"box": [
+163.75,
+300.86,
+166.79,
+306.86
+]
+},
+{
+"text": "1",
+"before": "ndDistributiveActivities",
+"after": "P12PP20.A.Civic3Commerci",
+"box": [
+356.16,
+317.04,
+359.2,
+323.04
+]
+},
+{
+"text": "12",
+"before": "DistributiveActivities1P",
+"after": "PP20.A.Civic3CommercialS",
+"box": [
+440.2,
+317.04,
+446.28,
+323.04
+]
+},
+{
+"text": "3",
+"before": "tivities1P12PP20.A.Civic",
+"after": "CommercialSchools1CNN20.",
+"box": [
+88.63,
+333.21,
+91.68,
+339.21
+]
+},
+{
+"text": "1",
+"before": ".Civic3CommercialSchools",
+"after": "CNN20.B.Civic3Educationa",
+"box": [
+217.57,
+333.21,
+220.61,
+339.21
+]
+},
+{
+"text": "3",
+"before": "ialSchools1CNN20.B.Civic",
+"after": "EducationalInstitutions1",
+"box": [
+88.63,
+349.39,
+91.68,
+355.39
+]
+},
+{
+"text": "1",
+"before": "3EducationalInstitutions",
+"after": "CNC20.C.Civic3JobTrainin",
+"box": [
+233.19,
+349.39,
+236.23,
+355.39
+]
+},
+{
+"text": "3",
+"before": "stitutions1CNC20.C.Civic",
+"after": "JobTrainingandVocational",
+"box": [
+88.63,
+365.57,
+91.68,
+371.57
+]
+},
+{
+"text": "1",
+"before": "alRehabilitationServices",
+"after": "PNP21.Civic3PublicBuildi",
+"box": [
+354.67,
+365.57,
+357.71,
+371.57
+]
+},
+{
+"text": "3",
+"before": "tionServices1PNP21.Civic",
+"after": "PublicBuildingsandUses15",
+"box": [
+88.63,
+381.75,
+91.68,
+387.75
+]
+},
+{
+"text": "15",
+"before": "c3PublicBuildingsandUses",
+"after": "PNC22.A.Civic3RailroadTr",
+"box": [
+240.39,
+381.75,
+246.47,
+387.75
+]
+},
+{
+"text": "3",
+"before": "gsandUses15PNC22.A.Civic",
+"after": "RailroadTracksandFacilit",
+"box": [
+88.63,
+397.92,
+91.68,
+403.92
+]
+},
+{
+"text": "16",
+"before": "cksandFacilities-Freight",
+"after": "PNP22.B.Civic3RailroadTr",
+"box": [
+295.73,
+397.92,
+301.82,
+403.92
+]
+},
+{
+"text": "3",
+"before": "s-Freight16PNP22.B.Civic",
+"after": "RailroadTracksandFacilit",
+"box": [
+88.63,
+414.1,
+91.68,
+420.1
+]
+},
+{
+"text": "3",
+"before": "s-PassengerPNP23.A.Civic",
+"after": "PublicParksandRecreation",
+"box": [
+88.63,
+430.28,
+91.68,
+436.28
+]
+},
+{
+"text": "1",
+"before": "ndRecreationalFacilities",
+"after": "PNP23.B.Civic3PublicDogP",
+"box": [
+300.25,
+430.28,
+303.29,
+436.28
+]
+},
+{
+"text": "3",
+"before": "Facilities1PNP23.B.Civic",
+"after": "PublicDogParksandDogRuns",
+"box": [
+88.63,
+446.46,
+91.68,
+452.46
+]
+},
+{
+"text": "1",
+"before": "PublicDogParksandDogRuns",
+"after": "CNC23.C.Civic3PrivateRec",
+"box": [
+265.27,
+446.46,
+268.31,
+452.46
+]
+},
+{
+"text": "3",
+"before": "andDogRuns1CNC23.C.Civic",
+"after": "PrivateRecreationalFacil",
+"box": [
+88.63,
+462.64,
+91.68,
+468.64
+]
+},
+{
+"text": "1,17",
+"before": "teRecreationalFacilities",
+"after": "PPP24.A.Civic3DomesticVi",
+"box": [
+258.85,
+462.64,
+270.83,
+468.64
+]
+},
+{
+"text": "3",
+"before": "ilities1,17PPP24.A.Civic",
+"after": "DomesticViolenceShelters",
+"box": [
+88.63,
+478.82,
+91.68,
+484.82
+]
+},
+{
+"text": "3",
+"before": "nceSheltersPPP24.B.Civic",
+"after": "EmergencySheltersP20P20P",
+"box": [
+88.63,
+494.99,
+91.68,
+500.99
+]
+},
+{
+"text": "20",
+"before": "Civic3EmergencySheltersP",
+"after": "P20P2024.C.Civic3MassShe",
+"box": [
+440.2,
+494.99,
+446.28,
+500.99
+]
+},
+{
+"text": "20",
+"before": "ic3EmergencySheltersP20P",
+"after": "P2024.C.Civic3MassShelte",
+"box": [
+494.13,
+494.99,
+500.21,
+500.99
+]
+},
+{
+"text": "20",
+"before": "EmergencySheltersP20P20P",
+"after": "24.C.Civic3MassSheltersP",
+"box": [
+548.07,
+494.99,
+554.16,
+500.99
+]
+},
+{
+"text": "3",
+"before": "ltersP20P20P2024.C.Civic",
+"after": "MassSheltersPPP25.Civic3",
+"box": [
+88.63,
+511.17,
+91.68,
+517.17
+]
+},
+{
+"text": "3",
+"before": "3MassSheltersPPP25.Civic",
+"after": "TransitCenters18PPC26.A.",
+"box": [
+88.63,
+527.35,
+91.68,
+533.35
+]
+},
+{
+"text": "18",
+"before": "P25.Civic3TransitCenters",
+"after": "PPC26.A.Civic3Utilities-",
+"box": [
+195.31,
+527.35,
+201.39,
+533.35
+]
+},
+{
+"text": "3",
+"before": "itCenters18PPC26.A.Civic",
+"after": "Utilities-FacilitiesRela",
+"box": [
+88.63,
+543.53,
+91.68,
+549.53
+]
+},
+{
+"text": "3",
+"before": "PowerPlantsCCC26.B.Civic",
+"after": "Utilities-TransmissionLi",
+"box": [
+88.63,
+586.56,
+91.68,
+592.56
+]
+},
+{
+"text": "3",
+"before": "smissionLinesPPP27.Civic",
+"after": "VehicleCamping26PPP28.Ci",
+"box": [
+88.63,
+602.74,
+91.68,
+608.74
+]
+},
+{
+"text": "26",
+"before": "P27.Civic3VehicleCamping",
+"after": "PPP28.Civic3WirelessComm",
+"box": [
+201.99,
+602.74,
+208.07,
+608.74
+]
+},
+{
+"text": "3",
+"before": "icleCamping26PPP28.Civic",
+"after": "WirelessCommunicationsFa",
+"box": [
+88.63,
+618.92,
+91.68,
+624.92
+]
+},
+{
+"text": "1",
+"before": "litiesPPP29.OfficeOffice",
+"after": "PPP1930.OfficeFinancialI",
+"box": [
+154.3,
+635.09,
+157.34,
+641.09
+]
+},
+{
+"text": "19",
+"before": "esPPP29.OfficeOffice1PPP",
+"after": "30.OfficeFinancialInstit",
+"box": [
+548.07,
+635.09,
+554.16,
+641.09
+]
+},
+{
+"text": "1",
+"before": "iceFinancialInstitutions",
+"after": "PP24C31.OtherPlannedUnit",
+"box": [
+220.13,
+651.27,
+223.17,
+657.27
+]
+},
+{
+"text": "24",
+"before": "FinancialInstitutions1PP",
+"after": "C31.OtherPlannedUnitDeve",
+"box": [
+494.13,
+651.27,
+500.21,
+657.27
+]
+}
+],
+"45": [
+{
+"text": "1",
+"before": "ntA.1.ResidentialDensity",
+"after": "-Minimumforresidentialon",
+"box": [
+111.89,
+120.67,
+113.92,
+124.67
+]
+},
+{
+"text": "2",
+"before": "nlyproject12N/AN/A242430",
+"after": "2430224302N/AN/AUnitsPer",
+"box": [
+346.03,
+120.67,
+348.06,
+124.67
+]
+},
+{
+"text": "2",
+"before": "oject12N/AN/A24243022430",
+"after": "24302N/AN/AUnitsPerAcreB",
+"box": [
+385.53,
+120.67,
+387.56,
+124.67
+]
+},
+{
+"text": "2",
+"before": "12N/AN/A2424302243022430",
+"after": "N/AN/AUnitsPerAcreB.1.Fl",
+"box": [
+429.99,
+120.67,
+432.02,
+124.67
+]
+},
+{
+"text": "3",
+"before": "eB.1.FloorAreaRatio(FAR)",
+"after": "-Minimum0.300.400.300.50",
+"box": [
+121.65,
+151.52,
+123.68,
+155.52
+]
+},
+{
+"text": "3",
+"before": "AB.2.FloorAreaRatio(FAR)",
+"after": "-MinimumwithaPUDorDRBCP0",
+"box": [
+121.65,
+172.6,
+123.68,
+176.6
+]
+},
+{
+"text": "3",
+"before": "AB.3.FloorAreaRatio(FAR)",
+"after": "-MaximumSee20.20.16NoneS",
+"box": [
+121.65,
+203.45,
+123.68,
+207.45
+]
+},
+{
+"text": "3",
+"before": "AB.4.FloorAreaRatio(FAR)",
+"after": "-MaximumwithaPUDNoincrea",
+"box": [
+121.65,
+224.53,
+123.68,
+228.53
+]
+},
+{
+"text": "9",
+"before": "YardSetbacks-SideMinimum",
+"after": "None10NoneNoneNoneNoneNo",
+"box": [
+81.55,
+307.31,
+83.58,
+311.31
+]
+},
+{
+"text": "4",
+"before": "PropertyZonedResidential",
+"after": "None755NoneNoneNoneNoneN",
+"box": [
+138.09,
+369.0,
+140.12,
+373.0
+]
+},
+{
+"text": "5",
+"before": "yZonedResidential4None75",
+"after": "NoneNoneNoneNoneNoneNone",
+"box": [
+200.99,
+349.47,
+203.02,
+353.47
+]
+}
+],
+"46": [
+{
+"text": "5",
+"before": "entE.1.MaximumHeight-WCF",
+"after": "80808080808080808080Feet",
+"box": [
+65.67,
+149.97,
+67.7,
+153.97
+]
+},
+{
+"text": "7",
+"before": "mHeight-EquipmentShelter",
+"after": "12121212121212121212Feet",
+"box": [
+71.94,
+190.58,
+73.97,
+194.58
+]
+},
+{
+"text": "8",
+"before": "ight.N/AF.1.YardSetbacks",
+"after": "-Require-mentsShallcompl",
+"box": [
+77.32,
+340.17,
+79.35,
+344.17
+]
+},
+{
+"text": "8",
+"before": "mentsN/AF.2.YardSetbacks",
+"after": "-OtherReferto60.70.35.14",
+"box": [
+77.32,
+400.32,
+79.35,
+404.32
+]
+}
+],
+"47": [
+{
+"text": "70",
+"before": "1.A.ResidentialDwellings",
+"after": "-Single-DetachedDwelling",
+"box": [
+170.99,
+507.82,
+177.07,
+513.82
+]
+},
+{
+"text": "6",
+"before": "Single-DetachedDwellingN",
+"after": "NNN6N6N6N6NN5N51.B.Resid",
+"box": [
+308.71,
+507.82,
+311.75,
+513.82
+]
+},
+{
+"text": "6",
+"before": "le-DetachedDwellingN6NNN",
+"after": "N6N6N6NN5N51.B.Residenti",
+"box": [
+393.11,
+507.82,
+396.15,
+513.82
+]
+},
+{
+"text": "6",
+"before": "-DetachedDwellingN6NNN6N",
+"after": "N6N6NN5N51.B.Residential",
+"box": [
+424.66,
+507.82,
+427.7,
+513.82
+]
+},
+{
+"text": "6",
+"before": "etachedDwellingN6NNN6N6N",
+"after": "N6NN5N51.B.ResidentialDw",
+"box": [
+454.15,
+507.82,
+457.2,
+513.82
+]
+},
+{
+"text": "6",
+"before": "achedDwellingN6NNN6N6N6N",
+"after": "NN5N51.B.ResidentialDwel",
+"box": [
+483.61,
+507.82,
+486.65,
+513.82
+]
+},
+{
+"text": "5",
+"before": "edDwellingN6NNN6N6N6N6NN",
+"after": "N51.B.ResidentialDwellin",
+"box": [
+538.76,
+507.82,
+541.8,
+513.82
+]
+},
+{
+"text": "5",
+"before": "DwellingN6NNN6N6N6N6NN5N",
+"after": "1.B.ResidentialDwellings",
+"box": [
+565.08,
+507.82,
+568.12,
+513.82
+]
+},
+{
+"text": "70",
+"before": "1.B.ResidentialDwellings",
+"after": "-DuplexPC1NNPPN4N4P66NN1",
+"box": [
+170.99,
+537.43,
+177.07,
+543.43
+]
+},
+{
+"text": "1",
+"before": "tialDwellings70-DuplexPC",
+"after": "NNPPN4N4P66NN1.C.Residen",
+"box": [
+312.17,
+537.43,
+315.21,
+543.43
+]
+},
+{
+"text": "4",
+"before": "ellings70-DuplexPC1NNPPN",
+"after": "N4P66NN1.C.ResidentialDw",
+"box": [
+454.15,
+537.43,
+457.2,
+543.43
+]
+},
+{
+"text": "4",
+"before": "lings70-DuplexPC1NNPPN4N",
+"after": "P66NN1.C.ResidentialDwel",
+"box": [
+483.61,
+537.43,
+486.65,
+543.43
+]
+},
+{
+"text": "66",
+"before": "ngs70-DuplexPC1NNPPN4N4P",
+"after": "NN1.C.ResidentialDwellin",
+"box": [
+509.83,
+537.43,
+515.91,
+543.43
+]
+},
+{
+"text": "70",
+"before": "1.C.ResidentialDwellings",
+"after": "-TriplexandQuadplexPNNPP",
+"box": [
+170.99,
+553.61,
+177.07,
+559.61
+]
+},
+{
+"text": "66",
+"before": "iplexandQuadplexPNNPPPPP",
+"after": "NN1.D.ResidentialDwellin",
+"box": [
+509.83,
+553.61,
+515.91,
+559.61
+]
+},
+{
+"text": "70",
+"before": "1.D.ResidentialDwellings",
+"after": "-TownhousePNNPPP4P4P66NN",
+"box": [
+170.99,
+569.78,
+177.07,
+575.78
+]
+},
+{
+"text": "4",
+"before": "llings70-TownhousePNNPPP",
+"after": "P4P66NN1.E.ResidentialDw",
+"box": [
+453.45,
+569.78,
+456.49,
+575.78
+]
+},
+{
+"text": "4",
+"before": "ings70-TownhousePNNPPP4P",
+"after": "P66NN1.E.ResidentialDwel",
+"box": [
+482.9,
+569.78,
+485.94,
+575.78
+]
+},
+{
+"text": "66",
+"before": "gs70-TownhousePNNPPP4P4P",
+"after": "NN1.E.ResidentialDwellin",
+"box": [
+509.83,
+569.78,
+515.91,
+575.78
+]
+},
+{
+"text": "70",
+"before": "1.E.ResidentialDwellings",
+"after": "-CottageClusterNNNNNNNNN",
+"box": [
+170.99,
+585.96,
+177.07,
+591.96
+]
+},
+{
+"text": "70",
+"before": "1.F.ResidentialDwellings",
+"after": "-Multi-DwellingP44P2P3P4",
+"box": [
+170.99,
+602.14,
+177.07,
+608.14
+]
+},
+{
+"text": "44",
+"before": "llings70-Multi-DwellingP",
+"after": "P2P3P44P44P44P44P44,66NN",
+"box": [
+306.48,
+602.14,
+312.56,
+608.14
+]
+},
+{
+"text": "2",
+"before": "ngs70-Multi-DwellingP44P",
+"after": "P3P44P44P44P44P44,66NN1.",
+"box": [
+335.97,
+602.14,
+339.01,
+608.14
+]
+},
+{
+"text": "3",
+"before": "s70-Multi-DwellingP44P2P",
+"after": "P44P44P44P44P44,66NN1.G.",
+"box": [
+363.87,
+602.14,
+366.91,
+608.14
+]
+},
+{
+"text": "44",
+"before": "0-Multi-DwellingP44P2P3P",
+"after": "P44P44P44P44,66NN1.G.Res",
+"box": [
+390.88,
+602.14,
+396.96,
+608.14
+]
+},
+{
+"text": "44",
+"before": "ulti-DwellingP44P2P3P44P",
+"after": "P44P44P44,66NN1.G.Reside",
+"box": [
+422.43,
+602.14,
+428.51,
+608.14
+]
+},
+{
+"text": "44",
+"before": "i-DwellingP44P2P3P44P44P",
+"after": "P44P44,66NN1.G.Residenti",
+"box": [
+451.92,
+602.14,
+458.01,
+608.14
+]
+},
+{
+"text": "44",
+"before": "wellingP44P2P3P44P44P44P",
+"after": "P44,66NN1.G.ResidentialD",
+"box": [
+481.38,
+602.14,
+487.46,
+608.14
+]
+},
+{
+"text": "44,",
+"before": "lingP44P2P3P44P44P44P44P",
+"after": "66NN1.G.ResidentialDwell",
+"box": [
+509.08,
+602.14,
+516.66,
+608.14
+]
+},
+{
+"text": "70",
+"before": "1.G.ResidentialDwellings",
+"after": "-HomeOccupationPPPPPPPPN",
+"box": [
+170.99,
+629.3,
+177.07,
+635.3
+]
+},
+{
+"text": "70",
+"before": "1.H.ResidentialDwellings",
+"after": "-PlannedUnitDevelopmentC",
+"box": [
+170.99,
+645.48,
+177.07,
+651.48
+]
+},
+{
+"text": "66",
+"before": "dUnitDevelopmentCCCCCCCC",
+"after": "CC1.I.ResidentialDwellin",
+"box": [
+509.92,
+645.48,
+516.0,
+651.48
+]
+},
+{
+"text": "70",
+"before": "1.I.ResidentialDwellings",
+"after": "-Single-RoomOccupanciesP",
+"box": [
+170.99,
+675.09,
+177.07,
+681.09
+]
+},
+{
+"text": "66",
+"before": "-RoomOccupanciesPPPPPPPP",
+"after": "NN1.J.ResidentialDwellin",
+"box": [
+509.83,
+675.09,
+515.91,
+681.09
+]
+},
+{
+"text": "70",
+"before": "1.J.ResidentialDwellings",
+"after": "-AccessoryDwellingUnitPN",
+"box": [
+170.99,
+704.69,
+177.07,
+710.69
+]
+}
+],
+"48": [
+{
+"text": "71",
+"before": "CommunicationsFacilities",
+"after": "PPPPPPPPPP3.A.Commercial",
+"box": [
+166.58,
+126.87,
+172.67,
+132.87
+]
+},
+{
+"text": "7",
+"before": "ercialMedicalClinicsPPPP",
+"after": "P8PP8PP9,10P9,104.C.Comm",
+"box": [
+392.4,
+191.58,
+395.44,
+197.58
+]
+},
+{
+"text": "8",
+"before": "cialMedicalClinicsPPPP7P",
+"after": "PP8PP9,10P9,104.C.Commer",
+"box": [
+423.95,
+191.58,
+426.99,
+197.58
+]
+},
+{
+"text": "8",
+"before": "lMedicalClinicsPPPP7P8PP",
+"after": "PP9,10P9,104.C.Commercia",
+"box": [
+482.9,
+191.58,
+485.94,
+197.58
+]
+},
+{
+"text": "9,10",
+"before": "dicalClinicsPPPP7P8PP8PP",
+"after": "P9,104.C.CommercialChild",
+"box": [
+533.58,
+191.58,
+545.55,
+197.58
+]
+},
+{
+"text": "9,10",
+"before": "ClinicsPPPP7P8PP8PP9,10P",
+"after": "4.C.CommercialChildCareC",
+"box": [
+559.9,
+191.58,
+571.88,
+197.58
+]
+},
+{
+"text": "11",
+"before": "ialCommercialAmusementPC",
+"after": "NPC12CCC13C13PNN6.Commer",
+"box": [
+306.57,
+253.54,
+312.65,
+259.54
+]
+},
+{
+"text": "12",
+"before": "mmercialAmusementPC11NPC",
+"after": "CCC13C13PNN6.CommercialD",
+"box": [
+362.44,
+253.54,
+368.52,
+259.54
+]
+},
+{
+"text": "13",
+"before": "ialAmusementPC11NPC12CCC",
+"after": "C13PNN6.CommercialDrive-",
+"box": [
+452.02,
+240.12,
+458.1,
+246.12
+]
+},
+{
+"text": "13",
+"before": "AmusementPC11NPC12CCC13C",
+"after": "PNN6.CommercialDrive-Thr",
+"box": [
+481.47,
+240.12,
+487.55,
+246.12
+]
+},
+{
+"text": "14",
+"before": "lDrive-ThroughFacilities",
+"after": "NC16NP20NCP17NC15C15C15N",
+"box": [
+233.52,
+269.72,
+239.6,
+275.72
+]
+},
+{
+"text": "16",
+"before": "ve-ThroughFacilities14NC",
+"after": "NP20NCP17NC15C15C15NNPC1",
+"box": [
+306.57,
+283.15,
+312.65,
+289.15
+]
+},
+{
+"text": "20",
+"before": "hroughFacilities14NC16NP",
+"after": "NCP17NC15C15C15NNPC17NN7",
+"box": [
+339.24,
+269.72,
+345.33,
+275.72
+]
+},
+{
+"text": "17",
+"before": "hFacilities14NC16NP20NCP",
+"after": "NC15C15C15NNPC17NN7.Comm",
+"box": [
+362.35,
+283.15,
+368.43,
+289.15
+]
+},
+{
+"text": "15",
+"before": "ilities14NC16NP20NCP17NC",
+"after": "C15C15NNPC17NN7.Commerci",
+"box": [
+395.76,
+269.72,
+401.84,
+275.72
+]
+},
+{
+"text": "15",
+"before": "ties14NC16NP20NCP17NC15C",
+"after": "C15NNPC17NN7.CommercialE",
+"box": [
+422.52,
+269.72,
+428.6,
+275.72
+]
+},
+{
+"text": "15",
+"before": "s14NC16NP20NCP17NC15C15C",
+"after": "NNPC17NN7.CommercialEati",
+"box": [
+452.02,
+269.72,
+458.1,
+275.72
+]
+},
+{
+"text": "17",
+"before": "6NP20NCP17NC15C15C15NNPC",
+"after": "NN7.CommercialEatingandD",
+"box": [
+509.92,
+283.15,
+516.0,
+289.15
+]
+},
+{
+"text": "9",
+"before": "DrinkingEstablishmentsPP",
+"after": "PPP9,13P9P13PP9P98.Comme",
+"box": [
+335.97,
+299.33,
+339.01,
+305.33
+]
+},
+{
+"text": "9,13",
+"before": "kingEstablishmentsPP9PPP",
+"after": "P9P13PP9P98.CommercialFi",
+"box": [
+419.48,
+299.33,
+431.45,
+305.33
+]
+},
+{
+"text": "9",
+"before": "stablishmentsPP9PPP9,13P",
+"after": "P13PP9P98.CommercialFina",
+"box": [
+453.45,
+299.33,
+456.49,
+305.33
+]
+},
+{
+"text": "13",
+"before": "ablishmentsPP9PPP9,13P9P",
+"after": "PP9P98.CommercialFinanci",
+"box": [
+481.38,
+299.33,
+487.46,
+305.33
+]
+},
+{
+"text": "9",
+"before": "shmentsPP9PPP9,13P9P13PP",
+"after": "P98.CommercialFinancialI",
+"box": [
+538.05,
+299.33,
+541.09,
+305.33
+]
+},
+{
+"text": "9",
+"before": "mentsPP9PPP9,13P9P13PP9P",
+"after": "8.CommercialFinancialIns",
+"box": [
+564.37,
+299.33,
+567.41,
+305.33
+]
+},
+{
+"text": "9",
+"before": "ialInstitutionsPPPPPPPPP",
+"after": "P99.CommercialLive/WorkU",
+"box": [
+538.05,
+315.5,
+541.09,
+321.5
+]
+},
+{
+"text": "9",
+"before": "lInstitutionsPPPPPPPPP9P",
+"after": "9.CommercialLive/WorkUse",
+"box": [
+564.37,
+315.5,
+567.41,
+321.5
+]
+},
+{
+"text": "21",
+"before": "rcialMeetingFacilitiesCP",
+"after": "CP21CP21CP21NCP21NCP21CP",
+"box": [
+306.48,
+361.29,
+312.56,
+367.29
+]
+},
+{
+"text": "21",
+"before": "lMeetingFacilitiesCP21CP",
+"after": "CP21CP21NCP21NCP21CP21CP",
+"box": [
+338.63,
+347.86,
+344.71,
+353.86
+]
+},
+{
+"text": "21",
+"before": "tingFacilitiesCP21CP21CP",
+"after": "CP21NCP21NCP21CP21CP2111",
+"box": [
+362.35,
+361.29,
+368.43,
+367.29
+]
+},
+{
+"text": "21",
+"before": "FacilitiesCP21CP21CP21CP",
+"after": "NCP21NCP21CP21CP2111.Com",
+"box": [
+395.05,
+347.86,
+401.14,
+353.86
+]
+},
+{
+"text": "21",
+"before": "itiesCP21CP21CP21CP21NCP",
+"after": "NCP21CP21CP2111.Commerci",
+"box": [
+456.1,
+347.86,
+462.18,
+353.86
+]
+},
+{
+"text": "21",
+"before": "CP21CP21CP21CP21NCP21NCP",
+"after": "CP21CP2111.CommercialOff",
+"box": [
+509.83,
+361.29,
+515.91,
+367.29
+]
+},
+{
+"text": "21",
+"before": "CP21CP21CP21NCP21NCP21CP",
+"after": "CP2111.CommercialOfficeP",
+"box": [
+540.7,
+347.86,
+546.79,
+353.86
+]
+},
+{
+"text": "21",
+"before": "CP21CP21NCP21NCP21CP21CP",
+"after": "11.CommercialOfficePPPP2",
+"box": [
+562.85,
+361.29,
+568.93,
+367.29
+]
+},
+{
+"text": "22",
+"before": "111.CommercialOfficePPPP",
+"after": "P23PPPPP12.CommercialPar",
+"box": [
+390.88,
+377.47,
+396.96,
+383.47
+]
+},
+{
+"text": "23",
+"before": ".CommercialOfficePPPP22P",
+"after": "PPPPP12.CommercialParkin",
+"box": [
+422.43,
+377.47,
+428.51,
+383.47
+]
+},
+{
+"text": "24",
+"before": "ngasthePrincipalUseCCCCN",
+"after": "CCCCCN24CN2413.Commercia",
+"box": [
+395.76,
+393.65,
+401.84,
+399.65
+]
+},
+{
+"text": "24",
+"before": "rincipalUseCCCCN24CCCCCN",
+"after": "CN2413.CommercialRentalB",
+"box": [
+541.41,
+393.65,
+547.49,
+399.65
+]
+},
+{
+"text": "24",
+"before": "ipalUseCCCCN24CCCCCN24CN",
+"after": "13.CommercialRentalBusin",
+"box": [
+563.56,
+407.07,
+569.64,
+413.07
+]
+},
+{
+"text": "25",
+"before": "mercialRentalBusinessPPP",
+"after": "P7,22,26P26,27P27P27P25,",
+"box": [
+362.35,
+423.25,
+368.43,
+429.25
+]
+},
+{
+"text": "7,22,",
+"before": "cialRentalBusinessPPP25P",
+"after": "26P26,27P27P27P25,29P25N",
+"box": [
+387.18,
+423.25,
+400.66,
+429.25
+]
+},
+{
+"text": "26,27",
+"before": "alBusinessPPP25P7,22,26P",
+"after": "P27P27P25,29P25N14.Comme",
+"box": [
+417.96,
+423.25,
+432.98,
+429.25
+]
+},
+{
+"text": "27",
+"before": "nessPPP25P7,22,26P26,27P",
+"after": "P27P25,29P25N14.Commerci",
+"box": [
+451.92,
+423.25,
+458.01,
+429.25
+]
+},
+{
+"text": "27",
+"before": "sPPP25P7,22,26P26,27P27P",
+"after": "P25,29P25N14.CommercialR",
+"box": [
+481.38,
+423.25,
+487.46,
+429.25
+]
+},
+{
+"text": "25,",
+"before": "P25P7,22,26P26,27P27P27P",
+"after": "29P25N14.CommercialRenta",
+"box": [
+509.08,
+423.25,
+516.66,
+429.25
+]
+},
+{
+"text": "25",
+"before": "22,26P26,27P27P27P25,29P",
+"after": "N14.CommercialRentalofEq",
+"box": [
+536.53,
+423.25,
+542.61,
+429.25
+]
+},
+{
+"text": "61",
+"before": "lRentalofEquipmentOnlyNP",
+"after": "NNNNNNNN15.A.CommercialR",
+"box": [
+334.45,
+450.41,
+340.53,
+456.41
+]
+},
+{
+"text": "26,",
+"before": "rcialRetail-RetailTradeP",
+"after": "30,31PC32P25NP22,26,33P1",
+"box": [
+305.73,
+466.59,
+313.31,
+472.59
+]
+},
+{
+"text": "32",
+"before": "l-RetailTradeP26,30,31PC",
+"after": "P25NP22,26,33P13,26P9,25",
+"box": [
+338.63,
+466.59,
+344.71,
+472.59
+]
+},
+{
+"text": "25",
+"before": "etailTradeP26,30,31PC32P",
+"after": "NP22,26,33P13,26P9,25,34",
+"box": [
+362.35,
+466.59,
+368.43,
+472.59
+]
+},
+{
+"text": "22,",
+"before": "lTradeP26,30,31PC32P25NP",
+"after": "26,33P13,26P9,25,34P13,2",
+"box": [
+394.92,
+466.59,
+402.51,
+472.59
+]
+},
+{
+"text": "13,26",
+"before": ",30,31PC32P25NP22,26,33P",
+"after": "P9,25,34P13,25P25P9,25C3",
+"box": [
+417.96,
+466.59,
+432.98,
+472.59
+]
+},
+{
+"text": "9,25,",
+"before": "PC32P25NP22,26,33P13,26P",
+"after": "34P13,25P25P9,25C35P9,25",
+"box": [
+448.23,
+466.59,
+461.71,
+472.59
+]
+},
+{
+"text": "13,25",
+"before": "P22,26,33P13,26P9,25,34P",
+"after": "P25P9,25C35P9,2515.B.Com",
+"box": [
+476.91,
+466.59,
+491.93,
+472.59
+]
+},
+{
+"text": "25",
+"before": ",33P13,26P9,25,34P13,25P",
+"after": "P9,25C35P9,2515.B.Commer",
+"box": [
+509.83,
+466.59,
+515.91,
+472.59
+]
+},
+{
+"text": "9,",
+"before": "P13,26P9,25,34P13,25P25P",
+"after": "25C35P9,2515.B.Commercia",
+"box": [
+537.3,
+466.59,
+541.84,
+472.59
+]
+},
+{
+"text": "35",
+"before": "6P9,25,34P13,25P25P9,25C",
+"after": "P9,2515.B.CommercialReta",
+"box": [
+540.34,
+480.02,
+546.42,
+486.02
+]
+},
+{
+"text": "9,25",
+"before": ",25,34P13,25P25P9,25C35P",
+"after": "15.B.CommercialRetail-Bu",
+"box": [
+559.9,
+466.59,
+571.88,
+472.59
+]
+},
+{
+"text": "9,36",
+"before": "ss/ProfessionalServicesP",
+"after": "PC32P25NP22,26,33P13,26P",
+"box": [
+303.53,
+512.38,
+315.5,
+518.38
+]
+},
+{
+"text": "32",
+"before": "fessionalServicesP9,36PC",
+"after": "P25NP22,26,33P13,26P9P9P",
+"box": [
+338.63,
+512.38,
+344.71,
+518.38
+]
+},
+{
+"text": "25",
+"before": "sionalServicesP9,36PC32P",
+"after": "NP22,26,33P13,26P9P9PP9,",
+"box": [
+362.35,
+512.38,
+368.43,
+518.38
+]
+},
+{
+"text": "22,",
+"before": "alServicesP9,36PC32P25NP",
+"after": "26,33P13,26P9P9PP9,10,25",
+"box": [
+394.92,
+512.38,
+402.51,
+518.38
+]
+},
+{
+"text": "13,26",
+"before": "sP9,36PC32P25NP22,26,33P",
+"after": "P9P9PP9,10,25P9,10,2517.",
+"box": [
+417.96,
+512.38,
+432.98,
+518.38
+]
+},
+{
+"text": "9",
+"before": "PC32P25NP22,26,33P13,26P",
+"after": "P9PP9,10,25P9,10,2517.Co",
+"box": [
+453.45,
+512.38,
+456.49,
+518.38
+]
+},
+{
+"text": "9",
+"before": "32P25NP22,26,33P13,26P9P",
+"after": "PP9,10,25P9,10,2517.Comm",
+"box": [
+482.9,
+512.38,
+485.94,
+518.38
+]
+},
+{
+"text": "9,10,",
+"before": "25NP22,26,33P13,26P9P9PP",
+"after": "25P9,10,2517.CommercialM",
+"box": [
+532.83,
+512.38,
+546.31,
+518.38
+]
+},
+{
+"text": "9,",
+"before": "6,33P13,26P9P9PP9,10,25P",
+"after": "10,2517.CommercialMariju",
+"box": [
+563.62,
+512.38,
+568.16,
+518.38
+]
+},
+{
+"text": "37",
+"before": "CommercialSelfStorageNNP",
+"after": "NNNNNNN19.B.CommercialSt",
+"box": [
+362.35,
+587.77,
+368.43,
+593.77
+]
+},
+{
+"text": "38",
+"before": ".CommercialStorageYardsC",
+"after": "NNNNNC39NNP4020.Commerci",
+"box": [
+306.57,
+603.94,
+312.65,
+609.94
+]
+},
+{
+"text": "39",
+"before": "ialStorageYardsC38NNNNNC",
+"after": "NNP4020.CommercialTempor",
+"box": [
+481.47,
+603.94,
+487.55,
+609.94
+]
+},
+{
+"text": "40",
+"before": "orageYardsC38NNNNNC39NNP",
+"after": "20.CommercialTemporaryLi",
+"box": [
+562.85,
+603.94,
+568.93,
+609.94
+]
+},
+{
+"text": "41",
+"before": "TemporaryLivingQuartersC",
+"after": "NPC41C41P41C41C42C42C422",
+"box": [
+306.57,
+620.12,
+312.65,
+626.12
+]
+},
+{
+"text": "41",
+"before": "raryLivingQuartersC41NPC",
+"after": "C41P41C41C42C42C4221.A.C",
+"box": [
+390.97,
+620.12,
+397.05,
+626.12
+]
+},
+{
+"text": "41",
+"before": "yLivingQuartersC41NPC41C",
+"after": "P41C41C42C42C4221.A.Comm",
+"box": [
+422.52,
+620.12,
+428.6,
+626.12
+]
+},
+{
+"text": "41",
+"before": "vingQuartersC41NPC41C41P",
+"after": "C41C42C42C4221.A.Commerc",
+"box": [
+451.92,
+620.12,
+458.01,
+626.12
+]
+},
+{
+"text": "41",
+"before": "gQuartersC41NPC41C41P41C",
+"after": "C42C42C4221.A.Commercial",
+"box": [
+481.47,
+620.12,
+487.55,
+626.12
+]
+},
+{
+"text": "42",
+"before": "artersC41NPC41C41P41C41C",
+"after": "C42C4221.A.CommercialAut",
+"box": [
+509.92,
+620.12,
+516.0,
+626.12
+]
+},
+{
+"text": "42",
+"before": "ersC41NPC41C41P41C41C42C",
+"after": "C4221.A.CommercialAutomo",
+"box": [
+536.62,
+620.12,
+542.7,
+626.12
+]
+},
+{
+"text": "42",
+"before": "C41NPC41C41P41C41C42C42C",
+"after": "21.A.CommercialAutomotiv",
+"box": [
+562.94,
+620.12,
+569.02,
+626.12
+]
+},
+{
+"text": "25",
+"before": "AutomotiveService,MajorC",
+"after": "NNCN43NNNNNN21.B.Commerc",
+"box": [
+306.57,
+636.3,
+312.65,
+642.3
+]
+},
+{
+"text": "43",
+"before": "tiveService,MajorC25NNCN",
+"after": "NNNNNN21.B.CommercialAut",
+"box": [
+395.76,
+636.3,
+401.84,
+642.3
+]
+},
+{
+"text": "25",
+"before": "motiveService,MinorPNCCC",
+"after": "NPC17C25NPC17NN21.C.Comm",
+"box": [
+422.52,
+652.48,
+428.6,
+658.48
+]
+},
+{
+"text": "17",
+"before": "eService,MinorPNCCC25NPC",
+"after": "C25NPC17NN21.C.Commercia",
+"box": [
+452.02,
+665.91,
+458.1,
+671.91
+]
+},
+{
+"text": "25",
+"before": "rvice,MinorPNCCC25NPC17C",
+"after": "NPC17NN21.C.CommercialBu",
+"box": [
+481.47,
+652.48,
+487.55,
+658.48
+]
+},
+{
+"text": "17",
+"before": ",MinorPNCCC25NPC17C25NPC",
+"after": "NN21.C.CommercialBulkFue",
+"box": [
+509.92,
+665.91,
+516.0,
+671.91
+]
+},
+{
+"text": "45",
+"before": "cialVehicleSalesorLeaseC",
+"after": "NNC9,22,26NP9,25P9,46P25",
+"box": [
+306.57,
+698.26,
+312.65,
+704.26
+]
+},
+{
+"text": "9,22,",
+"before": "ehicleSalesorLeaseC45NNC",
+"after": "26NP9,25P9,46P25,47NN",
+"box": [
+387.27,
+698.26,
+400.75,
+704.26
+]
+},
+{
+"text": "9,25",
+"before": "esorLeaseC45NNC9,22,26NP",
+"after": "P9,46P25,47NN",
+"box": [
+448.98,
+698.26,
+460.95,
+704.26
+]
+},
+{
+"text": "9,46",
+"before": "easeC45NNC9,22,26NP9,25P",
+"after": "P25,47NN",
+"box": [
+478.43,
+698.26,
+490.4,
+704.26
+]
+},
+{
+"text": "25,",
+"before": "45NNC9,22,26NP9,25P9,46P",
+"after": "47NN",
+"box": [
+509.08,
+698.26,
+516.66,
+704.26
+]
+}
+],
+"49": [
+{
+"text": "45",
+"before": "CommercialVehicleRentalC",
+"after": "NNC9,22,26NP9,25P9,46P25",
+"box": [
+306.57,
+113.44,
+312.65,
+119.44
+]
+},
+{
+"text": "9,22,",
+"before": "rcialVehicleRentalC45NNC",
+"after": "26NP9,25P9,46P25PP22.Com",
+"box": [
+387.27,
+113.44,
+400.75,
+119.44
+]
+},
+{
+"text": "9,25",
+"before": "cleRentalC45NNC9,22,26NP",
+"after": "P9,46P25PP22.CommercialF",
+"box": [
+448.98,
+113.44,
+460.95,
+119.44
+]
+},
+{
+"text": "9,46",
+"before": "ntalC45NNC9,22,26NP9,25P",
+"after": "P25PP22.CommercialFoodCa",
+"box": [
+478.43,
+113.44,
+490.4,
+119.44
+]
+},
+{
+"text": "25",
+"before": "45NNC9,22,26NP9,25P9,46P",
+"after": "PP22.CommercialFoodCartP",
+"box": [
+509.83,
+113.44,
+515.91,
+119.44
+]
+},
+{
+"text": "68",
+"before": "2.CommercialFoodCartPods",
+"after": "PPPPNPNPNN23.A.Civic19Co",
+"box": [
+195.68,
+140.6,
+201.76,
+146.6
+]
+},
+{
+"text": "19",
+"before": "ds68PPPPNPNPNN23.A.Civic",
+"after": "CommercialSchoolsPCPPCN3",
+"box": [
+89.03,
+156.78,
+95.12,
+162.78
+]
+},
+{
+"text": "33,48",
+"before": "9CommercialSchoolsPCPPCN",
+"after": "P13PPPP9C923.B.Civic19Ed",
+"box": [
+387.12,
+170.21,
+402.14,
+176.21
+]
+},
+{
+"text": "13",
+"before": "rcialSchoolsPCPPCN33,48P",
+"after": "PPPP9C923.B.Civic19Educa",
+"box": [
+422.43,
+156.78,
+428.51,
+162.78
+]
+},
+{
+"text": "9",
+"before": "choolsPCPPCN33,48P13PPPP",
+"after": "C923.B.Civic19Educationa",
+"box": [
+538.05,
+156.78,
+541.09,
+162.78
+]
+},
+{
+"text": "9",
+"before": "oolsPCPPCN33,48P13PPPP9C",
+"after": "23.B.Civic19EducationalI",
+"box": [
+564.46,
+156.78,
+567.5,
+162.78
+]
+},
+{
+"text": "19",
+"before": "3,48P13PPPP9C923.B.Civic",
+"after": "EducationalInstitutionsP",
+"box": [
+89.03,
+186.39,
+95.12,
+192.39
+]
+},
+{
+"text": "67",
+"before": "ucationalInstitutionsPCP",
+"after": "PPPPPPP9C924.Civic19Plac",
+"box": [
+338.63,
+186.39,
+344.71,
+192.39
+]
+},
+{
+"text": "9",
+"before": "InstitutionsPCP67PPPPPPP",
+"after": "C924.Civic19PlacesofWors",
+"box": [
+538.05,
+186.39,
+541.09,
+192.39
+]
+},
+{
+"text": "9",
+"before": "stitutionsPCP67PPPPPPP9C",
+"after": "24.Civic19PlacesofWorshi",
+"box": [
+564.46,
+186.39,
+567.5,
+192.39
+]
+},
+{
+"text": "19",
+"before": "sPCP67PPPPPPP9C924.Civic",
+"after": "PlacesofWorshipPPPPPPPPP",
+"box": [
+89.03,
+202.57,
+95.12,
+208.57
+]
+},
+{
+"text": "19",
+"before": "orshipPPPPPPPPPP25.Civic",
+"after": "PublicBuildings,Services",
+"box": [
+89.03,
+218.74,
+95.12,
+224.74
+]
+},
+{
+"text": "49",
+"before": "ervicesandUsesCPCCCCCCCP",
+"after": "CP4926.A.Civic19Railroad",
+"box": [
+540.7,
+218.74,
+546.79,
+224.74
+]
+},
+{
+"text": "49",
+"before": "cesandUsesCPCCCCCCCP49CP",
+"after": "26.A.Civic19RailroadTrac",
+"box": [
+562.85,
+232.17,
+568.93,
+238.17
+]
+},
+{
+"text": "19",
+"before": "CCCCCCCP49CP4926.A.Civic",
+"after": "RailroadTracksandFacilit",
+"box": [
+89.03,
+248.35,
+95.12,
+254.35
+]
+},
+{
+"text": "50",
+"before": "andFacilities-PassengerP",
+"after": "PPPPPPPPP26.B.Civic19Rai",
+"box": [
+306.48,
+248.35,
+312.56,
+254.35
+]
+},
+{
+"text": "19",
+"before": "erP50PPPPPPPPP26.B.Civic",
+"after": "RailroadTracksandFacilit",
+"box": [
+89.03,
+277.96,
+95.12,
+283.96
+]
+},
+{
+"text": "51",
+"before": "sandFacilities-FreightPP",
+"after": "PNNNNNP51P5127.A.Civic19",
+"box": [
+334.45,
+277.96,
+340.53,
+283.96
+]
+},
+{
+"text": "51",
+"before": "ities-FreightPP51PNNNNNP",
+"after": "P5127.A.Civic19PublicPar",
+"box": [
+536.53,
+277.96,
+542.61,
+283.96
+]
+},
+{
+"text": "51",
+"before": "es-FreightPP51PNNNNNP51P",
+"after": "27.A.Civic19PublicPark71",
+"box": [
+562.85,
+277.96,
+568.93,
+283.96
+]
+},
+{
+"text": "19",
+"before": "51PNNNNNP51P5127.A.Civic",
+"after": "PublicPark71CP52PPPPPPP5",
+"box": [
+89.03,
+307.56,
+95.12,
+313.56
+]
+},
+{
+"text": "71",
+"before": "5127.A.Civic19PublicPark",
+"after": "CP52PPPPPPP53P5327.B.Civ",
+"box": [
+177.27,
+307.56,
+183.35,
+313.56
+]
+},
+{
+"text": "52",
+"before": ".A.Civic19PublicPark71CP",
+"after": "PPPPPPP53P5327.B.Civic19",
+"box": [
+334.45,
+307.56,
+340.53,
+313.56
+]
+},
+{
+"text": "53",
+"before": "9PublicPark71CP52PPPPPPP",
+"after": "P5327.B.Civic19PublicDog",
+"box": [
+536.53,
+307.56,
+542.61,
+313.56
+]
+},
+{
+"text": "53",
+"before": "blicPark71CP52PPPPPPP53P",
+"after": "27.B.Civic19PublicDogPar",
+"box": [
+562.85,
+307.56,
+568.93,
+313.56
+]
+},
+{
+"text": "19",
+"before": "52PPPPPPP53P5327.B.Civic",
+"after": "PublicDogParksorDogRuns7",
+"box": [
+89.03,
+323.74,
+95.12,
+329.74
+]
+},
+{
+"text": "71",
+"before": "9PublicDogParksorDogRuns",
+"after": "CCCCCCCCCC27.C.Civic19Re",
+"box": [
+258.48,
+323.74,
+264.56,
+329.74
+]
+},
+{
+"text": "19",
+"before": "ns71CCCCCCCCCC27.C.Civic",
+"after": "RecreationalFacilitiesP1",
+"box": [
+89.03,
+339.92,
+95.12,
+345.92
+]
+},
+{
+"text": "11",
+"before": "9RecreationalFacilitiesP",
+"after": "P13PCCC54C54PNN28.A.Civi",
+"box": [
+306.48,
+339.92,
+312.56,
+345.92
+]
+},
+{
+"text": "13",
+"before": "creationalFacilitiesP11P",
+"after": "PCCC54C54PNN28.A.Civic19",
+"box": [
+334.45,
+339.92,
+340.53,
+345.92
+]
+},
+{
+"text": "54",
+"before": "onalFacilitiesP11P13PCCC",
+"after": "C54PNN28.A.Civic19Domest",
+"box": [
+452.02,
+339.92,
+458.1,
+345.92
+]
+},
+{
+"text": "54",
+"before": "lFacilitiesP11P13PCCC54C",
+"after": "PNN28.A.Civic19DomesticV",
+"box": [
+481.47,
+339.92,
+487.55,
+345.92
+]
+},
+{
+"text": "19",
+"before": "13PCCC54C54PNN28.A.Civic",
+"after": "DomesticViolenceShelters",
+"box": [
+89.03,
+356.1,
+95.12,
+362.1
+]
+},
+{
+"text": "19",
+"before": "tersPPPPPPPPPP28.B.Civic",
+"after": "EmergencySheltersP63P63P",
+"box": [
+89.03,
+372.28,
+95.12,
+378.28
+]
+},
+{
+"text": "63",
+"before": "ivic19EmergencySheltersP",
+"after": "P63P63P63P63P63P63P63P63",
+"box": [
+306.48,
+372.28,
+312.56,
+378.28
+]
+},
+{
+"text": "63",
+"before": "c19EmergencySheltersP63P",
+"after": "P63P63P63P63P63P63P63P63",
+"box": [
+334.45,
+372.28,
+340.53,
+378.28
+]
+},
+{
+"text": "63",
+"before": "EmergencySheltersP63P63P",
+"after": "P63P63P63P63P63P63P6328.",
+"box": [
+362.35,
+372.28,
+368.43,
+378.28
+]
+},
+{
+"text": "63",
+"before": "rgencySheltersP63P63P63P",
+"after": "P63P63P63P63P63P6328.C.C",
+"box": [
+390.88,
+372.28,
+396.96,
+378.28
+]
+},
+{
+"text": "63",
+"before": "ncySheltersP63P63P63P63P",
+"after": "P63P63P63P63P6328.C.Civi",
+"box": [
+422.43,
+372.28,
+428.51,
+378.28
+]
+},
+{
+"text": "63",
+"before": "SheltersP63P63P63P63P63P",
+"after": "P63P63P63P6328.C.Civic19",
+"box": [
+451.92,
+372.28,
+458.01,
+378.28
+]
+},
+{
+"text": "63",
+"before": "ltersP63P63P63P63P63P63P",
+"after": "P63P63P6328.C.Civic19Mas",
+"box": [
+481.38,
+372.28,
+487.46,
+378.28
+]
+},
+{
+"text": "63",
+"before": "rsP63P63P63P63P63P63P63P",
+"after": "P63P6328.C.Civic19MassSh",
+"box": [
+509.83,
+372.28,
+515.91,
+378.28
+]
+},
+{
+"text": "63",
+"before": "63P63P63P63P63P63P63P63P",
+"after": "P6328.C.Civic19MassShelt",
+"box": [
+536.53,
+372.28,
+542.61,
+378.28
+]
+},
+{
+"text": "63",
+"before": "63P63P63P63P63P63P63P63P",
+"after": "28.C.Civic19MassShelters",
+"box": [
+562.85,
+372.28,
+568.93,
+378.28
+]
+},
+{
+"text": "19",
+"before": "63P63P63P63P6328.C.Civic",
+"after": "MassSheltersPPPPPPPPPP29",
+"box": [
+89.03,
+388.45,
+95.12,
+394.45
+]
+},
+{
+"text": "19",
+"before": "eltersPPPPPPPPPP29.Civic",
+"after": "SocialOrganizationsP48NP",
+"box": [
+89.03,
+404.63,
+95.12,
+410.63
+]
+},
+{
+"text": "48",
+"before": "ic19SocialOrganizationsP",
+"after": "NPC48PC48PC48PC48PC48PCC",
+"box": [
+306.48,
+404.63,
+312.56,
+410.63
+]
+},
+{
+"text": "48",
+"before": "ocialOrganizationsP48NPC",
+"after": "PC48PC48PC48PC48PCC30Civ",
+"box": [
+362.44,
+418.06,
+368.52,
+424.06
+]
+},
+{
+"text": "48",
+"before": "lOrganizationsP48NPC48PC",
+"after": "PC48PC48PC48PCC30Civic19",
+"box": [
+395.05,
+404.63,
+401.14,
+410.63
+]
+},
+{
+"text": "48",
+"before": "anizationsP48NPC48PC48PC",
+"after": "PC48PC48PCC30Civic19Tran",
+"box": [
+426.6,
+404.63,
+432.69,
+410.63
+]
+},
+{
+"text": "48",
+"before": "ationsP48NPC48PC48PC48PC",
+"after": "PC48PCC30Civic19TransitC",
+"box": [
+456.1,
+404.63,
+462.18,
+410.63
+]
+},
+{
+"text": "48",
+"before": "nsP48NPC48PC48PC48PC48PC",
+"after": "PCC30Civic19TransitCente",
+"box": [
+485.55,
+404.63,
+491.64,
+410.63
+]
+},
+{
+"text": "19",
+"before": "48PC48PC48PC48PCC30Civic",
+"after": "TransitCenters71NPPCCCCP",
+"box": [
+89.03,
+434.24,
+95.12,
+440.24
+]
+},
+{
+"text": "71",
+"before": "C30Civic19TransitCenters",
+"after": "NPPCCCCPPP31.A.Civic19Ut",
+"box": [
+195.71,
+434.24,
+201.79,
+440.24
+]
+},
+{
+"text": "19",
+"before": "rs71NPPCCCCPPP31.A.Civic",
+"after": "Utilities-UtilitySubstat",
+"box": [
+89.03,
+450.41,
+95.12,
+456.41
+]
+},
+{
+"text": "71",
+"before": "herthanTransmissionLines",
+"after": "CCCCNCCCCC31.B.Civic19Ut",
+"box": [
+211.81,
+477.27,
+217.89,
+483.27
+]
+},
+{
+"text": "19",
+"before": "es71CCCCNCCCCC31.B.Civic",
+"after": "Utilities-TransmissionLi",
+"box": [
+89.03,
+493.45,
+95.12,
+499.45
+]
+},
+{
+"text": "71",
+"before": "lities-TransmissionLines",
+"after": "PPPPPPPPPP32.Civic19Vehi",
+"box": [
+254.45,
+493.45,
+260.53,
+499.45
+]
+},
+{
+"text": "19",
+"before": "ines71PPPPPPPPPP32.Civic",
+"after": "VehicleCamping69PPPPPPPP",
+"box": [
+89.03,
+509.63,
+95.12,
+515.63
+]
+},
+{
+"text": "69",
+"before": "32.Civic19VehicleCamping",
+"after": "PPPPPPPPPP33.IndustrialM",
+"box": [
+202.39,
+509.63,
+208.47,
+515.63
+]
+},
+{
+"text": "55,",
+"before": ",Processing,andPackingPC",
+"after": "58P56,57,58NP58,60NP25,5",
+"box": [
+305.82,
+539.23,
+313.4,
+545.23
+]
+},
+{
+"text": "56,57,",
+"before": "ssing,andPackingPC55,58P",
+"after": "58NP58,60NP25,58NP25,58P",
+"box": [
+329.23,
+525.81,
+345.75,
+531.81
+]
+},
+{
+"text": "58,60",
+"before": "ackingPC55,58P56,57,58NP",
+"after": "NP25,58NP25,58P56,57P56,",
+"box": [
+386.41,
+525.81,
+401.43,
+531.81
+]
+},
+{
+"text": "25,58",
+"before": "C55,58P56,57,58NP58,60NP",
+"after": "NP25,58P56,57P56,5734.In",
+"box": [
+447.46,
+525.81,
+462.48,
+531.81
+]
+},
+{
+"text": "25,",
+"before": "56,57,58NP58,60NP25,58NP",
+"after": "58P56,57P56,5734.Industr",
+"box": [
+509.08,
+525.81,
+516.66,
+531.81
+]
+},
+{
+"text": "56,57",
+"before": "58NP58,60NP25,58NP25,58P",
+"after": "P56,5734.IndustrialMarij",
+"box": [
+532.06,
+525.81,
+547.08,
+531.81
+]
+},
+{
+"text": "56,",
+"before": ",60NP25,58NP25,58P56,57P",
+"after": "5734.IndustrialMarijuana",
+"box": [
+562.1,
+525.81,
+569.69,
+531.81
+]
+},
+{
+"text": "58",
+"before": "35.IndustrialWarehousing",
+"after": "PPPPPNNPP59P5936.Industr",
+"box": [
+187.56,
+582.58,
+193.64,
+588.58
+]
+},
+{
+"text": "59",
+"before": "alWarehousing58PPPPPNNPP",
+"after": "P5936.IndustrialLaborato",
+"box": [
+536.53,
+582.58,
+542.61,
+588.58
+]
+},
+{
+"text": "59",
+"before": "arehousing58PPPPPNNPP59P",
+"after": "36.IndustrialLaboratoryP",
+"box": [
+562.85,
+582.58,
+568.93,
+588.58
+]
+},
+{
+"text": "55",
+"before": "6.IndustrialLaboratoryPC",
+"after": "P56,57NP60NP25NP25P56,57",
+"box": [
+306.57,
+612.18,
+312.65,
+618.18
+]
+},
+{
+"text": "56,57",
+"before": "ndustrialLaboratoryPC55P",
+"after": "NP60NP25NP25P56,57P56,57",
+"box": [
+329.98,
+598.75,
+345.0,
+604.75
+]
+},
+{
+"text": "60",
+"before": "alLaboratoryPC55P56,57NP",
+"after": "NP25NP25P56,57P56,57[ORD",
+"box": [
+390.88,
+598.75,
+396.96,
+604.75
+]
+},
+{
+"text": "25",
+"before": "boratoryPC55P56,57NP60NP",
+"after": "NP25P56,57P56,57[ORD4879",
+"box": [
+451.92,
+598.75,
+458.01,
+604.75
+]
+},
+{
+"text": "25",
+"before": "toryPC55P56,57NP60NP25NP",
+"after": "P56,57P56,57[ORD4879;Apr",
+"box": [
+509.83,
+598.75,
+515.91,
+604.75
+]
+},
+{
+"text": "56,57",
+"before": "yPC55P56,57NP60NP25NP25P",
+"after": "P56,57[ORD4879;April2026",
+"box": [
+532.06,
+598.75,
+547.08,
+604.75
+]
+},
+{
+"text": "56,",
+"before": "56,57NP60NP25NP25P56,57P",
+"after": "57[ORD4879;April2026]Foo",
+"box": [
+562.1,
+598.75,
+569.69,
+604.75
+]
+}
+],
+"55": [
+{
+"text": "1,2",
+"before": "reFeetB.1.MinimumLotArea",
+"after": "-Single-DetachedandDuple",
+"box": [
+155.26,
+681.48,
+164.2,
+687.48
+]
+},
+{
+"text": "1,2",
+"before": "reFeetB.2.MinimumLotArea",
+"after": "-TriplexandQuadplexN/AN/",
+"box": [
+155.26,
+711.09,
+164.2,
+717.09
+]
+}
+],
+"56": [
+{
+"text": "1,2",
+"before": "rementB.3.MinimumLotArea",
+"after": "-Multi-Dwelling(5-6units",
+"box": [
+155.26,
+113.44,
+164.2,
+119.44
+]
+},
+{
+"text": "23",
+"before": "(5-6units)N/AN/AN/A5,000",
+"after": "SquareFeetB.4.MinimumLot",
+"box": [
+437.08,
+113.44,
+443.16,
+119.44
+]
+},
+{
+"text": "1,2",
+"before": "reFeetB.4.MinimumLotArea",
+"after": "-TownhouseN/AN/AN/A1,300",
+"box": [
+155.26,
+143.05,
+164.2,
+149.05
+]
+},
+{
+"text": "16",
+"before": "-TownhouseN/AN/AN/A1,300",
+"after": "SquareFeetB.5.MinimumLot",
+"box": [
+437.08,
+143.05,
+443.16,
+149.05
+]
+},
+{
+"text": "1,2",
+"before": "reFeetB.5.MinimumLotArea",
+"after": "-CottageClusterN/AN/AN/A",
+"box": [
+155.26,
+159.22,
+164.2,
+165.22
+]
+},
+{
+"text": "1,2",
+"before": "reFeetB.6.MinimumLotArea",
+"after": "-Single-RoomOccupanciesN",
+"box": [
+155.26,
+175.4,
+164.2,
+181.4
+]
+},
+{
+"text": "4",
+"before": "mumLotAreaN/AN/AN/A6,000",
+"after": "SquareFeetD.MaximumResid",
+"box": [
+438.6,
+205.01,
+441.64,
+211.01
+]
+},
+{
+"text": "26",
+"before": "aximumResidentialDensity",
+"after": "N/AN/AN/AN/AUnitsPerAcre",
+"box": [
+204.76,
+221.19,
+210.84,
+227.19
+]
+},
+{
+"text": "3,27",
+"before": "inimumResidentialDensity",
+"after": "34343410UnitsPerAcreF.Mi",
+"box": [
+203.03,
+237.37,
+215.0,
+243.37
+]
+},
+{
+"text": "2,5",
+"before": "PerAcreF.MinimumLotWidth",
+"after": "N/AN/A142016FeetG.1.a.Ya",
+"box": [
+161.87,
+253.54,
+170.81,
+259.54
+]
+},
+{
+"text": "16",
+"before": "mumLotWidth2,5N/AN/A1420",
+"after": "FeetG.1.a.YardSetbacks2-",
+"box": [
+430.13,
+253.54,
+436.22,
+259.54
+]
+},
+{
+"text": "2",
+"before": "16FeetG.1.a.YardSetbacks",
+"after": "-FrontMinimum001010FeetG",
+"box": [
+133.6,
+269.72,
+136.64,
+275.72
+]
+},
+{
+"text": "2",
+"before": "10FeetG.2.a.YardSetbacks",
+"after": "-SideMinimum22:AbuttingL",
+"box": [
+133.6,
+285.9,
+136.64,
+291.9
+]
+},
+{
+"text": "22",
+"before": "ardSetbacks2-SideMinimum",
+"after": ":AbuttingLotN/AN/A0,3or5",
+"box": [
+209.88,
+285.9,
+215.97,
+291.9
+]
+},
+{
+"text": "7",
+"before": ":AbuttingLotN/AN/A0,3or5",
+"after": "0,3or57FeetG.2.b.YardSet",
+"box": [
+349.67,
+299.33,
+352.71,
+305.33
+]
+},
+{
+"text": "7",
+"before": "ngLotN/AN/A0,3or570,3or5",
+"after": "FeetG.2.b.YardSetbacks2-",
+"box": [
+444.36,
+285.9,
+447.4,
+291.9
+]
+},
+{
+"text": "2",
+"before": "57FeetG.2.b.YardSetbacks",
+"after": "-SideMinimum22:AbuttingS",
+"box": [
+133.6,
+315.5,
+136.64,
+321.5
+]
+},
+{
+"text": "22",
+"before": "ardSetbacks2-SideMinimum",
+"after": ":AbuttingStreet(publicor",
+"box": [
+209.88,
+315.5,
+215.97,
+321.5
+]
+},
+{
+"text": "7",
+"before": "icorprivate)N/AN/A0,3or5",
+"after": "0,3or57FeetG.3.YardSetba",
+"box": [
+349.67,
+328.93,
+352.71,
+334.93
+]
+},
+{
+"text": "7",
+"before": "vate)N/AN/A0,3or570,3or5",
+"after": "FeetG.3.YardSetbacks2-Si",
+"box": [
+444.36,
+315.5,
+447.4,
+321.5
+]
+},
+{
+"text": "2",
+"before": "or57FeetG.3.YardSetbacks",
+"after": "-SideMaximumN/AN/AN/AN/A",
+"box": [
+133.6,
+345.11,
+136.64,
+351.11
+]
+},
+{
+"text": "2",
+"before": "AN/AFeetG.4.YardSetbacks",
+"after": "-RearMinimumN/AN/A10158F",
+"box": [
+133.6,
+361.29,
+136.64,
+367.29
+]
+},
+{
+"text": "8",
+"before": "s2-RearMinimumN/AN/A1015",
+"after": "FeetG.5.YardSetbacks2-Mi",
+"box": [
+431.65,
+361.29,
+434.7,
+367.29
+]
+},
+{
+"text": "2",
+"before": "0158FeetG.5.YardSetbacks",
+"after": "-MinimumSideorRearYardsA",
+"box": [
+133.6,
+377.47,
+136.64,
+383.47
+]
+},
+{
+"text": "9",
+"before": "PropertyZonedResidential",
+"after": "1010N/AN/AFeetG.6.YardSe",
+"box": [
+120.96,
+404.32,
+124.0,
+410.32
+]
+},
+{
+"text": "2",
+"before": "AN/AFeetG.6.YardSetbacks",
+"after": "-MinimumSideorRearYardsA",
+"box": [
+133.6,
+420.5,
+136.64,
+426.5
+]
+},
+{
+"text": "25",
+"before": "untainNatureParkproperty",
+"after": "25252525FeetG.7.YardSetb",
+"box": [
+133.09,
+447.36,
+139.17,
+453.36
+]
+},
+{
+"text": "2",
+"before": "2525FeetG.7.YardSetbacks",
+"after": "-GarageandCarportMinimum",
+"box": [
+133.6,
+463.53,
+136.64,
+469.53
+]
+},
+{
+"text": "10",
+"before": "-GarageandCarportMinimum",
+"after": "N/AN/A5or18.51118.5FeetG",
+"box": [
+115.24,
+476.96,
+121.32,
+482.96
+]
+},
+{
+"text": "11",
+"before": "rtMinimum10N/AN/A5or18.5",
+"after": "18.5FeetG.8.YardSetbacks",
+"box": [
+355.11,
+476.96,
+361.19,
+482.96
+]
+},
+{
+"text": "2",
+"before": "18.5FeetG.8.YardSetbacks",
+"after": "-GarageDoortoRearMinimum",
+"box": [
+133.6,
+493.14,
+136.64,
+499.14
+]
+},
+{
+"text": "12",
+"before": "-GarageDoortoRearMinimum",
+"after": "N/AN/A2222FeetG.9.YardSe",
+"box": [
+115.24,
+506.57,
+121.32,
+512.57
+]
+},
+{
+"text": "2",
+"before": "2222FeetG.9.YardSetbacks",
+"after": "-MinimumBetweenBuildings",
+"box": [
+133.6,
+522.75,
+136.64,
+528.75
+]
+},
+{
+"text": "13",
+"before": "-MinimumBetweenBuildings",
+"after": "N/AN/A66FeetH.1.Building",
+"box": [
+112.03,
+536.17,
+118.11,
+542.17
+]
+},
+{
+"text": "14",
+"before": "2.BuildingHeight-Maximum",
+"after": "6515656545FeetI.1.FloorA",
+"box": [
+193.36,
+568.53,
+199.44,
+574.53
+]
+},
+{
+"text": "15",
+"before": "ildingHeight-Maximum1465",
+"after": "656545FeetI.1.FloorAreaR",
+"box": [
+283.26,
+568.53,
+289.34,
+574.53
+]
+},
+{
+"text": "2,17,18",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "2.0242.0241.524RefertoMa",
+"box": [
+218.18,
+630.49,
+239.09,
+636.49
+]
+},
+{
+"text": "24",
+"before": "AreaRatio(FAR)2,17,182.0",
+"after": "2.0241.524RefertoMaximum",
+"box": [
+284.65,
+630.49,
+290.73,
+636.49
+]
+},
+{
+"text": "24",
+"before": "atio(FAR)2,17,182.0242.0",
+"after": "1.524RefertoMaximumFARfo",
+"box": [
+316.62,
+630.49,
+322.71,
+636.49
+]
+},
+{
+"text": "24",
+"before": "FAR)2,17,182.0242.0241.5",
+"after": "RefertoMaximumFARforeach",
+"box": [
+352.32,
+630.49,
+358.41,
+636.49
+]
+},
+{
+"text": "2,17,18",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "-Single-DetachedDwelling",
+"box": [
+218.18,
+673.53,
+239.09,
+679.53
+]
+},
+{
+"text": "2,17,18",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "-DuplexN/AN/AN/A0.90N/A",
+"box": [
+218.18,
+703.13,
+239.09,
+709.13
+]
+}
+],
+"57": [
+{
+"text": "2,17,18",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "-TriplexandQuadplexN/AN/",
+"box": [
+218.18,
+113.44,
+239.09,
+119.44
+]
+},
+{
+"text": "2,17,18",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "-TownhouseN/AN/AN/AN/AN/",
+"box": [
+218.18,
+143.05,
+239.09,
+149.05
+]
+},
+{
+"text": "2,17,18",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "-CottageClusterN/AN/AN/A",
+"box": [
+218.18,
+172.65,
+239.09,
+178.65
+]
+},
+{
+"text": "2,17,18",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "-Multi-Dwelling(5to6unit",
+"box": [
+218.18,
+202.26,
+239.09,
+208.26
+]
+},
+{
+"text": "2,17,18",
+"before": "ximumFloorAreaRatio(FAR)",
+"after": "-Non-ResidentialUsesandC",
+"box": [
+218.18,
+231.87,
+239.09,
+237.87
+]
+},
+{
+"text": "19",
+"before": "entK.1.MaximumHeight-WCF",
+"after": "80808080FeetK.2.MaximumH",
+"box": [
+120.39,
+379.2,
+126.48,
+385.2
+]
+},
+{
+"text": "20",
+"before": "Height-EquipmentShelters",
+"after": "12121212FeetK.3.MaximumH",
+"box": [
+97.98,
+435.66,
+104.06,
+441.66
+]
+},
+{
+"text": "21",
+"before": "ight.N/AL.1.YardSetbacks",
+"after": "-RequirementsShallcomply",
+"box": [
+101.06,
+588.87,
+107.15,
+594.87
+]
+},
+{
+"text": "21",
+"before": "mentsN/AL.2.YardSetbacks",
+"after": "-OtherReferto60.70.35.14",
+"box": [
+123.8,
+631.9,
+129.88,
+637.9
+]
+}
+],
+"59": [
+{
+"text": "1",
+"before": "Single-DetachedDwellingN",
+"after": "N1N1,2P22.C.ResidentialD",
+"box": [
+459.23,
+683.61,
+462.27,
+689.61
+]
+},
+{
+"text": "1",
+"before": "ngle-DetachedDwellingN1N",
+"after": "N1,2P22.C.ResidentialDwe",
+"box": [
+492.83,
+683.61,
+495.87,
+689.61
+]
+},
+{
+"text": "1,2",
+"before": "le-DetachedDwellingN1N1N",
+"after": "P22.C.ResidentialDwellin",
+"box": [
+524.46,
+683.61,
+533.39,
+689.61
+]
+},
+{
+"text": "2",
+"before": "etachedDwellingN1N1N1,2P",
+"after": "2.C.ResidentialDwellings",
+"box": [
+559.95,
+683.61,
+562.99,
+689.61
+]
+},
+{
+"text": "7",
+"before": "dentialDwellings-DuplexP",
+"after": "P7P7P2.D.ResidentialDwel",
+"box": [
+458.52,
+699.79,
+461.56,
+705.79
+]
+},
+{
+"text": "7",
+"before": "ntialDwellings-DuplexP7P",
+"after": "P7P2.D.ResidentialDwelli",
+"box": [
+492.12,
+699.79,
+495.16,
+705.79
+]
+},
+{
+"text": "7",
+"before": "ialDwellings-DuplexP7P7P",
+"after": "P2.D.ResidentialDwelling",
+"box": [
+526.7,
+699.79,
+529.74,
+705.79
+]
+},
+{
+"text": "7",
+"before": "ings-TriplexandQuadplexP",
+"after": "P7P7P",
+"box": [
+458.52,
+715.97,
+461.56,
+721.97
+]
+},
+{
+"text": "7",
+"before": "gs-TriplexandQuadplexP7P",
+"after": "P7P",
+"box": [
+492.12,
+715.97,
+495.16,
+721.97
+]
+},
+{
+"text": "7",
+"before": "-TriplexandQuadplexP7P7P",
+"after": "P",
+"box": [
+526.7,
+715.97,
+529.74,
+721.97
+]
+}
+],
+"60": [
+{
+"text": "27",
+"before": "lings-Multi-DwellingPPPP",
+"after": "2.H.ResidentialDwellings",
+"box": [
+558.43,
+145.8,
+564.51,
+151.8
+]
+},
+{
+"text": "4",
+"before": "nufacturedandMobileHomes",
+"after": "PPPP2.J.ResidentialDwell",
+"box": [
+347.65,
+178.15,
+350.69,
+184.15
+]
+},
+{
+"text": "10",
+"before": "nsumerElectronicProducts",
+"after": "NNPP2.L.ResidentialDwell",
+"box": [
+406.82,
+210.51,
+412.9,
+216.51
+]
+},
+{
+"text": "3",
+"before": "anciesPPPP3.A.Commercial",
+"after": "AnimalCare,MajorCCC11C11",
+"box": [
+122.17,
+242.86,
+125.21,
+248.86
+]
+},
+{
+"text": "11",
+"before": "cial3AnimalCare,MajorCCC",
+"after": "C113.B.Commercial3Animal",
+"box": [
+525.27,
+242.86,
+531.35,
+248.86
+]
+},
+{
+"text": "11",
+"before": "l3AnimalCare,MajorCCC11C",
+"after": "3.B.Commercial3AnimalCar",
+"box": [
+558.52,
+242.86,
+564.6,
+248.86
+]
+},
+{
+"text": "3",
+"before": "orCCC11C113.B.Commercial",
+"after": "AnimalCare,MinorPPC11C11",
+"box": [
+122.17,
+259.04,
+125.21,
+265.04
+]
+},
+{
+"text": "11",
+"before": "cial3AnimalCare,MinorPPC",
+"after": "C114.A.Commercial3Hospit",
+"box": [
+525.27,
+259.04,
+531.35,
+265.04
+]
+},
+{
+"text": "11",
+"before": "l3AnimalCare,MinorPPC11C",
+"after": "4.A.Commercial3Hospitals",
+"box": [
+558.52,
+259.04,
+564.6,
+265.04
+]
+},
+{
+"text": "3",
+"before": "orPPC11C114.A.Commercial",
+"after": "HospitalsPPCC4.B.Commerc",
+"box": [
+122.17,
+275.22,
+125.21,
+281.22
+]
+},
+{
+"text": "3",
+"before": "pitalsPPCC4.B.Commercial",
+"after": "MedicalClinicsPPCC4.C.Co",
+"box": [
+122.17,
+291.4,
+125.21,
+297.4
+]
+},
+{
+"text": "3",
+"before": "linicsPPCC4.C.Commercial",
+"after": "ChildCareCentersPPPP5,31",
+"box": [
+122.17,
+307.58,
+125.21,
+313.58
+]
+},
+{
+"text": "5,31",
+"before": "ial3ChildCareCentersPPPP",
+"after": "4.D.Commercial3Residenti",
+"box": [
+555.48,
+307.58,
+567.45,
+313.58
+]
+},
+{
+"text": "3",
+"before": "rsPPPP5,314.D.Commercial",
+"after": "ResidentialCareFacilitie",
+"box": [
+122.17,
+323.75,
+125.21,
+329.75
+]
+},
+{
+"text": "30",
+"before": "entialCareFacilitiesPPCP",
+"after": "C5.Commercial3Commercial",
+"box": [
+554.25,
+323.75,
+560.33,
+329.75
+]
+},
+{
+"text": "3",
+"before": "itiesPPCP30C5.Commercial",
+"after": "CommercialAmusementCCNN6",
+"box": [
+122.17,
+339.93,
+125.21,
+345.93
+]
+},
+{
+"text": "3",
+"before": "musementCCNN6.Commercial",
+"after": "Drive-UpWindowFacilities",
+"box": [
+122.17,
+356.11,
+125.21,
+362.11
+]
+},
+{
+"text": "9",
+"before": "rive-UpWindowFacilitiesN",
+"after": "N9N9N97.Commercial3Eatin",
+"box": [
+459.23,
+356.11,
+462.27,
+362.11
+]
+},
+{
+"text": "9",
+"before": "ve-UpWindowFacilitiesN9N",
+"after": "N9N97.Commercial3Eatinga",
+"box": [
+492.83,
+356.11,
+495.87,
+362.11
+]
+},
+{
+"text": "9",
+"before": "-UpWindowFacilitiesN9N9N",
+"after": "N97.Commercial3Eatingand",
+"box": [
+527.4,
+356.11,
+530.45,
+362.11
+]
+},
+{
+"text": "9",
+"before": "pWindowFacilitiesN9N9N9N",
+"after": "7.Commercial3EatingandDr",
+"box": [
+560.65,
+356.11,
+563.7,
+362.11
+]
+},
+{
+"text": "3",
+"before": "tiesN9N9N9N97.Commercial",
+"after": "EatingandDrinkingEstabli",
+"box": [
+122.17,
+372.29,
+125.21,
+378.29
+]
+},
+{
+"text": "5",
+"before": "inkingEstablishmentsPPNP",
+"after": "8.Commercial3FinancialIn",
+"box": [
+559.95,
+372.29,
+562.99,
+378.29
+]
+},
+{
+"text": "3",
+"before": "shmentsPPNP58.Commercial",
+"after": "FinancialInstitutionsPPN",
+"box": [
+122.17,
+388.47,
+125.21,
+394.47
+]
+},
+{
+"text": "3",
+"before": "itutionsPPNN9.Commercial",
+"after": "FoodCartPods16PPNN10.Com",
+"box": [
+122.17,
+404.65,
+125.21,
+410.65
+]
+},
+{
+"text": "16",
+"before": ".Commercial3FoodCartPods",
+"after": "PPNN10.Commercial3Live/W",
+"box": [
+212.93,
+404.65,
+219.01,
+410.65
+]
+},
+{
+"text": "3",
+"before": "tPods16PPNN10.Commercial",
+"after": "Live/WorkUses14PPNN2911.",
+"box": [
+122.17,
+420.82,
+125.21,
+426.82
+]
+},
+{
+"text": "14",
+"before": "Commercial3Live/WorkUses",
+"after": "PPNN2911.A.Commercial3Ma",
+"box": [
+215.18,
+420.82,
+221.27,
+426.82
+]
+},
+{
+"text": "29",
+"before": "cial3Live/WorkUses14PPNN",
+"after": "11.A.Commercial3Marijuan",
+"box": [
+559.13,
+420.82,
+565.22,
+426.82
+]
+},
+{
+"text": "3",
+"before": "s14PPNN2911.A.Commercial",
+"after": "MarijuanaDispensary18PNN",
+"box": [
+122.17,
+437.0,
+125.21,
+443.0
+]
+},
+{
+"text": "18",
+"before": "cial3MarijuanaDispensary",
+"after": "PNNN11.B.Commercial3Mari",
+"box": [
+242.56,
+437.0,
+248.64,
+443.0
+]
+},
+{
+"text": "3",
+"before": "ary18PNNN11.B.Commercial",
+"after": "MarijuanaProcessingNNNN1",
+"box": [
+122.17,
+453.18,
+125.21,
+459.18
+]
+},
+{
+"text": "3",
+"before": "ssingNNNN11.C.Commercial",
+"after": "RetailMarijuanaSales8PNN",
+"box": [
+122.17,
+469.36,
+125.21,
+475.36
+]
+},
+{
+"text": "8",
+"before": "ial3RetailMarijuanaSales",
+"after": "PNNN11.D.Commercial3Whol",
+"box": [
+244.11,
+469.36,
+247.15,
+475.36
+]
+},
+{
+"text": "3",
+"before": "ales8PNNN11.D.Commercial",
+"after": "WholesaleMarijuanaSalesN",
+"box": [
+122.17,
+485.53,
+125.21,
+491.53
+]
+},
+{
+"text": "3",
+"before": "naSalesNNNN12.Commercial",
+"after": "MeetingFacilitiesPC19PC1",
+"box": [
+122.17,
+501.71,
+125.21,
+507.71
+]
+},
+{
+"text": "19",
+"before": "cial3MeetingFacilitiesPC",
+"after": "PC19NN13.Commercial3Offi",
+"box": [
+461.18,
+501.71,
+467.26,
+507.71
+]
+},
+{
+"text": "19",
+"before": "3MeetingFacilitiesPC19PC",
+"after": "NN13.Commercial3OfficePP",
+"box": [
+494.78,
+501.71,
+500.86,
+507.71
+]
+},
+{
+"text": "3",
+"before": "sPC19PC19NN13.Commercial",
+"after": "OfficePPNP514.A.Commerci",
+"box": [
+122.17,
+517.89,
+125.21,
+523.89
+]
+},
+{
+"text": "5",
+"before": "13.Commercial3OfficePPNP",
+"after": "14.A.Commercial3Parkinga",
+"box": [
+559.95,
+517.89,
+562.99,
+523.89
+]
+},
+{
+"text": "3",
+"before": "ficePPNP514.A.Commercial",
+"after": "ParkingasthePrincipalUse",
+"box": [
+122.17,
+534.07,
+125.21,
+540.07
+]
+},
+{
+"text": "3",
+"before": "turesCCNN14.B.Commercial",
+"after": "ParkingasthePrincipalUse",
+"box": [
+122.17,
+550.25,
+125.21,
+556.25
+]
+},
+{
+"text": "3",
+"before": "rfaceCCNN15.A.Commercial",
+"after": "BulkRetail15PNNN15.B.Com",
+"box": [
+122.17,
+566.43,
+125.21,
+572.43
+]
+},
+{
+"text": "15",
+"before": ".A.Commercial3BulkRetail",
+"after": "PNNN15.B.Commercial3Reta",
+"box": [
+192.52,
+566.43,
+198.61,
+572.43
+]
+},
+{
+"text": "3",
+"before": "ail15PNNN15.B.Commercial",
+"after": "RetailTrade15PPNP516.Com",
+"box": [
+122.17,
+582.6,
+125.21,
+588.6
+]
+},
+{
+"text": "15",
+"before": "B.Commercial3RetailTrade",
+"after": "PPNP516.Commercial3Renta",
+"box": [
+198.95,
+582.6,
+205.04,
+588.6
+]
+},
+{
+"text": "5",
+"before": "ercial3RetailTrade15PPNP",
+"after": "16.Commercial3RentalBusi",
+"box": [
+559.95,
+582.6,
+562.99,
+588.6
+]
+},
+{
+"text": "3",
+"before": "rade15PPNP516.Commercial",
+"after": "RentalBusinessP21,26P21,",
+"box": [
+122.17,
+598.78,
+125.21,
+604.78
+]
+},
+{
+"text": "21,26",
+"before": "mmercial3RentalBusinessP",
+"after": "P21,26NN17.Commercial3Se",
+"box": [
+452.53,
+598.78,
+467.55,
+604.78
+]
+},
+{
+"text": "21,26",
+"before": "al3RentalBusinessP21,26P",
+"after": "NN17.Commercial3ServiceB",
+"box": [
+486.13,
+598.78,
+501.15,
+604.78
+]
+},
+{
+"text": "3",
+"before": ",26P21,26NN17.Commercial",
+"after": "ServiceBusiness/Professi",
+"box": [
+122.17,
+614.96,
+125.21,
+620.96
+]
+},
+{
+"text": "21",
+"before": "ss/ProfessionalServicesP",
+"after": "P21NP518.A.Commercial3Co",
+"box": [
+457.0,
+614.96,
+463.08,
+620.96
+]
+},
+{
+"text": "21",
+"before": "ProfessionalServicesP21P",
+"after": "NP518.A.Commercial3ColdS",
+"box": [
+490.6,
+614.96,
+496.68,
+620.96
+]
+},
+{
+"text": "5",
+"before": "essionalServicesP21P21NP",
+"after": "18.A.Commercial3ColdStor",
+"box": [
+559.95,
+614.96,
+562.99,
+620.96
+]
+},
+{
+"text": "3",
+"before": "P21P21NP518.A.Commercial",
+"after": "ColdStoragePlantsNNNN18.",
+"box": [
+122.17,
+631.14,
+125.21,
+637.14
+]
+},
+{
+"text": "3",
+"before": "lantsNNNN18.B.Commercial",
+"after": "SelfStorageFacilitiesNNN",
+"box": [
+122.17,
+647.32,
+125.21,
+653.32
+]
+},
+{
+"text": "3",
+"before": "itiesNNNN18.C.Commercial",
+"after": "StorageYardsNNC28C2818.D",
+"box": [
+122.17,
+663.49,
+125.21,
+669.49
+]
+},
+{
+"text": "28",
+"before": "mmercial3StorageYardsNNC",
+"after": "C2818.D.Commercial3Stora",
+"box": [
+525.27,
+663.49,
+531.35,
+669.49
+]
+},
+{
+"text": "28",
+"before": "rcial3StorageYardsNNC28C",
+"after": "18.D.Commercial3StorageY",
+"box": [
+558.52,
+663.49,
+564.6,
+669.49
+]
+},
+{
+"text": "3",
+"before": "sNNC28C2818.D.Commercial",
+"after": "StorageYardforBuildingMa",
+"box": [
+122.17,
+679.67,
+125.21,
+685.67
+]
+},
+{
+"text": "3",
+"before": "terialsNNNN19.Commercial",
+"after": "TemporaryLivingQuartersP",
+"box": [
+122.17,
+695.85,
+125.21,
+701.85
+]
+},
+{
+"text": "6",
+"before": "mporaryLivingQuartersPPC",
+"after": "P20C620.A.Commercial3Aut",
+"box": [
+526.79,
+695.85,
+529.83,
+701.85
+]
+},
+{
+"text": "20",
+"before": "oraryLivingQuartersPPC6P",
+"after": "C620.A.Commercial3Auto,T",
+"box": [
+552.73,
+695.85,
+558.81,
+701.85
+]
+},
+{
+"text": "6",
+"before": "ryLivingQuartersPPC6P20C",
+"after": "20.A.Commercial3Auto,Tru",
+"box": [
+567.16,
+695.85,
+570.21,
+701.85
+]
+},
+{
+"text": "3",
+"before": "PPC6P20C620.A.Commercial",
+"after": "Auto,TruckandTrailerRent",
+"box": [
+122.17,
+712.03,
+125.21,
+718.03
+]
+}
+],
+"61": [
+{
+"text": "3",
+"before": "M-MRCM-RM20.B.Commercial",
+"after": "AutomotiveService,MajorN",
+"box": [
+122.17,
+113.44,
+125.21,
+119.44
+]
+},
+{
+"text": "3",
+"before": "MajorNNNN20.C.Commercial",
+"after": "AutomotiveService,MinorP",
+"box": [
+122.17,
+129.62,
+125.21,
+135.62
+]
+},
+{
+"text": "3",
+"before": "MinorPNNN20.D.Commercial",
+"after": "BulkFuelDealershipsNNNN2",
+"box": [
+122.17,
+145.8,
+125.21,
+151.8
+]
+},
+{
+"text": "3",
+"before": "shipsNNNN20.E.Commercial",
+"after": "HeavyEquipmentSalesNNNN2",
+"box": [
+122.17,
+161.97,
+125.21,
+167.97
+]
+},
+{
+"text": "3",
+"before": "SalesNNNN20.F.Commercial",
+"after": "VehicleRentalC21,22C21,2",
+"box": [
+122.17,
+178.15,
+125.21,
+184.15
+]
+},
+{
+"text": "21,22",
+"before": "ommercial3VehicleRentalC",
+"after": "C21,22NN20.G.Commercial3",
+"box": [
+452.62,
+178.15,
+467.64,
+184.15
+]
+},
+{
+"text": "21,22",
+"before": "ial3VehicleRentalC21,22C",
+"after": "NN20.G.Commercial3Vehicl",
+"box": [
+486.22,
+178.15,
+501.24,
+184.15
+]
+},
+{
+"text": "3",
+"before": "2C21,22NN20.G.Commercial",
+"after": "VehicleSalesorLeaseNNNN2",
+"box": [
+122.17,
+194.33,
+125.21,
+200.33
+]
+},
+{
+"text": "3",
+"before": "LeaseNNNN20.H.Commercial",
+"after": "Trailer,RecreationalVehi",
+"box": [
+122.17,
+210.51,
+125.21,
+216.51
+]
+},
+{
+"text": "3",
+"before": "orageNNNN20.I.Commercial",
+"after": "TrailerSalesorRepairNNNN",
+"box": [
+122.17,
+226.69,
+125.21,
+232.69
+]
+},
+{
+"text": "3",
+"before": "epairNNNN20.J.Commercial",
+"after": "VehicleStorageYardNNNN21",
+"box": [
+122.17,
+242.86,
+125.21,
+248.86
+]
+},
+{
+"text": "3,12",
+"before": "eStorageYardNNNN21.Civic",
+"after": "CemeteryNNCC22.A.Civic3,",
+"box": [
+89.18,
+259.04,
+101.16,
+265.04
+]
+},
+{
+"text": "3,12",
+"before": "12CemeteryNNCC22.A.Civic",
+"after": "CommercialSchoolsPP22NN2",
+"box": [
+89.18,
+275.22,
+101.16,
+281.22
+]
+},
+{
+"text": "22",
+"before": "c3,12CommercialSchoolsPP",
+"after": "NN22.B.Civic3,12Educatio",
+"box": [
+490.6,
+275.22,
+496.68,
+281.22
+]
+},
+{
+"text": "3,12",
+"before": "lSchoolsPP22NN22.B.Civic",
+"after": "EducationalInstitutionsP",
+"box": [
+89.18,
+291.4,
+101.16,
+297.4
+]
+},
+{
+"text": "3,12",
+"before": "stitutionsPPCC22.C.Civic",
+"after": "JobTrainingandVocational",
+"box": [
+89.18,
+307.58,
+101.16,
+313.58
+]
+},
+{
+"text": "22",
+"before": "lRehabilitationServicesP",
+"after": "P22NN23.Civic3,12Placeso",
+"box": [
+457.0,
+307.58,
+463.08,
+313.58
+]
+},
+{
+"text": "22",
+"before": "habilitationServicesP22P",
+"after": "NN23.Civic3,12PlacesofWo",
+"box": [
+490.6,
+307.58,
+496.68,
+313.58
+]
+},
+{
+"text": "3,12",
+"before": "ServicesP22P22NN23.Civic",
+"after": "PlacesofWorshipPPCC24.A.",
+"box": [
+89.18,
+323.75,
+101.16,
+329.75
+]
+},
+{
+"text": "3,12",
+"before": "sofWorshipPPCC24.A.Civic",
+"after": "PublicBuildingsandUses-N",
+"box": [
+89.18,
+339.93,
+101.16,
+345.93
+]
+},
+{
+"text": "3,12",
+"before": "cBuildingsPPCC24.B.Civic",
+"after": "PublicBuildingsandUses-P",
+"box": [
+89.18,
+369.54,
+101.16,
+375.54
+]
+},
+{
+"text": "3,12",
+"before": "cBuildingsPPCC24.C.Civic",
+"after": "PublicBuildingsandUses-P",
+"box": [
+89.18,
+385.72,
+101.16,
+391.72
+]
+},
+{
+"text": "3,12",
+"before": "ssionLinesPPPP24.D.Civic",
+"after": "PublicBuildingsandUses-P",
+"box": [
+89.18,
+415.32,
+101.16,
+421.32
+]
+},
+{
+"text": "3,12",
+"before": "ssionLinesCCCC25.A.Civic",
+"after": "RailroadTracksandFacilit",
+"box": [
+89.18,
+458.36,
+101.16,
+464.36
+]
+},
+{
+"text": "3,12",
+"before": "-PassengerPPCC25.B.Civic",
+"after": "RailroadTracksandFacilit",
+"box": [
+89.18,
+474.53,
+101.16,
+480.53
+]
+},
+{
+"text": "3,12",
+"before": "es-FreightNNNN26.A.Civic",
+"after": "PublicParkPPPP26.B.Civic",
+"box": [
+89.18,
+490.71,
+101.16,
+496.71
+]
+},
+{
+"text": "3,12",
+"before": "PublicParkPPPP26.B.Civic",
+"after": "PublicDogParksorDogRunsP",
+"box": [
+89.18,
+506.89,
+101.16,
+512.89
+]
+},
+{
+"text": "3,12",
+"before": "sorDogRunsPPPP26.C.Civic",
+"after": "PublicRecreationalFacili",
+"box": [
+89.18,
+523.07,
+101.16,
+529.07
+]
+},
+{
+"text": "3,12",
+"before": "FacilitiesPPCC26.D.Civic",
+"after": "PrivateRecreationalFacil",
+"box": [
+89.18,
+539.25,
+101.16,
+545.25
+]
+},
+{
+"text": "17",
+"before": "teRecreationalFacilities",
+"after": "PPCC26.E.Civic3,12Commun",
+"box": [
+276.5,
+539.25,
+282.58,
+545.25
+]
+},
+{
+"text": "3,12",
+"before": "cilities17PPCC26.E.Civic",
+"after": "CommunityGardensPPPP27.A",
+"box": [
+89.18,
+555.43,
+101.16,
+561.43
+]
+},
+{
+"text": "3,12",
+"before": "ityGardensPPPP27.A.Civic",
+"after": "DomesticViolenceShelters",
+"box": [
+89.18,
+571.6,
+101.16,
+577.6
+]
+},
+{
+"text": "3,12",
+"before": "ceSheltersPPPP27.B.Civic",
+"after": "EmergencySheltersP25P25P",
+"box": [
+89.18,
+587.78,
+101.16,
+593.78
+]
+},
+{
+"text": "25",
+"before": "ic3,12EmergencySheltersP",
+"after": "P25P25P2527.C.Civic3,12M",
+"box": [
+457.0,
+587.78,
+463.08,
+593.78
+]
+},
+{
+"text": "25",
+"before": ",12EmergencySheltersP25P",
+"after": "P25P2527.C.Civic3,12Mass",
+"box": [
+490.6,
+587.78,
+496.68,
+593.78
+]
+},
+{
+"text": "25",
+"before": "EmergencySheltersP25P25P",
+"after": "P2527.C.Civic3,12MassShe",
+"box": [
+525.18,
+587.78,
+531.26,
+593.78
+]
+},
+{
+"text": "25",
+"before": "rgencySheltersP25P25P25P",
+"after": "27.C.Civic3,12MassShelte",
+"box": [
+558.43,
+587.78,
+564.51,
+593.78
+]
+},
+{
+"text": "3,12",
+"before": "rsP25P25P25P2527.C.Civic",
+"after": "MassSheltersPPPP28.Civic",
+"box": [
+89.18,
+603.96,
+101.16,
+609.96
+]
+},
+{
+"text": "3,12",
+"before": "MassSheltersPPPP28.Civic",
+"after": "SocialOrganizationsPPCC2",
+"box": [
+89.18,
+620.14,
+101.16,
+626.14
+]
+},
+{
+"text": "3,12",
+"before": "rganizationsPPCC29.Civic",
+"after": "TransitCentersPPNN30.A.C",
+"box": [
+89.18,
+636.32,
+101.16,
+642.32
+]
+},
+{
+"text": "3,12",
+"before": "sitCentersPPNN30.A.Civic",
+"after": "Utilities-UtilitySubstat",
+"box": [
+89.18,
+652.49,
+101.16,
+658.49
+]
+},
+{
+"text": "3,12",
+"before": "ssionLinesCCCC30.B.Civic",
+"after": "Utilities-TransmissionLi",
+"box": [
+89.18,
+682.1,
+101.16,
+688.1
+]
+},
+{
+"text": "3,12",
+"before": "missionLinesPPPP31.Civic",
+"after": "VehicleCamping13PPPP32.C",
+"box": [
+89.18,
+698.28,
+101.16,
+704.28
+]
+},
+{
+"text": "13",
+"before": ".Civic3,12VehicleCamping",
+"after": "PPPP32.Civic3,12Wireless",
+"box": [
+219.64,
+698.28,
+225.72,
+704.28
+]
+},
+{
+"text": "3,12",
+"before": "cleCamping13PPPP32.Civic",
+"after": "WirelessCommunicationsFa",
+"box": [
+89.18,
+714.45,
+101.16,
+720.45
+]
+}
+],
+"62": [
+{
+"text": "3",
+"before": "RCM-MRCM-RM33.Industrial",
+"after": "LaboratoryP23,24P23,24NN",
+"box": [
+110.9,
+113.44,
+113.94,
+119.44
+]
+},
+{
+"text": "23,24",
+"before": "3.Industrial3LaboratoryP",
+"after": "P23,24NN34.Industrial3Ma",
+"box": [
+452.53,
+113.44,
+467.55,
+119.44
+]
+},
+{
+"text": "23,24",
+"before": "strial3LaboratoryP23,24P",
+"after": "NN34.Industrial3Manufact",
+"box": [
+486.13,
+113.44,
+501.15,
+119.44
+]
+},
+{
+"text": "3",
+"before": ",24P23,24NN34.Industrial",
+"after": "Manufacturing,Fabricatin",
+"box": [
+110.9,
+129.62,
+113.94,
+135.62
+]
+},
+{
+"text": "23,24",
+"before": "y,Processing,andPackingP",
+"after": "NNN35.OtherPlannedUnitDe",
+"box": [
+452.53,
+129.62,
+467.55,
+135.62
+]
+}
+],
+"71": [
+{
+"text": "th",
+"before": "kelmanParkandwestofSW175",
+"after": "Avenue.d.Balancecommunit",
+"box": [
+443.37,
+324.49,
+448.53,
+330.49
+]
+}
+],
+"210": [
+{
+"text": "th",
+"before": "JenkinsRoad,andeastof158",
+"after": "Avenueshallbeprocessedas",
+"box": [
+493.79,
+387.32,
+498.95,
+393.32
+]
+}
+],
+"265": [
+{
+"text": "1",
+"before": "sitService5percentofsite",
+"after": "48squarefeetperunit5perc",
+"box": [
+247.28,
+354.17,
+250.32,
+360.17
+]
+},
+{
+"text": "1",
+"before": "eetperunit5percentofsite",
+"after": "or48squarefeetperunit,wh",
+"box": [
+528.85,
+354.17,
+531.89,
+360.17
+]
+},
+{
+"text": "1",
+"before": "itService10percentofsite",
+"after": "56squarefeetperunit10per",
+"box": [
+250.07,
+397.2,
+253.11,
+403.2
+]
+},
+{
+"text": "1",
+"before": "etperunit10percentofsite",
+"after": "or56squarefeetperunit,wh",
+"box": [
+531.64,
+397.2,
+534.68,
+403.2
+]
+}
+],
+"288": [
+{
+"text": "1",
+"before": "sinallzoningdistricts0.5",
+"after": "0.51N/AN/AN/AZoningDistr",
+"box": [
+176.22,
+310.66,
+179.26,
+316.66
+]
+},
+{
+"text": "1",
+"before": "llzoningdistricts0.510.5",
+"after": "N/AN/AN/AZoningDistrictT",
+"box": [
+266.07,
+310.66,
+269.11,
+316.66
+]
+}
+],
+"417": [
+{
+"text": "5",
+"before": "includingshoppingcenters",
+"after": "5.16.2",
+"box": [
+283.54,
+704.07,
+286.59,
+710.07
+]
+}
+],
+"418": [
+{
+"text": "5",
+"before": "AdministrativeFacilities",
+"after": "3.44.119.CommercialUsesB",
+"box": [
+275.95,
+88.11,
+278.99,
+94.11
+]
+},
+{
+"text": "5",
+"before": "nk,FinancialInstitutions",
+"after": "5.46.520.CommercialUsesS",
+"box": [
+252.99,
+117.71,
+256.03,
+123.71
+]
+},
+{
+"text": "5",
+"before": "ialUsesServiceBusinesses",
+"after": "5.16.221.CommercialUsesR",
+"box": [
+215.94,
+147.32,
+218.98,
+153.32
+]
+},
+{
+"text": "5",
+"before": "sesMedical,DentalClinics",
+"after": "4.95.923.CommercialUsesM",
+"box": [
+234.26,
+206.53,
+237.31,
+212.53
+]
+},
+{
+"text": "5",
+"before": "g,DrinkingEstablishments",
+"after": "-FastFoodwithdrive-throu",
+"box": [
+273.73,
+259.03,
+276.77,
+265.03
+]
+},
+{
+"text": "5",
+"before": "g,DrinkingEstablishments",
+"after": "-FastFoodwithdrive-throu",
+"box": [
+273.73,
+302.06,
+276.77,
+308.06
+]
+},
+{
+"text": "5",
+"before": "g,DrinkingEstablishments",
+"after": "-Othereating,drinkingest",
+"box": [
+273.73,
+331.67,
+276.77,
+337.67
+]
+},
+{
+"text": "5",
+"before": "g,DrinkingEstablishments",
+"after": "-Othereating,drinkingest",
+"box": [
+273.73,
+374.7,
+276.77,
+380.7
+]
+},
+{
+"text": "5",
+"before": "lling,Live/Work(perunit)",
+"after": "1.81.827.CommercialUsesR",
+"box": [
+267.88,
+454.06,
+270.92,
+460.06
+]
+},
+{
+"text": "5",
+"before": "spaces/numberofFTEstaff)",
+"after": "2.02.0",
+"box": [
+261.75,
+721.73,
+264.8,
+727.73
+]
+}
+],
+"420": [
+{
+"text": "5",
+"before": "ms5.CommercialAmusements",
+"after": "Arena/Stadium/Theater2sp",
+"box": [
+126.83,
+207.13,
+129.88,
+213.13
+]
+},
+{
+"text": "5",
+"before": "ts6.CommercialAmusements",
+"after": "BowlingAlley1spaceper4,0",
+"box": [
+126.83,
+250.17,
+129.88,
+256.17
+]
+},
+{
+"text": "5",
+"before": "ea7.CommercialAmusements",
+"after": "DanceHall,SkatingRink1sp",
+"box": [
+126.83,
+293.2,
+129.88,
+299.2
+]
+},
+{
+"text": "5",
+"before": "ea8.CommercialAmusements",
+"after": "RecreationalFacility2spa",
+"box": [
+126.83,
+356.38,
+129.88,
+362.38
+]
+},
+{
+"text": "5",
+"before": "onducted9.CommercialUses",
+"after": "Retail,includingshopping",
+"box": [
+89.24,
+426.27,
+92.28,
+432.27
+]
+},
+{
+"text": "5",
+"before": "oorarea10.CommercialUses",
+"after": "Offices,AdministrativeFa",
+"box": [
+89.24,
+482.73,
+92.28,
+488.73
+]
+},
+{
+"text": "5",
+"before": "oorarea11.CommercialUses",
+"after": "Bank,FinancialInstitutio",
+"box": [
+89.24,
+539.19,
+92.28,
+545.19
+]
+},
+{
+"text": "5",
+"before": "oorarea12.CommercialUses",
+"after": "Medical,DentalClinics2sp",
+"box": [
+89.24,
+595.65,
+92.28,
+601.65
+]
+},
+{
+"text": "5",
+"before": "oorarea13.CommercialUses",
+"after": "Eating,DrinkingEstablish",
+"box": [
+89.24,
+652.11,
+92.28,
+658.11
+]
+},
+{
+"text": "5",
+"before": "oorarea14.CommercialUses",
+"after": "MortuariesNotrequired1sp",
+"box": [
+89.24,
+695.15,
+92.28,
+701.15
+]
+}
+],
+"421": [
+{
+"text": "5",
+"before": "ongTerm15.CommercialUses",
+"after": "AutomotiveService,Minora",
+"box": [
+89.24,
+184.24,
+92.28,
+190.24
+]
+},
+{
+"text": "5",
+"before": "oorarea16.CommercialUses",
+"after": "Truck,trailer,andautomob",
+"box": [
+89.24,
+227.27,
+92.28,
+233.27
+]
+},
+{
+"text": "5",
+"before": "2spaces17.CommercialUses",
+"after": "TemporaryLivingQuartersN",
+"box": [
+89.24,
+256.88,
+92.28,
+262.88
+]
+},
+{
+"text": "5",
+"before": "units18.PlacesofAssembly",
+"after": "Auditoria,meetingfacilit",
+"box": [
+110.61,
+293.2,
+113.65,
+299.2
+]
+},
+{
+"text": "5",
+"before": "paces19.PlacesofAssembly",
+"after": "PlacesofWorship1spaceper",
+"box": [
+110.61,
+336.23,
+113.65,
+342.23
+]
+},
+{
+"text": "5",
+"before": "paces20.PlacesofAssembly",
+"after": "SocialorFraternalOrganiz",
+"box": [
+110.61,
+399.41,
+113.65,
+405.41
+]
+},
+{
+"text": "5",
+"before": "ucted21.PlacesofAssembly",
+"after": "EducationalInstitutions:",
+"box": [
+110.61,
+455.87,
+113.65,
+461.87
+]
+},
+{
+"text": "5",
+"before": "sroom22.PlacesofAssembly",
+"after": "EducationalInstitutions:",
+"box": [
+110.61,
+485.48,
+113.65,
+491.48
+]
+},
+{
+"text": "5",
+"before": "dents23.PlacesofAssembly",
+"after": "EducationalInstitutions:",
+"box": [
+110.61,
+515.08,
+113.65,
+521.08
+]
+},
+{
+"text": "5",
+"before": "dents24.PlacesofAssembly",
+"after": "NurserySchools,DayorChil",
+"box": [
+110.61,
+544.69,
+113.65,
+550.69
+]
+},
+{
+"text": "5",
+"before": "sroom25.PlacesofAssembly",
+"after": "Library,museum,artgaller",
+"box": [
+110.61,
+581.01,
+113.65,
+587.01
+]
+},
+{
+"text": "5",
+"before": "rarea26.PlacesofAssembly",
+"after": "ParkandRideFacilitiesNot",
+"box": [
+110.61,
+617.33,
+113.65,
+623.33
+]
+},
+{
+"text": "5",
+"before": "paces27.PlacesofAssembly",
+"after": "PublicPark2spaces,orspac",
+"box": [
+110.61,
+673.79,
+113.65,
+679.79
+]
+}
+],
+"422": [
+{
+"text": "5",
+"before": "erm28.A.PlacesofAssembly",
+"after": "TransitCenters-BusNotreq",
+"box": [
+110.61,
+170.81,
+113.65,
+176.81
+]
+},
+{
+"text": "5",
+"before": "bay28.B.PlacesofAssembly",
+"after": "TransitCenters-LightRail",
+"box": [
+110.61,
+200.42,
+113.65,
+206.42
+]
+}
+],
+"453": [
+{
+"text": "1",
+"before": "atedCorridorForestcanopy",
+"after": "within300feetofwaterfeat",
+"box": [
+356.3,
+419.22,
+359.34,
+425.22
+]
+},
+{
+"text": "1",
+"before": "atedCorridorForestcanopy",
+"after": "within300feetofwaterfeat",
+"box": [
+356.3,
+462.26,
+359.34,
+468.26
+]
+},
+{
+"text": "2",
+"before": "PerennialStream–Priority",
+"after": "CWSVegetatedCorridor300f",
+"box": [
+159.25,
+491.86,
+162.29,
+497.86
+]
+},
+{
+"text": "1",
+"before": "atedCorridorForestcanopy",
+"after": "within300feetofstreamcen",
+"box": [
+356.3,
+521.47,
+359.34,
+527.47
+]
+},
+{
+"text": "1",
+"before": "ridorNoneN/AForestCanopy",
+"after": "NoneN/AForestCanopy1area",
+"box": [
+103.11,
+580.68,
+106.15,
+586.68
+]
+},
+{
+"text": "1",
+"before": "nopy1NoneN/AForestCanopy",
+"after": "area,regardlessofproximi",
+"box": [
+482.31,
+580.68,
+485.35,
+586.68
+]
+}
+],
+"509": [
+{
+"text": "1",
+"before": "cies-Nativeandnon-native",
+"after": "NoYesB.Size-Lowstature2Y",
+"box": [
+195.6,
+529.91,
+198.64,
+535.91
+]
+},
+{
+"text": "2",
+"before": "e1NoYesB.Size-Lowstature",
+"after": "YesNoC.Size-Lessthan6inc",
+"box": [
+133.29,
+546.09,
+136.33,
+552.09
+]
+},
+{
+"text": "3",
+"before": ".Size-Lessthan6inchesDBH",
+"after": "YesNoD.Type-NuisanceYesN",
+"box": [
+183.34,
+562.27,
+186.38,
+568.27
+]
+},
+{
+"text": "4",
+"before": "eadYesYes(WithinOverlay)",
+"after": ",No(OutsideOverlay)G.Con",
+"box": [
+553.54,
+610.8,
+556.58,
+616.8
+]
+},
+{
+"text": "5",
+"before": "areas,andpubliceasements",
+"after": "YesNoFootnotes:",
+"box": [
+152.13,
+670.01,
+155.18,
+676.01
+]
+}
+],
+"543": [
+{
+"text": "1",
+"before": "mumMaximumHeightN/A120ft",
+"after": "Intensity(FloorAreaRatio",
+"box": [
+433.15,
+238.78,
+436.2,
+244.78
+]
+},
+{
+"text": "2",
+"before": "nsity(FloorAreaRatio)1.5",
+"after": "NoneDensity(Units/Acre)3",
+"box": [
+249.48,
+254.96,
+252.52,
+260.96
+]
+},
+{
+"text": "3,4",
+"before": "2NoneDensity(Units/Acre)",
+"after": "602NoneAdditionalMassing",
+"box": [
+129.59,
+271.14,
+137.17,
+277.14
+]
+},
+{
+"text": "2",
+"before": "Density(Units/Acre)3,460",
+"after": "NoneAdditionalMassingReg",
+"box": [
+249.19,
+271.14,
+252.23,
+277.14
+]
+},
+{
+"text": "1",
+"before": "0.15.10.1.BRC-BCSetbacks",
+"after": "SetbackRequirementsSideM",
+"box": [
+197.92,
+493.77,
+200.97,
+499.77
+]
+}
+],
+"544": [
+{
+"text": "1",
+"before": "irementMaximumHeight-WCF",
+"after": "80ft.1MaximumHeight-Equi",
+"box": [
+145.34,
+579.95,
+148.39,
+585.95
+]
+},
+{
+"text": "1",
+"before": "tMaximumHeight-WCF180ft.",
+"after": "MaximumHeight-EquipmentS",
+"box": [
+332.06,
+579.95,
+335.1,
+585.95
+]
+},
+{
+"text": "2",
+"before": "Height-EquipmentShelters",
+"after": "12ft.1MaximumHeight-Roof",
+"box": [
+212.21,
+596.13,
+215.25,
+602.13
+]
+},
+{
+"text": "1",
+"before": "-EquipmentShelters212ft.",
+"after": "MaximumHeight-RoofMounte",
+"box": [
+332.06,
+596.13,
+335.1,
+602.13
+]
+},
+{
+"text": "3",
+"before": "duetoheight.YardSetbacks",
+"after": "-RequirementsShallcomply",
+"box": [
+100.94,
+655.34,
+103.99,
+661.34
+]
+},
+{
+"text": "3",
+"before": "requirementsYardSetbacks",
+"after": "-OtherReferto60.70.35.14",
+"box": [
+100.94,
+671.52,
+103.99,
+677.52
+]
+}
+],
+"545": [
+{
+"text": "1",
+"before": "imumMaximumHeightN/A65ft",
+"after": "Intensity(FloorAreaRatio",
+"box": [
+430.07,
+273.29,
+433.11,
+279.29
+]
+},
+{
+"text": "2,4",
+"before": "(FloorAreaRatio)0.5or0.7",
+"after": "NoneDensity(Units/Acre)3",
+"box": [
+280.5,
+289.47,
+288.08,
+295.47
+]
+},
+{
+"text": "3,5",
+"before": "4NoneDensity(Units/Acre)",
+"after": "18or242,4NoneAdditionalM",
+"box": [
+129.59,
+305.65,
+137.17,
+311.65
+]
+},
+{
+"text": "2,4",
+"before": "ity(Units/Acre)3,518or24",
+"after": "NoneAdditionalMassingReg",
+"box": [
+274.95,
+305.65,
+282.53,
+311.65
+]
+},
+{
+"text": "1",
+"before": "0.15.10.2.BRC-OTSetbacks",
+"after": "SetbackRequirementsMinim",
+"box": [
+198.82,
+544.71,
+201.86,
+550.71
+]
+}
+],
+"547": [
+{
+"text": "1",
+"before": "irementMaximumHeight-WCF",
+"after": "80ft.1MaximumHeight-Equi",
+"box": [
+145.34,
+576.83,
+148.39,
+582.83
+]
+},
+{
+"text": "1",
+"before": "tMaximumHeight-WCF180ft.",
+"after": "MaximumHeight-EquipmentS",
+"box": [
+332.06,
+576.83,
+335.1,
+582.83
+]
+},
+{
+"text": "2",
+"before": "Height-EquipmentShelters",
+"after": "12ft.1MaximumHeight-Roof",
+"box": [
+212.21,
+593.01,
+215.25,
+599.01
+]
+},
+{
+"text": "1",
+"before": "-EquipmentShelters212ft.",
+"after": "MaximumHeight-RoofMounte",
+"box": [
+332.06,
+593.01,
+335.1,
+599.01
+]
+},
+{
+"text": "3",
+"before": "duetoheight.YardSetbacks",
+"after": "-RequirementsShallcomply",
+"box": [
+100.94,
+652.22,
+103.99,
+658.22
+]
+},
+{
+"text": "3",
+"before": "equirements.YardSetbacks",
+"after": "-OtherReferto60.70.35.14",
+"box": [
+100.94,
+668.4,
+103.99,
+674.4
+]
+}
+],
+"548": [
+{
+"text": "1",
+"before": "imumMaximumHeightN/A75ft",
+"after": "Intensity(FloorAreaRatio",
+"box": [
+430.07,
+279.29,
+433.11,
+285.29
+]
+},
+{
+"text": "2",
+"before": "nsity(FloorAreaRatio)1.0",
+"after": "NoneDensity(Units/Acre)3",
+"box": [
+251.96,
+295.47,
+255.01,
+301.47
+]
+},
+{
+"text": "3,5",
+"before": "2NoneDensity(Units/Acre)",
+"after": "432NoneAdditionalMassing",
+"box": [
+129.59,
+311.65,
+137.17,
+317.65
+]
+},
+{
+"text": "2",
+"before": "Density(Units/Acre)3,543",
+"after": "NoneAdditionalMassingReg",
+"box": [
+249.19,
+311.65,
+252.23,
+317.65
+]
+},
+{
+"text": "1",
+"before": "0.15.10.3.BRC-MUSetbacks",
+"after": "SetbackRequirementsMinim",
+"box": [
+197.76,
+534.29,
+200.8,
+540.29
+]
+}
+],
+"549": [
+{
+"text": "1",
+"before": "irementMaximumHeight-WCF",
+"after": "80ft.1MaximumHeight-Equi",
+"box": [
+145.34,
+597.38,
+148.39,
+603.38
+]
+},
+{
+"text": "1",
+"before": "tMaximumHeight-WCF180ft.",
+"after": "MaximumHeight-EquipmentS",
+"box": [
+332.45,
+597.38,
+335.5,
+603.38
+]
+},
+{
+"text": "2",
+"before": "Height-EquipmentShelters",
+"after": "12ft.1MaximumHeight-Roof",
+"box": [
+212.21,
+613.56,
+215.25,
+619.56
+]
+},
+{
+"text": "1",
+"before": "-EquipmentShelters212ft.",
+"after": "MaximumHeight-RoofMounte",
+"box": [
+332.45,
+613.56,
+335.5,
+619.56
+]
+},
+{
+"text": "3",
+"before": "duetoheight.YardSetbacks",
+"after": "-RequirementsShallcomply",
+"box": [
+100.94,
+672.77,
+103.99,
+678.77
+]
+},
+{
+"text": "3",
+"before": "equirements.YardSetbacks",
+"after": "-OtherReferto60.70.35.14",
+"box": [
+100.94,
+688.95,
+103.99,
+694.95
+]
+}
+],
+"550": [
+{
+"text": "1",
+"before": "nsity(FloorAreaRatio)1.0",
+"after": "NoneDensity(Units/Acre)2",
+"box": [
+251.96,
+305.9,
+255.01,
+311.9
+]
+},
+{
+"text": "2,3",
+"before": "1NoneDensity(Units/Acre)",
+"after": "30160AdditionalMassingRe",
+"box": [
+129.59,
+322.08,
+137.17,
+328.08
+]
+},
+{
+"text": "1",
+"before": "Density(Units/Acre)2,330",
+"after": "60AdditionalMassingRegul",
+"box": [
+248.06,
+322.08,
+251.1,
+328.08
+]
+},
+{
+"text": "1",
+"before": "0.15.10.4.bRC-DTSetbacks",
+"after": "SetbackRequirementsMinim",
+"box": [
+193.08,
+528.29,
+196.12,
+534.29
+]
+}
+],
+"551": [
+{
+"text": "1",
+"before": "irementMaximumHeight-WCF",
+"after": "80ft.1MaximumHeight-Equi",
+"box": [
+145.34,
+558.52,
+148.39,
+564.52
+]
+},
+{
+"text": "1",
+"before": "tMaximumHeight-WCF180ft.",
+"after": "MaximumHeight-EquipmentS",
+"box": [
+332.06,
+558.52,
+335.1,
+564.52
+]
+},
+{
+"text": "2",
+"before": "Height-EquipmentShelters",
+"after": "12ft.1MaximumHeight-Roof",
+"box": [
+212.21,
+574.7,
+215.25,
+580.7
+]
+},
+{
+"text": "1",
+"before": "-EquipmentShelters212ft.",
+"after": "MaximumHeight-RoofMounte",
+"box": [
+332.06,
+574.7,
+335.1,
+580.7
+]
+},
+{
+"text": "3",
+"before": "duetoheight.YardSetbacks",
+"after": "-RequirementsShallcomply",
+"box": [
+100.94,
+633.91,
+103.99,
+639.91
+]
+},
+{
+"text": "3",
+"before": "equirements.YardSetbacks",
+"after": "-OtherReferto60.70.35.14",
+"box": [
+100.94,
+650.09,
+103.99,
+656.09
+]
+}
+],
+"555": [
+{
+"text": "1",
+"before": "Single-DetachedDwellingN",
+"after": "N1N1N11.BResidentialDwel",
+"box": [
+379.85,
+259.87,
+382.89,
+265.87
+]
+},
+{
+"text": "1",
+"before": "ngle-DetachedDwellingN1N",
+"after": "N1N11.BResidentialDwelli",
+"box": [
+429.0,
+259.87,
+432.04,
+265.87
+]
+},
+{
+"text": "1",
+"before": "le-DetachedDwellingN1N1N",
+"after": "N11.BResidentialDwelling",
+"box": [
+479.4,
+259.87,
+482.44,
+265.87
+]
+},
+{
+"text": "1",
+"before": "-DetachedDwellingN1N1N1N",
+"after": "1.BResidentialDwellings-",
+"box": [
+535.7,
+259.87,
+538.74,
+265.87
+]
+},
+{
+"text": "16",
+"before": "-AccessoryDwellingUnitsP",
+"after": "P16P16P162.ACommercialAn",
+"box": [
+378.43,
+405.47,
+384.52,
+411.47
+]
+},
+{
+"text": "16",
+"before": "cessoryDwellingUnitsP16P",
+"after": "P16P162.ACommercialAnima",
+"box": [
+427.58,
+405.47,
+433.67,
+411.47
+]
+},
+{
+"text": "16",
+"before": "soryDwellingUnitsP16P16P",
+"after": "P162.ACommercialAnimalCa",
+"box": [
+477.98,
+405.47,
+484.07,
+411.47
+]
+},
+{
+"text": "16",
+"before": "yDwellingUnitsP16P16P16P",
+"after": "2.ACommercialAnimalCare,",
+"box": [
+534.28,
+405.47,
+540.37,
+411.47
+]
+},
+{
+"text": "3",
+"before": "cialAnimalCare,MinorPPPP",
+"after": "3.ACommercialHospitalsCC",
+"box": [
+534.28,
+437.82,
+537.33,
+443.82
+]
+},
+{
+"text": "8",
+"before": "rive-UpWindowFacilitiesN",
+"after": "N8N8N86.CommercialEating",
+"box": [
+379.85,
+534.89,
+382.89,
+540.89
+]
+},
+{
+"text": "8",
+"before": "ve-UpWindowFacilitiesN8N",
+"after": "N8N86.CommercialEatingan",
+"box": [
+429.0,
+534.89,
+432.04,
+540.89
+]
+},
+{
+"text": "8",
+"before": "-UpWindowFacilitiesN8N8N",
+"after": "N86.CommercialEatingandD",
+"box": [
+479.4,
+534.89,
+482.44,
+540.89
+]
+},
+{
+"text": "8",
+"before": "pWindowFacilitiesN8N8N8N",
+"after": "6.CommercialEatingandDri",
+"box": [
+535.7,
+534.89,
+538.74,
+540.89
+]
+},
+{
+"text": "3",
+"before": "rinkingEstablishmentPPPP",
+"after": "7.CommercialFinancialIns",
+"box": [
+534.28,
+551.07,
+537.33,
+557.07
+]
+},
+{
+"text": "2",
+"before": "cialMeetingFacilitiesPPC",
+"after": "PN10.CommercialOfficePPP",
+"box": [
+435.93,
+599.6,
+438.98,
+605.6
+]
+},
+{
+"text": "3",
+"before": "N10.CommercialOfficePPPP",
+"after": "11.CommercialParkingasth",
+"box": [
+534.28,
+615.78,
+537.33,
+621.78
+]
+},
+{
+"text": "3",
+"before": "ercialRentalBusinessPPPP",
+"after": "13.CommercialRentalofEqu",
+"box": [
+534.28,
+648.14,
+537.33,
+654.14
+]
+},
+{
+"text": "9",
+"before": "NNNN14.CommercialRetailP",
+"after": "P9P9P3,915.CommercialPer",
+"box": [
+378.43,
+680.49,
+381.48,
+686.49
+]
+},
+{
+"text": "9",
+"before": "NN14.CommercialRetailP9P",
+"after": "P9P3,915.CommercialPerso",
+"box": [
+427.58,
+680.49,
+430.62,
+686.49
+]
+},
+{
+"text": "9",
+"before": "14.CommercialRetailP9P9P",
+"after": "P3,915.CommercialPersona",
+"box": [
+477.98,
+680.49,
+481.02,
+686.49
+]
+},
+{
+"text": "3,9",
+"before": ".CommercialRetailP9P9P9P",
+"after": "15.CommercialPersonalSer",
+"box": [
+534.28,
+680.49,
+541.86,
+686.49
+]
+},
+{
+"text": "3",
+"before": "sonalServiceBusinessPPPP",
+"after": "16.CommercialServiceBusi",
+"box": [
+534.28,
+696.67,
+537.33,
+702.67
+]
+},
+{
+"text": "10",
+"before": "ss/ProfessionalServicesP",
+"after": "P10P10P10",
+"box": [
+378.43,
+712.85,
+384.52,
+718.85
+]
+},
+{
+"text": "10",
+"before": "ProfessionalServicesP10P",
+"after": "P10P10",
+"box": [
+427.58,
+712.85,
+433.67,
+718.85
+]
+},
+{
+"text": "10",
+"before": "fessionalServicesP10P10P",
+"after": "P10",
+"box": [
+477.98,
+712.85,
+484.07,
+718.85
+]
+},
+{
+"text": "10",
+"before": "sionalServicesP10P10P10P",
+"after": "",
+"box": [
+534.28,
+712.85,
+540.37,
+718.85
+]
+}
+],
+"556": [
+{
+"text": "4",
+"before": "poraryLivingQuartersPPPC",
+"after": "21.ACommercialVehicles-A",
+"box": [
+534.47,
+163.5,
+537.51,
+169.5
+]
+},
+{
+"text": "7",
+"before": "mmercialVehicles-RentalC",
+"after": "C7C7N22.CommercialFoodCa",
+"box": [
+378.61,
+244.4,
+381.66,
+250.4
+]
+},
+{
+"text": "7",
+"before": "ercialVehicles-RentalC7C",
+"after": "C7N22.CommercialFoodCart",
+"box": [
+427.76,
+244.4,
+430.81,
+250.4
+]
+},
+{
+"text": "7",
+"before": "cialVehicles-RentalC7C7C",
+"after": "N22.CommercialFoodCartPo",
+"box": [
+478.16,
+244.4,
+481.21,
+250.4
+]
+},
+{
+"text": "5",
+"before": "2.CommercialFoodCartPods",
+"after": "PPPN23.ACivicCommercialS",
+"box": [
+224.68,
+260.57,
+227.72,
+266.57
+]
+},
+{
+"text": "15",
+"before": "nds,andRelatedFacilities",
+"after": "PPPP27.BCivicPublicDogPa",
+"box": [
+232.25,
+387.25,
+238.33,
+393.25
+]
+},
+{
+"text": "15",
+"before": "cPublicDogParksorDogRuns",
+"after": "PPPP27.CCivicRecreationa",
+"box": [
+287.48,
+403.42,
+293.56,
+409.42
+]
+},
+{
+"text": "12",
+"before": "creationalFacilitiesPPPP",
+"after": "27.DCivicCommunityGarden",
+"box": [
+534.28,
+419.6,
+540.37,
+425.6
+]
+},
+{
+"text": "15",
+"before": "7.DCivicCommunityGardens",
+"after": "PPPP28.ACivicDomesticVio",
+"box": [
+248.9,
+435.78,
+254.99,
+441.78
+]
+},
+{
+"text": "14",
+"before": ".BCivicEmergencyShelterP",
+"after": "P14P14P1428.CCivicMassSh",
+"box": [
+378.43,
+468.14,
+384.52,
+474.14
+]
+},
+{
+"text": "14",
+"before": "ivicEmergencyShelterP14P",
+"after": "P14P1428.CCivicMassShelt",
+"box": [
+427.58,
+468.14,
+433.67,
+474.14
+]
+},
+{
+"text": "14",
+"before": "cEmergencyShelterP14P14P",
+"after": "P1428.CCivicMassShelterP",
+"box": [
+477.98,
+468.14,
+484.07,
+474.14
+]
+},
+{
+"text": "14",
+"before": "ergencyShelterP14P14P14P",
+"after": "28.CCivicMassShelterPPPP",
+"box": [
+534.28,
+468.14,
+540.37,
+474.14
+]
+},
+{
+"text": "2",
+"before": "ivicSocialOrganizationsP",
+"after": "P2P2N30.CivicTransitCent",
+"box": [
+378.43,
+500.49,
+381.48,
+506.49
+]
+},
+{
+"text": "2",
+"before": "icSocialOrganizationsP2P",
+"after": "P2N30.CivicTransitCenter",
+"box": [
+427.58,
+500.49,
+430.62,
+506.49
+]
+},
+{
+"text": "2",
+"before": "SocialOrganizationsP2P2P",
+"after": "N30.CivicTransitCenters1",
+"box": [
+477.98,
+500.49,
+481.02,
+506.49
+]
+},
+{
+"text": "15",
+"before": "2N30.CivicTransitCenters",
+"after": "PPPN31.ACivicUtilities-U",
+"box": [
+224.71,
+516.67,
+230.79,
+522.67
+]
+},
+{
+"text": "15",
+"before": "herthanTransmissionLines",
+"after": "CCCC31.BCivicUtilities-T",
+"box": [
+179.75,
+559.7,
+185.84,
+565.7
+]
+},
+{
+"text": "15",
+"before": "lities-TransmissionLines",
+"after": "PPPP32.CivicWirelessComm",
+"box": [
+283.45,
+575.88,
+289.53,
+581.88
+]
+},
+{
+"text": "15",
+"before": "CommunicationsFacilities",
+"after": "PPPP33.IndustrialManufac",
+"box": [
+314.11,
+592.06,
+320.2,
+598.06
+]
+},
+{
+"text": "13",
+"before": "ly,Processing,andPacking",
+"after": "PC6PC6PC6N34.IndustrialM",
+"box": [
+263.21,
+621.67,
+269.29,
+627.67
+]
+},
+{
+"text": "6",
+"before": "rocessing,andPacking13PC",
+"after": "PC6PC6N34.IndustrialMari",
+"box": [
+386.78,
+614.95,
+389.83,
+620.95
+]
+},
+{
+"text": "6",
+"before": "essing,andPacking13PC6PC",
+"after": "PC6N34.IndustrialMarijua",
+"box": [
+435.93,
+614.95,
+438.98,
+620.95
+]
+},
+{
+"text": "6",
+"before": "ing,andPacking13PC6PC6PC",
+"after": "N34.IndustrialMarijuanaP",
+"box": [
+486.33,
+614.95,
+489.38,
+620.95
+]
+},
+{
+"text": "11",
+"before": "35.IndustrialWarehousing",
+"after": "PPPN36.IndustrialLaborat",
+"box": [
+216.56,
+654.02,
+222.64,
+660.02
+]
+},
+{
+"text": "13",
+"before": "N36.IndustrialLaboratory",
+"after": "PP3PN[ORD4804;August2021",
+"box": [
+205.93,
+670.2,
+212.01,
+676.2
+]
+},
+{
+"text": "3",
+"before": "IndustrialLaboratory13PP",
+"after": "PN[ORD4804;August2021][O",
+"box": [
+427.58,
+670.2,
+430.62,
+676.2
+]
+}
+],
+"622": [
+{
+"text": "1",
+"before": "PPStone/masonryPPStuccoS",
+"after": "PGlass(transparent,spand",
+"box": [
+363.01,
+703.88,
+366.05,
+709.88
+]
+}
+],
+"623": [
+{
+"text": "1",
+"before": "edcementsidingandpanelsS",
+"after": "PConcreteblockswithinteg",
+"box": [
+363.01,
+156.78,
+366.05,
+162.78
+]
+},
+{
+"text": "1",
+"before": "ished,orglazedfinishes)S",
+"after": "S1Concrete(pouredinplace",
+"box": [
+363.01,
+179.68,
+366.05,
+185.68
+]
+},
+{
+"text": "1",
+"before": "hed,orglazedfinishes)S1S",
+"after": "Concrete(pouredinplaceor",
+"box": [
+506.71,
+179.68,
+509.75,
+185.68
+]
+},
+{
+"text": "1",
+"before": "lcolor(splitfacefinish)S",
+"after": "S1CeramictileS1S1Standin",
+"box": [
+363.01,
+218.75,
+366.05,
+224.75
+]
+},
+{
+"text": "1",
+"before": "olor(splitfacefinish)S1S",
+"after": "CeramictileS1S1Standings",
+"box": [
+506.71,
+218.75,
+509.75,
+224.75
+]
+},
+{
+"text": "1",
+"before": "efinish)S1S1CeramictileS",
+"after": "S1StandingseammetalS1S1O",
+"box": [
+363.01,
+234.93,
+366.05,
+240.93
+]
+},
+{
+"text": "1",
+"before": "inish)S1S1CeramictileS1S",
+"after": "StandingseammetalS1S1Oth",
+"box": [
+506.71,
+234.93,
+509.75,
+240.93
+]
+},
+{
+"text": "1",
+"before": "leS1S1StandingseammetalS",
+"after": "S1Othermaterialasapprove",
+"box": [
+363.01,
+251.1,
+366.05,
+257.1
+]
+},
+{
+"text": "1",
+"before": "S1S1StandingseammetalS1S",
+"after": "Othermaterialasapprovedb",
+"box": [
+506.71,
+251.1,
+509.75,
+257.1
+]
+},
+{
+"text": "2",
+"before": "encingNNChainlinkfencing",
+"after": "NN[ORD4822;June2022]Foot",
+"box": [
+117.76,
+410.13,
+120.8,
+416.13
+]
+}
+],
+"737": [
+{
+"text": "th",
+"before": "parcellocatedat4245SW107",
+"after": "AvenueCPA2013-0003/ZMA20",
+"box": [
+322.09,
+649.98,
+327.25,
+655.98
+]
+}
+],
+"738": [
+{
+"text": "th",
+"before": "parcellocatedat9965SW170",
+"after": "AvenueCPA2014-0009/ZMA20",
+"box": [
+322.09,
+211.72,
+327.25,
+217.72
+]
+}
+]
+}
+}

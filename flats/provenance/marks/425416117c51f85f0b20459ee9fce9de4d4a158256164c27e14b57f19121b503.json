@@ -1,0 +1,190 @@
+{
+"book": "425416117c51f85f0b20459ee9fce9de4d4a158256164c27e14b57f19121b503",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"15": [
+{
+"text": "th",
+"before": "ththecoverpagedatedthe15",
+"after": "ofNovember,1962andsigned",
+"box": [
+518.74,
+624.16,
+524.14,
+631.12
+]
+}
+],
+"300": [
+{
+"text": "st",
+"before": "edtotheperiodbetweenMay1",
+"after": "andSeptember15th.Reveget",
+"box": [
+172.46,
+629.44,
+177.15,
+636.4
+]
+},
+{
+"text": "th",
+"before": "weenMay1standSeptember15",
+"after": ".Revegetationandsoilstab",
+"box": [
+259.49,
+629.44,
+264.89,
+636.4
+]
+},
+{
+"text": "th",
+"before": "shednolaterthanOctober15",
+"after": ".(g)Outdoorlightingshall",
+"box": [
+193.34,
+680.08,
+198.74,
+687.04
+]
+}
+],
+"371": [
+{
+"text": "st",
+"before": "hallnotoccurfromOctober1",
+"after": "-May1st.(5)Air,water,and",
+"box": [
+513.58,
+375.83,
+518.27,
+382.79
+]
+},
+{
+"text": "st",
+"before": "occurfromOctober1st-May1",
+"after": ".(5)Air,water,andnoisequ",
+"box": [
+406.51,
+388.55,
+411.2,
+395.51
+]
+}
+],
+"394": [
+{
+"text": "*",
+"before": "Electric(E)FieldStrength",
+"after": "(V2/m2)†MeanSquaredMagne",
+"box": [
+161.06,
+182.36,
+164.54,
+189.32
+]
+},
+{
+"text": "2",
+"before": "ctric(E)FieldStrength*(V",
+"after": "/m2)†MeanSquaredMagnetic",
+"box": [
+136.94,
+195.08,
+140.42,
+202.04
+]
+},
+{
+"text": "2",
+"before": "ic(E)FieldStrength*(V2/m",
+"after": ")†MeanSquaredMagnetic(H)",
+"box": [
+152.18,
+195.08,
+155.66,
+202.04
+]
+},
+{
+"text": "†",
+"before": "(E)FieldStrength*(V2/m2)",
+"after": "MeanSquaredMagnetic(H)Fi",
+"box": [
+159.26,
+195.08,
+162.74,
+202.04
+]
+},
+{
+"text": "*",
+"before": "Magnetic(H)FieldStrength",
+"after": "(A2/m2)‡EquivalentPlane-",
+"box": [
+233.09,
+182.36,
+236.57,
+189.32
+]
+},
+{
+"text": "2",
+"before": "netic(H)FieldStrength*(A",
+"after": "/m2)‡EquivalentPlane-Wav",
+"box": [
+208.97,
+195.08,
+212.45,
+202.04
+]
+},
+{
+"text": "2",
+"before": "ic(H)FieldStrength*(A2/m",
+"after": ")‡EquivalentPlane-WavePo",
+"box": [
+224.21,
+195.08,
+227.69,
+202.04
+]
+},
+{
+"text": "‡",
+"before": "(H)FieldStrength*(A2/m2)",
+"after": "EquivalentPlane-WavePowe",
+"box": [
+231.29,
+195.08,
+234.77,
+202.04
+]
+},
+{
+"text": "*",
+"before": "ntPlane-WavePowerDensity",
+"after": "(mW/cm2)100Khz–3MHz80,00",
+"box": [
+273.29,
+207.68,
+276.77,
+214.64
+]
+},
+{
+"text": "2",
+"before": "-WavePowerDensity*(mW/cm",
+"after": ")100Khz–3MHz80,000.05203",
+"box": [
+275.45,
+233.0,
+278.93,
+239.96
+]
+}
+]
+}
+}

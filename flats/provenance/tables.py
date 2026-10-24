@@ -64,6 +64,8 @@ class Cell:
     header: bool
     #: Section lines (1-based) the cell's words come from.
     lines: tuple[int, ...]
+    #: Each word as (line, its index among the line's words), in cell order.
+    words: tuple[tuple[int, int], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -282,11 +284,12 @@ def _letters(text: str) -> str:
 
 def place(
     proposal: Mapping[str, object], part: Part, lines: Sequence[str], page: int
-) -> tuple[int, int, list[list[tuple[int, str]]]] | None:
+) -> tuple[int, int, list[list[tuple[int, int, str]]]] | None:
     """The run of section lines on ``page`` that is exactly this table's words.
 
     Returns (first, last, each unique cell's words as the lines print them,
-    with the line each came from), 1-based, or None.
+    with the line each came from and its index among that line's words),
+    1-based, or None.
     """
     found = _page_lines(part, page, len(lines))
     if found is None:
@@ -309,13 +312,13 @@ def place(
                 break
             if have != want:
                 continue
-            raw = [(lo + a + m, w) for m in range(b - a + 1) for w in lines[lo + a + m - 1].split()]
-            words = [(n, _letters(w)) for n, w in raw]
+            raw = [(lo + a + m, i, w) for m in range(b - a + 1) for i, w in enumerate(lines[lo + a + m - 1].split())]
+            words = [(n, _letters(w)) for n, _i, w in raw]
             keep = [i for i, (_n, w) in enumerate(words) if w]
             got = _interleave(ordered, [words[i] for i in keep])
             if got is None:
                 continue
-            back: list[list[tuple[int, str]]] = [[] for _ in cells]
+            back: list[list[tuple[int, int, str]]] = [[] for _ in cells]
             for slot, k in enumerate(order):
                 back[k] = [raw[keep[i]] for i in got[slot]]
             return lo + a, lo + b, back
@@ -332,16 +335,17 @@ def check(
     if placed is None:
         problems.append("its words are not exactly the words of the section's lines on this page")
         first = last = 0
-        held: list[list[tuple[int, str]]] = [[] for _ in cells]
+        held: list[list[tuple[int, int, str]]] = [[] for _ in cells]
     else:
         first, last, held = placed
     out = tuple(
         Cell(
             row=tuple(c["row"]),  # type: ignore[arg-type]
             col=tuple(c["col"]),  # type: ignore[arg-type]
-            text=" ".join(w for _n, w in held[k]) if held[k] else " ".join(str(c["text"]).split()),
+            text=" ".join(w for _n, _i, w in held[k]) if held[k] else " ".join(str(c["text"]).split()),
             header=bool(c.get("header")),
-            lines=tuple(sorted({n for n, _w in held[k]})),
+            lines=tuple(sorted({n for n, _i, _w in held[k]})),
+            words=tuple((n, i) for n, i, _w in held[k]),
         )
         for k, c in enumerate(cells)
     )

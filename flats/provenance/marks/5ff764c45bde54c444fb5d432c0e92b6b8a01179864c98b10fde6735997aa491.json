@@ -1,0 +1,713 @@
+{
+"book": "5ff764c45bde54c444fb5d432c0e92b6b8a01179864c98b10fde6735997aa491",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"7": [
+{
+"text": "1",
+"before": "ANDISTRICTResidentialUses",
+"after": "CNTHCNTMCNRMSingleDetach",
+"box": [
+118.92,
+121.18,
+122.21,
+127.66
+]
+},
+{
+"text": "2",
+"before": "y/SharedHousingFacilityP",
+"after": "P2P2ElderlyHousingSURSUR",
+"box": [
+295.08,
+225.82,
+298.37,
+232.3
+]
+},
+{
+"text": "2",
+"before": "SharedHousingFacilityP2P",
+"after": "P2ElderlyHousingSURSURSU",
+"box": [
+388.8,
+225.82,
+392.09,
+232.3
+]
+},
+{
+"text": "2",
+"before": "aredHousingFacilityP2P2P",
+"after": "ElderlyHousingSURSURSURM",
+"box": [
+482.28,
+225.82,
+485.57,
+232.3
+]
+},
+{
+"text": "3",
+"before": "eNPNPNPAﬀordableHousingP",
+"after": "P3P3Table4.1220(A)Notes:",
+"box": [
+295.08,
+300.34,
+298.37,
+306.82
+]
+},
+{
+"text": "3",
+"before": "PNPNPAﬀordableHousingP3P",
+"after": "P3Table4.1220(A)Notes:1.",
+"box": [
+388.8,
+300.34,
+392.09,
+306.82
+]
+},
+{
+"text": "3",
+"before": "PNPAﬀordableHousingP3P3P",
+"after": "Table4.1220(A)Notes:1.Te",
+"box": [
+482.28,
+300.34,
+485.57,
+306.82
+]
+},
+{
+"text": "1",
+"before": "andRetailServiceandTrade",
+"after": "PPL2ClinicsPPL2Commercia",
+"box": [
+211.56,
+432.34,
+214.85,
+438.82
+]
+},
+{
+"text": "2",
+"before": "etailServiceandTrade1PPL",
+"after": "ClinicsPPL2CommercialPar",
+"box": [
+481.92,
+432.34,
+485.21,
+438.82
+]
+},
+{
+"text": "2",
+"before": "eandTrade1PPL2ClinicsPPL",
+"after": "CommercialParkingSURSURS",
+"box": [
+481.92,
+447.22,
+485.21,
+453.7
+]
+},
+{
+"text": "2",
+"before": "ercialParkingSURSURSUR/L",
+"after": "DaycareFacilitiesPPPLive/",
+"box": [
+492.0,
+462.1,
+495.29,
+468.58
+]
+}
+],
+"8": [
+{
+"text": "1",
+"before": "NPNPNPManufacturingL/SUR",
+"after": "L/SUR1NPMiscellaneousInd",
+"box": [
+304.8,
+195.94,
+308.09,
+202.42
+]
+},
+{
+"text": "1",
+"before": "ManufacturingL/SUR1L/SUR",
+"after": "NPMiscellaneousIndustria",
+"box": [
+398.52,
+195.94,
+401.81,
+202.42
+]
+},
+{
+"text": "1",
+"before": "sSURSURSURMedicalSURSURL",
+"after": "Parks,OpenSpaces,andTrai",
+"box": [
+481.92,
+487.18,
+485.21,
+493.66
+]
+},
+{
+"text": "2",
+"before": "penSpaces,andTrailsL/SUR",
+"after": "L/SUR2L/SUR2ReligiousIns",
+"box": [
+304.8,
+502.06,
+308.09,
+508.54
+]
+},
+{
+"text": "2",
+"before": "ces,andTrailsL/SUR2L/SUR",
+"after": "L/SUR2ReligiousInstitution",
+"box": [
+398.52,
+502.06,
+401.81,
+508.54
+]
+},
+{
+"text": "2",
+"before": "dTrailsL/SUR2L/SUR2L/SUR",
+"after": "ReligiousInstitutionsPPPSc",
+"box": [
+492.0,
+502.06,
+495.29,
+508.54
+]
+},
+{
+"text": "3",
+"before": "nstitutionsPPPSchoolsP/SUR",
+"after": "P/SUR3P/SUR3Table4.1220(",
+"box": [
+304.92,
+531.94,
+308.21,
+538.42
+]
+},
+{
+"text": "3",
+"before": "onsPPPSchoolsP/SUR3P/SUR",
+"after": "P/SUR3Table4.1220(D)Note",
+"box": [
+398.64,
+531.94,
+401.93,
+538.42
+]
+},
+{
+"text": "3",
+"before": "SchoolsP/SUR3P/SUR3P/SUR",
+"after": "Table4.1220(D)Notes:1.Li",
+"box": [
+492.12,
+531.94,
+495.41,
+538.42
+]
+}
+],
+"9": [
+{
+"text": "1",
+"before": "TRICTRenewableEnergyUses",
+"after": "CNTHCNTMCNRMSolarEnergyS",
+"box": [
+149.4,
+121.18,
+152.69,
+127.66
+]
+},
+{
+"text": "2",
+"before": "MSolarEnergySystemsL/SUR",
+"after": "L/SUR2L/SUR2WindEnergySy",
+"box": [
+304.8,
+136.42,
+308.09,
+142.9
+]
+},
+{
+"text": "2",
+"before": "EnergySystemsL/SUR2L/SUR",
+"after": "L/SUR2WindEnergySystemsL",
+"box": [
+398.52,
+136.42,
+401.81,
+142.9
+]
+},
+{
+"text": "2",
+"before": "SystemsL/SUR2L/SUR2L/SUR",
+"after": "WindEnergySystemsL/SUR3L",
+"box": [
+492.0,
+136.42,
+495.29,
+142.9
+]
+},
+{
+"text": "3",
+"before": "R2WindEnergySystemsL/SUR",
+"after": "L/SUR3L/SUR3BiomassEnerg",
+"box": [
+304.8,
+151.3,
+308.09,
+157.78
+]
+},
+{
+"text": "3",
+"before": "EnergySystemsL/SUR3L/SUR",
+"after": "L/SUR3BiomassEnergySyste",
+"box": [
+398.52,
+151.3,
+401.81,
+157.78
+]
+},
+{
+"text": "3",
+"before": "SystemsL/SUR3L/SUR3L/SUR",
+"after": "BiomassEnergySystemsL4L4",
+"box": [
+492.0,
+151.3,
+495.29,
+157.78
+]
+},
+{
+"text": "4",
+"before": "UR3BiomassEnergySystemsL",
+"after": "L4L4GeothermalEnergySyst",
+"box": [
+294.72,
+166.18,
+298.01,
+172.66
+]
+},
+{
+"text": "4",
+"before": "3BiomassEnergySystemsL4L",
+"after": "L4GeothermalEnergySystem",
+"box": [
+388.44,
+166.18,
+391.73,
+172.66
+]
+},
+{
+"text": "4",
+"before": "iomassEnergySystemsL4L4L",
+"after": "GeothermalEnergySystemsL",
+"box": [
+481.92,
+166.18,
+485.21,
+172.66
+]
+},
+{
+"text": "5",
+"before": "hermalEnergySystemsL/SUR",
+"after": "L/SUR5L/SUR5Micro-HydroE",
+"box": [
+304.8,
+181.06,
+308.09,
+187.54
+]
+},
+{
+"text": "5",
+"before": "EnergySystemsL/SUR5L/SUR",
+"after": "L/SUR5Micro-HydroEnergyS",
+"box": [
+398.52,
+181.06,
+401.81,
+187.54
+]
+},
+{
+"text": "5",
+"before": "SystemsL/SUR5L/SUR5L/SUR",
+"after": "Micro-HydroEnergySystems",
+"box": [
+492.0,
+181.06,
+495.29,
+187.54
+]
+},
+{
+"text": "6",
+"before": "icro-HydroEnergySystemsL",
+"after": "L6L6Table4.1220(E)Notes:",
+"box": [
+294.72,
+195.94,
+298.01,
+202.42
+]
+},
+{
+"text": "6",
+"before": "ro-HydroEnergySystemsL6L",
+"after": "L6Table4.1220(E)Notes:1.",
+"box": [
+388.44,
+195.94,
+391.73,
+202.42
+]
+},
+{
+"text": "6",
+"before": "-HydroEnergySystemsL6L6L",
+"after": "Table4.1220(E)Notes:1.Se",
+"box": [
+481.92,
+195.94,
+485.21,
+202.42
+]
+},
+{
+"text": "1",
+"before": "utilitiesMajorbasicutilities",
+"after": "PSURPSURPL/SURHelicopter",
+"box": [
+147.84,
+370.42,
+151.13,
+376.9
+]
+},
+{
+"text": "2",
+"before": "sPPPMarijuanaBusinessesL",
+"after": "L2NPTable4.1220(F)Notes:",
+"box": [
+294.72,
+427.9,
+298.01,
+434.38
+]
+},
+{
+"text": "2",
+"before": "PPMarijuanaBusinessesL2L",
+"after": "NPTable4.1220(F)Notes:1.",
+"box": [
+388.44,
+427.9,
+391.73,
+434.38
+]
+}
+],
+"10": [
+{
+"text": "1",
+"before": "NRMMaximumBuildingHeight",
+"after": "10stories8stories6storie",
+"box": [
+156.36,
+276.94,
+159.65,
+283.42
+]
+},
+{
+"text": "2",
+"before": "ntialandmixed-useprojects",
+"after": "Minimum0.90.50.3Maximumn",
+"box": [
+83.16,
+326.26,
+86.45,
+332.74
+]
+},
+{
+"text": "3",
+"before": "ity(unitsperacre)Minimum",
+"after": "302417Maximumnonenone304",
+"box": [
+234.84,
+340.06,
+238.13,
+346.54
+]
+},
+{
+"text": "4",
+"before": "3302417Maximumnonenone30",
+"after": "Screening&BuﬀeringRequir",
+"box": [
+502.8,
+354.94,
+506.09,
+361.42
+]
+}
+],
+"11": [
+{
+"text": "1",
+"before": "vicNeighborhoodConnector",
+"after": "CivicNeighborhoodLocalTo",
+"box": [
+463.2,
+152.26,
+466.49,
+158.74
+]
+},
+{
+"text": "2",
+"before": "BuildingSetbacks(infeet)",
+"after": "Front:10StreetSide:53Sid",
+"box": [
+83.16,
+201.82,
+86.45,
+208.3
+]
+},
+{
+"text": "3",
+"before": "et)2Front:10StreetSide:5",
+"after": "Side:0Rear:5Front:5Stree",
+"box": [
+230.28,
+189.7,
+233.57,
+196.18
+]
+},
+{
+"text": "4,",
+"before": "BuildingSetbacks(infeet)",
+"after": "5Front:20StreetSide:103F",
+"box": [
+83.16,
+239.02,
+88.02,
+245.5
+]
+},
+{
+"text": "3",
+"before": "4,5Front:20StreetSide:10",
+"after": "Front:10StreetSide:10Fro",
+"box": [
+235.32,
+239.02,
+238.61,
+245.5
+]
+},
+{
+"text": "6",
+"before": "umLotSizenoneMulti-Family",
+"after": "MinimumBuildingSetbacks(",
+"box": [
+103.68,
+305.02,
+106.97,
+311.5
+]
+},
+{
+"text": "2",
+"before": "BuildingSetbacks(infeet)",
+"after": "Front:10StreetSide:53Sid",
+"box": [
+83.16,
+343.06,
+86.45,
+349.54
+]
+},
+{
+"text": "3",
+"before": "et)2Front:10StreetSide:5",
+"after": "Side:0Rear:5Front:5Stree",
+"box": [
+230.28,
+330.82,
+233.57,
+337.3
+]
+},
+{
+"text": "4,",
+"before": "BuildingSetbacks(infeet)",
+"after": "5Front:20StreetSide:103F",
+"box": [
+83.16,
+380.14,
+88.02,
+386.62
+]
+},
+{
+"text": "3",
+"before": "4,5Front:20StreetSide:10",
+"after": "Front:8StreetSide:8Front",
+"box": [
+235.32,
+380.14,
+238.61,
+386.62
+]
+},
+{
+"text": "6",
+"before": "l,Industrial,Institutional",
+"after": "MinimumBuildingSetbacks(",
+"box": [
+200.52,
+421.3,
+203.81,
+427.78
+]
+},
+{
+"text": "2",
+"before": "BuildingSetbacks(infeet)",
+"after": "Front:0StreetSide:03Side",
+"box": [
+83.16,
+459.34,
+86.45,
+465.82
+]
+},
+{
+"text": "3",
+"before": "eet)2Front:0StreetSide:0",
+"after": "Side:0Rear:0Front:0Stree",
+"box": [
+230.28,
+447.1,
+233.57,
+453.58
+]
+},
+{
+"text": "4,",
+"before": "BuildingSetbacks(infeet)",
+"after": "5Front:5StreetSide:53Fro",
+"box": [
+83.16,
+496.42,
+88.02,
+502.9
+]
+},
+{
+"text": "3",
+"before": "t)4,5Front:5StreetSide:5",
+"after": "Front:5StreetSide:5Front",
+"box": [
+230.28,
+496.42,
+233.57,
+502.9
+]
+}
+],
+"77": [
+{
+"text": "1",
+"before": "nationLevel(Foot-Candles)",
+"after": "PrimaryInternalDrives1.0",
+"box": [
+335.16,
+322.78,
+338.45,
+329.26
+]
+}
+],
+"117": [
+{
+"text": "1",
+"before": "ensional)PPStone/Masonry",
+"after": "PPStucco2PPGlass(transpa",
+"box": [
+120.12,
+192.22,
+123.41,
+198.7
+]
+},
+{
+"text": "2",
+"before": "PPStone/Masonry1PPStucco",
+"after": "PPGlass(transparentandsp",
+"box": [
+83.88,
+209.02,
+87.17,
+215.5
+]
+},
+{
+"text": "3",
+"before": "ﬁled,FlutedorRibbedMetal",
+"after": "PanelsPPFiberReinforcedC",
+"box": [
+325.2,
+259.54,
+328.49,
+266.02
+]
+},
+{
+"text": "3",
+"before": "cTileSSStandingSeamMetal",
+"after": "SSGlassBlockAPConcreteBl",
+"box": [
+143.04,
+360.94,
+146.33,
+367.42
+]
+}
+]
+}
+}

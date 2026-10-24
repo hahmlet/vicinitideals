@@ -1,0 +1,262 @@
+{
+"book": "efffbbea3737df56a406bb0269bc9d4890bcf2b46c7acbd608ca42d6af634fd3",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"8": [
+{
+"text": "1",
+"before": "DepthA1One-WayAisleWidth",
+"after": "A2Two-WayAisleWidth1OOve",
+"box": [
+221.64,
+313.71,
+225.17,
+320.67
+]
+},
+{
+"text": "1",
+"before": "idth1A2Two-WayAisleWidth",
+"after": "OOverhangWStallWidthDSta",
+"box": [
+264.36,
+313.71,
+267.89,
+320.67
+]
+},
+{
+"text": "1",
+"before": "DepthA1One-WayAisleWidth",
+"after": "A2Two-WayAisleWidth1OOve",
+"box": [
+447.12,
+313.71,
+450.65,
+320.67
+]
+},
+{
+"text": "1",
+"before": "idth1A2Two-WayAisleWidth",
+"after": "OOverhang45°7.5015.5013.",
+"box": [
+489.84,
+313.71,
+493.37,
+320.67
+]
+}
+],
+"17": [
+{
+"text": "1",
+"before": "EPARKINGMAXIMUMLONG-TERM",
+"after": "SHORT-TERM1(A)RESIDENTIA",
+"box": [
+419.04,
+259.95,
+422.57,
+266.91
+]
+},
+{
+"text": "1",
+"before": "IMUMLONG-TERM1SHORT-TERM",
+"after": "(A)RESIDENTIAL(1)Singled",
+"box": [
+530.52,
+259.95,
+534.05,
+266.91
+]
+},
+{
+"text": "nd",
+"before": "ngtheNEGlisanSt.andNE162",
+"after": "Ave.corridors.(a)SingleD",
+"box": [
+135.72,
+322.45,
+142.97,
+329.41
+]
+},
+{
+"text": "nd",
+"before": "ngtheNEGlisanSt.andNE162",
+"after": "Ave.corridors),exceptfor",
+"box": [
+409.2,
+464.89,
+416.57,
+471.85
+]
+},
+{
+"text": "2",
+"before": "cesperDwellingUnitorNone",
+"after": "1perDwellingUnit1per20Dw",
+"box": [
+234.12,
+574.45,
+237.65,
+581.41
+]
+},
+{
+"text": "2",
+"before": "cesperDwellingUnitorNone",
+"after": "1perDwellingUnit1per20Dw",
+"box": [
+222.0,
+605.89,
+225.53,
+612.85
+]
+},
+{
+"text": "2",
+"before": "cesperDwellingUnitorNone",
+"after": "1perDwellingUnit1per20Dw",
+"box": [
+222.0,
+637.21,
+225.53,
+644.17
+]
+},
+{
+"text": "2",
+"before": "cesperDwellingUnitorNone",
+"after": "1perDwellingUnit1per20Dw",
+"box": [
+222.0,
+668.65,
+225.53,
+675.61
+]
+}
+],
+"18": [
+{
+"text": "1",
+"before": "EPARKINGMAXIMUMLONG-TERM",
+"after": "SHORT-TERM1(A)RESIDENTIA",
+"box": [
+419.04,
+90.51,
+422.57,
+97.47
+]
+},
+{
+"text": "1",
+"before": "IMUMLONG-TERM1SHORT-TERM",
+"after": "(A)RESIDENTIAL(3)Elderly",
+"box": [
+530.52,
+90.51,
+534.05,
+97.47
+]
+}
+],
+"19": [
+{
+"text": "1",
+"before": "EPARKINGMAXIMUMLONG-TERM",
+"after": "SHORT-TERM1(B)COMMERCIAL",
+"box": [
+419.04,
+90.51,
+422.57,
+97.47
+]
+},
+{
+"text": "1",
+"before": "IMUMLONG-TERM1SHORT-TERM",
+"after": "(B)COMMERCIAL(j)Arcades,",
+"box": [
+530.52,
+90.51,
+534.05,
+97.47
+]
+}
+],
+"20": [
+{
+"text": "1",
+"before": "EPARKINGMAXIMUMLONG-TERM",
+"after": "SHORT-TERM1(B)COMMERCIAL",
+"box": [
+419.04,
+90.51,
+422.57,
+97.47
+]
+},
+{
+"text": "1",
+"before": "IMUMLONG-TERM1SHORT-TERM",
+"after": "(B)COMMERCIAL(4)VehicleS",
+"box": [
+530.52,
+90.51,
+534.05,
+97.47
+]
+}
+],
+"21": [
+{
+"text": "1",
+"before": "EPARKINGMAXIMUMLONG-TERM",
+"after": "SHORT-TERM1(C)INSTITUTIO",
+"box": [
+419.04,
+90.51,
+422.57,
+97.47
+]
+},
+{
+"text": "1",
+"before": "IMUMLONG-TERM1SHORT-TERM",
+"after": "(C)INSTITUTIONALUSES(d)C",
+"box": [
+530.52,
+90.51,
+534.05,
+97.47
+]
+}
+],
+"22": [
+{
+"text": "1",
+"before": "EPARKINGMAXIMUMLONG-TERM",
+"after": "SHORT-TERM1(D)INDUSTRIAL",
+"box": [
+419.04,
+90.51,
+422.57,
+97.47
+]
+},
+{
+"text": "1",
+"before": "IMUMLONG-TERM1SHORT-TERM",
+"after": "(D)INDUSTRIAL(1)Manufact",
+"box": [
+530.52,
+90.51,
+534.05,
+97.47
+]
+}
+]
+}
+}

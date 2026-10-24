@@ -1,0 +1,58 @@
+{
+"book": "2c1b7959a000ea69f73a7d2552f8f16f30f8b89176a1483a20d5f0ab8d574e36",
+"tool": "pdfplumber 0.11.10 size<0.85 raised>1.2pt",
+"pages": {
+"14": [
+{
+"text": "1",
+"before": ".e.108squarefeetinsize).",
+"after": "Section2.050.UseofaDevel",
+"box": [
+308.33,
+278.76,
+312.35,
+286.8
+]
+}
+],
+"24": [
+{
+"text": "2",
+"before": "NESSection5.010.LandUse.",
+"after": "AlllandwithinthecityofRi",
+"box": [
+190.34,
+140.73,
+194.36,
+148.77
+]
+}
+],
+"27": [
+{
+"text": "3",
+"before": "sinAllZonesandDistricts.",
+"after": "Allsetbacksreferredtoint",
+"box": [
+393.79,
+540.98,
+397.81,
+549.02
+]
+}
+],
+"58": [
+{
+"text": "4",
+"before": "ystemDevelopmentCharges.",
+"after": "Allfeesandsystemdevelopm",
+"box": [
+334.73,
+458.18,
+338.75,
+466.22
+]
+}
+]
+}
+}
