@@ -997,6 +997,7 @@ async def test_walking_every_web_number_reads_each_stored_text_once(monkeypatch)
     for cached in (check._web_lines, check._web_marks):
         cached.cache_clear()
 
+    store = ProvenanceStore()
     web_documents: set[str] = set()
     for layer in check._layers().values():
         rows = [r for r in check._rows(layer, set()) if r["web"]]
@@ -1010,7 +1011,11 @@ async def test_walking_every_web_number_reads_each_stored_text_once(monkeypatch)
         reads.clear()
         for _ in check._questions(layer, rows, answers):
             pass
-        assert len(reads) <= len({r["document"] for r in rows}), "a web text was read per number"
+        # loading a section file also loads the chapter it was cut from (the
+        # store takes the book's details from it): one more read per section
+        cited = {r["document"] for r in rows}
+        sections = sum(1 for d in cited if store.part_of(d) is not None)
+        assert len(reads) <= len(cited) + sections, "a web text was read per number"
     assert web_documents, "fixture assumption: some numbers are in web-published codes"
 
 
