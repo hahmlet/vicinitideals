@@ -156,6 +156,9 @@ def test_section_buttons_stay_put_and_the_arrow_keys_turn_pages(logged_in_page: 
 def test_a_misread_word_carries_a_squiggle(logged_in_page: Page) -> None:
     page = logged_in_page
     page.goto(f"/flats/code/{CITY}/52/52.200.txt")
-    odd = page.locator("#L34 .odd", has_text="avern")
+    # line 34 sits in the use table: the squiggle is on its cell, and on the
+    # printed line folded under the table
+    odd = page.locator(".odd:visible", has_text="avern").first
     expect(odd).to_be_visible()
+    assert page.locator("#L34 .odd", has_text="avern").count() == 1
     assert "wavy" in odd.evaluate("el => getComputedStyle(el).textDecorationStyle")
