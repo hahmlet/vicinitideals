@@ -50,7 +50,7 @@ HOW = (
     "(line breaks do not matter). Merge the cells the page prints as one cell; make a header cell bold. "
     "Leave rows 1-2 and the picture alone."
 )
-ASK = "Right as drawn? Y or N, then a note if you like:"
+ASK = "Right as drawn? Y or N in the yellow cell, a note beside it:"
 
 
 def _book(sha: str) -> Path:
@@ -82,7 +82,7 @@ def export(city: str, held: bool, every: bool, pages: set[int], out: Path) -> in
     import pypdfium2 as pdfium
     from openpyxl import Workbook
     from openpyxl.drawing.image import Image
-    from openpyxl.styles import Alignment, Font
+    from openpyxl.styles import Alignment, Font, PatternFill
     from openpyxl.utils import get_column_letter
 
     store = ProvenanceStore()
@@ -121,6 +121,7 @@ def export(city: str, held: bool, every: bool, pages: set[int], out: Path) -> in
         sheet["A2"] = f"Page {page} of the book; the table as read by {reader}."
         sheet["A3"] = ASK
         sheet["A3"].font = Font(bold=True)
+        sheet["B3"].fill = PatternFill("solid", start_color="FFF2CC")
         for cell in checked._unique_cells(proposal["cells"]):
             r0, r1 = cell["row"]
             c0, c1 = cell["col"]
