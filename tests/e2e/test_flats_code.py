@@ -125,3 +125,37 @@ def test_selected_words_open_the_correction_box_filled(logged_in_page: Page) -> 
     box.get_by_role("button", name="Log it").click()
     expect(page.locator("#code-corrections [data-error]")).to_contain_text("the same")
     expect(page.locator("#code-corrections [data-logged]")).to_have_count(0)
+
+
+def test_section_buttons_stay_put_and_the_arrow_keys_turn_pages(logged_in_page: Page) -> None:
+    # Steph (2026-10-24): the buttons sit in the same place whatever the
+    # section's length, and ← / → turn to the neighbouring section.
+    page = logged_in_page
+    page.set_viewport_size({"width": 1280, "height": 800})
+    page.goto(f"/flats/code/{CITY}/40/40.310.txt")  # two lines
+    short = page.locator("[data-code-nav]").bounding_box()
+    page.goto(f"/flats/code/{CITY}/31/31.060.txt")  # over two hundred
+    long = page.locator("[data-code-nav]").bounding_box()
+    assert short and long and short == long
+    page.mouse.wheel(0, 4000)
+    assert page.locator("[data-code-nav]").bounding_box() == long
+
+    after = page.locator('[data-code-nav] a[rel="next"]').get_attribute("href") or ""
+    page.keyboard.press("ArrowRight")
+    page.wait_for_url(f"**{after}")
+    page.keyboard.press("ArrowLeft")
+    page.wait_for_url(f"**/{CITY}/31/31.060.txt")
+
+    # typing in the correction box does not turn the page
+    page.locator("[data-corrections] summary").click()
+    page.get_by_label("Shown here").fill("abc")
+    page.get_by_label("Shown here").press("ArrowLeft")
+    assert page.url.endswith("/31/31.060.txt")
+
+
+def test_a_misread_word_carries_a_squiggle(logged_in_page: Page) -> None:
+    page = logged_in_page
+    page.goto(f"/flats/code/{CITY}/52/52.200.txt")
+    odd = page.locator("#L34 .odd", has_text="avern")
+    expect(odd).to_be_visible()
+    assert "wavy" in odd.evaluate("el => getComputedStyle(el).textDecorationStyle")

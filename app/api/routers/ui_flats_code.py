@@ -48,6 +48,7 @@ from flats.encode import legible
 from flats.encode.readiness import _quoted_parts
 from flats.provenance.marks import Mark
 from flats.provenance.marks import marks as raised
+from flats.provenance.spelling import odd_words
 from flats.provenance.store import INDEX, ProvenanceError, parse_quote
 from flats.provenance.tables import Table, tables
 from flats.rules.fields import FIELDS
@@ -293,20 +294,44 @@ def outline(lines: list[str]) -> list[tuple[int, str]]:
     return out
 
 
-def _marked(text: str, found: Sequence[Mark], offset: int = 0) -> Markup:
+ODD_TITLE = (
+    "Spelled oddly: the extraction may have split, joined or dropped letters here. "
+    "If it is wrong, select it and suggest a correction."
+)
+
+
+def _plain(text: str, start: int, end: int, odd: Sequence[tuple[int, int]]) -> Markup:
+    """``text[start:end]`` escaped, each oddly spelled word inside it squiggled."""
+    out: list[Markup] = []
+    at = start
+    for a, b in odd:
+        if a < at or b > end:
+            continue
+        out.append(escape(text[at:a]))
+        out.append(Markup('<span class="odd" title="{}">{}</span>').format(ODD_TITLE, text[a:b]))
+        at = b
+    out.append(escape(text[at:end]))
+    return Markup("").join(out)
+
+
+def _marked(
+    text: str, found: Sequence[Mark], offset: int = 0, odd: Sequence[tuple[int, int]] = ()
+) -> Markup:
     """Text with the characters the book prints raised drawn raised.
 
     ``offset`` is where ``text`` starts in its line, for a word cut out of one.
     A mark printed against a number says so, because that is the one that
-    reads as a digit of the number in the plain text.
+    reads as a digit of the number in the plain text. ``odd`` are the line's
+    oddly spelled words (``spelling.odd_words``), underlined with a squiggle.
     """
+    odd = [(a - offset, b - offset) for a, b in odd if a >= offset and b - offset <= len(text)]
     out: list[Markup] = []
     at = 0
     for m in sorted(found, key=lambda m: m.start):
         start, end = m.start - offset, m.end - offset
         if start < at or start < 0 or end > len(text):
             continue
-        out.append(escape(text[at:start]))
+        out.append(_plain(text, at, start, odd))
         title = "Printed raised in the book"
         if m.glued:
             title += ", against the number before it: a footnote mark, not a digit of that number"
@@ -318,7 +343,7 @@ def _marked(text: str, found: Sequence[Mark], offset: int = 0) -> Markup:
         css = "mark glued" if m.glued else "mark"
         out.append(Markup('<sup class="{}" title="{}">{}</sup>').format(css, title, inner))
         at = end
-    out.append(escape(text[at:]))
+    out.append(_plain(text, at, len(text), odd))
     return Markup("").join(out)
 
 
@@ -333,7 +358,7 @@ def _cell_html(words: Sequence[tuple[int, int]], lines: dict[int, dict[str, Any]
     for n, i in words:
         line = lines[n]
         start, end = line["spans"][i]
-        parts.append(_marked(line["text"][start:end], line["marks"], offset=start))
+        parts.append(_marked(line["text"][start:end], line["marks"], offset=start, odd=line["odd"]))
     return Markup(re.sub(r"(?<=[A-Za-z])-\s+(?=[a-z])", "-", str(Markup(" ").join(parts))))
 
 
@@ -457,12 +482,14 @@ def _document(document: str) -> dict[str, Any]:
             notes_from[mark.note].add(mark.line)
     lines = []
     for n, (text, (depth, kind)) in enumerate(zip(text_lines, outline(text_lines)), start=1):
+        odd = odd_words(text)
         lines.append(
             {
                 "n": n,
                 "text": text,
-                "html": _marked(text, on_line.get(n, ())),
+                "html": _marked(text, on_line.get(n, ()), odd=odd),
                 "marks": on_line.get(n, ()),
+                "odd": odd,
                 "spans": [m.span() for m in re.finditer(r"\S+", text)],
                 "notes_from": sorted(notes_from.get(n, ())),
                 "grid": legible.is_grid(text),
@@ -494,6 +521,7 @@ def _document(document: str) -> dict[str, Any]:
         "lines": lines,
         "blocks": _blocks(document, lines),
         "cited": sum(1 for line in lines if line["readers"]),
+        "odd": sum(len(line["odd"]) for line in lines),
         "previous": order[at - 1] if at > 0 else "",
         "next": order[at + 1] if 0 <= at < len(order) - 1 else "",
         "readable": _readable(layer) if part is not None else "",

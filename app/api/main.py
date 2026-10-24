@@ -645,9 +645,11 @@ def create_app() -> FastAPI:
 
         from app.api.routers.ui_flats_check import warm
         from app.api.routers.ui_flats_code import _library
+        from flats.provenance import spelling
 
         threading.Thread(target=warm, name="flats-check-warm", daemon=True).start()
         threading.Thread(target=_library, name="flats-code-warm", daemon=True).start()
+        threading.Thread(target=spelling.warm, name="flats-spelling-warm", daemon=True).start()
 
     app.router.add_event_handler("startup", _warm_flats_check)
 

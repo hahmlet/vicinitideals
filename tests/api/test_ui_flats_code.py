@@ -213,3 +213,27 @@ async def test_a_correction_without_both_words_is_handed_back_not_logged(client,
     assert (await session.execute(select(func.count()).select_from(FlatsTextCorrection))).scalar() == 0
     stray = await client.post("/ui/flats/code/correction", data={"document": "../etc/passwd", "shown": "a", "printed": "b"})
     assert stray.status_code == 404
+
+
+async def test_a_misread_word_is_squiggled_where_it_stands(client, session):
+    # Tualatin 52.200 prints "T avern": the extraction split the capital off.
+    await _login(client, session)
+    page = await client.get(f"/flats/code/{CITY}/52/52.200.txt")
+    assert page.status_code == 200
+    odd = re.findall(r'<span class="odd" title="[^"]*">([^<]+)</span>', page.text)
+    assert "avern" in odd
+    row = page.text.split('id="L34"', 1)[1].split("</tr>", 1)[0]
+    assert '<span class="odd"' in row and "avern" in row
+    assert "data-odd-count" in page.text
+
+
+async def test_the_section_buttons_name_both_neighbours_or_say_there_is_none(client, session):
+    await _login(client, session)
+    page = await client.get(f"/flats/code/{SECTION}")
+    nav = page.text.split("data-code-nav", 1)[1].split("</nav>", 1)[0]
+    assert 'rel="prev"' in nav and 'rel="next"' in nav
+    shelf = code._where(SECTION)[1]
+    order = shelf.order()
+    page = await client.get(f"/flats/code/{order[0]}")
+    nav = page.text.split("data-code-nav", 1)[1].split("</nav>", 1)[0]
+    assert 'rel="prev"' not in nav and "← first" in nav
