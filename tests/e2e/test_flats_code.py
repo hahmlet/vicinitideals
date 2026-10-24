@@ -70,13 +70,16 @@ def test_nested_provisions_are_drawn_indented(logged_in_page: Page) -> None:
     expect(page.locator(".t.history")).to_contain_text("Ord.")
 
 
-def test_a_table_the_check_refused_stays_as_printed_lines(logged_in_page: Page) -> None:
+def test_a_table_docling_misread_is_drawn_from_the_printed_rules(logged_in_page: Page) -> None:
+    # Page 303: Docling's reading was refused; the table cut along the
+    # printed rules passed the same checks and is drawn, its line lit.
     page = logged_in_page
-    page.goto(f"/flats/code/{CITY}/40/40.300.txt")
-    expect(page.locator(".code-table")).to_have_count(3)
-    expect(page.locator(".table-held")).to_contain_text("shown as its printed lines")
-    # The page-303 rows are ordinary lines, visible without opening anything.
-    expect(page.locator("[data-code-lines] > tbody > tr#L100")).to_be_visible()
+    page.goto(f"/flats/code/{CITY}/40/40.300.txt#L100")
+    expect(page.locator(".code-table")).to_have_count(4)
+    block = page.locator('tr.table-block[data-table="98-116"]')
+    expect(block.locator(".table-note")).to_contain_text("cut along the printed rules")
+    expect(block.locator('[data-lines~="100"]').first).to_be_visible()
+    expect(page.locator(".table-held")).to_have_count(0)
 
 
 def test_a_footnote_mark_leads_to_its_note(logged_in_page: Page) -> None:

@@ -8,6 +8,7 @@ proof-copy and page-map cases at once.
 
 from __future__ import annotations
 
+import json
 import re
 
 import pytest
@@ -131,16 +132,37 @@ async def test_lines_the_extraction_kept_indented_are_left_as_printed():
 
 async def test_a_checked_table_is_drawn_and_its_printed_lines_kept(client, session):
     # Table 40-3 (FOLLOWUPS 115): cells name the lines they come from, the
-    # printed lines stay on the page so every citation still lands, and the
-    # page whose proposal failed its check stays as lines with the reason.
+    # printed lines stay on the page so every citation still lands, and each
+    # table says which reader drew it -- page 303's Docling reading was
+    # refused, the one cut along the printed rules passed.
     await _login(client, session)
     page = await client.get(f"/flats/code/{SECTION}")
     assert page.status_code == 200
-    assert page.text.count('class="code-table"') >= 3
+    assert page.text.count('class="code-table"') == 4
     assert re.search(r'<td data-lines="[\d ]*\b7[0-9]\b[\d ]*"', page.text)
-    assert 'data-table="66-97"' in page.text
+    assert 'data-table="66-97"' in page.text and 'data-table="98-116"' in page.text
     assert 'id="L66"' in page.text and 'id="L97"' in page.text
+    assert "Table drawn by Docling and checked" in page.text
+    assert "Table drawn by pdfplumber, cut along the printed rules and checked" in page.text
+
+
+async def test_a_table_every_reader_got_wrong_stays_as_lines_with_the_reason(client, session, monkeypatch):
+    # No Tualatin table placed on its lines is refused by every reader today,
+    # so the refused case is made: page 303 with only Docling's reading.
+    from flats.provenance import tables as checked
+
+    store = ProvenanceStore()
+    part = store.parts()[SECTION]
+    raw = json.loads((store.root / CITY / checked.PROPOSED).read_text(encoding="utf-8"))
+    refused = checked.check(raw["pages"]["303"][0], part, store.load(SECTION).text.splitlines(), 303, "docling")
+    assert not refused.shown and refused.first == 98
+    monkeypatch.setattr(code, "tables", lambda _store=None: {SECTION: (refused,)})
+    await _login(client, session)
+    page = await client.get(f"/flats/code/{SECTION}")
+    assert page.status_code == 200
+    assert 'class="code-table"' not in page.text
     assert "rows 4 and 5 overlap on the page" in page.text
+    assert 'id="L98"' in page.text
 
 
 async def test_raised_marks_are_drawn_raised_and_linked_to_their_note(client, session):

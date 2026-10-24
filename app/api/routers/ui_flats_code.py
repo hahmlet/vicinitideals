@@ -331,6 +331,18 @@ def _cell_html(words: Sequence[tuple[int, int]], lines: dict[int, dict[str, Any]
     return Markup(re.sub(r"(?<=[A-Za-z])-\s+(?=[a-z])", "-", str(Markup(" ").join(parts))))
 
 
+def _reader(tool: str) -> str:
+    """Who drew a table, in a few words: the tool string says it in full."""
+    if tool.startswith("docling"):
+        return "Docling"
+    if tool.startswith("pdfplumber"):
+        return "pdfplumber, cut along the printed rules"
+    if tool.startswith("by hand"):
+        who = tool[len("by hand") :].split(",")[0].strip(" :")
+        return f"hand ({who})" if who else "hand"
+    return tool or "a table reader"
+
+
 def _table_block(table: Table, lines: list[dict[str, Any]]) -> dict[str, Any]:
     """A shown table as rows of cells, each carrying the lines its words come from.
 
@@ -379,6 +391,8 @@ def _table_block(table: Table, lines: list[dict[str, Any]]) -> dict[str, Any]:
         "last": table.last,
         "page": table.page,
         "tool": table.tool,
+        "reader": _reader(table.tool),
+        "reviewed": table.reviewed,
         "rows": rows,
         "lines": [by_n[n] for n in range(table.first, table.last + 1)],
     }

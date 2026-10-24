@@ -12,7 +12,7 @@ import copy
 import json
 
 from flats.provenance.store import ProvenanceStore
-from flats.provenance.tables import PROPOSED, _interleave, check, page_problems, tables
+from flats.provenance.tables import PROPOSED, RULED, _interleave, boxed, check, contents_list, page_problems, tables
 
 SECTION = "or/clackamas/tualatin/40/40.300.txt"
 
@@ -63,10 +63,10 @@ def test_lines_read_across_are_split_back_into_cells_even_when_spaces_disagree()
     assert _interleave(cells, [(1, "Sale"), (1, "16"), (2, "of"), (2, "feet")]) is None
 
 
-def _stored(page: int) -> dict:
+def _stored(page: int, name: str = PROPOSED, k: int = 0) -> dict:
     store = ProvenanceStore()
-    raw = json.loads((store.root / "or/clackamas/tualatin" / PROPOSED).read_text(encoding="utf-8"))
-    return raw["pages"][str(page)][0]
+    raw = json.loads((store.root / "or/clackamas/tualatin" / name).read_text(encoding="utf-8"))
+    return raw["pages"][str(page)][k]
 
 
 def test_table_40_3_is_shown_with_each_cell_on_its_printed_lines():
@@ -85,10 +85,16 @@ def test_table_40_3_is_shown_with_each_cell_on_its_printed_lines():
     assert front.col[0] == 1
 
 
-def test_a_garbled_page_is_held_not_shown():
-    # p303: Docling ran the lot-size FAR rows together.
+def test_a_garbled_proposal_is_refused_and_the_rules_reading_shown_instead():
+    # p303: Docling ran the lot-size FAR rows together; the table cut along
+    # the printed rules passes the same checks and is the one drawn.
+    store = ProvenanceStore()
+    part = store.parts()[SECTION]
+    lines = store.load(SECTION).text.splitlines()
+    refused = check(_stored(303), part, lines, 303)
+    assert not refused.shown and any("overlap" in p for p in refused.problems)
     t = next(t for t in tables()[SECTION] if t.page == 303)
-    assert not t.shown and any("overlap" in p for p in t.problems)
+    assert t.shown and t.tool.startswith("pdfplumber") and (t.first, t.last) == (98, 116)
 
 
 def test_a_word_the_lines_do_not_hold_holds_the_table():
@@ -103,3 +109,82 @@ def test_a_word_the_lines_do_not_hold_holds_the_table():
     held = check(wrong, part, lines, 302)
     assert not held.shown
     assert any("not exactly the words" in p for p in held.problems)
+
+
+CN = "or/clackamas/tualatin/51/51.200.txt"
+
+
+def _cn():
+    store = ProvenanceStore()
+    return store.parts()[CN], store.load(CN).text.splitlines()
+
+
+def test_a_chapter_list_of_sections_is_not_a_table():
+    # Docling proposes "TDC | 51.100. | Purpose." rows as a table; the use
+    # table on the next page is one.
+    assert contents_list(_stored(351))
+    assert not contents_list(_stored(352))
+    assert all(t.page != 351 for t in tables().get("or/clackamas/tualatin/50/50.310.txt", ()))
+
+
+def test_a_rule_printed_as_a_thick_short_stroke_is_a_column_rule():
+    # Tualatin draws column rules as 0.5 pt strokes 13 pt thick: x = 225, 326.
+    xs = {round(r[0]) for r in _stored(352)["rules"]}
+    assert {225, 326} <= xs
+
+
+def test_a_word_docling_put_in_the_next_row_is_refused_and_the_ruled_table_drawn():
+    # Table 51-1: Docling moved "limitation, see TDC 51.210(3)." down into
+    # Community Services; the rows then overlap on the page.
+    part, lines = _cn()
+    assert not check(_stored(352), part, lines, 352).shown
+    t = next(t for t in tables()[CN] if t.page == 352)
+    assert t.shown and t.tool.startswith("pdfplumber") and (t.first, t.last) == (10, 33)
+    services = next(c for c in t.cells if c.text.startswith("Permitted uses limited to: General"))
+    assert services.text.endswith("see TDC 51.210(3).")
+
+
+def _by_hand(proposal: dict) -> dict:
+    """A proposal as a person writes it: the cells' words, no positions."""
+    return {**proposal, "cells": [{**c, "box": None} for c in proposal["cells"]], "tool": "by hand: test"}
+
+
+def test_a_correction_without_positions_takes_its_boxes_from_the_printed_words():
+    part, lines = _cn()
+    hand = _by_hand(_stored(352, RULED))
+    assert all(c.get("box") for c in boxed(hand)["cells"])
+    assert check(hand, part, lines, 352).shown
+
+
+def test_a_correction_that_repeats_docling_s_mistake_is_refused():
+    part, lines = _cn()
+    hand = _by_hand(_stored(352, RULED))
+    cells = hand["cells"]
+    moved = "limitation, see TDC 51.210(3)."
+    retail = next(c for c in cells if c["text"].startswith("Permitted uses limited to: General"))
+    community = next(c for c in cells if c["text"].startswith("Permitted uses limited to a community"))
+    retail["text"] = retail["text"].replace(" " + moved, "")
+    community["text"] = moved + " " + community["text"]
+    assert not check(hand, part, lines, 352).shown
+
+
+def test_a_correction_with_a_typo_is_refused():
+    part, lines = _cn()
+    hand = _by_hand(_stored(352, RULED))
+    cell = next(c for c in hand["cells"] if c["text"] == "Community Services")
+    cell["text"] = "Community"
+    problems = check(hand, part, lines, 352).problems
+    assert any("read across" in p for p in problems)
+
+
+
+def test_a_table_a_person_found_wrong_is_refused_and_one_found_right_says_so():
+    from flats.provenance.tables import _judged
+
+    t = next(t for t in tables()[CN] if t.page == 352)
+    said = {"page": 352, "box": list(t.box), "tool": t.tool, "by": "Steph", "date": "2026-10-25"}
+    assert _judged(t, [{**said, "verdict": "right"}]).reviewed == "Steph 2026-10-25"
+    wrong = _judged(t, [{**said, "verdict": "right"}, {**said, "verdict": "wrong", "note": "rows swapped"}])
+    assert not wrong.shown and "Steph 2026-10-25 found it wrong on the page: rows swapped" in wrong.problems
+    # A verdict on another reader's table says nothing about this one.
+    assert _judged(t, [{**said, "tool": "docling", "verdict": "wrong"}]).shown

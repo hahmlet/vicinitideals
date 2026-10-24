@@ -31,6 +31,25 @@ people in the page check (FOLLOWUPS 115).
 
 The proved text itself is untouched: tables are a way of showing lines, not
 a change to them, so no citation moves.
+
+*Other proposers.* Where Docling's proposal is refused, others are tried on
+the same place of the page, each held to the same two checks:
+``tables.corrected.json`` -- a table a person (or a reader working from the
+page image) wrote out, ``scripts/flats_tables_sheet.py`` round-trips it
+through a spreadsheet -- and ``tables.proposed.ruled.json``, the table
+pdfplumber cuts along the printed rules. A correction is tried first, so a
+person can also replace a table the check passed. A proposal without cell
+boxes (a correction) gets them from the page: its cells must be the printed
+words read across, line by line, and each cell's box is then its words' box.
+
+*People.* ``tables.reviewed.json`` holds people's verdicts on drawn tables,
+each for one reader's table on one page. A table a person found wrong is
+refused like any other, and the next reader is tried; one found right says
+so beside it. The share found wrong is the checks' miss rate.
+
+*Not tables.* A chapter's list of its sections ("TDC 40.100. Purpose.")
+is set out in columns, and Docling proposes it as a table; it is dropped,
+as it is printed lines and nothing in it is a table's cell.
 """
 
 from __future__ import annotations
@@ -47,6 +66,15 @@ from flats.provenance.store import INDEX, Part, ProvenanceStore
 
 #: The proposals file beside a city's ``sections.json``.
 PROPOSED = "tables.proposed.json"
+
+#: Other proposers, beside it, tried in this order where Docling's proposal
+#: is refused (a correction also where it was not).
+CORRECTED = "tables.corrected.json"
+RULED = "tables.proposed.ruled.json"
+
+#: People's verdicts on drawn tables, beside them: a table a person found
+#: wrong is not drawn, whatever the checks said, and the next reader is tried.
+REVIEWED = "tables.reviewed.json"
 
 #: The name of these checks, shown with every table so a change is visible.
 CHECK = "tables/1"
@@ -84,6 +112,10 @@ class Table:
     #: Every way the table disagrees with the page or the text. Empty = shown.
     problems: tuple[str, ...]
     tool: str = ""
+    #: The table's box on the page, PDF points from the top left.
+    box: tuple[float, ...] = ()
+    #: A person compared it with the page and found it right: who and when.
+    reviewed: str = ""
 
     @property
     def shown(self) -> bool:
@@ -131,10 +163,64 @@ def _unique_cells(cells: Sequence[Mapping[str, object]]) -> list[Mapping[str, ob
     return out
 
 
+#: A section number standing alone in a cell: "40.100.", "TDC 73C.040".
+_SECTION_NO = re.compile(r"^\s*(?:[A-Z]{2,5}\s+)?\d+[A-Z]?\.\d+[A-Z]?\.?\s*$")
+
+
+def contents_list(proposal: Mapping[str, object]) -> bool:
+    """A chapter's list of its sections, which Docling proposes as a table."""
+    cells = _unique_cells(proposal["cells"])  # type: ignore[arg-type]
+    rows: dict[int, bool] = {}
+    for cell in cells:
+        r = cell["row"][0]  # type: ignore[index]
+        rows[r] = rows.get(r, False) or bool(_SECTION_NO.match(str(cell["text"])))
+    return len(rows) >= 3 and sum(rows.values()) >= 0.8 * len(rows)
+
+
+def _visual_lines(words: Sequence[_Word]) -> list[list[_Word]]:
+    """The printed words in reading order: line by line down the page, left to right."""
+    out: list[list[_Word]] = []
+    for word in sorted(words, key=lambda w: (w.cy, w.x0)):
+        if out and abs(word.cy - out[-1][0].cy) < (word.bottom - word.top) / 2:
+            out[-1].append(word)
+        else:
+            out.append([word])
+    return [sorted(line, key=lambda w: w.x0) for line in out]
+
+
+def boxed(proposal: Mapping[str, object]) -> Mapping[str, object] | None:
+    """The proposal with every cell's box taken from the printed words it holds.
+
+    For a proposal written without positions (a correction): its cells, in
+    reading order, must be the table's printed words read across, line by
+    line -- the same reading the text check makes of the stored lines. None
+    when they are not.
+    """
+    cells = _unique_cells(proposal["cells"])  # type: ignore[arg-type]
+    if all(c.get("box") for c in cells):
+        return proposal
+    words = [_Word(*w) for w in proposal["words"]]  # type: ignore[union-attr]
+    flat = [(k, w) for k, line in enumerate(_visual_lines(words)) for w in line]
+    kept = [(k, w) for k, w in flat if _letters(w.text)]
+    order = sorted(range(len(cells)), key=lambda k: (cells[k]["row"][0], cells[k]["col"][0]))  # type: ignore[index]
+    got = _interleave([_letters(str(cells[k]["text"])) for k in order], [(k, _letters(w.text)) for k, w in kept])
+    if got is None:
+        return None
+    out = [dict(c) for c in cells]
+    for slot, k in enumerate(order):
+        mine = [kept[i][1] for i in got[slot]]
+        if mine:
+            out[k]["box"] = [min(w.x0 for w in mine), min(w.top for w in mine), max(w.x1 for w in mine), max(w.bottom for w in mine)]
+    return {**proposal, "cells": out}
+
+
 def page_problems(proposal: Mapping[str, object]) -> list[str]:
     """Every way a proposed table contradicts the printed page."""
     problems: list[str] = []
-    cells = _unique_cells(proposal["cells"])  # type: ignore[arg-type]
+    found = boxed(proposal)
+    if found is None:
+        return ["its cells are not the printed words read across, line by line"]
+    cells = _unique_cells(found["cells"])  # type: ignore[arg-type]
     words = [_Word(*w) for w in proposal["words"]]  # type: ignore[union-attr]
     rules = [tuple(r) for r in proposal["rules"]]  # type: ignore[union-attr]
     held: dict[int, list[_Word]] = {}
@@ -359,6 +445,7 @@ def check(
         cells=out,
         problems=tuple(problems),
         tool=tool,
+        box=tuple(proposal.get("box") or ()),  # type: ignore[arg-type]
     )
 
 
@@ -366,6 +453,23 @@ def tables(store: ProvenanceStore | None = None) -> dict[str, tuple[Table, ...]]
     """Every proposed table in the store, checked, keyed by section file."""
     store = store or ProvenanceStore()
     return dict(_tables(store.root))
+
+
+def _overlaps(a: Sequence[float], b: Sequence[float]) -> bool:
+    """Two boxes on a page share most of the smaller one."""
+    width = min(a[2], b[2]) - max(a[0], b[0])
+    height = min(a[3], b[3]) - max(a[1], b[1])
+    if width <= 0 or height <= 0:
+        return False
+    smaller = min((a[2] - a[0]) * (a[3] - a[1]), (b[2] - b[0]) * (b[3] - b[1]))
+    return smaller > 0 and width * height >= 0.5 * smaller
+
+
+def _read(path: Path) -> tuple[str, dict[int, list[Mapping[str, object]]]]:
+    if not path.is_file():
+        return "", {}
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return str(raw.get("tool", "")), {int(k): v for k, v in raw["pages"].items()}
 
 
 @lru_cache(maxsize=4)
@@ -380,24 +484,78 @@ def _tables(root: Path) -> tuple[tuple[str, tuple[Table, ...]], ...]:
         directory = proposed.parent.relative_to(root).as_posix()
         if not (proposed.parent / INDEX).is_file():
             continue
-        raw = json.loads(proposed.read_text(encoding="utf-8"))
-        tool = str(raw.get("tool", ""))
+        docling = _read(proposed)
+        corrected = _read(proposed.parent / CORRECTED)
+        ruled = _read(proposed.parent / RULED)
         candidates = by_dir.get(directory, [])
-        for page_key, found in sorted(raw["pages"].items(), key=lambda kv: int(kv[0])):
-            page = int(page_key)
+        texts: dict[str, list[str]] = {}
+        reviews = _reviews(proposed.parent / REVIEWED)
+
+        def placed(proposal: Mapping[str, object], page: int, tool: str, on_page: list[Part]) -> Table | None:
+            best: Table | None = None
+            for part in on_page:
+                lines = texts.setdefault(part.path, store.load(part.path).text.splitlines())
+                table = check(proposal, part, lines, page, str(proposal.get("tool") or tool))
+                if best is None or (table.first and not best.first):
+                    best = table
+            return best
+
+        for page in sorted(set(docling[1]) | set(corrected[1])):
             on_page = [p for p in candidates if any(n == page for n, _ in p.pages)]
-            for proposal in found:
-                best: Table | None = None
-                for part in on_page:
-                    lines = store.load(part.path).text.splitlines()
-                    table = check(proposal, part, lines, page, tool)
-                    if table.first and (best is None or not best.first):
-                        best = table
-                    elif best is None:
-                        best = table
-                if best is not None:
-                    out.setdefault(best.section, []).append(best)
-    return tuple((k, tuple(v)) for k, v in sorted(out.items()))
+            slots = [p for p in docling[1].get(page, []) if not contents_list(p)]
+            # A correction where Docling proposed nothing is a table of its own.
+            slots += [c for c in corrected[1].get(page, []) if not any(_overlaps(c["box"], d["box"]) for d in slots)]  # type: ignore[arg-type]
+            for slot in slots:
+                first: Table | None = None
+                chosen: list[Table] = []
+                tried: list[str] = []
+                for tool, pages in (corrected, docling, ruled):
+                    found = [p for p in pages.get(page, []) if _overlaps(p["box"], slot["box"])]  # type: ignore[arg-type]
+                    if not found:
+                        continue
+                    checked = [_judged(t, reviews) for t in (placed(p, page, tool, on_page) for p in found) if t is not None]
+                    if not checked:
+                        continue
+                    first = first or checked[0]
+                    if all(t.shown for t in checked):
+                        chosen = checked
+                        break
+                    tried.append(tool)
+                if chosen:
+                    for table in chosen:
+                        out.setdefault(table.section, []).append(table)
+                elif first is not None:
+                    if len(tried) > 1:
+                        first = Table(**{**_fields(first), "problems": (*first.problems, f"also refused: {', '.join(tried[1:])}")})
+                    out.setdefault(first.section, []).append(first)
+    return tuple((k, tuple(sorted(v, key=lambda t: (t.page, t.first)))) for k, v in sorted(out.items()))
+
+
+def _reviews(path: Path) -> tuple[Mapping[str, object], ...]:
+    if not path.is_file():
+        return ()
+    return tuple(json.loads(path.read_text(encoding="utf-8"))["reviews"])
+
+
+def _judged(table: Table, reviews: Sequence[Mapping[str, object]]) -> Table:
+    """The table with the latest verdict a person gave on it, if any."""
+    mine = [
+        r
+        for r in reviews
+        if r["page"] == table.page and r["tool"] == table.tool and table.box and _overlaps(r["box"], table.box)  # type: ignore[arg-type]
+    ]
+    if not mine:
+        return table
+    last = mine[-1]
+    who = f"{last['by']} {last['date']}"
+    if last["verdict"] == "wrong":
+        note = f": {last['note']}" if last.get("note") else ""
+        return Table(**{**_fields(table), "problems": (*table.problems, f"{who} found it wrong on the page{note}")})
+    return Table(**{**_fields(table), "reviewed": who})
+
+
+def _fields(table: Table) -> dict[str, object]:
+    return {name: getattr(table, name) for name in Table.__slots__}  # type: ignore[attr-defined]
 
 
 def report(store: ProvenanceStore | None = None) -> str:
@@ -408,11 +566,27 @@ def report(store: ProvenanceStore | None = None) -> str:
             mark = "SHOWN" if t.shown else "HELD "
             where = f"L{t.first}-L{t.last}" if t.first else "unplaced"
             why = "; ".join(t.problems)
-            rows.append(f"{mark} {section} p{t.page} {t.rows}x{t.cols} {where} {why}")
+            reader = (t.tool.split() or ["?"])[0]
+            rows.append(f"{mark} {section} p{t.page} {t.rows}x{t.cols} {where} [{reader}] {why}".rstrip())
     return "\n".join(rows)
 
 
-__all__ = ["CHECK", "PROPOSED", "Cell", "Table", "check", "page_problems", "place", "report", "tables"]
+__all__ = [
+    "CHECK",
+    "CORRECTED",
+    "PROPOSED",
+    "REVIEWED",
+    "RULED",
+    "Cell",
+    "Table",
+    "boxed",
+    "check",
+    "contents_list",
+    "page_problems",
+    "place",
+    "report",
+    "tables",
+]
 
 
 if __name__ == "__main__":  # pragma: no cover

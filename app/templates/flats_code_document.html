@@ -126,7 +126,7 @@
               </tbody>
             </table>
           </details>
-          <div class="table-note muted" title="{{ block.tool }}">Table drawn by Docling and checked against the printed page and these lines word for word. A check, not a proof: if a cell is wrong, the PDF page is the authority.</div>
+          <div class="table-note muted" title="{{ block.tool }}">Table drawn by {{ block.reader }} and checked against the printed page and these lines word for word. A check, not a proof: if a cell is wrong, the PDF page is the authority.{% if block.reviewed %} Compared with the page and found right by {{ block.reviewed }}.{% endif %}</div>
         </td>
       </tr>
       {% elif block.kind == "held" %}
