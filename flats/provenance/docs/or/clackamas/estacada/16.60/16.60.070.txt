@@ -1,0 +1,37 @@
+16.60.070 Minimum Residential Density
+
+1 Residential subdivisions and new multi-family development in the R-3, NCR, and C-2 zones must achieve a minimum density that is at least 50 percent of the maximum density permitted for the zoning district in which they are located.
+Residential subdivisions and new multi-family development in the MMU and CMU zones must achieve a minimum density of at least 15 dwelling units per net acre.
+
+2 Projects proposed at less than the minimum density must demonstrate on a site plan or other means, how, in all aspects, future intensification of the site to the minimum density or greater can be achieved.
+
+3 Minimum residential density is calculated as follows:
+
+1 For zones and housing types for which residential density is regulated by minimum lot area required per dwelling:
+
+1 Refer to the definition of “Acreage, Net.” Multiply the net acreage of the site by 0.50.
+
+2 Multiply the resulting number in step a by 43,560 to determine the total square footage of the site.
+
+3 Divide the resulting number in step b by the minimum land area required per dwelling for the applicable zone and housing type, as expressed in square feet, to determine the minimum number of dwellings that must be built on the site.
+
+2 For residential subdivisions and new multi-family development in the MMU and CMU zones:
+
+1 Refer to the definition of “Acreage, Net.”
+
+2 Multiply net acreage of the site by 15 to determine the minimum number of dwellings that must be built on the site.
+
+3 For zones and housing types for which residential density is regulated by maximum dwelling units per acre (except as provided in Subsection C.2):
+
+1 Refer to the definition of Net Acreage.
+Multiply the net acreage of the site by 0.50.
+
+2 Multiply the resulting number in step a by the maximum residential density required in the applicable zone, as expressed in dwelling units per net acre, to determine the minimum number of dwellings that must be built on the site.
+
+4 If the resulting number in step 1.b, 2.b, or 3.b is not a whole number, the number is rounded to the nearest whole number as follows: If the decimal is equal to or greater than 0.5, then the number is rounded up to the nearest whole number.
+If the decimal is less than 0.5, then the number is rounded down to the nearest whole number.
+
+.
+
+HISTORY
+Adopted by Ord. 2022-010 on 12/12/2022

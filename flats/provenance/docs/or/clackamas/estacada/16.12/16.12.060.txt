@@ -1,0 +1,67 @@
+16.12.060 Zone Descriptions
+
+1 Low Density Residential (R-1): Intended primarily for lower-density residential uses, including single-family dwellings and small-scale middle housing, but also allows home occupations, short-term rentals with standards, and certain public nonprofit conditional uses.
+
+2 Medium Density Residential (R-2): Intended for residential use at a moderate density, including single-family dwellings and middle housing.
+
+3 Multiple Family Residential (R-3): Intended for residential use as a high density residential district allowing some conditional uses with standards.
+
+4 North City Residential (NCR): Intended to establish a variety of housing types to meet the City's rental and affordable housing needs, while focusing multi-family housing nearer to major roads, protecting natural features and existing residential land uses, and providing for open space.
+
+5 Downtown (D): Intended to implement the Estacada Downtown and Riverside Area Plan (adopted 2011).
+The zone encourages a mix of office, service, retail, light manufacturing, and governmental uses.
+The D zone also allows residential uses in upper stories of commercial buildings, and high density residential and mixed-use (residential and commercial) development oriented to the Clackamas River.
+
+6 General Commercial (C-1): Intended to promote economic diversification.
+It accommodates certain commercial, light industrial, and governmental uses that are not conducive to locating in the D zone, such as those with large, unenclosed sales or storage areas, and those requiring large parcels of land.
+
+7 Residential Commercial (C-2): Designed for a mixture of office, retail, personal or business service, and residential uses, in order to promote the most productive capacity of property.
+
+8 Mill Area Mixed-Use (MMU): Intended to provide flexible opportunities for the development of a mix of land uses that are safe, clean, and compatible with existing and planned land uses at the core of the City.
+
+9 Riverfront Commercial (R-C): Intended to promote local tourism and history, outdoor recreation, and the use of adjacent park facilities, the Clackamas River, and connecting multi-use paths with a variety of commercial uses that attract local and out-of-town customers while enhancing the area's natural aesthetics and protecting adjacent open spaces.
+
+10 Highway Commercial (H-C): Intended to provide for large-footprint and vehicle-oriented commercial uses that are not appropriate for Downtown or other commercial areas, while ensuring that new development is appropriately screened and restricting residential uses, industrial uses, and excessive signage.
+
+11 Central Mixed-Use (CMU): Intended to establish small-footprint commercial uses, intermixed with denser residential uses, that cater primarily to customers in nearby residential areas and that do not detract from Downtown, while developing Eagle Creek Rd as a tree-lined, pedestrian- and bicycle-friendly corridor.
+
+12 Outdoor Commercial (O-C): Intended to preserve and enhance the area's natural aesthetic and establish commercial and public uses that attract local and out-of-town visitors, while protecting natural wetlands and adjacent residential land uses and ensuring that the area's commercial uses do not detract from Downtown.
+
+13 Light Industrial (M-1): Created for the expansion of light industrial uses.
+Permits wholly enclosed light industrial uses and compatible commercial uses which are compatible to the surrounding area.
+
+14 Airport (A-P): Created to encourage and support the continued operation and vitality of public-use airports by allowing certain airport-related commercial, residential, and recreational uses in accordance with state law.
+
+15 Open Space/Public Facilities Overlay (O-S): Created to ensure public greenways, pathways, and parks, and to allow governmental uses including public schools.
+
+16 Planned Development Overlay (P-D): Intended to permit the application of new technology and greater freedom than may be possible under a strict interpretation of the provisions of the development code.
+
+17 Airport Safety and Compatibility Overlay (ASC): Intended to encourage and support the continued operation and vitality of Estacada’s public-use airport(s) by establishing compatibility and safety standards to promote air navigational safety, and to reduce potential safety hazards for persons living, working or recreating near the airport.
+
+18 Historical Resources Overlay (H-R): Intended to encourage property owners to enhance and maintain historically designated resources within the community.
+
+19 Wetlands Resources Overlay (W-R): Intended to protect designated wetland resources within the community.
+
+(Prior code § 10.218; Ord. No. 2012-005, § 2, 9-10-2012; Ord. No. 2016-003, § 1(Exh.
+A), 5-23-2016)
+
+HISTORY
+Amended by Ord. 2018-007 on 1/28/2019
+Amended by Ord. 2019-005 on 3/9/2020
+Amended by Ord. 2022-010 on 12/12/2022
+Amended by Ord. 2025-013 on 1/26/2026
+
+Chapter 16.20 MEDIUM DENSITY RESIDENTIAL (R-2)
+
+16.20.010 Purpose
+
+16.20.020 Uses Permitted Outright
+
+16.20.030 Conditional Uses Permitted
+
+16.20.035 Prohibited Uses
+
+16.20.040 Standards
+
+16.20.050 Exceptions To Standards
+

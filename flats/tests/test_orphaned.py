@@ -21,6 +21,8 @@ means its document was re-fetched and the sentence is owed a re-read.
 from __future__ import annotations
 
 from flats.encode.orphaned import ORPHAN, orphans, scan
+from flats.provenance.sections import in_proof
+from flats.provenance.store import ProvenanceStore
 
 #: The one sentence known to have lost a numeral. Happy Valley 16.22.050(H),
 #: detached accessory structures: "...that is 100 square feet or less in area
@@ -56,9 +58,29 @@ KNOWN_LEAD_IN = "or/clackamas/sandy/sdc.17.90.txt#L2337"
 KNOWN_TABLE_LEAD_IN = "or/clackamas/estacada/emc.16.116.txt#L206"
 
 
+def _on_proof(cite: str, store: ProvenanceStore) -> str:
+    """A hit on a section file as the proof-copy line its unit word is on.
+
+    The pins name the fetched chapter's line, which a cut does not move: a
+    section file's sentence holds one or more printed lines, and the pinned
+    one must be among them. A hit on a document that was not cut is itself.
+    """
+    path, _, line = cite.partition("#L")
+    if store.part_of(path) is None:
+        return cite
+    proof, spans = in_proof(store, path, [(int(line), int(line))])
+    held = [f"{proof}#L{k}" for lo, hi in spans for k in range(lo, hi + 1)]
+    pinned = [c for c in PINNED if c in held]
+    return pinned[0] if len(pinned) == 1 else f"{proof}#L{held[0]}"
+
+
+PINNED = [KNOWN_TABLE_LEAD_IN, KNOWN_ORPHAN, KNOWN_LEAD_IN, KNOWN_MISPLACED]
+
+
 def test_exactly_one_stored_sentence_lost_its_number() -> None:
-    found = [o.cite for o in scan()]
-    assert found == [KNOWN_TABLE_LEAD_IN, KNOWN_ORPHAN, KNOWN_LEAD_IN, KNOWN_MISPLACED], (
+    store = ProvenanceStore()
+    found = sorted(_on_proof(o.cite, store) for o in scan())
+    assert found == sorted(PINNED), (
         "a unit word with no measurement in front of it is a standard that "
         "went missing on the way into the store, and it leaves no hole for any "
         f"other check to find. Orphaned now: {found}"

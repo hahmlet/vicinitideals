@@ -1,0 +1,103 @@
+16.24.040 Standards
+
+The following standards shall apply in an R-3 zone:
+
+1 Lot Size and Dimensions:
+
+1 Except as provided in Subsection 2, the minimum lot size shall be as follows:
+
+Duplex, triplex or fourplex  2,500 square feet per dwelling unit
+Commonwall Dwellings         2,500 square feet per lot for each dwelling unit
+Cottage Cluster              2,500 square feet per dwelling unit
+Multi-family dwelling        See Maximum Residential Density under Section 16.24.040.B.
+Motel, hotel, or resort      1,500 square feet per guest unit
+
+2 Exception for Conversions.
+When a duplex, triplex, or fourplex is created by internally converting, or expanding the floor area of an existing single-family dwelling, no minimum lot size shall apply.
+
+3 Minimum lot frontage for a flag lot shall be twenty-five (25) feet.
+
+4 No lot area, yard, off-street parking or loading area, or other required open space for one use shall be used as the required lot area, yard, off-street parking or loading area, or other required open spaces for another use.
+
+2 Maximum Residential Density.
+Maximum residential density for multi-family dwellings shall be 30 dwelling units per net acre.
+See EMC 16.60.060.
+
+3 Minimum Residential Density.
+New residential subdivisions and new multi-family dwellings are subject to the minimum density standards of EMC 16.60.070.
+
+4 Parking Requirements.
+The number of parking spaces as required by EMC 16.76 shall be provided.
+
+5 Setbacks.
+
+1 The front setback shall be a minimum of fifteen (15) feet, but a minimum of twenty (20) feet to any garage door or carport motor vehicle entry.
+
+2 Side setbacks for commonwall dwellings shall be as follows:
+
+1 The minimum side setback for the common side of attached dwellings is zero (0) feet.
+
+2 Two-unit and three-unit commonwall dwellings shall meet the side setback standard provided in Subsection 3 for sides that are not attached.
+
+3 Commonwall dwellings with four units shall have a minimum side setback of ten (10) feet for the sides that are not attached.
+
+3 Minimum side setbacks shall be five (5) feet, except:
+
+1 Commonwall dwellings as provided for in Subsection 2.
+
+2 Dwellings with a second story bedroom window that faces a side yard and is situated more than fifteen (15) feet above the ground level.
+As demonstrated in Figure 1 below, the minimum side setback is calculated by dividing the lower windowsill height (the distance from the lower windowsill to grade level directly below the center of the window) by three.
+Such windows used for egress must have minimum dimensions of at least three feet by three feet.
+The bedroom may instead be equipped with an automatic fire sprinkler system, unless otherwise approved by the City.
+
+3 If a public utility easement (PUE) exists on the side property line, the side yard setback shall be equal to the width of the PUE, if greater than the side yard setback required above.
+
+Figure 1.
+
+4 The rear setback shall be a minimum of fifteen (15) feet except:
+
+1 An accessory structure not used for human habitation and separated from the main building may be located up to five (5) feet from a rear property line.
+
+2 On a corner lot, setbacks required from the rear property line shall be the same as required for side yards.
+
+3 Detached accessory dwelling units are allowed exceptions to rear setbacks as provided in EMC 16.61.060.C.3.a.
+
+6 Sidewalks. Sidewalks, driveways and service driveways shall conform to standards established by this code.
+
+7 Fences.
+
+1 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit.
+
+2 Fences described above are subject to clear vision regulations of EMC 16.60.010 and EMC 8.12.050 limiting the use of barbed wire and electrical fences.
+
+8 Drainage. An applicant for a building permit shall submit a plan showing width, depth, and direction of flow of all drainage channels on property.
+In addition, the location, size and type of conduit used in drainage channels and driveway accesses shall be clearly delineated.
+Water from roof drains and other nonimpervious surfaces shall not be concentrated and directed so as to cause damage to property and shall be disposed of in accordance with EMC 13.08.010.
+
+9 Excavation/fill. A plan shall be submitted showing cubic yards removed or filled and the plan should be certified by a registered professional engineer for the removal or fill of more than fifty (50) cubic yards of material.
+
+10 Building Height.
+
+1 No building shall exceed a height of thirty-five (35) feet, except multi-family dwellings, public schools or churches which may be forty-five (45) feet.
+
+2 When a property in the R-3 zone is located in the Airport Safety and Compatibility Overlay Zone, all buildings thereupon shall comply with the height limitations in EMC 16.54.030.
+Whenever height limitations in this section are more restrictive than those in EMC 16.54.030, the height limitations of this section shall control.
+
+11 Lot Coverage.
+Except as provided below, buildings including accessory structures and garages shall not occupy more than fifty-five (55) percent of the total lot area.
+
+1 Each commonwall dwelling may occupy up to seventy (70) percent of its individual lot.
+
+2 Accessory dwelling units are allowed exceptions to rear setbacks as provided in EMC16.61.060.A.5.
+
+12 Geological Analysis Requirement.
+Any property identified as a geological natural hazard area as listed in EMC 16.68.030 or any property that has a slope of thirty-three (33) percent or greater, as defined by a 3:1 ratio, 3 horizontal : 1 vertical, will require a geotechnical analysis of the property as outlined in EMC 16.68.030.
+
+(Ord. 2000-26 § 3(3): prior code § 10.222(3); Ord. No. 2010-004, § 3, 3-28-2011; Ord. No. 2017-006, § 4, 11-13-2017; Ord. No. 2018-002, § 1, 8-13-2018)
+
+HISTORY
+Amended by Ord. 2018-007 on 1/28/2019
+Amended by Ord. 2019-005 on 3/9/2020
+Amended by Ord. 2022-010 on 12/12/2022
+Amended by Ord. 2025-013 on 1/26/2026
+

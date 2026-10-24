@@ -1,0 +1,166 @@
+16.114.130 Parking and Loading.
+A. Purpose. The purpose of this chapter is to provide basic and flexible standards for the development of vehicle parking, loading and bicycle parking.
+The design of parking and loading areas is critically important to the viability of commercial areas, pedestrian and driver safety, the efficient and safe operation of adjoining streets, and community image and livability.
+Because vehicle-parking facilities can occupy large amounts of land, they must be planned and designed carefully to use the land efficiently while maintaining the visual character of the community.
+B. Applicability. The Parking and Loading standards of Chapter 16.132 do not apply to new development in the Kingston Terrace District.
+They are superseded by the standards of Section
+16.114.130.
+C. Vehicle parking standards.
+1. Minimum number of vehicle parking spaces.
+There are no minimum vehicle parking requirements in the Kingston Terrace District.
+2. Maximum number of vehicle parking spaces.
+a. The number of parking spaces provided by any particular use in ground surface parking lots must not exceed the number of parking spaces provided in Table 16.114-13, Maximum Off-Street
+Vehicle Parking Spaces. Spaces provided on-street, or within the building footprint of structures, such as in rooftop parking, tuck-under parking or under-structure parking, or in multi-level parking above or below surface lots, do not apply toward the maximum number of allowable spaces.
+Where a fractional number of spaces results, the maximum number of spaces is rounded down to the nearest whole number.
+This section does not apply to single-family residential dwellings.
+Table 16.114-13 Maximum Vehicle Parking Spaces
+Maximum Off-Street Parking Requirements
+Use Categories  Specific Uses  Maximum Vehicle Parking
+A. Residential Categories
+1. Single-Family Single-family Attached/Detached Not Applicable
+Duplex, Triplex, Fourplex Not Applicable
+Residential Care Not Applicable
+Manufactured Home Not Applicable
+Mobile Home Not Applicable
+2. Multi-dwelling/Group Living Studio/1 Bedroom 1.5 spaces per unit.
+2 or more Bedrooms 2.25 spaces per unit.
+B. Commercial Categories:
+1. Retail Sales and Service Retail, Personal Service, Repair 1 space per 200 square feet.
+Retail, Repair Large Merchandise such as
+Home Appliances, Furniture
+1 space per 600 square feet of gross floor area.
+Restaurants, Health clubs, meeting rooms 1 space per 133 square feet of gross leas-able floor area.
+Motel 1.5 spaces per guest room, plus 1 space for the manager.
+Theater 1 space per 2.66 seats.
+2. Office Professional Government 1 space per 200 square feet.
+Medical, Dental 1 space per 200 square feet.
+3. Automotive Vehicle Repair 1 space per 6,000 square feet, or 2 minimum.
+Quick Vehicle Service, Car Wash 1 space per 6,000 square feet, or 2 minimum.
+C. Institutional Categories:
+1. Public Safety Facilities Number determined as part of conditional use.
+2. Community Parks and Open Space, Meeting Recreation Halls, Recreation Buildings
+1 space per 7,000 square feet of gross area, or 1 space per 700 square feet of building floor area, whichever is greater.
+3. Schools Grades K—12 0.3 per staff and students
+4. Religious assembly 1 space per 2.66 seats in the main worship area.
+5. Utilities
+1 space per 1.5 employees on the largest shift, or 1 space for each 350 square feet of gross floor area, plus 1 space per fleet vehicle.
+3. Availability. Parking spaces may not be used for the parking of equipment or storage of goods or inoperable vehicles.
+Parking spaces may not be assigned in any way to a use on another site, except for shared parking situations.
+4. Location.
+a. Vehicle parking is allowed only on approved streets, within garages, carports, and other structures, or on driveways or parking lots that have been developed in conformance with this code.
+Vehicle parking must not be located in a vehicle travel lane (including emergency or fire access lanes).
+b. Surface parking areas shall be located on the site to serve the intended users of the development safely and conveniently, without precluding future site intensification.
+c. Surface parking areas shall occur to the side or rear of buildings.
+d. Off-street surface vehicle parking areas, detached garages, and attached or detached carports associated with mixed-use, multi-family dwelling, or commercial buildings may not be located closer to a street property line than the building closest to that street property line.
+e. Parking spaces shall be so located and served by an access that their use will require no backing movements or other maneuvering within a street or right-of-way.
+5. ADA accessible parking spaces.
+a. When parking is provided on-site, accessible parking must be provided for disabled persons, in conformance with the Federal Americans with
+Disabilities Act (ADA). On-site accessible parking facilities must comply with the design requirements of the current building code as adopted by the State of Oregon.
+6. Shared Parking. Shared parking between two or more uses is permitted when all the following criteria are satisfied:
+a. Satisfactory legal evidence is presented to the city manager in the form of deeds, leases or contracts to establish the shared use; and
+b. The other applicable standards of this title can be met.
+7. Electrical service capacity.
+Electrical service capacity, as defined by ORS 455.417, must be provided to new off-street parking spaces in compliance with the standards of this subsection.
+Adjustments to the standards of this subsection are prohibited.
+a. Non-residential development and residential or mixed-use developments with less than five dwelling units must provide electrical service capacity to a minimum of twenty percent of all off-street vehicle parking spaces on the site.
+b. Residential or mixed-use developments with five or more dwelling units must provide electrical service capacity to a minimum of forty percent of all off-street vehicle parking spaces on the site.
+c. Dwelling units in townhouses are not included for the purposes of determining the applicability of this regulation.
+8. Maintenance.
+a. When provided, parking spaces shall be designed and maintained by the owner of the property.
+b. All off-street vehicle parking spaces and maneuvering areas must have a durable and paved surface and shall be maintained for all-weather use.
+The use of pervious concrete, pervious paving, driveway strips, or an in-ground grid or lattice surface is encouraged to reduce stormwater runoff.
+9. Parking stall standard dimensions and compact car parking.
+a. All off-street parking stalls must be improved to conform to City standards for surfacing, stormwater management and striping, and provide dimensions in accordance with Table
+16.114-14 Parking Stall Dimensions and Figure
+16.114-25 Parking Area Dimensions.
+b. No more than fifty percent of the parking stalls provided on-site can be compact spaces.
+c. The stopping edge of any curb or wheel stop must be placed no less than two feet from the end of the parking stall.
+d. Where a curb or wheel stop is provided, the overhang of a vehicle past the curb or wheel stop may be counted as part of the required parking stall depth, up to a maximum of two feet.
+e. Parking spaces along the boundaries of a parking lot or adjacent to interior landscaped areas or sidewalks shall be provided with a wheel stop that is at least four inches high located three feet back from the front of the parking space.
+The front three feet of the parking stall may be concrete, asphalt or low-lying landscape material that does not exceed the height of the wheel stop.
+This area cannot be calculated to meet landscaping or sidewalk requirement.
+Table 16.114-14 Minimum Parking Dimensions
+
+Parking
+Angle (A)
+Parking Stall
+Type  Stall Width (B)  Curb Length (C)
+1-Way Aisle
+Width (D)
+2-Way Aisle
+Width (D)
+Stall Depth
+(Includes bumper overhang) (E)
+0°  Standard  8.0 ft.  22.5 ft.  12 ft.  20 ft.  8.0 ft.
+Compact  8.0 ft.  22.5 ft.  12 ft.  20 ft.  8.0 ft.
+30 ° Standard 9.0 ft. 9.0 ft. 12 ft. 20 ft. 16.0 ft.
+Compact 8.0 ft. 8.0 ft. 12 ft. 20 ft. 15.0 ft.
+45 °  Standard  9.0 ft.  9.0 ft.  12 ft.  20 ft.  16.0 ft.
+Compact  8.0 ft.  8.0 ft.  12 ft.  20 ft.  15.0 ft.
+60 ° Standard 9.0 ft. 9.0 ft. 16.0 ft. 20.0 ft. 16.0 ft.
+Compact 8.0 ft. 8.0 ft. 16.0 ft. 20.0 ft. 15.0 ft.
+90 °  Standard  9.0 ft.  8.5 ft.  16.0 ft.  20.0 ft.  16.0 ft.
+Compact  8.0 ft.  8.5 ft.  16.0 ft.  20.0 ft.  15.0 ft.
+
+D. Loading area requirements.
+All off-street vehicle loading areas for passengers or goods must:
+1. Include sufficient area for turning and maneuvering of vehicles on-site.
+2. Be designed such that vehicle stacking does not impact any public right-of-way, vehicle travel lane, or emergency or fire access lanes.
+E. Bicycle parking requirements: Bicycle parking shall be provided in conjunction with all new mixed-use, dwelling, multi, commercial, and municipal developments in Kingston Terrace District.
+This section does not apply to single-family, residential dwellings.
+1. Number of bicycle parking spaces.
+Table 16.114-15 lists applicable standards.
+Figure 16.114-25 Parking Area Dimensions
+Table 16.114-15 Minimum Bicycle Parking Requirements
+Minimum Bicycle Parking Requirements
+Use Categories  Specific Uses  Minimum Bicycle Parking
+A. Residential Categories
+1. Single-Family Dwelling Single-family Detached/Attached
+Not Applicable
+Duplex, Triplex, Fourplex
+Residential Care
+Manufactured Home
+Mobile Home
+2. Dwelling, multi/Group Living Studio/1 Bedroom 1 space per unit.
+2 or more Bedrooms 1 space per unit.
+B. Commercial Categories:
+1. Retail Sales and Service Retail, Personal Service, Repair
+1 space per 2,500 square feet of floor area, or 2 spaces minimum.
+Retail, Repair Large Merchandise such as
+Home Appliances, Furniture
+Restaurants, Health clubs, meeting rooms
+Motel 1 space per 10 rooms, or 2 spaces minimum
+Theater
+1 covered space for every 20 seats, or 1 space per 20 persons allowed by Building
+Code.
+2. Office Professional Government 1 space per 2,500 square feet of floor area, or 2 spaces minimum Medical, Dental
+3. Automotive Vehicle Repair 2 covered spaces.
+Quick Vehicle Service, Car Wash
+C. Institutional Categories:
+1. Public Safety Facilities 1 space per 4,000 sq. ft., or 2 spaces minimum.
+2. Community Parks and Open Space, Meeting Recreation Halls, Recreation Buildings
+2 spaces within 50 feet of each developed playground, ball field, and shelter; or a minimum of 8 spaces per park.
+3. Schools Grades K-12 4 per classroom for grades 4—12.
+4. Religious assembly
+1 covered space for every 20 seats, or 1 space per 20 persons allowed by Building
+Code in the main assembly room.
+5. Utilities 1 space per 4,000 sq. ft., or 2 spaces minimum.
+2. Bicycle parking shall be located no more than fifty feet from a primary entrance in the closest available area to the primary entrance as determined by the decision-making authority.
+3. Bicycle parking facility design.
+a. Bicycle parking facilities shall either be lockable enclosures in which the bicycle is stored, or secure stationary rack which supports the frame so the bicycle cannot easily be pushed or fall to one side.
+Racks that require a user-supplied lock shall accommodate locking the frame and both wheels using either a cable or U-shaped lock.
+b. Bicycle parking spaces shall be at least six feet long and two and one-half feet wide, and overhead clearance in covered spaces shall be a minimum of seven feet.
+c. A five-foot aisle for bicycle maneuvering shall be provided and maintained beside or between each row of bicycle parking.
+d. Bicycle racks or lockers shall be securely anchored.
+e. Required bicycle parking shall be located in a well-lit secure location within fifty feet of an entrance to the building, but not farther from the entrance of the building than the closest standard or compact vehicle parking space.
+f. Bicycle parking shall not obstruct walkways.
+A minimum five-foot-wide aisle shall remain clear.
+g. If ten or more bicycle spaces are required for commercial or institutional developments, then at least fifty percent of the bicycle spaces must be
+sheltered under an eave, overhang, independent structure, or similar cover.
+A lockable enclosure shall be considered as a covered parking space.
+h. All of the required bicycle parking for residential uses shall be covered.
+This may include space provided in a carport or garage.
+(Ord. No. 2023-04, § 1(Exh.
+A), 10-18-2023; Ord.
+No. O-2024-01, § 1(Exh.
+A), 12-18-2024)

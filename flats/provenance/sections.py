@@ -40,13 +40,15 @@ standing on the old text without changing a word of what they quote
 Three limits, each the conservative direction:
 
 *Only a heading the rule names cuts.* A jurisdiction's heading form is written
-in ``flats/config/sections.yaml``; a document in which it finds no heading is
-not split at all.
+in ``flats/config/sections.yaml``; a document in which it finds no heading, or
+that the rule names under ``uncut``, is not split at all.
 
 *The contents list is not code.* Lines above the first real heading that are
 the chapter's own list of headings are left in the proof copy and in no
-section. Lines above it that are code text -- a slice that opened mid-section
--- must be named to a section in the rule, or the split refuses.
+section, and so are a cover, chapter title or compiler's preface when the rule
+names the document under ``front``. Lines above it that are code text -- a
+slice that opened mid-section -- must be named to a section in the rule, or
+the split refuses.
 
 *A citation that spans two sections stays on the proof copy.* A table row and
 the note that qualifies it are cited together or not at all (the store's own
@@ -96,6 +98,19 @@ class Rule:
     #: A page's header and footer, which the readable text leaves out (only
     #: in the lines just above a page start; see ``readable.py``).
     page_furniture: re.Pattern[str] | None = None
+    #: Documents whose lines above the first heading are a cover, a chapter
+    #: title or a compiler's preface -- not code. Like a contents list they
+    #: stay in the proof copy and in no section.
+    front: frozenset[str] = frozenset()
+    #: Documents left whole: their headings do not take the rule (a section
+    #: whose heading is never printed over its text), so the fetched document
+    #: stays the one a citation names.
+    uncut: frozenset[str] = frozenset()
+    #: Documents served with whole sections out of number order (a web print
+    #: that interleaved two chapters). Allowed only when every heading is also
+    #: in the contents list -- printed exactly twice -- so none is a wrapped
+    #: reference.
+    any_order: frozenset[str] = frozenset()
 
 
 def rules(path: Path = RULES) -> dict[str, Rule]:
@@ -113,6 +128,9 @@ def rules(path: Path = RULES) -> dict[str, Rule]:
             furniture=re.compile(furniture) if furniture else None,
             lead=dict(body.get("lead") or {}),
             page_furniture=re.compile(page) if page else None,
+            front=frozenset(body.get("front") or ()),
+            uncut=frozenset(body.get("uncut") or ()),
+            any_order=frozenset(body.get("any_order") or ()),
         )
     return out
 
@@ -126,8 +144,10 @@ class Section:
 
     @property
     def chapter(self) -> str:
-        """``40.300`` -> ``40``, ``73C.030`` -> ``73C``: the folder it is filed in."""
-        return self.number.split(".", 1)[0]
+        """``40.300`` -> ``40``, ``73C.030`` -> ``73C``, ``16.84.010`` ->
+        ``16.84``: the folder it is filed in -- the number less its last part,
+        so a title-chapter-section code files by chapter, not by title."""
+        return self.number.rsplit(".", 1)[0]
 
     @property
     def file(self) -> str:
@@ -164,7 +184,8 @@ def split(lines: Sequence[str], rule: Rule, doc_id: str) -> list[Section]:
             )
     starts = sorted((where[-1], number) for number, where in seen.items())
     order = [_sortable(number) for _, number in starts]
-    if order != sorted(order):
+    listed = doc_id in rule.any_order and all(len(where) == 2 for where in seen.values())
+    if order != sorted(order) and not listed:
         # A code prints its sections in number order. One out of order is a
         # line that looks like a heading and is not -- a reference wrapped to
         # the start of a line -- and cutting there would split a section.
@@ -185,7 +206,7 @@ def split(lines: Sequence[str], rule: Rule, doc_id: str) -> list[Section]:
         out.insert(0, Section(named, 1, opening))
     else:
         text = [line for line in lines[:opening] if line.strip()]
-        if text and not _is_heading(rule, text[0]):
+        if text and not _is_heading(rule, text[0]) and doc_id not in rule.front:
             raise ProvenanceError(
                 f"{doc_id}: lines 1-{opening} are text above the first heading, "
                 f"not a contents list; name their section under 'lead'"
@@ -537,7 +558,7 @@ def write(store: ProvenanceStore, rule: Rule, *, only: Iterable[str] | None = No
         name = text_file.name
         doc_id = text_file.stem
         proof = f"{rule.layer}/{name}"
-        if chosen is not None and doc_id not in chosen:
+        if (chosen is not None and doc_id not in chosen) or doc_id in rule.uncut:
             continue
         if name not in existing and text_file in flat:
             continue  # a section file of a flat cut, about to be replaced
@@ -695,7 +716,7 @@ _SPAN = r"\d+(?:-L\d+)?"
 def _cited(name: str) -> re.Pattern[str]:
     """A citation of ``name``: the full store path, or the bare file name in prose."""
     return re.compile(
-        rf"(?<![\w./-])(?P<dir>(?:[\w-]+/)*){re.escape(name)}"
+        rf"(?<![\w./-])(?P<dir>(?:[\w.-]+/)*){re.escape(name)}"
         rf"(?P<sep>#|\s)L(?P<spans>{_SPAN}(?:,\s*L{_SPAN})*)"
     )
 

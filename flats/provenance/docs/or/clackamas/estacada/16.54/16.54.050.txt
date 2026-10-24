@@ -1,0 +1,73 @@
+16.54.050 Limitations And Restrictions On Allowed Uses
+
+1 The land uses identified in Table 1, and their accessory uses, are either permitted, permitted under limited circumstances, or prohibited in the manner described in the Table and in the numbered list of table notes below.
+In the event of conflict with the underlying zone, the more restrictive provisions shall control.
+As used in this section, a limited use means a use that is allowed subject to special standards specific to that use.
+
+Table 1: Limitations & Restrictions On Allowed Uses.
+
+Key: P = Use is Permitted; L = Use is allowed under Limited circumstances described under the corresponding number in the list below; N = Use is Not allowed.
+Use Category                                                                                                                                                   RPZ  Approach surface  Direct impact area  Secondary impact area
+Public airport                                                                                                                                                 L    L                 P                   P
+Residential                                                                                                                                                    N    L                 L                   P
+Commercial                                                                                                                                                     N    L                 L                   P
+Industrial                                                                                                                                                     N    L                 P                   P
+Institutional                                                                                                                                                  N    L                 L                   P
+Farm use                                                                                                                                                       P    P                 P                   P
+Roads/parking                                                                                                                                                  L    P                 P                   P
+Utilities                                                                                                                                                      L    L                 L                   L
+Parks/open space                                                                                                                                               L    P                 P                   P
+Athletic field                                                                                                                                                 N    L                 L                   P
+Mining                                                                                                                                                         N    L                 L                   L
+Water impoundment                                                                                                                                              N    N                 N                   N
+Wetland mitigation                                                                                                                                             N    L                 L                   L
+
+Limitations and restrictions on the allowed uses in Table 1 include:
+
+1 No structures shall be allowed within the Runway Protection Zone (RPZ).
+Exceptions shall be made only for structures accessory to airport operations whose location within the RPZ has been approved by the Federal Aviation Administration.
+
+2 In the RPZ, public airport uses are restricted to those uses and facilities that require location in the RPZ.
+
+3 Roads and parking areas are permitted in the RPZ only upon demonstration that there are not practicable alternatives.
+Lights, guardrails, and related accessory structures are prohibited.
+Cost may be considered in determining whether practicable alternatives exist.
+
+4 In the RPZ, utilities, powerlines and pipelines must be underground.
+In approach surfaces and in airport direct and secondary impact areas, the proposed height of utilities shall be coordinated with the airport sponsor and Oregon Department of Aviation.
+
+5 Public assembly facilities are prohibited in the RPZ.
+
+6 Within 10,000 feet from the end of the primary surface of a non-precision instrument runway, and within 50,000 feet from the end of the primary surface of a precision instrument runway.
+
+7 Public assembly facilities may be allowed in an approach surface only if the potential danger to public safety is minimal.
+In determining whether a proposed use is appropriate, consideration shall be given to: proximity to the RPZ; density of people per acre; frequency of use; level of activity at the airport; and other factors relevant to public safety.
+In general, high density uses should not be permitted within airport approach surfaces, and residential structures should be located outside approach surfaces unless no practicable alternatives exist.
+
+8 Residential densities within approach surfaces shall not exceed the following densities:
+
+1 Within 500 feet of the outer edge of the RPZ, 1 unit per acre;
+
+2 Within 500 to 1,500 feet of the outer edge of the RPZ, 2 units per acre;
+
+3 Within 1,500 to 3,000 feet of the outer edge of the RPZ, 4 units per acre.
+
+9 Mining operations involving the creation or expansion of water impoundments shall comply with the requirements of this document regarding water impoundments.
+
+10 Water impoundments are prohibited within 5,000 feet from the edge or end of a runway.
+
+11 Wetland Mitigation required for projects located within an approach surface, the airport direct or secondary impact area shall be authorized only upon demonstration, supported by substantial evidence, that it is impracticable to provide mitigation outside of these areas.
+Proposals for wetland mitigation shall be coordinated with the airport sponsor, the Oregon Department of Aviation, the Federal Aviation Administration and the wetland-permitting agencies prior to the issuance of required permits.
+Wetland mitigation shall be designed and located to avoid creating a wildlife hazard or increasing hazardous movements of birds across runway and approach surfaces.
+Conditions shall be imposed as appropriate and necessary to prevent in perpetuity an increase in hazardous bird movements across runway and approach surfaces.
+
+12 Within the transitional surface, residential uses and athletic fields are not permitted.
+
+13 Within the transitional surface, overnight accommodations, such as hotels, motels, hospitals and dormitories, are not permitted.
+
+14 See EMC 16.54.060 prohibiting or regulating water impoundments within 5,000 or 10,000 feet of the end or edge of a runway.
+
+HISTORY
+Adopted by Ord. 2023-007 on 1/8/2024
+Amended by Ord. 2025-013 on 1/26/2026
+

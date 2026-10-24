@@ -1,0 +1,47 @@
+16.84.040 Dimensional and density requirements.
+The dimensional and density requirements for single dwelling residential zones are:
+*Note— Prior Ch. 16.84 derived from Ords. 96-4 and O-99-6.
+Table Dimensional and density requirements for Single Dwelling Residential Zones Dimensional and density requirements
+Zones
+R-9 R-12 R-15 R-24 SF AT
+Dwelling units per acre (minimum) 7.2 9.6 12 19.2 8 12
+Minimum lot size, in square feet
+1 2,400 2,000 5,000 5,000 4,000 5,000
+Minimum lot width, in feet 2 303 28 3 - - 40 40
+Minimum lot depth, in feet 60 60 - - 80 80
+Front yard setback, front yard to residential building, minimum/maximum, in feet
+12/26 10/26 15 15 10 10
+Front yard setback, to porch, minimum/maximum, in feet
+8/20 6/15 15 15 -
+Front yard setback, to garage, minimum, in feet 18 18 15 15 10 -
+Corner lot setback—front yard/side yard, minimum, in feet
+10 10/8 - - -
+Corner lot setback—garage, minimum, in feet 18 18 - - -
+Side yard, interior—minimum, in feet
+4 3 3 - 5 4 5/10 5
+Rear yard—to residential building, minimum, in feet
+6
+10 10 20 20 4 20
+Rear yard—to garage entry on alley, minimum, in feet
+7
+0—6 0—6 20 20 15
+Maximum building height, in feet 35 35 35 45 20 30
+Maximum height, accessory structures and detached accessory dwellings, in feet
+25 25 25 Per 16.176 and
+16.178
+Per 16.176 and
+16.178
+Maximum coverage of buildings and impervious surfaces
+8
+80% 80% 75% 75% 75% 75%
+1 T ownhouse lots may be a minimum of one thousand five hundred square feet.
+2 T ownhouse lots may have a minimum width of twenty feet.
+3 Minimum average lot width, in feet: twenty-four.
+4 For zero-foot setback buildings, set back is zero feet.
+In all cases, zero-foot setback buildings shall either: (1) be attached at the property line; or (2) have a minimum separation of six feet.
+5 Side yard of five feet for a one-story structure, and ten feet for two-story structures. 6 Zero feet for a detached accessory dwelling unit or building less than or equal to eighteen feet in height. 7 Zero—six feet or ≥ eighteen feet to a garage entrance to an alley .
+8 Maximum coverage cannot apply to Cottage Clusters.
+* In addition, building setbacks for each type of structure must comply with the current Oregon Building Code.
+(Ord. O-02-4 § 2 (part), 2002; Ord. No. O-2020-01, § 1(Exh.
+A), 8-19-2020; Ord. No. O-2021-01, § 2(Exh.
+B), 8-18-2021)

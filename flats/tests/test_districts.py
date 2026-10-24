@@ -773,6 +773,15 @@ RULINGS: dict[str, dict[str, str]] = {
             "(ddc.3.site-design L476)."
         ),
     },
+    "or/washington/king-city": {
+        # 2026-10-24: surfaced when KCC was cut into readable sections, which
+        # joined the wrapped sentence that defines it.
+        "LWI": (
+            "not-a-zone: the Local Wetlands Inventory, the wetland map "
+            "16.114.080 protects ('the City's adopted Local Wetlands Inventory "
+            "(LWI)', 16.114.080 L8)."
+        ),
+    },
     "or/washington/cornelius": {
         # 2026-10-01, a worktree draft. Every live district with a use list
         # is a zone block (R-7, R-10, MHP, A-2, C-2, LI, M-1, CMU, CC, CR,

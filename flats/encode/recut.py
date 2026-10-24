@@ -48,7 +48,7 @@ from flats.encode.verify import LOG_PATH as VERIFY_LOG
 from flats.encode.verify import Verification, VerificationLog, fingerprint
 from flats.provenance import pages as page_map
 from flats.provenance.repoint import _citations, config_files
-from flats.provenance.sections import Rule, _spans, addresses, held, rules, write
+from flats.provenance.sections import Rule, _spans, addresses, held, rules, split, write
 from flats.provenance.store import ProvenanceStore, parse_quote
 from flats.rules.loader import CONFIG_ROOT, load_rules
 
@@ -57,7 +57,7 @@ CARRY_DIR = Path(__file__).resolve().parents[2] / "data" / "flats" / "carry"
 
 _SPAN = r"\d+(?:-L\d+)?"
 _CITE = re.compile(
-    rf"(?<![\w./-])(?P<dir>(?:[\w-]+/)*)(?P<name>[\w.-]+\.txt)"
+    rf"(?<![\w./-])(?P<dir>(?:[\w.-]+/)*)(?P<name>[\w.-]+\.txt)"
     rf"(?P<sep>#|\s)L(?P<spans>{_SPAN}(?:,\s*L{_SPAN})*)"
 )
 
@@ -106,10 +106,37 @@ def _signed(layer_id: str, layers: Mapping, paths: set[str]) -> dict[tuple, tupl
     return out
 
 
+def first_cut(store: ProvenanceStore, rule: Rule) -> list[str]:
+    """The fetched documents of a layer that a cut will split for the first time.
+
+    A first cut moves citations off the fetched document itself. To the steps
+    below it is a section file whose every line holds its own line, so the
+    same words-and-pages check, reading carry and re-issue apply.
+    """
+    cut = store.proofs()
+    out = []
+    for file in sorted((store.root / rule.layer).glob("*.txt")):
+        proof = f"{rule.layer}/{file.name}"
+        if proof in cut or file.stem in rule.uncut or store.part_of(proof) is not None:
+            continue
+        if split(store.load(proof).text.splitlines(), rule, file.stem):
+            out.append(proof)
+    return out
+
+
+def _proof_of(store: ProvenanceStore, path: str) -> str:
+    part = store.part_of(path)
+    return part.proof if part is not None else path
+
+
 def snapshot(store: ProvenanceStore, layer_id: str, known: Mapping[str, Rule] | None = None) -> Before:
     parts = {p: part for p, part in store.parts().items() if part.layer == layer_id}
     text = {p: store.text_path(p).read_text(encoding="utf-8").splitlines() for p in parts}
     where = {p: held(store, p, known) for p in parts}
+    rule = (known if known is not None else rules()).get(layer_id)
+    for proof in first_cut(store, rule) if rule is not None else ():
+        text[proof] = store.load(proof).text.splitlines()
+        where[proof] = [(k,) for k in range(1, len(text[proof]) + 1)]
     layers = load_rules()
     cards = {}
     for card in worklist.cards(layers[layer_id], store):
@@ -122,9 +149,9 @@ def snapshot(store: ProvenanceStore, layer_id: str, known: Mapping[str, Rule] | 
         layer=layer_id,
         text=text,
         held=where,
-        pages={p: page_map.read(store, p) for p in parts},
+        pages={p: page_map.read(store, p) for p in text},
         cards=cards,
-        signed=_signed(layer_id, layers, set(parts)),
+        signed=_signed(layer_id, layers, set(text)),
     )
 
 
@@ -144,7 +171,7 @@ def _move_citations(
     known: Mapping[str, Rule] | None = None,
 ) -> tuple[list[tuple[Path, str, str]], list[tuple[Path, str, str]]]:
     by_name = {p.rsplit("/", 1)[-1]: p for p in before.text}
-    proof_of = {p: store.part_of(p).proof for p in before.text}  # type: ignore[union-attr]
+    proof_of = {p: _proof_of(store, p) for p in before.text}
     after = {proof: addresses(store, proof, known) for proof in set(proof_of.values())}
     moved: list[tuple[Path, str, str]] = []
     refused: list[tuple[Path, str, str]] = []
@@ -209,7 +236,7 @@ def _carry_readings(
 ) -> tuple[list[str], list[tuple[str, str]]]:
     layers = load_rules()
     layer = layers[layer_id]
-    proofs = {store.part_of(p).proof for p in before.text}  # type: ignore[union-attr]
+    proofs = {_proof_of(store, p) for p in before.text}
     # Proof-copy line numbers repeat across proof copies, but a section file
     # belongs to one, so (section file, line) -> its proof lines is unambiguous.
     raw_of: dict[tuple[str, int], set[int]] = {}
@@ -359,6 +386,9 @@ def recut(
             for p, data in saved.items():
                 p.parent.mkdir(parents=True, exist_ok=True)
                 p.write_bytes(data)
+            for p in sorted(directory.rglob("*"), reverse=True):
+                if p.is_dir() and not any(p.iterdir()):
+                    p.rmdir()  # a chapter folder the dry run made
     return report
 
 

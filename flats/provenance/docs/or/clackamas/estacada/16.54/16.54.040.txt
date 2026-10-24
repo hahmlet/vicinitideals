@@ -1,0 +1,39 @@
+16.54.040 Land Use And Building Application Requirements
+
+1 An applicant seeking a land use or limited land use approval, such as a structural building permit, in an area within this overlay zone shall provide the following information in addition to any other information required in the permit application:
+
+1 A map or drawing showing the location of the property in relation to the airport imaginary surfaces.
+The City shall provide the applicant with appropriate base maps upon which to locate the property.
+
+2 Elevation profiles and a site plan, both drawn to scale, including the location and height of all existing and proposed structures, measured in feet above ground level (AGL).
+
+3 If a height variance is requested, letters of support from the airport sponsor, the Oregon Department of Aviation and the Federal Aviation Administration.
+
+4 Other information or materials necessary to demonstrate compliance with or exemption from the following requirements:
+
+1 Noise. Within airport noise impact boundaries, land uses shall be established consistent with the levels identified in OAR 660, Division 13, Exhibit 5.
+A declaration of anticipated noise levels shall be attached to any subdivision or partition approval or other land use approval or building permit affecting land within airport noise impact boundaries.
+Noise levels shall be measured in Ldn, or Day Night Average Sound Level, which is the average sound level over a 24-hour period, with a 10 decibel (dB) penalty added for noise during the nighttime hours of 22:00 to 07:00.
+
+1 In areas where the noise level is anticipated to be at or above 55 Ldn, prior to issuance of a building permit for construction of a noise sensitive land use (real property normally used for sleeping or as a school, church, hospital, public library or similar use), the permit applicant shall be required to demonstrate that a noise abatement strategy will be incorporated into the building design that will achieve an indoor noise level equal to or less than 55 Ldn.
+
+2 Outdoor Lighting.
+No new or expanded industrial, commercial, residential, or recreational use shall project lighting directly onto an existing runway or taxiway or into existing airport approach surfaces except where necessary for safe and convenient air travel.
+Lighting for these uses shall incorporate shielding in their designs to reflect light away from airport approach surfaces.
+No use shall imitate airport lighting or impede the ability of pilots to distinguish between airport lighting and other lighting.
+
+3 Glare. No glare producing material, including but not limited to unpainted metal or reflective glass, shall be used on the exterior of structures located within an approach surface or on nearby lands where glare could impede a pilot's vision.
+
+4 Industrial Emissions.
+No new industrial, mining or similar use, or expansion of an existing industrial, mining or similar use, shall, as part of its regular operations, cause emissions of smoke, dust or steam that could obscure visibility within airport approach surfaces, except upon demonstration, supported by substantial evidence, that mitigation measures imposed as approval conditions will reduce the potential for safety risk or incompatibility with airport operations to an insignificant level.
+The review authority shall impose such conditions as necessary to ensure that the use does not obscure visibility.
+
+5 Communications Facilities and Electrical Interference.
+No use shall cause or create electrical interference with navigational signals or radio communications between an airport and aircraft.
+Proposals for the location of new or expanded radio, radiotelephone, and television transmission facilities and electrical transmission lines within this overlay zone shall be coordinated with the Oregon Department of Aviation and the Federal Aviation Administration prior to approval.
+Approval of cellular and other telephone or radio communication towers on leased property located within airport imaginary surfaces shall be conditioned to require their removal within 90 days following the expiration of the lease agreement.
+A bond or other security shall be required to ensure this result.
+
+HISTORY
+Adopted by Ord. 2023-007 on 1/8/2024
+

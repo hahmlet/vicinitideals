@@ -1,0 +1,10 @@
+2.2     Zoning Map.
+The Zoning Map appended to this Code is a graphical depiction of the general location of the City’s zoning districts.
+
+2.2.1   Zone Boundary.
+The boundary between different zoning districts on the map is:
+
+2.2.1.1          The centerline of the street when the district boundary aligns with a street;
+
+2.2.1.2          The lot line when the district boundary aligns with an approximate boundary of an existing lot.
+

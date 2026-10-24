@@ -1,5 +1,5 @@
 {
-  "digest": "6054ae7f11b49c93be5a398dd1aa76868f3cc755a3db1a24b895c1c72cf34c58",
+  "digest": "7aeeae9cfb573321f283595a7d566df77564a0c72559a6982adc87bf0fdccb28",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -23,7 +23,7 @@
       "gaps": []
     },
     "or/clackamas/estacada": {
-      "section_unread": 3,
+      "section_unread": 0,
       "misattributed": [],
       "label": "Estacada",
       "counts": {},
@@ -482,8 +482,17 @@
       "gaps": []
     },
     "or/washington/durham": {
-      "section_unread": 1,
-      "misattributed": [],
+      "section_unread": 0,
+      "misattributed": [
+        {
+          "zone": "SDR",
+          "field": "min_frontage_ft [unit_lots]",
+          "claimed": "7.12.8",
+          "found": "3.1",
+          "quote": "or/washington/durham/3/3.1.txt#L19",
+          "kind": "heading_other_file"
+        }
+      ],
       "label": "Durham",
       "counts": {},
       "gaps": []
@@ -538,16 +547,7 @@
     },
     "or/washington/king-city": {
       "section_unread": 0,
-      "misattributed": [
-        {
-          "zone": "(defaults)",
-          "field": "parking_front_prohibited",
-          "claimed": "16.114.130",
-          "found": "16.114.120",
-          "quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2612,L2624-L2625",
-          "kind": "heading_same_file"
-        }
-      ],
+      "misattributed": [],
       "label": "King City",
       "counts": {},
       "gaps": []

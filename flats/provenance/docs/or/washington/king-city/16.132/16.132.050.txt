@@ -1,0 +1,30 @@
+16.132.050 Parking dimensional standards.
+A. Table of Standards.
+1. Minimum standards for a standard parking stall's length and width, aisle width, and maneuvering space shall be determined from the following table.
+Dimensions for designated compact spaces are noted in parenthesis:
+Angle from Curb  A  B  C  D
+Stall Width Channel Width Aisle Width Curb Length per Stall
+Parallel 9
+0� 9 0 � 12 0� 23  0 �
+(8  6 � ) (8  6� ) (12  0� ) (20  0 � )
+30 9  0� 16  10 � 12 0� 18  0 �
+(8  6 � ) (14  10 � ) (12  0� ) (17  0 � )
+45 9  0� 19  1 � 14 0� 12  9 �
+(8  6 � ) (16  7� ) (14  0� ) (12  0 � )
+60 9  0� 20  1 � 18 0� 10  5 �
+(8  6 � ) (17  3� ) (18  0� ) (10  3 � )
+90 9  0� 18  0 � 24 0� 9  0 �
+(8  6 � ) (15  0� ) (24  0� ) (8  6� )
+
+2. Sample Illustration.
+3. The width of each parking space includes a four-inch wide stripe which separates each space.
+B. Aisle Width.
+1. Aisles accommodating two direction traffic, or allowing access from both ends shall be twenty-four feet in width.
+C. Angle Parking.
+1. Angle parking is permitted; provided, that each space contains a rectangle of not less than nine feet in width and eighteen feet in length or eight and one-half feet in width and fifteen feet in length for compact spaces, and an appropriate aisle width as determined by interpolation of the table in Section 18.106.050.B.
+D. Compact Parking.
+The compact parking spaces described in this title shall not be used to satisfy no more than fifty percent of the total required number of parking spaces.
+(Ord. 96-4 § 1
+(part), 1996)
+(Ord. No. O-2024-01, § 1(Exh.
+A), 12-18-2024)

@@ -88,3 +88,34 @@ def test_a_bare_name_in_another_citys_file_is_not_this_citys(tmp_path) -> None:
     moved, refused = _move_citations(store, before, [other], set(), write_files=True, known=KNOWN)
     assert (moved, refused) == ([], [])
     assert other.read_text(encoding="utf-8") == "note: see 40.100.txt L3\n"
+
+
+def test_a_first_cut_moves_citations_off_the_fetched_document(tmp_path) -> None:
+    """Durham, Rivergrove, King City and Estacada were cut for the first time
+    on 2026-10-24: their citations named the fetched chapter itself. To the
+    move it is a file whose every line holds its own line."""
+    from flats.encode.recut import first_cut
+
+    store = ProvenanceStore(tmp_path / "docs")
+    proof = f"{LAYER}/40.res.txt"
+    store.save(proof, url="https://example.test/code.pdf",
+               text="\n".join(CHAPTER) + "\n", retrieved=date(2026, 10, 23))
+    assert first_cut(store, RULE) == [proof]
+    before = Before(
+        layer=LAYER,
+        text={proof: list(CHAPTER)},
+        held={proof: [(k,) for k in range(1, len(CHAPTER) + 1)]},
+        pages={proof: page_map.read(store, proof)},
+        cards={},
+        signed={},
+    )
+    write(store, RULE)
+    assert first_cut(store, RULE) == []
+    rules = tmp_path / "town.yaml"
+    rules.write_text(f'a: "{proof}#L3"\nb: "{proof}#L2,L5"\n', encoding="utf-8")
+    moved, refused = _move_citations(store, before, [rules], {rules}, write_files=True, known=KNOWN)
+    assert {(a, b) for _, a, b in moved} == {(f"{proof}#L3", f"{S100}#L2")}
+    assert [cite for _, cite, _ in refused] == [f"{proof}#L2,L5"]
+    text = rules.read_text(encoding="utf-8")
+    assert f'a: "{S100}#L2"' in text
+    assert f'b: "{proof}#L2,L5"' in text  # spans two sections: left where it was

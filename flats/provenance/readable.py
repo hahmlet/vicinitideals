@@ -213,7 +213,26 @@ def _carries_on(upper: str, lower: str, heading: re.Pattern[str] | None) -> bool
     ended = re.search(r"[.:;]$", upper) is not None
     if re.match(r"\s*[a-z]", lower) and not ended:
         return True
+    if _table_row(upper) or _table_row(lower):
+        # A row of a space-set table runs to the margin because its columns
+        # do, not because its sentence does: joining rows makes one line of a
+        # whole table.
+        return False
     return len(upper) >= WIDTH and not (ended and re.match(r"\s*[A-Z(]", lower))
+
+
+#: Two cells of a row set apart by spaces, as an extraction prints columns.
+_COLUMNS = re.compile(r"\S {3,}\S")
+
+
+def _table_row(line: str) -> bool:
+    """Whether a printed line is a row of columns.
+
+    Its first word is left out: "10.3.5           As to ..." is a numbered
+    item, its number spaced off the text, not a table.
+    """
+    body = re.sub(r"^\S+\s+", "", line.strip(), count=1)
+    return _COLUMNS.search(body) is not None
 
 
 def _sentences(chars: list[_Char]) -> list[list[_Char]]:
@@ -276,7 +295,15 @@ def clean(
         text = lines[n - 1]
         chars = _line_chars(text, n, words)
         joined = False
-        if previous is not None and paragraphs and not crosses(previous, n) and text.strip():
+        # An empty printed line ends its paragraph: nothing joins onto it (the
+        # words would land in a paragraph that prints as an empty line).
+        if (
+            previous is not None
+            and paragraphs
+            and not crosses(previous, n)
+            and text.strip()
+            and lines[previous - 1].strip()
+        ):
             upper = lines[previous - 1]
             last = paragraphs[-1]
             broken = _broken_word(upper, text) if upper.strip() else None

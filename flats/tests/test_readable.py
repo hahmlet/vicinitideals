@@ -94,3 +94,37 @@ def test_align_walks_a_stored_text_back_to_its_printed_lines() -> None:
     # a word that is not the extraction's, or a word left out, does not
     assert align(lines, ["TDC 40.100. Purpose.", "Something else."], breaks=[5], furniture=FURNITURE) is None
     assert align(lines, stored[:2], breaks=[5], furniture=FURNITURE) is None
+
+
+def test_nothing_joins_onto_an_empty_printed_line() -> None:
+    """Durham 5.5: a lower-case line after a blank one was joined onto the
+    blank paragraph, and its words printed as an empty line."""
+    lines = ["5.5 Trees.", "", "and the trees shall be kept."]
+    got = clean(lines)
+    assert got.lines[-1] == "and the trees shall be kept."
+    _same(lines, got)
+
+
+def test_rows_of_a_space_set_table_are_never_joined() -> None:
+    """Estacada 16.116.030 and Durham 9.10 print tables as columns set apart
+    by spaces. A row runs to the margin because its columns do; joining on
+    width made one line of a whole table."""
+    lines = [
+        "Major collector (standard)                2 (12' each)             600 ft             200 ft",
+        "Minor collector (standard)                2 (11' each)             300 ft             100 ft",
+    ]
+    got = clean(lines)
+    assert got.lines == tuple(lines)
+    _same(lines, got)
+
+
+def test_a_numbered_item_spaced_off_its_text_still_wraps() -> None:
+    """Durham sets a subsection number apart from its text with spaces. That
+    is not a table: the item still joins the line it wraps onto."""
+    lines = [
+        "10.3.5           As to the conditions of approval, the city may require that the applicant of",
+        "Durham record the decision.",
+    ]
+    got = clean(lines)
+    assert len(got.lines) == 1
+    _same(lines, got)

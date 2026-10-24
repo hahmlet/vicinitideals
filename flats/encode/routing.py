@@ -356,6 +356,15 @@ def redirects(layer: Layer, store: ProvenanceStore | None = None) -> list[Routin
                 # home sends nobody anywhere.
                 if _is_followed(ref, {section}) or section.startswith(f"{ref}."):
                     continue
+                # "3.1.9.5 The fee in lieu shall be ..." -- a subsection's own
+                # number, opening its line inside its section's file, labels
+                # the line; it points nowhere. (Before a code was cut, the
+                # heading guess made such a line its own section and the
+                # guard above caught it.)
+                if ref.startswith(f"{section}.") and re.match(
+                    rf"\s*{re.escape(ref)}\.?\s", line
+                ):
+                    continue
                 followed = _is_followed(ref, read) or any(
                     _within(s, lo, hi)
                     for lo, hi in _spans(line)

@@ -1,0 +1,56 @@
+3.3     Site Design in the MDDO District.
+The purpose of the MDDO district is to allow a site design that includes density and height bonuses that in turn allow a variety of housing types and to provide incentives for high quality multi-dwelling development that includes additional amenities for the residents.
+
+3.3.1   Setbacks for a development abutting the major arterials (as identified in the Comprehensive Land Use Plan) of SW Boones Ferry Road or SW Lower Boones Ferry Road may be reduced to zero if the subject property does not abut a single dwelling residential district and if the City has allowed reduced front setbacks on adjacent properties.
+
+3.3.2   The City may permit reduced front setbacks for a development abutting those major arterials that is adjacent to another development for which the City has permitted reduced front setbacks so as to provide visual continuity as seen from the right of way and to allow a transition to the setbacks of structures on properties already developed.
+
+3.3.3   For a development that comprises multiple parcels, the City may allow setbacks from lot lines internal to a development to be reduced to zero when adjacent to another parcel with reduced front setbacks and when not abutting an SDR district.
+
+3.3.4   Density and height bonuses may be allowed for a development within the MDDO District up to 44 extra units (thus up to 60 units per gross acre) for a site abutting SW Boones Ferry Road or SW Lower Boones Ferry Road and up to 16 extra units (thus up to 32 units per gross acre) for a site not abutting either street.
+The design features that qualify a Planned Residential
+
+Development in the MDDO District for specified density and height bonuses are listed in Table 3.3.5.
+The design features listed in that table are defined as follows:
+
+3.3.4.1           “Durable materials” means (the use of) proven exterior materials such as cementitious brick, wood, metal and composites.
+
+3.3.4.2           “Ecologically sensitive and sustainable practices” means either LEED certification for the development or a minimum of 4 of the following, (* = as are further defined by the current version of the LEED program or by a similar, objective industry standard):
+
+3.3.4.2.1        *Energy and atmosphere aspects
+
+3.3.4.2.2        *Indoor environmental quality aspects
+
+3.3.4.2.3        *Innovation and design
+
+3.3.4.2.4        *Materials and resources aspects
+
+3.3.4.2.5        *Sustainable site aspects
+
+3.3.4.2.6        *Water efficiency aspects
+
+3.3.4.2.7        Bicycle parking that is secure and covered in a minimum amount of .75 space per dwelling unit
+
+3.3.4.2.8        Pedestrian connections to any major public transit facility that is within 2000 feet of the site of the development
+
+3.3.4.3           “Horizontal and vertical facade articulation” means a change of materials, color, texture, pattern or structural expression, bays and recesses, varied window form or detail, breaks in building or roof elevation, use of a belt course or signage band and so forth to provide visual interest, create a human scale, and to reduce the apparent bulk of large structures or facades by breaking them down into smaller components.
+
+3.3.4.4           “Multi-level structured parking” means above or below grade, concrete or steel constructed parking for at least 90% of the total of housing units.
+
+3.3.4.5           “Private open space” means that at least half of the housing units in a development have front or rear patios or decks (on the ground floor) or balconies or porches (on upper floors) of at least 40 square feet each, oriented towards common open space and away from adjacent single dwellings, trash receptacles, parking and driveways to the greatest extent practicable.
+
+3.3.4.6           “Property Operations” means the use of professional on-site management and leasing companies, experienced with Class A multi-unit residential properties with 200 or more units, to operate the development.
+
+3.3.4.7           “Roof lines” means such features as dormers, varied gables, articulated or significant eaves, roof plane offsets, varied parapets, multiple roof lines and so forth to create visual interest, and the screening of rooftop mechanical equipment from ground level view.
+
+3.3.4.8           “Security provisions” means pre-wiring for individual security systems in ground floor dwelling units and gated structured parking entries.
+
+Table 3.3.5 - MDDO  Design Features - Allowable Density and Height Bonus (Density In Additional Units Per Gross Acre, Additional Height in Feet)
+Durable Material                                      2D, 1H
+Ecological Practices                                     6D, 5H
+Horizontal/Vertical Facade Articulation                             3D, 1H
+Multi-Level Structured Parking                               30D, 15H
+Private Open Space                                      2D, 2H
+Property Operations                                     4D, 2H
+Roof Form                                          2D, 1H
+Security Provisions                                     6D, 3H

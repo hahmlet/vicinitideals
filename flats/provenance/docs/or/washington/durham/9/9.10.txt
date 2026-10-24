@@ -1,0 +1,107 @@
+9.10    Legislative (Type 4) Process.
+Type 4 is a process by which a person may apply for, or the City Council on its own motion may initiate, an addition or amendment or revision to the provisions of this Code (a “text amendment”) or to the zoning map attached to and incorporated into this Code (a rezone or “map amendment”), an addition or amendment to the comprehensive land use plan, or a combination of any of those applications.
+Type 4 is a legislative process and in some cases does not require a decision or a decision within a stated time.
+
+9.10.1  The City shall determine whether a private application for a text or map amendment requires a quasi-judicial or a legislative review and decision process at the start of that process.
+A quasi-judicial review and decision process requires a Type 3 process.
+
+9.10.2  The City Council shall decide a Type 4 process but the City Council may delegate any or all hearing(s) held as part of a Type 4 process to the Planning Commission.
+
+9.10.2.1         The City Council has discretion to make no decision on a Type 4 application unless the proposed text or map amendment is necessary to address the requirements of a new or amended statewide planning goal or other OAR or statute.
+
+9.10.2.2         A new provision or an amendment to this Code or to the zoning map or to the Comprehensive Land Use Plan shall be enacted as an ordinance.
+
+9.10.3  Notice of hearing to consider a Type 4 decision shall be sent to:
+
+9.10.3.1         the Department of Land Conservation and Development (DLCD) at least 35 days prior to the first public hearing on the application, or, in the case where a public hearing is not
+
+required as per OAR 660-018-0020(4), at least 35 days before the proposed changes is adopted, as required by ORS 197.610 (as amended and renumbered from time to time);
+
+9.10.3.2         all owners of property affected by the application, with the notice of potential effect on property value required by ORS 227.186, if applicable;
+
+9.10.3.3         all public agencies providing transportation facilities and services within the City, to Metro and to the Oregon Department of Transportation (ODOT); and,
+
+9.10.3.4         the general public, in the form of the published notice of the Planning Commission or City Council, or both, as required by Oregon public meetings law.
+
+9.10.4           Notice of hearing to consider a Type 4 decision shall include:
+
+9.10.4.1         the date, time and place of the first evidentiary hearing;
+
+9.10.4.2         the nature of the application and the result sought;
+
+9.10.4.3         the text of the proposed amendment and any supplemental information that the City believes necessary to inform those persons entitled to notice of hearing as to the effect of the proposal; and,
+
+9.10.4.4         a description of the properties or area affected by the application.
+
+9.10.5  The criteria for approval of a Type 4 application are:
+
+9.10.5.1         whether the amendment is consistent with provisions of the City’s comprehensive land use plan and with other provisions of this Code;
+
+9.10.5.2         whether the amendment is required by and is consistent with any provisions of federal, state and local law (including the statewide planning goals and other OAR, Metro Code, CWS Resolutions and Orders) that the City has identified as applicable to the amendment;
+
+9.10.5.3         whether the property affected by the amendment has, or whether there are adequate provisions by which the property will have, adequate public facilities to support the land uses that will be allowed on the property if the amendment is approved; and,
+
+9.10.5.4         whether adoption of the amendment, with or without such conditions as the City Council may deem necessary or desirable, promotes the public health, safety and welfare.
+
+9.10.6  Notice of a Type 4 decision shall include:
+
+9.10.6.1         the adopted text or adopted graphic of the text or map amendment, respectively, or both, together with the findings adopted by the City Council;
+
+9.10.6.2         a brief description of the action taken by the City and the factual basis on which the City made the decision;
+
+9.10.6.3         the date of decision;
+
+9.10.6.4         if delivered by mail, a certificate of mailing signed by the person mailing the notice, indicating the date the notice was deposited in the mail;
+
+9.10.6.5         the time(s) and place where the adopted amendment or new regulation may be reviewed; and,
+
+9.10.6.6         a statement that the City Council’s decision may be appealed to LUBA if notice of intent to appeal is filed with LUBA within 21 days from the date of notice of the City’s decision and as provided for in ORS 197.830.
+
+9.10.6.7         The notice shall specify the changes if any in the adopted amendment or new regulation compared to the version that was sent with the notice of hearing.
+
+9.10.7  Notice of a Type 4 decision shall be sent to:
+
+9.10.7.1         the applicant, if a person other than the City initiated the process;
+
+9.10.7.2         the owners of all property that may be affected by the decision;
+
+9.10.7.3         all persons who appeared orally or in writing in the decision process;
+
+9.10.7.4         all persons who requested in writing that the person receive such notice; and,
+
+9.10.7.5         the DLCD Director.
+
+9.10.8  Notice of a Type 4 decision shall be sent to those entitled to notice of decision not later than five working days after the City’s final decision.
+9.10.9  Table of Applications, Process and Code References.
+The list is not all-inclusive and is for convenience only.
+Applications with mixed elements shall be reviewed by the highest process applicable to any one element.
+
+Table 9.10.9 Application, Process Type, Code Reference
+Application                          Type       Code Chapter / Section
+Accessory Dwelling                          1                Section 7.1
+Adjustment                             1               Section 10.2
+Appeal to City Council                       3                Section 9.9
+Business Park Development                        3               Section 2.13
+Conditional Use                           3             Sections 2.4, 4.7
+Density Transfer                          3                Section 7.8
+Flood Plain Use                          1                Section 7.2
+Home Occupation                            1                Section 7.3
+Live-Work Residence                          3                Section 7.4
+Lot Legalization                         1                Section 8.5
+Major Modification to a Conditional Use                 3                Section 2.4
+MDDO Development                            3               Section 2.10
+MDR Development                            2                Section 2.9
+Partition or Subdivision                      2                Section 8.2
+Property Line Adjustment                       1                Section 8.4
+Religious Land Use                         3                Section 7.6
+Rezone                            3 or 4         Sections 4.8, 4.10
+Sign Permit                        1, 2, or 3            Chapter 6
+Site Design                            2                 Chapter 3
+Temporary Use                            1                Section 7.7
+Text Amendment                          3 or 4         Sections 4.9, 4.10
+Time Extension                         1 or 2            Section 11.3
+Tree Cut Permit                        1 or 2              Chapter 5
+Variance                             3               Section 10.3
+Wireless Communication Facility                     3               Section 7.10
+
+10

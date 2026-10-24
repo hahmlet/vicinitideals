@@ -1,0 +1,49 @@
+5.5     Tree Removal Requirements.
+5.5.1   An application that contemplates removing a tree or trees as further identified in Section 5.2 of this Chapter shall include a report identifying the following:
+
+5.5.1.1          An inventory of all trees on the subject lot or parcel listing all of the following:
+
+5.5.1.1.1        An assigned number for each tree;
+
+5.5.1.1.2        The tree type or common name, genus, and species for each tree;
+
+5.5.1.1.3        DBH for each tree; and
+
+5.5.1.1.4        For each tree, whether that tree is proposed to be preserved or removed.
+
+5.5.1.2          A Tree Preservation Plan, prepared by the Project Arborist, that consists of the following:
+
+5.5.1.2.1        A map drawn to scale of the subject lot or parcel and any lots or parcels resulting from a land division, indicating the location, size, species, and tag identification number for all trees on-site.
+Trees proposed for preservation and trees proposed for removal must be clearly labeled on the map, as well as all existing and proposed public and private improvements and or easement(s);
+
+5.5.1.2.2        A tree assessment report prepared by the Project Arborist that includes an inventory of trees proposed for preservation and removal, indicating species, condition, diameter DBH, estimated canopy square footage, and likelihood of survival in light of the development proposed; and
+
+5.5.1.2.3        The specific steps that the Applicant will take for tree preservation and protection during all phases of construction, including, but not limited to, excavation, grading, filling, cutting, augering, trenching, digging, tree repair and removal, pruning and structural support, fertilization, and aeration.
+
+5.5.1.2.4        The proposed mitigation plan demonstrating compliance with Section 5.7.
+
+5.5.1.3          Demonstration of compliance with one of the following tree preservation requirements:
+
+5.5.1.3.1        Percentage Compliance.
+
+5.5.1.3.1.1      At least 20% of all trees on the subject lot or parcel must be preserved, excluding any dead or declining tree or any hazard tree; AND
+
+5.5.1.3.1.2      At least 40% of the subject lot’s or parcel’s existing canopy coverage must
+
+be preserved; AND
+
+5.5.1.3.1.3      The preserved trees must be dispersed across at least 50% of the distribution area (see definitions).
+
+5.5.1.3.2        Discretionary Compliance.
+If an applicant under this Section is unable to comply with the requirements of 5.5.1.3.1, then the applicant must submit a written narrative and supporting information demonstrating that compliance with either one or both of these subsections is not possible and that removing more trees than allowed by these subsections is necessary due to one or more of the following:
+
+5.5.1.3.2.1      Removal is necessary due to existing or proposed utilities that cannot be relocated to an alternative location.
+
+5.5.1.3.2.2       Removal is necessary due to the topography of the subject lot or parcel and the tree(s) is located within or abutting areas of cuts or fills that are deemed threatening to the life of the tree, as determined by the Project Arborist.
+
+5.5.2    Applicant’s payment of any tree removal application fee established via resolution.
+
+5.5.3    The removal of trees under this Section shall be subject to mitigation under Section 5.7.
+
+5.5.4    The city will deny any application contemplated in Section 5.2 unless the applicant submits all materials identified in this Section 5.5.
+
