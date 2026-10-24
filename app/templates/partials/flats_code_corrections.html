@@ -1,0 +1,35 @@
+{#- The corrections box on a code-library page (Steph 2026-10-24): a reader who
+    sees a word wrong -- split, run together, a letter missing -- says what the
+    page shows and what the code prints. A soft note, fixed in batches; the
+    page does not change until the fix lands. Swapped whole by its own form. -#}
+<div id="code-corrections" class="code-corrections">
+  <details data-corrections{% if logged or error %} open{% endif %}>
+    <summary>Suggest a correction{% if corrections %} <span class="muted">· {{ corrections | length }} waiting</span>{% endif %}</summary>
+    <form hx-post="/ui/flats/code/correction" hx-target="#code-corrections" hx-swap="outerHTML">
+      <input type="hidden" name="document" value="{{ document }}">
+      <input type="hidden" name="line" value="{{ draft.line if draft else '' }}">
+      <div class="muted" style="font-size:11px;margin-bottom:6px">Select the wrong words on the page, then open this box — or type them.</div>
+      <label>Shown here
+        <input type="text" name="shown" maxlength="500" required value="{{ draft.shown if draft else '' }}" placeholder="T able">
+      </label>
+      <label>The code prints
+        <input type="text" name="printed" maxlength="500" required value="{{ draft.printed if draft else '' }}" placeholder="Table">
+      </label>
+      <label>Note <span class="muted">(optional)</span>
+        <input type="text" name="note" maxlength="500" value="{{ draft.note if draft else '' }}">
+      </label>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+        <button type="submit" class="btn btn-primary btn-sm">Log it</button>
+        {% if logged %}<span class="corrections-said" data-logged>Logged. It is fixed in the next batch; the page does not change until then.</span>{% endif %}
+        {% if error %}<span class="corrections-said" data-error style="color:#b91c1c">{{ error }}</span>{% endif %}
+      </div>
+    </form>
+    {% if corrections %}
+    <ul class="corrections-waiting">
+      {% for c in corrections %}
+      <li data-correction>{% if c.line %}<a href="#L{{ c.line }}">line {{ c.line }}</a>: {% endif %}<s>{{ c.shown }}</s> → {{ c.printed }}{% if c.note %} <span class="muted">— {{ c.note }}</span>{% endif %} <span class="muted">· {{ c.reviewer.split("@")[0] }}, {{ c.created_at.strftime("%Y-%m-%d") }}</span></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </details>
+</div>

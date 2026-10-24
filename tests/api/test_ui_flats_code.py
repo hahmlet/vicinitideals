@@ -173,3 +173,43 @@ async def test_raised_marks_are_drawn_raised_and_linked_to_their_note(client, se
     assert page.status_code == 200
     assert re.search(r'<sup class="mark" title="[^"]*"><a href="#L39">1</a></sup>', page.text)
     assert "↩ marked on" in page.text
+
+
+async def test_a_reader_logs_a_correction_and_the_page_lists_it_waiting(client, session):
+    # Steph 2026-10-24: a soft note -- the words as shown and as printed --
+    # logged for a batch fix. The text itself does not change.
+    from sqlalchemy import select
+
+    from app.models.flats import FlatsTextCorrection
+
+    await _login(client, session)
+    before = (await client.get(f"/flats/code/{SECTION}")).text
+    assert "Suggest a correction" in before and "data-correction>" not in before
+    said = await client.post(
+        "/ui/flats/code/correction",
+        data={"document": SECTION, "shown": "T  able", "printed": "Table", "line": "12", "note": "split"},
+    )
+    assert said.status_code == 200
+    assert "data-logged" in said.text and "line 12" in said.text and "<s>T able</s> → Table" in said.text
+    row = (await session.execute(select(FlatsTextCorrection))).scalar_one()
+    assert (row.document, row.line, row.shown, row.printed, row.note) == (SECTION, 12, "T able", "Table", "split")
+    assert row.sha256 == ProvenanceStore().load(SECTION).sha256 and row.fixed_at is None
+    after = (await client.get(f"/flats/code/{SECTION}")).text
+    assert "1 waiting" in after and "<s>T able</s> → Table" in after
+    # the text is untouched
+    assert ProvenanceStore().load(SECTION).sha256 == row.sha256
+
+
+async def test_a_correction_without_both_words_is_handed_back_not_logged(client, session):
+    from sqlalchemy import func, select
+
+    from app.models.flats import FlatsTextCorrection
+
+    await _login(client, session)
+    for data in ({"shown": "thelot", "printed": ""}, {"shown": "lot", "printed": " lot "}):
+        said = await client.post("/ui/flats/code/correction", data={"document": SECTION, "line": "999999", **data})
+        assert said.status_code == 200 and "data-error" in said.text and "data-logged" not in said.text
+        assert f'value="{data["shown"]}"' in said.text  # kept to fix
+    assert (await session.execute(select(func.count()).select_from(FlatsTextCorrection))).scalar() == 0
+    stray = await client.post("/ui/flats/code/correction", data={"document": "../etc/passwd", "shown": "a", "printed": "b"})
+    assert stray.status_code == 404

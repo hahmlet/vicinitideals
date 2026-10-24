@@ -34,14 +34,16 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Any, Sequence
 
-from fastapi import APIRouter, Query, Request
+from fastapi import APIRouter, Form, Query, Request
 from fastapi.responses import HTMLResponse
 from markupsafe import Markup, escape
+from sqlalchemy import select
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
 from app.api.routers.ui_flats import _known_documents, _layers, _page_index, _store
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
+from app.models.flats import FlatsTextCorrection
 from flats.encode import legible
 from flats.encode.readiness import _quoted_parts
 from flats.provenance.marks import Mark
@@ -55,6 +57,10 @@ router = APIRouter(include_in_schema=False)
 #: Matches a search needs before it is cut off. A one-letter query matches
 #: every line of a city's code, and a page of forty thousand rows helps nobody.
 SEARCH_LIMIT = 200
+
+#: Longest words a correction may name. A note is about a word or a phrase;
+#: a paragraph pasted in is a different kind of report.
+CORRECTION_LIMIT = 500
 
 
 @dataclass(frozen=True, slots=True)
@@ -585,5 +591,75 @@ async def flats_code(
     return templates.TemplateResponse(
         request,
         "flats_code_document.html",
-        {**_base_ctx(user, dedup_count, "flats_code", conflicts_count=conflicts_count), **ctx},
+        {
+            **_base_ctx(user, dedup_count, "flats_code", conflicts_count=conflicts_count),
+            **ctx,
+            "corrections": await _corrections(session, path),
+        },
+    )
+
+
+async def _corrections(session: DBSession, document: str) -> list[FlatsTextCorrection]:
+    """The notes waiting on this document's text, oldest first."""
+    rows = await session.execute(
+        select(FlatsTextCorrection)
+        .where(FlatsTextCorrection.document == document, FlatsTextCorrection.fixed_at.is_(None))
+        .order_by(FlatsTextCorrection.created_at, FlatsTextCorrection.id)
+    )
+    return list(rows.scalars())
+
+
+@router.post("/ui/flats/code/correction", response_class=HTMLResponse)
+async def flats_code_correction(
+    request: Request,
+    session: DBSession,
+    document: str = Form(...),
+    shown: str = Form(""),
+    printed: str = Form(""),
+    line: str = Form(""),
+    note: str = Form(""),
+) -> HTMLResponse:
+    """Log one reader's note that the text has words wrong. Changes nothing.
+
+    Returns the corrections box again, the note now among those waiting.
+    """
+    user = await _get_user(session, request)
+    if user is None:
+        return HTMLResponse("sign in first", status_code=401)
+    if document not in _known_documents():
+        return HTMLResponse("no such stored document", status_code=404)
+    shown, printed, note = (" ".join(v.split())[:CORRECTION_LIMIT] for v in (shown, printed, note))
+    error = ""
+    if not shown or not printed:
+        error = "Say both: the words as shown here, and as the code prints them."
+    elif shown == printed:
+        error = "The two are the same — what should change?"
+    doc = await run_in_threadpool(_store().load, document)
+    if not error:
+        count = len(doc.text.splitlines())
+        at = int(line) if line.isdigit() and 1 <= int(line) <= count else None
+        session.add(
+            FlatsTextCorrection(
+                document=document,
+                line=at,
+                sha256=doc.sha256,
+                shown=shown,
+                printed=printed,
+                note=note,
+                reviewer=(user.email or str(user.id))[:80],
+                reviewer_user_id=user.id,
+            )
+        )
+        await session.commit()
+    return templates.TemplateResponse(
+        request,
+        "partials/flats_code_corrections.html",
+        {
+            "document": document,
+            "corrections": await _corrections(session, document),
+            "logged": not error,
+            "error": error,
+            # A note refused is handed back to fix, not lost; 200 so htmx swaps it in.
+            "draft": {"shown": shown, "printed": printed, "note": note, "line": line} if error else {},
+        },
     )

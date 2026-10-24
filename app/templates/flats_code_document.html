@@ -39,6 +39,16 @@
   sup.mark.glued { background:rgba(234,88,12,.15); border-radius:3px; padding:0 1px; }
   .note-back { font-size:11px; color:var(--muted,#64748b); white-space:nowrap; }
   .code-nav { display:flex; justify-content:space-between; gap:10px; margin:14px 0; font-size:13px; }
+  .code-corrections { position:fixed; right:16px; bottom:16px; z-index:20; max-width:min(380px, calc(100vw - 32px));
+    background:var(--card,#fff); border:1px solid var(--line,#cbd5e1); border-radius:8px;
+    box-shadow:0 4px 14px rgba(15,23,42,.15); font-size:13px; }
+  .code-corrections summary { cursor:pointer; padding:7px 12px; font-weight:600; }
+  .code-corrections form { padding:0 12px 10px; }
+  .code-corrections label { display:block; font-size:12px; margin-top:4px; }
+  .code-corrections input[type=text] { width:100%; box-sizing:border-box; font-size:13px; padding:4px 6px; }
+  .corrections-said { font-size:12px; }
+  .corrections-waiting { margin:0; padding:6px 12px 10px 28px; max-height:30vh; overflow-y:auto;
+    border-top:1px solid var(--line,#cbd5e1); font-size:12px; }
 </style>
 
 <div class="topbar"></div>
@@ -148,6 +158,8 @@
 </div>
 </div>
 
+{% include "partials/flats_code_corrections.html" %}
+
 <script>
   // #L12, #L12-L14 and #L4,L7-L8 -- the same fragment a citation carries --
   // light the lines it names and bring the first into view.
@@ -178,6 +190,37 @@
     }
     window.addEventListener("hashchange", mark);
     mark();
+  })();
+
+  // The corrections box opens on the words last selected in the text: they
+  // fill "Shown here" and the line they sit on goes with the note.
+  (function () {
+    var picked = null;
+    document.addEventListener("selectionchange", function () {
+      var sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !sel.anchorNode) return;
+      var el = sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement;
+      if (!el || !el.closest("[data-code-lines]")) return;
+      var words = sel.toString().replace(/\s+/g, " ").trim();
+      if (!words) return;
+      var row = el.closest("[data-line]"), cell = el.closest("[data-lines]");
+      picked = { words: words, line: row ? row.dataset.line : cell ? cell.dataset.lines.split(" ")[0] : "" };
+      var open = document.querySelector("[data-corrections][open]");
+      if (open) fill(open, false);
+    });
+    function fill(box, focus) {
+      var form = box.querySelector("form");
+      form.elements.shown.value = picked.words;
+      form.elements.line.value = picked.line;
+      picked = null;
+      if (focus) form.elements.printed.focus();
+    }
+    // toggle does not bubble; listen on the way down.
+    document.addEventListener("toggle", function (e) {
+      var box = e.target;
+      if (!box.matches || !box.matches("[data-corrections]") || !box.open || !picked) return;
+      fill(box, true);
+    }, true);
   })();
 </script>
 {% endblock %}

@@ -92,3 +92,36 @@ def test_a_footnote_mark_leads_to_its_note(logged_in_page: Page) -> None:
     expect(note).to_have_count(1)
     expect(note.locator(".t")).to_contain_text("New drive-through")
     expect(note.locator(".note-back a").first).to_be_visible()
+
+
+def test_selected_words_open_the_correction_box_filled(logged_in_page: Page) -> None:
+    # Steph 2026-10-24: select the wrong words, open the box, say what the
+    # code prints. Submitted here with nothing to change, so the round trip
+    # is exercised without logging a note on the live queue.
+    page = logged_in_page
+    page.goto(f"/flats/code/{CITY}/40/40.300.txt")
+    word = page.evaluate(
+        """() => {
+            const t = document.querySelector('#L3 .t');
+            const node = [...t.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+            const start = node.textContent.search(/\S/);
+            const end = node.textContent.slice(start).search(/\s|$/) + start;
+            const range = document.createRange();
+            range.setStart(node, start);
+            range.setEnd(node, end);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            return node.textContent.slice(start, end);
+        }"""
+    )
+    assert word
+    box = page.locator("#code-corrections")
+    box.get_by_text("Suggest a correction").click()
+    expect(box.locator('input[name="shown"]')).to_have_value(word)
+    expect(box.locator('input[name="line"]')).to_have_value("3")
+    expect(box.locator('input[name="printed"]')).to_be_focused()
+    box.locator('input[name="printed"]').fill(word)
+    box.get_by_role("button", name="Log it").click()
+    expect(page.locator("#code-corrections [data-error]")).to_contain_text("the same")
+    expect(page.locator("#code-corrections [data-logged]")).to_have_count(0)

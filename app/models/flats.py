@@ -826,6 +826,51 @@ class FlatsDocumentReadthrough(Base):
     )
 
 
+class FlatsTextCorrection(Base):
+    """A reader's note that the readable text has a word wrong, and what it should say.
+
+    The code library (``/flats/code``) shows the text the screen reads. The
+    extraction splits words ('T able'), runs them together ('thelot') and
+    drops letters; a reader who notices says so in place -- the words as
+    shown and the words as printed -- instead of a checker flagging every
+    suspect for review (Steph 2026-10-24). A soft note: it changes nothing.
+    Corrections are fixed in batches, as mends the cleaning makes, and
+    ``fixed_at`` is stamped when one lands.
+
+    ``sha256`` is the text the note was made on, so a note about an edition
+    since replaced can be told apart. Append-only.
+    """
+
+    __tablename__ = "text_corrections"
+    __table_args__ = (
+        Index("ix_flats_text_corrections_document", "document", "created_at"),
+        Index(
+            "ix_flats_text_corrections_open",
+            "created_at",
+            postgresql_where=text("fixed_at IS NULL"),
+        ),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+    document: Mapped[str] = mapped_column(String(500), nullable=False)
+    #: The line the words are on, where the reader's selection named one.
+    line: Mapped[int | None] = mapped_column(Integer)
+    sha256: Mapped[str] = mapped_column(String(64), nullable=False, server_default="")
+    #: The words as the page shows them, and as the code prints them.
+    shown: Mapped[str] = mapped_column(Text, nullable=False)
+    printed: Mapped[str] = mapped_column(Text, nullable=False)
+    note: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+    reviewer: Mapped[str] = mapped_column(String(80), nullable=False)
+    reviewer_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    fixed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class FlatsCrossrefRuling(Base):
     """A reviewer's decision about a chapter the store cannot open.
 
