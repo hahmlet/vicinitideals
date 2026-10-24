@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 import pytest
 from playwright.sync_api import Page, expect
 
@@ -23,13 +25,19 @@ def test_reader_walks_from_the_shelf_to_a_cited_line(logged_in_page: Page) -> No
     expect(page.locator("[data-fingerprint]")).to_contain_text("Fingerprint")
     assert page.locator("tr.page").count() >= 1, "a section on a mapped book shows its pages"
 
-    # A citation's fragment lights the line it names and brings it into view.
-    read = page.locator("tr.read").first
-    line = read.get_attribute("data-line")
+    # 40.300's cited lines are in Table 40-3, drawn as a table. A citation's
+    # fragment lights the cell holding its line and brings it into view, and
+    # opens the printed lines so the line itself is lit too.
+    cell = page.locator(".code-table .read:has(.readers)").first
+    expect(cell).to_be_visible()
+    line = (cell.get_attribute("data-lines") or "").split()[0]
     page.goto(f"{page.url.split('#')[0]}#L{line}")
+    lit = page.locator(f'.code-table [data-lines~="{line}"]').first
+    expect(lit).to_have_class(re.compile(r"\bhit\b"))
+    expect(lit).to_be_in_viewport()
     target = page.locator(f"#L{line}")
     expect(target).to_have_class("read hit")
-    expect(target).to_be_in_viewport()
+    expect(target).to_be_visible()
     expect(target.locator(".readers a").first).to_be_visible()
 
     # Clicking a line number makes that line the citation.
@@ -60,3 +68,12 @@ def test_nested_provisions_are_drawn_indented(logged_in_page: Page) -> None:
     left = lambda el: el.evaluate("e => e.getBoundingClientRect().left + parseFloat(getComputedStyle(e).paddingLeft) + parseFloat(getComputedStyle(e).textIndent)")  # noqa: E731
     assert left(a) > left(two) + 10
     expect(page.locator(".t.history")).to_contain_text("Ord.")
+
+
+def test_a_table_the_check_refused_stays_as_printed_lines(logged_in_page: Page) -> None:
+    page = logged_in_page
+    page.goto(f"/flats/code/{CITY}/40/40.300.txt")
+    expect(page.locator(".code-table")).to_have_count(3)
+    expect(page.locator(".table-held")).to_contain_text("shown as its printed lines")
+    # The page-303 rows are ordinary lines, visible without opening anything.
+    expect(page.locator("[data-code-lines] > tbody > tr#L100")).to_be_visible()

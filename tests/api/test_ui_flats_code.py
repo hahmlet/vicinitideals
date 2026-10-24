@@ -127,3 +127,17 @@ async def test_the_outline_nests_labels_and_hangs_bodies_under_them():
 
 async def test_lines_the_extraction_kept_indented_are_left_as_printed():
     assert code.outline(["    (a)  indented already", "A.   B.   C."]) == [(0, ""), (0, "")]
+
+
+async def test_a_checked_table_is_drawn_and_its_printed_lines_kept(client, session):
+    # Table 40-3 (FOLLOWUPS 115): cells name the lines they come from, the
+    # printed lines stay on the page so every citation still lands, and the
+    # page whose proposal failed its check stays as lines with the reason.
+    await _login(client, session)
+    page = await client.get(f"/flats/code/{SECTION}")
+    assert page.status_code == 200
+    assert page.text.count('class="code-table"') >= 3
+    assert re.search(r'<td data-lines="[\d ]*\b7[0-9]\b[\d ]*"', page.text)
+    assert 'data-table="66-97"' in page.text
+    assert 'id="L66"' in page.text and 'id="L97"' in page.text
+    assert "rows 4 and 5 overlap on the page" in page.text

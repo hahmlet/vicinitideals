@@ -44,6 +44,7 @@ from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templa
 from flats.encode import legible
 from flats.encode.readiness import _quoted_parts
 from flats.provenance.store import INDEX, ProvenanceError, parse_quote
+from flats.provenance.tables import Table, tables
 from flats.rules.fields import FIELDS
 
 router = APIRouter(include_in_schema=False)
@@ -283,6 +284,101 @@ def outline(lines: list[str]) -> list[tuple[int, str]]:
     return out
 
 
+def _cell_text(words: str) -> str:
+    """A cell's words as one run: a word broken at a line end ("Cover- age") rejoined as printed ("Cover-age")."""
+    return re.sub(r"(?<=[A-Za-z])-\s+(?=[a-z])", "-", words)
+
+
+def _table_block(table: Table, lines: list[dict[str, Any]]) -> dict[str, Any]:
+    """A shown table as rows of cells, each carrying the lines its words come from.
+
+    The printed lines stay in the block, so a citation's line number still
+    names a row on the page and the table is only another way of showing them.
+    """
+    by_n = {line["n"]: line for line in lines}
+    covered: set[tuple[int, int]] = set()
+    for cell in table.cells:
+        for r in range(*cell.row):
+            for c in range(*cell.col):
+                covered.add((r, c))
+    rows: list[list[dict[str, Any]]] = [[] for _ in range(table.rows)]
+    # A printed line runs across a whole row, so a citation of it names every
+    # cell in the row: its chips go once, in the first cell holding the line.
+    shown: set[tuple[int, str, str, str]] = set()
+    for cell in sorted(table.cells, key=lambda c: (c.row[0], c.col[0])):
+        readers = []
+        for n in cell.lines:
+            for r in by_n[n]["readers"]:
+                key = (cell.row[0], r["layer"], r["zone"], r["field"])
+                if key not in shown:
+                    shown.add(key)
+                    readers.append(r)
+        cited = any(by_n[n]["readers"] for n in cell.lines)
+        rows[cell.row[0]].append(
+            {
+                "col": cell.col[0],
+                "text": _cell_text(cell.text),
+                "header": cell.header,
+                "rowspan": cell.row[1] - cell.row[0],
+                "colspan": cell.col[1] - cell.col[0],
+                "lines": " ".join(str(n) for n in cell.lines),
+                "readers": readers,
+                "read": cited,
+            }
+        )
+    for r in range(table.rows):
+        for c in range(table.cols):
+            if (r, c) not in covered:
+                rows[r].append({"col": c, "text": "", "header": False, "rowspan": 1, "colspan": 1, "lines": "", "readers": [], "read": False})
+        rows[r].sort(key=lambda cell: cell["col"])
+    return {
+        "kind": "table",
+        "first": table.first,
+        "last": table.last,
+        "page": table.page,
+        "tool": table.tool,
+        "rows": rows,
+        "lines": [by_n[n] for n in range(table.first, table.last + 1)],
+    }
+
+
+def _blocks(document: str, lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """The document as lines and shown tables, in printed order.
+
+    A table that failed its check stays as its printed lines, with a note
+    saying a table is there and why it is not drawn as one.
+    """
+    shown: dict[int, Table] = {}
+    held: dict[int, Table] = {}
+    for table in tables(_store()).get(document, ()):
+        if table.shown:
+            shown[table.first] = table
+        elif table.first:
+            held[table.first] = table
+    out: list[dict[str, Any]] = []
+    skip_to = 0
+    for line in lines:
+        n = line["n"]
+        if n <= skip_to:
+            continue
+        if n in shown:
+            table = shown[n]
+            if line["page"]:
+                out.append({"kind": "page", "page": line["page"]})
+            out.append(_table_block(table, lines))
+            skip_to = table.last
+            continue
+        paged = False
+        if n in held:
+            # The note goes under the page heading, above the table's first line.
+            if line["page"]:
+                out.append({"kind": "page", "page": line["page"]})
+                paged = True
+            out.append({"kind": "held", "table": held[n]})
+        out.append({"kind": "line", "line": line, "paged": paged})
+    return out
+
+
 def _document(document: str) -> dict[str, Any]:
     store = _store()
     doc = store.load(document)
@@ -324,6 +420,7 @@ def _document(document: str) -> dict[str, Any]:
         "part": part,
         "sections": sections,
         "lines": lines,
+        "blocks": _blocks(document, lines),
         "cited": sum(1 for line in lines if line["readers"]),
         "previous": order[at - 1] if at > 0 else "",
         "next": order[at + 1] if 0 <= at < len(order) - 1 else "",

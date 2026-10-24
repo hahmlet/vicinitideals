@@ -25,6 +25,15 @@
   .readers a:hover { background:rgba(22,163,74,.28); }
   .code-meta { font-size:12px; margin:6px 0 14px; }
   .code-meta code { font-size:11px; word-break:break-all; }
+  .code-table { border-collapse:collapse; width:100%; margin:4px 0 2px; font-size:13px; line-height:1.4; }
+  .code-table th, .code-table td { border:1px solid var(--line,#cbd5e1); padding:3px 6px; vertical-align:top; text-align:left; }
+  .code-table th { background:rgba(100,116,139,.10); font-weight:600; }
+  .code-table .read { box-shadow:inset 3px 0 0 rgba(22,163,74,.55); }
+  .code-table .hit { background:rgba(250,204,21,.28); }
+  .code-lines tr.table-block { scroll-margin-top:60px; }
+  .printed summary { font-size:11px; color:var(--muted,#64748b); cursor:pointer; margin:2px 0; }
+  .table-note { font-size:11px; margin:2px 0 6px; }
+  .table-held .table-note { color:#92400e; }
   .code-nav { display:flex; justify-content:space-between; gap:10px; margin:14px 0; font-size:13px; }
 </style>
 
@@ -62,27 +71,68 @@
   </details>
   {% endif %}
 
-  <table class="code-lines" data-code-lines>
-    <tbody>
-    {% for line in lines %}
-      {% if line.page %}
-      <tr class="page" data-page="{{ line.page.n }}"><td></td><td>
-        <a href="/flats/book/{{ line.page.book }}#page={{ line.page.n }}" target="_blank" rel="noopener">{{ line.page.cite }}{% if line.page.cite != "PDF page " ~ line.page.n %} (PDF page {{ line.page.n }}){% endif %}</a>
-      </td></tr>
-      {% endif %}
+  {% macro line_row(line) %}
       <tr id="L{{ line.n }}" data-line="{{ line.n }}"{% if line.readers %} class="read"{% endif %}>
         <td class="n"><a href="#L{{ line.n }}">{{ line.n }}</a></td>
         <td>
           <div class="t{% if line.grid %} grid{% endif %}{% if line.kind %} {{ line.kind }}{% endif %}"{% if line.kind in ("label", "body") %} style="--d:{{ line.depth }}"{% endif %}{% if line.kind == "history" %} title="Legislative history: the ordinances that adopted and amended this section, with their dates"{% endif %}>{{ line.text }}</div>
-          {% if line.readers %}
+          {% if line.readers %}{{ chips(line.readers) }}{% endif %}
+        </td>
+      </tr>
+  {% endmacro %}
+  {% macro chips(readers) %}
           <div class="readers">
-            {% for r in line.readers %}
+            {% for r in readers %}
             <a href="/flats/{{ r.layer }}" title="{{ r.layer }} · {{ r.zone }} · {{ r.field }}">{{ r.zone }} · {{ r.label }}{% if r.number %} {{ r.number }}{% endif %}</a>
             {% endfor %}
           </div>
-          {% endif %}
+  {% endmacro %}
+  {% macro page_row(page) %}
+      <tr class="page" data-page="{{ page.n }}"><td></td><td>
+        <a href="/flats/book/{{ page.book }}#page={{ page.n }}" target="_blank" rel="noopener">{{ page.cite }}{% if page.cite != "PDF page " ~ page.n %} (PDF page {{ page.n }}){% endif %}</a>
+      </td></tr>
+  {% endmacro %}
+
+  <table class="code-lines" data-code-lines>
+    <tbody>
+    {% for block in blocks %}
+      {% if block.kind == "page" %}
+      {{ page_row(block.page) }}
+      {% elif block.kind == "table" %}
+      <tr class="table-block" data-table="{{ block.first }}-{{ block.last }}">
+        <td class="n"><a href="#L{{ block.first }}-L{{ block.last }}">{{ block.first }}</a></td>
+        <td>
+          <table class="code-table">
+            {% for row in block.rows %}
+            <tr>
+              {% for cell in row %}
+              <{{ "th" if cell.header else "td" }}{% if cell.rowspan > 1 %} rowspan="{{ cell.rowspan }}"{% endif %}{% if cell.colspan > 1 %} colspan="{{ cell.colspan }}"{% endif %} data-lines="{{ cell.lines }}"{% if cell.read %} class="read"{% endif %}>{{ cell.text }}{% if cell.readers %}{{ chips(cell.readers) }}{% endif %}</{{ "th" if cell.header else "td" }}>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </table>
+          <details class="printed">
+            <summary>Lines {{ block.first }}–{{ block.last }} as printed</summary>
+            <table class="code-lines">
+              <tbody>
+              {% for line in block.lines %}
+                {% if line.page and not loop.first %}{{ page_row(line.page) }}{% endif %}
+                {{ line_row(line) }}
+              {% endfor %}
+              </tbody>
+            </table>
+          </details>
+          <div class="table-note muted" title="{{ block.tool }}">Table drawn by Docling and checked against the printed page and these lines word for word. A check, not a proof: if a cell is wrong, the PDF page is the authority.</div>
         </td>
       </tr>
+      {% elif block.kind == "held" %}
+      <tr class="table-held"><td></td><td>
+        <div class="table-note">A table is printed here. It is shown as its printed lines because the check found a problem: {{ block.table.problems | join("; ") }}.</div>
+      </td></tr>
+      {% else %}
+      {% if block.line.page and not block.paged %}{{ page_row(block.line.page) }}{% endif %}
+      {{ line_row(block.line) }}
+      {% endif %}
     {% endfor %}
     </tbody>
   </table>
@@ -99,7 +149,7 @@
   // light the lines it names and bring the first into view.
   (function () {
     function mark() {
-      document.querySelectorAll("tr.hit").forEach(function (row) { row.classList.remove("hit"); });
+      document.querySelectorAll(".hit").forEach(function (el) { el.classList.remove("hit"); });
       var hash = location.hash.replace(/^#L/, "");
       if (!hash || hash === location.hash) return;
       var first = null;
@@ -109,7 +159,15 @@
         if (!lo || !hi || hi < lo || hi - lo > 2000) return;
         for (var n = lo; n <= hi; n++) {
           var row = document.getElementById("L" + n);
-          if (row) { row.classList.add("hit"); first = first || row; }
+          if (!row) continue;
+          row.classList.add("hit");
+          // A line drawn in a table: light the cell that holds it, and open
+          // the printed lines so the line itself is on the page too.
+          var cells = document.querySelectorAll('[data-lines~="' + n + '"]');
+          cells.forEach(function (cell) { cell.classList.add("hit"); });
+          var printed = row.closest("details");
+          if (printed) printed.open = true;
+          first = first || (cells.length ? cells[0] : row);
         }
       });
       if (first) first.scrollIntoView({ block: "center" });
