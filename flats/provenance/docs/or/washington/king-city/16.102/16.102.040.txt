@@ -1,0 +1,97 @@
+16.102.040 Dimensional and density requirements.
+A. The dimensional requirements in the NMU district are:
+Dimensional Requirements Table
+Minimum land area per unit
+Duplex 3,000 min.
+Single-family detached 1,600 min.
+Single-family attached and 0-foot setback units 1,500 min.
+Multi-family units 1,500 min.
+Live-work units 1,500 min.
+Non-residential and mixed-use (non-residential and multi-family) buildings
+None
+Minimum average lot width (per lot)
+Duplex 48 feet
+Single-family detached 40 feet
+Single-family attached and 0-foot setback detached units 20 feet
+Multi-family units 48 feet
+Live-work units 24 feet
+Non-residential and mixed-use (non-residential and multi-family) buildings
+None
+Minimum average lot depth (per lot)
+Duplex 60 feet
+Single-family detached 60 feet
+Single-family attached and 0-foot setback detached units 60 feet
+Multi-family units 60 feet
+Live-work units 60 feet
+Non-residential and mixed-use (non-residential and multi-family) buildings
+None
+Setbacks (measured from property lines, except as noted)
+1
+Front yard:
+Residential and live-work
+Non-residential and mixed-use (non-residential and multi-family) buildings measured from the nearest edge of the clear zone or supplemental zone.
+10 feet minimum and 26 feet maximum to front building wall.
+6 feet minimum and 15 feet maximum to front porch.
+18 feet from the nearest edge of the public sidewalk to front of garage entrance.
+The front lot line shall be used if a sidewalk will not be present prior to occupancy permit.
+Building placement and frontage standards in Section
+16.102.060.B shall be satisfied. 0-6 feet or ≥ 18 feet to a garage entrance if driveway parking is allowed.
+Front yard - corner:
+For corner lots, at least one street frontage shall meet the front yard requirements above.
+For the second front yard, the property owner/applicant may apply the following standards:
+Residential and live-work
+Non-residential and mixed-use (non-residential and multi-family) buildings measured from the nearest edge of the clear zone or supplemental zone.
+6 feet minimum for a side yard facing a street. 18 feet from the nearest edge of the public sidewalk to front of garage entrance.
+The front lot line shall be used if a sidewalk will not be present prior to occupancy permit.
+Building placement and frontage standards in Section
+16.102.060.B shall be satisfied. 0—6 feet or ≥ 18 feet to a garage entrance if driveway parking is allowed.
+Side yard - interior:
+Residential and live-work
+Non-residential and mixed-use (non-residential and multi-family) buildings
+0 feet minimum, or a minimum of 3 feet.
+In all cases, 0-foot setback buildings shall either: (1) be attached at the property line; or (2) have a minimum separation of 6 feet.
+0 feet minimum, for side yard lot lines adjacent to other property zoned NMU or LC, or a minimum of 3 feet.
+In all cases,
+0-foot setback buildings shall either: (1) be attached at the property line; or (2) have a minimum separation of 6 feet. 10 feet minimum, for side yard lot lines adjacent to property that is not zoned NMU or LC.
+
+Minimum land area per unit
+Rear yard:
+Residential and Live-Work
+Non-residential and mixed-use (non-residential and multi-family) buildings
+10 feet minimum for residential building.
+0 feet for a detached accessory dwelling or building less than
+18 feet in height.
+0—6 feet or ≥ 18 feet to a garage entrance to an alley .
+10 feet minimum adjacent to property zoned NMU or LC. 20 feet minimum, for side yard lot lines adjacent to property that is not zoned NMU or LC. 5 feet for a detached accessory building less than 18 feet in height. 0—6 feet or ≥ 18 feet to a garage entrance to an alley .
+Minimum landscaped area
+Single-family attached, single-family detached 0-foot side yard, duplex, accessory dwellings, and multi-family dwellings
+20% of the total lot area
+2
+Live-work units 20% of the total lot area 2
+Non-residential and mixed-use (non-residential and multi-family) buildings
+15% of the total lot area
+2
+Building height
+Single-family attached, single-family detached 0-foot side yard, duplex, accessory dwellings that are within or attached to the primary dwelling, and multi-family dwellings
+35 feet
+Live-work units 35 feet
+Non-residential and mixed-use (non-residential and multi-family) buildings
+35 feet
+3
+Accessory structures and detached accessory dwellings 25 feet
+Residential (only) density standards
+Maximum 12 units per gross acre (Chapter 16.146)
+Minimum 80% of the allowed maximum
+Commercial, mixed-use (non-residential & multi-family) and live-work floor area standards Commercial including: Office, Retail sales and service (sales-, personal service-, and entertainment-oriented)
+Maximum 1.5 to 1 F AR
+4
+Live-work units Commercial floor area shall not exceed 50% of the total floor area of the live-work unit
+1 In addition, setbacks for each type of structure must comply with the current Oregon Building Code. 2 The landscaped area per lot may be reduced when common open space is provided.
+In this case, the total landscaped area on lots and common areas must total a minimum of 20%.
+3 Building height may be increased to a maximum of 45 feet as provided in Figure 1. 4 Floor area ratios (F ARs) apply to the total floor area in a mixed-use project regardless of the use.
+B. The maximum building height of thirty-five feet in subsection A of this section shall increase one foot for each additional foot of building setback over twenty-five feet from a residential zoning district, up to a maximum building height of forty-five feet as illustrated in Figure 1.
+In the case of a public street right-of-way lying between the NMU Zone and a residential zone, the setback shall be calculated using the right-of-way centerline in lieu of the property line.
+
+(Ord. No. 2018-04, § 2(Exh.
+B), 8-1-2018; Ord. No. O-2020-01, § 1(Exh.
+A), 8-19-2020)

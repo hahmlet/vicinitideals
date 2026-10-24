@@ -1,0 +1,53 @@
+2.18    Table of Land Uses and Zoning Districts.
+Uses permitted outright and with conditions in each of the zoning districts described in this Code and the kinds of permitted uses that are subject to special regulations are as follows:
+
+TABLE 2.18: ZONING DISTRICTS AND USES
+(* = See Supplemental Regulations Chapter 7)
+Accessory dwelling unit*
+Home Occupation*
+Planned Residential Development - Attached & Detached
+SDR Permitted           Residential Home
+Single unit detached residences, including mobile and manufactured homes*
+Middle housing
+SDR Conditional          Child care facility within a residence
+Public utility structure
+Accessory dwelling unit*
+Home Occupation*
+MDR Permitted           Multiple residential units within a commonly-owned structure
+Planned Residential Development - Attached & Detached Residential Facility
+Residential Home
+Live-Work residence*
+MDR & MDDO             Manufactured Home Park
+Conditional           Mobile Home Park
+Public utility structure
+Religious land use*
+
+TABLE 2.18: ZONING DISTRICTS AND USES
+(* = See Supplemental Regulations Chapter 7) Laboratories: Testing, medical, dental, photo or motion picture Manufacture of pottery and ceramics but not including any process to pulverize clay.
+IP & BPO Permitted         Manufacture of musical instruments, toys and novelties
+(All Uses in BPO         Molding of small products from metal or plastic
+District are          Offices for the sale or service of industrial products
+Confined to Building        Product processing, assembly, packaging
+Interior)           Public utility structure
+Publishing, printing and bookbinding
+Trade and industrial schools
+Warehousing related to a permitted use not including direct sales to consumers
+IP & BPO             Wireless communication facility*
+Conditional
+OP & BPO Permitted          Artist studio
+(All Uses in BPO         Professional office space;
+District are          Other similar uses not generating commercial truck traffic nor passenger
+Confined to Building        motor vehicle traffic in a volume exceeding what is typical for the uses
+Interior)           permitted (see Section 2.16)
+OP & BPO             Public utility structure;
+Conditional            Wireless communications facility*
+Access ways, parking areas and similar at-grade surface improvements for a permitted use in an adjacent zoning district;
+Community gardens;
+NR & NRO              Public and private unobstructed open space accessory to permitted
+Permitted            residential uses in adjacent zoning districts, and areas dedicated to public and private conservation;
+Public recreational use including a bicycle and pedestrian path, archery range, athletic field and park but not including any structure that might significantly obstruct the flow of floodwater.
+Any use permitted in the underlying zoning district, but only as part of a
+NRO Permitted            Planned Development, and subject to the provisions of Section 7.2 Flood
+Management Area, as may be applicable.
+
+3

@@ -1,0 +1,62 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/rivergrove",
+  "new_fingerprint": "82054b2cae43ddde52da9406c8ec158fccb9dc63f6c77291f0bed28543e37509",
+  "new_quote": "or/clackamas/rivergrove/5/5.050.txt#L1-L5",
+  "old_fingerprint": "ad2d51700b39cfe2bfb7e05da834a48aea5ede085d4daf7e15dadc7a8c87cc05",
+  "old_quote": "or/clackamas/rivergrove/rldo.composite.txt#L863-L866",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/rivergrove",
+  "new_fingerprint": "8b4a4362cd9bbffbec425f9bacc060c1d01552de53cbdccd762f043c72f2f5df",
+  "new_quote": "or/clackamas/rivergrove/5/5.080.txt#L5-L6,L13",
+  "old_fingerprint": "4936a414be60ba800f8760676d32e63a5806d2ee8049588972c386a2db5387b6",
+  "old_quote": "or/clackamas/rivergrove/rldo.composite.txt#L1023-L1026,L1038-L1039",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/rivergrove",
+  "new_fingerprint": "e9106327ec8f2cbc01da9819ef96f19633d8c983c8a2f7d930ad0aa77786bac3",
+  "new_quote": "or/clackamas/rivergrove/5/5.080.txt#L9,L13",
+  "old_fingerprint": "40c7913f80d3e32b43be26576dee89f2f2941adedf09b1d616444466ff8f5127",
+  "old_quote": "or/clackamas/rivergrove/rldo.composite.txt#L1033,L1038-L1039",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/rivergrove",
+  "new_fingerprint": "0dfc848ce152e6c32f63598cd2b3a35fe096bc623e3a89463f3504825c323df8",
+  "new_quote": "or/clackamas/rivergrove/5/5.080.txt#L11,L13",
+  "old_fingerprint": "5c59fdd70ab588977384b3f056e84c97e42412379e9b139e7341500560bbc96e",
+  "old_quote": "or/clackamas/rivergrove/rldo.composite.txt#L1035-L1036,L1038-L1039",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/rivergrove",
+  "new_fingerprint": "fa07a821f15237af2fa9445be3078ac5d42dcbec3fb7817bfd9db28e792424c4",
+  "new_quote": "or/clackamas/rivergrove/5/5.080.txt#L10",
+  "old_fingerprint": "aa826ed01c4eeb81ce0a628cb380ef45f3596610c48128c44dd3ecf05834569c",
+  "old_quote": "or/clackamas/rivergrove/rldo.composite.txt#L1034",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/rivergrove",
+  "new_fingerprint": "22ba3e7d24f1a26ac4c420eec725ce5e69341ad45507e5228b8abb14fedec379",
+  "new_quote": "or/clackamas/rivergrove/5/5.010.txt#L1-L4",
+  "old_fingerprint": "afcad7e9cec5a0ed740222555f29a5bae42be1890de3d55c86e1dfb9eaf26acc",
+  "old_quote": "or/clackamas/rivergrove/rldo.composite.txt#L844-L846",
+  "when_key": "",
+  "zone": "R10"
+ }
+]

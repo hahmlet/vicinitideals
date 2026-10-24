@@ -9,6 +9,13 @@
 #              readable text -- only in the lines just above a page start
 #              (flats/provenance/readable.py), so the same words in the code
 #              text stay
+#   front:     documents whose lines above the first heading are a cover, a
+#              chapter title or a preface, not code: they stay in the proof
+#              copy and in no section, like a contents list
+#   uncut:     documents left whole because their headings do not take the
+#              rule; the fetched document stays the one citations name
+#   any_order: documents served with whole sections out of number order;
+#              allowed only when every heading is also in the contents list
 
 or/clackamas/tualatin:
   # "TDC 40.220. Lot Size and Dimensional Standards." -- the number, a full
@@ -31,3 +38,65 @@ or/clackamas/tualatin:
   # page start of Tualatin's 24 chapters: every other line in those places is
   # code text ("Sections:", "CHAPTER 42", an ordinance history) and stays.
   page_furniture: '^\s*(?:TDC\s?\d+[A-Z]?:\d+(?:Supp\. No\. \d+)?|TDC \d+[A-Z]?\.\d+\s*(?:TUALATIN DEVELOPMENT CODE|[A-Z][A-Z ,&()/''-]+))\s*$'
+
+or/washington/durham:
+  # "2.8     Single Dwelling Residential (SDR) District." and the untitled
+  # "2.3     A use permitted outright ..." -- chapter.section at the margin,
+  # two or more spaces, a capital. Subsections ("2.8.1   Uses ...") carry a
+  # third number; a reference wrapped to the margin ("3.1 in the form of",
+  # "5.2 of this Chapter", "105.245 (Sale") has one space and no capital.
+  heading: '^(?P<n>\d{1,2}\.\d{1,2})\s{2,}[A-Z]'
+  # Every chapter opens with its title in capitals ("ZONING DISTRICTS").
+  front: [ddc.2.zoning-districts, ddc.3.site-design, ddc.4.applications, ddc.5.trees,
+          ddc.7.supplemental, ddc.8.land-divisions, ddc.9.procedures, ddc.10.adjustments,
+          ddc.12.definitions]
+  # The footer "12 | P a g e" and the header "DURHAM DEVELOPMENT CODE Rev.
+  # 11.13.2025", measured 2026-10-24 on every page start of the 9 chapters.
+  page_furniture: '^\s*(?:\d+ \| P a g e|DURHAM DEVELOPMENT CODE Rev\. \d+\.\d+\.\d+)\s*$'
+
+or/clackamas/rivergrove:
+  # "Section 1.010.  Title.  This ordinance ..." at the margin. Printed as
+  # typed: "Section 8.10." (the 8.010 of the contents) and "Section 8.110;"
+  # keep their printed numbers. Indented "Section 8.160." lines are
+  # references wrapped inside a sentence or an ordinance history.
+  heading: '^Section\s+(?P<n>\d+\.\d{2,3})[.;]?\s+[A-Z]'
+  # The compiler's cover, amendment history and table of contents (lines
+  # 1-267) are not code.
+  front: [rldo.composite]
+  # The bare page number and the compiler's two-line disclaimer at every page
+  # foot. Every bare number in the band is its page's printed number (PDF
+  # page minus 8 or 9), measured 2026-10-24.
+  page_furniture: '^\s*(?:\d{1,3}|THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE|LAND DEVELOPMENT ORDINANCE\.\s+THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED\.)\s*$'
+
+or/washington/king-city:
+  # Municode: "16.84.020 Permitted Uses." at the margin, printed once in the
+  # chapter's "Sections:" list and again over the text. The running header is
+  # the bare number ("16.84.010") with no title, so it does not cut.
+  heading: '^(?P<n>16\.\d+\.\d+)\s+[A-Z]'
+  # Each extract opens "Chapter 16.84 / SINGLE USE RESIDENTIAL ZONES* /
+  # Sections:" -- the chapter's title above its contents list.
+  front: [kcc.16.102.nmu, kcc.16.104-16.112.commercial-civic, kcc.16.114.kingston-terrace,
+          kcc.16.132.parking, kcc.16.136.circulation, kcc.16.144.vision-clearance,
+          kcc.16.146.density, kcc.16.80.general, kcc.16.82.unlisted,
+          kcc.16.84.single-use-residential, kcc.16.88-16.100.residential-zones]
+  # 16.24.040 "Solar access figures" is in the contents list but its heading
+  # is never printed over its text -- only scanned figure pages under a bare
+  # running number follow 16.24.030 -- so where it starts is a reading.
+  uncut: [kcc.16.24.definitions]
+  # The bare running header ("16.114.010") and the Municode footer
+  # ("174.78(King City Supp. No. 14, 12-23)", "174-19 (King City Supp.
+  # No.2, 3-04)", "174-20").
+  page_furniture: '^\s*(?:16\.\d+\.\d+|174[.-]\d+(?:\.\d+)*\s*(?:\(King City Supp\. No\.\s?\d+, \d+-\d+\))?|\(King City Supp\. No\.\s?\d+, \d+-\d+\))\s*$'
+
+or/clackamas/estacada:
+  # municipalcodeonline print: "16.16.020 Uses Permitted Outright" on its own
+  # line, once in the chapter's list and again over the text. Web text, so no
+  # pages and no page furniture.
+  heading: '^(?P<n>16\.\d+\.\d+)\s+[A-Z]'
+  # Each print opens "Chapter 16.16 LOW DENSITY RESIDENTIAL (R-1)".
+  front: [emc.16.08, emc.16.116, emc.16.132, emc.16.60, emc.16.75, emc.16.76, emc.16.88,
+          emc.16.zones]
+  # The zones print serves chapters 16.12 and 16.16 interleaved (16.12.010,
+  # 16.16.010-030, 16.12.020-030, ...); each section is whole, and every one
+  # of its 117 headings is printed exactly twice.
+  any_order: [emc.16.zones]

@@ -1,0 +1,252 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "3e807f22dc66501482a8436cc5a69d0193e80ebe66d6a07f0430ba776eba75c0",
+  "new_quote": "or/washington/durham/2/2.10.txt#L1-L7",
+  "old_fingerprint": "aa4ca356b9a8703501202b741d03100585241d588b7c22f75ca1bbe1c7c566a1",
+  "old_quote": "or/washington/durham/ddc.2.zoning-districts.txt#L125-L137",
+  "when_key": "",
+  "zone": "MDDO"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "8e79d5e5d1c14290c22e84b5accaf36b7ad1a7d2b1ee364ca30b9d95f4d1c2be",
+  "new_quote": "or/washington/durham/2/2.13.txt#L1-L28",
+  "old_fingerprint": "881476a1505ab9e80d106269e8b0d883c4c85132b5602fec3fcc7813c9a1f7a2",
+  "old_quote": "or/washington/durham/ddc.2.zoning-districts.txt#L203-L238",
+  "when_key": "",
+  "zone": "BPO"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "f6030343b9f526eec8e8d53105472e858dca536bb7af618681d49945bd16b85d",
+  "new_quote": "or/washington/durham/2/2.14.txt#L1-L12",
+  "old_fingerprint": "e182d5cb311fa2eb60d29105b95b0777ff25b625a9f869103cb8b632d759f609",
+  "old_quote": "or/washington/durham/ddc.2.zoning-districts.txt#L242-L263",
+  "when_key": "",
+  "zone": "NR"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "d024800b5f2f228fba6ba460ca9de49f6ea27dc2ad06521a1b12b62e2a4cc448",
+  "new_quote": "or/washington/durham/3/3.7.txt#L68-L75",
+  "old_fingerprint": "b0ec53cec8c3eaeb996b98be78fd75749387962d229360d69d0813a635d151e1",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L429-L437",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "3e0f51ddfe87815fd5a8d4f71ee3de15b9e84cd5da4194ac08729187d18cdb86",
+  "new_quote": "or/washington/durham/3/3.7.txt#L68-L75",
+  "old_fingerprint": "a36c419dcc88d5a45ff039255f99ad2e1163527e9f71b320f66df5a6b78e03d9",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L429-L437",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "ad5bc5e448b30ca064d3f391277ef3f97f9131e5e77a549ca00c1e52042271e8",
+  "new_quote": "or/washington/durham/3/3.7.txt#L14-L18",
+  "old_fingerprint": "bdea8f0dbcdf40516261440be985c76665d9010321dfeb414e80555a33445dce",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L333-L339",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "37f66e64d79e64daccd04ff216d385ccc19dfe006749ca4a7bf164af25de68d1",
+  "new_quote": "or/washington/durham/3/3.7.txt#L14-L18",
+  "old_fingerprint": "1c98dfb83a7c95457388fe7a97477409a79a920bcc17f6bedd42fe34ad38bbc2",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L333-L339",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_walkway_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "98e35e52107dd256b485d50c83383bcf2ac47ea3c4fa88043af543a7a8ae8d8c",
+  "new_quote": "or/washington/durham/3/3.7.txt#L25",
+  "old_fingerprint": "55a6b04625f5ed75280ebd6200070f0ae8b2ddac0e2867c14f04068909b14cfc",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L350-L352",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "9e331148cec31e2a63d2883c1cefdb548d922f9198a9c37f9b89d845207605f3",
+  "new_quote": "or/washington/durham/3/3.7.txt#L27-L28",
+  "old_fingerprint": "6f67886d3b855b56cd4f948e2700566b53b1d33195873c0fcb320fbf78b392d8",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L354-L359",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "c3ea7f4b90dba5471e3f37c6da64cde1a6fe9831b8f30b7cb15a64c2ec7fb56c",
+  "new_quote": "or/washington/durham/3/3.1.txt#L12-L13",
+  "old_fingerprint": "c39a890b6b214e2e9b26c57fcd06c30ce0b91176d7d8393424fc8b35f7bb5095",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L15-L17",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "1d5a9a960c7a5b4eb784609229704d68b35bb23429c4edb52971b472e03d74bf",
+  "new_quote": "or/washington/durham/3/3.7.txt#L1-L4",
+  "old_fingerprint": "c053d52bc552fa90eca315560187a59a8e27248e050be6821be10f848872641e",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L313-L318",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "dd3ba5b9328b586630e4f4eebfa7861b00928c4a1333a743551f9f6aa98171b9",
+  "new_quote": "or/washington/durham/3/3.1.txt#L3-L5",
+  "old_fingerprint": "41f534dfa11eb9143eec651c9a6d7ce9662379cc9bd02ec04ab755fae0579669",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L6-L7",
+  "when_key": "",
+  "zone": "SDR"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "d0e4e1cee9368e23c813a4c9d4abf75e548bdcd3d51cc9bdc0fb26d131573349",
+  "new_quote": "or/washington/durham/3/3.1.txt#L2-L4",
+  "old_fingerprint": "81a5ac9ccf773d7bfb02f94565fbdfdead818b7e9bd726ca8d88a5fc62045ced",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L4-L6",
+  "when_key": "",
+  "zone": "SDR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "e5ab5d66bceeb593e9fa4a30af2a7c0da4bc79d73e80ad181a6d54ca30ae6031",
+  "new_quote": "or/washington/durham/3/3.1.txt#L12",
+  "old_fingerprint": "51715ee9c1eea86bfeeeb0a6a3ee58a8df4f3d3db76c7119c40c7ce7c8225773",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L15-L16",
+  "when_key": "",
+  "zone": "SDR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "68c58b63b1f81bb884dc0d4bab179b116293b4baed211bfbc94257bcce9049ae",
+  "new_quote": "or/washington/durham/3/3.1.txt#L12-L13",
+  "old_fingerprint": "30a0ff5048c548662aa0c8d4323edc510f4d2e542305dc20739bfc59582b72b2",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L15-L17",
+  "when_key": "",
+  "zone": "SDR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "9f92ae816f54f7f7e40df402f8457df87fc9f9ac045e70d4b8d2930964895713",
+  "new_quote": "or/washington/durham/3/3.1.txt#L12-L13",
+  "old_fingerprint": "3ab02bafa1bf1ee8b8f7c131ad7dcdbcf3509365c1c9ca49ca16fcd5f0373542",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L15-L17",
+  "when_key": "",
+  "zone": "SDR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "e696390317b0a248c89e73dc6497ab2baf750fe1105cd040df1db0d5dec93011",
+  "new_quote": "or/washington/durham/3/3.1.txt#L12-L14",
+  "old_fingerprint": "be6fabde164f66355bd4b2ac2f1c3a4d60cf66e4c8e3f71baca102e0f6a1f5f2",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L17-L18",
+  "when_key": "",
+  "zone": "SDR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "c2ba59d58bf4c94737ea0e097e104300b49f722b8076438baacec2f62e7c388b",
+  "new_quote": "or/washington/durham/3/3.1.txt#L16-L17",
+  "old_fingerprint": "8fa2c6b94d5a6a6098d8df7321a5fc60e220dca5afc17afe63cf7e4a78a8cfe9",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L21-L22",
+  "when_key": "",
+  "zone": "SDR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "3bd05dc41fbcc8d17d94abe34293529e91738a9d5ae6113b19c03dc5c0f15b33",
+  "new_quote": "or/washington/durham/3/3.1.txt#L19",
+  "old_fingerprint": "755917b0184447fd34106d09e9abaf2397f82144fa9a947f48e95ae680efe02a",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L24-L25",
+  "when_key": "",
+  "zone": "SDR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "558c9ca7e492a14997d9201e997e7ea8613b8a3943f06e9765940244dea22d65",
+  "new_quote": "or/washington/durham/3/3.1.txt#L19",
+  "old_fingerprint": "834a442e41a1065ad1b18fd57b4ff020c994f83dd365d9a2d9c16db576792900",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L24-L25",
+  "when_key": "unit_lots",
+  "zone": "SDR"
+ },
+ {
+  "field": "open_space_min_pct",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "2f9644a67d9bf9b0e96d17b0ef41c680b5bf5c0188abc73b2092f30e0a7b46f5",
+  "new_quote": "or/washington/durham/3/3.1.txt#L28-L30",
+  "old_fingerprint": "e1abb6a2b912db34e73cdd4ecc97e3896011355db0d4436d5b3e19f913e78699",
+  "old_quote": "or/washington/durham/ddc.3.site-design.txt#L42-L46",
+  "when_key": "",
+  "zone": "SDR"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "8869ab8313e28e15fd0e64fe5287e8f8d9d37d332818e9ad778333b289889b67",
+  "new_quote": "or/washington/durham/7/7.12.txt#L23-L25",
+  "old_fingerprint": "0c948504797eb98045f9da8200992432f0a4896e292f3cad6a8025b9eeb02a8e",
+  "old_quote": "or/washington/durham/ddc.7.supplemental.txt#L860-L864",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "d344a4c77dbf85e33d166baadae68b4c59cbf93f53ab700511c3ad086d65a685",
+  "new_quote": "or/washington/durham/7/7.12.txt#L13-L14",
+  "old_fingerprint": "d676ef4bfd552eff6b2fd49fbf68cee4114323c294bee292ee2880bc316d8a51",
+  "old_quote": "or/washington/durham/ddc.7.supplemental.txt#L849-L851",
+  "when_key": "unit_lots",
+  "zone": "SDR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "51c11bcf377a900cc55508ee8d78b2b5954e72e74638fd28b574642665d5a0c0",
+  "new_quote": "or/washington/durham/7/7.12.txt#L16",
+  "old_fingerprint": "921bda5b2728f3fe05417fbbec4eff8760f9d16daec3a71b4d55ecf3f1ec8676",
+  "old_quote": "or/washington/durham/ddc.7.supplemental.txt#L853",
+  "when_key": "",
+  "zone": "SDR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/durham",
+  "new_fingerprint": "9efc95ee9bee90460d7bed3d2357e10e4d1d8bbab9a5556016209ffd621f3743",
+  "new_quote": "or/washington/durham/7/7.12.txt#L18-L21",
+  "old_fingerprint": "1df08f18bc21fccec0562c257bb8f6ded32d7230a6522b5578dd46d3d52f56a7",
+  "old_quote": "or/washington/durham/ddc.7.supplemental.txt#L855-L858",
+  "when_key": "attached_wall",
+  "zone": "SDR"
+ }
+]

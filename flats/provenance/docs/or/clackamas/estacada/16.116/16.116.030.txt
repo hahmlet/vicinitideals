@@ -1,0 +1,55 @@
+16.116.030 Street Width And Improvement Standards
+
+1 Roadway Classifications and Standards.
+The Standard design and widths should be provided unless it is impractical due to constrained areas, in which case Alternative Minimum design requirements may be applied with approval of the City Engineer.
+Roadway classifications must comply with the Typical Street Cross Sections in the 2023 Estacada Transportation System Plan (TSP Figures 13-17) Improvements to any segments of streets shown in the TSP Special Street Sections need to comply with the Special Street Cross Sections in the (TSP Figures 18-44).
+
+ROADWAY CLASSIFICATIONS AND STANDARDS
+
+Functional Classification                 Number of Traffic Lanes  Minimum Distance Between Accesses (Public)  Minimum Distance Between Accesses (Private)  Minimum Right-of-Way  Paved Width                                                            On-street Parking     Sidewalk               Bikeways                               Landscape Strip
+Major collector (standard)                2 (12' each)             600 ft                                      200 ft                                       60 ft                 40 ft                                                                  None                  2 sidewalks (5' each)  2 bike lanes (6' with 2' buffer each)  2 strips (5' each)
+Major collector (alternative)             2 (11' each)             600 ft                                      200 ft                                       50 ft                 32 ft                                                                  None                  2 sidewalks (5' each)  2 bike lanes (5' each)                 2 strips (4' each)
+Minor collector (standard)                2 (11' each)             300 ft                                      100 ft                                       62 ft                 42 ft                                                                  One side (8')         2 sidewalks (5' each)  2 bike lanes (6' each)                 2 strips (5' each)
+Minor collector (alternative)             2 (10' each)             300ft                                       100 ft                                       55 ft                 37 ft                                                                  One side (7')         2 sidewalks (5' each)  2 bike lanes (5' each)                 2 strips (4' each)
+Local streets (standard)                  2 (10' each)             150 ft                                      10 ft                                        56 ft                 36 ft                                                                  Both sides (8' each)  2 sidewalks (5' each)  No (shared street)                     2 strips (5' each)
+Local streets (alternative)               2 (10' each)             150 ft                                      10 ft                                        52 ft                 34 ft                                                                  Both sides (7' each)  2 sidewalks (5' each)  No (shared street)                     2 strips (4' each)
+Neighborhood local streets (standard)     2 (10' each)             150 ft                                      10 ft                                        40 ft                 28 ft                                                                  One side (8')         2 sidewalks (6' each)  No (shared street)                     No
+Neighborhood local streets (alternative)  2 (10' each)             150 ft                                      10 ft                                        37 ft                 27 ft                                                                  One side (7')         2 sidewalks (5' each)  No (shared street)                     No
+Alleys                                    2                                                                                                                 20 ft                 20 ft                                                                                        No                     No                                     No
+Cul-de-sacs                                                                                                                                                 55' Radius            100' Diameter                                                                                Yes                    No                                     Optional
+Hammerheads                                                                                                                                                                       As determined for adequate movement of traffic and emergency vehicles                        No                     No                                     No
+Shared-Use Path                                                                                                                                             14'                   10'
+
+2 Streets/Road Development Standards.
+The location, width and grade of streets shall be considered in their relationship to existing and planned streets, topographical conditions, public convenience and safety, and the proposed use of the land to be served by the streets.
+The arrangement of streets shall provide for the continuation or appropriate projection of existing streets in surrounding areas; or conform to a plan for development of the area to meet a particular situation where topographical or other conditions make continuance or conformance to existing streets impractical.
+
+3 Improvements. Improvements shall have the following minimum standards unless increased at the discretion of the city engineer or public works superintendent:
+
+1 All streets shall be rough graded for the full width.
+
+2 All streets shall have a minimum of eight inches well graded crushed base aggregate conforming to Section 2630 of the Oregon State Highway Division Standard Specifications.
+The aggregate shall be as follows:
+
+Base course      1-½"- 0
+Leveling course  ¾"- 0
+
+3 Base course shall be a minimum of six inches thick under asphalt concrete pavement.
+Base course shall be compacted to ninety-five (95) percent ASTM D 1557.
+Leveling course shall be a minimum of two inches thick and be compacted to ninety-five (95) percent ASTM D 1557.
+
+4 All streets shall be paved with four inches of asphaltic concrete to be applied in a two-inch lift.
+
+5 Grades and Curves.
+Grades shall not exceed six percent on arterials, ten (10) percent on collector streets or twelve (12) percent on other streets.
+Center line radii of curves shall not be less than three hundred (300) feet on major arterials, two hundred (200) feet collector streets or one hundred (100) feet on other streets, and shall be to an even ten (10) feet.
+Where existing conditions, particularly the topography, make it otherwise impractical to provide buildable sites, the planning commission may accept steeper grades and sharper curves.
+In flat areas, allowance shall be made for finished street grades having a minimum slope, preferable, of at least 0.5 percent.
+
+6 All street improvements shall be certified by an engineer licensed in the state of Oregon as meeting the required standards.
+
+(Ord. 2007-6 § 17; Ord. 2003-10 § 1; prior code § 10.775)
+
+HISTORY
+Amended by Ord. 2023-007 on 1/8/2024
+

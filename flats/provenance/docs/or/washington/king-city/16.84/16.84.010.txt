@@ -1,0 +1,19 @@
+16.84.010 Housing types permitted by single dwelling residential zone.
+A housing type is not a use category .
+It de-scribes a type of development that can contain a residential use.
+R-9 R-12 R-15 R-24 SF AT
+Single dwelling detached
+P P P P P P
+Single dwelling attached
+P P P P N P
+Dwelling, accessory P P P P P P
+Duplex P P P P P P
+Manufactured home on an individual lot
+P P P P P P
+Multi-dwelling N P P P N P
+P - Permitted N - Not permitted
+(Ord. No. O-2021-01, § 2(Exh.
+B), 8-18-2021)
+Editor’s note— Ord. No. O-2021-01 amended § 16.84.010 in its entirety to read as herein set out.
+Formerly § 16.84.010 was entitled
+"Purpose" and derived from Ord. O-02-4 § 2 (part), 2002.

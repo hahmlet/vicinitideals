@@ -356,103 +356,144 @@ or/clackamas/canby,unread,min_frontage_ft,or/clackamas/canby/cmc.16.41.050.txt,8
 or/clackamas/canby,unread,min_lot_sqft,or/clackamas/canby/cmc.16.64.040.txt,7,16.64.040,1,1. Lot sizes shall conform with requirements of Division III unless the applicant chooses to use an alternative lot layout per subsection (3) below to accommodate interconnected and continuous open sp
 or/clackamas/canby,unread,open_space_min_pct,or/clackamas/canby/cmc.16.76.010.txt,5,16.76.010,1,"A. Open Space. A minimum of fifteen (15) percent of the gross area of the development shall be devoted to open space and shall be located in a common area or dedicated to the public, except in the cas"
 or/clackamas/canby,unread,max_units,or/clackamas/canby/cmc.16.76.010.txt,33,16.76.010,1,e. A minimum of five (5) percent of the planned unit development’s dwelling units must be single-story units that have at least one (1) entrance accessible via a route that does not have any stairs be
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.08.txt,356,16.08.010,1,1 250 feet for utility runways.
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.08.txt,358,16.08.010,1,2 500 feet for other than utility runways.
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.116.txt,273,16.116.030,1,Alleys 2 20 ft 20 ft No No No
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,60,16,4,1 per 300 square feet of floor area
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,72,16,1,"3.5 per 1,000 square feet of floor area"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,97,16,1,1 per 200 square feet of leasable floor area
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,115,16,1,1 per 500 square feet of bulk merchandise area or storage
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,121,16,1,1 per 500 square feet of floor area
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,125,16,1,1 per 100 square feet of floor area
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,127,16,1,"1 per 2,000 square feet of floor area"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,157,16,1,4 The space is at least 22 feet long and 7 feet wide.
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,219,16,1,"Office 2, or 1 per 10,000 sq. ft. of floor area 2, or 1 per 40,000 sq. ft. of floor area"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,223,16,1,"Manufacturing And Production 2, or 1 per 15,000 sq. ft. of floor area None"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,224,16,1,"Warehouse And Freight Movement 2, or 1 per 40,000 sq. ft. of floor area None"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.76.txt,235,16,1,"Daycare 2, or 1 per 10,000 sq. ft. of net building area None"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,246,16.16.040,7,"1 The common side of a commonwall dwelling, which is zero (0) feet."
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,282,16.16.040,1,1 Each commonwall dwelling may occupy up to seventy (70) percent of an individual lot.
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,750,16.25.020,1,1 Single-family dwelling built on site and not within 200 feet of SE Eagle Creek Rd;
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,752,16.25.020,1,2 Single-family factory-built (modular) dwelling not within 200 feet of SE Eagle Creek Rd;
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,830,16.25.050,1,"Cottage clusters 2,500 square feet per cottage"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,1002,16.26.030,1,"5 Mini-warehouse, except within one hundred (100) feet of Broadway Street;"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,1006,16.26.030,1,"7 Auto detail shop, except within one hundred (100) feet of Broadway Street;"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,1839,16.33.030,1,"Single-family dwelling or duplex 4,000 square feet"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,2445,16.37.040,1,"2 Professional office in a leased or owned building space greater than 1,500 square feet;"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,3074,16.44.030,1,2 Structures shall be setback from residential zones a minimum of twenty (20) feet.
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,3565,16.54.050,1,"1 Within 500 feet of the outer edge of the RPZ, 1 unit per acre;"
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,3573,16.54.050,1,"10 Water impoundments are prohibited within 5,000 feet from the edge or end of a runway."
-or/clackamas/estacada,unfielded,,or/clackamas/estacada/emc.16.zones.txt,3593,16.54.060,1,"1 Within an approach surface and within 5,000 feet from the end of a runway; or"
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/emc.16.08.txt,108,16.08.010,1,"""Compact parking space"" means a parking space measuring between sixteen (16) and eighteen (18) feet by eight (8) feet, exclusive of maneuvering and access area, permanently reserved for the temporary "
-or/clackamas/estacada,unread,max_units,or/clackamas/estacada/emc.16.08.txt,114,16.08.010,1,"""Cottage cluster"" means a grouping of no fewer than three detached dwelling units on the same lot of record, with each dwelling unit having a footprint of less than 900 square feet, all dwellings shar"
-or/clackamas/estacada,unread,max_units,or/clackamas/estacada/emc.16.08.txt,154,16.08.010,1,"""Dwelling unit"" means a building or portion thereof with one or more rooms designed for occupancy by one family for living purposes which provides a minimum of two hundred (200) square feet of floor a"
-or/clackamas/estacada,unread,min_lot_sqft,or/clackamas/estacada/emc.16.08.txt,178,16.08.010,1,"""Flag lot"" means a lot, the major portion of which has access to a road or street by means of a narrow strip of land called the ""staff."" The staff shall have a minimum width and frontage of not less t"
-or/clackamas/estacada,unread,max_units,or/clackamas/estacada/emc.16.08.txt,401,16.08.010,1,"5 ""Private road"" means a private way created by deed or easement to provide vehicular ingress to, or egress from, three to six lots or parcels. Any road serving more than six dwelling units must be a "
-or/clackamas/estacada,unread,min_lot_sqft,or/clackamas/estacada/emc.16.116.txt,71,16.116.010,1,"5 Private Roads. Private roads may be approved if a new public road or extension of the public road system is impractical. In determining if the extension of the public road system is impractical, cri"
-or/clackamas/estacada,unread,max_units,or/clackamas/estacada/emc.16.116.txt,99,16.116.010,1,1 Dead end (cul-de-sac) streets in residential partitions or residential subdivisions shall not exceed four hundred (400) feet in length and shall not serve building sites for not more than eighteen (
-or/clackamas/estacada,unread,min_lot_width_ft,or/clackamas/estacada/emc.16.116.txt,108,16.116.010,1,1 Every lot/parcel shall abut a public street or private road. A flag lot with the staff that does not comply with the required minimum lot widths for the zone it is located in is permitted but shall 
-or/clackamas/estacada,unread,open_space_min_pct,or/clackamas/estacada/emc.16.116.txt,215,16.116.020,1,4 Dedication Standards and Procedure. Dedication of land or covenants approved as part of preliminary plat approval may be given or provided when the final plat is presented for approval. The topograp
-or/clackamas/estacada,unread,max_units,or/clackamas/estacada/emc.16.116.txt,351,16.116.050,1,"8 Damage and Maintenance. The developer of any subdivision, partition or development shall construct, maintain, repair, replace and shall be responsible for any damage to curbs, sidewalks, pavement an"
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.60.txt,21,16.60.010,1,"2 A clear vision area shall contain no planting, fence, wall, sign, banner, structure or temporary or permanent obstruction exceeding 2.5 feet or thirty (30) inches in height measured from the top of "
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.60.txt,38,16.60.030,1,1 Accessory Structures. An accessory structure not used for human habitation and separated from the main building may be located up to five feet from a rear property line if the structure is no more t
-or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/emc.16.60.txt,77,16.60.050,1,1 The required front or rear setback for a structure may be based upon the average of the front or rear setbacks of dwellings/garages on all lots within one hundred (100) feet of both sides of the pro
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/emc.16.76.txt,27,16.76.010,1,"4 Off-street parking spaces shall be located on the same lot or on an adjoining lot or lot located within one hundred fifty (150) feet, unless otherwise approved by the planning commission."
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/emc.16.76.txt,133,16,1,1 There is no minimum off-street parking requirement for uses located within one hundred (100) feet of Broadway Street between OR 224 and 2nd Avenue. Uses in the Downtown zone but located outside the 
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/emc.16.76.txt,137,16,1,2 Reduce the minimum parking standard by twenty (20) percent where the city decision-making body determines there is public on-street parking adjacent to the subject site in a quantity equal to the re
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/emc.16.76.txt,256,16.76.030,1,"For every five bicycle parking spaces provided for uses in the City's Downtown (D), General Commercial (C-1), Commercial Residential (C-2), and Light Industrial (M-1) zones that are beyond the require"
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/emc.16.76.txt,265,16.76.040,1,"The required number of vehicle parking spaces may be reduced by up to 25 percent if the site has a bus stop with transit service located adjacent to it, and the site's frontage is improved with a bus "
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/emc.16.76.txt,273,16.76.050,1,2 Transit-supportive plazas may be substituted for up to 10 percent of the required parking spaces on the site.
-or/clackamas/estacada,unread,min_lot_sqft,or/clackamas/estacada/emc.16.zones.txt,226,16.16.040,1,"1 The minimum lot size shall be seven thousand five hundred (7,500) square feet."
-or/clackamas/estacada,unread,min_frontage_ft,or/clackamas/estacada/emc.16.zones.txt,228,16.16.040,2,2 Minimum lot frontage for a flag lot shall be twenty-five (25) feet.
-or/clackamas/estacada,unread,setback_front_ft,or/clackamas/estacada/emc.16.zones.txt,236,16.16.040,1,1 The front setback shall be a minimum of twenty (20) feet.
-or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/emc.16.zones.txt,240,16.16.040,3,1 The minimum side setback for the common side of attached dwellings is zero (0) feet.
-or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/emc.16.zones.txt,248,16.16.040,7,"2 Dwellings with a second story bedroom window that faces a side yard and is situated more than fifteen (15) feet above the ground level. As demonstrated in Figure 1 below, the minimum side setback is"
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,266,16.16.040,5,"1 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,276,16.16.040,2,"1 No building shall exceed a height of thirty-five (35) feet, except public schools or churches which may be forty-five (45) feet."
-or/clackamas/estacada,unread,max_coverage_pct,or/clackamas/estacada/emc.16.zones.txt,280,16.16.040,2,"9 Lot Coverage. Except as provided below, buildings including accessory structures and garages shall not occupy more than fifty-five (55) percent of the total lot area."
-or/clackamas/estacada,unread,max_units,or/clackamas/estacada/emc.16.zones.txt,473,16.20.040,2,"Cottage cluster 2,500 square feet per dwelling unit"
-or/clackamas/estacada,unread,min_lot_sqft,or/clackamas/estacada/emc.16.zones.txt,475,16.20.040,1,"2 Exception for Conversions. When a triplex or fourplex is created by internally converting, or expanding the floor area of an existing single-family dwelling, the minimum lot size shall be 7,500 squa"
-or/clackamas/estacada,unread,min_frontage_ft,or/clackamas/estacada/emc.16.zones.txt,477,16.20.040,2,3 Minimum lot frontage for a flag lot shall be twenty-five (25) feet.
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/emc.16.zones.txt,1041,16.26.040,1,1 There is no minimum off-street parking requirement for uses located within one hundred (100) feet of Broadway Street between OR 224 and 2nd Avenue.
-or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/emc.16.zones.txt,1043,16.26.040,1,"2 Uses in the D zone but located outside the above described area are required to provide off-street parking in accordance with EMC 16.76, except that the number of required off-street parking spaces "
-or/clackamas/estacada,unread,setback_street_side_ft,or/clackamas/estacada/emc.16.zones.txt,1053,16.26.040,1,"1 Front and Street Side setbacks: Zero (0) feet minimum and five (5) feet maximum, except five (5) feet minimum and ten (10) feet maximum for development abutting 2nd Avenue or 224."
-or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/emc.16.zones.txt,1056,16.26.040,1,2 Side setback: Zero feet for common wall development and ten (10) feet if abutting a residential zone; otherwise setback shall conform to building code.
-or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/emc.16.zones.txt,1058,16.26.040,1,3 Rear setback: Zero feet for common wall development and ten (10) feet if abutting a residential zone; otherwise setback shall conform to building code.
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,1066,16.26.040,1,"1 A solid fence or wall of not less than six (6) feet in height, or other screening approved by the city decision-making body, shall be required along a property line that is the district boundary wit"
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,1068,16.26.040,6,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,1072,16.26.040,1,6 Building Height. Buildings shall exceed the minimum height of seventeen (17) feet and shall not exceed the maximum height of sixty-five (65) feet.
-or/clackamas/estacada,unread,open_space_min_pct,or/clackamas/estacada/emc.16.zones.txt,1106,16.26.040,1,3 An area equal to not less than ten (10) percent of the subject site shall be reserved as a common open space between the development (building and paved area) and the Lakeshore Trail. The open space
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,1189,16.26.050,1,"1 Fifty (50) percent of the face of a building's ground floor, and forty (40) percent of the face of all upper floors along a street shall be transparent elements. The area of a floor's ""face,"" for th"
-or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/emc.16.zones.txt,1497,16.28.040,1,1 Side setback: ten (10) feet if abutting a residential zone;
-or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/emc.16.zones.txt,1499,16.28.040,1,2 Rear setback: ten (10) feet if abutting a residential zone.
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,1505,16.28.040,8,1 A solid fence or wall of not less than six (6) feet in height shall be required along a property line which is the district boundary with an abutting residential district.
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,1511,16.28.040,1,6 Building Height. No building shall exceed a height of forty-five (45) feet.
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,1891,16.33.030,1,J. Building Height: Buildings shall not exceed a height of sixty-five (65) feet.
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,2135,16.34.060,3,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit. Fences described above are subject to clear vision reg"
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,2145,16.34.060,1,6 Building Height: Buildings shall not exceed a height of sixty-five (65) feet.
-or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/emc.16.zones.txt,2303,16.35.050,1,"1 Side setback: ten (10) feet for sides abutting the CMU, OC, or NCR Zones;"
-or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/emc.16.zones.txt,2305,16.35.050,1,"2 Rear setback: ten (10) feet if rear abuts the CMU, OC, or NCR Zones."
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,2319,16.35.050,1,6 Building Height: Buildings shall not exceed a height of forty-five (45) feet.
-or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/emc.16.zones.txt,2618,16.38.060,1,1 Side setback: ten (10) feet if abutting the H-C or NCR zones;
-or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/emc.16.zones.txt,2620,16.38.060,1,2 Rear setback: ten (10) feet if abutting the H-C or NCR zones.
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,2737,16.39.025,1,"4 On lots of record no larger than five (5) acres, temporary outdoor storage of goods produced, manufactured, or repaired on the subject lot of record or on an adjacent lot of record, provided the out"
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,2829,16.39.040,1,"6 Outdoor storage abutting or facing a street, highway, residential zone shall be screened with a sight-obscuring fence or a buffer strip of vegetation six (6) feet in height."
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,2961,16.42.040,1,"3 Outdoor storage abutting or facing a street, highway, or residential zone shall be screened with a sight-obscuring fence or a buffer strip of vegetation six (6) feet in height."
-or/clackamas/estacada,unread,setback_front_ft,or/clackamas/estacada/emc.16.zones.txt,2969,16.42.040,1,2 The front setback shall be a minimum of twenty (20) feet.
-or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/emc.16.zones.txt,2975,16.42.040,1,"2 Dwellings with a second story bedroom window that faces a side yard and is situated more than 15 feet above the ground level. As demonstrated in Figure 1 below, the minimum side setback is calculate"
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,2995,16.42.040,1,8 Building Height. No building shall exceed a height of thirty-five (35) feet.
-or/clackamas/estacada,unread,max_coverage_pct,or/clackamas/estacada/emc.16.zones.txt,2997,16.42.040,1,"9 Lot Coverage. Except as provided below, buildings including accessory structures and garages shall not occupy more than twenty (20) percent of the total lot area."
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,3076,16.44.030,1,"3 Outdoor storage abutting or facing a street, highway, or residential zone shall be screened with a sight-obscuring fence, or a buffer strip of vegetation six (6) feet in height."
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,3325,16.52.040,1,8 No building shall exceed a height that is fifty (50) percent greater than that of the maximum building height limitation of the zone in which the planned development is proposed. Such height increas
-or/clackamas/estacada,unread,open_space_min_pct,or/clackamas/estacada/emc.16.zones.txt,3331,16.52.040,1,"9 Open Space and Park Land. At least twenty (20) percent of the land area will be dedicated or reserved as common open space or park land in residential, recreational or combination residential-commer"
-or/clackamas/estacada,unread,max_units,or/clackamas/estacada/emc.16.zones.txt,3341,16.52.040,1,"5 Developments shall be designed so that no dwelling unit, as measured from the nearest point on the property line, is located more than one thousand (1,000) feet from a park or open space area, via p"
-or/clackamas/estacada,unread,open_space_min_pct,or/clackamas/estacada/emc.16.zones.txt,3343,16.52.040,1,"6 Open space areas shall contain a minimum of five thousand (5,000) square feet. Parks shall contain a minimum of ninety thousand (90,000) square feet."
-or/clackamas/estacada,unread,setback_front_ft,or/clackamas/estacada/emc.16.zones.txt,3389,16.52.050,1,"2 Minimum front yard setback is twenty (20) feet. This standard may be modified for residential dwellings, providing any garage structure facing a street maintains a twenty (20) foot setback."
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,3472,16.54.020,1,1 Would only allow structures of less than 35 feet in height above ground level (AGL);
-or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/emc.16.zones.txt,3490,16.54.030,1,"2 For areas within airport imaginary surfaces but outside the approach and transition surfaces, where the terrain is at higher elevations than the airport runway surfaces such that existing structures"
-or/clackamas/estacada,unread,max_units,or/clackamas/estacada/emc.16.zones.txt,3567,16.54.050,1,"2 Within 500 to 1,500 feet of the outer edge of the RPZ, 2 units per acre;"
-or/clackamas/estacada,unread,max_units,or/clackamas/estacada/emc.16.zones.txt,3569,16.54.050,1,"3 Within 1,500 to 3,000 feet of the outer edge of the RPZ, 4 units per acre."
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.08/16.08.010.txt,401,16.08.010,1,1 250 feet for utility runways.
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.08/16.08.010.txt,403,16.08.010,1,2 500 feet for other than utility runways.
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.116/16.116.030.txt,18,16.116.030,1,Alleys 2 20 ft 20 ft No No No
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.16/16.16.040.txt,28,16.16.040,1,"1 The common side of a commonwall dwelling, which is zero (0) feet."
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.16/16.16.040.txt,72,16.16.040,1,1 Each commonwall dwelling may occupy up to seventy (70) percent of an individual lot.
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.20/16.20.040.txt,9,16.20.040,1,"Single-family dwelling 5,000 square feet"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.20/16.20.040.txt,38,16.20.040,1,"1 The common side of a commonwall dwelling, which is zero (0) feet."
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.20/16.20.040.txt,80,16.20.040,1,1 Each commonwall dwelling may occupy up to seventy (70) percent of its individual lot.
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.25/16.25.020.txt,5,16.25.020,1,1 Single-family dwelling built on site and not within 200 feet of SE Eagle Creek Rd;
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.25/16.25.020.txt,7,16.25.020,1,2 Single-family factory-built (modular) dwelling not within 200 feet of SE Eagle Creek Rd;
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.25/16.25.050.txt,11,16.25.050,1,"Cottage clusters 2,500 square feet per cottage"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.25/16.25.050.txt,29,16.25.050,1,"1 The common side of a commonwall dwelling, which is zero (0) feet."
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.26/16.26.030.txt,13,16.26.030,1,"5 Mini-warehouse, except within one hundred (100) feet of Broadway Street;"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.26/16.26.030.txt,17,16.26.030,1,"7 Auto detail shop, except within one hundred (100) feet of Broadway Street;"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.32/16.32.040.txt,30,16.32.040,1,"1 The common side of a commonwall dwelling, which is zero (0) feet."
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.33/16.33.030.txt,31,16.33.030,1,"Single-family dwelling or duplex 4,000 square feet"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.33/16.33.030.txt,53,16.33.030,1,"1 The common side of a commonwall dwelling, which is zero (0) feet."
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.37/16.37.040.txt,5,16.37.040,1,"2 Professional office in a leased or owned building space greater than 1,500 square feet;"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.37/16.37.060.txt,26,16.37.060,1,"1 The common side of a commonwall dwelling, which is zero (0) feet."
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.42/16.42.040.txt,39,16.42.040,1,"1 The common side of a commonwall dwelling, which is zero (0) feet."
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.44/16.44.030.txt,5,16.44.030,1,2 Structures shall be setback from residential zones a minimum of twenty (20) feet.
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.54/16.54.050.txt,49,16.54.050,1,"1 Within 500 feet of the outer edge of the RPZ, 1 unit per acre;"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.54/16.54.050.txt,57,16.54.050,1,"10 Water impoundments are prohibited within 5,000 feet from the edge or end of a runway."
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.54/16.54.060.txt,7,16.54.060,1,"1 Within an approach surface and within 5,000 feet from the end of a runway; or"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,49,16.76.010,3,1 per 300 square feet of floor area
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,61,16.76.010,1,"3.5 per 1,000 square feet of floor area"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,84,16.76.010,1,1 per 200 square feet of leasable floor area
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,95,16.76.010,1,"Religious institution, membership club or community center, fraternal hall, or similar place of assembly 1 for every six seats or one space for each 50 square feet of floor area used for assembly, whi"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,96,16.76.010,1,"Retail store (bulk), including for sale of furniture, appliances, vehicles, building materials, home furnishings, garden supplies, or agricultural supplies 1 per 500 square feet of bulk merchandise ar"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,101,16.76.010,1,1 per 500 square feet of floor area
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,105,16.76.010,1,"1 per 2,000 square feet of floor area"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,138,16.76.010,1,4 The space is at least 22 feet long and 7 feet wide.
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,208,16.76.010,1,"Office 2, or 1 per 10,000 sq. ft. of floor area 2, or 1 per 40,000 sq. ft. of floor area"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,212,16.76.010,1,"Manufacturing And Production 2, or 1 per 15,000 sq. ft. of floor area None"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,213,16.76.010,1,"Warehouse And Freight Movement 2, or 1 per 40,000 sq. ft. of floor area None"
+or/clackamas/estacada,unfielded,,or/clackamas/estacada/16.76/16.76.010.txt,224,16.76.010,1,"Daycare 2, or 1 per 10,000 sq. ft. of net building area None"
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.08/16.08.010.txt,115,16.08.010,1,"""Compact parking space"" means a parking space measuring between sixteen (16) and eighteen (18) feet by eight (8) feet, exclusive of maneuvering and access area, permanently reserved for the temporary "
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.08/16.08.010.txt,121,16.08.010,1,"""Cottage cluster"" means a grouping of no fewer than three detached dwelling units on the same lot of record, with each dwelling unit having a footprint of less than 900 square feet, all dwellings shar"
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.08/16.08.010.txt,164,16.08.010,1,"""Dwelling unit"" means a building or portion thereof with one or more rooms designed for occupancy by one family for living purposes which provides a minimum of two hundred (200) square feet of floor a"
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.116/16.116.010.txt,107,16.116.010,1,1 Dead end (cul-de-sac) streets in residential partitions or residential subdivisions shall not exceed four hundred (400) feet in length and shall not serve building sites for not more than eighteen (
+or/clackamas/estacada,unread,min_lot_width_ft,or/clackamas/estacada/16.116/16.116.010.txt,120,16.116.010,1,A flag lot with the staff that does not comply with the required minimum lot widths for the zone it is located in is permitted but shall not be less than twenty-five (25) feet minimum frontage.
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.116/16.116.050.txt,41,16.116.050,1,"The developer of any subdivision, partition or development shall construct, maintain, repair, replace and shall be responsible for any damage to curbs, sidewalks, pavement and driveway approaches, sha"
+or/clackamas/estacada,unread,min_lot_sqft,or/clackamas/estacada/16.16/16.16.040.txt,7,16.16.040,1,"1 The minimum lot size shall be seven thousand five hundred (7,500) square feet."
+or/clackamas/estacada,unread,min_frontage_ft,or/clackamas/estacada/16.16/16.16.040.txt,9,16.16.040,1,2 Minimum lot frontage for a flag lot shall be twenty-five (25) feet.
+or/clackamas/estacada,unread,setback_front_ft,or/clackamas/estacada/16.16/16.16.040.txt,18,16.16.040,1,1 The front setback shall be a minimum of twenty (20) feet.
+or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.16/16.16.040.txt,22,16.16.040,1,1 The minimum side setback for the common side of attached dwellings is zero (0) feet.
+or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.16/16.16.040.txt,26,16.16.040,1,"3 Minimum side setbacks shall be five (5) feet, except:"
+or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.16/16.16.040.txt,39,16.16.040,1,4 The rear setback shall be a minimum of fifteen (15) feet except:
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.16/16.16.040.txt,51,16.16.040,1,"1 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.16/16.16.040.txt,64,16.16.040,1,"1 No building shall exceed a height of thirty-five (35) feet, except public schools or churches which may be forty-five (45) feet."
+or/clackamas/estacada,unread,min_lot_sqft,or/clackamas/estacada/16.16/16.16.040.txt,70,16.16.040,1,"Except as provided below, buildings including accessory structures and garages shall not occupy more than fifty-five (55) percent of the total lot area."
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.20/16.20.040.txt,10,16.20.040,1,"Duplex, triplex or fourplex 2,500 square feet per dwelling unit"
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.20/16.20.040.txt,11,16.20.040,1,"Commonwall dwellings 2,500 square feet per lot for each dwelling unit"
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.20/16.20.040.txt,12,16.20.040,1,"Cottage cluster 2,500 square feet per dwelling unit"
+or/clackamas/estacada,unread,min_lot_sqft,or/clackamas/estacada/16.20/16.20.040.txt,15,16.20.040,1,"When a triplex or fourplex is created by internally converting, or expanding the floor area of an existing single-family dwelling, the minimum lot size shall be 7,500 square feet."
+or/clackamas/estacada,unread,min_frontage_ft,or/clackamas/estacada/16.20/16.20.040.txt,17,16.20.040,1,3 Minimum lot frontage for a flag lot shall be twenty-five (25) feet.
+or/clackamas/estacada,unread,setback_front_ft,or/clackamas/estacada/16.20/16.20.040.txt,26,16.20.040,1,"1 The front setback shall be a minimum of fifteen (15) feet, but a minimum of twenty (20) feet to any garage door or carport motor vehicle entry."
+or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.20/16.20.040.txt,30,16.20.040,1,1 The minimum side setback for the common side of attached dwellings is zero (0) feet.
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.20/16.20.040.txt,34,16.20.040,1,3 Commonwall dwellings with four units shall have a minimum side setback of ten (10) feet for the sides that are not attached.
+or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.20/16.20.040.txt,36,16.20.040,1,"3 Minimum side setbacks shall be five (5) feet, except:"
+or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.20/16.20.040.txt,48,16.20.040,1,4 The rear setback shall be a minimum of fifteen (15) feet except:
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.20/16.20.040.txt,60,16.20.040,1,"1 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.20/16.20.040.txt,72,16.20.040,1,"1 No building shall exceed a height of thirty-five (35) feet, except public schools or churches which may be forty-five (45) feet."
+or/clackamas/estacada,unread,min_lot_sqft,or/clackamas/estacada/16.20/16.20.040.txt,78,16.20.040,1,"Except as provided below, buildings including accessory structures and garages shall not occupy more than fifty-five (55) percent of the total lot area."
+or/clackamas/estacada,unread,min_frontage_ft,or/clackamas/estacada/16.24/16.24.040.txt,18,16.24.040,1,3 Minimum lot frontage for a flag lot shall be twenty-five (25) feet.
+or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.24/16.24.040.txt,38,16.24.040,1,1 The minimum side setback for the common side of attached dwellings is zero (0) feet.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.24/16.24.040.txt,69,16.24.040,1,"1 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.25/16.25.050.txt,52,16.25.050,1,"1 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.26/16.26.040.txt,12,16.26.040,1,1 There is no minimum off-street parking requirement for uses located within one hundred (100) feet of Broadway Street between OR 224 and 2nd Avenue.
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.26/16.26.040.txt,14,16.26.040,1,"2 Uses in the D zone but located outside the above described area are required to provide off-street parking in accordance with EMC 16.76, except that the number of required off-street parking spaces "
+or/clackamas/estacada,unread,setback_street_side_ft,or/clackamas/estacada/16.26/16.26.040.txt,24,16.26.040,1,"1 Front and Street Side setbacks: Zero (0) feet minimum and five (5) feet maximum, except five (5) feet minimum and ten (10) feet maximum for development abutting 2nd Avenue or 224."
+or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.26/16.26.040.txt,29,16.26.040,1,2 Side setback: Zero feet for common wall development and ten (10) feet if abutting a residential zone; otherwise setback shall conform to building code.
+or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.26/16.26.040.txt,31,16.26.040,1,3 Rear setback: Zero feet for common wall development and ten (10) feet if abutting a residential zone; otherwise setback shall conform to building code.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.26/16.26.040.txt,40,16.26.040,1,"1 A solid fence or wall of not less than six (6) feet in height, or other screening approved by the city decision-making body, shall be required along a property line that is the district boundary wit"
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.26/16.26.040.txt,42,16.26.040,1,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.26/16.26.040.txt,47,16.26.040,1,Buildings shall exceed the minimum height of seventeen (17) feet and shall not exceed the maximum height of sixty-five (65) feet.
+or/clackamas/estacada,unread,open_space_min_pct,or/clackamas/estacada/16.26/16.26.040.txt,84,16.26.040,1,3 An area equal to not less than ten (10) percent of the subject site shall be reserved as a common open space between the development (building and paved area) and the Lakeshore Trail.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.26/16.26.050.txt,104,16.26.050,1,"The area of a floor's ""face,"" for the purposes of applying Table 16.26.051, shall be determined by multiplying the horizontal length of the subject building wall by either the height of that floor fro"
+or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.28/16.28.040.txt,15,16.28.040,1,1 Side setback: ten (10) feet if abutting a residential zone;
+or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.28/16.28.040.txt,17,16.28.040,1,2 Rear setback: ten (10) feet if abutting a residential zone.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.28/16.28.040.txt,23,16.28.040,1,1 A solid fence or wall of not less than six (6) feet in height shall be required along a property line which is the district boundary with an abutting residential district.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.28/16.28.040.txt,25,16.28.040,1,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.28/16.28.040.txt,30,16.28.040,1,No building shall exceed a height of forty-five (45) feet.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.32/16.32.040.txt,58,16.32.040,1,1 A solid fence or wall of not less than six (6) feet in height shall be required along a property line which is the district boundary with an abutting residential district.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.32/16.32.040.txt,60,16.32.040,1,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.33/16.33.030.txt,32,16.33.030,1,"Triplex or fourplex 2,500 square feet per dwelling unit"
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.33/16.33.030.txt,33,16.33.030,1,"Commonwall dwellings 2,500 square feet per lot for the first five dwelling units 1,500 square feet per lot for each unit above five"
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.33/16.33.030.txt,34,16.33.030,1,"Cottage cluster 2,500 square feet per dwelling unit"
+or/clackamas/estacada,unread,setback_front_ft,or/clackamas/estacada/16.33/16.33.030.txt,49,16.33.030,1,"1 The front setback shall be a minimum of fifteen (15) feet, but a minimum of twenty (20) feet to any garage door or carport motor vehicle entry."
+or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.33/16.33.030.txt,51,16.33.030,1,"2 Minimum side setbacks shall be five (5) feet, except:"
+or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.33/16.33.030.txt,64,16.33.030,1,"3 The rear setback shall be a minimum of fifteen (15) feet, except:"
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.33/16.33.030.txt,76,16.33.030,1,1 A solid fence or wall of not less than six (6) feet in height shall be required along a property line which is the district boundary with an abutting residential district.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.33/16.33.030.txt,78,16.33.030,1,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.33/16.33.030.txt,90,16.33.030,1,J. Building Height: Buildings shall not exceed a height of sixty-five (65) feet.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.34/16.34.060.txt,7,16.34.060,1,1 A solid fence or wall of not less than six (6) feet in height shall be required along a property line which is the district boundary with an abutting residential district.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.34/16.34.060.txt,9,16.34.060,1,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.34/16.34.060.txt,20,16.34.060,1,6 Building Height: Buildings shall not exceed a height of sixty-five (65) feet.
+or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.35/16.35.050.txt,7,16.35.050,1,"1 Side setback: ten (10) feet for sides abutting the CMU, OC, or NCR Zones;"
+or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.35/16.35.050.txt,9,16.35.050,1,"2 Rear setback: ten (10) feet if rear abuts the CMU, OC, or NCR Zones."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.35/16.35.050.txt,13,16.35.050,1,1 A solid fence or wall of not less than six (6) feet in height shall be required along a property line which is the district boundary with an abutting residential district.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.35/16.35.050.txt,15,16.35.050,1,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.35/16.35.050.txt,23,16.35.050,1,6 Building Height: Buildings shall not exceed a height of forty-five (45) feet.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.37/16.37.060.txt,49,16.37.060,1,1 A solid fence or wall of not less than six (6) feet in height shall be required along a property line which is the district boundary with an abutting residential district.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.37/16.37.060.txt,51,16.37.060,1,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,setback_side_ft,or/clackamas/estacada/16.38/16.38.060.txt,7,16.38.060,1,1 Side setback: ten (10) feet if abutting the H-C or NCR zones;
+or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.38/16.38.060.txt,9,16.38.060,1,2 Rear setback: ten (10) feet if abutting the H-C or NCR zones.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.38/16.38.060.txt,13,16.38.060,1,1 A solid fence or wall of not less than six (6) feet in height shall be required along a property line which is the district boundary with an abutting residential district.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.38/16.38.060.txt,15,16.38.060,1,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.39/16.39.025.txt,11,16.39.025,1,"4 On lots of record no larger than five (5) acres, temporary outdoor storage of goods produced, manufactured, or repaired on the subject lot of record or on an adjacent lot of record, provided the out"
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.39/16.39.040.txt,7,16.39.040,1,1 A solid fence or wall of not less than six (6) feet in height shall be required along a property line which is the district boundary with an abutting residential district.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.39/16.39.040.txt,9,16.39.040,1,"2 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.39/16.39.040.txt,19,16.39.040,1,"6 Outdoor storage abutting or facing a street, highway, residential zone shall be screened with a sight-obscuring fence or a buffer strip of vegetation six (6) feet in height."
+or/clackamas/estacada,unread,min_frontage_ft,or/clackamas/estacada/16.42/16.42.040.txt,9,16.42.040,1,2 Minimum lot frontage for a flag lot shall be twenty-five (25) feet.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.42/16.42.040.txt,26,16.42.040,1,"3 Outdoor storage abutting or facing a street, highway, or residential zone shall be screened with a sight-obscuring fence or a buffer strip of vegetation six (6) feet in height."
+or/clackamas/estacada,unread,setback_front_ft,or/clackamas/estacada/16.42/16.42.040.txt,35,16.42.040,1,2 The front setback shall be a minimum of twenty (20) feet.
+or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.42/16.42.040.txt,50,16.42.040,1,4 The rear setback shall be a minimum of fifteen (15) feet except:
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.42/16.42.040.txt,58,16.42.040,1,"1 Fences and sight-obscuring fences, with the exception of evergreen plantings, cannot exceed seven (7) feet in height without a building permit."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.42/16.42.040.txt,67,16.42.040,1,No building shall exceed a height of thirty-five (35) feet.
+or/clackamas/estacada,unread,min_lot_sqft,or/clackamas/estacada/16.42/16.42.040.txt,70,16.42.040,1,"Except as provided below, buildings including accessory structures and garages shall not occupy more than twenty (20) percent of the total lot area."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.44/16.44.030.txt,7,16.44.030,1,"3 Outdoor storage abutting or facing a street, highway, or residential zone shall be screened with a sight-obscuring fence, or a buffer strip of vegetation six (6) feet in height."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.52/16.52.040.txt,26,16.52.040,1,8 No building shall exceed a height that is fifty (50) percent greater than that of the maximum building height limitation of the zone in which the planned development is proposed.
+or/clackamas/estacada,unread,open_space_min_pct,or/clackamas/estacada/16.52/16.52.040.txt,34,16.52.040,1,"At least twenty (20) percent of the land area will be dedicated or reserved as common open space or park land in residential, recreational or combination residential-commercial developments."
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.52/16.52.040.txt,44,16.52.040,1,"5 Developments shall be designed so that no dwelling unit, as measured from the nearest point on the property line, is located more than one thousand (1,000) feet from a park or open space area, via p"
+or/clackamas/estacada,unread,open_space_min_pct,or/clackamas/estacada/16.52/16.52.040.txt,46,16.52.040,1,"6 Open space areas shall contain a minimum of five thousand (5,000) square feet."
+or/clackamas/estacada,unread,setback_front_ft,or/clackamas/estacada/16.52/16.52.050.txt,35,16.52.050,1,2 Minimum front yard setback is twenty (20) feet.
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.54/16.54.020.txt,15,16.54.020,1,1 Would only allow structures of less than 35 feet in height above ground level (AGL);
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.54/16.54.030.txt,9,16.54.030,1,"2 For areas within airport imaginary surfaces but outside the approach and transition surfaces, where the terrain is at higher elevations than the airport runway surfaces such that existing structures"
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.54/16.54.050.txt,51,16.54.050,1,"2 Within 500 to 1,500 feet of the outer edge of the RPZ, 2 units per acre;"
+or/clackamas/estacada,unread,max_units,or/clackamas/estacada/16.54/16.54.050.txt,53,16.54.050,1,"3 Within 1,500 to 3,000 feet of the outer edge of the RPZ, 4 units per acre."
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.60/16.60.010.txt,5,16.60.010,1,"2 A clear vision area shall contain no planting, fence, wall, sign, banner, structure or temporary or permanent obstruction exceeding 2.5 feet or thirty (30) inches in height measured from the top of "
+or/clackamas/estacada,unread,max_height_ft,or/clackamas/estacada/16.60/16.60.030.txt,6,16.60.030,1,An accessory structure not used for human habitation and separated from the main building may be located up to five feet from a rear property line if the structure is no more than fifteen (15) feet in
+or/clackamas/estacada,unread,setback_rear_ft,or/clackamas/estacada/16.60/16.60.050.txt,5,16.60.050,1,1 The required front or rear setback for a structure may be based upon the average of the front or rear setbacks of dwellings/garages on all lots within one hundred (100) feet of both sides of the pro
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.010.txt,12,16.76.010,1,"4 Off-street parking spaces shall be located on the same lot or on an adjoining lot or lot located within one hundred fifty (150) feet, unless otherwise approved by the planning commission."
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.010.txt,103,16.76.010,1,"1 per rented bedroom in addition to parking required for dwelling, with never less than 2 total parking spaces on the subject property Skating rink, arcade, gym, or other similar indoor recreational o"
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.010.txt,111,16.76.010,1,1 There is no minimum off-street parking requirement for uses located within one hundred (100) feet of Broadway Street between OR 224 and 2nd Avenue.
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.010.txt,116,16.76.010,1,2 Reduce the minimum parking standard by twenty (20) percent where the city decision-making body determines there is public on-street parking adjacent to the subject site in a quantity equal to the re
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.040.txt,3,16.76.040,1,"The required number of vehicle parking spaces may be reduced by up to 25 percent if the site has a bus stop with transit service located adjacent to it, and the site's frontage is improved with a bus "
+or/clackamas/estacada,unread,parking_min_per_unit,or/clackamas/estacada/16.76/16.76.050.txt,7,16.76.050,1,2 Transit-supportive plazas may be substituted for up to 10 percent of the required parking spaces on the site.
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,57,17.10.030,1,(a) Front—20 feet.
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,59,17.10.030,1,(b) Side—7.5 feet or five feet for irregularly shaped lots.
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,61,17.10.030,1,(c) Street side—20 feet.
@@ -1193,31 +1234,32 @@ or/clackamas/oregon-city,unread,min_density_du_per_acre,or/clackamas/oregon-city
 or/clackamas/oregon-city,unread,max_height_ft,or/clackamas/oregon-city/17.zoning.txt,15625,17.54.100,1,3.5 feet in total height as measured from the finished
 or/clackamas/oregon-city,unread,max_height_ft,or/clackamas/oregon-city/17.zoning.txt,15639,17.54.100,1,finished grade) 8.5 feet in height from the finished
 or/clackamas/oregon-city,unread,max_height_ft,or/clackamas/oregon-city/17.zoning.txt,15677,17.54.100,1,3. 5 feet in total height.
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,328,,1,not exceed 135 degrees.
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,456,,1,"livestock, other than household pets, shall be housed within 100 feet of any"
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,469,,1,permit (i.e. 108 square feet in size).
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,495,,1,twenty (20) percent; or
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,502,,1,shall not be reduced by more than twenty (20) percent.
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,882,,1,residence or above a garage up to 750 sq. ft. of floor area).
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,900,,1,"sign shall be artificially illuminated, permanent, or exceed 4 square feet in area or 4"
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,917,,1,above a garage up to a maximum of 750 sq. ft. of floor area) are permitted only in
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,981,,1,"feet required for each lot, i.e. 10,000 square feet."
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,1070,,1,"Places of Worship 0.5 per 1,000 sq. ft. 0.8 per 1,000 sq. ft."
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,1071,,1,"Recreation Facilities 3.4 per 1,000 sq. ft.* 6.5 per 1,000 sq. ft."
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,1109,,1,circumference) measured 4.5 feet from the ground (DBH diameter-breast-
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,1453,,1,be mailed to the owners of property within 200 feet of the property to be developed.
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,1581,,1,containing the names and addresses of property owners within 200 feet of the
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,1594,,1,200 feet surrounding and adjacent to the proposed land division.
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,1714,,1,given to owners of property within 200 feet of the area.
-or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,1926,,1,(b) A list of the addresses of property within 200 feet of the affected property and
-or/clackamas/rivergrove,unread,max_height_ft,or/clackamas/rivergrove/rldo.composite.txt,872,,1,height for each 12 feet in width;
-or/clackamas/rivergrove,unread,min_lot_sqft,or/clackamas/rivergrove/rldo.composite.txt,925,,1,"(c) Outside the Flood Hazard District, the minimum lot size is 10,000 sq. ft. and the"
-or/clackamas/rivergrove,unread,setback_front_ft,or/clackamas/rivergrove/rldo.composite.txt,1044,,1,Front Setback - 30 feet. Side Setback - 3 feet
-or/clackamas/rivergrove,unread,setback_street_side_ft,or/clackamas/rivergrove/rldo.composite.txt,1045,,1,Side Setback (corner lot) - 10 feet.
-or/clackamas/rivergrove,unread,setback_rear_ft,or/clackamas/rivergrove/rldo.composite.txt,1046,,1,Rear Setback - 3 feet.
-or/clackamas/rivergrove,unread,max_height_ft,or/clackamas/rivergrove/rldo.composite.txt,1058,,1,(a) No new residential structure may exceed 35 feet in height (not including the height
-or/clackamas/rivergrove,unread,max_height_ft,or/clackamas/rivergrove/rldo.composite.txt,1061,,1,(b) No new accessory structures may exceed 20 feet in height.
-or/clackamas/rivergrove,unread,min_frontage_ft,or/clackamas/rivergrove/rldo.composite.txt,1549,,1,(c) The partition contains a parcel having 25 feet or less street frontage;
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/1/1.050.txt,26,1.050,1,"(1) ""Corner Lot"" means a lot at least two adjacent sides of which abut streets other than alleys, provided the angle of the intersection of the adjacent streets does not exceed 135 degrees."
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/2/2.040.txt,12,2.040,1,"(e) Farming, truck gardening, orchards and nurseries provided that no wholesale business office is maintained on the premises, and provided that no poultry or livestock, other than household pets, sha"
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/2/2.040.txt,19,2.040,1,(h) Installation or construction of an accessory structure that does not require a building 1 permit (i.e. 108 square feet in size).
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/2/2.060.txt,11,2.060,1,(2) the land area covered by structures shall not be increased by more than twenty (20) percent; or
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/2/2.060.txt,14,2.060,1,(3) the standard requirement for land area or width or length of a lot or parcel shall not be reduced by more than twenty (20) percent.
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/5/5.050.txt,25,5.050,1,"No sign shall be artificially illuminated, permanent, or exceed 4 square feet in area or 4 feet on one side."
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/5/5.095.txt,7,5.095,1,"Places of Worship 0.5 per 1,000 sq. ft. 0.8 per 1,000 sq. ft."
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/5/5.095.txt,8,5.095,1,"Recreation Facilities 3.4 per 1,000 sq. ft.* 6.5 per 1,000 sq. ft."
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/6/6.040.txt,2,6.040,1,Notice of a Type II or III hearing on an area accessory development shall be mailed to the owners of property within 200 feet of the property to be developed.
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/6/6.110.txt,8,6.110,1,The applicant shall provide an ownership list containing the names and addresses of property owners within 200 feet of the property to be divided.
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/6/6.130.txt,4,6.130,1,The plan shall show a pattern of future street from the boundaries of the proposed land division to include the other tracts within 200 feet surrounding and adjacent to the proposed land division.
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/6/6.221.txt,4,6.221,1,Written notice of the hearing shall be given to owners of property within 200 feet of the area.
+or/clackamas/rivergrove,unfielded,,or/clackamas/rivergrove/6/6.310.txt,6,6.310,1,(b) A list of the addresses of property within 200 feet of the affected property and mailing labels;
+or/clackamas/rivergrove,unread,max_height_ft,or/clackamas/rivergrove/5/5.050.txt,9,5.050,1,(2) the dwelling shall have a pitched roof with a slope no less than three feet in height for each 12 feet in width;
+or/clackamas/rivergrove,unread,max_units,or/clackamas/rivergrove/5/5.050.txt,15,5.050,1,(b) Secondary Dwelling Unit (defined as a residential unit either within the primary residence or above a garage up to 750 sq. ft. of floor area).
+or/clackamas/rivergrove,unread,max_units,or/clackamas/rivergrove/5/5.055.txt,3,5.055,1,"(a) Notwithstanding the provisions of Section 5.050(b) and 5.060(c), secondary dwelling units (defined as residential units either within the primary residence or above a garage up to a maximum of 750"
+or/clackamas/rivergrove,unread,min_lot_sqft,or/clackamas/rivergrove/5/5.055.txt,7,5.055,1,"(c) Outside the Flood Hazard District, the minimum lot size is 10,000 sq. ft. and the maximum density allowed is:"
+or/clackamas/rivergrove,unread,max_units,or/clackamas/rivergrove/5/5.075.txt,14,5.075,1,"(2) To calculate the maximum number of residential units per net acre, divide the number of square feet in the net acres by the minimum number of square feet required for each lot, i.e. 10,000 square "
+or/clackamas/rivergrove,unread,setback_front_ft,or/clackamas/rivergrove/5/5.080.txt,16,5.080,1,Front Setback - 30 feet.
+or/clackamas/rivergrove,unread,setback_side_ft,or/clackamas/rivergrove/5/5.080.txt,17,5.080,1,Side Setback - 3 feet
+or/clackamas/rivergrove,unread,setback_street_side_ft,or/clackamas/rivergrove/5/5.080.txt,18,5.080,1,Side Setback (corner lot) - 10 feet.
+or/clackamas/rivergrove,unread,setback_rear_ft,or/clackamas/rivergrove/5/5.080.txt,19,5.080,1,Rear Setback - 3 feet.
+or/clackamas/rivergrove,unread,max_height_ft,or/clackamas/rivergrove/5/5.090.txt,3,5.090,1,"(a) No new residential structure may exceed 35 feet in height (not including the height of antennas, solar collectors, or wind generators)."
+or/clackamas/rivergrove,unread,max_height_ft,or/clackamas/rivergrove/5/5.090.txt,5,5.090,1,(b) No new accessory structures may exceed 20 feet in height.
+or/clackamas/rivergrove,unread,max_height_ft,or/clackamas/rivergrove/5/5.100.txt,5,5.100,1,"(1) “Tree”: Any standing woody plant having a trunk 11.5 inch diameter (36"" circumference) measured 4.5 feet from the ground (DBH diameter-breast-height)."
+or/clackamas/rivergrove,unread,min_frontage_ft,or/clackamas/rivergrove/6/6.090.txt,9,6.090,1,(c) The partition contains a parcel having 25 feet or less street frontage;
 or/clackamas/sandy,unfielded,,or/clackamas/sandy/sdc.17.100.txt,165,,1,"Topography, including identification of land exceeding a 25 percent slope."
 or/clackamas/sandy,unfielded,,or/clackamas/sandy/sdc.17.100.txt,268,,1,"Topography, including identification of land exceeding a 25 percent slope;"
 or/clackamas/sandy,unfielded,,or/clackamas/sandy/sdc.17.100.txt,945,17,1,Slope analysis map identifying land exceeding a 25 percent slope.
@@ -7539,77 +7581,72 @@ or/washington/cornelius,unread,max_height_ft,or/washington/cornelius/cmc.18.75.g
 or/washington/cornelius,unread,max_height_ft,or/washington/cornelius/cmc.18.90.fp.txt,522,18.90.060,1,Residentially zoned property less than or equal to two acres in size: structure is limited to a maximum of 200 square feet and maximum height of 12 feet;
 or/washington/cornelius,unread,min_lot_sqft,or/washington/cornelius/cmc.18.95.nro.txt,187,18.95.060,1,"Meet the required setback and decrease the minimum lot size by 10 to 50 percent. The reduction in lot size, at a maximum shall be equivalent to percentage of the site lost to the natural resource prot"
 or/washington/cornelius,unread,min_lot_sqft,or/washington/cornelius/cmc.18.95.nro.txt,193,18.95.060,1,"If a parcel loses more than 50 percent of its area to natural resource protection setbacks, then the developer shall only decrease the minimum lot size by a maximum of 50 percent."
-or/washington/durham,unfielded,,or/washington/durham/ddc.12.definitions.txt,27,12.2.5,1,with a footprint of less than 900 square feet each that includes a common courtyard.
-or/washington/durham,unfielded,,or/washington/durham/ddc.12.definitions.txt,160,12.2.36,1,exceed 50 percent of the market value of the structure before the damage occurred.
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,87,3.2.2,1,2500 square feet.
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,218,3.4.1.1,1,"3.4.1.1 Lot dimensions shall average at least 80 feet wide by 80 feet deep, with the lot"
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,248,3.5.1,1,"of 35,000 square feet."
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,331,3.7.1.3,1,of 30 feet wide. Access width shall be measured at the property line.
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,342,3.7.1.4.3,1,"feet wide, 5 foot sidewalk one side only, no curb required."
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,365,3.7.1.8,1,"SDR (NOT PRD) Driveway 10-30 feet wide, fully paved"
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,414,3.7.4.2,1,3.7.4.2 Artificial lighting that does not exceed 1 foot-candle as measured at any boundary
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,445,3.7.5,1,"IP Warehouse Up to 150,000 Sq Ft Gross Floor 1.6 / No maximum"
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,447,3.7.5,1,"IP Warehouse Over 150,000 Sq Ft Gross Floor 0.3 / No maximum"
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,458,3.7.8,1,"space per 1000 square feet of gross floor area, whichever is greater."
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,521,3.9.1.1,1,"3.9.1.1 Major arterial, 80 feet, 60 feet paved;"
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,523,3.9.1.2,1,"3.9.1.2 Minor arterial, 60 feet, 46 feet paved;"
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,525,3.9.1.3,1,"3.9.1.3 Major collector, 60 feet, 42 feet paved;"
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,527,3.9.1.4,1,"3.9.1.4 Neighborhood collector, 50 feet, 32 feet paved;"
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,529,3.9.1.5,1,"3.9.1.5 Local street and cul-de-sac, 40 feet, 26 feet paved;"
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,531,3.9.1.6,1,"3.9.1.6 Cul-de-sac turnaround, 45-foot radius, 38 feet paved."
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,543,3.9.2.1,1,100 feet.
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,552,3.9.2.4,1,3.9.2.4 The maximum length of a cul-de-sac shall be 300 feet measured from the nearest
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,555,3.9.2.5,1,3.9.2.5 A proposed cul-de-sac of 150 feet or longer shall provide for a bicycle and
-or/washington/durham,unfielded,,or/washington/durham/ddc.3.site-design.txt,561,3.9.2.6,1,"on a major arterial, 200 feet on a minor arterial and 100 feet on any other street."
-or/washington/durham,unfielded,,or/washington/durham/ddc.4.applications.txt,29,4.2.2,1,zoning districts within 1000 feet of the proposed land use or rezone;
-or/washington/durham,unfielded,,or/washington/durham/ddc.4.applications.txt,62,4.2.9,1,"defined by Clean Water Services (CWS) on site or within 200 feet of any point on the site,"
-or/washington/durham,unfielded,,or/washington/durham/ddc.4.applications.txt,103,4.2.16.1,1,conference to all persons who own property within 300 feet of any point on the proposed
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,15,7.1.3,1,7.1.3 An ADU shall not be larger than 33 percent of the habitable area of the primary
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,16,7.1.3,1,"residence (excludes garage) or 600 square feet, whichever is less."
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,378,7.2.14,1,(1) Less than 200 square feet and do not exceed one story;
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,462,7.5.1.1,1,"1,000 square feet;"
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,489,7.5.2.4,1,7.5.2.4 Covered porch entry with pillars or posts at least 3 feet from face of structure;
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,661,7.10.2.1,1,extending more than 5 feet from a supporting structure.
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,732,7.11.7,1,7.11.7 The maximum building footprint for a cottage shall be 900 square feet. The
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,755,7.11.11,1,contain a minimum of 150 square feet per cottage; the common courtyard must be a minimum
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,760,7.11.12,1,7.11.12 A minimum of 50 percent of cottages within a cluster must be oriented to the
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,806,7.11.21,1,7.11.21 Cottages within 20 feet of a street property line must meet any window coverage
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,831,7.11.28,1,7.11.28 Individual attached garages up to 200 square feet shall be exempted from the
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,834,7.11.28,1,must not exceed 20 feet in width.
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,847,7.12.5,1,7.12.5 The minimum distance between adjacent sets of townhouses shall be 20 feet.
-or/washington/durham,unfielded,,or/washington/durham/ddc.7.supplemental.txt,866,7.12.9,1,shall be paired and there shall be a minimum distance of 24 feet between paired driveways.
-or/washington/durham,unfielded,,or/washington/durham/ddc.8.land-divisions.txt,80,8.2.7.7,1,multiple thereof at a scale of 1 inch=100 feet;
-or/washington/durham,unread,open_space_min_pct,or/washington/durham/ddc.10.adjustments.txt,141,10.5.6,1,"10.5.6 a reduction of more than 10 percent in the area reserved for open space; or,"
-or/washington/durham,unread,setback_rear_ft,or/washington/durham/ddc.3.site-design.txt,29,3.1,1,"to 5 feet in front-, side- and rear setbacks."
-or/washington/durham,unread,min_lot_sqft,or/washington/durham/ddc.3.site-design.txt,85,3.2.2,1,3.2.2 The minimum lot size for detached single dwellings in a PRD shall be 5000 square feet.
-or/washington/durham,unread,setback_front_ft,or/washington/durham/ddc.3.site-design.txt,92,3.2.3,1,front setback to not less than 15 feet as part of the site design.
-or/washington/durham,unread,open_space_min_pct,or/washington/durham/ddc.3.site-design.txt,190,3.3.4.5,1,"upper floors) of at least 40 square feet each, oriented towards common open space and away"
-or/washington/durham,unread,min_lot_sqft,or/washington/durham/ddc.3.site-design.txt,220,3.4.1.1,1,"way, and with a minimum lot size of 10,000 square feet."
-or/washington/durham,unread,setback_rear_ft,or/washington/durham/ddc.3.site-design.txt,224,3.4.1.2,1,rear setback shall be 10 feet.
-or/washington/durham,unread,max_height_ft,or/washington/durham/ddc.3.site-design.txt,227,3.4.1.3,1,3.4.1.3 The maximum height of any structure shall be 35 feet above average grade.
-or/washington/durham,unread,max_far,or/washington/durham/ddc.3.site-design.txt,229,3.4.1.4,1,3.4.1.4 The maximum floor area ratio shall be 35 percent.
-or/washington/durham,unread,min_lot_width_ft,or/washington/durham/ddc.3.site-design.txt,246,3.5.1,1,"3.5.1 Lot dimensions shall be a minimum lot width of 50 feet, as measured both along the front"
-or/washington/durham,unread,min_lot_sqft,or/washington/durham/ddc.3.site-design.txt,247,3.5.1,1,"building line and along abutting right of way, and at least 120 feet deep, with a minimum lot size"
-or/washington/durham,unread,setback_front_ft,or/washington/durham/ddc.3.site-design.txt,250,3.5.1.1,1,3.5.1.1 The minimum front setback shall be 30 feet unless otherwise provided in this
-or/washington/durham,unread,setback_rear_ft,or/washington/durham/ddc.3.site-design.txt,256,3.5.1.2,1,such rear setback shall be a minimum of 30 feet.
-or/washington/durham,unread,setback_rear_ft,or/washington/durham/ddc.3.site-design.txt,259,3.5.1.3,1,rear setback shall be 50 feet.
-or/washington/durham,unread,max_height_ft,or/washington/durham/ddc.3.site-design.txt,264,3.5.1.5,1,3.5.1.5 The maximum height of any structure shall be 40 feet above average grade.
-or/washington/durham,unread,max_far,or/washington/durham/ddc.3.site-design.txt,268,3.5.1.6,1,3.5.1.6 The maximum floor area ratio shall be 35 percent.
-or/washington/durham,unread,max_units,or/washington/durham/ddc.3.site-design.txt,341,3.7.1.4.3,1,"3.7.1.4.3 For over 50 dwelling units, 1 two -way at least 40 feet wide or 2 one-way at least 30"
-or/washington/durham,unread,parking_min_per_unit,or/washington/durham/ddc.3.site-design.txt,347,3.7.1.5,1,least 30 feet wide. A site in such districts that includes more than 100 parking spaces shall have
-or/washington/durham,unread,max_units,or/washington/durham/ddc.3.site-design.txt,366,3.7.1.8,1,"MDR - MDDO 1-2 dwelling units: 20 feet wide, no sidewalk or curb required"
-or/washington/durham,unread,max_units,or/washington/durham/ddc.3.site-design.txt,367,3.7.1.8,1,"AND PLANNED 3-49 dwelling units: 1 at 30 feet wide or 2 one-way 20 feet wide, five foot sidewalk"
-or/washington/durham,unread,max_units,or/washington/durham/ddc.3.site-design.txt,369,3.7.1.8,1,"DEVELOPMENT 50 or more dwelling units: 1 at 40 feet wide or 2 one-way at 30 feet wide, 5 foot"
-or/washington/durham,unread,parking_min_per_unit,or/washington/durham/ddc.3.site-design.txt,371,3.7.1.8,1,"IP, OP, BPO 1 access way per 100 parking spaces, 30 feet wide"
-or/washington/durham,unread,max_units,or/washington/durham/ddc.3.site-design.txt,440,3.7.5,1,Live / Work Dwelling Unit 1.25 per DU plus 2.7 per 1000 sqft gross
-or/washington/durham,unread,max_height_ft,or/washington/durham/ddc.3.site-design.txt,463,3.7.9,1,"at least 6 feet long by 2 feet wide by 7 feet high (if height is restricted), shall include a paved"
-or/washington/durham,unread,max_units,or/washington/durham/ddc.7.supplemental.txt,425,7.3.2,1,"any accessory dwelling unit, and is limited to no more than 1000 square feet of the enclosed"
-or/washington/durham,unread,min_lot_sqft,or/washington/durham/ddc.7.supplemental.txt,723,7.11.4,1,"7.11.4 The minimum lot size for a cottage cluster shall be 10,000 square feet. All other"
-or/washington/durham,unread,max_height_ft,or/washington/durham/ddc.7.supplemental.txt,725,7.11.4,1,maximum building height for all structures in a cottage cluster is 25 feet.
-or/washington/durham,unread,max_units,or/washington/durham/ddc.7.supplemental.txt,733,7.11.7,1,"maximum average floor area for a cottage cluster is 1,400 square feet per dwelling unit. Up to"
-or/washington/durham,unread,max_units,or/washington/durham/ddc.7.supplemental.txt,734,7.11.7,1,200 square feet may be exempted in the calculation of dwelling unit footprint for an attached
-or/washington/durham,unread,parking_min_per_unit,or/washington/durham/ddc.7.supplemental.txt,814,7.11.23,1,7.11.23 Off-street parking spaces shall not be located within 10 feet of any other property
-or/washington/durham,unread,setback_garage_entrance_ft,or/washington/durham/ddc.7.supplemental.txt,833,7.11.28,1,exceed 400 square feet in floor area. Garage doors for attached and detached individual garages
+or/washington/durham,unfielded,,or/washington/durham/12/12.2.txt,78,12.2,1,12.2.36 “Substantial Damage” means damage of any origin sustained by a structure whereby the cost of restoring the structure to its before damaged condition would equal or exceed 50 percent of the mar
+or/washington/durham,unfielded,,or/washington/durham/3/3.7.txt,11,3.7,1,"3.7.1.3 A vehicle access way to a single, detached residential structure shall be 10 feet to 18 feet wide or as wide as 35 percent of the lot frontage, whichever is greater, up to a maximum of 30 feet"
+or/washington/durham,unfielded,,or/washington/durham/3/3.7.txt,33,3.7,1,"SDR (NOT PRD) Driveway 10-30 feet wide, fully paved"
+or/washington/durham,unfielded,,or/washington/durham/3/3.7.txt,60,3.7,1,3.7.4.2 Artificial lighting that does not exceed 1 foot-candle as measured at any boundary of the property and that is not directed towards any adjacent residential structure nor any adjacent public r
+or/washington/durham,unfielded,,or/washington/durham/3/3.7.txt,81,3.7,1,"IP Warehouse Up to 150,000 Sq Ft Gross Floor 1.6 / No maximum"
+or/washington/durham,unfielded,,or/washington/durham/3/3.7.txt,83,3.7,1,"IP Warehouse Over 150,000 Sq Ft Gross Floor 0.3 / No maximum"
+or/washington/durham,unfielded,,or/washington/durham/3/3.9.txt,4,3.9,1,"3.9.1.1 Major arterial, 80 feet, 60 feet paved;"
+or/washington/durham,unfielded,,or/washington/durham/3/3.9.txt,6,3.9,1,"3.9.1.2 Minor arterial, 60 feet, 46 feet paved;"
+or/washington/durham,unfielded,,or/washington/durham/3/3.9.txt,8,3.9,1,"3.9.1.3 Major collector, 60 feet, 42 feet paved;"
+or/washington/durham,unfielded,,or/washington/durham/3/3.9.txt,10,3.9,1,"3.9.1.4 Neighborhood collector, 50 feet, 32 feet paved;"
+or/washington/durham,unfielded,,or/washington/durham/3/3.9.txt,12,3.9,1,"3.9.1.5 Local street and cul-de-sac, 40 feet, 26 feet paved;"
+or/washington/durham,unfielded,,or/washington/durham/3/3.9.txt,14,3.9,1,"3.9.1.6 Cul-de-sac turnaround, 45-foot radius, 38 feet paved."
+or/washington/durham,unfielded,,or/washington/durham/3/3.9.txt,22,3.9,1,No two streets shall be offset at a “T” intersection by less than 100 feet.
+or/washington/durham,unfielded,,or/washington/durham/3/3.9.txt,28,3.9,1,3.9.2.4 The maximum length of a cul-de-sac shall be 300 feet measured from the nearest edge of the curb return of the intersecting street.
+or/washington/durham,unfielded,,or/washington/durham/3/3.9.txt,30,3.9,1,"3.9.2.5 A proposed cul-de-sac of 150 feet or longer shall provide for a bicycle and pedestrian connection from the end of the cul-de-sac to one or more local streets, if any, that abut the land divisi"
+or/washington/durham,unfielded,,or/washington/durham/3/3.9.txt,33,3.9,1,"A curve shall have a center line radius not less than 300 feet on a major arterial, 200 feet on a minor arterial and 100 feet on any other street."
+or/washington/durham,unfielded,,or/washington/durham/4/4.2.txt,8,4.2,1,"4.2.2 The location of the subject property by section, township and range and legal description and by a vicinity map showing the relative position of the property to adjacent properties and to zoning"
+or/washington/durham,unfielded,,or/washington/durham/4/4.2.txt,24,4.2,1,"4.2.9 The location and direction of existing water courses and “water quality sensitive areas” as defined by Clean Water Services (CWS) on site or within 200 feet of any point on the site, together wi"
+or/washington/durham,unfielded,,or/washington/durham/4/4.2.txt,42,4.2,1,4.2.16.1 The applicant shall send at least 20 days’ notice of a community development conference to all persons who own property within 300 feet of any point on the proposed development site.
+or/washington/durham,unfielded,,or/washington/durham/7/7.1.txt,8,7.1,1,"7.1.3 An ADU shall not be larger than 33 percent of the habitable area of the primary residence (excludes garage) or 600 square feet, whichever is less."
+or/washington/durham,unfielded,,or/washington/durham/7/7.10.txt,16,7.10,1,7.10.2.1 No WCF shall include a “top hat” or “playpen” antenna array nor have davit arms extending more than 5 feet from a supporting structure.
+or/washington/durham,unfielded,,or/washington/durham/7/7.11.txt,15,7.11,1,7.11.7 The maximum building footprint for a cottage shall be 900 square feet.
+or/washington/durham,unfielded,,or/washington/durham/7/7.11.txt,29,7.11,1,Cottages must abut the common courtyard on at least two sides of the courtyard; the common courtyard must contain a minimum of 150 square feet per cottage; the common courtyard must be a minimum of 15
+or/washington/durham,unfielded,,or/washington/durham/7/7.11.txt,30,7.11,1,7.11.12 A minimum of 50 percent of cottages within a cluster must be oriented to the common courtyard and must have a main entrance facing the common courtyard; be within 10 feet from the common court
+or/washington/durham,unfielded,,or/washington/durham/7/7.11.txt,54,7.11,1,7.11.21 Cottages within 20 feet of a street property line must meet any window coverage requirement that applies to detached single family dwellings in the same zone
+or/washington/durham,unfielded,,or/washington/durham/7/7.11.txt,73,7.11,1,7.11.28 Individual attached garages up to 200 square feet shall be exempted from the calculation of maximum building footprint for cottages; individual detached garages must not exceed 400 square feet
+or/washington/durham,unfielded,,or/washington/durham/7/7.12.txt,11,7.12,1,7.12.5 The minimum distance between adjacent sets of townhouses shall be 20 feet.
+or/washington/durham,unfielded,,or/washington/durham/7/7.2.txt,196,7.2,1,(1) Less than 200 square feet and do not exceed one story;
+or/washington/durham,unfielded,,or/washington/durham/7/7.5.txt,4,7.5,1,"7.5.1.1 Multi-sectional (""double wide"" or wider) and enclose a floor area of not less than 1,000 square feet;"
+or/washington/durham,unfielded,,or/washington/durham/7/7.5.txt,24,7.5,1,7.5.2.4 Covered porch entry with pillars or posts at least 3 feet from face of structure;
+or/washington/durham,unfielded,,or/washington/durham/8/8.2.txt,33,8.2,1,"8.2.7.7 The date, north point, and scale of the tentative plan on a sheet 18x24 inches or a multiple thereof at a scale of 1 inch=100 feet;"
+or/washington/durham,unread,max_height_ft,or/washington/durham/10/10.2.txt,2,10.2,1,"The City may allow an adjustment of up to 10 percent to one or more numerical or dimensional requirements of this Code as to floor area, frontage, grading, height, lot size, the number and dimension o"
+or/washington/durham,unread,open_space_min_pct,or/washington/durham/10/10.5.txt,14,10.5,1,"10.5.6 a reduction of more than 10 percent in the area reserved for open space; or,"
+or/washington/durham,unread,max_units,or/washington/durham/12/12.2.txt,11,12.2,1,12.2.5 “Cottage Cluster” means a grouping of no fewer than five detached dwelling units with a footprint of less than 900 square feet each that includes a common courtyard.
+or/washington/durham,unread,setback_rear_ft,or/washington/durham/3/3.1.txt,21,3.1,1,"3.1.6 Residential structures may include projections into the setbacks required by this Section 3.1 in the form of balconies, chimneys, porches, roof cornices and similar structural features up to 5 f"
+or/washington/durham,unread,min_lot_sqft,or/washington/durham/3/3.2.txt,4,3.2,1,3.2.2 The minimum lot size for detached single dwellings in a PRD shall be 5000 square feet.
+or/washington/durham,unread,min_lot_sqft,or/washington/durham/3/3.2.txt,5,3.2,1,"The minimum lot size for attached, fee-owned, single unit attached housing in a PRD shall be 2500 square feet."
+or/washington/durham,unread,setback_front_ft,or/washington/durham/3/3.2.txt,8,3.2,1,The City may allow for a reduced front setback to not less than 15 feet as part of the site design.
+or/washington/durham,unread,open_space_min_pct,or/washington/durham/3/3.3.txt,40,3.3,1,3.3.4.5 “Private open space” means that at least half of the housing units in a development have front or rear patios or decks (on the ground floor) or balconies or porches (on upper floors) of at lea
+or/washington/durham,unread,min_lot_width_ft,or/washington/durham/3/3.4.txt,4,3.4,1,"3.4.1.1 Lot dimensions shall average at least 80 feet wide by 80 feet deep, with the lot width to be measured along both the front building line and along the edge of abutting right of way, and with a"
+or/washington/durham,unread,setback_rear_ft,or/washington/durham/3/3.4.txt,7,3.4,1,The minimum side and rear setback shall be 10 feet.
+or/washington/durham,unread,max_height_ft,or/washington/durham/3/3.4.txt,8,3.4,1,3.4.1.3 The maximum height of any structure shall be 35 feet above average grade.
+or/washington/durham,unread,max_far,or/washington/durham/3/3.4.txt,10,3.4,1,3.4.1.4 The maximum floor area ratio shall be 35 percent.
+or/washington/durham,unread,min_lot_width_ft,or/washington/durham/3/3.5.txt,2,3.5,1,"3.5.1 Lot dimensions shall be a minimum lot width of 50 feet, as measured both along the front building line and along abutting right of way, and at least 120 feet deep, with a minimum lot size of 35,"
+or/washington/durham,unread,setback_front_ft,or/washington/durham/3/3.5.txt,4,3.5,1,3.5.1.1 The minimum front setback shall be 30 feet unless otherwise provided in this section.
+or/washington/durham,unread,setback_rear_ft,or/washington/durham/3/3.5.txt,7,3.5,1,"3.5.1.2 If public right of way abutting the front or side of the development forms the boundary with a residential district, each such setback shall be a minimum of 50 feet and any such rear setback s"
+or/washington/durham,unread,setback_rear_ft,or/washington/durham/3/3.5.txt,9,3.5,1,3.5.1.3 If the rear property line forms the boundary with a residential district the minimum rear setback shall be 50 feet.
+or/washington/durham,unread,max_height_ft,or/washington/durham/3/3.5.txt,13,3.5,1,3.5.1.5 The maximum height of any structure shall be 40 feet above average grade.
+or/washington/durham,unread,max_far,or/washington/durham/3/3.5.txt,15,3.5,1,3.5.1.6 The maximum floor area ratio shall be 35 percent.
+or/washington/durham,unread,max_units,or/washington/durham/3/3.7.txt,20,3.7,1,"3.7.1.4.3 For over 50 dwelling units, 1 two -way at least 40 feet wide or 2 one-way at least 30 feet wide, 5 foot sidewalk one side only, no curb required."
+or/washington/durham,unread,max_units,or/washington/durham/3/3.7.txt,34,3.7,1,"MDR - MDDO 1-2 dwelling units: 20 feet wide, no sidewalk or curb required"
+or/washington/durham,unread,max_units,or/washington/durham/3/3.7.txt,35,3.7,1,"AND PLANNED 3-49 dwelling units: 1 at 30 feet wide or 2 one-way 20 feet wide, five foot sidewalk"
+or/washington/durham,unread,max_units,or/washington/durham/3/3.7.txt,37,3.7,1,"DEVELOPMENT 50 or more dwelling units: 1 at 40 feet wide or 2 one-way at 30 feet wide, 5 foot"
+or/washington/durham,unread,parking_min_per_unit,or/washington/durham/3/3.7.txt,39,3.7,1,"IP, OP, BPO 1 access way per 100 parking spaces, 30 feet wide"
+or/washington/durham,unread,max_units,or/washington/durham/3/3.7.txt,77,3.7,1,Live / Work Dwelling Unit 1.25 per DU plus 2.7 per 1000 sqft gross commercial floor area / No maximum
+or/washington/durham,unread,parking_min_per_unit,or/washington/durham/3/3.7.txt,91,3.7,1,"3.7.8 Uses in the BPO, IP and OP districts shall provide at least 2 bicycle parking spaces or ½ space per 1000 square feet of gross floor area, whichever is greater."
+or/washington/durham,unread,max_height_ft,or/washington/durham/3/3.7.txt,93,3.7,1,"3.7.9 Any area designated for bicycle parking shall be convenient, secure and lighted, shall be at least 6 feet long by 2 feet wide by 7 feet high (if height is restricted), shall include a paved mane"
+or/washington/durham,unread,min_lot_sqft,or/washington/durham/7/7.11.txt,8,7.11,1,"7.11.4 The minimum lot size for a cottage cluster shall be 10,000 square feet."
+or/washington/durham,unread,max_height_ft,or/washington/durham/7/7.11.txt,9,7.11,1,"All other Site and Design Standards shall be the same as for the SDR zone, except for building height: The maximum building height for all structures in a cottage cluster is 25 feet."
+or/washington/durham,unread,max_units,or/washington/durham/7/7.11.txt,16,7.11,1,"The maximum average floor area for a cottage cluster is 1,400 square feet per dwelling unit."
+or/washington/durham,unread,max_units,or/washington/durham/7/7.11.txt,17,7.11,1,Up to 200 square feet may be exempted in the calculation of dwelling unit footprint for an attached garage or carport.
+or/washington/durham,unread,parking_min_per_unit,or/washington/durham/7/7.11.txt,56,7.11,1,"7.11.22 Off-street parking spaces and vehicle maneuvering areas shall not be located within of 20 feet from any street property line, except alley property lines; between a street property line and th"
+or/washington/durham,unread,parking_min_per_unit,or/washington/durham/7/7.11.txt,59,7.11,1,"7.11.23 Off-street parking spaces shall not be located within 10 feet of any other property line, except alley property lines."
+or/washington/durham,unread,setback_garage_entrance_ft,or/washington/durham/7/7.11.txt,74,7.11,1,Garage doors for attached and detached individual garages must not exceed 20 feet in width.
+or/washington/durham,unread,max_height_ft,or/washington/durham/7/7.2.txt,181,7.2,1,"7.2.13.7 The height of the below-grade crawlspace, measured from the interior grade of the crawlspace to the top of the crawlspace foundation wall must not exceed four (4) feet at any point."
+or/washington/durham,unread,max_units,or/washington/durham/7/7.3.txt,6,7.3,1,"7.3.2 The commercial activity is only an incidental use of the dwelling, does not occupy any accessory dwelling unit, and is limited to no more than 1000 square feet of the enclosed space, including a"
 or/washington/hillsboro,unfielded,,or/washington/hillsboro/cdc.12.01.general.txt,188,12.01.200,1,adjustment is a distance of less than 20 feet.
 or/washington/hillsboro,unfielded,,or/washington/hillsboro/cdc.12.01.general.txt,1272,12.01.500,1,• 400 square feet or less when measured at the largest horizontal projections;
 or/washington/hillsboro,unfielded,,or/washington/hillsboro/cdc.12.21.middle-housing-zones.txt,311,12.21.150,3,feet and minimum lot depth is 65 feet. Variation
@@ -8426,198 +8463,180 @@ or/washington/hillsboro,unread,max_units,or/washington/hillsboro/cdc.12.68.witch
 or/washington/hillsboro,unread,min_lot_width_ft,or/washington/hillsboro/cdc.12.68.witch-hazel-village-south.txt,424,12.68.270,1,middle housing dwellings with lot widths less than 50 feet shall be oriented with the side lot lines
 or/washington/hillsboro,unread,setback_front_ft,or/washington/hillsboro/cdc.12.68.witch-hazel-village-south.txt,812,12.68.710,1,"Subsection B.3.a—d, the front setback may be reduced to 10 feet for the dwelling"
 or/washington/hillsboro,unread,max_height_ft,or/washington/hillsboro/cdc.12.80.applications.txt,1192,12.80.099,1,4. Increases in proposed building height within 100 feet of single detached and middle
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,88,16.102.040,1,Duplex 48 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,89,16.102.040,1,Single-family detached 40 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,97,16.102.040,1,Duplex 60 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,98,16.102.040,1,Single-family detached 60 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,112,16.102.040,1,10 feet minimum and 26 feet maximum to front building wall.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,113,16.102.040,1,6 feet minimum and 15 feet maximum to front porch.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,114,16.102.040,1,18 feet from the nearest edge of the public sidewalk to front
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,118,16.102.060,1,16.102.060.B shall be satisfied. 0-6 feet or ≥ 18 feet to a garage
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,128,16.102.060,1,6 feet minimum for a side yard facing a street. 18 feet from
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,133,16.102.060,1,16.102.060.B shall be satisfied. 0—6 feet or ≥ 18 feet to a ga-
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,139,16.102.060,1,"0 feet minimum, or a minimum of 3 feet. In all cases, 0-foot"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,141,16.102.060,1,line; or (2) have a minimum separation of 6 feet.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,142,16.102.060,1,"0 feet minimum, for side yard lot lines adjacent to other prop-"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,143,16.102.060,1,"erty zoned NMU or LC, or a minimum of 3 feet. In all cases,"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,145,16.102.060,1,property line; or (2) have a minimum separation of 6 feet. 10
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,156,16.102.040,1,10 feet minimum for residential building.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,157,16.102.040,1,0 feet for a detached accessory dwelling or building less than
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,160,16.102.040,1,10 feet minimum adjacent to property zoned NMU or LC. 20
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,162,16.102.040,1,is not zoned NMU or LC. 5 feet for a detached accessory
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,179,16.102.040,2,35 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,185,16.102.040,1,Accessory structures and detached accessory dwellings 25 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,216,16.102.050,1,Location Within 8 feet of the longest front building wall. The appli-
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,219,16.102.050,1,Orientation Face the street at an angle that does not exceed 45 degrees; or
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,221,16.102.050,1,• A minimum of 25 square feet with a minimum dimension
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,222,16.102.050,1,of 4 feet;
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,224,16.102.050,1,• A roof that covers at least 30 percent of the porch area (see
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,227,16.102.050,1,Minimum glazing area 20 sq. ft. for each building wall facing a street. Windows in
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,231,16.102.050,1,essary to meet the 20 sq. ft. minimum glazing area standard.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,236,16.102.050,1,than 6 feet less than the front building wall setback. 60%
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,237,16.102.050,1,when the garage setback is at least 2 feet behind the front
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,239,16.102.050,1,at least 4 feet behind the front building wall or front porch.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,245,16.102.050,1,setback is at least 4 feet behind the front building wall or
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,253,16.102.050,2,that is up to 10 feet wide.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,263,16.102.050,1,sion shall be less than 10 feet. This standard is not required
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,267,16.102.050,1,which no dimension shall be less than 15 feet.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,271,16.102.050,1,tiguous area of 400 square feet per unit in the development
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,272,16.102.050,1,"with a minimum size of 4,000 square feet, of which no dimen-"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,273,16.102.050,1,sion shall be less than 40 feet.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,280,16.102.050,1,"• Be within 20 feet of, and facing the street upon which the"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,282,16.102.050,1,• Be located on the side of the building within 50 feet direct
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,326,16.102.060,1,a. A sidewalk clear zone with a minimum width of 6 feet; and
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.102.nmu.txt,327,16.102.060,1,"b. Street furniture zone with a minimum width of 5 feet, including the curb."
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,92,16.104.040,1,10 feet minimum along 99W .
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,103,16.104.040,2,"0 feet, except when abutting a residential zone where a minimum of 10 feet is re-"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,107,16.104.040,1,line or (2) have a minimum separation of 6 feet.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,108,16.104.040,1,10 feet minimum when abutting a residential zone.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,120,16.104.040,1,Accessory structures 18 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,138,16.104.040,1,"• Be within 20 feet of, and facing the street; or"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,139,16.104.040,1,• Be located on the side of the building within direct walking distance of 50 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,144,16.104.040,1,to meet the minimum glazing area standard is 2 feet for non-residential uses and 4
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,469,16.114.060,1,25 14 ft. 14 ft. 14 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,472,16.114.060,1,4 ft. Horizontal Dimension and Min.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,473,16.114.060,1,9 ft. Vertical Clearance
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,1656,16.114.090,1,more than 20 percent.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2116,16.114.120,1,"102 feet,"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2118,16.114.120,8,6 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2119,16.114.120,8,5 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2121,16.114.120,7,12 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2122,16.114.120,7,8 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2123,16.114.120,7,7 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2125,16.114.120,3,Shared 2 11 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2135,16.114.120,1,"100 feet,"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2154,16.114.120,2,"60 feet,"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2173,16.114.120,1,"90 feet,"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2182,16.114.120,1,Shared 2 12 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2199,16.114.120,1,Shared 2 10 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2208,16.114.120,1,"78 feet,"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2217,16.114.120,1,Protected 2 10 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2225,16.114.120,1,62 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2229,16.114.120,1,12 feet 8 feet Protected 2 10 feet Local
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2234,16.114.120,1,66 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2242,16.114.120,1,Separated 2 10 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2251,16.114.120,1,50—60 feet 5 feet 15—20 feet [
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2252,16.114.120,1,31] [ 32] 2 10 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2263,16.114.120,1,46 feet 5 feet 10.5 feet 1 lane at 7 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2264,16.114.120,1,35 Shared 1+ 14 feet Local
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2270,16.114.120,1,50 feet 5 feet 10.5 feet 2 lanes at
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2271,16.114.120,1,7 feet each Shared 1+ 14 feet Local
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2291,16.114-23,1,42 feet 10.5 feet 5 feet None Shared 1+ 20 feet Local
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2294,16.114-23,1,Figure 16.114-24 20.0—34.5 feet NA NA NA NA 1+ 14—20 feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2360,16.114.120,1,iv. No on-street parking is permitted within 30 feet of an intersection.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2470,16.114.120,1,"Dwelling, single detached or attached 1 10 ft. 10 ft."
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2471,16.114.120,1,"Dwellings, multi 1 30 ft. 15 ft. for 1-way 20 ft. for 2-way"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2472,16.114.120,1,Curbs and 5 ft. Walkway Required
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2477,16.114.120,1,50 ft. With Parking 40 ft. Curbs Required
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2575,16.114.120,1,"1. Retail Sales and Service Retail, Personal Service, Repair 1 space per 200 square feet."
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2578,16.114.120,1,1 space per 600 square feet of gross floor
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2580,16.114.120,1,"Restaurants, Health clubs, meeting rooms 1 space per 133 square feet of gross leas-"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2585,16.114.120,1,2. Office Professional Government 1 space per 200 square feet.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2586,16.114.120,1,"Medical, Dental 1 space per 200 square feet."
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2587,16.114.120,1,"3. Automotive Vehicle Repair 1 space per 6,000 square feet, or 2 mini-"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2589,16.114.120,1,"Quick Vehicle Service, Car Wash 1 space per 6,000 square feet, or 2 mini-"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2596,16.114.120,1,"1 space per 7,000 square feet of gross area,"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2597,16.114.120,1,or 1 space per 700 square feet of building
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2604,16.114.120,1,"shift, or 1 space for each 350 square feet of"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2726,16.114.130,1,Compact 8.0 ft. 22.5 ft. 12 ft. 20 ft. 8.0 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2727,16.114.130,1,30 ° Standard 9.0 ft. 9.0 ft. 12 ft. 20 ft. 16.0 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2728,16.114.130,2,Compact 8.0 ft. 8.0 ft. 12 ft. 20 ft. 15.0 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2729,16.114.130,1,45 ° Standard 9.0 ft. 9.0 ft. 12 ft. 20 ft. 16.0 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2731,16.114.130,1,60 ° Standard 9.0 ft. 9.0 ft. 16.0 ft. 20.0 ft. 16.0 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2761,16.114.130,1,"1 space per 2,500 square feet of floor area,"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2771,16.114.130,1,"2. Office Professional Government 1 space per 2,500 square feet of floor area,"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2775,16.114.130,1,"1. Public Safety Facilities 1 space per 4,000 sq. ft., or 2 spaces mini-"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2779,16.114.130,1,2 spaces within 50 feet of each developed
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2787,16.114.130,1,"5. Utilities 1 space per 4,000 sq. ft., or 2 spaces mini-"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,228,16.132.040,1,"such as Home Appliances, Furniture 2 spaces per 1,000 sq. ft. of floor area"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,230,16.132.040,1,"rooms 19 spaces per 1,000 sq. ft. of floor area"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,233,16.132.040,1,• Theater 1 space per 2.5 seats or 1 per 5 feet of
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,235,16.132.040,1,2. Office • Professional Government 1 space per 400 sq. ft. of floor area
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,236,16.132.040,1,"• Medical, Dental 1 space per 250 sq. ft. of floor area"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,237,16.132.040,1,3. Automotive • Vehicle Repair 2 spaces per 750 sq. ft. of floor area
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,238,16.132.040,1,"• Quick Vehicle Service, Car Wash 1 space per 500 sq. ft. of floor area"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,243,16.132.040,1,1. Public Safety Facilities 1 space per 500 sq. ft. of floor area
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,406,16.132.070,1,"such as home appliances, furniture 1 space per 6,000 sq. ft. or 2 minimum"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,408,16.132.070,1,"Rooms 1 space per 5,000 sq. ft. or 6 minimum"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,415,16.132.060,1,"2. Office • Professional Government 1 space per 4,000 sq. ft. or 2 minimum"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,416,16.132.060,1,"• Medical, Dental 1 space per 5,000 sq. ft. or 2 minimum"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,417,16.132.060,1,"3. Automotive • Service Stations, Vehicle Repair 1 space per 6,000 sq. ft. or 2 minimum"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.132.parking.txt,418,16.132.060,1,"• Quick Vehicle Service, Car Wash 1 space per 6,000 sq. ft. or 2 minimum"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,58,16.136.030,1,1 1 15 ft. 10 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,61,16.136.030,1,15 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,62,16.136.030,1,25 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,63,16.136.030,1,10 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,64,16.136.030,2,20 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,65,16.136.030,1,3—6 1 30 ft. 24 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,77,16.136.030,1,1—2 1 10 ft. 10 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,80,16.136.030,1,30 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,82,16.136.030,1,24 ft. if two-way
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,83,16.136.030,1,15 ft. if one-way
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,91,16.136.030,1,30 ft. 24 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,130,16.136.040,1,0—99 1 30 ft. 24 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,135,16.136.040,1,100+ 2 30 ft. 24 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.136.circulation.txt,142,16.136.040,1,1 50 ft. 40 ft.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,137,16.84.050,1,Location Within 8 feet of the longest front building wall (see
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,143,16.84.050,1,• A minimum of 25 square feet with a minimum di-
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,144,16.84.050,1,mension of 4 feet;
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,146,16.84.050,1,• A roof that covers at least 30 percent of the porch
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,149,16.84.050,1,Minimum glazing area 20 sq. ft. for each building wall facing a street.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,153,16.84.050,1,dow(s) necessary to meet the 20 sq. ft. minimum glaz-
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,159,16.84.050,1,shall be no more than 6 feet less than the front build-
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,161,16.84.050,1,60% when the garage setback is at least 4 feet behind
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,163,16.84.050,1,70% when the garage setback is at least 8 feet behind
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,169,16.84.050,1,70% when the garage setback is at least 4 feet behind
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,178,16.84.050,1,"of 400 square feet shall be provided on each lot, of"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,179,16.84.050,2,which no dimension shall be less than 10 feet. This
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,189,16.84.050,1,"of 300 square feet shall be provided on each lot, of"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,197,16.84.050,1,have a minimum contiguous area of 500 square feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.84.single-use-residential.txt,200,16.84.050,1,40 feet.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,160,16.94.050,1,Location Within 8 feet of the longest front building wall (see
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,166,16.94.050,1,• A minimum of 25 square feet with a minimum di-
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,167,16.94.050,1,mension of 4 feet;
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,169,16.94.050,1,• A roof that covers at least 30 percent of the porch
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,172,16.94.050,1,Minimum glazing area 20 sq. ft. for each building wall facing a street.
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,176,16.94.050,1,dow(s) necessary to meet the 20 sq. ft. minimum glaz-
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,182,16.94.050,1,be no more than 6 feet less than the front building
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,184,16.94.050,1,60% when the garage setback is at least 2 feet behind
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,186,16.94.050,2,70% when the garage setback is at least 4 feet behind
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,203,16.94.050,1,"of 300 square feet shall be provided on each lot, of"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,204,16.94.050,2,which no dimension shall be less than 10 feet. This
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,215,16.94.050,1,"of 200 square feet shall be provided on each lot, of"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,221,16.94.050,1,of 200 square feet shall be provided for each unit on
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,227,16.94.050,1,have a minimum contiguous area of 400 square feet
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,229,16.94.050,1,"4,000 square feet, of which no dimension shall be less"
-or/washington/king-city,unfielded,,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,230,16.94.050,1,than 40 feet.
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.102.nmu.txt,90,16.102.040,1,Single-family attached and 0-foot setback detached units 20 feet
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.102.nmu.txt,91,16.102.040,1,Multi-family units 48 feet
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.102.nmu.txt,92,16.102.040,1,Live-work units 24 feet
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.102.nmu.txt,99,16.102.040,1,Single-family attached and 0-foot setback detached units 60 feet
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.102.nmu.txt,100,16.102.040,1,Multi-family units 60 feet
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.102.nmu.txt,101,16.102.040,1,Live-work units 60 feet
-or/washington/king-city,unread,max_height_ft,or/washington/king-city/kcc.16.102.nmu.txt,158,16.102.040,1,18 feet in height.
-or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/kcc.16.102.nmu.txt,159,16.102.040,1,0—6 feet or ≥ 18 feet to a garage entrance to an alley .
-or/washington/king-city,unread,max_height_ft,or/washington/king-city/kcc.16.102.nmu.txt,163,16.102.040,1,building less than 18 feet in height. 0—6 feet or ≥ 18 feet to a
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.102.nmu.txt,180,16.102.040,1,Live-work units 35 feet
-or/washington/king-city,unread,max_height_ft,or/washington/king-city/kcc.16.102.nmu.txt,199,16.102.040,1,3 Building height may be increased to a maximum of 45 feet as provided in Figure 1.
-or/washington/king-city,unread,max_height_ft,or/washington/king-city/kcc.16.102.nmu.txt,230,16.102.050,1,Maximum window sill height 4 ft. above finished first floor elevation for the window(s) nec-
-or/washington/king-city,unread,max_height_ft,or/washington/king-city/kcc.16.102.nmu.txt,295,16.102.050,1,Maximum window sill height 4 feet above finished first floor elevation for the window(s)
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,66,16.104.040,1,"Multi-family units 1,600 square feet"
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,71,16.104.040,1,Multi-family units 48 feet
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,76,16.104.040,1,Multi-family units 60 feet
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,89,16.104.040,1,Multi-family units 10 feet minimum and 20-foot maximum along public street portions of SW 116
-or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,96,16.104.040,1,18 feet from the nearest edge of the public sidewalk to front of garage entrance for
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,105,16.104.040,1,"Multi-family units 0 feet, except as required by the Uniform Building Code (UBC), or a minimum of 3"
-or/washington/king-city,unread,max_units,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,114,16.104.040,1,Multi-family units 10 feet minimum
-or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt,115,16.104.040,1,Garage entrance 0-6 feet or ≥ 18 feet to a garage entrance for individual garage spaces to an alley .
-or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/kcc.16.114.kingston-terrace.txt,299,16,1,21 Zero to 6 feet or greater than 18 feet to a garage entrance to an alley.
-or/washington/king-city,unread,parking_min_per_unit,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2474,16.114.120,1,(0-99 Parking Spaces) 1 30 ft. 24 ft. Curbs Required
-or/washington/king-city,unread,parking_min_per_unit,or/washington/king-city/kcc.16.114.kingston-terrace.txt,2476,16.114.120,1,(100+ Parking Spaces) 1 30 ft. Without Parking 24 ft. Curbs Required
-or/washington/king-city,unread,max_height_ft,or/washington/king-city/kcc.16.84.single-use-residential.txt,152,16.84.050,1,Maximum window sill height 4 ft. above finished first floor elevation for the win-
-or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/kcc.16.84.single-use-residential.txt,173,16.84.050,1,one garage door that is up to 10 feet wide.
-or/washington/king-city,unread,max_height_ft,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,175,16.94.050,1,Maximum window sill height 4 ft. above finished first floor elevation for the win-
-or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/kcc.16.88-16.100.residential-zones.txt,196,16.94.050,1,one garage door that is up to 10 feet wide.
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,13,16.102.040,1,Duplex 48 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,14,16.102.040,1,Single-family detached 40 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,21,16.102.040,1,Duplex 60 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,22,16.102.040,1,Single-family detached 60 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,33,16.102.040,1,10 feet minimum and 26 feet maximum to front building wall.
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,34,16.102.040,1,6 feet minimum and 15 feet maximum to front porch.
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,51,16.102.040,1,"0 feet minimum, or a minimum of 3 feet."
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,52,16.102.040,1,"In all cases, 0-foot setback buildings shall either: (1) be attached at the property line; or (2) have a minimum separation of 6 feet."
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,53,16.102.040,1,"0 feet minimum, for side yard lot lines adjacent to other property zoned NMU or LC, or a minimum of 3 feet."
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,55,16.102.040,1,"0-foot setback buildings shall either: (1) be attached at the property line; or (2) have a minimum separation of 6 feet. 10 feet minimum, for side yard lot lines adjacent to property that is not zoned"
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,61,16.102.040,1,10 feet minimum for residential building.
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,62,16.102.040,1,0 feet for a detached accessory dwelling or building less than
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,76,16.102.040,2,35 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.040.txt,81,16.102.040,1,Accessory structures and detached accessory dwellings 25 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.050.txt,6,16.102.050,1,Location Within 8 feet of the longest front building wall.
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.050.txt,8,16.102.050,1,Orientation Face the street at an angle that does not exceed 45 degrees; or
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.050.txt,10,16.102.050,1,• A minimum of 25 square feet with a minimum dimension of 4 feet;
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.050.txt,12,16.102.050,1,• A roof that covers at least 30 percent of the porch area (see
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.050.txt,15,16.102.050,1,Minimum glazing area 20 sq. ft. for each building wall facing a street.
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.050.txt,23,16.102.050,1,30% when the garage setback is less than the front building wall or front porch. 60% when the garage setback is equal to or greater than the front building wall. 70% when the garage setback is at leas
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.050.txt,41,16.102.050,1,"• Be within 20 feet of, and facing the street upon which the building has frontage; or"
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.050.txt,42,16.102.050,1,• Be located on the side of the building within 50 feet direct walking distance from the public sidewalk along the collector or arterial street.
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.060.txt,5,16.102.060,1,a. A sidewalk clear zone with a minimum width of 6 feet; and
+or/washington/king-city,unfielded,,or/washington/king-city/16.102/16.102.060.txt,6,16.102.060,1,"b. Street furniture zone with a minimum width of 5 feet, including the curb."
+or/washington/king-city,unfielded,,or/washington/king-city/16.104/16.104.040.txt,30,16.104.040,1,10 feet minimum along 99W .
+or/washington/king-city,unfielded,,or/washington/king-city/16.104/16.104.040.txt,38,16.104.040,2,"0 feet, except when abutting a residential zone where a minimum of 10 feet is required."
+or/washington/king-city,unfielded,,or/washington/king-city/16.104/16.104.040.txt,40,16.104.040,1,"In all cases, 0-foot setback buildings shall either (1) be attached at the property line or (2) have a minimum separation of 6 feet."
+or/washington/king-city,unfielded,,or/washington/king-city/16.104/16.104.040.txt,41,16.104.040,1,10 feet minimum when abutting a residential zone.
+or/washington/king-city,unfielded,,or/washington/king-city/16.104/16.104.040.txt,51,16.104.040,1,Accessory structures 18 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.104/16.104.050.txt,8,16.104.050,1,"• Be within 20 feet of, and facing the street; or"
+or/washington/king-city,unfielded,,or/washington/king-city/16.104/16.104.050.txt,9,16.104.050,1,• Be located on the side of the building within direct walking distance of 50 feet between the public sidewalk and the entrance.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.060.txt,122,16.114.060,1,25 14 ft. 14 ft. 14 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.060.txt,125,16.114.060,1,4 ft. Horizontal Dimension and Min.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.060.txt,126,16.114.060,1,9 ft. Vertical Clearance
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.090.txt,250,16.114.090,1,a. The proposed adjustment does not repre-sent a deviation from the applicable standard by more than 20 percent.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,95,16.114.120,1,"102 feet, typical"
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,96,16.114.120,8,6 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,97,16.114.120,8,5 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,99,16.114.120,7,12 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,100,16.114.120,7,8 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,101,16.114.120,7,7 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,103,16.114.120,3,Shared 2 11 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,112,16.114.120,1,"100 feet, typical"
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,129,16.114.120,2,"60 feet, max."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,146,16.114.120,1,"90 feet, max."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,154,16.114.120,1,Shared 2 12 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,169,16.114.120,1,Shared 2 10 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,177,16.114.120,1,"78 feet, max."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,185,16.114.120,1,Protected 2 10 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,192,16.114.120,1,62 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,196,16.114.120,1,12 feet 8 feet Protected 2 10 feet Local
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,201,16.114.120,1,66 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,209,16.114.120,1,Separated 2 10 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,217,16.114.120,1,50—60 feet 5 feet 15—20 feet [
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,218,16.114.120,1,31] [ 32] 2 10 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,228,16.114.120,1,46 feet 5 feet 10.5 feet 1 lane at 7 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,229,16.114.120,1,35 Shared 1+ 14 feet Local
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,235,16.114.120,1,50 feet 5 feet 10.5 feet 2 lanes at
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,236,16.114.120,1,7 feet each Shared 1+ 14 feet Local
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,251,16.114.120,1,42 feet 10.5 feet 5 feet None Shared 1+ 20 feet Local
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,254,16.114.120,1,Figure 16.114-24 20.0—34.5 feet NA NA NA NA 1+ 14—20 feet
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,288,16.114.120,1,iv. No on-street parking is permitted within 30 feet of an intersection.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,341,16.114.120,1,"Dwelling, single detached or attached 1 10 ft. 10 ft."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,342,16.114.120,1,"Dwellings, multi 1 30 ft. 15 ft. for 1-way 20 ft. for 2-way"
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,343,16.114.120,1,Curbs and 5 ft. Walkway Required
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.120.txt,348,16.114.120,1,50 ft. With Parking 40 ft. Curbs Required
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,28,16.114.130,1,"1. Retail Sales and Service Retail, Personal Service, Repair 1 space per 200 square feet."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,31,16.114.130,1,1 space per 600 square feet of gross floor area.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,32,16.114.130,1,"Restaurants, Health clubs, meeting rooms 1 space per 133 square feet of gross leas-able floor area."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,35,16.114.130,1,2. Office Professional Government 1 space per 200 square feet.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,36,16.114.130,1,"Medical, Dental 1 space per 200 square feet."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,37,16.114.130,1,"3. Automotive Vehicle Repair 1 space per 6,000 square feet, or 2 minimum."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,38,16.114.130,1,"Quick Vehicle Service, Car Wash 1 space per 6,000 square feet, or 2 minimum."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,42,16.114.130,1,"1 space per 7,000 square feet of gross area, or 1 space per 700 square feet of building floor area, whichever is greater."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,46,16.114.130,1,"1 space per 1.5 employees on the largest shift, or 1 space for each 350 square feet of gross floor area, plus 1 space per fleet vehicle."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,95,16.114.130,1,Compact 8.0 ft. 22.5 ft. 12 ft. 20 ft. 8.0 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,96,16.114.130,1,30 ° Standard 9.0 ft. 9.0 ft. 12 ft. 20 ft. 16.0 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,97,16.114.130,2,Compact 8.0 ft. 8.0 ft. 12 ft. 20 ft. 15.0 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,98,16.114.130,1,45 ° Standard 9.0 ft. 9.0 ft. 12 ft. 20 ft. 16.0 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,100,16.114.130,1,60 ° Standard 9.0 ft. 9.0 ft. 16.0 ft. 20.0 ft. 16.0 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,128,16.114.130,1,"1 space per 2,500 square feet of floor area, or 2 spaces minimum."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,136,16.114.130,1,"2. Office Professional Government 1 space per 2,500 square feet of floor area, or 2 spaces minimum Medical, Dental"
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,140,16.114.130,1,"1. Public Safety Facilities 1 space per 4,000 sq. ft., or 2 spaces minimum."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,142,16.114.130,1,"2 spaces within 50 feet of each developed playground, ball field, and shelter; or a minimum of 8 spaces per park."
+or/washington/king-city,unfielded,,or/washington/king-city/16.114/16.114.130.txt,147,16.114.130,1,"5. Utilities 1 space per 4,000 sq. ft., or 2 spaces minimum."
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.040.txt,17,16.132.040,1,"• Retail, Repair Large Merchandise such as Home Appliances, Furniture 2 spaces per 1,000 sq. ft. of floor area"
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.040.txt,18,16.132.040,1,"• Restaurants, Health clubs, Meeting rooms 19 spaces per 1,000 sq. ft. of floor area"
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.040.txt,20,16.132.040,1,• Theater 1 space per 2.5 seats or 1 per 5 feet of bench
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.040.txt,21,16.132.040,1,2. Office • Professional Government 1 space per 400 sq. ft. of floor area
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.040.txt,22,16.132.040,1,"• Medical, Dental 1 space per 250 sq. ft. of floor area"
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.040.txt,23,16.132.040,1,3. Automotive • Vehicle Repair 2 spaces per 750 sq. ft. of floor area
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.040.txt,24,16.132.040,1,"• Quick Vehicle Service, Car Wash 1 space per 500 sq. ft. of floor area"
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.040.txt,27,16.132.040,1,1. Public Safety Facilities 1 space per 500 sq. ft. of floor area
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.070.txt,17,16.132.070,1,"• Retail, Repair Large merchandise such as home appliances, furniture 1 space per 6,000 sq. ft. or 2 minimum"
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.070.txt,19,16.132.070,1,"Rooms 1 space per 5,000 sq. ft. or 6 minimum"
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.070.txt,24,16.132.070,1,"2. Office • Professional Government 1 space per 4,000 sq. ft. or 2 minimum"
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.070.txt,25,16.132.070,1,"• Medical, Dental 1 space per 5,000 sq. ft. or 2 minimum"
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.070.txt,26,16.132.070,1,"3. Automotive • Service Stations, Vehicle Repair 1 space per 6,000 sq. ft. or 2 minimum"
+or/washington/king-city,unfielded,,or/washington/king-city/16.132/16.132.070.txt,27,16.132.070,1,"• Quick Vehicle Service, Car Wash 1 space per 6,000 sq. ft. or 2 minimum"
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,11,16.136.030,1,1 1 15 ft. 10 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,13,16.136.030,1,15 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,14,16.136.030,1,25 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,15,16.136.030,1,10 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,16,16.136.030,2,20 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,17,16.136.030,1,3—6 1 30 ft. 24 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,28,16.136.030,1,1—2 1 10 ft. 10 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,30,16.136.030,1,30 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,32,16.136.030,1,24 ft. if two-way
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,33,16.136.030,1,15 ft. if one-way
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.030.txt,39,16.136.030,1,30 ft. 24 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.040.txt,9,16.136.040,1,0—99 1 30 ft. 24 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.040.txt,12,16.136.040,1,100+ 2 30 ft. 24 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.136/16.136.040.txt,16,16.136.040,1,1 50 ft. 40 ft.
+or/washington/king-city,unfielded,,or/washington/king-city/16.84/16.84.050.txt,5,16.84.050,1,Location Within 8 feet of the longest front building wall (see
+or/washington/king-city,unfielded,,or/washington/king-city/16.84/16.84.050.txt,9,16.84.050,1,• A minimum of 25 square feet with a minimum dimension of 4 feet;
+or/washington/king-city,unfielded,,or/washington/king-city/16.84/16.84.050.txt,11,16.84.050,1,• A roof that covers at least 30 percent of the porch area (see Figure 2).
+or/washington/king-city,unfielded,,or/washington/king-city/16.84/16.84.050.txt,13,16.84.050,1,Minimum glazing area 20 sq. ft. for each building wall facing a street.
+or/washington/king-city,unfielded,,or/washington/king-city/16.84/16.84.050.txt,19,16.84.050,1,60% when the garage setback is at least 4 feet behind the front building wall or front porch.
+or/washington/king-city,unfielded,,or/washington/king-city/16.84/16.84.050.txt,20,16.84.050,1,70% when the garage setback is at least 8 feet behind the front building wall or front porch.
+or/washington/king-city,unfielded,,or/washington/king-city/16.84/16.84.050.txt,23,16.84.050,1,70% when the garage setback is at least 4 feet behind the front building wall or front porch.
+or/washington/king-city,unfielded,,or/washington/king-city/16.84/16.84.050.txt,36,16.84.050,1,40 feet.
+or/washington/king-city,unfielded,,or/washington/king-city/16.94/16.94.050.txt,5,16.94.050,1,Location Within 8 feet of the longest front building wall (see
+or/washington/king-city,unfielded,,or/washington/king-city/16.94/16.94.050.txt,9,16.94.050,1,• A minimum of 25 square feet with a minimum dimension of 4 feet;
+or/washington/king-city,unfielded,,or/washington/king-city/16.94/16.94.050.txt,11,16.94.050,1,• A roof that covers at least 30 percent of the porch area (see Figure 2).
+or/washington/king-city,unfielded,,or/washington/king-city/16.94/16.94.050.txt,13,16.94.050,1,Minimum glazing area 20 sq. ft. for each building wall facing a street.
+or/washington/king-city,unfielded,,or/washington/king-city/16.94/16.94.050.txt,19,16.94.050,1,60% when the garage setback is at least 2 feet behind the front building wall or front porch.
+or/washington/king-city,unfielded,,or/washington/king-city/16.94/16.94.050.txt,20,16.94.050,2,70% when the garage setback is at least 4 feet behind the front building wall or front porch.
+or/washington/king-city,unfielded,,or/washington/king-city/16.94/16.94.050.txt,39,16.94.050,1,"4,000 square feet, of which no dimension shall be less than 40 feet."
+or/washington/king-city,unread,max_units,or/washington/king-city/16.102/16.102.040.txt,15,16.102.040,1,Single-family attached and 0-foot setback detached units 20 feet
+or/washington/king-city,unread,max_units,or/washington/king-city/16.102/16.102.040.txt,16,16.102.040,1,Multi-family units 48 feet
+or/washington/king-city,unread,max_units,or/washington/king-city/16.102/16.102.040.txt,17,16.102.040,1,Live-work units 24 feet
+or/washington/king-city,unread,max_units,or/washington/king-city/16.102/16.102.040.txt,23,16.102.040,1,Single-family attached and 0-foot setback detached units 60 feet
+or/washington/king-city,unread,max_units,or/washington/king-city/16.102/16.102.040.txt,24,16.102.040,1,Multi-family units 60 feet
+or/washington/king-city,unread,max_units,or/washington/king-city/16.102/16.102.040.txt,25,16.102.040,1,Live-work units 60 feet
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.102/16.102.040.txt,35,16.102.040,1,18 feet from the nearest edge of the public sidewalk to front of garage entrance.
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.102/16.102.040.txt,38,16.102.040,1,16.102.060.B shall be satisfied. 0-6 feet or ≥ 18 feet to a garage entrance if driveway parking is allowed.
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.102/16.102.040.txt,44,16.102.040,1,6 feet minimum for a side yard facing a street. 18 feet from the nearest edge of the public sidewalk to front of garage entrance.
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.102/16.102.040.txt,47,16.102.040,1,16.102.060.B shall be satisfied. 0—6 feet or ≥ 18 feet to a garage entrance if driveway parking is allowed.
+or/washington/king-city,unread,max_height_ft,or/washington/king-city/16.102/16.102.040.txt,63,16.102.040,1,18 feet in height.
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.102/16.102.040.txt,64,16.102.040,1,0—6 feet or ≥ 18 feet to a garage entrance to an alley .
+or/washington/king-city,unread,max_height_ft,or/washington/king-city/16.102/16.102.040.txt,65,16.102.040,1,"10 feet minimum adjacent to property zoned NMU or LC. 20 feet minimum, for side yard lot lines adjacent to property that is not zoned NMU or LC. 5 feet for a detached accessory building less than 18 f"
+or/washington/king-city,unread,max_units,or/washington/king-city/16.102/16.102.040.txt,77,16.102.040,1,Live-work units 35 feet
+or/washington/king-city,unread,max_height_ft,or/washington/king-city/16.102/16.102.040.txt,91,16.102.040,1,3 Building height may be increased to a maximum of 45 feet as provided in Figure 1. 4 Floor area ratios (F ARs) apply to the total floor area in a mixed-use project regardless of the use.
+or/washington/king-city,unread,max_height_ft,or/washington/king-city/16.102/16.102.050.txt,17,16.102.050,1,Maximum window sill height 4 ft. above finished first floor elevation for the window(s) necessary to meet the 20 sq. ft. minimum glazing area standard.
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.102/16.102.050.txt,21,16.102.050,1,The garage door setback shall be no more than 6 feet less than the front building wall setback. 60% when the garage setback is at least 2 feet behind the front building wall or front porch. 70% when t
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.102/16.102.050.txt,26,16.102.050,2,"Minimum garage door width Notwithstanding the above requirements for garage door widths, a residence shall be permitted to have one garage door that is up to 10 feet wide."
+or/washington/king-city,unread,open_space_min_pct,or/washington/king-city/16.102/16.102.050.txt,32,16.102.050,1,"Minimum contiguous rear or side yard outdoor area of 200 square feet shall be provided on each lot, of which no dimension shall be less than 10 feet."
+or/washington/king-city,unread,max_units,or/washington/king-city/16.102/16.102.050.txt,34,16.102.050,1,"Multi-family units Minimum contiguous rear or side yard outdoor area of 200 square feet shall be provided for each unit on the lot, of which no dimension shall be less than 15 feet."
+or/washington/king-city,unread,open_space_min_pct,or/washington/king-city/16.102/16.102.050.txt,36,16.102.050,1,"This common outdoor area shall have a minimum contiguous area of 400 square feet per unit in the development with a minimum size of 4,000 square feet, of which no dimension shall be less than 40 feet."
+or/washington/king-city,unread,max_height_ft,or/washington/king-city/16.102/16.102.050.txt,48,16.102.050,1,Maximum window sill height 4 feet above finished first floor elevation for the window(s) necessary to meet the minimum glazing area standard.
+or/washington/king-city,unread,max_units,or/washington/king-city/16.104/16.104.040.txt,8,16.104.040,1,"Multi-family units 1,600 square feet"
+or/washington/king-city,unread,max_units,or/washington/king-city/16.104/16.104.040.txt,13,16.104.040,1,Multi-family units 48 feet
+or/washington/king-city,unread,max_units,or/washington/king-city/16.104/16.104.040.txt,18,16.104.040,1,Multi-family units 60 feet
+or/washington/king-city,unread,max_units,or/washington/king-city/16.104/16.104.040.txt,28,16.104.040,1,Multi-family units 10 feet minimum and 20-foot maximum along public street portions of SW 116 th
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.104/16.104.040.txt,32,16.104.040,1,18 feet from the nearest edge of the public sidewalk to front of garage entrance for individual garage space.
+or/washington/king-city,unread,max_units,or/washington/king-city/16.104/16.104.040.txt,39,16.104.040,1,"Multi-family units 0 feet, except as required by the Uniform Building Code (UBC), or a minimum of 3 feet."
+or/washington/king-city,unread,max_units,or/washington/king-city/16.104/16.104.040.txt,46,16.104.040,1,Multi-family units 10 feet minimum
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.104/16.104.040.txt,47,16.104.040,1,Garage entrance 0-6 feet or ≥ 18 feet to a garage entrance for individual garage spaces to an alley .
+or/washington/king-city,unread,max_height_ft,or/washington/king-city/16.104/16.104.050.txt,12,16.104.050,1,Maximum window sill height Minimum sill height above finished first floor elevation for the window(s) necessary to meet the minimum glazing area standard is 2 feet for non-residential uses and 4 feet 
+or/washington/king-city,unread,parking_min_per_unit,or/washington/king-city/16.114/16.114.120.txt,345,16.114.120,1,(0-99 Parking Spaces) 1 30 ft. 24 ft. Curbs Required
+or/washington/king-city,unread,parking_min_per_unit,or/washington/king-city/16.114/16.114.120.txt,347,16.114.120,1,(100+ Parking Spaces) 1 30 ft. Without Parking 24 ft. Curbs Required
+or/washington/king-city,unread,max_height_ft,or/washington/king-city/16.84/16.84.050.txt,15,16.84.050,1,Maximum window sill height 4 ft. above finished first floor elevation for the window(s) necessary to meet the 20 sq. ft. minimum glazing area standard.
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.84/16.84.050.txt,18,16.84.050,1,Garage door setback shall be no more than 6 feet less than the front building wall setback.
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.84/16.84.050.txt,24,16.84.050,1,"Minimum garage door width Notwithstanding the above requirements for garage door widths, a residence shall be permitted to have one garage door that is up to 10 feet wide."
+or/washington/king-city,unread,max_units,or/washington/king-city/16.84/16.84.050.txt,28,16.84.050,1,"Single-family detached units Minimum contiguous rear or side yard outdoor area of 400 square feet shall be provided on each lot, of which no dimension shall be less than 10 feet."
+or/washington/king-city,unread,open_space_min_pct,or/washington/king-city/16.84/16.84.050.txt,32,16.84.050,1,"Minimum contiguous rear or side yard outdoor area of 300 square feet shall be provided on each lot, of which no dimension shall be less than 10 feet."
+or/washington/king-city,unread,open_space_min_pct,or/washington/king-city/16.84/16.84.050.txt,35,16.84.050,1,"This common outdoor area shall have a minimum contiguous area of 500 square feet unit in the development with a minimum size of 5,000 square feet, of which no dimension shall be less than"
+or/washington/king-city,unread,max_height_ft,or/washington/king-city/16.94/16.94.050.txt,15,16.94.050,1,Maximum window sill height 4 ft. above finished first floor elevation for the window(s) necessary to meet the 20 sq. ft. minimum glazing area standard.
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.94/16.94.050.txt,18,16.94.050,1,The garage door setback shall be no more than 6 feet less than the front building wall setback.
+or/washington/king-city,unread,setback_garage_entrance_ft,or/washington/king-city/16.94/16.94.050.txt,24,16.94.050,1,"Minimum garage door width Notwithstanding the above requirements for garage door widths, a residence shall be permitted to have one garage door that is up to 10 feet wide."
+or/washington/king-city,unread,max_units,or/washington/king-city/16.94/16.94.050.txt,29,16.94.050,1,"Single-family detached units Minimum contiguous rear or side yard outdoor area of 300 square feet shall be provided on each lot, of which no dimension shall be less than 10 feet."
+or/washington/king-city,unread,open_space_min_pct,or/washington/king-city/16.94/16.94.050.txt,34,16.94.050,1,"Minimum contiguous rear or side yard outdoor area of 200 square feet shall be provided on each lot, of which no dimension shall be less than 10 feet."
+or/washington/king-city,unread,max_units,or/washington/king-city/16.94/16.94.050.txt,36,16.94.050,1,"Multi-family units Minimum contiguous rear or side yard outdoor area of 200 square feet shall be provided for each unit on the lot, of which no dimension shall be less than 15 feet."
+or/washington/king-city,unread,open_space_min_pct,or/washington/king-city/16.94/16.94.050.txt,38,16.94.050,1,This common outdoor area shall have a minimum contiguous area of 400 square feet per unit in the development with a minimum size of
 or/washington/sherwood,unfielded,,or/washington/sherwood/ord.2022-004.16.14.030.txt,103,2022-004,1,A shared driveway approach must not exceed 2O feet in width unless 20 feet
 or/washington/sherwood,unfielded,,or/washington/sherwood/ord.2022-004.16.14.030.txt,132,2022-004,1,Each individr¡al driveway approach must r1öt exceêd 12 feet in width per dwell¡ng
 or/washington/sherwood,unfielded,,or/washington/sherwood/sdc.16.10.definitions.txt,184,16.10.020,1,"each with a footprint of less than 900 square feet, located on a single lot or parcel that"

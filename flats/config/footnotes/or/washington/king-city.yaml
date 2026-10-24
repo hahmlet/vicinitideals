@@ -5,7 +5,7 @@
 # The census finds one notes block in the King City documents: the six
 # applicability notes of Table 16.114-5, the Kingston Terrace design
 # standards, printed as "[1]" to "[6]" above the table they qualify
-# (kcc.16.114.kingston-terrace.txt L358-L370). Its region runs from the top
+# (16.114.060.txt L40-L48). Its region runs from the top
 # of the chapter, so every Kingston Terrace value quoted above L358 counted
 # all six as its own. They say which elevation a design standard reaches,
 # and the layer holds no design standard (16.114.060 is a NOT ENCODED
@@ -17,7 +17,7 @@
 # 2026-09-29, and ruled here so the next reader need not repeat it:
 #
 # - Table 16.114-4, the dimensional table, notes 14 to 24
-#   (kcc.16.114.kingston-terrace.txt L288-L303):
+#   (16.114.050.txt L66-L75):
 #   14, setbacks must also meet the Oregon Building Code. A building-code
 #     separation, not a zoning yard; NOT ENCODED in the layer.
 #   15, the lot-size row is for residential use types. The pod is one.
@@ -54,7 +54,7 @@
 notes:
 
   # --- kcc.16.114.kingston-terrace.txt (Table 16.114-5 applicability) ---
-  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L358"
+  - quote: "or/washington/king-city/16.114/16.114.060.txt#L40"
     digest: "01a6814a4ef0"
     state: dismissed
     reason: >-
@@ -62,7 +62,7 @@ notes:
       entire site", for the open-space standards. It says where a design
       standard applies, and the layer holds no design standard (16.114.060
       is NOT ENCODED). No dimensional value the layer holds is under it.
-  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L359"
+  - quote: "or/washington/king-city/16.114/16.114.060.txt#L41-L42"
     digest: "cbc36f48b616"
     state: dismissed
     reason: >-
@@ -71,28 +71,28 @@ notes:
       sends multi-dwelling, mixed-use and commercial development to the
       circulation standards. Where a design standard applies, not a
       dimension; the layer holds no design standard.
-  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L366"
+  - quote: "or/washington/king-city/16.114/16.114.060.txt#L45"
     digest: "979604e31a0b"
     state: dismissed
     reason: >-
       Note 3 of Table 16.114-5: design standards on the elevation with a
       primary entrance. Where a design standard applies; the layer holds
       none.
-  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L367"
+  - quote: "or/washington/king-city/16.114/16.114.060.txt#L46"
     digest: "7b648f6d924b"
     state: dismissed
     reason: >-
       Note 4 of Table 16.114-5: design standards on elevations facing a
       public park or open space. Where a design standard applies; the
       layer holds none.
-  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L368"
+  - quote: "or/washington/king-city/16.114/16.114.060.txt#L47"
     digest: "6c2bbc8d1a69"
     state: dismissed
     reason: >-
       Note 5 of Table 16.114-5: the transitional-space standard for
       dwellings grouped around a shared open space or path. Where a design
       standard applies; the layer holds none.
-  - quote: "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L370"
+  - quote: "or/washington/king-city/16.114/16.114.060.txt#L48"
     digest: "14ad596eba47"
     state: dismissed
     reason: >-

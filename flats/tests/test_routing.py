@@ -313,6 +313,12 @@ OPEN = {
     "or/washington/sherwood 16.40.050 -> 16.40.040",
     "or/washington/king-city 16.114.040 -> 16.84.060",
     "or/washington/king-city 16.114.130 -> 16.132",
+    # 2026-10-24, surfaced when KCC was cut into one file per section: the
+    # wrapped line "16.102.060.C, or is subject to liquor license review"
+    # opened a printed line, so the old heading guess took it for 16.102.060's
+    # own heading. It is the NMU retail-sales use (outdoor display), and NMU
+    # refuses the pod.
+    "or/washington/king-city 16.102.020 -> 16.102.060",
     # 2026-10-02, Tualatin CC, encoded when Map 10-3 was traced. 53.300
     # sends "some uses and situations" to 53.310, which is stored and read:
     # (1) is a 125 ft height bonus by conditional use permit north of Boones
@@ -519,6 +525,11 @@ FOLLOWED = {
     # side and rear yards and street-side yard (L1956), D.2.c by
     # parking_front_prohibited (L2006) -- so the pointer leads nowhere unread.
     "or/clackamas/milwaukie 19.508.4 -> 19.304.5",
+    # 2026-10-24, surfaced when the RLDO was cut into one file per section:
+    # footnote 2 of 5.050's use list, "RLDO 5.010 is subject to an
+    # interpretation of the Rivergrove Planning Commission dated September 5,
+    # 2002", printed inside 5.050. 5.010 is read (the layer quotes it).
+    "or/clackamas/rivergrove 5.050 -> 5.010",
 }
 
 

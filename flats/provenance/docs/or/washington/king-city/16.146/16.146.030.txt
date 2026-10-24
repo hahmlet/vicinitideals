@@ -1,0 +1,20 @@
+16.146.030 Density calculation.
+A. To determine the maximum or minimum number of units, which may be constructed on a site for residential uses, the site size (in acres) shall be multiplied by the maximum or minimum number of units per acre allowed on the site, as designated by the applicable zone district, except as specified otherwise in this chapter.
+Density maximums may not apply to duplexes, quadplexes, triplexes, or cottage clusters.
+EXAMPLE
+Acres × units per acre = number of units allowed
+1.6 × 5 = 8.0 or 8 units
+B. Site size shall include the area of the subject lot(s) or parcel(s), in acres or portions thereof, except for:
+1. All areas dedicated for public right-of-way that exist at the time the development application is submitted for review;
+2. Proposed lots with a maximum size of twenty thousand square feet to include existing residences on the subject lot(s) or parcel(s) to be developed; and
+3. Proposed remnant parcels, which are of sufficient size to be developed or divided in the future.
+C. No portion of the allowable density shall be transferred from one land use designation to another land use designation, except as permitted in accordance with the planned development provisions of Chapter 16.150.
+D. Land outside of the urban growth boundary (UGB) shall be ineligible for density transfer and shall not be considered in any density calculations.
+E. The number of units, which may be constructed on the subject lot(s) or parcel(s) shall be subject to the limitations of the applicable provisions of this title.
+F . When the maximum or minimum number of units allowed on a site results in a fraction of one-half or more, the number of units allowed shall be the next highest whole number, provided all minimum zone district requirements other than density can be met.
+G. Land that is dedicated to a park and recreation provider as public park land may be used to calculate the minimum or maximum density, provided the land is developed for recreational uses, and is not comprised of flood plain, drainage hazard, wetland or slopes over twenty percent.
+H. Land used for a private park, that is available to the general public outside of the residential development the park is located in, may be excluded from the acreage used to calculate the minimum density, provided the park is developed for recreational uses and does not include floodplain, drainage hazard, wetland, or slopes over twenty percent.
+I. For categories of land listed in Section
+16.146.040, the applicant may either include it or exclude it from the acreage used to calculate the minimum or maximum density .
+(Ord. O-02-4 § 2 (part), 2004; Ord. No. O-2021-01,
+§ 2(Exh. B), 8-18-2021)

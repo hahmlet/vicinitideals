@@ -1,0 +1,712 @@
+[
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "2039514b7cc62566749eae3c2fa992b7e9bd061e02df018177939db84b2b4695",
+  "new_quote": "or/clackamas/estacada/16.08/16.08.010.txt#L352",
+  "old_fingerprint": "73d49c8f3795737ca8d0ea55627f3f59ac385e2d29b9f6c8f292baf7d5183c02",
+  "old_quote": "or/clackamas/estacada/emc.16.08.txt#L318",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "856edbb8bd912bb27baa065fde3e2393d79fd7ff7d593244f47c6eaf8f2bff81",
+  "new_quote": "or/clackamas/estacada/16.08/16.08.010.txt#L352",
+  "old_fingerprint": "b0615eed6144694bc34fa01142de0968c7b642701945fe20e087120f89ab50c7",
+  "old_quote": "or/clackamas/estacada/emc.16.08.txt#L318",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "d9a32263afd09ef5197aab180ac96e33d9b377973122d30e14b0d1b6057a54f4",
+  "new_quote": "or/clackamas/estacada/16.08/16.08.010.txt#L275-L277",
+  "old_fingerprint": "0e9ac1f2614f87f149d166f2a8ae36070d5b059324b8f39d607824ee4558855d",
+  "old_quote": "or/clackamas/estacada/emc.16.08.txt#L250",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "807927a044d0aae8a0df1a36e555771dcc463a98c2ecb6734870cc64f61a2ddf",
+  "new_quote": "or/clackamas/estacada/16.116/16.116.010.txt#L21-L23",
+  "old_fingerprint": "2e699a263314273219d53953e08ef5faea5192ec2d92c6fe8b814db9fa01d1b3",
+  "old_quote": "or/clackamas/estacada/emc.16.116.txt#L31",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "23e4e23201a3544c7b03c4fe4ec8e9009d8d14646b4286eb4e9ddca0519271f1",
+  "new_quote": "or/clackamas/estacada/16.60/16.60.070.txt#L3-L4",
+  "old_fingerprint": "ce6849f603b339d1be26e71718f61ddb06060a6b8a2a6a439cb0a2adc38c8c81",
+  "old_quote": "or/clackamas/estacada/emc.16.60.txt#L103",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "314cd52d481391a06eab348bbf087d74bb4728cf59121c3b2f5ffe8a9554d80e",
+  "new_quote": "or/clackamas/estacada/16.60/16.60.070.txt#L3-L4,L10-L16",
+  "old_fingerprint": "6366cc634a9ab3600101169e3c3532bc650aef89fef18ef630d56fb678e702a7",
+  "old_quote": "or/clackamas/estacada/emc.16.60.txt#L103,L109-L115",
+  "when_key": "unit_lots",
+  "zone": "CMU"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "fdf631469524531524cca7c47d7b416b9541f5b09260089f178dd67614db390c",
+  "new_quote": "or/clackamas/estacada/16.76/16.76.010.txt#L66-L67",
+  "old_fingerprint": "cac81d662adc334d52ab4b6603dc475687f17d04cbb8648e4b71dc1171a42cfe",
+  "old_quote": "or/clackamas/estacada/emc.16.76.txt#L77,L78",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "470bf34f4db60943f954460fa20c3d7af12678d580bb248834a382c7fe596603",
+  "new_quote": "or/clackamas/estacada/16.76/16.76.010.txt#L68-L69",
+  "old_fingerprint": "09f4804e6a0314c4acd3e930c06c30eaad3af6b35909f1e463671432f5d1b17b",
+  "old_quote": "or/clackamas/estacada/emc.16.76.txt#L80,L81",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "2d0927c65c2137924a6024c3aa91f0b233130f9fc238b2320134ab1521848e7e",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.020.txt#L15,L17",
+  "old_fingerprint": "56d278d7634dbeceab2134f856acab3af6cd67cf3601e77086916b1d65716441",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1572,L1574",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "908810357fee45c1ee00760f43ae3c7e60be3c3ca3eb24f1960b4b52eb3f95b4",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L8",
+  "old_fingerprint": "4f8ae8452a65decce4e8a1e024dfb06f633f8ffdbec4e0bf310ffa923dc947fc",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1638",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "c52c73c7e0103b28326388c8d47871ca14be73a6c90abaebf68ec5177027cab5",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L9",
+  "old_fingerprint": "83def63e97f89bf2e9c4aac9364e305b020b291bacc61f7b74fdd826c369926e",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1639",
+  "when_key": "unit_lots",
+  "zone": "C-2"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "fa3012ae259ab9fd1c1b3b28999386f91de6c4590e30d37853afbe44d1d19eef",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L5,L11",
+  "old_fingerprint": "252bc912a5a7eafa70c8cdcb0e8083998d1d3d7ee71104f389732b5b4a005732",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1635,L1641",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "7f3d14ea91ed08315cd179484441ac682d93ec242fcd495a7a7e3f4b6096a250",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L64-L65",
+  "old_fingerprint": "22d05d14fefebd0dcaf1872580343e67cd0248b4578b0d0c8e32db2b8ca136b4",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1686",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "c68d09ef040366c7f01d3a534a4bad00f4f088079ac63bfbb2cc0d4236134854",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L64-L65,L67-L68",
+  "old_fingerprint": "ab5c5637ba24492acc92adc944ffc809ac8e542850454d88db1ff3e0aa776c8d",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1686,L1688",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "56482ac4f917a21b154b6c0be95a6e6f705d181ebf39b8f15018a4d6c0b00631",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L64-L65,L67-L68",
+  "old_fingerprint": "2f8901034a1404504ef0ac6187b006777a39acf9cb470f9af783efb859b0551d",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1686,L1688",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "01afe4eb9b21abf52e3359fcc04ff0cc90b16a9a6e6098d7da395d81a8d62a52",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L67-L68",
+  "old_fingerprint": "85e0d1a6832ab21611bd49ffefbbc12f6689738b4493c24e9bee71c5315a5843",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1688",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "660a05af916f4dd5c5d6e66d2734d4da64065143aa719b863d77751c8c732818",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L26",
+  "old_fingerprint": "e475b6b633b12584092cb03a6e30c348670a1534c79c2644a371af4ed756f2b7",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1652",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "eb84248972554bd183abee923ebef412f8c08596b0d735cb8638ef43949b237c",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L26",
+  "old_fingerprint": "b796919683d26217f7d11612211b68aab2b45c43eede7253744a671285204d1d",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1652",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "93054cb21a2422e0d73b563ac7b8ed8bdc629666d0a73a4c50db588620b8f436",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L41",
+  "old_fingerprint": "e8c8d4ff9b59ac93839e18503431fd38d9005de207263f0e6e9175cab24f6535",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1664",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "3296e68115326a9d38aedc0060c6bf12d5b5fd7d223c283112f101b4868cff9f",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L28",
+  "old_fingerprint": "22420777a057e2d236d3a9b55b75451ab50505e25cc54a2778412cfdb8a1e56f",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1654",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "b138e04fe6d0b8a49936d2e4d7463d2e32c8660948460b21ca9cf6a3e89209c3",
+  "new_quote": "or/clackamas/estacada/16.32/16.32.040.txt#L26",
+  "old_fingerprint": "cc75edaafbe30becf6aae6d6a2f900b786446249f5d09eb1d9c66dd4182ad066",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1652",
+  "when_key": "",
+  "zone": "C-2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "c9be7f96b906e826d280fc3fb7e99ea181c54d14b05792ae91d5a826c76a4ee4",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.020.txt#L41,L45",
+  "old_fingerprint": "622ad7347e18c9f0a84b27b40e19cb22d173522aac5ef37805a93e0d16701fa9",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2410,L2414",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "69b8ef8c80f06c7a18cc0cf983e9d67d4bf805aca4d85b63d1b732eaf229ad62",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L8",
+  "old_fingerprint": "17a73a43970b475d96582677b6fced769e2a5b9407e340f8da65f375f3f29eef",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2478",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "923849b7f26e14517027b6986d8aabda1364b060d125ac0e5a0bfd439838fa7a",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L9",
+  "old_fingerprint": "bf46ef6f1f438b5043e3b3ede1934e94878ad9e89e7178356e9a4ba73fadc9b7",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2479",
+  "when_key": "unit_lots",
+  "zone": "CMU"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "fae8065cab920181ac70cd54a86771fa4d45588cc20e8ab7efca360a79ed7333",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L5,L11",
+  "old_fingerprint": "9f885b3b4a2755a29ec4f6afb8ec9cc61f4687642defd869c605ef33e8e621d5",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2475,L2481",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "34570733f94bcf6388b45d02c17becd33bf24b04ca849121da878f705270e170",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L63",
+  "old_fingerprint": "025966cce45fc570c79b6639e6d54ebcaad43042124ae064ee93c0b95295a64f",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2527",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "1e19abe7c203e5c34d7a9e1ac97ba34ebd62e5c1476a8acdc6ff5c913197f054",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L63,L67",
+  "old_fingerprint": "55f3490ac72f3de8646f22cd7d5953855975da11d90734477f65ae25f0c4ded5",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2527,L2531",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "abf1086297ddc052178f248b6f317f57a22569ddd724af351fcd80cbccbf17d7",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L63,L67",
+  "old_fingerprint": "fa64a5100065348bf5b92d6c5491bc3622276a1d2d18bad225e720ef94e343e7",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2527,L2531",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "1b5e134893551c7fdae90e7dda2a05099aca5cbbfdeb4e2c76f762367f36a5b8",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L22",
+  "old_fingerprint": "edceedd2996e433bf815c15a5d3b6314e3e58c4143a4af1c5fac7c009c1a5ec9",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2489",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "ca6abf8d5d35072b51bb2eee6ec2e32ebac3a27fcef9b8292b22a790abca532e",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L22",
+  "old_fingerprint": "314ca5fc11fb6d72efc91fe42b08d058dfd286d7343dfc46a0e765f6bb9c1590",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2489",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "04ee177788b947fedb8dec4aca2e7b3dfc3ad152c1285f267fff7a16ae1e92dc",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L37",
+  "old_fingerprint": "925337a2a56cedfdc1f0c8c41d42ffa41059e8d993dc64b7b63c8458d08cf8e4",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2501",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "b8d26bb5690c7c115c2e2feeed53c31eaea4b11b8a2b43e6df88e6de13299172",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L24",
+  "old_fingerprint": "f8c9dfeeaa6ae9f698337f0f14d3e044163a69251b10e47bf9c7d6afc1209170",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2491",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "790ae305176c328b8ffccdbdb17dec5b55934d50e27b3516506d5716fb66cf73",
+  "new_quote": "or/clackamas/estacada/16.37/16.37.060.txt#L22",
+  "old_fingerprint": "a09d2e6d7a2d76c38c8ff51a276f558709874fc70c55b2c31c55353918791148",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2489",
+  "when_key": "",
+  "zone": "CMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "7bc171ec34f0eb85d2595c770f254a6b2da53d50135f96737e4c8b69f906e185",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.020.txt#L13",
+  "old_fingerprint": "80e7e02422db1dcd2b1733260e2de1d4e674841383fbff5feac1bbc6dcacf67c",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L588",
+  "when_key": "unit_lots",
+  "zone": "R-3"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "94d37e6e0c9d42fb8d803dabbf28caf075bf9e6b0d4a28d353b9fa8d71d2c653",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L9",
+  "old_fingerprint": "c69600ef82551062a62689344b943c0039865cb836aa610debb41e7a008dc60b",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L636",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "8ac586ec61db92514b3febc79733b4cef901b4a97b6c9f0230fae87d6548d48f",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L10",
+  "old_fingerprint": "68d1c66961fa43f9452577bd232608400934ea96515f07a96a4822bd59dc0a11",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L637",
+  "when_key": "unit_lots",
+  "zone": "R-3"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "4170819fdf48db463efe15de44fe24a6ed43e4b1c1313bd70752df5d3a380b12",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L7,L13",
+  "old_fingerprint": "f8c1cd132d8c46609b366492b76fc032b4fde220f8a7def4630ffe7ea35dd460",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L634,L640",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "a860b5cb3736713da454f2c2457e4ea78129ac46f4f8ab4035ef95f35cb30a2e",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L81",
+  "old_fingerprint": "b2498887773e0d5ff57ee1acc2230e1a336da310323eb01bc7f595618c8e0446",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L698",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "e2fcb2e225647b1f4df0abe65b15cd923e939096140fce642c1706473b6f6bf3",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L86-L87",
+  "old_fingerprint": "fc4a2a0a9a9bb69737e8a8654c11fd5eff2a4089264b8c6bfd446ead7532ace7",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L702",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "e1304aa7490564774199a32b5258075a5b4f1395ecefaedfc22c09e24a4faa82",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L89",
+  "old_fingerprint": "d5b7e33b12fb3c80a536b9457c84f2b6c8ed2c16a4516bb3a96173c175a037dc",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L704",
+  "when_key": "unit_lots",
+  "zone": "R-3"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "8265c3f8d023b15e867a6b15af2cb8cc20f7537c094a0148240a2a64f81f40b5",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L86-L87,L93-L94",
+  "old_fingerprint": "68e7db94855c479d6b54e2fcf1373fcb0c5ba00c411665831421acbd9ccd810e",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L702,L708",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "222325b5bb1058fbf2d970a5029e5ecbd5c828666b595e783516135a88ac7725",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L34",
+  "old_fingerprint": "51f64c729cbdd97799455919f4d4f4123ccb60299c4d654bcaf68a2e2ed9a7a6",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L656",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "b9467f6025835d75e3da43793e7ffe5c6c5e652dc652d9d2d78625865ec39c7d",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L34",
+  "old_fingerprint": "53ef0e1470911d55b6b8cbd58e50f6c1345935a8994d21c17fd6da5d314949de",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L656",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "4bdf6f346f80e75950d17e6785b1db1660a3c6719d5ef12c7e2652f710b465c7",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L57",
+  "old_fingerprint": "358e9ff12e79e67fdee610d345aeb1abddd5efe6beaba3f6c6458cd75e7f995a",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L676",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "8559a9aebbf7c8c16a2cde0c32eefb77aa3e0bf07778ec29f81b64d2353cde53",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L44",
+  "old_fingerprint": "176d3848360658dd13e7817f7398f0464bafbc1e1cf44c068a28b5d222c3ddce",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L666",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "18150c4325ddc60c59739e28bd2f46b67cdba416cf01713a698265efd30a1082",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L42",
+  "old_fingerprint": "9413dc248d6689d204545efdf85c5e26c40b6b9e77c0cfc5ddc77b68e3064998",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L664",
+  "when_key": "unit_lots",
+  "zone": "R-3"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "7dd4f60dec683579525983c26f8e4a14386dcd567307257ecfb99e93109eac7b",
+  "new_quote": "or/clackamas/estacada/16.24/16.24.040.txt#L34",
+  "old_fingerprint": "4f96c6daec040835e229677528b79bc2966016007db06622b2a3b5cc0183ee7b",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L656",
+  "when_key": "",
+  "zone": "R-3"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "b7e5611ab6109167dfb913b70299d1bb4c0a01e4e8b10ea4e042558ac9c880d6",
+  "new_quote": "or/clackamas/estacada/16.16/16.16.020.txt#L15,L17",
+  "old_fingerprint": "c62ebc5c7fb10da9c871485a5923c9423ffe30dd25dad9b6961113e462ff22c0",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L99,L101",
+  "when_key": "",
+  "zone": "R-1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "ab646a033b0e96dc2f2dfd60df082c8d0951f61be729e08795e8d2ac43c0ba2e",
+  "new_quote": "or/clackamas/estacada/16.20/16.20.030.txt#L3,L7",
+  "old_fingerprint": "6f4c2f99ba0d015011db139da8a4a231c6dfb0d8b613a5d1563a3893faa126a9",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L440,L444",
+  "when_key": "conditional_use",
+  "zone": "R-2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "31dba8afec0c65352b24caa2d886959afee05d66e85a62f7c7f726060cb38335",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.020.txt#L17",
+  "old_fingerprint": "349aef1d52d816210321d70d5ae30bf8df671ccee8d8f70050c1b867be074938",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L762",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "09b1ddbbcf4b611bc2e422058ce39a101f011ce4d3deacd17f6c6c83259fd095",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.020.txt#L17",
+  "old_fingerprint": "ac7d2c1b438463fa8aaa0bce2156550772a79e14bc9e701179228dcbf4d7ac30",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L762",
+  "when_key": "near_named_street_200ft",
+  "zone": "NCR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "f856c07b9ff054a59f719af47584619a63c2fb004af7d6e34fc286e6ca0b864a",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L8",
+  "old_fingerprint": "2a02fbfb1f233b71fabcbe4634b886d89c2b4bd5a2a07de9ce5a6bdf2d965714",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L827",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "a611ddb0f862adc28cd365db688ec07ef8ad6046fc37a4219425ec1db82145b8",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L9",
+  "old_fingerprint": "12fdf8c0bf4491a3fd0867529dd307a74597c792f13dfb9fda3307a85384e641",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L828",
+  "when_key": "unit_lots",
+  "zone": "NCR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "8b4c1a50ccfdbb7795e4679bfb167d424ca96a6f8109f3908601385d84785345",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L7,L13-L14",
+  "old_fingerprint": "c48af08423c5a389c81d2b160f0e026b7b390c8564117cf203d30666aee65ed5",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L826,L832",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "3b3cd8ab2dd2c3bc394290bd87e468ec9b59d2842f16c5844af0938357c6721b",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L64",
+  "old_fingerprint": "f2cdc9c1f6470b7eb8f023ccbef04f4d4fde452e3b02c823565ac4464aeca696",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L876",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "f5927a3fa54fe7da18d641ab8dd69c4464ff9f1471b69ddbdd1745c91340832b",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L16-L18,L64",
+  "old_fingerprint": "ca28c384810a932960ca9f5ca8f9a8909853af153652291dd2b51b069483922b",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L834,L876",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "f556d593b37b90a1ebf99fd3febbaed0c1bbeb0e75b787b87f7312a99dfdb40a",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L64,L68-L69",
+  "old_fingerprint": "c2174d8d0cfd7600dde57c8cf84894b7746adc217c0c37e67f3c257eb15bc939",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L876,L880",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "ef1a1c01744e239420a0e5a79fc00e0caf74c51d4f8962ce3b5e9ecdd0f64f69",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L68-L69",
+  "old_fingerprint": "cc8c0046a9417829e0f7a3449dd029d990cf8539579c4deebed409df89b4ffdd",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L880",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "0e10d6d512dc704f8f5859a0220d3933917141794a88f1d9643fb21a6cb6a993",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L25",
+  "old_fingerprint": "b94c4932fbf2e312f0a66a8410c450174a69b191a2b2ef8b84d5ac4c1a2baee6",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L840",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "4974decaf92edad4689826f361b69d386c1ec5da8e61d257bcdec86627653414",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L25",
+  "old_fingerprint": "3dcec014a90ed1f88be7292fac022df2f75347d5458cc5155723d1d227a27be5",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L840",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "1fddbf8672c5a9d9717292216df71030804c76a1bc1684dff000612c1df7f257",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L40",
+  "old_fingerprint": "67f018253a587936d133e08e4220c050f3bbd4a8492cec3545bf87205f6014eb",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L852",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "a5f4b248c50dffd77f2fbd89db1c149ca0438200ed6cbcda9ef3f6c5d89482b0",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L27",
+  "old_fingerprint": "fe72b68387117f08880ffa93a8f6a9b605a07a6b2089f54423fbf67e236968dc",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L842",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "6b6d89d83aee1cc46aa3501cd9e3589fb73ca9c67cc06d475ca946bdf5cdee60",
+  "new_quote": "or/clackamas/estacada/16.25/16.25.050.txt#L25",
+  "old_fingerprint": "2725b1bb0cf6ba037cc223c2577f95ea8a5c6a177798985df0f0ca2803d75305",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L840",
+  "when_key": "",
+  "zone": "NCR"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "20aaaf9030dafd9eb777cb1fa20cef24bd2c0ce6176be09d6a7967ba91eeb9a6",
+  "new_quote": "or/clackamas/estacada/16.26/16.26.020.txt#L11,L13-L14,L16",
+  "old_fingerprint": "204bd05b4c81b20e3d7fcbab35efb5a40b04b9a2e1fcf9718980dbf485d576c0",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L940,L942,L944",
+  "when_key": "",
+  "zone": "D"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "0ff8a466dc49df1514e0ae584e7bc43daec4459754e8ae5da3133d0c3aaab3d4",
+  "new_quote": "or/clackamas/estacada/16.28/16.28.030.txt#L33",
+  "old_fingerprint": "c2396efa37f979a23cb6f17d14b21400df24731d17cd2ff699a5a01c66978980",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1455",
+  "when_key": "",
+  "zone": "C-1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "2296e999809059bd69652b57c3586aae9bb193641b8f2e14d4432be7146fe2ed",
+  "new_quote": "or/clackamas/estacada/16.28/16.28.030.txt#L33",
+  "old_fingerprint": "8d157ae73e95b79c5560bebcfa8938da2f0e24820d00c19e47886a9609e273cf",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L1455",
+  "when_key": "conditional_use",
+  "zone": "C-1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "7f82cf2ef51165346479684d469260ed7040028f1c5bbba41f21cdfc940fd2c9",
+  "new_quote": "or/clackamas/estacada/16.34/16.34.040.txt#L1,L9",
+  "old_fingerprint": "39220d2cae39a58cc317a55198b2a46244b6bee6199057066552f3fe1d026d54",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2095,L2103",
+  "when_key": "",
+  "zone": "R-C"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "3983dfa1831594fb931396b6edd5683d2e923cf23e3417b6a365b394a641b0a9",
+  "new_quote": "or/clackamas/estacada/16.35/16.35.040.txt#L9",
+  "old_fingerprint": "67016d7cb092ee4c78a5449225ca2d79cff0fe56a82b0b0e2c62b2a66190f8e3",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2287",
+  "when_key": "",
+  "zone": "H-C"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "cd4b2e20f9580281425ce26b45e093ee5f101f116d5b515846236f333402b71a",
+  "new_quote": "or/clackamas/estacada/16.38/16.38.020.txt#L3",
+  "old_fingerprint": "7c0e276ab13c1a006dda8a12f69246c4507b442e1efd4c553514beeeca46bd88",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2573",
+  "when_key": "",
+  "zone": "O-C"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "3fa737d401700ab323075ae56541b8e6b64dcf9b5298d44137f68e498604e5dd",
+  "new_quote": "or/clackamas/estacada/16.39/16.39.020.txt#L5,L7,L9",
+  "old_fingerprint": "f249da447f84538fd8885a36e7d43ce7121f92f4bfa5e4cbe66fa94ecb7231ac",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L2693,L2695,L2697",
+  "when_key": "",
+  "zone": "M-1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/estacada",
+  "new_fingerprint": "0817795606658786c2e7b2b5d01ae7202222891c6e349cb3d58c8a000d3868d2",
+  "new_quote": "or/clackamas/estacada/16.44/16.44.015.txt#L3,L5",
+  "old_fingerprint": "6c4653950c38c60e7155b42f2c9c0ddcdb228fe6f07ceefc721d2a2de377ab73",
+  "old_quote": "or/clackamas/estacada/emc.16.zones.txt#L3032,L3034",
+  "when_key": "",
+  "zone": "O-S"
+ }
+]

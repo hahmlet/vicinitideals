@@ -1,0 +1,47 @@
+7.10              Wireless communication facilities (WCF).
+The intent of these regulations is to implement federal law that prohibits barriers to market entry by telecommunications providers and requires that any regulation be on a competitively neutral basis while preserving the City’s discretion, as also allowed by federal law, to limit the visual effects of all such facilities (not limited to telecommunications providers’ facilities) as viewed from residential neighborhoods and to require design and placement of such facilities to be compatible with the surrounding natural and built environments.
+
+7.10.1           Scope. These regulations shall apply to the construction or reconstruction of both publicly and privately owned facilities but do not apply to:
+
+7.10.1.1         Emergency or routine maintenance or repair of existing facilities, federally authorized equipment under Title 47, CFR and amateur radio facilities no more than 70 feet high (measured from the base of the support structure) as allowed by ORS 221.295;
+
+7.10.1.2         Facilities completely enclosed within a habitable structure;
+
+7.10.1.3         Satellite communication antennas up to 1 meter in diameter in residential zoning districts and up to 2 meters in diameter in all other zoning districts; and
+
+7.10.1.4         Television and radio broadcast towers regulated by the FCC.
+
+7.10.2           WCF Design Features.
+
+7.10.2.1         No WCF shall include a “top hat” or “playpen” antenna array nor have davit arms extending more than 5 feet from a supporting structure.
+
+7.10.2.2         The maximum height of any facility in any zoning district, including an antenna mounted to a roof or to the side of a structure shall be the maximum height allowed for any other structure in that district unless otherwise allowed by an adjustment or variance.
+
+7.10.2.3         No lighting shall be allowed except as expressly required by federal law.
+
+7.10.2.4         All antenna towers and other on-ground facilities shall be obscured by fencing and landscaping in an aesthetic form and design approved by the City.
+
+7.10.2.5         The City may require that antenna towers and other structures be painted or be disguised as artificial trees or smokestacks to minimize the visual impact of the structure(s) on residential neighborhoods.
+
+7.10.2.6         Noise generating facilities such as cooling fans shall be screened by landscaping or structural buffers so as to limit the noise above ambient to the extent practicable as measured at any boundary of the WCF site if in or adjacent to a residential zoning district.
+
+7.10.2.7         Site design shall include at least one off-street parking space for each WCF site.
+The setback requirements of the applicable zoning district shall apply to any WCF.
+
+7.10.2.8         Co-Location. A WCF facility shall be constructed so as to allow co                  -location of similar facilities on the site in the future.
+
+7.10.3           Situs. Denial of an application for a conditional use as a WCF on the grounds that siting a WCF at that location is not compatible with residential neighborhoods shall not be deemed to actually or effectively prohibit telecommunications service unless the applicant shows by substantial evidence that:
+
+7.10.3.1         There exists a significant gap and not merely “dead spots” in the applicant’s own service coverage, and
+
+7.10.3.2         The applicant has adequately investigated all feasible alternative sites and demonstrates that no alternative site is available to fill the significant gap in coverage.
+
+7.10.4           A WCF is a conditional use in the IP, OP and BPO zoning districts.
+An application for a WCF shall be reviewed by a Type 3 process.
+
+7.10.5           Notwithstanding the time allowed for a Type 3 decision by Sections 9.7.6 and 9.7.15  of this Code, the City shall use its best efforts to decide an application for a WCF collocation within 90 days and to decide an application for any other WCF facility within 150 days of the date the application is deemed complete.
+The City shall adopt written findings in any case not decided within those timelines as to why the time allowed by this Section for decision is not reasonable as to that particular application.
+
+7.10.5.1         For purposes of this Section, an application to add an antenna to an existing tower or other structure is a request for collocation if it does not involve a “substantial increase in the size of a tower” as defined in the Nationwide Programmatic Agreement for the Collocation of Wireless Antennas, 47 C.F.R.
+Part 1, Appendix B.
+

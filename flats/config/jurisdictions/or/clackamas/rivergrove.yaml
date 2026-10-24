@@ -27,7 +27,7 @@ definitions:
   corner_lot:
     test: adjacent_frontages
     max_intersection_angle_deg: 135.0
-    quote: "or/clackamas/rivergrove/rldo.composite.txt#L326-L328"
+    quote: "or/clackamas/rivergrove/1/1.050.txt#L26"
     cite: "RLDO, Lot, Corner Lot"
 
 code:
@@ -57,26 +57,26 @@ zones:
       # under a thousand people and outside Tillamook County, so ORS
       # 197A.420(4)(a)(A) leaves the middle housing mandate off it.
       value: false
-      quote: "or/clackamas/rivergrove/rldo.composite.txt#L863-L866"
+      quote: "or/clackamas/rivergrove/5/5.050.txt#L1-L5"
     setback_front_ft:
       value: 25
-      quote: "or/clackamas/rivergrove/rldo.composite.txt#L1023-L1026,L1038-L1039"
+      quote: "or/clackamas/rivergrove/5/5.080.txt#L5-L6,L13"
     setback_side_ft:
       value: 10
-      quote: "or/clackamas/rivergrove/rldo.composite.txt#L1033,L1038-L1039"
+      quote: "or/clackamas/rivergrove/5/5.080.txt#L9,L13"
     setback_rear_ft:
       # "from the rear lot line or the ordinary high water mark - whichever is
       # greater". On a lot fronting the Tualatin the binding line may be the
       # water rather than the boundary, which is a measurement this screen
       # does not make; 25 ft from the lot line is the floor under it.
       value: 25
-      quote: "or/clackamas/rivergrove/rldo.composite.txt#L1035-L1036,L1038-L1039"
+      quote: "or/clackamas/rivergrove/5/5.080.txt#L11,L13"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/rivergrove/rldo.composite.txt#L1034"
+      quote: "or/clackamas/rivergrove/5/5.080.txt#L10"
     min_lot_sqft:
       value: 10000
-      quote: "or/clackamas/rivergrove/rldo.composite.txt#L844-L846"
+      quote: "or/clackamas/rivergrove/5/5.010.txt#L1-L4"
     notes: 'quadfit confidence: needs_verification | NOT subject to HB 2001 — city pop <=1,000 exempt.
       Single SFR district; no middle-housing code. Metro ZONE ''R10'' verified (ZONE_CLASS SFR1). ~half
       the city is floodplain (0.5 ac min there).'

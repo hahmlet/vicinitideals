@@ -1,0 +1,702 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "4cffb726cc542f92c72ad1ce420f5bfe2dd93b2b6b7431f1ad841ab389300d55",
+  "new_quote": "or/washington/king-city/16.102/16.102.020.txt#L1-L20",
+  "old_fingerprint": "63d1674123aef3018a67d7d7f17295a1f341368ca13b5b5d0900c52b4d2b26c7",
+  "old_quote": "or/washington/king-city/kcc.16.102.nmu.txt#L21-L47",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "18f39021231338f4265bd6208aac38e205c14b8105814a8a28fd280d5942b1f3",
+  "new_quote": "or/washington/king-city/16.104/16.104.020.txt#L1-L16",
+  "old_fingerprint": "ed46eca3ae39b5cfa5fa7131e7fdf315b9fd6d04b788ca87a6a9b6b30780a2a7",
+  "old_quote": "or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt#L19-L36",
+  "when_key": "",
+  "zone": "LC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "0edbfbcf2af640bd99228fa2ef9c6edd9170d04dbcad93ba026331dbe6f6fff3",
+  "new_quote": "or/washington/king-city/16.108/16.108.020.txt#L1-L6",
+  "old_fingerprint": "741a547f70cb4a43eab0c618f7c15eb2a8fb1fca4a3159c8cab8cff88237df82",
+  "old_quote": "or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt#L254-L261",
+  "when_key": "",
+  "zone": "CF"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "f7be0863247ed853594c590c78d563b4a59b606fb20cf019c9377d0f568a251b",
+  "new_quote": "or/washington/king-city/16.112/16.112.020.txt#L1-L7",
+  "old_fingerprint": "e6f5284fb3496b028b894b4ea457f28c1de307857f5c98aa7d569a6c27ea4f22",
+  "old_quote": "or/washington/king-city/kcc.16.104-16.112.commercial-civic.txt#L327-L337",
+  "when_key": "",
+  "zone": "ROS"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "11d6ab863b7c751aa972a47f1784271056219d7b8601ad6bda4cff285d2592ac",
+  "new_quote": "or/washington/king-city/16.114/16.114.130.txt#L5-L10",
+  "old_fingerprint": "69ca788f7eae8a13d4833751ff75d33f96e5a01913ba9488b78db638b16c1e0d",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2536-L2544",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "68d4b989bb32796d4bf9c57c7cb9c89c354997842cd7de625f90b206a3bd4410",
+  "new_quote": "or/washington/king-city/16.114/16.114.130.txt#L16-L21",
+  "old_fingerprint": "26973ffbd14889128f62fd83afa816883ad9796cb6fc5a79b74ab3a18872b487",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2563-L2568",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "416e336895d6c5e1cf0ccb1af84646238f0de6fbb570402c2ffd2080c4c7b9a0",
+  "new_quote": "or/washington/king-city/16.114/16.114.130.txt#L49,L53",
+  "old_fingerprint": "c36ae552b660f2eab94ea9fc8612ff098fbb6b937b67cb9981839a0fb5604263",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2612,L2624-L2625",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "66300992f26cae8a5cc9715ef87d37ac0c4cf5395ea0316e9e1e1f08e04db459",
+  "new_quote": "or/washington/king-city/16.114/16.114.130.txt#L72-L75,L82-L93,L102",
+  "old_fingerprint": "d180c601d873cf528fd55bb38052b9a4db070a498e54076e03256c07cdf1ef79",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2683-L2690,L2712-L2724,L2733",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "4344466ad40e711cbeeb9b93fc906cda796955518e20868ce76fcb4f9078ad01",
+  "new_quote": "or/washington/king-city/16.114/16.114.130.txt#L72-L75,L78,L82-L93,L102",
+  "old_fingerprint": "0aaf9aa986311016c4b33552085a899a859e3d83020958ee342ad4c3ccfca65e",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2683-L2690,L2696-L2699,L2712-L2724,L2733",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "6df082566b46833badcf91c5b3affb51086b8dcb42a7a7f3dcf6e5a5cae1185b",
+  "new_quote": "or/washington/king-city/16.114/16.114.130.txt#L82-L93,L102",
+  "old_fingerprint": "c2fe71b7a217d6eaf76782406aae9ff1088d5e1fe92ef6665b18b1cd88bc3449",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2712-L2724,L2733",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "09bd7a8f45a6e303c95664485843ec14f843bd4ed9c7ce6086407c58261b4fcd",
+  "new_quote": "or/washington/king-city/16.114/16.114.130.txt#L82-L93,L102",
+  "old_fingerprint": "d7a97bd512bafefefe864492c6bc0dbefc0a7e2a536e4b702df0280403494471",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L2712-L2724,L2733",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "526ba19b52dc5bc513f7406f1df5532f5a1a9ea4c88b8836a92457f5fcde0c35",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L28,L67-L68",
+  "old_fingerprint": "e28abecf9c8903dc477201a9d43b847e99dd09b3cfeb904689b694ea67fa7892",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L233,L290-L292",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "df80df1db767c159bf61eb828d496bd32afde4918d27b2b7ba023b6d52eccd13",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L29,L69",
+  "old_fingerprint": "4230dabd47a0d1ea957caa3433b379d93a19060fb09ae9abe0c44df764a548fb",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L234,L293-L294",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "00bcb1d3b6c90dc2869c733f0e2f0e4bc6b4272e3fe005c3564ea9b4130488d5",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L30",
+  "old_fingerprint": "56a51d6547ed4ff9439427bdff662d8ee6de8ab25f07e08ceb90c16b5cecfacf",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L235",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "cfb00e16c6ee11d4d08a274ee8ff006bfe7816cea334d436a4b8d6f0f4c52047",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L1-L13",
+  "old_fingerprint": "bb7ca3ac4c85e6fe07c3af8f3bf4c87b9122701176a704e60f160443ee18c95f",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "0503340beb8fea24fc88159afed1098a6d02ffa3ec1b024722b6e42ae375d22b",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32",
+  "old_fingerprint": "b0e3e4aa5f3291fb3c5125527e46428425f89173a4964622ba58f5e57d9e0b95",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "f42f0d1dcbb0a3caa81e01f59cfd5708567bf60d45d6f5734febb8d4e8cec098",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32",
+  "old_fingerprint": "b00c1573c576941376c57dcf255af8fbf52c5bb8512e82885086af014fb85373",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "dde4c000606f8f32be88a5fbee83c715b0a615eb175f56a96d92e0b20636a79f",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L34,L36",
+  "old_fingerprint": "57af349c11f48928d3cc2777d6ff598d3c4753a87422f15f5344af6df701ef6e",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L242-L243,L246-L247",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "3963a700a62ba0a25517852544b9ae054ee0dee87fec9a5c42403eb2a49df66b",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L37-L38,L70-L71",
+  "old_fingerprint": "1278e86e91945715758903f35b5e1575777ac337954c0f1c1285eca7c59d7716",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L248-L249,L295-L296",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "9068096af6f8835c3fe8c48f980bd95438bab33a5729918183b8055454f3cd41",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35,L39",
+  "old_fingerprint": "89ed359d0d5e096e0a42652a4df45d46ce020edc269955210431ff7f2b83d605",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L244-L245,L250-L251",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "59f12480456e0af29634bf07c56f3bd25adfe2696906938f8d462eb669920450",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L40-L41",
+  "old_fingerprint": "eaa63445ae15f34d53112f67f14832b17ce8d96e5f8345a57179c0a7cdeec9bc",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L252-L254",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "b7112055d6c9b710f103ee7720543b826bce8555b2a0d76fb95e9e41e05c8555",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L54-L61",
+  "old_fingerprint": "99d30678b68e7f29e634379dbffe96db52b29f3314f6d64807d416cef08bf1cd",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "cc5ed5fc61f2b540c84ddc50055a848d339114d65dc695730075cc70d6bc7588",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L54-L60,L64-L65,L75",
+  "old_fingerprint": "bbd07b1964f2bf5b5190f79d5bc1290dda7aebc03a0ce0c45335c4b253d3a31e",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "235b02b83f8e4eb47f4c9e0062ea48f99ebd840dc796063e003162275ea14df1",
+  "new_quote": "or/washington/king-city/16.114/16.114.060.txt#L132,L134-L135,L139-L141",
+  "old_fingerprint": "59d4a26323c5878babfaa9a5f756d18e179df308226f69b20d16d9e05c261673",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L483,L486-L487,L493-L499",
+  "when_key": "",
+  "zone": "KTTC"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "2391295b575e4bf2a3a5f2edbdf7a0a7640d8a4d864b4e971957b4cf32c99b23",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L28,L67-L68",
+  "old_fingerprint": "c01a08c636e63df80e8d099bcec475c1ab55d3afe4cc32c8094f66653b4d4267",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L233,L290-L292",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "cbc465841f1bfa7e92f9a984217026dc52e515e629bcf732625f062d5b02fa2c",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L29,L69",
+  "old_fingerprint": "bb76928368fdd07029f384eea0f7dacfc69ac49747ec2ac0cd0619bc16e8a711",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L234,L293-L294",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "ce039684df7e2c9f2a48c5aa9a67e0d63d32ff52583cc573c11670d1214a5c64",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L30",
+  "old_fingerprint": "0eb3779b7a5f43f2680056dcffabea92b41ae78d4c33cdee4aa64e1ee6e83560",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L235",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "28957e2c997bbd5441f156ac02a71adc596318ff6d6fadf0bc73f3a482b7a55a",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L1-L13",
+  "old_fingerprint": "db589c0fbc156eeea6782e318d6e6963289bd7f2fe226816153beb7e7308cce3",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "4cba51cdc2adc3f301fca061548cbea7d83e5df68a38cf53c9458c26acda71d4",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32",
+  "old_fingerprint": "f38373a61f997f984f86c4b480a2c332595c0c1c21e9e6ce78f931e44bd24d20",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "e9302e639d44048df74d7fe2f4a9cb136856d860ae0670a395bca5e7c5dd8851",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32",
+  "old_fingerprint": "8d669e2e3b1e89995e435c57b054e179d7f57d09a4d96a42923251e330b083cf",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "ed531c97494368697289b8d33e6e98b84d3452e3a7c99beffedeaf5586ab3685",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L34,L36",
+  "old_fingerprint": "f78a4263931bff92315064492bc3887b084663c552792882537fc6a1fa3c3c05",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L242-L243,L246-L247",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "3d9bb219f6771ee9fcebcfcf9f833b69e11fc481e3f4faf78fed9ab3c7d2896a",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L37-L38,L70-L71",
+  "old_fingerprint": "e9276c1d4e6f3e357bab8779d73c1a2603947b62e4c3f133e02e6c22a869c54a",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L248-L249,L295-L296",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "7ffbc5c097074960143edb98c9a020571dd5fda59c2e3bebcd16ad8469953444",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35,L39",
+  "old_fingerprint": "02dbb45f9bec16fdaaff6f45ad06db5e1c483858225c22b7b3d9b18a4460dd22",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L244-L245,L250-L251",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "95405f543ad345903492445f4815104395b28117e300be91e2215d2d7ae7f395",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L40-L41",
+  "old_fingerprint": "3bd5fdc349d7cf368085deae29460bd925efd49a9f7b42a6e261d3d404e71a0b",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L252-L254",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "4d3e35590e38ae389d6165b6122cc86f1a3ba22c4a6c20d6045840c861083409",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L54-L61",
+  "old_fingerprint": "2423b2d903a36b04d33d99f7beda89576f2e6da6e59f2310cd86edb26bafb1d4",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "c72f3f1c27e39aa91e03df82fd7ce5d06387f93cf4fc18f65432b16a2422326c",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L54-L60,L64-L65,L75",
+  "old_fingerprint": "c5608f88267dbd9bbc7db41be721f6257526f7165058ef7289068cc52c9ee027",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "ec14a7ddf6bb77201c6b0cbf6089aac196625cc7f5fae9e205620aeb3d3e66c1",
+  "new_quote": "or/washington/king-city/16.114/16.114.060.txt#L132,L134-L135,L139-L141",
+  "old_fingerprint": "70ec62ad54f42986751956efadc59b80ebf7aacce5b281e4f516ec0ca8b6a3f5",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L483,L486-L487,L493-L499",
+  "when_key": "",
+  "zone": "KTBB"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "be829fca7e9b6577cdfa5bcc8ea5fbdce6dcdbce62de76fe46e0ea6f590bea57",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L28,L67",
+  "old_fingerprint": "4ec566d129d9b89b14531b31c3eb41dda5d5bfd87c3070bb71ab0cfc7d9d4221",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L233,L290",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "fd406004402144c60184907997d1adf5f3cd80207e4253d81e3bdd2090d7e511",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L29,L69",
+  "old_fingerprint": "de15d9cbeba4a15767dc56605c3c399e4934c9d04c8668f26c9daf1c54b85615",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L234,L293-L294",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "e5ef131a4028e9a15e58f78ad5d247ca2fc68ec91d5379492dde1ce4037707e8",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L30",
+  "old_fingerprint": "13231b65ecc29b85ad90bc5c69deecc57b39c849b54ffd00e297879dbd5070a1",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L235",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "8f7e25eb1ebb6d926b1bd0efa3fc42a8a9b760910bc9bb7911be50b4b09c33a6",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L1-L13",
+  "old_fingerprint": "dc9733497098c171051f2105d0375ddaaafcf2bbf788a04ea8b27d197dbb58d0",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "db4e72ff60d67cf547b5758c8eb9feebd94cfca622666b78a992d154e219407d",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32",
+  "old_fingerprint": "9e5cafeba2114e6aeba2cc5f8d60effdaa84d0df561ccde5732c7526f10cc341",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "ba3d8be94e4aba4dc05fac8b0bb7495bb829e0bd259aeca6e5f559e0349c454d",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32",
+  "old_fingerprint": "a2efa45d34419934804be8639ee02344a68a432d3a12b0a1791d16535291a111",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "06d880f1ff82c01fea49d7f4d69fcf2b4d0fa1c36c548f2f01987143f986d97a",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L34,L36",
+  "old_fingerprint": "e210fbf219ad64d5a6fa0409600e2c468dabb19bb93b4f908ad7fede85b2e950",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L242-L243,L246-L247",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "32f3e826fc8bb8d23106bfb3b8a530f147b0ec1862f76e1891384303825ea252",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L37-L38,L70-L71",
+  "old_fingerprint": "10c736bd8ae25b7f536eb87290210ea0216ebdb517db4d1da2fa377770472376",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L248-L249,L295-L296",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "ba2170727df84c6cfd856b5e31b90793c51bb262c44c29d9dcb5e377345a7f14",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35,L39",
+  "old_fingerprint": "a7cef3d3a37a8221eb0b0a082846824908c366468b1fdd183ce63f22a567569b",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L244-L245,L250-L251",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "16194fc9a5d9e221cb2d96d444daef118d48c011ac81ba219a59075dd7be6b8e",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L40-L41",
+  "old_fingerprint": "14e845c360945c6ae0b07715ecc3470cd0968e18e501f220fd565508d1b72cd8",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L252-L254",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "04de6b7def0d44d75ac981ea75416645460dff8aca181fc06029258e0ffb0647",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L54-L61",
+  "old_fingerprint": "cd4c473da9bb12ef1ccd83515b5855edc31d4d5a3f9d63bb33aca05157c1a400",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "86a150a045652eef716c794a8e257cd4c308ec8464a59cb3bd91a26d95ed0164",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L54-L60,L64-L65,L75",
+  "old_fingerprint": "c17949259a75406a05c81bf12e5270de4e1235cf2476688c7fb73aea8115eb91",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "4f4d6c7d5e58b91226f849a410a51dc5c36f7311804658b6efe604c7fceeed2a",
+  "new_quote": "or/washington/king-city/16.114/16.114.060.txt#L132,L134-L135,L139-L141",
+  "old_fingerprint": "1db61e275b9fe6dd7b284c39826145e3ae3b62dc984a55c34e4a5a09067d59df",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L483,L486-L487,L493-L499",
+  "when_key": "",
+  "zone": "KTC"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "0fc68532b4b40453d8e9c76379ccbc301a4db1c6be0fb8fa923f5e63b30653c9",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L28,L67",
+  "old_fingerprint": "8c1a7b64a01f69dc0a63cb37e2a2145ace55997a36afa00f12288f62838ab838",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L233,L290",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "89889b09786f79b5669db31b616ad8f4c83d4eb18c2346ed2d01a0036c265a6c",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L29,L69",
+  "old_fingerprint": "854167e5f9d4e8e8503669498c47f0ab0f0edaf2eb9861cb2e036519d78b857a",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L234,L293-L294",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "a26c948b73cd325343a90b55b3556a96a10d83036fadf2d18460cb3705da28dc",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L30",
+  "old_fingerprint": "ea01a591f2c78e3986963c16f22867ec8662c907aafafee23e6c757c0a0a21c1",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L235",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "476d5958153c99bfda21cb116aeb6035b1b5984e947e806a672025b36d72e8ef",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L1-L13",
+  "old_fingerprint": "553466acfc753f228c3990844fc59840cbee5e878759de3e29ccdd0100261850",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L197-L199,L202-L215",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "44a25fc45998921f7674aedb60ec62b832ae3be5e287ae54ce83501131aa9122",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32",
+  "old_fingerprint": "f97091356b662d7c6ee248c73adad037675cd0e9eefe1ff6b979ac43040a7f41",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "5bd1118d8c6e9a5a1032c102d6d124c2ff6e8043ed61b8e3cf7a214f83e22769",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L31-L32",
+  "old_fingerprint": "9305e249661b959143db78e25e7332bf66bf093ef960cd2fae44870f356b747e",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L236-L239",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "0eba4fe3c400468955a218acf5722b98456e5058a24e0c7cdda8a7faa11c7092",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L34,L36",
+  "old_fingerprint": "35cd39a45e6e842f7239e03160e54a4b012d51ddda91f576379a1faeda206e63",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L242-L243,L246-L247",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "17670834ad58c07e4b539e8d515c6fb47903d3756664da1d0337798f83e8b151",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L37-L38,L71",
+  "old_fingerprint": "d77c4e3dac024bc3051f047b7527ff49e6e3dbb4d835ad3d634a14bb6a00aaff",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L248-L249,L297",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "b6003c86a06aca9251367fb2b5f7546518dcce827def19cf335ddaa2588b41cf",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L35,L39",
+  "old_fingerprint": "44fb4874f23641a861a4f00c66714cf9bb0c3c951d00a06e640ca72af88a6a8f",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L244-L245,L250-L251",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "d4e2c4dce7fcc5daba25316ec61ca5e48168adfbddc9013682f8570f05eaabbf",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L20-L26,L40-L41",
+  "old_fingerprint": "23d9cee236c7b4230a19b87b68648e60e880c4379fbacd04a8ce85ced631b0e2",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L225-L231,L252-L254",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "ee3bef227d042cc34b99507e65f71e5383cd6b6dfe97eb33b54e90196cf34254",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L54-L61",
+  "old_fingerprint": "8138e2337382578aa40dd07338a8cea64343bfa6558dc1a4f7300df75178c95a",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L280",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "86f05a7bd33ea8f9e18bb79a6c944e6fb668f001d82d6c233457f2c8d3bead15",
+  "new_quote": "or/washington/king-city/16.114/16.114.050.txt#L54-L60,L64-L65,L75",
+  "old_fingerprint": "02e04f2d772b947367e2012eb58a0edc2ce1d416d6c4a2f4999d9bd246c3a35f",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L273-L279,L285-L287,L303",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "b8a14fd67a59111708a8a894aab90753ae4ec3a7f626fa9d23e6c51694a92134",
+  "new_quote": "or/washington/king-city/16.114/16.114.060.txt#L132,L134-L135,L139-L141",
+  "old_fingerprint": "f57879a7e9cd600b591b2c31f2599c063de86f04214123f67d7743f55e3f7592",
+  "old_quote": "or/washington/king-city/kcc.16.114.kingston-terrace.txt#L483,L486-L487,L493-L499",
+  "when_key": "",
+  "zone": "KTRC"
+ },
+ {
+  "field": "row_to_centerline_named_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "a6282130edfc58d03bfb880eaf17c61a18fbef827974a3bac03417370fe8ba29",
+  "new_quote": "or/washington/king-city/16.80/16.80.060.txt#L1-L12",
+  "old_fingerprint": "03b6f90e1b31b4ccf8eedc2fbf1863deb90a275d6fdc40bd6e6589df8ea273f5",
+  "old_quote": "or/washington/king-city/kcc.16.80.general.txt#L105-L129",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_other_ft",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "8e84414a5199a8fe61052ee907e4786b63fe8834c35a16965512563a307967a9",
+  "new_quote": "or/washington/king-city/16.80/16.80.060.txt#L3-L4,L12",
+  "old_fingerprint": "6d577f954c9d428340ef3b212b8a6c935b7b17123849f990c5cec4819af84a3b",
+  "old_quote": "or/washington/king-city/kcc.16.80.general.txt#L113-L114,L129",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "75575efe83cf878d744689034032b3d7d801714152c74de9cc38fb589bd59409",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "old_fingerprint": "f466cf8b5d163576267bfca6b917f5edddb034410c3508164ac39feef5563bd5",
+  "old_quote": "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31",
+  "when_key": "",
+  "zone": "R-12"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "bba35f0821667ee5dd81fba14d9077ce9d4c445a2bb646f3a60a3e54c7258658",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "old_fingerprint": "3b41e3121a49b1f643413073b4d40203901f843e6e038244cdd84b93353b126d",
+  "old_quote": "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "0d45615c8d01a0e0d97a82731d9193166fa981ac60d7ac9497f9507f45eb2ae7",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "old_fingerprint": "ad4b6c65b659affda1d0413b69b98ec530016224cdcd483ff3fb1d96817ee353",
+  "old_quote": "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "0bde756056ccd7e2a74eac0314e8255968cc8cfdfc4864392add367abc6fdffb",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "old_fingerprint": "2917e86bec4dd8fe43ab8dbf2c326732c82863e572d64387a075c5134ee79819",
+  "old_quote": "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31",
+  "when_key": "",
+  "zone": "SF"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "ec472fa4f9d3ef097ec809628fea91032cc8477d49a8f3927dd5fd224e6a6268",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "old_fingerprint": "9617e12d7a8e2ce68c2fcdfa11a4ede7de2f4ed0b63e72b3e2aa2c9a01de54f0",
+  "old_quote": "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31",
+  "when_key": "",
+  "zone": "AT"
+ }
+]

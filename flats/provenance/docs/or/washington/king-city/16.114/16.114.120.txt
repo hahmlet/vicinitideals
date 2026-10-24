@@ -1,0 +1,360 @@
+16.114.120 Neighborhood Circulation.
+A. The neighborhood circulation requirements and approval standards of Chapter 16.212 apply to development in the Kingston Terrace
+District, except for the street, sidewalk, accessway, and trail circulation standards as modified in this
+Section.
+B. Backbone Street Network.
+The Regulating Plan, Figure 16.114-9, illustrates the location of existing and future Backbone Street Network consistent with King City's Transportation System Plan and the Kingston Terrace Master Plan.
+Following is a list of the existing and future streets, the functional classification, and corresponding
+Project Identification (ID) number identified in
+Table 13 in Chapter 5 of the Transportation System Plan (TSP):
+1. North-south streets (listed west to the east):
+a. Roy Rogers Road - Arterial - TSP Project
+ID 1.
+b. River Terrace Boulevard Extension - Collector - TSP Project ID 3.
+c. New Neighborhood Route west of Elsner
+Road between Beef Bend Road and Fischer Road
+- TSP Project ID 4.
+d. Elsner Road - Collector - TSP Project ID 5 and 6.
+e. New Neighborhood Route east of Elsner
+Road and west of 155 th Avenue extension between
+Beef Bend Road and Ficher Road - TSP Project
+ID 10.
+f. 155 th Avenue Extension - Collector - TSP
+Project ID 11.
+g. New Neighborhood Route east of 155 th
+Avenue extension and west of 150 th Avenue between Beef Bend Road and south of Fischer Road
+- TSP Project ID 12.
+h. 150 th Avenue - Collector - TSP Project ID
+13.
+i. 147 th Avenue - Neighborhood Route - TSP
+Project ID 14.
+j. Myrtle Avenue - Neighborhood Route -
+TSP Project ID 15.
+k. 137 th Avenue - Collector - TSP Project ID
+18.
+2. East-west streets (north to south):
+a. Beef Bend Road - Arterial - TSP Project
+ID 8.
+b. New Neighborhood Route south of Beef
+Bend Road between 137 th Avenue and new neighborhood route - TSP Project ID 9.
+c. New Neighborhood Route north of Fischer
+Road extension between 137 th Avenue and 150th
+Avenue - TSP Project ID 16.
+d. Fischer Road Extension - Collector - TSP
+Project ID 7.
+3. Local Streets. Within the areas bounded by
+Backbone Streets a finer-grained network of local streets will be built.
+4. Location of connecting street segment.
+To minimize impact to natural resources and accommodate topography, alignment of segments of Collector and Neighborhood Routes may vary up to one hundred feet from the locations identified on the Regulating Plan, Figure 16.114-9, provided they fully connect/intersect with each of the streets and intersections as shown on the Regulating Plan.
+C. Backbone Street intersections.
+The Regulating Plan, Figure 16.114-9, identifies the types of intersections of Backbone Streets and classifies them as follows:
+1. Type A Intersections. The following intersections already exist and/or will be extended into the Kingston Terrace District Plan.
+The location of these intersections may be adjusted by one hundred feet in any direction to accommodate topography, desired connection points, and construction feasibility.
+Type A intersections include:
+a. Beef Bend Road at Roy Rogers Road;
+b. Fischer Road Extension at Roy Rogers
+Road;
+c. Elsner Road at Roy Rogers Road;
+d. River Terrace Boulevard Extension at Beef
+Bend Road;
+e. Elsner Road at Beef Bend Road;
+f. 150th Avenue at Beef Bend Road;
+g. 137th Avenue at Beef Bend Road;
+h. Fischer Road at 137 th Avenue; and
+i. Fischer Road at 150 th Avenue.
+2. Type B Intersections. The remaining intersections identified on the Regulating Plan, Figure
+16.114-9, are Type B. The location of these intersections may be adjusted by two hundred feet in any direction to accommodate topography, desired connection points, and construction feasibility.
+3. The Regulating Plan, Figure 16.114-9, includes unidentified intersections of Backbone
+Streets with Beef Bend Road. Location of the unidentified intersections is dependent upon Washington County's intersection spacing standards, the timing of development, property ownership, topography, and minimization of impact to natural resources.
+D. Street circulation standards.
+The following criteria apply to the street network within the
+Kingston Terrace District:
+1. Block length of collectors, neighborhood routes, and local streets shall not exceed five hundred thirty feet measured between intersections with public streets.
+2. Exceptions to the block size may be approved by the City Engineer where a street location is precluded by natural topography, wetlands, significant habitat areas, bodies of water, pre-existing development, or intersection spacing requirements for arterial or collector streets.
+An exception to the block length may also be approved to support the urban design goals of the neighborhood including, but not limited to, development of an urban neighborhood that includes plazas and active frontages, and creation of public parks and open spaces such as park blocks or linear greens that support multi-modal transportation.
+3. Mid-block pedestrian and bicycle accessways on public easements or rights-of-way must be provided at spacing of no more than three hundred thirty feet if full-street connections cannot be provided, unless the connection is imprac-ticable due to topography, natural areas, inade-quate sight distance, lack of supporting land use or other factors that may prevent safe connection, as determined by the City Engineer.
+4. The Regulating Plan, Figure 16.114-9, does not limit the ability of a developer to add additional streets or intersections.
+E. Design Standards: Table 16.114-11 details the street dimension and design characteristics for streets in the Kingston Terrace District.
+Table 16.114-11 Street Dimensional and Design Standards
+
+Street Type  Right-of-way or easement width27
+Pedestrian Walkway:
+Sidewalk, and Furnishings/
+Landscape Zone  Parking Lane width, max.  Bike Facility
+Vehicular travel lanes
+Applicability
+Pedestrian
+Throughway, min.28
+Pedestrian
+Walkway, min.  Number  Width, max.
+Median Street A
+[
+29]
+Planted Median
+Figure 16.114-12
+102 feet, typical
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Shared 2 11 feet
+Collector,
+Neighborhood
+Route, or Local
+Median Street B
+[
+29]
+Center Plaza [30]
+Figure 16.114-13
+100 feet, typical
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Shared 2 11 feet
+Collector,
+Neighborhood
+Route, or Local
+Main Street A
+Parallel Parking
+[
+30]
+Figure 16.114-14
+60 feet, max.
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Shared 2 11 feet
+Collector,
+Neighborhood
+Route, or Local
+Main Street B
+Diagonal Parking
+[
+30]
+Figure 16.114-15
+90 feet, max.
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Shared 2 12 feet
+Collector,
+Neighborhood
+Route, or Local
+Neighborhood
+Street
+Figure 16.114-16
+60 feet, max.
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Shared 2 10 feet
+Collector,
+Neighborhood
+Route, or Local
+Biking Street A
+Parking-Buffered
+Bike Lane
+Figure 16.114-17
+78 feet, max.
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Protected 2 10 feet
+Collector,
+Neighborhood
+Route, or Local
+Biking Street B
+Buffered Bike Lane
+Figure 16.114-18
+62 feet
+6 feet
+5 feet
+(Local)
+12 feet 8 feet Protected 2 10 feet Local
+Biking Street C
+Separated Bike
+Lane
+Figure 16.114-19
+66 feet
+6 feet
+5 feet
+(Local)
+12 feet
+8 feet
+7 feet
+(Local)
+Separated 2 10 feet
+Collector,
+Neighborhood
+Route, or Local
+Rural Character
+Neighborhood
+Street
+Figure 16.114-20
+50—60 feet 5 feet 15—20 feet [
+31] [ 32] 2 10 feet
+Collector,
+Neighborhood
+Route, or Local [
+32]
+Narrow Street
+A[
+33][34]
+Parking One-Side
+Figure 16.114-21
+46 feet 5 feet 10.5 feet 1 lane at 7 feet
+35 Shared 1+ 14 feet Local
+Narrow Street
+B[
+33][34]
+Parking Both Sides
+Figure 16.114-22
+50 feet 5 feet 10.5 feet 2 lanes at
+7 feet each Shared 1+ 14 feet Local
+Street Type  Right-of-way or easement width27
+Pedestrian Walkway:
+Sidewalk, and Furnishings/
+Landscape Zone  Parking Lane width, max.  Bike Facility
+Vehicular travel lanes
+Applicability
+Pedestrian
+Throughway, min.28
+Pedestrian
+Walkway, min.  Number  Width, max.
+Narrow Street
+C[
+33][34] No Parking Figure
+16.114-23
+42 feet 10.5 feet 5 feet None Shared 1+ 20 feet Local
+Alley[
+36]
+Figure 16.114-24 20.0—34.5 feet NA NA NA NA 1+ 14—20 feet
+May be used along natural resource edge
+27 The combined required dimensions of each component (i.e., Plant Strip, Sidewalk) may be accommodated within the right-of-way, an easement or a combination of the two.
+28 Per the City of King City Transportation System Plan, Figure 29: Sidewalk Zones, the Pedestrian Walkway Zone includes both the Pedestrian Throughway and Furnishing/Landscape Zone.
+The Pedestrian Throughway Zone is the accessible zone in which pedestrians travel.
+The Furnishings/Landscape Zone is located between the pedestrian throughway and the curb and includes street furnishings and/or landscaping (e.g., benches, lighting, bicycle parking, tree wells, and/or other plantings). 29 Left turn lane is optional in median streets; median may be a combination of planted, paved, and/or parked; median may be 20 to 40 feet wide. 30 Parallel or diagonal parking area may be partially planted, and/or used for permanent or temporary outdoor seating or other public uses instead of parking. 31 Parking is accommodated within the Pedestrian Walkway zone.
+32 On a collector street the bicycle facility may be accommodated on a multi-use path. 33 Lots with front lot lines adjacent to or within ¼­mile distance from a Habitat Conservation Area (HCA) may be served by a narrow street or alley to minimize impact to the resource.
+34 Narrow Street design alternatives A, B, and C must meet the applicable criteria of Section 16.114.120.F .1. 35 The parking zone may shift from side to side of the vehicular travel lane as long as the minimum width of the vehicular is maintained.
+The curbside parking area may be partially planted, and/or used for permanent or temporary outdoor seating or other public uses instead of parking. 36 Development sites that have public street frontage on an arterial street, collector, neighborhood route or local street, upon which they cannot take direct vehicle access may choose to provide vehicle access through an alley.
+F . Typical street sections:
+
+Figure 16.114.12 Median Street A (Planted Median)
+Figure 16.114.13 Median Street B (Center Plaza)
+Figure 16.114.14 Main Street A (Parallel Parking)
+Figure 16.114.15 Main Street B (Diagonal Parking)
+Figure 16.114.16 Neighborhood Street
+Figure 16.114.17 Biking Street A (Parking-Buffered Bike Lane)
+37 Optional Biking Street B (Buffered Bike Lane) design may include parking lane as noted in Table 16.114-11, Street Dimensional and Design Standards.
+Figure 16.114.18 Biking Street B (Buffered Bike Lane)
+37
+38 Optional Biking Street C (Separated Bike Lane) design may include parking lane as noted in Table 16.114-11 - Street Dimensional and Design Standards.
+Figure 16.114.19 Biking Street C (Separated Bike Lane)
+38
+1. Narrow Streets. Three alternative cross-sections for local residential narrow streets are illustrated in the following Figures 16.114-21, 16.114-22, and 16.114-23.
+Each Narrow Street alternative is tied to a specific set of criteria that must be met when adopting the alternative.
+a. Criteria for Narrow Street A:
+i. Traffic Flow Plan must be submitted and approved before adopting the alternative. ii.
+Not appropriate for streets serving more than five hundred vehicle trips per day. iii.
+On-street parking is permitted on one side only.
+iv. No on-street parking is permitted within thirty feet of an intersection.
+b. Criteria for Narrow Street B:
+i. Traffic Flow Plan must be submitted and approved before adopting the alternative. ii.
+Not appropriate for streets serving more than one thousand vehicle trips per day. iii.
+On-street parking is permitted on both sides.
+iv. No on-street parking is permitted within 30 feet of an intersection.
+Figure 16.114.20 Rural Character Neighborhood Street
+c. Criteria for Narrow Street C:
+i. Traffic Flow Plan must be submitted and approved before adopting the alternative. ii.
+Not appropriate for streets serving more than two hundred vehicle trips per day. iii.
+No on-street parking is permitted on either side.
+
+Figure 16.114.21 Narrow Street A (Parking One-Side)
+Figure 16.114.22 Narrow Street B (Parking Both Sides)
+Figure 16.114.23 Narrow Street C (No Parking)
+G. Adjustments to the street dimension and design characteristics.
+Adjustments to the street dimension and design characteristics of Section
+16.114.120.E may be approved by the City Engineer through a Development Plan Review with consideration made to the following:
+1. The functional street classification.
+2. Anticipated traffic volume.
+3. Sidewalk and bikeway requirements.
+4. On-street parking needs.
+5. Requirements for placement of utilities.
+6. Street lighting.
+7. Drainage and slope impacts.
+8. Protection of inventoried Goal 5 natural resources including Class A and B Upland Wildlife Habitat Conservations Areas and Class I and
+II Riparian Habitat Conservation Areas.
+9. Street location.
+10. Planting and landscape areas.
+11. Safety and comfort for motorists, bicyclists, and pedestrians.
+12. Access needs for emergency and service vehicles and transit.
+13. Guidance provided in Table 5: Minimum
+Bicycle Facilities, Table 7: Process for Determining Street Cross-Sections in Constrained Conditions, and Table 8: Constrained Acceptable Sidewalk Configuration of the City's Transportation
+System Plan.
+Figure 16.114.24 Alley
+H. On-Site bicycle and pedestrian circulation.
+Development within Kingston Terrace shall provide an on-site bicycle and pedestrian circulation system which includes the following:
+1. Private development shall provide continuous connections between the primary buildings, ground level entrances, common buildings, common open space, and vehicle and bicycle parking areas.
+2. Pedestrian walkways shall be separated from vehicle parking and maneuvering areas by physical barriers such as planter strips, raised curbs, or bollards.
+3. Walkways shall be constructed with a hard surface material and shall be no less than five feet wide.
+If adjacent to a parking area where vehicles will overhang the walkway, it shall have a minimum width of seven feet.
+The walkways shall be separated from parking areas and internal driveways using curbing, bollards, landscaping, or dis-tinctive paving materials.
+4. Dwelling, multi, mixed-use, and commercial developments shall provide on-site bicycle and pedestrian connections every three hundred thirty feet of block length where block lengths exceed five hundred thirty feet, except where precluded by natural topography, wetlands, significant habitat areas, bodies of water, or pre-existing development.
+I. Public bicycle and pedestrian circulation and facilities.
+The bicycle and pedestrian circulation system in the Kingston Terrace District shall include the following:
+1. Location of pedestrian and bicycle routes shall substantially conform to Figure 26: Pedestrian Route Designations and Figure 27: Bicycle
+Route Designations of the King City Transportation System Plan, except as altered by traffic or engineer analysis.
+2. Size and location of pedestrian and bicycle facilities along public streets shall conform to the
+Street Dimensional and Design Standards of Table 16.114-11.
+3. Where bicycle routes are parallel and adjacent to an auto travel lane, the connection must be clearly marked and safely separated from the auto travel lane.
+J. Future transit.
+Developers shall coordinate with transit providers on design and location of transit infrastructure for development along transit routes identified in King City's Transportation
+System Plan Figure 28: Transit Route Designations.
+K. Circulation and Access.
+Development in the Kingston Terrace District shall comply with the minimum driveway, access width, and pavement width standards of Table 16.114-12.
+Table 16.114-12 Minimum Vehicle Access Standards
+Uses  Number of
+Driveways  Access Width  Pavement Width
+Dwelling, single detached or attached 1 10 ft. 10 ft.
+Dwellings, multi 1 30 ft. 15 ft. for 1-way 20 ft. for 2-way
+Curbs and 5 ft. Walkway Required
+Mixed-Use and Non-Residential Uses
+(0-99 Parking Spaces) 1 30 ft. 24 ft. Curbs Required
+Mixed-Use and Non-Residential Uses
+(100+ Parking Spaces) 1 30 ft. Without Parking 24 ft. Curbs Required
+50 ft. With Parking 40 ft. Curbs Required
+1. Private residential access drives shall be provided and maintained in accordance with the applicable provisions of the Uniform Fire Code.
+2. Access drives from the street to off-street parking or loading areas shall be designed and constructed to facilitate the flow of traffic and provide maximum safety for pedestrian and vehicular traffic on the site.
+3. Parking spaces on access driveways shall be designed to reduce or eliminate backing movements and other conflicts with the driveway traffic and pedestrian routes and crosswalks.
+4. To slow traffic speeds on access drives, speed bumps, speed limit signs, and similar techniques may be required by the approval authority to enhance safety for pedestrians, bicyclists, and motorists on the site.
+5. To improve traffic flow, the city engineer may require directional signs on the site to guide pedestrians, bicyclists, or motorists.
+6. Where a proposed parking facility is served by one-way traffic flow on the site, it shall be accommodated by a driveway system approved by the city, and the entrance drive shall be situated closest to oncoming traffic and the exit drive shall be situated farthest from oncoming traffic.
+7. The direction of traffic flow shall be clearly marked for motorists on the property and the adjoining public street.
+8. Excluding dwelling, single-family attached or detached, groups of more than two parking spaces and all loading areas shall be served by a service drive so that no backing movements or other maneuvering within a street or other public right-of-way is required.
+9. All driveways shall be paved and designed in a manner approved by the City Engineer.
+10. Where pedestrian or bicycle routes cross driveways, parking area or loading areas, the connection must be clearly identifiable through the use of striping, elevation changes, speed bumps, a different paving material, or other similar method.
+(Ord. No. 2023-04, § 1(Exh.
+A), 10-18-2023)

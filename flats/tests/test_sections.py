@@ -269,3 +269,48 @@ def test_folder_tools_skip_the_proof_copy_and_own_the_chapter_folders(tmp_path) 
 def test_every_cut_in_the_corpus_is_its_slice() -> None:
     """The real store: every section file is exactly its proof copy's readable text."""
     assert check() == []
+
+
+def test_a_named_front_matter_document_cuts_below_its_cover() -> None:
+    """Durham, King City and Estacada print a cover, a title and a preface over
+    their first heading. A document named in ``front`` keeps them in the proof
+    copy and in no section; any other document still refuses."""
+    lines = ["DEVELOPMENT CODE", "Adopted by the council.", *CHAPTER[2:]]
+    with pytest.raises(ProvenanceError, match="not a contents list"):
+        split(lines, RULE, "40.res")
+    front = Rule(layer=LAYER, heading=RULE.heading, furniture=RULE.furniture,
+                 front=frozenset({"40.res"}))
+    got = split(lines, front, "40.res")
+    assert got[0] == Section("40.100", 3, 5)
+
+
+def test_out_of_order_headings_pass_only_where_named_and_each_printed_twice() -> None:
+    """Estacada's zone chapters are interleaved (16.12, 16.16, 16.12 ...). The
+    order guard is waived for a document named in ``any_order``, and only while
+    every heading is printed exactly twice -- contents list and text -- so a
+    heading the guard would have caught is still caught."""
+    lines = ["TDC 40.200. Uses.", "TDC 40.100. Purpose.",
+             "TDC 40.200. Uses.", "x", "TDC 40.100. Purpose.", "y"]
+    with pytest.raises(ProvenanceError, match="out of number order"):
+        split(lines, RULE, "40.res")
+    listed = Rule(layer=LAYER, heading=RULE.heading, any_order=frozenset({"40.res"}))
+    assert split(lines, listed, "40.res") == [Section("40.200", 3, 4), Section("40.100", 5, 6)]
+    once = ["TDC 40.200. Uses.", "x", "TDC 40.100. Purpose.", "y"]
+    with pytest.raises(ProvenanceError, match="out of number order"):
+        split(once, listed, "40.res")
+
+
+def test_an_uncut_document_is_left_whole(tmp_path) -> None:
+    """King City 16.24's definitions name a section whose heading is printed
+    only in the contents list; ``uncut`` leaves that document whole."""
+    store = _store(tmp_path)
+    uncut = Rule(layer=LAYER, heading=RULE.heading, furniture=RULE.furniture,
+                 uncut=frozenset({"40.res"}))
+    assert write(store, uncut) == []
+    assert store.proofs() == set()
+    assert f"{LAYER}/40.res.txt" in store.documents()
+
+
+def test_a_three_part_number_files_under_its_chapter() -> None:
+    assert Section("16.114.130", 1, 2).chapter == "16.114"
+    assert Section("16.114.130", 1, 2).file == "16.114/16.114.130.txt"

@@ -1,0 +1,31 @@
+2.9     Multi-Dwelling Residential (MDR) District.
+The MDR district allocates land where this land use already exists and where such development is desirable by reason of access to transportation facilities and separation from potentially conflicting land uses.
+
+2.9.1   Uses permitted outright in the MDR district include:
+
+2.9.1.1          Accessory dwelling unit
+
+2.9.1.2          Home occupation
+
+2.9.1.3          Multiple residential units within a commonly-owned structure, including but not limited to residential condominia
+
+2.9.1.4          Planned Residential Development
+
+2.9.1.5          Residential Facility
+
+2.9.1.6          Residential Home
+
+2.9.1.7          Single dwelling attached residence
+
+2.9.2   Uses permitted conditionally in the MDR district include:
+
+2.9.2.1          Live-Work residence
+
+2.9.2.2          Manufactured Home Park
+
+2.9.2.3          Mobile home park
+
+2.9.2.4          Public utility structure
+
+2.9.2.5          Religious land use
+

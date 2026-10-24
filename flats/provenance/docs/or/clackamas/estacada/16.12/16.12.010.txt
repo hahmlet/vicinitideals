@@ -1,0 +1,46 @@
+16.12.010 Classification Of Zones
+
+For the purpose of this title, the following zones are established in the city:
+
+Map Designations and Abbreviations.
+
+1 Residential Zones.
+Low Density Residential      R-1
+Medium Density Residential   R-2
+Multiple Family Residential  R-3
+North City Residential       NCR
+
+2 Commercial Zones.
+General Commercial     C-1
+Riverfront Commercial  R-C
+Highway Commercial     H-C
+Outdoor Commercial     O-C
+
+3 Mixed-Use Zones.
+Downtown                D
+Residential Commercial  C-2
+Mill Area Mixed-Use     MMU
+Central Mixed-Use       CMU
+
+4 Industrial Zones.
+
+Light Industrial  M-1
+Airport           A-P
+
+5 Open Space/Public Facility Zones.
+
+Open Space/Public Facilities
+O-S
+
+6 Special Overlay Zones.
+Historic Resources                H-R
+Planned Development               P-D
+Airport Safety And Compatibility  ASC
+Wetland Resources                 W-R
+
+(Prior code § 10.211) (Ord. No. 2012-005, § 1, 9-10-2012)
+
+HISTORY
+Amended by Ord. 2019-005 on 3/9/2020
+Amended by Ord. 2025-013 on 1/26/2026
+

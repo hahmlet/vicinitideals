@@ -689,7 +689,9 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
 
     assert silent == {
         "or/clackamas/johnson-city/ors.197a.420.txt",
-        "or/clackamas/rivergrove/rldo.composite.txt",
+        # rldo.composite.txt left this set 2026-10-24: Rivergrove's ordinance
+        # is now a proof copy cut into one file per section, and each section
+        # file claims its own number.
         "or/clackamas/_unincorporated/roadway.p100.txt",
         "or/clackamas/_unincorporated/roadway.p200.txt",
         "or/clackamas/tualatin/appendix-b.figures.txt",
