@@ -131,6 +131,9 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # The whole-document read-through (0144): one row per document a
         # person read end to end, with the comments they left.
         "document_readthroughs",
+        # Readers' notes of wrong words in the code library's text (0146),
+        # fixed in batches; fixed_at stamps each.
+        "text_corrections",
         # The flag plan's approvals (0139): a person setting a flag type's
         # risk and severity, or the colour rule set, until the drain writes
         # it into flags.yaml / colour.yaml.
