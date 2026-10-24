@@ -14,7 +14,9 @@ jobs:
   # ---------------------------------------------------------------------------
   scope-detect:
     name: Detect change scope
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest: latest moved to 26.04 on 2026-10-24 and
+    # Playwright ships no chromium for it, so the full gate could not start.
+    runs-on: ubuntu-24.04
     outputs:
       skip_heavy: ${{ steps.detect.outputs.skip_heavy }}
     steps:
@@ -56,7 +58,7 @@ jobs:
   # ---------------------------------------------------------------------------
   light-gate:
     name: Light gate (lint + unit tests)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: scope-detect
 
     # Ephemeral Postgres for the test conftest (CREATE DATABASE per run, dropped
@@ -165,7 +167,7 @@ jobs:
   # ---------------------------------------------------------------------------
   full-gate:
     name: Full gate (integration + E2E + security scans)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [scope-detect, light-gate]
     if: needs.scope-detect.outputs.skip_heavy != 'true'
 
