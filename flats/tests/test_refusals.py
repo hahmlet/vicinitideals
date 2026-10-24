@@ -373,7 +373,10 @@ pytestmark = pytest.mark.unit
 # (FOLLOWUPS 93 + 85): notes arrive on Troutdale HDR and MU-1 (the 8.130.C townhouse
 # design standards, read and NOT ENCODED), Fairview VTH and Milwaukie SMU, and leave
 # Milwaukie NMU (now encoded); one Fairview comment arrives.
-EXPECTED = {"notes": 157, "comments": 287, "tests": 18}
+# 287 -> 286 comments on 2026-10-23 (oc-driveway-preempt merge, FOLLOWUPS 24): Oregon
+# City 16.12.035.F is encoded (driveway_units_per_approach = 2) with the state override
+# on top, so its NOT ENCODED comment becomes ENCODED AND OVERRIDDEN.
+EXPECTED = {"notes": 157, "comments": 286, "tests": 18}
 # 286 -> 287 comments on 2026-10-22 (gresham-corner): Rockwood 7.0512(A)(2) S3.b-c, the
 # 60 ft of building at a corner, binds neither of the pod's forms (S3 is "All Development",
 # which leaves townhouses out, and 7.0502(B) leaves plexes out of 7.0501-7.0512).

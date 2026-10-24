@@ -92,6 +92,7 @@ _LABELS: dict[str, str] = {
     "driveway_min_width_two_way_ft": "min. driveway width (two-way)",
     "driveway_one_lane_ft": "one-lane drive to the court, cars taking turns",
     "driveway_max_frontage_pct": "max. driveway share of frontage",
+    "driveway_units_per_approach": "dwellings served by one driveway approach",
     "driveway_walkway_ft": "walkway beside the driveway",
     "land_division_parent_standards": "parent-lot standards apply",
     "max_building_width_ft": "max. building width",
@@ -957,6 +958,22 @@ _F: tuple[FieldDef, ...] = (
         "garages, parking and manoeuvring together along the street; a rear "
         "court's lane passes that one untouched and can still fail this on a "
         "narrow lot.",
+        True,
+    ),
+    FieldDef(
+        "driveway_units_per_approach",
+        "count",
+        "How many dwelling units one driveway approach may serve: the code "
+        "requires one approach for every this-many units, rounded up. Oregon "
+        "City 16.12.035.F: \"Townhouses shall have one driveway approach for "
+        "every two dwelling units (round up for townhouse structures with an "
+        "odd number of dwellings)\" -- two approaches for the four-unit pod "
+        "(Steph 2026-09-30: a requirement, not a cap). Stated by one city in "
+        "the corpus; the others print only caps (Sherwood's share of frontage) "
+        "or per-lot limits that this pod never reaches. A divisor, so MORE units "
+        "per approach means FEWER approaches: the loose direction runs up, which "
+        "is why it is declared like a ceiling -- state law (OAR 660-046-0225(1)(c)) "
+        "clips a city asking fewer units per approach and leaves one asking more.",
         True,
     ),
     FieldDef(
@@ -1866,6 +1883,9 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "driveway_one_lane_ft",
         "driveway_walkway_ft",
         "driveway_max_frontage_pct",
+        # A requirement one city states (Oregon City 16.12.035.F); a zone or
+        # city that prints none is not thereby incomplete.
+        "driveway_units_per_approach",
         "parking_maneuvering_max_width_ft",
         "parking_area_max_frontage_pct",
         "parking_area_max_width_ft",

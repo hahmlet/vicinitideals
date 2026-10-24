@@ -1720,7 +1720,10 @@ def _chain(layer_id: str, zone: str, field: str) -> dict[str, Any]:
                 "origin": origin,
                 "won": won,
                 "silent": number is None,
-                "preempts": bool(number is not None and getattr(number, "preempts", False)),
+                "preempts": bool(number is not None and number.preempts.binds),
+                "overridden": bool(
+                    resolved and resolved.preempted and not won and number is not None
+                ),
                 "base": _evidence(number) if number is not None else None,
                 "exceptions": [_evidence(v) for v in (number.variants if number else ())],
             }
@@ -1733,6 +1736,7 @@ def _chain(layer_id: str, zone: str, field: str) -> dict[str, Any]:
         "answer_status_words": (
             _display_words(resolved.status.value, _REVIEW_STATUS_WORDS) if resolved else ""
         ),
+        "winner": next((x["label"] for x in steps if x["won"]), None),
         "steps": steps,
         "verdict": resolution.verdict.value,
         # Taken off the encoded exceptions rather than off the resolution's
@@ -2880,6 +2884,7 @@ _REASON_WORDS = {
     "CLOSER_LOOK_SPLIT_ZONE": "closer look: the lot lies in more than one zoning district and the building or its parking stands across the line; the city's code has no rule that puts the whole lot in one, and the standards were read from the district that covers most of it",
     "CLOSER_LOOK_REVIEW_CONDITIONS": "closer look: the city's review of this building may add conditions or weigh judgement beyond its measured standards — ask the planner before counting on the plan as drawn",
     "CLEAR_OBJECTIVE": "state law voids the judgement test: inside an urban growth boundary the city may apply only clear and objective standards to housing (ORS 197A.400), so this lot is judged on its measured standards alone — the city may refuse at first and an appeal may be needed",
+    "CLOSER_LOOK_SECOND_APPROACH": "closer look: the city asks one driveway entrance for every two homes, which is two for this building, and the plan draws one shared drive — whether a second entrance fits on the street side, with its width, its distance from the lot line and its spacing, has not been drawn or measured yet",
     "CLOSER_LOOK_RESOURCE": "closer look: part of the lot is a mapped stream, wetland, habitat or flood area where the city allows building only with a permit — a report, replanting or a raised floor to price",
     "FACT_UNOBSERVED": "a fact about the site nothing has measured decides which number applies",
     "FACT_ASSUMED": "a fact about the site was assumed rather than measured",

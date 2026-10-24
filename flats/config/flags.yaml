@@ -643,6 +643,37 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [CLOSER_LOOK_STEEP_COARSE]
+  DRIVEWAY-SECOND-APPROACH:
+    description: "The code asks one driveway approach for every two dwelling units (Oregon City 16.12.035.F, a requirement: Steph 2026-09-30), which is two for the four-unit pod, and the plan draws one shared drive; no second approach's width, spacing or offset is held to prove it fits (the bounds are the approaches the plan draws and the approaches the code asks)"
+    kind: parametric
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, design]
+    path: "Draw a second approach on the lot's street frontage that meets the approach width, the 5 ft offset from the lot line and the spacing (FOLLOWUPS 25), or ask the city engineer whether one shared approach is accepted"
+    priority: next
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [CLOSER_LOOK_SECOND_APPROACH]
+  DRIVEWAY-STATE-OVERRIDE:
+    description: "The city's code asks one driveway approach for every N dwelling units (Oregon City 16.12.035.F: every two, which is two for the four-unit pod), and state law overrides it: a Large City may not scale a design standard, driveways included, by the number of dwelling units (OAR 660-046-0225(1)(c), 660-046-0020(4)), so the plan's one shared drive stands. A record of the city's rule, below the yellow line; it returns as DRIVEWAY-SECOND-APPROACH if the override is ever removed"
+    kind: parametric
+    risk: remote
+    # Records the override, never holds a green: below the yellow line.
+    severity: 1
+    absorbs: null
+    resolution: document_review
+    scope: shared
+    key: [jurisdiction]
+    path: "Whether the city has filed alternative standards with the state (OAR 660-046-0235); none was found for Oregon City Ord. 22-1001"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [DRIVEWAY_STATE_OVERRIDE]
   RESOURCE-PERMIT:
     description: "Part of the lot is a mapped stream, wetland, habitat or flood area where the code lets a house go up only with a permit: a report, mitigation planting or a raised floor (FOLLOWUPS 42)"
     kind: categorical

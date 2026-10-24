@@ -199,6 +199,14 @@ CLEAR_OBJECTIVE = "CLEAR_OBJECTIVE"
 #: RED -- nor a planned development, a county review use or a state-law path,
 #: each of which is its own procedure with its own standards.
 CLEAR_OBJECTIVE_RELIEF: frozenset[str] = frozenset({"conditional_use", "judgement_review"})
+#: The code requires one driveway approach for every N dwelling units and the
+#: pod's plan draws one drive (Oregon City 16.12.035.F, a requirement: Steph
+#: 2026-09-30). Nothing here holds a second approach's geometry -- its width,
+#: spacing, offset from the lot line and count per frontage are FOLLOWUPS 25
+#: -- so the lot is a closer look, never GREEN, and never a miss.
+CLOSER_LOOK_SECOND_APPROACH = "CLOSER_LOOK_SECOND_APPROACH"
+#: Driveway approaches the drawn plan holds: one shared drive to the court.
+PLAN_APPROACHES = 1
 #: The plan's fit, missed on the ground left once the steep ground is taken
 #: off and met without that (:attr:`LotFacts.steep_blocks`): the slope
 #: eliminates the lot, not the pod's placement (Steph 2026-10-04). The fit
@@ -1537,6 +1545,28 @@ def _checks(
     return out, unchecked, unmeasured
 
 
+def approaches_missing(rules: ZoneResolution, design: Design) -> int:
+    """How many driveway approaches the code asks beyond the one the plan
+    draws: ``ceil(units / driveway_units_per_approach) - PLAN_APPROACHES``,
+    0 where the code states no such requirement."""
+    per = rules.get("driveway_units_per_approach")
+    if not per:
+        return 0
+    return max(0, math.ceil(design.units / per - 1e-9) - PLAN_APPROACHES)
+
+
+def approaches_overridden(rules: ZoneResolution, design: Design) -> int:
+    """How many approaches a city's own per-unit rule would ask of the plan
+    when state law has overridden it, 0 where it asks no more than the plan
+    draws or was not overridden. ``approaches_missing`` is the rule standing;
+    this is the rule shadowed, kept so a page can say both."""
+    held = rules.values.get("driveway_units_per_approach")
+    if held is None or not held.preempted or not held.shadowed:
+        return 0
+    asked = math.ceil(design.units / held.shadowed - 1e-9)
+    return asked if asked > PLAN_APPROACHES else 0
+
+
 def _slope_closer(lot: LotFacts) -> bool:
     """Whether the plan's ground falls enough to want a closer look and not
     so much that a check failed on it (Steph 2026-10-04)."""
@@ -2518,6 +2548,8 @@ def screen(
         # Where ORS 197A.400 reaches, a condition the review adds must itself
         # be clear and objective (Steph 2026-10-15): flagged, not yellow.
         closer = (*closer, CLOSER_LOOK_REVIEW_CONDITIONS)
+    if approaches_missing(rules, design):
+        closer = (*closer, CLOSER_LOOK_SECOND_APPROACH)
 
     if any(not o.available for o in walls):
         # A verified standard the code offers no way around. Nothing still
@@ -3115,6 +3147,22 @@ def _account(
         flag(code, by, fact=review, source=_cite(rules, REVIEW_FIELDS[review]))
     if cleared_use is not None:
         flag("CLEAR-OBJECTIVE", CLEAR_OBJECTIVE, fact=cleared_use[0], source=cleared_use[1])
+    missing = approaches_missing(rules, design)
+    if missing:
+        flag(
+            "DRIVEWAY-SECOND-APPROACH",
+            CLOSER_LOOK_SECOND_APPROACH,
+            bounds=(PLAN_APPROACHES, PLAN_APPROACHES + missing),
+            source=_cite(rules, "driveway_units_per_approach"),
+        )
+    asked = approaches_overridden(rules, design)
+    if asked:
+        flag(
+            "DRIVEWAY-STATE-OVERRIDE",
+            "DRIVEWAY_STATE_OVERRIDE",
+            bounds=(PLAN_APPROACHES, asked),
+            source=_cite(rules, "driveway_units_per_approach"),
+        )
     # Fitted clear of an easement assumed along every street line (Steph
     # 2026-10-01): a plat showing a wider one, or one on a side or rear
     # line, would move the building. A record, below the yellow line.
@@ -3205,6 +3253,7 @@ __all__ = [
     "CLOSER_LOOK_MIN_DENSITY",
     "CLOSER_LOOK_RESOURCE",
     "CLOSER_LOOK_SPLIT_ZONE",
+    "CLOSER_LOOK_SECOND_APPROACH",
     "CLOSER_LOOK_STEEP_COARSE",
     "CLOSER_LOOK_REVIEW_CONDITIONS",
     "GEOMETRY_UNREADABLE",
