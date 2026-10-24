@@ -24,5 +24,6 @@
              display:block;{% if not line.grid %}white-space:pre-wrap;padding-left:7ch;text-indent:-7ch;{% endif %}"
       {% if line.grid %}title="Table row — the spacing is the column layout, shown unaltered"{% endif %}
     >{% if line.n %}{{ "%5d" | format(line.n) }}  {% endif %}{{ line.shown if line.shown is defined else line.text }}</span>{% endfor %}</pre>
-  <div class="muted" style="font-size:11px">{{ path }}</div>
+  <div class="muted" style="font-size:11px">{{ path }} ·
+    <a href="/flats/code/{{ path }}{% if "#L" in ref %}#L{{ ref.partition("#L")[2] }}{% endif %}" target="_blank" rel="noopener">read it in the code</a></div>
 {% endif %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ shelf.label }} code — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar"></div>
+<div class="content">
+<div style="max-width:1100px;margin:0 auto">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">{{ shelf.label }}</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats/code">Code library</a> · {{ shelf.layer }} ·
+        <a href="/flats/{{ shelf.layer }}">Encoded rules</a>
+      </div>
+    </div>
+  </div>
+
+  <form method="get" action="/flats/code/{{ shelf.layer }}" style="margin:10px 0 14px;display:flex;gap:8px">
+    <input type="search" name="q" value="{{ q }}" placeholder="Find words in {{ shelf.label }}'s code"
+           aria-label="Search this code" style="flex:1;max-width:520px">
+    <button class="btn btn-secondary btn-sm" type="submit">Search</button>
+  </form>
+
+  {% if q %}
+  <div data-search-results>
+    <h3 style="margin:0 0 6px">{{ hits | length }}{% if hits | length >= limit %}+{% endif %} line{{ "" if hits | length == 1 else "s" }} with “{{ q }}”</h3>
+    <ul style="list-style:none;padding:0;margin:0 0 18px">
+      {% for hit in hits %}
+      <li style="padding:4px 0;border-bottom:1px solid var(--line,#e5e7eb)">
+        <a href="/flats/code/{{ hit.path }}#L{{ hit.n }}">{{ hit.name }} line {{ hit.n }}</a>
+        <span style="margin-left:6px">{{ hit.text[:240] }}</span>
+      </li>
+      {% else %}
+      <li class="muted">Nothing found.</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% for title, entries in shelf.chapters %}
+  <section style="margin:0 0 14px" data-chapter="{{ title }}">
+    {% if entries | length == 1 and not entries[0].proof %}
+      {% set e = entries[0] %}
+      <div style="padding:4px 0"><a href="/flats/code/{{ e.path }}"><strong>{{ e.name }}</strong></a>
+        <span class="muted" style="margin-left:6px">{{ e.heading }}</span></div>
+    {% else %}
+      <h3 style="margin:10px 0 4px;font-size:15px">Chapter {{ title }}
+        <a class="muted" style="font-size:11px;font-weight:normal" href="/flats/code/{{ entries[0].proof }}" title="The chapter as extracted from the PDF, line for printed line: what the sections are proved against">printed lines</a></h3>
+      <ul style="list-style:none;padding:0 0 0 12px;margin:0">
+        {% for e in entries %}
+        <li style="padding:2px 0"><a href="/flats/code/{{ e.path }}">{{ e.name }}</a>
+          <span class="muted" style="margin-left:6px">{{ e.heading }}</span></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </section>
+  {% endfor %}
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}{{ name }} · {{ label }} — Viciniti Deals{% endblock %}
+
+{% block content %}
+<style>
+  .code-doc { max-width:980px; margin:0 auto; }
+  .code-lines { border-collapse:collapse; width:100%; font-size:14px; line-height:1.55; }
+  .code-lines td { vertical-align:top; padding:1px 6px; }
+  .code-lines .n { width:4.5ch; text-align:right; color:var(--muted,#64748b); font-size:11px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; user-select:none; padding-top:4px; }
+  .code-lines .n a { color:inherit; text-decoration:none; }
+  .code-lines .n a:hover { text-decoration:underline; }
+  .code-lines .t { white-space:pre-wrap; overflow-wrap:anywhere; }
+  .code-lines .t.grid { white-space:pre; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px; overflow-x:auto; }
+  .code-lines tr.read .t { border-left:3px solid rgba(22,163,74,.55); padding-left:6px; }
+  .code-lines tr.hit td { background:rgba(250,204,21,.28); }
+  .code-lines tr.page td { padding:10px 6px 2px; font-size:11px; color:var(--muted,#64748b); border-top:1px dashed var(--line,#cbd5e1); }
+  .code-lines tr { scroll-margin-top:60px; }
+  .readers { display:flex; flex-wrap:wrap; gap:4px; margin:2px 0 4px; }
+  .readers a { font-size:11px; padding:1px 6px; border-radius:9px; background:rgba(22,163,74,.12);
+    color:inherit; text-decoration:none; }
+  .readers a:hover { background:rgba(22,163,74,.28); }
+  .code-meta { font-size:12px; margin:6px 0 14px; }
+  .code-meta code { font-size:11px; word-break:break-all; }
+  .code-nav { display:flex; justify-content:space-between; gap:10px; margin:14px 0; font-size:13px; }
+</style>
+
+<div class="topbar"></div>
+<div class="content">
+<div class="code-doc">
+  <div class="toolbar" style="margin-bottom:4px">
+    <div>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats/code">Code library</a> ·
+        <a href="/flats/code/{{ layer }}">{{ label }}</a>
+      </div>
+      <h2 style="margin:4px 0 0">{{ heading or name }}</h2>
+    </div>
+  </div>
+
+  <div class="code-meta muted" data-fingerprint="{{ sha256 }}">
+    {% if part %}
+      Section {{ part.number }}, cut from printed lines {{ part.first }}–{{ part.last }} of
+      <a href="/flats/code/{{ part.proof }}">{{ part.proof.rsplit("/", 1)[-1] }}</a>{% if readable %} ({{ readable }}){% endif %}.
+    {% elif sections %}
+      The chapter as extracted from the PDF, line for printed line. Its {{ sections | length }} sections are proved against it word for word.
+    {% endif %}
+    Retrieved {{ retrieved }} from <a href="{{ url }}" rel="noopener noreferrer" target="_blank">the city's copy</a>.
+    {{ cited }} of {{ lines | length }} lines carry an encoded value.
+    <div>Fingerprint <code>{{ sha256 }}</code>{% if extractor %} · {{ extractor }}{% endif %}</div>
+  </div>
+
+  {% if sections %}
+  <details style="margin:0 0 12px">
+    <summary>Sections in this chapter</summary>
+    <ul style="margin:6px 0">
+      {% for p in sections %}<li><a href="/flats/code/{{ p.path }}">{{ p.number }}</a> <span class="muted">lines {{ p.first }}–{{ p.last }}</span></li>{% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+
+  <table class="code-lines" data-code-lines>
+    <tbody>
+    {% for line in lines %}
+      {% if line.page %}
+      <tr class="page" data-page="{{ line.page.n }}"><td></td><td>
+        <a href="/flats/book/{{ line.page.book }}#page={{ line.page.n }}" target="_blank" rel="noopener">{{ line.page.cite }}{% if line.page.cite != "PDF page " ~ line.page.n %} (PDF page {{ line.page.n }}){% endif %}</a>
+      </td></tr>
+      {% endif %}
+      <tr id="L{{ line.n }}" data-line="{{ line.n }}"{% if line.readers %} class="read"{% endif %}>
+        <td class="n"><a href="#L{{ line.n }}">{{ line.n }}</a></td>
+        <td>
+          <div class="t{% if line.grid %} grid{% endif %}">{{ line.text }}</div>
+          {% if line.readers %}
+          <div class="readers">
+            {% for r in line.readers %}
+            <a href="/flats/{{ r.layer }}" title="{{ r.layer }} · {{ r.zone }} · {{ r.field }}">{{ r.zone }} · {{ r.label }}{% if r.number %} {{ r.number }}{% endif %}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="code-nav">
+    <span>{% if previous %}<a href="/flats/code/{{ previous }}" rel="prev">← {{ previous.rsplit("/", 1)[-1].removesuffix(".txt") }}</a>{% endif %}</span>
+    <span>{% if next %}<a href="/flats/code/{{ next }}" rel="next">{{ next.rsplit("/", 1)[-1].removesuffix(".txt") }} →</a>{% endif %}</span>
+  </div>
+</div>
+</div>
+
+<script>
+  // #L12, #L12-L14 and #L4,L7-L8 -- the same fragment a citation carries --
+  // light the lines it names and bring the first into view.
+  (function () {
+    function mark() {
+      document.querySelectorAll("tr.hit").forEach(function (row) { row.classList.remove("hit"); });
+      var hash = location.hash.replace(/^#L/, "");
+      if (!hash || hash === location.hash) return;
+      var first = null;
+      hash.split(",").forEach(function (part) {
+        var edges = part.replace(/L/g, "").split("-").map(Number);
+        var lo = edges[0], hi = edges.length > 1 ? edges[1] : edges[0];
+        if (!lo || !hi || hi < lo || hi - lo > 2000) return;
+        for (var n = lo; n <= hi; n++) {
+          var row = document.getElementById("L" + n);
+          if (row) { row.classList.add("hit"); first = first || row; }
+        }
+      });
+      if (first) first.scrollIntoView({ block: "center" });
+    }
+    window.addEventListener("hashchange", mark);
+    mark();
+  })();
+</script>
+{% endblock %}

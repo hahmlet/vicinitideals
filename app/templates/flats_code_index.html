@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Code library — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar"></div>
+<div class="content">
+<div style="max-width:1100px;margin:0 auto">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Code library</h2>
+      <p class="muted" style="margin:4px 0 0;max-width:85ch">
+        Every zoning code the screen reads, as readable text with the line numbers every rule cites.
+        Each page prints the fingerprint of its text and links to the printed page it came from.
+      </p>
+    </div>
+  </div>
+
+  {% for county, shelves in counties %}
+  <h3 style="margin:18px 0 6px">{{ county }}</h3>
+  <div class="table-wrap">
+    <table class="data-table" data-county="{{ county }}">
+      <thead><tr><th>Jurisdiction</th><th class="col-right">Documents</th><th>Form</th></tr></thead>
+      <tbody>
+        {% for shelf in shelves %}
+        <tr data-shelf="{{ shelf.layer }}">
+          <td><a href="/flats/code/{{ shelf.layer }}">{{ shelf.label }}</a>
+            <div class="muted" style="font-size:11px">{{ shelf.layer }}</div></td>
+          <td class="col-right">{{ shelf.documents }}</td>
+          <td>{% if shelf.cut %}One section per page, one sentence per line{% else %}<span class="muted">Whole chapters, as extracted</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">No stored documents.</p>
+  {% endfor %}
+</div>
+</div>
+{% endblock %}

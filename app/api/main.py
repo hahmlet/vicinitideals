@@ -644,8 +644,10 @@ def create_app() -> FastAPI:
         import threading
 
         from app.api.routers.ui_flats_check import warm
+        from app.api.routers.ui_flats_code import _library
 
         threading.Thread(target=warm, name="flats-check-warm", daemon=True).start()
+        threading.Thread(target=_library, name="flats-code-warm", daemon=True).start()
 
     app.router.add_event_handler("startup", _warm_flats_check)
 
@@ -653,6 +655,11 @@ def create_app() -> FastAPI:
     # Ahead of ui_flats for the same catch-all reason.
     from app.api.routers.ui_flats_flags import router as ui_flats_flags_router
     app.include_router(ui_flats_flags_router)
+
+    # FLATS code library — the stored ordinances as readable text. Ahead of
+    # ui_flats for the same catch-all reason.
+    from app.api.routers.ui_flats_code import router as ui_flats_code_router
+    app.include_router(ui_flats_code_router)
 
     # FLATS rule review — read-only pages over the encoded zoning standards
     from app.api.routers.ui_flats import router as ui_flats_router
