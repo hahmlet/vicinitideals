@@ -101,7 +101,7 @@ def test_selected_words_open_the_correction_box_filled(logged_in_page: Page) -> 
     page = logged_in_page
     page.goto(f"/flats/code/{CITY}/40/40.300.txt")
     word = page.evaluate(
-        """() => {
+        r"""() => {
             const t = document.querySelector('#L3 .t');
             const node = [...t.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
             const start = node.textContent.search(/\S/);
