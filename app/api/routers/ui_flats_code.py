@@ -28,6 +28,7 @@ Registered ahead of ``ui_flats``: that router ends in a catch-all
 from __future__ import annotations
 
 import json
+import re
 from collections import defaultdict
 from dataclasses import dataclass
 from functools import lru_cache
@@ -188,6 +189,100 @@ def _page_rows(document: str) -> dict[int, dict[str, Any]]:
     return out
 
 
+#: A provision's label at the start of a line: (1), (a), (iv), (A), 1., a., A.
+_LABEL = re.compile(r"^(?:\((?P<p>[0-9]{1,3}|[A-Za-z]{1,5})\)|(?P<d>[0-9]{1,3}|[A-Za-z]{1,4})\.)\s+\S")
+_ROMAN = re.compile(r"^(?=[ivxl]+$)l?x{0,3}(?:ix|iv|v?i{0,3})$")
+#: The legislative history a codifier prints under a section: the ordinances
+#: that adopted and amended it, with their dates.
+_HISTORY = re.compile(r"^\((?:Ord|Ordinance|Res|Amended|Added)\b.*\)\.?$", re.IGNORECASE)
+#: A heading in capitals ("MINIMUM SETBACKS"): the outline starts over below it.
+_CAPITALS = re.compile(r"^[^a-z]*[A-Z]{3}[^a-z]*$")
+#: A section heading or a table's title: the outline starts over there too.
+_STARTS_OVER = re.compile(r"^(?:[A-Z]{2,5}\s+\d+[A-Z]?\.\d+\.?\s|Section\s|Sec\.\s|Table\s+\S+$|Figure\s+\S+$)")
+
+
+def _roman(token: str) -> int:
+    values = {"i": 1, "v": 5, "x": 10, "l": 50}
+    total = 0
+    for here, after in zip(token, [*token[1:], ""]):
+        value = values[here]
+        total += -value if after and values[after] > value else value
+    return total
+
+
+def _readings(token: str, form: str) -> list[tuple[str, int]]:
+    """Every (style, ordinal) a label could be: ``(i)`` is the ninth letter or the first numeral."""
+    if token.isdigit():
+        return [(f"{form}1", int(token))]
+    out = []
+    low = token.lower()
+    if len(token) == 1:
+        out.append((f"{form}{'a' if token.islower() else 'A'}", ord(low) - ord("a") + 1))
+    if _ROMAN.match(low):
+        out.append((f"{form}{'i' if token.islower() else 'I'}", _roman(low)))
+    return out
+
+
+def outline(lines: list[str]) -> list[tuple[int, str]]:
+    """How deep each line sits in its section's outline, for display only.
+
+    ``(2)`` then ``(a)`` then ``(i)`` is three levels; a line with no label
+    belongs to the provision above it. A label style already open is a sibling
+    and closes everything opened under it. ``(i)`` after ``(h)`` is a letter,
+    and a numeral anywhere else. Lines the extraction kept indented, and
+    tables, are left as printed. The text and its line numbers are untouched:
+    this only says how far in to draw each line.
+
+    Returns (depth, kind) per line: kind is "label", "body", "history" or "".
+    """
+    open_: list[tuple[str, int]] = []
+    out: list[tuple[int, str]] = []
+    for line in lines:
+        text = line.strip()
+        if not text or line[:1].isspace() or legible.is_grid(line):
+            out.append((0, ""))
+            continue
+        if _HISTORY.match(text):
+            open_ = []
+            out.append((0, "history"))
+            continue
+        m = _LABEL.match(text)
+        if m is None:
+            if _CAPITALS.match(text) or _STARTS_OVER.match(text):
+                open_ = []
+                out.append((0, ""))
+            else:
+                out.append((len(open_), "body" if open_ else ""))
+            continue
+        token = m.group("p") or m.group("d")
+        form = "(" if m.group("p") else "."
+        readings = _readings(token, form)
+        if not readings:
+            out.append((len(open_), "body" if open_ else ""))
+            continue
+        styles = [style for style, _ in open_]
+        chosen = None
+        # A sibling that continues the count wins; then any style already open.
+        for style, ordinal in readings:
+            if style in styles and open_[styles.index(style)][1] == ordinal - 1:
+                chosen = (style, ordinal)
+                break
+        if chosen is None:
+            for style, ordinal in readings:
+                if ordinal == 1 and style not in styles:
+                    chosen = (style, ordinal)
+                    break
+        if chosen is None:
+            open_styles = [r for r in readings if r[0] in styles]
+            chosen = open_styles[0] if open_styles else readings[0]
+        style, _ = chosen
+        if style in styles:
+            del open_[styles.index(style):]
+        open_.append(chosen)
+        out.append((len(open_) - 1, "label"))
+    return out
+
+
 def _document(document: str) -> dict[str, Any]:
     store = _store()
     doc = store.load(document)
@@ -195,8 +290,9 @@ def _document(document: str) -> dict[str, Any]:
     part = store.part_of(document)
     readers = _readers().get(document, {})
     starts = _page_rows(document)
+    text_lines = doc.text.splitlines()
     lines = []
-    for n, text in enumerate(doc.text.splitlines(), start=1):
+    for n, (text, (depth, kind)) in enumerate(zip(text_lines, outline(text_lines)), start=1):
         lines.append(
             {
                 "n": n,
@@ -204,6 +300,8 @@ def _document(document: str) -> dict[str, Any]:
                 "grid": legible.is_grid(text),
                 "page": starts.get(n),
                 "readers": readers.get(n, ()),
+                "depth": min(depth, 6),
+                "kind": kind,
             }
         )
     order = shelf.order() if shelf else []

@@ -88,3 +88,42 @@ async def test_anything_the_store_did_not_fetch_is_refused(client, session, path
     await _login(client, session)
     page = await client.get(f"/flats/code/{path}")
     assert page.status_code == 404
+
+
+async def test_the_outline_nests_labels_and_hangs_bodies_under_them():
+    lines = [
+        "TDC 31.070.  Interpretation.",
+        "(1)  The City Manager interprets the code.",
+        "(2)  A party must apply.",
+        "The application must describe:",
+        "(a)  traffic;",
+        "(h)  parking;",
+        "(i)  occupants; and",
+        "(3)  A decision follows.",
+        "(a)  findings;",
+        "(i)  of fact;",
+        "(ii)  of law.",
+        "MINIMUM SETBACKS",
+        "Front 15 feet",
+        "(Ord. 590-83 §1, 04-11-83; Ord. No. 1486-24, § 2, 6-10-24)",
+    ]
+    assert code.outline(lines) == [
+        (0, ""),
+        (0, "label"),
+        (0, "label"),
+        (1, "body"),
+        (1, "label"),
+        (1, "label"),
+        (1, "label"),  # (i) after (h) is the ninth letter
+        (0, "label"),
+        (1, "label"),
+        (2, "label"),  # (i) under (a) is the first numeral
+        (2, "label"),
+        (0, ""),  # a heading in capitals starts the outline over
+        (0, ""),
+        (0, "history"),
+    ]
+
+
+async def test_lines_the_extraction_kept_indented_are_left_as_printed():
+    assert code.outline(["    (a)  indented already", "A.   B.   C."]) == [(0, ""), (0, "")]

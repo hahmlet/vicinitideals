@@ -13,6 +13,9 @@
   .code-lines .t { white-space:pre-wrap; overflow-wrap:anywhere; }
   .code-lines .t.grid { white-space:pre; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px; overflow-x:auto; }
   .code-lines tr.read .t { border-left:3px solid rgba(22,163,74,.55); padding-left:6px; }
+  .code-lines .t.label { padding-left:calc(var(--d) * 1.8em + 2.2em); text-indent:-2.2em; }
+  .code-lines .t.body { padding-left:calc(var(--d) * 1.8em); }
+  .code-lines .t.history { font-size:12px; color:var(--muted,#64748b); font-style:italic; }
   .code-lines tr.hit td { background:rgba(250,204,21,.28); }
   .code-lines tr.page td { padding:10px 6px 2px; font-size:11px; color:var(--muted,#64748b); border-top:1px dashed var(--line,#cbd5e1); }
   .code-lines tr { scroll-margin-top:60px; }
@@ -70,7 +73,7 @@
       <tr id="L{{ line.n }}" data-line="{{ line.n }}"{% if line.readers %} class="read"{% endif %}>
         <td class="n"><a href="#L{{ line.n }}">{{ line.n }}</a></td>
         <td>
-          <div class="t{% if line.grid %} grid{% endif %}">{{ line.text }}</div>
+          <div class="t{% if line.grid %} grid{% endif %}{% if line.kind %} {{ line.kind }}{% endif %}"{% if line.kind in ("label", "body") %} style="--d:{{ line.depth }}"{% endif %}{% if line.kind == "history" %} title="Legislative history: the ordinances that adopted and amended this section, with their dates"{% endif %}>{{ line.text }}</div>
           {% if line.readers %}
           <div class="readers">
             {% for r in line.readers %}

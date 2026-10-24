@@ -50,3 +50,13 @@ def test_search_reaches_the_line_it_found(logged_in_page: Page) -> None:
     line = href.rsplit("#L", 1)[1]
     expect(page.locator(f"tr.hit#L{line}")).to_be_visible()
     expect(page.locator(f"#L{line} .t")).to_contain_text("cul-de-sac", ignore_case=True)
+
+
+def test_nested_provisions_are_drawn_indented(logged_in_page: Page) -> None:
+    page = logged_in_page
+    page.goto(f"/flats/code/{CITY}/31/31.070.txt")
+    two = page.locator("tr[data-line] .t", has_text="(2)").first
+    a = page.locator("tr[data-line] .t", has_text="(a)").first
+    left = lambda el: el.evaluate("e => e.getBoundingClientRect().left + parseFloat(getComputedStyle(e).paddingLeft) + parseFloat(getComputedStyle(e).textIndent)")  # noqa: E731
+    assert left(a) > left(two) + 10
+    expect(page.locator(".t.history")).to_contain_text("Ord.")
