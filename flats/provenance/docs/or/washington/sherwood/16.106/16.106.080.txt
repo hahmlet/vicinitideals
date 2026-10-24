@@ -1,0 +1,54 @@
+16.106.080 Traffic Impact Analysis (TIA)
+A. Purpose
+The purpose of this section is to implement Sections 660-012-0045(2)(b) and -0045(2)(e) of the State Transportation Planning Rule (TPR), which require the City to adopt performance standards and a process to apply conditions to land use proposals in order to minimize impacts on and protect transportation facilities.
+This section establishes requirements for when a traffic impact analysis (TIA) must be prepared and submitted; the analysis methods and content involved in a TIA; criteria used to review the TIA; and authority to attach conditions of approval to minimize the impacts of the proposal on transportation facilities.
+This section refers to the TSP for performance standards for transportation facilities as well as for projects that may need to be constructed as mitigation measures for a proposal's projected impacts.
+This section also relies on the City's Engineering Design Manual to provide street design standards and construction specifications for improvements and projects that may be constructed as part of the proposal and mitigation measures approved for the proposal.
+B. Applicability
+A traffic impact analysis (TIA) shall be required to be submitted to the City with a land use application at the request of the City Engineer or if the proposal is expected to involve one ( 1) or more of the following:
+1. An amendment to the Sherwood Comprehensive Plan or zoning map.
+2. A new direct property approach road to Highway 99W is proposed.
+3. The proposed development generates fifty (50) or more PM peak-hour trips on High­ way 99W, or one hundred (100) PM peak-hour trips on the local transportation system.
+4. An increase in use of any adjacent street or direct property approach road to Highway 99W by ten ( 10) vehicles or more per day that exceed the twenty thousand-pound gross vehicle weight.
+5. The location of an existing or proposed access driveway does not meet minimum spacing or sight distance requirements, or is located where vehicles entering or leaving the property are restricted, or such vehicles are likely to queue or hesitate at an approach or access connection, thereby creating a safety hazard.
+6. A change in internal traffic patterns that may cause safety problems, such as back up onto the highway or traffic crashes in the approach area.
+C. Requirements
+The following are typical requirements that may be modified in coordination with Engineer­ ing Staff based on the specific application.
+1. Pre-application Conference. The applicant shall meet with the City Engineer prior to submitting an application that requires a TIA.
+This meeting will be coordinated with
+
+Washington County and ODOT when an approach road to a County road or Highway
+99W serves the property, so that the TIA will meet the requirements of all relevant agencies.
+2. Preparation. The TIA shall be prepared by an Oregon Registered Professional Engineer qualified to perform traffic Engineering analysis and will be paid for by the applicant.
+3. Typical Average Daily Trips and Peak Hour Trips. The latest edition of the Trip Generation Manual, published by the Institute of Transportation Engineers (ITE), shall be used to gauge PM peak hour vehicle trips, unless a specific trip generation study that is approved by the City Engineer indicates an alternative trip generation rate is appropriate.
+4. Intersection-level Analysis. Intersection-level analysis shall occur at every intersection where the analysis shows that fifty (50) or more peak hour vehicle trips can be expected to result from the development.
+5. Transportation Planning Rule Compliance. The requirements of OAR 660-012-0060 shall apply to those land use actions that significantly affect the transportation system, as defined by the Transportation Planning Rule.
+D. Study Area
+The following facilities shall be included in the study area for all TIAs:
+1. All site-access points and intersections (signalized and unsignalized) adjacent to the proposed development site.
+If the site fronts an arterial or collector street, the analysis shall address all intersections and driveways along the site frontage and within the access spacing distances extending out from the boundary of the site frontage.
+2. Roads and streets through and adjacent to the site.
+3. All intersections needed for signal progression analysis.
+4. In addition to these requirements, the City Engineer may require analysis of any additional intersections or roadway links that may be adversely affected as a result of the proposed development.
+E. Analysis Periods
+To adequately assess the impacts of a proposed land use action, the following study periods, or horizon years, should be addressed in the transportation impact analysis where applicable:
+1. Existing Year.
+2. Background Conditions in Project Completion Year. The conditions in the year in which the proposed land use action will be completed and occupied, but without the expected traffic from the proposed land use action.
+This analysis should account for all City-approved developments that are expected to be fully built out in the proposed land use action horizon year, as well as all planned transportation system improvements.
+3. Full Buildout Conditions in Project Completion Year. The background condition plus traffic from the proposed land use action assuming full build-out and occupancy.
+4. Phased Years of Completion. If the project involves construction or occupancy in phases, the applicant shall assess the expected roadway and intersection conditions resulting from major development phases.
+Phased years of analysis will be determined in coordination with City staff.
+
+5. Twenty-Year or TSP Horizon Year. For planned unit developments, comprehensive plan amendments or zoning map amendments, the applicant shall assess the expected future roadway, intersection, and land use conditions as compared to approved com­ prehensive planning documents.
+F. Approval Criteria
+When a TIA is required, a proposal is subject to the following criteria, in addition to all criteria otherwise applicable to the underlying land use proposal:
+1. The analysis complies with the requirements of 16.106.080.C;
+2. The analysis demonstrates that adequate transportation facilities exist to serve the proposed development or identifies mitigation measures that resolve identified traffic safety problems in a manner that is satisfactory to the City Engineer and, when County or State highway facilities are affected, to Washington County and ODOT;
+3. For affected non-highway facilities, the TIA demonstrates that mobility and other applicable performance standards established in the adopted City TSP have been met; and
+4. Proposed public improvements are designed and will be constructed to the street standards specified in Section 16.106.010 and the Engineering Design Manual, and to the access standards in Section 16.106.040.
+5. Proposed public improvements and mitigation measures will provide safe connections across adjacent right-of-way (e.g., protected crossings) when pedestrian or bicycle facilities are present or planned on the far side of the right-of-way.
+G. Conditions of Approval
+The City may deny, approve, or approve a development proposal with conditions needed to meet operations and safety standards and provide the necessary right-of-way and improve­ ments to ensure consistency with the future planned transportation system.
+Improvements required as a condition of development approval, when not voluntarily provided by the applicant, shall be roughly proportional to the impact of the development on transportation facilities, pursuant to Section 16.106.090.
+Findings in the development approval shall indicate how the required improvements are directly related to and are roughly proportional to the impact of development.
+(Ord. No. 2014-012, § 3, 7-17-2014)

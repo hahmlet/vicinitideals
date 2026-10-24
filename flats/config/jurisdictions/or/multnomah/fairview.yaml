@@ -967,7 +967,7 @@ defaults:
     cite: FMC 19.164.030(A) (Vehicle parking standards)
     url: https://ecode360.com/50511349
     retrieved: '2026-08-26'
-    quote: "or/multnomah/fairview/19.164.txt#L29-L31"
+    quote: "or/multnomah/fairview/19.164/19.164.030.txt#L3-L5"
   # And no maximum. Every residential row of Table 19.164.030(A) -- accessory
   # dwelling, manufactured home, manufactured home park, "Multi-Unit Including
   # Duplex, Triplex, Cottage Clusters and Townhouses", rooming house, single
@@ -980,7 +980,7 @@ defaults:
     cite: FMC 19.164.030(C) and Table 19.164.030(A), Residential Uses rows
     url: https://ecode360.com/50511349
     retrieved: '2026-08-26'
-    quote: "or/multnomah/fairview/19.164.txt#L43-L44,L55-L57,L175-L177"
+    quote: "or/multnomah/fairview/19.164/19.164.030.txt#L17-L18,L29-L31,L153-L155"
   # How big a stall is, from the 90-degree standard row of the Minimum Parking
   # Space and Aisle Dimensions table in 19.164.030(D). Fairview asks for a
   # wider aisle than anybody else in this corpus -- 24 feet where Gresham asks
@@ -993,25 +993,25 @@ defaults:
     cite: FMC 19.164.030(D), Minimum Parking Space and Aisle Dimensions, 90 degrees, standard
     url: https://ecode360.com/50511349
     retrieved: '2026-08-26'
-    quote: "or/multnomah/fairview/19.164.txt#L185-L186,L191"
+    quote: "or/multnomah/fairview/19.164/19.164.030.txt#L165-L166,L171"
   parking_stall_depth_ft:
     value: 19
     cite: FMC 19.164.030(D), Minimum Parking Space and Aisle Dimensions, 90 degrees, standard
     url: https://ecode360.com/50511349
     retrieved: '2026-08-26'
-    quote: "or/multnomah/fairview/19.164.txt#L185-L186,L191"
+    quote: "or/multnomah/fairview/19.164/19.164.030.txt#L165-L166,L171"
   parking_aisle_one_way_ft:
     value: 24
     cite: FMC 19.164.030(D), Minimum Parking Space and Aisle Dimensions, 90 degrees, standard
     url: https://ecode360.com/50511349
     retrieved: '2026-08-26'
-    quote: "or/multnomah/fairview/19.164.txt#L185-L186,L191"
+    quote: "or/multnomah/fairview/19.164/19.164.030.txt#L165-L166,L171"
   parking_aisle_two_way_ft:
     value: 24
     cite: FMC 19.164.030(D), Minimum Parking Space and Aisle Dimensions, 90 degrees, standard
     url: https://ecode360.com/50511349
     retrieved: '2026-08-26'
-    quote: "or/multnomah/fairview/19.164.txt#L185-L186,L191"
+    quote: "or/multnomah/fairview/19.164/19.164.030.txt#L165-L166,L171"
   # ------------------------------------------------------------------------
   # Chapter 19.162, Access and Circulation, read the same day and NOT ENCODED,
   # in two places, for two different reasons.
@@ -1079,7 +1079,7 @@ defaults:
     cite: FMC 19.162.020(L)(1), driveway openings, single-unit/duplex/triplex/quadplex/townhouse uses
     url: https://ecode360.com/50511157
     retrieved: '2026-08-27'
-    quote: "or/multnomah/fairview/19.162.txt#L177-L187"
+    quote: "or/multnomah/fairview/19.162/19.162.020.txt#L199-L211"
   # The 24-foot ceiling of the same row. Fairview states a second approach
   # figure in a different chapter -- 19.30.040(F)(1), "The total width of all
   # driveway approaches must not exceed 32 feet per frontage, as measured at
@@ -1101,7 +1101,7 @@ defaults:
     cite: FMC 19.162.020(L)(1), maximum driveway width; FMC 19.30.040(F)(1) caps all approaches on a frontage at 32 ft
     url: https://ecode360.com/50511157
     retrieved: '2026-08-27'
-    quote: "or/multnomah/fairview/19.162.txt#L177-L187"
+    quote: "or/multnomah/fairview/19.162/19.162.020.txt#L199-L211"
   # 19.30.040(E)(2). Garages and off-street parking areas may not sit between
   # a building and a public street other than an alley, "except in compliance
   # with" three subsections, of which (2) is the one a pod with no garage can
@@ -1116,7 +1116,7 @@ defaults:
     cite: FMC 19.30.040(E)(2), total garage and outdoor on-site parking and maneuvering areas as a share of property street frontage
     url: https://ecode360.com/50509420
     retrieved: '2026-08-27'
-    quote: "or/multnomah/fairview/19.30.txt#L666-L676"
+    quote: "or/multnomah/fairview/19.30/19.30.040.txt#L107-L117"
   parking_area_frontage_any_street:
     # The cap above is read on EVERY street the lot has (FOLLOWUPS 84). (E)
     # reaches parking "between a building and a public street (other than an
@@ -1131,7 +1131,7 @@ defaults:
     cite: "FMC 19.30.040(E) and (E)(2), garages and parking between a building and a public street, within 50 percent of the property street frontage (any street frontage: front, side and rear streets)"
     url: https://ecode360.com/50509420
     retrieved: '2026-08-27'
-    quote: "or/multnomah/fairview/19.30.txt#L666-L676"
+    quote: "or/multnomah/fairview/19.30/19.30.040.txt#L107-L117"
   # The other limb of the same sentence, (E)(1), is why this is exempt rather
   # than true: a garage or parking area IS allowed between the building and
   # the street where it "is separated from the street property line by a
@@ -1145,7 +1145,7 @@ defaults:
     cite: FMC 19.30.040(E)(1) and (E)(2), which permit parking between a building and the street subject to two conditions
     url: https://ecode360.com/50509420
     retrieved: '2026-08-27'
-    quote: "or/multnomah/fairview/19.30.txt#L666-L676"
+    quote: "or/multnomah/fairview/19.30/19.30.040.txt#L107-L117"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from
@@ -1192,12 +1192,12 @@ defaults:
     cite: FMC 19.162.020(5), Double-Frontage Lots, access first from the street with the lowest classification
     url: https://ecode360.com/50511157
     retrieved: '2026-08-27'
-    quote: "or/multnomah/fairview/19.162.txt#L81-L83"
+    quote: "or/multnomah/fairview/19.162/19.162.020.txt#L87-L92"
     variants:
       - value: side
         when: [unit_lots]
         cite: FMC 19.30.050(D)(2)(b), a townhouse project that includes a corner lot takes access from a single driveway approach on the side of the corner lot
-        quote: "or/multnomah/fairview/19.30.txt#L860-L862"
+        quote: "or/multnomah/fairview/19.30/19.30.050.txt#L120-L123"
   # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
   # lets the site plan know whether it may try each street as the front: only
   # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
@@ -1214,7 +1214,7 @@ defaults:
     cite: FMC 19.13, Front Yard Orientation, determined on a corner lot by the location of the main building entrance
     url: https://ecode360.com/50509087
     retrieved: '2026-08-27'
-    quote: "or/multnomah/fairview/19.13.definitions.txt#L325-L326"
+    quote: "or/multnomah/fairview/19.13/19.13.060.txt#L58-L60"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
@@ -1243,12 +1243,12 @@ defaults:
     cite: FMC 19.30.040(E), which caps outdoor parking and maneuvering as a share of street frontage and states no width
     url: https://ecode360.com/50509420
     retrieved: '2026-08-27'
-    quote: "or/multnomah/fairview/19.30.txt#L666-L676"
+    quote: "or/multnomah/fairview/19.30/19.30.040.txt#L107-L117"
     variants:
       - value: 12
         when: [unit_lots]
         cite: FMC 19.30.050(D)(1)(c), outdoor on-site parking and maneuvering areas on a townhouse lot
-        quote: "or/multnomah/fairview/19.30.txt#L826-L848"
+        quote: "or/multnomah/fairview/19.30/19.30.050.txt#L84-L107"
   # 19.163.030(E)(3)(b): "Where a parking or maneuvering area, or driveway, is
   # adjacent to a building, the area shall be separated from the building by a
   # raised pathway, plaza, or landscaped buffer no less than four feet in
@@ -1263,7 +1263,7 @@ defaults:
     cite: FMC 19.163.030(E)(3)(b), separation between a parking or maneuvering area and an adjacent building
     url: https://ecode360.com/50511237
     retrieved: '2026-08-27'
-    quote: "or/multnomah/fairview/19.163.txt#L307-L309"
+    quote: "or/multnomah/fairview/19.163/19.163.030.txt#L242-L246"
   #
   # NOT ENCODED: any private open space standard. Fairview states one --
   # 19.30.090(B)(2), ground-floor units get patios or decks of at least 48
@@ -1276,7 +1276,7 @@ defaults:
   # dwellings or more. Neither the 10 percent common open space of
   # 19.30.090(B)(1) nor the 48 square feet of (B)(2) is encoded, which means
   # a Fairview site plan reserves no open space at all -- and that is the code
-  # as read, not an omission. (or/multnomah/fairview/19.30.txt#L1338-L1360)
+  # as read, not an omission. (or/multnomah/fairview/19.30/19.30.090.txt#L10-L36)
   #
   # NOT ENCODED, the rest of what applies once a stall exists: 5 percent of
   # the combined parking area landscaped with at least one tree per five
@@ -1299,7 +1299,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/fairview/19.80.txt#L51-L53,L55-L66,L143-L145"
+      quote: "or/multnomah/fairview/19.80/19.80.020.txt#L3-L7,L9-L20,L89-L92"
     notes: >-
       Table 19.80.020.A has four use categories -- Industrial, Commercial,
       Civic and Semi-Public, Other -- and no residential one at all. The
@@ -1315,7 +1315,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/fairview/19.85.txt#L35-L37,L39-L50,L70-L72"
+      quote: "or/multnomah/fairview/19.85/19.85.020.txt#L3-L7,L9-L20,L39-L41"
     notes: >-
       This table does have a Residential category and it is one row: "One
       caretaker unit shall be permitted for each development, subject to the
@@ -1333,7 +1333,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/fairview/19.70.txt#L23-L25,L27-L38,L97-L106"
+      quote: "or/multnomah/fairview/19.70/19.70.020.txt#L3-L7,L9-L20,L74-L83"
     notes: >-
       Row 4 of Table 19.70.020.A is Residential and it lists three things:
       residential mixed use, manufactured homes on individual lots where the
@@ -1364,7 +1364,7 @@ zones:
       # cells of a row are five different numbers and a range that swallowed
       # them all would let a citation check pass on a neighbour's.
       value: 5.8
-      quote: "or/multnomah/fairview/19.30.txt#L305,L312,L313"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L84,L91-L92"
       # The acre this rate is per is a net one.
       # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
       # "Maximum Net Density", and FMC 19.13 defines net density as units
@@ -1378,7 +1378,7 @@ zones:
       # The loosest net acre in this corpus, and the closest to the lot's
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
-        quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        quote: "or/multnomah/fairview/19.13/19.13.140.txt#L15,L27"
         less: []
         assumed_none:
           - "street right-of-way"
@@ -1388,13 +1388,13 @@ zones:
         # should not have to know they coincide here.
         - value: 5.8
           when: [unit_lots]
-          quote: "or/multnomah/fairview/19.30.txt#L305,L318,L319"
+          quote: "or/multnomah/fairview/19.30/19.30.030.txt#L84,L97-L98"
     max_density_du_per_acre:
       # Row 4.b prints "None" for this zone -- no ceiling on duplex, triplex,
       # quadplex or cottage cluster density. Exempt rather than a large
       # number: the code states no maximum here.
       exempt: true
-      quote: "or/multnomah/fairview/19.30.txt#L330,L337,L338"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L109,L116-L117"
       # The acre this rate is per is a net one.
       # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
       # "Maximum Net Density", and FMC 19.13 defines net density as units
@@ -1408,7 +1408,7 @@ zones:
       # The loosest net acre in this corpus, and the closest to the lot's
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
-        quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        quote: "or/multnomah/fairview/19.13/19.13.140.txt#L15,L27"
         less: []
         assumed_none:
           - "street right-of-way"
@@ -1416,10 +1416,10 @@ zones:
         # Row 4.c, Townhouse, which does carry one.
         - value: 25
           when: [unit_lots]
-          quote: "or/multnomah/fairview/19.30.txt#L330,L343,L344"
+          quote: "or/multnomah/fairview/19.30/19.30.030.txt#L109,L122-L123"
     min_building_separation_ft:
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L418"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L197"
     cite_default:
       cite: FMC 19.30.020 Table A / 19.30.030 Table A (2023-41-TA amendments, PC Final Review Draft 12-5-2023)
       url: https://ecode360.com/50509420
@@ -1436,11 +1436,11 @@ zones:
       # worth a field that cannot be measured.
       value: 35
       cite: FMC Table 19.30.030.A, row 17
-      quote: "or/multnomah/fairview/19.30.txt#L452,L453"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L231-L232"
       qualified_by:
         fact: adjacent_single_story_building
         cite: FMC 19.30.030(E), Building Height Transition
-        quote: "or/multnomah/fairview/19.30.txt#L516-L527"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L320"
     max_far:
       # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
       # as a ratio to one. Read across from the row label, because the table
@@ -1457,19 +1457,19 @@ zones:
       # platted before it.
       value: 0.7
       cite: FMC Table 19.30.030.A, row 14
-      quote: "or/multnomah/fairview/19.30.txt#L430,L431,L432"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L209-L211"
     max_lot_depth_ratio:
       value: 3
-      quote: "or/multnomah/fairview/19.30.txt#L366"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L145"
       variants:
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/fairview/19.30.txt#L367"
+          quote: "or/multnomah/fairview/19.30/19.30.030.txt#L146"
     quadplex_allowed:
       # Table 19.30.020.A row h, Quadplex. Six district columns, four values
       # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
       value: true
-      quote: "or/multnomah/fairview/19.30.txt#L72-L95,L140-L144"
+      quote: "or/multnomah/fairview/19.30/19.30.020.txt#L13-L36,L81-L85"
     orientation_constraint:
       # FMC 19.30.040.B, reached from note (5) on the Quadplex row of Table
       # 19.30.020.A. At least one main entrance of a quadplex must sit within
@@ -1481,7 +1481,7 @@ zones:
       # fit stage keeps both orientations.
       value: entrance_only
       cite: "FMC 19.30.040.B, Entry Orientation, reached from note (5) on the Quadplex row of Table 19.30.020.A"
-      quote: "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
+      quote: "or/multnomah/fairview/19.30/19.30.040.txt#L15-L18,L20-L22,L24-L51"
     setback_front_ft:
       # Table 19.30.030.A row 8, and the table is not the whole rule. 19.30.030(D)
       # governs every zone in this chapter: in an "established residential area"
@@ -1497,29 +1497,29 @@ zones:
       # certify a depth the street may not allow.
       # Found 2026-09-09 working the reading queue.
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L375"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L154"
       qualified_by:
         fact: established_residential_area
         cite: FMC 19.30.030(D), Front Yard Setbacks for Infill Housing in Established Residential Areas
-        quote: "or/multnomah/fairview/19.30.txt#L498-L500,L504-L506,L508-L510,L512-L514"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L286-L290,L294-L299,L301-L303,L305-L307"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/fairview/19.30.txt#L400"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L179"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/fairview/19.30.txt#L390"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L169"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L412"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L191"
     min_lot_sqft:
       value: 6000
-      quote: "or/multnomah/fairview/19.30.txt#L270"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L49"
     min_lot_width_ft:
       value: 30
-      quote: "or/multnomah/fairview/19.30.txt#L356"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L135"
     max_coverage_pct:
       value: 50
-      quote: "or/multnomah/fairview/19.30.txt#L441"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L220"
       # 19.163.030(C), the citywide landscape area standards, read 2026-08-26.
       # The chapter applies to "all developments requiring site design review,
       # and other developments with required landscaping", and 19.13 defines site
@@ -1532,7 +1532,7 @@ zones:
       cite: FMC 19.163.030(C)(1) (landscape area standards, residential districts)
       url: https://ecode360.com/50511237
       retrieved: '2026-08-26'
-      quote: "or/multnomah/fairview/19.163.txt#L109-L111,L113-L115"
+      quote: "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L16-L18"
     notes: >-
       Quadplex outright, and the minimum lot is the detached-dwelling minimum:
       6,000 sq ft buys four units here. Maximum FAR is 0.7, and it is close:
@@ -1573,7 +1573,7 @@ zones:
       wider reading costs a review and the narrow one costs a false GREEN.
     setback_front_max_ft:
       value: 30
-      quote: "or/multnomah/fairview/19.30.txt#L382"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L161"
   R-7.5:
     min_density_du_per_acre:
       # Table 19.30.030.A row 3.b, "Duplex, Triplex, Quadplex, Cottage
@@ -1584,7 +1584,7 @@ zones:
       # cells of a row are five different numbers and a range that swallowed
       # them all would let a citation check pass on a neighbour's.
       value: 4.6
-      quote: "or/multnomah/fairview/19.30.txt#L305,L312,L314"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L84,L91,L93"
       # The acre this rate is per is a net one.
       # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
       # "Maximum Net Density", and FMC 19.13 defines net density as units
@@ -1598,7 +1598,7 @@ zones:
       # The loosest net acre in this corpus, and the closest to the lot's
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
-        quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        quote: "or/multnomah/fairview/19.13/19.13.140.txt#L15,L27"
         less: []
         assumed_none:
           - "street right-of-way"
@@ -1608,13 +1608,13 @@ zones:
         # should not have to know they coincide here.
         - value: 4.6
           when: [unit_lots]
-          quote: "or/multnomah/fairview/19.30.txt#L305,L318,L320"
+          quote: "or/multnomah/fairview/19.30/19.30.030.txt#L84,L97,L99"
     max_density_du_per_acre:
       # Row 4.b prints "None" for this zone -- no ceiling on duplex, triplex,
       # quadplex or cottage cluster density. Exempt rather than a large
       # number: the code states no maximum here.
       exempt: true
-      quote: "or/multnomah/fairview/19.30.txt#L330,L337,L339"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L109,L116,L118"
       # The acre this rate is per is a net one.
       # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
       # "Maximum Net Density", and FMC 19.13 defines net density as units
@@ -1628,7 +1628,7 @@ zones:
       # The loosest net acre in this corpus, and the closest to the lot's
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
-        quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        quote: "or/multnomah/fairview/19.13/19.13.140.txt#L15,L27"
         less: []
         assumed_none:
           - "street right-of-way"
@@ -1636,10 +1636,10 @@ zones:
         # Row 4.c, Townhouse, which does carry one.
         - value: 23.2
           when: [unit_lots]
-          quote: "or/multnomah/fairview/19.30.txt#L330,L343,L345"
+          quote: "or/multnomah/fairview/19.30/19.30.030.txt#L109,L122,L124"
     min_building_separation_ft:
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L419"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L198"
     cite_default:
       cite: FMC 19.30.020/19.30.030 (2023-41-TA amendments)
       url: https://ecode360.com/50509420
@@ -1656,11 +1656,11 @@ zones:
       # worth a field that cannot be measured.
       value: 35
       cite: FMC Table 19.30.030.A, row 17
-      quote: "or/multnomah/fairview/19.30.txt#L452,L454"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L231,L233"
       qualified_by:
         fact: adjacent_single_story_building
         cite: FMC 19.30.030(E), Building Height Transition
-        quote: "or/multnomah/fairview/19.30.txt#L516-L527"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L320"
     max_far:
       # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
       # as a ratio to one. Read across from the row label, because the table
@@ -1677,19 +1677,19 @@ zones:
       # platted before it.
       value: 0.7
       cite: FMC Table 19.30.030.A, row 14
-      quote: "or/multnomah/fairview/19.30.txt#L430,L433,L434"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L209,L212-L213"
     max_lot_depth_ratio:
       value: 3
-      quote: "or/multnomah/fairview/19.30.txt#L368"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L147"
       variants:
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/fairview/19.30.txt#L369"
+          quote: "or/multnomah/fairview/19.30/19.30.030.txt#L148"
     quadplex_allowed:
       # Table 19.30.020.A row h, Quadplex. Six district columns, four values
       # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
       value: true
-      quote: "or/multnomah/fairview/19.30.txt#L72-L95,L140-L144"
+      quote: "or/multnomah/fairview/19.30/19.30.020.txt#L13-L36,L81-L85"
     orientation_constraint:
       # FMC 19.30.040.B, reached from note (5) on the Quadplex row of Table
       # 19.30.020.A. At least one main entrance of a quadplex must sit within
@@ -1701,7 +1701,7 @@ zones:
       # fit stage keeps both orientations.
       value: entrance_only
       cite: "FMC 19.30.040.B, Entry Orientation, reached from note (5) on the Quadplex row of Table 19.30.020.A"
-      quote: "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
+      quote: "or/multnomah/fairview/19.30/19.30.040.txt#L15-L18,L20-L22,L24-L51"
     setback_front_ft:
       # Row 8 of Table 19.30.030.A, qualified the same way R-6's is and for the
       # same rule: 19.30.030(D) applies to every zone in this chapter, and in an
@@ -1709,29 +1709,29 @@ zones:
       # nearest single-unit dwelling's rather than from this row -- between 10
       # and 40 feet. The row's number is the bottom of that range.
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L376"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L155"
       qualified_by:
         fact: established_residential_area
         cite: FMC 19.30.030(D), Front Yard Setbacks for Infill Housing in Established Residential Areas
-        quote: "or/multnomah/fairview/19.30.txt#L498-L500,L504-L506,L508-L510,L512-L514"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L286-L290,L294-L299,L301-L303,L305-L307"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/fairview/19.30.txt#L402"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L181"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/fairview/19.30.txt#L392"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L171"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L413"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L192"
     min_lot_sqft:
       value: 7500
-      quote: "or/multnomah/fairview/19.30.txt#L271"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L50"
     min_lot_width_ft:
       value: 30
-      quote: "or/multnomah/fairview/19.30.txt#L358"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L137"
     max_coverage_pct:
       value: 50
-      quote: "or/multnomah/fairview/19.30.txt#L442"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L221"
       # 19.163.030(C)(1), the citywide landscape area standard for residential
       # districts, read 2026-08-26. The chapter reaches "all developments
       # requiring site design review, and other developments with required
@@ -1745,7 +1745,7 @@ zones:
       cite: FMC 19.163.030(C)(1) (landscape area standards, residential districts)
       url: https://ecode360.com/50511237
       retrieved: '2026-08-26'
-      quote: "or/multnomah/fairview/19.163.txt#L109-L111,L113-L115"
+      quote: "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L16-L18"
     notes: >-
       Quadplex outright on the zone's own 7,500 sq ft minimum.
 
@@ -1774,7 +1774,7 @@ zones:
       wider reading costs a review and the narrow one costs a false GREEN.
     setback_front_max_ft:
       value: 30
-      quote: "or/multnomah/fairview/19.30.txt#L383"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L162"
   R-10:
     min_density_du_per_acre:
       # Table 19.30.030.A row 3.b, "Duplex, Triplex, Quadplex, Cottage
@@ -1785,7 +1785,7 @@ zones:
       # cells of a row are five different numbers and a range that swallowed
       # them all would let a citation check pass on a neighbour's.
       value: 3.5
-      quote: "or/multnomah/fairview/19.30.txt#L305,L312,L315"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L84,L91,L94"
       # The acre this rate is per is a net one.
       # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
       # "Maximum Net Density", and FMC 19.13 defines net density as units
@@ -1799,7 +1799,7 @@ zones:
       # The loosest net acre in this corpus, and the closest to the lot's
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
-        quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        quote: "or/multnomah/fairview/19.13/19.13.140.txt#L15,L27"
         less: []
         assumed_none:
           - "street right-of-way"
@@ -1809,13 +1809,13 @@ zones:
         # should not have to know they coincide here.
         - value: 3.5
           when: [unit_lots]
-          quote: "or/multnomah/fairview/19.30.txt#L305,L318,L321"
+          quote: "or/multnomah/fairview/19.30/19.30.030.txt#L84,L97,L100"
     max_density_du_per_acre:
       # Row 4.b prints "None" for this zone -- no ceiling on duplex, triplex,
       # quadplex or cottage cluster density. Exempt rather than a large
       # number: the code states no maximum here.
       exempt: true
-      quote: "or/multnomah/fairview/19.30.txt#L330,L337,L340"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L109,L116,L119"
       # The acre this rate is per is a net one.
       # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
       # "Maximum Net Density", and FMC 19.13 defines net density as units
@@ -1829,7 +1829,7 @@ zones:
       # The loosest net acre in this corpus, and the closest to the lot's
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
-        quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        quote: "or/multnomah/fairview/19.13/19.13.140.txt#L15,L27"
         less: []
         assumed_none:
           - "street right-of-way"
@@ -1837,10 +1837,10 @@ zones:
         # Row 4.c, Townhouse, which does carry one.
         - value: 17.6
           when: [unit_lots]
-          quote: "or/multnomah/fairview/19.30.txt#L330,L343,L346"
+          quote: "or/multnomah/fairview/19.30/19.30.030.txt#L109,L122,L125"
     min_building_separation_ft:
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L420"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L199"
     cite_default:
       cite: FMC 19.30.020/19.30.030 (2023-41-TA amendments)
       url: https://ecode360.com/50509420
@@ -1857,11 +1857,11 @@ zones:
       # worth a field that cannot be measured.
       value: 35
       cite: FMC Table 19.30.030.A, row 17
-      quote: "or/multnomah/fairview/19.30.txt#L452,L455"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L231,L234"
       qualified_by:
         fact: adjacent_single_story_building
         cite: FMC 19.30.030(E), Building Height Transition
-        quote: "or/multnomah/fairview/19.30.txt#L516-L527"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L320"
     max_far:
       # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
       # as a ratio to one. Read across from the row label, because the table
@@ -1878,19 +1878,19 @@ zones:
       # platted before it.
       value: 0.7
       cite: FMC Table 19.30.030.A, row 14
-      quote: "or/multnomah/fairview/19.30.txt#L430,L435,L436"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L209,L214-L215"
     max_lot_depth_ratio:
       value: 3
-      quote: "or/multnomah/fairview/19.30.txt#L370"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L149"
       variants:
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/fairview/19.30.txt#L371"
+          quote: "or/multnomah/fairview/19.30/19.30.030.txt#L150"
     quadplex_allowed:
       # Table 19.30.020.A row h, Quadplex. Six district columns, four values
       # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
       value: true
-      quote: "or/multnomah/fairview/19.30.txt#L72-L95,L140-L144"
+      quote: "or/multnomah/fairview/19.30/19.30.020.txt#L13-L36,L81-L85"
     orientation_constraint:
       # FMC 19.30.040.B, reached from note (5) on the Quadplex row of Table
       # 19.30.020.A. At least one main entrance of a quadplex must sit within
@@ -1902,7 +1902,7 @@ zones:
       # fit stage keeps both orientations.
       value: entrance_only
       cite: "FMC 19.30.040.B, Entry Orientation, reached from note (5) on the Quadplex row of Table 19.30.020.A"
-      quote: "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
+      quote: "or/multnomah/fairview/19.30/19.30.040.txt#L15-L18,L20-L22,L24-L51"
     setback_front_ft:
       # Row 8 of Table 19.30.030.A, qualified the same way R-6's is and for the
       # same rule: 19.30.030(D) applies to every zone in this chapter, and in an
@@ -1910,29 +1910,29 @@ zones:
       # nearest single-unit dwelling's rather than from this row -- between 10
       # and 40 feet. The row's number is the bottom of that range.
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L377"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L156"
       qualified_by:
         fact: established_residential_area
         cite: FMC 19.30.030(D), Front Yard Setbacks for Infill Housing in Established Residential Areas
-        quote: "or/multnomah/fairview/19.30.txt#L498-L500,L504-L506,L508-L510,L512-L514"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L286-L290,L294-L299,L301-L303,L305-L307"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/fairview/19.30.txt#L404"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L183"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/fairview/19.30.txt#L394"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L173"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L414"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L193"
     min_lot_sqft:
       value: 10000
-      quote: "or/multnomah/fairview/19.30.txt#L272"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L51"
     min_lot_width_ft:
       value: 30
-      quote: "or/multnomah/fairview/19.30.txt#L360"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L139"
     max_coverage_pct:
       value: 50
-      quote: "or/multnomah/fairview/19.30.txt#L443"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L222"
       # 19.163.030(C), the citywide landscape area standards, read 2026-08-26.
       # The chapter applies to "all developments requiring site design review,
       # and other developments with required landscaping", and 19.13 defines site
@@ -1945,7 +1945,7 @@ zones:
       cite: FMC 19.163.030(C)(1) (landscape area standards, residential districts)
       url: https://ecode360.com/50511237
       retrieved: '2026-08-26'
-      quote: "or/multnomah/fairview/19.163.txt#L109-L111,L113-L115"
+      quote: "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L16-L18"
     notes: >-
       Quadplex outright, and the quadplex minimum is the zone minimum: 10,000
       sq ft either way.
@@ -1975,7 +1975,7 @@ zones:
       wider reading costs a review and the narrow one costs a false GREEN.
     setback_front_max_ft:
       value: 30
-      quote: "or/multnomah/fairview/19.30.txt#L384"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L163"
   RM:
     open_space_min_pct:
       # Read blind 2026-09-08 out of a section nobody had ever quoted, and
@@ -2010,13 +2010,13 @@ zones:
       cite: FMC 19.30.090.B.1, Common Open Space (Multi-Unit Housing, RM)
       url: https://fairvieworegon.gov/DocumentCenter/View/1319
       retrieved: '2026-09-08'
-      quote: "or/multnomah/fairview/19.30.txt#L1330,L1332-L1334,L1338-L1340,L1342-L1344"
+      quote: "or/multnomah/fairview/19.30/19.30.090.txt#L1,L3-L6,L10-L12,L14-L18"
     min_density_du_per_acre:
       # Row 3.b prints "14 (Triplexes and Quadplexes)" in the RM column, and
       # row 3.c prints 14 for townhouses. One figure whichever way the pod is
       # platted, so no variant.
       value: 14
-      quote: "or/multnomah/fairview/19.30.txt#L305,L312,L317"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L84,L91,L96"
       # The acre this rate is per is a net one.
       # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
       # "Maximum Net Density", and FMC 19.13 defines net density as units
@@ -2030,7 +2030,7 @@ zones:
       # The loosest net acre in this corpus, and the closest to the lot's
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
-        quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        quote: "or/multnomah/fairview/19.13/19.13.140.txt#L15,L27"
         less: []
         assumed_none:
           - "street right-of-way"
@@ -2040,7 +2040,7 @@ zones:
       # 10,000 for -- the ceiling does not bind in RM, and it is encoded
       # because whether it binds is the screen's question and not the file's.
       value: 21.8
-      quote: "or/multnomah/fairview/19.30.txt#L330,L337,L342"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L109,L116,L121"
       # The acre this rate is per is a net one.
       # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
       # "Maximum Net Density", and FMC 19.13 defines net density as units
@@ -2054,13 +2054,13 @@ zones:
       # The loosest net acre in this corpus, and the closest to the lot's
       # own area.
         cite: FMC 19.13 "Net density"; "Net site area"
-        quote: "or/multnomah/fairview/19.13.definitions.txt#L543-L544,L554-L555"
+        quote: "or/multnomah/fairview/19.13/19.13.140.txt#L15,L27"
         less: []
         assumed_none:
           - "street right-of-way"
     min_building_separation_ft:
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L422"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L201"
     cite_default:
       cite: FMC 19.30.010.D, 19.30.020, 19.30.030 Table A (2023-41-TA amendments)
       url: https://ecode360.com/50509420
@@ -2077,11 +2077,11 @@ zones:
       # worth a field that cannot be measured.
       value: 45
       cite: FMC Table 19.30.030.A, row 17
-      quote: "or/multnomah/fairview/19.30.txt#L452,L457"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L231,L236"
       qualified_by:
         fact: adjacent_single_story_building
         cite: FMC 19.30.030(E), Building Height Transition
-        quote: "or/multnomah/fairview/19.30.txt#L516-L527"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L320"
     max_far:
       # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
       # as a ratio to one. Read across from the row label, because the table
@@ -2099,12 +2099,12 @@ zones:
       # platted before it.
       value: 0.7
       cite: FMC Table 19.30.030.A, row 14
-      quote: "or/multnomah/fairview/19.30.txt#L430,L438,L439"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L209,L217-L218"
     quadplex_allowed:
       # Table 19.30.020.A row h, Quadplex. Six district columns, four values
       # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
       value: true
-      quote: "or/multnomah/fairview/19.30.txt#L72-L95,L140-L144"
+      quote: "or/multnomah/fairview/19.30/19.30.020.txt#L13-L36,L81-L85"
     orientation_constraint:
       # FMC 19.30.040.B, reached from note (5) on the Quadplex row of Table
       # 19.30.020.A. At least one main entrance of a quadplex must sit within
@@ -2116,7 +2116,7 @@ zones:
       # fit stage keeps both orientations.
       value: entrance_only
       cite: "FMC 19.30.040.B, Entry Orientation, reached from note (5) on the Quadplex row of Table 19.30.020.A"
-      quote: "or/multnomah/fairview/19.30.txt#L578-L580,L582-L584,L586-L612"
+      quote: "or/multnomah/fairview/19.30/19.30.040.txt#L15-L18,L20-L22,L24-L51"
     setback_front_ft:
       # Row 8 of Table 19.30.030.A, qualified the same way R-6's is and for the
       # same rule: 19.30.030(D) applies to every zone in this chapter, and in an
@@ -2124,20 +2124,20 @@ zones:
       # nearest single-unit dwelling's rather than from this row -- between 10
       # and 40 feet. The row's number is the bottom of that range.
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L379"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L158"
       qualified_by:
         fact: established_residential_area
         cite: FMC 19.30.030(D), Front Yard Setbacks for Infill Housing in Established Residential Areas
-        quote: "or/multnomah/fairview/19.30.txt#L498-L500,L504-L506,L508-L510,L512-L514"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L286-L290,L294-L299,L301-L303,L305-L307"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/fairview/19.30.txt#L408"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L187"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/fairview/19.30.txt#L397"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L176"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/fairview/19.30.txt#L416"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L195"
     min_lot_sqft:
       # Table 19.30.030.A row 1.d, Quadplex. Five columns across the row --
       # R-6 6,000, R-7.5 7,500, R-10 10,000, TOZ NA, RM "2,500 per unit" --
@@ -2146,13 +2146,13 @@ zones:
       # coincidence, the R-10 cell three columns to its left: a citation check
       # looking for the number in the quoted row found it and passed.
       per_dwelling: 2500
-      quote: "or/multnomah/fairview/19.30.txt#L269-L274"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L48-L53"
     min_lot_width_ft:
       value: 60
-      quote: "or/multnomah/fairview/19.30.txt#L363"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L142"
     max_coverage_pct:
       value: 60
-      quote: "or/multnomah/fairview/19.30.txt#L445"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L224"
       # 19.163.030(C), the citywide landscape area standards, read 2026-08-26.
       # The chapter applies to "all developments requiring site design review,
       # and other developments with required landscaping", and 19.13 defines site
@@ -2165,7 +2165,7 @@ zones:
       cite: FMC 19.163.030(C)(1) (landscape area standards, residential districts)
       url: https://ecode360.com/50511237
       retrieved: '2026-08-26'
-      quote: "or/multnomah/fairview/19.163.txt#L109-L111,L113-L115"
+      quote: "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L16-L18"
     notes: >-
       The zone states its lot minimum per unit rather than per building, so a
       quadplex needs 2,500 sq ft four times over. Ordinary RM lots run 6,000 to
@@ -2197,7 +2197,7 @@ zones:
       wider reading costs a review and the narrow one costs a false GREEN.
     setback_front_max_ft:
       value: 30
-      quote: "or/multnomah/fairview/19.30.txt#L386"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L165"
   RM/TOZ:
     cite_default:
       cite: FMC 19.30.030 Table A (RM + Townhouse Overlay columns)
@@ -2221,11 +2221,11 @@ zones:
       # would answer it by accident.
       value: 35
       cite: FMC Table 19.30.030.A, row 17, Townhouse Overlay column
-      quote: "or/multnomah/fairview/19.30.txt#L452,L456"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L231,L235"
       qualified_by:
         fact: adjacent_single_story_building
         cite: FMC 19.30.030(E), Building Height Transition
-        quote: "or/multnomah/fairview/19.30.txt#L516-L527"
+        quote: "or/multnomah/fairview/19.30/19.30.030.txt#L309-L320"
     max_far:
       # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
       # as a ratio to one. Read across from the row label, because the table
@@ -2239,7 +2239,7 @@ zones:
       # platted before it.
       value: 0.7
       cite: FMC Table 19.30.030.A, row 14
-      quote: "or/multnomah/fairview/19.30.txt#L430,L437"
+      quote: "or/multnomah/fairview/19.30/19.30.030.txt#L209,L216"
     like: RM
       # 19.163.030(C)(1), the citywide landscape area standard for residential
       # districts, read 2026-08-26. The chapter reaches "all developments
@@ -2254,7 +2254,7 @@ zones:
       cite: FMC 19.163.030(C)(1) (landscape area standards, residential districts)
       url: https://ecode360.com/50511237
       retrieved: '2026-08-26'
-      quote: "or/multnomah/fairview/19.163.txt#L109-L111,L113-L115"
+      quote: "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L16-L18"
     notes: >-
       Metro layer label, not a Fairview zone: the RM base district with the
       townhouse overlay mapped onto it. Adopted by reference rather than
@@ -2335,7 +2335,7 @@ zones:
       cite: FMC 19.65.040(B)(2), Through-Lots, the front setbacks apply
       url: https://ecode360.com/print/FA4439?guid=50509772
       retrieved: '2026-09-27'
-      quote: "or/multnomah/fairview/19.65.txt#L378"
+      quote: "or/multnomah/fairview/19.65/19.65.040.txt#L112"
     cite_default:
       cite: FMC 19.65.020 Table 19.65.020(A) (Land Uses and Building Types Permitted in the Town Center Commercial District), row 1.h Quadplexes; FMC 19.65.030 through 19.65.060
       url: https://ecode360.com/50509772
@@ -2370,7 +2370,7 @@ zones:
     min_lot_sqft:
       exempt: true
       cite: "FMC 19.65.100(A)(1), Residential Uses, Density: no minimum or maximum residential density standard"
-      quote: "or/multnomah/fairview/19.65.txt#L972-L974,L976-L978"
+      quote: "or/multnomah/fairview/19.65/19.65.100.txt#L12-L16,L18-L21"
     # 45 feet, and 19.65.070 will sell another 20 on top of it. The step-downs
     # in 19.65.060(B) reduce the limit on a PORTION of a site within 25 feet
     # of a residential zone -- 35 feet next to R, R-7.5, R-10 or VSF -- and
@@ -2378,14 +2378,14 @@ zones:
     # change this pod's answer.
     max_height_ft:
       value: 45
-      quote: "or/multnomah/fairview/19.65.txt#L444,L448-L450,L452-L454,L456-L458,L460-L462"
+      quote: "or/multnomah/fairview/19.65/19.65.060.txt#L1,L6-L10,L12-L14,L16-L19,L21-L24"
     # "There is no minimum front setback required." The zone wants buildings
     # at the sidewalk, not away from it, which is why the binding front number
     # here is the MAXIMUM.
     setback_front_ft:
       value: 0
       cite: "FMC 19.65.040(A)(1), Front Setbacks, Minimum Setback: no minimum front setback required"
-      quote: "or/multnomah/fairview/19.65.txt#L284,L290-L292,L294-L296"
+      quote: "or/multnomah/fairview/19.65/19.65.040.txt#L1,L11-L13,L15-L17"
     # Ten feet, and this is a real constraint on a fixed-dimension building:
     # at least 50 percent of the ground level street-facing facade must sit
     # within it (75 percent inside a storefront district). A 56-foot pod set
@@ -2393,7 +2393,7 @@ zones:
     setback_front_max_ft:
       value: 10
       cite: "FMC 19.65.040(A)(2)(c)(i), Front Setbacks, Maximum Setback: 10 feet from a street lot line"
-      quote: "or/multnomah/fairview/19.65.txt#L284,L298-L300,L322-L324,L326-L328"
+      quote: "or/multnomah/fairview/19.65/19.65.040.txt#L1,L19-L21,L45-L47,L49-L56"
     # Zero, except fifteen when the building abuts a residential district --
     # and which of those applies is the neighbour's zoning, which this system
     # does not hold. The fifteen is the base for the same reason Portland's
@@ -2402,11 +2402,11 @@ zones:
     setback_side_ft:
       value: 15
       cite: "FMC 19.65.040(C), Side Setbacks: none, 15 feet abutting a residential district"
-      quote: "or/multnomah/fairview/19.65.txt#L284,L380-L382"
+      quote: "or/multnomah/fairview/19.65/19.65.040.txt#L1,L114-L117"
       variants:
         - value: 0
           when: [abuts_nonresidential_zone]
-          quote: "or/multnomah/fairview/19.65.txt#L284,L380-L382"
+          quote: "or/multnomah/fairview/19.65/19.65.040.txt#L1,L114-L117"
     # The same sentence pair on the rear line, with an extra step in the
     # middle: zero on street-access lots, eight on alley-access lots so a car
     # can park parallel behind the building, fifteen against a residential
@@ -2415,14 +2415,14 @@ zones:
     setback_rear_ft:
       value: 15
       cite: "FMC 19.65.040(B)(1), Rear Setbacks, Minimum Setback: zero, eight feet for alley-access lots, 15 feet abutting a residential district"
-      quote: "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374"
+      quote: "or/multnomah/fairview/19.65/19.65.040.txt#L1,L101-L103,L105-L108"
       variants:
         - value: 0
           when: [abuts_nonresidential_zone]
-          quote: "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374"
+          quote: "or/multnomah/fairview/19.65/19.65.040.txt#L1,L101-L103,L105-L108"
         - value: 8
           when: [abuts_nonresidential_zone, alley_at_rear]
-          quote: "or/multnomah/fairview/19.65.txt#L284,L368-L370,L372-L374"
+          quote: "or/multnomah/fairview/19.65/19.65.040.txt#L1,L101-L103,L105-L108"
       # 19.163.030(C), the citywide landscape area standards, read 2026-08-26.
       # The chapter applies to "all developments requiring site design review,
       # and other developments with required landscaping", and 19.13 defines site
@@ -2435,7 +2435,7 @@ zones:
       cite: FMC 19.163.030(C)(2) (landscape area standards, town center commercial district)
       url: https://ecode360.com/50511237
       retrieved: '2026-08-26'
-      quote: "or/multnomah/fairview/19.163.txt#L109-L111,L117-L119"
+      quote: "or/multnomah/fairview/19.163/19.163.030.txt#L12-L14,L20-L22"
     notes: >-
       This is the one Fairview district that permits the pod outright, and
       the encoding still opens with a refusal. The reason is a subarea:
@@ -2491,12 +2491,12 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/fairview/19.135.txt#L15,L17-L18,L20-L21"
+      quote: "or/multnomah/fairview/19.135/19.135.010.txt#L1,L3-L4,L6-L7"
       variants:
         - value: true
           when: [unit_lots, conditional_use]
           cite: "FMC 19.135.010 row c, attached single-unit dwellings a conditional use in the VMU zone; ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
-          quote: "or/multnomah/fairview/19.135.txt#L15,L17-L18,L20-L21"
+          quote: "or/multnomah/fairview/19.135/19.135.010.txt#L1,L3-L4,L6-L7"
       #
       # Closed by the 2026-10-08 ruling, reopened 2026-10-15 by ORS 197A.400:
       # Attached single-unit dwellings are a conditional use (19.135.010 row c); multi-unit
@@ -2514,20 +2514,20 @@ zones:
     # no lot size. Read and empty.
     min_lot_sqft:
       exempt: true
-      quote: "or/multnomah/fairview/19.135.txt#L52,L114-L116,L118-L120,L122-L124"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L66-L68,L70-L72,L74-L76"
     max_height_ft:
       value: 45
-      quote: "or/multnomah/fairview/19.135.txt#L52,L122-L124"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L74-L76"
     max_coverage_pct:
       value: 75
-      quote: "or/multnomah/fairview/19.135.txt#L52,L118-L120"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L70-L72"
     # "Residential density shall not exceed 45 units per acre", and 19.13 says
     # the acre is net of street right-of-way. Four units need 3,872 square feet
     # of it, which no VMU lot is likely to fail; encoded because a ceiling
     # nobody wrote down is a ceiling nobody can check.
     max_density_du_per_acre:
       value: 45
-      quote: "or/multnomah/fairview/19.135.txt#L52,L114-L116"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L66-L68"
       measured_on:
         fact: net_developable_area
         cite: FMC 19.13 "Density(ies)" and "Net site area"
@@ -2543,13 +2543,13 @@ zones:
     # inventing one is how a lot screens buildable to a line it does not own.
     setback_front_ft:
       exempt: true
-      quote: "or/multnomah/fairview/19.135.txt#L52,L54-L56,L82-L84,L86-L88,L102-L104"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L31-L33,L35-L37,L52-L54"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/fairview/19.135.txt#L52,L54-L56,L82-L84,L102-L104"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L31-L33,L52-L54"
     setback_rear_ft:
       value: 5
-      quote: "or/multnomah/fairview/19.135.txt#L52,L54-L56,L82-L84,L102-L104"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L31-L33,L52-L54"
     notes: >-
       OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): the conditional use (19.135.010 row c) is a hearing on criteria not stored (19.440), which state law reduces to the clear and objective standards inside a UGB, so the `[unit_lots, conditional_use]` variant is back and the lot is judged on the standards below, flagged CLEAR-OBJECTIVE (green, below the yellow line). Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.440, are not stored, and the stored text shows the review may add conditions (19.163, "the city may require additional landscaping through the conditional use permit process"); held red until 19.440 is read. The 2026-10-08 ruling read: the only way to four attached homes here is a conditional use,
@@ -2594,16 +2594,16 @@ zones:
           quote: "or/multnomah/fairview/19.135.txt#L15,L17-L18,L21,L52,L54-L56,L58-L60,L78-L80"
     min_lot_sqft:
       exempt: true
-      quote: "or/multnomah/fairview/19.135.txt#L52,L114-L116,L118-L120,L122-L124"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L66-L68,L70-L72,L74-L76"
     max_height_ft:
       value: 45
-      quote: "or/multnomah/fairview/19.135.txt#L52,L122-L124"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L74-L76"
     max_coverage_pct:
       value: 75
-      quote: "or/multnomah/fairview/19.135.txt#L52,L118-L120"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L70-L72"
     max_density_du_per_acre:
       value: 45
-      quote: "or/multnomah/fairview/19.135.txt#L52,L114-L116"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L66-L68"
       measured_on:
         fact: net_developable_area
         cite: FMC 19.13 "Density(ies)" and "Net site area"
@@ -2617,13 +2617,13 @@ zones:
     # not a fact this system holds, so the twenty is the base.
     setback_front_ft:
       value: 20
-      quote: "or/multnomah/fairview/19.135.txt#L52,L54-L56,L58-L60,L74-L76"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L7-L9,L23-L25"
     setback_side_ft:
       value: 15
-      quote: "or/multnomah/fairview/19.135.txt#L52,L54-L56,L58-L60,L70-L72"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L7-L9,L19-L21"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/fairview/19.135.txt#L52,L54-L56,L58-L60,L70-L72"
+      quote: "or/multnomah/fairview/19.135/19.135.030.txt#L1,L3-L5,L7-L9,L19-L21"
       # 19.150.070: "A minimum of 15 percent of the developed VO and VC site
       # areas must be used for landscaping." VMU shares the chapter's title
       # and not this sentence.
@@ -2632,7 +2632,7 @@ zones:
       cite: FMC 19.150.070 (VO and VC landscaping and street furniture)
       url: https://ecode360.com/50511109
       retrieved: '2026-08-26'
-      quote: "or/multnomah/fairview/19.150.txt#L79,L81"
+      quote: "or/multnomah/fairview/19.150/19.150.070.txt#L1,L3"
     notes: >-
       Fairview counts differently from its neighbours. FMC 19.13 defines a "multi-unit dwelling" as "a building containing five or more dwelling units", so the P on that row is not this building's P -- a quadplex is four. The same chapter defines "quadplex" as "four dwelling units on a lot or parcel in any configuration" and "single-unit attached housing (townhouses)" as "two or more single-unit dwellings with common end-walls", which the pod is. Read the five-or-more row as the permission and every village zone in this city screens green on a standard that does not apply to the building.
 
@@ -2667,7 +2667,7 @@ zones:
         - value: true
           when: [unit_lots, conditional_use]
           cite: "FMC 19.125.030 (A), townhouses a conditional use after Planning Commission approval; ORS 197A.400 reduces the hearing to the clear and objective standards inside a UGB (Steph 2026-10-15, FOLLOWUPS 85)"
-          quote: "or/multnomah/fairview/19.125.txt#L63,L65,L67-L69"
+          quote: "or/multnomah/fairview/19.125/19.125.030.txt#L1,L3,L5-L7"
       #
       # Closed by the 2026-10-08 ruling, reopened 2026-10-15 by ORS 197A.400:
       # Townhouses are a conditional use after Planning Commission approval (19.125.030(A)).
@@ -2682,13 +2682,13 @@ zones:
       quote: "or/multnomah/fairview/19.145.txt#L17,L45"
     min_lot_sqft:
       exempt: true
-      quote: "or/multnomah/fairview/19.125.txt#L73,L75-L77,L79-L81,L83-L85,L87-L89"
+      quote: "or/multnomah/fairview/19.125/19.125.040.txt#L1,L3-L6,L8-L10,L12-L14,L16-L19"
     max_height_ft:
       value: 45
-      quote: "or/multnomah/fairview/19.125.txt#L73,L83-L85"
+      quote: "or/multnomah/fairview/19.125/19.125.040.txt#L1,L12-L14"
     max_coverage_pct:
       value: 65
-      quote: "or/multnomah/fairview/19.125.txt#L73,L79-L81"
+      quote: "or/multnomah/fairview/19.125/19.125.040.txt#L1,L8-L10"
     # The only zone in this city with a density FLOOR, and on a small lot the
     # floor is what bites: twenty units per net acre means four units may not
     # spread over more than 8,712 square feet, while the thirty-unit ceiling
@@ -2696,7 +2696,7 @@ zones:
     # two numbers.
     min_density_du_per_acre:
       value: 20
-      quote: "or/multnomah/fairview/19.125.txt#L73,L75-L77"
+      quote: "or/multnomah/fairview/19.125/19.125.040.txt#L1,L3-L6"
       measured_on:
         fact: net_developable_area
         cite: FMC 19.13 "Density(ies)" and "Net site area"
@@ -2706,7 +2706,7 @@ zones:
           - "street right-of-way"
     max_density_du_per_acre:
       value: 30
-      quote: "or/multnomah/fairview/19.125.txt#L73,L75-L77"
+      quote: "or/multnomah/fairview/19.125/19.125.040.txt#L1,L3-L6"
       measured_on:
         fact: net_developable_area
         cite: FMC 19.13 "Density(ies)" and "Net site area"
@@ -2742,13 +2742,13 @@ zones:
       # reading behind it, and that is a question for a person.
       # Found 2026-09-07 by the blind second reading.
       value: 20
-      quote: "or/multnomah/fairview/19.125.txt#L73,L87-L89"
+      quote: "or/multnomah/fairview/19.125/19.125.040.txt#L1,L16-L19"
     setback_side_ft:
       exempt: true
-      quote: "or/multnomah/fairview/19.125.txt#L73,L87-L89"
+      quote: "or/multnomah/fairview/19.125/19.125.040.txt#L1,L16-L19"
     setback_rear_ft:
       exempt: true
-      quote: "or/multnomah/fairview/19.125.txt#L73,L87-L89"
+      quote: "or/multnomah/fairview/19.125/19.125.040.txt#L1,L16-L19"
     min_landscaped_pct:
       # The sentence is in 19.145, not in this zone's own chapter, and the
       # cite_default above would have credited it to 19.125.
@@ -2756,7 +2756,7 @@ zones:
       cite: FMC 19.145.070 (Landscaping, VTH and VA zones)
       url: https://ecode360.com/50511096
       retrieved: '2026-08-26'
-      quote: "or/multnomah/fairview/19.145.txt#L63,L65"
+      quote: "or/multnomah/fairview/19.145/19.145.070.txt#L1,L3"
     notes: >-
       OPENED 2026-10-15 BY ORS 197A.400 (Steph, FOLLOWUPS 85): the conditional use (19.125.030(A)) is a hearing on criteria not stored (19.440), which state law reduces to the clear and objective standards inside a UGB, so the `[unit_lots, conditional_use]` variant is back and the lot is judged on the standards below, flagged CLEAR-OBJECTIVE (green, below the yellow line). Before that:
       RED, RE-CHECKED 2026-10-14 under Steph's review rule: the conditional-use criteria, 19.440, are not stored, and the stored text shows the review may add conditions (19.163, "the city may require additional landscaping through the conditional use permit process"); held red until 19.440 is read. The 2026-10-08 ruling read: the only way to four attached homes here is a conditional use,
@@ -2840,10 +2840,10 @@ zones:
       # either of them.
       value: 35
       cite: FMC 19.115.040(D) (Village Single-Family, height)
-      quote: "or/multnomah/fairview/19.115.txt#L59-L61"
+      quote: "or/multnomah/fairview/19.115/19.115.040.txt#L19-L21"
     min_lot_depth_ft:
       value: 70
-      quote: "or/multnomah/fairview/19.115.txt#L51-L53"
+      quote: "or/multnomah/fairview/19.115/19.115.040.txt#L10-L13"
     quadplex_allowed:
       # 19.115.020A adopts R-6's use list wholesale: "The permitted uses in the
       # residential (R) district R-6 shall apply in the village single-family
@@ -2851,7 +2851,7 @@ zones:
       # one document and the row it lands on is in another -- Table 19.30.020.A
       # row h, quoted under R-6 above, where a quadplex reads permitted.
       value: true
-      quote: "or/multnomah/fairview/19.115.txt#L21-L25"
+      quote: "or/multnomah/fairview/19.115/19.115.020.txt#L1-L7"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. 19.145.040 applies in VSF, VTH and VA
       # (19.145.010): "Hipped gambrel or gabled roofs are required. The pitch
@@ -2863,7 +2863,7 @@ zones:
       quote: "or/multnomah/fairview/19.145.txt#L17,L45"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/fairview/19.115.txt#L71-L73"
+      quote: "or/multnomah/fairview/19.115/19.115.040.txt#L31-L33"
     setback_side_ft:
       # 19.115.040(E)(1)(d) is four feet on one side and five on the opposite,
       # combined at least nine. The field carries one number for both sides,
@@ -2872,19 +2872,19 @@ zones:
       # has to say which side, which is a site-plan question rather than a
       # rules one.
       value: 5
-      quote: "or/multnomah/fairview/19.115.txt#L83-L85"
+      quote: "or/multnomah/fairview/19.115/19.115.040.txt#L45-L48"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/fairview/19.115.txt#L87-L89"
+      quote: "or/multnomah/fairview/19.115/19.115.040.txt#L50-L52"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/fairview/19.115.txt#L83-L85"
+      quote: "or/multnomah/fairview/19.115/19.115.040.txt#L45-L48"
     min_lot_sqft:
       value: 4000
-      quote: "or/multnomah/fairview/19.115.txt#L47-L49"
+      quote: "or/multnomah/fairview/19.115/19.115.040.txt#L3-L8"
     max_coverage_pct:
       value: 60
-      quote: "or/multnomah/fairview/19.115.txt#L55-L57"
+      quote: "or/multnomah/fairview/19.115/19.115.040.txt#L15-L17"
     notes: 'quadfit confidence: needs_verification. Quadplex use flows in via the amended 19.30.020
       linkage, which is the needs_verification part; village design standards apply on top.
 
@@ -2911,7 +2911,7 @@ zones:
       # either of them.
       value: 35
       cite: FMC 19.120.040(D) (Village Townhouse, height)
-      quote: "or/multnomah/fairview/19.120.txt#L103-L105"
+      quote: "or/multnomah/fairview/19.120/19.120.040.txt#L16-L18"
     quadplex_allowed:
       # 19.120.020 lists what is permitted in VTH and a quadplex is not on it:
       # detached single-unit (existing only), townhouses, duplexes, then
@@ -2919,7 +2919,7 @@ zones:
       # accessory dwelling units. The zone is named for attached dwellings and
       # allows no new detached ones, so the state mandate does not attach.
       value: false
-      quote: "or/multnomah/fairview/19.120.txt#L21-L55"
+      quote: "or/multnomah/fairview/19.120/19.120.020.txt#L1-L35"
       variants:
         # Townhouses are row B of the same closed list, permitted outright,
         # and 19.13 defines a townhouse as a unit "located on an individual
@@ -2930,7 +2930,7 @@ zones:
         - value: true
           when: [unit_lots]
           cite: "FMC 19.120.020(B), townhouses permitted in the VTH zone; FMC 19.13 \"Townhouse\", each unit on an individual lot (Steph 2026-10-15, townhomes have separate lots)"
-          quote: "or/multnomah/fairview/19.120.txt#L21,L23,L29-L31"
+          quote: "or/multnomah/fairview/19.120/19.120.020.txt#L1,L3,L9-L11"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. 19.145.040 applies in VSF, VTH and VA
       # (19.145.010): "Hipped gambrel or gabled roofs are required. The pitch
@@ -2951,39 +2951,39 @@ zones:
       # fit, so it is read and NOT ENCODED.
       value: 2000
       cite: FMC 19.120.040(A) (Village Townhouse, density / lot area)
-      quote: "or/multnomah/fairview/19.120.txt#L89,L91,L93"
+      quote: "or/multnomah/fairview/19.120/19.120.040.txt#L1,L3,L5-L6"
     min_lot_width_ft:
       value: 20
       cite: FMC 19.120.040(B) (Village Townhouse, lot dimensions)
-      quote: "or/multnomah/fairview/19.120.txt#L89,L95,L97"
+      quote: "or/multnomah/fairview/19.120/19.120.040.txt#L1,L8,L10"
     min_lot_depth_ft:
       value: 70
       cite: FMC 19.120.040(B) (Village Townhouse, lot dimensions)
-      quote: "or/multnomah/fairview/19.120.txt#L89,L95,L97"
+      quote: "or/multnomah/fairview/19.120/19.120.040.txt#L1,L8,L10"
     max_coverage_pct:
       value: 70
       cite: FMC 19.120.040(C) (Village Townhouse, lot coverage)
-      quote: "or/multnomah/fairview/19.120.txt#L89,L99,L101"
+      quote: "or/multnomah/fairview/19.120/19.120.040.txt#L1,L12,L14"
     # (E) is a menu, like VA's: the front facade sits "either 10 or 15 feet"
     # from the right-of-way. Ten is the least it may be and fifteen the most.
     setback_front_ft:
       value: 10
       cite: FMC 19.120.040(E) (Village Townhouse, setbacks)
-      quote: "or/multnomah/fairview/19.120.txt#L89,L107,L109"
+      quote: "or/multnomah/fairview/19.120/19.120.040.txt#L1,L20,L22-L24"
     setback_front_max_ft:
       value: 15
       cite: FMC 19.120.040(E) (Village Townhouse, setbacks)
-      quote: "or/multnomah/fairview/19.120.txt#L89,L107,L109"
+      quote: "or/multnomah/fairview/19.120/19.120.040.txt#L1,L20,L22-L24"
     # "Sides of units may have a setback of zero feet from property line on
     # both sides of the lot" -- a stated zero, not a silence.
     setback_side_ft:
       value: 0
       cite: FMC 19.120.040(E) (Village Townhouse, setbacks)
-      quote: "or/multnomah/fairview/19.120.txt#L89,L107,L109"
+      quote: "or/multnomah/fairview/19.120/19.120.040.txt#L1,L20,L22-L24"
     setback_rear_ft:
       value: 15
       cite: FMC 19.120.040(E) (Village Townhouse, setbacks)
-      quote: "or/multnomah/fairview/19.120.txt#L89,L107,L109"
+      quote: "or/multnomah/fairview/19.120/19.120.040.txt#L1,L20,L22-L24"
       # 19.145.070 is one sentence covering two zones -- "In all VTH and VA
       # zones, a minimum of 25 percent of site area shall be landscaped" -- and
       # only VA had it. The village article carries its own landscaping regime
@@ -2994,7 +2994,7 @@ zones:
       cite: FMC 19.145.070 (Landscaping, VTH and VA zones)
       url: https://ecode360.com/50511096
       retrieved: '2026-08-26'
-      quote: "or/multnomah/fairview/19.145.txt#L63,L65"
+      quote: "or/multnomah/fairview/19.145/19.145.070.txt#L1,L3"
     notes: >-
       quadfit confidence: verified | Townhouse/duplex zone; new detached SFD not allowed -- OAR mandate
       does not attach.
@@ -3018,7 +3018,7 @@ zones:
       retrieved: '2026-08-19'
     quadplex_allowed:
       value: false
-      quote: "or/multnomah/fairview/19.108.txt#L15,L17,L19-L45"
+      quote: "or/multnomah/fairview/19.108/19.108.010.txt#L1,L3-L4,L6-L32"
     notes: >-
       A Metro layer label, not a Fairview zone, and the shortest chapter in
       this code answers it. 19.108.010 is one sentence and seven items: a
@@ -3062,12 +3062,12 @@ zones:
       # states no such standard, which is what this flag is for.
       exempt: true
       cite: FMC 19.30.100 (MH district standards); Table 19.30.030.A note A
-      quote: "or/multnomah/fairview/19.30.txt#L1512-L1544"
+      quote: "or/multnomah/fairview/19.30/19.30.100.txt#L1-L42"
     quadplex_allowed:
       # The same Quadplex row, read for what it does not print: the Manufactured
       # Home Park column is the fifth of six and the row stops at four values.
       value: false
-      quote: "or/multnomah/fairview/19.30.txt#L72-L95,L140-L144"
+      quote: "or/multnomah/fairview/19.30/19.30.020.txt#L13-L36,L81-L85"
     notes: 'quadfit confidence: needs_verification | MH-park district; no detached SFD — no quadplex mandate
       (3 lots).'
   # === The September 2026 map's two codes, ruled 2026-09-20 ================
@@ -3115,7 +3115,7 @@ zone_rulings:
       floor to be commercial or office "except for the special 'VC flex'
       area located on the extreme western portion of the VC zone, as
       depicted in Figure V-1 ... where residential uses are allowed on the
-      first floors" (19.135.txt L78-L80). Metro's layer draws that area as its
+      first floors" (19.135.030.txt L27-L29). Metro's layer draws that area as its
       own code on one lot, 1700 NE Market Dr (1N3E33AB-00500). It is the VC
       zone with one standard lifted, so VC's block answers: multi-unit is
       five or more units under FMC 19.13, attached single-unit dwellings are
@@ -3138,7 +3138,7 @@ neighbours:
   abuts_nonresidential_zone:
     true_for: [CC, TCC, GI, LI, VC, VO]
     false_for: [R-6, R-7.5, R-10, RM, RM/TOZ, R/SFLD, R/CSP, R/MH, VSF, VTH, VA]
-    quote: "or/multnomah/fairview/19.65.txt#L372-L374,L380-L382"
+    quote: "or/multnomah/fairview/19.65/19.65.040.txt#L105-L108,L114-L117"
     cite: FMC 19.65.040(B)(1) and (C) (TCC rear and side setbacks); FMC 19.30.010
       (Purpose -- "the residential districts (zones)"); FMC 19.30.030 Table A;
       FMC 19.145.010 (VSF, VTH and VA)
@@ -3146,7 +3146,7 @@ neighbours:
       19.65.040 turns on "a residential district" and Chapter 19.30 is the
       chapter titled Residential Districts: its purpose section opens "The
       residential districts (zones) are intended to promote the livability
-      ... of the city's neighborhoods" (19.30.txt L20-L22) and names R-6,
+      ... of the city's neighborhoods" (19.30.010.txt L3-L6) and names R-6,
       R-7.5, R-10, the manufactured home park (MH) zone and RM (L48-L58);
       the map's R/SFLD, R/CSP and RM/TOZ are Metro's spellings of overlays
       on those districts and R/MH is the MH park district. The Fairview

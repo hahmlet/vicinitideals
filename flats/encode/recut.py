@@ -49,7 +49,7 @@ from flats.encode.verify import Verification, VerificationLog, fingerprint
 from flats.provenance import pages as page_map
 from flats.provenance.repoint import _citations, config_files
 from flats.provenance.sections import Rule, _spans, addresses, held, rules, split, write
-from flats.provenance.store import ProvenanceStore, parse_quote
+from flats.provenance.store import ProvenanceError, ProvenanceStore, parse_quote
 from flats.rules.loader import CONFIG_ROOT, load_rules
 
 #: Where the carry files for production land, one per re-cut.
@@ -188,7 +188,13 @@ def _move_citations(
                 return found.group(0)
             if not prefix and file not in own:
                 return found.group(0)
-            ref = parse_quote(f"{path}#L{found.group('spans').replace(' ', '')}")
+            try:
+                ref = parse_quote(f"{path}#L{found.group('spans').replace(' ', '')}")
+            except ProvenanceError:
+                # Prose may list lines out of order ("#L452,L464,L63"): not a
+                # quote this can move, so it stays for a person.
+                refused.append((file, found.group(0), "its spans are out of order"))
+                return found.group(0)
             stored = before.held[path]
             if any(not 1 <= n <= len(stored) for n in ref.numbers):
                 refused.append((file, found.group(0), "names a line the file does not have"))

@@ -1,0 +1,27 @@
+3.020  Zoning District Outline.
+
+All areas within The City limits of Troutdale are divided into the following zoning districts.
+The use of each tract of land within the corporate limits of the City of Troutdale shall be limited to those uses permitted within the applicable zoning district.
+
+Symbol           District Name                                                                                   TDC Section
+Residential Districts                                                                              3.100
+LDR-1              Low-Density Residential (formerly R-20 & R-10)                                     3.111
+LDR-2              Low-Density Residential (formerly R-7)                                                   3.112
+MDR                Medium-Density Residential (formerly R-5 & R-4)                                   3.113
+HDR                High-Density Residential (formerly A-2)                                                   3.114
+Mixed-Use Districts                                                                               3.200
+MU-1               Downtown Mixed-Use (formerly CBD)                                                     3.211
+MU-2               General Mixed-Use (formerly MO/H & NC)                                             3.212
+MU-3               Urban Mixed-Use                                                                                     3.213
+Commercial Districts                                                                             3.300
+CC                   Community Commercial                                                                          3.311
+GC                   General Commercial                                                                                3.312
+Industrial Districts                                                                                 3.400
+IP                     Industrial Park                                                                                          3.450
+LI                     Light Industrial                                                                                         3.460
+GI                    General Industrial                                                                                    3.470
+Other Districts                                                                                        3.500
+OS                   Open Space                                                                                             3.520
+UPA                 Urban Planning Area — unincorporated areas with city zoning              3.040
+NSA                 National Scenic Area — incorporated areas with county zoning             3.050
+

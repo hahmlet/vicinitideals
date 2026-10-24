@@ -11,7 +11,7 @@ notes: 'Ported from quadfit rules.yaml, then re-cited value by value against the
   states a frontage standard as such. CORRECTED 2026-09-10 -- the rest of this reading used to say that
   the "Average minimum lot width" printed three rows beneath it was a subdivision average and therefore
   not encoded. It is not a subdivision average, and the city''s own glossary is what says so. CDC 02.030,
-  at 02.definitions.txt#L652: "Lot width. The horizontal distance between side lot lines, measured at
+  at 02.030.txt#L891-L892: "Lot width. The horizontal distance between side lot lines, measured at
   right angles to the lot depth. Average lot width is measured at the midpoints of opposite lot lines."
   That is one lot, measured on one line, and it is the same measurement Oregon City states in OCMC
   17.04.700 and the screen already takes (`side_midpoints`, Lot Analysis/quadfit/lotdims.py). So the
@@ -41,7 +41,7 @@ notes: 'Ported from quadfit rules.yaml, then re-cited value by value against the
   stands from the line — and inventing a setback to stand in for it would produce a number no reviewer
   could find on the page. It is written here so the next reader starts from the reading rather than
   from the reference.
-  (4) max_far is read against CDC 02.030''s own definition, at 02.definitions.txt#L440: "the FAR is that
+  (4) max_far is read against CDC 02.030''s own definition, at 02.030.txt#L598-L605: "the FAR is that
   percentage of the total lot size that can be built as habitable space ... on a 10,000-square-foot lot,
   an FAR of 0.45 will allow a 4,500-square-foot house". Habitable floor area over lot area, which is
   what the screen computes; the definition excludes attached and detached garages, accessory dwellings
@@ -126,7 +126,7 @@ readings:
       width at front lot line 45 ft" and, three rows under it, "Average minimum lot width 80 ft".
       This file held the smaller, and the layer note above called the second a subdivision average
       and therefore not encodable. IT IS NOT A SUBDIVISION AVERAGE, AND THE CITY'S OWN GLOSSARY IS
-      WHAT SAYS SO. CDC 02.030, at 02.definitions.txt#L652: "Lot width. The horizontal distance
+      WHAT SAYS SO. CDC 02.030, at 02.030.txt#L891-L892: "Lot width. The horizontal distance
       between side lot lines, measured at right angles to the lot depth. Average lot width is
       measured at the midpoints of opposite lot lines." One lot, one line, and the same
       measurement Oregon City states in OCMC 17.04.700 -- which the screen already takes, as
@@ -156,7 +156,7 @@ readings:
       the two West Linn zones whose two width rows disagree: 35 ft at the front lot line, which
       this file held, and 50 ft average, which it did not. The reason for leaving it open rather
       than raising the held number was that min_lot_width_ft named no measurement -- and the
-      city's own glossary names both. CDC 02.030 at 02.definitions.txt#L652: lot width is "the
+      city's own glossary names both. CDC 02.030 at 02.030.txt#L891-L892: lot width is "the
       horizontal distance between side lot lines, measured at right angles to the lot depth", and
       "average lot width is measured at the midpoints of opposite lot lines". Against a figure
       taken at the front lot line, that means a lot thirty-five feet wide at the street and sixty
@@ -462,7 +462,7 @@ definitions:
     test: intersecting_frontages
     count: 2
     max_intersection_angle_deg: 135.0
-    quote: "or/clackamas/west-linn/02.definitions.txt#L177"
+    quote: "or/clackamas/west-linn/02/02.030.txt#L221"
     cite: "West Linn CDC 2.030, Corner lot"
 
 crossrefs:
@@ -691,8 +691,8 @@ defaults:
   # four single-family residential homes". If the land is ever divided first,
   # the pod becomes single-family attached and the looser branch is the one
   # that applies -- worth knowing, because the plat path is already modelled.
-  # (or/clackamas/west-linn/02.definitions.txt#L800,L947,L949,
-  #  or/clackamas/west-linn/46.parking.txt#L241,L245)
+  # (or/clackamas/west-linn/02/02.030.txt#L1107-L1108,L1327-L1329,L1331-L1334,
+  #  or/clackamas/west-linn/46/46.150.txt#L20-L22,L29-L32)
 
   # NO MINIMUM. Not stated as an exemption anywhere -- West Linn simply
   # deleted the machinery. CDC 46.080, Computation of Required Parking Spaces
@@ -725,7 +725,7 @@ defaults:
     cite: West Linn CDC 46.090(A), Maximum parking, Multifamily non-studio row
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/46.parking.txt#L133,L135,L137"
+    quote: "or/clackamas/west-linn/46/46.090.txt#L3-L4,L6,L8"
   # THE STALL, from 46.150(A)(1), which packs three sizes into four sentences.
   # Eight by 16 is named "compact"; "to accommodate larger cars, 50 percent of
   # the parking spaces shall have a minimum dimension of nine feet in width
@@ -757,13 +757,13 @@ defaults:
     cite: West Linn CDC 46.150(A)(1), and Figure 2 (90 degrees, drive-in, 9.0' stall)
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/46.parking.txt#L231,L376-L378,L383"
+    quote: "or/clackamas/west-linn/46/46.150.txt#L7-L10,L193-L195,L200"
   parking_stall_depth_ft:
     value: 18
     cite: West Linn CDC 46.150(A)(1), and Figure 2 dimension 'A' (90 degrees, drive-in, 9.0' stall)
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/46.parking.txt#L231,L376-L378,L383"
+    quote: "or/clackamas/west-linn/46/46.150.txt#L7-L10,L193-L195,L200"
   # THE AISLE, from the same figure, and West Linn states it by angle and by
   # how the car enters rather than by which way traffic runs: 90 degrees
   # drive-in, 23.0'; 90 degrees back-in, 22.0'. Both columns of stall width
@@ -781,13 +781,13 @@ defaults:
     cite: West Linn CDC 46.150(E), Figure 2, Minimum Distance for Parking Stalls (90 degrees, drive-in)
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/46.parking.txt#L370,L374,L376-L378,L383"
+    quote: "or/clackamas/west-linn/46/46.150.txt#L187,L191,L193-L195,L200"
   parking_aisle_two_way_ft:
     value: 23
     cite: West Linn CDC 46.150(E), Figure 2, Minimum Distance for Parking Stalls (90 degrees, drive-in)
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/46.parking.txt#L370,L374,L376-L378,L383"
+    quote: "or/clackamas/west-linn/46/46.150.txt#L187,L191,L193-L195,L200"
   # THE DRIVE THAT REACHES IT, from Chapter 48, which Chapter 46 never
   # mentions and every zone chapter requires. 48.030(E): "Access and/or
   # service drives for multifamily dwellings shall be fully improved with hard
@@ -807,13 +807,13 @@ defaults:
     cite: West Linn CDC 48.030(E)(1) (access and service drives for multifamily dwellings)
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/48.access.txt#L129,L131"
+    quote: "or/clackamas/west-linn/48/48.030.txt#L52,L54"
   driveway_min_width_one_way_ft:
     value: 15
     cite: West Linn CDC 48.030(E)(2) (access and service drives for multifamily dwellings)
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/48.access.txt#L129,L133"
+    quote: "or/clackamas/west-linn/48/48.030.txt#L52,L56-L57"
   # THE CURB CUT, from 48.060, and it is the rare pair stated flatly with no
   # use, no zone and no street attached: "A. Minimum curb cut width shall be
   # 16 feet. B. Maximum curb cut width shall be 36 feet." The floor is the
@@ -829,13 +829,13 @@ defaults:
     cite: West Linn CDC 48.060(A)
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/48.access.txt#L173,L175"
+    quote: "or/clackamas/west-linn/48/48.060.txt#L1,L3"
   driveway_approach_max_width_ft:
     value: 36
     cite: West Linn CDC 48.060(B)
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/48.access.txt#L173,L177"
+    quote: "or/clackamas/west-linn/48/48.060.txt#L1,L5-L6"
   # 48.025(B)(3)(a), Option 1: "If a property has access to an alley or lane,
   # direct access to a public street is not permitted." The chapter first
   # puts access on the street (B.3) and offers the alley as an option the
@@ -852,7 +852,7 @@ defaults:
     cite: West Linn CDC 48.025(B)(3)(a), Option 1 -- no direct street access where the property has access to an alley or lane
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/48.access.txt#L55"
+    quote: "or/clackamas/west-linn/48/48.025.txt#L20-L23"
   # WHERE THE PARKING MAY SIT, THE SIDE HALF. `parking_side_prohibited` is the
   # townhouse-branch sentence "No off-street parking shall be allowed in the
   # front yard or side yard of a townhouse", held apart from
@@ -872,7 +872,7 @@ defaults:
     cite: West Linn CDC 46.150(A)(1), which dimensions the parking space and states no yard it may not occupy
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/46.parking.txt#L231,L376-L378,L383"
+    quote: "or/clackamas/west-linn/46/46.150.txt#L7-L10,L193-L195,L200"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -887,7 +887,7 @@ defaults:
     cite: West Linn CDC 48.025(B)(5), access first from the street with the lowest classification
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/48.access.txt#L61"
+    quote: "or/clackamas/west-linn/48/48.025.txt#L33-L35"
   # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
   # lets the site plan know whether it may try each street as the front: only
   # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
@@ -903,7 +903,7 @@ defaults:
     cite: West Linn CDC Chapter 2, Lot line, front, the shortest street lot line on a corner lot
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/02.definitions.txt#L628"
+    quote: "or/clackamas/west-linn/02/02.030.txt#L862-L863"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
@@ -916,7 +916,7 @@ defaults:
     cite: West Linn CDC Chapter 2, Lot line, rear, a double-frontage lot that is not a corner lot has no rear lot line
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
     retrieved: '2026-08-27'
-    quote: "or/clackamas/west-linn/02.definitions.txt#L626,L636"
+    quote: "or/clackamas/west-linn/02/02.030.txt#L860,L871"
   #
   # NOT ENCODED: curb cut spacing, 48.060(C) and (D). Eleven numbers between
   # them and every one is selected by a street classification -- 150 feet from
@@ -926,7 +926,7 @@ defaults:
   # ones, so guessing "local" would be the permissive guess on exactly the
   # lots where it is wrong. The same shape as Oregon City's refused driveway
   # spacing, in a city that states it in more detail.
-  # (or/clackamas/west-linn/48.access.txt#L179,L193)
+  # (or/clackamas/west-linn/48/48.060.txt#L8,L22)
   #
   # The alley-first rule, 48.025(B)(3)(a), was refused here from 2026-08-27
   # to 2026-09-13 as "the same missing fact" as Gresham's: nothing knew
@@ -946,7 +946,7 @@ defaults:
   # 60 feet, and five percent across it is a fall of three feet; a hillside
   # lot in West Linn can pass every dimension in this file and still need the
   # court benched into the slope before a stall can sit on it.
-  # (or/clackamas/west-linn/46.parking.txt#L261,L265, or/clackamas/west-linn/48.access.txt#L113)
+  # (or/clackamas/west-linn/46/46.150.txt#L53-L58,L62-L63, or/clackamas/west-linn/48/48.030.txt#L30-L34)
   #
   # NOT ENCODED: the horizontal clearance beside a one-way drive, 48.030(E)(2)
   # -- "two and one-half feet wide on either side of the driveway", which
@@ -954,7 +954,7 @@ defaults:
   # pavement width and adding five feet to it would misstate the pavement for
   # anything that sums area. It does not bind the layout drawn here, whose
   # side lane is two-way, and it would bind a one-way loop.
-  # (or/clackamas/west-linn/48.access.txt#L133)
+  # (or/clackamas/west-linn/48/48.030.txt#L56-L57)
   #
   # Read and NOT a constraint, recorded so the next reader does not re-open
   # them: 46.150(A)(8) requires 20 feet of driveway between the back of
@@ -977,7 +977,7 @@ zones:
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/west-linn/08.r-40.txt#L75"
+      quote: "or/clackamas/west-linn/08/08.030.txt#L21"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
       # have a pitch of at least 6:12", under the same applicability
@@ -987,15 +987,15 @@ zones:
       # (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
-      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46"
       variants:
         - value: 6
           when: [willamette_historic_district]
           cite: West Linn CDC 25.070(C)(9), roof pitch
-          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
+          quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46,L94-L95"
     setback_front_ft:
       value: 30
-      quote: "or/clackamas/west-linn/08.r-40.txt#L150"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L28"
       # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
       # with "the average of the front setbacks of adjacent homes on the block
       # face" -- a number the block has and the code does not, so it can sit on
@@ -1007,19 +1007,19 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L50-L52"
     setback_side_ft:
       value: 10
-      quote: "or/clackamas/west-linn/08.r-40.txt#L153"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L31"
     setback_rear_ft:
       value: 30
-      quote: "or/clackamas/west-linn/08.r-40.txt#L160"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L38"
     setback_street_side_ft:
       value: 30
-      quote: "or/clackamas/west-linn/08.r-40.txt#L157"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L35"
     min_lot_sqft:
       value: 40000
-      quote: "or/clackamas/west-linn/08.r-40.txt#L135"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L13"
     max_density_du_per_acre:
       # Table 05.020's third column, headed "Dwelling Units per Net
       # Acre". The header is quoted with the row because the table puts
@@ -1053,7 +1053,7 @@ zones:
       # subtractions are in that section rather than in the glossary, and
       # the gross figure beside it is the bound.
         cite: CDC 02.030 "Developable net area"; CDC 05.025
-        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
+        quote: "or/clackamas/west-linn/02/02.030.txt#L250-L251,L253-L254"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1065,16 +1065,16 @@ zones:
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
-      quote: "or/clackamas/west-linn/05.density.txt#L29,L31"
+      quote: "or/clackamas/west-linn/05/05.020.txt#L6,L8"
     min_lot_width_ft:
       value: 150
-      quote: "or/clackamas/west-linn/08.r-40.txt#L140"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L18"
     min_average_lot_width_ft:
       value: 150
-      quote: "or/clackamas/west-linn/08.r-40.txt#L144"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L22"
     max_coverage_pct:
       value: 25
-      quote: "or/clackamas/west-linn/08.r-40.txt#L167"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L44"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex
       (only cottage clusters exempt). Corner side-yard read as 30 ft.'
     max_far:
@@ -1084,7 +1084,7 @@ zones:
       # binds only on an undersized lot, which is what a screen over existing
       # parcels mostly sees.
       value: 0.45
-      quote: "or/clackamas/west-linn/08.r-40.txt#L175,L176"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L53-L54"
       measured_on:
         fact: net_developable_area
         # Not the density net area: this chapter's own subtraction, one item
@@ -1099,7 +1099,7 @@ zones:
         # based on the whole property. That is a floor under what is allowed
         # and can only loosen, so it is read and not encoded.
         cite: 'West Linn CDC 08.070, Type I and II lands'
-        quote: "or/clackamas/west-linn/08.r-40.txt#L178"
+        quote: "or/clackamas/west-linn/08/08.070.txt#L56-L58"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1107,7 +1107,7 @@ zones:
           - "mineral and aggregate deposits protected under Goal 5"
     max_height_ft:
       value: 40
-      quote: "or/clackamas/west-linn/08.r-40.txt#L163"
+      quote: "or/clackamas/west-linn/08/08.070.txt#L41"
   R-20:
     section: ["09."]
     cite_default:
@@ -1117,7 +1117,7 @@ zones:
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/west-linn/09.r-20.txt#L73"
+      quote: "or/clackamas/west-linn/09/09.030.txt#L19"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
       # have a pitch of at least 6:12", under the same applicability
@@ -1127,15 +1127,15 @@ zones:
       # (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
-      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46"
       variants:
         - value: 6
           when: [willamette_historic_district]
           cite: West Linn CDC 25.070(C)(9), roof pitch
-          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
+          quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46,L94-L95"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/west-linn/09.r-20.txt#L154"
+      quote: "or/clackamas/west-linn/09/09.070.txt#L28"
       # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
       # with "the average of the front setbacks of adjacent homes on the block
       # face" -- a number the block has and the code does not, so it can sit on
@@ -1147,19 +1147,19 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L50-L52"
     setback_side_ft:
       value: 7.5
-      quote: "or/clackamas/west-linn/09.r-20.txt#L157"
+      quote: "or/clackamas/west-linn/09/09.070.txt#L31"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/west-linn/09.r-20.txt#L162"
+      quote: "or/clackamas/west-linn/09/09.070.txt#L36"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/west-linn/09.r-20.txt#L160"
+      quote: "or/clackamas/west-linn/09/09.070.txt#L34"
     min_lot_sqft:
       value: 20000
-      quote: "or/clackamas/west-linn/09.r-20.txt#L139"
+      quote: "or/clackamas/west-linn/09/09.070.txt#L13"
     max_density_du_per_acre:
       # Table 05.020's third column, headed "Dwelling Units per Net
       # Acre". The header is quoted with the row because the table puts
@@ -1193,7 +1193,7 @@ zones:
       # subtractions are in that section rather than in the glossary, and
       # the gross figure beside it is the bound.
         cite: CDC 02.030 "Developable net area"; CDC 05.025
-        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
+        quote: "or/clackamas/west-linn/02/02.030.txt#L250-L251,L253-L254"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1205,16 +1205,16 @@ zones:
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
-      quote: "or/clackamas/west-linn/05.density.txt#L29,L32"
+      quote: "or/clackamas/west-linn/05/05.020.txt#L6,L9"
     min_lot_width_ft:
       value: 100
-      quote: "or/clackamas/west-linn/09.r-20.txt#L144"
+      quote: "or/clackamas/west-linn/09/09.070.txt#L18"
     min_average_lot_width_ft:
       value: 100
-      quote: "or/clackamas/west-linn/09.r-20.txt#L148"
+      quote: "or/clackamas/west-linn/09/09.070.txt#L22"
     max_coverage_pct:
       value: 25
-      quote: "or/clackamas/west-linn/09.r-20.txt#L169"
+      quote: "or/clackamas/west-linn/09/09.070.txt#L43"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex.'
     max_far:
       # This zone's FAR row exempts cottage clusters and nobody else, so the
@@ -1223,7 +1223,7 @@ zones:
       # binds only on an undersized lot, which is what a screen over existing
       # parcels mostly sees.
       value: 0.45
-      quote: "or/clackamas/west-linn/09.r-20.txt#L177,L178"
+      quote: "or/clackamas/west-linn/09/09.070.txt#L52-L53"
       measured_on:
         fact: net_developable_area
         # Not the density net area: this chapter's own subtraction, one item
@@ -1238,7 +1238,7 @@ zones:
         # based on the whole property. That is a floor under what is allowed
         # and can only loosen, so it is read and not encoded.
         cite: 'West Linn CDC 09.070, Type I and II lands'
-        quote: "or/clackamas/west-linn/09.r-20.txt#L180"
+        quote: "or/clackamas/west-linn/09/09.070.txt#L55-L57"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1246,7 +1246,7 @@ zones:
           - "mineral and aggregate deposits protected under Goal 5"
     max_height_ft:
       value: 40
-      quote: "or/clackamas/west-linn/09.r-20.txt#L165"
+      quote: "or/clackamas/west-linn/09/09.070.txt#L39"
   R-15:
     section: ["10."]
     cite_default:
@@ -1256,7 +1256,7 @@ zones:
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/west-linn/10.r-15.txt#L71"
+      quote: "or/clackamas/west-linn/10/10.030.txt#L19"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
       # have a pitch of at least 6:12", under the same applicability
@@ -1266,15 +1266,15 @@ zones:
       # (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
-      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46"
       variants:
         - value: 6
           when: [willamette_historic_district]
           cite: West Linn CDC 25.070(C)(9), roof pitch
-          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
+          quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46,L94-L95"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/west-linn/10.r-15.txt#L150"
+      quote: "or/clackamas/west-linn/10/10.070.txt#L28"
       # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
       # with "the average of the front setbacks of adjacent homes on the block
       # face" -- a number the block has and the code does not, so it can sit on
@@ -1286,19 +1286,19 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L50-L52"
     setback_side_ft:
       value: 7.5
-      quote: "or/clackamas/west-linn/10.r-15.txt#L153"
+      quote: "or/clackamas/west-linn/10/10.070.txt#L31"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/west-linn/10.r-15.txt#L158"
+      quote: "or/clackamas/west-linn/10/10.070.txt#L36"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/west-linn/10.r-15.txt#L156"
+      quote: "or/clackamas/west-linn/10/10.070.txt#L34"
     min_lot_sqft:
       value: 15000
-      quote: "or/clackamas/west-linn/10.r-15.txt#L135"
+      quote: "or/clackamas/west-linn/10/10.070.txt#L13"
     max_density_du_per_acre:
       # Table 05.020's third column, headed "Dwelling Units per Net
       # Acre". The header is quoted with the row because the table puts
@@ -1332,7 +1332,7 @@ zones:
       # subtractions are in that section rather than in the glossary, and
       # the gross figure beside it is the bound.
         cite: CDC 02.030 "Developable net area"; CDC 05.025
-        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
+        quote: "or/clackamas/west-linn/02/02.030.txt#L250-L251,L253-L254"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1344,10 +1344,10 @@ zones:
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
-      quote: "or/clackamas/west-linn/05.density.txt#L29,L33"
+      quote: "or/clackamas/west-linn/05/05.020.txt#L6,L10"
     min_lot_width_ft:
       value: 45
-      quote: "or/clackamas/west-linn/10.r-15.txt#L140"
+      quote: "or/clackamas/west-linn/10/10.070.txt#L18"
     # Thirty-five feet wider than the row three above it, and the only
     # other zone whose two width rows disagree is R-10. Not a stricter
     # reading of the same line: CDC 02.030 measures this one at the
@@ -1355,15 +1355,15 @@ zones:
     # line, so a lot 45 ft at the street and 90 ft behind satisfies both.
     min_average_lot_width_ft:
       value: 80
-      quote: "or/clackamas/west-linn/10.r-15.txt#L144"
+      quote: "or/clackamas/west-linn/10/10.070.txt#L22"
     max_coverage_pct:
       value: 30
-      quote: "or/clackamas/west-linn/10.r-15.txt#L165"
+      quote: "or/clackamas/west-linn/10/10.070.txt#L43"
     notes: 'quadfit confidence: verified | Width 45 ft at front line / 80 ft avg (frontage=45). Coverage
       30% applies to quadplex.'
     max_height_ft:
       value: 40
-      quote: "or/clackamas/west-linn/10.r-15.txt#L161"
+      quote: "or/clackamas/west-linn/10/10.070.txt#L39"
   R-10:
     section: ["11."]
     cite_default:
@@ -1373,7 +1373,7 @@ zones:
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/west-linn/11.r-10.txt#L63"
+      quote: "or/clackamas/west-linn/11/11.030.txt#L11"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
       # have a pitch of at least 6:12", under the same applicability
@@ -1383,15 +1383,15 @@ zones:
       # (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
-      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46"
       variants:
         - value: 6
           when: [willamette_historic_district]
           cite: West Linn CDC 25.070(C)(9), roof pitch
-          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
+          quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46,L94-L95"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/west-linn/11.r-10.txt#L151"
+      quote: "or/clackamas/west-linn/11/11.070.txt#L23"
       # 25.070(C)(1)(a) replaces this inside the district with "the average of
       # the front setbacks of adjacent homes on the block face" -- a number the
       # block has and the code does not, which could sit either side of twenty
@@ -1401,19 +1401,19 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L50-L52"
     setback_side_ft:
       value: 7.5
-      quote: "or/clackamas/west-linn/11.r-10.txt#L154"
+      quote: "or/clackamas/west-linn/11/11.070.txt#L26"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/west-linn/11.r-10.txt#L159"
+      quote: "or/clackamas/west-linn/11/11.070.txt#L31"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/west-linn/11.r-10.txt#L157"
+      quote: "or/clackamas/west-linn/11/11.070.txt#L29"
     min_lot_sqft:
       value: 10000
-      quote: "or/clackamas/west-linn/11.r-10.txt#L138"
+      quote: "or/clackamas/west-linn/11/11.070.txt#L10"
     max_density_du_per_acre:
       # Table 05.020's third column, headed "Dwelling Units per Net
       # Acre". The header is quoted with the row because the table puts
@@ -1447,7 +1447,7 @@ zones:
       # subtractions are in that section rather than in the glossary, and
       # the gross figure beside it is the bound.
         cite: CDC 02.030 "Developable net area"; CDC 05.025
-        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
+        quote: "or/clackamas/west-linn/02/02.030.txt#L250-L251,L253-L254"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1459,21 +1459,21 @@ zones:
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
-      quote: "or/clackamas/west-linn/05.density.txt#L29,L34"
+      quote: "or/clackamas/west-linn/05/05.020.txt#L6,L11"
     min_lot_width_ft:
       value: 35
-      quote: "or/clackamas/west-linn/11.r-10.txt#L142"
+      quote: "or/clackamas/west-linn/11/11.070.txt#L14"
     # The second of the two zones whose width rows disagree: 35 ft at the
     # front lot line, 50 ft measured at the midpoints.
     min_average_lot_width_ft:
       value: 50
-      quote: "or/clackamas/west-linn/11.r-10.txt#L145"
+      quote: "or/clackamas/west-linn/11/11.070.txt#L17"
     max_coverage_pct:
       # Was cited at L161, which is "35 ft" — the maximum building height.
       # The citation check passed because this zone's coverage and its height
       # are both 35, so the figure matched a line about something else. L164
       # is "35%", the coverage cell.
-      quote: "or/clackamas/west-linn/11.r-10.txt#L164"
+      quote: "or/clackamas/west-linn/11/11.070.txt#L36"
       value: 35
     max_far:
       # The FAR row states 0.45, then a second row: "Duplex, triplex, and
@@ -1482,7 +1482,7 @@ zones:
       # minimum of an existing undersized lot, which is most of what this
       # screen looks at.
       value: 0.60
-      quote: "or/clackamas/west-linn/11.r-10.txt#L170,L173-L174"
+      quote: "or/clackamas/west-linn/11/11.070.txt#L43,L46-L47"
       measured_on:
         fact: net_developable_area
         # Not the density net area: this chapter's own subtraction, one item
@@ -1497,7 +1497,7 @@ zones:
         # based on the whole property. That is a floor under what is allowed
         # and can only loosen, so it is read and not encoded.
         cite: 'West Linn CDC 11.070, Type I and II lands'
-        quote: "or/clackamas/west-linn/11.r-10.txt#L175"
+        quote: "or/clackamas/west-linn/11/11.070.txt#L48-L50"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1508,7 +1508,7 @@ zones:
       against the 0.45 the zone states for everything else.'
     max_height_ft:
       value: 35
-      quote: "or/clackamas/west-linn/11.r-10.txt#L161"
+      quote: "or/clackamas/west-linn/11/11.070.txt#L33"
     max_building_width_ft:
       # Not in this zone's dimensional table, and not in the exception its
       # setback row cites -- that names 25.070(C)(1) through (4), the four
@@ -1528,14 +1528,14 @@ zones:
       cite: West Linn CDC 25.070(C), Willamette Historic District general design standards
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
       retrieved: '2026-08-20'
-      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46"
       variants:
         - value: 35
           when: [willamette_historic_district]
           cite: West Linn CDC 25.070(C)(8), Building shapes and sizes
           url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
           retrieved: '2026-08-20'
-          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L426"
+          quote: "or/clackamas/west-linn/25/25.070.txt#L90-L92"
   R-7:
     section: ["12."]
     cite_default:
@@ -1545,7 +1545,7 @@ zones:
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/west-linn/12.r-7.txt#L63"
+      quote: "or/clackamas/west-linn/12/12.030.txt#L11"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
       # have a pitch of at least 6:12", under the same applicability
@@ -1555,14 +1555,14 @@ zones:
       # (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
-      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46"
       variants:
         - value: 6
           when: [willamette_historic_district]
           cite: West Linn CDC 25.070(C)(9), roof pitch
-          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
+          quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46,L94-L95"
     setback_front_ft:
-      quote: "or/clackamas/west-linn/12.r-7.txt#L153"
+      quote: "or/clackamas/west-linn/12/12.070.txt#L27"
       value: 20
       # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
       # with "the average of the front setbacks of adjacent homes on the block
@@ -1575,22 +1575,22 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L50-L52"
     setback_side_ft:
-      quote: "or/clackamas/west-linn/12.r-7.txt#L156"
+      quote: "or/clackamas/west-linn/12/12.070.txt#L30"
       value: 7.5
     setback_rear_ft:
-      quote: "or/clackamas/west-linn/12.r-7.txt#L161"
+      quote: "or/clackamas/west-linn/12/12.070.txt#L35"
       value: 20
     setback_street_side_ft:
-      quote: "or/clackamas/west-linn/12.r-7.txt#L159"
+      quote: "or/clackamas/west-linn/12/12.070.txt#L33"
       value: 15
     min_lot_sqft:
       # Two rows, and CDC 02 decides which one a four-unit pod stands in.
       # "Single-family attached residential units" are units "attached side by
       # side with some structural parts in common at a common property line ON
       # SEPARATE LOTS OR PARCELS ... may be further defined as a duplex,
-      # triplex, or quadplex" (02.definitions.txt L947); the detached
+      # triplex, or quadplex" (02.030.txt L1327-L1329); the detached
       # definition is the one "located on a lot or parcel" and it carries the
       # same "may be further defined as a duplex, triplex, or quadplex"
       # sentence (L949). So the row turns on the plat, not on the walls: four
@@ -1598,11 +1598,11 @@ zones:
       # the attached one. Only the detached figure was held.
       # Found 2026-09-07 by the blind second reading.
       value: 7000
-      quote: "or/clackamas/west-linn/12.r-7.txt#L136"
+      quote: "or/clackamas/west-linn/12/12.070.txt#L10"
       variants:
         - value: 5500
           when: [unit_lots]
-          quote: "or/clackamas/west-linn/12.r-7.txt#L138-L139"
+          quote: "or/clackamas/west-linn/12/12.070.txt#L12-L13"
     max_density_du_per_acre:
       # Table 05.020's third column, headed "Dwelling Units per Net
       # Acre". The header is quoted with the row because the table puts
@@ -1636,7 +1636,7 @@ zones:
       # subtractions are in that section rather than in the glossary, and
       # the gross figure beside it is the bound.
         cite: CDC 02.030 "Developable net area"; CDC 05.025
-        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
+        quote: "or/clackamas/west-linn/02/02.030.txt#L250-L251,L253-L254"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1648,22 +1648,22 @@ zones:
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
-      quote: "or/clackamas/west-linn/05.density.txt#L29,L35"
+      quote: "or/clackamas/west-linn/05/05.020.txt#L6,L12"
     min_lot_width_ft:
       value: 35
-      quote: "or/clackamas/west-linn/12.r-7.txt#L145"
+      quote: "or/clackamas/west-linn/12/12.070.txt#L19"
     min_average_lot_width_ft:
       value: 35
-      quote: "or/clackamas/west-linn/12.r-7.txt#L148"
+      quote: "or/clackamas/west-linn/12/12.070.txt#L22"
     max_coverage_pct:
-      quote: "or/clackamas/west-linn/12.r-7.txt#L166"
+      quote: "or/clackamas/west-linn/12/12.070.txt#L40"
       value: 35
     max_far:
       # "Duplex, triplex, and quadplex 0.60", printed under the 0.45 that
       # applies to everything else. The note below has said so since the
       # quadfit import and no value carried it.
       value: 0.60
-      quote: "or/clackamas/west-linn/12.r-7.txt#L172,L175-L176"
+      quote: "or/clackamas/west-linn/12/12.070.txt#L47,L50-L51"
       measured_on:
         fact: net_developable_area
         # Not the density net area: this chapter's own subtraction, one item
@@ -1678,7 +1678,7 @@ zones:
         # based on the whole property. That is a floor under what is allowed
         # and can only loosen, so it is read and not encoded.
         cite: 'West Linn CDC 12.070, Type I and II lands'
-        quote: "or/clackamas/west-linn/12.r-7.txt#L177"
+        quote: "or/clackamas/west-linn/12/12.070.txt#L52-L54"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1688,7 +1688,7 @@ zones:
       max FAR 0.60 for duplex/triplex/quadplex.'
     max_height_ft:
       value: 35
-      quote: "or/clackamas/west-linn/12.r-7.txt#L163"
+      quote: "or/clackamas/west-linn/12/12.070.txt#L37"
   R-5:
     section: ["13."]
     cite_default:
@@ -1698,7 +1698,7 @@ zones:
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/west-linn/13.r-5.txt#L65"
+      quote: "or/clackamas/west-linn/13/13.030.txt#L11"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
       # have a pitch of at least 6:12", under the same applicability
@@ -1708,15 +1708,15 @@ zones:
       # (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
-      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46"
       variants:
         - value: 6
           when: [willamette_historic_district]
           cite: West Linn CDC 25.070(C)(9), roof pitch
-          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
+          quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46,L94-L95"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/west-linn/13.r-5.txt#L163"
+      quote: "or/clackamas/west-linn/13/13.070.txt#L33"
       # 25.070(C)(1)(a) replaces this inside the district with "the average of
       # the front setbacks of adjacent homes on the block face" -- a number the
       # block has and the code does not, which could sit either side of twenty
@@ -1726,22 +1726,22 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L50-L52"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/west-linn/13.r-5.txt#L166"
+      quote: "or/clackamas/west-linn/13/13.070.txt#L36"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/west-linn/13.r-5.txt#L171"
+      quote: "or/clackamas/west-linn/13/13.070.txt#L41"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/west-linn/13.r-5.txt#L169"
+      quote: "or/clackamas/west-linn/13/13.070.txt#L39"
     min_lot_sqft:
       # Two rows, and CDC 02 decides which one a four-unit pod stands in.
       # "Single-family attached residential units" are units "attached side by
       # side with some structural parts in common at a common property line ON
       # SEPARATE LOTS OR PARCELS ... may be further defined as a duplex,
-      # triplex, or quadplex" (02.definitions.txt L947); the detached
+      # triplex, or quadplex" (02.030.txt L1327-L1329); the detached
       # definition is the one "located on a lot or parcel" and it carries the
       # same "may be further defined as a duplex, triplex, or quadplex"
       # sentence (L949). So the row turns on the plat, not on the walls: four
@@ -1749,11 +1749,11 @@ zones:
       # the attached one. Only the detached figure was held.
       # Found 2026-09-07 by the blind second reading.
       value: 5000
-      quote: "or/clackamas/west-linn/13.r-5.txt#L142"
+      quote: "or/clackamas/west-linn/13/13.070.txt#L12"
       variants:
         - value: 4500
           when: [unit_lots]
-          quote: "or/clackamas/west-linn/13.r-5.txt#L144-L145"
+          quote: "or/clackamas/west-linn/13/13.070.txt#L14-L15"
     max_density_du_per_acre:
       # Table 05.020's third column, headed "Dwelling Units per Net
       # Acre". The header is quoted with the row because the table puts
@@ -1787,7 +1787,7 @@ zones:
       # subtractions are in that section rather than in the glossary, and
       # the gross figure beside it is the bound.
         cite: CDC 02.030 "Developable net area"; CDC 05.025
-        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
+        quote: "or/clackamas/west-linn/02/02.030.txt#L250-L251,L253-L254"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1799,13 +1799,13 @@ zones:
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
-      quote: "or/clackamas/west-linn/05.density.txt#L29,L37"
+      quote: "or/clackamas/west-linn/05/05.020.txt#L6,L14"
     min_lot_width_ft:
       value: 35
-      quote: "or/clackamas/west-linn/13.r-5.txt#L152"
+      quote: "or/clackamas/west-linn/13/13.070.txt#L22"
     min_average_lot_width_ft:
       value: 35
-      quote: "or/clackamas/west-linn/13.r-5.txt#L156"
+      quote: "or/clackamas/west-linn/13/13.070.txt#L26"
     notes: 'quadfit confidence: verified | Max lot coverage does NOT apply to quadplexes (CDC 13.070)
       -> no coverage cap for a 4-plex; SFD base coverage 40%.'
     max_coverage_pct:
@@ -1816,17 +1816,17 @@ zones:
       # The zone's own note has said the standard does not apply since the
       # quadfit import; the value did not.
       exempt: true
-      quote: "or/clackamas/west-linn/13.r-5.txt#L178,L179"
+      quote: "or/clackamas/west-linn/13/13.070.txt#L48-L50"
     max_far:
       # "Maximum FAR does not apply to duplexes, triplexes, quadplexes ..."
       # Recorded rather than left absent: an absent field and a field the code
       # switches off read the same to the screen and not to a reviewer, and
       # this city states both in zones two pages apart.
       exempt: true
-      quote: "or/clackamas/west-linn/13.r-5.txt#L186,L188"
+      quote: "or/clackamas/west-linn/13/13.070.txt#L57,L59"
     max_height_ft:
       value: 35
-      quote: "or/clackamas/west-linn/13.r-5.txt#L174"
+      quote: "or/clackamas/west-linn/13/13.070.txt#L44"
     max_building_width_ft:
       # Not in this zone's dimensional table, and not in the exception its
       # setback row cites -- that names 25.070(C)(1) through (4), the four
@@ -1846,14 +1846,14 @@ zones:
       cite: West Linn CDC 25.070(C), Willamette Historic District general design standards
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
       retrieved: '2026-08-20'
-      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46"
       variants:
         - value: 35
           when: [willamette_historic_district]
           cite: West Linn CDC 25.070(C)(8), Building shapes and sizes
           url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
           retrieved: '2026-08-20'
-          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L426"
+          quote: "or/clackamas/west-linn/25/25.070.txt#L90-L92"
   R-4.5:
     section: ["14."]
     cite_default:
@@ -1863,7 +1863,7 @@ zones:
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L63"
+      quote: "or/clackamas/west-linn/14/14.030.txt#L11"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
       # have a pitch of at least 6:12", under the same applicability
@@ -1873,14 +1873,14 @@ zones:
       # (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
-      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46"
       variants:
         - value: 6
           when: [willamette_historic_district]
           cite: West Linn CDC 25.070(C)(9), roof pitch
-          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
+          quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46,L94-L95"
     setback_front_ft:
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L188"
+      quote: "or/clackamas/west-linn/14/14.070.txt#L32"
       value: 20
       # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
       # with "the average of the front setbacks of adjacent homes on the block
@@ -1893,22 +1893,22 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L50-L52"
     setback_side_ft:
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L191"
+      quote: "or/clackamas/west-linn/14/14.070.txt#L35"
       value: 5
     setback_rear_ft:
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L196"
+      quote: "or/clackamas/west-linn/14/14.070.txt#L40"
       value: 20
     setback_street_side_ft:
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L194"
+      quote: "or/clackamas/west-linn/14/14.070.txt#L38"
       value: 15
     min_lot_sqft:
       # Two rows, and CDC 02 decides which one a four-unit pod stands in.
       # "Single-family attached residential units" are units "attached side by
       # side with some structural parts in common at a common property line ON
       # SEPARATE LOTS OR PARCELS ... may be further defined as a duplex,
-      # triplex, or quadplex" (02.definitions.txt L947); the detached
+      # triplex, or quadplex" (02.030.txt L1327-L1329); the detached
       # definition is the one "located on a lot or parcel" and it carries the
       # same "may be further defined as a duplex, triplex, or quadplex"
       # sentence (L949). So the row turns on the plat, not on the walls: four
@@ -1916,11 +1916,11 @@ zones:
       # the attached one. Only the detached figure was held.
       # Found 2026-09-07 by the blind second reading.
       value: 4500
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L168"
+      quote: "or/clackamas/west-linn/14/14.070.txt#L12"
       variants:
         - value: 4000
           when: [unit_lots]
-          quote: "or/clackamas/west-linn/14.r-4.5.txt#L170-L171"
+          quote: "or/clackamas/west-linn/14/14.070.txt#L14-L15"
     max_density_du_per_acre:
       # Table 05.020's third column, headed "Dwelling Units per Net
       # Acre". The header is quoted with the row because the table puts
@@ -1954,7 +1954,7 @@ zones:
       # subtractions are in that section rather than in the glossary, and
       # the gross figure beside it is the bound.
         cite: CDC 02.030 "Developable net area"; CDC 05.025
-        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
+        quote: "or/clackamas/west-linn/02/02.030.txt#L250-L251,L253-L254"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -1966,13 +1966,13 @@ zones:
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
-      quote: "or/clackamas/west-linn/05.density.txt#L29,L37"
+      quote: "or/clackamas/west-linn/05/05.020.txt#L6,L14"
     min_lot_width_ft:
       value: 35
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L178"
+      quote: "or/clackamas/west-linn/14/14.070.txt#L22"
     min_average_lot_width_ft:
       value: 35
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L182"
+      quote: "or/clackamas/west-linn/14/14.070.txt#L26"
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 14.070); SFD
       base 40%.'
     max_coverage_pct:
@@ -1983,17 +1983,17 @@ zones:
       # The zone's own note has said the standard does not apply since the
       # quadfit import; the value did not.
       exempt: true
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L203,L204"
+      quote: "or/clackamas/west-linn/14/14.070.txt#L47-L49"
     max_far:
       # "Maximum FAR does not apply to duplexes, triplexes, quadplexes ..."
       # Recorded rather than left absent: an absent field and a field the code
       # switches off read the same to the screen and not to a reviewer, and
       # this city states both in zones two pages apart.
       exempt: true
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L211,L213"
+      quote: "or/clackamas/west-linn/14/14.070.txt#L56,L58"
     max_height_ft:
       value: 35
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L199"
+      quote: "or/clackamas/west-linn/14/14.070.txt#L43"
   R-3:
     section: ["15."]
     cite_default:
@@ -2003,7 +2003,7 @@ zones:
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/west-linn/15.r-3.txt#L65"
+      quote: "or/clackamas/west-linn/15/15.030.txt#L11"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. CDC 25.070(C)(9), "Roof pitch. Roofs shall
       # have a pitch of at least 6:12", under the same applicability
@@ -2013,14 +2013,14 @@ zones:
       # (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: West Linn CDC 25.070(C), applies only in the Willamette Historic District
-      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46"
       variants:
         - value: 6
           when: [willamette_historic_district]
           cite: West Linn CDC 25.070(C)(9), roof pitch
-          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388,L428"
+          quote: "or/clackamas/west-linn/25/25.070.txt#L43-L46,L94-L95"
     setback_front_ft:
-      quote: "or/clackamas/west-linn/15.r-3.txt#L181"
+      quote: "or/clackamas/west-linn/15/15.070.txt#L27"
       value: 15
       # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
       # with "the average of the front setbacks of adjacent homes on the block
@@ -2033,12 +2033,12 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L50-L52"
     setback_side_ft:
-      quote: "or/clackamas/west-linn/15.r-3.txt#L187"
+      quote: "or/clackamas/west-linn/15/15.070.txt#L33"
       value: 5
     setback_rear_ft:
-      quote: "or/clackamas/west-linn/15.r-3.txt#L192"
+      quote: "or/clackamas/west-linn/15/15.070.txt#L38"
       value: 15
       # 25.070(C)(4) sets a minimum 20 ft rear yard inside the Willamette
       # Historic District and this zone's row is 15. It is the one place in West
@@ -2050,9 +2050,9 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(4), Rear yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L410"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L72-L73"
     setback_street_side_ft:
-      quote: "or/clackamas/west-linn/15.r-3.txt#L190"
+      quote: "or/clackamas/west-linn/15/15.070.txt#L36"
       value: 15
     min_lot_sqft:
       # The one residential zone where the attached and detached rows print
@@ -2061,7 +2061,7 @@ zones:
       # write. Recorded because the other four zones do split and a reader
       # who checks them will come here next.
       value: 3000
-      quote: "or/clackamas/west-linn/15.r-3.txt#L166"
+      quote: "or/clackamas/west-linn/15/15.070.txt#L12"
     max_density_du_per_acre:
       # Table 05.020's third column, headed "Dwelling Units per Net
       # Acre". The header is quoted with the row because the table puts
@@ -2095,7 +2095,7 @@ zones:
       # subtractions are in that section rather than in the glossary, and
       # the gross figure beside it is the bound.
         cite: CDC 02.030 "Developable net area"; CDC 05.025
-        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
+        quote: "or/clackamas/west-linn/02/02.030.txt#L250-L251,L253-L254"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -2107,10 +2107,10 @@ zones:
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
-      quote: "or/clackamas/west-linn/05.density.txt#L29,L39"
+      quote: "or/clackamas/west-linn/05/05.020.txt#L6,L16"
     min_lot_width_ft:
       value: 35
-      quote: "or/clackamas/west-linn/15.r-3.txt#L175"
+      quote: "or/clackamas/west-linn/15/15.070.txt#L21"
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 15.070); SFD
       base 50%. FAR 0.45 (n/a to middle housing).'
     max_coverage_pct:
@@ -2121,17 +2121,17 @@ zones:
       # The zone's own note has said the standard does not apply since the
       # quadfit import; the value did not.
       exempt: true
-      quote: "or/clackamas/west-linn/15.r-3.txt#L200,L201"
+      quote: "or/clackamas/west-linn/15/15.070.txt#L46-L48"
     max_far:
       # "Maximum FAR does not apply to duplexes, triplexes, quadplexes ..."
       # Recorded rather than left absent: an absent field and a field the code
       # switches off read the same to the screen and not to a reviewer, and
       # this city states both in zones two pages apart.
       exempt: true
-      quote: "or/clackamas/west-linn/15.r-3.txt#L205,L207"
+      quote: "or/clackamas/west-linn/15/15.070.txt#L52,L54"
     max_height_ft:
       value: 35
-      quote: "or/clackamas/west-linn/15.r-3.txt#L196"
+      quote: "or/clackamas/west-linn/15/15.070.txt#L42"
   R-2.1:
     section: ["16."]
     cite_default:
@@ -2141,9 +2141,9 @@ zones:
       retrieved: '2026-08-14'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L75"
+      quote: "or/clackamas/west-linn/16/16.030.txt#L23"
     setback_front_ft:
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L203"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L33"
       value: 15
       # 25.070(C)(1)(a) replaces this inside the Willamette Historic District
       # with "the average of the front setbacks of adjacent homes on the block
@@ -2156,12 +2156,12 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L50-L52"
     setback_side_ft:
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L206"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L36"
       value: 5
     setback_rear_ft:
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L211"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L41"
       value: 15
       # 25.070(C)(4) sets a minimum 20 ft rear yard inside the Willamette
       # Historic District and this zone's row is 15. It is the one place in West
@@ -2173,16 +2173,16 @@ zones:
       qualified_by:
         fact: willamette_historic_district
         cite: West Linn CDC 25.070(C)(4), Rear yard setback
-        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L410"
+        quote: "or/clackamas/west-linn/25/25.070.txt#L72-L73"
     setback_street_side_ft:
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L209"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L39"
       value: 15
     min_lot_sqft:
       # Two rows, and CDC 02 decides which one a four-unit pod stands in.
       # "Single-family attached residential units" are units "attached side by
       # side with some structural parts in common at a common property line ON
       # SEPARATE LOTS OR PARCELS ... may be further defined as a duplex,
-      # triplex, or quadplex" (02.definitions.txt L947); the detached
+      # triplex, or quadplex" (02.030.txt L1327-L1329); the detached
       # definition is the one "located on a lot or parcel" and it carries the
       # same "may be further defined as a duplex, triplex, or quadplex"
       # sentence (L949). So the row turns on the plat, not on the walls: four
@@ -2190,7 +2190,7 @@ zones:
       # the attached one. Only the detached figure was held.
       # Found 2026-09-07 by the blind second reading.
       value: 4000
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L182"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L12"
       variants:
         # Stated per unit, not per lot -- "For each attached single-family
         # units / 2,700 sf" -- so four of them want 10,800 sq ft, which is
@@ -2199,7 +2199,7 @@ zones:
         # and in no other, which is the reason to write it down.
         - per_dwelling: 2700
           when: [unit_lots]
-          quote: "or/clackamas/west-linn/16.r-2.1.txt#L183-L184"
+          quote: "or/clackamas/west-linn/16/16.070.txt#L13-L14"
     max_density_du_per_acre:
       # Table 05.020's third column, headed "Dwelling Units per Net
       # Acre". The header is quoted with the row because the table puts
@@ -2233,7 +2233,7 @@ zones:
       # subtractions are in that section rather than in the glossary, and
       # the gross figure beside it is the bound.
         cite: CDC 02.030 "Developable net area"; CDC 05.025
-        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
+        quote: "or/clackamas/west-linn/02/02.030.txt#L250-L251,L253-L254"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -2245,13 +2245,13 @@ zones:
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
-      quote: "or/clackamas/west-linn/05.density.txt#L29,L39"
+      quote: "or/clackamas/west-linn/05/05.020.txt#L6,L16"
     min_lot_width_ft:
       value: 35
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L193"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L23"
     min_average_lot_width_ft:
       value: 35
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L197"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L27"
     notes: 'quadfit confidence: needs_verification | ATTACHED quadplex permitted OUTRIGHT. Detached SFD/detached
       quadplex are CONDITIONAL only (16.050(6)). Coverage max does not apply to quadplexes; SFD base 50%.
       Min lot 4,000 for detached SFD - verify.'
@@ -2263,17 +2263,17 @@ zones:
       # The zone's own note has said the standard does not apply since the
       # quadfit import; the value did not.
       exempt: true
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L221,L222"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L49-L51"
     max_far:
       # "Maximum FAR does not apply to duplexes, triplexes, quadplexes ..."
       # Recorded rather than left absent: an absent field and a field the code
       # switches off read the same to the screen and not to a reviewer, and
       # this city states both in zones two pages apart.
       exempt: true
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L226,L228"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L55,L57"
     max_height_ft:
       value: 35
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L215"
+      quote: "or/clackamas/west-linn/16/16.070.txt#L44"
   # === The September 2026 map's six codes, ruled 2026-09-20 ================
   #
   # Steph's rule: every code the county map carries is read once, its reason
@@ -2445,23 +2445,23 @@ zones:
       # feet from the front property line." The porch allowance is a
       # projection the pod does not have; the building holds 12.
       value: 12
-      quote: "or/clackamas/west-linn/59.mu.txt#L204-L206"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L38-L40"
     setback_front_max_ft:
       # The "Maximum" row under Front yard: the building may stand no further
       # back than 20 ft. Encoded because it is a real standard of the zone;
       # nothing screens on it yet (same footing as Oregon City MUC-1).
       value: 20
-      quote: "or/clackamas/west-linn/59.mu.txt#L207-L209"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L41-L43"
     setback_side_ft:
       # "Interior side yard 7.5 ft; Townhouse common walls that are attached
       # may have a 0-ft side setback." The 0 is for the shared walls of
       # townhouse lots, not the outer wall of the pod; the pod's outer sides
       # hold 7.5.
       value: 7.5
-      quote: "or/clackamas/west-linn/59.mu.txt#L210-L212"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L44-L46"
     setback_street_side_ft:
       value: 12
-      quote: "or/clackamas/west-linn/59.mu.txt#L213-L214"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L47-L48"
     setback_rear_ft:
       # "Rear yard 20 ft. Where the use abuts a residential district, the
       # setback distance required in the residential district shall apply,
@@ -2473,7 +2473,7 @@ zones:
       # here: a MU lot whose rear line abuts R-40 would need 30 ft. The buffer
       # sits inside the setback, so it costs no extra ground.
       value: 20
-      quote: "or/clackamas/west-linn/59.mu.txt#L215-L217"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L49-L51"
     min_lot_sqft:
       # The base row, 4,500 sf "Unless defined as an existing lot of record".
       # The townhouse-project row (average 1,500 sf per lot, L183-L186) is a
@@ -2481,39 +2481,39 @@ zones:
       # the base figure, which is the same conservative reading the other
       # West Linn zones take.
       value: 4500
-      quote: "or/clackamas/west-linn/59.mu.txt#L175-L178"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L9-L12"
     min_lot_width_ft:
       # "Minimum lot width at front lot line 35 ft; Does not apply to
       # townhouses or cottage clusters." Held for the single-lot quadplex.
       value: 35
-      quote: "or/clackamas/west-linn/59.mu.txt#L187-L192"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L21-L26"
     min_average_lot_width_ft:
       value: 50
-      quote: "or/clackamas/west-linn/59.mu.txt#L193-L196"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L27-L30"
     min_lot_depth_ft:
       # "Average minimum lot depth 90 ft".
       value: 90
-      quote: "or/clackamas/west-linn/59.mu.txt#L197-L200"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L31-L34"
     max_height_ft:
       # "35 ft or 2 stories above grade, whichever is less." Both limbs are
       # encoded in the two fields that hold them; the screen takes the
       # binding one.
       value: 35
-      quote: "or/clackamas/west-linn/59.mu.txt#L218-L220"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L52-L54"
     max_height_stories:
       value: 2
-      quote: "or/clackamas/west-linn/59.mu.txt#L218-L220"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L52-L54"
     max_far:
       # "Maximum floor area ratio 0.40. Maximum FAR does not apply to cottage
       # clusters." The only exemption named is cottage clusters, so it binds
       # the quadplex. Type I and II lands do not count toward lot area, a
       # denominator nothing here holds, so the lot's own area is the bound.
       value: 0.40
-      quote: "or/clackamas/west-linn/59.mu.txt#L225-L228"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L59-L62"
       measured_on:
         fact: net_developable_area
         cite: 'West Linn CDC 59.070(A), Maximum floor area ratio, additional notes'
-        quote: "or/clackamas/west-linn/59.mu.txt#L229"
+        quote: "or/clackamas/west-linn/59/59.070.txt#L63-L65"
         less: [floodplain]
         may_less: [west_linn_flood, west_linn_wetlands, west_linn_wra_stream, west_linn_wra_ephemeral, west_linn_wra_piped, west_linn_rci, slope_25]
         assumed_none:
@@ -2524,7 +2524,7 @@ zones:
       # building and a public or private street, except alleys; parking areas
       # shall be located behind, under, or on the side of the building."
       value: true
-      quote: "or/clackamas/west-linn/59.mu.txt#L241"
+      quote: "or/clackamas/west-linn/59/59.070.txt#L82"
     notes: >-
       Encoded 2026-10-08 from 59.020-59.070. READ AND NOT ENCODED (no field
       holds them): a MAXIMUM lot size of 10,000 sf unless an existing lot of
@@ -2557,7 +2557,7 @@ drawn_areas:
       MapServer (layer 1, DOCUMENTAT "Community Development Code, Ch 25"),
       queried in EPSG:2913 on 2026-10-04 and saved unchanged: one polygon,
       about 20 acres.
-    quote: "or/clackamas/west-linn/25.willamette-historic.txt#L59,L73"
+    quote: "or/clackamas/west-linn/25/25.020.txt#L3-L4,L22"
     cite: CDC 25.020(A) and 25.020(B)(3)(c)
     note: >-
       The chapter applies to "properties designated as historic resources as
@@ -2574,7 +2574,7 @@ drawn_areas:
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: true
-  quote: "or/clackamas/west-linn/02.definitions.txt#L971"
+  quote: "or/clackamas/west-linn/02/02.030.txt#L1370-L1371"
   says: "A public or private right-of-way"
   cite: "CDC 02.030 (Street; Private street; Lot line, front; Corner lot)"
   note: >-

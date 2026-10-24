@@ -98,6 +98,9 @@ class Rule:
     #: A page's header and footer, which the readable text leaves out (only
     #: in the lines just above a page start; see ``readable.py``).
     page_furniture: re.Pattern[str] | None = None
+    #: A running header printed on a page's own first line, above the text
+    #: (a print whose page map starts the page at its header).
+    page_head: re.Pattern[str] | None = None
     #: Documents whose lines above the first heading are a cover, a chapter
     #: title or a compiler's preface -- not code. Like a contents list they
     #: stay in the proof copy and in no section.
@@ -122,12 +125,14 @@ def rules(path: Path = RULES) -> dict[str, Rule]:
             raise ValueError(f"{layer}: the heading pattern names no group 'n'")
         furniture = body.get("furniture")
         page = body.get("page_furniture")
+        head = body.get("page_head")
         out[layer] = Rule(
             layer=layer,
             heading=heading,
             furniture=re.compile(furniture) if furniture else None,
             lead=dict(body.get("lead") or {}),
             page_furniture=re.compile(page) if page else None,
+            page_head=re.compile(head) if head else None,
             front=frozenset(body.get("front") or ()),
             uncut=frozenset(body.get("uncut") or ()),
             any_order=frozenset(body.get("any_order") or ()),
@@ -347,9 +352,16 @@ def _cut(
         raw = lines[section.first - 1 : section.last]
         local = [b - section.first + 1 for b in breaks if section.first < b <= section.last + 1]
         text = readable.clean(
-            raw, breaks=local, furniture=rule.page_furniture, heading=rule.heading, words=words
+            raw,
+            breaks=local,
+            furniture=rule.page_furniture,
+            heading=rule.heading,
+            words=words,
+            head=rule.page_head,
         )
-        problems = readable.prove(raw, text, breaks=local, furniture=rule.page_furniture)
+        problems = readable.prove(
+            raw, text, breaks=local, furniture=rule.page_furniture, head=rule.page_head
+        )
         if problems:
             raise ProvenanceError(f"{cut.path(section)}: {'; '.join(problems)}")
         out.append(Cut(section, cut.path(section), text, _pages_of(text, section, pages)))
@@ -464,7 +476,9 @@ def _held(store: ProvenanceStore, part: Part, known: Mapping[str, Rule] | None) 
         if part.first < b <= part.last + 1
     ]
     text = store.text_path(path).read_text(encoding="utf-8").splitlines()
-    found = readable.align(raw, text, breaks=local, furniture=rule.page_furniture)
+    found = readable.align(
+        raw, text, breaks=local, furniture=rule.page_furniture, head=rule.page_head
+    )
     if found is None:
         raise ProvenanceError(f"{path}: the stored text is not the proof copy's words")
     return tuple(tuple(part.first + k - 1 for k in src) for src in found)

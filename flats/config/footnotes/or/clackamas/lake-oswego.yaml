@@ -35,7 +35,7 @@
 # ground, and relaxations -- dismissed, with the reason written down.
 notes:
   # --- Table 50.03.002-1, the residential use table ------------------
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L489"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L477"
     digest: "51cc7973074a"
     state: dismissed
     reason: >-
@@ -46,7 +46,7 @@ notes:
       dwelling type in one place, and the quadplex row's P in that column
       stands on its own
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L490"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L478"
     digest: "fbdef142ff47"
     state: dismissed
     reason: >-
@@ -54,7 +54,7 @@ notes:
       says no commercial activity is allowed with it. It qualifies an
       accessory use, not a dwelling
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L491"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L479"
     digest: "57cac05edacf"
     state: unmeasured
     fact: split_zone
@@ -71,7 +71,7 @@ notes:
       the largest zone_missing row in this jurisdiction is NC/R-0, 84 lots
       over 18.4 acres, which is precisely the split this note is about
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L492"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L480"
     digest: "e8635f7f8c27"
     state: unmeasured
     fact: site_specific_limitation
@@ -85,7 +85,7 @@ notes:
       reaching the same lots from three directions
 
   # --- Table 50.04.001-1/-2, the R-7.5 zone ---------------------------
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L235"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L219"
     digest: "8382d0fb9594"
     state: unmeasured
     fact: net_developable_area
@@ -96,7 +96,7 @@ notes:
       over a ceiling, and the quantity the floor is computed on is a survey of
       what the parcel loses to sensitive lands and dedications
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L223"
     digest: "12b82f5551e3"
     state: encoded
     encoded_as: >-
@@ -113,7 +113,7 @@ notes:
       is a number the code does not print, and what the note withholds under
       it is permission
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L239"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L229"
     digest: "1c0207f1d714"
     state: dismissed
     reason: >-
@@ -121,7 +121,7 @@ notes:
       landmark. A relaxation, granted for moving a landmark onto the site;
       declining it can only cost a lot that would have qualified
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L241"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L231"
     digest: "3839f3e55683"
     state: dismissed
     reason: >-
@@ -129,7 +129,7 @@ notes:
       sides. A relaxation of a standard this layer does not encode for R-7.5,
       and one bought with yard the pod is trying to fit inside
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L243"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L233"
     digest: "deeb8fc51849"
     state: dismissed
     reason: >-
@@ -141,7 +141,7 @@ notes:
       -- to 32 where the ground falls away under it. A relaxation that needs a
       topography nothing here reads
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L245"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L237"
     digest: "53220937d37d"
     state: dismissed
     reason: >-
@@ -149,14 +149,14 @@ notes:
       height. A ceiling on accessory structures and projections, neither of
       which is part of the pod
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L247"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L239"
     digest: "9e6972a85a18"
     state: dismissed
     reason: >-
       cottage cluster floor area. A different housing type, and a floor-area
       standard this layer does not encode
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L249"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L242"
     digest: "f84d8587bf8d"
     state: dismissed
     reason: >-
@@ -166,7 +166,7 @@ notes:
       does not bind a building of about a thousand square feet per unit
 
   # --- Table 50.04.001-3, the R-5 and R-6 zones ----------------------
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L604"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L599"
     digest: "42d5e438f82a"
     state: unmeasured
     fact: net_developable_area
@@ -174,7 +174,7 @@ notes:
       minimum density again, in the R-5 and R-6 zones and computed the same
       way: net developable area over the minimum lot size, times 0.8
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L605"
     digest: "77baa83e6b6b"
     state: encoded
     encoded_as: >-
@@ -186,7 +186,7 @@ notes:
       Projects" states 5,000 (L526), so four townhouses need 5,000 sq ft of
       land against the 4 x 1,500 the townhouse lot row would allow
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L608"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L611"
     digest: "37137f670abc"
     state: dismissed
     reason: >-
@@ -196,7 +196,7 @@ notes:
       to the left in the same row, exempts quadplexes from maximum density
       outright. A ceiling the pod is exempt from is not a ceiling
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L610"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L615"
     digest: "92ec8a7651ff"
     state: dismissed
     reason: >-
@@ -204,7 +204,7 @@ notes:
       historically significant. A relaxation for a building already standing,
       which is not the one being placed
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L612"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L617"
     digest: "41fa8ae3a9df"
     state: dismissed
     reason: >-
@@ -213,7 +213,7 @@ notes:
       number for the same one, and one that only ever raises a building --
       to 32 where the ground falls away. It needs a topography nothing reads
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L614"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L620"
     digest: "2a25acc9b2d6"
     state: dismissed
     reason: >-
@@ -225,7 +225,7 @@ notes:
   # One reason, said three times: these are R-6's notes. They reach R-5's
   # setbacks only because a block's region runs back to the previous block,
   # and R-5's setback row sits inside it.
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L788"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L800"
     digest: "ac62e8e05c25"
     state: dismissed
     reason: >-
@@ -237,7 +237,7 @@ notes:
       10 ft below the eave -- and the pod is encoded off the Primary
       Structures column beside it
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L789"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L801"
     digest: "294e6c28c1c5"
     state: dismissed
     reason: >-
@@ -249,7 +249,7 @@ notes:
       relative to the house rather than changing any figure in the Primary
       Structures column
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L790"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L802"
     digest: "3e870ea34bd1"
     state: dismissed
     reason: >-
@@ -264,7 +264,7 @@ notes:
       rather than one it leaves open
 
   # --- Table 50.04.001-11, the R-W, R-3, R-2 and R-0 zones -----------
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1450"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1472"
     digest: "3fdd3832cb7b"
     state: unmeasured
     fact: net_developable_area
@@ -272,7 +272,7 @@ notes:
       minimum density in the R-W and R-3 zones, computed on net developable
       area at 80 percent of the theoretical yield
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1452"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1476"
     digest: "2134b66c0c2f"
     state: unmeasured
     fact: net_developable_area
@@ -284,7 +284,7 @@ notes:
       ordinary lots, and the acre it is measured on is a survey nobody here
       holds
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1454"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1480"
     digest: "b8a6bd4094fe"
     state: encoded
     encoded_as: "R-W, R-3, R-2 and R-0 max_density_du_per_acre exempt; R-W and R-3 quadplex_allowed unit_lots band"
@@ -300,7 +300,7 @@ notes:
       band; R-2 and R-0 are "No min." and carry none. R-2's and R-0's Maximum
       density cells are em dashes regardless
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1456"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1484"
     digest: "6db2c0b7f5ee"
     state: dismissed
     reason: >-
@@ -310,7 +310,7 @@ notes:
       building -- to 32 where the ground falls away. It needs a topography
       nothing reads
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1458"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1487"
     digest: "3d8294473e1c"
     state: encoded
     encoded_as: "R-W max_height_ft 25"
@@ -326,7 +326,7 @@ notes:
       nothing here measures, and which is the difference between RED and GREEN
       for a 26 ft pod
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1460"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1491"
     digest: "cd7aed242922"
     state: unmeasured
     fact: site_specific_limitation
@@ -336,7 +336,7 @@ notes:
       table's note 4 points at, reaching the dimensions this time: a parcel on
       it is held to standards the table does not print
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1462"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1493"
     digest: "a7a442bdb3a0"
     state: dismissed
     reason: >-
@@ -347,7 +347,7 @@ notes:
   # Live from 2026-08-21, when R-2 was encoded. Nothing quoted this region
   # before, because the zone the table is written for was not in the funnel.
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1597"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1633"
     digest: "b3ea94a3b22d"
     state: unmeasured
     fact: abuts_lower_density_zone
@@ -418,7 +418,7 @@ notes:
   # citation.
 
   # --- Table 50.03.002-2, the commercial and mixed use use table ------
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1267"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L1215"
     digest: "d524dbd06245"
     state: dismissed
     reason: >-
@@ -430,7 +430,7 @@ notes:
       offices. If the WLG zones are ever encoded this is a prohibition on this
       product and not a dimension
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1269"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L1217"
     digest: "54f7e14addca"
     state: dismissed
     reason: >-
@@ -443,7 +443,7 @@ notes:
       encoded because the zone is not encoded. This note is the reason the WLG
       zones should be
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1271"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L1219"
     digest: "7c0577627a7e"
     state: dismissed
     reason: >-
@@ -451,7 +451,7 @@ notes:
       conducted within an enclosed structure. A public facility standard, on a
       column whose residential cell is blank
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1273"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L1221"
     digest: "5b51351fe50c"
     state: dismissed
     reason: >-
@@ -459,7 +459,7 @@ notes:
       District and the FMU zone. A commercial use, and a prohibition on
       something this building is not
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1275"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L1223"
     digest: "0db149d9350c"
     state: dismissed
     reason: >-
@@ -469,7 +469,7 @@ notes:
       conditional use. Not one of them is a dwelling, so it does not open the
       IP column to housing, and IP is not encoded in any case
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1277"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L1226"
     digest: "a572d4cde11f"
     state: dismissed
     reason: >-
@@ -478,7 +478,7 @@ notes:
       it on a sales use, and the threshold is a building size this screen does
       not test a dwelling against
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1279"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L1228"
     digest: "c573330c1a2d"
     state: dismissed
     reason: >-
@@ -489,7 +489,7 @@ notes:
       contemplate. Nothing here to encode until FMU is, and if it is, this is
       a condition needing a fact nobody holds
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1285"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L1234"
     digest: "ccc34079dfce"
     state: dismissed
     reason: >-
@@ -502,7 +502,7 @@ notes:
       which is what anchors GC as column two and the whole left edge with it.
       Not encoded because GC is not
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1288"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L1238"
     digest: "017f70d9cf8c"
     state: dismissed
     reason: >-
@@ -517,7 +517,7 @@ notes:
       a multifamily residence in this code is a question for the day WLG OC is
       encoded
 
-  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1290"
+  - quote: "or/clackamas/lake-oswego/50.03/50.03.002.txt#L1240"
     digest: "80453330afbe"
     state: dismissed
     reason: >-
@@ -526,7 +526,7 @@ notes:
       the ban on 5 November 2024. Not a dwelling standard
 
   # --- Table 50.04.001-14, commercial, mixed use and industrial -------
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1889"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1926"
     digest: "4f2e8b147d6a"
     state: dismissed
     reason: >-
@@ -539,14 +539,14 @@ notes:
       because the table it modifies is not encoded either; the day any column
       of it is, this note is unmeasured and not a dismissal
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1892"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1929"
     digest: "3b522f4fa33c"
     state: dismissed
     reason: >-
       note 2 reads "(Reserved)". A number was removed and the marker left
       behind. Counted so the census is complete and nothing is owed to it
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1895"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1932"
     digest: "6c1b67b1805d"
     state: dismissed
     reason: >-
@@ -559,7 +559,7 @@ notes:
       clears it. Worth recording because the same sentence without the floor
       is note 8, on the I column, where it does bite
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1898"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1935"
     digest: "90e2e6b4cf06"
     state: dismissed
     reason: >-
@@ -568,7 +568,7 @@ notes:
       on whether the site is unified -- which is a fact about ownership rather
       than about the lot
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1901"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1938"
     digest: "edcd66a4a8d0"
     state: dismissed
     reason: >-
@@ -581,7 +581,7 @@ notes:
       recreation, which min_landscaped_pct exists to hold. Not encoded because
       the column it sits on is not
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1904"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1943"
     digest: "4c0170375d90"
     state: dismissed
     reason: >-
@@ -590,7 +590,7 @@ notes:
       holds it as setback_street_side_ft; it would be an encoding the day the
       column carrying it is read, and it reaches nothing today
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1907"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1946"
     digest: "72f837130698"
     state: dismissed
     reason: >-
@@ -602,7 +602,7 @@ notes:
       per_height_ft was added for. Both would be encodable. Neither is,
       because the columns are not
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1910"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1949"
     digest: "972f7a4fefc4"
     state: dismissed
     reason: >-
@@ -613,7 +613,7 @@ notes:
       permitted, so it cannot refuse this building -- but it is the sharper of
       the two tapers and the difference between them is one clause
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1913"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1952"
     digest: "5cb5ac2538cf"
     state: dismissed
     reason: >-
@@ -622,7 +622,7 @@ notes:
       needs, and this corpus encodes exactly that shape elsewhere as a
       when [unit_lots] variant. Dismissed on the column, not on the substance
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1916"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1955"
     digest: "a90ea096ec58"
     state: dismissed
     reason: >-
@@ -633,7 +633,7 @@ notes:
       owes, so this is a real determination -- and it is a discretionary one,
       which is a thing this system refuses to encode as a number
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1919"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1962"
     digest: "59b0177c1d77"
     state: dismissed
     reason: >-
@@ -645,7 +645,7 @@ notes:
       buildings four times this one. Its value here is as an anchor: it fixes
       the eighth cell of the height row as CR&D
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1922"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1965"
     digest: "38b1917da956"
     state: dismissed
     reason: >-
@@ -655,7 +655,7 @@ notes:
       joint-use parking and circulation. It permits things in a setback rather
       than moving one
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1925"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1968"
     digest: "6be57829a205"
     state: dismissed
     reason: >-
@@ -663,7 +663,7 @@ notes:
       shape as note 11 and the same use here: it fixes the cell reading 95 as
       the MC column, which is what makes the row resolvable at all
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1928"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1971"
     digest: "3d34bf01a6b8"
     state: dismissed
     reason: >-
@@ -673,7 +673,7 @@ notes:
       building rather than from a lot line, on a zone this layer does not
       hold, needing a survey of what stood where thirteen years ago
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1935"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1977"
     digest: "4881ff1595af"
     state: dismissed
     reason: >-
@@ -681,7 +681,7 @@ notes:
       primary street. It scopes a minimum FAR, which is a density floor on a
       zone this layer does not encode
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1938"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1980"
     digest: "0c42f525f5f5"
     state: dismissed
     reason: >-
@@ -691,7 +691,7 @@ notes:
       parcels, which is neither a dimension of a lot nor a standard this
       screen can test
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1947"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1988"
     digest: "bd2f7dd0a6ad"
     state: dismissed
     reason: >-
@@ -700,7 +700,7 @@ notes:
       right-of-way count out. A definition attached to a ratio in a zone this
       layer does not hold
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1950"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1991"
     digest: "1ede4de8ac4f"
     state: dismissed
     reason: >-
@@ -710,7 +710,7 @@ notes:
       row as FMU, and a ceiling three times this building's height in a zone
       that is not encoded
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1953"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L1994"
     digest: "0a0466e69c5f"
     state: dismissed
     reason: >-
@@ -725,13 +725,13 @@ notes:
       it is
 
   # --- Table 50.04.001-18, EC maximum height --------------------------
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L2105"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L2148"
     digest: "96e754fe4a6f"
     state: dismissed
     reason: >-
       note 1 reads "(Reserved)". Counted, owes nothing
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L2106"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.001.txt#L2149"
     digest: "a5701d9c55b7"
     state: dismissed
     reason: >-
@@ -745,7 +745,7 @@ notes:
       under note 11 of Table 50.04.001-14
 
   # --- Table 50.04.003-1, general exceptions to height limitations ----
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L2412"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.003.txt#L157"
     digest: "e9602f5e8324"
     state: dismissed
     reason: >-
@@ -756,8 +756,8 @@ notes:
       panel stand above the ceiling, which relieves rather than binds, and the
       pod's height is the building's
 
-  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L2413"
-    digest: "2632aad61b5e"
+  - quote: "or/clackamas/lake-oswego/50.04/50.04.003.txt#L158"
+    digest: "7eb2105392dc"
     state: dismissed
     reason: >-
       note 2 does the same for small wind turbines, and the captured text runs

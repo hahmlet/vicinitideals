@@ -20,8 +20,10 @@ Nothing is added, dropped, reordered or respelt.
 
 *Only furniture is removed.* A removed line matches the jurisdiction's
 furniture pattern and sits in the last few lines before a page starts, where
-the extraction puts a page's header and footer. The same words anywhere else
-are code text and stay.
+the extraction puts a page's header and footer -- or matches its page-head
+pattern and is a page's own first line, where a book that prints its running
+header at the top of the sheet puts it. The same words anywhere else are code
+text and stay.
 
 *No line crosses a page.* A readable line draws on one printed page, so the
 page a citation names is still the sheet its words are printed on.
@@ -61,6 +63,7 @@ _OPENS = re.compile(
       | \(\s*[a-zA-Z]{1,5}\s*\)         # (a) (iv) (A)
       | [0-9]{1,3}[.)]\s                # 1.  1)
       | [a-zA-Z][.)]\s                  # a.  A)
+      | \[\s*[0-9A-Za-z]{1,3}\s*\]\s*$  # [2] -- a web print's note marker, alone
       | [•●▪◦–—*-]\s   # bullets and dashes
       | (?:Table|Figure|Map|Exhibit|Chapter|Section|Sections)\b
       | [A-Z][A-Z0-9 ,&()/'-]{5,}$      # A HEADING IN CAPITALS
@@ -157,15 +160,28 @@ class Readable:
 
 
 def _furniture(
-    lines: Sequence[str], breaks: Iterable[int], furniture: re.Pattern[str] | None
+    lines: Sequence[str],
+    breaks: Iterable[int],
+    furniture: re.Pattern[str] | None,
+    head: re.Pattern[str] | None = None,
 ) -> set[int]:
-    if furniture is None:
-        return set()
+    """The furniture lines: ``furniture`` in the band above a page start, and
+    ``head`` on a page's own first line.
+
+    Some books print their running header at the top of the page, so the
+    extraction puts it on the first line of the page rather than in the band
+    above it: Troutdale's "TROUTDALE DEVELOPMENT CODE" and Sherwood's bare
+    section number. Only that one line is looked at, so the same words in the
+    text below it stay.
+    """
     out: set[int] = set()
     for brk in breaks:
-        for k in range(max(1, brk - BAND), min(brk, len(lines) + 1)):
-            if furniture.match(lines[k - 1]):
-                out.add(k)
+        if furniture is not None:
+            for k in range(max(1, brk - BAND), min(brk, len(lines) + 1)):
+                if furniture.match(lines[k - 1]):
+                    out.add(k)
+        if head is not None and 1 <= brk <= len(lines) and head.match(lines[brk - 1]):
+            out.add(brk)
     return out
 
 
@@ -271,18 +287,20 @@ def clean(
     furniture: re.Pattern[str] | None = None,
     heading: re.Pattern[str] | None = None,
     words: Mapping[str, int] | None = None,
+    head: re.Pattern[str] | None = None,
 ) -> Readable:
     """``lines`` of an extraction as readable text.
 
     ``breaks`` are the lines (1-based) a printed page starts on; one past the
     last line counts when the slice ends where its book does. ``heading`` is
-    the jurisdiction's section heading, which always opens a line.
+    the jurisdiction's section heading, which always opens a line. ``head``
+    is a running header printed on a page's own first line.
     """
     words = words or {}
     page_starts = sorted(set(breaks))
     # The first line opens the slice -- a section's heading -- whatever it
     # looks like.
-    removed = _furniture(lines, page_starts, furniture) - {1}
+    removed = _furniture(lines, page_starts, furniture, head) - {1}
     kept = [n for n in range(1, len(lines) + 1) if n not in removed]
 
     def crosses(a: int, b: int) -> bool:
@@ -365,6 +383,7 @@ def prove(
     *,
     breaks: Iterable[int] = (),
     furniture: re.Pattern[str] | None = None,
+    head: re.Pattern[str] | None = None,
 ) -> list[str]:
     """Every way ``readable`` is not the words of ``lines``. Empty is proof.
 
@@ -373,7 +392,7 @@ def prove(
     """
     problems: list[str] = []
     page_starts = sorted(set(breaks))
-    allowed = _furniture(lines, page_starts, furniture)
+    allowed = _furniture(lines, page_starts, furniture, head)
     stray = sorted(set(readable.removed) - allowed)
     if stray:
         problems.append(f"lines {stray} were removed and are not page furniture")
@@ -419,6 +438,7 @@ def align(
     *,
     breaks: Iterable[int] = (),
     furniture: re.Pattern[str] | None = None,
+    head: re.Pattern[str] | None = None,
 ) -> tuple[tuple[int, ...], ...] | None:
     """Each line of a readable text that was written earlier, as extraction lines.
 
@@ -428,7 +448,7 @@ def align(
     every readable line came from. That is what lets a citation of the old
     text be re-addressed after a re-cut. None when the letters part.
     """
-    removed = _furniture(lines, sorted(set(breaks)), furniture) - {1}
+    removed = _furniture(lines, sorted(set(breaks)), furniture, head) - {1}
     want: list[tuple[str, bool, int]] = []
     for n, raw in enumerate(lines, start=1):
         if n in removed:

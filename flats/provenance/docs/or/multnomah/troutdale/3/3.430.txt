@@ -1,0 +1,52 @@
+3.430  Dimensional Standards for Industrial Zoning Districts.
+
+A.     Dimensional Standards Table for Industrial Zoning Districts.
+
+Land Use                                                          IP                            LI                           GI
+Lot Size and Coverage
+Minimum lot width                                      150 ft.                      None                      None
+Maximum lot coverage                        60% of the site               None                      None
+Setbacks
+Front yard setback                                      20 ft.                       20 ft.                       20 ft.
+Side yard setback                                       15 ft.                       10 ft.                       None see 3.430.B.4
+Street side yard setback                             15 ft.                       10 ft.                       None see 3.430.B.4
+Rear yard setback                                       10 ft.                       None                      None see 3.430.B.4
+Setbacks for insufficient right-of-                         see 3.430.B.1         see 3.430.B.1         see 3.430.B.1 way
+Additional setback requirements                None               see 3.430.B.3         see 3.430.B.3
+
+
+Land Use                                                          IP                            LI                           GI
+Maximum Height of the Structure                   35 ft.                       45 ft.                      see 3.430.B.2 see 3.430.B.2
+Lot Area                                                    No minimum           No minimum          see 3.430.B.5
+
+B.     Additional Dimensional Standards.
+
+1.     Setbacks for insufficient rights-of-way: The minimum front, side, or other setbacks shall be increased where such yard or setback abuts a street having insufficient rights-of-way width to serve the area.
+The necessary right-of-way widths, and the additional yard or setback requirements in such cases, shall be determined
+
+2.     Unless otherwise limited by the Federal Aviation Administration.
+
+3.     Additional setback requirements: If any use in this district abuts or faces any residential zoning district, a setback of fifty (50) feet from the property line or centerline of an intervening public street, on the side abutting or facing the residential zoning district shall be required.
+
+4.     No side or rear yard setbacks unless the property abuts a parcel of land in a more restrictive manufacturing or commercial district, in which case the requirements of the abutting zoning district shall apply.
+
+5.     Lot Area. Division of lots or parcels are permitted as follows:
+
+a.     Lots or parcels fifty (50) acres or smaller in size may be divided into any number of smaller lots or parcels.
+
+b.     Undeveloped lots, parcels, or tracts larger than fifty (50) acres in size may be divided into smaller lots, parcels, or tracts so long as the resulting land division yields at least one (1) lot, parcel, or tract of at least fifty (50) acres in size.
+If a land division results in more than one (1) lot, parcel, or tract of fifty (50) acres or greater in size, only one (1) of those fifty (50) + acre lots, parcels, or tracts, if further divided, must yield a lot, parcel, or tract of at least fifty (50) acres in size.
+
+c.     Developed lots or parcels fifty (50) acres or larger in size may be divided into any number of smaller lots or parcels pursuant to a master plan approved by the City so long as at least forty percent (40%) of the net area of the lot or parcel has already been developed with industrial uses or uses accessory to industrial use, and no portion of the lot has been developed, or is proposed to be developed, with uses regulated by Subsection 3.175(D) of this Code.
+
+d.     Notwithstanding parts b. and c. of this Subsection, any lot or parcel may be divided into smaller lots or parcels or made subject to rights-of-way for the following purposes:
+
+i.      To provide public facilities and services;
+
+
+ii.      To separate a portion of a lot or parcel in order to protect a natural resource, to provide a public amenity, or to implement a remediation plan for a site identified by the Oregon Department of Environmental Quality pursuant to ORS 465.225;
+iii.     To separate a portion of a lot or parcel containing a nonconforming use from the remainder of the lot or parcel in order to render the remainder more practical for a permitted use; or iv.
+To allow the creation of a lot for financing purposes when the created lot is part of a master planned development.
+(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att.
+A), 2-25-2025)
+

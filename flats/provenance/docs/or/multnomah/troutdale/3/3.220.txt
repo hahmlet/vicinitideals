@@ -1,0 +1,82 @@
+3.220  Land Use Table for Mixed-Use Zoning Districts.
+
+A.     Uses that are permitted are marked with a "P", with specific standards for the use listed in the far-right column as shown below.
+
+B.     Uses that require conditional use approval in accordance with Section 6.300 of this Code are marked with a "C", with specific standards for the use listed in the far-right column as shown below.
+
+C.     Uses that are not permitted are marked with a "N".
+
+Specific
+Land Use                                                      MU-1             MU-2             MU-3                                Standards
+Residential Dwellings and Uses
+Single-family detached                                     N                    P                    N                8.110
+Duplex                                                              N                    P                    N                8.110
+Triplex                                                               N                    P                    P                8.120
+Quadplex                                                          N                    P                    P                8.120
+Townhouse                                                       P                    P                    P                8.130
+Cottage cluster                                                 N                    P                    N                8.140
+Multi-family (residential units only)                   P                    P                    P                8.150
+Multi-family (vertical mixed-use)                       P                    P                    P          varies,    see
+8.200
+Manufactured home                                         N                    N                    N
+Manufactured home park                                 N                    N                    N
+Accessory dwelling units                                  N                    P                    P                8.170
+Shared dwellings                                              N                    C                    C                8.180
+Residential facility                                             N                    C                    N
+Mixed-Uses
+Live-Work units                                                          P                    P                    P
+(residential/commercial)
+Live-Make units                                                          N                    N                    C
+(residential/industrial)
+Flex units (commercial/industrial)                     N                    N                    C
+Home-based child care                                    P                    P                    P
+Commercial Uses
+General retail (up to 15,000 s.f.)
+P                    P                    P
+General retail (above 15,000 s.f.)
+C                    C                    P
+Offices (up to 15,000 s.f.)
+P                    P                    P
+Offices (above 15,000 s.f.)
+C                    P                    P
+Eating & drinking establishments
+Restaurants & bars (no drive-thru)                P                    P                    P
+Restaurants & bars (with drive-thru)             C                    P                    P
+Kiosks (drive-thru only)                                 C                    C                    N                5.200
+
+
+Specific
+Land Use                                                      MU-1             MU-2             MU-3                                   Standards
+Mobile food vendor (individually                                       P                    P                    P                5.200 placed, in park or right-of-way)
+Mobile food vendor (individually                                       P                    P                    N                5.200 placed, on privately owned lot)
+Food cart pod, micro-retail pod, or out-                                  P                    P                    C door market
+Financial institutions (no drive-thru)                  P                    P                    P
+Financial institutions (with drive-thru)               P                    P                    P
+Personal services                                             P                    P                    P
+Human services                                                C                    P                    C
+Vehicular and equipment services
+Fueling stations                                             N                    C                    N
+Repair shops                                                 N                    C                    N
+Sales or rentals                                             C                    C                    N
+Lodging facilities                                               P                    P                    P
+Bed & breakfast inns                                        P                    P                    C
+Entertainment facilities (major)                         N                    N                    C
+Entertainment facilities (minor)                         P                    P                    P
+Storage facilities                                               N                    N                    N
+Marijuana facilities                                            N                    N                    N
+Industrial Uses
+Marijuana processors                                       N                    N                    N
+LI permitted uses                                                         C                    N                    C
+(unless otherwise listed in table)
+Other Uses
+Community service uses                                  C                    C                    C
+Recreation facilities (active)                             C                    C                    C
+Gym (up to 5,000 s.f.)
+P                    P                    C
+Gym (above 5,000 s.f.)
+C                    C                    C
+Recreation facilities (passive)                           P                    P                    P
+Utility facilities (major)                                      C                    C                    C
+Utility facilities (minor)                                       P                    P                    P
+(Ord. No. 894, § 2, 12-10-2024)
+

@@ -1,0 +1,155 @@
+17.29.100 Standards.
+
+(1) The following uses are allowed outright:
+
+(a) Excavation and fill required to plant any new trees or vegetation, provided such activities do not constitute development;
+
+(b) Restoration or enhancement of floodplains, riparian areas, wetlands, upland and streams that meet federal and state standards; provided, that any project which encroaches in the floodway complies with GMC Section 17.29.140 (floodways).
+
+(2) All uses allowed in the underlying zoning district are allowed subject to compliance with the standards of this chapter.
+
+(3) The following uses are prohibited:
+
+(a) Any use prohibited in the underlying zoning district;
+
+(b) Uncontained areas of hazardous materials as defined by the Department of Environmental Quality.
+
+(4) All development in the FM district shall conform to the following balanced cut and fill standards:
+
+(a) This subsection does not apply to work necessary to protect, repair or maintain existing structures, utility facilities, roadways, driveways, accessory uses and exterior improvements in response to emergencies; provided, that after the emergency has passed, adverse impacts are mitigated in accordance with applicable standards.
+
+(b) No net fill in any floodplain is allowed.
+All fill placed in a floodplain shall be balanced with at least an equal amount of soil material removal.
+For the purposes of calculating net fill, fill shall include any structure below the design flood elevation that has been floodproofed pursuant to subsection (6)(b) of this section.
+Such information shall be certified by an engineer.
+
+(c) Any excavation below bankfull stage shall not count toward compensating for fill.
+
+(d) Excavation to balance a fill shall be located on the same parcel as the fill unless it is not practicable to do so.
+In such cases, the excavation shall be located in the same Gladstone floodplain, so long as the proposed excavation and fill will not increase flood impacts for surrounding properties as determined through hydrologic and hydraulic analysis.
+
+(e) For excavated areas identified by the city to remain dry in the summer, such as parks or mowed areas, the lowest elevation of the excavated area shall be at least six inches above the winter “low water” elevation, and sloped at a minimum of two percent towards the protected water feature pursuant to GMC Chapter 17.27 (WQ—Water Quality Resource Area District).
+One percent slopes will be allowed in smaller areas.
+
+(f) For excavated areas identified by the city to remain wet in the summer, such as a constructed wetland, the grade shall be designed not to drain into the protected water feature pursuant to GMC Chapter 17.27 (WQ—Water Quality Resource Area District).
+
+(g) Minimum finished floor elevations shall be at least one foot above the design flood elevation or highest flood of record, whichever is higher, for new habitable structures in the flood area.
+
+(h) Parking areas in the floodplain shall be accompanied by signs that inform the public that the parking area is located in a flood management area and that care should be taken when the potential for flooding exists.
+
+(i) Temporary fills permitted during construction shall be removed at the end of construction, 30 days after subdivision acceptance or completion of the final inspection.
+
+(j) New culverts, stream crossings and transportation projects shall be designed as balanced cut and fill projects.
+Such projects shall be designed to minimize the area of fill in the FM district and to minimize erosive velocities.
+Stream crossings shall be as close to perpendicular to the stream as practicable.
+Bridges shall be used instead of culverts wherever practicable.
+
+(k) Excavation and fill required for the construction of detention facilities or structures, and other facilities, such as levees, specifically shall be designed to reduce or mitigate flood impacts and improve water quality.
+Such information shall be certified by an engineer.
+Levees shall not be used to create vacant buildable lands.
+
+(5) The following construction standards shall apply in all flood management areas:
+
+(a) Anchoring.
+
+(A) All new construction and substantial improvements shall be anchored to prevent flotation, collapse or lateral movement of the structure.
+
+(B) All manufactured homes shall be anchored to prevent flotation, collapse or lateral movement and shall be installed using methods and practices that minimize flood damage.
+Anchoring methods may include, but are not limited to, use of over-the-top or frame ties to ground anchors.
+Additional techniques may be found in FEMA’s “Manufactured Home Installation in Flood Hazard Areas” publication.
+
+(b) Construction Materials and Methods.
+
+(A) All new construction and substantial improvements shall be constructed with materials and utility equipment resistant to flood damage.
+
+(B) All new construction and substantial improvements shall be constructed using methods and practices that minimize flood damage.
+
+(C) Electrical, heating, ventilation, plumbing and air conditioning equipment and other service facilities shall be designed and/or otherwise elevated or located so as to prevent water from entering or accumulating within the components during conditions of flooding.
+
+(c) Utilities.
+
+(A) All new and replacement water supply systems shall be designed to minimize or eliminate infiltration of floodwaters into the system.
+
+(B) New and replacement sanitary sewage systems shall be designed to minimize or eliminate infiltration of floodwaters into the systems and discharge from the systems into floodwaters.
+
+(C) On-site waste disposal systems shall be located to avoid impairment to them or contamination from them during flooding.
+
+(6) In all areas of special flood hazard where base flood elevation data has been provided (Zones A, AH and AE) as set forth in GMC Sections 17.29.030(1) and (2), the following provisions are required:
+
+(a) Residential Construction.
+
+(A) New construction and substantial improvement of any residential structure shall have the lowest floor, including basement, elevated a minimum of one foot above the design flood elevation.
+
+(B) The following standards apply to below-grade crawl spaces:
+
+(i) The building must be designed and adequately anchored to resist flotation, collapse, and lateral movement of the structure resulting from hydrodynamic and hydrostatic loads, including the effects of buoyancy.
+Hydrostatic loads and the effects of buoyancy can usually be addressed through the required openings stated in subsection (6)(a)(B)(ii) of this section.
+Because of hydrodynamic loads, crawlspace construction is not allowed in areas with flood velocities greater that five feet per second unless the design is reviewed by a qualified design professional, such as a registered architect or professional engineer.
+Other types of foundations are recommended for these areas.
+
+(ii) The crawlspace is an enclosed area below the base flood elevation (BFE) and, as such, must have openings that equalize hydrostatic pressures by allowing the automatic entry and exit of floodwaters.
+The bottom of each flood vent opening can be no more that one foot above the lowest adjacent exterior grade.
+
+(iii) Portions of the building below the BFE must be constructed with materials resistant to flood damage.
+This includes not only the foundation walls of the crawlspace used to elevate the building, but also any joists, insulation, or other materials that extend below the BFE.
+The recommended construction practice is to elevate the bottom of joists and all insulation above BFE.
+
+(iv) Any building utility systems within the crawlspace must be elevated above BFE or designed so that floodwaters cannot enter or accumulate within the system components during flood conditions.
+Ductwork, in particular, must either be placed above the BFE or sealed from floodwaters.
+
+(v) The interior grade of a crawlspace below the BFE must not be more than two feet below the lowest adjacent exterior grade.
+
+(vi) The height of the below-grade crawlspace, measured from the interior grade of the crawlspace to the top of the crawlspace foundation wall, must not exceed four feet in any point.
+The height limitation is the maximum allowable unsupported wall height according to the engineering analyses and building code requirements for flood hazard areas.
+
+(vii) There must be an adequate drainage system that removes floodwaters from the interior area of the crawlspace.
+The enclosed area should be drained within a reasonable time after a flood event.
+The type of drainage system will vary because of the site gradient and other drainage characteristics, such as soil types.
+Possible options include natural drainage through porous, well-drained soils and drainage systems such as perforated pipes, drainage tiles or gravel or crushed stone drainage by gravity or mechanical means.
+
+(viii) The velocity of floodwaters at the site should not exceed five feet per second for any crawlspace.
+For velocities in excess of five feet per second, other foundation types should be used.
+
+(C) Fully enclosed areas below the lowest floor that are subject to flooding are prohibited unless they are designed to automatically equalize hydrostatic flood forces on exterior walls by allowing for the entry and exit of floodwaters.
+Designs for meeting this requirement must either be certified by a registered professional engineer or architect or must meet or exceed the following minimum criteria:
+
+(D) Nonresidential structures that are elevated, not floodproofed, shall comply with subsection (6)(a)(B) of this section; and
+
+(E) Applicants floodproofing nonresidential buildings shall be notified that flood insurance premiums will be based on rates that are one foot below the floodproofed level (e.g., a building floodproofed to the design flood level will be rated as one foot below that level).
+
+(b) Nonresidential Construction. New construction and substantial improvement of any commercial, industrial or other nonresidential structure shall either have the lowest floor, including basement, elevated at or above the base flood elevation; or, together with attendant utility and sanitary facilities, shall:
+
+(A) Be floodproofed so that below the design flood level the structure is watertight with walls substantially impermeable to the passage of water; provided, that the requirements of subsection (4)(b) of this section are met;
+
+(B) Have structural components capable of resisting hydrostatic and hydrodynamic loads and effects of buoyancy;
+
+(C) Be certified by a registered professional engineer or architect that the design and methods of construction are in accordance with accepted standards of practice for meeting provisions of this subsection based on their development and/or review of the structural design, specifications and plans.
+Such certifications shall be provided pursuant to GMC Section 17.29.070(2)(b)(B);
+
+(D) Nonresidential structures that are elevated, not floodproofed, shall comply with subsection (6)(a)(B) of this section; and
+
+(E) Applicants floodproofing nonresidential buildings shall be notified that flood insurance premiums will be based on rates that are one foot below the floodproofed level (e.g., a building floodproofed to the design flood level will be rated as one foot below that level).
+
+(c) Manufactured Homes.
+
+(A) Manufactured homes to be placed or substantially improved on sites that are outside of a manufactured home park or subdivision; in a new manufactured home park or subdivision; in an expansion to an existing manufactured home park or subdivision; or in an existing manufactured home park or subdivision on which a manufactured home has incurred “substantial damage” as the result of a flood, shall be elevated on a permanent foundation such that the lowest floor of the manufactured home is elevated one foot above the base flood elevation and be securely anchored to an adequately designed foundation system to resist flotation, collapse and lateral movement.
+
+(B) Manufactured homes to be placed or substantially improved on sites in an existing manufactured home park or subdivision within Zones A1-30, AH, and AE on the community’s FIRM that are not subject to subsection (6)(c)(A) of this section shall be elevated so that either:
+
+(i) The lowest floor of the manufactured home is elevated one foot above the base flood elevation and the manufactured home is securely anchored to an adequately designed foundation system to resist flotation, collapse and lateral movement; or
+
+(ii) The manufactured home chassis is supported by reinforced piers or other foundation elements of at least equivalent strength that are no less than three feet in height above grade and is securely anchored to an adequately designed foundation system to resist flotation, collapse and lateral movement.
+
+(d) Recreational Vehicles. Recreational vehicles shall:
+
+(A) Be on the site for fewer than 180 consecutive days; or
+
+(B) Be fully licensed and ready for highway use, on wheels or jacking system, attached to the site only by quick disconnect type utilities and security devices, and have no permanently attached additions; or
+
+(C) Comply with subsection (6)(c) of this section and the elevation and anchoring requirements for manufactured homes.
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 § 4; 2002, Ord. 1408, 2008; Ord. 1538 §1 (Exh.
+A), 2025.
+

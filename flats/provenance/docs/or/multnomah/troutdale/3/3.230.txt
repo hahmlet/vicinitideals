@@ -1,0 +1,44 @@
+3.230  Dimensional Standards for Mixed-Use Zoning Districts.
+
+A.     Non-residential uses (including vertical mixed-use with upper floor residential units):
+
+Dimensional Standard                                                      MU-1              MU-2              MU-3
+Minimum lot size (sq. ft.)                                                     None              None              None
+Minimum lot width (ft.)                                                         None              None              None
+
+
+Dimensional Standard                                                      MU-1              MU-2              MU-3
+Minimum lot depth (ft.)                                                         None              None              None
+Minimum lot frontage (ft.)                                                       15                  15                  15
+Setbacks (ft):
+when abutting a park (regardless of zoning district)            0                    0                   10 when abutting a non-residential zoning district                   0                    0                    0 when abutting a residential zoning district                         20                  20                  20 for building facades over 35 ft. in height                           N/A                N/A                 15
+Maximum building height (ft.)                                                 35                  35           see 3.235.D
+Maximum building footprint size (sq. ft.)                               N/A              20,000                                       60,000 see note 1              footprint
+Table Notes
+1. There is no maximum building size applicable if the building was in existence prior to March 10, 1950.
+B.     Residential uses (excluding vertical mixed-use with upper floor residential units):
+
+Dimensional Standard                                                      MU-1              MU-2              MU-3
+Minimum lot size (sq. ft.)                                                see 3.235.A   see 3.235.A   see 3.235.A
+Minimum lot width (ft.)                                                            15                  15                  15
+Minimum lot depth (ft.)                                                   see 3.235.B   see 3.235.B   see 3.235.B
+Minimum lot frontage (ft.)                                                       15                  15                  15
+Minimum setbacks (ft):                                                                                                 see 3.230.A
+Front yard:
+without alley access to the garage door of units with a driveway                                      20                  20 from street to the front façade of a residential unit                        15                  15 to the front porch of a residential unit                          10                  10 with alley access to the front façade of a residential unit                        10                  10 to the front porch of a residential unit                           5                    5
+Side yard                                                                   see 3.235.C.2 see 3.235.C.2
+Building side                                                                        0                    0                    0
+Street side yard                                                              0 or 18                        0 or 18 see note 1            see note 1
+Rear yard                                                                   see 3.235.C.5 see 3.235.C.5
+Accessory structures                                                    see 5.010       see 5.010       see 5.010
+Maximum front yard setback (ft.)                                          N/A                N/A                 20
+Minimum building height (ft.)                                                 N/A                N/A                 25
+Maximum building height (ft.)                                                 35                  35           see 3.235.D
+Maximum building footprint size (sq. ft.)                               N/A              20,000                                       60,000 see note 2
+Density standards                                                            see 3.140       see 3.140       see 3.140
+
+
+Table Notes
+1. Street side yard setback is 18 feet if driveway access is taken from street side yard.
+2. There is no maximum building size applicable if the building was in existence prior to March 10, 1950.
+

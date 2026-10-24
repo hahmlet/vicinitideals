@@ -36,7 +36,7 @@ crossrefs:
   "16.68.020A":
     note: >-
       In the store. "the development conforms to Section 16.68.020A, above"
-      (sdc.16.68.infill.txt L63-L66) points at the same slice: 16.68.020 is
+      (16.68.020.txt L19) points at the same slice: 16.68.020 is
       printed at L19, and its A is the landscape plan an undersized infill
       lot owes before a building permit. The ledger did not match the
       letter to the heading. The reduction the sentence allows (16.68.020 B,
@@ -47,7 +47,7 @@ crossrefs:
     note: >-
       OAR 660 Division 46, the state's middle housing rule, named in the
       16.94.020 parking table: "ADU standards are per OAR Division 46"
-      (sdc.16.94.parking.txt L371-L373). The rule is state law, which the
+      (16.94.020.txt L18). The rule is state law, which the
       ledger counts apart, and it caps what a city may require; the table's
       own quadplex row (1 space a unit, no maximum) is read in the layer and
       is no stricter than the state's cap on a lot this size.
@@ -79,7 +79,7 @@ crossrefs:
     note: >-
       Use Classifications and Interpretations. The use tables send a use
       the table does not list to a case-by-case determination under Chapter
-      16.88 (sdc.16.22.commercial.txt L41-L56). It is a process with no
+      16.88 (16.22.020.txt L3-L5). It is a process with no
       figure in it; the refusals stand on the table's own rows, which
       permit multi-family housing in the commercial districts only above a
       ground floor non-residential use, and the conservative reading takes
@@ -112,7 +112,7 @@ crossrefs:
     outcome: procedure
     note: >-
       Conditional Uses, named in the definition of the term
-      (sdc.16.10.definitions.txt L127-L128). The layer admits the pod only
+      (16.10.020.txt L61). The layer admits the pod only
       where a table prints P and refuses it where it prints C or N, so the
       conditional-use process is never the path taken.
   "16.90.020":
@@ -120,14 +120,14 @@ crossrefs:
     note: >-
       The commercial design review matrix of Site Plan Review, which the
       Light Industrial zone applies to hotels and motels
-      (sdc.16.31.industrial.txt L326-L332). A hotel is not the pod, and LI
+      (16.31.040.txt L4-L7). A hotel is not the pod, and LI
       refuses the pod.
   "16.22.080":
     outcome: misread
     note: >-
       Not a reference: the editor's note on Chapter 16.22's derivation,
       "Former Ch. 16.22, §§ 16.22.010-16.22.080, pertained to the Office
-      Commercial district" (sdc.16.22.commercial.txt L62-L69). A repealed
+      Commercial district" (16.22.020.txt L9-L17). A repealed
       chapter's history.
   "16.31.100":
     outcome: misread
@@ -324,7 +324,7 @@ definitions:
     # the definition's own words, which is the default alleys_count: false.
     test: intersecting_frontages
     drives_count: true
-    quote: "or/washington/sherwood/sdc.16.10.definitions.txt#L488,L885-L886"
+    quote: "or/washington/sherwood/16.10/16.10.020.txt#L234,L398-L399"
     cite: "Sherwood SZCDC 16.10.020, Lot, Corner; Street"
 
 # Whether a private road or drive the lot abuts is a street here (FOLLOWUPS
@@ -333,7 +333,7 @@ definitions:
 # makes it a street, as this one does).
 private_drives:
   street: true
-  quote: "or/washington/sherwood/sdc.16.10.definitions.txt#L885-L886"
+  quote: "or/washington/sherwood/16.10/16.10.020.txt#L398-L399"
   says: "A public or private road, easement or right-of-way"
   cite: "Sherwood SZCDC 16.10.020 (Street; Lot Line, Front; Lot, Corner)"
   note: >-
@@ -361,7 +361,7 @@ defaults:
     cite: Sherwood SZCDC 16.106.020 A, right-of-way by functional classification in the Transportation System Plan, Figure 17
     url: https://api.municode.com/PublicationPdfDownload/3865
     retrieved: '2026-09-29'
-    quote: "or/washington/sherwood/sdc.16.106.transportation.txt#L118-L125"
+    quote: "or/washington/sherwood/16.106/16.106.020.txt#L1-L4"
   row_to_centerline_principal_arterial_ft:
     value: 61
     cite: Sherwood SZCDC 16.106.030 D, additional setback measured from the street centerline, Principle Arterial (99W) 61 feet
@@ -405,7 +405,7 @@ defaults:
   # that includes lands within one-half (1/2) mile of a frequent transit
   # corridor", and per OAR 660-012-0435 none "within the Sherwood Town
   # Center and one-quarter mile of the area (see CFEC Parking Delineated
-  # Area Map at the end of this section)" (sdc.16.94.parking.txt#L354-
+  # Area Map at the end of this section)" (16.94.020.txt#L7-L8-
   # L367). Table 1 is headed "for lots or parcels not within the CFEC
   # Parking Delineated Area" (L368-L370). No registered condition carries
   # either distance and the map is a figure, so the stricter figure is held
@@ -415,13 +415,13 @@ defaults:
     cite: Sherwood SZCDC 16.94.020 Table 1, Quadplex on a lot of 7,000 SF or more (4 spaces total)
     url: https://api.municode.com/PublicationPdfDownload/3865
     retrieved: '2026-09-29'
-    quote: "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L375-L398,L490,L502-L525,L560-L571"
+    quote: "or/washington/sherwood/16.94/16.94.020.txt#L17,L20-L34,L80,L86-L100,L115-L119"
   parking_max_per_unit:
     exempt: true
     cite: Sherwood SZCDC 16.94.020 Table 1, Quadplex maximum permitted parking (None in Zone A and Zone B)
     url: https://api.municode.com/PublicationPdfDownload/3865
     retrieved: '2026-09-29'
-    quote: "or/washington/sherwood/sdc.16.94.parking.txt#L368-L370,L490,L502-L525,L560-L571"
+    quote: "or/washington/sherwood/16.94/16.94.020.txt#L17,L80,L86-L100,L115-L119"
   # DRIVEWAY APPROACH. 16.14.030 A: "Each individual driveway approach must
   # not exceed 12 feet in width per dwelling served by the driveway" (A.1);
   # shared driveways, "a single driveway serving two units", are required
@@ -430,7 +430,7 @@ defaults:
   # can be achieved between driveways" (A.3). Four units take two shared
   # driveways, and 20 is the width that holds without the spacing, which
   # nothing measures. 16.96.050 A.4 sends a quadplex's on-site vehicle
-  # circulation to the same section (sdc.16.96.circulation.txt#L162,L180).
+  # circulation to the same section (16.96.050.txt#L1,L14).
   # The Municode PDF prints A.1 and A.2 and drops the rest with page
   # 296.18.1 (sdc.16.14.residential-design.txt#L443-L448); the ordinance
   # prints all of it.
@@ -479,7 +479,7 @@ defaults:
   # within the front yard of a dwelling except within a designated driveway
   # or garage or per the provisions of 16.14.020 and 16.14.030", and a front
   # yard runs "between the front lot line and the nearest line or point of
-  # the building" (16.10.020 Yard, A; sdc.16.10.definitions.txt#L1051-
+  # the building" (16.10.020 Yard, A; 16.10.020.txt#L483-
   # L1052), which is the whole ground in front of the building, not the
   # setback. 16.14.030 grants no front-yard parking of its own. 16.14.010
   # applies "to all new residential development" (C.1), and the guideline
@@ -496,7 +496,7 @@ defaults:
     cite: Sherwood SZCDC 16.10.020, Lot Line, Front (as many front lines as there are street frontages)
     url: https://api.municode.com/PublicationPdfDownload/3865
     retrieved: '2026-09-29'
-    quote: "or/washington/sherwood/sdc.16.10.definitions.txt#L505-L506"
+    quote: "or/washington/sherwood/16.10/16.10.020.txt#L245"
 
 # THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-29. Each applies
 # in every zone below unless the zone says otherwise.
@@ -507,7 +507,7 @@ defaults:
 # approval from the City Engineer or designee" (ord.2022-004.16.12.030.txt
 # #L15-L18, the ordinance's OCR). 16.10.020 defines it as public sewer,
 # public water, street access meeting emergency vehicle standards, and storm
-# drainage (sdc.16.10.definitions.txt#L978-L988). As in the county layer,
+# drainage (16.10.020.txt#L450-L454). As in the county layer,
 # the applicant may provide it; not a use gate. A doubt for lots far from a
 # main.
 #
@@ -654,7 +654,7 @@ zones:
         height_ft: 24
         rise_per_ft: 2
         cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
-        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+        quote: "or/washington/sherwood/16.68/16.68.030.txt#L1-L2,L10-L13"
     setback_street_side_ft:
       value: 20
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
@@ -739,7 +739,7 @@ zones:
         height_ft: 24
         rise_per_ft: 2
         cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
-        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+        quote: "or/washington/sherwood/16.68/16.68.030.txt#L1-L2,L10-L13"
     setback_street_side_ft:
       value: 20
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
@@ -798,7 +798,7 @@ zones:
     max_far:
       value: 0.5
       cite: "Sherwood SZCDC 16.68.030 A.1, floor area in a dwelling over 24 feet no more than 50% of lot area (LDR; the stricter reading of its reach)"
-      quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L82"
+      quote: "or/washington/sherwood/16.68/16.68.030.txt#L1-L5"
     setback_front_ft:
       value: 20
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
@@ -815,7 +815,7 @@ zones:
         height_ft: 24
         rise_per_ft: 2
         cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
-        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+        quote: "or/washington/sherwood/16.68/16.68.030.txt#L1-L2,L10-L13"
     setback_street_side_ft:
       value: 20
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
@@ -874,7 +874,7 @@ zones:
     max_far:
       value: 0.55
       cite: "Sherwood SZCDC 16.68.030 A.2, floor area in a dwelling over 24 feet no more than 55% of lot area (MDRL; the stricter reading of its reach)"
-      quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L81,L83"
+      quote: "or/washington/sherwood/16.68/16.68.030.txt#L1-L4,L6"
     setback_front_ft:
       value: 14
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
@@ -891,7 +891,7 @@ zones:
         height_ft: 24
         rise_per_ft: 2
         cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
-        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+        quote: "or/washington/sherwood/16.68/16.68.030.txt#L1-L2,L10-L13"
     setback_street_side_ft:
       value: 15
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
@@ -949,7 +949,7 @@ zones:
     max_far:
       value: 0.6
       cite: "Sherwood SZCDC 16.68.030 A.3, floor area in a dwelling over 24 feet no more than 60% of lot area (MDRH; the stricter reading of its reach)"
-      quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L81,L84"
+      quote: "or/washington/sherwood/16.68/16.68.030.txt#L1-L4,L7"
     setback_front_ft:
       value: 14
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
@@ -966,7 +966,7 @@ zones:
         height_ft: 24
         rise_per_ft: 2
         cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
-        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+        quote: "or/washington/sherwood/16.68/16.68.030.txt#L1-L2,L10-L13"
     setback_street_side_ft:
       value: 15
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
@@ -1025,7 +1025,7 @@ zones:
     max_far:
       value: 0.65
       cite: "Sherwood SZCDC 16.68.030 A.4, floor area in a dwelling over 24 feet no more than 65% of lot area (HDR; the stricter reading of its reach)"
-      quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L81,L85"
+      quote: "or/washington/sherwood/16.68/16.68.030.txt#L1-L4,L8"
     setback_front_ft:
       value: 14
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Front yard
@@ -1042,7 +1042,7 @@ zones:
         height_ft: 24
         rise_per_ft: 2
         cite: "Sherwood SZCDC 16.68.030 B.1, a half foot further in for every foot over 24 feet (the stricter reading of its reach)"
-        quote: "or/washington/sherwood/sdc.16.68.infill.txt#L74-L75,L89-L95"
+        quote: "or/washington/sherwood/16.68/16.68.030.txt#L1-L2,L10-L13"
     setback_street_side_ft:
       value: 15
       cite: Sherwood SZCDC 16.12.030 C, Setbacks, Corner lot street side (Quadplex)
@@ -1060,7 +1060,7 @@ zones:
   # RESIDENTIAL PUDs. The map marks land developed as a Planned Unit
   # Development with the base code and "_PUD" (MDRH's is "MDRH-PUD"). Lot
   # size and setbacks are "consistent with the provisions in the
-  # underlying zone" (16.40.050 C.3; sdc.16.40.pud.txt#L228-L230), so each
+  # underlying zone" (16.40.050 C.3; 16.40.050.txt#L15-L16), so each
   # takes its base zone's standards. The use is qualified as VLDR_PUD's is:
   # PUD uses are those "approved as part of a Final Development Plan", and a
   # change of use is a major change. A lot on the perimeter of a
@@ -1077,7 +1077,7 @@ zones:
       zone: LDR
       wins: local
       cite: Sherwood SZCDC 16.40.050 C.3, minimum lot size and setbacks consistent with the underlying zone
-      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230"
+      quote: "or/washington/sherwood/16.40/16.40.050.txt#L1,L10,L15-L16"
     quadplex_allowed:
       value: true
       cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in LDR) and 16.40.050 A (Residential PUD uses)
@@ -1099,7 +1099,7 @@ zones:
       zone: MDRL
       wins: local
       cite: Sherwood SZCDC 16.40.050 C.3, minimum lot size and setbacks consistent with the underlying zone
-      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230"
+      quote: "or/washington/sherwood/16.40/16.40.050.txt#L1,L10,L15-L16"
     quadplex_allowed:
       value: true
       cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in MDRL) and 16.40.050 A (Residential PUD uses)
@@ -1121,7 +1121,7 @@ zones:
       zone: MDRH
       wins: local
       cite: Sherwood SZCDC 16.40.050 C.3, minimum lot size and setbacks consistent with the underlying zone
-      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230"
+      quote: "or/washington/sherwood/16.40/16.40.050.txt#L1,L10,L15-L16"
     quadplex_allowed:
       value: true
       cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in MDRH) and 16.40.050 A (Residential PUD uses)
@@ -1143,7 +1143,7 @@ zones:
       zone: HDR
       wins: local
       cite: Sherwood SZCDC 16.40.050 C.3, minimum lot size and setbacks consistent with the underlying zone
-      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L199,L215,L228-L230"
+      quote: "or/washington/sherwood/16.40/16.40.050.txt#L1,L10,L15-L16"
     quadplex_allowed:
       value: true
       cite: Sherwood SZCDC 16.12.020 A (Triplex and Quadplex P in HDR) and 16.40.050 A (Residential PUD uses)
@@ -1179,7 +1179,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
-      quote: "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135"
+      quote: "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32"
     notes: >-
       DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
   OC_PUD:
@@ -1190,7 +1190,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (OC, which lists no triplex or quadplex)
-      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L240-L244,L253-L256"
+      quote: "or/washington/sherwood/16.40/16.40.060.txt#L1-L3,L9-L10"
     notes: >-
       DRAFT. Refuses: OC's uses; a waiver of dwelling type is the approved
       plan's, not the lot's.
@@ -1202,7 +1202,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
-      quote: "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135"
+      quote: "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32"
     notes: >-
       DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
   RC:
@@ -1213,7 +1213,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
-      quote: "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135"
+      quote: "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32"
     notes: >-
       DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
   RC_PUD:
@@ -1224,7 +1224,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (RC, which lists no triplex or quadplex)
-      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L240-L244,L253-L256"
+      quote: "or/washington/sherwood/16.40/16.40.060.txt#L1-L3,L9-L10"
     notes: >-
       DRAFT. Refuses: RC's uses; a waiver of dwelling type is the approved
       plan's, not the lot's.
@@ -1236,7 +1236,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: Sherwood SZCDC 16.22.020 A-B and the commercial use table (no triplex or quadplex row; multi-family only above a ground-floor non-residential use)
-      quote: "or/washington/sherwood/sdc.16.22.commercial.txt#L37-L47,L60-L61,L72-L94,L135"
+      quote: "or/washington/sherwood/16.22/16.22.020.txt#L1-L4,L7-L8,L18-L22,L32"
     notes: >-
       DRAFT. Refuses: no triplex or quadplex row; unlisted uses prohibited.
   LI:
@@ -1247,7 +1247,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: Sherwood SZCDC 16.31.020 A-B and the industrial use table (one security dwelling only; unlisted uses prohibited)
-      quote: "or/washington/sherwood/sdc.16.31.industrial.txt#L49-L53,L59-L64"
+      quote: "or/washington/sherwood/16.31/16.31.020.txt#L1-L4,L7-L10"
     notes: >-
       DRAFT. Refuses: the only dwelling is one for a security person.
   LI_PUD:
@@ -1258,7 +1258,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: Sherwood SZCDC 16.40.060 A, uses permitted outright in the underlying zone (LI, which lists one security dwelling only)
-      quote: "or/washington/sherwood/sdc.16.40.pud.txt#L240-L244,L253-L256"
+      quote: "or/washington/sherwood/16.40/16.40.060.txt#L1-L3,L9-L10"
     notes: >-
       DRAFT. Refuses: LI's uses; a waiver of dwelling type is the approved
       plan's, not the lot's.
@@ -1270,7 +1270,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: Sherwood SZCDC 16.31.020 A-B and the industrial use table (one security dwelling only; unlisted uses prohibited)
-      quote: "or/washington/sherwood/sdc.16.31.industrial.txt#L49-L53,L59-L64"
+      quote: "or/washington/sherwood/16.31/16.31.020.txt#L1-L4,L7-L10"
     notes: >-
       DRAFT. Refuses: the only dwelling is one for a security person.
   EI:
@@ -1284,7 +1284,7 @@ zones:
       # supplement and was not updated; the map prints it.
       value: false
       cite: Sherwood SZCDC 16.31.020 A-B and the industrial use table (one security dwelling only; unlisted uses prohibited)
-      quote: "or/washington/sherwood/sdc.16.31.industrial.txt#L49-L53,L59-L64"
+      quote: "or/washington/sherwood/16.31/16.31.020.txt#L1-L4,L7-L10"
     notes: >-
       DRAFT. Refuses: the only dwelling is one for a security person.
   IP:
@@ -1295,7 +1295,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: Sherwood SZCDC 16.36.020 A-B and the IP use table (one security dwelling, conditional; unlisted uses prohibited)
-      quote: "or/washington/sherwood/sdc.16.36.institutional-public.txt#L14-L19,L25-L29"
+      quote: "or/washington/sherwood/16.36/16.36.020.txt#L1-L4,L7-L9"
     notes: >-
       DRAFT. Refuses: the only dwelling is a conditional one for a security
       person.
@@ -1304,7 +1304,7 @@ zones:
 # field CODE) was counted on 2026-09-29; acreages are the layer's own
 # Shape__Area in square feet over 43,560. Eleven codes carry the layer's
 # own DESCRIPTION "Unannexed Area-Inside UGB": land the city has planned
-# and not annexed. 16.04.040 (sdc.16.04.districts.txt L50-L59) puts that
+# and not annexed. 16.04.040 (16.04.040.txt L1-L6) puts that
 # land under the Urban Planning Area Agreement, not this code, and gives an
 # annexed lot an interim city zone "consistent with the Official Plan and
 # Zoning Map" -- which this map does not print. So a lot the county's
@@ -1320,10 +1320,10 @@ zone_rulings:
     note: >-
       "Old Town Overlay", one feature of 44.7 acres on the city's zoning
       layer on 2026-09-29. OT is an overlay district of 16.04.010
-      (sdc.16.04.districts.txt L25), not a base zone: 16.162.030 A permits
+      (16.04.010.txt L18), not a base zone: 16.162.030 A permits
       the uses "permitted outright in the RC zone ... the HDR zone ... and
       the MDRL zone ... limited to those permitted in the underlying zoning
-      district" (sdc.16.162.old-town.txt L49-L53), and 16.162.060 applies
+      district" (16.162.030.txt L3-L4), and 16.162.060 applies
       "the dimensional standards of the underlying RC, HDR and MDRL zones"
       with exceptions (L102-L104). The map paints the overlay over its
       whole area and prints no underlying zone, so which of the three
@@ -1336,7 +1336,7 @@ zone_rulings:
     note: >-
       "Open Space-OS", one feature of 4.3 acres on the city's zoning layer
       on 2026-09-29. OS is not among the districts 16.04.010 lists
-      (sdc.16.04.districts.txt L10-L25) and no chapter of the code sliced
+      (16.04.010.txt L3-L18) and no chapter of the code sliced
       here sets its uses or standards. The list is printed from a 2007
       supplement and is stale (it also omits EI, which Chapter 16.31
       creates), so OS may be a district the code adds elsewhere; it was
@@ -1346,7 +1346,7 @@ zone_rulings:
     note: >-
       "Urban Growth Area-Concept Plan Required", two features of 14.0 acres
       on the city's zoning layer on 2026-09-29. No district of 16.04.010
-      (sdc.16.04.districts.txt L10-L25); by 16.04.040 (L50-L59) land inside
+      (16.04.010.txt L3-L18); by 16.04.040 (L50-L59) land inside
       the UGB and outside the city is regulated under the Urban Planning
       Area Agreement with Washington County, and the description says a
       concept plan comes before any zone. Nothing here can say what an
@@ -1356,7 +1356,7 @@ zone_rulings:
     note: >-
       "Unannexed Area-Inside UGB" with no county code at all, 34 features of
       190.3 acres on the city's zoning layer on 2026-09-29. 16.04.040
-      (sdc.16.04.districts.txt L50-L59) leaves this land to the Urban
+      (16.04.040.txt L1-L6) leaves this land to the Urban
       Planning Area Agreement and gives it, once annexed, an interim zone
       consistent with the Official Plan and Zoning Map, which this layer
       does not print. The county's code governs until annexation; Sherwood's
@@ -1367,7 +1367,7 @@ zone_rulings:
     note: >-
       "Unannexed Area-Inside UGB" under the county code AF-5, 11 features of
       272.0 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
-      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      district (16.04.010.txt L3-L18). Unannexed land is the
       county's under 16.04.040 (L50-L59); an annexed lot takes an interim
       city zone the map does not print, and the county's AF-5 does not
       survive annexation in this code. See the comment above zone_rulings.
@@ -1376,7 +1376,7 @@ zone_rulings:
     note: >-
       "Unannexed Area-Inside UGB" under the county code AF-10, 5 features of
       219.2 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
-      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      district (16.04.010.txt L3-L18). Unannexed land is the
       county's under 16.04.040 (L50-L59); an annexed lot takes an interim
       city zone the map does not print, and the county's AF-10 does not
       survive annexation in this code. See the comment above zone_rulings.
@@ -1385,7 +1385,7 @@ zone_rulings:
     note: >-
       "Unannexed Area-Inside UGB" under the county code AF-20, 5 features of
       560.0 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
-      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      district (16.04.010.txt L3-L18). Unannexed land is the
       county's under 16.04.040 (L50-L59); an annexed lot takes an interim
       city zone the map does not print, and the county's AF-20 does not
       survive annexation in this code. See the comment above zone_rulings.
@@ -1394,7 +1394,7 @@ zone_rulings:
     note: >-
       "Unannexed Area-Inside UGB" under the county code EFU, one feature of
       106.1 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
-      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      district (16.04.010.txt L3-L18). Unannexed land is the
       county's under 16.04.040 (L50-L59); an annexed lot takes an interim
       city zone the map does not print, and the county's EFU does not
       survive annexation in this code. See the comment above zone_rulings.
@@ -1403,7 +1403,7 @@ zone_rulings:
     note: >-
       "Unannexed Area-Inside UGB" under the county code FD-10, 5 features of
       6.0 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
-      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      district (16.04.010.txt L3-L18). Unannexed land is the
       county's under 16.04.040 (L50-L59); an annexed lot takes an interim
       city zone the map does not print, and the county's FD-10 does not
       survive annexation in this code. See the comment above zone_rulings.
@@ -1412,7 +1412,7 @@ zone_rulings:
     note: >-
       "Unannexed Area-Inside UGB" under the county code FD-20, 8 features of
       325.1 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
-      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      district (16.04.010.txt L3-L18). Unannexed land is the
       county's under 16.04.040 (L50-L59); an annexed lot takes an interim
       city zone the map does not print, and the county's FD-20 does not
       survive annexation in this code. See the comment above zone_rulings.
@@ -1421,7 +1421,7 @@ zone_rulings:
     note: >-
       "Unannexed Area-Inside UGB" under the county code R-9, one feature of
       5.9 acres on the city's zoning layer on 2026-09-29. Not a Sherwood
-      district (sdc.16.04.districts.txt L10-L25). Unannexed land is the
+      district (16.04.010.txt L3-L18). Unannexed land is the
       county's under 16.04.040 (L50-L59); an annexed lot takes an interim
       city zone the map does not print, and the county's R-9 does not
       survive annexation in this code. See the comment above zone_rulings.
@@ -1431,7 +1431,7 @@ zone_rulings:
       "Unannexed Area-Inside UGB" under RRFF5, 2 features of 31.0 acres on
       the city's zoning layer on 2026-09-29. RRFF-5 is a Clackamas County
       district, not Washington County's, and not a Sherwood district
-      (sdc.16.04.districts.txt L10-L25). Unannexed land is regulated under
+      (16.04.010.txt L3-L18). Unannexed land is regulated under
       the Urban Planning Area Agreement by 16.04.040 (L50-L59); an annexed
       lot takes an interim city zone the map does not print.
   MG:
@@ -1440,7 +1440,7 @@ zone_rulings:
       "Unannexed Area-Inside UGB" under MG, one feature of 1156.0 acres on
       the city's zoning layer on 2026-09-29 -- the largest single feature on
       the map. MG reads as Tualatin's General Manufacturing district, not a
-      county or Sherwood code (sdc.16.04.districts.txt L10-L25); the
+      county or Sherwood code (16.04.010.txt L3-L18); the
       feature likely draws land in or planned by the neighbouring city.
       Unannexed land is regulated under the Urban Planning Area Agreement
       by 16.04.040 (L50-L59); nothing here zones it.
@@ -1450,6 +1450,6 @@ zone_rulings:
       "Unannexed Area-Inside UGB" under MBP, 2 features of 50.2 acres on the
       city's zoning layer on 2026-09-29. MBP reads as Tualatin's
       Manufacturing Business Park district, not a county or Sherwood code
-      (sdc.16.04.districts.txt L10-L25). Unannexed land is regulated under
+      (16.04.010.txt L3-L18). Unannexed land is regulated under
       the Urban Planning Area Agreement by 16.04.040 (L50-L59); nothing
       here zones it.

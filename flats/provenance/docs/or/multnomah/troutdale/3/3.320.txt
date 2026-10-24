@@ -1,0 +1,69 @@
+3.320  Land Use Table for Commercial Zoning Districts.
+
+A.     Uses that are permitted are marked with a "P", with specific standards for the use listed in the far-right column as shown below.
+
+B.     Uses that require conditional use approval in accordance with Section 6.300 of this Code are marked with a "C", with specific standards for the use listed in the far-right column as shown below.
+
+C.     Uses that are not permitted are marked with a "N".
+
+Specific
+Land Use                                                                              CC                 GC         Standards
+Residential Dwellings and Uses
+Residential facilities                                                                P                    P
+Other residential uses                                                            N                    N
+Mixed-Uses
+Live-Work units (residential/commercial)                                P                    N
+Live-Make units (residential/industrial)                                   C                    N
+Flex units (commercial/industrial)                                           C                    C
+Commercial Uses
+General retail (up to 60,000 s.f.)
+P                    P
+General retail (above 60,000 s.f.)
+C                    P
+Offices (up to 60,000 s.f.)
+P                    P
+Offices (above 60,000 s.f.)
+N                    P
+Eating & drinking establishments
+
+
+Specific
+Land Use                                                                              CC                 GC                            Standards
+Restaurants & bars (no drive-thru)                                      P                    P
+Restaurants & bars (with drive-thru)                                   P                    P
+Kiosks (drive-thru only)                                                       P                    P                 5.200
+Mobile food vendor (individually placed, in park or                                           P                    P                 5.200 right-of-way)
+Mobile food vendor (individually placed, on pri-                                              P                    P                 5.200 vately owned lot)
+Food cart pod, micro-retail pod, or outdoor market                P                    P                 5.200
+Financial institutions (no drive-thru)                                        P                    P
+Financial institutions (with drive-thru)                                     P                    P
+Personal services                                                                   P                    P
+Human services                                                                      P                    P
+Vehicular and equipment services
+Fueling stations                                                                   C                    P
+Repair shops                                                                       N                    P
+Sales or rentals                                                                   C                    C
+Lodging facilities                                                                     P                    P
+Bed & breakfast inns                                                              N                    N
+Entertainment facilities (major)                                               C                    C               3.325.B
+Entertainment facilities (minor)                                               P                    P
+Storage facilities                                                                     N                    N
+Marijuana facilities                                                                  N                    C               3.325.A
+Industrial Uses
+Warehousing or distribution outlets                                        N                    C
+Marijuana processors                                                             N                    N
+LI permitted uses (unless otherwise listed in table)                N                    N
+Other Uses
+Agricultural or animal-based uses                                          N                    P
+Community service uses                                                        C                    C
+Recreation facilities (active)                                                   C                    C
+Gym (up to 5,000 s.f.)
+P                    P
+Gym (above 5,000 s.f.)
+C                    C
+Recreation facilities (passive)                                                 P                    P
+Utility facilities (major)                                                            C                    C
+Utility facilities (minor)                                                             P                    P
+(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att.
+A), 2-25-2025)
+

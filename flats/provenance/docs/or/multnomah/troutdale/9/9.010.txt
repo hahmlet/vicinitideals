@@ -1,0 +1,75 @@
+9.010  Off-Street Parking Space Requirements.
+
+The City of Troutdale has been required to reduce parking regulations for certain areas of the city to comply with the State of Oregon's Climate Friendly and Equitable Communities (CFEC) regulations.
+For areas of the city with reduced parking regulations due to CFEC, the Planning Department can provide off-street parking standards that are recommended but not required per this Subsection.
+A.     Required parking spaces may be provided off-site, within two thousand (2,000) feet of pedestrian travel of a site.
+If any non-loading parking is provided on site, all required parking for people with disabilities shall be on site.
+If all parking is off-site, parking for people with disabilities must be located within the shortest possible distance of an accessible entrance via an accessible path and no greater than two hundred (200) feet from that entrance.
+
+Table 1: Parking standards for lots or parcels not within the CFEC Delineated Area (see CFEC Parking Delineated Area Map).
+Parking spaces are based on one (1) per one thousand (1,000) sq. ft. of gross leasable area primary to the functional use, per Metro Title 3; ADU standards are per OAR Division 46.
+
+
+Residential Land Use                      Minimum                                  Maximum
+Accessory Dwelling Unit (ADU)      None                                        None
+Single-family detached and                      1 space per dwelling unit         No maximum manufactured home on lot
+Duplex                                             2 spaces total                           No maximum
+Triplex and Quadplex
+• Lot size of less than 3,000 sq. ft.  1 space total                             No maximum
+• Lot size of less than 5,000 sq. ft.  2 spaces total                           No maximum
+• Lot size between 5,000 sq. ft.                3 spaces total                           No maximum and 6,999 sq. feet
+• Lot size of 7,000 sq. ft. or                  3 spaces total per triplex                 No maximum greater                                         4 spaces total per quadplex
+Townhome                                      1 space per dwelling unit
+Cottage Cluster                               0 space per unit if the floor                No maximum area is less than 1,000 sq. ft.
+1 space per unit if the floor area is over 1,000 sq. ft.
+Multi-family dwelling                        1 space per dwelling unit1        No maximum
+Affordable units, as defined in                 None                                        No maximum
+OAR 660-039-0010
+Residential units smaller than 750              None                                        No maximum sq. ft.
+Single room occupancy housing     None                                        No maximum
+Shared dwelling                              None                                        No maximum
+Public supported housing as                     None                                        No maximum defined in ORS 456.250
+Manufactured home park                1 space per dwelling unit         No maximum
+Facilities for people with                      None                                        No maximum disabilities as defined in ORS
+443.400
+Domestic violence, emergency,                   None                                        No maximum and transitional shelters
+Commercial Land Use                    Minimum                                  Maximum
+General retail or personal service,             4.1 spaces per 1,000 sq. ft. of            6.2 spaces per 1,000 sq. ft. of including shopping centers and                  gross floor area                           gross floor area grocery stores
+General retail with bulky                       2 spaces per 1,000 sq. ft. of              3 spaces per 1,000 sq. ft. of merchandise, such as a furniture                gross floor area                           gross floor area or appliance store
+Eating and drinking establishment               10 spaces per 1,000 sq. ft. of             19.1 spaces per 1,000 sq. ft.
+without a drive-thru                            gross floor area                           of gross floor area
+
+
+Commercial Land Use                    Minimum                                  Maximum
+Eating and drinking establishment              8 spaces per 1,000 sq. ft of             12.4 spaces per 1,000 sq. ft.
+with a drive-thru                              gross floor area                         of gross floor area
+Mobile food vendor                         See Section 5.100                    Food stands/food carts: N/A
+Food trucks: 1 per truck Kiosks: 12.4 spaces per 1,000 sq. ft. of gross floor area
+Medical/dental office or clinic          3.9 spaces per 1,000 sq. ft. of                5.9 spaces per 1,000 sq. ft. of gross floor area                         gross floor area
+General professional office or                 2.7 spaces per 1,000 sq. ft. of          4.1 spaces per 1,000 sq. ft. of financial institution                          gross floor area                         gross floor area
+Financial institution with a drive-            4.3 spaces per 1,000 sq. ft. of          6.5 spaces per 1,000 sq. ft. of thru                                           gross floor area                         gross floor area
+Personal services or minor                     4.3 spaces per 1,000 sq. ft. of          6.5 spaces per 1,000 sq. ft. of entertainment facility                         gross floor area                         gross floor area
+Auto, boat, or trailer sales, or               1 space per 1,000 sq. ft. of             2 spaces per 1,000 sq. ft. of nursery                                        gross floor area                         gross floor area
+Lodging facility or bed and                    1 space per guestroom/suite    2 spaces per guestroom/suite breakfast
+Service station                                0.5 space per 1,000 sq. ft. of           1 space per 1,000 sq. ft. of gross lot area                           gross lot area
+Bowling alley                                   2 spaces per lane                     3 spaces per lane
+Major entertainment facility                   1 space per 4 seats or 1                 1.5 spaces per 4 seats or 1
+(theater, racetrack, stadium, or               space per 8-foot bench length            space per 8-foot bench length similar use)
+Major entertainment facility                   1 spaces per 100 sq. ft. of              1.5 spaces per 100 sq. ft. of
+(amusement park)                               recreation area                          recreation area
+Institutional and Community
+Service Land Use                           Minimum                                  Maximum
+Child care facility as defined in              None                                        No maximum
+ORS 329A.250
+School (elementary or middle)        2 spaces per teacher               3 spaces per teacher
+School (high school, college, or               0.2 spaces per number of                 0.3 spaces per number of trade school)                                  students and staff                       students and staff
+Library or museum                          2.5 spaces per 1,000 sq. ft. of              3 spaces per 1,000 sq. ft. of gross floor area, plus 1 space           gross floor area, plus 1.25 per 2 employees                          spaces per 2 employees
+Religious facility or mortuary           1 space per 4 seats or 1                       2 spaces per 4 seats or 2 space for 7 feet of bench                spaces for 7 feet of bench length                                   length
+Hospital                                           1.5 spaces per bed                  2 spaces per bed
+
+
+Industrial Land Use                         Minimum                                  Maximum
+Storage, warehouse, or                      1 space per employee on the            1.5 spaces per employee on manufacturing establishment; air,           largest shift                          the largest shift rail, or trucking freight terminal
+(Ord. No. 899, § 2(Att.
+A), 6-24-2025)
+

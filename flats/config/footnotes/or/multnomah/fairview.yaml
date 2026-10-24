@@ -32,7 +32,7 @@
 # that constraint with no citation and the port would not copy an uncited
 # number. This is the citation, in one city.
 notes:
-  - quote: "or/multnomah/fairview/19.30.txt#L215"
+  - quote: "or/multnomah/fairview/19.30/19.30.020.txt#L155"
     digest: "11b74f37b0e0"
     state: dismissed
     reason: >-
@@ -44,7 +44,7 @@ notes:
       manufactured home park and conditional-use rows of Table
       19.30.020.A, and it blocks the pod's value only because the region
       rule governs by table rather than by row
-  - quote: "or/multnomah/fairview/19.30.txt#L216"
+  - quote: "or/multnomah/fairview/19.30/19.30.020.txt#L156"
     digest: "f04fdc68d02d"
     state: dismissed
     reason: >-
@@ -59,7 +59,7 @@ notes:
       not owe 19.30.090.B.1's 10 percent common open space or B.2's per-
       unit patios and balconies. The note marks the Multi-Unit Dwellings
       row, which is the row those definitions belong to
-  - quote: "or/multnomah/fairview/19.30.txt#L217"
+  - quote: "or/multnomah/fairview/19.30/19.30.020.txt#L157"
     digest: "e99ab2d15fd0"
     state: dismissed
     reason: >-
@@ -68,7 +68,7 @@ notes:
       those uses. Placing a permanent four-unit dwelling is not a
       temporary use or a home occupation, and the chapter is not fetched
       because nothing in it reaches a value this layer encodes
-  - quote: "or/multnomah/fairview/19.30.txt#L218"
+  - quote: "or/multnomah/fairview/19.30/19.30.020.txt#L158"
     digest: "4e2747ea16d4"
     state: dismissed
     reason: >-
@@ -80,7 +80,7 @@ notes:
       townhouse row and this note are not its row and not its note. The
       distinction matters twice over: Fairview also runs a Townhouse
       Overlay zone off the same word
-  - quote: "or/multnomah/fairview/19.30.txt#L219"
+  - quote: "or/multnomah/fairview/19.30/19.30.020.txt#L159"
     digest: "0b55969584ef"
     state: encoded
     encoded_as: >-
@@ -107,7 +107,7 @@ notes:
       refused for want of one. G asks for a three-foot hard-surfaced
       path to the door. H is about converting an existing house, which
       is not what this places
-  - quote: "or/multnomah/fairview/19.30.txt#L220"
+  - quote: "or/multnomah/fairview/19.30/19.30.020.txt#L160"
     digest: "f80ef331d91d"
     state: dismissed
     reason: >-
@@ -118,7 +118,7 @@ notes:
 
   # --- Table 19.30.030.A, the dimensional table ---
 
-  - quote: "or/multnomah/fairview/19.30.txt#L460"
+  - quote: "or/multnomah/fairview/19.30/19.30.030.txt#L239-L240"
     digest: "4c902831bbc1"
     state: encoded
     encoded_as: >-
@@ -139,7 +139,7 @@ notes:
   # the census read none of them. eCode360 prints it once as "[1] ...", which
   # it reads, so the move to eCode360 on 2026-09-27 is what surfaced it.
 
-  - quote: "or/multnomah/fairview/19.106.txt#L1413"
+  - quote: "or/multnomah/fairview/19.106/19.106.080.txt#L49-L50"
     digest: "a9e14274b83c"
     state: dismissed
     reason: >-

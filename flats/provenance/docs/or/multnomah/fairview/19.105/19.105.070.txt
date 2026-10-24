@@ -1,0 +1,408 @@
+§ 19.105.070. General standards for flood hazard reduction.
+
+A.
+
+General Standards. In all special flood hazard areas, the following standards shall be adhered to:
+
+1.
+
+Alteration of Watercourses. Require that the flood-carrying capacity within the altered or relocated portion of said watercourse is maintained.
+Require that maintenance is provided within the altered or relocated portion of said watercourse to ensure that the flood-carrying capacity is not diminished.
+Require compliance with FMC 19.105.040(B)(4) and (B)(5).
+
+2.
+
+Anchoring.
+
+a.
+
+All new construction and substantial improvements shall be anchored to prevent flotation, collapse, or lateral movement of the structure resulting from hydrodynamic and hydrostatic loads, including the effects of buoyancy.
+
+b.
+
+All manufactured dwellings shall be anchored per subsection (B)(4)(d) of this section.
+All manufactured dwellings shall be anchored to prevent flotation, collapse, or lateral movement and installed using methods and practices designed to minimize flood damage.
+Anchoring methods may include, but are not limited to, use of over-the-top or frame ties to ground anchors (see FEMA's "Manufactured Home Installation in Flood Hazard Areas").
+
+3.
+
+Construction Materials and Methods.
+
+a.
+
+All new construction and substantial improvements shall be constructed with materials and utility equipment resistant to flood damage.
+
+b.
+
+All new construction and substantial improvements shall be constructed using methods and practices that minimize flood damage.
+
+c.
+
+Electrical, heating, ventilation, plumbing, air-conditioning and other service equipment/facilities shall be designed and/or elevated or located to prevent water from entering or accumulating within the components during flooding.
+
+4.
+
+Utilities and Equipment.
+
+a.
+
+Water Supply, Sanitary Sewer, and On-Site Waste Disposal Systems.
+
+i.
+
+All new and replacement water supply systems shall be designed to minimize or eliminate infiltration of floodwaters into the system.
+
+ii.
+
+New and replacement sanitary sewage systems shall be designed to minimize or eliminate infiltration of floodwaters into the systems and discharge from the systems into floodwaters.
+
+iii.
+
+On-site waste disposal systems shall be located to avoid impairment to them or contamination from them during flooding consistent with the Oregon Department of Environmental Quality.
+
+b.
+
+Electrical, Mechanical, Plumbing, and Other Equipment.
+Electrical, heating, ventilating, air-conditioning, plumbing, duct systems, and other equipment and service facilities shall be elevated at or above the base flood level or shall be designed and installed to prevent water from entering or accumulating within the components and to resist hydrostatic and hydrodynamic loads and stresses, including the effects of buoyancy, during conditions of flooding.
+In addition, electrical, heating, ventilating, air-conditioning, plumbing, duct systems, and other equipment and service facilities shall:
+
+i.
+
+If replaced as part of a substantial improvement, meet all the requirements of this section.
+
+5.
+
+Tanks.
+
+a.
+
+Underground tanks shall be anchored to prevent flotation, collapse and lateral movement under conditions of the base flood.
+
+b.
+
+Aboveground tanks shall be installed at or above the base flood level or shall be anchored to prevent flotation, collapse, and lateral movement under conditions of the base flood.
+
+6.
+
+Subdivision Proposals and Other Proposed Developments.
+
+a.
+
+All new subdivision proposals and other proposed new developments (including proposals for manufactured dwelling parks and subdivisions) greater than 50 lots or five acres, whichever is the lesser, shall include within such proposals base flood elevation data.
+
+b.
+
+All new subdivision proposals and other proposed new developments (including proposals for manufactured dwelling parks and subdivisions) shall:
+
+i.
+
+Be consistent with the need to minimize flood damage.
+
+ii.
+
+Have public utilities and facilities such as sewer, gas, electrical, and water systems located and constructed to minimize or eliminate flood damage.
+
+iii.
+
+Have adequate drainage provided to reduce exposure to flood hazards.
+
+7.
+
+Use of Other Base Flood Elevation Data. When base flood elevation data has not been provided in accordance with FMC 19.105.030(B) the local floodplain administrator shall obtain, review, and reasonably utilize any base flood elevation data available from a federal, state, or other source, in order to administer this section.
+All new subdivision proposals and other proposed new developments (including proposals for manufactured dwelling parks and subdivisions) must meet the requirements of subsection (A)(6) of this section.
+
+Base flood elevations shall be determined for development proposals that are five acres or more in size or are 50 lots or more, whichever is lesser in any A zone that does not have an established base flood elevation.
+Development proposals located within a riverine unnumbered A zone shall be reasonably safe from flooding; the test of reasonableness includes use of historical data, high water marks, FEMA-provided base level engineering data, and photographs of past flooding, etc., where available.
+Failure to elevate at least two feet above grade in these zones may result in higher insurance rates.
+
+8.
+
+Structures Located in Multiple or Partial Flood Zones. In coordination with the state of Oregon Specialty Codes:
+
+a.
+
+When a structure is located in multiple flood zones on the community's flood insurance rate maps (FIRM), the provisions for the more restrictive flood zone shall apply.
+
+b.
+
+When a structure is partially located in a special flood hazard area, the entire structure shall meet the requirements for new construction and substantial improvements.
+
+B.
+
+Specific Standards for Riverine (Including All Non-Coastal) Flood Zones.
+These specific standards shall apply to all new construction and substantial improvements in addition to the general standards contained in subsection A of this section.
+
+1.
+
+Flood Openings. All new construction and substantial improvements with fully enclosed areas below the lowest floor (excluding basements) are subject to the following requirements.
+Enclosed areas below the base flood elevation, including crawl spaces, shall:
+
+a.
+
+Be designed to automatically equalize hydrostatic flood forces on walls by allowing for the entry and exit of floodwaters;
+
+b.
+
+Be used solely for parking, storage, or building access;
+
+c.
+
+Be certified by a registered professional engineer or architect or meet or exceed all of the following minimum criteria: a minimum of two openings;
+
+d.
+
+The total net area of non-engineered openings shall be not less than one square inch for each square foot of enclosed area, where the enclosed area is measured on the exterior of the enclosure walls;
+
+e.
+
+The bottom of all openings shall be no higher than one foot above grade;
+
+f.
+
+Openings may be equipped with screens, louvers, valves, or other coverings or devices; provided, that they shall allow the automatic flow of floodwater into and out of the enclosed areas and shall be accounted for in the determination of the net open area;
+
+g.
+
+All additional higher standards for flood openings in the state of Oregon Residential Specialty Codes Section R322.2.2 shall be complied with when applicable.
+
+2.
+
+Attached garages may be constructed with the garage floor slab below the base flood elevation (BFE) in riverine flood zones, if the following requirements are met: If located within a floodway the proposed garage must comply with the requirements of subsection (B)(5) of this section.
+
+a.
+
+The floors are at or above grade on not less than one side;
+
+b.
+
+The garage is used solely for parking, building access, and/or storage;
+
+c.
+
+The garage is constructed with flood openings in compliance with subsection (B)(1) of this section to equalize hydrostatic flood forces on exterior walls by allowing for the automatic entry and exit of floodwater;
+
+d.
+
+The portions of the garage constructed below the BFE are constructed with materials resistant to flood damage;
+
+e.
+
+The garage is constructed in compliance with the standards in subsection A of this section; and
+
+f.
+
+The garage is constructed with electrical, and other service facilities located and installed so as to prevent water from entering or accumulating within the components during conditions of the base flood.
+
+3.
+
+Detached garages must be constructed in compliance with the standards for appurtenant structures in subsection (B)(4)(f) of this section or nonresidential structures in subsection (B)(4)(c) of this section, depending on the square footage of the garage.
+
+4.
+
+For Riverine (Non-Coastal) Special Flood Hazard Areas With Base Flood Elevations.
+In addition to the general standards listed in subsection A of this section the following specific standards shall apply in riverine (non-coastal) special flood hazard areas with base flood elevations (BFE): Zones A1-A30, AH, and AE.
+
+a.
+
+Before Regulatory Floodway. In areas where a regulatory floodway has not been designated, no new construction, substantial improvement, or other development (including fill) shall be permitted within Zones A1-30 and AE on the community's flood insurance rate map (FIRM), unless it is demonstrated that the cumulative effect of the proposed development, when combined with all other existing and anticipated development, will not increase the water surface elevation of the base flood more than one foot at any point within the community.
+
+b.
+
+Residential Construction.
+
+i.
+
+New construction, conversion to, and substantial improvement of any residential structure shall have the lowest floor, including basement, elevated at or above the base flood elevation (BFE).
+
+ii.
+
+Enclosed areas below the lowest floor shall comply with the flood opening requirements in subsection (B)(1) of this section.
+
+c.
+
+Nonresidential Construction.
+
+i.
+
+New construction, conversion to, and substantial improvement of any commercial, industrial, or other nonresidential structure shall: (A) have the lowest floor, including basement elevated at or above the base flood elevation (BFE); or, (B) together with attendant utility and sanitary facilities:
+
+(A)
+
+Be floodproofed so that below the base flood level the structure is watertight with walls substantially impermeable to the passage of water;
+
+(B)
+
+Have structural components capable of resisting hydrostatic and hydrodynamic loads and effects of buoyancy;
+
+(C)
+
+Be certified by a registered professional engineer or architect that the design and methods of construction are in accordance with accepted standards of practice for meeting provisions of this section based on their development and/or review of the structural design, specifications and plans.
+Such certifications shall be provided to the floodplain administrator as set forth by FMC 19.105.040(B)(2).
+
+ii.
+
+Nonresidential structures that are elevated, not floodproofed, shall comply with the standards for enclosed areas below the lowest floor in subsection (B)(1) of this section.
+
+iii.
+
+Applicants floodproofing nonresidential buildings shall be notified that flood insurance premiums will be based on rates that are one foot below the floodproofed level (e.g., a building floodproofed to the base flood level will be rated as one foot below).
+
+d.
+
+Manufactured Dwellings.
+
+i.
+
+Manufactured dwellings to be placed (new or replacement) or substantially improved that are supported on solid foundation walls shall be constructed with flood openings that comply with subsection (B)(1) of this section;
+
+ii.
+
+The bottom of the longitudinal chassis frame beam shall be at or above base flood elevation;
+
+iii.
+
+Manufactured dwellings to be placed (new or replacement) or substantially improved shall be anchored to prevent flotation, collapse, and lateral movement during the base flood.
+Anchoring methods may include, but are not limited to, use of over-the-top or frame ties to ground anchors (Reference FEMA's "Manufactured Home Installation in Flood Hazard Areas" guidebook for additional techniques); and
+
+iv.
+
+Electrical crossover connections shall be a minimum of 12 inches above base flood elevation (BFE).
+
+e.
+
+Recreational Vehicles. Recreational vehicles placed on sites are required to:
+
+i.
+
+Be on the site for fewer than 180 consecutive days; and
+
+ii.
+
+Be fully licensed and ready for highway use, on its wheels or jacking system, attached to the site only by quick disconnect type utilities and security devices, and have no permanently attached additions; or
+
+iii.
+
+Meet the requirements of subsection (B)(4)(d) of this section, including the anchoring and elevation requirements for manufactured dwellings.
+
+f.
+
+Appurtenant (Accessory) Structures. Relief from elevation or floodproofing requirements for residential and nonresidential structures in riverine (non-coastal) flood zones may be granted for appurtenant structures that meet the following requirements:
+
+i.
+
+Appurtenant structures located partially or entirely within the floodway must comply with requirements for development within a floodway found in subsection (B)(5) of this section;
+
+ii.
+
+Appurtenant structures must only be used for parking, access, and/or storage and shall not be used for human habitation;
+
+iii.
+
+In compliance with state of Oregon Specialty Codes, appurtenant structures on properties that are zoned residential are limited to one-story structures less than 200 square feet, or 400 square feet if the property is greater than two acres in area and the proposed appurtenant structure will be located a minimum of 20 feet from all property lines.
+Appurtenant structures on properties that are zoned as nonresidential are limited in size to 120 square feet;
+
+iv.
+
+The portions of the appurtenant structure located below the base flood elevation must be built using flood-resistant materials;
+
+v.
+
+The appurtenant structure must be adequately anchored to prevent flotation, collapse, and lateral movement of the structure resulting from hydrodynamic and hydrostatic loads, including the effects of buoyancy, during conditions of the base flood.
+
+vi.
+
+The appurtenant structure must be designed and constructed to equalize hydrostatic flood forces on exterior walls and comply with the requirements for flood openings in subsection (B)(1) of this section;
+
+vii.
+
+Appurtenant structures shall be located and constructed to have low damage potential;
+
+viii.
+
+Appurtenant structures shall not be used to store toxic material, oil, or gasoline, or any priority persistent pollutant identified by the Oregon Department of Environmental Quality unless confined in a tank installed in compliance with subsection (A)(5) of this section.
+
+ix.
+
+Appurtenant structures shall be constructed with electrical, mechanical, and other service facilities located and installed so as to prevent water from entering or accumulating within the components during conditions of the base flood.
+
+5.
+
+Floodways. Located within the special flood hazard areas established in FMC 19.105.030(B) are areas designated as floodways.
+Since the floodway is an extremely hazardous area due to the velocity of the floodwaters which carry debris, potential projectiles, and erosion potential, the following provisions apply:
+
+a.
+
+Prohibit encroachments, including fill, new construction, substantial improvements, and other development within the adopted regulatory floodway unless:
+
+i.
+
+Certification by a registered professional civil engineer is provided, demonstrating through hydrologic and hydraulic analyses performed in accordance with standard engineering practice that the proposed encroachment shall not result in any increase in flood levels within the community during the occurrence of the base flood discharge; or
+
+ii.
+
+A community may permit encroachments within the adopted regulatory floodway that would result in an increase in base flood elevations; provided, that a conditional letter of map revision (CLOMR) is applied for and approved by the Federal Insurance Administrator, and the requirements for such revision as established under Volume 44 of the Code of Federal Regulations Section 65.12 are fulfilled.
+
+b.
+
+If the requirements of subsection (B)(5)(a) of this section are satisfied, all new construction, substantial improvements, and other development shall comply with all other applicable flood hazard reduction provisions of this section.
+
+6.
+
+Standards for Shallow Flooding Areas. Shallow flooding areas appear on FIRMs as AO zones with depth designations or as AH zones with base flood elevations.
+For AO zones the base flood depths range from one to three feet above ground where a clearly defined channel does not exist, or where the path of flooding is unpredictable and where velocity flow may be evident.
+Such flooding is usually characterized as sheet flow.
+For both AO and AH zones, adequate drainage paths are required around structures on slopes to guide floodwaters around and away from proposed structures.
+
+a.
+
+Standards For AH Zones. Development within AH zones must comply with the standards in subsections A and (B)(6) of this section.
+
+b.
+
+Standards for AO Zones. In AO zones, the following provisions apply in addition to the requirements in subsections A and (B)(6) of this section:
+
+i.
+
+New construction, conversion to, and substantial improvement of residential structures and manufactured dwellings within AO zones shall have the lowest floor, including basement, elevated above the highest grade adjacent to the building, at minimum to or above the depth number specified on the flood insurance rate maps (FIRM) (at least two feet if no depth number is specified).
+For manufactured dwellings, the lowest floor is considered to be the bottom of the longitudinal chassis frame beam.
+
+ii.
+
+New construction, conversion to, and substantial improvements of nonresidential structures within AO zones shall either:
+
+(A)
+
+Have the lowest floor (including basement) elevated above the highest adjacent grade of the building site, at minimum to or above the depth number specified on the flood insurance rate maps (FIRMs) (at least two feet if no depth number is specified); or
+
+(B)
+
+Together with attendant utility and sanitary facilities, be completely floodproofed to or above the depth number specified on the FIRM or a minimum of two feet above the highest adjacent grade if no depth number is specified, so that any space below that level is watertight with walls substantially impermeable to the passage of water and with structural components having the capability of resisting hydrostatic and hydrodynamic loads and the effects of buoyancy.
+If this method is used, compliance shall be certified by a registered professional engineer or architect.
+
+iii.
+
+Recreational vehicles placed on sites within AO zones on the community's flood insurance rate maps (FIRM) shall either:
+
+(A)
+
+Be on the site for fewer than 180 consecutive days; and
+
+(B)
+
+Be fully licensed and ready for highway use, on its wheels or jacking system, attached to the site only by quick disconnect type utilities and security devices, and have no permanently attached additions; or
+
+(C)
+
+Meet the elevation requirements of subsection (B)(6)(b) of this section, and the anchoring and other requirements for manufactured dwellings of subsection (B)(4)(d) of this section.
+
+iv.
+
+In AO zones, new and substantially improved appurtenant structures must comply with the standards in subsection (B)(4)(f) of this section.
+
+v.
+
+In AO zones, enclosed areas beneath elevated structures shall comply with the requirements in subsection (B)(1) of this section.
+
+(Ord. 2-2019 § 2 (Exh. 1); Ord. 1-2026 § 1 (Att.
+A))
+

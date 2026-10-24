@@ -9,6 +9,8 @@
 #              readable text -- only in the lines just above a page start
 #              (flats/provenance/readable.py), so the same words in the code
 #              text stay
+#   page_head: a running header printed on a page's own first line, above the
+#              text (where a print's page map starts the page); only there
 #   front:     documents whose lines above the first heading are a cover, a
 #              chapter title or a preface, not code: they stay in the proof
 #              copy and in no section, like a contents list
@@ -100,3 +102,115 @@ or/clackamas/estacada:
   # 16.16.010-030, 16.12.020-030, ...); each section is whole, and every one
   # of its 117 headings is printed exactly twice.
   any_order: [emc.16.zones]
+
+or/multnomah/troutdale:
+  # Municode print of the TDC: "3.130  Dimensional Standards for ..." at the
+  # margin, two or more spaces, a capital -- once in the chapter's contents
+  # list and again over the text. The division titles ("3.100  RESIDENTIAL
+  # ZONING DISTRICTS") are indented, so they do not cut; they print at the
+  # foot of the section before. The left-page running header "3.030
+  # TROUTDALE DEVELOPMENT CODE" names the section on the page, not a new one.
+  heading: '^(?P<n>\d{1,2}\.\d{3})\s{2,}[A-Z]'
+  furniture: '^\d{1,2}\.\d{3}\s+TROUTDALE DEVELOPMENT CODE'
+  # Every chapter opens with its title in capitals ("ZONING DISTRICTS").
+  front: [1.020.definitions, 3.zoning-districts, 8.development-standards, 9.parking]
+  # The footer "Supp. No. 13      TDC3-1" (or a bare "TDC3-6.1"), measured
+  # 2026-10-24 on every page start of the 4 chapters.
+  page_furniture: '^\s*(?:Supp\. No\. \d+\s+)?TDC\d+-\d+(?:\.\d+)?\s*$'
+  # This print's page map starts each page at its running header, so the
+  # header is a page's own first line, not in the band above it: "3.030
+  # TROUTDALE DEVELOPMENT CODE" on the left page, "ZONING DISTRICTS   3.030"
+  # on the right, either without its number on a contents page. Measured
+  # 2026-10-24: 128 of the 129 page starts after each chapter's first page
+  # are one of these; the other is "CHAPTER 4", the next chapter's title at
+  # the foot of Chapter 3, and it stays.
+  page_head: '^\s*(?:(?:\d{1,2}\.\d{3}\s+)?TROUTDALE DEVELOPMENT CODE|(?:INTRODUCTORY PROVISIONS|ZONING DISTRICTS|DEVELOPMENT AND DESIGN STANDARDS|OFF-STREET PARKING AND LOADING)(?:\s+\d{1,2}\.\d{3})?)\s*$'
+
+or/washington/sherwood:
+  # Municode print, as King City: "16.22.030 Development Standards" at the
+  # margin, in the chapter's "Sections:" list and again over the text. The
+  # running header is the bare number ("16.12.010"), and a reference wrapped
+  # to the margin ("16.12.010.F). Minor ...", "16.106.020 or 16.96.030.") has
+  # no space and capital after it.
+  heading: '^(?P<n>16\.\d+\.\d+)\s+[A-Z]'
+  # Four extracts run on past their chapter's last page into the next
+  # chapter's contents list ("Sections: / 16.42.010 Purpose / ... / Chapter
+  # 16.42"); those entries name sections not in the extract, and stay at the
+  # foot of the last section like any chapter's closing lines.
+  furniture: '^16\.(?:42|52|60|164)\.\d+\s'
+  # Each extract opens with its chapter title ("Chapter 16.22 / COMMERCIAL
+  # LAND USE DISTRICTS*") above its contents list.
+  front: [sdc.16.04.districts, sdc.16.106.transportation, sdc.16.162.old-town,
+          sdc.16.22.commercial, sdc.16.31.industrial, sdc.16.36.institutional-public,
+          sdc.16.40.pud, sdc.16.50.accessory-structures, sdc.16.58.vision-clearance,
+          sdc.16.68.infill, sdc.16.94.parking, sdc.16.96.circulation]
+  # 16.12.030's heading is never printed over its text (its page opens on the
+  # standards table), and the 16.14 extract ends before 16.14.040, which its
+  # contents list names: where a section starts is a reading in one, and a
+  # listed section is missing in the other.
+  uncut: [sdc.16.12.residential, sdc.16.14.residential-design]
+  # The bare running header ("16.12.010") and the Municode footer in its
+  # print and scan forms: "294Supp. No. 22", "Supp No 20 274", "267
+  # (Sherwood Supp. No. 6, 4-07)", "(Sheiwood Supp. No 6, 4-07) 470-88",
+  # "Supp No l.l 328", "[The next page 1s 467] Supp No 15 464". Measured
+  # 2026-10-24 on every page start of the 18 extracts.
+  # On some pages the page map starts the page at the bare running header
+  # ("16.10.020" above "Apartment: Each dwelling unit ..."), so it is the
+  # page's own first line rather than in the band above.
+  page_furniture: '^\s*(?:16\.\d+\.\d+|\[The next page (?:is|1s) \d+\]|(?:\[The next page (?:is|1s) \d+\]\s*)?(?:\d+(?:[.-]\d+)?\s?)?\(?(?:Sh\w+wood )?Supp\.? No\.? ?[\dl.]+(?:[,.] \d+-\d+\))?(?:\s?\d+(?:[.-]\d+)?)?)\s*$'
+  page_head: '^\s*16\.\d+\.\d+\s*$'
+
+or/clackamas/west-linn:
+  # codepublishing web text: "12.070 DIMENSIONAL REQUIREMENTS, ..." on its
+  # own line, once in the chapter's list and again over the text. Web text,
+  # so no pages and no page furniture.
+  heading: '^(?P<n>\d{2}\.\d{3})\s+[A-Z]'
+  # Chapter 25's applicability matrix opens its rows with the section they
+  # name ("25.060 DESIGN STANDARDS ...   A. STANDARDS FOR ..."), set in
+  # columns; a heading is never followed by a column gap.
+  furniture: '^\d{2}\.\d{3}\s.*\S {3,}\S'
+  # Each print opens "Chapter 12 / RESIDENTIAL, R-7" (some under a division
+  # or density title).
+  front: [02.definitions, 05.density, 08.r-40, 09.r-20, 10.r-15, 11.r-10, 12.r-7, 13.r-5,
+          14.r-4.5, 15.r-3, 16.r-2.1, 18.nc, 19.gc, 21.obc, 22.ci, 23.gi,
+          25.willamette-historic, 41.steep-lots, 43.sidewall, 46.parking, 48.access, 59.mu]
+
+or/clackamas/gladstone:
+  # codepublishing web text: "17.10.050 Dimensional standards." on its own
+  # line, once in the chapter's list and again over the text.
+  heading: '^(?P<n>17\.\d+\.\d+)\s+[A-Z]'
+  # A repealed section's history note ("17.18.030 History: ... Repealed by
+  # Ord. 1517") and a table or figure caption ("17.48.030 Table 1",
+  # "17.48.030 FIGURE 1 ...") open with a section number and are not headings.
+  furniture: '^17\.\d+\.\d+\s+(?:History:|Table\b|FIGURE\b)'
+  # Each print opens "Chapter 17.10 / R-7.2—SINGLE-HOUSEHOLD RESIDENTIAL
+  # DISTRICT".
+  front: [17.06.definitions, 17.10.r-7.2, 17.12.r-5, 17.14.mr, 17.16.c-1, 17.18.c-2,
+          17.20.c-3, 17.22.op, 17.24.li, 17.25.hcad, 17.26.os, 17.27.wq, 17.28.greenway,
+          17.29.flood, 17.48.parking]
+  # The water quality chapter prints its Table 1 notes one to a line and four
+  # times over ("1 Vegetated corridors ... feature." / "2 Where the protected
+  # ..."). Readable text joins a whole line that ran to the margin onto the
+  # next, so the three notes would read as one and the footnote census would
+  # lose two of them. Left whole until readable text can tell a note's number
+  # from a sentence that carries on.
+  uncut: [17.27.wq]
+
+or/multnomah/fairview:
+  # ecode360 print: "§ 19.70.040. Dimensional standards." on its own line,
+  # printed once (no contents list); a definitions section opens with a
+  # quote ("§ 19.13.010. "A" definitions.").
+  heading: '^§ (?P<n>19\.\d+\.\d+)\.\s+["A-Z]'
+  # Each print opens with the viewer's buttons and the title, article and
+  # chapter lines ("Close / Print / Resize: / City of Fairview, OR / ...").
+  front: ['19.105', '19.106', '19.108', '19.110', '19.115', '19.120', '19.125',
+          19.13.definitions, '19.130', '19.135', '19.140', '19.145', '19.150', '19.155',
+          '19.162', '19.163', '19.164', '19.165', 19.25.ah, '19.30', '19.65', '19.70',
+          '19.80', '19.85']
+
+or/clackamas/lake-oswego:
+  # ecode360 print, as Fairview: "§ 50.04.002. Special Street Setbacks." on
+  # its own line, printed once. A table cell naming a subsection ("§
+  # 50.04.001.1.b") has a digit after the number's stop, not a space.
+  heading: '^§ (?P<n>50\.\d+\.\d+)\.\s+[A-Z]'
+  front: [50.03.002.use-table, 50.04.dimensional]

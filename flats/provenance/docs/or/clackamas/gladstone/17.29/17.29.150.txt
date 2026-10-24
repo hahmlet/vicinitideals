@@ -1,0 +1,121 @@
+17.29.150 Definitions.
+
+Unless specifically defined below, words and phrases used in this chapter shall be interpreted so as to give them the meaning they have in common usage and to give this chapter its most reasonable application.
+The following definitions supplement those found in GMC Chapter 17.06 (Definitions).
+
+(1) “Architect” means an architect licensed by the State of Oregon.
+
+(2) “Area of special flood hazard” means the land in the floodplain within a community subject to a one percent or greater chance of flooding in any given year.
+Designation on Federal Insurance Administration or Federal Emergency Management Agency (FEMA) maps always includes the letters A or V.
+
+(3) “Bankfull stage” is defined in GMC Section 17.27.090(1).
+
+(4) “Base flood” means the flood having a one percent chance of being equaled or exceeded in any given year.
+Also referred to as the 100-year flood.
+Designation on Federal Insurance Administration or FEMA maps always includes the letters A or V.
+
+(5) “Basement” means any area of the building having its floor subgrade (below ground level) on all sides.
+
+(6) “Below-grade crawl space” means an enclosed area below the base flood elevation, which is in nearly all cases considered by the NFIP to also be a basement, that generally serves as the foundation for a structure and exhibits the following characteristics:
+
+(a) All sides of the crawl space are below the adjacent exterior grades outside the crawl space;
+
+(b) The interior grade inside the crawl space is not more than two feet below the lowest adjacent exterior grade;
+
+(c) The height, measured from the interior grade of the crawlspace to the top of the crawlspace foundation, does not exceed four feet at any point.
+
+(7) “Design flood elevation” means the elevation of the base flood or 100-year storm as defined in Federal Insurance Administration or FEMA Flood Insurance Studies, or the highest flood of record since the adoption of the flood insurance maps or, in areas without Federal Insurance Administration or FEMA floodplains, the elevation of the 25-year storm, or the edge of mapped flood-prone soils or similar methodologies, whichever is higher.
+
+(8) “Development” means any manmade change to improved or unimproved real estate, including but not limited to buildings or other structures, mining, dredging, filling, grading, paving, excavation or drilling operations or storage of equipment or materials located within the area of special flood hazard.
+
+(9) “Emergency” is defined in GMC Section 17.27.090(8).
+
+(10) “Engineer” means a registered professional engineer licensed by the State of Oregon.
+
+(11) “Enhancement” means the process of improving upon the natural functions and/or values of an area or feature which has been degraded by human activity.
+Enhancement activities may or may not return the site to a predisturbance condition, but create/recreate processes and features that occur naturally.
+
+(12) “Existing manufactured home park or subdivision” means a manufactured home park or subdivision for which the construction of facilities for servicing the lots on which the manufactured homes are to be affixed (including, at a minimum, the installation of utilities, the construction of streets, and either final site grading or the pouring of concrete pads) is completed before the effective date of this chapter.
+
+(13) “Expansion to an existing manufactured home park or subdivision” means the preparation of additional sites by the construction of facilities for servicing the lots on which manufactured homes are to be affixed (including the installation of utilities, the construction of streets, and either final site grading or the pouring of concrete pads).
+
+(14) “Fill” means sand, soil, rock, gravel, concrete, asphalt, vegetation, wood, or other material that is placed for the purposes of development or redevelopment that changes the elevation of the floodplain.
+The placement of fill is considered “development.”
+
+(15) “Flood” or “flooding” means a general and temporary condition of partial or complete inundation of normally dry land areas from:
+
+(a) The overflow of inland or tidal waters; and/or
+
+(b) The unusual and rapid accumulation of runoff of surface waters from any source.
+
+(16) “Flood insurance rate map” means the official map on which the Federal Insurance Administration or FEMA has delineated both the areas of special flood hazard and the risk premium zones applicable to the community.
+
+(17) “Flood insurance study” means the official report provided by the Federal Insurance Administration or FEMA that includes flood profiles, the Flood Boundary-Floodway Map, and the water surface elevation of the base flood.
+
+(18) “Flood management areas” means areas of special flood hazard, areas of inundation for the February 1996 flood and areas that have physical or documented evidence of flooding within recorded history.
+
+(19) “Floodplain” means the land area identified and designated by the United States Army Corps of Engineers, the Oregon Division of State Lands, the Federal Insurance Administration, FEMA or the City of Gladstone that has been or may be covered temporarily by water as a result of a storm event of identified frequency.
+It is usually the flat area of land adjacent to a stream or river formed by floods.
+
+(20) “Floodway” means the channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than one foot.
+
+(21) “Floodway fringe” means the area of the floodplain, lying outside the floodway, which does not contribute appreciably to the passage of floodwater, but services as a retention area.
+
+(22) “Lowest floor” means the lowest floor of the lowest enclosed area (including basement).
+An unfinished or flood-resistant enclosure, usable solely for parking of vehicles, building access or storage, in an area other than a basement area, is not considered a building’s lowest floor; provided, that such enclosure is not built so as to render the structure in violation of the applicable non-elevation design requirements in GMC Section 17.29.100(6)(a)(B).
+
+(23) “Manufactured home” means a structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities.
+The term “manufactured home” does not include a “recreational vehicle.”
+
+(24) “Manufactured home park or subdivision” means a parcel (or contiguous parcels) of land divided into two or more manufactured home lots for rent or sale.
+
+(25) “Metro” is defined in GMC Section 17.27.090(12).
+
+(26) “New construction” means structures for which the “start of construction” commenced on or after the effective date of this chapter.
+
+(27) “New manufactured home park or subdivision” means a manufactured home park or subdivision for which the construction of facilities for servicing the lots on which the manufactured homes are to be affixed (including, at a minimum, the installation of utilities, the construction of streets, and either final site grading or the pouring of concrete pads) is completed on or after the effective date of this chapter.
+
+(28) “Ordinary mean high water line” is defined in GMC Section 17.27.090(15).
+
+(29) “Practicable” is defined in GMC Section 17.27.090(16).
+
+(30) “Recreational vehicle” means a vehicle which is:
+
+(a) Built on a single chassis;
+
+(b) Four hundred square feet or less when measured at the largest horizontal projection;
+
+(c) Designed to be self-propelled or permanently towable by a light duty truck; and
+
+(d) Designed primarily as temporary living quarters for recreational, camping, travel or seasonal use and not for use as a permanent dwelling.
+
+(31) “Start of construction” is meant to include substantial improvement, and means the date the building permit was issued, provided the actual start of construction, repair, reconstruction, placement or other improvement was within 180 days of the permit date.
+The actual start means either the first placement of permanent construction of a structure on a site, such as the pouring of slab or footings, the installation of piles, the construction of columns, or any work beyond the stage of excavation; or the placement of a manufactured home on a foundation.
+Permanent construction does not include land preparation, such as clearing, grading and filling; nor does it include the installation of streets and/or walkways; nor does it include excavation for a basement, footings, piers, or foundations or the erection of temporary forms; nor does it include the installation on the property of accessory buildings, such as garages or sheds not occupied as dwelling units or not part of the main structure.
+For substantial improvement, the actual start of construction means the first alteration of any wall, ceiling, floor, or other structural part of a building, whether or not that alteration affects the external dimensions of the building.
+
+(32) “Stream” is defined in GMC Section 17.27.090(24).
+
+(33) “Structure” means a walled and roofed building, a manufactured home or a gas or liquid storage tank that is principally above ground.
+
+(34) “Substantial damage” means damage of any origin sustained by a structure whereby the cost of restoring the structure to its before damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred.
+
+(35) “Substantial improvement” means any repair, reconstruction or improvement of a structure, the cost of which equals or exceeds 50 percent of the market value of the structure either before the improvement or repair is started or if the structure has been damaged and is being restored, before the damage occurred.
+For the purposes of this definition “substantial improvement” is considered to occur when the first alteration of any wall, ceiling, floor or other structural part of the building commences, whether or not that alteration affects the external dimensions of the structure.
+The term does not, however, include either:
+
+(a) Any project for improvement of a structure to correct existing violations of state or local health, sanitary or safety code specifications which have been identified by the local code enforcement official and which are the minimum necessary to assure safe living conditions; or
+
+(b) Any alteration of a structure listed on the National Register of Historic Places or a State Inventory of Historic Places.
+
+(36) “Utility facilities” is defined in GMC Section 17.27.090(26).
+
+(37) “Watercourse” means a channel in which a flow of water occurs, either continuously or intermittently, and if the latter, with some degree of regularity.
+Such flow must be in a definite direction.
+
+(38) “Wetlands” is defined in GMC Section 17.27.090(29).
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part) 2002, Ord. 1408, 2008; Ord. 1538 §1 (Exh.
+A), 2025.

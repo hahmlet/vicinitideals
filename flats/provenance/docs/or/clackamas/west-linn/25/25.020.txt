@@ -1,0 +1,39 @@
+25.020 USE OF THIS CHAPTER
+
+A. Applicability. This chapter shall apply to all properties designated as historic resources as shown on the City’s zoning map and properties listed on the National Register.
+Specific sections apply as noted in subsections B and C of this section.
+
+B. Hierarchy of regulation.
+The provisions of this chapter shall supersede any conflicting standards or criteria elsewhere in the CDC.
+The underlying zoning provisions for the applicable zone still apply.
+
+1. Exemptions. The items listed in CDC 25.040(A), Exemptions from Historic Design Review, are exempt from historic review; provided, that they comply with any applicable requirements in CDC 25.040(A).
+
+2. Design standards.
+CDC 25.060, Design standards applicable to historic resources, applies to historic reviews for designated properties, except for CDC 25.060(B), Standards for accessory structures, which applies only to accessory structures on sites containing historic resources.
+
+3. Additional design standards.
+CDC 25.070, Additional design standards applicable to historic districts, provides additional standards that are applicable to Historic Design Review for historic district properties.
+
+a. CDC 25.070(A), Standards for alterations and additions, applies only to Historic Design Review in a historic district.
+
+b. CDC 25.070(B), Standards for new construction, applies only to new development or construction in a historic district beyond alterations and additions, and including accessory structures.
+
+c. CDC 25.070(C), Willamette Historic District general standards, applies only to alterations and additions, new construction, and accessory structure construction in the Willamette Historic District.
+
+C. Applicability of historic design standards.
+Development subject to this chapter must comply with applicable Historic Design Review standards unless otherwise approved through the modifications process under CDC 25.080.
+The “X” in the following chart indicates which standards are applicable to different types of development.
+
+STANDARDS APPLICABILITY MATRIX                                       STANDARDS APPLICABILITY MATRIX                     STANDARDS APPLICABILITY MATRIX  STANDARDS APPLICABILITY MATRIX  STANDARDS APPLICABILITY MATRIX  STANDARDS APPLICABILITY MATRIX  STANDARDS APPLICABILITY MATRIX
+SECTION                                                              PROPOSED ACTIVITY                                  ADDITIONS AND ALTERATIONS       ADDITIONS AND ALTERATIONS       NEW CONSTRUCTION                ACCESSORY STRUCTURES            ACCESSORY STRUCTURES
+SECTION                                                              LOCATION                                           HISTORIC LANDMARK               HISTORIC DISTRICT               HISTORIC DISTRICT               HISTORIC LANDMARK               HISTORIC DISTRICT
+25.060 DESIGN STANDARDS APPLICABLE TO HISTORIC RESOURCES             A. STANDARDS FOR ALTERATIONS AND ADDITIONS         X                               X                               X                               X                               X
+25.060 DESIGN STANDARDS APPLICABLE TO HISTORIC RESOURCES             B. STANDARDS FOR ACCESSORY STRUCTURES                                                                                                              X                               X
+25.070 ADDITIONAL DESIGN STANDARDS APPLICABLE TO HISTORIC DISTRICTS  A. STANDARDS FOR ALTERATIONS AND ADDITIONS                                         X                                                                                               X
+25.070 ADDITIONAL DESIGN STANDARDS APPLICABLE TO HISTORIC DISTRICTS  B. STANDARDS FOR NEW CONSTRUCTION                                                                                  X                                                               X
+25.070 ADDITIONAL DESIGN STANDARDS APPLICABLE TO HISTORIC DISTRICTS  C. WILLAMETTE HISTORIC DISTRICT GENERAL STANDARDS                                  X                               X                                                               X
+
+(Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh.
+B), 2022)
+

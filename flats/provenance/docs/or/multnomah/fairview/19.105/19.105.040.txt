@@ -1,0 +1,240 @@
+§ 19.105.040. Administration.
+
+A.
+
+Designation of the Floodplain Administrator. The city manager or their designee is hereby appointed to administer, implement, and enforce this chapter by granting or denying development permits in accordance with its provisions.
+The floodplain administrator may delegate authority to implement these provisions.
+
+B.
+
+Duties and Responsibilities of the Floodplain Administrator. Duties of the floodplain administrator, or their designee, shall include, but not be limited to:
+
+1.
+
+Permit Review. Review all development permits to determine that:
+
+a.
+
+The permit requirements of this chapter have been satisfied;
+
+b.
+
+All other required local, state, and federal permits have been obtained and approved;
+
+c.
+
+Review all development permits to determine if the proposed development is located in a floodway.
+If located in the floodway ensure that the floodway provisions in FMC 19.105.070(B)(5) are met;
+
+d.
+
+Review all development permits to determine if the proposed development is located in an area where base flood elevation (BFE) data is available either through the flood insurance study (FIS) or from another authoritative source.
+If BFE data is not available then ensure compliance with the provisions of FMC 19.105.070(A)(7);
+
+e.
+
+Provide to building officials the base flood elevation (BFE) and freeboard applicable to any building requiring a development permit;
+
+f.
+
+Review all development permit applications to determine if the proposed development qualifies as a substantial improvement as defined in FMC 19.105.020;
+
+g.
+
+Review all development permits to determine if the proposed development activity is a watercourse alteration.
+If a watercourse alteration is proposed, ensure compliance with the provisions in FMC 19.105.070(A)(1); and
+
+h.
+
+Review all development permits to determine if the proposed development activity includes the placement of fill or excavation.
+
+2.
+
+Information to Be Obtained and Maintained. The following information shall be obtained and maintained and shall be made available for public inspection as needed:
+
+a.
+
+Obtain, record, and maintain the actual elevation (in relation to mean sea level) of the lowest floor (including basements) and all attendant utilities of all new or substantially improved structures where base flood elevation (BFE) data is provided through the flood insurance study (FIS), flood insurance rate map (FIRM), or obtained in accordance with FMC 19.105.070(A)(7).
+
+b.
+
+Obtain and record the elevation (in relation to mean sea level) of the natural grade of the building site for a structure prior to the start of construction and the placement of any fill and ensure that the requirements of FMC 19.105.070(B)(5) and subsection (B)(1)(b) of this section are adhered to.
+
+c.
+
+Upon placement of the lowest floor of a structure (including basement), but prior to further vertical construction, obtain documentation, prepared and sealed by a professional licensed surveyor or engineer, certifying the elevation (in relation to mean sea level) of the lowest floor (including basement).
+
+d.
+
+Where base flood elevation data are utilized, obtain as-built certification of the elevation (in relation to mean sea level) of the lowest floor (including basement) prepared and sealed by a professional licensed surveyor or engineer, prior to the final inspection.
+
+e.
+
+Maintain all elevation certificates (EC) submitted to the community;
+
+f.
+
+Obtain, record, and maintain the elevation (in relation to mean sea level) to which the structure and all attendant utilities were floodproofed for all new or substantially improved floodproofed structures where allowed under this chapter and where base flood elevation (BFE) data is provided through the FIS, FIRM, or obtained in accordance with FMC 19.105.070(A)(7);
+
+g.
+
+Maintain all floodproofing certificates required under this chapter;
+
+h.
+
+Record and maintain all variance actions, including justification for their issuance;
+
+i.
+
+Obtain and maintain all hydrologic and hydraulic analyses performed as required under FMC 19.105.070(B)(5).
+
+j.
+
+Record and maintain all substantial improvement and substantial damage calculations and determinations as required under subsection (B)(6) of this section.
+
+k.
+
+Maintain for public inspection all records pertaining to the provisions of this chapter.
+
+3.
+
+Requirement to Notify Other Entities and Submit New Technical Data.
+
+a.
+
+Community Boundary Alterations. The floodplain administrator shall notify the Federal Insurance Administrator in writing whenever the boundaries of the community have been modified by annexation or the community has otherwise assumed authority or no longer has authority to adopt and enforce floodplain management regulations for a particular area, to ensure that all flood hazard boundary maps (FHBM) and flood insurance rate maps (FIRM) accurately represent the community's boundaries.
+Include within such notification a copy of a map of the community, suitable for reproduction, clearly delineating the new corporate limits or new area for which the community has assumed or relinquished floodplain management regulatory authority.
+
+4.
+
+Watercourse Alterations. Notify adjacent communities, the Department of Land Conservation and Development, and other appropriate state and federal agencies prior to any alteration or relocation of a watercourse, and submit evidence of such notification to the Federal Insurance Administration.
+This notification shall be provided by the applicant to the Federal Insurance Administration as a letter of map revision (LOMR) along with either:
+
+a.
+
+Proposed maintenance plan to ensure the flood-carrying capacity within the altered or relocated portion of the watercourse is maintained; or
+
+b.
+
+Certification by a registered professional engineer that the project has been designed to retain its flood-carrying capacity without periodic maintenance.
+
+The applicant shall be required to submit a conditional letter of map revision (CLOMR) when required under subsection (B)(5) of this section.
+Ensure compliance with all applicable requirements in subsection (B)(5) of this section and FMC 19.105.070(A)(1).
+
+5.
+
+Requirement to Submit New Technical Data. A community's base flood elevations may increase or decrease resulting from physical changes affecting flooding conditions.
+As soon as practicable, but not later than six months after the date such information becomes available, a community shall notify the Federal Insurance Administrator of the changes by submitting technical or scientific data in accordance with Title 44 of the Code of Federal Regulations (CFR), Section 65.3.
+The community may require the applicant to submit such data and review fees required for compliance with this section through the applicable FEMA Letter of Map Change (LOMC) process.
+
+The floodplain administrator shall require a conditional letter of map revision prior to the issuance of a floodplain development permit for:
+
+a.
+
+Proposed floodway encroachments that increase the base flood elevation; and
+
+b.
+
+Proposed development which increases the base flood elevation by more than one foot in areas where FEMA has provided base flood elevations but no floodway.
+
+An applicant shall notify FEMA within six months of project completion when an applicant has obtained a conditional letter of map revision (CLOMR) from FEMA.
+This notification to FEMA shall be provided as a letter of map revision (LOMR).
+
+6.
+
+Substantial Improvement and Substantial Damage Assessments and Determinations. Conduct substantial improvement (SI) (as defined in FMC 19.105.020) reviews for all structural development proposal applications and maintain a record of SI calculations within permit files in accordance with subsection (B)(2) of this section.
+Conduct substantial damage (SD) (as defined in FMC 19.105.020) assessments when structures are damaged due to a natural hazard event or other causes.
+Make SD determinations whenever structures within the special flood hazard area (as established in FMC 19.105.030(B)) are damaged to the extent that the cost of restoring the structure to its before-damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred.
+
+C.
+
+Establishment of Development Permit.
+
+1.
+
+Floodplain Development Permit Required. A development permit shall be obtained before construction or development begins within any area horizontally within the special flood hazard area established in FMC 19.105.030(B).
+The development permit shall be required for all structures, including manufactured dwellings, and for all other development, as defined in FMC 19.105.020, including fill and other development activities.
+
+2.
+
+Application For Development Permit. Application for a development permit may be made on forms furnished by the floodplain administrator and may include, but not be limited to, plans in duplicate drawn to scale showing the nature, location, dimensions, and elevations of the area in question; existing or proposed structures, fill, storage of materials, drainage facilities, and the location of the foregoing.
+Specifically, the following information is required:
+
+a.
+
+In riverine flood zones, the proposed elevation (in relation to mean sea level), of the lowest floor (including basement) and all attendant utilities of all new and substantially improved structures; in accordance with the requirements of subsection (B)(2) of this section.
+
+b.
+
+In coastal flood zones (V zones and coastal A zones), the proposed elevation in relation to mean sea level of the bottom of the lowest structural member of the lowest floor (excluding pilings and columns) of all structures, and whether such structures contain a basement.
+
+c.
+
+Proposed elevation in relation to mean sea level to which any nonresidential structure will be floodproofed.
+
+d.
+
+Certification by a registered professional engineer or architect licensed in the state of Oregon that the floodproofing methods proposed for any nonresidential structure meet the floodproofing criteria for nonresidential structures in FMC 19.105.070(B)(4)(c).
+
+e.
+
+Description of the extent to which any watercourse will be altered or relocated.
+
+f.
+
+Base flood elevation data for subdivision proposals or other development when required per subsection (B)(1) of this section and FMC 19.105.070(A)(6).
+
+g.
+
+Substantial improvement calculation for any improvement, addition, reconstruction, renovation, or rehabilitation of an existing structure.
+
+h.
+
+The amount and location of any fill or excavation activities proposed.
+
+3.
+
+Application Review Procedure.
+
+a.
+
+A Type I procedure is required for:
+
+i.
+
+Any use in the underlying zoning district requiring a Type I development review.
+
+ii.
+
+Any permitted use within the floodplain and a designated natural resource area that requires a Type I natural resource permit.
+See Table 19.106.040(B).
+
+b.
+
+A Type II procedure is required for:
+
+i.
+
+Any use in the underlying zoning district requiring a Type II site design review.
+
+ii.
+
+Any permitted use within the floodplain and a designated natural resource area that requires a Type II natural resource permit.
+See Table 19.106.040(B).
+
+c.
+
+A Type III procedure is required for:
+
+i.
+
+Any use in the underlying zoning district requiring a Type III land use procedure.
+
+ii.
+
+Any permitted use within the floodplain and a designated natural resource area that requires a Type III natural resource permit.
+See Table 19.106.040(B).
+
+(Ord. 2-2019 § 2 (Exh. 1); Ord. 1-2026 § 1 (Att.
+A))
+
