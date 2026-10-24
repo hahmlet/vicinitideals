@@ -510,9 +510,10 @@ read when the weekly full re-screen lands.
    city rule anyway, with the state override on top, so a pre-emption
    filing by OC or a change in state law flips it back by deleting one
    override (register `2026-10-10-oregon-city-encode-approach-rule-with-override`).
-   STATUS 2026-10-16: BUILT on flats/oc-driveway-preempt (0c1acab7, f08c5766,
-   3fface67; worktree .claude/worktrees/bridge-cse_01AscZHMyQcrv55zaVAUrca4),
-   OC bound read: ZERO colour moves, as expected. NOT MERGED -- merge it.
+   STATUS 2026-10-23: MERGED 77091035 (flats/oc-driveway-preempt, built
+   2026-10-16; OC bound read then: ZERO colour moves) and DEPLOYED; rides the
+   FULL weekly ~10-26 (expect zero OC moves: all 519 zones x both designs ask
+   no second approach; the override record shows on the 17 OC zones only).
    Do NOT merge flats/oc-two-approaches (the old requirement build: 2,197
    OC greens -> yellow); Steph to confirm, then delete it.
    CORNELIUS (R-7/R-10/A-2/CR/GMU) "not more than two lots may be served by
