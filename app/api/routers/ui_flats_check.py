@@ -34,23 +34,29 @@ from urllib.parse import quote
 
 from fastapi import APIRouter, Form, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse, RedirectResponse
-from sqlalchemy import select, update
+from sqlalchemy import func, select, update
+from sqlalchemy.exc import DBAPIError
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
 from app.api.routers.ui_flats import (
+    _COLOURS,
+    _best,
+    _chosen_run,
     _cited_lines,
     _known_documents,
     _layers,
     _mark,
     _number,
     _page_index,
+    _lots_limits,
     _ranges,
+    _runs,
     _store,
     _value_rows,
 )
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
-from app.models.flats import FlatsDocumentReadthrough, FlatsPageCheck, FlatsRuleSignature
+from app.models.flats import FlatsDocumentReadthrough, FlatsLot, FlatsPageCheck, FlatsRuleSignature
 from flats.encode import dispositions, footnotes, readiness
 from flats.provenance import books, pages as page_map, sheet
 from flats.rules import conditions
@@ -531,6 +537,45 @@ def _layer_label(layer: Layer) -> str:
 
 
 # --- answers ----------------------------------------------------------------
+
+
+#: Lots per jurisdiction per colour, by run id: a shown run's results do not
+#: change, so the whole-run count is taken once per process.
+_COLOUR_COUNTS: dict[int, dict[str, dict[str, int]]] = {}
+
+
+async def _colours_by_layer(session: DBSession) -> tuple[int | None, dict[str, dict[str, int]]]:
+    """(run id, {jurisdiction: {colour: lots}}) for the run the Lots page shows.
+
+    A lot's colour is its best across the run's designs, the colour the Lots
+    page counts -- every stored number taken as right (Steph 2026-10-25: what
+    each jurisdiction comes to once its numbers are signed off). Empty when
+    there is no run or the count runs past the Lots page's clock.
+    """
+    run = _chosen_run(await _runs(session), None)
+    if run is None:
+        return None, {}
+    if run.id in _COLOUR_COUNTS:
+        return run.id, _COLOUR_COUNTS[run.id]
+    best = _best(run.id, None)
+    stmt = (
+        select(FlatsLot.jurisdiction, best.c.colour, func.count())
+        .select_from(best)
+        .join(FlatsLot, FlatsLot.id == best.c.lot_id)
+        .group_by(FlatsLot.jurisdiction, best.c.colour)
+    )
+    out: dict[str, dict[str, int]] = defaultdict(lambda: {c: 0 for c in _COLOURS})
+    try:
+        async with session.begin_nested():
+            await _lots_limits(session)
+            for jurisdiction, colour, n in (await session.execute(stmt)).all():
+                if 0 <= colour < len(_COLOURS):
+                    out[jurisdiction][_COLOURS[colour]] += n
+    except DBAPIError:
+        return run.id, {}
+    _COLOUR_COUNTS.clear()
+    _COLOUR_COUNTS[run.id] = dict(out)
+    return run.id, _COLOUR_COUNTS[run.id]
 
 
 async def _answers(session: DBSession, layer_id: str | None = None) -> dict[tuple, FlatsPageCheck]:
@@ -1921,6 +1966,7 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
     answers = await _answers(session)
     signed = await _signed(session)
     replies = _replies(answers)
+    run_id, colours = await _colours_by_layer(session)
 
     def build() -> tuple[list[dict[str, Any]], dict[str, int], list[dict[str, Any]], list[dict[str, Any]]]:
         layers = _layers()
@@ -1936,7 +1982,9 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
                     elsewhere[why] += 1
             if not rows and not any(elsewhere.values()):
                 continue
-            table.append({"id": layer_id, "label": _layer_label(layer), **counts, **elsewhere})
+            table.append(
+                {"id": layer_id, "label": _layer_label(layer), **counts, **elsewhere, "colours": colours.get(layer_id)}
+            )
             for key in ("numbers", "checked", "problems", "two_source"):
                 totals[key] += counts[key]
             for key in ("no_map", "html"):
@@ -1988,6 +2036,7 @@ async def flats_check_index(request: Request, session: DBSession) -> HTMLRespons
             "totals": totals,
             "problems": problems,
             "answered": answered,
+            "colours_run": run_id if colours else None,
         },
     )
 

@@ -2,6 +2,10 @@
 {% block title %}Page check — Viciniti Deals{% endblock %}
 
 {% block content %}
+<style>
+  .lots-green { color:#15803d; } .lots-yellow { color:#a16207; }
+  .lots-unknown { color:var(--muted,#64748b); } .lots-red { color:#b91c1c; }
+</style>
 <div class="topbar"></div>
 
 <div class="content">
@@ -93,6 +97,11 @@
         <tr>
           {# data-col: base.html sorts on a header click (Steph 2026-10-19: find the small ones). #}
           <th data-col="jurisdiction">Jurisdiction</th>
+          {# Lots by colour in the run the Lots page shows, every stored number
+             taken as right (Steph 2026-10-25). #}
+          {% for c, word in (("green", "Green"), ("yellow", "Yellow"), ("unknown", "Grey"), ("red", "Red")) %}
+          <th class="col-right" data-col="lots_{{ c }}" title="lots {{ word | lower }} today{% if colours_run %} (run {{ colours_run }}){% endif %}, taking every stored number as right">{{ word }}</th>
+          {% endfor %}
           <th class="col-right" data-col="numbers">With a printed page</th>
           <th class="col-right" data-col="checked">Checked</th>
           <th class="col-right" data-col="left" title="printed-page numbers nobody has checked yet">Left to check</th>
@@ -106,6 +115,9 @@
         {% for t in table %}
         <tr>
           <td>{{ t.label }}<div class="muted" style="font-size:11px">{{ t.id }}</div></td>
+          {% for c in ("green", "yellow", "unknown", "red") %}
+          <td class="col-right" data-lots="{{ c }}">{% if t.colours %}<a class="lots-{{ c }}" href="/flats/lots?jurisdiction={{ t.id | urlencode }}&colour={{ c }}">{{ "{:,}".format(t.colours[c]) }}</a>{% endif %}</td>
+          {% endfor %}
           <td class="col-right">{{ t.numbers }}</td>
           <td class="col-right">{{ t.checked }}</td>
           <td class="col-right">{{ t.left }}</td>

@@ -90,6 +90,30 @@ async def test_the_index_is_not_swallowed_by_the_layer_route(client, session):
     assert 'data-col="numbers"' in response.text
 
 
+async def test_the_index_counts_each_jurisdictions_lots_by_colour(client, session):
+    # Steph 2026-10-25: Green / Yellow / Grey / Red per jurisdiction, sortable,
+    # as the Lots page counts them -- a lot's best colour across the designs.
+    from tests.api.test_ui_flats_lots import _seed
+
+    check._COLOUR_COUNTS.clear()
+    await _login(client, session)
+    run = await _seed(session)
+
+    page = (await client.get("/flats/check")).text
+    assert 'data-col="lots_green"' in page and 'data-col="lots_red"' in page
+
+    def cells(layer: str) -> dict[str, str]:
+        row = page.split(f"{layer}</div>", 1)[1].split("</tr>", 1)[0]
+        return dict(re.findall(r'data-lots="(\w+)">(?:<a[^>]*>([\d,]*)</a>)?', row))
+
+    # Portland: one lot green in a design, one yellow in both; Milwaukie: one unknown
+    assert cells("or/multnomah/portland") == {"green": "1", "yellow": "1", "unknown": "0", "red": "0"}
+    assert cells("or/clackamas/milwaukie")["unknown"] == "1"
+    assert "/flats/lots?jurisdiction=or%2Fmultnomah%2Fportland&colour=green" in page
+    assert check._COLOUR_COUNTS.keys() == {run.id}
+    check._COLOUR_COUNTS.clear()
+
+
 async def test_a_card_shows_the_page_with_the_box_and_asks_one_question(client, session):
     await _login(client, session)
 
