@@ -32,37 +32,37 @@ crossrefs:
   "11.20.01":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.20.010, Purpose (18.20.010.txt L7-L8)
+      Not a reference: the history note closing 18.20.010, Purpose (18.20.010.txt L7)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.01"), not a pointer.
   "11.20.04":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.20.040, Prohibited uses (18.20.040.txt L33-L36)
+      Not a reference: the history note closing 18.20.040, Prohibited uses (18.20.040.txt L33)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.04"), not a pointer.
   "11.20.101":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.95.010, Purpose (18.95.010.txt L30-L31)
+      Not a reference: the history note closing 18.95.010, Purpose (18.95.010.txt L30)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.101"), not a pointer.
   "11.20.11":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.25.010, Purpose (18.25.010.txt L6-L7)
+      Not a reference: the history note closing 18.25.010, Purpose (18.25.010.txt L6)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.11"), not a pointer.
   "11.20.14":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.25.040, Prohibited uses (18.25.040.txt L33-L37)
+      Not a reference: the history note closing 18.25.040, Prohibited uses (18.25.040.txt L33)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.14"), not a pointer.
   "11.20.15":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.25.050, Area, density and lot requirements (18.25.050.txt L72-L75)
+      Not a reference: the history note closing 18.25.050, Area, density and lot requirements (18.25.050.txt L72)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.15"), not a pointer.
   "11.20.21":
@@ -74,31 +74,31 @@ crossrefs:
   "11.20.22":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.30.020, Permitted uses (18.30.020.txt L41-L44)
+      Not a reference: the history note closing 18.30.020, Permitted uses (18.30.020.txt L41)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.22"), not a pointer.
   "11.20.23":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.30.030, Prohibited uses (18.30.030.txt L18-L20)
+      Not a reference: the history note closing 18.30.030, Prohibited uses (18.30.030.txt L18)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.23"), not a pointer.
   "11.20.31":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.35.010, Purpose (18.35.010.txt L6-L7)
+      Not a reference: the history note closing 18.35.010, Purpose (18.35.010.txt L6)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.31"), not a pointer.
   "11.20.34":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.35.040, Prohibited uses (18.35.040.txt L38-L41)
+      Not a reference: the history note closing 18.35.040, Prohibited uses (18.35.040.txt L38)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.34"), not a pointer.
   "11.20.35":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.35.050, Area, density and lot requirements (18.35.050.txt L99-L103)
+      Not a reference: the history note closing 18.35.050, Area, density and lot requirements (18.35.050.txt L99)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.35"), not a pointer.
   "11.20.51":
@@ -110,25 +110,25 @@ crossrefs:
   "11.20.52":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.45.020, Uses permitted outright (18.45.020.txt L53-L55)
+      Not a reference: the history note closing 18.45.020, Uses permitted outright (18.45.020.txt L53)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.52"), not a pointer.
   "11.20.73":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.55.030, Conditional uses permitted (18.55.030.txt L63-L69)
+      Not a reference: the history note closing 18.55.030, Conditional uses permitted (18.55.030.txt L63)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.73"), not a pointer.
   "11.20.74":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.55.040, Prohibited uses (18.55.040.txt L23-L26)
+      Not a reference: the history note closing 18.55.040, Prohibited uses (18.55.040.txt L23)
       names the section's former number in the 2000 code ("Code 2000
       § 11.20.74"), not a pointer.
   "11.40.14":
     outcome: misread
     note: >-
-      Not a reference: the history note closing 18.145.040, Off-street loading (18.145.040.txt L69-L70)
+      Not a reference: the history note closing 18.145.040, Off-street loading (18.145.040.txt L69)
       names the section's former number in the 2000 code ("Code 2000
       § 11.40.14"), not a pointer.
   "11.40.34":

@@ -22,6 +22,5 @@ Land Use
 16.114.100 - Neighborhood Locations and Primary Land Uses
 16.114.110 - Parks, Open Space and Trails
 Mobility 16.114.120 - Neighborhood Circulation
-Public Utilities and Services 16.114.130 - Provision of Adequate Public Facilities (Ord. No. 2023-04, § 1(Exh.
-A), 10-18-2023)
+Public Utilities and Services 16.114.130 - Provision of Adequate Public Facilities (Ord. No. 2023-04, § 1(Exh. A), 10-18-2023)
 

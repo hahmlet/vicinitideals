@@ -449,7 +449,7 @@ zones:
   # housing-type table for all six: "R-9 R-12 R-15 R-24 SF AT", with rows for
   # single dwelling detached and attached, accessory dwelling, duplex,
   # manufactured home and "Multi-dwelling N P P P N P"
-  # (16.84.010.txt#L1-L16). There is no triplex and
+  # (16.84.010.txt#L1-L15). There is no triplex and
   # no fourplex row, and multi-dwelling is five or more units by definition.
   # Each district's own permitted-use list (16.84.020 for R-9; 16.88.020 SF,
   # 16.92.020 AT, 16.94.020 R-12, 16.96.020 R-15, 16.100.020 R-24) names
@@ -505,7 +505,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling N in R-9) and 16.84.020 permitted uses
-      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L16"
+      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L15"
     notes: >-
       DRAFT. Refuses: the housing-type table has no triplex or fourplex
       row, and the district's permitted uses name none. A question for the
@@ -518,7 +518,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.94.020 permitted uses
-      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L16"
+      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L15"
     notes: >-
       DRAFT. Refuses: the housing-type table has no triplex or fourplex
       row, and 16.94.020 names none. A question for the owner.
@@ -533,7 +533,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.96.020 permitted uses
-      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L16"
+      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L15"
     notes: >-
       DRAFT. Refuses: the housing-type table has no triplex or fourplex
       row, and 16.96.020 names none. A question for the owner.
@@ -545,7 +545,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.100.020 permitted uses
-      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L16"
+      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L15"
     notes: >-
       DRAFT. Refuses: the housing-type table has no triplex or fourplex
       row, and 16.100.020 names none. A question for the owner.
@@ -557,7 +557,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling N in SF) and 16.88.020 permitted uses (residential home only)
-      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L16"
+      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L15"
     notes: >-
       DRAFT. Refuses: the housing-type table has no triplex or fourplex
       row, and 16.88.020 permits a residential home only. A question for
@@ -570,7 +570,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling is five or more units) and 16.92.020 permitted uses
-      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L16"
+      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L15"
     notes: >-
       DRAFT. Refuses: the housing-type table has no triplex or fourplex
       row, and 16.92.020 names a duplex and nothing larger. A question for

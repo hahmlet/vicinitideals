@@ -42,6 +42,5 @@ An application for a WCF shall be reviewed by a Type 3 process.
 7.10.5           Notwithstanding the time allowed for a Type 3 decision by Sections 9.7.6 and 9.7.15  of this Code, the City shall use its best efforts to decide an application for a WCF collocation within 90 days and to decide an application for any other WCF facility within 150 days of the date the application is deemed complete.
 The City shall adopt written findings in any case not decided within those timelines as to why the time allowed by this Section for decision is not reasonable as to that particular application.
 
-7.10.5.1         For purposes of this Section, an application to add an antenna to an existing tower or other structure is a request for collocation if it does not involve a “substantial increase in the size of a tower” as defined in the Nationwide Programmatic Agreement for the Collocation of Wireless Antennas, 47 C.F.R.
-Part 1, Appendix B.
+7.10.5.1         For purposes of this Section, an application to add an antenna to an existing tower or other structure is a request for collocation if it does not involve a “substantial increase in the size of a tower” as defined in the Nationwide Programmatic Agreement for the Collocation of Wireless Antennas, 47 C.F.R. Part 1, Appendix B.
 

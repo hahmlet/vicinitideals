@@ -4,6 +4,3 @@ The guidelines are a user-friendly compendium of recommended designs that refere
 For any architectural definitions not listed in Chapter 16.10, A Visual Dictionary of Architecture (Francis DK Ching -1997) shall be used as a reference.
 (Ord. 2006-009 § 2)
 
-Sections:
-16.164.010 GENERALLY
-Chapter 16.164

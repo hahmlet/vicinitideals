@@ -3,7 +3,5 @@
 The high density residential zone is Residential Zone R-HD.
 This zone implements the high density residential land use designation in the Milwaukie Comprehensive Plan.
 
-(Ord. 2051 § 2, 2012; Ord. 2110 § 2 (Exh.
-G), 2015; Ord. 2120 § 2, 2016; Ord. 2134 § 2, 2016; Ord. 2168 § 2, 2019; Ord. 2218 § 2 (Exh.
-B), 2022; Ord. 2224 § 2, 2022; Ord. 2229 § 2, 2023; Ord. 2236 § 2, 2023; Ord. 2260, 1/20/2026)
+(Ord. 2051 § 2, 2012; Ord. 2110 § 2 (Exh. G), 2015; Ord. 2120 § 2, 2016; Ord. 2134 § 2, 2016; Ord. 2168 § 2, 2019; Ord. 2218 § 2 (Exh. B), 2022; Ord. 2224 § 2, 2022; Ord. 2229 § 2, 2023; Ord. 2236 § 2, 2023; Ord. 2260, 1/20/2026)
 

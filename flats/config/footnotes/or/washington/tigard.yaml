@@ -110,7 +110,7 @@ notes:
   # Table 18.910.1 (minimum rights-of-way by street class), stored
   # 2026-10-15 for road dedication (FOLLOWUPS 81). Seven notes; none changes
   # a right-of-way width. The layer holds the top of each class's range.
-  - quote: "or/washington/tigard/18.910/18.910.030.txt#L401-L402"
+  - quote: "or/washington/tigard/18.910/18.910.030.txt#L397-L398"
     digest: "bbe497ff463b"
     state: dismissed
     reason: >-
@@ -118,30 +118,30 @@ notes:
       7-lane roads). It fixes the lanes inside the street, not the
       right-of-way; the layer holds the widest right-of-way of the class,
       which already allows for the most lanes.
-  - quote: "or/washington/tigard/18.910/18.910.030.txt#L403"
+  - quote: "or/washington/tigard/18.910/18.910.030.txt#L399"
     digest: "e9d87693721e"
     state: dismissed
     reason: >-
       Note 2 allows on-street parking on downtown collectors. It is about
       what goes inside the street; the right-of-way width is unchanged.
-  - quote: "or/washington/tigard/18.910/18.910.030.txt#L404"
+  - quote: "or/washington/tigard/18.910/18.910.030.txt#L400"
     digest: "d0fd11d2dc63"
     state: dismissed
     reason: >-
       Note 3 leaves bike lanes on downtown collectors to the City Engineer.
       Inside the street; the right-of-way width is unchanged.
-  - quote: "or/washington/tigard/18.910/18.910.030.txt#L405"
+  - quote: "or/washington/tigard/18.910/18.910.030.txt#L401"
     digest: "c50ac73774e0"
     state: dismissed
     reason: >-
       Note 4 sets the sidewalk width on the rows that carry it. Inside the
       right-of-way; its width is unchanged.
-  - quote: "or/washington/tigard/18.910/18.910.030.txt#L406"
+  - quote: "or/washington/tigard/18.910/18.910.030.txt#L402"
     digest: "a7c0b8b5aeb4"
     state: dismissed
     reason: >-
       Note 5 marks a street unstriped. No width.
-  - quote: "or/washington/tigard/18.910/18.910.030.txt#L407-L408"
+  - quote: "or/washington/tigard/18.910/18.910.030.txt#L403-L404"
     digest: "3c772b527bdc"
     state: dismissed
     reason: >-
@@ -149,7 +149,7 @@ notes:
       and review criteria are met: a narrower street on review, a
       relaxation. The layer holds the widest local right-of-way, the
       stricter reading.
-  - quote: "or/washington/tigard/18.910/18.910.030.txt#L409-L411"
+  - quote: "or/washington/tigard/18.910/18.910.030.txt#L405-L407"
     digest: "14b38dd83c25"
     state: dismissed
     reason: >-

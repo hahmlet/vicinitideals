@@ -1,0 +1,32 @@
+[
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "e3f03abc09f46792f175517c8b0f538a733f4a014d9a266f638e5c800c462ba7",
+  "new_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L1031-L1035",
+  "old_fingerprint": "3510ce6c0be3a17041418048edd6a08fba5c765a39af018de205408976959dfc",
+  "old_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L1034-L1038",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "front_lot_line_through",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "c2ef6ef679e616dc5d9a072bfa872061190a26e826bc99c4f9c89974c90517b5",
+  "new_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L1032-L1035",
+  "old_fingerprint": "dc5fa2ba09200880b2b69b90f1b631df7d4f81488d0c794bb2622e2d3baf7d32",
+  "old_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L1035-L1038",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "2002bb61f778aa67500cfa4015035f75d06fb9b49b4f06f2ba83c53e7b6542fe",
+  "new_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L624-L628",
+  "old_fingerprint": "4c73dd78ea1b3c8d83ecf8ae3fdcd8949781710164147b75031d8551ed28498b",
+  "old_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L627-L631",
+  "when_key": "",
+  "zone": "VTH"
+ }
+]

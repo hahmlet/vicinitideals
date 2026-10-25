@@ -190,9 +190,5 @@ H.
 Electric Vehicle Conduit. For new multi-unit residential buildings with five or more residential dwelling units, and new mixed-use buildings consisting of privately owned commercial space and five or more residential dwelling units, cities shall require the provision of electrical service capacity, to accommodate 40 percent of all vehicle parking spaces.
 Electrical vehicle conduit shall be provided per the requirements of ORS 455.417(3)(a)(A) (Building Code).
 
-(Ord. 6-2001 § 1; Ord. 8-2002 §§ 1 – 3; Ord. 3-2010 § 5; Ord. 2-2017 § 1 (Exh.
-A); Ord. 1-2022 § 1 (Att.
-A); Ord. 1-2024 § 1 (Att.
-A); Ord. 3-2025 § 1 (Att.
-A))
+(Ord. 6-2001 § 1; Ord. 8-2002 §§ 1 – 3; Ord. 3-2010 § 5; Ord. 2-2017 § 1 (Exh. A); Ord. 1-2022 § 1 (Att. A); Ord. 1-2024 § 1 (Att. A); Ord. 3-2025 § 1 (Att. A))
 

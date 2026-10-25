@@ -214,6 +214,5 @@ NOTES:
 a. For example, if a development would create 1,000 square feet of new impervious surface, then 1,000 square feet new pervious surface would need to be created.
 However, if only 500 square feet can be created within the same reach, then the remaining 500 square feet created in a different reach would need to be 1,000 square feet because of the 200 percent multiplier.
 
-(Ord. 2025-05 § 1 (Exh.
-A), 2025)
+(Ord. 2025-05 § 1 (Exh. A), 2025)
 

@@ -62,6 +62,4 @@ E.
 Duplexes: For the purpose of calculating maximum density, duplexes shall be counted the same as a single-family residence (i.e., duplexes shall count as one dwelling unit).
 Accessory dwelling units (ADUs) do not count towards maximum density.
 
-(Ord. No. 2021-03, § 2(Exh.
-B), 5-17-2021; Ord. No. 2024-01, § 1(Exh.
-A), 2-20-2024)
+(Ord. No. 2021-03, § 2(Exh. B), 5-17-2021; Ord. No. 2024-01, § 1(Exh. A), 2-20-2024)

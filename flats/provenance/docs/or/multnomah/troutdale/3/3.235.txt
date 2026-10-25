@@ -47,5 +47,3 @@ D.     Maximum building height in the MU-3 zoning district.
 (Ord. No. 894, § 2, 12-10-2024)
 
 
-3.300  COMMERCIAL ZONING DISTRICTS
-

@@ -31,14 +31,10 @@ Live-Make units                                                          N      
 Flex units (commercial/industrial)                     N                    N                    C
 Home-based child care                                    P                    P                    P
 Commercial Uses
-General retail (up to 15,000 s.f.)
-P                    P                    P
-General retail (above 15,000 s.f.)
-C                    C                    P
-Offices (up to 15,000 s.f.)
-P                    P                    P
-Offices (above 15,000 s.f.)
-C                    P                    P
+General retail (up to 15,000 s.f.)                       P                    P                    P
+General retail (above 15,000 s.f.)                     C                    C                    P
+Offices (up to 15,000 s.f.)                                 P                    P                    P
+Offices (above 15,000 s.f.)                               C                    P                    P
 Eating & drinking establishments
 Restaurants & bars (no drive-thru)                P                    P                    P
 Restaurants & bars (with drive-thru)             C                    P                    P
@@ -74,10 +70,8 @@ LI permitted uses                                                         C     
 Other Uses
 Community service uses                                  C                    C                    C
 Recreation facilities (active)                             C                    C                    C
-Gym (up to 5,000 s.f.)
-P                    P                    C
-Gym (above 5,000 s.f.)
-C                    C                    C
+Gym (up to 5,000 s.f.)                                   P                    P                    C
+Gym (above 5,000 s.f.)                                 C                    C                    C
 Recreation facilities (passive)                           P                    P                    P
 Utility facilities (major)                                      C                    C                    C
 Utility facilities (minor)                                       P                    P                    P

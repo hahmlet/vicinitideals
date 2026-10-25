@@ -114,6 +114,39 @@ class Rule:
     #: in the contents list -- printed exactly twice -- so none is a wrapped
     #: reference.
     any_order: frozenset[str] = frozenset()
+    #: Headings above the section -- an article, a chapter, a division -- that
+    #: get a page of their own (see :func:`split`).
+    opens: tuple["Opening", ...] = ()
+    #: A line that, printed just above such a heading with only a contents
+    #: list between, is the start of its page (Sherwood prints the next
+    #: chapter's "Sections:" list above its "Chapter 16.108" line).
+    lead_in: re.Pattern[str] | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class Opening:
+    """One form of heading that opens an article, chapter or division.
+
+    ``line`` names the heading's number as group ``n`` (and, optionally, the
+    word as printed as group ``kind``), or -- for a heading that is only a
+    title, "COMPLIANCE AND ENFORCEMENT" -- the title as group ``title``.
+    ``above`` is for a title that is a heading only when the next line it
+    sits over opens a section.
+    """
+
+    kind: str
+    line: re.Pattern[str]
+    above: bool = False
+
+
+def _openings(body: object, layer: str) -> tuple[Opening, ...]:
+    out = []
+    for entry in body or ():  # type: ignore[union-attr]
+        line = re.compile(entry["line"])
+        if not {"n", "title"} & set(line.groupindex):
+            raise ValueError(f"{layer}: an 'opens' pattern names no group 'n' or 'title'")
+        out.append(Opening(kind=entry["kind"], line=line, above=bool(entry.get("above"))))
+    return tuple(out)
 
 
 def rules(path: Path = RULES) -> dict[str, Rule]:
@@ -136,6 +169,8 @@ def rules(path: Path = RULES) -> dict[str, Rule]:
             front=frozenset(body.get("front") or ()),
             uncut=frozenset(body.get("uncut") or ()),
             any_order=frozenset(body.get("any_order") or ()),
+            opens=_openings(body.get("opens"), layer),
+            lead_in=re.compile(body["lead_in"]) if body.get("lead_in") else None,
         )
     return out
 
@@ -146,17 +181,28 @@ class Section:
     #: First and last line in the proof copy, 1-based and inclusive.
     first: int
     last: int
+    #: Where a heading page is filed (``3/article-3.txt``); a section's own
+    #: file follows from its number.
+    named: str = ""
 
     @property
     def chapter(self) -> str:
         """``40.300`` -> ``40``, ``73C.030`` -> ``73C``, ``16.84.010`` ->
         ``16.84``: the folder it is filed in -- the number less its last part,
         so a title-chapter-section code files by chapter, not by title."""
+        if self.named:
+            return self.named.rsplit("/", 1)[0]
         return self.number.rsplit(".", 1)[0]
 
     @property
     def file(self) -> str:
-        return f"{self.chapter}/{self.number}.txt"
+        return self.named or f"{self.chapter}/{self.number}.txt"
+
+    @property
+    def page(self) -> bool:
+        """Whether this is a heading page -- an article, chapter or division
+        heading and what it prints above its first section -- not a section."""
+        return bool(self.named)
 
 
 def _is_heading(rule: Rule, line: str) -> re.Match[str] | None:
@@ -224,7 +270,155 @@ def split(lines: Sequence[str], rule: Rule, doc_id: str) -> list[Section]:
                 raise ProvenanceError(
                     f"{doc_id}: contents entry {found.group('n')} has no heading below it"
                 )
+    return _paged(lines, rule, doc_id, out, front=0 if named else opening)
+
+
+# --- heading pages ----------------------------------------------------------
+
+#: Words a title leaves lower case, after its first.
+_SMALL_WORDS = frozenset("a an and as at by for from in of on or the to with".split())
+
+
+def titled(text: str) -> str:
+    """A title printed in capitals, as a name: "PLANNING COMMISSION AND
+    HEARINGS OFFICER" -> "Planning Commission and Hearings Officer". Text
+    already in mixed case is left as printed. For display only -- the page
+    keeps the printed words."""
+    text = " ".join(text.split())
+    if text != text.upper():
+        return text
+    out = []
+    for k, word in enumerate(text.split(" ")):
+        low = word.lower()
+        if k and low in _SMALL_WORDS:
+            out.append(low)
+        elif word.startswith("("):
+            out.append(word)  # "(RML)", "(R-2)": a zone's letters stay
+        else:
+            # The first letter up, after any opening quote: "DECISION-MAKING"
+            # -> "Decision-making".
+            lead = len(low) - len(low.lstrip("\"'“‘"))
+            out.append(low[:lead] + low[lead : lead + 1].upper() + low[lead + 1 :])
+    return " ".join(out)
+
+
+def _slug(text: str) -> str:
+    return re.sub(r"[^0-9a-z.]+", "-", text.lower()).strip("-.")
+
+
+def _paged(
+    lines: Sequence[str], rule: Rule, doc_id: str, sections: list[Section], *, front: int
+) -> list[Section]:
+    """``sections`` with every article, chapter or division heading on a page of its own.
+
+    A document that holds more than one article or chapter prints the next
+    one's heading -- "ARTICLE 3 / PLANNING COMMISSION AND HEARINGS OFFICER",
+    "CHAPTER 41 / ... / Sections: ..." -- below the last section of the one
+    before, so it read as that section's closing lines. Each such heading,
+    and everything printed between it and the next section (its title, its
+    contents list, a reserved chapter's note), becomes its own small page in
+    reading order. So does the first such heading above a document's first
+    section (``front`` is the line before it; 0 when the opening lines belong
+    to a named section), whose lines would otherwise be in no page at all;
+    the cover above it stays in none.
+
+    Only a heading the rule names makes a page, and never one that names the
+    section's own article or chapter (Sherwood prints "Chapter 16.10" under
+    the heading of 16.10.010).
+    """
+    if not rule.opens:
+        return sections
+    starts = {s.first for s in sections}
+    found: list[tuple[int, Opening, re.Match[str]]] = []
+    for n, line in enumerate(lines, start=1):
+        if n in starts:
+            continue
+        for opening in rule.opens:
+            got = opening.line.match(line)
+            if got is None:
+                continue
+            if opening.above and _next_text(lines, n) not in starts:
+                continue
+            found.append((n, opening, got))
+            break
+
+    cuts: dict[int, tuple[int, str, str]] = {}  # page start -> (heading line, number, stem)
+    for n, opening, got in found:
+        groups = got.groupdict()
+        if groups.get("n"):
+            kind = (groups.get("kind") or opening.kind).strip().title()
+            number = f"{kind} {groups['n']}"
+            stem = f"{kind.lower()}-{_slug(groups['n'])}"
+        else:
+            number = titled(groups["title"])
+            stem = _slug(groups["title"])
+        if n <= front:
+            if any(k <= front for k in cuts):
+                continue  # one page above the first section: the first heading's
+            start = n
+        else:
+            within = next((s for s in sections if s.first < n <= s.last), None)
+            if within is None:
+                continue
+            own = groups.get("n") or ""
+            if own and (own == within.chapter or within.number.startswith(f"{own}.")):
+                continue
+            if opening.above and any(within.first <= k < n for k in cuts):
+                continue  # a chapter's title, under the chapter's own heading
+            start = _lead_in(lines, rule, n, within.first)
+        cuts[start] = (n, number, stem)
+    if not cuts:
+        return sections
+
+    bounds = sorted(starts | set(cuts))
+    real = {s.first: s for s in sections}
+    out: list[Section] = []
+    for k, first in enumerate(bounds):
+        if first in real:
+            section = real[first]
+            nxt = next((b for b in bounds[k + 1 :]), None)
+            last = min(section.last, nxt - 1) if nxt is not None else section.last
+            out.append(Section(section.number, section.first, last, section.named))
+            continue
+        nxt = bounds[k + 1] if k + 1 < len(bounds) else len(lines) + 1
+        _n, number, stem = cuts[first]
+        # Filed with the section it opens, or -- a heading the extract ends
+        # on -- with the section it was printed under.
+        after = next((s for s in sections if s.first > first), None)
+        before = [s for s in sections if s.first < first]
+        home = (after or before[-1]).chapter
+        out.append(Section(number, first, nxt - 1, f"{home}/{stem}.txt"))
+    files = [s.file for s in out]
+    twice = sorted({f for f in files if files.count(f) > 1})
+    if twice:
+        raise ProvenanceError(f"{doc_id}: two pages would be filed as {twice}")
     return out
+
+
+def _next_text(lines: Sequence[str], n: int) -> int:
+    """The next line after ``n`` that is not empty, or 0."""
+    for k in range(n + 1, len(lines) + 1):
+        if lines[k - 1].strip():
+            return k
+    return 0
+
+
+def _lead_in(lines: Sequence[str], rule: Rule, n: int, floor: int) -> int:
+    """Where the page of the heading on line ``n`` starts: there, or at a
+    ``lead_in`` line printed above it with only a contents list between."""
+    if rule.lead_in is None:
+        return n
+    k = n - 1
+    while k > floor:
+        text = lines[k - 1]
+        if rule.lead_in.match(text):
+            return k
+        if text.strip() and not rule.heading.match(text) and not (
+            rule.furniture is not None and rule.furniture.match(text)
+        ):
+            return n
+        k -= 1
+    return n
 
 
 def _sortable(number: str) -> tuple[object, ...]:
@@ -278,9 +472,19 @@ def splits(store: ProvenanceStore | None = None) -> dict[str, Split]:
             out[proof] = Split(
                 proof=proof,
                 sha256=body["sha256"],
-                sections=tuple(Section(row[0], row[1], row[2]) for row in body["sections"]),
+                sections=tuple(
+                    Section(row[0], row[1], row[2], _named(row)) for row in body["sections"]
+                ),
             )
     return out
+
+
+def _named(row: Sequence[object]) -> str:
+    """A heading page's file, from its index row; empty for a section, whose
+    file follows from its number."""
+    section = Section(str(row[0]), int(row[1]), int(row[2]))  # type: ignore[call-overload]
+    file = str(row[3]) if len(row) > 3 else section.file
+    return "" if file == section.file else file
 
 
 def derived(paths: Iterable[str], store: ProvenanceStore | None = None) -> frozenset[str]:
@@ -584,6 +788,14 @@ def write(store: ProvenanceStore, rule: Rule, *, only: Iterable[str] | None = No
         if sections:
             todo.append(Split(proof=proof, sha256=doc.sha256, sections=tuple(sections)))
     family = {f"{rule.layer}/{name}" for name in existing} | {c.proof for c in todo}
+    redone = {c.proof.rsplit("/", 1)[-1] for c in todo}
+    filed = [str(p).replace("\\", "/") for name, paths in before.items() if name not in redone for p in paths]
+    filed += [s.file for c in todo for s in c.sections]
+    twice = sorted(f for f, k in Counter(filed).items() if k > 1)
+    if twice:
+        # Two documents of one city cutting a page or section to one file: the
+        # second would overwrite the first.
+        raise ProvenanceError(f"{rule.layer}: two documents file {twice}")
     words = _vocabulary(store, family)
     made: list[Split] = []
     for cut in todo:

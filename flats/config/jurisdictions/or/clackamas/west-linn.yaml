@@ -144,7 +144,7 @@ readings:
       neither is encoded with a unit_lots variant, which is the treatment min_lot_width_ft has
       carried since the port and is the stricter reading on that path.
     fingerprint: e130db1ba22edd38
-  "11.r-10.txt#11.070":
+  "11.070.txt#11.070":
     queue: missed
     outcome: not_here
     note: >-
@@ -163,8 +163,8 @@ readings:
       feet wide across the middle satisfies both rows and would fail a single field set to fifty.
       Two rows, two measurements, two fields, and both are now held. The full survey of all nine
       West Linn chapters is in the R-15 ruling on 10.r-15.txt#10.070.
-    fingerprint: 440da5e4a66dd3c4
-  "08.r-40.txt#08.070":
+    fingerprint: 0e386936022abe5e
+  "08.070.txt#08.070":
     queue: missed
     outcome: not_here
     note: >-
@@ -177,8 +177,8 @@ readings:
       needs twenty-four feet of drive is not helped by an easement allowed to be twenty. R-40's
       own width rows are 150 and 150, so this zone has none of the front-line-versus-average gap
       found in R-15 and R-10.
-    fingerprint: bcee1aeb56ccacab
-  "09.r-20.txt#09.070":
+    fingerprint: 0566c3b0e24edd10
+  "09.070.txt#09.070":
     queue: missed
     outcome: not_here
     note: >-
@@ -188,8 +188,8 @@ readings:
       cluster is detached cottages around a common courtyard and this screen places four attached
       units, so the sentence reaches a building we do not build. R-20's two width rows both read
       100 ft, so the average-width gap found in R-15 and R-10 is not here.
-    fingerprint: 521c5e79f769d4ce
-  "12.r-7.txt#12.070":
+    fingerprint: 0e3581096f0a5568
+  "12.070.txt#12.070":
     queue: missed
     outcome: not_here
     note: >-
@@ -197,8 +197,8 @@ readings:
       project -- and a cottage cluster is not the four-unit attached pod this screen places. R-7's
       front-line and average lot widths are both 35 ft, so the two-measurement gap found in R-15
       and R-10 does not arise in this zone.
-    fingerprint: 17d74b4300a1c768
-  "13.r-5.txt#13.070":
+    fingerprint: a9c6414d8741b223
+  "13.070.txt#13.070":
     queue: missed
     outcome: not_here
     note: >-
@@ -206,8 +206,8 @@ readings:
       residential zone. It sets ten-foot yards for a cottage cluster project, which is detached
       cottages round a courtyard rather than four attached units. R-5's front-line and average lot
       widths are both 35 ft, so nothing here is a second width standard.
-    fingerprint: e20a86feea625361
-  "14.r-4.5.txt#14.070":
+    fingerprint: 394d369eb75d424f
+  "14.070.txt#14.070":
     queue: missed
     outcome: not_here
     note: >-
@@ -215,7 +215,7 @@ readings:
       a different housing type from the four attached units this screen places, and no additional
       setbacks between structures on individual lots within one. R-4.5 states 35 ft for both lot
       width rows, so this zone has no front-line-versus-average gap.
-    fingerprint: 4163db773ceeee43
+    fingerprint: 47a6d0c72a6e5c8c
   "15.r-3.txt#15.070":
     queue: missed
     outcome: not_here
@@ -225,7 +225,7 @@ readings:
       width" row at all -- only the 35 ft at the front lot line -- so the second width standard
       found in R-15 and R-10 has nothing to hide in here.
     fingerprint: 72b872c4c0aec2e2
-  "16.r-2.1.txt#16.070":
+  "16.070.txt#16.070":
     queue: missed
     outcome: not_here
     note: >-
@@ -237,8 +237,8 @@ readings:
       count rather than a length, and a two-storey pod cannot reach it whichever way West Linn
       classifies four attached units. R-2.1's own width rows are 35 and 35, and its coverage and
       floor area ratio are already recorded here as switched off for quadplexes.
-    fingerprint: b3b37d2c595ecf86
-  "48.access.txt#48.030":
+    fingerprint: 8d0512a377d3e27c
+  "48.030.txt#48.030":
     queue: missed
     outcome: not_here
     note: >-
@@ -253,8 +253,8 @@ readings:
       waivable by the fire district, and nothing measures either. Worth recording rather than
       passing over: 48.030(D) makes access to five or more single-family homes a public street
       built to city standards, and a four-unit pod sits one unit under that line.
-    fingerprint: f9e6ec92bbba34dd
-  "46.parking.txt#46.090":
+    fingerprint: ad0cb75d21911252
+  "46.090.txt#46.090":
     queue: missed
     outcome: not_here
     note: >-
@@ -262,8 +262,8 @@ readings:
       employees on the site, at least 10 percent..." -- a standard selected by use and by employee
       parking count, and this screen places dwellings. Neither the use nor the threshold reaches a
       four-unit residential pod with a handful of stalls.
-    fingerprint: 859014f0f0c840ee
-  "25.willamette-historic.txt#25.040":
+    fingerprint: 03d886f87e9ddf14
+  "25.040.txt#25.040":
     queue: missed
     outcome: not_here
     note: >-
@@ -273,8 +273,8 @@ readings:
       ten feet in height, freestanding art and statuary over ten feet tall. None of them states
       the height of a dwelling, and the section decides which permit an application runs on rather
       than what may be built.
-    fingerprint: c42deaaf2034b757
-  "25.willamette-historic.txt#25.070":
+    fingerprint: 4e88489624b28ce6
+  "25.070.txt#25.070":
     queue: condition
     outcome: applies
     note: >-
@@ -296,7 +296,7 @@ readings:
       West Linn lot for nothing. The 18-inch projection allowance is a relaxation. Left open
       because the height line is still unquoted and that is a decision worth being able to find
       again.
-    fingerprint: c7e51383434f0b49
+    fingerprint: 253f6a95cd965880
   "02.definitions.txt#02.030":
     queue: condition
     outcome: never
@@ -312,7 +312,7 @@ readings:
       grade -- subtracts from counted floor area, so it can only lower a ratio and never raise it.
       A definition that makes a standard looser is still a definition.
     fingerprint: c74f285bb0e1a663
-  "41.steep-lots.txt#41.020":
+  "41.020.txt#41.020":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -332,8 +332,8 @@ readings:
       which is a real measurement rule and is already cited in this layer; and 41.010's three-foot
       front setback for a garage on a site of 25 percent slope or more names a structure this
       building does not have.
-    fingerprint: a3ebc338f6a4e1fc
-  "41.steep-lots.txt#41.040":
+    fingerprint: 25bffe504333d16d
+  "41.040.txt#41.040":
     queue: chapter
     outcome: nothing_here
     note: >-
@@ -341,7 +341,7 @@ readings:
       project does not place. One measuring line, and it sits inside the same chapter of height
       exceptions whose main section was ruled today on the same reasoning: an exception is a
       permission, and this one is a permission granted to somebody else.
-    fingerprint: af9106016965b53c
+    fingerprint: c1bf676f8560495b
   "46.parking.txt#46.150":
     queue: nofield
     outcome: design
@@ -406,7 +406,7 @@ readings:
       that runs down the whole column and is held by the hillside chapter rather than by a yard
       field.
     fingerprint: 14244271cc0bd6c9
-  "46.parking.txt#46.110":
+  "46.110.txt#46.110":
     queue: nofield
     outcome: other_building
     note: >-
@@ -415,16 +415,16 @@ readings:
       on each side of a fuelling island, three per washing unit at a car wash. Somebody else's
       queue. The pod's requirement is held in this layer as parking_min_per_unit and comes from
       the residential row of the same chapter.
-    fingerprint: 387969be8816461f
-  "46.parking.txt#46.130":
+    fingerprint: 7098c4b94996e99b
+  "46.130.txt#46.130":
     queue: nofield
     outcome: other_building
     note: >-
       Loading-berth thresholds for industrial floor area -- manufacturing at 5,000 and 40,000
       square feet, warehouse the same, storage at 10,000 and 100,000. A four-unit dwelling is
       below the first number in every row, and industrial floor area is not a thing it has at all.
-    fingerprint: 36e6bf7afe6a573f
-  "48.access.txt#48.060":
+    fingerprint: 98d7de8a2d252406
+  "48.060.txt#48.060":
     queue: nofield
     outcome: other_stage
     note: >-
@@ -444,7 +444,7 @@ readings:
       large enough to hold this pod has. Nothing in this system locates a lot against its nearest
       intersection, so encoding it would mean charging every lot in the city for a corner lot's
       problem.
-    fingerprint: aa53ef85f527188a
+    fingerprint: a1175ad68dea3420
 definitions:
   # "Corner lot. A lot or parcel abutting on two intersecting streets other
   # than an alley, excluding lots or parcels with boundary line angles greater

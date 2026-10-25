@@ -188,9 +188,7 @@ Street frontage controls lot width for townhomes.
 [9]     Maximum lot coverage for townhomes is the greater of the percentage identified in the table or up to 1,000 square feet of buildings, decks, stairways and entry bridges that are more than 30 inches above grade (excluding eaves).
 Compliance with all other standards is required.
 
-(Ord. 389 § 1(Exh.
-A), 2009; Ord. 406 § 1, 2010; Ord. 422 § 1, 2012; Ord. 427 § 1, 2012; Ord. 433 § 1, 2013; Ord. 446 § 1, 2014; Ord. 468 § 1, 2014; Ord. 474 § 1, 2015; Ord. 501 § 1, 2016; Ord. 521 § 3, 2017; Ord. 556 § 1, 2021; Ord. 561 § 1(Exh.
-A), 2022; Ord. 571 § 1, 2022; Ord. 582, 3/19/2024)
+(Ord. 389 § 1(Exh. A), 2009; Ord. 406 § 1, 2010; Ord. 422 § 1, 2012; Ord. 427 § 1, 2012; Ord. 433 § 1, 2013; Ord. 446 § 1, 2014; Ord. 468 § 1, 2014; Ord. 474 § 1, 2015; Ord. 501 § 1, 2016; Ord. 521 § 3, 2017; Ord. 556 § 1, 2021; Ord. 561 § 1(Exh. A), 2022; Ord. 571 § 1, 2022; Ord. 582, 3/19/2024)
 
 [1]
 Editor's Note: Ord. 589, which amended this section with regard to Cottage Clusters, was remanded by the courts and all amendments were removed at request of the City.

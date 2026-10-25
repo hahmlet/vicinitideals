@@ -314,3 +314,119 @@ def test_an_uncut_document_is_left_whole(tmp_path) -> None:
 def test_a_three_part_number_files_under_its_chapter() -> None:
     assert Section("16.114.130", 1, 2).chapter == "16.114"
     assert Section("16.114.130", 1, 2).file == "16.114/16.114.130.txt"
+
+
+ARTICLES = [
+    "ARTICLE 1",  # 1  the first article's heading, above the first section
+    "GENERAL PROVISIONS",  # 2
+    "TDC 1.010. Title.",  # 3
+    "This code is the town code.",  # 4
+    "ARTICLE 2",  # 5  the next article, printed under 1.010
+    "SCOPE AND COMPLIANCE",  # 6
+    "TDC 2.010. Scope.",  # 7
+    "Every lot is subject to it.",  # 8
+]
+
+
+def _opening(**extra) -> Rule:
+    from flats.provenance.sections import Opening
+
+    opens = extra.pop("opens", (Opening("Article", re.compile(r"^\s*ARTICLE\s+(?P<n>\d+)\s*$")),))
+    return Rule(layer=LAYER, heading=RULE.heading, front=frozenset({"1.code"}), opens=opens, **extra)
+
+
+def test_an_article_heading_is_a_page_of_its_own_in_reading_order() -> None:
+    """Rivergrove printed "ARTICLE 3 / PLANNING COMMISSION AND HEARINGS
+    OFFICER" as the closing lines of 2.090, and its first article's heading
+    was in no file at all. Each becomes a small page named for the heading,
+    between the sections, and the section ends above it."""
+    got = split(ARTICLES, _opening(), "1.code")
+    assert got == [
+        Section("Article 1", 1, 2, "1/article-1.txt"),
+        Section("1.010", 3, 4),
+        Section("Article 2", 5, 6, "2/article-2.txt"),
+        Section("2.010", 7, 8),
+    ]
+    assert got[0].page and not got[1].page
+    # without the rule, the heading stays where it was printed
+    plain = Rule(layer=LAYER, heading=RULE.heading, front=frozenset({"1.code"}))
+    assert split(ARTICLES, plain, "1.code") == [Section("1.010", 3, 6), Section("2.010", 7, 8)]
+
+
+def test_a_heading_naming_the_sections_own_chapter_is_not_a_page() -> None:
+    """Sherwood prints "Chapter 16.10" under the heading of 16.10.010."""
+    from flats.provenance.sections import Opening
+
+    lines = ["TDC 16.10.010. Purpose.", "Chapter 16.10", "Words.", "Chapter 16.20", "TITLE"]
+    rule = Rule(
+        layer=LAYER,
+        heading=re.compile(r"^TDC (?P<n>16\.\d+\.\d+)\. [A-Z]"),
+        opens=(Opening("Chapter", re.compile(r"^Chapter (?P<n>16\.\d+)$")),),
+    )
+    got = split(lines, rule, "16.code")
+    assert got == [Section("16.10.010", 1, 3), Section("Chapter 16.20", 4, 5, "16.10/chapter-16.20.txt")]
+
+
+def test_a_contents_list_printed_above_the_heading_opens_its_page() -> None:
+    """Sherwood prints the next chapter's "Sections:" list ABOVE its "Chapter
+    16.108" line; ``lead_in`` starts the page there, not one line under it."""
+    from flats.provenance.sections import Opening
+
+    lines = ["TDC 16.10.010. Purpose.", "Words.", "Sections:", "TDC 16.20.010. Uses.",
+             "Chapter 16.20", "TDC 16.20.010. Uses.", "More words."]
+    rule = Rule(
+        layer=LAYER,
+        heading=re.compile(r"^TDC (?P<n>16\.\d+\.\d+)\. [A-Z]"),
+        opens=(Opening("Chapter", re.compile(r"^Chapter (?P<n>16\.\d+)$")),),
+        lead_in=re.compile(r"^Sections:$"),
+    )
+    got = split(lines, rule, "16.code")
+    assert got == [
+        Section("16.10.010", 1, 2),
+        Section("Chapter 16.20", 3, 5, "16.20/chapter-16.20.txt"),
+        Section("16.20.010", 6, 7),
+    ]
+
+
+def test_a_title_only_heading_is_a_page_only_over_a_section() -> None:
+    """Tualatin's "COMPLIANCE AND ENFORCEMENT" over 31.105; a line in capitals
+    that is not over a section stays where it is."""
+    from flats.provenance.sections import Opening
+
+    lines = ["TDC 31.100. Purpose.", "SHOUTED LINE IN TEXT", "Words.",
+             "COMPLIANCE AND ENFORCEMENT", "TDC 31.105. Enforcement.", "More."]
+    rule = Rule(
+        layer=LAYER,
+        heading=RULE.heading,
+        opens=(Opening("Title", re.compile(r"^(?P<title>[A-Z][A-Z ]{6,}[A-Z])$"), above=True),),
+    )
+    got = split(lines, rule, "31.code")
+    assert got == [
+        Section("31.100", 1, 3),
+        Section("Compliance and Enforcement", 4, 4, "31/compliance-and-enforcement.txt"),
+        Section("31.105", 5, 6),
+    ]
+
+
+def test_heading_pages_are_written_indexed_and_read_back(tmp_path) -> None:
+    store = _store(tmp_path, lines=ARTICLES, name="1.code.txt")
+    rule = _opening()
+    write(store, rule)
+    assert check(store, {LAYER: rule}) == []
+    page = f"{LAYER}/2/article-2.txt"
+    assert store.load(page).text == "ARTICLE 2\nSCOPE AND COMPLIANCE\n"
+    assert store.part_of(page).number == "Article 2"
+    cut = splits(store)[f"{LAYER}/1.code.txt"]
+    assert [s.file for s in cut.sections] == ["1/article-1.txt", "1/1.010.txt", "2/article-2.txt", "2/2.010.txt"]
+    assert store.load(f"{LAYER}/1/1.010.txt").text == "TDC 1.010. Title.\nThis code is the town code.\n"
+
+
+def test_two_pages_filed_as_one_refuse() -> None:
+    from flats.provenance.sections import titled
+
+    lines = ["TDC 1.010. Title.", "x", "ARTICLE 3", "TDC 2.010. A.", "y", "ARTICLE 3", "TDC 2.020. B.", "z"]
+    with pytest.raises(ProvenanceError, match="two pages would be filed"):
+        split(lines, _opening(), "1.code")
+    assert titled("PLANNING COMMISSION AND HEARINGS OFFICER") == "Planning Commission and Hearings Officer"
+    assert titled("MEDIUM LOW DENSITY RESIDENTIAL ZONE (RML)") == "Medium Low Density Residential Zone (RML)"
+    assert titled("Commercial Standards (Reserved).") == "Commercial Standards (Reserved)."

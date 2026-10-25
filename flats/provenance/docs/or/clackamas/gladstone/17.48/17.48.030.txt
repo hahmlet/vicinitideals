@@ -420,7 +420,5 @@ Minimum Turning Radius                                  60° Parking
 
 Statutory Reference: ORS Ch. 197 and 227
 
-History: Ord. 1131 §2, 1990; Ord. 1269 §1, 1998; Ord. 1282 §1, 1998; Ord. 1298 §1, 2000; Ord. 1483 §2 (Exh. 5), 2017; Ord. 1515 §2 (Exh.
-B), 2022; Ord. 1535 §1 (Exh.
-A), 2024.
+History: Ord. 1131 §2, 1990; Ord. 1269 §1, 1998; Ord. 1282 §1, 1998; Ord. 1298 §1, 2000; Ord. 1483 §2 (Exh. 5), 2017; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
 

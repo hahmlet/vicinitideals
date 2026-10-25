@@ -1,0 +1,62 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "cc923239f56884858a0d7eb7d23bfb485e604a27f3bf2fcc149a9a5c569078a0",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L15",
+  "old_fingerprint": "043b3b6cd45929c310608eebac0399051584ccc0e64b97d5c72afb86389824c2",
+  "old_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "when_key": "",
+  "zone": "R-9"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "1c935593a544a76a5d5916407d27d1272bc11b73ceeb908c11263d28b878c52a",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L15",
+  "old_fingerprint": "75575efe83cf878d744689034032b3d7d801714152c74de9cc38fb589bd59409",
+  "old_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "when_key": "",
+  "zone": "R-12"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "17821245517f8936543186475ad837ccbae3b3538457ad9636af5f22347decdd",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L15",
+  "old_fingerprint": "bba35f0821667ee5dd81fba14d9077ce9d4c445a2bb646f3a60a3e54c7258658",
+  "old_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "when_key": "",
+  "zone": "R-15"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "c5820f811caa374c928ed29d6aff7ecd3779369366181a90fceebbce72fc7a34",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L15",
+  "old_fingerprint": "0d45615c8d01a0e0d97a82731d9193166fa981ac60d7ac9497f9507f45eb2ae7",
+  "old_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "when_key": "",
+  "zone": "R-24"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "2bb8c4ae1c11aa6f615b08fb210b3ef7923d7a18469cf3528c59c05231ab3849",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L15",
+  "old_fingerprint": "0bde756056ccd7e2a74eac0314e8255968cc8cfdfc4864392add367abc6fdffb",
+  "old_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "when_key": "",
+  "zone": "SF"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/king-city",
+  "new_fingerprint": "544ef7d7d975ecb7bfa5735804d5a7ebd274170517adfe92cf7b80327edc2992",
+  "new_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L15",
+  "old_fingerprint": "ec472fa4f9d3ef097ec809628fea91032cc8477d49a8f3927dd5fd224e6a6268",
+  "old_quote": "or/washington/king-city/16.84/16.84.010.txt#L1-L16",
+  "when_key": "",
+  "zone": "AT"
+ }
+]

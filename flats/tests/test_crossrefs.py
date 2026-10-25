@@ -685,7 +685,17 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
     cites it by that name (BDC 10.40.3.A), and the layer quotes it for the one
     clause it holds."""
     store = ProvenanceStore()
-    silent = {d for d in store.documents() if not _doc_ids([d])}
+    # A heading page -- "ARTICLE 3 / PLANNING COMMISSION AND HEARINGS
+    # OFFICER", cut from above an article's first section (FOLLOWUPS 73) --
+    # holds a heading and no section of its own; it is named for the heading,
+    # not a number. Some print a contents list ("16.08.010 Purpose") and so
+    # claim the chapter's numbers; either way a page is not a whole code.
+    parts = store.parts()
+    pages = {
+        d for d, part in parts.items() if d.rsplit("/", 1)[-1].removesuffix(".txt") != part.number
+    }
+    assert pages
+    silent = {d for d in store.documents() if d not in pages and not _doc_ids([d])}
 
     assert silent == {
         "or/clackamas/johnson-city/ors.197a.420.txt",

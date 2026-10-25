@@ -48,6 +48,7 @@ from flats.encode import legible
 from flats.encode.readiness import _quoted_parts
 from flats.provenance.marks import Mark
 from flats.provenance.marks import marks as raised
+from flats.provenance.sections import titled
 from flats.provenance.spelling import odd_words
 from flats.provenance.store import INDEX, ProvenanceError, parse_quote
 from flats.provenance.tables import Table, tables
@@ -110,6 +111,36 @@ def _heading(path: str) -> str:
     return ""
 
 
+def _is_page(path: str, number: str) -> bool:
+    """A heading page -- an article, chapter or division heading and what it
+    prints above its first section -- not a section: its file is named for
+    the heading ("article-3.txt"), a section's for its number."""
+    return path.rsplit("/", 1)[-1].removesuffix(".txt") != number
+
+
+def _page_title(path: str, number: str) -> str:
+    """A heading page's title as a name: "ARTICLE 3 / PLANNING COMMISSION AND
+    HEARINGS OFFICER" -> "Planning Commission and Hearings Officer". Empty when
+    the heading prints none (a title page is named for its title already)."""
+    try:
+        text = _store().text_path(path).read_text(encoding="utf-8")
+    except OSError:
+        return ""
+    lines = [" ".join(line.split()) for line in text.splitlines() if line.strip()]
+    for k, line in enumerate(lines):
+        if not line.lower().startswith(number.lower()):
+            continue
+        rest = line[len(number):].strip(" .:—-")
+        if not rest and k + 1 < len(lines):
+            after = lines[k + 1]
+            if not after.endswith(":") and not after[:1].isdigit():
+                rest = after
+                if k + 2 < len(lines) and lines[k + 2].startswith("("):
+                    rest = f"{rest} {lines[k + 2]}"  # "(NMU)", the zone's letters
+        return titled(rest)[:140]
+    return ""
+
+
 def _label(layer: str) -> str:
     found = _layers().get(layer)
     if found is not None and found.label:
@@ -131,7 +162,8 @@ def _library() -> dict[str, Shelf]:
         layer = store.layer_of(path)
         part = parts.get(path)
         if part is not None:
-            entry = Entry(path, part.number, _heading(path), part.proof)
+            shown = _page_title(path, part.number) if _is_page(path, part.number) else _heading(path)
+            entry = Entry(path, part.number, shown, part.proof)
             by_layer[layer][part.proof].append(entry)
         else:
             name = path.rsplit("/", 1)[-1].removesuffix(".txt")
@@ -506,12 +538,18 @@ def _document(document: str) -> dict[str, Any]:
         sections = [
             p for p in sorted(store.parts().values(), key=lambda p: p.first) if p.proof == document
         ]
+    name = store.section_of(document) or document.rsplit("/", 1)[-1].removesuffix(".txt")
+    heading = _heading(document)
+    if part is not None and _is_page(document, part.number):
+        name = part.number
+        title = _page_title(document, part.number)
+        heading = f"{name} — {title}" if title else name
     return {
         "document": document,
         "layer": layer,
         "label": shelf.label if shelf else _label(layer),
-        "name": store.section_of(document) or document.rsplit("/", 1)[-1].removesuffix(".txt"),
-        "heading": _heading(document),
+        "name": name,
+        "heading": heading,
         "url": doc.url,
         "retrieved": doc.retrieved,
         "sha256": doc.sha256,

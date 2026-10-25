@@ -39,6 +39,5 @@ For corner lots, the front lot line is that with the narrowest frontage.
 When the lot line abutting a street is curved, the front lot line is the chord or straight line connecting the ends of the curve.
 For a flag lot, the front lot line is the lot line that is most parallel to and closest to the street, excluding the pole portion of the flag lot (see Figure 1 following Chapter 18.165 CMC).
 
-(Code 2000 § 11.60.00; Ord. 841 Exh. 2, 2003; amended during 2007 recodification; Ord. 2016-011 § 1 (Exh.
-A), 2016)
+(Code 2000 § 11.60.00; Ord. 841 Exh. 2, 2003; amended during 2007 recodification; Ord. 2016-011 § 1 (Exh. A), 2016)
 
