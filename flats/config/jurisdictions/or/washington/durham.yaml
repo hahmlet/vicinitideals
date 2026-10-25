@@ -208,20 +208,32 @@ defaults:
   # 40 feet" (L354-L359). Held. Under the table's SDR row the drive itself
   # would stop at 30 at the property line; not held, for the reason above.
   #
-  # NOT ENCODED, the rest of 3.7.1.7: the apron "shall be set back from
-  # adjacent property by at least 5 feet and no portion of same shall be
-  # less than 100 feet from any street intersection as measured from the
-  # curb return". Nothing measures the curb return; on a corner lot less than
-  # about 100 feet along a street, the second clause leaves that street no
-  # legal apron at all. A doubt, and one that can turn a corner lot red.
-  # "These dimensions may be adjusted" for joint and reciprocal access: a
-  # relief on an approval, not a standard.
+  # THE 100 FEET, the rest of 3.7.1.7: "no portion of same shall be less
+  # than 100 feet from any street intersection as measured from the curb
+  # return". Nothing measures the curb return; on a corner lot less than
+  # about 100 feet along a street, the clause leaves that street no legal
+  # apron at all, a doubt that can turn a corner lot red. Held since
+  # 2026-10-24 (FOLLOWUPS 118) as a qualifier on the apron, on a fact nothing
+  # answers: every Durham lot the rest of the screen would certify is held
+  # out of GREEN, named, until the distance is measured. Not narrowed to
+  # corner lots: a lot beside a corner lot can be as close, and no measured
+  # fact says how far a frontage sits from an intersection. The printed
+  # figure, 100 feet, is the fact's own name.
+  #
+  # NOT ENCODED: the apron "shall be set back from adjacent property by at
+  # least 5 feet" -- placement along the frontage, which the plan does not
+  # draw. "These dimensions may be adjusted" for joint and reciprocal access:
+  # a relief on an approval, not a standard.
   driveway_approach_max_width_ft:
     value: 40
     cite: Durham Development Code 3.7.1.7, driveway apron within public right of way not wider than 40 feet (all zoning districts)
     url: https://durham-oregon.us/wp-content/uploads/2025/11/Development-Code-Revised-11.13.2025.pdf
     retrieved: '2026-09-29'
     quote: "or/washington/durham/3/3.7.txt#L27-L28"
+    qualified_by:
+      fact: driveway_near_intersection_100ft
+      cite: Durham Development Code 3.7.1.7, no portion of the driveway apron within public right of way less than 100 feet from any street intersection as measured from the curb return (all zoning districts)
+      quote: "or/washington/durham/3/3.7.txt#L27"
   # NOT ENCODED: 3.7.1.1, "vehicle access to an occupiable structure shall
   # extend to no less than 50 feet from a ground level access to that
   # structure. Pedestrian access shall extend from each ground level entry

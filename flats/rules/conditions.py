@@ -308,6 +308,26 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "driveway_near_intersection_100ft",
+        "site_fact",
+        "No stretch of the lot's street frontage wide enough for the "
+        "driveway apron lies 100 feet or more from every street "
+        "intersection. Durham 3.7.1.7, in all zoning districts: the part of "
+        "a vehicle access way within public right of way, \"e.g., the "
+        "driveway apron\", \"no portion of same shall be less than 100 feet "
+        "from any street intersection as measured from the curb return\". "
+        "On a corner lot, or a lot next to one, the sentence can leave a "
+        "street no legal apron at all. Nothing measures the distance from "
+        "a frontage to an intersection's curb return, so the fact is never "
+        "answered and every Durham lot the rest of the screen would certify "
+        "is held open, named (FOLLOWUPS 118; owner 2026-10-24: hold them out "
+        "of GREEN until the measurement exists). False would lift it; True "
+        "keeps it open, because no number here says what the apron then "
+        "needs.",
+        evidence="not held: the distance along each street lot line to the nearest street intersection's curb return",
+        assume=None,
+    ),
+    ConditionDef(
         "beyond_ugb_mile",
         "site_fact",
         "The parcel is more than one mile from the Metro Urban Growth "

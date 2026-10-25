@@ -1210,6 +1210,21 @@ types:
     approved_by: null
     approved_on: null
     raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
+  FACT-DRIVEWAY-NEAR-INTERSECTION-100FT:
+    description: "Durham forbids a driveway within 100 ft of a street intersection (3.7.1.7); not yet checked on this lot"
+    kind: categorical
+    risk: possible
+    severity: 5
+    absorbs: null
+    resolution: measurement
+    scope: per_lot
+    key: [lot, fact]
+    path: "Measure along each street lot line the distance to the nearest street intersection's curb return; a frontage with an apron's width 100 ft or more clear of every intersection clears it (FOLLOWUPS 118)"
+    priority: later
+    status: pending
+    approved_by: null
+    approved_on: null
+    raised_from: [FACT_UNOBSERVED, FACT_ASSUMED]
   FACT-MIDDLE-HOUSING-CHILD-LOT:
     description: "Whether the lot is a middle-housing land division child lot"
     kind: categorical
