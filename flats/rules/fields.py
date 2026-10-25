@@ -338,7 +338,11 @@ _F: tuple[FieldDef, ...] = (
         "19.501.2.A (29 major streets at 25, 30 or 40 ft). Held as a list of "
         "[street as the code prints it, feet]; a stretch the code names in brackets "
         "is not read, so the distance holds along the whole street, and a street "
-        "listed twice takes the deeper. A street the list leaves out takes "
+        "listed twice takes the deeper. A street listed with no figure (null) is "
+        "one the code names and leaves to someone else -- King City's Pacific "
+        "Highway, \"as determined by the Oregon Department of Transportation\" -- "
+        "and is read like an unread name, the deepest the zone states. A street "
+        "the list leaves out takes "
         "row_to_centerline_other_ft where the code states one, else none. "
         + _ROW_TO_CENTERLINE,
         False,

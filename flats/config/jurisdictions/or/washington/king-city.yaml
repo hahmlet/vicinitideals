@@ -260,17 +260,25 @@ private_drives:
 
 defaults:
   # ADDITIONAL YARD FROM THE CENTRE LINE (16.80.060 A; see the note above
-  # the zones). 99W's 61 feet is Sherwood's, borrowed: King City's code
-  # defers to ODOT and states no figure.
+  # the zones). Pacific Highway (99W) is "as determined by the Oregon
+  # Department of Transportation" (L5-L6): the code names the street and
+  # prints no figure, so the row holds none (null) and a line on 99W takes
+  # the deepest figure the section does print, 33 feet -- the field's rule
+  # for a street it cannot read (flats/geom/dedication.py). Until
+  # 2026-10-25 it held Sherwood's 61 feet for the same highway, borrowed;
+  # Steph's page check (1087): "Pacific Highway does not say 61' on this
+  # page." No lot moves on 99W today: every district that fronts it (LC,
+  # CBD, INST, the older residential districts) refuses the pod. Before one
+  # of them opens, ODOT's figure has to be found, not approximated.
   row_to_centerline_named_ft:
     value:
-      - [Pacific Highway, 61]
+      - [Pacific Highway, null]
       - [Beef Bend Road, 33]
       - [131st Avenue, 33]
       - [Fischer Road, 33]
       - [116th Avenue, 30]
       - [Royalty Parkway, 30]
-    cite: King City KCC 16.80.060 A.2.a-f, right-of-way from centerline by street (99W held at Sherwood SZCDC 16.106.030 D's 61 feet; ODOT states King City's)
+    cite: King City KCC 16.80.060 A.2.a-f, right-of-way from centerline by street (Pacific Highway as determined by ODOT, no figure printed)
     url: https://api.municode.com/PublicationPdfDownload/3913
     retrieved: '2026-09-29'
     quote: "or/washington/king-city/16.80/16.80.060.txt#L1-L12"
@@ -297,9 +305,18 @@ defaults:
   # requirements in the Kingston Terrace District." Table 16.114-13 prints
   # "Duplex, Triplex, Fourplex Not Applicable" as the maximum. Zero is
   # encoded because the code says none, not because it is silent.
+  # Citywide, not only Kingston Terrace (Steph asked, page check 1076,
+  # 2026-10-25): Ordinance O-2024-01 deleted the old 16.132.030 "Minimum
+  # off-street parking requirements", and the section that replaced it sets
+  # maximums only (16.132/16.132.030.txt#L1-L4,L33-L35). The state layer
+  # neither raises nor lowers this: OAR 660-046-0220(2)(e)(B) caps what a
+  # city may ASK (or/_state.yaml, preempts: cap), and the Climate-Friendly
+  # parking rules (OAR 660-012-0400 to -0450) are shown on the lot page and
+  # not screened (rulings.yaml 2026-09-30-transit-show-not-screen). The
+  # city's zero governs, and the pod draws its four stalls either way.
   parking_min_per_unit:
     value: 0
-    cite: King City KCMC 16.114.130 C.1, no minimum vehicle parking in the Kingston Terrace District
+    cite: King City KCMC 16.114.130 C.1, no minimum vehicle parking in the Kingston Terrace District (and none citywide since Ord. O-2024-01 deleted the minimums of 16.132.030)
     url: https://api.municode.com/PublicationPdfDownload/3913
     retrieved: '2026-09-29'
     quote: "or/washington/king-city/16.114/16.114.130.txt#L5-L10"
@@ -335,12 +352,18 @@ defaults:
   # length is not encoded (a doubt). C.9.b allows up to half the stalls
   # compact (8.0 by 15.0); the standard stall is held, the stricter reading,
   # as in the other layers.
+  # The quote is the table (printed page 427); C.9.a, the sentence that
+  # sends every stall to it, is the `via`. Quoted together, the card opened
+  # on page 426 and boxed the "9." of "9. Parking stall standard
+  # dimensions" as the 9-foot width (Steph: wrong box, page check 1081,
+  # 2026-10-25).
   parking_stall_width_ft:
     value: 9
     cite: King City KCMC 16.114.130 C.9.a and Table 16.114-14, 90 degrees, Standard
     url: https://api.municode.com/PublicationPdfDownload/3913
     retrieved: '2026-09-29'
-    quote: "or/washington/king-city/16.114/16.114.130.txt#L72-L75,L82-L93,L102"
+    quote: "or/washington/king-city/16.114/16.114.130.txt#L82-L93,L102"
+    via: "or/washington/king-city/16.114/16.114.130.txt#L72-L75"
   parking_stall_depth_ft:
     value: 16
     cite: King City KCMC 16.114.130 C.9.a and Table 16.114-14, 90 degrees, Standard (stall depth including bumper overhang)
@@ -367,10 +390,13 @@ defaults:
   # duplex, triplex or fourplex. Neither row names the pod; a doubt.
   front_lot_line_corner:
     value: both
-    cite: King City KCMC 16.24.020, Lot line (a front lot line is a lot line that abuts a street)
+    cite: King City KCMC 16.24.020, Lot line (a front lot line is a lot line that abuts a street; a lot may have more than one)
     url: https://api.municode.com/PublicationPdfDownload/3913
     retrieved: '2026-09-29'
-    quote: "or/washington/king-city/kcc.16.24.definitions.txt#L462-L465"
+    # Through L469, "In the case of more than one front lot line": the
+    # sentence that shows the code gives a corner lot two fronts. The card
+    # showed only the first (page check 1097, 2026-10-25).
+    quote: "or/washington/king-city/kcc.16.24.definitions.txt#L462-L469"
 
 # THE LAYER-WIDE REFUSALS, one per standard, read 2026-09-29.
 #
@@ -399,9 +425,9 @@ defaults:
 # "between X and Y" stretches of 131st, 116th and Royalty are not read: the
 # distance holds along the whole street, which can only push a yard back.
 # Pacific Highway (99W) is "as determined by the Oregon Department of
-# Transportation", which states no number; it is held at Sherwood's 61 feet
-# for the same highway (16.106.030 D, "Principle Arterial (99W)"), the
-# nearest stated figure. A borrowed number and a question for Steph.
+# Transportation", which states no number; held as a row with no figure
+# (null), read like a street the screen cannot name: the deepest figure the
+# section prints. It borrowed Sherwood's 61 feet until 2026-10-25.
 # The county-zoned "(WC)" districts read the county's dedication instead.
 #
 # NOT ENCODED: 16.80.060 B, projections into yards (L130-L149). An
@@ -448,6 +474,24 @@ zones:
   # carries no quadplex_allowed, and quadplex_allowed: false is not how a
   # zone says "not residential" (or/_state.yaml, the -0010(2) comment).
   #
+  # THE TOWNHOUSE PATH IS OPEN ON PAPER, AND NOT YET ENCODED (page check
+  # 1092, 1095, 1098, 2026-10-25: Steph answered "differs" on AT, R-24 and
+  # R-9). The same table prints "Single dwelling attached P P P P N P" --
+  # permitted in R-9, R-12, R-15, R-24 and AT, not SF (16.84.010.txt#L7-L8)
+  # -- and 16.24.030 defines it as a dwelling "located on its own lot, that
+  # shares one or more common or abutting walls ... Also referred to as a
+  # townhome or townhouse" (kcc.16.24.definitions.txt#L1209-L1214).
+  # 16.84.050 caps a row at "Maximum number of attached single-family units
+  # 4 units", and 16.84.040 prints townhouse lots of 1,500 square feet and
+  # 20 feet wide (its notes 1 and 2). That is the pod on four unit lots. The
+  # fourplex on one lot stays refused, as above. The unit-lot path wants
+  # `quadplex_allowed: true when [unit_lots]` in those five zones AND their
+  # 16.84.040 dimensions, 16.84.050's entrance rule and 16.132's parking
+  # (9 by 18 foot stalls and 24-foot aisles, 16.132.050 -- not the Kingston
+  # Terrace 9 by 16 and 20 in the defaults), read as one piece; opened
+  # without them every lot would sit grey. Until then these zones are red
+  # on a path the code allows: a false red, never a false green.
+  #
   # Two copying slips in the source, recorded so a reader does not stop on
   # them: 16.96.020 (R-15) and 16.100.020 (R-24) both open "Permitted uses in
   # the AT zone are" (residential-zones.txt L255-L256, L307-L308), under
@@ -461,7 +505,7 @@ zones:
     quadplex_allowed:
       value: false
       cite: King City KCMC 16.84.010 housing types (no triplex or fourplex row; Multi-dwelling N in R-9) and 16.84.020 permitted uses
-      quote: "or/washington/king-city/kcc.16.84.single-use-residential.txt#L12-L31,L37-L50"
+      quote: "or/washington/king-city/16.84/16.84.010.txt#L1-L16"
     notes: >-
       DRAFT. Refuses: the housing-type table has no triplex or fourplex
       row, and the district's permitted uses name none. A question for the

@@ -598,7 +598,8 @@ def _shown(value: object) -> str:
     if isinstance(v, (list, tuple)) and v:
         if all(isinstance(r, (list, tuple)) and len(r) == 2 and isinstance(r[0], str) for r in v):
             # A street table (row_to_centerline_named_ft): street, feet.
-            return "; ".join(f"{street} {_num(ft)} ft" for street, ft in v)
+            # A null row: the code names the street and prints no figure.
+            return "; ".join(f"{street} {'no figure' if ft is None else _num(ft) + ' ft'}" for street, ft in v)
         if all(isinstance(r, (list, tuple)) for r in v):
             return _curve(v)
         return ", ".join(_num(x) for x in v)

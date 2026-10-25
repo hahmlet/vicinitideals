@@ -2373,15 +2373,26 @@ def check_kind(name: str, v: Any) -> None:
 
 
 def _validate_street_table(name: str, v: Any) -> None:
-    """A street table is [[street as the code prints it, feet], ...]."""
+    """A street table is [[street as the code prints it, feet], ...].
+
+    ``feet`` may be null where the code names the street and prints no figure
+    for it -- King City 16.80.060 A.2.a, Pacific Highway "as determined by the
+    Oregon Department of Transportation". The row says the street is listed;
+    it is read as a street the screen cannot name (flats/geom/dedication.py),
+    never as zero and never as a figure borrowed from another code.
+    """
     if not isinstance(v, list) or not v:
         raise ValueError(f"{name}: expected a non-empty list of [street, feet] rows")
+    if all(isinstance(row, (list, tuple)) and len(row) == 2 and row[1] is None for row in v):
+        raise ValueError(f"{name}: every row is without a figure; a table must print at least one")
     for i, row in enumerate(v):
         if not isinstance(row, (list, tuple)) or len(row) != 2:
             raise ValueError(f"{name}: row {i} must be [street, feet]")
         street, ft = row
         if not isinstance(street, str) or not street.strip():
             raise ValueError(f"{name}: row {i} street must be a non-empty string, got {street!r}")
+        if ft is None:
+            continue
         if isinstance(ft, bool) or not isinstance(ft, (int, float)) or ft < 0:
             raise ValueError(f"{name}: row {i} feet must be a non-negative number, got {ft!r}")
 
