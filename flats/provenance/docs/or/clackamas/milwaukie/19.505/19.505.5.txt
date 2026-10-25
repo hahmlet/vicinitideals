@@ -1,0 +1,325 @@
+§ 19.505.5. Townhouses.
+
+A.
+
+Purpose
+
+Townhouses provide a type of housing that includes the benefits of a single detached dwelling, such as fee simple ownership and private yard area, while also being an affordable housing type for new homeowners and households that do not require as much living space.
+Townhouses are allowed at 4 times the maximum density allowed for single detached dwelling in the same zone or 25 dwelling units per acre, whichever is less, and the general design requirements are very similar to the design requirements for single detached dwellings.
+Two important aspects of these standards are to include a private-to-public transition space between the dwelling and the street and to prevent garage and off-street parking areas from being prominent features on the front of townhouses.
+
+B.
+
+Applicability
+
+1.
+
+The standards of Subsection 19.505.5 apply to single dwellings on their own lot, where the dwelling shares a common wall across a side lot line with at least one other dwelling, and where the lots meet the standards for a townhouse lot in both Section 19.302 and Subsection 19.505.5.E.
+Townhouse development may take place on existing lots that meet the lot standards for townhouse lots or on land that has been divided to create new townhouse lots.
+
+2.
+
+Development standards for townhouses are in Subsections 19.301.4 and 19.302.4.
+
+3.
+
+Dwelling units that share a common side wall and are not on separate lots are subject to the standards for single detached dwellings, middle housing, or multi-unit housing.
+
+4.
+
+Creation of new lots or parcels as part of a townhouse development is subject to the applicable land division process in Title 17 of this code.
+
+C.
+
+Townhouse Design Standards
+
+The design standards in this subsection apply to townhouses when the closest wall of the street-facing façade is within 50 ft of a front or street side lot line.
+An architectural feature may be used to comply with more than one standard.
+
+An applicant may request a variance to the Detailed Design standards in Subsection 19.505.5.C.4 through a Type II review, pursuant to Subsection 19.911.3.B. variances to any other design standards requires a variance through a Type III review, per Subsection 19.911.3.C.
+
+1.
+
+Articulation
+
+All buildings must incorporate design elements that break up all street-facing façades into smaller planes as follows.
+
+a.
+
+For buildings with 30-60 ft of street frontage, a minimum of one of the following elements must be provided along the street-facing façades.
+
+(1)
+
+A porch at least 5 ft deep.
+
+(2)
+
+A balcony that is at least 2 ft deep and is accessible from an interior room.
+
+(3)
+
+A bay window that extends at least 2 ft wide.
+
+(4)
+
+A section of the façade that is recessed by at least 2 ft deep and 6 ft long.
+
+(5)
+
+A gabled dormer.
+
+b.
+
+For buildings with less than 30 ft of street frontage, the building articulation standard is not applicable.
+
+2.
+
+Eyes on the Street
+
+At least 15% of the area of each street-facing façade must be windows or entrance doors.
+
+a.
+
+Windows used to meet this standard must be transparent and allow views from the building to the street.
+Glass blocks and privacy windows in bathrooms do not meet this standard.
+
+b.
+
+Half of the total window area in the door(s) of an attached garage counts toward the eyes on the street standard.
+All of the window area in the street-facing wall(s) of an attached garage count toward meeting this standard.
+
+c.
+
+Window area is considered the entire area within the outer window frame, including any interior window grid.
+
+d.
+
+Doors used to meet this standard must face the street or be at an angle of no greater than 45 degrees from the street.
+
+e.
+
+Door area is considered the portion of the door that moves.
+Door frames do not count toward this standard.
+
+3.
+
+Main Entrance
+
+At least one main entrance must meet both of the following standards.
+
+a.
+
+Be no further than 8 ft behind the longest street-facing wall of the building.
+
+b.
+
+Face the street, be at an angle of up to 45 degrees from the street, or open onto a porch.
+If the entrance opens up onto a porch, the porch must meet all of these additional standards.
+
+(1)
+
+Be at least 25 sq ft in area with a minimum 4-ft depth.
+
+(2)
+
+Have at least one porch entry facing the street.
+
+(3)
+
+Have a roof that is no more than 12 ft above the floor of the porch.
+
+(4)
+
+Have a roof that covers at least 30% of the porch area.
+
+4.
+
+Detailed Design
+
+All buildings shall include at least 5 of the following features on any street-facing façade.
+
+a.
+
+Covered porch at least 5 ft deep, as measured horizontally from the face of the main building façade to the edge of the deck, and at least 5 ft wide.
+
+b.
+
+Recessed entry area at least 2 ft deep, as measured horizontally from the face of the main building façade, and at least 5 ft wide.
+
+c.
+
+Offset on the building face of at least 16 in from one exterior wall surface to the other.
+
+d.
+
+Dormer that is at least 4 ft wide and integrated into the roof form.
+
+e.
+
+Roof eaves with a minimum projection of 12 in from the intersection of the roof and the exterior walls.
+
+f.
+
+Roof line offsets of at least 2 ft from the top surface of one roof to the top surface of the other.
+
+g.
+
+Tile or wood shingle roofs.
+
+h.
+
+Horizontal lap siding between 3 to 7 in wide (the visible portion once installed).
+The siding material may be wood, fiber-cement, or vinyl.
+
+i.
+
+Brick, cedar shingles, stucco, or other similar decorative materials covering at least 40% of the street-facing façade.
+
+j.
+
+Gable roof, hip roof, or gambrel roof design.
+
+k.
+
+Window trim around all windows at least 3 in wide and 5/8 in deep.
+
+l.
+
+Window recesses, in all windows, of at least 3 in as measured horizontally from the face of the building façade.
+
+m.
+
+Balcony that is at least 3 ft deep, 5 ft wide, and accessible from an interior room.
+
+n.
+
+One roof pitch of at least 500 sq ft in area that is sloped to face the southern sky and has its eave line oriented within 30 degrees of the true north/south axis.
+
+o.
+
+Bay window at least 2 ft deep and 5 ft wide.
+
+p.
+
+Attached garage width, as measured between the inside of the garage door frame, of 35% or less of the length of the street-facing façade.
+
+q.
+
+The following design element counts as two elements.
+Dwelling must be built to meet universal access as follows:
+
+(1)
+
+Dwelling must have a bedroom on the ground floor.
+
+(2)
+
+A ramp complying with R311.8 Oregon Residential Specialty Code (ORSC) must be provided to the main entrance of the dwelling.
+
+(3)
+
+Doors must have a minimum clear width of 32 in.
+
+(4)
+
+Horizontal and vertical grab bars must be provided in one bathroom on the main floor at the toilet, bath and shower.
+(See ANSI A117-1 section 609 for size and location requirements.)
+
+5.
+
+Townhouses must include an area of transition between the public realm of the right-of-Way and the entry to the private dwelling.
+The entry may be either vertical or horizontal, as described below.
+
+a.
+
+A vertical transition shall be an uncovered flight of stairs that leads to the front door or front porch of the dwelling.
+The stairs must rise at least 3 ft, and not more than 8 ft, from grade.
+The flight of stairs may encroach into the required front yard, and the bottom step must be at least 4 ft from the front lot line.
+
+b.
+
+A horizontal transition shall be a covered porch with a depth of at least 5 ft. The porch may encroach into the required front yard, but it must be at least 4 ft from the front lot line.
+
+D.
+
+Number of Townhouses Allowed
+
+In the High Density Zone, no more than 4 consecutive townhouses that share a common wall(s) are allowed.
+A set of 4 townhouses with common walls is allowed to be adjacent to a separate set of 4 townhouses with common walls.
+
+In the R-MD zone, the maximum number of consecutive attached townhouses is 4.
+
+E.
+
+Townhouse Lot Standards
+
+1.
+
+Townhouse development is allowed only where there are at least 2 abutting lots on the same street frontage whose street frontage, lot width, lot depth, and lot area meet or exceed the base zone requirements listed in Tables 19.301.4 and 19.302.4.
+
+2.
+
+Townhouse development must meet the minimum lot size of 1,500 sq ft.
+
+F.
+
+Driveway Access and Parking
+
+1.
+
+Garages on the front façade of a townhouse, off-street parking areas in the front yard, and driveway accesses in front of a townhouse are prohibited unless the following standards are met.
+See Figure 19.505.5.F.1.
+
+a.
+
+Development of 2 or 3 townhouses has at least one shared access between the lots, and development of 4 townhouses has 2 shared accesses.
+
+b.
+
+Outdoor on-site parking and maneuvering areas do not exceed 10 ft wide on any lot.
+
+c.
+
+The garage width does not exceed 12 ft, as measured from the inside of the garage door frame.
+
+d.
+
+Shared accesses are spaced a minimum of 24 ft apart.
+
+Figure 19.505.5.F.1 Townhouse Development with Front Yard Parking
+
+2.
+
+The following rules apply to driveways and parking areas for townhouse developments that do not meet all of the standards in Subsection 19.505.5.F.1.
+
+a.
+
+Off-street parking areas must be accessed on the back façade or located in the rear yard.
+
+b.
+
+Townhouse development that includes a corner lot shall take access from a single driveway on the side of the corner lot.
+The City Engineer may alter this requirement based on street classifications, access spacing, or other provisions of Chapter 12.16 Access Management.
+See Figure 19.505.5.F.2.b.
+
+Figure 19.505.5.F.2.b Townhouse Development with Corner Lot Access
+
+c.
+
+Townhouse development that does not include a corner lot shall consolidate access for all lots into a single driveway.
+The access and driveway are not allowed in the area directly between the front façade and front lot line of any of the townhouses.
+See Figure 19.505.5.F.2.c.
+
+Figure 19.505.5.F.2.c Townhouse Development with Consolidated Access
+
+d.
+
+A townhouse development that includes consolidated access or shared driveways shall grant appropriate access easements to allow normal vehicular access and emergency access.
+
+G.
+
+Accessory Structure Setbacks
+
+On townhouse lots with a lot width of 25 ft or less, there is no required side yard between an accessory structure and a side lot line abutting a townhouse lot.
+All other accessory structure regulations in Subsection 19.502.2.A apply.
+

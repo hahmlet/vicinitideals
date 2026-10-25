@@ -1,0 +1,1002 @@
+[
+ {
+  "field": "corner_access_street",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "9cd65073d3a6255c0ad2f0179d89cb98e896f98a3a0e6d1f4e21a8af58bf6e55",
+  "new_quote": "or/clackamas/milwaukie/12.16/12.16.040.txt#L34-L37",
+  "old_fingerprint": "1dfc55905da6f5910ec61a175c4921ee67e7a291d614b76845747c968af5497e",
+  "old_quote": "or/clackamas/milwaukie/12.16.access-management.txt#L124-L126",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_min_width_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "b1e7a97bdb745d8f712f3ed4a0e781a91de54c9d18dc6a9b7d61c243f957812a",
+  "new_quote": "or/clackamas/milwaukie/12.16/12.16.040.txt#L185",
+  "old_fingerprint": "c822c2f3a89c3f3a4109bf3815c07a11fa76fc65c8b3536ca14a4b657bfb1ac1",
+  "old_quote": "or/clackamas/milwaukie/12.16.access-management.txt#L260",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_min_width_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "5d7d8d3c1e5dc0c3264e51420b940441d22add1cbd1d56425c32ebcb48e85c7d",
+  "new_quote": "or/clackamas/milwaukie/12.16/12.16.040.txt#L185",
+  "old_fingerprint": "3f1c498857ca900d440fa10f53977ddad26f748241031d6b514748ae1ce0e78b",
+  "old_quote": "or/clackamas/milwaukie/12.16.access-management.txt#L260",
+  "when_key": "local_street",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "3e01824a8dd8df75fa6dc29ab3e509b168229685724289823f7224259c68b7ce",
+  "new_quote": "or/clackamas/milwaukie/12.16/12.16.040.txt#L185",
+  "old_fingerprint": "47832760e611472e89e990c0a6d9dd4bd036745767ab004b47a8d684c65bcad5",
+  "old_quote": "or/clackamas/milwaukie/12.16.access-management.txt#L260",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "1f9414e260bc095bf3051b620c0ba4d993a401269c51be5639b41e60c4b79aa3",
+  "new_quote": "or/clackamas/milwaukie/19/19.201.txt#L395-L399",
+  "old_fingerprint": "507b92e945975b8f7c578f2fb36ddefa9ecea689fafc8ab9084d0c738f303fbe",
+  "old_quote": "or/clackamas/milwaukie/19.200.definitions.txt#L470",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "front_lot_line_through",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "fa66fca12be1bfa6208e95096894952ecd87142f3e833e12ca89ebb30c051ad9",
+  "new_quote": "or/clackamas/milwaukie/19/19.201.txt#L395-L399,L402",
+  "old_fingerprint": "c2a849a107779399cfc8af56c4a96a70cf371b668035fee4b1c11fd694dc6f74",
+  "old_quote": "or/clackamas/milwaukie/19.200.definitions.txt#L470,L474",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "6a2462a8a884c1b90037586400c7f2b4a887688ef4becdcefbec2427e5cd2785",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.2.txt#L15",
+  "old_fingerprint": "fcc817498e952339e8ace573017800808dd9b0422863b28a304519f962c0cd80",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L35",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "5fc2bf52dcfc2c4d72946c48907bfc8868df9512ebaaa4b4f7347de1fafa5430",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L197",
+  "old_fingerprint": "2d4344b05c4a0f394f042c5247aeab5b6179572b631672c1ac1eb8d1ac53258f",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L282",
+  "when_key": "flag_lot+unit_lots",
+  "zone": "R-MD"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "de5aa006c55e47a3e02cc71abae416d3fcd933027cb9ed53b003c937088ce20b",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L99",
+  "old_fingerprint": "fe35fdd02ab01b822df9d1f5b0abd919af7367ae29b859cd22250b7f5947a51f",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L184",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "10228a743f8783206e258118f90b7d7b60e5476b8f3677b7973742b5368f7e2e",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L109",
+  "old_fingerprint": "4f72eee5f768834f4251d4b28d0811e783cd9324c0d895bfcf2913b5a52db9d5",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L194",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "1aa8bf4dc2a231d443a5b6ab2e67a492532debecfc54efb240d83b8a7f457a56",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L129",
+  "old_fingerprint": "8d471081c73498b96c447a842bbf4dca9faf0d1c347bf11c7c106610e6af4676",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L214",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "e42d307361fcca420d0d3ef21184a1603a99d978f7c06c0fe38ef74eb9be7b90",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L121",
+  "old_fingerprint": "bd0abb8f3ae0b55cbb909472d27fbfdcaa24c62d5009a82efa2ceb6e8fd4752c",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L206",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "9f4651f5d3595224ee9e59b5d82d6da853d8d0e4001435a510f5a60af3392e75",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L35",
+  "old_fingerprint": "c739cce193b0b23b4f731eba841b6c19813a9c338b8a84db097a64b4a24c7a0f",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L120",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "59cdcb3f5367ad33d0c1c89b4079acb71835f8a610458da3a6ff955b32c1534c",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L34-L45",
+  "old_fingerprint": "37eb9fda93eb5f7b07e6cebbe3678e953e25bac335ebbe95c1ff7c1f9533f1aa",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L119-L130",
+  "when_key": "unit_lots",
+  "zone": "R-MD"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "6e9a0412c5a45f0c7f9eb1c9679c5233212575b65ea03b7066856a77b8e6cecc",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L59",
+  "old_fingerprint": "fc0436ce0b2d80ab97e4e140be1c98d931642e9803a20ef99663b9694da6ced5",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L144",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "c111456f2bef81a4f5559be4e5131e5e900ea5dcab830f9ddc1e5408902bdaac",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L61,L64",
+  "old_fingerprint": "426cdf3e03d629b4b62138922a8e7627ee6e9fc7ecf5a6403744f9a5c00884f1",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L146,L149",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "2edba8ace7f5eb930e490467456a45c1d4f5c273852de53db50d20cbc3490a39",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L66,L69,L72",
+  "old_fingerprint": "d6964e8966c0bf05f2958717aca4d375f886a409974f55a86687c952d9f3e130",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L154,L157",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "bff426dc3338622e93c6e846a23c48d085f52336eaebb4621523ce1f259a4328",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L66-L68",
+  "old_fingerprint": "3a563590dfa8261587158eac25db41705b72afe4279d2a61d8a230f0cd9127e6",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L151,L152,L153",
+  "when_key": "unit_lots",
+  "zone": "R-MD"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "1588d37c52e007c666ef7356f9853e121833a9bc184ff27d11bcb2049b4cc0a5",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L159",
+  "old_fingerprint": "a374df52615a03299997a01cfa58575f978367fcfe9792babc61dc4e68e5ac7b",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L244",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "d8e34c0f9a07326ceb08d64fa96850c9e6a25493978718769627beef2efaf5f7",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L139",
+  "old_fingerprint": "26b42346025c1b5dbe3e082e0f0bcc1cebaf25519de5bf5aa4b8070d3d2c5c7a",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L224",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "6acb4bd589bd9b285dff829d3cd65277e4301539af71513b00e6095a851d6911",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L198-L199",
+  "old_fingerprint": "accae0d7e8942ef71b31ae722e50a1294594cad019881d4a48076e0ae6965f6e",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L283",
+  "when_key": "",
+  "zone": "R-MD"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "d2b100c88b0672eb7f6e86fef735933b955e25955bcd50c001f601b0035a870b",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L198-L199",
+  "old_fingerprint": "6473f75f8649ed6c3e9e50e0d5b24e46ea98ae87afb5960ed7837673185b9ed2",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L283",
+  "when_key": "unit_lots",
+  "zone": "R-MD"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "b77fcbb5fb163285c63ff1ad249037fe12999e9e083f006080a1ee0b78923fc5",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.2.txt#L15",
+  "old_fingerprint": "5dfc85395dd8fbf004b63e88ba390c9bc9dbb73b03d4496416aa321e12e37641",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L404",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "127920ccc555eb9483180ad42f77efc47cc47b17622551a51eb979ea2a9fcd56",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L33",
+  "old_fingerprint": "5c63e3d1bdf959168a2f4abaf893201596b0145deeb5b7151a9e5351175e4df3",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L495",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "fe6abc7943c3d0c8a241e2d5a96c7340e54f739484c1ce1f67879965d8eb92e7",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.5.txt#L12,L16-L18",
+  "old_fingerprint": "6f71ed1b00ba9b798f709782bb29730a0dfcb4f1dd8d6e0ac0c0250b4a92b6e2",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L526,L530",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "0507d593695392f43f54b50e73f983f845175d0e2e3a5f317c1cce215b2750e3",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L36",
+  "old_fingerprint": "a86c6f81949bca50782979a1312419b996fb24cac0ac971097d89c1a51b5a7a7",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L498",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "bdffd762fe41f917a2d608b6d518b3ec68d2555568e09b29f102feca7e092483",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L35",
+  "old_fingerprint": "e4b10bc120f6a1ef5fa92689386b1a7baa51e264d05dcdeec5a646ea60cbf968",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L497",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "1fd0fd6faa50cf88c93cee481fc66824c25b623d44a286819b148d18b6492425",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L51",
+  "old_fingerprint": "a201cfd9449e39edf9919ae7c8a14914ce3acc381b686ae80d8e39b6d0c8bb2c",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L512",
+  "when_key": "unit_lots",
+  "zone": "R-HD"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "68e64ccc484dff5c1849c442d3471c5067e29b1ea03142ae7b134d6506fe0d64",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L14",
+  "old_fingerprint": "68c8aadac34f151eb2fcd993ca6744c8ee602cbe085d8af08d74a028dfa41fa4",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L476",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "96a47638e1c7e36a7385162273f051f987e230e18cd5fd6056313e710b1bf579",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L13",
+  "old_fingerprint": "1a2d9d7f90d6e17a068877f23f1f5524e39987fb71e4ecc34dcdb00cb8d6aad4",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L475",
+  "when_key": "unit_lots",
+  "zone": "R-HD"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "8ead23814282a2b14190a97476c01d490a6854d1bf3ae637ae123b5619231291",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L24",
+  "old_fingerprint": "1c8d547a09550cabcff0edc3b257d0419bc0590b72d18084485ad3cd616ea2b5",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L486",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "57237dfd7679c99d4e7cd10c96c41ab70d0041251661066db64fd0807cb79667",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L22,L25",
+  "old_fingerprint": "094dd76de7b9cc260ac6f5de260c471286010da1d67811dafb31e70e27cdfcb3",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L484,L487",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "d74e6de5dc34330d5c94ba13dfd37543c6e0648b57ba6350cd6c3d5f96862c48",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L26,L28",
+  "old_fingerprint": "3e7c5f8af6d03349a0ce0217db7f09367a54affaf420ae3aea608ddcd6ec1fdb",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L488,L490",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "6400c954e8649d8578bd7b2178cd3a15d0ff23ea2965e31a32b8ce7ad6390f0c",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L26-L27",
+  "old_fingerprint": "46ae0b71765e7eb1f29718e4a854e0d962383c00c6060091b8b97318a54e1ede",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L488,L489",
+  "when_key": "unit_lots",
+  "zone": "R-HD"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "239f76af0ca2166800a2484e6a4f616f75693546359c6f631749b235569b05a9",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L37",
+  "old_fingerprint": "fac9fc03311ea1457580daa3e4bab083c11fa210e69b26036b9a9ac75f29025a",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L499",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "791e7de92a97288f2a144c63e1f037fa6d827fcd5787ed1751815004d7f4e733",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L41",
+  "old_fingerprint": "5d557053452ab9db5b41888ca420e2a707ce9ec60db75be468095bee828cb693",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L503",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "f69e7a1d5fb134985f1fdbfb5b9ea672069d4c7d2584f507b5ed687d497ea239",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L48-L49",
+  "old_fingerprint": "3966d0b8ff75ce9b7add6ac0294085c2d3e817570b1723b9f288952f46449be4",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L510",
+  "when_key": "",
+  "zone": "R-HD"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "4d783cfaa5f2ba8ace0f86932cbad75935a0f0e8ba97ab26474f024c95419184",
+  "new_quote": "or/clackamas/milwaukie/19.302/19.302.4.txt#L48-L49",
+  "old_fingerprint": "4b8c12d86269bc1806a052e2535fe78c3da511835ba7ca150a33f145322ef3b7",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L510",
+  "when_key": "unit_lots",
+  "zone": "R-HD"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "8ea7a8ef764dc256772752567402e7407e951aa5f1eaca5b148d02f8f7c7e9d0",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.2.txt#L28,L30-L31,L54-L86,L184-L189,L210-L211",
+  "old_fingerprint": "43c585df65bdd1f0342677a27e6d68fcff72bb04d03883a1e9428739d84daf3c",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1400,L1402,L1424-L1427,L1428-L1456,L1547-L1551,L1572-L1573",
+  "when_key": "",
+  "zone": "OS"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "e179ea5756d261675e8aeee7d8f91665e13eb5cb5df8158619429f201cba475d",
+  "new_quote": "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L366-L370",
+  "old_fingerprint": "d191288996362d43cbd4c8c060d712de20030812684932cda5a7d6521422873c",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L3502,L3504,L3534-L3560,L3809-L3811",
+  "when_key": "",
+  "zone": "MUTSA"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "1ef058a14f1debf62eca4ae5405f9b0412d3134c82fe6939b04e397f3940792b",
+  "new_quote": "or/clackamas/milwaukie/19.312/19.312.2.txt#L31,L33-L34,L65-L91,L366-L370",
+  "old_fingerprint": "f253476176dfb20971ae153b3fc47c9495970ecdaad322e83bd9f877cbe3f6cc",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L3502,L3504,L3534-L3560,L3809-L3811",
+  "when_key": "",
+  "zone": "NME"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "ae92066d0abd40b49845af6ca94b4ce9f3fff1e8908a54e3895ccb5476de2de3",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.2.txt#L28-L31,L58-L86",
+  "old_fingerprint": "f180d0378d37122c17b9459d76bbbe91b22befd6dffa3a81ba2be24554c87cab",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1400-L1402,L1428-L1456",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "529d1279802fd335cd4d7ca52ef958ba3b6b657781741a1d11c4cfbbfdd613d1",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.4.txt#L29-L30",
+  "old_fingerprint": "37727857c6cbf726f0c1fc87856e64af928d693476cb3372faccaef6a100cb4e",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1703-L1704",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "4612886a9870b2ac38432c640d0607e907ba5f5e73b86278a95ecc56a9b624b9",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.4.txt#L32-L33",
+  "old_fingerprint": "43cd22d9cdb28b4a0f6f60d6fe97e5eaa74579f9ae81f386abd8153c775f154a",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1706-L1707",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "dc64ff42cf04ce83071062e594cabb1c9481e9d96ad6c622ffd0abe8bb87cbc4",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.4.txt#L73-L74",
+  "old_fingerprint": "38e15ebbb7b8437efee9413eb1fdc494d065fc704b4879e11e569e55aeccf1d9",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1747-L1748",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "074146081f9d21fca63a2abe5ea2b0038e5f51888a0536264992597f9abcef12",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.5.txt#L153",
+  "old_fingerprint": "19ca02a1455d4e8a2e8e794056336a54b5ffb2e16c3f95ba079e3c438f5f4ec2",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1956",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "b5c70b137979578d08e298e51f9716f1de0ab468478c6d1cf422fc6a863495ba",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.4.txt#L89-L91",
+  "old_fingerprint": "98f6cda0ffaf4acd938932cf5dbc6669f11e5f92a9059c0bf92aa0f867f63152",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1763-L1765",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "890c3407814ea266b8c7278e8ca744d6ae4a0c389b8753c81d6d39d2cf6a882c",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.4.txt#L89-L91",
+  "old_fingerprint": "60700649c1e608129bdd35f4f611b93b74259dae8f9e0c8527c94da48b80a324",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1763-L1765",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "6737b8574ba3ce3b902d95d8f88da7f20190ad33d0980b5516eef700af5af57f",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.5.txt#L153",
+  "old_fingerprint": "29d1490f150c51468252dad2cada89604504858c5c5a2ff6ac4884885c5290c3",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1956",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "b01ae35d2421715f11d45c191a77d8ad295450d5467b20ad4c1267f7df8822df",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.4.txt#L13-L131",
+  "old_fingerprint": "2668102e4d12817bd6f50dac792192d0ecb12b7044717343230807630229db6b",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1687-L1810",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "d0b398ef90bfcd9d6453a422798cef9ca9b6b0d37718ab7794273137b470336a",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.5.txt#L206",
+  "old_fingerprint": "8a2b1f3f3497c425a061f0c50035049f512d1c052919d85329175acef01f6f28",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L2006",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "f354abe04d25882417490dcefd183fc4a1c0f48d7819729a413d711c2ffa950c",
+  "new_quote": "or/clackamas/milwaukie/19.304/19.304.5.txt#L227-L228",
+  "old_fingerprint": "2f054ca43c58c44f7ed05df01e3b9cfa28316e437db9d9bcb07856e377d28867",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L2026",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "00bbbecfef56ec2d8e235238b31880e7fd656b0bb98be6d6a40322fdf684ef8d",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.2.txt#L21-L22,L58-L83,L245-L283",
+  "old_fingerprint": "43226288f530223602d3d29caa813394f09b2843a2405b4bd2ee1fd66dc8ff97",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L731-L756,L911-L936",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "eb39f6991fc5620db51553b5ad99c9d8442f06f55f58beeaa2195dd5a1ed7f52",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.2.txt#L69-L73",
+  "old_fingerprint": "b52c9559f1e7426a95d78d28d9c1e82224f4e40c15998f9395c0a87d8164c80e",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L742-L746",
+  "when_key": "conditional_use",
+  "zone": "NMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "ae3c9af2b80989260bf7b69e4de8e4caa064073be3c98dbf6f0925ac09bab404",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29",
+  "old_fingerprint": "b8866c291485ca2ce5fe2e70eadba794227c9905c2bc2012ec9b0db0e89aae88",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "e661932943ecf90c6631389a996dcf42da684e48a8ae7c5987feececff268434",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33",
+  "old_fingerprint": "9d1e2c0353cab52e874bd1334260169f04a41beee8460affb633883b9b0487b2",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L968-L969",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "9317e64d38d9ed45cb8e248bebeb2b969c299ae394f19f647740c3a2205e87b0",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.4.txt#L66",
+  "old_fingerprint": "df697f11028b4140b861aa463834852b518211271b86446e5c343008740e2b70",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1136",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "a87b81ee2d9c6e5c7819d24f2cae6faaf1ca51f2ab5b49270348125b7a90c0c8",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L19-L21,L69,L71",
+  "old_fingerprint": "4da4bf3f6e1b1dc80a4c07e5712ba15b2eecc5b7ebc379a7bd44c73e9372d9ff",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L955-L957,L1005,L1007",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "53a8053ee4fdb4c460f755178ee11d1db43e23439afe4ffec47360e57333f028",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L19-L21,L69,L71",
+  "old_fingerprint": "64ab892058aae8751573606f17bf216ee6e2bfa0a899a46ea91366000e2a685b",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L955-L957,L1005,L1007",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "b36cd00e2af2981bf74146f66484ab9da66a9690b595c801fd56a1b6d8ff433c",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L79-L80",
+  "old_fingerprint": "e8016485a967ca0d3b9a2d6869097305dd759ee81dd92357cef93abf330fbc4a",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "4d28d18b0504a1b2e7c18aaabd5348a8a4436df5c19d852151da446402e9f7d3",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L83-L84",
+  "old_fingerprint": "462507eae28fc1e79bc83a32fa03b7f07c1e7855bbd748f83c94305f76bb452c",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1019-L1020",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "a3ec10dd61de2813be019a9d8425b2470f3c5aee9d124864c9f613a201196574",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.4.txt#L223",
+  "old_fingerprint": "bf79ea68c630d1650d0c430e5eb963e8e9e84c251c3e03ae816cc56f79a8ffab",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1286",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "d203d0e37c75f76c36095035bca0db9cfb077a454640bf42ab847a8a46accd78",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.4.txt#L223",
+  "old_fingerprint": "a041f74cfc18f454665a3d856e4cc6812ca1195956f90293879b86416d9dc5a0",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1286",
+  "when_key": "",
+  "zone": "NMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "84a942ada53c1a491bd6612ec382aa1b9e09d17b5998134d01ecd99a9835b9d6",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.2.txt#L21-L22,L69-L73",
+  "old_fingerprint": "da515ccd3d469f02a8699e9eb4cb48761bbbec12f0bf9ad2e8a5cbf244b84ed9",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L742-L746",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "a03b377eedea0ed26764e04b74ad451da06be4062f78665a31e862091f4ee02f",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.2.txt#L64-L68,L263-L265",
+  "old_fingerprint": "bce6e2dd154f9d0c60186edda2d5a20fe0a6c0f644b5851348fbbb07fb1db9ec",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L737-L741,L921-L922",
+  "when_key": "unit_lots",
+  "zone": "GMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "6753209093e299f6cfadfa9e4e5e2fc8d39a75192c0ac057395ff777d40fb5e5",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29",
+  "old_fingerprint": "c857bff363982bf0ad15e561074c64270250518f060125563fb76d30562ab566",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "d4892a69f172b1039d7998891f6f0096364e830494d34c9802830822401b6237",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33",
+  "old_fingerprint": "a077ceccbf3a9784aa098d4af51df3cac84303d5bd2b12cbd37fb47868062f0f",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L968-L969",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "acb0664888f362c42864b256b01d6e84da782510fa7a7a6cd5636237146c5d9f",
+  "new_quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L99",
+  "old_fingerprint": "1eb4717045ad166833ba140188bac0d4434aa6dea685ccfa5c46f25397b2cc6b",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L184",
+  "when_key": "abuts_residential_zone",
+  "zone": "GMU"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "1ba8b5d3a2ad51f92d137cfb6be96e5fb84502fa9631b46856d8bbf1805d2b83",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L69-L70",
+  "old_fingerprint": "f29ae1a809ae0f7294febdf9551f792254708c7111d45c05c5378cfe48c3cf94",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1005-L1006",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "466a818fb026091cf5905a68ebfbba5b8871b79ba97025babe644bd319c842eb",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L69-L70",
+  "old_fingerprint": "0f7ad52e0e387832895e34c12681bf625c384884068f07f9b6d8f08e87af3dfc",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1005-L1006",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "dc0e925233f124cd3f92adba88ccada4fad6e29e1e507d2bfe0475f64ba89d01",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L79-L80",
+  "old_fingerprint": "f6aed12041ef8084a113f754da14f766731e671e5644fbb2c1b15b898c06d06d",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "4a1de918f72d4c86e55367c061702d75da9ee1f02ea3e5c7f08649374a0dc0a8",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L83-L84",
+  "old_fingerprint": "868458228831bcdef5155c567a978d6fecc4b415513b2e674d0d265193ea4ff6",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1019-L1020",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "d9044d8c606626e123487626f681388c3eaf7dafaa5b83c0b8875f7d05ace9aa",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.4.txt#L145-L146",
+  "old_fingerprint": "fa375b1d7ef3024516bf49d79dc26146e086acaf11ad0c15a47efa725c0247a6",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1212",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "98151f7bac20953b6bc173c2ac255ffe3b4e4ebc5a8548742eb6902f98e18add",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.4.txt#L219",
+  "old_fingerprint": "f3b3d72d0ff8c0c3ab2b552ac339dd7135e9761609d5921a8f43d6c4c69b0257",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1282",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "d80b975025cf814d00551df20b65ca37b4860e98ff2561cddcc4b44878661310",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.4.txt#L219",
+  "old_fingerprint": "5a0cde93ceec4cf65fb05b4ed64cd2deb066564ce1a1591770e6823137bb366e",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1282",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "572ce571d987ba254ba824fd7bf320b4cad5b3f2ab5e3c10058926a0e8d92ac1",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.2.txt#L21-L22,L58-L83,L245-L283",
+  "old_fingerprint": "4052fcc4be8bab31a88e123224847d49c4369fc48c83a5f051cd4a6a7c8e3603",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L697,L731-L756,L911-L936",
+  "when_key": "",
+  "zone": "SMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "ab2c6d0aa56246903510f91228e6949a37b1e25521d20be1f78eedb869774a91",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.2.txt#L69-L73",
+  "old_fingerprint": "0590ca8af0fbeace15b0a4142ef03f2aec018e56dcaf4558116c52df3074d0ff",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L742-L746",
+  "when_key": "conditional_use",
+  "zone": "SMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "182d618628c5efd906bc56a8b7036bb83b1097d4aa05cbc6b2d4c5db67d39e31",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L28-L29",
+  "old_fingerprint": "2213764594b093354db5aad37b626571394c2b6a5af8c0be468c00e8c34a3c76",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L964-L965",
+  "when_key": "",
+  "zone": "SMU"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "9bc178c994c572d52006a13e36f86b6cf58c3a1cc3e322c26015f8f2e1a26c7a",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L32-L33",
+  "old_fingerprint": "c414ea62f5a220161aac8f467b91d8868285b79343f8030fb3f91cf215cb668f",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L968-L969",
+  "when_key": "",
+  "zone": "SMU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "ac95b0c53ef99d09e4d2d9117078e54a188f929a5f57589838a292b130575613",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L60-L63",
+  "old_fingerprint": "5c20599cb3de5e1449bdc07b7976305f5ad5fe62630b94715e4cde2619058264",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L996-L999",
+  "when_key": "",
+  "zone": "SMU"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "a54afd0f4431436f00a46e55f13522efd070c8902541dea031995514c6e804a4",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L64-L67",
+  "old_fingerprint": "b796010c4a5f556bb63127e1baabe078fa40a583b9f0aad6492c718c954b1db1",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1000-L1003",
+  "when_key": "",
+  "zone": "SMU"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "b8aa060ca569c0b8c3fedf258197199bdc0ee97f229aed862ed8589a947d7e6d",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L79-L80",
+  "old_fingerprint": "a9e44b9f8c8d14eecd07e2b1345db4982e636f2eec1872335129533b84e7459a",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1015-L1016",
+  "when_key": "",
+  "zone": "SMU"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "bf86cc29cfd727df56a650a99c6c20da147b082ea6dffe8227c6181a851ba7f9",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L83-L84",
+  "old_fingerprint": "470ef630200ff7093b5d9b703a66a4eaf2d21869ed83c2e6b83ad12de52d8c57",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1019-L1020",
+  "when_key": "",
+  "zone": "SMU"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "32395a0b2a379d0f2a804af0f25b3a01d7d2e18de9bb03598522bb04835e445f",
+  "new_quote": "or/clackamas/milwaukie/19.303/19.303.3.txt#L116-L119",
+  "old_fingerprint": "cc2c2e4bc7b4d5820e6c98016cd84990b95ce682b334d97c02e7e7ece53625c4",
+  "old_quote": "or/clackamas/milwaukie/19.300.base-zones.txt#L1052-L1055",
+  "when_key": "",
+  "zone": "SMU"
+ },
+ {
+  "field": "row_to_centerline_named_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "755c01e18180f95dfa0ce19ed67017c25c86a3436b3fc4e88e37f1d2a595bda0",
+  "new_quote": "or/clackamas/milwaukie/19.501/19.501.2.txt#L5-L38",
+  "old_fingerprint": "db1c3902ba4309702e900f56fd237786feb085ef83e4e2970174edc687b8875e",
+  "old_quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L35-L67",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "451323aa1ee5c8f13a4e6408a583c67cb1c4f3e5853eb1e917c6703d51b455c3",
+  "new_quote": "or/clackamas/milwaukie/19.505/19.505.3.txt#L40-L41,L161",
+  "old_fingerprint": "33732ff6ed80b2ad02366c28a37422cd3098caaefc93eca7e96bc51fbe78fc35",
+  "old_quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1485",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_side_prohibited",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "4efa77b9d614839a77f4921540de1c712f642f41e8b28a6cc0486c02cc9a93f3",
+  "new_quote": "or/clackamas/milwaukie/19.505/19.505.3.txt#L40-L41,L161",
+  "old_fingerprint": "3181b55038eb73b227219c3753476bee0518b3ffcd6e967b1ee35bc8182e59be",
+  "old_quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1485",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_side_prohibited",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "a168cc702da096b53516cce1a3114360e7045c3308ef9abc2c10cefc742f3f33",
+  "new_quote": "or/clackamas/milwaukie/19.505/19.505.5.txt#L297",
+  "old_fingerprint": "1cfc43e39c2a7902e107394676fa35c823fb69f51d07f6066b6df6172eb5696f",
+  "old_quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L2314",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "cda0a4b7821777675bc7522c1a73078010ef2e91e376093b8136a8d61439ba1d",
+  "new_quote": "or/clackamas/milwaukie/19.505/19.505.5.txt#L301-L303",
+  "old_fingerprint": "8494e4db0e7211299e579dc7f778432b50eab8da3d867d2f3a3021f9ab17f8ff",
+  "old_quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L2318",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_maneuvering_max_width_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "9afc21f6dda0a366af579b261a3240aca9653d721d09bc2a133aaffbd46dab17",
+  "new_quote": "or/clackamas/milwaukie/19.505/19.505.5.txt#L270-L317",
+  "old_fingerprint": "bee064265221a36d4574d6b2f508e28566e329665b704efc4eb231af25400689",
+  "old_quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L2288-L2330",
+  "when_key": "unit_lots",
+  "zone": "defaults"
+ },
+ {
+  "field": "open_space_min_sqft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "7035466c42fcaad5dc44a315cd8538875705f3def392bb156012aa1cdeeb38b7",
+  "new_quote": "or/clackamas/milwaukie/19.505/19.505.3.txt#L40-L41,L126-L131",
+  "old_fingerprint": "ea57ca827eb5b24de2f82f7e951601c934da6359cd62b867e58572557f972bd9",
+  "old_quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1458-L1462",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "private_open_space_min_dimension_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "1dff51c14e98fba641fa66fdf057b9977a44aa3a259b93c0f6c08d7f413c4584",
+  "new_quote": "or/clackamas/milwaukie/19.505/19.505.3.txt#L40-L41,L131,L133",
+  "old_fingerprint": "bf57ccb5cbe7eb3a5c49432357dbebb13edcf45157c9803e4504e380e3dd64be",
+  "old_quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1462,L1464",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "c9eddbce4a85696c825947f99ec4b513dfa800b8f967742e4ff7b40feebcd9f1",
+  "new_quote": "or/clackamas/milwaukie/19.505/19.505.5.txt#L262",
+  "old_fingerprint": "a837ef99be5ee37b24d52d72b86fd2357ba513fdf7667607976fe14d9ee684f8",
+  "old_quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L2280",
+  "when_key": "unit_lots",
+  "zone": "DMU"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "4a7b24fe97e8273678319d80ec66123059645ec9f9f5ac6a9ba5bda106f13109",
+  "new_quote": "or/clackamas/milwaukie/19.508/19.508.4.txt#L73-L74",
+  "old_fingerprint": "e5dd54bbbd94411c95b17e43fcacd500793a4a8b06efe5a5c52c783c63829003",
+  "old_quote": "or/clackamas/milwaukie/19.500.supplementary.txt#L3083",
+  "when_key": "",
+  "zone": "DMU"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "b3e73a0bb76e7603c6b122754e4ade7bad186aabea21b7c4e6e3eca128d05546",
+  "new_quote": "or/clackamas/milwaukie/19.605/19.605.1.txt#L83",
+  "old_fingerprint": "1855a51e23296bd89c2c9029033ebbd498cf8679540caa05b33d743351555b2b",
+  "old_quote": "or/clackamas/milwaukie/19.600.parking.txt#L292",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "b619290186560c687962ba6de4366123044ba7b8ca4d940e07b55232592b8afc",
+  "new_quote": "or/clackamas/milwaukie/19.605/19.605.1.txt#L33-L34,L42",
+  "old_fingerprint": "8e58d0888d38b01a1a9caf235a42e08df7ecd502cc476fa9c117fcd2ef87aaa7",
+  "old_quote": "or/clackamas/milwaukie/19.600.parking.txt#L245-L246,L253",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "05f8fddc5932665f227c4c201cc58cf9cc61a139d583b771efb98a9164a8dd34",
+  "new_quote": "or/clackamas/milwaukie/19.607/19.607.1.txt#L3-L4,L10",
+  "old_fingerprint": "b2dd0c6c4b1fff715c1b205d665deb08a2ba2e5ce628ddc0c61c4b6a9ab41311",
+  "old_quote": "or/clackamas/milwaukie/19.600.parking.txt#L919,L925",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "dac4beda8aa33f762332436060b47cb13bf3604ed244453ee7eb19671236c7a4",
+  "new_quote": "or/clackamas/milwaukie/19.607/19.607.1.txt#L3-L4,L10",
+  "old_fingerprint": "a3d19e2e214eeb88bb5efef44a9d37d88a3066fc5e5712a6acccd767d8a1663e",
+  "old_quote": "or/clackamas/milwaukie/19.600.parking.txt#L919,L925",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_front_yard_max_pct",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "166b98100d7935095c57f60cd89baa9fa4cc2c0bf49010879cf1ba472b7865d2",
+  "new_quote": "or/clackamas/milwaukie/19.607/19.607.1.txt#L16,L65",
+  "old_fingerprint": "5ff77539acc532835c7676d80a1e53d134e2b6596283aef34cd246e043d64192",
+  "old_quote": "or/clackamas/milwaukie/19.600.parking.txt#L931,L975",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_maneuvering_max_width_ft",
+  "layer": "or/clackamas/milwaukie",
+  "new_fingerprint": "1ec1104a1ca6404d8876c34f455969c8292747313a39be42aa0d57e5b4ad1231",
+  "new_quote": "or/clackamas/milwaukie/19.607/19.607.1.txt#L16,L65",
+  "old_fingerprint": "ae37e0362825cc4ab4f6ff12bf292eaf6431b2ceef55dc731dd66d4e1bd4c799",
+  "old_quote": "or/clackamas/milwaukie/19.600.parking.txt#L931,L975",
+  "when_key": "",
+  "zone": "defaults"
+ }
+]

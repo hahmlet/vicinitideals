@@ -1,0 +1,219 @@
+§ 19.502.3. Sustainability-Related Accessory Structures.
+
+A.
+
+Purpose
+
+The purpose of these regulations is to allow apparatus for the generation of renewable energy and collection of stormwater, subject to standards to ensure that these structures are appropriate for their surroundings in both design and scale.
+
+B.
+
+Maintenance Requirement
+
+All of the sustainability-related structures in this subsection shall be maintained to be functional and safe.
+The Planning Director may require the repair or removal of a structure listed in this subsection if the structure is deteriorated, malfunctioning, or is otherwise unsafe.
+
+C.
+
+Solar Energy Systems
+
+1.
+
+Allowance
+
+The installation of a solar energy system is an outright permitted use in zones where commercial, industrial, and residential structures are allowed outright.
+Installation of solar equipment that does not meet the definition of a solar energy system shall be reviewed as a Community Service Use, per Section 19.904, unless the use is allowed outright in a zone.
+
+2.
+
+Review Process for Installation of Solar Energy Systems
+
+a.
+
+A stand-alone solar energy system that is not wholly supported by another structure is subject to the reviews required by applicable base zones and overlay zones or special areas.
+
+b.
+
+A solar energy system that is wholly supported by another structure shall be subject to review, or not, as described below.
+
+(1)
+
+The installation of a solar energy system on an historic resource that is designated either "contributing" or "significant," per Section 19.403, shall follow the review procedures of that section for alteration of the resource.
+
+(2)
+
+The installation of a solar energy system in a downtown zone shall be exempt from downtown design review, per Section 19.907.
+
+(3)
+
+The installation of a solar energy system on a structure within the Willamette Greenway Zone, or within a designated Natural Resource, is exempt from the review requirements of that zone or special area.
+
+(4)
+
+The installation of a solar energy system on a structure that has been designated as a Conditional Use or a Community Service Use is exempt from the reviews of Subsections 19.904.3 and 19.905.3.
+
+(5)
+
+The installation of a solar energy system under circumstances other than those described in Subsections 19.502.3.C.2.b(1)-(4) above is exempt from any land use review.
+
+c.
+
+A Type I development review permit may be required for installation of a solar energy system depending upon the applicability criteria in Subsection 19.906.2.A.
+In no case shall a Type II development review application be required for installation of a solar energy system.
+
+3.
+
+Standards
+
+a.
+
+A stand-alone solar energy system is subject to the development standards that apply to the site.
+The design standards of Subsection 19.502.2.A.2 shall not be construed so as to prevent installation of a stand-alone solar energy system.
+
+b.
+
+A solar energy system that is attached to a structure is subject to the following standards.
+
+(1)
+
+The solar energy system will not increase the lot coverage or footprint of the structure on which the system is installed.
+
+(2)
+
+The solar energy system would be mounted so that the plane of the system is parallel to the slope of the roof, except that the plane of the system is allowed a minimum slope of 35 degrees from horizontal regardless of the slope of the roof.
+
+D.
+
+Wind Energy Systems
+
+1.
+
+Allowance
+
+A wind energy system is allowed outright as an accessory use in all zones.
+Installation of wind turbines, and related equipment that does not meet the definition of a wind energy system, shall be reviewed as a Community Service Use per Section 19.904, unless the use is allowed outright in a zone.
+
+2.
+
+Review Process for Installation of Wind Energy Systems
+
+The review of a freestanding or roof-mounted wind energy system is subject to the reviews required by applicable base zones and overlay zones or special areas.
+
+3.
+
+General Standards
+
+a.
+
+The minimum distance between the ground and any part of a rotor blade must be at least 20 ft.
+
+b.
+
+Wind energy systems may not be illuminated, nor may they bear any signs or advertising.
+
+c.
+
+Wind energy systems must have an automatic braking, governing, or feathering system to prevent uncontrolled rotation, overspeeding, and excessive pressure on the support structure, rotor blades, and turbine components.
+
+d.
+
+All wiring serving small wind energy systems must be underground.
+
+e.
+
+Noise produced by wind energy systems may not exceed 45 dBA measured at the property line.
+
+f.
+
+Wind energy systems must not cause any interference with normal radio and television reception in the surrounding area, any public safety agency or organization's radio transmissions, or any microwave communications link.
+The owner shall bear the costs of immediately eliminating any such interference, should any occur, or must immediately shut down the system or parts of the system causing the interference.
+
+g.
+
+A finish (paint/surface) must be provided for the wind energy system that reduces the visibility of the facility, including the rotors.
+The Planning Director may specify that the support structure and rotors be brown, blue, light gray haze, or other suitable color to minimize the structure's visibility.
+If the support structure is unpainted, it must be of a single color throughout its height.
+The owner must maintain the finish, painted or unpainted, so that no discoloration is allowed to occur.
+
+h.
+
+The rotor sweep area, as defined by the American Wind Energy Association, is 50 sq ft in residential zones and 150 sq ft in all other zones.
+
+4.
+
+Standards for Freestanding Systems
+
+Wind energy systems may be mounted on a tower that is detached from other structures on the lot.
+
+a.
+
+Setback
+
+A freestanding wind energy system is not allowed in a required front yard or street side yard, and it must be at least 10 ft away from any side or rear lot line.
+All portions of the support pole, blades, guy wires, and associated structures or equipment must meet these standards.
+
+b.
+
+Height
+
+The pole and turbine are subject to the base zone height limit for primary structures, except that an increase of 1 additional ft high is allowed for every 1 ft that the wind energy system is set back beyond what is required in Subsection 19.502.3.D.4.a, up to a maximum of 50% above the base zone height limit.
+
+c.
+
+Number
+
+A maximum of 1 freestanding small wind generator system may be allowed on a lot of 15,000 sq ft or less. 1 additional freestanding system is allowed for each 7,500 sq ft of lot area above 15,000 sq ft.
+
+5.
+
+Standards for Roof-Mounted Systems
+
+Wind energy systems may be mounted on the roof of a structure.
+
+a.
+
+Setback
+
+The roof-mounted wind energy system is subject to the minimum yard requirements of the building on which it is mounted.
+
+b.
+
+Height
+
+Roof-mounted systems are subject to the height limit for freestanding Systems in Subsection 19.502.3.D.4.b.
+
+c.
+
+Number
+
+There is no maximum number of roof-mounted systems permitted.
+
+E.
+
+Rainwater Cisterns
+
+1.
+
+A rainwater cistern installed below ground, at grade, or above ground is a permitted accessory use for all properties.
+
+2.
+
+A rainwater cistern that meets the standards listed below may encroach up to 3 ft into a required yard, but not be closer than 3 ft from any lot line.
+Rainwater cisterns that meet the standards below are not subject to any design or materials standards.
+
+a.
+
+The rainwater cistern is not mounted more than 2 ft above grade.
+
+b.
+
+The rainwater cistern's storage capacity is 80 gallons or less.
+
+3.
+
+A rainwater cistern that exceeds the standards listed in Subsection 19.502.3.E.2 is allowed subject to all other applicable regulations for an accessory structure.
+
+4.
+
+A below-ground rainwater cistern shall be located at least 3 ft away from any lot line.
+

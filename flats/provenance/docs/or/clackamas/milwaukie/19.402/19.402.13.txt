@@ -1,0 +1,196 @@
+§ 19.402.13. Land Division and Property Line Adjustments.
+
+The following standards apply to property line adjustments and all forms of land division defined in Chapter 17.08.
+These standards apply in addition to the applicable requirements provided in Title 17 Land Division and elsewhere in Title 19 Zoning.
+Lot consolidations, as defined in Chapter 17.08, are not subject to the provisions of Section 19.402.
+
+A.
+
+Boundary Verification
+
+Whether or not an applicant believes the NR Map is accurate, the applicant must verify the boundaries of the WQR and HCA on the property according to Subsection 19.402.15.
+
+B.
+
+Construction Management Plans
+
+1.
+
+In accordance with Subsection 19.402.9, a construction management plan is required for applications for land division that will require physical site improvements (e.g., grading and/or construction of structures, streets, or utilities) within, or within 100 ft of, a WQR or HCA.
+
+2.
+
+A construction management plan is not required for applications for land division that do not require grading; constructing structures, streets, or utilities; or making other physical improvements to the site.
+
+C.
+
+Impacts from Site Improvements
+
+Applications for land division that will require physical site improvements (e.g., grading and/or the construction of streets, sidewalks, culverts, bridges, or utilities) within a WQR or HCA must comply with the relevant standards for disturbance limitation and mitigation provided in Subsections 19.402.11 and/or 19.402.12, as applicable.
+
+D.
+
+Mitigation for Future Structures or Improvements
+
+Applications proposing a division of land on which future construction may impact a WQR or HCA must comply with one of the following two standards:
+
+1.
+
+Complete the mitigation requirements for any impacts to the WQR or HCA, in accordance with the requirements of Section 19.402, thereby exempting all subsequent development on lots containing a WQR and/or HCA from further review if in compliance with the related approval.
+When mitigation is required for new streets created as part of a subdivision, as outlined in Subsection 19.402.13.H, such mitigation must be completed prior to approval of the final plat for the subdivision, unless the Planning Commission's approval establishes a different schedule.
+
+2.
+
+Not complete the mitigation requirements, thus requiring that any subsequent development be subject to review under Section 19.402.
+
+E.
+
+Property Line Adjustments
+
+Applications for property line adjustment, when any of the properties include HCAs, must address the resulting change in the percentage of HCA coverage on each property and demonstrate compliance with one of the following standards:
+
+1.
+
+The proposed property line adjustment will result in no more than a 30-point difference in the percentage of HCA coverage on each property.
+Such an adjustment is subject to the Type I review process.
+
+2.
+
+The proposed property line adjustment will not contravene a condition of approval related to HCA distribution from a previously approved land division.
+Such an adjustment is subject to the Type I review process.
+
+3.
+
+The proposed property line adjustment cannot meet the standard of Subsection 19.402.13.E.1, above, but will result in the smallest practicable difference in the percentage of HCA coverage on each property.
+Furthermore, the new boundary configuration will mitigate, to the extent practicable, the potential future impacts to the HCA from access and development.
+Such an adjustment is subject to the Type II review process.
+
+F.
+
+Low-Impact Partitions
+
+Applications for partitions are subject to Type I review if they demonstrate compliance with the following standards:
+
+1.
+
+For properties that contain HCAs, but no WQRs, and where the HCA covers 85% or less of the total lot area, the partition must achieve either of the following results:
+
+a.
+
+There must be no more than a 30-point difference in the percentage of HCA coverage on each of the new parcels.
+For example, a two-lot partition that would produce one parcel that is 55% HCA and the other that is 30% HCA is permissible with Type I review, whereas, a two-lot partition that would produce one parcel that is 75% HCA and the other that is 40% HCA is not permissible with Type I review and will be subject to the standards of Subsection 19.402.13.G.
+
+b.
+
+At least 90% of the original property's HCA is on a separate unbuildable parcel, protected by a conservation restriction.
+
+2.
+
+For properties that contain WQRs, the applicant must place 100% of the WQR in a separate unbuildable tract, protected by a conservation restriction.
+
+3.
+
+For properties that contain both WQRs and HCAs, the applicant must comply with both of the standards listed above in Subsections 19.402.13.F.1 and 2.
+
+4.
+
+For properties where the HCA covers more than 85% of the total lot area, the proposed partition is subject to the standards and review process established in Subsection 19.402.13.G.
+
+G.
+
+All Other Partitions
+
+Applications for partitions that cannot comply with Subsection 19.402.13.F are subject to Type II review and must comply with one of the following two standards:
+
+1.
+
+For properties that do not contain any WQRs, but for which it is not practicable to comply with the partition standards in Subsection 19.402.13.F.1, and where the HCA covers 85% or less of the total lot area, the application must meet the following standards and is not subject to the requirements of Subsection 19.402.12:
+
+a.
+
+The partition plan will result in the smallest practicable percentage point difference in HCA coverage on the parcels created by the partition.
+
+b.
+
+To the extent practicable, the parcel configuration will mitigate the potential future impacts to the HCA from access and development.
+
+2.
+
+For properties that contain WQRs but cannot comply with Subsection 19.402.13.F.2, that contain both WQRs and HCAs but cannot comply with Subsection 19.402.13.F.3, or where the HCA covers more than 85% of the total lot area, the application must comply with the following standards:
+
+a.
+
+To the extent practicable, the parcel configuration must mitigate the potential future impacts to WQRs from access and development.
+
+b.
+
+An Impact Evaluation and Alternatives Analysis must be prepared in accordance with the relevant portions of Subsection 19.402.12.A.
+
+c.
+
+For properties where the HCA covers more than 85% of the total lot area, the Impact Evaluation and Alternatives Analysis must address how the applicant's proposal retains the greatest practicable degree of contiguity of the HCA across the new parcels.
+
+H.
+
+Subdivisions
+
+Applications for subdivisions are subject to Type II review and must comply with one of the following two standards:
+
+1.
+
+At least 90% of the property's HCA and 100% of the property's WQR must be located in a separate tract.
+Applications that meet this standard are not subject to the discretionary review requirements of Subsection 19.402.12.
+
+2.
+
+If a subdivision cannot comply with the standards in Subsection 19.402.13.H.1, the application must comply with the following standards:
+
+a.
+
+All proposed lots must have adequate buildable area outside of the WQR and HCA.
+
+b.
+
+To the extent practicable, the lot and access configurations must mitigate the potential future impacts to the WQR and HCA from access and development.
+
+c.
+
+An Impact Evaluation and Alternatives Analysis must be prepared in accordance with the relevant portions of Subsection 19.402.12.A.
+
+d.
+
+For properties where the HCA covers more than 85% of the total lot area, the Impact Evaluation and Alternatives Analysis must address how the applicant's proposal retains the greatest practicable degree of contiguity of the HCA across the new lots.
+
+I.
+
+Resource Area as a Separate Tract
+
+Where required by Section 19.402, the new subdivision or partition plat must delineate and show all WQRs and HCAs as being located in a separate unbuildable tract(s) according to the following process:
+
+1.
+
+Prior to preliminary plat approval, the designated natural resource (whether WQR, HCA, or both) must be shown as a separate tract(s), which cannot be part of any lot or parcel used for construction of any structures.
+
+2.
+
+Prior to final plat approval, ownership of the separate natural resource tract(s) must be identified to distinguish it from lots or parcels intended for sale.
+Ownership in common or by a homeowners association is strongly discouraged.
+The tract(s) may be identified as any one of the following:
+
+a.
+
+Private natural area held by the owner with a restrictive covenant and/or conservation easement.
+
+b.
+
+For residential subdivisions, private natural area subject to an easement conveying storm and surface water management rights to the City of Milwaukie, Clackamas County Water Environment Services, and/or any other relevant jurisdiction, and preventing the owner of the tract from activities and uses inconsistent with the purposes of Section 19.402.
+
+c.
+
+Public natural area where the tract has been dedicated to the City of Milwaukie or a private nonprofit with the mission of land conservation.
+
+3.
+
+The boundaries of all such separate tracts must be demarcated with stakes, flags, or some similar means so that the boundaries between tracts and adjacent properties are defined in perpetuity.
+Fences that prevent the unfettered passage of wildlife cannot be installed along the boundary of any tract.
+

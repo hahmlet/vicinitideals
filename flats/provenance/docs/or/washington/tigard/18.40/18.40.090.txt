@@ -1,0 +1,40 @@
+§ 18.40.090. Tree Diameter.
+
+Tree diameter is measured in several ways:
+
+A.
+
+Existing trees are generally measured in terms of diameter inches at a height of 4.5 feet above the ground.
+The diameter may be determined by measuring the circumference of the tree trunk and dividing by 3.14.
+See Figure 18.40.16.
+
+Figure 18.40.16 Measuring Tree Size for Existing Trees
+
+B.
+
+When the trunk is at an angle or is on a slope, the trunk is measured at right angles to the trunk 4.5 feet along the center of the trunk axis, so the height is the average of the shortest and the longest sides of the trunk.
+See Figure 18.40.17.
+
+Figure 18.40.17 Measuring Existing Trees with an Angle or on Slopes
+
+C.
+
+When the trunk branches or splits less than 4.5 feet from the ground, the trunk is measured at the smallest circumference below the lowest branch.
+See Figure 18.40.18.
+
+Figure 18.40.18 Measuring Split Trunk Tree
+
+D.
+
+For multi-stemmed trees, the size is determined by measuring all the trunks at 4.5 feet from the ground and adding the total diameter of the largest trunk and half the diameter of each additional trunk; see Figure 18.40.19.
+A multi-stemmed tree has trunks that are connected above the ground and does not include individual trees growing close together or from a common root stock that do not have trunks connected above the ground.
+
+Figure 18.40.19 Measuring Multi-Stemmed Trees
+
+E.
+
+Nursery trees are measured in caliper inch, which is the diameter of the trunk 6 inches above the ground or root ball.
+For coniferous trees, the tree height may also be used.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1)
+

@@ -143,7 +143,7 @@ def test_the_net_acre_citation_points_at_the_calculation_not_the_glossary(
     held = happy_valley.zones["R7"].values["max_density_du_per_acre"]
     assert held.measured_on == "net_developable_area"
     assert "16.63.020(F)(1)" in (held.measured_on_cite or "")
-    assert "16.63.land-divisions.txt" in (held.measured_on_quote or "")
+    assert "16.63/16.63.020.txt" in (held.measured_on_quote or "")
 
 
 def test_and_the_quote_is_the_list_of_what_comes_off(

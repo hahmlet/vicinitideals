@@ -1,0 +1,260 @@
+§ 16.23.030. Commercial districts.
+
+A.
+
+Purpose.
+
+1.
+
+Community Commercial Center District (CCC). The Community Commercial Center (CCC) District is intended to provide locations or "nodes" for a relatively wide range of small businesses, services and mixed use adjacent to residential areas as a convenience to nearby residents.
+The CCC District is to be located and developed in a manner consistent with the Comprehensive Plan.
+In order to limit impacts to residential areas, new community commercial center nodes are intended to be limited in size to not more than five acres of contiguous land.
+
+Building size is also limited to a 30,000 square foot footprint, and measured in accordance with requirements of Table 16.23.030-2 (Footnote 5).
+Appropriate locations for community commercial center nodes are at the intersection of two arterial streets (major and minor), an arterial street and a collector street, or two collector streets, and within the Happy Valley Town Center Plan Area.
+
+2.
+
+Mixed Commercial Center District (MCC). This zone is intended to establish locations for the development of mixed use commercial centers providing a broad range of shopping and service requirements to meet neighborhood and city-wide needs.
+The Mixed Commercial Center (MCC) District, as applied in the East Happy Valley Comprehensive Plan Area, corresponds to the Damascus/Boring Concept Plan's designation of Neighborhood Centers.
+These mixed-use centers in the East Happy Valley Comprehensive Plan area accommodate retail services with a focus on meeting resident's daily shopping needs.
+They are planned to be well served by transit and be integrated with mixed use and higher density housing, thus supporting less auto-dependent lifestyles.
+These centers are also appropriate locations for civic uses such as post offices and branch libraries.
+Their design is intended to be highly pedestrian-oriented.
+
+New mixed commercial centers are limited to an area of up to 15 acres of contiguous land and shall be developed in a manner consistent with the Comprehensive Plan, except as described in Table 16.23.030-2 (Footnote 6), within the East Happy Valley Comprehensive Plan Area.
+Single-use retail buildings are limited to a maximum square footage of 60,000 square feet as specified in Table 16.23.030-2 (Footnote 6).
+Appropriate locations for mixed commercial centers are at the intersection of two arterial streets or an arterial and a major collector, preferably on streets served by transit.
+
+All MCC developments involving 20 acres or more of land shall be subject to master plan approval prior to development.
+
+In the MCC District, buildings should be oriented towards the street or accessway with clearly marked entrances.
+Blank frontage walls at street level are discouraged.
+Development boundaries and patterns are not defined by type of use (for example, retail and office); instead the district allows a variety of permitted uses to occur throughout the commercial district.
+The commercial uses are meant to provide a concentration of commercial and office uses to create an active area.
+
+B.
+
+Permitted Uses. Table 16.23.030-1 identifies the land uses that are allowed in the CCC and MCC Districts.
+
+Table 16.23.030-1 Community Commercial Center and Mixed Commercial Center (CCC, MCC) Permitted Uses                                                                    Table 16.23.030-1 Community Commercial Center and Mixed Commercial Center (CCC, MCC) Permitted Uses  Table 16.23.030-1 Community Commercial Center and Mixed Commercial Center (CCC, MCC) Permitted Uses
+P=Permitted; C=Conditional Use; X=Prohibited                                                                                                                           P=Permitted; C=Conditional Use; X=Prohibited                                                         P=Permitted; C=Conditional Use; X=Prohibited
+Land Use                                                                                                                                                               CCC                                                                                                  MCC
+Residential                                                                                                                                                            Residential                                                                                          Residential
+Pre-existing dwellings. Pre-existing dwellings may be allowed to remodel or expand and shall not be subject to the provisions of Chapter 16.72                         P                                                                                                    P
+Medium to high density residential                                                                                                                                     P[1,2]                                                                                               P[1,3]
+Live-Work Units                                                                                                                                                        P[2,8]                                                                                               X
+Senior housing                                                                                                                                                         X                                                                                                    P
+Skilled nursing facility                                                                                                                                               X                                                                                                    P
+Congregate care                                                                                                                                                        X                                                                                                    P
+Home occupations (per Section 16.69.020)                                                                                                                               P                                                                                                    P
+Home occupations, subject to a conditional use review (per Section 16.69.020)                                                                                          C                                                                                                    C
+Commercial—Retail Uses                                                                                                                                                 Commercial—Retail Uses                                                                               Commercial—Retail Uses
+Art and craft supply stores, studios                                                                                                                                   P                                                                                                    P
+Bakeries                                                                                                                                                               P                                                                                                    P
+Banks, savings and loan associations, loan companies, ATM (without drive-through)                                                                                      P                                                                                                    P
+Banks, savings and loan associations, loan companies, ATM (with drive-through) (per Section 16.44.090)                                                                 P/X[4]                                                                                               P
+Barber shops, beauty salons                                                                                                                                            P                                                                                                    P
+Bicycle sales, supplies, repair service                                                                                                                                P                                                                                                    P
+Book stores                                                                                                                                                            P                                                                                                    P
+Camera stores                                                                                                                                                          P                                                                                                    P
+Coffee shops, cafés, sandwich shops and delicatessens                                                                                                                  P[4]                                                                                                 P[4]
+Drug stores                                                                                                                                                            P[4]                                                                                                 P[4]
+Dry cleaners and tailors                                                                                                                                               P[4]                                                                                                 P[4]
+Florists                                                                                                                                                               P                                                                                                    P
+Home furnishing stores                                                                                                                                                 P                                                                                                    P
+Gift stores                                                                                                                                                            P                                                                                                    P
+Grocery, food, specialty foods, and produce stores                                                                                                                     P[4]                                                                                                 P[4]
+Hotels                                                                                                                                                                 C                                                                                                    P
+Helipads                                                                                                                                                               X                                                                                                    X
+Indoor health and recreation facilities, such as racquetball courts, gymnasiums, health and exercise spas, swimming pools, and similar uses and associated facilities  C                                                                                                    P
+Interior decorating shops, sales and service                                                                                                                           P                                                                                                    P
+Laundromats                                                                                                                                                            P                                                                                                    P
+Marijuana retailing                                                                                                                                                    P[6]                                                                                                 P[6]
+Music shops, sales and service                                                                                                                                         P                                                                                                    P
+Mobile food units                                                                                                                                                      P[5]                                                                                                 P[5]
+Optometry and optical goods, sales and service                                                                                                                         P                                                                                                    P
+Photo finishing, photography studios                                                                                                                                   P                                                                                                    P
+Psilocybin service center                                                                                                                                              P[6]                                                                                                 P[6]
+Rental stores, without outdoor storage                                                                                                                                 P                                                                                                    P
+Restaurants—full-service (without drive-through)                                                                                                                       P                                                                                                    P
+Restaurants—drive-through (per Section 16.44.090)                                                                                                                      P/X[4]                                                                                               P
+Secondhand stores                                                                                                                                                      C                                                                                                    C
+Shoe sales and repair stores                                                                                                                                           P                                                                                                    P
+Sporting goods, sales and service                                                                                                                                      P                                                                                                    P
+Stationery stores                                                                                                                                                      P                                                                                                    P
+Taverns, bars and cocktail lounges (a minimum distance of 1,500 feet from school uses)                                                                                 C                                                                                                    C
+Theaters or assembly halls                                                                                                                                             C                                                                                                    C
+Vehicular service/fueling stations                                                                                                                                     P                                                                                                    P
+Yogurt and ice cream stores                                                                                                                                            P                                                                                                    P
+Retail and service commercial uses similar to those above but not listed elsewhere in this section upon administrative determination by the Planning Official          P[4]                                                                                                 P[4]
+Commercial—Offices                                                                                                                                                     Commercial—Offices                                                                                   Commercial—Offices
+Professional and administrative offices                                                                                                                                P                                                                                                    P
+Medical office buildings, clinics and laboratories                                                                                                                     P                                                                                                    P
+Institutional                                                                                                                                                          Institutional                                                                                        Institutional
+Churches, synagogues, temples or places of worship                                                                                                                     C                                                                                                    C
+Library, post office, community center, etc.
+P                                                                                                    P
+Public parks, usable open space                                                                                                                                        C                                                                                                    C
+Public and private schools (includes commercial day care, dancing and music schools)                                                                                   C                                                                                                    C
+Other                                                                                                                                                                  Other                                                                                                Other
+Marijuana processing, production and wholesaling                                                                                                                       X                                                                                                    X
+Psilocybin processing, production and wholesaling                                                                                                                      X                                                                                                    X
+Self-storage facilities                                                                                                                                                X                                                                                                    P[7]
+
+NOTES:
+[1] Residential uses on upper floors of mixed use buildings are permitted.
+In such cases, Notes 2 and 3 below do not apply.
+[2] Freestanding residential uses at densities greater than the minimum SFA density of 10 du/acre and not to exceed the maximum MUR-M2 density of 34 du/acre (10—34 du/acre) may be permitted in the CCC zone when nonresidential uses occupy the street side(s) of the parcel.
+The footprint of such freestanding residential uses (including associated parking and accessory uses) may not exceed 25% of the CCC zoned area of the parcel or subject property.
+In the Rock Creek Employment Center, the same residential densities may be utilized in freestanding residential footprints if a nonresidential use per Table 16.23.030-1 occupies one street side of the parcel, and occupies at least 18% of the total ground floor footprints.
+Of the nonresidential footprint, 65% maximum may be live/work units.
+[3] Residential uses at MUR-M2 densities (25—34 du/acre) in conjunction with nonresidential uses are permitted by this code.
+The footprint of such freestanding residential uses (including associated parking and accessory uses) may not exceed 25% of the MCC zoned area of the parcel or subject property.
+[4] Drive-through facilities not permitted for these uses, and all other uses, within the CCC zoned areas of the Happy Valley Town Center Plan Area.
+[5] Pursuant to Section 16.69.030.
+[6] Pursuant to Chapter 16.49.
+[7] Self-storage facilities shall be limited to a single building where individual storage units are only accessed from within the building and are constructed within a single structure.
+Not more than one self-storage facility, limited to 60,000 square feet of building footprint, shall be permitted within the MCC zone, and only on lots or parcels within the Happy Valley Town Center area and abutting Rock Creek.
+[8] Live-work units limited to the Rock Creek Employment Center.
+
+C.
+
+Location Criteria.
+
+1.
+
+Appropriate locations for mixed commercial center development occurs within one-quarter mile from the following types of major intersections:
+
+a.
+
+Major or minor arterial streets;
+
+b.
+
+Major or minor arterial street and collector street.
+
+2.
+
+Appropriate locations for community commercial center nodes are at intersections of the following types of streets:
+
+a.
+
+Arterial street and arterial street (any combination of major and minor);
+
+b.
+
+Major or minor arterial street and collector street;
+
+c.
+
+Collector street and collector street.
+
+D.
+
+Development Standards.
+
+1.
+
+The development standards in Table 16.23.030-2 apply to all uses, structures, buildings, and development in the CCC and MCC Districts.
+
+Table 16.23.030-2: Development Standards for CCC and MCC Districts  Table 16.23.030-2: Development Standards for CCC and MCC Districts  Table 16.23.030-2: Development Standards for CCC and MCC Districts
+Standard                                                            CCC                                                                 MCC
+Residential density[1] (minimum—maximum)                            10 to 34 du/acre                                                    25 to 34 du/acre
+Lot size (minimum)                                                  None                                                                None
+Lot width (minimum)                                                 None                                                                None
+Lot depth (minimum)                                                 None                                                                None
+Lot coverage (maximum)                                              75%                                                                 75%
+Building setback (minimum):
+Front                                                               0 ft.                                                               0 ft.
+Rear                                                                None[2]                                                             None[2]
+Interior side                                                       None[3]                                                             10 ft.[4]
+Street side                                                         0 ft.                                                               0 ft.
+Building setback (maximum):
+Front                                                               None                                                                20 ft.
+Rear                                                                None                                                                None
+Side                                                                None                                                                None
+Building height (maximum)                                           35 ft.[7]                                                           60 ft.[7]
+Building size                                                       30,000 s.f.[5]                                                      60,000 s.f.[6]
+
+NOTES:
+[1] Density calculations shall be made pursuant to Section 16.63.020(F).
+[2] Except when a rear lot line is abutting a lot in a residential zone and then the rear setback shall be a minimum of 10 feet.
+The required rear setback shall be increased by one-half foot for each foot by which the building height exceeds 20 feet.
+[3] Except when a side lot line is abutting a lot in a residential zone and then the side setback shall be a minimum of 10 feet.
+The required side setback shall be increased by one-half foot for each foot by which the building height exceeds 20 feet.
+[4] Except when a side lot line is abutting a lot in a residential zone and then the side setback shall be a minimum of 20 feet.
+The required side setback shall be increased by one-half foot for each foot by which the building height exceeds 20 feet.
+[5] Maximum building square footage for single use retail buildings is limited to 30,000 square-foot building footprint per structure.
+For the purposes of measuring maximum building footprint, measurement is taken from outside wall to outside wall of the ground level.
+[6] Maximum building square footage for single use retail buildings is limited to a 60,000 square-foot building footprint per structure.
+However, as illustrated within the East Happy Valley Comprehensive Plan Map, one MCC zoned center may exceed the 15 acre limit noted above but shall not exceed 20 acres of contiguous property.
+In this center, the maximum building footprint size is limited to 150,000 square feet per structure, provided the entire contiguous 20 acre is master planned prior to new development.
+If the entire contiguous 20 acre area is not master planned together, the maximum building footprint size shall remain 60,000 square feet.
+An area is not considered to be contiguous if it is separated from an adjacent MCC District by a public right-of-way.
+Further, as part of demonstrating compliance with master plan requirements, design review to the Happy Valley Style, and other code criteria, applicants shall demonstrate how:
+a. The visual impact of larger scale development has been mitigated;
+b. The streetscape is pedestrian-oriented and varied to create visual interest;
+c. Public amenities are provided and scaled appropriately;
+d. Transitions to adjacent areas and future development are provided;
+e. Adequate infrastructure is provided; and
+f. Overall design excellence aligns justifies the larger than normal scale of the project.
+[7] In the Rock Creek Employment Center the maximum height for mixed-use buildings is 50 feet and the maximum height for residential buildings is 45 feet.
+
+2.
+
+Off-Street Parking and Loading (Vehicle and Bicycle). Off-street parking and loading spaces shall be provided as required in Chapters 16.41 and 16.43.
+
+3.
+
+Landscaping. Landscaping shall be provided as required in Chapter 16.42.
+
+4.
+
+Pedestrian Access and Circulation. Adequate pedestrian access and circulation systems shall be provided as required in Chapter 16.41.
+
+E.
+
+Special Standards.
+
+1.
+
+Design Review. New development in the Mixed Commercial Center and Community Commercial Center Districts shall be subject to Chapter 16.62, Land Use and Design Review, and Chapter 16.46, Happy Valley Style Design Standards.
+Development in the Mixed Commercial Center District involving 20 acres or more of land shall be subject to Chapter 16.65, Master Planned Developments.
+
+2.
+
+Pedestrian Oriented Areas. MCC zoned centers shall include pedestrian oriented areas which do not front solely on arterial streets and parking fields.
+The purpose of this standard is to enhance the pedestrian experience and "village feel" of the centers.
+As part design review and/or master plan review, applicants shall demonstrate compliance with this standard by using a combination of the following, or similar, concepts and guidelines:
+
+a.
+
+Provision of a "main street" and/or village center area that is framed by buildings oriented to both sides of the street or center;
+
+b.
+
+On-street parking;
+
+c.
+
+Storefront character, with entries oriented to the street, large display windows, and front façades broken into divided bays;
+
+d.
+
+Public plazas and promenades;
+
+e.
+
+Strong corners, as described in Happy Valley Style;
+
+f.
+
+Residential uses on upper stories;
+
+g.
+
+Public uses in prominent locations.
+
+(Ord. 389 § 1(Exh.
+A), 2009; Ord. 398 § 1, 2010; Ord. 422 § 1, 2012; Ord. 446 § 1, 2014; Ord. 474 § 1, 2015; Ord. 503 § 1, 2016; Ord. 521 § 3, 2017; Ord. 523 § 1, 2017; Ord. 534 § 1, 2017; Ord. 539 § 1, 2018; Ord. 572 § 1, 2023; Ord. 582, 3/19/2024; Ord. 583, 2/20/2024; Ord. 592, 6/3/2025)

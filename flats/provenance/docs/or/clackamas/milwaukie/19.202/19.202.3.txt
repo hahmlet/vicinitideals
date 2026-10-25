@@ -1,0 +1,16 @@
+§ 19.202.3. Measuring Tree Diameter.
+
+A.
+
+Existing Trees
+
+Existing trees are measured at a height 4.5 ft above the mean ground level at the base of the tree, also sometimes referred to as "diameter at breast height."
+Trees on slopes are measured from the ground level on the lower side of the tree.
+If a tree splits into multiple trunks below 4.5 ft above ground level, the diameter is measured at its most narrow point below the split.
+
+B.
+
+New Trees
+
+New trees are measured in caliper inches, which is the diameter of the trunk 6 in above the mean ground level at the base of the tree.
+

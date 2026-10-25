@@ -1,0 +1,163 @@
+§ 19.606.4. Surface Parking Areas Over 1/4-Acre.
+
+A.
+
+Purpose and Applicability
+
+To comply with OAR 660-012-0405 and to mitigate the negative impacts of large surface parking lots such as increased ambient temperatures, increased stormwater run-off, and diminished pedestrian connectivity, all newly proposed surface parking areas that are greater than 1/4-acre in size must comply with the standards in Subsection 19.606.4.
+
+For existing parking lots 1/4-acre or greater in size, Subsection 19.606.4 is applicable when 50% or more of the existing asphalt or pavement is excavated for parking improvements.
+See Section 19.602 for additional applicability details.
+
+B.
+
+Measurement
+
+Calculating the 1/4-acre threshold (10,890 sq ft) is based on the cumulative area measured around the perimeter of all new off-street parking spaces, vehicle maneuvering lanes, vehicle maneuvering areas, interior walkways, and interior landscaping areas.
+The calculation must include all new off-street parking areas, even when parking areas are scattered throughout a property or span multiple lots but serve a common use or uses.
+
+C.
+
+General Requirements
+
+Parking areas that are over 1/4-acre in size must comply with all the standards below.
+
+1.
+
+Development standards.
+
+a.
+
+The standards of Subsection 19.606.4.C.1 apply in addition to the applicable pedestrian access and circulation standards in Subsections 19.606.3.D, 19.504.7, and Section 19.505.
+Where there is a conflict with those standards, the standards in Subsection 19.606.4 take precedence.
+
+b.
+
+Walkway crossings at intersections with drive aisles and driveways must be provided.
+Crossing facilities must be demarcated by either a raised surface or by utilizing a separate surface material.
+Demarcation with the use of paint alone is not permitted.
+
+c.
+
+Development must provide trees along driveways or a minimum of 40% tree canopy coverage over new parking areas.
+Tree plantings must be consistent with the planting requirements in 19.606.4.D.
+
+2.
+
+Climate Mitigation Actions. Developments not required to comply with OAR 330-135-0010 must provide one of the following:
+
+a.
+
+Installation of solar panels with a generation capacity of at least 0.5 kilowatts per parking space on the property.
+Panels may be located anywhere on the property so long as their placement complies with other development standards in the Milwaukie Municipal Code.
+
+b.
+
+Tree canopy covering at least 50% of the parking lot at maturity but no more than 15 years after planting, as measured per Subsection 19.606.4.D.
+
+D.
+
+Tree Canopy Coverage Standards
+
+The following standards apply when providing tree canopy coverage under Subsection 19.606.4.C.2.c.
+
+1.
+
+Calculating Parking Lot Area to be Covered by Tree Canopy
+
+When calculating the area required to be covered by a tree canopy for the purposes of this subsection, the following rules must be followed:
+
+a.
+
+All surface areas on which a vehicle is designed to maneuver, such as drives, drive-through lanes, drive aisles, and parking stalls, must be included.
+
+b.
+
+Areas not used for passenger vehicles, such as loading areas, interior landscaped areas, interior walkways not designed to be used by a passenger vehicle, and areas that are permanently used for outdoor storage, can be excluded when calculating this area.
+
+2.
+
+Calculating Tree Canopy Coverage
+
+When calculating tree canopy coverage to comply with this subsection, the following rules must be followed:
+
+a.
+
+The expected diameter of the tree crown at 15 years must be used to calculate tree canopy coverage, regardless of if the tree is mature at that time.
+
+b.
+
+The area under the expected canopy at 15 years that is either paved surface, including parking stalls and maneuvering areas, loading areas, walkways that are interior to the parking area, and interior and perimeter parking area landscaping will count towards meeting the required canopy coverage standard.
+
+c.
+
+The existing canopy of trees preserved on-site and providing coverage of the subject parking area can be counted towards the canopy coverage standard.
+The current diameter of a preserved tree's crown must be used to calculate tree canopy coverage.
+Or, if the tree was newly planted, the expected diameter of the tree crown area at 15 years can be used.
+Preserved trees used to meet this standard must be at least 2 ft in diameter at breast height if deciduous and at least 5 ft tall if coniferous.
+
+d.
+
+Trees located off site, including those in the public right-of-way, do not count towards the canopy coverage standard.
+
+e.
+
+Newly planted trees that are isolated in disconnected individual planters are permitted but do not count towards the canopy coverage standard.
+The canopy of preserved trees that are isolated and at least 12 ft in diameter at breast height can count toward the canopy coverage standard.
+
+f.
+
+Canopy that covers structures does not count towards the canopy coverage standard unless covering a roofed but unenclosed structure that is used for protecting an automobile, bicycle, garbage/recycling area, or similar area from the elements.
+
+g.
+
+Canopy area of significant overlap does not count towards the canopy coverage standard.
+Significant overlap is defined as any overlap greater than 5 ft. The overlap measurement is the length of a line segment within the overlap area of a line between tree canopy trucks/centers.
+See Figure 19.606.4 for an example of this measurement.
+
+Figure 19.606.4
+Significant Canopy Overlap Measurement
+
+3.
+
+Tree Plan Submittal Requirements
+
+The following must be submitted to demonstrate compliance with this standard at the time development permits are submitted or with any land-use application subject to this subsection and Section 19.906.
+
+a.
+
+A tree plan must be submitted to the Urban Forester or designee per the submittal requirements in Subsection 16.32.042.H
+
+b.
+
+The tree plan shall be prepared by an ISA-certified arborist in coordination with local utility providers.
+The final tree plan must be reviewed and approved by the Urban Forester.
+
+4.
+
+General Tree Planting and Maintenance Requirements
+
+In providing trees under Subsection 19.606.4, plantings shall comply with the following standards.
+
+a.
+
+Trees must be planted in continuous trenches in perimeter and interior landscaping areas and spaced to maintain a continuous canopy 15 years after planting.
+Canopy spacing will be measured based on the expected diameter of the tree crown 15 years after planting.
+Sections of the canopy are considered continuous when there is no space greater than 3 ft between two or more projected crown areas.
+Gaps in the canopy are permitted to accommodate other features of the parking area, such as drive aisles.
+
+b.
+
+Applicants must submit a soil volume and protection plan for approval by the Urban Forester or designee as outlined in Subsection 16.32.042.G Soil Volume Standards.
+
+c.
+
+Applicants must submit a tree protection plan for approval by the Urban Forester or designee as outlined in Subsection 16.32.042.F Tree Protection Standards.
+
+d.
+
+Trees must be maintained to ensure their survival and long-term health.
+Inspection of tree health will occur at the time of site development and, to ensure tree survival, three to five years after planting.
+
+(Ord. 2243, 5/21/2024)
+

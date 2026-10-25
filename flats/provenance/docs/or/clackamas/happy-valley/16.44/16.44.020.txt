@@ -1,0 +1,645 @@
+§ 16.44.020. Wireless communications facilities.
+
+A.
+
+Purpose. The purpose of this section is to assure that wireless communication facilities are located, designed, installed, maintained and removed in a manner that provides for the effective provision of wireless communications within the City, while protecting and promoting the health, safety, and welfare of the City and its residents by:
+
+1.
+
+Requiring the collocation, to the greatest extent possible, of new wireless communication facilities on existing facilities in order to minimize the number of support towers and related equipment;
+
+2.
+
+Carefully considering the topography, natural features, and adopted overlay zones in selecting potential wireless communication facility sites;
+
+3.
+
+Encouraging the use of existing structures, including, but not limited to, freestanding structures such as light or utility poles and water towers, instead of constructing new support towers;
+
+4.
+
+Encouraging the location of new support towers and related equipment in nonresidential zones;
+
+5.
+
+Limiting new structures and regulating the enlargement or expansion of existing structures in the right-of-way for the purpose of providing wireless communication facilities; and
+
+6.
+
+Providing wireless communication services using facilities with minimal visual impact.
+
+B.
+
+Excluded Facilities. The following facilities are exempt from the requirements of this section:
+
+1.
+
+Siting of dish antennas solely for the benefit of persons residing on a property.
+
+2.
+
+Amateur or "ham" radios and associated equipment.
+
+3.
+
+Public safety communication facilities.
+
+4.
+
+"Utility facilities" as defined in Section 16.12.030.
+
+5.
+
+"Small wireless facilities" placed in the public right-of-way as defined and outlined in Chapter 12.06.
+
+6.
+
+Maintenance of existing wireless communication facilities, as defined in this section.
+
+C.
+
+General Provisions: Siting Priority, Land Use Districts, Collocation Requirements.
+
+1.
+
+Siting Priority. Except as otherwise provided in subsection (C)(3)of this section, a wireless communication facility shall be sited according to the following priority, by descending order of preference:
+
+a.
+
+First priority: collocation of an antenna or antenna array, including small wireless facilities, on an existing support tower, support structure, or utility structure;
+
+b.
+
+Second priority: collocation of an antenna or antenna array, including small wireless facilities, on a replacement structure;
+
+c.
+
+Third priority: substantial change in the physical dimensions of a support tower or replacement with a support tower that represents a substantial change in the physical dimensions of the original support tower;
+
+d.
+
+Fourth priority: construction of a new support tower.
+
+2.
+
+Land Use Districts.
+
+a.
+
+Wireless communication facilities are allowed subject to the provisions of this section, the applicable requirements in each land use district, and subject to the following additional limitations:
+
+Zones
+Collocation with No Substantial Change and Small Wireless Facilities (located outside of the public right-of-way)
+Other New Facility or Substantial Change
+Residential
+Permitted
+Collocation with substantial change permitted as a conditional use subject to the development and design standards.
+New support tower permitted as a conditional use subject to the requirements of Section 16.44.020.D and the development and design standards of this section.
+Steep Slopes and Natural Resources Overlay
+Small wireless facilities permitted
+Prohibited.
+Institutional & Public Use
+Permitted
+Permitted, subject to the development and design standards of this section.
+Commercial
+Permitted
+Permitted, subject to the development and design standards of this section.
+Industrial
+Permitted
+Permitted, subject to the development and design standards of this section[1].
+Future Urban – 10 acres
+Permitted
+Permitted as a conditional use subject to the development and design standards of this section.
+
+Notes:
+[1] WCF are permitted outright in the industrial districts, with a height maximum of 200 feet.
+
+b.
+
+Small wireless facilities are permitted in all zones within and/or outside of the public right-of-way, per the size requirements found within Section 16.12.030 (Definitions), above.
+Small wireless facilities located within the public right-of-way are further subject to Chapter 12.06 (Small Wireless Facilities) of this code.
+
+c.
+
+The siting of new speculation support towers is prohibited in all zones.
+
+d.
+
+All wireless communication facilities, except for small cell facilities not proposed on a new support tower or support tower system, located in the right-of-way shall be attached to existing utility structures or replacement structures.
+
+e.
+
+Modifications are permitted in all zones, provided the modification does not result in a substantial change in the physical dimensions of the existing support tower or base station.
+
+3.
+
+Collocation Required.
+
+a.
+
+Except for a small cell facility or a new support tower or structure proposed in an industrial district, a wireless communication facility located outside the right-of-way shall be collocated, unless the applicant demonstrates that:
+
+i.
+
+No existing support structures or support towers which meet the applicant's coverage, capacity and engineering requirements are located within the identified geographic area;
+
+ii.
+
+Existing support towers, support structures, utility structures or replacement structures are not of sufficient height to provide the identified service within the geographic area;
+
+iii.
+
+Collocation would interfere with other wireless communication facilities located on an existing support structure or support tower or would jeopardize the physical integrity of the facility upon which collocation would be made;
+
+iv.
+
+Consent cannot be obtained for the collocation on an existing support structure or support tower despite the applicant's reasonable efforts to obtain such consent; or
+
+v.
+
+It is not feasible from an engineering or structural standpoint to achieve collocation on an available existing support structure or support tower either due to structural limitations or because the needed auxiliary support equipment cannot be accommodated at the site.
+
+b.
+
+All wireless communication service providers shall cooperate with other providers to achieve collocation of facilities and all new support structures and support towers shall be designed so as to not preclude collocation provided collocation can be accommodated in a manner consistent with the applicable design and development standards.
+
+c.
+
+In the event collocation is represented to be infeasible, the City may retain a technical expert in the field of telecommunications engineering to evaluate whether collocation at the site is feasible.
+
+d.
+
+A wireless communication service provider shall exercise good faith in attempting to achieve collocation with other providers and sharing antenna sites, provided that such shared use does not technically impair its ability to provide wireless communication service.
+Such good faith shall include sharing of technical information to evaluate the feasibility of collocation.
+The City may deny a permit application for a wireless communication facility if it determines that the applicant has not made a good faith effort to collocate on an existing support structure or support tower.
+
+4.
+
+Collocation/Modification Standards.
+
+a.
+
+All collocations and modifications shall be designed in such a way as to be visually compatible with the structures on which they are placed.
+If the existing support structure incorporates stealth technologies or camouflage in its design, collocated and modified facilities shall be similarly designed.
+
+b.
+
+Except for small cell facilities, auxiliary support equipment shall be located within the existing enclosure and shall not result in any material exterior changes to the enclosure.
+
+c.
+
+Collocations and modifications to existing support structures, support towers or base stations shall meet all applicable building code requirements.
+The applicant shall demonstrate to the satisfaction of the Building Official that the collocation or modification will not adversely affect the structural integrity of the support structure, support tower or base station.
+
+d.
+
+A collocation or modification proposed for a building listed in the Happy Valley Register of Historic Structures shall be designed to incorporate or enhance the existing architectural and design elements of the building.
+
+D.
+
+Permit Required—Siting Limitations—Interference—Abandonment.
+
+1.
+
+Except as otherwise provided in this section, a new wireless communication facility shall not be sited within the City unless a permit is obtained consistent with this section and the applicable requirements of this Code.
+
+2.
+
+New support towers are permitted as conditional uses in all residential land use districts if, in addition to demonstrating compliance with the conditional use, development and design standards, the applicant also demonstrates compliance with the collocation requirements in subsection C.3.a and the following conditions exist:
+
+a.
+
+The proposed facility is necessary to satisfy the applicant's coverage, capacity and/or engineering requirements within the identified geographic area and the facility is the least intrusive means to meet these requirements, including documentation from a radio frequency (RF) engineer or a licensed civil engineer regarding the nature and necessity of the coverage, capacity and/or engineering requirements;
+
+b.
+
+The proposed facility must be sited in a residential zone to satisfy the applicant's coverage, capacity and/or engineering requirements;
+
+c.
+
+The characteristics of the site (size, shape, location, topography, and location of improvements and natural features) are suitable for the proposed facility;
+
+d.
+
+The proposed facility will not substantially change the character of the surrounding residential area in a way which limits or precludes use of the surrounding properties consistent with the provisions of the residential zone;
+
+e.
+
+The proposed facility is designed to minimize the negative impacts on the surrounding properties and uses by utilizing existing site characteristics, including but not limited to the site's size, shape, location, topography, improvements, and natural features, as well the incorporation of camouflage and/or stealth technology.
+Negative impacts are minimized if there is:
+
+i.
+
+A decrease in negative visual impacts, including, but not limited to, visual clutter;
+
+ii.
+
+Better preservation of views or view corridors; and
+
+iii.
+
+A decrease in any other identifiable negative impacts to the surrounding area's primary uses.
+
+3.
+
+A new support structure or support tower shall not be constructed, installed or erected within 1,000 feet of any other support structure or support tower that is owned, operated or occupied by the same wireless communication service provider.
+This separation standard does not apply to small cell facilities that work together in a small cell network.
+Exceptions to this standard may be permitted by the Planning Official or person designated by the Planning Official if, after reviewing evidence submitted by the service provider, the Planning Official or designee finds: (a) that closer spacing is required in order to provide adequate wireless communication service to the subject area; and (b) the service provider has exhausted all reasonable means of collocating on other existing structures located within the proposed service area.
+The Planning Official's or designee's decision may be appealed to the review body provided the appeal is filed with the Planning Official or designee within 10 calendar days of the decision.
+The appeal shall include the appropriate fees, as set by the City Council by resolution.
+
+4.
+
+A support structure or support tower that has not had an antenna or antenna array mounted on it for a period of 180 successive days, or if the antenna or antenna array mounted thereon are not operated for a period of 180 successive days, shall be considered abandoned and the owner shall remove the structure or tower and any accompanying auxiliary support equipment within 90 days from the date of written notice from the City.
+During the 90 days, the owner may apply, and upon a showing of good cause, may be granted an extension of time on such terms as the Planning Official or designee shall determine.
+If the structure and auxiliary support equipment are not removed, the City may declare the abandoned facility to be a nuisance and seek enforcement pursuant to the Happy Valley Municipal Code and/or may seek and obtain a court order directing the structure or tower to be removed and placing a lien on the real property upon which the structure(s) is located in an amount equal to the cost of removal.
+
+E.
+
+Application Submittal Requirements. In addition to the submittal requirements for the applicable approval type in Chapter 16.61, an application for a new wireless communication facility shall include the following:
+
+1.
+
+Collocation/Modification/Small Cell Facility Installation Application.
+
+a.
+
+A site plan that includes a description of the proposed new facility or modification, the design and dimensions, together with elevations showing all components of the existing support structure or support tower and its connection to utilities;
+
+b.
+
+Documentation that the proposed facility meets the radio frequency emissions requirements of the Federal Communications Commission;
+
+c.
+
+Documentation that any auxiliary support equipment will not emanate noise at levels that exceed City standards, or designs showing how the sound will be effectively modified to meet those standards by means of baffling, barriers, or other suitable means;
+
+d.
+
+An engineer's certification that the proposed support structure or support tower will safely handle the load created by the collocation, modification or attachment and comply with American National Standards Institute (ANSI) and other industry safety and structural codes and standards.
+
+2.
+
+Application for a new Wireless Communication Facility, Other Than a Collocated/Modified/Small Cell Facility Subject to Subsection E.1.
+In addition to the submittal requirements listed in subsection E.1, an application for a new wireless communication facility or modification shall include the following:
+
+a.
+
+An engineer's certification that the proposed support structure or support tower will safely handle the load created by the new facilities and future collocation facilities, and complies with American National Standards Institute (ANSI) and other industry safety and structural codes and standards.
+
+b.
+
+For new support towers, documentation from a radio frequency (RF) engineer or a licensed civil engineer that the necessary service cannot be provided by collocation on, or modification to, an existing support tower or support structure or utility structure, or by attachment on a replacement structure for one or more of the following reasons:
+
+i.
+
+No existing support structures, or utility structures are located within the geographic area where service will be provided;
+
+ii.
+
+There are no existing support towers, support structures or towers that meet the applicant's coverage, capacity and/or engineering requirements within the identified geographic area;
+
+iii.
+
+Collocation would interfere with other wireless communication facilities location on an existing support structure or tower, or would jeopardize the physical integrity of the facility upon which collocation would occur;
+
+iv.
+
+Consent cannot be obtained for the collocation on an existing support structure or tower despite the applicant's reasonable efforts to obtain such consent; or
+
+v.
+
+It is not feasible for engineering or structural reasons to collocate on an available existing support structure or tower either due to structural limitations or because the needed auxiliary support equipment cannot be accommodated at the site.
+
+c.
+
+An alternatives analysis for new support towers demonstrating compliance with the siting priorities of subsection C.1; provided, however, that an applicant is not required to consider small cell facilities as an alternative to a proposed new support tower.
+
+d.
+
+The number and type of antennas that the support tower is designed to accommodate.
+
+e.
+
+A signed statement of compliance from the owner of the wireless communication facility that the owner will allow timely collocation by other users, provided all safety, structural, technological, and monetary requirements are met.
+
+f.
+
+A visual study containing, at a minimum, color simulations showing the appearance of the proposed support tower, antennas, and auxiliary equipment from at least three viewpoints within reasonable proximity of the site.
+The viewpoints shall be chosen by the applicant, but shall include representative views from residential buildings, historic resources, or historic districts located within 250 feet of the proposed site.
+If the support tower must comply with the design standards applicable to historic structures, the graphic simulation shall include the proposed design.
+
+g.
+
+If applicable due to the nature of the proposal, coverage maps showing any gap in the service provider's coverage, capacity or technologies and the minimum height or configuration of the facility needed to fill the gap.
+
+3.
+
+Application for New Support Tower in Residential Zones. In addition to the submittal requirements of subsections E.1 and E.2, an application for a new support tower in any residential zone shall also provide documentation that:
+
+a.
+
+The proposed facility is necessary to satisfy the applicant's coverage, capacity and/or engineering requirements within the identified geographic area and the facility is the least intrusive means to meet these requirements, including documentation from a radio frequency (RF) engineer or a licensed civil engineer regarding the nature and necessity of the coverage, capacity and/or engineering requirements;
+
+b.
+
+The proposed facility must be sited in a residential or future urban zone to satisfy the applicant's coverage, capacity and/or engineering requirements;.
+
+c.
+
+The characteristics of the site (size, shape, location, topography, and location of improvements and natural features) are suitable for the proposed facility;
+
+d.
+
+The proposed facility will not substantially change the character of the surrounding residential area in a way which limits or precludes use of the surrounding properties consistent with the provisions of the residential zone;
+
+e.
+
+The proposed facility is designed to minimize the negative impacts on the surrounding properties and uses by utilizing existing site characteristics, including but not limited to the site's size, shape, location, topography, improvements, and natural features, as well the incorporation of camouflage and/or stealth technology.
+Negative impacts are minimized if there is:
+
+i.
+
+A decrease in negative visual impacts, including, but not limited to, visual clutter,
+
+ii.
+
+Better preservation of views or view corridors, and
+
+iii.
+
+A decrease in any other identifiable negative impacts to the surrounding area's primary uses.
+
+F.
+
+Procedures.
+
+1.
+
+Applications for collocation on an existing support structure, support tower, base station or utility structure, or modification that will not result in a substantial change in the physical dimension of the existing facility shall be reviewed pursuant to the Type I Administrative procedure provided at Section 16.61.020.
+
+2.
+
+An application for small cell facilities shall be reviewed pursuant to the Type I Administrative procedure provided in Section 16.61.020.
+At the applicant's discretion, a consolidated application addressing all or part of a small cell network may be submitted for Type I review as an alternative to individual permitting for each small cell facility in a small cell network.
+
+3.
+
+An application for a modification that will result in a substantial change in the physical dimension of the existing facility shall be reviewed pursuant to the Type II Administrative procedure provided at Section 16.61.030, unless the application is for a site in a residential or future urban zone.
+
+4.
+
+An application to site a new wireless communication facility on a new support structure or support tower in zones other than residential or future urban zones shall be reviewed pursuant to the Type II Administrative procedure provided at Section 16.61.030.
+
+5.
+
+Except as provided above in subsections F.1 and F.2, an application to site a new wireless communication facility on a new support structure or support tower in all residential or future urban zones shall be reviewed pursuant to the Type III Quasi-judicial procedure provided at Section 16.61.040.
+
+6.
+
+The City shall issue a final decision on all applications consistent with the timing requirements of ORS 227.178 and applicable federal regulations.
+
+G.
+
+Approval Criteria.
+
+1.
+
+Collocated Facilities and Modifications.
+
+a.
+
+A new wireless communication facility or modification to an existing facility that does not result in a substantial change in the physical dimension of the existing facility shall meet the applicable collocation requirements and standards of this section.
+
+b.
+
+A new wireless communication facility or modification to an existing facility that would result in a substantial change in the physical dimension of the existing facility shall meet the applicable collocation requirements and standards of this section.
+
+2.
+
+New Support Structure or Tower.
+
+a.
+
+A new support structure or support tower is subject to all provisions of this section.
+
+b.
+
+In addition, a new support structure or support tower shall meet the following criteria:
+
+i.
+
+The application as approved will minimize and/or mitigate reasonably likely adverse impacts of the use on the adjacent properties, surrounding neighborhood and neighborhood character.
+In order to mitigate and minimize the impact of the support structure or tower, the City may impose conditions relating to the size, design, operating conditions, or other features of the proposal, including those which may be applicable to conditional uses under this Code; and
+
+ii.
+
+The application demonstrates compliance with the collocation requirements in subsection C.3.a.
+
+H.
+
+Development and Design Standards.
+
+1.
+
+Setback Requirements.
+
+a.
+
+New support structures and support towers and auxiliary support equipment shelters must meet the applicable setback requirements of the zone in which they are proposed to be sited, except as required in subsection b or c below.
+
+b.
+
+A new support structure or support tower proposed on property that is adjacent to a residential zone or an existing residential structure must be set back from the relevant property line or structure by a distance equal to the height of the proposed support structure or support tower.
+
+c.
+
+The review body may require greater setbacks for a proposed new support structure or support tower to assure that the proposed facility complies with the visual impact standards of this section or to address identified safety concerns.
+
+2.
+
+Height Limitations.
+
+a.
+
+A new support structure or support tower located in an institutional, commercial or industrial zone shall meet the applicable height limitation for the zone in which it will be located, provided that the facility may exceed the height limit in the zone by demonstration by the applicant that additional height is necessary to meet the applicant's coverage, capacity and/or engineering requirements for an identified technology or service.
+However, a new support structure or support tower may not exceed 200 feet in an Industrial zone or 150 feet in any other zone.
+A "speculative height" support structure or support tower designed to accommodate unknown future users are not allowed in any zone.
+
+b.
+
+A new support structure or support tower proposed in a residential or future urban zone shall meet the otherwise applicable height standards in the zone, provided that the facility may exceed the height limit in the zone by demonstrating that additional height is necessary to meet the applicant's coverage, capacity and/or engineering requirements for an identified technology or service.
+A new support structure or support tower in a residential or future urban zone must be constructed using stealth technology.
+
+c.
+
+An antenna attached to an existing support structure, including utility structures and replacement utility structures, may add 20 feet to the overall height of the existing structure regardless of the height standard of the underlying zone.
+
+3.
+
+Development Standards.
+
+a.
+
+The area around the base of support towers (including any auxiliary support equipment) must be fenced, with a sight-obscuring fence a minimum of six feet in height.
+The fenced area is to be surrounded by evergreen shrubs (or a similar type of evergreen landscaping), placed within a landscaped strip a minimum of 10 feet in width.
+In the event that placement of a proposed support tower and/or auxiliary support equipment is located in a unique area within a subject site that would not benefit from the addition of landscaped screening, the Planning Official or designee may require that the applicant submit a landscape plan illustrating the addition of a proportional landscape area that will enhance the subject site either at a building perimeter, parking lot, or street frontage, adjacent to or within the subject site.
+Although barbed wire is permitted, no concertina (razor) wire shall be installed atop any fence or barrier.
+
+b.
+
+All support structures, support towers, antennas, and antenna arrays and associated facilities shall be finished in a non-reflective neutral color.
+For a new support structure or tower, the Review body may require camouflaging or stealth technology.
+
+c.
+
+Construction and installation of a new support structure or a new support tower is subject to all applicable building code requirements.
+
+d.
+
+Antennas, antenna arrays, support structures and support towers shall not be artificially lighted except as required by the Federal Aviation Administration or other governmental agency.
+
+e.
+
+Signs, symbols, flags, banners or other such devices or things may not be attached to, painted or inscribed on a wireless communication facility, except for signs with standard public safety warnings, contact information or similar signage.
+
+f.
+
+The applicant shall maintain and, if necessary, improve, the existing access to City standards.
+If there is no existing access, the applicant shall provide a paved access driveway a minimum of 10 feet wide to accommodate service vehicles.
+
+I.
+
+Wireless Communication Facility Adjustment.
+
+1.
+
+Applicability. Except as otherwise provided in this section, a wireless communication facility shall not be used or developed contrary to any applicable development standard unless an adjustment has been granted pursuant to this section.
+These provisions apply exclusively to wireless communication facilities and are in lieu of the generally applicable variance provisions in Chapter 16.71.
+
+2.
+
+Procedure Type. A wireless communications facility adjustment is a Type II procedure.
+
+3.
+
+Submittal Requirements. In addition to the general submittal requirements for a Type II application, an application for a wireless communication facility adjustment shall include:
+
+a.
+
+A written statement demonstrating how the adjustment would meet the criteria.
+
+b.
+
+A site plan that includes:
+
+i.
+
+Description of the proposed facility's design and dimensions, as it would appear with and without the adjustment.
+
+ii.
+
+Elevations showing all components of the wireless communication facility as it would appear with and without the adjustment.
+
+iii.
+
+Color simulations of the wireless communication facility after construction demonstrating compatibility with the vicinity, as it would appear with and without the adjustment.
+
+4.
+
+Criteria. An application for a wireless communication facility adjustment may be granted if the following criteria are met:
+
+a.
+
+The adjustment is consistent with the purpose of the development standard for which the adjustment is sought.
+
+b.
+
+Based on a visual analysis, the design minimizes the visual impacts to residential zones through mitigating measures, including, but not limited to, building heights, bulk, color, and landscaping.
+
+c.
+
+The applicant demonstrates the existence of either of the following:
+
+i.
+
+Gap in Service.
+
+(A)
+
+A gap in the coverage, capacity, or technologies of the service network exists;
+
+(B)
+
+The gap can only be filled through an adjustment in one or more of the standards in this section; and
+
+(C)
+
+The adjustment is narrowly tailored to fill the service gap such that the wireless communication facility conforms to this section's standards to the greatest extent possible.
+
+5.
+
+Minimization of Impacts. The adjustment must minimize or eliminate negative impacts to surrounding properties and uses through by utilizing existing site characteristics including, but not limited to, the site's size, shape, location, topography, improvements, and natural features.
+Negative impacts are minimized or eliminated if there is:
+
+a.
+
+A decrease in negative visual impacts, including, but not limited to, visual clutter;
+
+b.
+
+Better preservation of views or view corridors; or
+
+c.
+
+A decrease in any other identifiable negative impacts to the surrounding area's primary uses.
+
+J.
+
+Special Provisions.
+
+1.
+
+Temporary Facilities. In order to facilitate continuity of services during maintenance or repair of existing facilities or prior to completion of construction of a new facility, temporary wireless communication facilities are allowed through administrative review.
+Temporary facilities authorized under this subsection may not be used in excess of 90 days, may not have a permanent foundation and shall be removed within 30 days after the permanent facility is completed.
+A permit for a temporary facility under this subsection may not be renewed or extended, nor may a new permit be issued for the same facility within the succeeding six months after the expiration of the initial permit.
+
+2.
+
+Third-Party Review and Associated Fees. The City may engage a third-party expert to review evidence presented by an applicant under this section to demonstrate compliance with this section as to the infeasibility of collocation or the need to fill a service gap.
+The City Council may establish reasonable fees in amounts sufficient to recover all of the City's costs to retain such consultants.
+
+3.
+
+Issuance of Building Permit. No building permit shall be issued for the construction of a wireless communication facility until the application for the specific type of siting has been approved, including any local appeal.
+
+4.
+
+Exception for Public Utilities. Nothing in this section shall be deemed to prohibit a public utility, as defined in ORS 757.005 from installing or constructing a new utility structure, or enlarging, expanding, or reconstructing an existing utility structure in right-of-way, if the installation, construction, enlargement, expansion, or reconstruction of the utility structure would otherwise be permitted under law and the utility can demonstrate that the need for the new utility structure is not related to or created by a wireless communication facility.
+
+5.
+
+Relocation.
+
+a.
+
+The City may require a wireless communication facility located in the right-of-way to be relocated when the public convenience requires the relocation, and the expense thereof shall be paid solely by the owner of the wireless communication facility.
+
+b.
+
+Prior to requiring relocation, the City will provide the owner with notice substantially similar to that given to franchisees, licensees, or grantees.
+
+c.
+
+Should an owner fail to remove or relocate the wireless communication facility or facilities by the date stated in the notice, the City may cause removal or relocation of the wireless communication facility or facilities, and the expense thereof shall be paid by the owner, including all enforcement and other costs incurred by the City due to the owner's failure to remove or relocate the wireless communication facility or facilities.
+
+d.
+
+If an owner must relocate its wireless communication facility or facilities in the right-of-way as the result of a request by the City, the City will make a reasonable effort to provide the owner with an alternate location for the relocated facility.
+
+6.
+
+Measurements. Unless otherwise specified in this section, all references to existing, allowed or modified height in this section are measured from the original grade at the base of the wireless communications facility as originally approved to the highest point on the wireless communication facility, including all antennas approved prior to February 22, 2012, and excluding any lightning rods.
+
+(Ord. 481 § 1, 2015; Ord. 501 § 1, 2016; Ord. 552 § 1, 2020)
+

@@ -1,0 +1,1092 @@
+[
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "5ed42a4453dd40a97eba8a0442889ae11c940a195c726e3128b893547ae35153",
+  "new_quote": "or/washington/cornelius/18.145/18.145.030.txt#L17-L18,L34-L35",
+  "old_fingerprint": "bcb51d7fce7796012c2788fde97f4e838de149cc045b2b52073c2988947928e1",
+  "old_quote": "or/washington/cornelius/cmc.18.145.parking.txt#L111-L112,L131-L132",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "f37f4c920c8935f46bd1b1b5fc709b9170de1bf6e9ee53e03309669b05cb663d",
+  "new_quote": "or/washington/cornelius/18.145/18.145.030.txt#L19-L20,L24-L25,L34-L35",
+  "old_fingerprint": "ab3fc0bbc05ecb454c487376a0f5cd46ed1abcd0eff100447aa9827598531944",
+  "old_quote": "or/washington/cornelius/cmc.18.145.parking.txt#L113-L114,L118-L119,L131,L133-L134",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "5899ec25626820bb642f6880c3a2763638d1671942f281de76f76486ef3bf1ff",
+  "new_quote": "or/washington/cornelius/18.145/18.145.050.txt#L5-L6",
+  "old_fingerprint": "f1965fdc69de85a274e979375886d949983f1423963024071b33549b12006ef3",
+  "old_quote": "or/washington/cornelius/cmc.18.145.parking.txt#L501",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "fe2e0cfef811ece07c314dfda7eb560a100cef96e5797ddebf77acbce39897f5",
+  "new_quote": "or/washington/cornelius/18.145/18.145.050.txt#L5-L6",
+  "old_fingerprint": "a23ff546d94d5d60c840c7fda0a062ade32eda4f9c3a3d6ea1b9218d76ccc384",
+  "old_quote": "or/washington/cornelius/cmc.18.145.parking.txt#L501",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_required_yard_prohibited",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "64a607350f185eddb2193602af2f114c262516e428be41fd2321cdfdf487c765",
+  "new_quote": "or/washington/cornelius/18.145/18.145.010.txt#L13",
+  "old_fingerprint": "c0d01be3f47f15d85a2c12fa55fa7e5ce2a20c79ae59da3f4fa1a4be95000da3",
+  "old_quote": "or/washington/cornelius/cmc.18.145.parking.txt#L23",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "22a23be4db0d4b820550b0ec8177a34ebd0aa7f4dec63bd9baf83170ee76a86e",
+  "new_quote": "or/washington/cornelius/18.145/18.145.010.txt#L13",
+  "old_fingerprint": "56835f8ad3fa93e44ecbcb46bee4416155574c32f9c58d72e23088a2fbea5f74",
+  "old_quote": "or/washington/cornelius/cmc.18.145.parking.txt#L23",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "bf3c0a82b7a104ce8ba395a969170bf414c36effb37e57877129223d37e084a8",
+  "new_quote": "or/washington/cornelius/18.145/18.145.010.txt#L13",
+  "old_fingerprint": "4bc7e270bdaa823f4684b1161b320a631db3886da8e063ab09d6d8f6a65e0eeb",
+  "old_quote": "or/washington/cornelius/cmc.18.145.parking.txt#L23",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "7c4e23e95e826e95f973f0fbfc60e037467b2f1cd40b3ad1d59482b5fd767b06",
+  "new_quote": "or/washington/cornelius/18.145/18.145.010.txt#L13",
+  "old_fingerprint": "84e1594b7715a431629d5a2ef435a0e0d93f38bf2291c183e0290c8947cc0b28",
+  "old_quote": "or/washington/cornelius/cmc.18.145.parking.txt#L23",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "abb783ec2af3cfec71856a2fcaa7c83cda0544f83946601c649624bffc8ada16",
+  "new_quote": "or/washington/cornelius/18.145/18.145.010.txt#L13",
+  "old_fingerprint": "79c855076cbb342c373fce72c998e9f99a4d3e456df452397ad75c8ec681925c",
+  "old_quote": "or/washington/cornelius/cmc.18.145.parking.txt#L23",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "f6b3635f6ab8992fd89207a8b08cf46a58252aac926015e5808806a57ac01453",
+  "new_quote": "or/washington/cornelius/18.145/18.145.010.txt#L13",
+  "old_fingerprint": "0c25098ab4fe3c1c54dd8f6d429a81379939418807671959a7de694a1d74fb6f",
+  "old_quote": "or/washington/cornelius/cmc.18.145.parking.txt#L23",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "solar_shade_limit",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ce68010c4c3f603f8b085024cf39671cd07cbd87018a6c7c29dfa4e2900d2fac",
+  "new_quote": "or/washington/cornelius/18.160/18.160.020.txt#L3-L4,L15-L29",
+  "old_fingerprint": "6a6c5b732505ea58e1f585d2d2e4b931744abe52340a16ae75f9b5918d6fb55d",
+  "old_quote": "or/washington/cornelius/cmc.18.160.solar-balance-point.txt#L23,L33-L46",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "solar_shade_limit",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "408270bae837c09f21943daa7cf1fe32d54b1183390e2db326f8a8b407c6f08b",
+  "new_quote": "or/washington/cornelius/18.160/18.160.020.txt#L3-L4,L15-L29",
+  "old_fingerprint": "e39a2840435c2999f6ab58cc6f96ace16baece57d15da772569c2248c2d3dda4",
+  "old_quote": "or/washington/cornelius/cmc.18.160.solar-balance-point.txt#L23,L33-L46",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "76cb39bbc606c479e0c2162831c9c2bc84681c66cfff0178e83770640bf8855b",
+  "new_quote": "or/washington/cornelius/18.195/18.195.060.txt#L37-L40",
+  "old_fingerprint": "cee7274bb247668fc5d8f9ee6c83bb722454d6542f6f263795311f01fb781dc0",
+  "old_quote": "or/washington/cornelius/cmc.18.195.definitions.txt#L291-L292",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "5f7fc3ceb112901cd444ac78661f671c3fe49265816a6188ac88a0df23fd815b",
+  "new_quote": "or/washington/cornelius/18.20/18.20.060.txt#L27-L29",
+  "old_fingerprint": "e379ebef2d6488b47608f7df2ccb72b2e5aa8e70b386a9f2f592a2d9017dabb8",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L256",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "fc23c6d0252dc7f9827cc98b389bba9234adac8f05d17045a6df10432f6bd444",
+  "new_quote": "or/washington/cornelius/18.20/18.20.020.txt#L3,L11",
+  "old_fingerprint": "13988b4c27606220296c05f768ab3580a671fc1acd1cc85c9b9f6701706d5f91",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L23,L31",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ab08731ca0394aa6763737df9a0f39e7fd94dfd5ce8a225da9add0a3b2f45d1b",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L13,L15",
+  "old_fingerprint": "d2d1e929d37c809f33b4ccf0714c73acfc8ea58a3ab30723cb5272f0dc925b0f",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L157,L159",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "542ac86a6dee87547e138c02dea78594f94478d1964bb24e3cc648b94a45e891",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L13,L16",
+  "old_fingerprint": "09286ce2dcc102222485a5cad092109bccaa9e2a109f31a3457798a9a815d317",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L157,L160",
+  "when_key": "unit_lots",
+  "zone": "R-7"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ed013e9a7eb4f2ce83fa54b6e66394f1ac5824c63427a2ad94cfa76efd026c8f",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L76-L77",
+  "old_fingerprint": "cbfb6b78d2246ee2b8982cba013ebacd1da4bf6dce10058ec4b722ebc143b20f",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L216",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "55f4a31b2c3027bf3de3461cad454b4b184fe5dae2f117a800b732004f7b8a4e",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L76-L77",
+  "old_fingerprint": "f13e184af1340368d1c086143de62b029a82f12ef468a9f9232a7f5198c86236",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L216",
+  "when_key": "unit_lots",
+  "zone": "R-7"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "b386dbd2be113dc112d8e8d7820bffe17337d5e53967190105d34ca888f67ac4",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L76-L77",
+  "old_fingerprint": "f4569f3af3f2bb6ed5f4a81e54308ce2b49258e8c5e184454c43b76d3785b027",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L216",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ea47d5a32fe05a42cf02e97e2d31f0f1881624aeda8170aeca123d89181fa90f",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L24-L25",
+  "old_fingerprint": "d9744537e748931edf87402d8bcf71242e6446ebecd4820488243d995f9952ec",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L168",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "9aecd4baddc5a5210ae46bb062be18cd43566ad775d063979d36ed98590714df",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L5-L7",
+  "old_fingerprint": "c081a14f4531621b7ae686837179183f9ba8b01767962a7466b3cb535e918c87",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L151",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ea48b6bc5dea16189a27645fa1826e4c28e276f02bcffd36e41e3c2becd4fcc3",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L5-L7",
+  "old_fingerprint": "cf1ed81089e70854ea9b657e340b7ea35b69ce7d420ac76db1afe77fa0115f06",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L151",
+  "when_key": "unit_lots",
+  "zone": "R-7"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "fa693b28a13aa9de8dbf5731f17ea7c3e61e5ee2b268877d3210ce0de2c7baf8",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L29",
+  "old_fingerprint": "7f09ca42e6b96d373afe39c6f6a89bf707fe2ec4b08008778e40338deeba93b3",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L172",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "6edaf971513ffef5188e4e94eefc0bf7fc338b57e7e9fb2fa7f206719f7c46cf",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L45-L46",
+  "old_fingerprint": "1156784192d85e3c0e30bbfd527c75e9fe8a4ff85b2faf184389cc62cd730a1e",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L188",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "7a643780831bfb76ffa621db5d673215ac16e27e2f4f2da2c71194065e41bcf7",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L45-L46",
+  "old_fingerprint": "370a244158e84a466dcc6400937d37d1c8619417523f618e7ae241fbf7c3d9de",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L188",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "75602befdefe73fb0465e8f07d54f8ea756977a067ec35184a3e753dcd39f241",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L50",
+  "old_fingerprint": "308e8e9425fb7d092ab6c209ade4da3766afddf17840d3c9d9714670b0bb9474",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L192",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "49237ebed5a0c5f32cfbaf47239e1fb98e2d09220c53714a9e9c3354649b48dd",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L54-L56",
+  "old_fingerprint": "14d09bb3c8e84e316493141bf4e3ad742da5128a370237ac967b24098dfcea6c",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L196",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "cc8b1d4abac09a6987c7e3d1406dea74576e363c597541db85e76be4a50dc461",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L54-L56",
+  "old_fingerprint": "f91800ad5618ea68453f82104a1b62bd1748142800bd359e3ef9828da20f9b5f",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L196",
+  "when_key": "attached_wall",
+  "zone": "R-7"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "b2a360ad84f195236edb841b83057303aba3783e6b325590bb22c9d6c9c56ac2",
+  "new_quote": "or/washington/cornelius/18.20/18.20.050.txt#L54-L56",
+  "old_fingerprint": "ff511d3f9ff73226ee56f2567a544a23649c298b000934bc1a35c96ee5dfd8fd",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L196",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "8cb278702786f16724a98541c173ceb6649ecc70d5439befa4a8e11dd2c864f1",
+  "new_quote": "or/washington/cornelius/18.20/18.20.060.txt#L53-L54",
+  "old_fingerprint": "33444cbf0e38cd4ae1edfde50aba4fe584807f53b835a94e0edf2d1299562406",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L280",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "026321036735d0e16643c10bab6b79cb081efacc5ebcbaf72066a31f92b7375f",
+  "new_quote": "or/washington/cornelius/18.20/18.20.060.txt#L53-L54",
+  "old_fingerprint": "577eaa80f82a85c9e31324b0f2d911d5b67df02d7879d70cdc0c38167802aa9e",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L280",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "54179e017011187d584fb7a7c32992233790dbb2ac93ce7b8825004cf36821a2",
+  "new_quote": "or/washington/cornelius/18.20/18.20.060.txt#L53-L54",
+  "old_fingerprint": "b859686b6ce17f6ef86a3a0f23b22829257ce7083ba436c6b4fcaed0ab22ae4b",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L280",
+  "when_key": "",
+  "zone": "R-7"
+ },
+ {
+  "field": "parking_covered_required",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "87bb8cc3cc94fbbdf9b4f45b2e7f06d52dd89823c10ef2d7a7307337213de694",
+  "new_quote": "or/washington/cornelius/18.20/18.20.060.txt#L88",
+  "old_fingerprint": "e19e185b6e1962135c35a12e65f1f405e32933f57fda2642957a75263a70d66b",
+  "old_quote": "or/washington/cornelius/cmc.18.20.r-7.txt#L312",
+  "when_key": "unit_lots",
+  "zone": "R-7"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "5110375f67408bb4849e1d8f0d4a9291187bd018a5234a567655916be1ad2bf6",
+  "new_quote": "or/washington/cornelius/18.25/18.25.020.txt#L3,L11",
+  "old_fingerprint": "0244a33fad5753c42653f140261a1efb7cdd1a2406e6365ed78ee737773e4a78",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L23,L31",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "dfcfcb6b757b26846a1fd24b83242cb06e239a82b29ea0caddcc607018c497ed",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L12-L13",
+  "old_fingerprint": "1ef84528092c6d92024d289346e6b410dff0c345bb85744574abcc465177c0f3",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L149-L150",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "557e8678c5146b15d4cd3e45c76447dcc2af8a995e99c8f1e4e57c864cf9d395",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L12,L14",
+  "old_fingerprint": "c911a026ce16747c58cab94786d87675f53cfed6469e8ba1d17f69d4edc67ae9",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L149,L151",
+  "when_key": "unit_lots",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "6ea9348b9fc152d99a07cf497e84778bf55b385b227e565d36968f031bdea2e4",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L65-L66",
+  "old_fingerprint": "8147283540739ba7ba9576e2fa01ed36ad4f5483b7f251af699f5fdaa613f03e",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L199",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ea799e9bb24e31f6cb97941c05c0a02077c7eab5015eaea1650e28079f3058ab",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L65-L66",
+  "old_fingerprint": "4e2e099c2e909016fbf0c51a229a1fc56b25998dc4a59ca10b366d759b29d4c2",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L199",
+  "when_key": "unit_lots",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "20568563804d93c1e756e07a2b639687c00236ba448ef53bc3bd0227e2efc1c1",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L65-L66",
+  "old_fingerprint": "74250111376851dff835b62dc3775427ef3bd412ffb321e0abc5c33595dd7910",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L199",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "59b8fa4a48fb276d65e360183e273046706b8c8d364ff0a348c2a6c76605e15f",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L5-L6",
+  "old_fingerprint": "91efc2792aa301ca4e54701f3da1a4f24f2147489d2811351a7a3b008b64c87e",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L143",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "e03e3b2de91da22a94f71e0a828a69dd7e68c32e8c2ec5517e60338746b3ffe4",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L22",
+  "old_fingerprint": "b95a41f36bd3bfc2e6b61fb7379ac695e4bff8f54e5d8ad06bc4321033af3603",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L159",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ca011850e61ce72241fe377b5cb87fa660cd4090671e335adf57be100eb1618f",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L38-L39",
+  "old_fingerprint": "4edfafcb1d71e413075e5c4a87d9909b4a988886ecd3c7444d979ee83b17b3aa",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L175",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ffd7cf7b4c228a014baef2f1d7f667a5204ec923ea7035ee83f96fc799eed3d7",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L38-L39",
+  "old_fingerprint": "bb94dff21405c36b1de82a6845e41bc9c2bdf47dc5940199ca40c1e57e03ebbb",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L175",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "c241a3faf24e295b55f9069120d4b875831ce33ba618de82ce12ad443d6bace5",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L43",
+  "old_fingerprint": "15c66bfac9548f82558b9f14f28bf5876b3dd0f994b630f048faf8e23c1a5967",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L179",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ff6b5525145ff3acdd62399d8379ff5bfef44aafd939afd94ceb41b2a8be9869",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L47-L49",
+  "old_fingerprint": "ff3b3da16c63e20514796c581bef93b5d3102da235fcc23baf7ae442f2c332fd",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L183",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "47d07cd85bc21c8f25531cdf3c5427253f8b7f89049d80370c57d923cbcb504f",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L47-L49",
+  "old_fingerprint": "4c1c241eccde6f4ac445be238582a6e879d7ca94d692dd7acc1188942eca60be",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L183",
+  "when_key": "attached_wall",
+  "zone": "R-10"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "84cc9b2c32f0f2f4db12bb496ec4b4d794b8c38a9781aec4aa7db64162b9faee",
+  "new_quote": "or/washington/cornelius/18.25/18.25.050.txt#L47-L49",
+  "old_fingerprint": "3a8b52e3e16c8aa96dddb0b2983017fa47fd4bc92f3256e315c457bae99c2269",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L183",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "7423a74731121dcc8608e62631bd885cd130bb1d52412b77e7ecc9b626cb16f6",
+  "new_quote": "or/washington/cornelius/18.25/18.25.060.txt#L50-L51",
+  "old_fingerprint": "3206d5b42053f69609a681f6e6b5f417b634e93bf6559b305256582ca40cefc9",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L251",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "fb243f55d5be6f23f8906265be75fdb3431debb2875cf52cd36ccadc08465f30",
+  "new_quote": "or/washington/cornelius/18.25/18.25.060.txt#L50-L51",
+  "old_fingerprint": "08ebaa1d7f299e4ab9c2dbfd51ed80edafa8ce75aedc0e5c1678842b77a36c3d",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L251",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "b9ff84772bafbd1dc1fa176f5ad8ebf6da32aca7440b9e1d141b68af914991b0",
+  "new_quote": "or/washington/cornelius/18.25/18.25.060.txt#L50-L51",
+  "old_fingerprint": "3e487c7f888bc2ef3cdfa34242606d4e172c77d897aae4b034fae726291dc953",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L251",
+  "when_key": "",
+  "zone": "R-10"
+ },
+ {
+  "field": "parking_covered_required",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "995ef78ce9c8027960393dd91b88c7172a3deaad3b5dc02504b8e0ece48ae2dc",
+  "new_quote": "or/washington/cornelius/18.25/18.25.060.txt#L85",
+  "old_fingerprint": "b98c8f58e1ee6292f242b91bcf113adb2d41e0dfd3204494c3b886633042d7dd",
+  "old_quote": "or/washington/cornelius/cmc.18.25.r-10.txt#L283",
+  "when_key": "unit_lots",
+  "zone": "R-10"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "768e361b663e821ae68045b3fc55c3672b436d1395c00c8392f1a127e10738bf",
+  "new_quote": "or/washington/cornelius/18.35/18.35.020.txt#L3,L11",
+  "old_fingerprint": "46fe5702bf65d51705ee524ffce34a6d5a0e4aadf96c3646093b329c7976c768",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L23,L31",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "f8b4e937ffbfa1167919a5951b3f046d03b6c7eefe6a3d44e84c4015ebe5efa1",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L15,L18",
+  "old_fingerprint": "c21a4ceb70c2b5a709c6f519a85fac8b6031f5e89ef0643861fec037eb1ba3df",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L163,L166",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "9ba7134cbe553e60e48c05e5cc2efe1455d91d68f644d3d288b17f2dac26b6d1",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L15,L19",
+  "old_fingerprint": "d799d501ca37bf50c8a53f5ec5e1e7b6d137d0ccaf6c4a731fffe59db0078018",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L163,L167",
+  "when_key": "unit_lots",
+  "zone": "A-2"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "251985f6b3c5e9e36b47a47acf28e0b4bfa2682f531393cdf8843b2f44a7b944",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L89",
+  "old_fingerprint": "4ee6701fd3e14f1e8f074fd0114fe9f65e658f4571f35563d66981c20653852e",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L232",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "913aa567a2b00e95a8888cc78d3f0e6b1624255d6e59db444bd53b04815805cc",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L97",
+  "old_fingerprint": "630ba42ff926a408a75156d0a3584da0a89243ba9fa158193e4a778927cada78",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L240",
+  "when_key": "unit_lots",
+  "zone": "A-2"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "2d7c8ef04e0aefadb36ecfcea23bb657bd7f9276e831fb8ad44dec79b2cd5571",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L89",
+  "old_fingerprint": "85d7201120d81f512f37127ca97a352985f593188daaeaeccf1a7f58a5a65ff8",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L232",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "67fd66212825d8e3ca69bd9fc61bd1872a2fcfab6498fc14273631dcdab0da44",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L28-L29",
+  "old_fingerprint": "7661e231d2f586ed12738e1c779164bf8a3882753f722e3808cfb457e9d6fa98",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L176",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "7fa18eab4c436e2dc1d21688dd6275f64c0dcdf6d9dccdbba10e5d5857bb0f95",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L8-L9",
+  "old_fingerprint": "943ae8daedeacc27253291a2d37cf9db67a1dd8cd9a2652cbc7b33116f5e80cd",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L157",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "12ab24f77fcf434ee7240dae8ec8c06757e1ee1d3878a9bfb843349d39112133",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L8-L9",
+  "old_fingerprint": "39ea20a08e67422df96d774ebdf5759b6271716b6d6c804e50095910c101ace1",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L157",
+  "when_key": "unit_lots",
+  "zone": "A-2"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "3059f61ddf9858240bc977706026b165f7b6ce170aeaeee7b795db903be25a42",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L33",
+  "old_fingerprint": "f1c4772a36cd293ef3c6208513db5c332fe21800f3187dbcb15ef76d35eace48",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L180",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "24ca1402d5cdf2119d898f98eabfb21ee5c46f6914c8726d49c2d8bd9884f35f",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L53-L54",
+  "old_fingerprint": "c238d2ec8f98db4ce82da096f9e00067a68ff1137c973af296374bca842ed190",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L200",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "c8ebb951721653b5b1c3cb905d5d21bfe31c0b215cd686db4461b2560a5fa2de",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L53-L54",
+  "old_fingerprint": "131abbab7af43a7b8277b46f5863b9c3ab6a4d654a25f3ff732ed39dc9a7acbd",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L200",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "bd54fa3ccc686feb5b386b3d018ea0f45af50d73e90dbdc8cab0f7ece0d29cb9",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L58",
+  "old_fingerprint": "7be91164645fab823ad23dee369f5a44ab00ffbdb739ee433c75005a525f43d2",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L204",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "31b406c6c9239595e6aa44663151a1923f2eff1a1ce9a55843dba286e6c07cf3",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L62-L65",
+  "old_fingerprint": "51355fd94bfe179a04c5b046339d580145314a37c7b6253c34cf823b6bdab96f",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L208",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "d9bd71193bf040864c1bf4b59258b7b7c01547e10773b1783be83194b0d1a9a5",
+  "new_quote": "or/washington/cornelius/18.35/18.35.050.txt#L62-L65",
+  "old_fingerprint": "a875f99e466515b6d3535e95ac6f8a7d4e77e992c9d2a5c883acd77830430d0a",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L208",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "3bc20d92db41d4f0fb7335be730018f1d8a4af77b7f6a8e51dd75ce3dce66755",
+  "new_quote": "or/washington/cornelius/18.35/18.35.060.txt#L73-L75,L79",
+  "old_fingerprint": "3253241684ad10e59f51fff214150a1795b6445fd3513006e6d5fe0336638842",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L302,L306",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "811a7472779cc86e603728ebe6b252762c5a41a397ee444151219ce33e2bba9d",
+  "new_quote": "or/washington/cornelius/18.35/18.35.060.txt#L73-L75,L83",
+  "old_fingerprint": "4d5983dd7afc4e017bc13039a27c334210a889ceeb49cef0a6643cf79116f6f1",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L302,L310",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "b2d12dad9a346d78efbb4233c4878a07329a5c6ca92697cbf177c19054391df9",
+  "new_quote": "or/washington/cornelius/18.35/18.35.060.txt#L103-L104",
+  "old_fingerprint": "c067aa8b2f4c165aafcfb532bf68ccf4fb2b721e4a2ad3930e9a23a136e65e30",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L330",
+  "when_key": "",
+  "zone": "A-2"
+ },
+ {
+  "field": "parking_covered_required",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "3e37ded4d112e3570787e5ab6bd9001a739cb1effc0ec51c4b6016edd72085a1",
+  "new_quote": "or/washington/cornelius/18.35/18.35.060.txt#L156-L157",
+  "old_fingerprint": "5c41b6c8cadf4e88ac87b9cb271e6c9251ef5e3400fac2cc1adde86833c2ee08",
+  "old_quote": "or/washington/cornelius/cmc.18.35.a-2.txt#L378",
+  "when_key": "unit_lots",
+  "zone": "A-2"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "9ca7e07405916e4a790ff5d0eaa8aa8568f3ab411b5e53c44f4706cc7fd0cc1b",
+  "new_quote": "or/washington/cornelius/18.54/18.54.020.txt#L3,L52",
+  "old_fingerprint": "45c2f0917be18f23a5c1006a2e3fab4ea4ae2fe3075765399db395ca2ed179bc",
+  "old_quote": "or/washington/cornelius/cmc.18.54.li.txt#L25,L73",
+  "when_key": "",
+  "zone": "LI"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "6aded118b6f88ca1ce90a4b5a58d5e48835543695e157fbdb2fde80529101fd6",
+  "new_quote": "or/washington/cornelius/18.55/18.55.040.txt#L9,L13,L17",
+  "old_fingerprint": "aa22a0ab2399bf6a7b15677d067bd73b9b0be136ab9d02256088e0320b0d0255",
+  "old_quote": "or/washington/cornelius/cmc.18.55.m-1.txt#L133,L137,L141",
+  "when_key": "",
+  "zone": "M-1"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "83e07fab12f4ea9fe94ab2bb2c841709ec36b3ebdad257f391db29524b4269f0",
+  "new_quote": "or/washington/cornelius/18.60/18.60.030.txt#L1,L3,L11",
+  "old_fingerprint": "0ad6ac9089b1acfc5341aac6203cfa1f729966f1ea08955587c29fe14fad741c",
+  "old_quote": "or/washington/cornelius/cmc.18.60.cmu.txt#L95,L97,L105",
+  "when_key": "conditional_use",
+  "zone": "CMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "0fc8dda39e50981b07a24f1bf66c9f8fe99ca1f17ce9b82f81d38c01e5eb092f",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L9,L12",
+  "old_fingerprint": "057b6a54443aefde43f0dab4ed76fa680c62364bdd32d789f2cd28f46b95ccfa",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L167,L170",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "66896b94d7ccd119885b326ab203a5147d030b8b586eaaadf0222ee3fd4f38e3",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L9,L13",
+  "old_fingerprint": "cf4e0e3dd2610bf761c042407a92030e49e6d132b437b80714c5d0ec8413337a",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L167,L171",
+  "when_key": "unit_lots",
+  "zone": "CR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "208c6d62ac33f7646e2d92b89c31b6caa6d021b3fb9afab508f369e46fc0dfe7",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L92",
+  "old_fingerprint": "a98a0709d779354e526995e815ed6e5a6e8d9944e68178fc1f7626d714d68301",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L248",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "6e77453851c4f66c6b3b7814b9790a70f9ed7bdd1c8e43d3fc311d7f25364fda",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L96",
+  "old_fingerprint": "4d33927ccf823081e9c54ed7e69add534ad9ce48ef674df5cf920c3475d855e4",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L252",
+  "when_key": "unit_lots",
+  "zone": "CR"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "d001b7234b4d9c53da16fda392d26957aed847d8d25aa00aedfeac4f4b9e46ff",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L3,L26-L27",
+  "old_fingerprint": "d8282ec4f844f4ca6a69678a1f22e926f77d68041beb8eec57a0c5a936c43fad",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L161,L184",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "a0a64cedbfc08e824bfa73cdcaae56b7440793fc7afea3763459cbfbd3fb6757",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L31",
+  "old_fingerprint": "6cad6e379b8f892f282ed66a02d308cda8e021b63b4d3facfee5808f4c02f7f8",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L188",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "1b7e1c39dbb196d67889d652e39011d9812966fb5c7c9e3a5c77c056040f7e29",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L35",
+  "old_fingerprint": "08883aee019b3d678c4bcc6614dcb77bc0cce8919c1026fc263f0a6d9be0ded5",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L192",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "9957703dfe4c8e91d162baafe0cf9cc7421bc4f93c3f6d7961ab4fa1875b402a",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L55-L56",
+  "old_fingerprint": "ad5958bbc005a4c33b83b73f2fa8b0a97634fee495f059c2a919e5e9b38392e5",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L212",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "8fdd8ef9d5954f10aed51ec3d355c17dab72e7c1d8a49475ff6489d957840160",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L55-L56",
+  "old_fingerprint": "c036da1f61368d0143370c4f219210724454116b209ae8ffc91d818fa479d9cd",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L212",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "c648dacd2e09c5326cdf89ab5b7181175702f6da1b7db89677ede2445e8dabd6",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L60",
+  "old_fingerprint": "0f4a6f7a6c61d61b27690db8acaacda0f98a6f33a02890eeb2709e521beb4800",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L216",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "6523e5be778b51f6b674139425927a43662f8939b36b3b4762af36c2b64fea1c",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L68",
+  "old_fingerprint": "776126f6396f462d4a9be1e55205a0b372840fa8f00ea576cbd03a3e7ca21d4e",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L224",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "c704039b8d0c2a74bc9060458ceff793638ef77d486bb5e9cc60ea481b745616",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L68",
+  "old_fingerprint": "25617fe743775e336b77f423811b707256b3d1633042099bc8d3254d839da5fc",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L224",
+  "when_key": "attached_wall",
+  "zone": "CR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ad54cbed463cbd3526c054ee1d28b9e2908553cc80ff27e259313d28ce8251d9",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L72",
+  "old_fingerprint": "db307c7e8d4ab9864eb6918b58ec12a352b49cf5eed57221774aec20807091de",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L228",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "e042f3b6a45b3a85c43ecc42949585d3ad9f8cb0c651419828c73a883780d361",
+  "new_quote": "or/washington/cornelius/18.70/18.70.050.txt#L84",
+  "old_fingerprint": "633709317268102e0f65bd65326c144fcbc9260fb0404b6790848d591405b220",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L240",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "3b7cac906a4b5780faad0b7fa2f254dc56f4b9b9ac1b2259886883629c527626",
+  "new_quote": "or/washington/cornelius/18.70/18.70.060.txt#L48-L50,L54",
+  "old_fingerprint": "6297db782e560c0a911da7b21350059bce964af1cf78186923253ab1e77169f6",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L304,L308",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ebd58a90968fe47daffa6fb3f3f572c672f8bca7be4bde0437493944aa93516e",
+  "new_quote": "or/washington/cornelius/18.70/18.70.060.txt#L48-L50,L58",
+  "old_fingerprint": "7bdacbd7c7a4db653bbee394a49beeafc8de5f4ed06a08dba6fc889860821c1c",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L304,L312",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "91abef29facf4525a85a7a8eec6308fc0f1838a1c7e672a7d3adb7ce3665a135",
+  "new_quote": "or/washington/cornelius/18.70/18.70.060.txt#L78-L79",
+  "old_fingerprint": "35f10a5cb1f30b0fd87ba85d034dfc5ef2489b7cc5730f5773aa0d7c7523d50b",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L332",
+  "when_key": "",
+  "zone": "CR"
+ },
+ {
+  "field": "parking_covered_required",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "03abf7ff5e0671d99c2eba01c1e3319e3d0bfe83a6d910ff74d5474992518586",
+  "new_quote": "or/washington/cornelius/18.70/18.70.060.txt#L131",
+  "old_fingerprint": "c3a826d18b582ac1a987a43d6d0dc72862634cdb3e4390e0207880c509f3d4af",
+  "old_quote": "or/washington/cornelius/cmc.18.70.cr.txt#L380",
+  "when_key": "unit_lots",
+  "zone": "CR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "b7ecdd2e3a8d884d5e845e36c578bcc8b0b3b376f4249cb1f5963cd7edb3ca24",
+  "new_quote": "or/washington/cornelius/18.75/18.75.050.txt#L5-L6",
+  "old_fingerprint": "4d0878812b749bfa56d8919bcb2c44d4d1e2f24917a01e26ce5c4041cac72dcc",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L199",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "c1de26ba07f415b04f0c034dffb7b172aa37c00061b2bef14cf42ce261a14fee",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L128,L132",
+  "old_fingerprint": "c1c0fb1c1a3ff5f66467ff1ed3a1499dcb8d15966099390ab07ee8c03d94f647",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L567",
+  "when_key": "unit_lots",
+  "zone": "GMU"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "96c373d496121cedeb2143c9b4a8790308665d5334e3eb3edd06719f6c0b097c",
+  "new_quote": "or/washington/cornelius/18.75/18.75.050.txt#L5-L6",
+  "old_fingerprint": "0cb5005c9dafbc9ac3f7ee6a3fe2beadf8063a2667418fb65d0220e10e01159c",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L199",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "74cd86c5c63716932af8d28873e67bfafd91e6004521926ab0469d9e514e4442",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L128,L136",
+  "old_fingerprint": "a97c40136358dadb53a625045fe3e19980c1b9a316900a0e60ac8a98b750eba3",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L571",
+  "when_key": "unit_lots",
+  "zone": "GMU"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "539dc54cd4fb17fbd8c5acfbe5f32aeb28db56c3ce74d0138d73c17331942489",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L30-L31",
+  "old_fingerprint": "c509ea425af51fdae90534385bbb9440768189107915b364860811d77347a4f3",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L479",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "a8ee2f18357de4696f196456223209394d0dab8b3efc5c5951bab9713011155d",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L30-L31",
+  "old_fingerprint": "785cf9db1397fc238833acec59d7a09eca56853692d3b550f182d5570e357e81",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L479",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "931a208a1d52fdaa026aa6effc61f6d62fc2a6c946b9ff162900f5034c0a910c",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L128,L140",
+  "old_fingerprint": "9bae714dfd2b2d34e4d23804af6be94824302a32bfaf9e4155cb2ed391b8e5c5",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L575",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "ae7013e6c24171a23667ce4e45ca98a5ff1483bd79f810281ca98892a1404f69",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L128,L144-L145",
+  "old_fingerprint": "594b5ef41a02d012b6d41b5ce09ee23ab72bad3774dc7942b809ea31dc54fdac",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L579",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "9c8059891f30cdd520c7716886b5384f102ae97174ee4421fae5d7606c57c40c",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L128,L144-L145",
+  "old_fingerprint": "bf8a5829d18bf593de5165275c5a6bce6b4548c3ec996b4cc8de743a66a32aec",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L579",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "f421c6b8071fdacdd9cab0af5ec92f1eb644be82f3b6990eda235d11ef0a1399",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L128,L149",
+  "old_fingerprint": "7e6d7c2d9e0d1bce29a14303f0dff4b574e2281f0294fd4e5f5a11f58745bf71",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L583",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "3338664bbb0d0d1d003a16dbfa96241f4017dcfa813d28b50b91484e645f923b",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L128,L153",
+  "old_fingerprint": "b5d0ce04561452544bb8f252a44c34cd035a9755155268d9d7a75ba4620d6076",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L587",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "a8736e103c7d07f090744b458fb4dff253b95b15a3b7a1054de6dfe97d1ba413",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L128,L153",
+  "old_fingerprint": "5d3611afd346355a566f6e0bae707dba354db4426a11abe60a06a7765db17c56",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L563,L587",
+  "when_key": "attached_wall",
+  "zone": "GMU"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "6ddc15ba66f1a87af49b55962bd20b957bdc97f4c1d8a834aedb94199a0c50fd",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L43-L44",
+  "old_fingerprint": "b786f8bbddd577c7f5453ef199069e85662128cb86b1a7e75fc1b6c5a4a87eb1",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L487",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "76af0beebc49467c71ccce1e04c97f6e1ac3f688bdbdf5145a7626d60008742a",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L171-L173,L177",
+  "old_fingerprint": "84fadbfd975d642f5c603a28705b8673f5e6bffd01f2c278ffd33d75fcf830ae",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L603,L607",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "db4681719d59152b50e9d03ae6b572602e4678da477cc3359e0951e8ef700776",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L171-L173,L181",
+  "old_fingerprint": "9298634173a063a7bc4a05e9faa51663300a44cf2c29ef5cf18a93a58b25babe",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L603,L611",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "d00525b9cb2a948b76f4836c0926d1cd7af118a2649f62fbcddc4a08691cbf91",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L201-L202",
+  "old_fingerprint": "3461a0f51ff92ff08d476950526823b9b29b5fc902917e87f51a62b28d0181b5",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L631",
+  "when_key": "",
+  "zone": "GMU"
+ },
+ {
+  "field": "parking_covered_required",
+  "layer": "or/washington/cornelius",
+  "new_fingerprint": "6179483ffda965bd43fb58165e46de9f07d862c58402aaba9cd40694ec7af850",
+  "new_quote": "or/washington/cornelius/18.75/18.75.065.txt#L246",
+  "old_fingerprint": "4c3434e57bf2846fc88e74186e58b17fed6cc105e9956e2d01ac2d191ee2e1e2",
+  "old_quote": "or/washington/cornelius/cmc.18.75.gmu.txt#L671",
+  "when_key": "",
+  "zone": "GMU"
+ }
+]

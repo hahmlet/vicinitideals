@@ -458,8 +458,11 @@ class TestDrift:
     ) -> None:
         from flats.encode.uncited import survey
 
-        one = {MILWAUKIE: layers[MILWAUKIE]}
-        report = audit(one, rows=survey([layers[MILWAUKIE]]))
+        # Without its rulings: Milwaukie's were written against the chapter
+        # copies, and since the cut into sections (2026-10-24) no card carries
+        # those names, so the real layer reports all of them settled.
+        bare = unruled(layers[MILWAUKIE])
+        report = audit({MILWAUKIE: bare}, rows=survey([bare]))
 
         assert report.clean, "no rulings written yet, so nothing can have gone stale"
         assert dict(report.open_by_queue).keys() == set(KINDS)

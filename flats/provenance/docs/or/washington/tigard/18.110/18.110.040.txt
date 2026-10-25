@@ -1,0 +1,55 @@
+§ 18.110.040. Housing Types.
+
+A.
+
+A housing type is not a use category.
+It describes a type of development that can contain a Residential Use.
+
+B.
+
+A list of allowed, limited, and prohibited housing types in residential zones is provided in Table 18.110.3.
+Terms and abbreviations used are defined as follows:
+
+1.
+
+Yes, allowed (Y).
+Housing types that are allowed.
+
+2.
+
+Limited (L). Housing types that require a conditional use approval or are allowed subject to specific limitations.
+
+3.
+
+No, prohibited (N).
+Housing types that are not allowed under any circumstance.
+
+C.
+
+All housing types are subject to the standards and provisions of the applicable development standards chapter or applicable plan district chapter, if any.
+The applicable chapter for each housing type is provided in Table 18.110.3.
+
+D.
+
+All allowed housing types may be built on site or manufactured off site.
+
+Table 18.110.3 Housing Types  Table 18.110.3 Housing Types  Table 18.110.3 Housing Types  Table 18.110.3 Housing Types  Table 18.110.3 Housing Types  Table 18.110.3 Housing Types  Table 18.110.3 Housing Types
+Housing Types                 Applicable Chapter            RES-A                         RES-B                         RES-C                         RES-D                         RES-E
+Accessory Dwelling Units      18.220                        Y                             Y                             Y                             Y                             N
+Apartments                    18.230                        N                             N                             N                             Y                             Y
+Cottage Clusters              18.240                        Y                             Y                             Y                             Y                             N
+Courtyard Units               18.250                        Y                             Y                             Y                             Y                             N
+Mobile Home Parks             18.260                        N                             L[1]                          Y                             Y                             Y
+Quads                         18.270                        Y                             Y                             Y                             Y                             N
+Rowhouses                     18.280                        L[2]                          L[2]                          L[2]                          Y                             Y
+Small Form Residential        18.290                        Y                             Y                             Y                             Y                             N
+Mixed-Use Development         NA                            N                             N                             N                             N                             N
+
+Notes:                                                    Notes:                                                    Notes:
+Y=Yes, Allowed L=Limited, see footnotes N=No, Prohibited  Y=Yes, Allowed L=Limited, see footnotes N=No, Prohibited  Y=Yes, Allowed L=Limited, see footnotes N=No, Prohibited
+[1]                                                       Allowed only through a conditional use application.
+Allowed only through a conditional use application.
+[2]                                                       Rowhouses of up to 5 units per grouping allowed.
+Rowhouses of up to 5 units per grouping allowed.
+
+(Ord. 18-23 §2; Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-06 §2; Ord. No. 24-05, 4/23/2024)

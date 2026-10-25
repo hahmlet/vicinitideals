@@ -1,0 +1,361 @@
+§ 18.660.070. Site Design Standards.
+
+A.
+
+Purpose. The purpose of these standards is to create safe, comfortable, and attractive streetscapes for pedestrians and preserve district trees, specifically the Oregon white oak (Quercus garryana).
+
+B.
+
+Building location.
+
+1.
+
+Street setbacks. The minimum building setback is one foot from the street property line.
+This standard applies to the entire building, except for building projections as allowed by Section 18.660.080.D.
+The maximum building setback is 12 feet from the street property line.
+This standard is met when at least 70% of the street-facing building facade is located no more than 12 feet away from the street property line as shown in Figure 18.660.1.
+
+a.
+
+For sites with more than one street property line, such as corner or through lots, the maximum building setback standard applies to all street property lines except where all of the following are met:
+
+i.
+
+The maximum building setback standard is met on at least one street property line, and
+
+ii.
+
+The building is located at least 35 feet away from the other street property lines.
+
+b.
+
+For lots with existing buildings, the maximum building setback standard does not apply in the following situations:
+
+i.
+
+A new building is proposed to be completely located behind an existing building that meets the maximum building setback standard, or
+
+ii.
+
+There is less than 25 linear feet of street frontage that does not contain a building within the maximum building setback area.
+
+c.
+
+The maximum street setback standard may be increased to 15 feet beyond the drip line of a district tree, as defined in Subsection 18.660.070.H, where a district tree is proposed to be preserved.
+
+2.
+
+Interior setbacks. There is no minimum or maximum building setback standard for interior property lines.
+
+3.
+
+Clear vision areas.
+The clear vision standards in Chapter 18.930, Vision Clearance Areas, do not apply to development in the TMU zone.
+See Paragraph 18.660.070.G.4 for driveway sight distance requirements.
+
+Figure 18.660.1 Site and Building Design Standards
+
+C.
+
+Utilities and service areas.
+
+1.
+
+Above-ground private utilities proposed to serve a single development, such as transformers and control valves, that are 1 cubic foot or greater in volume or have any 1 dimension greater than 2 feet must be located on the site with the proposed development, and:
+
+a.
+
+Located inside a building;
+
+b.
+
+Located no closer to the street property line than the street-facing facade of the nearest building on site and painted or wrapped with a non-reflective material that is dark in color; or
+
+c.
+
+Screened as required by Paragraph 18.660.070.F.4.
+
+2.
+
+Service areas, such as those that contain waste and recycling containers, outdoor storage, and mechanical equipment, must be screened as required by Paragraph 18.660.070.F.4 where not screened by a building.
+
+3.
+
+Landscaped stormwater facilities and roof-top mechanical equipment are exempt from these standards.
+Vehicle parking and loading areas are subject to the standards in Subsection 18.660.070.D.
+Wireless communication facilities are subject to the standards and procedures in Chapter 18.450, Wireless Communication Facilities.
+
+D.
+
+Off-street vehicle parking and loading.
+
+1.
+
+Quantity. The maximum quantity standards for off-street parking areas are provided in Table 18.410.3.
+Adjustments to maximum parking quantity standards are prohibited.There is no minimum or maximum quantity standard for off-street loading areas.
+
+2.
+
+Size. Off-street parking spaces must be a minimum of seven and one-half feet in width and 17.5 feet in length.
+
+3.
+
+Location. Off-street parking and loading areas, except those within parking structures, must be located behind a building or at least 35 feet away from all street property lines.
+For purposes of this chapter, a parking structure includes an individual garage associated with a residential use.
+
+4.
+
+Screening. Off-street parking and loading areas not located behind a building, except those within parking structures, must be screened as required by subsection F.4.
+
+5.
+
+Landscaping.
+
+a.
+
+Off-street parking areas 20,000 square feet in size or more, as measured using the method provided in Section 18.40.150, must meet the standards of Section 18.410.030.M.2.
+
+b.
+
+Off-street parking areas with more than 10 spaces, but less than 20,000 square feet in area, except those that are covered or within parking structures, are subject to the following standards as shown in Figure 18.660.2:
+
+i.
+
+One landscaped island with a tree must be provided at the end of each row of parking and at intervals of at least every five spaces within each row of parking.
+A landscaped area that runs the entire length of a row of parking may be provided instead of the required landscaped islands but must contain at least the same number of trees as the islands.
+
+ii.
+
+All required landscaped areas must be a minimum of 90 square feet in size for single-loaded parking rows or 180 square feet in size for double-loaded parking rows.
+The required landscape area must be a minimum of five feet, as measured in any horizontal direction from the inside of any proposed curb.
+
+iii.
+
+All required landscaped areas must be protected from vehicle overhang through the use of wheel stops.
+
+iv.
+
+All required and proposed trees must have a minimum caliper of one and one-half inches at the time of planting and meet the standards in Section 13 Part 2 and Appendix 3 of the Tigard Urban Forestry Manual for soil volume and species.
+All required trees must be maintained in good health and be replaced as needed to meet the parking area landscaping standards into perpetuity.
+
+v.
+
+A required landscaped area may be used to meet the city's stormwater standards.
+
+6.
+
+Vertical clearance. Off-street parking areas must have a minimum vertical clearance of seven feet.
+Off-street loading areas must have a minimum vertical clearance of 15 feet.
+
+7.
+
+Circulation. Off-street parking and loading areas must be designed to prevent vehicles from backing into the street unless approved by the City Engineer.
+
+8.
+
+Surface material. Off-street parking areas, except those that are covered or within parking structures, must be paved, graveled, or utilize a turf grid or open joint pavers.
+Covered or structured off-street parking areas and all off-street loading areas must be paved.
+
+9.
+
+Electrical service capacity.
+Off-street parking areas must meet the standards of Section 18.410.030.L.
+
+Figure 18.660.2 Parking Area Landscaping Standards
+
+E.
+
+Public bicycle parking.
+
+1.
+
+Quantity. The minimum quantity standard for public bicycle parking is provided in Table 18.660.5.
+There is no maximum quantity standard for public bicycle parking.
+Public bicycle parking is defined as bicycle racks or lockers that are available for use by members of the public, including but not limited to visitors, employees, and residents.
+
+Table 18.660.5 Minimum Number of Public Bicycle Parking Spaces            Table 18.660.5 Minimum Number of Public Bicycle Parking Spaces
+Proposed Development                                                      Minimum Number of Spaces
+Residential development that is not mixed-use and has more than 4 units.  1 space per 30 linear feet of street frontage or any portion thereof
+Non-residential and mixed-use developments.                               1 space per 20 linear feet of street frontage or any portion thereof
+
+2.
+
+Design. All bicycle parking must meet the following standards.
+
+a.
+
+Bicycle racks must be designed to allow a bicycle frame to lock to it at 2 points of contact, except that spiral racks and wave racks with more than 1 loop are prohibited;
+
+b.
+
+Bicycle racks must be securely anchored to the ground;
+
+c.
+
+Bicycle parking spaces must be at least 2.5 feet in width and 6 feet in length and have an access aisle between each row of spaces that is at least 5 feet in width.
+Covered bicycle parking must provide a vertical clearance of 7 feet; and
+
+d.
+
+Bicycle parking spaces must be paved with a dust-free hard surface material.
+
+3.
+
+Location. Public bicycle parking spaces must be visible to pedestrians on the sidewalk in front of the proposed development.
+They must be located in front of or to the side of the building.
+They may be located in the public right-of-way with approval by the City Engineer.
+Bicycle parking must not conflict with the use and maintenance of any utilities, service areas, off-street vehicle parking and loading areas, driveways, or transportation facilities.
+
+F.
+
+Retaining walls, fences, and street screens.
+
+1.
+
+The maximum height of retaining walls is 4 feet where located within 12 feet of any street property line.
+
+2.
+
+Fences and walls along street and interior property lines are allowed but not required.
+The maximum height of fences and walls is 3 feet where located within 12 feet of any street property line.
+
+3.
+
+Chain link fencing and unfinished concrete blocks with any 1 dimension equal to or greater than 15 inches are prohibited within 12 feet of any street property line.
+
+4.
+
+Street screens are required to screen off-street parking and loading areas, service areas, and some utilities from the street.
+Utilities and service areas include, but are not limited to, waste and recycling areas, transformers, utility vaults, and mechanical equipment.
+Street screens must meet the following standards:
+
+a.
+
+Location. A street screen must be located within five feet of the area to be screened, except on sites sloping down from the street.
+A street screen on downward sloping sites must be located as far from the street property line as possible so that the area to be screened is not visible to pedestrians on the sidewalk in front of the proposed development.
+A line of sight analysis is required in these circumstances.
+A street screen is not required where it would obstruct vehicle or pedestrian access.
+
+b.
+
+Height. If the area to be screened is an off-street parking area, the street screen must be between four and six feet in height.
+If the area to be screened is an off-street loading area, service area, or utility, the street screen must be between four and eight feet in height.
+
+c.
+
+Length. The maximum length of a street screen is 12 feet where located along, and within 35 feet of, any street property line.
+This standard does not apply to street screens meeting the standard in Subparagraph 18.660.070.F.4.a.
+
+d.
+
+Materials. The street screen must be a wall, fence, or combination thereof.
+It must be opaque and permanent.
+Chain link fencing and unfinished concrete blocks are prohibited.
+
+G.
+
+Driveways.
+
+1.
+
+Quantity. Driveways on all streets are subject to the standards in Table 18.660.6, except for driveways on Dartmouth Street and Pacific Highway.
+Driveways on these streets are subject to the access management standards in Chapter 18.920, Access, Egress, and Circulation.
+
+Table 18.660.6
+Maximum Number of Driveways
+Table 18.660.6
+Maximum Number of Driveways
+Table 18.660.6
+Maximum Number of Driveways
+Street
+Length of Street Frontage
+Maximum Number of Driveways
+72nd Ave
+Not Applicable
+1 per street frontage, except where a second driveway is required by Tualatin Valley Fire and Rescue for emergency access.
+If a second driveway is required, it must be:
+• Shared with an adjacent development subject to 18.660.070.G.5; or
+• Gated and limited to emergency vehicle access only.
+All Other Streets
+For each street frontage less than or equal to 300 feet in length
+1 per street frontage
+All Other Streets
+For each street frontage more than or equal to 300 feet in length
+1 per every 200 feet of street frontage
+
+2.
+
+Size. Driveways for all uses, other than rowhouses and small form residential development, must be 20 feet or less in width on all streets, except for driveways on Dartmouth Street, 72nd Avenue, and Pacific Highway.
+Driveways on these streets must only be as wide as needed for safety and are subject to the access management standards in Subsection 18.920.030.H.
+Driveways for rowhouses and small form residential development must be 10 feet or less in width.
+Driveway width measurements do not include driveway wings.
+
+3.
+
+Location. Driveways must be located as far apart from each other as practicable except where shared.
+Driveways near street intersections must be located as far from the intersection as practicable.
+Driveways must not be located in the influence area of any intersection with Dartmouth Street, 72nd Avenue, or Pacific Highway and are subject to the access management standards in Subsection 18.920.030.H.
+
+4.
+
+Sight distance. Driveways must have adequate sight distance for safety.
+A sight distance analysis is required for proposed driveways or existing driveways on sites where development is proposed.
+The City Engineer will specify the technical information that must be included in the analysis.
+
+5.
+
+Shared access. Shared access is required along 72nd Avenue for certain types of residential development to prevent a series of closely-spaced driveways.
+Development that includes a single detached dwelling unit or two attached dwelling units is prohibited from using a single driveway to access 72nd Avenue.
+Shared access between adjacent residential or nonresidential developments may also be required where practicable.
+Where required, shared access must be maintained into perpetuity with a recorded joint access agreement, contract, or other legally binding document.
+
+H.
+
+District trees.
+
+1.
+
+District trees are Oregon white oaks located throughout the TMU zone adjacent to existing and future public rights-of-way as shown on the Tigard Triangle District Tree Inventory and Map.
+
+2.
+
+The Director will maintain the Tigard Triangle District Tree Inventory and Map.
+If a district tree is found to be in the public right-of-way or is removed, as provided below, the Director will delete the tree from the district tree inventory and map.
+
+3.
+
+District trees must be preserved but may be removed in either of the following circumstances:
+
+a.
+
+The applicant has submitted an adjustment application as provided in Paragraph 18.660.040.C.4 and has obtained the necessary land use approval and tree removal permit.
+Tree replacement is not required.
+
+b.
+
+The applicant has submitted a report from a certified arborist that demonstrates that the tree meets one of the criteria for removal in Section 7 Part 1.B.1, 2, 3, 5 or 10 of the Tigard Urban Forestry Manual for a dead, dying, or hazardous tree and has obtained the necessary tree removal permit.
+Tree replacement is not required.
+
+4.
+
+Development adjacent to district trees is subject to the following standards:
+
+a.
+
+A district tree preservation area must extend 15 feet beyond the drip line of the tree.
+
+b.
+
+Pedestrian facilities that do not disturb district tree roots are allowed within the tree preservation area.
+
+c.
+
+Buildings, driveways, and off-street vehicle parking and loading areas are not allowed within the tree preservation area.
+
+d.
+
+Tree protection measures must be in place during any ground disturbance work.
+Tree protection measures consist of a five-foot metal fence placed on the perimeter of the tree preservation area.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 19-09 §1; Ord. 22-02 §3; Ord. 22-06 §2; Ord. 22-10 §2; Ord. 23-08, 12/5/2023; Ord. No. 24-05, 4/23/2024)
+

@@ -1,0 +1,18 @@
+Sec. 17.26.20. - Comprehensive plan and corresponding zoning map designations.
+
+
+Plan Map Designation         Zoning Map Designation
+Residential                  Residential
+LDR—Low Density Residential  SFR Single Family (3—5.8 units/net acre)
+R-1 Low Density (5—8 units/net acre)
+MDR—Medium Density           R-2 Medium Density (8—14 units/net acre)
+HDR—High Density             R-3 High Density (10—20 units/net acre)
+Commercial                   C-1 Central Business District
+C-2 General Commercial
+C-3 Village Commercial
+Industrial                   Industrial
+I-1 Industrial Park
+I-2 Light Industrial
+I-3 Heavy Industrial
+
+

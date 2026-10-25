@@ -1,0 +1,7 @@
+§ 19.202.5. Façade Area.
+
+The area of a building façade is the sum of all wall areas above grade that are visible on one side of a building.
+The following areas are excluded: roof areas; the wall area of a horizontal or vertical offset that is perpendicular to the primary orientation of the façade; and gable ends below the ridge of the roof and above the eave line.
+The wall area of a dormer is not exempt.
+
+Figure 19.202.5 Façade Area

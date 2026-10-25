@@ -1,0 +1,2002 @@
+[
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "56afd383b69b7c0acae21d4dcb0e51af258f8331d9bba437c6230027d80582f7",
+  "new_quote": "or/washington/tigard/18.130/18.130.030.txt#L23,L30-L32",
+  "old_fingerprint": "893865fcd921b8f2c5c127e986e1058dbb3e3f766e1b22439c918ac011a6026d",
+  "old_quote": "or/washington/tigard/tdc.18.130.industrial-zones.txt#L59,L66-L68",
+  "when_key": "",
+  "zone": "IND"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "31b66da67ea1b66069f51665bda0289e9668fff52e5024f8ce3d1479ddd138b4",
+  "new_quote": "or/washington/tigard/18.140/18.140.040.txt#L23,L26-L28",
+  "old_fingerprint": "06d8b6f60dbb209f2438946f6df5fa51d5434e1c1208555324a32a171049a7e2",
+  "old_quote": "or/washington/tigard/tdc.18.140.parks.txt#L81,L84-L86",
+  "when_key": "",
+  "zone": "PR"
+ },
+ {
+  "field": "row_to_centerline_class_by",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "c744f5b302360968d59cc6598b0856eaa2fa037c6f996178784491e0ac3ace40",
+  "new_quote": "or/washington/tigard/18.210/18.210.030.txt#L3-L9",
+  "old_fingerprint": "1383ea8a5279770d65d86aa26666c3595cde25dd90fdfd81b42b391bce74d658",
+  "old_quote": "or/washington/tigard/tdc.18.210.residential-general.txt#L45-L51",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "daaaa805ab3589890c67157e747841ca6b97913a7ad03249156d542ccde7b34e",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L38-L43",
+  "old_fingerprint": "8ca6b20daebcb8f5e59d4fcf372c2600b28ef146b71fe0bb416d2a6522ca5f02",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L93-L97",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "697bdb0c36ee870b02a2634e4056ae001d312cee5703da64702a2c789c27151b",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L21",
+  "old_fingerprint": "0b9023b84b033afb05be243f3a017aad1c359df6c5f2308036eecc57854ce129",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "95db62834a0bd9627a3a0e786d0254f3b5fab75ab863e1ebc49c5fa4a04c86f9",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L22",
+  "old_fingerprint": "685f03bced81b08750edec42f8137b5f115549bac880ae93d736054d2c25e633",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "d39a7440515fe0e0bd3dee35c1078cb2fc96d4df82dbe6c47edc2d0ce3e72268",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23",
+  "old_fingerprint": "8e6d78db23055b5738298a81b216a950ccef4905104e9eb03a7f84300abac830",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "e9e8748b29093ba08f4883727bb8d9f201fdd5527c2f54e5724992b62e472d16",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23,L32-L33",
+  "old_fingerprint": "34d621669c77569c3f91f79696a48552f8a4cf1501bdd829cb08cefd645d2a89",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+  "when_key": "attached_wall",
+  "zone": "RES-A"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "46d8c910fd7edd3222a3b4ad354ba1bb39365d156943cc8ff27a53bb0dd1099f",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24",
+  "old_fingerprint": "5b96e6aa4ff85708aafeea666d06453687f849cd7485fa2d545539e5dc23a118",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "da070aef3ec2722a86292d2e259136435c0cf5e0f3f965ddde10c97f9317d291",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34",
+  "old_fingerprint": "bd00245b9faa57cd3eb65addf740aa58cbe63b8d13062711068326c65aa8487a",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+  "when_key": "alley_at_rear",
+  "zone": "RES-A"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f6bf9eaf2f6ac00c527dd738c0838de460667672e5cc984fccfd587992bdde06",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L26",
+  "old_fingerprint": "98ef085afc5f614ef305e573f4e06928f536216d106ffa573e1e6adc6a04a391",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "02b630cf41bcb39b846611e5bca45dbbc3f14e3f86b09f07e4a7fddcb4500644",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L28",
+  "old_fingerprint": "6e710c7a785219e0c28b5c95e0eab9394adada0e33f318224135b9901e9e895f",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "d8fd068847b835da752f8308d5a698de40c70b0d26197630122d48f9afd3906c",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L29",
+  "old_fingerprint": "90d8fd0ec6b0cd8fe322f13b8cb07e11c7abcca2eb219f89d3a5a5bcda35dc54",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "88c4dec8e37fc9a2b00c6af452561499aa8e07f2271bdcc3009f751dd7737d75",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L30",
+  "old_fingerprint": "6810542cf4f212204596226eca4f0f8932d3df3628f71735dc47001265cbc4dc",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "91c407046216350c5a30aadbaf0ffa83c4155800154bd1fa14f240209e9de40d",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L88-L90",
+  "old_fingerprint": "66fd7850ac724ea31523b008b5f8d2f6e9ef59a275b18a8e7e6c371dcb0ec68c",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "4ea970324ad497cc21dfbcb006fe6772f900d3686c8a563418ef25500399bf9c",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "f68604d5e40e86b458ffcc3700a3cd6267c87f83cf445551cd8817c22d994c22",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "e7f5a0a21aa86c3f924f369d3d36663773993eaad14f5e84f79603d2806d405b",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "b5683fbcdcb2c518e9481eef226ce89bc03ad43ba43755854675041954bad567",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "804b376d3403b5aadca86fcc7a0f31e35d269f4b15b355b41b094c187d9bfaff",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L159-L162",
+  "old_fingerprint": "4d716e614a3efd2b814f732f8f4330c3987c539d28eef5807eef988aefc18d86",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "fd8482bb4ac2ecc2f5e1c41ae803f93d31bd26df7eb221684175125f87197325",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L21",
+  "old_fingerprint": "9e9079e7d3a6b3ddb76e3adf5e39334cda3bcc3fe769e5986d72f7597ff41dd3",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "ccfcd44e6f8af5a7081bc191084f5770926cdcb508711554b8a989f13b320f3e",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L22",
+  "old_fingerprint": "b369bc784a4af2c7422b9a9ce731ed89104edaa70d2a9915abe3d8ff8b1e8329",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "db1d3deca46da21819428447974a133e95a3d496db01f383c86927284b70b229",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23",
+  "old_fingerprint": "3fb318ce83b9de9950e226c56fe8a49bbe0fba3edea962769a41ebf2c9780873",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "4d71b0069b3166ee4c11548209ee59c212a58242597a16a6592044e8e75e99f0",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23,L32-L33",
+  "old_fingerprint": "3cf1eb5110f2fdff749510118a4814f8cb2efbd9cacc00af5e3e78bc9a39a4b6",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+  "when_key": "attached_wall",
+  "zone": "RES-B"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a0bd863b71d62914aea45a674e6db1cfe0aae74f1f0f4d18067533e9dd5995f6",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24",
+  "old_fingerprint": "f92d8c7e6d2e98ce738a1f641c40447401136f4c71e9618401c27f776f185409",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "09775026bb8dfd65d63e3229c619662dadf2920d46dc7071beb724b65313e0c0",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34",
+  "old_fingerprint": "58517ff2be979da903c8ad0848515f25f4fecce7e074646945d2314f2ead77e0",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+  "when_key": "alley_at_rear",
+  "zone": "RES-B"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "5e9385dc8264eb7385555d11c58944dc646ec12898456a92ebdbc6bdc8a90a93",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L26",
+  "old_fingerprint": "772061a28f98a8dcd7c5ee6e7efd7c55c421a278ed2c1270911da33b4a0accf5",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "805aff18c3de76dc25900f332826378521541b55e0469a236eff115bafe85efc",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L28",
+  "old_fingerprint": "9c960abf6a63f32b5adb6303c82e18fae27efc10eb9cd240dfe790e3b39f930f",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "35e534e6e13373a7b0a786d02ec49c8126f68f94f8a962efff2cfd4c4dc851fd",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L29",
+  "old_fingerprint": "e805136d9cdd788225b9713869f22d92c04e0e376cbe4148e0c44daebc03c5fd",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f3b85601549dacfb29e3f1f894a7d05764b3cef40701711d293c851f4abf45c6",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L30",
+  "old_fingerprint": "315b354f677d2c979765e5dffebf5d88023c0da9c6dacf06313cb71b8862ca6b",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "c8ecb8e3cc4bb454853dc8371185a28896a3715108d22458a96be0e0e61e09e1",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L88-L90",
+  "old_fingerprint": "89814aa8dd44c117920fc30d0cd723893ab8117653f2bc43e4b30225b8e39771",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "7906d051aac4d196455b12137524de3c695d41c216f060e0c2d7be7b8899151e",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "d54ec5479c3bd2538e1cf417a9cf2978d763e435659c1abe8b4624ba65b3fb79",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "ac14d4631d9af42d8391fd7487c1accd7f4b8bd7bf9f9676c6a0dca60d122d20",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "6da6dc3428ff65f225fcbc0b2428f4f04aa24e00d70b4be2b0242913b3c57cbc",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "d7981c00c58531eb36728c4c946f4e75a0d166355743daea3def92be1cceb4b7",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L159-L162",
+  "old_fingerprint": "e90bd80583a000c0492000e646df63233fde6e97b8612acc4099117794354ae1",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "3ee63c72e7d62f8de42802f4ed29771f33eaf085b544e4baa35b8030383ca76b",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L21",
+  "old_fingerprint": "de0b6a06f692f8b081da946bb5bb608559c3521832fa49d40f29084a0120694d",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "824e27b03ea854b8fd9da93e181521c3468db3cef8b77462f916f66229d5e530",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L22",
+  "old_fingerprint": "6bd5f87d6d76a364e2922d6dbdfef5828584dfabb1df5361c7e03a658956bbaf",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "8fd627033f20e5d567b1ff54695e09638ab27146e49d7ab416a9904054186a6d",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23",
+  "old_fingerprint": "9d52e408ebbb304e4de3ab93dee4184830a308ee2fb94fcc253930e2a8ad2331",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a3993dbc11fc5468b169f6a02a478a16cb111c0beeb6c2fc2f76d6800f23c25e",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23,L32-L33",
+  "old_fingerprint": "81c58db782157781832935411037f1c807ece433052f59e8afe409bac44d3d08",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+  "when_key": "attached_wall",
+  "zone": "RES-C"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "29b1662e96a3e681fb98d1bf51037cbf53ef870aad7bbd7d0562fc271575402e",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24",
+  "old_fingerprint": "729c9c9f19e37250b95e6971060e1d74654883315f0e08f47ff5ea2dc3597bbd",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "004a048a5f681d8168343d005ab00d7dfdec957dda5d3b5ad2c4c3d40168b93a",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34",
+  "old_fingerprint": "d0ed420a9d2eb0752208c87272423b05749040076680aff5830543bb8c195f6a",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+  "when_key": "alley_at_rear",
+  "zone": "RES-C"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "2cca8cd046a52065732180f11fe79aef93929a3b58344c6afcdf3d9eebf45b34",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L26",
+  "old_fingerprint": "5042a1691524ae142b521a13e01934ff0c9eca0e5b9769f711493fc8e492aaf5",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "039656948db0ed85de79b3800c36cad3829dfaa31f84a84f1da2904a0608c93b",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L28",
+  "old_fingerprint": "0d32351dfc5c4c4b7ffda3f2746d3d1ae55efe22a8f07ffb6666d28d196c1de1",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "b081935cf3a48323f04363a31b46dd5edcd7e480a8df07999417e93b85bb6e44",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L29",
+  "old_fingerprint": "ca7d6352e269b4134c9687cbc382fd9f4187b7d4aebd7686359656e3cb51b27a",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "b11761ff3346b9119af7bd86125863c3a1ed41f36d7e4c315fa7645788849f2d",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L30",
+  "old_fingerprint": "430b5d846f81a06272b59282584166a317ff93ee0b009ed68734d6a639542c30",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "1a5a81ef5b3a54a0ad2f46151430eb4888f3b5d8082633474a55cd6339dae8ac",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L88-L90",
+  "old_fingerprint": "d8c87a298f7a3aa07b57e58e96df2fbd88193faaa5ed56e6a7b40ab841670dd7",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "cd9c08d41fb713c29bc059fdbb8dfeb18cd9b651550e19f8f02804149b266299",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "27a5934ca2ce8b9b087971b2075414c47990c216f7bf25a4b2b2dd223b24759e",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "6ba09bc475ced26ec6ef20aaccc92d20e42e584cee4238140840990d854dce43",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "07033cd47ad0145f0651451050bb88b19fd5f6b3a6de9f63a5af48290a7d3920",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "2ea8e6baeda3b115558beb9de240eb692115f9a475aea4b3580ad6c2ac2dbd2f",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L159-L162",
+  "old_fingerprint": "1a3a2bb059949878637840d02fe67cbc55342c41036df0f075445c603f89a206",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "47bc87baa7882e1cac8b5192c8f1296e8d43b70393c4038492d4bb0907f3a861",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L21",
+  "old_fingerprint": "e818296c52a6f637d1218c9dfcb1535e6b728f7bdc968ebf7b305c5b43a094ec",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "b2189dcd1a235de35a65331fc55f6b424267a56789cf148922bab6dc312cd688",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L22",
+  "old_fingerprint": "4d443d7455b8e63f20e20ac57e241e8ad8398e26ce2404c2929b2dde8ff421a2",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "76fb781bd66fd2e8ccd06d4046321a72176166144b00cf4276c2d682c690a4f2",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23",
+  "old_fingerprint": "2c1457bfac02fcbd40f2c0c18fda11d09046097a6fd6c0a803fd2bd6042f7c8f",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "692cc9bbbc8e7a53c1aef427b12d0fbedae761d075afb0a941dd1615c06452d5",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23,L32-L33",
+  "old_fingerprint": "727bea990b880c64054602c594f2c3989e505614b7a7c5d5b85a4b6885936f00",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+  "when_key": "attached_wall",
+  "zone": "RES-D"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "1a8bac48d19a62462a59dae4c1ea73f411c8b8d0696c3971b9db5f3c2cf4fa7b",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24",
+  "old_fingerprint": "87282f4f435d7e44d55424da0c80a7c86762def63e976b31fef3ccb21177c566",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "45d654cac0aac6c2879007a34b38dc97bf3aeecfde417d8d93248d6437a0b9f6",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34",
+  "old_fingerprint": "6787a581b680613f7b89f6b955d24a02a1954cf42aa86352f99eae96f430f5c3",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+  "when_key": "alley_at_rear",
+  "zone": "RES-D"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "9761a6ad6afb8f5f5725b23a07b283c84d39534bdaf78201805b78315d44f2f8",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L26",
+  "old_fingerprint": "16aced8b352ddada8825090933f3e75af6ccb3ed8a243441d35644055db32aa1",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "ab629451cfe1c8ad46198706b7fca930a22aa93a31de05ff195a48bb548063f7",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L28",
+  "old_fingerprint": "178b33256f86031ea7948e284a978f892358e7d2036633af11fae35f0742a8a6",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f01da2e71ed343ba3207195689966b6d7fda838b7e43c089e68f9de2644efe08",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L29",
+  "old_fingerprint": "6947bd910e9cfb1e6cc5405904a4dbb39b39ed1ca2a46b0ff650d6f1b5bead8d",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "ad7f37c6dd9416517c5ff7029ccb7af2d06b8d9939494c887256f18abe5a3385",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L30",
+  "old_fingerprint": "6336aa5d47d5ca717e797a4eaa5a5d80002b8fe8b5a404f97e64421ec353a698",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "3b9cf03f6b7b97cb73aa875e8c47da75250779fedef33e6ae5fd3c6f93a45f5c",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L88-L90",
+  "old_fingerprint": "a0ea445ce0fec101e072aff4c074482b296ce37960eec97fb2cb39c2e063f648",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "e4b91e44b7ebddfe4d895ad7568a3a071590fdace6bff61c3bc5380007584ec2",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "01ad58099dde1b04fb08b95eea9e42c07b445bd7364cc98fe2d4ccb929e7ebd3",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "b4410ed747fcd7dcfbbcd768c02289cd2ee532d46125e52bf411f347f0abb43a",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "5c7bb053b4633fb47437ed78959a1d54de9331963aa967511257a7d6dd7377df",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "34eadab467c8f68b33af4851100e7ebe35edf542ceae5921593e9ac7b061daca",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L159-L162",
+  "old_fingerprint": "59ec3973058e0ff66d852936cafe0468f3da884271b4f2d11cc1443252264a02",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f02d96b142c039a5830e9e529517fce87bbd4a8e77896761c74340a2c1b76e2e",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L21",
+  "old_fingerprint": "11a93556364382327ede3f4bd82b8c2c797e5b44fda1f73fc624bab0a51c78a0",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "15c9e2072eb266a23e221cb21d36d310f5cc9fc770f21c451ddb2b0030264db6",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L22",
+  "old_fingerprint": "5fdb42b4d0f671522699a33d6a03f0c31b51a160f55e637ea2bd12f105fa3d38",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "70bcd94f150da86fafe2205fed17a878c30485571a626b95725dd5fb837bb4ce",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23",
+  "old_fingerprint": "d8d7d7d0b2050e676393fa068dffcb8c5b5bd643ddf56a0b1f707c2a7e179743",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "0a24725fcb1b71dcf960f0d4398c93b4c7f731f07e2cc5b334e44f1a83072a06",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23,L32-L33",
+  "old_fingerprint": "a0ff86dea414e85fe4c3579ae13b25ffd9679ed90c301da6cc19fb98acca8490",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+  "when_key": "attached_wall",
+  "zone": "RES-E"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "0def12b222a0794883da68fbdc8472a8c612e13cf0d129dbfdb0e752f84e4377",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24",
+  "old_fingerprint": "a668e4d0c2ff6dd6a0503b8344267f52e663546e05ca9c8b81db0fceae6b8855",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "147fb22edc51baef57923c52293e353f45b7f7d24d2174a49f7f17c03ed6950b",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34",
+  "old_fingerprint": "84880944df15e442783f568863423a662bfb21948aff20352258b732ab54c7d8",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+  "when_key": "alley_at_rear",
+  "zone": "RES-E"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "5639d856abe05ef294fdc4685666966e107dc47987dc2c4147dbff48d94df8f0",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L26",
+  "old_fingerprint": "42899576ad64fc88afbf0887fa9d73344305391b399533f61275c0f13a5034bc",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "39c606311f09a6171e12267bca1a1e46e61d0597c73fe754e1d0dc0b9e03e27b",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L28",
+  "old_fingerprint": "33f55530c8dc59e1a2fccd8a484cf98fe06677065f8157036d80849540c8d2ed",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "43be7971a378036f3f90ef9724973083a1919e34380747b9f2aa92daf1a14b85",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L29",
+  "old_fingerprint": "73bc52bc417046fcf801541dfd8a9429d0675ad36ae7ff64fe21f73cb898ebfc",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "0195acb0cff3961ced36f2a4affd110d5ef065dc21d9b420ae83dc9a1c5ac92a",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L30",
+  "old_fingerprint": "d5aba52a3f795fe3eb1dfef8aa67cb295f1cc1609765277a779a1f7f2ae973e0",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "49885ca3a2bc27062ace25844e8dfbda0a492ac6c703c61794394db24358aed9",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L88-L90",
+  "old_fingerprint": "a78582693d7b0231343a391ae83b335bd7f7d1a70fe72785a62a3922438dead5",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "07606b9c1fc93c036cc6c37e4903d5aba7b425ead95127e2f5dbe7af2c580ca8",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "d8407355b476457e901f9d9014effe69f52fc2b58baf494638e8114f5358c5eb",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "17b0664e8b644f9e1b047a65ff0b7336b85c64982e6d047cbbffaa9955c1033a",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "63a055950c7a4646e83b48637a0862990c336908af9cf51d2a4f57c8d12c3585",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "75f60e201a06db9fcf636626507aecb6847c212a5549f40c1b80e5f6f1b63696",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L159-L162",
+  "old_fingerprint": "608132d4b73eeb04028ed07eec179f249ccfef342f394de6aabe05c29868772a",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "0db3e482d96e624edad516f64084fad4ef023df277d5a441fcd4d014934f22a8",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L21",
+  "old_fingerprint": "2089208cdee8cd50a263afef9775631b62b77eb0023355ddd716dcbc57e40571",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L76",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "fef52819b7d03b234635bfc89db041ddffd5fa214386d0b0aa7fc50819142061",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L22",
+  "old_fingerprint": "402945dc22b8287c00032df237ea1848575df6b7cf4c6962a53945598c320907",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L77",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "904b5243d3f124a9456f23d3e7dc0bd64d4d182a90820e68928f22fcb6952ca3",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23",
+  "old_fingerprint": "3e8e067b52a5f2020241850fd891bfbc9faa601c0e79369dda943fb2ee2ce912",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "c96f3dfc4a320177f6158cc696c362129af1658b37579f9b6a93f684e6df8c18",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L23,L32-L33",
+  "old_fingerprint": "ed6a96fdf75f853a21f5631ff19727fe025cbdcfc9a4ec015e3862d757c9a853",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L78,L87-L88",
+  "when_key": "attached_wall",
+  "zone": "MUR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "9cd54861ae044b6d68f946ffd01d80bf739865b37b0b1e8754f04e818cd781c3",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24",
+  "old_fingerprint": "d7e3c7cd83b186941ad32a6d17e4c69f2a4d975baeec67587f8ac1641ea4dd6c",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "8fcc879b691656abb960d7b51a9d948903cd41937fb6a66f1dba420fae94734c",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L24,L32,L34",
+  "old_fingerprint": "c3fb1c5010edb2dbb98b5335cfd0a68ed62906ab4beb684c93f56623c9bdfa1d",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L79,L87,L89",
+  "when_key": "alley_at_rear",
+  "zone": "MUR"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a413a840fb8bb2347d64eb89b62f060304d0258c11542affec4a8bea4c770316",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L25-L26",
+  "old_fingerprint": "9f44fd251bcb65a70386625afd1c295a1b79a01739e74e4f58f451e6242fd90a",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L80-L81",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "841b5cff6e122f4887b340907109b272b72e6dd2061e6d0534c8e1ac4540ae6e",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L28",
+  "old_fingerprint": "475956862a4ed7c74ef5c6d968722a4bb2d3af155adf18f704b1cd86ac909424",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L83",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "dcc432963d0ac946b9013ba7aac4ef533f7b826126a5768c275149fd5929a5cf",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L29",
+  "old_fingerprint": "1fd1f47a9b78f0b27d41c0e4c5867217805c385fadda4c2b772fa6cfcf3f0a52",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L84",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "e33db50c4a1c83468d5a956b01d21f43963902a86250159528f1b63684eb7f3b",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L18-L20,L30",
+  "old_fingerprint": "86ca3fc29fc3148d1fd2cb55bd372f4a25e37c6ad3be8c15bcb32a791ecb8e8e",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L73-L75,L85",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "e91e0658655416a44c0b484d0f5f74405c822b3b74255533a4fded6f8479777b",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L88-L90",
+  "old_fingerprint": "ba2b6d06105519d9cfdb80245df67e8824f5d197961b51b3dad5475d1ff354aa",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "495753b6973dc11d09b548f9da5af866ec58251b1b8e26f4138ab9e9780e2c36",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "07e1566bfaf8d6f528e95ccdd50078f99b0a34a7156a2397a786c393946d3f24",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "cfa2a72cb269d6d4ca1b17666705eda21dab3b2dad142b2a0e4f4131d3fa1ac0",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "f6f8c93ade35dd52144630f9dec8c3fefbd9d341a1d8cbea93afe54370768e83",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "d5cf84527bc72be1a21b34d025ccb29db8e0a3b157d967a71037192dbee8df57",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L159-L162",
+  "old_fingerprint": "4f018ca53cc618670e4c30ebdda51b7395db3c1b3539f1bc1ac4b8840249efb7",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "aa3d870b90cad1f98b2ae41b91eea8fd9a8c1ddd8e4d07e6228d0857464ed254",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L88-L90",
+  "old_fingerprint": "9b1d9cb45e417799d041b46dd482dc6748179717e153173eb733544b57b61ec2",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L139-L141",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "34a070d87272f467214447fa26d89b5179c31a338ec2148d714619953490c58f",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "0e53be88d57bc51178fe7804cbda2b019de7d4697f73db2733802949f1d6b84a",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f1d714afb212736cf379b1953a8af429185d4c4127c5e6275f6ddcbd0d23480a",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L70-L72",
+  "old_fingerprint": "131f2d74da3a140ee84d1e7133d0d1424d07c744c8b7a8f92353d00bfba246a0",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L121-L123",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "34d45f3c77755319da65dbc743ca5df572d4d6dbe685081b2f7fbf0a64968860",
+  "new_quote": "or/washington/tigard/18.280/18.280.040.txt#L159-L162",
+  "old_fingerprint": "393a66d310bd54f7eb052e2d54272271eaea1d3e5284685d11035cd5baec65ff",
+  "old_quote": "or/washington/tigard/tdc.18.280.rowhouses.txt#L207-L209",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "8d85c5f001214157d7e48a486f54eb5fce5673d9411d5449900e390cae255c55",
+  "new_quote": "or/washington/tigard/18.30/18.30.020.txt#L494-L495",
+  "old_fingerprint": "ec3ab74d510263bfc08fdcd62bed01c8c9b7b8cfa0a3f6b14cd8ddbe4c21b046",
+  "old_quote": "or/washington/tigard/tdc.18.30.definitions.txt#L1244-L1245",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "adeab3bc08b8185a8521c920a851305930bce94a91985f0d52a7f62d07c84823",
+  "new_quote": "or/washington/tigard/18.410/18.410.060.txt#L1-L19",
+  "old_fingerprint": "4af243bb0067f0e02d8d9c361fc9a7f465a9712a6783a895e8bd249fd72a66ce",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L385-L401",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "5fe25b3bdd33dfda779de4af5f8e3c6bb5dbdbb7bce96a3db9ae7cd0f74e02a7",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "e1ead5d0d4b2a8c60f65f9fdcb5c1fa89db705f68c1703965279ca0e5157dcb2",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "d4132073e7e122343475154322c5fa0e47b58f50ec0c9e5ac097d2629595518d",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "62e0198cf5660bf737e3f1c7be98da71a9be88380e90f438d4cd6e3e8c8e46e4",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "1cd0f76422e21002573c70bd239be8abc3bbddad6aa2646afbfd6605cae45ceb",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "d86852954dce4748f29a6b2c7e6996a7af4e3c4893df850ce846d1ef4190471c",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "4bee4494009fde74cbdc3fd437a72766e5c400edcccdb8924a70a54eab3a442b",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "db1133fd1b05f088da69f03357cce9e3f2b8a5961720eb57041a5881c0b25b59",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a04fb4f57eef20bea9e04343262e9dee45e77735ad3ab1defe03ee687f160e1f",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "1a2b4d5c75730a122e4e60a0c6c9bf2276eff225c44fc337a32a9a6574d935b7",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "8d302c90d444c6d7de138877a71538b1e600051ff6e8ac50b977b7aff39683e6",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "ec612b1937ae010d7d2e1ed0fc977c94b026999789427f821061f7cf01c2e832",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "7c9d74bf587fe5d4e30ae7f114398eef12402f926b8608ae3a4f830b47f845d9",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "dba40c10c1dc943525df2cceccce9e30e4029f445f1caf9cd7b5aa36b1c7d3d4",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "dd359d870560f4ced7dc43d2465480f5efafa06c4413dc1df9869385520a8646",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "a9af5025bad40781514071bf37c2584deaf45bc0972b5216425a091db2219917",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "3b82e84ad68d6a02e2984380a8cd737710f8669292504fc2b9f7e5722565d602",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "92da995dd8df90444894ac9da6a32475ed0471b0f4addb87b8a956173d369de8",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "da9abe61e128f150b49ebe70129627755b28d5626345e9d3e8d12f3083108f44",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "1b0d218e7a567056cea8e7ff749d02ee6687d0aa63101bb121bfa7157f3fb71d",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "413517dee10e1e7dacbc01ca2f2fb8e29c9b1dbf2b318ead6915403404deefc2",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "6bd0a351d37312033a75cb162d438182c60ed724978455ba40ea48b1b05320c5",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a31aa0c5271d79c13817c756eecb71d4d183a30ac2ad2db8976b4abda6d54eed",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "9a56a40e0e19c8f143f2ef066fc4d0471a9b668974e6f233740d890d26caf1af",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "496ca0ad1fd9d2fe765c9583e74d1cb9aaad6479608677a0108106cb5d368659",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "b0b21858dc1c27003d111ce69ba07780badbf6e14203315ebe087b33d2e583d0",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "3c8fc5c105c67c503bfc14ab015cf1ae66ee120eb8b02df06c3611891e86515c",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "562c59e8f7384a6b0376de21741fa4ae704eaf413c04a4be4e51c0364adb00be",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "0ee02453cd370fdb7265796b8f3b5d36b88737f42f36b686ba1cb26e9a30405f",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "2c8422730144e4cf97b5424cfcb498e919179c4ab3fd44b5141ea443206e6a0c",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "430dc9776a2384f72331d6d63281545aac179bd0653d2d6a970a051ce5f9e333",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "83d30c6878cb229fdc4e36b803606b5ee43a967a7e5c124f8c46ecb40c7f26d3",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "e8bbf90c8a8bf84f758db1b30ca24bf1c71de842703b8452fa876353519e317a",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "b2ce5c746290faa5c0497bc33d6e17a7530faf2d07389ab2c141c10edc42f832",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "c489dc7edcb2b455f02d108aee092162bd783767f50e6cc60011d591400a5365",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "8e0e65c0922e06a02dd7f9bd4578797eb777cf959476ca305db70d796ba5405b",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "b61a9d6c5eb6a313328bd3523ab4ec97eadba42acc930881dd86cdff087a8984",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "1ad1b9911a036c52919e646e0208b88de81de8085abe25100155f4f595cfb2be",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "1f898085758175980f0f0240f1a96113c390487f78b89045ff18b919befd8400",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "b98a063623583675851bb7842a1a77cff2a4989a8d7647dc0a2d4c3c9e0dbea0",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "8b5345ce6d14b6e33aaa3a94529374b49a1ebfb6abc9267463cb7d84ca811078",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "e64c62cb0c658cb93bfce81a0d3405e807367c36ab8b26378d5c28da9bf89fe0",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "52fd0dd27107823408a67a3bd50a4a5463c23138ed820913a9c39b6df1c84b17",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "ff56f7669143a2881d0213151814811510899d08558680a0e842e9474a658329",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "37d889489b344f841ac3b5ee5a3863b6e94b27c7ce35aee8b1a8a5aae8a1004b",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "6cdbf2661cf97a474ce6712dfb936b91faefcc04221ca39f764b727b34974974",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "356035914fe7e4bd699541e58194970daae901fa53d576c95e16503456f81097",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "4a32ea3a5baad229143d57d7739c92e54c9da9ace4e35d5198d6ae2a679ae5e7",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a31276c15947d1ece7e2aa4688a0d794a2b6d23907aa6563ae7e049a3c381c1c",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "30c78cc3792604c774d90152dc219ef19613aa9ba72ae88347a6c176d1d8480a",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "e02e6671d652cf264f4cae114f7545b637acfa34aab78577153cee67214ba1bc",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "e2823d2ba1f4332af22e0375eba8e3734a03a05926699dc4ef0afd9c8c8512bc",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "4b2f8ef859f6ab5b3fed7baa888b0cb12511fbfe7e1c912e0b92b6b425fa6166",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "ad11740948fc534f5894312744f7e43312c882d82c9854cb478a0c5f0757d996",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "568ccf4d5f519589fbf379653da8df59f790d010f3f87fc018cb076e33accf19",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "a92cdbf53ed0bf9adc79b0031a1d99d2894e2913e8d1412d62f123e7a72956e5",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "6aa58a88cf30eae0562b154b8e04c41069778e04b2cddf21827d18c630d62a5d",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "c155a042da37bc37a74aa8416cdd3de3bd4e5b3b06c562a1c58d2b65c1ee57d4",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "6b9ede1a76fb97c9106cd31a05f29e11bd7981a8b5c084c409e45cee000f1a78",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "c7ed5cf14cb9fbec6b6ff19972a121aec6512e482e123f694efe2d47377307f3",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "9d756442fd405e246b789085adff19a52946c0b77ec475200a9cf811c0adba8c",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "e81f328d9c08e8a7e631f5381fafa0da7ad09ca7a2e39332d1fea92dde74b04c",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "ca4b2a992734bae0c217f2a63da8f45610e633fc2c172d5e3e0aeb8c7e0f8519",
+  "new_quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+  "old_fingerprint": "f69c197f9f44f832547998daee00d54e3f584efef2c5d3440d47a56803a2dbf1",
+  "old_quote": "or/washington/tigard/tdc.18.410.parking.txt#L231,L235-L236,L241",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "row_to_centerline_named_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "d75ac19fe05db99513b07a78743cd916d9526ceae72c5173496693a1fc40e742",
+  "new_quote": "or/washington/tigard/18.640/18.640.080.txt#L1-L17",
+  "old_fingerprint": "05dba440a616d0fa1e40217fa4cfbc45b5ab982380d9041e6d81da36f1390e02",
+  "old_quote": "or/washington/tigard/tdc.18.640.river-terrace.txt#L709-L719",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "7c9604abea08fafbff5d8dc850b983f5afeb31e26ffe1ef4b9e5c8d65f3ab59c",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L23",
+  "old_fingerprint": "b5e8e0b25236e0cccfa637be26ba7aa1c3b99dbb523ce1ca8372234fe11c2bf9",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L471",
+  "when_key": "inside_mapped_use_area",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f1b6c50819b6a869775b3080322b988f1293511979011e6f0957a85a0176799d",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L10",
+  "old_fingerprint": "cf9b7f8e0e88f39468ac89dcd5ea72e0bb43e78071f2b505dcc8e28455ba1bb0",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L458",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a16507fafd550712c823140694c8827ffc9e71b55bc947a4ab0a5ba170812133",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L11",
+  "old_fingerprint": "871b57bb19d031eadef96d19eba7dae96b6c016e06415632cc94a6b2f460c2f6",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L459",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "982fbf23dc5f2f7480097b75a6fb0a8b0c95f5727ef24757e19c0496dbc13427",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L12-L13",
+  "old_fingerprint": "64971e58ce4d8aa00cc8f6c9a515f57dc6ffbb37cae2a925e683f1bd496f4eec",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460-L461",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "ba5ffe09ded2979fc35e4491761d520d667b26f543ff6fa6562c872d2da56c4a",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L12,L14",
+  "old_fingerprint": "a7e8cd39b11a06cf50bef8c9fcc7d4f00be18079d23092375e5549a0e6a3c723",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L462",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "913b36a2eaadce27a0c7303e96b2c485bf75e60fc74f45aa69df390c9181fc87",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L12,L15",
+  "old_fingerprint": "de98b5e2f8b3cbfb06e4abcaedcbed84f8994d48f6f5039b55658d81a49423d8",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L463",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f9d26d3d17b8c92587ec20d1555752005ae126e6bd2c297b99d71464c58135df",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L12,L16",
+  "old_fingerprint": "3d1239fa2e1898cd406839466f587eae5490b474ec732c1db4a1acc7d4102479",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L460,L464",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "e3e1aaed54345ccfb932b8570ef91fa33d1bec8275aacb37e801612594389b96",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L17-L18",
+  "old_fingerprint": "4f80f7d8b3c84d155475cff0494a9aef114d4bd54d053037d5cf4e511dcabf6f",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L465-L466",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "547610fdef74c614e86413bb04c5ea05c1d879ca0bad685703eabc3defba58d1",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L20,L22,L31,L33",
+  "old_fingerprint": "581dfb8c5ff5a53a8760a42003acf600e33b73b63e6a95efef7407e69601ded7",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L468,L470,L479,L481",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "min_building_height_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "6956b107c7f24bc9829f3cc9950def9d2ebc2873f8b99b18d786b37c22c00b0b",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L20-L21",
+  "old_fingerprint": "db35bbe6cd6b48789da2af54d4d586541b2abb1c57556758e96df5f70502e620",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L468-L469",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "max_impervious_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "69ee41e5b2e05540d1d4d6bd433c4b23e0f29901fb9a7ad12b0675cc56e81440",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L24",
+  "old_fingerprint": "dd977284e59a2372e007f99bc586d3b1f3b215daf3844e04a292b0c2c48c159f",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L472",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "8198510c67e6992180b63d0d061d4ce91bcfb1388c420d59fcf690d471f4e7b8",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L25",
+  "old_fingerprint": "7d208bcf9162ffa48b767b292a634ef0ef67e1c7d2ec495bd92fd5e0d78dc664",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L473",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a1fccd4d5a8c6936c8948b5f395b51a9b8fe98c232e8d44107774b4ba03090ca",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L27-L28,L31,L35",
+  "old_fingerprint": "02f1a2867647323d9df6f2dd26f7ba5fd4f4e7b97c144358c2e10e0d996bc5bd",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L475-L476,L479,L483",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "30a5cb5594ff9e2a521c3a3ccaf1c1558d70ff7af26558acb59934befa0bd5ce",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L7-L9,L27,L29,L31,L36",
+  "old_fingerprint": "5460f813653fa68fe77ddaa3f4ab1f69b4bd6376a7d6f9855b774a46823cc34a",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L455-L457,L475,L477,L479,L484",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "ccf0fb547e10cb80f4d9e6f00af4b7441df8c5cb99b6f2cb7754c0c4646ceabf",
+  "new_quote": "or/washington/tigard/18.650/18.650.080.txt#L21-L22,L54",
+  "old_fingerprint": "100a667b005cddb3f113bde60d076709934b7d5323ee40ae9e5ff35cdd3e364e",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L582,L614",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "parking_front_prohibited",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "3e9dd2de051e5b8e232d1ada66abcb02532f13557344dfa8c56e47e26aeff570",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L40-L45",
+  "old_fingerprint": "e8785dc3540bb676710d3ebc8ef76b6a2f6ddf6416615f064abe03beb99baf25",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L488-L492",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "parking_area_max_frontage_pct",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "315c093a259661d14fb05a6efaa4bfdf3cd1aeb9378058987f6514dcd1455ae5",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L40-L45",
+  "old_fingerprint": "30235ba9f6a3cc71a776d6edcce45f0e767f38004a60230dcfaa7169e16fa7ca",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L488-L492",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "8f7f9d8d9d2d09c7f133a271e4959aac9622447bb233e52e4976f999a9e6e82e",
+  "new_quote": "or/washington/tigard/18.650/18.650.070.txt#L40,L49",
+  "old_fingerprint": "579499ae48081a4a8b55ca1a74667ac97b7fe97e5e75e7b7ebe4e5eff599167d",
+  "old_quote": "or/washington/tigard/tdc.18.650.downtown.txt#L488,L496",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "85d506efa10e4435f6cef81658e1d72b59ea907176be39c5faef1b90d0229a50",
+  "new_quote": "or/washington/tigard/18.660/18.660.040.txt#L217-L218",
+  "old_fingerprint": "441665fa6376a4206e808e8e79f34d3df2f0433bbc0e528e7634b09d72221209",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L351",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "56462397c4fc65f0d9e431ceddf000447674f9b095a975fe3ae21c4470b1ef47",
+  "new_quote": "or/washington/tigard/18.660/18.660.040.txt#L217-L218",
+  "old_fingerprint": "c1522d050df0c63a49600f1d7d87c57e6786dc3175961da1b2983498e459f650",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L351",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "22f9297d73322a7c1180339b40ea014555a183b2cc86525fd30edd5146e58bc7",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L13-L16",
+  "old_fingerprint": "eaa624062cdae2ee328bdc6c1d114e869a7a315147a1dc559158491a2e0de160",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L633",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "557fc2e54f197632ee5eaeac1cdb101c5672e58752129f80f4ecc2d53963f52f",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L13-L16",
+  "old_fingerprint": "ee4bc0c8d915b1948e7e2f4de2ccc8d216a6f8e98278bd7aaeacaf3d1aa1ab77",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L633",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "adcfcdc8fd0a5e8cb116a547972b954afea69aab691baf3cef80c9a66a1b4f38",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L13-L16",
+  "old_fingerprint": "7d06f9dee0a817df90728d817ac7cfba076d0f4371380cbb1846d2e6986220eb",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L633",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "86200108502e571cc130b212ce37d1cd1a8f4c582c3875db8af747b475d15066",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L48",
+  "old_fingerprint": "50a049a0a154c8758217d07a392adfd8ef66d967f02444c0c93700415cf9753e",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L665",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a2e986045c9a413fc7cc78ba7dad13161b29d008be682c0fe2a9c745bc5ba2d1",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L48",
+  "old_fingerprint": "4f98b163baf2cf42678ca31d693672869f05aeac4253669bea1e326cb58a3e46",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L665",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "max_height_stories",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "d4ac1300afa5a6a5a2866ee153034d649e13a46f6fcfb544690ed3cbe71fa591",
+  "new_quote": "or/washington/tigard/18.660/18.660.080.txt#L10-L13",
+  "old_fingerprint": "f0ac0e098d97873a7b21c6a99d806932aeb2c354bfff30b33628e8b99adb1b1a",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L943",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "min_ground_story_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f82989b75444e5b18c7613c483d52fd8ff88e255ecc2dd2d510bef59ea3661f2",
+  "new_quote": "or/washington/tigard/18.660/18.660.080.txt#L10-L13,L15-L17",
+  "old_fingerprint": "f60538028c3ce3793757bf96a6847fc9e5333e9998f8e2203a9dbc4f13583c9d",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L943,L945-L947",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "458b5a5dd07133c85ccd1209e60fe3ab2d11e73929ecc25285c2cf61d95e0428",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L92-L95",
+  "old_fingerprint": "7009da0683b05b3b7e865022e474c9e2f6d046e6e999bcdbc0864de3d01d1d27",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L705-L707",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "bec81e50fc3c05cce6222ff49cc983b6f9cbf808620be2a9efea7ce587372ca3",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L99",
+  "old_fingerprint": "b3056c47f3f2e4f0eacbcbda6b2e7b90eda1cdd5e3930f68de32c85ffe837e65",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L711",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a0206ed137a7dd9fc1345fc5290ee6375ac0dcc40abc4117cca118c4e17de0b5",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L99",
+  "old_fingerprint": "22e7b2a4837a117305371f4fa7d82b023936e911a1e8ecb0fdbf73e5daf58e5f",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L711",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "eab1cf5798cbf802d86f3e90d4e636479313bcf01db968fd157f4ca09e6bbebd",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L103-L104",
+  "old_fingerprint": "4365bd73a2e4fadf022908df71004591c7a0f6aaa666b28a70edf84e9d884257",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L715",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "3e8813dbd61191b3ee652a93486b9234e389aec2593e0e9d50cc69a1ed9b4f90",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L288-L291",
+  "old_fingerprint": "1bd3f7be122f5919d9b5779aac28f1739035464485c306d22e4e0bbe6fdc11fb",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L875",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "driveway_one_lane_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "37f57a15c3247a9b715d30c9fcc7252889b73f36b6633eb4bb65f03ca216ba2e",
+  "new_quote": "or/washington/tigard/18.660/18.660.070.txt#L288-L291",
+  "old_fingerprint": "e668b8de5777098243d0713c4aa66584376ec7c606043204adbfae0f9f4cc695",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L875",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "orientation_constraint",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "3f583f4de7befb6a9dd5d37a46232ffd850dfa5c71ea96111062eb822f4c9161",
+  "new_quote": "or/washington/tigard/18.660/18.660.080.txt#L23,L27,L47-L49",
+  "old_fingerprint": "628950bfc67f9ea35a6d6cee393b4bb4de429ab22fc2a822b6bdd2917308d220",
+  "old_quote": "or/washington/tigard/tdc.18.660.triangle.txt#L953,L957,L975-L977",
+  "when_key": "",
+  "zone": "TMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "b89bb3a95d39e2e67b8ca920f71390871c27842ab93ac1165ed1fe7c6587a035",
+  "new_quote": "or/washington/tigard/18.670/18.670.060.txt#L36-L37,L44,L69-L73",
+  "old_fingerprint": "ffa247227a2fa695c8b15345582515d5cdafd6c2b3e1fd5343c1528a02bc4c23",
+  "old_quote": "or/washington/tigard/tdc.18.670.wsrc.txt#L453-L454,L461,L485-L487",
+  "when_key": "inside_mapped_use_area",
+  "zone": "MUR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "05301a76e31a60f099c0d99c9c0b91a1c0e5a495e85521171b65f9901e3ca30c",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67-L68",
+  "old_fingerprint": "21015a4d14edff28629feb9722214b53b48c8cb4c04057ba92fbd9d351b6ee80",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "33f79041d8017816bc96c7feb4e0e7b89cc687cb8b686e26015c3b3cf5059496",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67-L68",
+  "old_fingerprint": "a2159dd7625494a60176a4bf987ced95c98abeb3ae912cbc3095c76ee38f6051",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94",
+  "when_key": "unit_lots",
+  "zone": "RES-A"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "3de37dfe56a37d02d2496f617466bf701c0d0cadaf37912a2c551dbee0bc8043",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67-L68",
+  "old_fingerprint": "cb607ba0cc846a8715dc5d5aef29e52b74def5b0c58dc1693b1b567c45fb2904",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L94",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "7b4c73148583220cb5469a2932768c7e6fe07cb67b5a0823a2e8fe64a72742f8",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L25-L33,L159-L160",
+  "old_fingerprint": "48e3e639fca2508490f5da4d7abcb72549fca94c20f3a42a0b945d4c091d818b",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L186",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "85ed085e7faaa6cab43f476b08418003b32f332ef7ce0cb6ddf4b5af9822e3e8",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L180-L184",
+  "old_fingerprint": "262df31e8baf79b2c478070bfecee7aa4ab0bace5c332f942076a3d0ca8e4ae5",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209",
+  "when_key": "",
+  "zone": "RES-A"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "ae3fccda80eadaa25b249b074fc5dfa135893008c22296c20ef5690f3dd09a15",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L69",
+  "old_fingerprint": "50bbb5ef2833480c68081f90ce282b36496dda71f70d4fe81c8a661563abe131",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "519767807dc88bb146517bc64c40932afa4734a880ec7bc5f37e885f4a911384",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L69",
+  "old_fingerprint": "d6c1876aaf583b6118e6f706f357d93f6879aaf51d060b608673a19238124acc",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95",
+  "when_key": "unit_lots",
+  "zone": "RES-B"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "49b328ad1c652cae4c3c349393425b4ea0c79e0a1c5d117a44cbd3a499bb05a0",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L69",
+  "old_fingerprint": "e70bdc44679ef56b93720fa00136627015bd933f143a1699ddda81bc5c062c4d",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L95",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "729ca0f54ceeff8f2c331d99975ac91581c4c932cb22c4d782745fc214af3e99",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L25-L33,L159,L161",
+  "old_fingerprint": "63ce36dead7fbfef24d60908662cb8a248aeb6634bf6c81d7c466b3b826e5f6f",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L187",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "c17cc1791839abcdc0fbf84ec526cf7f60d4b75cb4fd639dcd9ba0eca04e2794",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L180-L184",
+  "old_fingerprint": "485677224844a0b4f4bbed66fff195df31eddf4a4a3e002d8aba15ce28fb743b",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209",
+  "when_key": "",
+  "zone": "RES-B"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "25661221e35a50f10f91fe3b36ea66e32fa898a609e670e5f7f7f1457bd9e736",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L70",
+  "old_fingerprint": "a7330f235ebc1e6c45e8a37e05e2da7654ee961526bd7fe05559352bb955ebb8",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "604d373bdd7ab09c3f322bb084ef1511a09d2539a3012d481b629329308da37b",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L70",
+  "old_fingerprint": "4dd49cc48c812c63ce08a42be400f3a662af9b5442b2fd8628a302cf9b23af8b",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96",
+  "when_key": "unit_lots",
+  "zone": "RES-C"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "d39288fad598d88992332d07ce18c2d50dda1a055bbc155c4ab4f6c46d1816f9",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L70",
+  "old_fingerprint": "e8c7f16699b2fb3f798e49a2c610df5172c78a296a6fbd6361065b284f145bfc",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L96",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "05dc2ec6b0137601faf1529869b860fbb6827c56fdd7fb9005055b28220aecca",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L25-L33,L159,L162",
+  "old_fingerprint": "8e5ccb70b41c674de333102c109441fd15e9a9ed1176c861dfec5bcc5c561463",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L188",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "1b9af3b6997d4441428ec56e8b81a60d75b16474a5ad61e3f8b8cf715b40e47f",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L180-L184",
+  "old_fingerprint": "6ae2fadcfc278ecbc95d31f80d5166f7a0151f60a1bb1eeae9970df1536aaf23",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209",
+  "when_key": "",
+  "zone": "RES-C"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f87551b081824cb1ff4a01ff79066f589e3529602dd7c6f91620a71012209fa7",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L71",
+  "old_fingerprint": "656146dc71ecaceb699fb13127514e18a2a7f4e05fe262d5cc9be4f9563b1671",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "68ea7f1f30d7074d1ce57357d6b36b765bc158a3cafb3f60e7a68d3ca8e55dc9",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L71",
+  "old_fingerprint": "7df49680769f327a3da110d4c29ecb4ebe14bccc32e4705868a8d836a9ae1da1",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97",
+  "when_key": "unit_lots",
+  "zone": "RES-D"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "3bc770b1385502c1d8cb093d4715b0dc58147ecd64f0b515751791343459f69c",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L71",
+  "old_fingerprint": "3c929542b0cbecb570e5c4b23160b66a2755e0f032e5225025244fa3ee5aa842",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L97",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f7cdcb13eda72fe9bf71058924ac2f0095455b4eb673399fe803eded9c84d281",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L25-L33,L159,L163",
+  "old_fingerprint": "346e37e65b13d82f0a262bc89744ce81b23476de1b27043f4c313802e234828c",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L189",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a9a6cf0c481f7625a0d8b52a616ab77876c877f342f8051e19258cd7b9b1c44b",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L180-L184",
+  "old_fingerprint": "2d9f577aafcf123b7ecf087ee485dbf52db2629dc99f2af57ee7969b83b19582",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209",
+  "when_key": "",
+  "zone": "RES-D"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "139048fb5c7875e3a6a633412b2ec516ff8bc3122d23ad596874d7c882c02a6b",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L72",
+  "old_fingerprint": "cd4c8097c9082a6942435ba3961fb83d38c1fc16cbd16102a87ad2d30e79d112",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L98",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "27a5175b57c44988b684bee0009182979007549a0eccbaf84291289f2d3ed11f",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L72",
+  "old_fingerprint": "5eb4ca949a3fd14c48e9d1c0a9fd352f0f6010b0af933d169fc4346ab2cc0b2a",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L98",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f869cf60bd1271b5d49d589880303a42c1face7314c8c1fbeb0a2854ffbc3c11",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L25-L33,L159,L164",
+  "old_fingerprint": "32c011bb47f673e90b1885285e5983d888216836b75c7b5ebdfa3438badb6b37",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L190",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "a670df07320b8cc0a5c898182e081e22e2159ff3553a4809426fb4a1caf01073",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L180-L184",
+  "old_fingerprint": "e9f74f441d71b59e7ff1ae61d5999dd56116f66dd3b75eb149bac5d9c77ddcdf",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209",
+  "when_key": "",
+  "zone": "RES-E"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "bbcf4b4b62b154a1f3ac79629f5475edbe91255757a6438fe4a44a65c61408f9",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L74",
+  "old_fingerprint": "0c1a0e10e532cad026ee97c2f2ee3a0d3699a6ffc00f436388f1e4cdbdd4ea66",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L100",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "c8d56c1c564a664bc7b21ae46605e21ef662a9103b906e8aaea9f657dcb33cf2",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67,L74",
+  "old_fingerprint": "2c9b5501fb1ac89f837741a161c649d51f23a412daeff32ddf329fa2174e9d5d",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93,L100",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "e49ff02df409c6e6981451b40e2d30d2ec110bf4c5e6b666917447bac2a6a67d",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L25-L33,L159,L166",
+  "old_fingerprint": "af840c0a3082211e0873f116d88090396e235c40276c3e393a6d957ac7cc488c",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185,L192",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "4bcaed5515674cebb1d9b9746df81595b582819775696948d252eb2e1f7b05c0",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L180-L184",
+  "old_fingerprint": "58e71e35385baa5fe1aad7f35a69921297a70ed783a02f46d789d75032f2f5c5",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209",
+  "when_key": "",
+  "zone": "MUR"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "5158bbb0fbd94fdde06744e16bd28bece8a8093df56be3e0bb62b90134d83872",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L5,L25-L33,L67-L74",
+  "old_fingerprint": "75d6a2b6d26812d4f1eff0f59c699abe822e163ae4ac876b94bc9aea99be47f9",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L31,L51-L59,L93-L100",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "ebb1cd1bd07d46dd10a4c90b99cd210ad65b2e8d80add59cc6e12ea9a469555d",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L25-L33,L159-L166",
+  "old_fingerprint": "9a535a5dae0baf85dcf9b904d99ba90c091a0f9bc62ed921abdf83df1e6aace8",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L51-L59,L185-L192",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f87ff7c9461c3d91493ad86fb94387230f3854f237787fa8f1faed2c6c052e26",
+  "new_quote": "or/washington/tigard/18.805/18.805.030.txt#L180-L184",
+  "old_fingerprint": "5bd99b2445a154f06e1eb30d04de4144b0d0f9d3a8a0ccf3426d8f1ed08fef11",
+  "old_quote": "or/washington/tigard/tdc.18.805.lot-standards.txt#L205-L209",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "row_to_centerline_stated_as_width",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "95317e86cd65170702de238a9b4afd1ff09bb70e6f734feea52acfccda38ebe6",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L141-L152,L194-L215",
+  "old_fingerprint": "9242b083f5294014068754ac90e7f85c97d7172ad7a17af052e4b79be89ae84f",
+  "old_quote": "or/washington/tigard/tdc.18.910.improvement-standards.txt#L177-L183,L225-L246",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_arterial_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "12852edebc4b4f0ca467e7e8b2cb37cd7bedad0e775f0f47f20f163a6e0a56e5",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L224-L225",
+  "old_fingerprint": "fa3c11cf63a89bc99d0159af4908bb643262b22263487755a6fc9dae3ae488d3",
+  "old_quote": "or/washington/tigard/tdc.18.910.improvement-standards.txt#L245-L246,L255-L256",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_collector_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "657f620aae8aa15510ca0eee665b5817a4fa3d629f766dc9f9a2d0cde6377df0",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L236-L237",
+  "old_fingerprint": "9c4a9f2cf9f9f60bab49349a60229f14f57791bd3dd286dc43ac1492e7bec9bc",
+  "old_quote": "or/washington/tigard/tdc.18.910.improvement-standards.txt#L245-L246,L265-L266",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "1e9bbf497379ad76a7094a83aa64485f96056f012d6b0dd117ece435f44122f8",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L248-L249",
+  "old_fingerprint": "ffdd5b492efdacf60bff2b83d1955ed2a14d6bfd0ce2909858bc43a8d9f86897",
+  "old_quote": "or/washington/tigard/tdc.18.910.improvement-standards.txt#L245-L246,L275-L276",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "f933fd44f5a42af8b75cd15c71b63411218a02e010f685373e7efdbe92e0844f",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L258-L259,L268-L270",
+  "old_fingerprint": "1a0b932e23785ab1f6a23cb409b1193a2cbf59277e35b13bc339291bdeb67d90",
+  "old_quote": "or/washington/tigard/tdc.18.910.improvement-standards.txt#L245-L246,L285-L286,L295-L297",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "row_to_centerline_local_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "cddcf9199df970574579066ccfe03908ca52bbac7f36e861f99739fae80eac81",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L141-L146,L214-L215,L329-L330,L339-L340,L349-L350,L359-L360,L369-L370",
+  "old_fingerprint": "7077eb349dad18e16a440f69dcf63ccfb58381fd677f49ef119a1fe0016f5f37",
+  "old_quote": "or/washington/tigard/tdc.18.910.improvement-standards.txt#L177,L245-L246,L356-L357,L366-L367,L376-L377,L386-L387,L396-L397",
+  "when_key": "",
+  "zone": "MU-CBD"
+ },
+ {
+  "field": "row_to_centerline_neighborhood_route_ft",
+  "layer": "or/washington/tigard",
+  "new_fingerprint": "c0a324af146ed1432f473a70c61b2967cc8e151612502d2004c49902bf12d29f",
+  "new_quote": "or/washington/tigard/18.910/18.910.030.txt#L141-L146,L214-L215,L329-L330,L339-L340,L349-L350,L359-L360,L369-L370",
+  "old_fingerprint": "97b8f41fb990bc15d44912dcbece7958966ec55d796201d6d1f26f46ccd4e795",
+  "old_quote": "or/washington/tigard/tdc.18.910.improvement-standards.txt#L177,L245-L246,L356-L357,L366-L367,L376-L377,L386-L387,L396-L397",
+  "when_key": "",
+  "zone": "MU-CBD"
+ }
+]

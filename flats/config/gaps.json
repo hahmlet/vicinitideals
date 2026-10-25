@@ -1,5 +1,5 @@
 {
-  "digest": "865f448cb307df43e83746599a990dd356c1fb190bec8245a55f61136c29d99f",
+  "digest": "b3b5192a3a27fa539ddbecf8dbb224bdd7e941e7f911d767739d4954e2f7c8f0",
   "layers": {
     "or": {
       "section_unread": 0,
@@ -37,7 +37,7 @@
       "gaps": []
     },
     "or/clackamas/happy-valley": {
-      "section_unread": 219,
+      "section_unread": 0,
       "misattributed": [],
       "label": "Happy Valley",
       "counts": {
@@ -69,8 +69,33 @@
       "gaps": []
     },
     "or/clackamas/milwaukie": {
-      "section_unread": 39,
-      "misattributed": [],
+      "section_unread": 0,
+      "misattributed": [
+        {
+          "zone": "GMU",
+          "field": "setback_front_ft [abuts_residential_zone]",
+          "claimed": "19.504.4",
+          "found": "19.301.4",
+          "quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L99",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "NMU",
+          "field": "setback_rear_ft [abuts_residential_zone]",
+          "claimed": "19.504.4 19.504.4 19.303.5",
+          "found": "19.301.4",
+          "quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L99",
+          "kind": "heading_other_file"
+        },
+        {
+          "zone": "NMU",
+          "field": "setback_side_ft [abuts_residential_zone]",
+          "claimed": "19.504.4 19.504.4 19.303.5",
+          "found": "19.301.4",
+          "quote": "or/clackamas/milwaukie/19.301/19.301.4.txt#L99",
+          "kind": "heading_other_file"
+        }
+      ],
       "label": "Milwaukie",
       "counts": {},
       "gaps": []
@@ -90,8 +115,17 @@
       "gaps": []
     },
     "or/clackamas/sandy": {
-      "section_unread": 79,
-      "misattributed": [],
+      "section_unread": 7,
+      "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "parking_min_per_unit",
+          "claimed": "17.98.40",
+          "found": "17.98.20",
+          "quote": "or/clackamas/sandy/17.98/17.98.20.txt#L40,L43",
+          "kind": "unlocated"
+        }
+      ],
       "label": "Sandy",
       "counts": {},
       "gaps": []
@@ -475,7 +509,7 @@
       "gaps": []
     },
     "or/washington/cornelius": {
-      "section_unread": 19,
+      "section_unread": 4,
       "misattributed": [],
       "label": "Cornelius",
       "counts": {},
@@ -897,8 +931,241 @@
       "gaps": []
     },
     "or/washington/tigard": {
-      "section_unread": 61,
-      "misattributed": [],
+      "section_unread": 0,
+      "misattributed": [
+        {
+          "zone": "(defaults)",
+          "field": "row_to_centerline_arterial_ft",
+          "claimed": "18.910.1",
+          "found": "18.910.030",
+          "quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L224-L225",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "row_to_centerline_collector_ft",
+          "claimed": "18.910.1",
+          "found": "18.910.030",
+          "quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L236-L237",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "row_to_centerline_neighborhood_route_ft",
+          "claimed": "18.910.1",
+          "found": "18.910.030",
+          "quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L248-L249",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "(defaults)",
+          "field": "row_to_centerline_local_ft",
+          "claimed": "18.910.1",
+          "found": "18.910.030",
+          "quote": "or/washington/tigard/18.910/18.910.030.txt#L214-L215,L258-L259,L268-L270",
+          "kind": "unlocated"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "parking_aisle_one_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "parking_aisle_two_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "parking_stall_depth_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "MU-CBD",
+          "field": "parking_stall_width_ft",
+          "claimed": "18.410.2 18.650 18.650.020",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "MUC",
+          "field": "parking_aisle_one_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "MUC",
+          "field": "parking_aisle_two_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "MUC",
+          "field": "parking_stall_depth_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "MUR",
+          "field": "parking_aisle_one_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "MUR",
+          "field": "parking_aisle_two_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "MUR",
+          "field": "parking_stall_depth_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-A",
+          "field": "parking_aisle_one_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-A",
+          "field": "parking_aisle_two_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-A",
+          "field": "parking_stall_depth_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-B",
+          "field": "parking_aisle_one_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-B",
+          "field": "parking_aisle_two_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-B",
+          "field": "parking_stall_depth_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-C",
+          "field": "parking_aisle_one_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-C",
+          "field": "parking_aisle_two_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-C",
+          "field": "parking_stall_depth_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-D",
+          "field": "parking_aisle_one_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-D",
+          "field": "parking_aisle_two_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-D",
+          "field": "parking_stall_depth_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-E",
+          "field": "parking_aisle_one_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-E",
+          "field": "parking_aisle_two_way_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        },
+        {
+          "zone": "RES-E",
+          "field": "parking_stall_depth_ft",
+          "claimed": "18.410.2",
+          "found": "18.410.030",
+          "quote": "or/washington/tigard/18.410/18.410.030.txt#L160-L161,L165-L166,L171",
+          "kind": "header_or_xref"
+        }
+      ],
       "label": "Tigard",
       "counts": {},
       "gaps": []

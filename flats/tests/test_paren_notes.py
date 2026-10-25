@@ -140,6 +140,19 @@ def test_a_notes_block_repeated_across_a_colspan_is_read_once() -> None:
     assert seen.unmarked == ()
 
 
+def test_a_repeated_notes_later_sentences_are_not_read_in_twice() -> None:
+    """Sandy's access-spacing note prints four times, and readable text puts
+    each of its sentences on a line of its own. The copy's first line was
+    always skipped; its later lines are the copy's too."""
+    copy = [
+        "[1] Minimum spacing is the existing city block spacing.",
+        "Public road connections are preferred over private driveways.",
+        "Note: All distances measured from center to center.",
+    ]
+    seen = census("\n".join(["Notes:", *copy, *copy, *copy]), doc="d.txt")
+    assert [b.text for b in seen.bodies] == [" ".join(copy)[4:]]
+
+
 # --- what the chapter says now --------------------------------------------
 
 

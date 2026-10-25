@@ -1,0 +1,376 @@
+Sec. 17.84.50. - Street requirements.
+
+
+A.
+
+Transportation Impact Study (No Dwellings). For development applications that do not propose any dwelling units, the City may require a transportation impact study that evaluates the impact of the proposed development on the transportation system.
+Unless the City does not require a transportation impact study, the applicant shall prepare the study in accordance with the following:
+
+1.
+
+A proposal establishing the scope of the study shall be submitted for review to the City Traffic Engineer.
+The scope shall reflect the magnitude of the project in accordance with accepted transportation planning and engineering practices.
+Large projects shall assess intersections and street segments where the development causes increases of more than 20 vehicles in either the AM or PM peak hours.
+Once the City Traffic Engineer has approved the scope of the study, the applicant shall submit the results of the study as part of its development application.
+Failure to submit a required study will result in an incomplete application.
+A traffic impact study shall bear the seal of a Professional Engineer licensed in the State of Oregon and qualified in traffic or civil engineering.
+
+2.
+
+If the study identifies vehicle operating conditions less than the minimum mobility targets established in the development code or the 2023 City of Sandy Transportation System Plan, or fails to demonstrate that average daily traffic on existing or proposed streets will meet the ADT standards established in the development code, the applicant shall propose improvements and funding strategies for mitigating identified problems or deficiencies that will be implemented concurrent with the proposed development.
+
+B.
+
+Transportation Impact Study (Dwellings). For development applications that propose dwelling units, an applicant must submit a transportation impact study unless the application is exempt from this requirement pursuant to Subsection B.7., below.
+Failure to submit the study will result in an incomplete application.
+A traffic impact study shall bear the seal of a Professional Engineer licensed in the State of Oregon and qualified in traffic or civil engineering.
+The applicant shall prepare the study in accordance with the following:
+
+1.
+
+The study area must include all existing and proposed site accesses and all existing and proposed streets and intersections where the development adds more than 20 vehicles during any peak hour as determined by using the Institute of Transportation Engineers Trip Generation Manual (11 th edition).
+The determination of peak hour vehicle addition shall include the cumulative impact of the proposed development and development on abutting properties that received a certificate of occupancy or recorded a plat within the past five years.
+
+2.
+
+The study must analyze existing conditions and projected conditions upon completion of the proposed development.
+
+3.
+
+The study must be performed for the weekday a.m. peak hour (one hour between 7:00 a.m. and 9:00 a.m.) and p.m. peak hour (one hour between 4:00 p.m. and 6:00 p.m.).
+Analysis of other time periods may be required for uses that generate their highest traffic volumes at other times of the day or on weekends.
+
+4.
+
+The study must demonstrate that the transportation impacts from the proposed development will comply with the City's mobility targets and average daily traffic standards and the Oregon Department of Transportation's (ODOT's) mobility targets.
+
+5.
+
+If the study identifies vehicle operating conditions less than the minimum mobility targets established in the 2023 City of Sandy Transportation System Plan, or fails to demonstrate that average daily traffic on existing or proposed streets will meet the ADT standards established in Chapter 17.10 of the development code or fails to meet ODOT's mobility targets, the applicant shall propose improvements and funding strategies for mitigating identified problems or deficiencies that will be implemented concurrent with the proposed development.
+
+6.
+
+If improvements and mitigation measures are necessary, pursuant to Subsection 5., above, the following criteria shall be met in order for the application to be approved:
+
+a.
+
+The improvements and funding strategies proposed as mitigation address the problems or deficiencies to the extent necessary to meet the City's mobility targets and average daily traffic standards and, if applicable, ODOT's mobility target.
+
+b.
+
+If proposed mitigation requires improvements within City, County, or ODOT rights-of way, the design has been approved by the City Engineer, Clackamas County, and ODOT when applicable.
+
+7.
+
+A transportation impact study is not required under this section if:
+
+a.
+
+The cumulative impact of the proposed development and development on abutting properties that received a certificate of occupancy or recorded a plat within the past five years will generate no more than 20 vehicle trips in any weekday a.m. or p.m. peak hour as determined by using the Institute of Transportation Engineers Trip Generation Manual (11 th Edition); or
+
+b.
+
+The proposed development completed a transportation impact study at the time of annexation within the past five years and that study assessed the impact of the same or more dwelling units than proposed under the new land use action; or
+
+c.
+
+The application only proposes to convert an existing detached single family dwelling to a duplex.
+
+C.
+
+Transportation Impact Study (Dwellings)—Discretionary Track.
+As an alternative to the process outlined in Section 17.84.50.B., an applicant may choose to follow the process in Section 17.84.50.A.
+
+D.
+
+Traffic Letter (Dwellings). For development applications that propose dwelling units, an applicant must submit a traffic letter where the development adds 20 or fewer vehicles during any peak hour as determined by using the Institute of Transportation Engineers Trip Generation Manual (11 th Edition).
+Failure to submit the traffic letter will result in an incomplete application.
+Development applications that add two or fewer vehicles during any peak hour as determined by using the Institute of Transportation Engineers Trip Generation Manual (11 th Edition) are exempt from the traffic letter requirement.
+
+E.
+
+Street Requirements (Discretionary). For development applications that do not propose dwelling units, or for applications that include dwellings and that elect to use the discretionary track, the following standards shall be met.
+
+1.
+
+Location of new arterial streets shall conform to the 2023 City of Sandy Transportation System Plan in accordance with the following:
+
+a.
+
+Arterial streets should generally be spaced in one-mile intervals.
+
+b.
+
+Traffic signals should generally not be spaced closer than 1,500 feet for reasonable traffic progression.
+
+2.
+
+Local streets shall be designed to discourage through traffic.
+NOTE: for the purposes of this section, "through traffic" means the traffic traveling through an area that does not have a local origination or destination.
+To discourage through traffic and excessive vehicle speeds the following street design characteristics shall be considered, as well as other designs intended to discourage traffic:
+
+a.
+
+Straight segments of local streets should be kept to less than a quarter mile in length.
+As practical, local streets should include traffic calming features, and design features such as curves and "T" intersections while maintaining pedestrian connectivity.
+
+b.
+
+Local streets should typically intersect in "T" configurations rather than four-way intersections to minimize conflicts and discourage through traffic.
+Adjacent "T" intersections shall maintain a minimum of 150 feet between the nearest edges of the two rights-of-way.
+
+c.
+
+Cul-de-sacs are prohibited unless the criteria and standards in Subsections 17.100.110.G and H. are met.
+
+3.
+
+Development sites shall be provided with access from a public street improved to City standards in accordance with the following:
+
+a.
+
+Where a development site abuts an existing public street not improved to City standards, the abutting street shall be improved to City standards along the full frontage of the property concurrent with development.
+
+b.
+
+Half-street improvements are considered the minimum required improvement.
+Three-quarter-street or full-street improvements shall be required where traffic volumes generated by the development are such that a half-street improvement would cause safety and/or capacity problems.
+Such a determination shall be made by the City Engineer.
+
+c.
+
+To ensure improved access to a development site consistent with policies on orderly urbanization and extension of public facilities the Planning Commission or Director may require off-site improvements concurrent with development.
+Off-site improvement requirements upon the site developer shall be reasonably related to the anticipated impacts of the development.
+
+i.
+
+When necessary to meet transportation operations and safety standards, the City of Sandy, and ODOT where access to a state roadway is proposed, will identify conditions of approval consistent with the planned transportation system.
+The City may deny, approve, or approve the proposal with appropriate conditions based on the transportation standards in Section 17.100.110 and consistent with the City's adopted mobility targets, which requires a minimum level of service (LOS) D for signalized and unsignalized intersections and maximum volume to capacity ratio of 0.90 for roundabout intersections.
+
+ii.
+
+Improvements required as a condition of development approval, when not voluntarily provided by the applicant, shall be roughly proportional to the impact of the development on transportation facilities.
+Findings supporting development approval shall indicate how the required improvements directly relate to and are roughly proportional to the impact of development.
+
+d.
+
+Reimbursement agreements for three-quarter-street improvements (i.e., curb face to curb face) may be requested by the developer per Chapter 12 of the SMC.
+
+e.
+
+A half-street improvement includes curb and pavement two feet beyond the center line of the right-of-way.
+A three-quarter-street improvement includes curbs on both sides of the side and full pavement between curb faces.
+
+4.
+
+Public streets installed concurrent with development of a site shall be extended through the site to the edge of the adjacent property(ies) in accordance with the following:
+
+a.
+
+Temporary dead-ends created by this requirement to extend street improvements to the edge of adjacent properties may be installed without a turn-around, subject to the approval of the Fire Marshal.
+
+b.
+
+In order to assure the eventual continuation or completion of the street, reserve strips may be required.
+
+5.
+
+Where required by the Planning Commission or Director, public street improvements may be required through a development site to provide for the logical extension of an existing street network or to connect a site with a nearby neighborhood activity center, such as a school or park.
+Where this creates a land division incidental to the development, a land partition shall be completed concurrent with the development.
+
+6.
+
+Except for extensions of existing streets, no street names shall be used that will duplicate or be confused with names of existing streets.
+Street names and numbers shall conform to the established pattern in the surrounding area and be subject to approval of the Director.
+
+7.
+
+Location, grades, alignment, and widths for all public streets shall be considered in relation to existing and planned streets, topographical conditions, public convenience and safety, and proposed land use.
+Where topographical conditions present special circumstances, exceptions to these standards may be granted by the City Engineer provided the safety and capacity of the street network are not adversely affected.
+The following standards shall apply:
+
+a.
+
+Location of streets in a development shall not preclude development of adjacent properties.
+Streets shall conform to planned street extensions identified in the Transportation Plan and/or provide for continuation of the existing street network in the surrounding area.
+
+b.
+
+Grades shall not exceed six percent on arterial streets and ten percent on collector streets and local streets.
+Exceptions allowing local street grades over ten percent may be allowed with approval of a Variance, if approved by the Fire Marshal; however, in no case shall local street grades exceed 15 percent.
+
+c.
+
+As far as practical, arterial streets and collector streets shall be extended in alignment with existing streets by continuation of the street centerline.
+When staggered street alignments resulting in "T" intersections are unavoidable, they shall leave a minimum of 150 feet between the nearest edges of the two rights-of-way.
+
+d.
+
+Centerline radii of curves shall not be less than 500 feet on arterial streets, 300 feet on collector streets, and 100 feet on local streets.
+
+e.
+
+Streets shall be designed to intersect at angles of 75 to 105 degrees and shall comply with the following:
+
+i.
+
+The intersection of an arterial or collector street with another arterial or collector street shall have a minimum of 100 feet of straight (tangent) alignment approaching the intersection.
+
+ii.
+
+The intersection of a local street with another street shall have a minimum of 50 feet of straight (tangent) alignment approaching the intersection.
+
+iii.
+
+All intersections shall have a minimum curb corner radius of 28 feet, per Oregon Fire Code standards for fire apparatus access roads.
+
+f.
+
+Right-of-way and improvement widths shall be as specified by the 2023 City of Sandy Transportation System Plan.
+Exceptions to those specifications may be approved by the City Engineer to deal with specific unique physical constraints of the site.
+
+F.
+
+Street Requirements (Dwellings/Clear and Objective Track). For development applications that propose dwelling units, all of the following standards shall be met, unless the applicant elects to use the discretionary standards under Subsection E., above.
+
+1.
+
+Location of new arterial streets shall conform to the 2023 City of Sandy Transportation System Plan in accordance with the following:
+
+a.
+
+Arterial streets shall be spaced at minimum intervals of 5,280 feet and maximum intervals of 6,000 feet.
+
+b.
+
+Traffic signals shall not be spaced closer than 1,500 feet.
+
+2.
+
+Local streets shall be designed to discourage through traffic.
+NOTE: for the purposes of this section, "through traffic" means the traffic traveling through an area without originating or stopping in that area.
+To discourage through traffic and excessive vehicle speeds the following street design characteristics shall be considered, as well as other designs intended to discourage traffic:
+
+a.
+
+Straight segments of local streets shall be kept to less than a quarter mile in length.
+
+b.
+
+Local streets may intersect in "T" configurations rather than four-way intersections to minimize conflicts and discourage through traffic.
+Adjacent "T" intersections shall maintain a minimum of 150 feet between the nearest edges of the two rights-of-way.
+
+c.
+
+Cul-de-sacs are prohibited unless the criteria and standards in Subsections 17.100.110.G and H. are met.
+
+3.
+
+Development sites shall be provided with access from a public street improved to City standards in accordance with the following:
+
+a.
+
+Where a development site abuts an existing public street not improved to City standards, the abutting street shall be improved to City standards along the full frontage of the property concurrent with development.
+
+b.
+
+Half-street improvements are considered the minimum required improvement.
+Three-quarter-street or full-street improvements shall be required where traffic volumes generated by the development are such that a half-street improvement would result in the street failing to meet the level of service standards in the 2023 City of Sandy Transportation System Plan.
+
+c.
+
+To ensure improved access to a development site and extension of public facilities, off-site improvements concurrent with development shall be required if the Transportation Impact Analysis indicates they are necessary to mitigate problems or deficiencies in off-site facilities, pursuant to Section 17.84.50.B.
+
+i.
+
+If requested by the applicant, the City Engineer or designee may approve an alternative to the off-site improvements required under Subsection c., based upon information submitted by the applicant showing that the improvements which would otherwise be required by this Code would not be reasonably related or roughly proportional to the impact of the proposed development, as determined by the City.
+
+d.
+
+Reimbursement agreements for three-quarter-street improvements (i.e., curb face to curb face) may be requested by the developer per Chapter 12 of the SMC.
+
+e.
+
+A half-street improvement includes curb and pavement two feet beyond the center line of the right-of-way.
+A three-quarter-street improvement includes curbs on both sides of the side and full pavement between curb faces.
+
+4.
+
+Public streets installed concurrent with development of a site shall be extended through the site to the edge of the adjacent property(ies) in accordance with the following:
+
+a.
+
+Wherever a proposed development abuts unplatted land or a future development with an approved tentative plat, street stubs shall be provided to allow access to future abutting developments and to extend the street system into the surrounding area.
+If the abutting land has an approved tentative plat, streets shall align with streets in the approved tentative plat.
+
+b.
+
+Where the stubbed street is over 100 feet long, street ends shall contain temporary turnarounds built to Oregon Fire Code standards and shall be designed to facilitate future extension in terms of grading, width, and temporary barricades, unless this requirement is waived by the Fire Marshal.
+
+c.
+
+In order to ensure City control over the eventual continuation or completion of the street, reserve strips shall be granted to the City of Sandy.
+
+5.
+
+Public street improvements shall be required through a development site to provide for the logical extension of an existing street network.
+Where this street extension has the effect of dividing a parcel of land, a land partition shall be completed concurrent with the development.
+
+6.
+
+Except for extensions of existing streets, no street names shall be used that will duplicate or be confused with names of existing streets.
+Street names and numbers shall conform to the established pattern in the surrounding area and be subject to approval of the Director.
+
+7.
+
+Location, grades, alignment, and widths for all public streets shall be considered in relation to existing and planned streets, topographical conditions, public convenience and safety, and proposed land use in accordance with standards a. through f. below.
+Where topographical conditions present special circumstances, exceptions to these standards may be granted through the procedures in Chapter 17.66 of the Sandy Development Code, provided the City Engineer determines that the safety and capacity of the street network are not adversely affected.
+
+a.
+
+Location of streets in a development shall not preclude development of adjacent properties.
+Streets shall conform to planned street extensions identified in the 2023 City of Sandy Transportation System Plan, Figure 11, and/or provide for continuation of the existing street network in the surrounding area.
+
+b.
+
+Grades shall not exceed six percent on arterial streets and ten percent on collector streets and local streets.
+Exceptions allowing local street grades over ten percent may be allowed with approval of a Variance, if approved by the Fire Marshal; however, in no case shall local street grades exceed 15 percent.
+
+c.
+
+Arterial streets and collector streets shall be extended in alignment with existing streets by continuation of the street centerline.
+When staggered street alignments resulting in "T" intersections are unavoidable, they shall leave a minimum of 150 feet between the nearest edges of the two rights-of-way.
+
+d.
+
+Centerline radii of curves shall not be less than 500 feet on arterial streets, 300 feet on collector streets, and 100 feet on local streets.
+
+e.
+
+Streets shall be designed to intersect at angles of 75 to 105 degrees and shall comply with the following:
+
+i.
+
+The intersection of an arterial or collector street with another arterial or collector street shall have a minimum of 100 feet of straight (tangent) alignment approaching the intersection.
+
+ii.
+
+The intersection of a local street with another street shall have a minimum of 50 feet of straight (tangent) alignment approaching the intersection.
+
+iii.
+
+All intersections shall have a minimum curb corner radius of 28 feet, per Oregon Fire Code standards for fire apparatus access roads.
+
+f.
+
+Right-of-way and improvement widths shall be as specified by the 2023 City of Sandy Transportation System Plan, Figures 18 through 24 and Table 4.
+Exceptions to those specifications may be granted through the procedures in Chapter 17.66 of the Sandy Development Code, if approved by the City Engineer, to deal with specific unique physical constraints of the site.
+
+8.
+
+All public streets shall be designed in conformance with Title 12 of the Sandy Municipal Code and with the City of Sandy Utility Standard Details for Streets & Roads, Sidewalks, and Traffic Control Devices.
+
+(Ord. No. 2024-01, § 1(Exh.
+A), 2-20-2024)
+
+

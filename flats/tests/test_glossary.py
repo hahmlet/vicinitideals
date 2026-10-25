@@ -640,10 +640,10 @@ def test_tigards_chapter_is_read_whole_with_its_nouns(corpus: list[Chapter]) -> 
 
     assert tigard.read_whole
     assert len(tigard.entries) == 228
-    assert terms["Rowhouse"] == "or/washington/tigard/tdc.18.30.definitions.txt#L1032"
-    assert terms["Quad"] == "or/washington/tigard/tdc.18.30.definitions.txt#L1028"
-    assert terms["Corner lot"] == "or/washington/tigard/tdc.18.30.definitions.txt#L1236"
-    assert terms["Driveway"] == "or/washington/tigard/tdc.18.30.definitions.txt#L978"
+    assert terms["Rowhouse"] == "or/washington/tigard/18.30/18.30.020.txt#L261"
+    assert terms["Quad"] == "or/washington/tigard/18.30/18.30.020.txt#L257"
+    assert terms["Corner lot"] == "or/washington/tigard/18.30/18.30.020.txt#L485"
+    assert terms["Driveway"] == "or/washington/tigard/18.30/18.30.020.txt#L204"
 
 
 def test_a_sentence_running_on_below_is_not_a_term_and_its_body() -> None:

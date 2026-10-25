@@ -1,0 +1,124 @@
+§ 16.22.060. Mixed use residential—Multifamily (MUR-M and MUR-X).
+
+A.
+
+Purpose.
+
+1.
+
+Mixed use residential will promote compact form, and residential and commercial or residential and office mixed vertically, in addition to across the district.
+The multifamily sub-area provides for a range of densities, each of which should be shown on the master plan map.
+The multifamily subareas allow for retail uses that are meant to provide services to local residents, not attract outside traffic.
+The density requirements and minimum/maximum lot sizes are meant as a guide, and will vary based on the amount of unbuildable lands removed from gross acres.
+The density is calculated by averaging density for the residential district area identified in the master plan.
+Therefore, some lots may be smaller than the lot sizes given below.
+Minimum densities are provided to comply with the Urban Growth Management Functional Plan, Title 1 requirements.
+
+2.
+
+MUR-X Mixed Use Buildings with Residential Emphasis. Residential and retail combinations with the primary use of the building being residential.
+Permitted commercial uses shown on Table 16.22.060-1.
+
+B.
+
+Permitted Uses. Table 16.22.060-1 identifies the land uses that are allowed in the MUR-M and MUR-X Districts.
+
+Table 16.22.060-1 Mixed Use Residential—Multifamily (MUR-M and MUR-X) Permitted Uses                                                                                    Table 16.22.060-1 Mixed Use Residential—Multifamily (MUR-M and MUR-X) Permitted Uses  Table 16.22.060-1 Mixed Use Residential—Multifamily (MUR-M and MUR-X) Permitted Uses
+P=Permitted; C=Conditional Use; X=Prohibited                                                                                                                            P=Permitted; C=Conditional Use; X=Prohibited                                          P=Permitted; C=Conditional Use; X=Prohibited
+Land Use                                                                                                                                                                MUR-M Multifamily                                                                     MUR-X Mixed Buildings
+Residential                                                                                                                                                             Residential                                                                           Residential
+Single-family detached dwellings                                                                                                                                        X                                                                                     X
+Attached dwellings, (townhouses, attached duplex, rowhouses)                                                                                                            P                                                                                     P
+Multifamily dwellings
+Low                                                                                                                                                                     P                                                                                     P
+Medium                                                                                                                                                                  P                                                                                     P
+High                                                                                                                                                                    P                                                                                     P
+Senior housing                                                                                                                                                          P                                                                                     P
+Skilled nursing facility                                                                                                                                                C                                                                                     C
+Congregate housing                                                                                                                                                      C                                                                                     C
+Rooming houses                                                                                                                                                          X                                                                                     X
+Accessory dwelling units (per Section 16.44.050)                                                                                                                        X                                                                                     X
+Home occupation (per Section 16.69.020)                                                                                                                                 P                                                                                     P
+Neighborhood Commercial Uses                                                                                                                                            Neighborhood Commercial Uses                                                          Neighborhood Commercial Uses
+Coffee shops, cafés, sandwich shops and delicatessens, restaurants (no drive-through service allowed)                                                                   P[1]
+Florists                                                                                                                                                                P[1]
+Grocery, food, specialty foods, and produce stores                                                                                                                      P[1]
+Laundromats and dry cleaners                                                                                                                                            P[1]
+Personal services (e.g., barbershops, hair salons, spas)                                                                                                                P[1]
+Yogurt and ice cream stores                                                                                                                                             P[1]
+Video rental stores                                                                                                                                                     P[1]
+Retail and service commercial uses similar to those above but not listed elsewhere in this section upon administrative determination through the design review process  P[1]
+Commercial—Retail Uses                                                                                                                                                  Commercial—Retail Uses                                                                Commercial—Retail Uses
+Art and craft supply stores, studios                                                                                                                                                                                                                          P
+Bakeries                                                                                                                                                                                                                                                      P
+Banks, savings and loan associations, loan companies, ATM (not drive-in or drive-through)                                                                                                                                                                     P
+Bicycle sales, supplies, repair service                                                                                                                                                                                                                       P
+Book stores                                                                                                                                                                                                                                                   C
+Coffee shops, cafés, sandwich shops and delicatessens (no drive-through service allowed)                                                                                                                                                                      P
+Drug stores                                                                                                                                                                                                                                                   P
+Dry cleaners and tailors                                                                                                                                                                                                                                      P
+Florists                                                                                                                                                                                                                                                      P
+Gift stores                                                                                                                                                                                                                                                   P
+Grocery, food, specialty foods, and produce stores                                                                                                                                                                                                            P
+Hotels                                                                                                                                                                                                                                                        P
+Indoor health and recreation facilities, such as racquetball court, gymnasiums, health and exercise spas, swimming pools, and similar uses and associated facilities                                                                                          C
+Interior decorating shops, sales and service                                                                                                                                                                                                                  P
+Laundromats                                                                                                                                                                                                                                                   P
+Marijuana retailing                                                                                                                                                     X                                                                                     X
+Music shops, sales and service                                                                                                                                                                                                                                P
+Optometry and optical goods, sales and service                                                                                                                                                                                                                P
+Personal services (e.g., barbershops, hair salons, spas)                                                                                                                                                                                                      P
+Photo finishing, photography studiosPPost offices                                                                                                                                                                                                             P
+Psilocybin service center                                                                                                                                               X                                                                                     X
+Rental stores, without outdoor storage                                                                                                                                                                                                                        P
+Restaurants, full service                                                                                                                                                                                                                                     C
+Shoe sales and repair stores                                                                                                                                                                                                                                  P
+Sporting goods, sales and service                                                                                                                                                                                                                             P
+Stationery stores                                                                                                                                                                                                                                             P
+Taverns, bars and cocktail lounges (1,500 feet from school uses, public parks and churches)                                                                                                                                                                   C
+Yogurt and ice cream stores                                                                                                                                                                                                                                   P
+Video rental stores                                                                                                                                                                                                                                           C
+Retail and service commercial uses similar to those above but not listed elsewhere in this section upon administrative determination through the design review process                                                                                        P[2]
+Commercial—Offices                                                                                                                                                      Commercial—Offices                                                                    Commercial—Offices
+Professional and administrative offices                                                                                                                                 C[1]                                                                                  P
+Medical office buildings                                                                                                                                                C[1]                                                                                  P
+Institutional                                                                                                                                                           Institutional                                                                         Institutional
+Churches, synagogues, temples or places of worship                                                                                                                      C                                                                                     C
+Public park, usable open space                                                                                                                                          C                                                                                     C
+Private and public schools (includes day care)                                                                                                                          C                                                                                     C
+Other                                                                                                                                                                   Other                                                                                 Other
+Utility facilities (telecommunication, pump stations, substations)                                                                                                      C                                                                                     C
+Helipad                                                                                                                                                                 X                                                                                     X
+Marijuana processing, production and wholesaling                                                                                                                        X                                                                                     X
+New streets and roads, including the extensions of existing streets and roads, that are included with the adopted transportation system plan                            P                                                                                     P
+Psilocybin processing, production and wholesaling                                                                                                                       X                                                                                     X
+
+NOTES:
+[1] Neighborhood commercial use subject to the provisions of Section 16.44.080.
+[2] Where scale and trip generation are compatible with residential development.
+
+C.
+
+Development Standards. The development standards in Table 16.22.060-2 apply to all uses, structures, buildings, and development in the MUR-M and MUR-X Districts.
+
+Table 16.22.060-2 Development Standards for MUR-M1, MUR-M2 and MUR-M3 Districts  Table 16.22.060-2 Development Standards for MUR-M1, MUR-M2 and MUR-M3 Districts  Table 16.22.060-2 Development Standards for MUR-M1, MUR-M2 and MUR-M3 Districts  Table 16.22.060-2 Development Standards for MUR-M1, MUR-M2 and MUR-M3 Districts
+Standard                                                                         MUR-M1                                                                           MUR-M2                                                                           MUR-M3
+Residential density (maximum)[1]                                                 24.99 du/net acre                                                                34.99 du/net acre                                                                50 du/net acre
+Townhome maximum density (units per net acre)                                    25 du/net acre
+Residential density (minimum)[1]                                                 15 du/net acre                                                                   25 du/net acre                                                                   35 du/net acre
+Lot size (minimum)                                                               Variable[2]                                                                      Variable[2]                                                                      Variable[2]
+Lot width (minimum)                                                              Variable[2]                                                                      Variable[2]                                                                      Variable[2]
+Lot depth (minimum)                                                              Variable[2]                                                                      Variable[2]                                                                      Variable[2]
+Lot coverage (maximum)                                                           Variable2, [3]                                                                   Variable2, [3]                                                                   Variable2, [3]
+Building setbacks (minimum)                                                      Variable[2]                                                                      Variable[2]                                                                      Variable[2]
+Building height (maximum)                                                        65 feet[4]                                                                       65 feet[4]                                                                       65 feet[4]
+
+NOTES:
+[1] Density calculations shall be made pursuant to Section 16.63.020.F.
+[2] Standards are flexible and shall be determined through the master plan process or design review application.
+[3] Pursuant to Section 16.42.030, 20% of the net developable area must be usable open space.
+[4] Building height is measured pursuant to Chapter 16.12 Definitions.
+Maximum building height for single-family (attached) is 45 feet at the front elevation; the building height may not exceed 49 feet at the side and rear elevations.
+
+(Ord. 389 § 1(Exh.
+A), 2009; Ord. 398 § 1, 2010; Ord. 406 § 1, 2010; Ord. 427 § 1, 2012; Ord. 433 § 1, 2013; Ord. 446 § 1, 2014; Ord. 503 § 1, 2016; Ord. 572 § 1, 2023; Ord. 582, 3/19/2024; Ord. 592, 6/3/2025)

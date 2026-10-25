@@ -201,7 +201,10 @@ def audit(
             if r.state != "dismissed" or not _CORPUS_CLAIM.search(r.reason):
                 continue
             doc, _, line = r.quote.partition("#L")
-            over = sorted(scope.get((doc, int(line or 0)), set())) if line else []
+            # A note of two sentences is quoted over its two lines in readable
+            # text ("#L241-L242"); the note stands at its first.
+            first = re.match(r"\d+", line)
+            over = sorted(scope.get((doc, int(first.group())), set())) if first else []
             out.append(
                 Stale(
                     layer=lid,

@@ -1,0 +1,168 @@
+§ 18.90.030. General provisions.
+
+(A)
+
+Warning and Disclaimer of Liability. The degree of flood protection required by this chapter is considered reasonable for regulatory purposes and is based on scientific and engineering considerations.
+Larger floods can and will occur on rare occasions.
+Flood heights may be increased by manmade or natural causes.
+This chapter does not imply that land outside the areas of special flood hazard or uses permitted within such areas is guaranteed to be free from flooding or flood damages.
+This chapter shall not create liability on the part of the city of Cornelius, any officer or employee thereof, or the Federal Insurance Administration, for any flood damages that result from reliance on this chapter or any administrative decision lawfully made hereunder.
+
+(B)
+
+Abrogation and Severability. This chapter is not intended to repeal, abrogate, or impair any existing easements, covenants, or deed restrictions.
+However, where this chapter and another ordinance, easement, covenant, or deed restriction conflict or overlap, whichever imposes the more stringent restrictions shall prevail.
+If any section, clause, sentence, or phrase of this chapter is held to be invalid or unconstitutional by any court of competent jurisdiction, then said holding shall in no way affect the validity of the remaining portions of this chapter.
+
+(C)
+
+Violation and Penalties. Violations of the provisions of this chapter, inclusive, by failure to comply with any of its requirements or prohibitions shall constitute a misdemeanor.
+Any person, firm or corporation who violates any of these provisions contained in this chapter, inclusive, shall, upon conviction, be fined not more than $10,000 for each violation and in addition shall pay all costs and expenses incurred by the city in the prosecution of said violation.
+Nothing herein contained shall prevent the city from taking such other lawful action as necessary to prevent or remedy any violation.
+
+(D)
+
+Permit Review. The floodplain administrator, or their designee, shall implement the provisions of this floodplain (FP) overlay zone by granting or denying development permit applications as follows:
+
+(1)
+
+Determine that the requirements of this section have been satisfied;
+
+(2)
+
+Determine that all other necessary permits have been obtained from those federal, state or local governmental agencies from which prior approval is required;
+
+(3)
+
+Determine if the proposed development is located in the floodway.
+
+(a)
+
+If located in the floodway, assure that the encroachment provisions of CMC § 18.90.060 are met;
+
+(b)
+
+Determine if the proposed development is located in an area where base flood elevation data is available either through the flood insurance study or from another authoritative source.
+If base flood elevation data is not available then ensure compliance with the provisions of subsection (E) of this section; and
+
+(c)
+
+Provide to building official the base flood elevation applicable to any building requiring a development permit;
+
+(4)
+
+Determine if the proposed development qualifies as a substantial improvement as defined by CMC § 18.90.080, Definitions;
+
+(5)
+
+Determine if the proposed development activity is a watercourse alteration.
+If a watercourse alteration is proposed, ensure compliance with the provisions in subsection (G) of this section;
+
+(6)
+
+Determine if the proposed development activity includes the placement of fill or excavation.
+If fill or excavation is proposed, ensure compliance with the provision of CMC § 18.90.050; and
+
+(7)
+
+Determine whether the proposed development activity complies with the no net loss standards in CMC § 18.90.070, No net loss standards.
+
+(E)
+
+Information to Be Obtained and Maintained. The following information shall be obtained and maintained and shall be made available for public inspection, as needed:
+
+(1)
+
+Obtain, record, and maintain the actual elevation (in relation to mean sea level) of the lowest floor (including basements) and all attendant utilities of all new or substantially improved structures where base flood elevation data is provided through the flood insurance study, flood insurance rate map, or obtained in accordance with subsection (F) of this section.
+
+(2)
+
+Obtain and record the elevation (in relation to mean sea level) of the natural grade of the building site for a structure prior to the start of construction and the placement of any fill and ensure that the requirements of CMC § 18.90.050, Fill/removal review criteria, are adhered to and all other required local, state and federal permits have been obtained and approved.
+
+(3)
+
+Upon placement of the lowest floor or a structure (including basement) but prior to further vertical construction, obtain documentation, prepared and sealed by a professional licensed surveyor or engineer, certifying the elevation (in relation to mean sea level) of the lowest floor (including basement).
+
+(4)
+
+Where base flood elevation data are used, obtain record drawing certification of the elevation (in relation to mean sea level) of the lowest floor (including basement) prepared and sealed by a professional licensed surveyor or engineer, prior to final inspection.
+
+(5)
+
+Maintain all elevation certificates submitted to the city of Cornelius.
+
+(6)
+
+Obtain, record, and maintain the elevation (in relation to mean sea level) to which the structure and all attendant utilities were floodproofed for all new or substantially improved floodproofed structures where under this chapter and where base flood elevation data is provided through the FIS, FIRM, or obtained in accordance with subsection (F) of this section.
+
+(7)
+
+Maintain all floodproofing certificates required under this chapter.
+
+(8)
+
+Record and maintain all variance actions, including justification for their issuance.
+
+(9)
+
+Obtain and maintain all hydrologic and hydraulic analyses performed as required under CMC § 18.90.070, No net loss standards.
+
+(10)
+
+Record and maintain all substantial improvement and substantial damage calculations and determinations as required under subsection (I) of this section.
+
+(11)
+
+Documentation of how no net loss standards have been met per CMC § 18.90.070, No net loss standards.
+
+(F)
+
+City Boundary Alterations. The floodplain administrator shall notify the Federal Insurance Administrator in writing whenever the boundaries of the city have been modified by annexation or the city has otherwise assumed authority or no longer has authority to adopt and enforce floodplain regulations for a particular area, to ensure that all flood hazard boundary maps and flood insurance rate maps accurately represent the city's boundaries.
+The notification will include a copy of a map of the city suitable for reproduction, clearly delineating the new corporate limits or new area for which the city has assumed or relinquished floodplain management regulatory authority.
+
+(G)
+
+Watercourse Alterations. The floodplain administrator shall notify adjacent communities and the Department of Land Conservation and Development prior to any alteration or relocation of a watercourse, and submit evidence of such notification to the Federal Insurance Administration.
+
+(H)
+
+Requirement to Submit New Technical Data. The city's base flood elevations may increase or decrease resulting from physical changes affecting flooding conditions.
+As soon as practicable, but not later than six months after the date such information becomes available, the city must notify the Federal Insurance Administrator of the changes by submitting technical or scientific data in accordance with 44 CFR 65.4.
+The city shall require the applicant to submit such data and review fees required for compliance with the section through the applicable FEMA letter of map change process.
+The floodplain administrator shall require a conditional letter of map revision prior to the issuance of a floodplain development permit for proposed floodway encroachments that increase the base flood elevation and proposed development which increases the base flood elevation by more than one foot in areas where FEMA has provided base flood elevations but no floodway.
+An applicant shall notify FEMA within six months of project completion when an applicant has obtained a conditional letter of map revision from FEMA.
+This notification to FEMA shall be provided in a letter of map revision.
+
+(I)
+
+Substantial Improvement and Substantial Damage Assessment and Determinations. The floodplain administrator shall:
+
+(1)
+
+Conduct substantial improvement (as defined in CMC § 18.90.080, Definitions) reviews for all structural development proposal applications and maintain a record of substantial improvement calculations within permit files in accordance with subsection (E) of this section.
+
+(2)
+
+Conduct substantial damage assessments when structures are damaged due to a natural hazard event or other causes.
+
+(3)
+
+Make substantial damage determinations whenever structures within the area of special flood hazard (as established in CMC § 18.90.020(A)) are damaged to the extent that the cost of restoring the structure to its before damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred.
+
+(J)
+
+Floodplain Permit Required. A floodplain permit shall be obtained before construction or development begins within any area horizontally within the area of special flood hazard established in CMC § 18.90.020(A) and shall include the information identified in CMC § 18.90.040, Floodplain permit application.
+The application shall be required for all structures including manufactured dwellings and all other development, as defined in CMC § 18.90.080, Definitions.
+
+(K)
+
+No Net Loss. Adherent to NMFS 2016 Biological Opinion, mitigation is necessary to ensure no net loss in floodplain functions.
+FEMA's 2024 Draft Oregon Implementation Plan identifies proxies that provide measurable actions that can prevent the no net loss of the parent floodplain functions.
+These proxies include undeveloped spaces, pervious surfaces and trees to account for a no net loss in respective floodplain functions of floodplain storage, water quality, and vegetation.
+Mitigation of these proxies must be completed to ensure compliance with no net loss standards.
+No net loss applies to the net change in floodplain functions as compared to existing conditions at the time of the proposed development and mitigation must address the floodplain function that is directly impacted.
+The no net loss standards apply to all special flood hazard areas as defined in CMC § 18.90.020(A).
+
+(Ord. 2025-05 § 1 (Exh.
+A), 2025)
+

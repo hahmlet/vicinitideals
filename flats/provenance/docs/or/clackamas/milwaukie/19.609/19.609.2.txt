@@ -1,0 +1,51 @@
+§ 19.609.2. Quantity of Spaces.
+
+A.
+
+Development must provide the number of bicycle parking spaces as listed in Table 19.609.2.
+In no case shall less than two short-term and two long-term spaces be provided, unless specifically stated otherwise.
+Modifications to the standards in Table 19.609.2 may be made as per Section 19.609.3.
+
+B.
+
+When a specific use has not been proposed or identified at the time of permit review, the Planning Manager may elect to assign a use category from Table 19.609.2 to determine the bicycle parking required.
+Future tenants or property owners are responsible for compliance with Chapter 19.600 per the applicability provisions of Section 19.602.
+
+C.
+
+If a proposed use is not listed in Table 19.609.2, the Planning Manager has the discretion to apply the quantity requirements of a similar use listed in the table upon finding that the listed use and unlisted use have similar parking demands.
+
+D.
+
+Where the calculation of minimum bicycle parking spaces does not result in a whole number, the result shall be rounded up to the next whole number.
+
+Table 19.609.2: Minimum Required Bicycle Spaces               Table 19.609.2: Minimum Required Bicycle Spaces  Table 19.609.2: Minimum Required Bicycle Spaces
+Use                                                           Long-Term Spaces                                 Short-Term Spaces
+A. Residential Uses                                           A. Residential Uses                              A. Residential Uses
+Multi-Unit Residential Development (5 or more units on site)  1.0 per unit                                     2 or one per 20 units
+Cottage Cluster Development                                   1.5 per unit                                     0.5 per unit
+B. Commercial Uses                                            B. Commercial Uses                               B. Commercial Uses
+Retail Sales and Services                                     0.20 per 1,000 sq ft of floor area               0.23 per 1,000 sq ft of floor area
+Retail Restaurants and Bars                                   0.27 per 1,000 sq ft of floor area               0.63 per 1,000 sq ft of floor area
+Temporary Lodging                                             0.10 per 1,000 sq ft of floor area               0.01 per 1,000 sq ft of floor area
+Office                                                        0.43 per 1,000 sq ft of floor area               0.03 per 1,000 sq ft of floor area
+Major Event Entertainment                                     0.07 per 1,000 sq ft of floor area               0.20 per 1,000 sq ft of floor area
+Medical Office (non-hospital)                                 0.28 per 1,000 sq ft of floor area               0.29 per 1,000 sq ft of floor area
+C. Industrial Uses                                            C. Industrial Uses                               C. Industrial Uses
+Manufacturing and Production                                  0.16 per 1,000 sq ft of floor area               0.01 per 1,000 sq ft of floor area
+Warehouse and Freight Movement                                0.08 per 1,000 sq ft of floor area               0.003 per 1,000 sq ft of floor area
+Self-storage or Mini Warehouse                                0.005 per 1,000 sq ft of floor area              0.018 per 1,000 sq ft of floor area
+D. Institutional Uses                                         D. Institutional Uses                            D. Institutional Uses
+Religious Institution                                         0.07 per 1,000 sq ft of floor area               0.44 per 1,000 sq ft of floor area
+Daycare                                                       0.26 per 1,000 sq ft of floor area               0.03 per 1,000 sq ft of floor area
+Elementary or Middle School                                   2 per classroom                                  1 per 100,000 sq ft of floor area
+High School                                                   4 per classroom                                  1 per 100,000 sq ft of floor area
+College (excluding dormitories)                               0.07 per 1,000 sq ft of floor area               0.06 per 1,000 sq ft of floor area
+Library, Museum, Community                                    0.25 per 1,000 sq ft of floor area               0.10 per 1,000 sq ft of floor area
+Center, Performance Theater
+Medical Center or Hospital                                    0.27 per 1,000 sq ft of floor area               0.01 per 1,000 sq ft of floor area
+Parks and Open Area                                           None                                             Neighborhood Parks: 4 per park Community Parks or Natural Areas: 8 per park/area
+High-Capacity Transit Facility                                12                                               4
+Park and Ride Facilities                                      12                                               4
+Transit Centers                                               30                                               12
+

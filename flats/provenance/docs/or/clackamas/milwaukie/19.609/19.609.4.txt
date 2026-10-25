@@ -1,0 +1,250 @@
+§ 19.609.4. Bicycle Parking Development Standards.
+
+A.
+
+General Development Standards for Bicycle Parking
+
+Long-term and short-term bicycle parking must be provided in lockers or racks that meet the following standards:
+
+1.
+
+The area devoted to bicycle parking must be hard-surfaced.
+
+2.
+
+Where bicycle parking is provided in racks, the racks must meet the following standards:
+
+a.
+
+The rack must be designed so that the bicycle frame and one wheel can be locked to a rigid portion of the rack with a U-shaped shackle lock when both wheels are left on the bicycle.
+
+b.
+
+If the rack is a horizontal rack, it must support the bicycle at two points, including the frame.
+
+c.
+
+The rack must be securely anchored with tamper-resistant hardware.
+
+3.
+
+Bicycle parking spaces, aisles, and clearances must meet the minimum dimensional standards contained in Table 19.609.4.A.3.
+See examples of bicycle parking spacing options in Figures 19.609.4.A.3.a-g.
+
+Table 19.609.4.A.3 Minimum Bicycle Parking Space Dimensions  Table 19.609.4.A.3 Minimum Bicycle Parking Space Dimensions  Table 19.609.4.A.3 Minimum Bicycle Parking Space Dimensions  Table 19.609.4.A.3 Minimum Bicycle Parking Space Dimensions  Table 19.609.4.A.3 Minimum Bicycle Parking Space Dimensions  Table 19.609.4.A.3 Minimum Bicycle Parking Space Dimensions
+Length                                                       Width                                                        Height                                                       Maneuvering Area Width                                       Clearance to Rack From Walls
+Standard Spacing                                             6 ft                                                         2 ft                                                         3 ft 4 in                                                    5 ft                                                         2 ft 6 in
+Horizontal Side by Side                                      6 ft                                                         1 ft 6 in                                                    3 ft 4 in                                                    5 ft                                                         2 ft 6 in
+Horizontal Wall Attached                                     6 ft                                                         2 ft                                                         3 ft 4 in                                                    5 ft                                                         1 ft
+Horizontal Diagonal (45-60 degrees)                          6 ft                                                         1 ft 6 in                                                    3 ft 4 in                                                    5 ft                                                         3 ft
+Vertical Spaces [1]                                          3 ft 4 in                                                    1 ft 5 in                                                    6 ft                                                         5 ft                                                         -
+Stacked Spaces [2]                                           -                                                            1 ft 5 in                                                    -                                                            8 ft                                                         -
+Larger Bicycle Space                                         8 ft                                                         3 ft                                                         3 ft 4 in                                                    5 ft                                                         3 ft
+
+1.  The spacing allowed for vertical bicycle parking spaces requires a minimum vertical stagger of eight inches between each space.
+2.  The spacing for stacked bicycle parking requires a vertical stagger to be included in the manufacturer's design.
+
+Figure 19.609.4.A.3.a
+Standard Bicycle Parking
+
+Figure 19.609.4.A.3.b
+Horizontal Side-by-Side Bicycle Parking
+
+Figure 19.609.4.A.3.c
+Horizontal Wall Attached Bicycle Parking
+
+Figure 19.609.4.A.3.d
+Horizontal Diagonal (45-60 degree) Bicycle Parking
+
+Figure 19.609.4.A.3.e
+Vertical Bicycle Parking
+
+Figure 19.609.4.A.3.f
+Stacked Bicycle Parking
+
+Figure 19.609.4.A.3.g
+Large Bicycle Parking Space
+
+4.
+
+Bicycle lockers are fully enclosed and secure bicycle parking spaces that meet the following standards:
+
+a.
+
+The locker must be securely anchored to the ground.
+
+b.
+
+Locker spaces must have a minimum depth of 6 ft and an access door that is at least 2 ft wide.
+If providing more than one bicycle parking space through a triangle locker layout, a 2 ft wide door must be provided on each side of the locker.
+
+5.
+
+All bicycle parking areas must provide lighting consistent with the standards in 19.606.3.D.
+
+6.
+
+The following bicycle parking information must be submitted with applications for a building permit or land-use review:
+
+a.
+
+Location and number of bicycle parking spaces for short- and long-term bicycle parking along with the access route to long-term bicycle parking.
+
+b.
+
+The model or design of the bicycle parking facilities to be installed.
+
+c.
+
+Dimensions of all aisles and maneuvering areas.
+
+B.
+
+Standards for Long-Term Bicycle Parking
+
+In addition to the general standards established in Subsection 19.609.4.A, long-term bicycle parking must be provided in lockers or racks that meet the following standards:
+
+1.
+
+Locational Standards. Long-term bicycle parking must be provided in one or more of the following locations:
+
+a.
+
+Within a building, including on individual building floors.
+
+b.
+
+On-site, including in parking areas and structured parking.
+
+c.
+
+Within a residential dwelling unit.
+Up to 50% of long-term bicycle parking spaces may be provided within a residential dwelling unit if they meet the following requirements:
+
+(1)
+
+Parking space must include a rack that meets the dimensional requirements for a standard bicycle rack per Table 19.609.4.
+
+(2)
+
+For multifamily and mixed-use developments without an elevator, in-unit long-term bicycle parking can only be located on the ground floor.
+
+d.
+
+Exceptions. Sites containing residential development with 12 or fewer dwelling units may provide up to 100% of required long-term bicycle parking spaces in dwelling units.
+All other applicable standards in Subsection 19.609.4.B must still be met, including the prohibition of in-unit bicycle parking on upper floors unless the building has an elevator.
+
+e.
+
+For schools, all long-term bicycle parking must be placed within the building on the ground floor, within 100 ft of a main entrance, or some combination of the two.
+
+f.
+
+For sites with multiple primary uses, long-term bicycle parking must be provided in an area that can be accessed from each use.
+If bicycle parking is provided in a common area on the site, the area must be accessible to all tenants.
+
+g.
+
+All long-term bicycle parking must be covered.
+Where covered bicycle parking is not within a building or locker, the cover must be permanent, impervious to precipitation, and project a minimum of 2 ft beyond the bicycle parking spaces on the portion of the structure that is not enclosed by a wall.
+
+2.
+
+Security Standards. Long-term bicycle parking must meet the following security standards:
+
+a.
+
+Long-term bicycle parking for residential uses must be provided within one of the following:
+
+(1)
+
+A restricted access, lockable room or enclosure, designated primarily for bicycle parking.
+
+(2)
+
+A bicycle locker.
+
+(3)
+
+A residential dwelling unit, subject to the limitations in Subsection 19.906.4.B.1.c.
+
+b.
+
+Long-term bicycle parking for all other uses must be located in one of the following locations.
+
+(1)
+
+A restricted access, lockable room or enclosure.
+
+(2)
+
+A bicycle locker.
+
+3.
+
+Additional Development Standards. The following standards apply to sites with more than 20 long-term bicycle parking spaces:
+
+a.
+
+Minimum number of horizontal bicycle parking spaces.
+At least 30% of spaces must be in a horizontal rack, or on the lower level of a stacked bicycle parking rack.
+For elementary and middle schools (K-8), all spaces located outside of the building must be in a horizontal rack.
+
+b.
+
+Parking for larger bicycles.
+At least 5% of spaces must accommodate a larger bicycle space, placed in a horizontal rack.
+These spaces may be included to meet the minimum percentage requirements for Subparagraph B.3.a.
+See Figure 19.609.4.A.7.
+
+c.
+
+Electrical outlet requirement.
+At least 5% of spaces must be located within 10 ft of an electrical socket.
+Each electrical socket must be accessible to horizontal bicycle parking spaces.
+
+C.
+
+Standards for Short-Term Bicycle Parking
+
+In addition to the general standards established in Subsection 19.609.4.A, short-term bicycle parking must meet the following standards:
+
+1.
+
+Short-term bicycle parking must meet the following locational requirements:
+
+a.
+
+Be located on site, outside of a building.
+
+b.
+
+Must be at the same grade as the sidewalk or at a location that can be reached by an accessible route.
+
+c.
+
+Be located within 50 ft of the main entrance, or for buildings with multiple main entrances, must be dispersed and located within 50 ft of the main entrance on each façade.
+For sites with multiple primary buildings, short-term parking must be dispersed and located within 50 ft of the main entrance for each primary building.
+
+d.
+
+Must be visible to building occupants.
+
+e.
+
+Must be designed not to impede pedestrians along sidewalks or public rights-of-way.
+
+f.
+
+If located adjacent to automobile parking, must be separated from vehicle parking areas by curbing or other similar physical barriers.
+
+2.
+
+The public right-of-way may be utilized for bicycle parking when parking cannot be reasonably accommodated on the site and the location is convenient to the building's front entrance.
+The bicycle parking area in the right-of-way must leave a clear, unobstructed width of sidewalk that meets the Engineering Department's Public Works Standards for sidewalk passage.
+See Figure 19.609 for illustration of space and locational standards.
+A right-of-way permit is required.
+
+Figure 19.609.4.C.2
+Bicycle Parking in the Public Right-of-Way
+

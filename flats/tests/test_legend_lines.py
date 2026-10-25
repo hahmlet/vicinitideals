@@ -115,6 +115,50 @@ def test_a_section_heading_after_the_legend_ends_it() -> None:
     assert seen.blocks == ()
 
 
+def test_a_legend_definition_one_sentence_to_a_line_is_still_the_legend() -> None:
+    """Readable text gives each sentence of "CSU = ... Section 19.904. Type
+    III review required ... existing CSU." a line of its own. The later
+    sentences name the code they define, and are stepped over with it; the
+    section file of Table 19.303.2 lost all eight notes without this."""
+    seen = census(
+        "\n".join(
+            [
+                "Notes:",
+                "P = Permitted.",
+                "CSU = Permitted with community service use approval subject to"
+                " provisions of Section 19.904.",
+                "Type III review required to establish a new CSU or for major"
+                " modification of an existing CSU.",
+                "Type I review required for a minor modification of an existing CSU.",
+                "CU = Permitted with conditional use approval.",
+                "Type I review required for a minor modification of an existing CU.",
+                "1.",
+                "The limit of 4 consecutive townhouses does not apply in GMU.",
+                "2.",
+                "Day care uses are limited to 5,000 sq ft.",
+            ]
+        ),
+        doc="d.txt",
+    )
+    assert [b.mark for b in seen.bodies] == ["1", "2"]
+
+
+def test_a_line_after_a_legend_that_does_not_name_its_code_still_ends_it() -> None:
+    seen = census(
+        "\n".join(
+            [
+                "Notes:",
+                "CSU = Permitted with community service use approval.",
+                "Agricultural uses are permitted subject to these conditions.",
+                "1.",
+                "Fences shall not exceed 6 ft.",
+            ]
+        ),
+        doc="d.txt",
+    )
+    assert seen.blocks == ()
+
+
 def test_the_legend_shape() -> None:
     assert LEGEND_LINE.match("P       =       Permitted.")
     assert LEGEND_LINE.match("CSU     =       Permitted with approval")
@@ -250,11 +294,16 @@ def test_the_high_density_side_yard_quotes_both_paragraphs() -> None:
     text = pathlib.Path(
         "flats/config/jurisdictions/or/clackamas/milwaukie.yaml"
     ).read_text(encoding="utf-8")
-    assert f'"{DOC}#L526,L530"' in text
+    assert f'"{MILWAUKIE}/19.302/19.302.5.txt#L12,L16-L18"' in text
 
 
 def test_every_new_note_is_ruled_and_none_blocks() -> None:
+    # The section files the two use tables' notes were cut into (2026-10-24).
     ruled = {row.quote: row for row in dispositions(MILWAUKIE)}
-    for line in (921, 923, 925, 927, 929, 931, 933, 935, 3809, 3812, 3819, 3822):
-        assert ruled[f"{DOC}#L{line}"].state == "dismissed"
+    for path, lines in (
+        ("19.303/19.303.2.txt", (263, 266, 268, 271, 274, 276, 278, 280)),
+        ("19.312/19.312.2.txt", (366, 371, 378, 381)),
+    ):
+        for line in lines:
+            assert ruled[f"{MILWAUKIE}/{path}#L{line}"].state == "dismissed"
     assert not [row for row in qualified() if row.blocking]

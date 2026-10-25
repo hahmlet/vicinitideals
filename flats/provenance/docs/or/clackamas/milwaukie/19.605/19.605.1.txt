@@ -1,0 +1,86 @@
+§ 19.605.1. Parking Maximums.
+
+A.
+
+When off-street parking is provided with development, the number of spaces shall not be more than the maximum number of parking spaces as listed in Table 19.605.1.
+Modifications to the standards in Table 19.605.1 may be made as per Section 19.605.
+Where multiple ratios are listed, the Planning Manager shall determine which ratio to apply to the proposed development or use.
+
+B.
+
+When a specific use has not been proposed or identified at the time of permit review, the Planning Manager may elect to assign a use category from Table 19.605.1 to determine the maximum allowed parking.
+Future tenants or property owners are responsible for compliance with Chapter 19.600 per the applicability provisions of Section 19.602.
+
+C.
+
+If a proposed use is not listed in Table 19.605.1, the Planning Manager has the discretion to apply the maximum requirements of a similar use listed in the table upon finding that the listed use and unlisted use have similar parking demands.
+If a similar use is not listed, the maximum allowance will be determined per Subsection 19.605.2.
+
+D.
+
+Where the calculation of maximum parking spaces does not result in a whole number, the result shall be rounded to the nearest whole number.
+
+E.
+
+Parking spaces for disabled persons, and other improvements related to parking, loading, and maneuvering for disabled persons, shall conform to the Americans with Disabilities Act and shall be subject to review and approval by the Building Official.
+Spaces reserved for disabled persons are included in the maximum allowed number of off-street parking spaces.
+
+F.
+
+Uses that have legally established parking areas that exceed the maximum number of spaces allowed by Section 19.605 prior to June 17, 2010, the effective date of Ordinance #2015, shall be considered nonconforming with respect to the quantity requirements.
+Such uses shall not be considered parking facilities as defined in Section 19.201.
+
+Table 19.605.1 Minimum To Maximum Off-Street Parking Requirements                                                  Table 19.605.1 Minimum To Maximum Off-Street Parking Requirements
+Use                                                                                                                Maximum Allowed
+A. Residential Uses                                                                                                A. Residential Uses
+1. Single detached dwellings, including manufactured homes.
+No maximum.
+2. Multi-Unit Dwellings                                                                                            2 spaces per dwelling unit.
+3. Middle Housing[1]
+a. Duplexes                                                                                                        1 space per dwelling unit
+b. Triplexes                                                                                                       1 space per dwelling unit
+c. Quadplexes                                                                                                      1 space per dwelling unit
+d. Townhouses[2]                                                                                                   1 space per dwelling unit
+e. Cottage Clusters                                                                                                1 space per dwelling unit
+4. Adult foster/care homes and similar facilities allowed by right in residential zones.
+Minimum required parking plus 1 space per bedroom.
+5. Accessory dwelling units (ADU).
+No maximum.
+B. Community Service and Other Public Uses                                                                         B. Community Service and Other Public Uses
+1. Religious institutions.                                                                                         1 space per 2 seats.
+2. Day-care center ("family daycare" as defined in Section 19.201 has no parking requirements).                    3.5 spaces per 1,000 sq ft of floor area.
+3. School—elementary/junior high.                                                                                  2 spaces per classroom.
+4. School—senior high.                                                                                             0.33 spaces per student, plus 1 space per staff.
+5. Meeting room, club, lodge, or association.                                                                      16.66 spaces per 1,000 sq ft of floor area, or 1 space per 3 seats if seats are permanently installed.
+6. Library, museum, art gallery.                                                                                   1.2 spaces per 1,000 sq ft of floor area.
+7. Residential care facilities.                                                                                    1 space per 3 beds.
+C. Lodging Places                                                                                                  C. Lodging Places
+1. Motel, hotel, boarding house.                                                                                   1.5 spaces per lodging unit.
+2. Bed and breakfast establishments.                                                                               1.5 spaces per lodging unit, plus 2 spaces for the permanent residence.
+D. Commercial Uses—Recreational                                                                                    D. Commercial Uses—Recreational
+1. Indoor recreation, such as a health club, gym, bowling alley, arcade, etc.                                      5.5 spaces per 1,000 sq ft of floor area.
+2. Theater, auditorium, or stadium.                                                                                1 space per 3 seats.
+E. Commercial Uses—Retail Goods                                                                                    E. Commercial Uses—Retail Goods
+1. Eating and drinking establishments.                                                                             15 spaces per 1,000 sq ft of floor area.
+2. General retail—grocery stores, convenience stores, specialty retail and shops.                                  5 spaces per 1,000 sq ft of floor area.
+3. Bulk retail—furniture and home furnishings, appliances, vehicles, building materials, and similar large items.  3 spaces per 1,000 sq ft of floor area.
+4. Gas stations.                                                                                                   1.25 spaces per 4 pumps.
+F. Commercial Uses—Services                                                                                        F. Commercial Uses—Services
+1. General office, including banks.                                                                                3.4 spaces per 1,000 sq ft of floor area.
+2. Medical/dental office (nonhospital), veterinary clinic.                                                         4.9 spaces per 1,000 sq ft of floor area.
+3. Personal services, such as a barbershop, beauty parlor, etc.                                                    5.4 spaces per 1,000 sq ft of floor area.
+4. Commercial services, such as dry cleaners and repair shops (does not include vehicle repair).                   5.1 spaces per 1,000 sq ft of floor area.
+5. Vehicle repair.                                                                                                 2.5 spaces per 1,000 sq ft of floor area.
+6. Quick vehicle repair and servicing, such as oil change and tire shops.                                          3 spaces per service bay.
+7. Mortuary/funeral home.                                                                                          1 space per 3 chapel or parlor seats.
+8. Car wash.                                                                                                       2 spaces per wash bay for self-service washes, or 2 spaces per 1,000 sq ft of floor area for full-service washes.
+G. Industrial Uses                                                                                                 G. Industrial Uses
+1. Manufacturing.                                                                                                  2 spaces per 1,000 sq ft of floor area.
+2. Storage, warehouse, wholesale establishment less than 150,000 sq ft.                                            1 space per 1,000 sq ft of floor area.
+3. Storage, warehouse, wholesale establishment 150,000 sq ft or greater.                                           0.4 spaces per 1,000 sq ft of floor area.
+4. Mini-warehouse; self-service storage.                                                                           1 space per 20 storage units, plus 1 space per employee of the largest shift.
+
+1  For middle housing developments located on streets classified as Arterials or Collectors in the Transportation System Plan, 0.5 off-street parking spaces per dwelling unit are required.
+2  For townhouse developments of 8 or more townhouses, 0.5 off-street parking spaces per dwelling unit are required.
+Successive or phased townhouse developments to avoid this requirement are not permitted.
+

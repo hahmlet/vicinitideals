@@ -1,0 +1,501 @@
+§ 16.34.070. Development standards.
+
+For nonexempt uses and activities proposed within verified natural resources, there are three types of development standards outlined in this chapter: nondiscretionary, special use, and discretionary.
+As summarized below, the special use standards outlined in Section 16.34.070(D) apply to specific types of recreational, public facility and utility facilities.
+Individuals proposing other nonexempt uses and activities within HCAs (that are not also Water Quality Resource Areas) may use either the nondiscretionary development standards in Section 16.34.070(C) or the discretionary standards in 16.34.075.
+Except for the Special Uses identified in Section 16.34.070(D), individuals proposing development within a Water Quality Resource must use the discretionary review standards in Section 16.34.075.
+
+Development Standards            Water Quality Resources  HCAs
+Nondiscretionary (16.34.070(C))  No                       Yes
+Special use (16.34.070(D))       Yes                      Yes
+Discretionary (16.34.075)        Yes                      Yes/No
+
+A.
+
+Permit Requirements. Individuals proposing nonexempt development within Natural Resources (Water Quality Resources or HCAs) must provide a development plan and accompanying narrative explanation that includes the following information.
+All of the application requirements must be met prior to permit approval.
+
+1.
+
+Applicants must verify the boundaries of any Water Quality Resource or HCA on their property as described in Section16.34.060.
+
+2.
+
+For the entire subject property (including non-resource areas), applicants must submit a scale map of the property that includes:
+
+a.
+
+Location of any wetlands or water bodies on the property, including a delineation of the Water Quality Resource Area;
+
+b.
+
+Location of all high, moderate, and low HCAs on the property;
+
+c.
+
+Outline of any existing disturbance area, including the location of existing adjacent streets and paved areas, utilities, culverts, stormwater management facilities, or bridges;
+
+d.
+
+Location of 100-year floodplain and floodway boundary as defined by the Federal Emergency Management Agency (FEMA) and the area of the 1996 flood inundation; and
+
+e.
+
+Topography shown by two-foot vertical contours in areas of slopes less than 15%, and at fivefoot vertical contours of slopes 15% or greater.
+On properties that are two acres or larger, such a contour map is required only for the portion of the property to be developed.
+
+3.
+
+Detailed site plan of proposed development outlining total disturbance area, including proposed building footprints, site property improvements, utilities and landscaping.
+The types, sizes and intensities of lights must be placed so that they do not shine directly into the NROZ.
+
+4.
+
+The following additional information shall be provided about the HCA:
+
+a.
+
+For properties containing less than one acre of HCA, the location of all trees within the HCA that are greater than six inches diameter at breast height (DBH), shall be identified by size and species.
+For properties containing one acre or more of HCA, the applicant may approximate the number of trees and the diameter range, and provide a listing of the dominant species;
+
+b.
+
+For proposed disturbance areas containing less than one acre of HCA, all trees with a diameter of six inches or greater that will be removed shall be specifically identified as to diameter at breast height (DBH) and species.
+For proposed disturbance areas containing one acre or more of HCA an approximate of the number of trees, their diameters and the dominant species.
+
+5.
+
+If grading will occur within a Water Quality Resource or HCA, a grading plan showing the proposed alteration of the ground at two-foot vertical contours in areas of slopes less than 15%, and at five-foot vertical contours of slopes 15% or greater.
+
+6.
+
+When a property containing any Water Quality Resource is subdivided, this Code requires that new subdivision plats delineate and show the Water Quality Resource as a separate unbuildable tract.
+The division of properties containing HCAs are subject to Section 16.34.070(C)(5).
+
+B.
+
+Construction Management Plans.
+
+1.
+
+In order to ensure that trees and vegetation within the NROZ are not damaged during construction, all applicants shall provide a construction management plan that includes the following information:
+
+a.
+
+Location of site access and egress that construction equipment will use;
+
+b.
+
+Equipment and material staging and stockpile areas;
+
+c.
+
+Erosion and sediment control measures; and
+
+d.
+
+Measures to protect trees and other vegetation located within Water Quality Resources and HCAs, but outside of the disturbance area approved under the provisions of Section 16.34.070 or 16.34.075.
+
+2.
+
+Applicants who are partitioning or subdividing, but are not simultaneously developing their property, do not need to provide a Construction Management Plan.
+
+C.
+
+Nondiscretionary Development Standards within HCAs.
+The following development standards apply to all nonexempt development that occurs within the HCA except for development that occurs pursuant to the standards established by the discretionary development standards in Section 16.34.075 or the special use standards in Section 16.34.070(D).
+
+1.
+
+Disturbance Area Limitations to Minimize Impact to HCA.
+
+a.
+
+Detached Single-Family Residential Uses. The maximum disturbance area (MDA) allowed within HCAs is determined by subtracting the area of the lot or parcel outside of the HCAs from the total disturbance area (TDA) calculated as described in Table 16.34.070-1 below.
+(TDA—Area outside the HCA = MDA)
+
+i.
+
+Moderate and Low HCAs are subject to the same disturbance area limitations.
+
+ii.
+
+Calculation of Maximum Disturbance Area. If a lot or parcel includes both High and Moderate/Low HCAs then:
+
+(A)
+
+If there is more High HCA than Moderate/Low HCA on the lot or parcel, then the MDA shall be calculated as if all of the Moderate/Low and High HCA were High, pursuant to Table 16.34.070-1 below; or
+
+(B)
+
+If there is more Moderate/Low HCA than High HCA on the lot or parcel, then the MDA shall be calculated as if all of the Moderate/Low and High HCA were Moderate/Low, pursuant to Table 16.34.070-1 below.
+
+iii.
+
+Location of MDA. If a lot or parcel includes different types of HCAs, then:
+
+(A)
+
+The amount of development that may occur within the High HCA is equal to the total disturbance area minus the area of the lot or parcel outside of the High HCA (TDA – non-High HCA = MDA).
+If the area of the lot or parcel outside the High HCA is greater than the total disturbance area, then development shall not occur within the High HCA (Area outside High HCA > TDA = no development in High HCA);
+
+(B)
+
+The amount of development that may occur within the Moderate HCA is equal to the total disturbance area minus the area of the lot or parcel outside of the High and Moderate HCA (TDA – (Low HCA + non-HCA) = MDA).
+If the area of the lot or parcel outside the Moderate HCA is greater than the total disturbance area, then development shall not occur within the Moderate HCA (Area outside Moderate HCA > TDA = no development in Moderate HCA); and
+
+(C)
+
+The amount of development that may occur within the Low HCA is equal to the total disturbance area minus the area of the lot or parcel outside of the High, Moderate and Low HCA (TDA – non-HCA = MDA).
+If the area of the lot or parcel outside the Low HCA is greater than the total disturbance area, then development shall not occur within the Low HCA (Area outside Low HCA > TDA = no development in Low HCA).
+
+b.
+
+All Other Uses. The maximum disturbance area (MDA) allowed by right within Low, Moderate and High HCAs in these zones is found in Table 16.34.070-2 below; this MDA is subject to the mitigation requirements described in Section 16.34.070(C)(4).
+
+Table 16.34.070-1 HCA Total Disturbance Area Limitations for Detached SFR Uses  Table 16.34.070-1 HCA Total Disturbance Area Limitations for Detached SFR Uses
+HCA Type                                                                        Total Disturbance Area
+High                                                                            50 percent of the lot area, up to maximum of 5,000 sq. ft.
+Moderate/Low                                                                    65 percent of the lot area, up to maximum of 6,000 sq. ft.
+
+Table 16.34.070-2 HCA Disturbance Area Limitations for all Uses other than Detached SFR  Table 16.34.070-2 HCA Disturbance Area Limitations for all Uses other than Detached SFR
+HCA Type                                                                                 Maximum Disturbance Area
+High                                                                                     10 percent of HCA on site
+Moderate                                                                                 20 percent of HCA on site
+Low                                                                                      50 percent of HCA on site
+
+c.
+
+Development within an HCA in accordance with these provisions shall not result in a change of the HCA status of such developed areas on a property.
+In the case of a later development request seeking to develop within previously undisturbed HCAs on a property where a prior development request was subject to these provisions, the calculation of the MDA allowed on the property shall be based on the location of the HCA, notwithstanding the location of any authorized development within the HCA.
+
+2.
+
+Protection of habitat during site development.
+During development of any site containing a HCA, the following standards apply:
+
+a.
+
+Work areas shall be marked to reduce potential damage to the HCA;
+
+b.
+
+Trees in HCAs shall not be used as anchors for stabilizing construction equipment;
+
+c.
+
+Native soils disturbed during development shall be conserved on the property;
+
+d.
+
+An erosion and sediment control plan is required and shall be prepared in compliance with requirements set forth in the City's Engineering Design Standards Manual;
+
+e.
+
+Prior to construction, the HCA that is to remain undeveloped shall be flagged, fenced, or otherwise marked and shall remain undisturbed;
+
+f.
+
+All work on the property shall conform to the Construction Management Plan described in Section 16.34.070(B).
+
+3.
+
+Utility Facility Standards. The following disturbance area limitations apply to new utilities, private connections to existing or new utility lines, and upgrades to existing utilities.
+
+a.
+
+The disturbance area for utility facility connections to utility facilities is no greater than 10 feet wide.
+
+b.
+
+The disturbance area for the upgrade of existing utility facilities is no greater than 15 feet wide.
+
+c.
+
+No fill or excavation is allowed within the ordinary high water mark of a stream, unless a permit is obtained from the US Army Corps of Engineers through the Standard Local Operating Procedures for Endangered Species (SLOPES) process.
+
+d.
+
+Mitigation is required as described in Section 16.34.070(B)(4), below.
+
+4.
+
+Mitigation requirements for disturbance in HCAs.
+In order to achieve the goal of reestablishing forested canopy that meets the ecological values and functions described in Section 16.34.010, tree replacement and vegetation planting are required when development intrudes into a HCA according to the following standards, except for wetlands mitigation requirements imposed by State and Federal law.
+
+a.
+
+Required Plants and Plant Densities. All trees, shrubs and groundcover must be native plants selected from the Happy Valley Plant List (Appendix A).
+An applicant must meet Mitigation Option 1 or 2, whichever results in more tree plantings; except that where the disturbance area is one acre or more, the applicant shall comply with Mitigation Option 2.
+
+i.
+
+Mitigation Option 1.
+This mitigation requirement is calculated based on the number and size of trees that are removed from the site.
+Trees that are removed from the site shall be replaced as shown in Table 16.34.070-3.
+Conifers shall be replaced with conifers.
+Bare ground shall be planted or seeded with native grasses or herbs.
+Non-native sterile wheat grass may also be planted or seeded, in equal or lesser proportion to the native grasses or herbs.
+
+Table 16.34.070-3 Tree Replacement               Table 16.34.070-3 Tree Replacement
+Size of Tree to be Removed (Inches in Diameter)  Number of Trees and Shrubs to be Planted
+6 to 12                                          2 trees and 3 shrubs
+13 to 18                                         3 trees and 6 shrubs
+19 to 24                                         5 trees and 12 shrubs
+25 to 30                                         7 trees and 18 shrubs
+over 30                                          10 trees and 30 shrubs
+
+ii.
+
+Mitigation Option 2.
+This mitigation requirement is calculated based on the size of the disturbance area within a HCA.
+Native trees and shrubs are required to be planted at a rate of five trees and 25 shrubs per every 500 square feet of disturbance area (calculated by dividing the number of square feet of disturbance area by 500, and then multiplying that result times five trees and 25 shrubs, and rounding all fractions to the nearest whole number of trees and shrubs; for example, if there will be 330 square feet of disturbance area, then 330 divided by 500 equals .66, and .66 times five equals 3.3, so three trees must be planted, and .66 times 25 equals 16.5, so 17 shrubs must be planted).
+Bare ground shall be planted or seeded with native grasses or herbs.
+Non-native sterile wheat grass may also be planted or seeded, in equal or lesser proportion to the native grasses or herbs.
+
+b.
+
+Plant Size. Replacement trees must be at least one-half inch in caliper, measured at six inches above the ground level for field grown trees or above the soil line for container grown trees (the one-half inch minimum size may be an average caliper measure, recognizing that trees are not uniformly round), unless they are oak or madrone which may be one gallon size.
+Shrubs must be in at least a one-gallon container or the equivalent in ball and burlap and must be at least 12 inches in height.
+
+c.
+
+Plant Spacing. Trees shall be planted between eight and twelve (12) feet on-center and shrubs shall be planted between four and five feet on center, or clustered in single species groups of no more than four plants, with each cluster planted between eight and ten (10) feet on center.
+When planting near existing trees, the dripline of the existing tree shall be the starting point for plant spacing measurements.
+
+d.
+
+Plant Diversity. Shrubs must consist of at least two different species.
+If 10 trees or more are planted, then no more than 50% of the trees may be of the same genus.
+
+e.
+
+Location of Mitigation Area. All vegetation must be planted on the applicant's site within the HCA or in an area contiguous to the HCA; provided, however, that if the vegetation is planted outside of the HCA then the applicant shall preserve the contiguous area by executing a deed restriction, such as a restrictive covenant.
+In addition, an off-site mitigation option is provided in a streamlined discretionary review process, but in all cases, mitigation shall be provided within the City of Happy Valley City limits.
+
+f.
+
+Invasive Vegetation. Invasive non-native or noxious vegetation must be removed within the mitigation area prior to planting.
+
+g.
+
+Tree and Shrub Survival. A minimum of 80% of the trees and shrubs planted shall remain alive on the fifth anniversary of the date that the mitigation planting is completed.
+
+h.
+
+Monitoring and Reporting. Monitoring of the mitigation site is the ongoing responsibility of the property owner.
+Plants that die must be replaced in kind.
+The developer shall submit a two-year maintenance bond covering the continued health and survival of all plantings.
+
+i.
+
+To enhance survival of the mitigation plantings, the following practices are required:
+
+i.
+
+Mulching. Mulch new plantings a minimum of three inches in depth and 18 inches in diameter to retain moisture and discourage weed growth.
+
+ii.
+
+Irrigation. Water new plantings one inch per week between June 15th to October 15th, for the three years following planting.
+
+iii.
+
+Weed Control. Remove, or control, non-native or noxious vegetation throughout maintenance period.
+
+j.
+
+To enhance survival of tree replacement and vegetation plantings, the following practices are recommended:
+
+i.
+
+Planting Season. Plant bare root trees between December 1st and February 28th, and potted plants between October 15th and April 30th.
+
+ii.
+
+Wildlife Protection. Use plant sleeves or fencing to protect trees and shrubs against wildlife browsing and resulting damage to plants.
+
+5.
+
+Standards for Partitions, Subdivisions and PUDs.
+The purpose of this section is to allow for partitions in a manner that limits the total amount of allowable development within HCAs on the partitioned parcels; and to require that new subdivision/PUD plats delineate and show the Moderate and High HCAs as a separate unbuildable tract.
+These standards apply in addition to the other land division requirements of the Happy Valley Land Development Code.
+
+a.
+
+Standards for Partitions Containing HCAs.
+
+i.
+
+When partitioning a property into parcels, an applicant shall verify the boundaries of the HCA on the property according to Section 16.34.060.
+
+ii.
+
+When partitioning a property into parcels there shall be no more than a 30 percentage point difference in the percentage of HCA on the parcels; for example, a partition that produces two parcels, one that is 55% HCA and the other that is 35% HCA is permissible; whereas a partition that produces two parcels, one that is 75% HCA and the other that is 30% HCA is not permissible.
+However, an applicant may partition a property such that at least 90% of the original property's High HCA and 80% of its Moderate HCA is on a separate unbuildable parcel, protected by a conservation easement.
+
+iii.
+
+Subsequent development on any parcels containing HCAs shall comply with the development standards of either Section 16.34.070 or Section 16.34.075.
+
+b.
+
+Standards for Subdivisions/PUDs Containing HCAs.
+
+i.
+
+Applicants who are subdividing, but not constructing, structures must verify the location of the HCA boundary according to Section 16.34.060 and comply with this subsection.
+Applicants who are subdividing, but not constructing, structures may:
+
+(A)
+
+Complete the mitigation requirements of Section 16.34.070(C)(4) (and, if appropriate, Sections 16.34.075(B) and 16.34.075(C)) and thereby exempt all subsequent development on lots containing HCA from further review; or
+
+(B)
+
+Not complete the mitigation requirements of Sections 16.34.070(C)(4); 16.34.075(B); or 16.34.075(C) thus requiring that any subsequent development within an HCA be subject to this chapter.
+
+ii.
+
+Applicants who are subdividing and developing properties must comply with Sections 16.34.060 and 16.34.070 or 16.34.075.
+
+iii.
+
+When a property containing any HCA is subdivided, this Code requires that new subdivision/PUD plats delineate and show the Moderate and High HCA as a separate unbuildable tract according to the following process:
+
+(A)
+
+The applicant must place at least 90% of the High HCA and 80% of the Moderate HCA in a separate tract.
+
+(1)
+
+If over 50% of the HCA on a property is of a High designation, the entire calculation is for High (i.e., 90% of the HCA must be placed within a separate tract).
+
+(2)
+
+If over 50% of the HCA on a property is of a Moderate designation, the entire calculation is for Moderate (i.e., 80% of the HCA must be placed within a separate tract).
+
+(B)
+
+If the tract is adjacent to the backyard for residences, the minimum backyard requirement is reduced to 10 feet.
+
+(C)
+
+Prior to preliminary plat approval, the Moderate and/or High HCA shall be shown as a separate tract, which shall not be a part of any lot used for construction of a dwelling unit.
+
+(D)
+
+Prior to final plat approval, ownership of the HCA tract shall be identified to distinguish it from lots intended for sale.
+The tract may be identified as any one of the following:
+
+(1)
+
+Private natural area held by the owner or homeowners association by a restrictive covenant and/or conservation easement; or
+
+(2)
+
+For residential subdivisions/PUDs, private natural area subject to an easement conveying storm and surface water management rights to the City of Happy Valley and/or Clackamas County Service District No. 1, preventing the owner of the tract from activities and uses inconsistent with the purpose of this chapter; or
+
+(3)
+
+Public natural area where the tract has been dedicated to the City of Happy Valley or a private nonprofit with the mission of land conservation.
+
+D.
+
+Special Use Standards. Applications for the uses listed in subsections 5 through 6 of this section shall satisfy the following standards:
+
+1.
+
+Water Quality Resources and HCAs shall be restored and maintained in accordance with an approved mitigation plan.
+
+2.
+
+To the extent practicable, existing vegetation shall be protected and left in place.
+Work areas shall be carefully located and marked to reduce potential damage to Water Quality Resources and HCAs.
+Trees in the Water Quality Resources or HCAs shall not be used as anchors for stabilizing construction equipment.
+
+3.
+
+Where existing vegetation has been removed, or the original land contours disturbed, the site shall be revegetated, and the vegetation shall be established as soon as practicable.
+Nuisance plants, as identified in the Happy Valley Plant List (Appendix A), may be removed at any time.
+Interim erosion control measures such as mulching shall be used to avoid erosion on bare areas.
+Nuisance plants shall be replaced with non-nuisance plants by the next growing season.
+
+4.
+
+Prior to construction, the water quality resource area shall be flagged, fenced or otherwise marked and shall remain undisturbed except as allowed in subsections 5 through 6 of this section.
+Such markings shall be maintained until construction is complete.
+
+5.
+
+Walkways and Bike Paths.
+
+a.
+
+Wherever practicable, a gravel walkway or bike path may not be constructed closer than 10 feet from the boundary of the protected water feature.
+Walkways and bike paths shall be constructed so as to minimize disturbance to existing vegetation.
+Where practicable, a maximum of 10% of the trail may be within 30 feet of the protected water feature;
+
+b.
+
+Wherever practicable, a paved walkway or bike path shall not be constructed closer than 10 feet from the boundary of the protected water feature.
+For any paved walkway or bike path, the width of Water Quality Resources or HCAs must be increased by a distance equal to the width of the path.
+Walkways and bike paths shall be constructed so as to minimize disturbance to existing vegetation.
+Where practicable, a maximum of 10% of the trail may be within 30 feet of the protected water feature; and
+
+c.
+
+A walkway or bike path shall not exceed 10 feet in width.
+
+6.
+
+Municipal Water Utility Facilities Standards. Except as provided within this subsection, in addition to all other requirements of Section 16.34.075(D)(2), municipal potable water, stormwater (drainage) and wastewater utility facilities may be built, expanded, repaired, maintained, reconfigured, rehabilitated, replaced or upsized if not exempted in Section 16.34.030.
+These facilities may include but are not limited to water treatment plants, wastewater treatment plants, raw water intakes, pump stations, transmission mains, conduits or service lines, terminal storage reservoirs, and outfall devices provided that:
+
+a.
+
+Such projects shall not have to comply with the requirements of Section 16.34.075(D)(2)(b); provided that, where practicable, the project does not encroach closer to a water feature than existing operations and development, or for new projects where there are no existing operations or development, that the project does not encroach closer to a water feature than practicable;
+
+b.
+
+Best management practices will be employed that accomplish the following:
+
+i.
+
+Account for watershed assessment information in project design;
+
+ii.
+
+Minimize the trench area and tree removal within Water Quality Resources and HCAs;
+
+iii.
+
+Utilize and maintain erosion controls until other site stabilization measures are established, post-construction;
+
+iv.
+
+Replant immediately after backfilling or as soon as effective;
+
+v.
+
+Preserve wetland soils and retain soil profiles;
+
+vi.
+
+Minimize compactions and the duration of the work within the Water Quality Resources and HCAs;
+
+vii.
+
+Complete in-water construction during appropriate seasons or as approved within requisite Federal or State permits;
+
+viii.
+
+Monitor water quality during the construction phases, if applicable; and
+
+ix.
+
+Implement a full inspection and monitoring program during and after project completion, if applicable.
+
+(Ord. 389 § 1(Exh.
+A), 2009; Ord. 468 § 1, 2014; Ord. 566 § 1, 2022)
+

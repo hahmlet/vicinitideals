@@ -1,0 +1,2682 @@
+[
+ {
+  "field": "front_lot_line_corner",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3510ce6c0be3a17041418048edd6a08fba5c765a39af018de205408976959dfc",
+  "new_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L1034-L1038",
+  "old_fingerprint": "f21b8e3df1b08f55261b8a3f3ffd8f908fcc7afaade09c4c112c0079e241f32b",
+  "old_quote": "or/clackamas/happy-valley/16.12.definitions.txt#L882-L883",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "front_lot_line_through",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "dc5fa2ba09200880b2b69b90f1b631df7d4f81488d0c794bb2622e2d3baf7d32",
+  "new_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L1035-L1038",
+  "old_fingerprint": "2ed741274c91c8a249a9390e501ffeda4178570a11078fc6bbc5c084938d5aaa",
+  "old_quote": "or/clackamas/happy-valley/16.12.definitions.txt#L883",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "4c73dd78ea1b3c8d83ecf8ae3fdcd8949781710164147b75031d8551ed28498b",
+  "new_quote": "or/clackamas/happy-valley/16.12/16.12.030.txt#L627-L631",
+  "old_fingerprint": "9a017f45684286dfbc80e62d01f801f6d651e7841020eb6deebeabd3d87485a9",
+  "old_quote": "or/clackamas/happy-valley/16.12.definitions.txt#L560-L561",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "8d8f0398b7ad4201e765c5f4a36bae3365c3c1acf9ee2199556b8ba8a7d152a8",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L54",
+  "old_fingerprint": "6fde4f7d56494f3308dbdfdf0d00172d8fbf9821c15c0a1ca96eb0341080583d",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L160",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6681a946411742231c4be6698faae04c97979daa2985e38d8a20c2b1afd45cf1",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L166-L167",
+  "old_fingerprint": "c645cdae83bf3ad1fd283a4aa20a14663c6734d2e3eaab0c5232b38522978a0c",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L271",
+  "when_key": "middle_housing_child_lot",
+  "zone": "R40"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "a5db60f3de9a4c8f712eb11619d29351c7420ae962f65f99dfe31b8390a89a25",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L194",
+  "old_fingerprint": "111c1d589713bb1cd79ed351f34a5b5d1b1e26cefa73480cc4fd66590953cf00",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L278,L298",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "79687b6b40348495665752e2ba38203f4f817c790e6a738f51181881c723e95f",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177",
+  "old_fingerprint": "28dba219ed75621533475cac5fa00e41dae6cf562894d5af951e033e35b82f36",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L278,L281",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f8d3e7623003522b71c9bc56e09fcf98b5ca98e9534834425deebe3d6fff81b2",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177",
+  "old_fingerprint": "8da7d82981e947f5d4c357a4d76e634f5841a4fd33697c7a695f381d67a7f3bc",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L278,L281",
+  "when_key": "unit_lots",
+  "zone": "R40"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "20288ddbac41c158a46214d47a749e7ff3081b2ab2e315154de1fcf62d9869dd",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L186",
+  "old_fingerprint": "6a913ffd8c8cac2eaa8365e04a0e50534ea9a41b5fcab5e96fa4b3162050a874",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L290",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "e42f0b1d05458f13de5e5404737b296b1846e13bd17e88138825d4529254d9b9",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L188",
+  "old_fingerprint": "8cb29e073beee9afb95e346650c9dca1b8def77c0984b5e0563783d0ecb3b07e",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L292",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "14585d9a2e7ea40c117213b16d60395da68b6255e1e7681d0efd7611d5678dea",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L188,L202",
+  "old_fingerprint": "ff254979c53d498f2f9eb7c2f2627815309366f8ce49c622ed3a120d3b0ea721",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L292,L305",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "R40"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7d6212e09d3fda21aecb1b960747affcebb18a038f8610693c6c23e8c31b61c6",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L187",
+  "old_fingerprint": "3e0bdb2a3139cece90bd7921d304d64104eaed56de428f14c746c5d21dc40fcb",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L291",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "dd4e8e1e9a345625ab8e7db878e8a9ef08caf2f731634a255448ff94c5808aa8",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L189",
+  "old_fingerprint": "47b687fa2d14666bb888a6232604b30e7e07e66ae39bc1f5ce46b16accc440fc",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L293",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "119cceb37d51e7e9cef2265595771da1aff1ef5c1bb127dbe0189d8ac42bcfd9",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L175",
+  "old_fingerprint": "25875a2850747cd6993c1a91b9102423ff7b7c976c0fad3bd01a40e425cddbc7",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L279",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7c0bff2b44f7548a7a766d3415c89c8c8e2fccdbdba1c4d74ac6cdc1e594570e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L176",
+  "old_fingerprint": "df3e219a840269eff8aa38ae2d676c90b8bc1a9e7e1b721b2b67e2dfe0a8f6d2",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L280",
+  "when_key": "unit_lots",
+  "zone": "R40"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "eda5fcfcb151d67b7e71d13f56871430a956ecda7ea605e61906c06a0ae69504",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L178",
+  "old_fingerprint": "49da7b30c86c83adec36f8ae736989e9675c616b4279109c61e6a1669d3cd743",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L282",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "16236441f105394f8008496faed73e4de39ea8918f37e4107ff29d72cfa425cd",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L178,L200",
+  "old_fingerprint": "fea22b57349c923df9eaca636c1c9a67441827a6e9b380e993c800d76b9e1b4e",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L282,L303",
+  "when_key": "unit_lots",
+  "zone": "R40"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "989fd608548e0bdffc4ba9d00be08d46bd62e7c98a73287ed9f698ea05ca97e5",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L179",
+  "old_fingerprint": "057c44fa8f7faec3332ab97b721a662487af81e6169ee911484a8e46824e1e4b",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L283",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d5cb60fd4bafc23d3afe4b4e6dd1b4b7e2b2cc09e627e932a6f221b990097e46",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L180,L182",
+  "old_fingerprint": "1ddef4a204c468e32604985f75e6bd377a1de74d6a9decdfa0ff1f5d3c7cf29d",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L284,L286",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "374a19f49396f47c67657e0dc0ec3164e502146a48b900f6ef7cdc651c77b17a",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L181",
+  "old_fingerprint": "f7e2b8f9fe7e5df882184ef83c081ea8814c15186473b81f27d9aef74f48b648",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L285",
+  "when_key": "fronts_cul_de_sac",
+  "zone": "R40"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3d71898c19460f21f7726fafa0d88bb6349aa604510c3509118ebe45e1aa2bfe",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L183",
+  "old_fingerprint": "4b3e2d3524b5e8bbc3f67d5b9fa944df3641fd8f2553e93669f40aa3002bc02a",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L287",
+  "when_key": "unit_lots",
+  "zone": "R40"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "0119487c3fe84111ea8f90aadd942a7ecf5b44b33dc0f3a7e69623e9173d09a2",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L183",
+  "old_fingerprint": "9e02d541dd186358d28b9e95793e4786310f73ebef68a54e40e8aa56def33f65",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L287",
+  "when_key": "fronts_cul_de_sac+unit_lots",
+  "zone": "R40"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "03ecb57d19077057897e601cba4ba0d0db2c9a8183e651f401f94cf4db0cab14",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L184",
+  "old_fingerprint": "5f7b927cd9a4b4c7c8cb56bd243ffbfe3ea32f7d5ddcb29a4b502042c01ba9d5",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L288",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "334ae9fa2cc7e8883f3c184694345903f79c97b6796f95d6f0221bb6aacd8974",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L54",
+  "old_fingerprint": "79b33a2d414ef6b6a46d9beaf9e75904d28a9ce1e0a889dd8f00a339c193aa1d",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L160",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "cffb8064a116ce2ade7ebc975455f3326e6ab63663482ba0f0f5f52e7540de35",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L166-L167",
+  "old_fingerprint": "e3dba8eaddce6d93bda10690eca5839930fe4c112cd6235a16da46e1dedaa099",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L271",
+  "when_key": "middle_housing_child_lot",
+  "zone": "R20"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "fc92dc22e3528975cffcf3719223af679acfaec27865e9cc85da19b14d4f332d",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L194",
+  "old_fingerprint": "65ab15cc9d92a9578c497cc966f511129317306de866c9d587e12e7b442497df",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L278,L298",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "faa42bf4d11227a8447ee0c25fa35a04a87306803df9a20f3fd4be3f33cc4452",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177",
+  "old_fingerprint": "042bcc0dc428ceb846c96bb8af42604af58cce0df93d280a8417689300b5c61a",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L278,L281",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "4a8de44ecd21f73eed0031534a642c4df411b414a4d1ff5eb7625ad60093d344",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177",
+  "old_fingerprint": "340bdde1c1451c7f10dc19d8e5d8e1a24cf88bda99c1aeb82d26f2f962979a15",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L278,L281",
+  "when_key": "unit_lots",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "061632174d367e3d8e58ce0ebfb0421b0995e62853ae4f7319e3c986df18ba66",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L186",
+  "old_fingerprint": "9c44723ce5d1edbd8e83ea70694cda27dfe6a7ddc503761bed45a0a550fa69e5",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L290",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "74781834fc612a7932fc097394927d94a64fc0fea268c69d59196810fff3af06",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L188",
+  "old_fingerprint": "c61da2d35f9b990ae313e5fcc39467e374b0bcc8a236d74da2e3378b37654b9c",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L292",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6191136b629cbef17ed67766c755b5afafb085651da57a2e8d474455b81a8bc3",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L188,L202",
+  "old_fingerprint": "34f35a16a6df6629e22843718d39a0c902a9e5c92443517b75d0fc8b01228752",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L292,L305",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "938b48b11726b63e9aab65928fed25e2f644970a130c4786859b0a1822d42485",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L187",
+  "old_fingerprint": "f035df4f4ae61d565b3f92c136cf363471fb52cfe6c918430931af61c14aa033",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L291",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6342efa142b0d3409d6a7de43145c79593771523100f1154abdadadd6b6ecbf2",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L189",
+  "old_fingerprint": "ae67864de80d0da16a641ca2f95dbcea79e9ce97c074423fa2d27b368ea6ab5e",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L293",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "b0ce3ef546c58c78cebc20ab05bd44123fbf7baeeaf2a73a1adfacf8f34d0932",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L175",
+  "old_fingerprint": "183f2f02deb127ea40d51e212df030bd07f8473f6b08e5733786979d6483d040",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L279",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "e55f668f105306a1815f1da63d3e7b83a92ff8395e36825823b708a90705be83",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L176",
+  "old_fingerprint": "4bc10a735894d8ffc0f616327e28a7831d12578eff9d552ec3a43fb516368fe3",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L280",
+  "when_key": "unit_lots",
+  "zone": "R20"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5358c669f526d7561a398590e18dec7cb80a734fba245c4b1bf472435586a57e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L178",
+  "old_fingerprint": "ffbf6548cad71363231eeecdd7ac9340b5fd8abecb4883f04d1f31db2707acf7",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L282",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "511b17776effc05069b8d5675fc34d4614380ca0e6ff092aa251f1a4e32f9e3e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L178,L200",
+  "old_fingerprint": "8f48dfd4c23a5bb0e9a9a7d612cecd9d8aa61375dd9346b4002614cb83636a76",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L282,L303",
+  "when_key": "unit_lots",
+  "zone": "R20"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d1af35795c6c62d40231ee1c739fe07a5ac9680fecdb58ef1f0b3b14ac4ee9a9",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L179",
+  "old_fingerprint": "d235fd432b9c5755df97ca90e4dfdb29bbe60aceadd1ec3832a079ed9bcca163",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L283",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f0ed6614c52d03aeb32f4d69fc2e33e9fd8b471ca5a42e621921b834c65029c1",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L180,L182",
+  "old_fingerprint": "67215dc406ff19ec11a96693c196051bb28b918f9a4f009deb299f153a8dbba3",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L284,L286",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "06cd268ea61debd94e6a95af6e34da33cb3e884357ac098d03941aec569aacd8",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L181",
+  "old_fingerprint": "5276c49d459b74c2b427cf5ca1a3b6e21fbebf945e021c5dd4ccf02d1643d3a7",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L285",
+  "when_key": "fronts_cul_de_sac",
+  "zone": "R20"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f0b3b2b4427e221614bce098007d7917c93ed63d755ee7a604b08ea06f33d949",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L183",
+  "old_fingerprint": "81aec72935f6d23b3bd0249ea1d9a7e4c95c60070020ca1b64a8fabddfa9c629",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L287",
+  "when_key": "unit_lots",
+  "zone": "R20"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9df77aaf6af973c831d6f7a50814d7ab898c9718527d6ca7bc07e52acfa56bc6",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L183",
+  "old_fingerprint": "464c6348dfe7f710f3e473bc909fac3a14126269848abd4c12b7712c3b87e68c",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L287",
+  "when_key": "fronts_cul_de_sac+unit_lots",
+  "zone": "R20"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6150a7508afcde182e0ea8483868d44d05ef82348b9c89c5b2b73c92b5d31bb4",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L184",
+  "old_fingerprint": "754586deb78c1e78554725634904b055f975c419d6a98993f6252f1e1af04c7c",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L288",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3e2122df4532953d59c84b65a09be1891f18b4a5dcaf4e5362b67af01a04bfbb",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L54",
+  "old_fingerprint": "556352ecd60ee58265a5bccc47648ca0ec6655a965436ca6e975598a014af7f1",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L160",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "c1c5e2b1e2f57b21d374afa81a0e291feb4084dd8b6e53e31c2f95a2a40ace05",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L166-L167",
+  "old_fingerprint": "bd725c5a2e5378cc9cbd6b5edfbf955506654a73a8fe55aaa5d646f449601cac",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L271",
+  "when_key": "middle_housing_child_lot",
+  "zone": "R15"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "846b7d1b972a871196a53d581d832e0306e291ac2564a89945946953d327af49",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L194",
+  "old_fingerprint": "6e1b72c0f9ce76000f38c0092b1fcbb1b12b695decb1f82e656ca665b8ec41dc",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L278,L298",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f17a58050b0ec7f92f96a281eaae9874b1037dd008686bcb5ef5e3a6ccbb3a3d",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177",
+  "old_fingerprint": "23a3675d816d947bee1a13812a1633e4d8273b8bc50136f3f18864622ccfb5d2",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L278,L281",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "de0701b781989ca6ea8218d14e6f161a1b758ac900a5aaebb53d382ed19846d3",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177",
+  "old_fingerprint": "9cadc09561192fe5006bb1d34e8fbf1eb731c5507986a3ce17734b0e9011bf8d",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L278,L281",
+  "when_key": "unit_lots",
+  "zone": "R15"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5cab0883e808abf4a769551123db1a51ba21fa6c36b3140cea256f9840c9f905",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L186",
+  "old_fingerprint": "a706394f52e07b213ac37b76e7f45b2290bb3fe07c20af967a3bcb978c280557",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L290",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "140ee9d2aaf263076ff5f45d605879ba7d04e8377a7de935cd0487bdfe7886c9",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L188",
+  "old_fingerprint": "e98f9fe020bde5ea569a2561c8f3e0403d35b020161b6d26c4e905ed8a2a0d01",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L292",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3bf0821a285fcc56041ee3f69b9e057c8edd54573f0f9ae3d772093c8f019f97",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L188,L202",
+  "old_fingerprint": "128a86ad49d8b4fb90c6980efe12deb9391c8074faccfdbbf8eef7a41cb6fab3",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L292,L305",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "R15"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "1da34d296d0263e24735cc1484338e48e0f3bc73000a98ef980aa1e62d6caa68",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L187",
+  "old_fingerprint": "ec0ae5e80e05ddfd59aa3a0f1f69bc8b79d0ca2b845b2dcefab7ba483c37bd58",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L291",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "55ce5d83ece1a848339a6f0017d43e8a50895dfed5a638318b217fb29cc2fb26",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L189",
+  "old_fingerprint": "def53b5d5ac25d5e766bb279ff94d846df80eea8b799491e65d64a1a1f51805e",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L293",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d1d82604f58f471f2708e19aff17cce656f64df8d64234d3d37039666e4f83a3",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L175",
+  "old_fingerprint": "12c1d1c65866f5599189508ae18fa4061f498fad8784e3ebd0b30060a93e5c2d",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L279",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d941bf42aea0879a58d187e07868ce5450f04d243f18e098a5cd4521f32fd384",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L176",
+  "old_fingerprint": "7446c895eef7e6cfc9a1aa3f300bfa2f74583a0d4f273af090aa6962791d2669",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L280",
+  "when_key": "unit_lots",
+  "zone": "R15"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f2c13f609427a8876e158d1049a3662fda17d0ccb6c0a01ec07fbd30c62e4ed4",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L178",
+  "old_fingerprint": "4a0acdfe34d3471a07311ba328709a9914d17a69990ea5b5772734600cf5255d",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L282",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "21e2f12f083662d9483ae40ca204d06eebb6b09d1c44a7c446d702a2b1da4c44",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L178,L200",
+  "old_fingerprint": "94ec100cbbcaa5f36b1d3e0632561dec3ac41dad8285f2b22f1e910cdef014b9",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L282,L303",
+  "when_key": "unit_lots",
+  "zone": "R15"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9941e4378b18bc1e3f67890fd9e98c469daed3383898e78dddc4be5d09e3aaac",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L179",
+  "old_fingerprint": "0388a64867a8a1131485b3b00a892aece913b877df26c6707d7f9edc07b10517",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L283",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3e3541eb610bc7bb219ebbb73a5c5f3cdf550c9dfca0a740cc720470a47e336b",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L180,L182",
+  "old_fingerprint": "9c3077ed857b8db2a670bdabd8d1d83cef3ce8190b7440b2cda11f8110c20071",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L284,L286",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d146cf85831e2c41007a38f28f1bf0f6b908e11baaf9dee7f0845a38b4566ca6",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L181",
+  "old_fingerprint": "34bef54b9b0e52097b68a5dd175c2797834da67eef9388b16bc1034ca251832c",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L285",
+  "when_key": "fronts_cul_de_sac",
+  "zone": "R15"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "e018a577b5a0b98635fb4418b474c9180462aac68e1f01c7d94ec6100dd92fee",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L183",
+  "old_fingerprint": "d158fdd6d38ee67c6276ddcee1d9852f6f73f67011cbe4217f845d7f2e971355",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L287",
+  "when_key": "unit_lots",
+  "zone": "R15"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "c24979644394846b21036f0686923296574ecff207a9a310a53b936b9d85e878",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L183",
+  "old_fingerprint": "de283af40c31cf4dbc9b0843367cab4f6d9d12a93cce20e54d28ecf3dd5e9278",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L287",
+  "when_key": "fronts_cul_de_sac+unit_lots",
+  "zone": "R15"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5508572f07011a036536991ef3f5ee93df93542c764884cb14052ba8ecf1aa9c",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.020.txt#L184",
+  "old_fingerprint": "c77829bcfdc2fd1b5992f5d7d687ae4a9d21084a22787c3de7d6adc471c7beff",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L288",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f54eb79e383cecdb51c8bf7e0227ad25f7c5da167256128f370cdc6b6f06252f",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L51",
+  "old_fingerprint": "4a7b859a7f62a10ccd5f8cfe512b1fae079b0055f6db70f064f75c9881118d39",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L353",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "1f86fd66380ad36854cf04680130c544d3271f97b5942c44e9dee0ecac70d206",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L160-L161",
+  "old_fingerprint": "fa2538d778621d60009385f8c2667748c2f675c0da8a17b6f02835164065f1e9",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L460",
+  "when_key": "middle_housing_child_lot",
+  "zone": "R10"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "081d7983a7d43469385a64df275a9e191b3f9566f276cba41a6f1843a6c67a4f",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L189",
+  "old_fingerprint": "f08edb706b96103c21e1b143b438342b8623f6010294f8ce66fd7e8ae83b8d83",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L468,L488",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "8c1a11440fd45aad4da6409cb080d8032b566122985a68caf00ab09865311e98",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172",
+  "old_fingerprint": "015c595cddc47b047946f65b656e34679989d938cb9357e897c2d114a6fabee4",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L468,L471",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d7d34fa2c4e2bda5af343134c5fd388afa28855073f3e4a681b183238047824f",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172",
+  "old_fingerprint": "b7bf141ffe3639f3cb1413f351028e22c6008fe8b0b7b346704318271c232558",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L468,L471",
+  "when_key": "unit_lots",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "49f21b47c51db39d4b019f8b9e39836f37c1e06873953be1cf024dc41974f6ef",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L182",
+  "old_fingerprint": "1b58e002f8bee801877e0f7b052a49b2708af73594f4fed3dd80de43d0c58ee2",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L481",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9db9cec43d01fc80406a659e24eed074adfbde8eeab85998ff256e1fb83705f7",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L184",
+  "old_fingerprint": "6e3cecc245eaeb2f34b5eadc976663476abe0de8f9772d3457fae5fd03919df0",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L483",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "19755000bda2cd42a9cde02187bf1b046fa7b648500d12bd912db146196c8ef4",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L184,L197",
+  "old_fingerprint": "d3c844de7e7b2a476c0b7447936f030446b67e0f76507343425b339f5c94424f",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L483,L495",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f10d94ab805b64269a5dda2a004639d25a63a5ca18a1c70e928597c8af97b5d7",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L183",
+  "old_fingerprint": "57d485ebe51d2469f5d551e71fc6e0e40ca5bf2d03bf81613365e45702cbbcfe",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L482",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9cad498d6ec1ddaa2df180cb877c7dcd38826e1e6c01b8f5cd8a3f43233ac7af",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L186",
+  "old_fingerprint": "6612577d7e8e09053419692cdd5e6153f075fdc9afd1e61178412c20ae16062b",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L485",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "325405380bdcf490f9befce4d1b2878d981d5c252cb838eb75c72fbc7270dc53",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L170",
+  "old_fingerprint": "bd5c0076813d352af14ee1e460dfe2c2ddd3b1d754ea0ed38eff398978597438",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L469",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "b07f7bd4de1e2e19f84e099e54929a554246d7e32cb47e4b85e9ee6033a515ab",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L171",
+  "old_fingerprint": "a2cf98e81240b21c9ac9ed3d5c8670021391e2211267cd7906102e9ae30018cd",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L470",
+  "when_key": "unit_lots",
+  "zone": "R10"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "bc6878a38324351fd2bad834119b9c49b6af72c2bf7d348793ebfab1ba52b9fe",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L173",
+  "old_fingerprint": "851eeeca48dbbbe192cbd3739110bbd4ea79e6e14ab1bc971c115cfb9825118e",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L472",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7f6585eb6c2902b1a5a05066eba63397b6cb7d91492be0508b8c0218c52feaec",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L173,L195",
+  "old_fingerprint": "895c68f757b332287138ff1dc911c48575185f4f0f6805b369945b6d43993db5",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L472,L493",
+  "when_key": "unit_lots",
+  "zone": "R10"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "c01781701325ef2126f607cda543c09234e8e99d19ca5257570a3dcdc0270e81",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L180",
+  "old_fingerprint": "c30f0fe0c0d88ae40265f955aa6c364d5a30db43e6f759d585d4d22a780aace2",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L479",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "4940cefe38d4b3cf8daf230f2b0c036a431d01733b789e7597124b56207b16c7",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L174",
+  "old_fingerprint": "45c2db0755bf44cfee16011363c306b7fd4989b3e3ee0b323cb6b00c4b6e89aa",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L473",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "c6f019abd85cb08b18be09001bc34a5027e579e9ded0cfe0fdcde676a3265d39",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L175,L177",
+  "old_fingerprint": "c6f4bb67ba87dc8b44fa70427c981742cc4740f1ea11c08ac9bde2d69251103a",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L474,L476",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "02639fa721f562e723e8e0420f8e6ff42ca31693c1e1e34cdc731c899f543608",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L176",
+  "old_fingerprint": "1050c0b5ee37f4e151a5a531a121ad3a41f9f119e987ded3474758c0168cbaaa",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L475",
+  "when_key": "fronts_cul_de_sac",
+  "zone": "R10"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7cff5c4ff25267d4dbebb905bc54d6afe943384fcaf85c3c34097b8e32b714ed",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L178",
+  "old_fingerprint": "6b2149950c65e2fe42e065df6798068f42f8732029f9246a0dda800987e5b0d2",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L477",
+  "when_key": "unit_lots",
+  "zone": "R10"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "838f3a41f99d82982ff37e6aa823534f891a057c72621d951585732387940dbd",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L178",
+  "old_fingerprint": "76847f0094f80f4594b217c03b146f358064a352b0af6982c401a331f78e67cb",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L477",
+  "when_key": "fronts_cul_de_sac+unit_lots",
+  "zone": "R10"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "a54e2e22504150f3b22705e82cf0a2e28042511a84cb825acbaa3981ee68800b",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L51",
+  "old_fingerprint": "fae8c9b3e4430be911183a02309d9027512945c74e1816ea23ca8f7226cc7304",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L353",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "ceb534cbf622920ba5dda16a4eeb60310e412b07bb16022f4acab7a599a78c51",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L160-L161",
+  "old_fingerprint": "b1339b44c6802cd4869217085b59a09986518f86de09da88970aeabac418ae07",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L460",
+  "when_key": "middle_housing_child_lot",
+  "zone": "R8.5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "fda5105f339fa1aad00a90750e91c9617d7b11858077fe8142a75990f028c1a0",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L189",
+  "old_fingerprint": "31887bd51661fa34b8d913cfd12c8069d3e38d0f7dcf70f61af5f863635cdbf6",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L468,L488",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "99d1238c3a69cc1902a56f2d5487565b9731e25748f8c59c8d83571543c40866",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172",
+  "old_fingerprint": "a3290dd1b4117d4b671be1c2a8ef53dc29f72f2a0480c033a0c6d854afda4eaa",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L468,L471",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "27f030ebfd94dcd95135a69768868d39df3d412dd2e465e9cd040d234595da44",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172",
+  "old_fingerprint": "19ff5f4cee761a319d01e24d7fd232fe11df0cb16e0731dacba015ef0b50a440",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L468,L471",
+  "when_key": "unit_lots",
+  "zone": "R8.5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "423ced95181717116b5850f4c13673f00d97d81ddec657f9926853212f7c1723",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L182",
+  "old_fingerprint": "8e68a6081923b39def7b27e108a507ab55fa4ec3a3fbca29888f654268cce185",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L481",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9990126b6c5975694c97379da658909331ec06ecfe1e2795d60dbe91d4ecf034",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L184",
+  "old_fingerprint": "f96fbfc36b1373ebea3d75ac46ee2bfde4f93dec73500fc3bd797ab2e90f6340",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L483",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7d3673dd9095a7e301cd92f182e7d31d02e27f8cdb17743cf075efdcad81c090",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L184,L197",
+  "old_fingerprint": "bb7f4635f45443a5c6f6dc8dc5e4aeffd5eee59a1776385b858925d3813a63ff",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L483,L495",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "R8.5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "a41f0d2878416e99b3db084e7f46860edbb9e23720d81726e3d99d7beac98506",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L183",
+  "old_fingerprint": "e38a89f31309c8f209040c4397e37c29fa36d47c4d31901a455ece5cfd6848c2",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L482",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "b9ccc8c845fbc6712430f080758ab6164f4275e46c50a76caf7f972f5d5ee0a4",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L186",
+  "old_fingerprint": "4432a0933a89cbef6fe269b9d4af1b17927748ea40165aea7c827047e7470488",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L485",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "a5edf3116499d20aa8108e09d142f10c36ddf75510780cc70edb2c822e89bc13",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L170",
+  "old_fingerprint": "2d78594895723340e1bb92d250e8b7ee0eaa8b9d7b16abe7f5e98cad2260e99b",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L469",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d8d133501860b10d701b2020c52954f86178151cfc003ba3481cfabe84faed92",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L171",
+  "old_fingerprint": "d2e413f18c66a051d32cee77c510fa93b6d5ba5074a364cd3c00eea019e4f025",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L470",
+  "when_key": "unit_lots",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5d0d354708edf0c8ef4490a456ab82842045c331579c3db6ce28ce136f34f17e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L173",
+  "old_fingerprint": "651d636ffa7d9103dc797b60a3a63df3585d5d4919566507e0ae453243c41c63",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L472",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "24fc36ba51c0a540ab5596b884f8b3b5089cef2e956e5d56c703f67cf4cae743",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L173,L195",
+  "old_fingerprint": "1d1148d56f41d3800dec03696e468a25afec9d3937c2f8f70472c424a8599c13",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L472,L493",
+  "when_key": "unit_lots",
+  "zone": "R8.5"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3c2126f99b2faf5ea8fc890dc4159071bcf4edc9383e0771d88ee550bbd3c793",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L180",
+  "old_fingerprint": "5fd5e07bc2454cb0b5d628f00e4caa876808862fb87517486289af5a5a00dbc9",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L479",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "352ad6be2fe802e34ad72ec172ee90bd7d8de880977327751839d0a8b5f59cea",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L174",
+  "old_fingerprint": "fc54be86e862c70e5af979646c89fd8f1fe6e5b5f1464cd495a5b8e5eeb4d36c",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L473",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "ccd0a64b9c1e37d04018e111c6978a3b4de111c6257e37e3d8b7d7404e81d93a",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L175,L177",
+  "old_fingerprint": "38f36b16e509f0f97be462473058a7d798849f0fbbc380dac241989c8243fe61",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L474,L476",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d6f7148db0926824225fa11ac0c2b77c598d909a4f2225545e6ae7247bcb2c47",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L176",
+  "old_fingerprint": "e50c5c6091756bd6ced4819ba393b8668f16630b3ec1e2db0939e6089af03402",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L475",
+  "when_key": "fronts_cul_de_sac",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "be741e8fc5f9acd109b1d72a38058fba604377b40e4829aea223f567678fa8ba",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L178",
+  "old_fingerprint": "19cf3481eeb260e4a9a6084ccd94fb12e39d3d1df53db83a69295150361258de",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L477",
+  "when_key": "unit_lots",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5034fae0478d14f359a0ed6b6514cfbd51f66c820adf41a7760345741131cf3b",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L178",
+  "old_fingerprint": "5edc40b31f4186fb77d0af93c647c20de16cded002f82dd5252775be63d9b90b",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L477",
+  "when_key": "fronts_cul_de_sac+unit_lots",
+  "zone": "R8.5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "a625c1ae1653f4efd607718bb0c44476f405f620750ef1ce0decb65f21003b9b",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L51",
+  "old_fingerprint": "026721af6cdfa2ff1f8c0adee9fb3e818c451e865d75592ae270436cac49271d",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L353",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "fb1a40204d8d19dfd8400afcff8c14d709845820096a272eee573da119d5ec9c",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L160-L161",
+  "old_fingerprint": "e4f5d87285181c851a2c35c15b1be8b528a37b9758a17a93e57e073fe1e2e6a9",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L460",
+  "when_key": "middle_housing_child_lot",
+  "zone": "R7"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "31e933f7c936bc9e2057d08cea718c44336732d9dbb5b6f53c2510de68b71263",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L189",
+  "old_fingerprint": "99c28cfeef0531d336a4295200c5a1158e6e439c3442a74eeec19a06c72bb8b7",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L468,L488",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "a985dad6385f0e75a838e86505171389508826dab20eb060d109ad558f325667",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172",
+  "old_fingerprint": "8ed912293dcb888592c801ab50ffc64956a36aaa95879906329f7563cb5c87c5",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L468,L471",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "27ea2898471a96871f458dd911178650aba7a176dc40a5e954ac2c2aecf567ca",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172",
+  "old_fingerprint": "b36ecf155b58b5b9c45bee6b6a071d1f71f62796775626ca2b96188784060d5c",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L468,L471",
+  "when_key": "unit_lots",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "20f3b11449580feece80a2e354f46e067d003c0ac54530cff57efc1826c214ed",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L182",
+  "old_fingerprint": "5663dc9fdb7ef021b058fe3246e75bd8b52dd11c80bf84151e7c834c9fb7808f",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L481",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "0c26551650169e9fa2ed9e54576ad54f2a6e30fb6d938fbce8ddfb477c289029",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L184",
+  "old_fingerprint": "91b41f339325b41f22f2e3215270934cfa78ee32661032aabbe3036e884af353",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L483",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7ab0992756cf7a6321b8e7b5d9398de751e24105aa262c3f07bfabff6452e70a",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L184,L197",
+  "old_fingerprint": "e4787fef364d22979d0ad5856f4487d7f4ce32ad545dd96a79a870764691cb9e",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L483,L495",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5c1a460b503a03cd7803ef6cb6a6e199b8f11bee2f6f87daa2797096da0df6d6",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L183",
+  "old_fingerprint": "9ea95d53d093d11880aa45106f48122b9a71b15b2963be4682111a96ae23ba51",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L482",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "e4177c1be1b3eaa963e2d8b9ce61f356e57ad1f7e49a5bf45b296fb612ab0c2a",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L186",
+  "old_fingerprint": "66053e5f48a3b04005d7b3f6a974163d91cbbcfa457e89e92604524a90cecedd",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L485",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "56b6c0406565cff5f9ad0a9520b350d3e76ce87c76631e8c961ed798b7da8214",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L170",
+  "old_fingerprint": "a11ed4f6b6a03b86551eb612a352b99b9b46ce85e9504d8295b3f044febefa1b",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L469",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "b0a55958ec64ebc0c66c30b91dec06ff236d2ddc3edb0ce2df630ef3af931c64",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L171",
+  "old_fingerprint": "069ae8d5bb7f9789d596c7e8f699ac5023590f7cb4213dbd094f023a9db0645d",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L470",
+  "when_key": "unit_lots",
+  "zone": "R7"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "31b1d9afb53c1fea8178eca78f4ea38befeeaaa249fc7990097ebdf185feb569",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L173",
+  "old_fingerprint": "2280964fb52785827c0d3b2be4d7509d990423afb17c03cb022f985eecf2ff90",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L472",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "b4c10e8cc981b00ef93dca8313d375a0317a8c42099a7e4320bffb7f157d0dae",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L173,L195",
+  "old_fingerprint": "9454e1257ac1a88d7e90355c46263060aa7b256866e7a3ae665d80af28c973ef",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L472,L493",
+  "when_key": "unit_lots",
+  "zone": "R7"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "1ea5ed358af8eb9443187180d10c8550b6de7b5ae5c59ce915c8753839a0a0ff",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L180",
+  "old_fingerprint": "feff372cb14831e7cda4dd160e87a60f9a6e2cf307c97daa0052f4c9b3ff39b2",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L479",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3b8cf8a92059aa3b9c84b981211aba7efaca8d6b08ebc06413b6367e5e186f3b",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L174",
+  "old_fingerprint": "ad78231e56bdb91be8368e0c55df9b59dbfaa9f6ffa1a955d9abc982b8f375c8",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L473",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "49e5c03540b4a9ebedc87cf534a45fea92a275d6362e3eb908f2b90b4b4bdd96",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L175,L177",
+  "old_fingerprint": "b4bdfbbe538cf77f56f19f3af87ad25cf85f569b9b503bbdd7154735c088adb7",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L474,L476",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6a6187919cc09013a18a17bb1ff271b50f83e470229b2090ac7c85bb836fc761",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L176",
+  "old_fingerprint": "0bf07941d2e30bf3c5e3f5ee6ee162fe53de8ef2f99e3f49b9153fa60ceea26a",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L475",
+  "when_key": "fronts_cul_de_sac",
+  "zone": "R7"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "ab3ac30450f97d0c7e9aafb3b377cf8cb01ef11eb5356314200bd5d4cc037bac",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L178",
+  "old_fingerprint": "fd9008c282cc8b29685a325334386653e0b409bd8d6d849207b687c840d0fb21",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L477",
+  "when_key": "unit_lots",
+  "zone": "R7"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "4832dd246d2aa4c9684e64cbf8d6478d3b246cc1126980d1b424ceca3952cc12",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.030.txt#L178",
+  "old_fingerprint": "abda9ff634f602d9bf249c83e95eb15c293b90692c8be9ef4ddff07938e45e8b",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L477",
+  "when_key": "fronts_cul_de_sac+unit_lots",
+  "zone": "R7"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "334b66ee1930161d3a99c201d2300e6d43df8a055d1ca53c8af946492395485e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L151",
+  "old_fingerprint": "5105f9445cf58eb3e17791f7bdf46ae53d5e32d45c8c241cb18796c63cb639e3",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L642,L647",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f77ce5d1063495b7f6f937507b971a73295d00184ea98fccddefa4d242942165",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L174",
+  "old_fingerprint": "ad88f672fc392cf4ef7bc5d8f3f40bb620566ee9fa57734850033b54bc035d7e",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L642,L670",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "533765010526b5f20caaf4af21e56476f2542ff6612dc88b75120f8706b127ee",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L150-L151",
+  "old_fingerprint": "e10fc1751313799ee277fe3323cc5d0bf4ac541434cb4ee873d83ca9dcf7f079",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "1ddf8abe91bfaa0af3a62f459e18a6c02452591700480042a3d85fee8536e707",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L150",
+  "old_fingerprint": "4a6ce1c5397cade51a487dbfbfea584f628a8c47819ee5c8ccd6804c922d4895",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L642,L646",
+  "when_key": "unit_lots",
+  "zone": "R5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "53e4a721f6cfb32d91b0aaa34baa6b55bc0c78326eaa13e5cfa13eae6d8f7e04",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L37",
+  "old_fingerprint": "8c2b78315088adc2f1b7bef105824ffe47211074642a75423d8a0a51b4f55dba",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L535",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "0d8b1e3bec5fe451c3e7d32e19cd62e8581817f2763628442553a6340633edcd",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L136-L137",
+  "old_fingerprint": "3dd7c2809d7b48ee135bedf96ba50653f042d5b077a2c6d0d6c130c9a8618165",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L633",
+  "when_key": "middle_housing_child_lot",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7fd53a82693c24133c4b03aeefab753ff5d1a04b50d32ddb840954f1ec3f960e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L162",
+  "old_fingerprint": "48b2ff9720c8f06dc622eef926579aa9572eee92d160c8171df1f68d2f476e23",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L658",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "dcee47758be81598ba915ee516f55068a92e786b02ab6026dba6cf0dfb5f77cc",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L165",
+  "old_fingerprint": "6f3434bef3c0380f528c25de90321cb7b5e474bec317b09469979ba50d3f1f4b",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L661",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "dce313a7805cd11b8cfe55e532bd225bafbd1ffc2b0b1182e9b4a95095f7fb0c",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L165,L182",
+  "old_fingerprint": "4e6faffff797200c74fd5abcef15ea7f610e3843994776733c8490f21b9e6ff1",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L661,L676",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "4e3e73ac1f46eaca929351a7e70a094947e2782573a2dbc0a9027dea4755cef0",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L164",
+  "old_fingerprint": "cd0e5298ac2ef73891ddb016a495335f3be72a4b6fdd808f12a3749fa39615c5",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L660",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "64c4b48184107252ef022075d719f4d3bf214f6b5aa956cb3590ba78dc446067",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L166",
+  "old_fingerprint": "206cb5cd4feef3f38684fd702e123312b5c2cb2593c54cd69376ea8865236c70",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L662",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f8c7a85e6191de24ae391b8c0037c17f6c03072fcad2d750e65418c3951243ab",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L148",
+  "old_fingerprint": "82b4f50be0a1feaef5e05b02815474fadb0edb5cdb167d1b40da9e6c7cdb6309",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L644",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "71448428a948250bfbfce5f22e4e094cd8945e74344baa81cb2e293831d7f6b5",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L149",
+  "old_fingerprint": "47e96287768e6c62e0357a4babe58adbe2acc18647d74fec6e05f714da19183f",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L645",
+  "when_key": "unit_lots",
+  "zone": "R5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "97608aa13ef645635e4352e50e3e16cff34bcdc09cfcc88176a0f5a3f78090bf",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L152",
+  "old_fingerprint": "3ecc6d4e2436621ef88fd717172d793042064f1b594ae9475cb0dd21395b37de",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L648",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "649959c661779b00282fde14f19d939c6212681d33a180718b26f3cc0e2ddc34",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L152,L180-L181",
+  "old_fingerprint": "1252b252187949f18feff753caa306b5520edbe0ca9b6d2f846292cce50a3653",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L648,L675",
+  "when_key": "unit_lots",
+  "zone": "R5"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9fdd989d5ed02670733297a2b9936d5b1ec9b69c623472b77dcf04865835a282",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L160",
+  "old_fingerprint": "2d878c37b2741b888e3d858a3b42d5b680098476a592a13e1ab1768ef4a0cd09",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L656",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "e81afe6cbf8aed8b85c6244713fde7204e07341ace0dd9343d4bda71e8aecab7",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L153",
+  "old_fingerprint": "740781968fbe6fc62237870af6637bf28360bac5857982b4dac9c5fb69f0d08a",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L649",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f895724440b8116bfb6b65cc06c802693775dc20019968fee04fc035769f0d04",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L154,L156",
+  "old_fingerprint": "bf8c8f3c44e7cc4eb9129c9b454e613153dee0fadcbec4f9f528145eabc9cfd1",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L650,L652",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "2993c6f6fec34995d4243446a5d044daae302f57a608fe9cc58ecd4411a7a2d1",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L155",
+  "old_fingerprint": "9ad14f1a00713e0a58b4bf7746d0bd83cb7c0fe3fe7eb81b5246b7720e83ff88",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L651",
+  "when_key": "fronts_cul_de_sac",
+  "zone": "R5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "27910577a718fa62f96733c7b84ae55c0999d7a017484f7ff95af9453057856f",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L157",
+  "old_fingerprint": "2f129d49116ae2fb9fc4e959f979179371c826c42724a3682e80d9f6ffe2f0ad",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L653",
+  "when_key": "unit_lots",
+  "zone": "R5"
+ },
+ {
+  "field": "min_frontage_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "8d497959ee055ecce07fba2e79e345fb8452b9bb72f7b6fdb32bd449ad21891f",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L157",
+  "old_fingerprint": "0000c8a1625c25bba6c50edb6aed932a8894f4a1ec399c2e9f7a0340a8529cb5",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L653",
+  "when_key": "fronts_cul_de_sac+unit_lots",
+  "zone": "R5"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7d9dc6cb4ee0cefdfc88033900a5fac865495aa0b663e795530389b0249003aa",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L151",
+  "old_fingerprint": "d492b29b6816f1972947b73ca17d07d73b65dd34c933fca26a16c593d41d6240",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L642,L647",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "fda57105aeab6ccde58dfce9745590ad2631d070f9a7905f48c1ed04d3d4e839",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L174",
+  "old_fingerprint": "11cc21f77debf0e77709d1021ec58d33d7598c5c75af07a2433f305e9b4ab0b9",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L642,L670",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5b136828534b36338fa7a91c25833d199376d2125e76496e36c9f18320f6b496",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L150-L151",
+  "old_fingerprint": "0be646bcd3b274a8164b82d69ad7aafb938cf686ce4eb1f8723bb61857278f85",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "07c43cea9300ba6984703ecec5dbc9eb2c490e0f0217afa9778788530ea0ac6e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L150",
+  "old_fingerprint": "fa9fce78516ffcf1a304d270fc6cd39122f48aed1bb6c433075f65487ba34958",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L642,L646",
+  "when_key": "unit_lots",
+  "zone": "MURS"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f5a29a66a457684cd7f3ef48c9bbbbf0bce532dd0df644e00ac69943fd4c906c",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L148",
+  "old_fingerprint": "721342f2c84d18046c64992b48e34dfaf67e5a254d15cf1ae7edfc3dcb0a7d94",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L642,L644",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "54c127a89da3fe95ebdd4d2ebea7e8064311b6899e77553515c8b78a72758a6d",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L149",
+  "old_fingerprint": "57f0287a9027ac2509405212c30f06d4458950c2182ad8e0b1af070785d1be2a",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L645",
+  "when_key": "unit_lots",
+  "zone": "MURS"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "468bd5d50115f1917a80a85ba31610acbbabf17c20cc796a9c28a2e1fef77f7d",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L37",
+  "old_fingerprint": "59ef3e1699d006bc211dea995e58ad1efa2dbfde598a55af3e47afdbd9823814",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L535",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "ecb4c959ed2bcb11b1c0795d1ff4f9b178c596ab07eb8f31bc21a7fd6ac82df4",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L136-L137",
+  "old_fingerprint": "9f2b4328c12052abdaec6d44c565e5f8583adc899847d85a94209dfc96c88e29",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L633",
+  "when_key": "middle_housing_child_lot",
+  "zone": "MURS"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "b3110ff129e50284f45ceea2464591b31ca2e3c06f90db39ec37c6e30c805a47",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L162",
+  "old_fingerprint": "f5a085e14fc07763b7661667a1caee891283295307651eff0f4b9135e8f9a490",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L658",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d4d92ea4fcc3a87667b9f3854cc88c0fe93422b3ff29b742d74020a3d43eb02d",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L165",
+  "old_fingerprint": "e7a4d9943f03e5367263be6f41ff2a3205ecdf1a8c6f72cfd49bbc42ebb02d3f",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L661",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9a9de8ce8927f28d583d7b8f6519d6a742e2e34b18a8db8d6cc9c20e9a9bd5fb",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L165,L182",
+  "old_fingerprint": "595be52ea698b8ad8bae64229fb098aba77994a0823a390a88e57988b933a829",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L661,L676",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "MURS"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7aabe64f27b7f5ed59405bc1a2dc3c5e3201d696adbaae20a06d50a91a4de369",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L164",
+  "old_fingerprint": "1356d233ee92d768257b02f2f46fce0f447e2f8a56420a449d3eb91fad195ef6",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L660",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9f054521188b28519739ac65a188e197baa78d291bb51be7fe4637248b83f93e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.040.txt#L166",
+  "old_fingerprint": "94fb32e0841f192fdde114afc074c7ad48cbe18df9108ec23d5e3a2e322b8948",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L662",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "85d2ca2905129e9b55eff9759759d0d8764fb0b124b3dd084f58253fb7bdaf9e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L94-L95",
+  "old_fingerprint": "7114aa7c6b815be1b201e50cda8f3ea725c2c7e99f0f5951f24c69a5d1409fea",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L775,L776",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "b4618a5a00f5b1a8be82f607a88167c923c3803fa202b5deca3e3d94c8a6d22b",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L271-L272",
+  "old_fingerprint": "c3e2413ff3bd38cb250433fb85e361e6454b4c5c3f967415f1a8612f977b4da0",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L950,L951",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "41ea76aa44149d6a11b19312e8e9ed9f393e98aba9b3e9e1f693446717abf661",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L275-L276",
+  "old_fingerprint": "aa236c0e1618fef1a5d57ec4b59f5909b41437139ef10f86c36d45484e57d052",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L954,L955",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6c6abd0392e7b1fa36f9a8843a97809d10b89b63aeaf6895ab2a2193d302f25f",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L279-L280",
+  "old_fingerprint": "6603d9e945127186594b917b14d4e001674882919f2600a7be93edd00d328f9a",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L958,L959",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "8f49be51172ec79d2d5513e7d5dc3818e06595840c0db389b551fdb1e087985e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L283-L284",
+  "old_fingerprint": "7597e757f25ba05b4912da5c1cd817e8efbd112336373854fdeef7862d0aa25c",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L962,L963",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "1a3390a629951cce23e6d0e286ee36f3cb1a57b6a45f5ba7910529fc90e52663",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L288-L289",
+  "old_fingerprint": "bddc3b52c83c6e5c642f7a38c773d27ffa22a4dda6f1b563590767e8ac42eaeb",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L967,L968",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "05828cdd99517d7866b0ff2b76ded8f7f408c75fa8a6f1755ceb49f65733158f",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L292-L293",
+  "old_fingerprint": "a5cf5f2fce2fba3477e9592a497d5c36299c8f97182d7f83bd3095d40573c2d2",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L971,L972",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "0212f29de9c7aeee382d846fe6c8ae5f6afd37d9e4e1e526d26c441d75d727c3",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L296-L297",
+  "old_fingerprint": "c87e402095d4156ce81b82b3ce930142f4d4834cbd5f7cc452b447de5580c500",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L975,L976",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "677d5b6ac70f79c8986a358f7870fd4b6182537758256128a34fa1febaf083fa",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L296-L297,L346",
+  "old_fingerprint": "54588675c1a1527ac2e50addeb27b040fa7d1273a629f155f3b3896e82011d3a",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L975,L976,L1022",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "SFA"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "0b48efd82cc5371fe012f7e3ef37028928c7e0e7c17027d60fbecb7329fcef40",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L300-L301",
+  "old_fingerprint": "35605b52b3e01929ba115e473ed13b9ce243eef52ca47a4ab4826602fec9bd08",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L979,L980",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d61ae41373653578737d627a29682e81a1fde68b21bb0997d535e157ac4bad28",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L306-L308",
+  "old_fingerprint": "1299956818e2fdc010b41356f116d98a8c36f77e6821f990af2f4ac81c4f61aa",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L985,L986,L987",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "97a6b8ee08413fc6b9b0ff1e6de7f552c3f9904f8cb074c6f7880b5bed430c7b",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L315-L316",
+  "old_fingerprint": "89db9186d9fff5fa90efc294a817ae17e406f5fc1257b27f87d14aec9e144f2e",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L994,L995",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7d7c5fbbfab4ce578b1bea29aa85e5b5c06db0c43c0626d65ad96dc72cef2497",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L323-L324",
+  "old_fingerprint": "768b730fd92c61bca1574c89778a1a21a0164dd9c45b57a341406687c4eb5a82",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L1002,L1003",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "a4af35084ca0db772953b6d117de04f09975782bcb8cead0a2730814283e4dad",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L263-L264,L338-L339",
+  "old_fingerprint": "c966cdc7277c4a2ed066b60701f64b47d681edaf4bda26ade1e4214130bba284",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L942,L943,L1016",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7484176face563cf641f8cfac8cd1c14ba02976fed89718bbda11bbdb2f11d32",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L338-L339",
+  "old_fingerprint": "177d994a94c694f5ae35c0bcce65e5fc892129af79c06c7edfb834099798b4f6",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L1016",
+  "when_key": "unit_lots",
+  "zone": "SFA"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6f4227f526df9fbf78cf7b5cd340b3b7ba55e6d9f4b8884bce84ed63ae52499e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L267-L268,L338-L339",
+  "old_fingerprint": "6e9d802f7c13be900cc16640f9997eaf81d05d11997923425cf5676baf225f92",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L946,L947,L1016",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "67a74b17b5d159f25275a01c1258d82a4eada2134f5667d9d24a1dbf172d8a0b",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L94,L96",
+  "old_fingerprint": "7862acbedc1e9ffb90412dc6116941a1251d41a25444d50b34b17fd9dd144246",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L775,L777",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "13c1e38820b0bcc49810b48b46561fc23b7790e40f4332d93fba416fb055a36f",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L271,L273",
+  "old_fingerprint": "5e8108aaa5412bc879d70c41a50191b62c4f48f35cb63f128e7d7620c26df8da",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L950,L952",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5d391662dc63202ab80f689253d9540c561042e740d18499f9c0b5e4a5d061b7",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L352-L357",
+  "old_fingerprint": "ff065782d12283c2494004a944eba47c15091c5a050131321be78c9b43312214",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L1028",
+  "when_key": "unit_lots",
+  "zone": "MURA"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "e99a8bcbe13154f9c9725a5bad8c0198e6b1cf648a89110b29f0a201f438a5e8",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L275,L277",
+  "old_fingerprint": "8349b2209f5f9594ac99a0f737cf0b4205691b199a72073b08ac001a153326fc",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L954,L956",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "21553da3617e4990ac7f94cfa0c5d53ae0778eb5e027f1e3d240b15e5f26c44e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L279,L281",
+  "old_fingerprint": "beb5e0a5f0053f442afa2a1d3cbdaecb205a6daab1f688a6101aab3ac293716a",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L958,L960",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f20d84c0c70776c2cbbd73c1d0d7276915c158aa89d121319105db696f34a768",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L283,L285",
+  "old_fingerprint": "5284dae1b698a8c2e4da1814f5bc3cd3335b1ed7b612ccf3c6f60c1e3fc937b3",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L962,L964",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9d385cdce7b24f1a4fbd9097ad25b2f8a43769e87e34f65a69b777812f0fdd51",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L288,L290",
+  "old_fingerprint": "6bc4bd772443a62d1a7e1a4664d951c54eaed2fc308cc8c0d23fbb1976f401cb",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L967,L969",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "8deff4daa5b895ba24c814c97e7b420316c52635ca94ba64524d02ee142856a1",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L292,L294",
+  "old_fingerprint": "1c914a2e54748537b231bf96c5050345ff699dd048c3509bb1e8d22214155678",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L971,L973",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "dd181b3804c14f2b62bbaa8f0b862c7b25af53ad70b724f9de35954a7633db9e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L296,L298",
+  "old_fingerprint": "c62849557c0866267ce3c6bc23b0b30333e2d0dd6efb87993f8fb4c5e3116fa3",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L975,L977",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "8b0374693a104b4aa4fb5349e31560ecf680cbfac2d62c6eef870369ba416871",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L296,L298,L346",
+  "old_fingerprint": "998b2af074486e2b04560316982ca976388d4f785b9c89096c406424c515e997",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L975,L977,L1022",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "MURA"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "452d9cbc77bf6a481212bd1e0a99b3667c473dd57182c51097dafd0148d9c93f",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L300,L302",
+  "old_fingerprint": "20859dcc4992811f21270e2949eb300a506abbb1dc083fa56cc96a22926de039",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L979,L981",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "688d122074701e5e9e21e1d884387d38c37f4edf0260ebc0e31a1396a11693b3",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L306-L307,L309",
+  "old_fingerprint": "43996e46202409a24f82f364435f0a88be0604e28801f73759cd1d4adb46aaf3",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L985,L986,L988",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "ee1e610ec4e512fa0a5192d89c8df5992763c42b16e5bee7b2c9c3c9ca4f541e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L315,L317",
+  "old_fingerprint": "488c42e3a0168ad78054bb29812030720530542b6c42b063cddc3f633118f8f0",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L994,L996",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "721c1ba91e753b681af329d282ff070293ed904c77024a7ad95e29e6d8568351",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L323,L325",
+  "old_fingerprint": "1387ade3ef39eb9ec3174a344263771be42bd9bb96d11af4ecc2e5e61d06c13f",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L1002,L1004",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d1dbb0545511855a8e8bb5988304bd88c81a74f3639e01c10b828d27a2585449",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L263,L265,L338-L339",
+  "old_fingerprint": "323e284c5298aa857345cb8bb295ddea074db18ea67d2dad4b6c613af463f338",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L942,L944,L1016",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "872436d3063a0eca743b0484ae47f27d7fb728add97e337395458f5dea2969c6",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L338-L339",
+  "old_fingerprint": "1ea494f440e712409b5e557ae66669165d4631a5731e86e2896370045fcfaec7",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L1016",
+  "when_key": "unit_lots",
+  "zone": "MURA"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "03805ed33d74a8b40ab243ffa857ead709b5cbc283e08f22f22949d3ac8ace6e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L267,L269,L338-L339",
+  "old_fingerprint": "22bcbaa8ba73a220418a8f592f5cd583d95164d72684f46de490aed5667b09d7",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L946,L948,L1016",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "43ed25001e7919801845295fc871a41cbbdb57320ecfe13b644b73d127460a72",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L94,L97",
+  "old_fingerprint": "73010b66b180fe37c93551e40871b1418d92a04a07cda919528fd592e2917869",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L775,L778",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_roof_pitch_in_12",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "51ccb7500e465f36363197f5df289839554d1f090689749c4f714c488fb01a60",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L397,L432-L433",
+  "old_fingerprint": "bc54eef12af925feee6855ac77dd790d6df63526589b8bb5aa4d19036c2fdcd1",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L1066,L1098",
+  "when_key": "unit_lots",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6d477d0ad817bda9992eb8e895a376ba7d2e495e7d5310c38135acfdda15939d",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L271,L274",
+  "old_fingerprint": "aaed1107ea51a31cca99950acd5fd07888fb227b526df569e1839fef117406b8",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L950,L953",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "066bbe9918252621e41da9043174e59295a572a0e533ba0cde80cf7b99da5971",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L275,L278",
+  "old_fingerprint": "a1525a4c45f3615b061caf027d17afbfef3de5a1780be592b02bfd23190caa7c",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L954,L957",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "a9c8bb125480d11d734380a399748fc88470544f68190ba206213457d371d711",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L279,L282",
+  "old_fingerprint": "0c34202b69846e790d56bd0b9feede694e7a599d9569577e3ad6d12f62952722",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L958,L961",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "de8fb8dc56f2644bca36c9eeffc531c82a4d7b40066a831939fe71002ac645f1",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L283,L286",
+  "old_fingerprint": "339e9ca41b1a0551718c354b68d265ebf9deb84c46a74a4e291caad2e0de6e26",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L962,L965",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "077f4e8eb7198297426ac46712c89809cdb52de99e485787539342f6f929dc41",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L288,L291",
+  "old_fingerprint": "a9456d4736286fbe74a55a628859ab70b456ded914506b007be82d704d90b0c2",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L967,L970",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "27497c8cb30dbd936f91cd80815e5667cc605bf2e53eac85f9ef99daaf04be5a",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L292,L295",
+  "old_fingerprint": "29a356c7dd0c346014c58a01729150489fb018ed3ba0235b534cd5baf58ee072",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L971,L974",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "ec0cb9f15ad6119e02d4e0724770db426f8a909b0d6fe8a5bb93643b97b58a0a",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L296,L299",
+  "old_fingerprint": "4eedcedd74068d00b4ea64e191a8ec31cac3f120597372b59a096d251442392b",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L975,L978",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "71db5fdeae9f9dcab9f73eaee0048201bd4166cf49d10ac05b8250ad9df60a41",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L296,L299,L346",
+  "old_fingerprint": "ac54cacc73ba3f0f10ad88d5f604ef6675802c410d0ba4475c1d82ea1b125819",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L975,L978,L1022",
+  "when_key": "attached_wall+unit_lots",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "e5d83a0c3bf45fb2f471bab562ec8e9c8eff18ce77a47b18ae4540cf9a116b2a",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L300,L303",
+  "old_fingerprint": "fe09f54ee16e32070b9a5e6897b435fd061d9570fa77b41002469db48b6d2c71",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L979,L982",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_front_max_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5546321896ad0c19aa5c95473376564ba4b7cd19726cda0b198a3a4b1a154841",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L319,L322",
+  "old_fingerprint": "b5513aa67259b86c149e7b154e678fad51cb9cce6038ed4e5b62c952b3a68332",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L998,L1001",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "setback_garage_entrance_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "51cf4db4304f3d5edb328b9122fa3947d3acd5840d6f4c52d16b01535eba40ca",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L306-L307,L310",
+  "old_fingerprint": "7a5a68bac4e2d1c235715484328c6e3a3a0d9218f60728eff934c57e7d5cd106",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L985,L986,L989",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_building_separation_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "a1eeb5be9f26298c4c33b7a4873f6797f3f654a4b9b5161a817d88ab8a242f61",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L315,L318",
+  "old_fingerprint": "4e78650c8ae63ae562db490529de0671fd807e3795c6f5a7370e7208102abd17",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L994,L997",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3e300d0838756ff2393481e51135a180a105e7ac643a57267438bda35c1905b7",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L323,L326",
+  "old_fingerprint": "c1208e7c6d2ed5d72a4e934f78ef90009df24fb6ed3ebef4355fcf25aa0dbecb",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L1002,L1005",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "max_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "22d7084ed0242daeac3adfca6c1d5f107256de894e8f959f6de696d52d6dc049",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L263,L266,L335-L336",
+  "old_fingerprint": "3c36cd27f64cb2d69bcbbb269bb78e37e10a80f8e628b578a901c131a01adbcd",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L942,L945,L1014",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_density_du_per_acre",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6fc1039ad587b841551f42190dea671eaaa14173127eaa67f3a13a19b0be9a45",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.050.txt#L267,L270,L335-L336",
+  "old_fingerprint": "114b141a533964f72a0abfeb9830f53ba678fc956db633edcb53d75712f8b00b",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L946,L949,L1014",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "ec95fd5c53aee81054e964c0e1b7ccd1d71db75e2f10a4c0af6c4166a80c9425",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.060.txt#L24,L28,L31-L32",
+  "old_fingerprint": "fe7bf8b2f9e7ea4f2573e485511abef6a30db88636bf26b152d167f6085428d5",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L1225,L1229,L1232,L1233",
+  "when_key": "",
+  "zone": "MURM"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "c8720c28efb276aee6b9b9543d7d7b8a5588691973e18c76022b630f8fb4b3b6",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.060.txt#L105,L114",
+  "old_fingerprint": "4fbcd576cd90b6094397e0981ac3b9f6477c6c2791e65749c3463313b3676dc9",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L1306,L1315",
+  "when_key": "",
+  "zone": "MURM"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "c32a68c0d768830bfe960c32baf2fa6657cbf78f3284fd3e24b287a2763c4ec2",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.060.txt#L24,L28,L31-L32",
+  "old_fingerprint": "323500674f23f0a8363242099f06778e779573e0f045f25bc7cdaa769ac60193",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L1225,L1229,L1232,L1233",
+  "when_key": "",
+  "zone": "MURX"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "55d14701df780a1e649376fbfeca44377af2a3348d96289079408c0c6fb036ef",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.010.txt#L14,L16,L18-L34",
+  "old_fingerprint": "26a58509f5879d7566b644003009da1b82c0807574a296aa70253ff1f7f7d768",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L27,L29,L31-L45",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "max_height_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5d973f97b56e623f588dc0dfd86c3ef4ad133ade9905ef006a85cc8270467bfb",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L106",
+  "old_fingerprint": "d04275d0beb3a93ab631f2159aefc174c0b21d909a848ff5e639dd9775baa5f5",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L114",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "setback_front_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f5a74f0651dd1c62e53a3c4efb0a4fdc1ecadc2bf0541fbd0131a5b73e58398e",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L101-L102",
+  "old_fingerprint": "465ce182b8bcf8e53f8212c64f8aee83a8737bd1745574fd86f12fec1985d92a",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109-L110",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "setback_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "1c22aa21f2e6ed76786c6a7cdd11ff8c9c08ff3bf022f1756f5b9715bfb88121",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L101,L103",
+  "old_fingerprint": "de21c43020d5e7fa0153a37e31ffd3211b4cbcae23c47deaa856116e94ecd6e3",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109,L111",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "setback_rear_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6719b5756a7a8d5bbe9ea695c29ebd44f33c0596dee972eac22bb640171844fb",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L101,L104",
+  "old_fingerprint": "da59abdaf168c3f405365af04dd0936217db13ba0179fe494afef05364078c2d",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109,L112",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "setback_street_side_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "e3972476f237a18b2285145bee8a5bd14f4dda3ec890a9610e0ac3f1890dd024",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L101,L105",
+  "old_fingerprint": "013c9997cf010362bf4dfb4ba42e546b6272354f79dec0e572db6b2d08a264c5",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109,L113",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "min_lot_sqft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "87d4913e9f89e5378ba11674c625c2dcd7312841703936c6d3654b2943e7cba9",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L97",
+  "old_fingerprint": "3bbc5eec2a2c52022621191eff787ef58061a6e5091e7d8bebf8eddf5e542517",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L105",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "min_lot_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d8f3fe2c0a3a4d3c5455486ea04b73c0223fed9af3eacba1a1a0b02ada2dfc73",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L98",
+  "old_fingerprint": "b3678e565ab493cecc52ad587f2311d1aed706e64a62643aa86ba0b2f18ddfc2",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L106",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "min_lot_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "81e55907acbcfeadcb13a77fe6e52a3bd814b056ee38f70bba17368a2d135b93",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L99",
+  "old_fingerprint": "0fbfc1f09920a0b437bcfd76fd9b1c70cea0e3b7230c5923076eae88e1da6b92",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L107",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "max_coverage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "59c957ebf9b7179d3d656602fa03f73797743eadfec2e93764b3bbf8ce3d54e3",
+  "new_quote": "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L100",
+  "old_fingerprint": "4f15082de773f440d6f88faf8d57622eafd3919d36b0b2c5ee1302bff0faa21b",
+  "old_quote": "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L108",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "de6893657e8de64e8627fc8f27ef9028a0746fb378220db57be02fe89dac7160",
+  "new_quote": "or/clackamas/happy-valley/16.23/16.23.010.txt#L32,L34-L36,L81-L88,L111,L113-L116",
+  "old_fingerprint": "afd3b001178638ac6fe29277e9020bc2785426af9ef538a647ebcc9527f11211",
+  "old_quote": "or/clackamas/happy-valley/16.23.commercial.txt#L35,L37-L39,L84-L91,L113,L115-L116",
+  "when_key": "",
+  "zone": "MUC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "cbb700bf30af24a9db02cae649df043251a9e15a4c3edec08a9d4dc93d079069",
+  "new_quote": "or/clackamas/happy-valley/16.23/16.23.010.txt#L19-L20,L32,L34-L36,L81-L88",
+  "old_fingerprint": "1d9ea393dd5be51325518988270ef5a49f18110819fb7d88a970fd4de8159a95",
+  "old_quote": "or/clackamas/happy-valley/16.23.commercial.txt#L27,L35,L37-L39,L84-L91",
+  "when_key": "",
+  "zone": "MUE"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "64d704dc391351911c8488ffe127e4d14d776af4101418896de57a1f554057e8",
+  "new_quote": "or/clackamas/happy-valley/16.23/16.23.010.txt#L32,L34-L36,L81-L88,L111-L112",
+  "old_fingerprint": "1ef9e3fd42d1be3eec9683e1f816b92886ad14f3420d767500ff399fb02804fc",
+  "old_quote": "or/clackamas/happy-valley/16.23.commercial.txt#L35,L37-L39,L84-L91,L113-L114",
+  "when_key": "",
+  "zone": "RCMU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "01ab56b7d9406f9f44f040e0e4049ced1624daac9e7b83a6ee054140883437a6",
+  "new_quote": "or/clackamas/happy-valley/16.23/16.23.020.txt#L21,L23,L26,L29-L40,L279-L281",
+  "old_fingerprint": "79b9115e83075b65551174e121e47370a4c6292d63e7142b07b11faed3016ac5",
+  "old_quote": "or/clackamas/happy-valley/16.23.commercial.txt#L436,L438,L441,L444-L455,L693-L695",
+  "when_key": "",
+  "zone": "VC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "2eb83e526870cdd3da561b122fd8b03866c75e85dc29bfd09bbdfd67f6d12a1e",
+  "new_quote": "or/clackamas/happy-valley/16.23/16.23.020.txt#L21,L23,L26,L29-L40",
+  "old_fingerprint": "54658ffdda226012e26da297cebba7a9f7093b3698b921918081b3b521cca2cb",
+  "old_quote": "or/clackamas/happy-valley/16.23.commercial.txt#L436,L438,L441,L444-L455",
+  "when_key": "",
+  "zone": "VO"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "c05f4e2add60ef024a2fc26152593bacd87c10d1fe4612d9cff1853d7037260d",
+  "new_quote": "or/clackamas/happy-valley/16.23/16.23.030.txt#L38,L40-L47,L105-L111",
+  "old_fingerprint": "24f5c002a88e19b485c7876a928638acc25aed4cf56203d0654d3657be8f4183",
+  "old_quote": "or/clackamas/happy-valley/16.23.commercial.txt#L785,L787-L794,L851-L854",
+  "when_key": "",
+  "zone": "CCC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6587e5a0a69071edae8fb0c0b050bdc36615dea741fbe81b9b2b6b269202d07e",
+  "new_quote": "or/clackamas/happy-valley/16.23/16.23.030.txt#L38,L40-L47,L105-L107,L112-L113",
+  "old_fingerprint": "7100a97f9a5bada8e719ecf59675c35930c257f0bd249ee976cc3753f3093f9c",
+  "old_quote": "or/clackamas/happy-valley/16.23.commercial.txt#L785,L787-L794,L851-L852,L855",
+  "when_key": "",
+  "zone": "MCC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "8c8f9874a739fb2e2f031dda2bd88db8a6612e7b6b6a1c6f4284c87da77a52fc",
+  "new_quote": "or/clackamas/happy-valley/16.24/16.24.010.txt#L11,L13,L15-L57",
+  "old_fingerprint": "04fdf010d06795199bb5e19ed3dec74c91752fc342214fd81aee0b893abe568b",
+  "old_quote": "or/clackamas/happy-valley/16.24.institutional.txt#L23,L25,L27-L69",
+  "when_key": "",
+  "zone": "IPU"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "ad10c75a53cff8b49e8f25118e6a43fb388f91922d012ed40f212d21483ebff4",
+  "new_quote": "or/clackamas/happy-valley/16.25/16.25.005.txt#L13,L15-L21,L65-L67",
+  "old_fingerprint": "093f13a299b6f6bd5b0665f83ecf4725c4a01603a52e99ace249d6773a4ef377",
+  "old_quote": "or/clackamas/happy-valley/16.25.industrial.txt#L23,L25-L31,L74-L76",
+  "when_key": "",
+  "zone": "RC-ME"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5f2dc3c4602f2a17c918116e8a7615ab88de73220c49c0cf20280c03835ee667",
+  "new_quote": "or/clackamas/happy-valley/16.25/16.25.010.txt#L72,L74,L76-L80,L138-L141",
+  "old_fingerprint": "0949379135903252ab0323dff1a21a9ac1a330657128e7c0eef89a1ba4c4a1dd",
+  "old_quote": "or/clackamas/happy-valley/16.25.industrial.txt#L742,L744,L746-L750,L807-L808",
+  "when_key": "",
+  "zone": "EC"
+ },
+ {
+  "field": "quadplex_allowed",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9b965c718d6d79805d14c83e63393f49cd1d5f884fe16efd63eb05805fcca931",
+  "new_quote": "or/clackamas/happy-valley/16.25/16.25.010.txt#L72,L74,L76-L80",
+  "old_fingerprint": "7d7780b2f8516b0d3117110ab03ebb3fecb49bb0cbc70e2822552c774242ff79",
+  "old_quote": "or/clackamas/happy-valley/16.25.industrial.txt#L742,L744,L746-L750",
+  "when_key": "",
+  "zone": "IC"
+ },
+ {
+  "field": "driveway_min_width_two_way_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "66f187d800854647cacadf634a37085dbc4dc342f582b66c89c63de57adece0f",
+  "new_quote": "or/clackamas/happy-valley/16.41/16.41.030.txt#L1,L32-L38",
+  "old_fingerprint": "44a0921bf4bcdb3fc82968bf3ccb5736ff31268d0820963df5651c59ea072be6",
+  "old_quote": "or/clackamas/happy-valley/16.41.access.txt#L27,L53-L59",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_min_width_one_way_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "e2512bc96ed22501ff69471aa6df20285c1a28ed5aafcf5c7453d78a97d194ed",
+  "new_quote": "or/clackamas/happy-valley/16.41/16.41.030.txt#L1,L32-L38",
+  "old_fingerprint": "f17316c73cf762e43e76dd04573f8a8c9ad0753060001458c66e97356f3d10e3",
+  "old_quote": "or/clackamas/happy-valley/16.41.access.txt#L27,L53-L59",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6a549456e6882584b9a16da764661d7fac925b57c901e18117ad1aa818746119",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "f79cbdc15a6a2b96a83338bbdb64188ab9026854225c3d76d337bd6a1b5956ab",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3e9c18dd261bf78bb6afd9f9365d1bd32875b33866c0f515c4e58327267abe25",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "1d7c94a90a744ee659d85055d8d6437058b96d2b7a38ceca7ca4a6a1df131c38",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6fe69076b500b1c4eb8f78a52c755294ceccd00358e7e99fbb6d3ce240e89b70",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "b3a3b81acf9863c3ca7c3d898eb648f0f98c46dcfae1fb8f523e73e7392b2979",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "cebdd2b179dfd79e0bb15d01d8d7a5357384d03dd4920e313b794475f6218baa",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "1bdc31e7a44fba6193629d8c78b790b95a8483bcc0e74c140a4d194bf809d852",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "858ee7d23ebdf7aaaa117c67362648046fb07b5f24cbc6510b22d2914a7422e1",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "dd823f88429c64f0454eb88ebda41dee0cf82fa827a4b94635d0b5e1d66b4d04",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "05edb8b450f09585f87650d3ffeee05ff0ae0ea6d85466881ad2e79c0d85ead0",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "db97f0c2750979b879d93f4fadd0f80228604ac7416ba04b094a9d799a21b99b",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "ebeb6cfecaf108c2c9f1e9a39615f54a9b579ffeea3b30042f4785ab4b7b7e46",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "1ed2003624fcae372f36293898d15150fdd708397cb620573342f4245d0c4c03",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "ffde75aa3fbb05e7cecdb59879b0b54f78bbbc8fb708b40c7899e0b3ce2e0db9",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "7cf3b5b3e9a375aad2405118aa813569aca5d5c13c40e38a5e1552434bd052b6",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "91137072d31db49f8d9a61935d8ca2ef0c54f9a01b90afb28e5d3cc4af1a95ac",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "b13d57fd57d5925d8504e12613597d6f50a2b9cd83b9cb2c8cfdac84681694ce",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "be3c896f87a6e6b15c8d41baf20d3957da9b1081706ddf90f8ec5e2500c2f056",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "391f8d2a1771ffa2f808e46cec209c8e56e41516fd01feed67affec70c114454",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "212aaa0b9f40ac68518449255702366e60452053dd68e7224fd06d36d49a3582",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "0d99a77aa3a9e385d8274dab259016f25ce6be1f347b67d821996490b0733f2d",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "min_landscaped_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "5ee0b9315749fefad7eeaab1fd97b6ccc587b88463ef90bd9a49baf1d4aeceaa",
+  "new_quote": "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80",
+  "old_fingerprint": "7244d1d3ae423113160c362fbbb9ffe4ef249171ff3bcea5038bd9bb8b626bf2",
+  "old_quote": "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "parking_min_per_unit",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "25d4397dd8f9af788f98c225a65e8720442e8adfa3ec27d872119c3c34d05f76",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L209-L210",
+  "old_fingerprint": "ccb3fe17caaacc5d7d7c2b63a70451d77c758f3ab9b8b0d56bb840f1ed0612b9",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L215-L216",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_max_per_unit",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "f4b608c157acc0070b9e93a894f091ad079f0a94b1c65672b9ea4099fce0fb12",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L186-L190,L209-L211,L452-L453",
+  "old_fingerprint": "b6b798ddce9ba45fb9326dd9baed63cd2ec07e1e249e222d81edda2fee6eb589",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L192-L196,L215-L217,L456-L457",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3c7edb8f40857fb318948c87a828b6e275c9eb53523758594663f06171d6d8fa",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624",
+  "old_fingerprint": "636e50fe495a4ebc1f185cc7e7822541873d86eae182dda6b647b2a02788404f",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_stall_depth_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "0390d7876ccbccf05f0ec9c511036627f1c284c95230efadb92e9bc1d2433c12",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624",
+  "old_fingerprint": "faf0d6bbfb3e2d8dd7eb34a27c243bcc629dcfbf4300bd5f92466dedc32e8255",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_one_way_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "9a4ca644353fef198345b0c6f91741b24665986382b4d967bb0d97bcdc5b2917",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624",
+  "old_fingerprint": "c00f70a406e4921524392432f73790a9ce648d1d9000f91ac50709aea764cb5f",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_aisle_two_way_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "43102a6740a691a8b7b0fa73e74b52beda8aef3147844e0de51a59a72ce31ad0",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624",
+  "old_fingerprint": "a03987b3ab4b51c2c2f240ccc5318d6ea88ef27d2a67a0d08cb1e65cffd49065",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_side_prohibited",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "33ee47ddc0f1403444c5f0b3f1dc66831c5420d5bb95b618a6fe386d1f4afae2",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L513,L521,L525-L527",
+  "old_fingerprint": "a2919f83f930a553760de1631bcec9ae0872c53cd9a3f799a174029ab1a7220d",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L515,L523,L527",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "94958a73f60e877540492b536af676d3b026e131ea311fdcf9b7738efed22a1f",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "04db84a6457f5ba6230a0f15381a9d5cad397cc7bb74e1d5ffeb7d1fe42aa882",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "R40"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "4f7c1282c411d556fe08c53c6f70c0dd78c3d7c9c755ca7511bd538445e882bc",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "056f184b3005f51c3fda784052af072a134de27dc203f02e2cec99ce1bd32ee4",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "R20"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "0776177b5f2520c85122c506c3115f4577908548f931d68251d5382df213a602",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "cf7247de5a10b8d06fe5e56e4c80c575b02495f96bd08435c45ed0dcb39d6453",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "R15"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d0811c51fd899957139bad1ca60db8c39e5735932220d91cf6f36b0d808e744b",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "45b8d4a34edaac6cdf74776b5c13368590f1820fe92af635b6c93cb857495e6b",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "R10"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "6a511cedde14772d4ef5cae6160f1bf0b6a8ebd6dda9a5b59ee45a639e9daf3a",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "13b9b572337ba9f43c3e257a7f9f107f305f55d1347cc83d6af568c5b114e004",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "R8.5"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "8853ffa241556293fd511d7bddff565344545306e628e5e7192f27cd3a3e864c",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "f72769cf43f10784c2db514d5ffc0c3769bbd71cbc823a04ff9976b90c8a491e",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "R7"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "3c23ccbec58e77eecb7b3162ee74073bf42fcd22cd9d5fc38821dfefe1619ee7",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "c4e05480dd714593eb9c3cdcc629cb3737b6bf81903ad93d60321f1aca4ac32e",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "R5"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "893ff2837d806637297b237d0efd4e45f53087dddd560ddd2bbe1d2f269673c7",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "e882128d22a7cfda197290256491c34f596a355949faf72f616f9a0bfcdcb659",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "MURS"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "c7ceaa1dfba0ecb9f47ffb601b55ad6535d5e6d230df51beb8f146ab6c845330",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "37c4832a4bbaa4631eb306e82f19e5882f7689a3365e19dd5c79ec294046bfbc",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "SFA"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d36fbfd6b482acfcddcda93b2a96cef462a3a87e025a766c665028f1b3d1673b",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "5d969fa5ac464bf913aae2db371b8b913723f3b706950fb41bb7d5f1ae5f9c1d",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "MURA"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7abeb529ae4c9740ff8b3d36d84528a8e5fc02a2449672ab2a6f75fa2cf28efc",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "0c9ad035ed9c123ed7d7de234d224127cafc05eed784e5c6fe36663883049a39",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "VTH"
+ },
+ {
+  "field": "parking_street_setback_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "453788fbe06a68c375569e3a640e5a30d1a58a9f8c6dbb31ecd8c5e63af27a71",
+  "new_quote": "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527",
+  "old_fingerprint": "6303aad86040b72e23d61d4121b66ca6e0e6c2b7b6676fdced9d1b92e855d40f",
+  "old_quote": "or/clackamas/happy-valley/16.43.parking.txt#L511,L527",
+  "when_key": "",
+  "zone": "FU10"
+ },
+ {
+  "field": "driveway_approach_min_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "d13c0b9178f57f649896d435d284b9bd324fcc978e1f6b14202fc22c1c752313",
+  "new_quote": "or/clackamas/happy-valley/16.44/16.44.120.txt#L176-L178,L190-L193",
+  "old_fingerprint": "96a8cc1617fde75e63f8696d926c1ee073b510b1b53e1fb6896098ee52de6f13",
+  "old_quote": "or/clackamas/happy-valley/16.44.special-standards.txt#L1888-L1890,L1900-L1902",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_approach_max_width_ft",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "efdfc8e8f2d7b4fc35d1feeae96658839f4a71cecca675c925e026b2d6931523",
+  "new_quote": "or/clackamas/happy-valley/16.44/16.44.120.txt#L176-L178,L190-L193",
+  "old_fingerprint": "8c2dbe3173d75748ad7a3c4a1898d49cb84c01b7fbfa03d8b1a35e2ccd951d6d",
+  "old_quote": "or/clackamas/happy-valley/16.44.special-standards.txt#L1888-L1890,L1900-L1902",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "driveway_max_frontage_pct",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "885ec162b18d714b9abe2e36f39577264b306430da93ae9a9a47ec88827da2fc",
+  "new_quote": "or/clackamas/happy-valley/16.44/16.44.120.txt#L176-L183,L190-L193",
+  "old_fingerprint": "13ff56f0f2e40f57051f8f842af88decb0382f99ee56c3463898fd95b512f773",
+  "old_quote": "or/clackamas/happy-valley/16.44.special-standards.txt#L1888-L1894,L1900-L1902",
+  "when_key": "",
+  "zone": "defaults"
+ },
+ {
+  "field": "corner_access_street",
+  "layer": "or/clackamas/happy-valley",
+  "new_fingerprint": "7e47965e33e186c27eb5bdedd0df7d5aa2835052d8d80f1b908e03c58849917b",
+  "new_quote": "or/clackamas/happy-valley/16.44/16.44.120.txt#L1,L5-L6,L155-L158,L176-L178,L195-L197",
+  "old_fingerprint": "35fbee11abbd8192a0acff3899f1e6f312e4353d67da9154823798fd24a2e8c2",
+  "old_quote": "or/clackamas/happy-valley/16.44.special-standards.txt#L1720,L1724,L1868-L1870,L1888-L1890,L1904-L1906",
+  "when_key": "",
+  "zone": "defaults"
+ }
+]

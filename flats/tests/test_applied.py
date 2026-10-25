@@ -157,10 +157,17 @@ def test_no_ruling_is_pure_prose(rows) -> None:
 def test_a_ruling_found_outside_its_own_region_is_reported_not_hidden(rows) -> None:
     """Happy Valley's 16.42.030 note is encoded on every zone in the layer
     while its own block sits under one table. That is not a defect and it is
-    not confirmation either, so it gets its own word."""
+    not confirmation either, so it gets its own word.
+
+    Tigard's Table 18.110.3 note 2 joined it when Tigard was cut into
+    sections (2026-10-24): the note now sits in section 18.110.040, and the
+    quadplex values it is encoded on quote lines in two sections, so their
+    citations stay on the chapter's proof copy, outside the note's region."""
     elsewhere = [r for r in rows if r.state == "elsewhere"]
-    assert len(elsewhere) == 1
-    assert elsewhere[0].note.layer == "or/clackamas/happy-valley"
+    assert sorted(r.note.layer for r in elsewhere) == [
+        "or/clackamas/happy-valley",
+        "or/washington/tigard",
+    ]
 
 
 # --- reading a figure out of prose ------------------------------------------

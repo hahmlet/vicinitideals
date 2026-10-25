@@ -550,7 +550,7 @@ definitions:
     test: intersecting_frontages
     count: 2
     max_intersection_angle_deg: 135.0
-    quote: "or/clackamas/happy-valley/16.12.definitions.txt#L907-L908"
+    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1067-L1069"
     cite: "HV LDC 16.12.030, Corner lot"
 
 code:
@@ -675,7 +675,7 @@ defaults:
     cite: HV LDC 16.43.030.B.12, Table 16.43.030-1, Residential row (townhome/duplex/triplex/quadplex/cottage cluster)
     url: https://ecode360.com/print/HA4934?guid=43529966
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43.parking.txt#L215-L216"
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L209-L210"
   # The maximum column of the same row. Its header says so twice over --
   # "Maximum Parking Spaces (if nothing is noted, there is no maximum)" -- and
   # footnote 4 confirms it from the other side: maximums "apply only to
@@ -687,7 +687,7 @@ defaults:
     cite: HV LDC Table 16.43.030-1, Maximum Parking Spaces column, and footnote 4
     url: https://ecode360.com/print/HA4934?guid=43529966
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43.parking.txt#L192-L196,L215-L217,L456-L457"
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L186-L190,L209-L211,L452-L453"
   # Table 16.43.030-2, "Off-Street Parking Matrix Required Space and Aisle
   # Dimensions in Feet", standard-size vehicles at 90 degrees: stall width
   # 9.0, stall depth 18.5, aisle width 24.0, module width 61.0, bumper
@@ -703,25 +703,25 @@ defaults:
     cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
     url: https://ecode360.com/print/HA4934?guid=43529966
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623"
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624"
   parking_stall_depth_ft:
     value: 18.5
     cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
     url: https://ecode360.com/print/HA4934?guid=43529966
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623"
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624"
   parking_aisle_one_way_ft:
     value: 24
     cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
     url: https://ecode360.com/print/HA4934?guid=43529966
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623"
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624"
   parking_aisle_two_way_ft:
     value: 24
     cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
     url: https://ecode360.com/print/HA4934?guid=43529966
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623"
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L564-L569,L619-L624"
   #
   # NOT ENCODED, and this is the one that would change a site plan: LDC
   # 16.43.030.E.4, Parking Location. "Parking areas shall be set back from a
@@ -735,7 +735,7 @@ defaults:
   # Wilsonville cap it, banned. E.1 adds "No off-street parking shall be
   # allowed in the landscaped yard areas of any lot", and E.3 sends a parking
   # area abutting a residential district to that district's setback, which is
-  # a neighbour's standard applying to our lot. (or/clackamas/happy-valley/16.43.parking.txt#L515,L523,L527)
+  # a neighbour's standard applying to our lot. (or/clackamas/happy-valley/16.43/16.43.030.txt#L513,L521,L525-L527)
   #
   # NOT ENCODED: LDC 16.43.030.F.5, Backing and Maneuvering. "Except for a
   # single-family dwelling or two-family dwelling, groups of more than three
@@ -747,7 +747,7 @@ defaults:
   # hard-coded rear court) and the first to state it as a flat rule rather
   # than one conditioned on street class. F.3 adds that no vehicle may project
   # over a property line or right-of-way, and allows a five-foot-clear
-  # overhang across an internal sidewalk. (or/clackamas/happy-valley/16.43.parking.txt#L632,L640)
+  # overhang across an internal sidewalk. (or/clackamas/happy-valley/16.43/16.43.030.txt#L633-L637,L645-L647)
   #
   # NOT ENCODED: three ways the minimum above can fall to zero, all of them
   # site facts nothing measures. 16.43.030.B.12 exempts a lot within
@@ -760,7 +760,7 @@ defaults:
   # each, so the size limb does not reach it, and affordability is elective.
   # Footnote 3 exempts housing-type conversions, which is not new
   # construction. Encoding any of them would forgive a requirement that
-  # really applies. (or/clackamas/happy-valley/16.43.parking.txt#L155-L181,L454-L459)
+  # really applies. (or/clackamas/happy-valley/16.43/16.43.030.txt#L148-L175,L450-L455)
   #
   # DRIVEWAY, read 2026-08-27 out of Chapter 16.41 once it was fetched.
   # 16.41.030.B.1: "A driveway to an off-street parking area shall be improved
@@ -786,13 +786,13 @@ defaults:
     cite: HV LDC 16.41.030.B.1, minimum improved driveway width, two-way drive
     url: https://ecode360.com/print/HA4934?guid=43529957
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.41.access.txt#L27,L53-L59"
+    quote: "or/clackamas/happy-valley/16.41/16.41.030.txt#L1,L32-L38"
   driveway_min_width_one_way_ft:
     value: 12
     cite: HV LDC 16.41.030.B.1, minimum improved driveway width, one-way drive
     url: https://ecode360.com/print/HA4934?guid=43529957
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.41.access.txt#L27,L53-L59"
+    quote: "or/clackamas/happy-valley/16.41/16.41.030.txt#L1,L32-L38"
   # DRIVEWAY APPROACH, read 2026-10-15 out of Chapter 16.44 (Ord. 603,
   # 8/18/2026). 16.44.120.B.4.b.iii: "Residential driveway approach widths
   # shall be limited to half the parcel frontage width, with a minimum
@@ -808,19 +808,19 @@ defaults:
     cite: HV LDC 16.44.120.B.4.b.iii, minimum residential driveway approach width (Ord. 603, 8/18/2026)
     url: https://ecode360.com/print/HA4934?guid=43529967
     retrieved: '2026-10-15'
-    quote: "or/clackamas/happy-valley/16.44.special-standards.txt#L1888-L1890,L1900-L1902"
+    quote: "or/clackamas/happy-valley/16.44/16.44.120.txt#L176-L178,L190-L193"
   driveway_approach_max_width_ft:
     value: 35
     cite: HV LDC 16.44.120.B.4.b.iii, maximum residential driveway approach width (Ord. 603, 8/18/2026)
     url: https://ecode360.com/print/HA4934?guid=43529967
     retrieved: '2026-10-15'
-    quote: "or/clackamas/happy-valley/16.44.special-standards.txt#L1888-L1890,L1900-L1902"
+    quote: "or/clackamas/happy-valley/16.44/16.44.120.txt#L176-L178,L190-L193"
   driveway_max_frontage_pct:
     value: 50
     cite: HV LDC 16.44.120.B.4.b.iii, approach no wider than half the parcel frontage, with B.4.b.i one driveway per frontage (Ord. 603, 8/18/2026)
     url: https://ecode360.com/print/HA4934?guid=43529967
     retrieved: '2026-10-15'
-    quote: "or/clackamas/happy-valley/16.44.special-standards.txt#L1888-L1894,L1900-L1902"
+    quote: "or/clackamas/happy-valley/16.44/16.44.120.txt#L176-L183,L190-L193"
   #
   # NOT ENCODED: 16.44.120.B.4.b.v, "Driveways shall comply with the City's
   # access spacing standards", which turns on the neighbours' driveways and
@@ -847,7 +847,7 @@ defaults:
     cite: HV LDC 16.43.030.E.1, E.3 and E.4, which set parking back from a street and from a residential neighbour and ban it in landscaped yards, naming no side yard
     url: https://ecode360.com/print/HA4934?guid=43529966
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.43.parking.txt#L515,L523,L527"
+    quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L513,L521,L525-L527"
   # WHICH STREET THE DRIVEWAY USES on a lot with more than one.
   # `corner_access_street` is read only on such a lot: `side` sends the curb
   # cut to the street the building does not face, `lowest_class` to the street
@@ -875,7 +875,7 @@ defaults:
     cite: HV LDC 16.44.120.B.4.b.iv, lots with more than one frontage access the street with the lowest TSP classification (Ord. 603, 8/18/2026)
     url: https://ecode360.com/print/HA4934?guid=43529967
     retrieved: '2026-10-15'
-    quote: "or/clackamas/happy-valley/16.44.special-standards.txt#L1720,L1724,L1868-L1870,L1888-L1890,L1904-L1906"
+    quote: "or/clackamas/happy-valley/16.44/16.44.120.txt#L1,L5-L6,L155-L158,L176-L178,L195-L197"
   # WHICH STREET IS THE FRONT on a corner lot. `front_lot_line_corner` is what
   # lets the site plan know whether it may try each street as the front: only
   # `shortest` takes the choice away; `owner`, `entrance` and `both` leave it
@@ -891,7 +891,7 @@ defaults:
     cite: HV LDC 16.12, Lot line, front, the applicant or property owner chooses on a corner lot
     url: https://ecode360.com/print/HA4934?guid=43529904
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.12.definitions.txt#L882-L883"
+    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1034-L1038"
   # WHICH STREET IS THE FRONT on a THROUGH lot -- streets along two opposite
   # lines (FOLLOWUPS 6(i), read 2026-09-29 across all fourteen layers). Every
   # street edge is cut as a front unless this names the far one the rear.
@@ -907,7 +907,7 @@ defaults:
     cite: HV LDC 16.12, Lot line, front, on a through lot the applicant or property owner chooses the front and the rear lot line
     url: https://ecode360.com/print/HA4934?guid=43529904
     retrieved: '2026-08-27'
-    quote: "or/clackamas/happy-valley/16.12.definitions.txt#L883"
+    quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1035-L1038"
   #
   # NOT ENCODED: a driveway approach width, because Happy Valley states none.
   # The sentence above ends "not less than the full width of the standard
@@ -920,7 +920,7 @@ defaults:
   # site facts nothing measures: 12 feet of vertical clearance, a 12 percent
   # slope ceiling for a driveway (15 with a design exception), vision
   # clearance, and shared driveways where the City Engineer requires them.
-  # (or/clackamas/happy-valley/16.41.access.txt#L60-L105)
+  # (or/clackamas/happy-valley/16.41/16.41.030.txt#L39-L90)
   #
   # ENCODED PER ZONE, not here: LDC 16.43.030.E.4, Parking Location. "Parking
   # areas shall be set back from a lot line adjoining a street the same
@@ -962,7 +962,7 @@ defaults:
   # residential zoning district", which is the NEIGHBOUR'S standard applying
   # to our lot: `same_as` reaches another field in this zone, not another
   # zone's field, and what would answer it is the zoning of the parcel next
-  # door. (or/clackamas/happy-valley/16.43.parking.txt#L515,L523)
+  # door. (or/clackamas/happy-valley/16.43/16.43.030.txt#L513,L521)
   #
   # NOT ENCODED: any private open space standard, and the trail runs cold in a
   # way worth writing down. Two of the zone tables in Chapter 16.22 carry a
@@ -976,7 +976,7 @@ defaults:
   # contain it, in a table this building is not on, under a chapter that
   # excludes this building from most of the section: three reasons not to
   # encode twenty percent, and no reason to. (or/clackamas/happy-valley/16.22.residential.txt#L679,L1320 and
-  # or/clackamas/happy-valley/16.42.landscaping.txt#L25)
+  # or/clackamas/happy-valley/16.42/16.42.020.txt#L3-L4)
 
 zones:
   R40:
@@ -988,7 +988,7 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L54"
       variants:
         # The note over this use table, in every one of the three it appears
         # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
@@ -1003,7 +1003,7 @@ zones:
         # disappearing into it.
         - value: false
           when: [middle_housing_child_lot]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L271"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L166-L167"
     max_height_ft:
       # Table 16.22.020-2, the "Building height (maximum)" row: 45 feet in all
       # three columns. The quote carries the column header line as well as the
@@ -1017,7 +1017,7 @@ zones:
       # four attached dwellings, so the relief is not available to it and the
       # cell figure stands unqualified. Either way 26 feet clears.
       value: 45
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L298"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L194"
     max_density_du_per_acre:
       # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -1034,7 +1034,7 @@ zones:
       # reading one district's number across would put four times the real
       # ceiling on R-40.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177"
       # The acre this rate is per is a net one.
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
@@ -1055,7 +1055,7 @@ zones:
         # that list rather than the glossary line, because the glossary line
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -1064,13 +1064,13 @@ zones:
       variants:
         - value: 4.4
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177"
     setback_front_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L186"
     setback_side_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L292"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L188"
       variants:
         # The cell prints `15/04` -- 15 feet, or zero, the trailing 4 being
         # footnote 4 run up against the number. The footnote is quoted with
@@ -1082,13 +1082,13 @@ zones:
           # condition; the pair is, which is also how the other five zones and
           # Gladstone read the same sentence.
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L292,L305"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L188,L202"
     setback_rear_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L187"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L189"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -1099,10 +1099,10 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     min_lot_sqft:
       value: 40000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L175"
       variants:
         # The row under the one this value comes from: "Lot size (minimum):
         # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
@@ -1115,20 +1115,20 @@ zones:
         # four-unit building on and one it will.
         - per_dwelling: 1500
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L280"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L176"
     min_lot_width_ft:
       value: 100
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178"
       variants:
         # Footnote 2 on the row: "Townhomes are exempt from the lot width
         # requirements." An exemption, not a smaller number -- the code
         # switches the standard off for this building rather than loosening it.
         - exempt: true
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L282,L303"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178,L200"
     min_lot_depth_ft:
       value: 200
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L179"
     min_frontage_ft:
       # L286 is the "All other lots" row. The row above it, L285, is the
       # cul-de-sac row -- 70 feet where this one asks 100 -- and since
@@ -1141,7 +1141,7 @@ zones:
       # code holds to 100. A lot the screen has not proven on a bulb still
       # owes 100.
       value: 100
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L284,L286"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L180,L182"
       variants:
         # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
         # lot line contiguous with the outer radius of a curve" -- and the
@@ -1150,7 +1150,7 @@ zones:
         # are what s4 reads.
         - value: 70
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L285"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L181"
         # The row below the general one: townhomes, twenty feet, in every
         # column of every residential table in this chapter. The comment this
         # replaces called it "a standard for a different product than the pod"
@@ -1158,16 +1158,16 @@ zones:
         # the townhome density row three fields up is already read.
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L183"
         # A townhome on a bulb is still a townhome: the townhome row is a row
         # of its own and stands in every column, and a relief cannot tighten
         # it. Spelled out so the two one-condition rows above do not tie.
         - value: 20
           when: [unit_lots, fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L183"
     max_coverage_pct:
       value: 20
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L184"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -1195,7 +1195,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: 'quadfit confidence: verified | Setbacks/coverage from City Model Home Application form (LDC
       eff 3/19/2024). Height 45 ft front elev / 49 ft side+rear. Covered porch >=20% of bldg line cuts
       front to 15 ft. Quadplex by-right per HV Middle Housing amendments. min_lot is the nominal density
@@ -1209,7 +1209,7 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L54"
       variants:
         # The note over this use table, in every one of the three it appears
         # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
@@ -1224,7 +1224,7 @@ zones:
         # disappearing into it.
         - value: false
           when: [middle_housing_child_lot]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L271"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L166-L167"
     max_height_ft:
       # Table 16.22.020-2, the "Building height (maximum)" row: 45 feet in all
       # three columns. The quote carries the column header line as well as the
@@ -1238,7 +1238,7 @@ zones:
       # four attached dwellings, so the relief is not available to it and the
       # cell figure stands unqualified. Either way 26 feet clears.
       value: 45
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L298"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L194"
     max_density_du_per_acre:
       # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -1255,7 +1255,7 @@ zones:
       # reading one district's number across would put four times the real
       # ceiling on R-40.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177"
       # The acre this rate is per is a net one.
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
@@ -1276,7 +1276,7 @@ zones:
         # that list rather than the glossary line, because the glossary line
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -1285,13 +1285,13 @@ zones:
       variants:
         - value: 8.7
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177"
     setback_front_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L186"
     setback_side_ft:
       value: 10
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L292"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L188"
       variants:
         # The cell prints `10/04` -- 10 feet, or zero, the trailing 4 being
         # footnote 4 run up against the number. The footnote is quoted with
@@ -1303,13 +1303,13 @@ zones:
           # condition; the pair is, which is also how the other five zones and
           # Gladstone read the same sentence.
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L292,L305"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L188,L202"
     setback_rear_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L187"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L189"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -1320,10 +1320,10 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     min_lot_sqft:
       value: 20000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L175"
       variants:
         # The row under the one this value comes from: "Lot size (minimum):
         # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
@@ -1336,20 +1336,20 @@ zones:
         # four-unit building on and one it will.
         - per_dwelling: 1500
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L280"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L176"
     min_lot_width_ft:
       value: 80
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178"
       variants:
         # Footnote 2 on the row: "Townhomes are exempt from the lot width
         # requirements." An exemption, not a smaller number -- the code
         # switches the standard off for this building rather than loosening it.
         - exempt: true
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L282,L303"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178,L200"
     min_lot_depth_ft:
       value: 100
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L179"
     min_frontage_ft:
       # L286 is the "All other lots" row. The row above it, L285, is the
       # cul-de-sac row -- 50 feet where this one asks 80 -- and since
@@ -1362,7 +1362,7 @@ zones:
       # code holds to 80. A lot the screen has not proven on a bulb still
       # owes 80.
       value: 80
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L284,L286"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L180,L182"
       variants:
         # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
         # lot line contiguous with the outer radius of a curve" -- and the
@@ -1371,7 +1371,7 @@ zones:
         # are what s4 reads.
         - value: 50
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L285"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L181"
         # The row below the general one: townhomes, twenty feet, in every
         # column of every residential table in this chapter. The comment this
         # replaces called it "a standard for a different product than the pod"
@@ -1379,16 +1379,16 @@ zones:
         # the townhome density row three fields up is already read.
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L183"
         # A townhome on a bulb is still a townhome: the townhome row is a row
         # of its own and stands in every column, and a relief cannot tighten
         # it. Spelled out so the two one-condition rows above do not tie.
         - value: 20
           when: [unit_lots, fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L183"
     max_coverage_pct:
       value: 30
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L184"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -1416,7 +1416,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: 'quadfit confidence: verified | Height 45 ft front / 49 ft side+rear. Porch >=20% bldg line
       -> front 15 ft. min_lot nominal.'
   R15:
@@ -1428,7 +1428,7 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L54"
       variants:
         # The note over this use table, in every one of the three it appears
         # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
@@ -1443,7 +1443,7 @@ zones:
         # disappearing into it.
         - value: false
           when: [middle_housing_child_lot]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L271"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L166-L167"
     max_height_ft:
       # Table 16.22.020-2, the "Building height (maximum)" row: 45 feet in all
       # three columns. The quote carries the column header line as well as the
@@ -1457,7 +1457,7 @@ zones:
       # four attached dwellings, so the relief is not available to it and the
       # cell figure stands unqualified. Either way 26 feet clears.
       value: 45
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L298"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L194"
     max_density_du_per_acre:
       # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -1474,7 +1474,7 @@ zones:
       # reading one district's number across would put four times the real
       # ceiling on R-40.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177"
       # The acre this rate is per is a net one.
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
@@ -1495,7 +1495,7 @@ zones:
         # that list rather than the glossary line, because the glossary line
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -1504,13 +1504,13 @@ zones:
       variants:
         - value: 11.6
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L174,L177"
     setback_front_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L186"
     setback_side_ft:
       value: 7
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L292"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L188"
       variants:
         # The cell prints `7/04` -- 7 feet, or zero, the trailing 4 being
         # footnote 4 run up against the number. The footnote is quoted with
@@ -1522,13 +1522,13 @@ zones:
           # condition; the pair is, which is also how the other five zones and
           # Gladstone read the same sentence.
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L292,L305"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L188,L202"
     setback_rear_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L187"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L189"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -1539,10 +1539,10 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     min_lot_sqft:
       value: 15000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L175"
       variants:
         # The row under the one this value comes from: "Lot size (minimum):
         # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
@@ -1555,20 +1555,20 @@ zones:
         # four-unit building on and one it will.
         - per_dwelling: 1500
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L280"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L176"
     min_lot_width_ft:
       value: 70
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178"
       variants:
         # Footnote 2 on the row: "Townhomes are exempt from the lot width
         # requirements." An exemption, not a smaller number -- the code
         # switches the standard off for this building rather than loosening it.
         - exempt: true
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L282,L303"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L178,L200"
     min_lot_depth_ft:
       value: 90
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L179"
     min_frontage_ft:
       # L286 is the "All other lots" row. The row above it, L285, is the
       # cul-de-sac row -- 50 feet where this one asks 60 -- and since
@@ -1581,7 +1581,7 @@ zones:
       # code holds to 60. A lot the screen has not proven on a bulb still
       # owes 60.
       value: 60
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L284,L286"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L180,L182"
       variants:
         # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
         # lot line contiguous with the outer radius of a curve" -- and the
@@ -1590,7 +1590,7 @@ zones:
         # are what s4 reads.
         - value: 50
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L285"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L181"
         # The row below the general one: townhomes, twenty feet, in every
         # column of every residential table in this chapter. The comment this
         # replaces called it "a standard for a different product than the pod"
@@ -1598,16 +1598,16 @@ zones:
         # the townhome density row three fields up is already read.
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L183"
         # A townhome on a bulb is still a townhome: the townhome row is a row
         # of its own and stands in every column, and a relief cannot tighten
         # it. Spelled out so the two one-condition rows above do not tie.
         - value: 20
           when: [unit_lots, fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
+          quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L183"
     max_coverage_pct:
       value: 35
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
+      quote: "or/clackamas/happy-valley/16.22/16.22.020.txt#L184"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -1635,7 +1635,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot
       nominal.'
   R10:
@@ -1647,7 +1647,7 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L51"
       variants:
         # The note over this use table, in every one of the three it appears
         # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
@@ -1662,13 +1662,13 @@ zones:
         # disappearing into it.
         - value: false
           when: [middle_housing_child_lot]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L460"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L160-L161"
     max_height_ft:
       # Table 16.22.030-2, same row and same reading as the very low density
       # table above: 45 feet in all three columns, note 5 the single-family
       # front/side-and-rear relief that a quadplex cannot take.
       value: 45
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L488"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L189"
     max_density_du_per_acre:
       # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -1685,7 +1685,7 @@ zones:
       # reading one district's number across would put four times the real
       # ceiling on R-40.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172"
       # The acre this rate is per is a net one.
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
@@ -1706,7 +1706,7 @@ zones:
         # that list rather than the glossary line, because the glossary line
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -1715,13 +1715,13 @@ zones:
       variants:
         - value: 17.4
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172"
     setback_front_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L182"
     setback_side_ft:
       value: 7
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L483"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L184"
       variants:
         # The cell prints `7/04` -- 7 feet, or zero, the trailing 4
         # being the footnote run up against the number. The footnote is quoted
@@ -1731,13 +1731,13 @@ zones:
         # adopted Uniform Building Code."
         - value: 0
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L483,L495"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L184,L197"
     setback_rear_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L183"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L186"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -1748,10 +1748,10 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     min_lot_sqft:
       value: 10000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L170"
       variants:
         # The row under the one this value comes from: "Lot size (minimum):
         # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
@@ -1764,27 +1764,27 @@ zones:
         # four-unit building on and one it will.
         - per_dwelling: 1500
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L470"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L171"
     min_lot_width_ft:
       value: 60
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173"
       variants:
         # Footnote 2 on the row: "Townhomes are exempt from the lot width
         # requirements." An exemption, not a smaller number -- the code
         # switches the standard off for this building rather than loosening it.
         - exempt: true
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L472,L493"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173,L195"
     max_coverage_pct:
       value: 40
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L180"
     min_lot_depth_ft:
       # Table 16.22.030-2, "Lot depth (minimum)". Stated by the code and absent
       # from this zone until now. Most Oregon codes are silent about depth, so
       # the field is optional and its absence raises nothing -- which is
       # exactly why a zone that does state it can go unencoded unnoticed.
       value: 80
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L473"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L174"
     min_frontage_ft:
       # Table 16.22.030-2, "Street frontage (minimum)", "All other lots" row.
       # The row above it, "Lots fronting on cul-de-sac", states a smaller 35
@@ -1797,7 +1797,7 @@ zones:
       # lots the code holds to 50. A lot the screen has not proven on a bulb
       # still owes 50.
       value: 50
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L474,L476"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L175,L177"
       variants:
         # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
         # lot line contiguous with the outer radius of a curve" -- and the
@@ -1806,18 +1806,18 @@ zones:
         # are what s4 reads.
         - value: 35
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L475"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L176"
         # The row below: townhomes, twenty feet in every column of every
         # residential table in this chapter.
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L178"
         # A townhome on a bulb is still a townhome: the townhome row is a row
         # of its own and stands in every column, and a relief cannot tighten
         # it. Spelled out so the two one-condition rows above do not tie.
         - value: 20
           when: [unit_lots, fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L178"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -1845,7 +1845,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot
       nominal.'
   R8.5:
@@ -1857,7 +1857,7 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L51"
       variants:
         # The note over this use table, in every one of the three it appears
         # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
@@ -1872,13 +1872,13 @@ zones:
         # disappearing into it.
         - value: false
           when: [middle_housing_child_lot]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L460"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L160-L161"
     max_height_ft:
       # Table 16.22.030-2, same row and same reading as the very low density
       # table above: 45 feet in all three columns, note 5 the single-family
       # front/side-and-rear relief that a quadplex cannot take.
       value: 45
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L488"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L189"
     max_density_du_per_acre:
       # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -1895,7 +1895,7 @@ zones:
       # reading one district's number across would put four times the real
       # ceiling on R-40.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172"
       # The acre this rate is per is a net one.
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
@@ -1916,7 +1916,7 @@ zones:
         # that list rather than the glossary line, because the glossary line
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -1925,13 +1925,13 @@ zones:
       variants:
         - value: 20.5
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172"
     setback_front_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L182"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L483"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L184"
       variants:
         # The cell prints `5/04` -- 5 feet, or zero, the trailing 4
         # being the footnote run up against the number. The footnote is quoted
@@ -1941,13 +1941,13 @@ zones:
         # adopted Uniform Building Code."
         - value: 0
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L483,L495"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L184,L197"
     setback_rear_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L183"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L186"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -1958,10 +1958,10 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     min_lot_sqft:
       value: 8500
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L170"
       variants:
         # The row under the one this value comes from: "Lot size (minimum):
         # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
@@ -1974,27 +1974,27 @@ zones:
         # four-unit building on and one it will.
         - per_dwelling: 1500
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L470"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L171"
     min_lot_width_ft:
       value: 50
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173"
       variants:
         # Footnote 2 on the row: "Townhomes are exempt from the lot width
         # requirements." An exemption, not a smaller number -- the code
         # switches the standard off for this building rather than loosening it.
         - exempt: true
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L472,L493"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173,L195"
     max_coverage_pct:
       value: 45
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L180"
     min_lot_depth_ft:
       # Table 16.22.030-2, "Lot depth (minimum)". Stated by the code and absent
       # from this zone until now. Most Oregon codes are silent about depth, so
       # the field is optional and its absence raises nothing -- which is
       # exactly why a zone that does state it can go unencoded unnoticed.
       value: 70
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L473"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L174"
     min_frontage_ft:
       # Table 16.22.030-2, "Street frontage (minimum)", "All other lots" row.
       # The row above it, "Lots fronting on cul-de-sac", states a smaller 35
@@ -2007,7 +2007,7 @@ zones:
       # lots the code holds to 50. A lot the screen has not proven on a bulb
       # still owes 50.
       value: 50
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L474,L476"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L175,L177"
       variants:
         # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
         # lot line contiguous with the outer radius of a curve" -- and the
@@ -2016,18 +2016,18 @@ zones:
         # are what s4 reads.
         - value: 35
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L475"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L176"
         # The row below: townhomes, twenty feet in every column of every
         # residential table in this chapter.
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L178"
         # A townhome on a bulb is still a townhome: the townhome row is a row
         # of its own and stands in every column, and a relief cannot tighten
         # it. Spelled out so the two one-condition rows above do not tie.
         - value: 20
           when: [unit_lots, fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L178"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -2055,7 +2055,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: 'quadfit confidence: verified | Layer value is ''R8.5'' (code text ''R-8.5''). Height 45/49
       ft. Porch >=20% -> front 15 ft. min_lot nominal.'
   R7:
@@ -2067,7 +2067,7 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L51"
       variants:
         # The note over this use table, in every one of the three it appears
         # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
@@ -2082,13 +2082,13 @@ zones:
         # disappearing into it.
         - value: false
           when: [middle_housing_child_lot]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L460"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L160-L161"
     max_height_ft:
       # Table 16.22.030-2, same row and same reading as the very low density
       # table above: 45 feet in all three columns, note 5 the single-family
       # front/side-and-rear relief that a quadplex cannot take.
       value: 45
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L488"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L189"
     max_density_du_per_acre:
       # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -2105,7 +2105,7 @@ zones:
       # reading one district's number across would put four times the real
       # ceiling on R-40.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172"
       # The acre this rate is per is a net one.
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
@@ -2126,7 +2126,7 @@ zones:
         # that list rather than the glossary line, because the glossary line
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -2135,13 +2135,13 @@ zones:
       variants:
         - value: 24.9
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L169,L172"
     setback_front_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L182"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L483"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L184"
       variants:
         # The cell prints `5/04` -- 5 feet, or zero, the trailing 4
         # being the footnote run up against the number. The footnote is quoted
@@ -2151,13 +2151,13 @@ zones:
         # adopted Uniform Building Code."
         - value: 0
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L483,L495"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L184,L197"
     setback_rear_ft:
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L183"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L186"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -2168,10 +2168,10 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     min_lot_sqft:
       value: 7000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L170"
       variants:
         # The row under the one this value comes from: "Lot size (minimum):
         # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
@@ -2184,27 +2184,27 @@ zones:
         # four-unit building on and one it will.
         - per_dwelling: 1500
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L470"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L171"
     min_lot_width_ft:
       value: 50
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173"
       variants:
         # Footnote 2 on the row: "Townhomes are exempt from the lot width
         # requirements." An exemption, not a smaller number -- the code
         # switches the standard off for this building rather than loosening it.
         - exempt: true
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L472,L493"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L173,L195"
     max_coverage_pct:
       value: 50
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L180"
     min_lot_depth_ft:
       # Table 16.22.030-2, "Lot depth (minimum)". Stated by the code and absent
       # from this zone until now. Most Oregon codes are silent about depth, so
       # the field is optional and its absence raises nothing -- which is
       # exactly why a zone that does state it can go unencoded unnoticed.
       value: 70
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L473"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L174"
     min_frontage_ft:
       # Table 16.22.030-2, "Street frontage (minimum)", "All other lots" row.
       # The row above it, "Lots fronting on cul-de-sac", states a smaller 35
@@ -2217,7 +2217,7 @@ zones:
       # lots the code holds to 50. A lot the screen has not proven on a bulb
       # still owes 50.
       value: 50
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L474,L476"
+      quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L175,L177"
       variants:
         # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
         # lot line contiguous with the outer radius of a curve" -- and the
@@ -2226,18 +2226,18 @@ zones:
         # are what s4 reads.
         - value: 35
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L475"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L176"
         # The row below: townhomes, twenty feet in every column of every
         # residential table in this chapter.
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L178"
         # A townhome on a bulb is still a townhome: the townhome row is a row
         # of its own and stands in every column, and a relief cannot tighten
         # it. Spelled out so the two one-condition rows above do not tie.
         - value: 20
           when: [unit_lots, fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
+          quote: "or/clackamas/happy-valley/16.22/16.22.030.txt#L178"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -2265,7 +2265,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% -> front 15 ft. Coverage never
       binds a ~1,000 sf/unit fourplex footprint. min_lot nominal.'
   R5:
@@ -2276,7 +2276,7 @@ zones:
       # The zone states no floor, which is not a floor of zero -- it is the
       # absence of the test.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L647"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L151"
       # The acre this rate is per is a net one.
       # Table 16.22.040-2 states these per NET acre, which 16.12 defines as
       # "one acre of developable land, as calculated pursuant to Section
@@ -2298,7 +2298,7 @@ zones:
         # that list rather than the glossary line, because the glossary line
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -2323,12 +2323,12 @@ zones:
       # the marker arrives at a note about open space and has no way to tell
       # whether the height was read.
       value: 45
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L670"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L174"
     max_density_du_per_acre:
       # No ceiling is printed for the quadplex on one lot. The townhome row is
       # a different standard for a different plat, carried as the variant.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L150-L151"
       # The acre this rate is per is a net one.
       # Table 16.22.040-2 states these per NET acre, which 16.12 defines as
       # "one acre of developable land, as calculated pursuant to Section
@@ -2350,7 +2350,7 @@ zones:
         # that list rather than the glossary line, because the glossary line
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -2359,14 +2359,14 @@ zones:
       variants:
         - value: 25
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L150"
     cite_default:
       cite: HV LDC 16.22.040 Table 16.22.040-2 (Medium Density)
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L535"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L37"
       variants:
         # The note over this use table, in every one of the three it appears
         # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
@@ -2381,13 +2381,13 @@ zones:
         # disappearing into it.
         - value: false
           when: [middle_housing_child_lot]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L633"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L136-L137"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L658"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L162"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L661"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L165"
       variants:
         # The cell prints `5/0 feet 3` -- 5 feet, or zero, the trailing 3
         # being the footnote run up against the number. The footnote is quoted
@@ -2397,13 +2397,13 @@ zones:
         # adopted Uniform Building Code."
         - value: 0
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L661,L676"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L165,L182"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L660"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L164"
     setback_street_side_ft:
       value: 8
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L662"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L166"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -2414,10 +2414,10 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     min_lot_sqft:
       value: 7000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L644"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L148"
       variants:
         # The row under the one this value comes from: "Lot size (minimum):
         # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
@@ -2430,10 +2430,10 @@ zones:
         # four-unit building on and one it will.
         - per_dwelling: 1500
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L645"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L149"
     min_lot_width_ft:
       value: 40
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L648"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L152"
       variants:
         # Footnote 2 on the row: "Townhomes are exempt from the lot width
         # requirements." This table's copy adds a sentence: "Street
@@ -2441,17 +2441,17 @@ zones:
         # switches the standard off for this building rather than loosening it.
         - exempt: true
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L648,L675"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L152,L180-L181"
     max_coverage_pct:
       value: 60
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L656"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L160"
     min_lot_depth_ft:
       # Table 16.22.040-2, "Lot depth (minimum)". Stated by the code and absent
       # from this zone until now. Most Oregon codes are silent about depth, so
       # the field is optional and its absence raises nothing -- which is
       # exactly why a zone that does state it can go unencoded unnoticed.
       value: 60
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L649"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L153"
     min_frontage_ft:
       # Table 16.22.040-2, "Street frontage (minimum)", "All other lots" row.
       # The row above it, "Lots fronting on cul-de-sac", states a smaller 35
@@ -2464,7 +2464,7 @@ zones:
       # lots the code holds to 40. A lot the screen has not proven on a bulb
       # still owes 40.
       value: 40
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L650,L652"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L154,L156"
       variants:
         # "Lots fronting on cul-de-sac". 16.12 defines the lot -- "a front
         # lot line contiguous with the outer radius of a curve" -- and the
@@ -2473,18 +2473,18 @@ zones:
         # are what s4 reads.
         - value: 35
           when: [fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L651"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L155"
         # The row below: townhomes, twenty feet in every column of every
         # residential table in this chapter.
         - value: 20
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L653"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L157"
         # A townhome on a bulb is still a townhome: the townhome row is a row
         # of its own and stands in every column, and a relief cannot tighten
         # it. Spelled out so the two one-condition rows above do not tie.
         - value: 20
           when: [unit_lots, fronts_cul_de_sac]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L653"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L157"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -2512,7 +2512,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: 'quadfit confidence: verified | Front 20 ft street-access / 10 ft alley-access. Height 45/49
       ft. Densest std SF zone. CORRECTED 2026-08-13 against Table 16.22.040-2: quadfit encoded the
       single-family tiers (5,000 sf lot / 50% coverage); the table splits by housing type and the
@@ -2530,7 +2530,7 @@ zones:
       # density to 16.63.020(F) and asks cottage clusters for four units per
       # gross acre.
       value: 6
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L647"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L151"
       # The acre this rate is per is a net one.
       # Table 16.22.040-2 states these per NET acre, which 16.12 defines as
       # "one acre of developable land, as calculated pursuant to Section
@@ -2552,7 +2552,7 @@ zones:
         # that list rather than the glossary line, because the glossary line
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -2562,10 +2562,10 @@ zones:
       # Table 16.22.040-2, MUR-S column: 65 feet, twenty above the R-5 cell
       # beside it. Same marker 6 and the same discrepancy recorded on R-5.
       value: 65
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L670"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L174"
     max_density_du_per_acre:
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L150-L151"
       # The acre this rate is per is a net one.
       # Table 16.22.040-2 states these per NET acre, which 16.12 defines as
       # "one acre of developable land, as calculated pursuant to Section
@@ -2587,7 +2587,7 @@ zones:
         # that list rather than the glossary line, because the glossary line
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -2596,7 +2596,7 @@ zones:
       variants:
         - value: 25
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L150"
     cite_default:
       cite: HV LDC 16.22.040 (MUR-S, Mixed Use Residential-Single-Family); allows detached SFD
       url: https://ecode360.com/print/HA4934?guid=43529907
@@ -2610,14 +2610,14 @@ zones:
       # states and the screen did not test. Most of the MUR-S column reads
       # "Variable" and is genuinely unfixed; this cell is not one of them.
       value: 7000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L644"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L146,L148"
       variants:
         - per_dwelling: 1500
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L645"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L149"
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L535"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L37"
       variants:
         # The note over this use table, in every one of the three it appears
         # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
@@ -2632,13 +2632,13 @@ zones:
         # disappearing into it.
         - value: false
           when: [middle_housing_child_lot]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L633"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L136-L137"
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L658"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L162"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L661"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L165"
       variants:
         # The cell prints `5/0 feet3,4` -- 5 feet, or zero, the trailing 3
         # being the footnote run up against the number. The footnote is quoted
@@ -2648,13 +2648,13 @@ zones:
         # adopted Uniform Building Code."
         - value: 0
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L661,L676"
+          quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L165,L182"
     setback_rear_ft:
       value: 20
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L660"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L164"
     setback_street_side_ft:
       value: 8
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L662"
+      quote: "or/clackamas/happy-valley/16.22/16.22.040.txt#L166"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -2665,7 +2665,7 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -2693,7 +2693,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: 'quadfit confidence: needs_verification | Layer value ''MURS'' = code ''MUR-S''. Setbacks from
       Model Home form (verified); max_coverage not shown in form (verify Table 16.22.040-2). Front 20
       street/10 alley. In HV middle-housing zone list.'
@@ -2710,32 +2710,32 @@ zones:
       # child-lot note over this table -- that note is printed over the
       # three lower-density use tables only.
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L775,L776"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L94-L95"
     min_lot_sqft:
       value: 2000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L950,L951"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L271-L272"
     min_lot_width_ft:
       # The cell reads "None". A stated absence is an answered standard,
       # not a missing one.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L954,L955"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L275-L276"
     min_lot_depth_ft:
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L958,L959"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L279-L280"
     max_coverage_pct:
       # Note 12 lowers this to 50 percent for single-family detached and
       # lifts it off cottage clusters. A quadplex is neither.
       value: 75
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L962,L963"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L283-L284"
     setback_front_ft:
       value: 10
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L967,L968"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L288-L289"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L971,L972"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L292-L293"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L976"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L296-L297"
       variants:
         # Note 5: "Side yard building setbacks for attached single-family
         # (townhouse) may be reduced to zero in compliance with applicable
@@ -2746,10 +2746,10 @@ zones:
         # interior lot line for it to apply to.
         - value: 0
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L976,L1022"
+          quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L296-L297,L346"
     setback_street_side_ft:
       value: 8
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L979,L980"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L300-L301"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -2760,17 +2760,17 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     setback_garage_entrance_ft:
       # "Garage and carport entrances -- entrances not facing an alley: 22
       # feet." The alley row is a two-part standard (22 feet to the base
       # floor, 6 to upper floors) that this field cannot hold, and it only
       # ever applies to a lot with an alley, which nothing measures.
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L985,L986,L987"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L306-L308"
     min_building_separation_ft:
       value: 10
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L994,L995"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L315-L316"
     max_height_ft:
       # Note 8: "Maximum building height for single-family
       # detached/attached is 45 feet at the front elevation; side and rear
@@ -2778,7 +2778,7 @@ zones:
       # above the cell figure for SFA and a restriction below it for
       # MUR-A's 65; either way the pod stands 26 feet and clears both.
       value: 45
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1002,L1003"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L323-L324"
     max_density_du_per_acre:
       # Note 2: "Residential care homes/facilities, duplexes, triplexes,
       # quadplexes, cottage clusters, and accessory dwellings are exempt
@@ -2786,18 +2786,18 @@ zones:
       # 25 units/acre." The exemption is the whole of it for a quadplex;
       # the townhouse ceiling is carried as the variant it is.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L942,L943,L1016"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L263-L264,L338-L339"
       variants:
         - value: 25
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1016"
+          quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L338-L339"
       # Stated per NET acre, which 16.12 defines as "one acre of developable
       # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
       # the parcel rather than an attribute of it.
       measured_on:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -2807,14 +2807,14 @@ zones:
       # Exempt by the same sentence, which excuses these buildings from
       # "the density standards" rather than from the maximum alone.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L946,L947,L1016"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L267-L268,L338-L339"
       # Stated per NET acre, which 16.12 defines as "one acre of developable
       # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
       # the parcel rather than an attribute of it.
       measured_on:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -2829,7 +2829,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: >-
       The densest by-right ground for this building in Happy Valley, and it was
       not in the file at all. A quadplex is permitted outright, the lot minimum
@@ -2861,10 +2861,10 @@ zones:
       # child-lot note over this table -- that note is printed over the
       # three lower-density use tables only.
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L775,L777"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L94,L96"
     min_lot_sqft:
       value: 3000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L950,L952"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L271,L273"
       variants:
         # Note 9: "Each lot for a townhouse in the MUR-A zone shall have a
         # minimum size of 1,500 square feet and no maximum lot size." The
@@ -2873,29 +2873,29 @@ zones:
         # four-family dwelling, so the 3,000 above stands for the pod.
         - per_dwelling: 1500
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1028"
+          quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L352-L357"
     min_lot_width_ft:
       # The cell reads "None". A stated absence is an answered standard,
       # not a missing one.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L954,L956"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L275,L277"
     min_lot_depth_ft:
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L958,L960"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L279,L281"
     max_coverage_pct:
       # Note 12 lowers this to 50 percent for single-family detached and
       # lifts it off cottage clusters. A quadplex is neither.
       value: 75
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L962,L964"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L283,L285"
     setback_front_ft:
       value: 10
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L967,L969"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L288,L290"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L971,L973"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L292,L294"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L977"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L296,L298"
       variants:
         # Note 5: "Side yard building setbacks for attached single-family
         # (townhouse) may be reduced to zero in compliance with applicable
@@ -2906,10 +2906,10 @@ zones:
         # interior lot line for it to apply to.
         - value: 0
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L977,L1022"
+          quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L296,L298,L346"
     setback_street_side_ft:
       value: 8
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L979,L981"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L300,L302"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -2920,17 +2920,17 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     setback_garage_entrance_ft:
       # "Garage and carport entrances -- entrances not facing an alley: 22
       # feet." The alley row is a two-part standard (22 feet to the base
       # floor, 6 to upper floors) that this field cannot hold, and it only
       # ever applies to a lot with an alley, which nothing measures.
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L985,L986,L988"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L306-L307,L309"
     min_building_separation_ft:
       value: 10
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L994,L996"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L315,L317"
     max_height_ft:
       # Note 8: "Maximum building height for single-family
       # detached/attached is 45 feet at the front elevation; side and rear
@@ -2938,7 +2938,7 @@ zones:
       # above the cell figure for SFA and a restriction below it for
       # MUR-A's 65; either way the pod stands 26 feet and clears both.
       value: 65
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1002,L1004"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L323,L325"
     max_density_du_per_acre:
       # Note 2: "Residential care homes/facilities, duplexes, triplexes,
       # quadplexes, cottage clusters, and accessory dwellings are exempt
@@ -2946,18 +2946,18 @@ zones:
       # 25 units/acre." The exemption is the whole of it for a quadplex;
       # the townhouse ceiling is carried as the variant it is.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L942,L944,L1016"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L263,L265,L338-L339"
       variants:
         - value: 25
           when: [unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1016"
+          quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L338-L339"
       # Stated per NET acre, which 16.12 defines as "one acre of developable
       # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
       # the parcel rather than an attribute of it.
       measured_on:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -2967,14 +2967,14 @@ zones:
       # Exempt by the same sentence, which excuses these buildings from
       # "the density standards" rather than from the maximum alone.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L946,L948,L1016"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L267,L269,L338-L339"
       # Stated per NET acre, which 16.12 defines as "one acre of developable
       # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
       # the parcel rather than an attribute of it.
       measured_on:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -2989,7 +2989,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: >-
       Same table as SFA, two columns over: a higher lot minimum (3,000), the
       same 75 percent coverage and 65 feet of height instead of 45. The
@@ -3016,7 +3016,7 @@ zones:
       # child-lot note over this table -- that note is printed over the
       # three lower-density use tables only.
       value: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L775,L778"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L94,L97"
     min_roof_pitch_in_12:
       # FOLLOWUPS 109 chunk 3. 16.22.050(B)(2)(c), for "Attached
       # Single-Family Dwellings in the VTH District": "Hipped, gambrel, or
@@ -3028,36 +3028,36 @@ zones:
       # pod's roof is flat (rulings.yaml 2026-10-21-pod-roof-flat).
       exempt: true
       cite: HV LDC 16.12, dwelling, multiple-family (five or more families); 16.22.050(B)(2), attached single-family dwellings only
-      quote: "or/clackamas/happy-valley/16.12.definitions.txt#L560-L561"
+      quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L627-L631"
       variants:
         - value: 1
           when: [unit_lots]
           cite: HV LDC 16.22.050(B)(2)(c), roofs of attached single-family dwellings in VTH
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1066,L1098"
+          quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L397,L432-L433"
     min_lot_sqft:
       value: 2000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L950,L953"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L271,L274"
     min_lot_width_ft:
       # The cell reads "None". A stated absence is an answered standard,
       # not a missing one.
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L954,L957"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L275,L278"
     min_lot_depth_ft:
       exempt: true
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L958,L961"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L279,L282"
     max_coverage_pct:
       # 65 percent, and unlike the other two columns it carries no note 12.
       value: 65
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L962,L965"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L283,L286"
     setback_front_ft:
       value: 10
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L967,L970"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L288,L291"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L971,L974"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L292,L295"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L978"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L296,L299"
       variants:
         # Note 5: "Side yard building setbacks for attached single-family
         # (townhouse) may be reduced to zero in compliance with applicable
@@ -3068,10 +3068,10 @@ zones:
         # interior lot line for it to apply to.
         - value: 0
           when: [attached_wall, unit_lots]
-          quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L978,L1022"
+          quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L296,L299,L346"
     setback_street_side_ft:
       value: 5
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L979,L982"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L300,L303"
     # 16.43.030.E.4, stated as equal to the building setback -- see the note
     # in `defaults:`. `same_as` resolves against the row above, the printed
     # ten-foot floor is the only figure the sentence carries, and neither
@@ -3082,7 +3082,7 @@ zones:
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     setback_front_max_ft:
       # A maximum, not a minimum: "Setback (maximum from street
       # right-of-way or designated accessway) -- 18 feet". SFA and MUR-A
@@ -3090,22 +3090,22 @@ zones:
       # townhome district uses to hold the street wall, and it is the one
       # dimension here that a deep-setback site plan fails.
       value: 18
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L998,L1001"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L319,L322"
     setback_garage_entrance_ft:
       # "Garage and carport entrances -- entrances not facing an alley: 22
       # feet." The alley row is a two-part standard (22 feet to the base
       # floor, 6 to upper floors) that this field cannot hold, and it only
       # ever applies to a lot with an alley, which nothing measures.
       value: 22
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L985,L986,L989"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L306-L307,L310"
     min_building_separation_ft:
       value: 10
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L994,L997"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L315,L318"
     max_height_ft:
       # 35 feet flat. Note 8's 45-foot front elevation allowance is marked
       # on the SFA and MUR-A cells only.
       value: 35
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1002,L1005"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L323,L326"
     max_density_du_per_acre:
       # VTH states density as an area per primary unit rather than units
       # per acre, and note 2's quadplex exemption is marked on the SFA and
@@ -3115,14 +3115,14 @@ zones:
       # minimum two rows down is 2,000. The density is the binding half,
       # and reading the lot row alone would have missed it fourfold.
       sqft_per_unit: 2000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L942,L945,L1014"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L263,L266,L335-L336"
       # Stated per NET acre, which 16.12 defines as "one acre of developable
       # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
       # the parcel rather than an attribute of it.
       measured_on:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -3132,14 +3132,14 @@ zones:
       # And at least one unit per 3,000 sq ft, so four units need no more
       # than 12,000 sq ft of net developable area. The pair is a band.
       sqft_per_unit: 3000
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L946,L949,L1014"
+      quote: "or/clackamas/happy-valley/16.22/16.22.050.txt#L267,L270,L335-L336"
       # Stated per NET acre, which 16.12 defines as "one acre of developable
       # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
       # the parcel rather than an attribute of it.
       measured_on:
         fact: net_developable_area
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
-        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+        quote: "or/clackamas/happy-valley/16.63/16.63.020.txt#L81-L84,L88,L92,L96,L100,L104"
         less: [happy_valley_slope, happy_valley_nroz]
         assumed_none:
           - "public facilities in a tract"
@@ -3154,7 +3154,7 @@ zones:
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: >-
       The one district in the chapter whose density is stated as an area per
       unit, and the one where reading the lot-size row alone would mislead by
@@ -3199,10 +3199,10 @@ zones:
       # same table, L1229 and L1232) was a variant until 2026-10-08 and is
       # closed by ruling, not by the table: see the note.
       value: false
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1225,L1229,L1232,L1233"
+      quote: "or/clackamas/happy-valley/16.22/16.22.060.txt#L24,L28,L31-L32"
     max_height_ft:
       value: 65
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1306,L1315"
+      quote: "or/clackamas/happy-valley/16.22/16.22.060.txt#L105,L114"
     notes: >-
       RED, RE-RULED 2026-10-14 under Steph's review rule (it replaces the
       by-right-only ruling of 2026-10-08 and keeps this zone red): the review
@@ -3253,7 +3253,7 @@ zones:
       # rowhouses)" and multifamily low, medium and high, and names no
       # four-family dwelling anywhere.
       value: false
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1225,L1229,L1232,L1233"
+      quote: "or/clackamas/happy-valley/16.22/16.22.060.txt#L24,L28,L31-L32"
     notes: >-
       RED, RE-RULED 2026-10-14 (the same reason as MURM): see MURM, the same
       table and the same note 2. The unit-lot variant (townhouses permitted outright) is removed
@@ -3329,7 +3329,7 @@ zones:
       # multifamily row. 12 lots. The districts ledger ruled it prohibited
       # from the same table on 2026-09-08 as FU-10; the map spells it FU10.
       value: false
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L27,L29,L31-L45"
+      quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L14,L16,L18-L34"
       variants:
         # State law over the city's table (Steph 2026-09-30, FOLLOWUPS 21(b)):
         # ORS 197A.420(2) has a city over 1,000 inside Metro allow every
@@ -3353,26 +3353,26 @@ zones:
       # [2] lets side and rear elevations reach 49 ft for a single-family
       # house only; the pod takes the stated 45.
       value: 45
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L114"
+      quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L106"
     setback_front_ft:
       value: 32
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109-L110"
+      quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L101-L102"
     setback_side_ft:
       value: 12
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109,L111"
+      quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L101,L103"
     setback_rear_ft:
       value: 32
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109,L112"
+      quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L101,L104"
     setback_street_side_ft:
       value: 15
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L109,L113"
+      quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L101,L105"
     parking_street_setback_ft:
       same_as: setback_front_ft
       floor_ft: 10
       cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
       url: https://ecode360.com/print/HA4934?guid=43529966
       retrieved: '2026-08-27'
-      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
+      quote: "or/clackamas/happy-valley/16.43/16.43.030.txt#L509,L525-L527"
     min_lot_sqft:
       # "Average lot size (minimum) 10 acres": one lot's average is the lot.
       # The state path caps a quadplex's minimum at the
@@ -3380,22 +3380,22 @@ zones:
       # nothing here. Nearly every FU-10 lot is smaller; the miss rides the
       # adjustment/variance path (16.22.010(E), Chapter 16.71 not stored).
       acres: 10
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L105"
+      quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L97"
     min_lot_width_ft:
       value: 100
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L106"
+      quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L98"
     min_lot_depth_ft:
       value: 200
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L107"
+      quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L99"
     max_coverage_pct:
       value: 20
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L102-L103,L108"
+      quote: "or/clackamas/happy-valley/16.22/16.22.010.txt#L94-L95,L100"
     min_landscaped_pct:
       value: 20
       cite: HV LDC 16.42.030(B)(1)
       url: https://ecode360.com/print/HA4934?guid=43529965
       retrieved: '2026-08-20'
-      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+      quote: "or/clackamas/happy-valley/16.42/16.42.030.txt#L75,L79-L80"
     notes: >-
       Encoded 2026-09-20 from Table 16.22.010-1. One house per lot is the
       whole of household living in the zone; 16.67.070 note * says an
@@ -3427,7 +3427,7 @@ zones:
       # uses occupy the street side(s) of the parcel" with a footprint
       # capped at 25 percent of the parcel. 33 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L35,L37-L39,L84-L91,L113,L115-L116"
+      quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L32,L34-L36,L81-L88,L111,L113-L116"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.010-1. Refused on the row before
       the note: the building is not multifamily by this code's own
@@ -3448,7 +3448,7 @@ zones:
       # purpose sentence says the same -- "office, employment and low
       # density multifamily residential uses". 9 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L27,L35,L37-L39,L84-L91"
+      quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L19-L20,L32,L34-L36,L81-L88"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.010-1, MUE column. See MUC; this
       column has no note 3 door at all.
@@ -3467,7 +3467,7 @@ zones:
       # mixed use area and is subject to the master plan requirements of
       # Chapter 16.65"), which is a process, not a row. 20 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L35,L37-L39,L84-L91,L113-L114"
+      quote: "or/clackamas/happy-valley/16.23/16.23.010.txt#L32,L34-L36,L81-L88,L111-L112"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.010-1, RCMU column. See MUC.
   VC:
@@ -3486,7 +3486,7 @@ zones:
       # more -- or upstairs in a mixed use building; a four-unit building
       # on its own lot is neither. 5 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L436,L438,L441,L444-L455,L693-L695"
+      quote: "or/clackamas/happy-valley/16.23/16.23.020.txt#L21,L23,L26,L29-L40,L279-L281"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.020-1, VC column. The row's two
       halves are the two doors this code gives commercial land, and this
@@ -3503,7 +3503,7 @@ zones:
       # "Multifamily dwellings or residential uses on upper floors of mixed
       # use buildings" X -- prohibited by the legend's own word. 3 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L436,L438,L441,L444-L455"
+      quote: "or/clackamas/happy-valley/16.23/16.23.020.txt#L21,L23,L26,L29-L40"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.020-1, VO column. The only new
       housing the table names is marked X here.
@@ -3530,7 +3530,7 @@ zones:
       # condition cannot be met, and "may be permitted" is a discretion this
       # screen never presumes. 38 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L785,L787-L794,L851-L854"
+      quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L38,L40-L47,L105-L111"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.030-1, CCC column. The row is a
       density band, not a building type, and every way through it needs a
@@ -3552,7 +3552,7 @@ zones:
       # use on the parcel, and at most a quarter of it -- a stand-alone
       # four-unit building is neither. 18 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.23.commercial.txt#L785,L787-L794,L851-L852,L855"
+      quote: "or/clackamas/happy-valley/16.23/16.23.030.txt#L38,L40-L47,L105-L107,L112-L113"
     notes: >-
       Encoded 2026-09-20 from Table 16.23.030-1, MCC column. See CCC; this
       column's door is the same shape without the discretion.
@@ -3572,7 +3572,7 @@ zones:
       # a tower setback from "any residential property line". 119 lots --
       # the schools and parks of the city, and the largest of the 23.
       value: false
-      quote: "or/clackamas/happy-valley/16.24.institutional.txt#L23,L25,L27-L69"
+      quote: "or/clackamas/happy-valley/16.24/16.24.010.txt#L11,L13,L15-L57"
     notes: >-
       Encoded 2026-09-20 from Table 16.24.010-1. A district for public
       land with no dwelling in it.
@@ -3593,7 +3593,7 @@ zones:
       # lots on the city's layer, plus the one the county layer sends here
       # as a pocket.
       value: false
-      quote: "or/clackamas/happy-valley/16.25.industrial.txt#L23,L25-L31,L74-L76"
+      quote: "or/clackamas/happy-valley/16.25/16.25.005.txt#L13,L15-L21,L65-L67"
     notes: >-
       Encoded 2026-09-20 from Table 16.25.005-1. The purpose is "high job
       densities that provide stable, family-wage employment"; the only
@@ -3615,7 +3615,7 @@ zones:
       # otherwise employment; a building that is all dwelling is 100
       # percent of its site. 22 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.25.industrial.txt#L742,L744,L746-L750,L807-L808"
+      quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L72,L74,L76-L80,L138-L141"
     notes: >-
       Encoded 2026-09-20 from Table 16.25.010-1, EC column. The row reads
       P and the note takes the P back for a stand-alone residential
@@ -3632,7 +3632,7 @@ zones:
       # "New residential uses X". Metro Title 4 regionally significant
       # industrial land. 57 lots.
       value: false
-      quote: "or/clackamas/happy-valley/16.25.industrial.txt#L742,L744,L746-L750"
+      quote: "or/clackamas/happy-valley/16.25/16.25.010.txt#L72,L74,L76-L80"
     notes: >-
       Encoded 2026-09-20 from Table 16.25.010-1, IC column. Marked X in
       the city's own legend.
@@ -3700,7 +3700,7 @@ zone_rulings:
   # designations/districts, which are administered by the City via the
   # applicable auspices (for example, yard setbacks) of the Clackamas County
   # ZDO until receiving urban zoning per an adopted urban Comprehensive Plan"
-  # (16.67.plan-amendments.txt L241). The county layer holds every one of
+  # (16.67.070.txt L56). The county layer holds every one of
   # these codes under the same spelling; its answer is what applies.
   RRFF5:
     outcome: pocket
@@ -3754,7 +3754,7 @@ zone_rulings:
 # 2026-09-29): s4 reads a line within 50 ft of a private road as a street line.
 private_drives:
   street: true
-  quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1641"
+  quote: "or/clackamas/happy-valley/16.12/16.12.030.txt#L1942-L1944"
   says: "A public right-of-way or private tract"
   cite: "HVMC 16.12.020 (Street; Private street; Front lot line; Corner lot)"
   note: >-

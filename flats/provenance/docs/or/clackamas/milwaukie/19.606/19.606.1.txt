@@ -1,0 +1,31 @@
+§ 19.606.1. Parking Space and Aisle Dimensions.
+
+A.
+
+The dimensions for off-street parking spaces and abutting drive aisles, where provided, shall be no less than in Table 19.606.1.
+The minimum dimensions listed in Table 19.606.1. are illustrated in Figure 19.606.1.
+
+Table 19.606.1 Minimum Parking Space And Aisle Dimensions  Table 19.606.1 Minimum Parking Space And Aisle Dimensions  Table 19.606.1 Minimum Parking Space And Aisle Dimensions  Table 19.606.1 Minimum Parking Space And Aisle Dimensions  Table 19.606.1 Minimum Parking Space And Aisle Dimensions  Table 19.606.1 Minimum Parking Space And Aisle Dimensions
+Angle (A)                                                  Width (B)                                                  Curb Length (C)                                            1-Way Aisle Width (D)                                      2-Way Aisle Width (D)                                      Depth (E)
+0° (Parallel)                                              8.5′                                                       22′                                                        12′                                                        19′                                                        8.5′
+30°                                                        9′                                                         17′                                                        12′                                                        19′                                                        16.5′
+45°                                                        9′                                                         12′                                                        13′                                                        19′                                                        18.5′
+60°                                                        9′                                                         10′                                                        17′                                                        19′                                                        19′
+90°                                                        9′                                                         9′                                                         22′                                                        22′                                                        18′
+
+Figure 19. Parking Dimension Factors
+
+B.
+
+The dimension of vehicle parking spaces provided for disabled persons shall be according to federal and State requirements.
+
+C.
+
+Parking spaces shall be provided with adequate aisles or turnaround areas so that all vehicles may enter the street in a forward manner.
+
+D.
+
+Drive aisles shall be required in parking areas greater than 5 spaces.
+Drive aisles shall meet the minimum width standards of Subsection 19.606.1.
+Where a drive aisle or portion thereof does not abut a parking space(s), the minimum allowed width for a one-way drive aisle shall be 8 ft and the minimum allowed width for a two-way drive aisle shall be 16 ft.
+

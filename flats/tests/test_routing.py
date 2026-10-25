@@ -278,7 +278,9 @@ OPEN = {
     # 19.510". 19.510 (L4521) only defines the green-building certifications
     # (LEED, Passive House ...) that earn the height bonus; the bonus raises
     # the 45 ft ceiling and is not taken, so nothing in it can tighten.
-    "or/clackamas/milwaukie 19.303.4 -> 19.510",
+    # Left the ledger when Milwaukie was cut into sections (2026-10-24): one
+    # sentence to a line, and the routing words on the old printed line
+    # belong to the next sentence, not the one naming 19.510.
     "or/clackamas/lake-oswego 50.04.001.3 -> 50.04.003",
     "or/clackamas/wilsonville 4.001 -> 4.140",
     "or/clackamas/wilsonville 4.135 -> 4.156.01",
@@ -387,9 +389,9 @@ OPEN = {
     # which surfaces TMU's adequate-utilities sentence (tdc.18.660 L208):
     # easements, sanitary sewers and undergrounding of utilities. Read: public
     # facility standards for the Public Works permit, no dimension the pod
-    # meets on its lot.
-    "or/washington/tigard 18.660.040 -> 18.910.050",
-    "or/washington/tigard 18.660.040 -> 18.910.090",
+    # meets on its lot. .050 and .090 left the ledger when Tigard was cut
+    # into sections (2026-10-24): one sentence to a line, and only the
+    # sentence naming .120 carries routing words.
     "or/washington/tigard 18.660.040 -> 18.910.120",
     # 2026-10-15 (FOLLOWUPS 89): Happy Valley 16.44 is stored for 16.44.120's
     # driveway and corner-access sentences, which surfaces three use-table
@@ -510,8 +512,9 @@ FOLLOWED = {
     # storeys (L943), whose basements are "as defined in Chapter 18.30"; the
     # layer reads 18.30 whole. 18.660.060 -> .040 is a WIRELESS FACILITY
     # pointer (L581), closed only because the TMU use gate quotes 18.660.040;
-    # the pointer itself reaches nothing the pod is.
-    "or/washington/tigard 18.660.080 -> 18.30",
+    # the pointer itself reaches nothing the pod is. 18.660.080 -> 18.30 left
+    # the ledger when Tigard was cut into sections (2026-10-24): the routing
+    # words were in another sentence on the same printed line.
     "or/washington/tigard 18.660.060 -> 18.660.040",
     # 2026-10-01, later: the same 18.280.020 quote (MUC's exempt yards and
     # height). Its subsection C sends MU-CBD and TMU rowhouses to 18.650 and

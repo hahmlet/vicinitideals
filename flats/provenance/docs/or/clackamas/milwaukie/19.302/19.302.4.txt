@@ -1,0 +1,55 @@
+§ 19.302.4. Development Standards.
+
+In the high density residential zone, the development standards in Table 19.302.4 apply.
+Notes and/or cross references to other applicable code sections are listed in the "standards/Additional Provisions" column.
+Additional standards are provided in Section 19.302.5.
+
+The standards in Subsection 19.302.4 are not applicable to cottage cluster development except where specifically referenced by Subsection 19.505.4.
+
+See Sections 19.201 Definitions and 19.202 Measurements for specific descriptions of standards and measurements listed in the table.
+
+In the high density residential zone the following housing types are permitted on lot sizes as follows:
+
+Between 1,500 to 2,999 sq ft: Townhouse; a townhouse is permitted on a corner lot up to 3,500 sq ft in area.
+Between 3,000 to 4,999 sq ft: Duplex, Triplex, and Quadplex.
+Between 5,000 to 6,999 sq ft: Single Detached Dwelling, Single Detached Dwelling with up to 2 ADUs, Duplex, Triplex, and Quadplex.[1]
+7,000 sq ft and up: Single Detached Dwelling, Single Detached Dwelling with up to 2 ADUs, Duplex, Triplex, Quadplex, Cottage Cluster, Multi-Unit Housing
+
+All other uses require a minimum lot size of 5,000 sq ft.
+
+Table 19.302.4 High Density Residential Development Standards  Table 19.302.4 High Density Residential Development Standards  Table 19.302.4 High Density Residential Development Standards
+Standard                                                       R-HD                                                           Standards/Additional Provisions
+A. Lot Standards
+Minimum lot size (sq ft)                                       1,500                                                          Subsection 19.501.1 Lot Size Exceptions Subsection 19.505.4 Cottage Cluster Housing Subsection 19.505.5 Townhouses
+Minimum lot width (ft)                                         20
+Minimum lot depth (ft)                                         70
+Minimum street frontage requirements (ft)                                                                                     Subsection 19.504.6 Flag Lots
+Townhouse                                                      20                                                             Subsection 19.504.6 Flag Lots
+Standard lot                                                   35                                                             Subsection 19.504.6 Flag Lots
+Flag lot                                                       25                                                             Subsection 19.504.6 Flag Lots
+Double flag lot                                                25                                                             Subsection 19.504.6 Flag Lots
+B. Development Standards
+Minimum yard requirements for primary structures (ft)          -                                                              Subsection 19.504.5 Transition Area Measures
+Front yard                                                     20                                                             Subsection 19.504.5 Transition Area Measures
+Side yard                                                      See Subsection 19.302.5.A                                      Subsection 19.504.5 Transition Area Measures
+Street side yard                                               15[4]                                                          Subsection 19.504.5 Transition Area Measures
+Rear yard                                                      15                                                             Subsection 19.504.5 Transition Area Measures
+Maximum building height for primary structures                 45 ft                                                          Subsection 19.302.5.E Height Exceptions Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions Subsection 19.505.7 Nonresidential Development
+Side yard height plane limit                                                                                                  Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+Height above ground at minimum required side yard depth (ft)   25                                                             Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+Slope of plane (degrees)                                       45                                                             Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+Maximum lot coverage (percent of total lot area)               50%                                                            Section 19.201 "Lot coverage" definition
+Minimum vegetation (percent of total lot area)                 15%                                                            Subsection 19.504.5 Minimum Vegetation Subsection 19.302.5.C Minimum Vegetation Subsection 19.302.5.D Front Yard Minimum Vegetation
+Density requirements (Dwelling units per acre)                 -                                                              Subsection 19.202.4 Density Calculations
+Minimum                                                        25.0                                                           Subsection 19.302.5.F Residential Densities
+Maximum[2,3]                                                   32.0                                                           Subsection 19.501.4 Density Exceptions
+
+1  Minimum lot size for single detached dwelling applies to lots created on or after June 3, 2022, the effective date of Ordinance #2218.
+2  Townhouses are allowed at 4 times the maximum density allowed for single detached dwellings in the same zone or 25 dwelling units per acre, whichever is less.
+Duplexes, triplexes, quadplexes, and cottage clusters are exempt from density maximums.
+3  The density for single room occupancy (SRO) developments is calculated as follows: four SRO rooms equal one dwelling unit.
+4  The street side yard setback for townhouses is 5 ft.
+
+Table 19.302.4 is supplemented by Figure 19.302.4.
+For those properties identified in Figure 19.302.4, the minimum front yard setback is 5 ft.
+

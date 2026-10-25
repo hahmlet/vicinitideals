@@ -1,0 +1,197 @@
+§ 16.22.040. Medium density single-family residential zones.
+
+A.
+
+Purpose.
+
+1.
+
+Residential—Five thousand Square Feet (R-5).
+This development district will allow single-family (attached and detached) as well as duplexes, triplexes within the City.
+Sanitary sewer and water are the most essential of urban services, but all Level I services and facilities are necessary and required for development at full density.
+In this district, there is an average lot size of 5,000 square feet.
+
+2.
+
+Mixed Use Residential—Single-Family (MUR-S).
+Mixed use residential will promote compact form, and residential and commercial or residential and office mixed vertically, in addition to across the district.
+Minimum densities are provided to comply with the Urban Growth Management Functional Plan, Title 1 requirements.
+MUR-S has a minimum density of six units per net acre and a minimum lot size of 5,000 square feet.
+
+B.
+
+Permitted Uses Table 16.22.040-1 identifies the land uses that are allowed in the R-5 and MUR-S Districts.
+
+Table 16.22.040-1 Medium Density Single-Family Residential (R-5 and MUR-S) Permitted Uses
+Table 16.22.040-1 Medium Density Single-Family Residential (R-5 and MUR-S) Permitted Uses
+Table 16.22.040-1 Medium Density Single-Family Residential (R-5 and MUR-S) Permitted Uses
+P=Permitted; C=Conditional Use; X=Prohibited
+P=Permitted; C=Conditional Use; X=Prohibited
+P=Permitted; C=Conditional Use; X=Prohibited
+Land Use
+R-5
+MUR-S
+Residential
+Residential
+Residential
+One single-family dwelling, townhome, duplex, triplex, quadplex, cottage cluster, or modular dwelling unit per lot[1]
+P
+P
+Multiple-family units or manufactured housing, approved as part of a PUD application pursuant to Section 16.63.130.
+Density calculation as defined in Section 16.12.030 may be used where applicable.
+P
+P
+Accessory dwelling units, complying with Section 16.44.050
+P
+P
+Residential care home
+P
+P
+Residential care facilities
+C
+C
+Manufactured home parks subject to the provisions of Section 16.44.040
+C
+P
+Rooming houses
+X
+X
+Commercial
+Commercial
+Commercial
+Commercial daycare facilities
+C
+C
+Home occupation as defined in Section 16.12.030, per the provisions of Section 16.69.020
+P
+P
+Special event centers for hosting functions such as weddings, anniversary celebrations, corporate parties and similar events
+C
+C
+Neighborhood Commercial Uses
+Neighborhood Commercial Uses
+Neighborhood Commercial Uses
+Coffee shops, cafes, sandwich shops and delicatessens, restaurants (no drive-through service allowed)
+X
+P[2,3]
+Florists
+X
+P[2,3]
+Grocery, food, specialty foods, and produce stores
+X
+P[2,3]
+Laundromats and dry cleaners
+X
+P[2,3]
+Personal services (e.g., barbershops, hair salons, spas)
+X
+P[2,3]
+Yogurt and ice cream stores
+X
+P[2,3]
+Video rental stores
+X
+P[2,3]
+Retail and service commercial uses similar to those above but not listed elsewhere in this section upon administrative determination through the design review process
+X
+P[2,3]
+Institutional/Utilities
+Institutional/Utilities
+Institutional/Utilities
+Church, synagogue, temple or other place of worship
+C
+C
+Public or private school(s)
+C
+C
+Utility facilities (telecommunication, pump stations, substations)
+C
+C
+Other
+Other
+Other
+Public or private open spaces, parks and playgrounds, tennis courts, and similar outdoor recreational activity areas and recreational buildings, facilities and grounds, which include fully or partially enclosed structures for the primary or secondary use
+P
+P
+Large scale recreational facilities such as golf courses, aquatic centers, aquariums, amusement parks and similar uses
+C
+C
+Wireless communications facilities not to include antenna support structures, subject to the provisions of Section 16.44.020 of this title
+P/C
+P/C
+Helipad
+X
+X
+Construction of new streets and roads including the extensions of existing streets and roads, that are included with the adopted transportation system plan
+P
+P
+Any accessory structure, which is, customarily incidental to any of the permitted uses, located on the same lot
+P
+P
+Uses similar to those upon administrative determination by the Planning Official
+P/C
+P/C
+
+NOTES:  NOTES:
+[1]     Applies to a parent lot.
+Duplexes, triplexes, quadplexes, and cottage clusters are not permitted on a child lot (i.e., previously subdivided lot from a middle housing land division).
+[2]     Neighborhood commercial uses subject to the provisions of Section 16.44.080.
+[3]     Neighborhood commercial uses are permitted within the Happy Valley Town Center Plan Area.
+
+C.
+
+Development Standards. The development standards in Table 16.22.040-2 apply to all uses, structures, buildings, and development in the R-5, MUR-S Districts.
+
+Table 16.22.040-2 Development Standards for R-5 and MUR-S                      Table 16.22.040-2 Development Standards for R-5 and MUR-S                                                                    Table 16.22.040-2 Development Standards for R-5 and MUR-S
+Standard                                                                       R-5                                                                                                                          MUR-S
+Lot size (minimum): Single-family dwelling detached, duplex, and triplex[1,8]  5,000 sf                                                                                                                     5,000 sf
+Lot size (minimum): Quadplex and cottage cluster[8]                            7,000 sf                                                                                                                     7,000 sf
+Lot size (minimum) Townhome[1]                                                 1,500 sf                                                                                                                     1,500 sf
+Townhome maximum density (units/net acre)                                      25 du/net acre                                                                                                               25 du/net acre
+Residential density (minimum)[1]                                               None                                                                                                                         6 du/net acre
+Lot width (minimum)[2]                                                         40 feet                                                                                                                      Variable[4]
+Lot depth (minimum)                                                            60 feet                                                                                                                      Variable[4]
+Street frontage (minimum)[8]
+Lots fronting on cul-de-sac                                                    35 feet                                                                                                                      Variable[4]
+All other lots                                                                 40 feet                                                                                                                      Variable[4]
+Townhomes                                                                      20 feet                                                                                                                      20 feet
+Lot coverage (maximum)[5,8,9]
+Single-family (detached)                                                       50%                                                                                                                          Variable[4,6]
+Duplex, triplex, quadplex, townhome                                            60%                                                                                                                          Variable[4,6]
+Building setbacks (minimum)[8]
+Front (street access garage)                                                   20 feet                                                                                                                      20 feet
+Front (alley access garage)                                                    10 feet                                                                                                                      10 feet[4]
+Rear                                                                           20 feet                                                                                                                      20 feet[4]
+Interior side                                                                  5/0 feet 3                                                                                                                   5/0 feet[3,4]
+Street side (corner lot)                                                       8 feet                                                                                                                       8 feet[4]
+Cottage cluster, front                                                         10 feet                                                                                                                      10 feet
+Cottage cluster, rear                                                          10 feet                                                                                                                      10 feet
+Cottage cluster, interior side                                                 5 feet                                                                                                                       5 feet
+Cottage cluster, street side                                                   8 feet                                                                                                                       8 feet
+Garage and carport entrances
+Entrances not facing an alley                                                  22 feet                                                                                                                      22 feet[4]
+Entrances facing an alley                                                      22 feet to base floor (foundation only, not including posts or other support mechanisms) 6 feet to upper floors (wall face)  22 feet to base floor (foundation only, not including posts or other support mechanisms) 6 feet to upper floors (wall face)[4]
+Building height (maximum)                                                      45 feet[6]                                                                                                                   65 feet[6]
+Shared outdoor recreation areas                                                400 sq. ft./unit provided in accordance with Section 16.42.080                                                               400 sq. ft./unit provided in accordance with Section 16.42.080
+
+NOTES:  NOTES:
+[1]     Density calculations for single-family detached shall be made pursuant to Section 16.63.020(F).
+Cottage clusters must meet a minimum density of four units per gross acre.
+[2]     Townhomes are exempt from the lot width requirements.
+Street frontage controls lot width for townhomes.
+[3]     Interior side yard setbacks for townhomes may be reduced to zero in compliance with applicable sections of the adopted Uniform Building Code.
+[4]     Standards may be proposed for amendment by Master Plan, PUD or Design Review land use applications.
+[5]     Cottage cluster housing is exempt from lot coverage requirements.
+[6]     Pursuant to Section 16.42.030, 20% of the net developable area must be usable open space.
+[7]     The single-family residential building height maximum is 45 feet at the front elevation; side and rear elevations may not exceed 49 feet.
+[8]     If a duplex, triplex, fourplex, or cottage cluster has been divided by a middle housing land division, per LDC 16.61, the development standards that are applicable to the lot shall apply to the middle housing parent lot, not to the middle housing child lot.
+[9]     Maximum lot coverage for townhomes is the greater of the percentage identified in the table or up to 1,000 square feet of buildings, decks, stairways and entry bridges that are more than 30 inches above grade (excluding eaves).
+Compliance with all other standards is required.
+
+(Ord. 389 § 1(Exh.
+A), 2009; Ord. 406 § 1, 2010; Ord. 422 § 1, 2012; Ord. 427 § 1, 2012; Ord. 433 § 1, 2013; Ord. 446 § 1, 2014; Ord. 468 § 1, 2014; Ord. 474 § 1, 2015; Ord. 501 § 1, 2016; Ord. 521 § 3, 2017; Ord. 556 § 1, 2021; Ord. 561 § 1(Exh.
+A), 2022; Ord. 571 § 1, 2022; Ord. 582, 3/19/2024)
+
+[1]
+Editor's Note: Ord. 589, which amended this section with regard to Cottage Clusters, was remanded by the courts and all amendments were removed at request of the City.
+

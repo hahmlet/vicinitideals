@@ -75,8 +75,8 @@ def test_the_street_yards_stay_held_whatever_the_shared_lines_say(corpus, zone: 
     for field in ("setback_front_ft", "setback_street_side_ft"):
         held = corpus[MIL].zones[zone].values[field]
         assert held.qualified_by == ACROSS, field
-        assert held.qualified_quote == "or/clackamas/milwaukie/19.500.supplementary.txt#L605"
-    text = ProvenanceStore().quote("or/clackamas/milwaukie/19.500.supplementary.txt#L605")
+        assert held.qualified_quote == "or/clackamas/milwaukie/19.504/19.504.4.txt#L8-L10"
+    text = ProvenanceStore().quote("or/clackamas/milwaukie/19.504/19.504.4.txt#L8-L10")
     assert "adjacent across a right-of-way from the R-MD Zone" in text
 
 

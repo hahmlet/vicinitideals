@@ -1,0 +1,108 @@
+§ 19.402.3. Applicability.
+
+A.
+
+The regulations in Section 19.402 apply to all properties that contain or are within 100 ft of a WQR and/or HCA (including any locally significant Goal 5 wetlands or habitat areas identified by the City of Milwaukie) as shown on the Milwaukie Natural Resources Administrative Map (hereafter "NR Map").
+
+B.
+
+For properties that do not contain, but are within 100 ft of, a WQR and/or HCA, as shown on the NR Map, and where an activity not listed as exempt in Subsection 19.402.4.A will disturb more than 150 sq ft, a construction management plan is required in accordance with Subsection 19.402.9 (see also Table 19.402.3).
+
+C.
+
+The NR Map, which shows WQRs and HCAs, is adopted by reference.
+The NR Map will be used to determine the applicability of Section 19.402 and will be administered in accordance with Subsection 19.402.15.
+
+D.
+
+Designated natural resources are shown on the NR Map as follows:
+
+1.
+
+Water quality resources (WQRs) include protected water features and their associated vegetated corridors, as specified in Table 19.402.15.
+The vegetated corridor is a buffer around each protected water feature, established to prevent damage to the water feature.
+The width of the vegetated corridor varies depending on the type of protected water feature, upstream drainage area served, and slope adjacent to the protected water feature.
+The NR Map is a general indicator of the location of vegetated Corridors; the specific location of vegetated corridors must be determined in the field in accordance with Table 19.402.15.
+
+2.
+
+Habitat conservation areas (HCAs) include significant Goal 5 wetlands, riparian areas, and fish and wildlife habitat.
+HCAs are designated based on a combination of inventory of vegetative cover and analysis of habitat value and urban development value.
+HCA locations on the NR Map are assumed to be correct unless demonstrated otherwise; verifications and corrections will be processed in accordance with the procedures established in Subsection 19.402.15.
+
+E.
+
+To determine whether a proposed activity on a given property will trigger any requirements of Section 19.402, the City will use the latest available aerial photographs; a copy of the applicable section of the NR Map; and, in the case of WQRs, the parameters established in Table 19.402.15.
+If a property owner or applicant believes that the NR Map is inaccurate, they may propose corrections according to the standards established in Subsection 19.402.15.
+
+F.
+
+In the context of designated natural resources, "disturbance" is a condition or result of an act that "disturbs" as defined in Section 19.201.
+Disturbance can be either temporary or permanent as noted below.
+
+1.
+
+Temporary disturbances are those that occur during an allowed or approved development or activity but will not persist beyond completion of the project.
+Temporary disturbances include, but are not limited to, accessways for construction equipment; material staging and stockpile areas; and excavation areas for building foundations, utilities, stormwater facilities, etc.
+
+2.
+
+Permanent disturbances are those that remain in place after an allowed or approved development or activity is completed.
+Permanent disturbances include, but are not limited to, buildings, driveways, walkways, and other permanent structures.
+
+G.
+
+If more than 150 sq ft of area will be disturbed in conjunction with a proposed activity listed as exempt in Subsection 19.402.4.B, a construction management plan must be submitted according to the provisions of Subsection 19.402.9.
+This requirement applies even when the proposed activity will not occur within a designated natural resource but is within at least 100 ft of the resource, in accordance with Table 19.402.3.
+
+H.
+
+Proposed activities that are listed as exempt or occur more than 100 ft from a WQR or HCA, as shown on the NR Map or determined in accordance with Table 19.402.15, do not require review under the provisions of Section 19.402.
+
+I.
+
+Those portions of streams, creeks, and other protected water features that appear on the NR Map but are enclosed in pipes, culverts, or similar structures are not subject to the provisions of Section 19.402, except where a proposed activity will expose or directly disturb the protected water feature, such as with excavation.
+For WQRs, the underground portion of the protected water feature is not considered a protected water feature for purposes of determining the WQR location as outlined in MMC Table 19.402.15.
+For HCAs, the boundary verification options provided in MMC 19.402.15 may be used as necessary to determine whether the aboveground characteristics of the underground portion of the protected water feature affects the representation of HCA on the NR Map.
+
+J.
+
+The requirements of Section 19.402 apply, as shown in Table 19.402.3, both to properties that include a WQR and/or HCA, and to properties that do not include a WQR or HCA but where an activity is proposed within 100 ft of a WQR or HCA.
+
+Table 19.402.3 Applicability of Requirements of Section 19.402                                         Table 19.402.3 Applicability of Requirements of Section 19.402                                Table 19.402.3 Applicability of Requirements of Section 19.402
+Situations/Activities that may Trigger Section 19.402                                                  Prepare Construction Management Plan per Subsection 19.402.9                                  Comply with Remainder of Section 19.402
+Activities listed as exempt per: • Subsection 19.402.4.A (outright exemptions for both WQRs and HCAs)  No                                                                                            No
+• Subsection 19.402.4.B (limited exemptions for HCAs only)                                             No (unless > 150 sq ft of disturbance is proposed)                                            No
+Nonexempt activities: • Outside of WQR and HCA                                                         No (unless activity is within 100' of WQR or HCA and > 150 sq ft of disturbance is proposed)  No
+• Within WQR or HCA                                                                                    Yes                                                                                           Yes
+
+K.
+
+Activities that are not exempt per Subsection 19.402.4, or prohibited per Subsection 19.402.5, are subject to the Type I, II, or III review process as outlined in Table 19.402.3.K.
+
+Table 19.402.3.K Types of Process Review for Various Activities                                                      Table 19.402.3.K Types of Process Review for Various Activities  Table 19.402.3.K Types of Process Review for Various Activities  Table 19.402.3.K Types of Process Review for Various Activities
+Activity (and applicable code sections)                                                                              Type of Review Process                                           Type of Review Process                                           Type of Review Process
+Activity (and applicable code sections)                                                                              Type I (19.1004)                                                 Type II (19.1005)                                                Type III (19.1006)
+Agency-approved natural resource Management plans (Subsections 19.402.10.A and C)                                    ✓
+Independent natural resource management plans (Subsections 19.402.10.B and C)                                                                                                         ✓
+Limited tree removal (Subsection 19.402.6.B)                                                                         ✓
+Tree removal that is not exempt or allowable with Type I review (Subsection 19.402.8.A.8)                                                                                                                                                              ✓
+Activities within HCA that meet nondiscretionary standards (Subsection 19.402.11.D)                                  ✓
+Maintenance of existing utility facilities (Subsection 19.402.6.E)                                                   ✓
+Utility connections (Subsection 19.402.6.F)                                                                          ✓
+Nonemergency abatement of nuisances or violations (Subsection 19.402.6.G)                                            ✓
+Limited WQR disturbance for new dwelling units Subsection 19.402.6.B                                                 ✓
+Special use activities (Subsections 19.402.7.A and 19.402.11.E)                                                                                                                       ✓
+Other limited disturbance to WQRs (Subsection 19.402.7.D)                                                                                                                             ✓
+Development activities that are not exempt or allowable with Type I or II review Subsections 19.402.8 and 19.402.12                                                                                                                                    ✓
+Property line adjustments that balance the HCA distribution (Subsection 19.402.13.E.1 or 2)                          ✓
+Property line adjustments that otherwise limit HCA disparity (Subsection 19.402.13.E.3)                                                                                               ✓
+Low-impact partitions (put designated natural resources in separate tract) (Subsection 19.402.13.F)                  ✓
+Other partitions or subdivisions (Subsection 19.402.13.G or H)                                                                                                                        ✓
+Boundary verifications with minor corrections (Subsection 19.402.15.A.1)                                             ✓
+Boundary verifications with substantial corrections (Subsection 19.402.15.A.2)                                                                                                        ✓
+
+L.
+
+Where WQRs and HCAs overlap, the WQR overlap area is not included in any calculations of the HCA area for purposes of determining whether HCA-only exemptions are allowed or for calculating allowable HCA disturbances.
+

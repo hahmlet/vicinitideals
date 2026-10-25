@@ -1,0 +1,45 @@
+§ 19.302.2. Allowed Uses in the High Density Residential Zone.
+
+Uses allowed, either allowed by right or conditionally, in the high density residential zone are listed in Table 19.302.2 below.
+Similar uses not listed in the table may be allowed through a Director's Determination pursuant to Section 19.903.
+Notes and/or cross references to other applicable code sections are listed in the "Standards/Additional provisions" column.
+
+See Section 19.201 Definitions for specific descriptions of the uses listed in the table.
+
+Table 19.302.2 High Density Residential Uses Allowed                                                          Table 19.302.2 High Density Residential Uses Allowed  Table 19.302.2 High Density Residential Uses Allowed
+Use                                                                                                           R-HD                                                  Standards/ Additional Provisions
+Residential Uses                                                                                              Residential Uses                                      Residential Uses
+Single detached dwelling                                                                                      P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Duplex                                                                                                        P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Triplex                                                                                                       P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Quadplex                                                                                                      P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Adult foster/care home                                                                                        P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Accessory dwelling unit                                                                                       P                                                     Subsection 19.910.1 Accessory Dwelling Units
+Manufactured dwelling park                                                                                    III                                                   Subsection 19.910.3 Manufactured Dwelling Parks
+Townhouse                                                                                                     P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development Subsection 19.505.5 Standards for Townhouses
+Cottage cluster                                                                                               P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development Subsection 19.505.4 Cottage Cluster Housing
+Mixed use                                                                                                     P                                                     Subsection 19.505.7 Nonresidential Development
+Multi-unit housing                                                                                            P                                                     Subsection 19.505.3 Multi-Unit Housing Subsection 19.302.5.F Residential Densities Subsection 19.302.5.H Building Limitations
+Single room occupancy Housing                                                                                 P                                                     Subsection 19.505.3 Multi-Unit Housing Subsection 19.302.5.F Residential Densities Subsection 19.302.5.H Building Limitations
+Residential care facility Examples include: assisted living, nursing facilities, and memory care communities  P                                                     Subsection 19.505.3 Multi-Unit Housing Subsection 19.302.5.F Residential Densities Subsection 19.302.5.H Building Limitations
+Office: Production-related office and Professional and Administrative office                                  P                                                     Subsection 19.302.3 Use Limitations and Restrictions Subsection 19.505.7 Nonresidential Development
+Personal/business services                                                                                    P                                                     Subsection 19.302.3 Use Limitations and Restrictions Subsection 19.505.7 Nonresidential Development
+Hotel or motel                                                                                                CU                                                    Section 19.905 Conditional Uses
+Bed and breakfast or vacation rental                                                                          CU                                                    Section 19.905 Conditional Uses
+Accessory use                                                                                                 P                                                     Section 19.503 Accessory Uses
+Agricultural or horticultural use                                                                             P                                                     Subsection 19.302.3 Use Limitations and Restrictions
+Community service use                                                                                         CSU                                                   Section 19.904 Community Service Uses
+Home occupation                                                                                               P                                                     Section 19.507 Home Occupation Standards
+Short-term rental                                                                                             P                                                     Section 19.507 Home Occupation Standards
+
+Notes:  Notes:  Notes:
+P       =       Permitted.
+N       =       Not permitted.
+CSU     =       Permitted with Community Service Use approval subject to provisions of Section 19.904.
+Type III review required to establish a new CSU or for major modification of an existing CSU.
+Type I review required for a minor modification of an existing CSU.
+CU      =       Permitted with conditional use approval subject to the provisions of Section 19.905.
+Type III review required to establish a new CU or for major modification of an existing CU.
+Type I review required for a minor modification of an existing CU.
+III     =       Type III review required.
+

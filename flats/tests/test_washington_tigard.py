@@ -375,11 +375,12 @@ def test_the_footnotes_are_all_ruled() -> None:
     assert by_state(rows) == {"encoded": 5, "dismissed": 12}
     encoded = {(n.doc.rsplit("/", 1)[-1], n.line) for n in rows if n.state == "encoded"}
     assert encoded == {
-        ("tdc.18.110.residential-zones.txt", 215),
-        ("tdc.18.280.rowhouses.txt", 88),
-        ("tdc.18.280.rowhouses.txt", 89),
-        ("tdc.18.650.downtown.txt", 481),
-        ("tdc.18.650.downtown.txt", 483),
+        # The section files the three tables' notes were cut into (2026-10-24).
+        ("18.110.040.txt", 52),
+        ("18.280.040.txt", 33),
+        ("18.280.040.txt", 34),
+        ("18.650.070.txt", 33),
+        ("18.650.070.txt", 35),
     }
 
 

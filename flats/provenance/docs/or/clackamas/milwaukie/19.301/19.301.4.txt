@@ -1,0 +1,200 @@
+§ 19.301.4. Development Standards.
+
+In the moderate density residential zone, the development standards in Table 19.301.4 apply.
+Notes and/or cross references to other applicable code sections are listed in the "standards/Additional Provisions" column.
+Additional standards are provided in Subsection 19.301.5.
+
+See Sections 19.201 Definitions and 19.202 Measurements for specific descriptions of standards and measurements listed in the table.
+
+Table 19.301.4
+Moderate Density Residential Development Standards
+Table 19.301.4
+Moderate Density Residential Development Standards
+Table 19.301.4
+Moderate Density Residential Development Standards
+Table 19.301.4
+Moderate Density Residential Development Standards
+Table 19.301.4
+Moderate Density Residential Development Standards
+Table 19.301.4
+Moderate Density Residential Development Standards
+Standard
+R-MD
+R-MD
+R-MD
+R-MD
+Standards/ Additional Provisions
+Standard
+Lot size (square feet)
+Lot size (square feet)
+Lot size (square feet)
+Lot size (square feet)
+Standards/ Additional Provisions
+Standard
+1,500 – 2,999
+3,000–4,999
+5,000-6,999[2]
+7,000 and up
+Standards/ Additional Provisions
+A. Permitted Dwelling Type
+A. Permitted Dwelling Type
+A. Permitted Dwelling Type
+A. Permitted Dwelling Type
+A. Permitted Dwelling Type
+A. Permitted Dwelling Type
+Townhouse[1]
+Duplex, Triplex, Quadplex
+Single Detached Dwelling, Single Detached Dwelling, with up to 2 ADUs, Duplex, Triplex, Quadplex
+Single Detached Dwelling, Single Detached Dwelling, with 2 ADUs, Duplex, Triplex, Quadplex, Cottage Cluster
+Subsection 19.501.1 Lot Size Exceptions
+B. Lot Standards
+B. Lot Standards
+B. Lot Standards
+B. Lot Standards
+B. Lot Standards
+B. Lot Standards
+1. Minimum lot width (ft)
+20
+30
+50
+60
+2. Minimum lot depth (ft)
+70
+80
+80
+80
+3. Minimum street frontage requirements (ft)
+a. Townhouse
+20
+b. Standard lot
+35
+30
+35
+35
+c. Flag lot
+NA[3]
+25
+25
+25
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+d. Double flag lot
+NA[3]
+25
+25
+25
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+C. Development Standards
+C. Development Standards
+C. Development Standards
+C. Development Standards
+C. Development Standards
+C. Development Standards
+1. Minimum yard requirements for primary structures (ft)
+Subsection 19.301.5.A Yards
+Subsection 19.501.2 Yard Exceptions
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+Subsection 19.505.4 Cottage Cluster Housing
+Subsection 19.505.5 Townhouses
+a. Front yard
+20
+20
+20
+20
+Subsection 19.301.5.A Yards
+Subsection 19.501.2 Yard Exceptions
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+Subsection 19.505.4 Cottage Cluster Housing
+Subsection 19.505.5 Townhouses
+b. Side yard
+5
+5
+5
+5/10
+Subsection 19.301.5.A Yards
+Subsection 19.501.2 Yard Exceptions
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+Subsection 19.505.4 Cottage Cluster Housing
+Subsection 19.505.5 Townhouses
+c. Street side yard
+5
+15
+15
+20
+Subsection 19.301.5.A Yards
+Subsection 19.501.2 Yard Exceptions
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+Subsection 19.505.4 Cottage Cluster Housing
+Subsection 19.505.5 Townhouses
+d. Rear yard
+15
+20
+20
+20
+Subsection 19.301.5.A Yards
+Subsection 19.501.2 Yard Exceptions
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+Subsection 19.505.4 Cottage Cluster Housing
+Subsection 19.505.5 Townhouses
+2. Maximum building height for primary structures
+35 ft
+35 ft
+35 ft
+35 ft
+Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+3. Side yard height plane limit
+Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+a. Height above ground at minimum required side yard depth (ft)
+20
+20
+20
+20
+b. Slope of plane (degrees)
+45
+45
+45
+45
+4. Maximum lot coverage (percent of total lot area)
+45%
+35%
+35%
+30%
+Section 19.201 "Lot coverage" definition
+Subsection 19.301.5.B Lot Coverage
+5. Minimum vegetation (percent of total lot area)
+15%
+25%
+25%
+30%
+Subsection 19.301.5.C Front Yard Minimum Vegetation
+Subsection 19.504.5 Minimum Vegetation
+D. Other Standards
+D. Other Standards
+D. Other Standards
+D. Other Standards
+D. Other Standards
+D. Other Standards
+1. Density requirements (dwelling units per acre)
+Subsection 19.301.5.D Residential Densities
+Subsection 19.501.4 Density Exceptions For Cottage Clusters and Townhouse Density Exceptions, see 19.501.4
+a. Minimum
+25
+7.0
+7.0
+5.0
+Subsection 19.301.5.D Residential Densities
+Subsection 19.501.4 Density Exceptions For Cottage Clusters and Townhouse Density Exceptions, see 19.501.4
+b. Maximum[4]
+25
+8.7
+8.7
+6.2
+Subsection 19.301.5.D Residential Densities
+Subsection 19.501.4 Density Exceptions For Cottage Clusters and Townhouse Density Exceptions, see 19.501.4
+
+Notes:  Notes:
+1       A townhouse is permitted on a corner lot up to 3,500 sq ft in area.
+2       Minimum lot size for single detached dwelling applies to lots created on or after June 3, 2022, the effective date of Ordinance #2218.
+3       Townhouses are not permitted on flag lots.
+4       Townhouses are allowed at 4 times the maximum density allowed for single detached dwellings in the same zone or 25 dwelling units per acre, whichever is less.
+Duplexes, triplexes, quadplexes, and cottage clusters are exempt from density maximums.
+

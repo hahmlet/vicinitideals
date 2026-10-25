@@ -1,0 +1,48 @@
+§ 18.120.040. Housing Types.
+
+A.
+
+A housing type is not a use category.
+It describes a type of development that contains a Residential use.
+
+B.
+
+A list of allowed, limited, and prohibited housing types in commercial zones is provided in Table 18.120.2.
+The terms and abbreviations in Table 18.120.2 are as follows:
+
+1.
+
+Yes, allowed (Y).
+Housing types that are allowed.
+
+2.
+
+No, prohibited (N).
+Housing types that are not allowed under any circumstance.
+
+C.
+
+All housing types are subject to the standards and provisions of the applicable development standards chapter or applicable plan district chapter, if any.
+The applicable chapter for each housing type is provided in Table 18.120.2.
+
+D.
+
+All allowed housing types may be built on site or manufactured off site.
+
+Table 18.120.2 Commercial Zone Housing Types  Table 18.120.2 Commercial Zone Housing Types  Table 18.120.2 Commercial Zone Housing Types  Table 18.120.2 Commercial Zone Housing Types  Table 18.120.2 Commercial Zone Housing Types  Table 18.120.2 Commercial Zone Housing Types
+Housing Types                                 Applicable Chapter                            COM                                           MUC                                           MUE                                           MUR
+Accessory Dwelling Units                      18.220                                        N                                             N                                             N                                             Y
+Apartments                                    18.230                                        N                                             Y                                             N                                             Y
+Cottage Clusters                              18.240                                        N                                             N                                             N                                             Y
+Courtyard Units                               18.250                                        N                                             N                                             N                                             Y
+Mobile Home Parks                             18.260                                        N                                             N                                             N                                             N
+Quads                                         18.270                                        N                                             N                                             N                                             Y
+Rowhouses                                     18.280                                        N                                             Y                                             N                                             Y
+Small Form Residential                        18.290                                        N                                             N                                             N                                             Y
+Mixed-Use Development                         18.320                                        Y                                             Y                                             Y                                             Y
+
+Y = Yes, Allowed
+L = Limited
+N = No, Prohibited
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 20-01 §1; Ord. 22-06 §2; Ord. No. 24-05, 4/23/2024)

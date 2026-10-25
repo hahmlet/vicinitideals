@@ -208,6 +208,78 @@ or/multnomah/fairview:
           '19.162', '19.163', '19.164', '19.165', 19.25.ah, '19.30', '19.65', '19.70',
           '19.80', '19.85']
 
+or/washington/tigard:
+  # ecode360 print, as Fairview: "§ 18.110.020. Use Categories." on its own
+  # line, printed once; a reserved section prints "§ 18.130.040. (Reserved)".
+  heading: '^§ (?P<n>18\.\d+\.\d+)\.\s+["A-Z(]'
+  # Each print opens with the viewer's buttons and the title, part and
+  # chapter lines. The two TSP extracts are a two-column PDF with no section
+  # headings; they are not cut and stay whole.
+  front: [tdc.18.110.residential-zones, tdc.18.120.commercial-zones,
+          tdc.18.130.industrial-zones, tdc.18.140.parks, tdc.18.210.residential-general,
+          tdc.18.270.quads, tdc.18.280.rowhouses, tdc.18.30.definitions,
+          tdc.18.320.commercial-standards, tdc.18.40.measurements, tdc.18.410.parking,
+          tdc.18.60.use-categories, tdc.18.620.bridgeport, tdc.18.640.river-terrace,
+          tdc.18.650.downtown, tdc.18.660.triangle, tdc.18.670.wsrc, tdc.18.720.annexations,
+          tdc.18.805.lot-standards, tdc.18.840.sublot-plats,
+          tdc.18.910.improvement-standards, tdc.18.920.access, tdc.18.930.vision-clearance]
+
+or/washington/cornelius:
+  # ecode360 print: "§ 18.20.030. Permitted uses." on its own line, printed
+  # once. The repealed chapters (18.40, 18.50, 18.80, 18.85) print no section
+  # heading and stay whole.
+  heading: '^§ (?P<n>1[678]\.\d+\.\d+)\.\s+["A-Z(]'
+  # Each print opens with the viewer's buttons and the title, division and
+  # chapter lines; the flood chapter opens on its prior-legislation note.
+  front: [cmc.16.annexation, cmc.17.subdivisions, cmc.18.05.general, cmc.18.10.procedure,
+          cmc.18.100.site-design, cmc.18.143.transportation, cmc.18.145.parking,
+          cmc.18.15.review, cmc.18.150.special-use, cmc.18.155.solar-access,
+          cmc.18.160.solar-balance-point, cmc.18.165.solar-access-permit,
+          cmc.18.195.definitions, cmc.18.20.r-7, cmc.18.25.r-10, cmc.18.30.mhp,
+          cmc.18.35.a-2, cmc.18.45.c-2, cmc.18.54.li, cmc.18.55.m-1, cmc.18.60.cmu,
+          cmc.18.65.cc, cmc.18.70.cr, cmc.18.75.gmu, cmc.18.90.fp, cmc.18.95.nro]
+
+or/clackamas/milwaukie:
+  # ecode360 print in two depths: the zoning title's sections "§ 19.301.
+  # Moderate Density Residential Zones" (no stop after the title) and their
+  # parts "§ 19.301.4. Development Standards."; Title 12 prints "§
+  # 12.16.040. Access requirements and standards.". A part files in a folder
+  # named for its section (19.301/19.301.4.txt).
+  heading: '^§ (?P<n>\d+\.\d+(?:\.\d+)?)\.\s+["A-Z(]'
+  # Each print opens with the viewer's buttons and the title and chapter
+  # lines; 12.16 opens on its prior-ordinance note.
+  front: [12.16.access-management, 12.24.clear-vision, 19.100.introductory-provisions,
+          19.200.definitions, 19.300.base-zones, 19.400.overlays, 19.500.supplementary,
+          19.600.parking]
+
+or/clackamas/happy-valley:
+  # ecode360 print: "§ 16.22.010. Future urbanization zone." on its own line,
+  # printed once.
+  heading: '^§ (?P<n>16\.\d+\.\d+)\.\s+["A-Z(]'
+  # Each print opens with the viewer's buttons and the title, article and
+  # chapter lines.
+  front: [16.12.definitions, 16.22.residential, 16.23.commercial, 16.24.institutional,
+          16.25.industrial, 16.31.rock-creek-pmu, 16.32.steep-slopes,
+          16.34.natural-resources, 16.41.access, 16.42.landscaping, 16.43.parking,
+          16.44.special-standards, 16.63.land-divisions, 16.67.plan-amendments]
+
+or/clackamas/sandy:
+  # Municode web print: "Sec. 17.12.10. - Type I—Administrative review." on
+  # its own line, printed once ("Sec. 17.06.10 - Building permit" has no
+  # stop; "Sec. 17.12.110. - 120-day rule." opens on a digit). 17.64 is
+  # reserved, prints no section, and stays whole.
+  heading: '^Sec\. (?P<n>17\.\d+\.\d+)\.? - \S'
+  # Each print opens "CHAPTER 17.12 - PROCEDURES FOR DECISION MAKING[4]"
+  # and the chapter's footnotes (an editor's note or its history).
+  front: [sdc.17.00, sdc.17.02, sdc.17.04, sdc.17.06, sdc.17.08, sdc.17.10, sdc.17.100,
+          sdc.17.102, sdc.17.12, sdc.17.14, sdc.17.16, sdc.17.18, sdc.17.20, sdc.17.22,
+          sdc.17.24, sdc.17.26, sdc.17.28, sdc.17.30, sdc.17.32, sdc.17.34, sdc.17.36,
+          sdc.17.38, sdc.17.40, sdc.17.42, sdc.17.44, sdc.17.46, sdc.17.48, sdc.17.50,
+          sdc.17.52, sdc.17.54, sdc.17.56, sdc.17.60, sdc.17.62, sdc.17.66, sdc.17.68,
+          sdc.17.70, sdc.17.72, sdc.17.74, sdc.17.76, sdc.17.78, sdc.17.80, sdc.17.82,
+          sdc.17.84, sdc.17.86, sdc.17.88, sdc.17.90, sdc.17.92, sdc.17.94, sdc.17.96,
+          sdc.17.98]
+
 # or/clackamas/lake-oswego: NOT CUT (2026-10-24). Its headings take one clean
 # rule ('^§ (?P<n>50\.\d+\.\d+)\.\s+[A-Z]', front: both documents), but its
 # tables print one cell to a line, and readable text joins a cell that runs to

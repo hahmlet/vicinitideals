@@ -1,0 +1,121 @@
+§ 18.650.070. Development Standards.
+
+A.
+
+Development standards. Development standards are provided in Table 18.650.1
+
+Table 18.650.3 Development Standards  Table 18.650.3 Development Standards  Table 18.650.3 Development Standards  Table 18.650.3 Development Standards  Table 18.650.3 Development Standards
+Standard                              Sub-Areas                             Sub-Areas                             Sub-Areas                             Sub-Areas
+Standard                              Main Street (MS)                      99W/Hall Corridor (99H)               Scoffins/Commercial (SC)              Fanno/Burnham (FB)
+Minimum Lot Size                      None                                  None                                  None                                  None
+Minimum Lot Width                     None                                  None                                  None                                  None
+Minimum Setbacks                      Minimum Setbacks                      Minimum Setbacks                      Minimum Setbacks                      Minimum Setbacks
+- Front                               0 ft.                                 0/5 ft.(5 ft. for frontage on 99W)    0 ft.                                 0 ft.
+- Street side                         0 ft.                                 0 ft.                                 0 ft.                                 0 ft.
+- Side                                0 ft.                                 0 ft.                                 0 ft.                                 0 ft.
+- Rear                                0 ft.                                 5 ft.                                 5 ft.                                 5 ft.
+Maximum Setbacks                      Maximum Setbacks                      Maximum Setbacks                      Maximum Setbacks                      Maximum Setbacks
+- Front                               10 ft.                                25 ft.                                20 ft.                                20 ft.
+- Street side                         10 ft.                                None                                  None                                  None
+Building Height                       Building Height                       Building Height                       Building Height                       Building Height
+- Minimum                             20 ft.                                20 ft.                                20 ft.                                20 ft.
+- Maximum [1]                         80 ft.                                45 ft.                                80 ft.                                80 ft. [2]
+- First story minimum                 15 ft.                                15 ft.                                None                                  None
+Maximum Lot Coverage                  100%                                  90%                                   90%                                   80%
+Minimum Landscape Area [3]            0%                                    10%                                   10%                                   20%
+Minimum Building Frontage             50%                                   50%                                   50%                                   50%
+Residential Density (units per acre)  Residential Density (units per acre)  Residential Density (units per acre)  Residential Density (units per acre)  Residential Density (units per acre)
+- Minimum [4]                         25                                    25                                    25                                    15
+- Maximum [1]                         50                                    50                                    50 [5]                                50 [5]
+
+Notes:  Notes:
+[1]     See Subsection 18.650.080.D.
+[2]     45 feet within 200 feet of Fanno Creek Park boundary (see Map 18.650.B) or within 50 feet of the RES-A through RES-D zones.
+[3]     In the MU-CBD zone, required landscaping may be provided on roofs or within the abutting right-of-way where the applicant is required to provide landscaping as part of a street improvement in compliance with Section 18.650.070.
+[4]     Minimum density applies to residential-only development (not mixed-use).
+[5]     Maximum density in the station area overlay is 80 units per acre (see Map 18.650.B).
+
+B.
+
+Parking.
+
+1.
+
+Parking areas must be located on the side or rear of newly constructed buildings.
+If located on the side, the parking area may not exceed 50% of the total frontage of the site.
+
+2.
+
+Parking areas must be set back a minimum of 10 feet from a street property line.
+
+3.
+
+When abutting a public right-of-way, pedestrian paths and trails in a public easement, or a public park, parking areas must be screened to the S-4 standard as provided in Table 18.420.2.
+
+4.
+
+Where a parking area shares a property line with an adjacent parking area, landscaping is not required along the shared property line.
+
+5.
+
+Adjustments to the bicycle parking requirements are prohibited.
+
+Figure 18.650.1 Parking Location
+
+C.
+
+Rooftop features and equipment screening.
+
+1.
+
+The following rooftop equipment does not require screening:
+
+a.
+
+Solar panels, wind generators, and green roof features;
+
+b.
+
+Equipment under two feet in height.
+
+2.
+
+Elevator mechanical equipment may extend above the height limit a maximum of 16 feet provided that the mechanical shaft is incorporated into the architecture of the building.
+
+3.
+
+Satellite dishes and other communications equipment are limited to a maximum of 10 feet in height and must be set back a minimum of five feet from the roof edge and screened from public view to the extent practicable.
+
+4.
+
+All other roof-mounted mechanical equipment is limited to a maximum of 10 feet in height and must be set back a minimum of five feet from the roof edge and screened from public view and from views from adjacent buildings by one of the following methods:
+
+a.
+
+A screen around the equipment that is made of a primary exterior finish material used on other portions of the building or architectural grade wood fencing or masonry; or
+
+b.
+
+Green roof features or regularly maintained dense evergreen foliage that forms an opaque barrier when planted.
+
+D.
+
+Other exterior mechanical equipment.
+Other exterior mechanical equipment on the site (electrical boxes, etc.) must be screened from public right-of-way, pedestrian paths in a public easement, public parks, public spaces, and parking areas by one or more of the following:
+
+1.
+
+A screen around the equipment that is made of a primary exterior finish material used on other portions of the building or architectural grade wood fencing or masonry; or
+
+2.
+
+Dense evergreen landscaping that provides an opaque barrier.
+All landscaping used for this purpose must be regularly maintained.
+
+E.
+
+Fences. All fences must comply with the standards of Section 18.310.020.
+Barbed or razor wire fences are prohibited.
+
+(Ord. 17-22 §2; Ord. 18-23 §2; Ord. 18-28 §1; Ord. 19-09 §1; Ord. 20-01 §1; Ord. 22-06 §2; Ord. 22-10 §2 Ord. No. 24-05, 4/23/2024)
+
