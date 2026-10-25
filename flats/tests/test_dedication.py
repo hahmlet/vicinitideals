@@ -260,7 +260,8 @@ def test_sherwoods_map_is_read_for_the_dedication_only() -> None:
         (["FISCHER RD"], 33),
         (["116TH AVE"], 30),
         (["ROYALTY PKWY"], 30),
-        (["PACIFIC HWY"], 61),
+        # 99W: named, "as determined by ODOT", no figure -- the deepest printed.
+        (["PACIFIC HWY"], 33),
         (["MONARCH DR"], 25),
         # A line that may be on either of two streets takes the deeper.
         (["MONARCH DR", "FISCHER RD"], 33),
@@ -271,7 +272,7 @@ def test_king_city_reads_its_named_streets(rules, street, distance) -> None:
 
 
 def test_king_city_unread_street_takes_the_deepest(rules) -> None:
-    assert strip(rules, KING_CITY, "KTTC", 0.0, names=None) == 61
+    assert strip(rules, KING_CITY, "KTTC", 0.0, names=None) == 33
 
 
 def test_king_city_county_pockets_read_the_countys_rule(rules, layers) -> None:

@@ -419,6 +419,16 @@ defaults:
   # would be wrong for a city the division reaches differently -- scope it then.
   # Text read is the version LCDC adopted 2026-08-27 (operative 2027-01-01);
   # the operative 2020 Model Code says the same of driveways.
+  #
+  # The 4 is printed nowhere: the rule says "one approach, the same as a
+  # house" and the pod is four units, so one approach serves four. The quote
+  # is the two sentences that say so -- driveways are design standards
+  # (-0020(4), L227-L230) and design standards "may not scale by the number
+  # of dwelling units" (-0225(1)(c), L783-L785). It used to start at L572-L573,
+  # "Large Cities may allow more than four dwelling units" -- a sentence about
+  # how many homes a quadplex may hold, not about driveways -- and the page
+  # check boxed its "four" as though it were this number (Steph answered
+  # "differs", page check 1063, 2026-10-25).
   driveway_units_per_approach:
     value: 4
     preempts: cap
@@ -426,7 +436,7 @@ defaults:
     url: "https://www.oregon.gov/lcd/LAR/Documents/Div46_Proposed_Rules_August_LCDC_Final.pdf"
     retrieved: 2026-10-10
     status: draft
-    quote: "or/oar.660-046.adopted-2026-08.txt#L572-L573,L783-L785"
+    quote: "or/oar.660-046.adopted-2026-08.txt#L227-L230,L783-L785"
 
   # NOT ENCODED: OAR 660-046-0220(2)(e)(E), which says a Large City "must apply
   # the same off-street parking surfacing, dimensional, landscaping, access,

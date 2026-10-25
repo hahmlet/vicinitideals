@@ -563,6 +563,12 @@ class Rule:
     #: class -> designation -> distance (``row_to_centerline_by_designation``),
     #: halved like ``classes`` where the code states widths.
     by_designation: Mapping[str, Mapping[str, float]] = dataclasses.field(default_factory=dict)
+    #: Streets the name list holds with no figure: the code names them and
+    #: leaves the distance to someone else (King City 16.80.060 A.2.a, Pacific
+    #: Highway "as determined by the Oregon Department of Transportation").
+    #: A line on one is read like an unread name -- :meth:`deepest` -- not as
+    #: a street the list leaves out, whose distance the code does state.
+    unstated: tuple[str, ...] = ()
 
     def deepest(self) -> float:
         """The deepest distance the zone states: what an unread line takes."""
@@ -581,7 +587,8 @@ class Rule:
         where the code lists one street twice for two stretches: the stretch
         is not read). Any other street takes its class's distance, or the
         unlisted distance, or none. An unread name, where names decide, and
-        an unread class, where classes do, take :meth:`deepest`.
+        an unread class, where classes do, take :meth:`deepest` -- and so
+        does a street the list names without a figure (:attr:`unstated`).
         """
         if self.named and names is None:
             return self.deepest()
@@ -590,7 +597,9 @@ class Rule:
         listed = dict(self._listed())
         got = []
         for n in names or ():
-            if n in listed:
+            if n in self.unstated and n not in listed:
+                got.append(self.deepest())
+            elif n in listed:
                 got.append(listed[n])
             elif self.classes:
                 got.append(self._by_class(classes))
@@ -645,12 +654,17 @@ def rule_of(rules: "ZoneResolution") -> Rule | None:
     if rules.get(WIDTH_FIELD) is True:
         classes = {c: n / 2.0 for c, n in classes.items()}
     named: list[tuple[str, float]] = []
+    unstated: list[str] = []
     table = rules.get(NAMED_FIELD)
     if isinstance(table, (list, tuple)):
         for entry in table:
-            ft = _number(entry[1]) if isinstance(entry, (list, tuple)) and len(entry) == 2 else None
+            if not isinstance(entry, (list, tuple)) or len(entry) != 2:
+                continue
+            ft = _number(entry[1])
             if ft is not None:
                 named.append((street_key(entry[0]), ft))
+            elif entry[1] is None:
+                unstated.append(street_key(entry[0]))
     if rules.get(WIDTH_FIELD) is True:
         named = [(n, ft / 2.0) for n, ft in named]
     other = _number(rules.get(OTHER_FIELD))
@@ -666,6 +680,7 @@ def rule_of(rules: "ZoneResolution") -> Rule | None:
         named=tuple(named),
         other=other,
         by_designation=rows,
+        unstated=tuple(unstated),
     )
 
 
